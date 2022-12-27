@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\tModLoader.targets" />
+  <PropertyGroup>
+    <AssemblyName>Coralite</AssemblyName>
+    <TargetFramework>net6.0</TargetFramework>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Items\BotanicalTechs\" />
+    <Folder Include="Assets\Items\BotanicalItems\Plants\" />
+    <Folder Include="Assets\Items\Accessories\" />
+    <Folder Include="Content\Items\BotanicalItems\Plants\" />
+    <Folder Include="Content\Items\Materials\" />
+    <Folder Include="Content\Items\Pets\" />
+    <Folder Include="Content\UI\" />
+    <Folder Include="Sounds\Shadows\" />
+  </ItemGroup>
+</Project>
