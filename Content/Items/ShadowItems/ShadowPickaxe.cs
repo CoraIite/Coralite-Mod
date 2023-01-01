@@ -25,36 +25,21 @@ namespace Coralite.Content.Items.ShadowItems
             Item.useTime = 16;
             Item.useAnimation = 20;
             Item.knockBack = 2f;
-<<<<<<< HEAD
-            Item.value = Item.sellPrice(0, 1, 50, 0);
-=======
             Item.value = Item.sellPrice(0,1,50,0);
->>>>>>> 3e3a356d43305b33add95547cc02507bbb4a8d4b
             Item.rare = ItemRarityID.Orange;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
             Item.useTurn = true;
-<<<<<<< HEAD
-            
-=======
 
->>>>>>> 3e3a356d43305b33add95547cc02507bbb4a8d4b
             Item.pick = 100;
         }
 
         public override void AddRecipes()
         {
-<<<<<<< HEAD
-             CreateRecipe()
-            .AddIngredient(ModContent.ItemType<ShadowCrystal>(), 8)
-            .AddTile(TileID.Anvils)
-            .Register();
-=======
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ModContent.ItemType<ShadowCrystal>(), 8);
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
->>>>>>> 3e3a356d43305b33add95547cc02507bbb4a8d4b
         }
     }
 }
