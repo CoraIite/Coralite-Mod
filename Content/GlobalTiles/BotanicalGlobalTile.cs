@@ -83,17 +83,51 @@ namespace Coralite.Content.GlobalTiles
 
         public override bool Drop(int i, int j, int type)
         {
-            #region 丛林植物
-            if (type == TileID.JunglePlants || type == TileID.JunglePlants2)
+            #region 天空层
+            if (j < Main.worldSurface * 0.35f)
             {
-                if (Main.rand.NextBool(25))
-                {
-                    Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
-                    Item.NewItem(null, worldPosition, ItemType<JungleBuds>());
-                }
+
+                return true;
             }
             #endregion
 
+            #region 世界表面层
+            if (j < Main.worldSurface)
+            {
+
+                return true; 
+            }
+            #endregion
+
+            #region 泥土层
+            if (j < Main.rockLayer)
+            {
+
+                return true;
+            }
+            #endregion
+
+            #region 地下岩石层
+            if (j < Main.maxTilesX - 200)
+            {
+                #region 丛林植物
+                if (type == TileID.JunglePlants || type == TileID.JunglePlants2)
+                {
+                    if (Main.rand.NextBool(25))
+                    {
+                        Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
+                        Item.NewItem(null, worldPosition, ItemType<JungleBuds>());
+                        return false;
+                    }
+                }
+                #endregion
+
+                return true;
+            }
+            #endregion
+
+            #region 地狱层
+            #endregion
             return true;
         }
     }

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "PjtVDVLEPWoImFcFR1tthNe0lJZYXgZYqQlDBxI2y/xJIkFFcSuzp3MFREBRb7BBbnoHFr14VE77T3O7r72m6g==",
+  "success": true,
+  "projectFilePath": "D:\\My Games\\Terraria\\tModLoader\\ModSources\\Coralite\\Coralite.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\79370\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
+  ],
+  "logs": []
+}
