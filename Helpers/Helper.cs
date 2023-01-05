@@ -91,7 +91,8 @@ namespace Coralite.Helpers
         public static float EllipticalEase(float rotation, float halfShortAxis, float halfLongAxis)
         {
             float halfFocalLength2 = halfLongAxis * halfLongAxis - halfShortAxis * halfShortAxis;
-            return (float)(halfLongAxis * halfShortAxis / Math.Sqrt(halfLongAxis * halfLongAxis - halfFocalLength2 * (Math.Cos(2 * rotation + 1) / 2)));
+            float cosx = (float)Math.Cos(rotation);
+            return (float)(halfLongAxis * halfShortAxis / Math.Sqrt(halfLongAxis * halfLongAxis - halfFocalLength2 * cosx * cosx));
         }
 
         public static T[] FastUnion<T>(this T[] front, T[] back)

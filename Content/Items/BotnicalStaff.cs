@@ -1,10 +1,12 @@
 ﻿using Coralite.Content.Tiles.Plants;
 using Coralite.Core;
+using Coralite.Core.Prefabs.Tiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 
 namespace Coralite.Content.Items
 {
@@ -32,6 +34,7 @@ namespace Coralite.Content.Items
             int i = point.X;
             int j = point.Y;
             Tile tile = Framing.GetTileSafely(i, j);
+
             if (BotanicalHelper.TryGetTileEntityAs(i, j, out NormalPlantTileEntity plantEntity))
             {
                 Main.NewText(plantEntity.growTime);
@@ -41,7 +44,8 @@ namespace Coralite.Content.Items
                 if (plantEntity.growTime >= plantEntity.DominantGrowTime)
                 {
                     plantEntity.growTime = 0;
-                    tile.TileFrameX += 18;
+                    TileObjectData data = TileObjectData.GetTileData(tile);
+                    tile.TileFrameX += (short)(data.CoordinateWidth+data.CoordinatePadding);
                     if (Main.netMode != NetmodeID.SinglePlayer)
                         NetMessage.SendTileSquare(-1, i, j, 1);
                 }

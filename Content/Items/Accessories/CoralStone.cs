@@ -26,6 +26,7 @@ namespace Coralite.Content.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statManaMax2 += 100;
+            player.statLifeMax2 += 100;
         }
         //设置合成表
         public override void AddRecipes()

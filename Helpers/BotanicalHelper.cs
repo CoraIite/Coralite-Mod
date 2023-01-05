@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 
 namespace Coralite.Helpers
 {
@@ -73,6 +74,38 @@ namespace Coralite.Helpers
             }
 
             entity=(T)TileEntity.ByID[index];
+            return true;
+        }
+
+        public static bool TryGetTileEntityForMultTile<T>(ushort tileType,int i, int j, out T entity) where T : ModTileEntity
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+            if (tile.TileType!=tileType)
+            {
+                entity=null;
+                return false;
+            }
+
+            TileObjectData data = TileObjectData.GetTileData(tile);
+            int index = -1;
+            //遍历！哈哈！
+            for (int m = 0; m < data.Width; m++)
+            {
+                for (int n = 0; n < data.Height; n++)
+                {
+                    index = ModContent.GetInstance<T>().Find(i - m, j - n);
+                    if (index != -1)
+                        break;
+                }
+            }
+
+            if (index == -1)
+            {
+                entity = null;
+                return false;
+            }
+
+            entity = (T)TileEntity.ByID[index];
             return true;
         }
 

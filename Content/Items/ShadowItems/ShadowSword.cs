@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.ShadowItems
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("影子剑");
+            DisplayName.SetDefault("潜伏");
 
             Tooltip.SetDefault("尽管是把剑，但却充满魔力！");
         }
@@ -25,18 +25,21 @@ namespace Coralite.Content.Items.ShadowItems
         public override void SetDefaults()
         {
             Item.height = Item.width = 40;
-            Item.DamageType = DamageClass.Magic;
-            Item.useStyle = ItemUseStyleID.Swing;
+
             Item.damage = 20;
             Item.useTime = 16;
             Item.useAnimation = 16;
             Item.knockBack = 6f;
             Item.reuseDelay = 20;
-            Item.value = Item.sellPrice(0,3,0,0);
-            Item.rare = ItemRarityID.Orange;
             Item.mana = 9;
             Item.crit = 10;
+
+            Item.value = Item.sellPrice(0, 3, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.DamageType = DamageClass.Magic;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.UseSound = SoundID.Item9;
+
             Item.autoReuse = true;
             Item.useTurn = true;
             Item.noMelee = false;
@@ -55,9 +58,8 @@ namespace Coralite.Content.Items.ShadowItems
             rotation -= 5.5f;
 
             if (rotation > 8)
-            {
                 rotation = 0;
-            }
+
             return false;
         }
 
@@ -76,16 +78,13 @@ namespace Coralite.Content.Items.ShadowItems
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("剑之虚影");
+            DisplayName.SetDefault("潜伏分身");
         }
 
         public override void SetDefaults()
         {
-            DrawOffsetX = -13;
-            DrawOriginOffsetY = -13;
-            Projectile.height = 16;
-            Projectile.width = 16;
-            Projectile.Center = new Vector2(21, 21);
+            Projectile.height = 44;
+            Projectile.width = 44;
 
             Projectile.friendly = true;
             Projectile.timeLeft = 900;
@@ -116,6 +115,7 @@ namespace Coralite.Content.Items.ShadowItems
                 else
                 {
                     proj.Timer = 0;
+                    projectile.alpha = 0;
                     proj.SetState<ShootState>();
                 }
             }
@@ -129,11 +129,11 @@ namespace Coralite.Content.Items.ShadowItems
             public override void AI(ProjStateMachine proj)
             {
                 Projectile projectile = proj.Projectile;
-                if (proj.Timer==0)
-                    projectile.alpha = 0;
                 
                 if (projectile.velocity.Length() < 1f) 
                     ProjectilesHelper.AimingTheNearestNPC(projectile, 10, 1000f);
+
+                projectile.alpha = 60 - (int)(Math.Cos(proj.Timer * 0.0314f) * 60);
 
                 proj.Timer++;
                 projectile.rotation = projectile.velocity.ToRotation() + 0.785f;
@@ -143,8 +143,8 @@ namespace Coralite.Content.Items.ShadowItems
                     dust.noGravity = true;
                 }
 
-                float factor = proj.Timer / 300;
-                if (factor >= 1)
+
+                if (proj.Timer >= 300)
                 {
                     proj.Timer = 0;
                     proj.SetState<TrackingState>();
@@ -161,6 +161,7 @@ namespace Coralite.Content.Items.ShadowItems
             {
                 Projectile projectile = proj.Projectile;
                 //自转
+                projectile.alpha = 60 - (int)(Math.Cos(proj.Timer * 0.0314f) * 60);
                 proj.Timer++;
                 float factor = proj.Timer / 550f;
                 projectile.rotation += 0.18f * factor;
@@ -172,11 +173,10 @@ namespace Coralite.Content.Items.ShadowItems
                 }
 
                 projectile.velocity = new Vector2(0, -0.5f * factor);
+
                 ProjectilesHelper.AutomaticTracking(projectile, 0.1f, 10, 150f);
                 if (factor >= 1)
-                {
-                    Dust _dust = Dust.NewDustPerfect(projectile.position + new Vector2(Main.rand.Next(projectile.width), Main.rand.Next(projectile.height)), DustID.Granite ,null,0,default,1.2f);
-                }
+                    Dust.NewDustPerfect(projectile.position + new Vector2(Main.rand.Next(projectile.width), Main.rand.Next(projectile.height)), DustID.Granite ,null,0,default,1.2f);
             }
         }
 

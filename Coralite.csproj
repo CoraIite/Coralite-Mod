@@ -13,12 +13,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Items\BotanicalTechs\" />
-    <Folder Include="Assets\Items\BotanicalItems\Plants\" />
     <Folder Include="Assets\Items\Accessories\" />
-    <Folder Include="Content\Items\BotanicalItems\Plants\" />
     <Folder Include="Content\Items\Materials\" />
     <Folder Include="Content\Items\Pets\" />
-    <Folder Include="Content\UI\" />
     <Folder Include="Sounds\Shadows\" />
   </ItemGroup>
 </Project>

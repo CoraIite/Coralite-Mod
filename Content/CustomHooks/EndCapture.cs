@@ -11,7 +11,7 @@ namespace Coralite.Content.CustomHooks
         //来源于yiyang233的MEAC
         //应该不会对别的东西有什么影响
         public override SafetyLevel Safety => base.Safety;
-
+        
         public override void Load()
         {
             FilterManager.EndCapture += new FilterManager.hook_EndCapture(FilterManager_EndCapture);

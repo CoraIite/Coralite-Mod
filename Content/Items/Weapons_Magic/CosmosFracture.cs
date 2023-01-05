@@ -28,17 +28,17 @@ namespace Coralite.Content.Items.Weapons_Magic
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 255;
+            Item.damage = 215;
             Item.useTime = 20;
             Item.useAnimation = 20;
-            Item.mana = 20;
+            Item.mana = 22;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Magic;
-            Item.knockBack = 6;
-            Item.crit = 36;
+            Item.knockBack = 4;
+            Item.crit = 26;
 
             Item.value = Item.sellPrice(0, 50, 0, 0);
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ItemRarityID.Lime;
             Item.shoot = ProjectileType<CosmosFractureProj1>();
 
             Item.useTurn = false;

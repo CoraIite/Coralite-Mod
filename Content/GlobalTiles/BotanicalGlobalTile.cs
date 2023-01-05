@@ -2,6 +2,7 @@
 using Coralite.Content.Tiles.Plants;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -31,10 +32,10 @@ namespace Coralite.Content.GlobalTiles
             if (j < Main.worldSurface)
             {
                 #region 沙子
-                if (type == TileID.Sand)
+                if (type == TileID.Sand&&!upTile.CheckingLiquid)
                 {
                     //饮水棘
-                    if (Main.rand.NextBool(250))
+                    if (Main.rand.NextBool(3000))
                     {
                         WorldGen.Place1x1(i, j - 1, TileType<WaterDrinker>());
                         upTile.TileFrameX = 54;
@@ -42,7 +43,18 @@ namespace Coralite.Content.GlobalTiles
                     }
                 }
                 #endregion
-
+                #region 雪块&冰块
+                if ((type==TileID.SnowBlock||type==TileID.IceBlock) && !upTile.CheckingLiquid)
+                {
+                    //冷水花
+                    if (Main.rand.NextBool(3000))
+                    {
+                        WorldGen.Place1x1(i, j - 1, TileType<PileaNotata>());
+                        //upTile.TileFrameX = 54;
+                        return;
+                    }
+                }
+                #endregion
                 return;
             }
             #endregion
@@ -62,7 +74,7 @@ namespace Coralite.Content.GlobalTiles
                 if (type == TileID.JungleGrass)
                 {
                     //丛林芽孢
-                    if (Main.rand.NextBool(250))
+                    if (Main.rand.NextBool(2000))
                     {
                         WorldGen.Place1x1(i, j - 1, TileType<CoraliteJungleSpores>());
                         upTile.TileFrameX = 36;
@@ -72,7 +84,18 @@ namespace Coralite.Content.GlobalTiles
                 }
 
                 #endregion
-
+                #region 雪块&冰块
+                if ((type == TileID.SnowBlock || type == TileID.IceBlock) && !upTile.CheckingLiquid)
+                {
+                    //冷水花
+                    if (Main.rand.NextBool(3000))
+                    {
+                        WorldGen.Place1x1(i, j - 1, TileType<AgropyronFrozen>());
+                        upTile.TileFrameX = 52;
+                        return;
+                    }
+                }
+                #endregion
                 return;
             }
             #endregion
@@ -94,7 +117,17 @@ namespace Coralite.Content.GlobalTiles
             #region 世界表面层
             if (j < Main.worldSurface)
             {
-
+                #region 木头
+                if (type==TileID.Trees)
+                {
+                    if (Main.rand.NextBool(30))
+                    {
+                        Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
+                        Item.NewItem(new EntitySource_TileBreak(i,j), worldPosition, ItemType<TreeJokeSeed>());
+                        return false;
+                    }
+                }
+                #endregion
                 return true; 
             }
             #endregion
@@ -113,10 +146,10 @@ namespace Coralite.Content.GlobalTiles
                 #region 丛林植物
                 if (type == TileID.JunglePlants || type == TileID.JunglePlants2)
                 {
-                    if (Main.rand.NextBool(25))
+                    if (Main.rand.NextBool(30))
                     {
                         Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
-                        Item.NewItem(null, worldPosition, ItemType<JungleBuds>());
+                        Item.NewItem(new EntitySource_TileBreak(i,j), worldPosition, ItemType<JungleBuds>());
                         return false;
                     }
                 }
@@ -128,6 +161,7 @@ namespace Coralite.Content.GlobalTiles
 
             #region 地狱层
             #endregion
+
             return true;
         }
     }

@@ -15,14 +15,14 @@ namespace Coralite.Content.NPCs
     {
         public override string Texture => AssetDirectory.ShadowNPCs + Name;
 
-        private Player target => Main.player[NPC.target];
+        private Player Target => Main.player[NPC.target];
 
         private int yFrame = 0;
         private int frameCounter = 0;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("暗影护卫");
+            DisplayName.SetDefault("影子守卫");
             Main.npcFrameCount[NPC.type] = 4;
         }
 
@@ -36,7 +36,7 @@ namespace Coralite.Content.NPCs
             NPC.value=Item.buyPrice(0, 0, 2, 0);
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-
+            
             NPC.knockBackResist = 0.7f;
             NPC.aiStyle = NPCAIStyleID.HoveringFighter;
             NPC.aiAction = NPCID.Wraith;
@@ -45,9 +45,7 @@ namespace Coralite.Content.NPCs
         public override void Load()
         {
             for (int i = 0; i <= 2; i++)
-            {
                 GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.ShadowGores + "ShadowGuard_Gore" + i);
-            }
         }
 
         public override void AI()
@@ -63,13 +61,12 @@ namespace Coralite.Content.NPCs
                 else
                     yFrame = 0;
             }
-            NPC.spriteDirection = Math.Sign(target.Center.X - NPC.Center.X);
+            NPC.spriteDirection = Math.Sign(Target.Center.X - NPC.Center.X);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D mainTex = ModContent.Request<Texture2D>(Texture).Value;
-            Texture2D glowTex = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
 
             int frameWidth = mainTex.Width;
             int frameHeight = mainTex.Height / Main.npcFrameCount[NPC.type];
@@ -82,7 +79,6 @@ namespace Coralite.Content.NPCs
                 effects = SpriteEffects.FlipHorizontally;
 
             Main.spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, effects, 0f);
-            Main.spriteBatch.Draw(glowTex, NPC.Center - screenPos, frameBox, Color.White, NPC.rotation, origin, NPC.scale, effects, 0f);
             return false;
         }
 
@@ -92,16 +88,11 @@ namespace Coralite.Content.NPCs
             {
                 Helper.PlayPitched("Shadows/Shadow_Hurt0", 0.4f, 0f, NPC.Center);
                 for (int i = 0; i < 3; i++)
-                {
                     Dust.NewDustPerfect(NPC.Center + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), DustID.Granite, null, 0, default, 1f);
-                }
+
                 if (NPC.life <= 0 )
-                {
                     for (int j = 0; j <= 2; j++)
-                    {
                         Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("ShadowGuard_Gore" + j).Type);
-                    }
-                }
             }
         }
 

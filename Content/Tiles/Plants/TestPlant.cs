@@ -8,9 +8,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class TestPlant : BasePlantTile<NormalPlantTileEntity>
+    public class TestPlant : BasePlantTileWithSeed<NormalPlantTileEntity>
     {
-        public TestPlant() : base(AssetDirectory.PlantTiles, 18, 4, ItemType<TestSeed>(), ItemID.Wood) { }
+        public TestPlant() : base(AssetDirectory.PlantTiles, 16, 4, ItemType<TestSeed>(), ItemID.Wood) { }
 
         public override void SetStaticDefaults()
         {
