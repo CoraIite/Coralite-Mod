@@ -18,6 +18,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         public override bool ShouldUpdatePosition() => false;
 
         protected bool canDrawMagic = false;
+        protected bool canDrawSelf = true;
 
         protected int fractureFrameX = 0;
         protected int fractureFrameY = 0;
@@ -44,9 +45,14 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
         }
-
         #region AI
 
+        protected override void AIBefore()
+        {
+            if(!completeAndRelease)
+                Owner.itemTime = Owner.itemAnimation = 2;//这个东西不为0的时候就无法使用其他物品
+            Owner.itemRotation = Owner.direction > 0 ? _Rotation : _Rotation + 3.141f;
+        }
         protected override void AIAfter()
         {
             _Rotation = -1.57f;
@@ -85,7 +91,6 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                         break;
                     default: break;
                 }
-
                 return;
             }
         }
@@ -149,41 +154,11 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             timer = 0;
             Projectile.timeLeft = 76;
             Projectile.friendly = true;
+            Owner.itemTime = Owner.itemAnimation = 40;
             TargetDirection = Vector2.Normalize(Main.MouseWorld - Owner.Center);
             if (Main.myPlayer == Owner.whoAmI)
                 Center = Projectile.Center + (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitY) * 80f;
-            #region 废弃内容
-            //fractureLenth = new float[20];
-            //fractureWidth = new int[20];
-            //index = new short[114];     //((20 - 2) *2 + 2) * 3
 
-            //index[0] = 0;
-            //index[1] = 1;
-            //index[2] = 2;
-
-            //for (short j = 0; j < 17; j++)
-            //{
-            //    index[j * 6 + 3] = (short)(j * 2 + 1);
-            //    index[j * 6 + 4] = (short)(j * 2 + 2);
-            //    index[j * 6 + 5] = (short)(j * 2 + 4);
-
-            //    index[j * 6 + 6] = (short)(j * 2 + 1);
-            //    index[j * 6 + 7] = (short)(j * 2 + 3);
-            //    index[j * 6 + 8] = (short)(j * 2 + 4);
-            //}
-
-            //index[111] = 35;
-            //index[112] = 36;
-            //index[113] = 37;
-
-            //for (int i = 0; i < 20; i++)
-            //{
-            //    int a = i % 2 == 0 ? 1 : -1;        //<---  1和-1交替，为了形成类似闪电的效果
-            //    fractureWidth[i] = a * Main.rand.Next(50, 100);      //<---这里是百分比的分子
-            //    //全刷成0
-            //    fractureLenth[i] = 0f;
-            //}
-            #endregion
             completeAndRelease = true;
 
             #endregion
@@ -192,6 +167,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         protected override void CompleteAndRelease()
         {
             canDrawMagic = false;
+            if (Projectile.timeLeft < 35)
+                canDrawSelf = false;
             //控制大剑的方法
 
             if (fractureFrameY < 2)
@@ -310,7 +287,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             sb.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
             //绘制自己
-            DrawSelf(lightColor, sb);
+            if(canDrawSelf)
+                DrawSelf(lightColor, sb);
 
             if (completeAndRelease)
             {

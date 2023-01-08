@@ -9,9 +9,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class Dandelion : BasePlantTile<NormalPlantTileEntity>
+    public class Dandelion : BasePlantTileWithSeed<NormalPlantTileEntity>
     {
-        public Dandelion() : base(AssetDirectory.PlantTiles, 34, 3, ItemType<DandelionSeed>(), ItemID.PaperAirplaneA) { }
+        public Dandelion() : base(AssetDirectory.PlantTiles, 32, 3, ItemType<DandelionSeed>(), ItemID.PaperAirplaneA) { }
 
         public override void SetStaticDefaults()
         {

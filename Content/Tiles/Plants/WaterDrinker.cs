@@ -9,9 +9,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class WaterDrinker : BasePlantTile<NormalPlantTileEntity>
+    public class WaterDrinker : BasePlantTileWithSeed<NormalPlantTileEntity>
     {
-        public WaterDrinker() : base(AssetDirectory.PlantTiles, 18, 4, ItemType<WaterDrinkerSeed>(), ItemID.WetBomb) { }
+        public WaterDrinker() : base(AssetDirectory.PlantTiles, 16, 4, ItemType<WaterDrinkerSeed>(), ItemID.WetBomb) { }
 
         public override void SetStaticDefaults()
         {

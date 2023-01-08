@@ -7,14 +7,14 @@ using Coralite.Core;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class PerpetualCore:ModItem
+    public class PerpetualCore : ModItem
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("永动的核心");
-            Tooltip.SetDefault("来自丛林神庙的黑科技，无穷无尽地向外释放着能量\n召唤石巨人，不消耗");
+            Tooltip.SetDefault("来自丛林神庙的黑科技，无穷无尽地向外释放着能量\n在丛林祭坛附近召唤石巨人，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.BossSummons
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.LihzahrdPowerCell,5)
+                .AddIngredient(ItemID.LihzahrdPowerCell, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

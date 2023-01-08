@@ -20,6 +20,12 @@
 
         #endregion
 
+        #region 粒子部分！
+
+        public const string Dusts =         Assets + "Dusts/";
+
+        #endregion
+
         #region 物品部分！
 
         public const string Items =                          Assets + "Items/";
@@ -32,9 +38,11 @@
         public const string OtherItems =                  Items + "Others/";
 
         public const string ShadowItems =             Items + "Shadow/";
+        public const string RedJadeItems =            Items + "RedJade/";
         public const string BlazingItems =              Items + "Blazing/";
 
-        public const string Accessories = Items + "Accessories/";
+        public const string Materials =                 Items + "Materials/";
+        public const string Accessories =               Items + "Accessories/";
         public const string Weapons_Melee =        Items + "Weapons_Melee/";
         public const string Weapons_Magic =      Items + "Weapons_Magic/";
         public const string Weapons_Summon = Items + "Weapons_Summon/";
@@ -54,6 +62,7 @@
         public const string OtherProjectiles =      Projectiles + "Others/";
 
         public const string ShadowProjectiles =  Projectiles + "Shadow/";
+        public const string RedJadeProjectiles = Projectiles + "RedJade/";
 
         public const string Projectiles_Melee =   Projectiles + "Projectiles_Melee/";
         public const string Projectiles_Summon = Projectiles + "Projectiles_Summon/";
@@ -82,6 +91,12 @@
         public const string Gores =                 Assets + "Gores/";
 
         public const string ShadowGores =   Gores + "Shadow/";
+
+        #endregion
+
+        #region UI部分
+
+        public const string UI = Assets + "UI/";
 
         #endregion
 

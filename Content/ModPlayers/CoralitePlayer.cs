@@ -1,4 +1,5 @@
-﻿using Terraria.ModLoader;
+﻿using Terraria.DataStructures;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.ModPlayers
 {
@@ -8,8 +9,13 @@ namespace Coralite.Content.ModPlayers
 
         public override void PostUpdate()
         {
-            if (cosmosFractureRightClickTimer != 0)
+            if (cosmosFractureRightClickTimer > 0)
                 cosmosFractureRightClickTimer--;
+        }
+        
+        public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
+        {
+            base.ModifyDrawInfo(ref drawInfo);
         }
     }
 }

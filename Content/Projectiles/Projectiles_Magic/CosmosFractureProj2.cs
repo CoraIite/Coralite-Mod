@@ -220,9 +220,10 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                 for (int i = 0; i < 20; i++)
                 {
                     r += 0.314f;
-                    Vector2 dir = r.ToRotationVector2() * Helper.EllipticalEase(1.57f + 0.314f * i, 1f, 6f);
+                    Vector2 dir = r.ToRotationVector2() * Helper.EllipticalEase(1.85f + 0.314f * i, 1f, 3f)*0.5f;
+
                     //Vector2 dir = new Vector2((float)Math.Cos(1.57f + 0.314f*i ), (float)Math.Sin(1.57f + 0.314f*i +0.5f));       //<--这样不行  : (
-                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Skyware, dir * 3.2f, 0, default, 1.5f);
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Skyware, dir * 3.2f, 0, default, 1f);
                     dust.noGravity = true;
                     Dust dust2 = Dust.NewDustPerfect(Projectile.Center, DustID.FrostStaff, dir * 2f, 0, default, 1.5f);
                     dust2.noGravity = true;
@@ -291,11 +292,11 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 6; i++)
-            {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Skyware, Main.rand.NextVector2Unit() * 5f, 0, default, Main.rand.NextFloat(1f, 1.5f));
-                dust.noGravity = true;
-            }
+            //for (int i = 0; i < 6; i++)
+            //{
+            //    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Skyware, Main.rand.NextVector2Unit() * 5f, 0, default, Main.rand.NextFloat(1f, 1.5f));
+            //    dust.noGravity = true;
+            //}
 
             for (int i = 0; i < 6; i++)
             {

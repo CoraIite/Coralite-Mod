@@ -9,9 +9,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class CoraliteJungleSpores : BasePlantTile<NormalPlantTileEntity>
+    public class CoraliteJungleSpores : BasePlantTileWithSeed<NormalPlantTileEntity>
     {
-        public CoraliteJungleSpores() : base(AssetDirectory.PlantTiles, 18, 3, ItemType<JungleBuds>(), ItemID.JungleSpores) { }
+        public CoraliteJungleSpores() : base(AssetDirectory.PlantTiles, 16, 3, ItemType<JungleBuds>(), ItemID.JungleSpores) { }
 
         public override void SetStaticDefaults()
         {
