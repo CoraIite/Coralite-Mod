@@ -9,7 +9,83 @@ namespace Coralite.Helpers
 {
     public static partial class Helper
     {
+        /// <summary>
+        /// 角度转弧度系数
+        /// </summary>
+        public const float Deg2Rad = 0.0174532924f;
+
         public static Vector3 Vec3(this Vector2 vector) => new Vector3(vector.X, vector.Y, 0);
+
+        public static float SignedAngle(Vector2 from, Vector2 to)
+        {
+            float num = Angle(from, to);
+            float num2 = Math.Sign(from.X * to.Y - from.Y * to.X);
+            return num * num2;
+        }
+
+        public static float SqrMagnitude(this Vector2 vector2)
+        {
+            return vector2.X * vector2.X + vector2.Y + vector2.Y;
+        }
+
+        public static float Angle(Vector2 from, Vector2 to)
+        {
+            float num = (float)Math.Sqrt(from.SqrMagnitude() * to.SqrMagnitude());
+            if (num < 1E-15f)
+            {
+                return 0f;
+            }
+
+            float num2 = Clamp(Dot(from, to) / num, -1f, 1f);
+            return (float)Math.Acos(num2) * 57.29578f;
+        }
+
+        /// <summary>
+        /// 将value限定在min和max之间
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public static float Clamp(float value, float min, float max)
+        {
+            if (value < min)
+            {
+                value = min;
+            }
+            else if (value > max)
+            {
+                value = max;
+            }
+
+            return value;
+        }
+
+        public static float Dot(Vector2 lhs, Vector2 rhs)
+        {
+            return lhs.X * rhs.X + lhs.Y * rhs.Y;
+        }
+
+        /// <summary>
+        /// 仅仅是多了转float的Atan2
+        /// </summary>
+        /// <param name="y"></param>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static float Atan2(float y, float x)
+        {
+            return (float)Math.Atan2(y, x);
+        }
+
+        public static float Cos(float f)
+        {
+            return (float)Math.Cos(f);
+        }
+
+        public static float Sin(float f)
+        {
+            return (float)Math.Sin(f);
+        }
 
         /// <summary>
         /// 检测线段碰撞（两个点之间连线和hitbox是否发生了碰撞）

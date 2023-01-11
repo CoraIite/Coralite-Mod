@@ -89,13 +89,13 @@ namespace Coralite.Helpers
             TileObjectData data = TileObjectData.GetTileData(tile);
             int index = -1;
             //遍历！哈哈！
-            for (int m = 0; m < data.Width; m++)
+            for (int m = -1; m < data.Width; m++)
             {
-                for (int n = 0; n < data.Height; n++)
+                for (int n = -1; n < data.Height; n++)
                 {
                     index = ModContent.GetInstance<T>().Find(i - m, j - n);
                     if (index != -1)
-                        break;
+                        goto finded;
                 }
             }
 
@@ -105,6 +105,7 @@ namespace Coralite.Helpers
                 return false;
             }
 
+            finded:
             entity = (T)TileEntity.ByID[index];
             return true;
         }

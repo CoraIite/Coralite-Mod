@@ -10,6 +10,7 @@ namespace Coralite.Content.Projectiles.ShadowProjectiles
     public class InvertedShadowBullet : ModProjectile
     {
         public override string Texture => AssetDirectory.ShadowProjectiles + Name;
+        public override string GlowTexture => AssetDirectory.ShadowProjectiles+Name+"_Glow";
 
         public override void SetDefaults()
         {

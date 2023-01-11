@@ -1,15 +1,19 @@
-﻿using Coralite.Content.Tiles;
+﻿using Coralite.Content.Tiles.Machines;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.BotanicalSystem;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.UI;
+using static System.Formats.Asn1.AsnWriter;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.UI
@@ -17,24 +21,101 @@ namespace Coralite.Content.UI
     class CrossBreedUI : BetterUIState
     {
         public static bool visible = false;
-        public static BaseMachineEntity machineEntity=null;
+        public static BaseMachineEntity machineEntity = null;
         public static UIImageButton crossBreedButton = new UIImageButton(Request<Texture2D>(AssetDirectory.UI + "CrossBreedButton", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+        public static PlantParentsSlot FatherSlot = new PlantParentsSlot();
+        public static PlantParentsSlot MotherSlot = new PlantParentsSlot();
+        public static PlantSonSlot SonSlot = new PlantSonSlot();
+        public static PlantParentsSlot CatalystSlot = new PlantParentsSlot();
+
+        public byte timer;
+        public string crossBreedState = "";
+        public static Vector2 basePos = new Vector2((Main.screenWidth / 2) + 80, (Main.screenHeight / 2) - 150);
 
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
         public override bool Visible => visible;
 
-        private void CrossBreed()
+        public override void OnInitialize()
         {
-            if (machineEntity != null)
+            Elements.Clear();
+
+
+            SetPositionOnInitialize(FatherSlot, 100, 80);
+            crossBreedButton.Width.Set(64, 0);
+            crossBreedButton.Height.Set(38, 0);
+            crossBreedButton.OnClick += CrossBreedButton_OnClick;
+
+            Append(crossBreedButton);
+
+            SetPositionOnInitialize(FatherSlot, 0, 0);
+
+
+            SetPositionOnInitialize(CatalystSlot, 80, 0);
+
+
+            SetPositionOnInitialize(MotherSlot, 160, 0);
+
+
+
+            SetPositionOnInitialize(SonSlot, 80, 200);
+            SonSlot.Width.Set(32, 0);
+            SonSlot.Height.Set(32, 0);
+
+        }
+
+        private void SetPositionOnInitialize(UIElement element, int x, int y)
+        {
+            element.Left.Set(basePos.X + x, 0);
+            element.Top.Set(basePos.Y + y, 0);
+
+            Append(element);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (!Main.playerInventory)
+                visible = false;
+
+            if (timer > 0)
+                timer--;
+            else
+                crossBreedState = "";
+        }
+
+        public override void Recalculate()
+        {
+            FatherSlot.Item = machineEntity?.father;
+            MotherSlot.Item = machineEntity?.mother;
+            SonSlot.Item = machineEntity?.son;
+            CatalystSlot.Item = machineEntity?.catalyst;
+
+            base.Recalculate();
+        }
+
+        public static void SaveItem()
+        {
+            if (machineEntity is null)
+                return;
+            machineEntity.father=FatherSlot.Item;
+            machineEntity.mother= MotherSlot.Item;
+            machineEntity.son=SonSlot.Item;
+            machineEntity.catalyst=CatalystSlot.Item ;
+        }
+
+        private void CrossBreedButton_OnClick(UIMouseEvent evt, UIElement listeningElement)
+        {
+            if (machineEntity is null)
                 return;
 
             if (machineEntity.son.IsAir)
             {
                 machineEntity.son = CrossBreed(machineEntity.father, machineEntity.mother, machineEntity.catalyst, out string text);
-                SoundEngine.PlaySound(SoundID.Grab);
+                crossBreedState = text;
+                timer = 180;
             }
-                
+
+            UILoader.GetUIState<CrossBreedUI>().Recalculate();
         }
 
         /// <summary>
@@ -151,6 +232,7 @@ namespace Coralite.Content.UI
             if (state == CrossBreedState.error)
             {
                 text = "发生错误！";
+                Helper.PlayPitched("UI/Error", 0.4f, 0f);
                 return new Item();
             }
 
@@ -160,7 +242,7 @@ namespace Coralite.Content.UI
             BotanicalItem bMother = mother.GetBotanicalItem();
             BotanicalItem bSon = son.GetBotanicalItem();
             int growTimePower = 0;
-            int levelPower=0;
+            int levelPower = 0;
 
             //催化剂相关，如果有催化剂那么就消耗掉
             if (!catalyst.IsAir)
@@ -168,7 +250,7 @@ namespace Coralite.Content.UI
                 CrossBreedCatalystItem catalystItem = catalyst.GetCatalystItem();
                 if (catalystItem.isCatalyst)
                 {
-                    growTimePower =catalystItem.growTimePower;
+                    growTimePower = catalystItem.growTimePower;
                     levelPower = catalystItem.levelPower;
 
                     if (catalyst.stack > 1)
@@ -231,6 +313,7 @@ namespace Coralite.Content.UI
             else
                 mother.TurnToAir();
 
+            Helper.PlayPitched("UI/Success", 0.4f, 0f);
             return son;
         }
     }
@@ -238,6 +321,17 @@ namespace Coralite.Content.UI
     public class PlantParentsSlot : UIElement
     {
         public Item Item;
+
+        public PlantParentsSlot()
+        {
+            Item = new Item();
+        }
+
+        public override void OnInitialize()
+        {
+            Width.Set(32, 0);
+            Height.Set(32, 0);
+        }
 
         public override void Click(UIMouseEvent evt)
         {
@@ -250,8 +344,9 @@ namespace Coralite.Content.UI
                 {
                     Main.LocalPlayer.GetItem(Main.myPlayer, Item.Clone(), GetItemSettings.InventoryUIToInventorySettings);
                     Item.TurnToAir();
+                    SoundEngine.PlaySound(SoundID.Grab);
                 }
-
+                CrossBreedUI.SaveItem();
                 return;
             }
 
@@ -260,24 +355,112 @@ namespace Coralite.Content.UI
                 Main.mouseItem = Item.Clone();
                 Item.TurnToAir();
                 SoundEngine.PlaySound(SoundID.Grab);
+                CrossBreedUI.SaveItem();
+                return;
             }
 
-            if (!Main.LocalPlayer.HeldItem.IsAir && Item.IsAir) //鼠标有物品并且UI内为空，放入
+            if (!Main.LocalPlayer.HeldItem.IsAir && Item.IsAir && Main.LocalPlayer.HeldItem.ModItem is not null) //鼠标有物品并且UI内为空，放入
             {
                 Item = Main.LocalPlayer.HeldItem.Clone();
                 Main.LocalPlayer.HeldItem.TurnToAir();
                 Main.mouseItem.TurnToAir();
                 SoundEngine.PlaySound(SoundID.Grab);
+                CrossBreedUI.SaveItem();
+                return;
             }
 
-            if (!Main.LocalPlayer.HeldItem.IsAir && !Item.IsAir) //都有物品，进行交换
+            if (!Main.LocalPlayer.HeldItem.IsAir && !Item.IsAir&&Main.LocalPlayer.HeldItem.ModItem is not null) //都有物品，进行交换
             {
                 var temp = Item;
                 Item = Main.LocalPlayer.HeldItem;
                 Main.mouseItem = temp;
                 SoundEngine.PlaySound(SoundID.Grab);
+                CrossBreedUI.SaveItem();
+                return;
             }
         }
 
+        public override void RightClick(UIMouseEvent evt)
+        {
+            
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            Texture2D mainTex = Request<Texture2D>(AssetDirectory.UI + "testSlot").Value;
+            Vector2 pos = GetDimensions().Center();
+            spriteBatch.Draw(mainTex, pos, null, Color.White, 0, mainTex.Size() / 2, 1, SpriteEffects.None, 0);
+            if (!Item.IsAir)
+            {
+                Texture2D itemTex = Request<Texture2D>(Item.ModItem.Texture).Value;
+                if (Item.stack > 1)
+                    Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), pos + new Vector2(-1, 1) * 14, Color.White, 0.8f, 1, 0.5f);
+                spriteBatch.Draw(itemTex, pos, itemTex.Frame(), Color.White, 0, itemTex.Size() / 2, (mainTex.Size() * 0.8f) / itemTex.Size(), 0, 0);
+                if (IsMouseHovering)
+                {
+                    Main.LocalPlayer.mouseInterface = true;
+                    Main.HoverItem = Item.Clone();
+                    Main.hoverItemName = "CoraliteCrossBreed";
+                }
+            }
+                
+        }
+    }
+
+    public class PlantSonSlot : UIElement
+    {
+        public Item Item;
+
+        public PlantSonSlot()
+        {
+            Item = new Item();
+        }
+
+        public override void Click(UIMouseEvent evt)
+        {
+            //快捷取回到玩家背包中
+            if (PlayerInput.Triggers.Current.SmartSelect)
+            {
+                int invSlot = Helper.GetFreeInventorySlot(Main.LocalPlayer);
+
+                if (!Item.IsAir && invSlot != -1)
+                {
+                    Main.LocalPlayer.GetItem(Main.myPlayer, Item.Clone(), GetItemSettings.InventoryUIToInventorySettings);
+                    Item.TurnToAir();
+                    SoundEngine.PlaySound(SoundID.Grab);
+                }
+                CrossBreedUI.SaveItem();
+                return;
+            }
+
+            if (Main.mouseItem.IsAir && !Item.IsAir) //鼠标物品为空且UI内有物品，直接取出
+            {
+                Main.mouseItem = Item.Clone();
+                Item.TurnToAir();
+                SoundEngine.PlaySound(SoundID.Grab);
+                CrossBreedUI.SaveItem();
+                return;
+            }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            Texture2D mainTex = Request<Texture2D>(AssetDirectory.UI + "testSlot").Value;
+            Vector2 pos = GetDimensions().Center();
+            spriteBatch.Draw(mainTex, pos, null, Color.White, 0, mainTex.Size() / 2, 1, SpriteEffects.None, 0);
+            if (!Item.IsAir)
+            {
+                Texture2D itemTex = Request<Texture2D>(Item.ModItem.Texture).Value;
+                if (Item.stack > 1)
+                    Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), pos + new Vector2(-1, 1) * 14, Color.White, 0.8f, 1, 0.5f);
+                spriteBatch.Draw(itemTex, pos, itemTex.Frame(), Color.White, 0, itemTex.Size() / 2, (mainTex.Size() * 0.8f) / itemTex.Size(), 0, 0);
+                if (IsMouseHovering)
+                {
+                    Main.LocalPlayer.mouseInterface = true;
+                    Main.HoverItem = Item.Clone();
+                    Main.hoverItemName = "CoraliteCrossBreed";
+                }
+            }
+        }
     }
 }
