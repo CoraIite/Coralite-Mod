@@ -47,7 +47,7 @@ namespace Coralite.Core.Systems.BotanicalSystem
             if (item1 == null || item2 == null)
                 return false;
 
-            if (item1.IsAir || item2.IsAir)
+            if (item1.IsAir || item2.IsAir || item1.type != item2.type)
                 return false;
 
             BotanicalItem botanicalItem1 = item1.GetBotanicalItem();
@@ -81,10 +81,6 @@ namespace Coralite.Core.Systems.BotanicalSystem
         {
             switch (item.type)
             {
-                case ItemID.Daybloom://太阳花
-                    botanicalItem = true;
-
-                    break;
                 case ItemID.Blinkroot://闪耀根
                     botanicalItem = true;
 
@@ -119,7 +115,9 @@ namespace Coralite.Core.Systems.BotanicalSystem
 
             string Genotypes;
             if (isIdentified)
+            {
                 Genotypes = $"生长时间: {DominantGrowTime}\n";
+            }
             else
                 Genotypes = "该植物还未被鉴定";
 

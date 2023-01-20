@@ -86,6 +86,13 @@ namespace Coralite.Core.Prefabs.Projectiles
             canChannel = false;
         }
 
-
+        public virtual void OnChannelComplete(int timeLeft,int itemTime)
+        {
+            completeAndRelease = true;
+            Projectile.friendly = true;
+            Projectile.timeLeft = timeLeft;
+            Owner.itemTime = Owner.itemAnimation = itemTime;
+            timer = 0;
+        }
     }
 }

@@ -8,6 +8,7 @@ using Terraria.ID;
 using Coralite.Helpers;
 using Terraria.Graphics.CameraModifiers;
 using Coralite.Core.Prefabs.Projectiles;
+using System;
 
 namespace Coralite.Content.Projectiles.Projectiles_Magic
 {
@@ -45,6 +46,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
         }
+
         #region AI
 
         protected override void AIBefore()
@@ -109,13 +111,11 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
                 Helper.PlayPitched("Weapons_Magic/MagicAcc", 0.4f, ((timer / 20) - 1) * 0.18f,Projectile.Center);
                 if (Main.netMode != NetmodeID.Server)
-                {
                     for (float i = 0; i < 6.28; i += 0.2f)
                     {
                         Dust dust = Dust.NewDustPerfect(Owner.Center, DustID.FrostStaff, i.ToRotationVector2() * Main.rand.Next(5, 8));
                         dust.noGravity = true;//生成粒子
                     }
-                }
             }
             else
                 canChannel = false;
@@ -151,15 +151,11 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
             #region 蓄力完成释放后的初始化操作
 
-            timer = 0;
-            Projectile.timeLeft = 76;
-            Projectile.friendly = true;
-            Owner.itemTime = Owner.itemAnimation = 40;
             TargetDirection = Vector2.Normalize(Main.MouseWorld - Owner.Center);
             if (Main.myPlayer == Owner.whoAmI)
                 Center = Projectile.Center + (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitY) * 80f;
 
-            completeAndRelease = true;
+            OnChannelComplete(76, 40);
 
             #endregion
         }
@@ -268,14 +264,14 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         public override bool PreDraw(ref Color lightColor)
         {
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(0, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
             //绘制魔法阵
             if (canDrawMagic)
                 DrawMagic();
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
 
@@ -317,23 +313,28 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                     alpha = 1;
             }
 
+            float cosProgress = Helper.Cos(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
+            int r = (int)(174.5f + cosProgress * 42.5);
+            int r2= (int)(174.5f - cosProgress * 42.5);
+            int b = (int)(245 + cosProgress * 10);
+            int b2 = (int)(245 - cosProgress * 10);
             alpha *= 255;
             //绘制中心
             Rectangle source = new Rectangle(0, 0, 256, 256);       //<---因为知道贴图多大所以就暴力填数字了
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
-                                                new Color(132, 241, 255, alpha), Projectile.rotation, origin, magicScale, SpriteEffects.None, 0f);
+                                                new Color(r2, 241, b, alpha), Projectile.rotation, origin, magicScale, SpriteEffects.None, 0f);
 
             //绘制外层圈圈
             float rotation = timer * 0.01f;
             source = new Rectangle(0, 256, 256, 256);
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
-                                            new Color(217, 233, 235, alpha), rotation, origin, magicScale, SpriteEffects.None, 0f);
+                                            new Color(r, 233, b2, alpha), rotation, origin, magicScale, SpriteEffects.None, 0f);
 
             //绘制文字层
             rotation = timer * -0.015f;
             source = new Rectangle(0, 512, 256, 256);
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
-                                            new Color(132, 241, 255, alpha), rotation, origin, magicScale, SpriteEffects.None, 0f);
+                                            new Color(r2, 241, b, alpha), rotation, origin, magicScale, SpriteEffects.None, 0f);
         }
 
         protected void DrawSelf(Color lightColor, SpriteBatch sb)

@@ -9,13 +9,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class WaterDrinker : BasePlantTileWithSeed<NormalPlantTileEntity>
+    public class WaterDrinker : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
     {
         public WaterDrinker() : base(AssetDirectory.PlantTiles, 16, 4, ItemType<WaterDrinkerSeed>(), ItemID.WetBomb) { }
 
         public override void SetStaticDefaults()
         {
-            (this).PlantPrefab<NormalPlantTileEntity>(new int[] { TileID.Sand,TileID.Sandstone }, new int[] { TileID.ClayPot, TileID.PlanterBox }, new int[] { 26 }, -6, SoundID.Grass, DustID.WoodFurniture, Color.Brown, 16, "饮水棘", 1, 0);
+            (this).SoildBottomPlantPrefab<NormalPlantTileEntity>(new int[] { TileID.Sand,TileID.Sandstone }, new int[] { TileID.ClayPot, TileID.PlanterBox }, new int[] { 26 }, -6, SoundID.Grass, DustID.WoodFurniture, Color.Brown, 16, "饮水棘", 1, 0);
         }
 
         public override void DropItemNormally(ref int rarePlantStack, ref int plantItemStack, ref int seedItemStack)

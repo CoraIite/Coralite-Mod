@@ -17,7 +17,7 @@ namespace Coralite.Content.CustomHooks
             On.Terraria.Main.DrawDust += DrawPrimitives;
         }
         /// <summary>
-        /// 使用自己的渲染方式
+        /// 在绘制粒子之后插一段，使用自己的渲染方式
         /// </summary>
         private void DrawPrimitives(On.Terraria.Main.orig_DrawDust orig, Main self)
         {

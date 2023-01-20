@@ -22,10 +22,15 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
     {
         public override string Texture => AssetDirectory.Projectiles_Magic + Name;
 
-        public int textureType = 0;
-        public int timer;
-        private float lenth;//蓄力特化状态专用变量
+        public readonly int textureType;
+        public ref float timer => ref Projectile.localAI[0];
+        public ref float lenth => ref Projectile.localAI[1];//蓄力特化状态专用变量
         public Vector2 Target;
+
+        public CosmosFractureProj2()
+        {
+            textureType = Main.rand.Next(14);//随机一下贴图
+        }
 
         public override void SetStaticDefaults()
         {
@@ -54,15 +59,6 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         public override void AI()
         {
-            if (timer == 0)
-            {
-                //随机一下贴图
-                textureType = Main.rand.Next(14);
-                //SoundEngine.PlaySound(SoundID.Item4, Projectile.Center);
-            }
-
-            //Lighting.AddLight(Projectile.Center, new Vector3(170, 170, 255));
-
             switch (Projectile.ai[0])
             {
                 default:
@@ -220,7 +216,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                 for (int i = 0; i < 20; i++)
                 {
                     r += 0.314f;
-                    Vector2 dir = r.ToRotationVector2() * Helper.EllipticalEase(1.85f + 0.314f * i, 1f, 3f)*0.5f;
+                    Vector2 dir = r.ToRotationVector2() * Helper.EllipticalEase(1.85f + 0.314f * i, 1f, 3f) * 0.5f;
 
                     //Vector2 dir = new Vector2((float)Math.Cos(1.57f + 0.314f*i ), (float)Math.Sin(1.57f + 0.314f*i +0.5f));       //<--这样不行  : (
                     Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Skyware, dir * 3.2f, 0, default, 1f);
@@ -254,17 +250,17 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(0, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
-            Texture2D mainTex = Request<Texture2D>(AssetDirectory.Projectiles_Magic + "CosmosFractureProj2").Value;
+            Texture2D mainTex = Request<Texture2D>(Texture).Value;
             Rectangle source = new Rectangle(38 * textureType, 0, 38, 36);      //<---简单粗暴地填数字了，前提是贴图不能有改动
-            Vector2 origion = new Vector2(19, 18);
+            Vector2 origin = new Vector2(19, 18);
 
             float sinProgress = (float)Math.Sin(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
             int r = (int)(128 - sinProgress * 128);
             int g = (int)(150 + sinProgress * 60);
             for (int i = 0; i < 3; i++)     //这里是绘制类似于影子拖尾的东西，简单讲就是随机位置画几个透明度低的自己
             {
-                Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + new Vector2(19, 18)*Projectile.scale - Main.screenPosition, source,
-                                                    new Color(r, g, 255, 120 - i * 30), Projectile.oldRot[i], origion, Projectile.scale + i * 0.1f, SpriteEffects.None, 0);
+                Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + origin * Projectile.scale - Main.screenPosition, source,
+                                                    new Color(r, g, 255, 120 - i * 30), Projectile.oldRot[i], origin, Projectile.scale + i * 0.1f, SpriteEffects.None, 0);
             }
             //最终颜色会是淡蓝到淡粉之间，很奇怪，总是喜欢用这样的颜色组合
             Main.spriteBatch.End();
@@ -275,17 +271,17 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         public override void PostDraw(Color lightColor)
         {
             //绘制本体的地方
-            Texture2D mainTex = Request<Texture2D>(AssetDirectory.Projectiles_Magic + "CosmosFractureProj2").Value;
+            Texture2D mainTex = Request<Texture2D>(Texture).Value;
             Rectangle source = new Rectangle(38 * textureType, 0, 38, 36);
-            Vector2 origion = new Vector2(19, 18);
+            Vector2 origin = new Vector2(19, 18);
 
             float sinProgress = (float)Math.Sin(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
-            int r = (int)(174.5 + sinProgress * 42.5);
+            int r = (int)(174.5f + sinProgress * 42.5f);
             int g = (int)(237 + sinProgress * 4);
             int a = (int)(150 + sinProgress * 30);
 
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
-                                                    new Color(r, g, 255, a), Projectile.rotation, origion, Projectile.scale, SpriteEffects.None, 0);
+                                                    new Color(r, g, 255, a), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
         }
 
         #endregion

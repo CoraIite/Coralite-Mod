@@ -56,19 +56,7 @@ namespace Coralite
             loadCache = null;
 
         }
-        public override void AddRecipeGroups()
-		{
-			RecipeGroup torchgroup = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + "火把", new int[]
-			{
-				Terraria.ID.ItemID.Torch,
-				Terraria.ID.ItemID.BlueTorch,
-                Terraria.ID.ItemID.WhiteTorch,
-                Terraria.ID.ItemID.YellowTorch,
-                Terraria.ID.ItemID.GreenTorch,
-                Terraria.ID.ItemID.PinkTorch,
-            }) ;
-			RecipeGroup.RegisterGroup("MOD:Torch", torchgroup);
-		}
+
         /// <summary>
         /// 设置加载的时候在屏幕上显示的内容
         /// </summary>

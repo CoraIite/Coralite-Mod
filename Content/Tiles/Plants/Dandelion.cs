@@ -9,13 +9,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class Dandelion : BasePlantTileWithSeed<NormalPlantTileEntity>
+    public class Dandelion : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
     {
         public Dandelion() : base(AssetDirectory.PlantTiles, 32, 3, ItemType<DandelionSeed>(), ItemID.PaperAirplaneA) { }
 
         public override void SetStaticDefaults()
         {
-            (this).PlantPrefab<NormalPlantTileEntity>(new int[] { TileID.Grass }, new int[] { TileID.ClayPot, TileID.PlanterBox }, new int[] { 44 }, -26, SoundID.Grass, DustID.Grass, Color.Green, 32, "不愤怒的蒲公英", 3, 0);
+            (this).SoildBottomPlantPrefab<NormalPlantTileEntity>(new int[] { TileID.Grass }, new int[] { TileID.ClayPot, TileID.PlanterBox }, new int[] { 44 }, -26, SoundID.Grass, DustID.Grass, Color.Green, 32, "不愤怒的蒲公英", 3, 0);
         }
 
         public override void DropItemNormally(ref int rarePlantStack, ref int plantItemStack, ref int seedItemStack)

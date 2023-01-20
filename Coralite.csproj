@@ -12,10 +12,11 @@
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Items\BotanicalTechs\" />
-    <Folder Include="Assets\Items\Accessories\" />
+    <Folder Include="Content\Items\Accessories\" />
     <Folder Include="Content\Items\Pets\" />
+    <Folder Include="Content\Items\AstronomyItems\" />
     <Folder Include="Core\Systems\MagliteSystem\" />
+    <Folder Include="Core\Systems\AstronomySystem\" />
     <Folder Include="Sounds\Shadows\" />
   </ItemGroup>
 </Project>

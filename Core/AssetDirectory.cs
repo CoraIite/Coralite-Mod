@@ -39,6 +39,7 @@
 
         public const string ShadowItems =             Items + "Shadow/";
         public const string RedJadeItems =            Items + "RedJade/";
+        public const string StarsItems =                  Items + "Stars/";
         public const string BlazingItems =              Items + "Blazing/";
 
         public const string Materials =                 Items + "Materials/";
@@ -47,7 +48,7 @@
         public const string Weapons_Magic =      Items + "Weapons_Magic/";
         public const string Weapons_Summon = Items + "Weapons_Summon/";
 
-        public const string BotanicalTechs =        Items + "BotanicalTechs/";
+        public const string MachineItems =        Items + "Machines/";
         public const string Seeds =                     Items + "BotanicalItems/Seeds/";
         public const string Plants =                     Items + "BotanicalItems/Plants/";
 
@@ -63,6 +64,7 @@
 
         public const string ShadowProjectiles =  Projectiles + "Shadow/";
         public const string RedJadeProjectiles = Projectiles + "RedJade/";
+        public const string StarsProjectiles =      Projectiles + "Stars/";
 
         public const string Projectiles_Melee =   Projectiles + "Projectiles_Melee/";
         public const string Projectiles_Summon = Projectiles + "Projectiles_Summon/";
@@ -75,6 +77,7 @@
         public const string Tiles =         Assets + "Tiles/";
 
         public const string PlantTiles =        Tiles + "Plants/";
+        public const string MachineTiles = Tiles + "Machines/";
 
         #endregion
 

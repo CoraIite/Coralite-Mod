@@ -53,7 +53,9 @@ namespace Coralite.Content.Items.Weapons_Magic
 
         public override void AddRecipes()
         {
-
+            CreateRecipe()
+                .AddIngredient(ItemID.BambooBlock, 30)
+                .Register();
         }
     }
 

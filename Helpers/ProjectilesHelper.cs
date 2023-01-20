@@ -14,7 +14,7 @@ namespace Coralite.Helpers
         /// <param name="offset">追踪力度</param>
         /// <param name="chasingSpeed">追踪速度</param>
         /// <param name="distanceMax">最大追踪距离</param>
-        public static void AutomaticTracking(Projectile projectile, float offset, float chasingSpeed = 0, float distanceMax = 1000f)
+        public static bool AutomaticTracking(Projectile projectile, float offset, float chasingSpeed = 0, float distanceMax = 1000f)
         {
             NPC target = FindCloestEnemy(projectile.Center, distanceMax, (n) =>
             {
@@ -29,7 +29,9 @@ namespace Coralite.Helpers
                 float origionSpeed = projectile.velocity.Length();
                 projectile.velocity += plrToTheNearestNPC * offset;
                 projectile.velocity = Vector2.Normalize(projectile.velocity) * (chasingSpeed == 0 ? origionSpeed : chasingSpeed);
+                return true;
             }
+            return false;
         }
 
         /// <summary>

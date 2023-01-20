@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Coralite.Helpers;
-using Coralite.Core;
 using static Coralite.Core.VertexInfos;
 using static Terraria.ModLoader.ModContent;
 
@@ -41,7 +40,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected int trailWidth = 10;
         protected float startAngle = 2.5f;
         protected float endAngle = 2.5f;
-        protected float perAngle;// 挥舞时每一帧旋转的角度
+        public ref float PerAngle=>ref Projectile.localAI[0];// 挥舞时每一帧旋转的角度
         public ref float _Rotation => ref Projectile.ai[1];// 实际角度，通过一系列计算得到的每一帧的弹幕角度
         protected float spriteRotation = 2.356f;//2.445?之前写的是这个数，但我忘了当时是怎么得到这个数的，重新算了一下发现不对劲
         public int timer = 0;
@@ -154,7 +153,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (Owner.whoAmI == Main.myPlayer)
                 _Rotation = (Main.MouseWorld - Owner.Center).ToRotation() - Owner.direction * startAngle;//设定起始角度
 
-            perAngle = Owner.direction * Math.Sign(startAngle) * (Math.Abs(endAngle) + Math.Abs(startAngle)) / maxTime;//计算每一帧应当旋转的角度
+            PerAngle = Owner.direction * Math.Sign(startAngle) * (Math.Abs(endAngle) + Math.Abs(startAngle)) / maxTime;//计算每一帧应当旋转的角度
 
             Slasher();
             Smoother.ReCalculate(minTime, maxTime);
@@ -188,7 +187,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual void Slash()
         {
-            _Rotation += perAngle * Smoother.Smoother(timer, minTime, maxTime);
+            _Rotation += PerAngle * Smoother.Smoother(timer, minTime, maxTime);
             Slasher();
             Projectile.netUpdate = true;
         }
@@ -363,7 +362,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected string CheckTexture()
         {
-            if (perAngle > 0)
+            if (PerAngle > 0)
                 return Texture;
 
             if (isSymmetrical)

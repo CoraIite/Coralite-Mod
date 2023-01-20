@@ -109,7 +109,7 @@ namespace Coralite.Content.Projectiles.ShadowProjectiles
 
                 projectile.velocity = new Vector2(0, -0.5f * factor);
 
-                ProjectilesHelper.AutomaticTracking(projectile, 0.1f, 10, 150f);
+                ProjectilesHelper.AutomaticTracking(projectile, 0.2f, 10, 600f);
                 if (factor >= 1)
                     Dust.NewDustPerfect(projectile.position + new Vector2(Main.rand.Next(projectile.width), Main.rand.Next(projectile.height)), DustID.Granite, null, 0, default, 1.2f);
             }

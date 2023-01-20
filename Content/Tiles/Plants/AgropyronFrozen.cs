@@ -10,13 +10,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class AgropyronFrozen : BasePlantTileWithSeed<NormalPlantTileEntity>
+    public class AgropyronFrozen : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
     {
         public AgropyronFrozen() : base(AssetDirectory.PlantTiles, 24, 3, ItemType<AgropyronSeed>(), ItemType<AgropyronFreezer>()) { }
 
         public override void SetStaticDefaults()
         {
-            (this).PlantPrefab<NormalPlantTileEntity>(new int[] { TileID.IceBlock,TileID.SnowBlock }, new int[] { TileID.ClayPot, TileID.PlanterBox }, new int[] { 22 }, -6, SoundID.Grass, DustID.Grass, Color.Green, 24, "寒霜冰草", 1, 0);
+            (this).SoildBottomPlantPrefab<NormalPlantTileEntity>(new int[] { TileID.IceBlock,TileID.SnowBlock }, new int[] { TileID.ClayPot, TileID.PlanterBox }, new int[] { 22 }, -6, SoundID.Grass, DustID.Grass, Color.Green, 24, "寒霜冰草", 1, 0);
         }
 
         public override void DropItemNormally(ref int rarePlantStack, ref int plantItemStack, ref int seedItemStack)

@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.Weapons_Magic
             Item.knockBack = 4;
             Item.crit = 26;
 
-            Item.value = Item.sellPrice(0, 50, 0, 0);
+            Item.value = Item.sellPrice(0, 20, 0, 0);
             Item.rare = ItemRarityID.Lime;
             Item.shoot = ProjectileType<CosmosFractureProj1>();
 
@@ -70,23 +70,20 @@ namespace Coralite.Content.Items.Weapons_Magic
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (rightClick)
+            if (rightClick && player.statMana > 25)
             {
-                if (player.statMana > 25)
+                CoralitePlayer coralitePlayer = player.GetModPlayer<CoralitePlayer>();
+                if (coralitePlayer.RightClickReuseDelay == 0)
                 {
-                    CoralitePlayer coralitePlayer = player.GetModPlayer<CoralitePlayer>();
-                    if (coralitePlayer.cosmosFractureRightClickTimer == 0)
-                    {
-                        coralitePlayer.cosmosFractureRightClickTimer = 120;
-                        for (int i = 0; i < 6; i++)
-                            Projectile.NewProjectile(source, player.Center + (-1.57f + i * 1.047f).ToRotationVector2() * 120, Vector2.Zero, ProjectileType<CosmosFractureProj2>(), (int)(damage * 0.2f), knockback, player.whoAmI, 2, (-1.57f + i * 1.047f));
+                    coralitePlayer.RightClickReuseDelay = 120;
+                    for (int i = 0; i < 6; i++)
+                        Projectile.NewProjectile(source, player.Center + (-1.57f + i * 1.047f).ToRotationVector2() * 120, Vector2.Zero, ProjectileType<CosmosFractureProj2>(), (int)(damage * 0.2f), knockback, player.whoAmI, 2, (-1.57f + i * 1.047f));
 
-                        SoundEngine.PlaySound(SoundID.Item71, player.Center);
-                        player.statMana -= 25;
-                    }
-                    else
-                        SoundEngine.PlaySound(SoundID.Item63, player.Center);
+                    SoundEngine.PlaySound(SoundID.Item71, player.Center);
+                    player.statMana -= 25;
                 }
+                else
+                    SoundEngine.PlaySound(SoundID.Item63, player.Center);
             }
             else
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage * 3, knockback, player.whoAmI);

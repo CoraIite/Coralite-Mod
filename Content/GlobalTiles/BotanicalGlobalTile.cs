@@ -11,6 +11,23 @@ namespace Coralite.Content.GlobalTiles
 {
     public class BotanicalGlobalTile : GlobalTile
     {
+        public override void SetStaticDefaults()
+        {
+            //用于修复原版的一个BUG，那就是透明方块会阻挡楼梯绘制，而不透明方块却不会阻挡
+            for (int i = 0; i < TileID.Count; i++)
+            {
+                if (i == 386 || i == 387 || i == 54 || i == 541)
+                {
+                    TileID.Sets.BlocksStairs[i] = false;
+                    TileID.Sets.BlocksStairsAbove[i] = false;
+                    continue;
+                }
+
+                TileID.Sets.BlocksStairs[i] = true;
+                TileID.Sets.BlocksStairsAbove[i] = true;
+            }
+        }
+
         public override void RandomUpdate(int i, int j, int type)
         {
             #region 天空层
@@ -24,6 +41,20 @@ namespace Coralite.Content.GlobalTiles
             #region 世界表面层
             if (j < Main.worldSurface)
             {
+                #region 草
+                if (type == TileID.Grass)
+                {
+                    //太阳花
+                    if (Main.rand.NextBool(2500))
+                        if (CanPlace(i, j, out Tile upTile))
+                        {
+                            WorldGen.Place1x1(i, j - 1, TileType<CoraliteDaybloom>());
+                            upTile.TileFrameX = 36;
+                            return;
+                        }
+                    return;
+                }
+                #endregion
                 #region 沙子
                 if (type == TileID.Sand)
                 {
@@ -110,6 +141,20 @@ namespace Coralite.Content.GlobalTiles
                     return;
                 }
                 #endregion
+                #region 蘑菇草
+                if (type == TileID.MushroomGrass)
+                {
+                    //吸光蘑菇
+                    if (Main.rand.NextBool(2500))
+                        if (CanPlace(i, j, out Tile upTile) && Main.hardMode)
+                        {
+                            WorldGen.Place1x1(i, j - 1, TileType<GloomMushroom>());
+                            upTile.TileFrameX = 18;
+                            return;
+                        }
+                    return;
+                }
+                #endregion
                 return;
             }
             #endregion
@@ -139,6 +184,18 @@ namespace Coralite.Content.GlobalTiles
                     {
                         Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
                         Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, ItemType<TreeJokeSeed>());
+                        return false;
+                    }
+                }
+                #endregion
+                #region 丛林植物
+                if (type == TileID.JunglePlants || type == TileID.JunglePlants2)
+                {
+                    //西瓜
+                    if (Main.rand.NextBool(30))
+                    {
+                        Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
+                        Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, ItemType<WatermelonSeed>());
                         return false;
                     }
                 }
@@ -181,7 +238,7 @@ namespace Coralite.Content.GlobalTiles
             return true;
         }
 
-        private bool CanPlace(int i, int j, out Tile upTile, bool shouldCheckLiquid = true)
+        public bool CanPlace(int i, int j, out Tile upTile, bool shouldCheckLiquid = true)
         {
             upTile = Framing.GetTileSafely(i, j - 1);
             if (upTile.HasTile)

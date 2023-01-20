@@ -9,13 +9,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class CoraliteJungleSpores : BasePlantTileWithSeed<NormalPlantTileEntity>
+    public class CoraliteJungleSpores : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
     {
         public CoraliteJungleSpores() : base(AssetDirectory.PlantTiles, 16, 3, ItemType<JungleBuds>(), ItemID.JungleSpores) { }
 
         public override void SetStaticDefaults()
         {
-            (this).PlantPrefab<NormalPlantTileEntity>(new int[] { TileID.JungleGrass }, new int[] { TileID.ClayPot, TileID.PlanterBox }, new int[] { 20 }, -2, SoundID.Grass, DustID.JungleGrass, Color.Green, 16, "丛林孢子", 1, 0, true);
+            (this).SoildBottomPlantPrefab<NormalPlantTileEntity>(new int[] { TileID.JungleGrass }, new int[] { TileID.ClayPot, TileID.PlanterBox }, new int[] { 20 }, -2, SoundID.Grass, DustID.JungleGrass, Color.Green, 16, "丛林孢子", 1, 0, true);
         }
 
         public override void DropItemNormally(ref int rarePlantStack, ref int plantItemStack, ref int seedItemStack)

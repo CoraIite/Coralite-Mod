@@ -18,12 +18,12 @@ namespace Coralite.Content.Items.Weapons
 
         public override bool AltFunctionUse(Player Player) => true;
 
-        internal int comboNormal = 0;
-        internal int comboBoost = 0;
-        internal int count = 0;
-        internal bool rightClick = false;
-        internal bool cancount = false;
-        internal bool reinforced = false;
+        public int comboNormal = 0;
+        public int comboBoost = 0;
+        public int count = 0;
+        public bool rightClick = false;
+        public bool cancount = false;
+        public bool reinforced = false;
 
         public override void SetStaticDefaults()
         {
@@ -31,25 +31,26 @@ namespace Coralite.Content.Items.Weapons
 
             Tooltip.SetDefault("猫猫最爱的武器\n喵~喵喵喵~");
         }
+
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
             Item.damage = 75;
             Item.useTime = 15;
             Item.useAnimation = 15;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.DamageType = DamageClass.Melee;
             Item.knockBack = 6;
-            
+
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Orange;
-            Item.shoot = ProjectileType<CatClawsProj_Slash>();
-            Item.shootSpeed = 0.1f;
+            Item.useStyle = ItemUseStyleID.Rapier;
+            Item.DamageType = DamageClass.Melee;
 
             Item.useTurn = false;
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.autoReuse = true;
+
+            Item.shoot = ProjectileType<CatClawsProj_Slash>();
         }
 
         public override void HoldItem(Player player)
@@ -61,24 +62,16 @@ namespace Coralite.Content.Items.Weapons
             {
                 reinforced = true;
                 if (Main.netMode != NetmodeID.Server)
-                {
-                    for (int i = 0; i < 10; i++)
-                    {
+                    for (int i = 0; i < 8; i++)
                         Dust.NewDustPerfect(player.Center, DustID.FireworksRGB, Main.rand.NextVector2Circular(5, 5), 0, Color.Orange, 2f);
-                    }
-                }
                 SoundEngine.PlaySound(SoundID.Item4, player.Center);
             }
 
             if (count == 120)
             {
                 if (Main.netMode != NetmodeID.Server)
-                {
-                    for (int i = 0; i < 10; i++)
-                    {
+                    for (int i = 0; i < 8; i++)
                         Dust.NewDustPerfect(player.Center, DustID.FireworksRGB, Main.rand.NextVector2Circular(5, 5), 0, Color.DarkRed, 2f);
-                    }
-                }
 
                 count = 0;
                 reinforced = false;
@@ -119,13 +112,13 @@ namespace Coralite.Content.Items.Weapons
                         Projectile.NewProjectile(source, position, velocity, type, (int)(damage * 1.5f), knockback, player.whoAmI, 4);
                         break;
 
-                    case 2:
+                    case 1:
                         if (!Main.projectile.Any(n => n.active && n.type == ProjectileType<CatClawsProj_shield>() && n.owner == player.whoAmI))
-                            Projectile.NewProjectile(source, position, velocity, ProjectileType<CatClawsProj_shield>(), (int)(damage * 1.5f), 3, player.whoAmI,2);
+                            Projectile.NewProjectile(source, position, velocity, ProjectileType<CatClawsProj_shield>(), (int)(damage * 1.3f), 3, player.whoAmI, 0, 2);
                         break;
 
-                    case 3:
-                        Projectile.NewProjectile(source, position, velocity, type, damage * 2, 3, player.whoAmI,5);
+                    case 2:
+                        Projectile.NewProjectile(source, position, velocity, type, damage * 2, 3, player.whoAmI, 5);
                         comboBoost = 0;
                         cancount = false;
                         reinforced = false;
@@ -148,16 +141,16 @@ namespace Coralite.Content.Items.Weapons
                 default:
                 case 0:
                 case 1:
-                    Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0, comboNormal);
+                    Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, comboNormal);
                     break;
 
                 case 2:
                     if (!Main.projectile.Any(n => n.active && n.type == ProjectileType<CatClawsProj_shield>() && n.owner == player.whoAmI))
-                        Projectile.NewProjectile(source, position, velocity, ProjectileType<CatClawsProj_shield>(), damage, 3, player.whoAmI, 1);
+                        Projectile.NewProjectile(source, position, velocity, ProjectileType<CatClawsProj_shield>(), damage, 3, player.whoAmI, 0, 0);
                     break;
 
                 case 3:
-                    Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0, comboNormal);
+                    Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, comboNormal);
                     SoundEngine.PlaySound(SoundID.Item1, player.Center);
                     comboNormal = 0;
                     return false;
@@ -188,7 +181,9 @@ namespace Coralite.Content.Items.Weapons
             spriteRotation = 3.141f;
             distanceToOwner = 40;
             minTime = 0;
-            TrailTexture = AssetDirectory.OtherProjectiles + "CatClawsTrail";
+            TrailTexture = AssetDirectory.OtherProjectiles + "CatClawsTrail2";
+            color1 = Color.Orange;
+            color2 = Color.OrangeRed;
         }
 
         protected override void Initializer()
@@ -196,38 +191,42 @@ namespace Coralite.Content.Items.Weapons
             switch (Combo)
             {
                 case -1://右键
-                    maxTime = 30;
-                    startAngle = 1.9f;
-                    endAngle = 1.5f;
+                    maxTime = 45;
+                    startAngle = 1.2f;
+                    endAngle = 0f;
                     useSlashTrail = true;
+                    trailLengh = 30;
+                    trailWidth = 20;
+                    Projectile.extraUpdates = 2;
                     break;
 
                 case 0://普通挥舞0：上至下小幅度
-                    maxTime = 30;
-                    startAngle = 1f;
-                    endAngle = 0.8f;
-                    Projectile.extraUpdates = 1;
+                    maxTime = 45;
+                    startAngle = 0.9f;
+                    endAngle = 0.1f;
+                    Projectile.extraUpdates = 2;
                     break;
 
                 case 1://普通挥舞1：下至上小幅度
-                    maxTime = 30;
-                    startAngle = -1f;
-                    endAngle = 1f;
-                    Projectile.extraUpdates = 1;
+                    maxTime = 45;
+                    startAngle = -0.9f;
+                    endAngle = 0.1f;
+                    Projectile.extraUpdates = 2;
                     break;
 
                 case 3://普通挥舞2：上至下大幅度
                     maxTime = 60;
-                    startAngle = 2.3f;
-                    endAngle = 1.8f;
-                    Projectile.extraUpdates = 1;
+                    startAngle = 1.8f;
+                    endAngle = 0f;
+                    Projectile.extraUpdates = 2;
                     break;
 
                 case 4://强化攻击0：三连击
                     maxTime = 26;
-                    startAngle = 1f;
-                    endAngle = 1f;
-                    projImmune = 3;
+                    startAngle = 0.6f;
+                    endAngle = 0f;
+                    projImmune = 5;
+                    trailLengh = 25;
                     useSlashTrail = true;
                     Projectile.extraUpdates = 1;
                     break;
@@ -238,6 +237,8 @@ namespace Coralite.Content.Items.Weapons
 
                 default: goto case 0;
             }
+
+            Smoother = new Fast2SlowSmoother(0.8f, 3.5f, 0.15f, 5);
 
             base.Initializer();
         }
@@ -270,10 +271,10 @@ namespace Coralite.Content.Items.Weapons
                         if (Owner.whoAmI == Main.myPlayer)
                         {
                             _Rotation = (Main.MouseWorld - Owner.Center).ToRotation();
-                            Owner.velocity += Vector2.Normalize(Main.MouseWorld - Owner.Center) * 15;
+                            Owner.velocity += Vector2.Normalize(Main.MouseWorld - Owner.Center) * 7;
                         }
                     }
-                    else if (timer <30)
+                    else if (timer < 30)
                         Slasher();
                     else if (timer > 30)
                         Projectile.Kill();
@@ -281,7 +282,7 @@ namespace Coralite.Content.Items.Weapons
                     break;
             }
         }
-        
+
     }
 
     /// <summary>
@@ -291,7 +292,7 @@ namespace Coralite.Content.Items.Weapons
     {
         public override string Texture => AssetDirectory.Projectiles_Melee + "CatClawsProj_4";
 
-        public ref float Reinforced => ref Projectile.ai[0];
+        public ref float Reinforced => ref Projectile.ai[1];
 
         public sealed override void SetDefaults()
         {
@@ -309,10 +310,13 @@ namespace Coralite.Content.Items.Weapons
 
         public override void AIBefore()
         {
-            if (Main.rand.NextBool(3) && Reinforced == 2)
+            if (Main.netMode != NetmodeID.Server)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.FireworksRGB, null, 0, Color.Orange, 2f);
-                dust.noGravity = true;
+                if (Main.rand.NextBool(3) && Reinforced == 2)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.FireworksRGB, null, 0, Color.Orange, 2f);
+                    dust.noGravity = true;
+                }
             }
         }
 
