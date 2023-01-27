@@ -4,6 +4,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Coralite.Helpers;
+using Terraria.ModLoader.IO;
+using Coralite.Content.Tiles.Plants;
+using static Terraria.ModLoader.ModContent;
+using Terraria.Audio;
+using Coralite.Content.Items.BotanicalItems;
 
 namespace Coralite.Core.Systems.BotanicalSystem
 {
@@ -81,30 +86,47 @@ namespace Coralite.Core.Systems.BotanicalSystem
         {
             switch (item.type)
             {
-                case ItemID.Blinkroot://闪耀根
-                    botanicalItem = true;
-
+                case ItemID.DaybloomSeeds://太阳花种子
+                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteDaybloom>());
                     break;
-                case ItemID.Moonglow://月光草
-                    botanicalItem = true;
 
+                case ItemID.BlinkrootSeeds://闪耀根种子
+                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteBlinkroot>());
                     break;
-                case ItemID.Waterleaf://幌菊
-                    botanicalItem = true;
 
+                case ItemID.MoonglowSeeds://月光草种子
+                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteMoonglow>());
                     break;
-                case ItemID.Shiverthorn://寒颤棘
-                    botanicalItem = true;
 
+                case ItemID.WaterleafSeeds://幌菊种子
+                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteWaterleaf>());
                     break;
-                case ItemID.Deathweed://死亡草
-                    botanicalItem = true;
 
+                case ItemID.ShiverthornSeeds://寒颤棘种子
+                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteShiverthorn>());
                     break;
-                case ItemID.Fireblossom://火焰花
-                    botanicalItem = true;
 
+                case ItemID.DeathweedSeeds://死亡草种子
+                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteDeathweed>());
                     break;
+
+                case ItemID.FireblossomSeeds://火焰花种子
+                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteFireblossom>());
+                    break;
+
+                case ItemID.Daybloom: 
+                case ItemID.Blinkroot: 
+                case ItemID.Moonglow: 
+                case ItemID.Waterleaf: 
+                case ItemID.Shiverthorn: 
+                case ItemID.Deathweed: 
+                case ItemID.Fireblossom: 
+                    botanicalItem = true;
+                    DominantGrowTime = 10;
+                    RecessiveGrowTime = 10;
+                    break;
+
+                default: break;
             }
         }
 
@@ -116,17 +138,94 @@ namespace Coralite.Core.Systems.BotanicalSystem
             string Genotypes;
             if (isIdentified)
             {
-                Genotypes = $"生长时间: {DominantGrowTime}\n";
+                //显性生长时间
+                Genotypes = $"生长时间: {DominantGrowTime}";
+                TooltipLine line = new TooltipLine(Mod, "DGrowTime", Genotypes);
+                tooltips.Add(line);
+
+                //隐性生长时间
+                Genotypes = $"生长时间: {RecessiveGrowTime}";
+                line = new TooltipLine(Mod, "DGrowTime", Genotypes);
+                line.OverrideColor = Color.Gray;
+                tooltips.Add(line);
+
+                //显性强度
+                Genotypes = $"等级: {DominantLevel}";
+                line = new TooltipLine(Mod, "DGrowTime", Genotypes);
+                tooltips.Add(line);
+
+                //隐性强度
+                Genotypes = $"等级: {RecessiveLevel}";
+                line = new TooltipLine(Mod, "DGrowTime", Genotypes);
+                line.OverrideColor = Color.Gray;
+                tooltips.Add(line);
             }
             else
-                Genotypes = "该植物还未被鉴定";
-
-            TooltipLine line = new TooltipLine(Mod, "", Genotypes);
-            if (!isIdentified)
+            {
+                string notDentified = "该植物还未被鉴定";
+                TooltipLine line = new TooltipLine(Mod, "NotDentified", notDentified);
                 line.OverrideColor = Color.Gray;
+                tooltips.Add(line);
+            }
 
-            tooltips.Add(line);
         }
 
+        public override bool CanRightClick(Item item)
+        {
+            return botanicalItem && !isIdentified&&Main.LocalPlayer.HasItem(ItemType<IdentifyLoupe>());
+        }
+
+        public override void RightClick(Item item, Player player)
+        {
+            item.stack++;
+
+            if (item.IsAir)
+                return;
+
+            if (!player.HasItem(ItemType<IdentifyLoupe>()))
+                return;
+
+            //消耗5魔力
+            if (player.statMana < 20)
+                return;
+
+            player.statMana -= 20;
+
+            BotanicalItem bItem = item.GetBotanicalItem();
+            if (!bItem.botanicalItem || bItem.isIdentified)
+                return;
+
+            bItem.isIdentified = true;
+            item.RebuildTooltip();
+            SoundEngine.PlaySound(SoundID.Item4, player.position);
+        }
+
+        public override void SaveData(Item item, TagCompound tag)
+        {
+            tag.Add("isIdentified", isIdentified);
+            tag.Add("DominantGrowTime", DominantGrowTime);
+            tag.Add("RecessiveGrowTime", RecessiveGrowTime);
+            tag.Add("DominantLevel", DominantLevel);
+            tag.Add("RecessiveLevel", RecessiveLevel);
+        }
+
+        public override void LoadData(Item item, TagCompound tag)
+        {
+            isIdentified = tag.GetBool("isIdentified");
+            DominantGrowTime = tag.GetInt("DominantGrowTime");
+            RecessiveGrowTime = tag.GetInt("RecessiveGrowTime");
+            DominantLevel = tag.GetInt("DominantLevel");
+            RecessiveLevel = tag.GetInt("RecessiveLevel");
+        }
+
+        public void SetVanillaPlant(Item item,int DGrowTime,int RGrowTime,int DLevel,int Rlevel,int TileType)
+        {
+            botanicalItem = true;
+            DominantGrowTime = DGrowTime;
+            RecessiveGrowTime = RGrowTime;
+            DominantLevel = DLevel;
+            RecessiveLevel=Rlevel;
+            item.createTile = TileType;
+        }
     }
 }

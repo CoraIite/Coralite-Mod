@@ -49,8 +49,9 @@
         public const string Weapons_Summon = Items + "Weapons_Summon/";
 
         public const string MachineItems =        Items + "Machines/";
-        public const string Seeds =                     Items + "BotanicalItems/Seeds/";
-        public const string Plants =                     Items + "BotanicalItems/Plants/";
+        public const string BotanicalItems =       Items + "BotanicalItems/";
+        public const string Seeds =                     BotanicalItems + "Seeds/";
+        public const string Plants =                    BotanicalItems + "Plants/";
 
         public const string BossSummons =            Items + "BossSummons/";
 

@@ -11,7 +11,7 @@ namespace Coralite.Core.Prefabs.Projectiles
     {
         public Player Owner => Main.player[Projectile.owner];
 
-        protected bool completeAndRelease = false;
+        public bool completeAndRelease = false;
         protected bool canChannel = true;
 
         protected int timer;

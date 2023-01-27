@@ -1,12 +1,11 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.IO;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -18,6 +17,9 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
         public override string Texture => AssetDirectory.StarsProjectiles + "StarRunic";
 
         public readonly int textureType;
+
+        public ref float lenth => ref Projectile.ai[1];//蓄力特化状态专用变量
+
         public ref float timer => ref Projectile.localAI[0];
         public ref float direction => ref Projectile.localAI[1];
         public Player Owner => Main.player[Projectile.owner];
@@ -40,14 +42,14 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
 
             Projectile.aiStyle = -1;
             Projectile.penetrate = 1;
-            Projectile.timeLeft = 400;
+            Projectile.timeLeft = 1000;
             Projectile.friendly = false;
             Projectile.netImportant = true;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
 
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
         }
 
         #region AI
@@ -79,38 +81,39 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
 
         public void OnChannel()
         {
-            if (timer<2)
-                direction = (Projectile.Center - Owner.Center).ToRotation();
-
-            float lenth = (Owner.Center - Projectile.Center).Length();
-            if (lenth > 5)
+            if (timer ==0)
             {
-                lenth -= 3f;
+                direction = (Projectile.Center - Owner.Center).ToRotation();
+                lenth = (Owner.Center - Projectile.Center).Length();
+            }
+
+            if (lenth > 16)
+            {
+                lenth -= 5f;
                 Projectile.Center = Owner.Center + direction.ToRotationVector2() * lenth;
-                
             }
             else
             {
                 int projType = ProjectileType<StarBookProj1>();
                 for (int i = 0; i < 1000; i++)
-                {
-                    if (Main.projectile[i].type == projType && Main.projectile[i].owner==Projectile.owner)
+                    if (Main.projectile[i].type == projType && Main.projectile[i].owner == Projectile.owner && !(Main.projectile[i].ModProjectile as BaseChannelProj).completeAndRelease)
                     {
                         Main.projectile[i].ai[0] += 1;
-                        Projectile.Kill();
                         break;
                     }
-                }
+
+                Projectile.Kill();
             }
 
         }
 
         public void AutoTracking()
         {
-            if (!ProjectilesHelper.AutomaticTracking(Projectile, 1f, 14,2000f))
-            {
-                Projectile.velocity *= 0.98f;
-            }
+            Projectile.friendly = true;
+            Projectile.tileCollide = true;
+            if (!ProjectilesHelper.AutomaticTracking(Projectile, 3f, 16, 2000f))
+                if (Projectile.velocity.Length() > 5f)
+                    Projectile.velocity *= 0.98f;
         }
 
 
@@ -123,18 +126,18 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(0, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
-            Texture2D mainTex = Request<Texture2D>(Texture).Value;
+            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             Rectangle source = new Rectangle(16 * textureType, 0, 16, 16);     //<---简单粗暴地填数字了，前提是贴图不能有改动
             Vector2 origin = new Vector2(8, 8);
 
-            float sinProgress = (float)Math.Sin(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
+            float sinProgress = Helper.Sin(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
             int r = (int)(238.5f + sinProgress * 16.5f);
             int g = (int)(230.5f + sinProgress * 23.5f);
             int b = (int)(156 + sinProgress * 35);
-            for (int i = 0; i < 3; i++)     //这里是绘制类似于影子拖尾的东西，简单讲就是随机位置画几个透明度低的自己
+            for (int i = 0; i < 6; i++)     //这里是绘制类似于影子拖尾的东西，简单讲就是随机位置画几个透明度低的自己
             {
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + origin * Projectile.scale - Main.screenPosition, source,
-                                                    new Color(r, g, b, 120 - i * 30), Projectile.oldRot[i], origin, Projectile.scale + i * 0.1f, SpriteEffects.None, 0);
+                                                    new Color(r, g, b, 120 - i * 30), Projectile.oldRot[i], origin, Projectile.scale + i * 0.25f, SpriteEffects.None, 0);
             }
 
             Main.spriteBatch.End();

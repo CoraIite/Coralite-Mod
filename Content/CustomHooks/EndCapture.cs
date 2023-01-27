@@ -8,7 +8,7 @@ namespace Coralite.Content.CustomHooks
 {
     public class EndCapture : HookGroup
     {
-        //来源于yiyang233的MEAC
+        //抄自yiyang233的MEAC
         //应该不会对别的东西有什么影响
         public override SafetyLevel Safety => base.Safety;
         
@@ -39,12 +39,8 @@ namespace Coralite.Content.CustomHooks
         {
             bool flag = false;
             foreach (Projectile proj in Main.projectile)
-            {
                 if (proj.active && proj.ModProjectile is IDrawWarp)
-                {
                     flag = true;
-                }
-            }
 
             return flag;
         }

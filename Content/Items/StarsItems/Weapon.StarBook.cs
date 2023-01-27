@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.StarsItems
         {
             DisplayName.SetDefault("星之书");
 
-            Tooltip.SetDefault("汇聚群星的能量");
+            Tooltip.SetDefault("汇聚群星的能量\n蓄力吸取星之符文，完成后释放星光球\n取消蓄力释放追踪的星之符文");
         }
 
         public override void SetDefaults()
@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.StarsItems
             Item.damage = 75;
             Item.useTime = 20;
             Item.useAnimation = 20;
-            Item.mana = 22;
+            Item.mana = 15;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.DamageType = DamageClass.Magic;
             Item.knockBack = 8;
@@ -36,9 +36,18 @@ namespace Coralite.Content.Items.StarsItems
 
             Item.useTurn = false;
             Item.noMelee = true;
-            Item.noUseGraphic = true;
+            Item.noUseGraphic = false;
             Item.autoReuse = true;
             Item.channel = true;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.FallenStar, 20)
+                .AddIngredient(ItemID.SoulofLight, 9)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

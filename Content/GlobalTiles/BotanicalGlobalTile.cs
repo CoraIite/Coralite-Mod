@@ -44,14 +44,7 @@ namespace Coralite.Content.GlobalTiles
                 #region 草
                 if (type == TileID.Grass)
                 {
-                    //太阳花
-                    if (Main.rand.NextBool(2500))
-                        if (CanPlace(i, j, out Tile upTile))
-                        {
-                            WorldGen.Place1x1(i, j - 1, TileType<CoraliteDaybloom>());
-                            upTile.TileFrameX = 36;
-                            return;
-                        }
+
                     return;
                 }
                 #endregion

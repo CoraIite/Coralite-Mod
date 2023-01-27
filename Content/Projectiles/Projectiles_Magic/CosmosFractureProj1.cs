@@ -9,6 +9,7 @@ using Coralite.Helpers;
 using Terraria.Graphics.CameraModifiers;
 using Coralite.Core.Prefabs.Projectiles;
 using System;
+using Terraria.GameContent;
 
 namespace Coralite.Content.Projectiles.Projectiles_Magic
 {
@@ -361,7 +362,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         protected void DrawBigSword(SpriteBatch sb)
         {
-            Texture2D mainTex = Request<Texture2D>(Texture).Value;
+            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
 
             sb.Draw(mainTex, Projectile.Center + TargetDirection * (Projectile.height / 2) - Main.screenPosition, mainTex.Frame(), Color.White, TargetDirection.ToRotation() + 0.785f,
                           new Vector2(mainTex.Width / 2, mainTex.Height / 2), Projectile.height / 96, SpriteEffects.None, 0);

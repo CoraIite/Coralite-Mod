@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -250,7 +251,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(0, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
-            Texture2D mainTex = Request<Texture2D>(Texture).Value;
+            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             Rectangle source = new Rectangle(38 * textureType, 0, 38, 36);      //<---简单粗暴地填数字了，前提是贴图不能有改动
             Vector2 origin = new Vector2(19, 18);
 
@@ -271,7 +272,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         public override void PostDraw(Color lightColor)
         {
             //绘制本体的地方
-            Texture2D mainTex = Request<Texture2D>(Texture).Value;
+            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             Rectangle source = new Rectangle(38 * textureType, 0, 38, 36);
             Vector2 origin = new Vector2(19, 18);
 
