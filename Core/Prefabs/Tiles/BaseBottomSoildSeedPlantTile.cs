@@ -172,7 +172,7 @@ namespace Coralite.Core.Prefabs.Tiles
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            BotanicalHelper.KillPlant<T>(i, j);
+            BotanicalHelper.KillPlantEntity<T>(i, j);
         }
 
     }

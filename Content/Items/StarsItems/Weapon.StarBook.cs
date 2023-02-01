@@ -25,11 +25,11 @@ namespace Coralite.Content.Items.StarsItems
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.mana = 15;
-            Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.DamageType = DamageClass.Magic;
             Item.knockBack = 8;
             Item.crit = 0;
 
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.DamageType = DamageClass.Magic;
             Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.rare = ItemRarityID.Lime;
             Item.shoot = ProjectileType<StarBookProj1>();

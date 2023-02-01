@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Coralite.Content.Buffs;
 using static Terraria.ModLoader.ModContent;
+using Terraria.GameContent;
 
 namespace Coralite.Content.Projectiles.Projectile_Summon
 {
@@ -27,7 +28,7 @@ namespace Coralite.Content.Projectiles.Projectile_Summon
 
         private Vector2[] oldPosi = new Vector2[10];
 
-        public static float gravityAccel = 0.4f;
+        public readonly float gravityAccel = 0.4f;
 
         public override void SetStaticDefaults()
         {
@@ -44,20 +45,20 @@ namespace Coralite.Content.Projectiles.Projectile_Summon
             Projectile.width = 64;
             Projectile.height = 64;
             Projectile.alpha = 0;
-
+            Projectile.timeLeft = 300;
+            Projectile.minionSlots = 1;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
+            Projectile.localNPCHitCooldown = 20;
 
             Projectile.friendly = true;
             Projectile.ignoreWater = false;
             Projectile.tileCollide = true;
             Projectile.netImportant = true;
-            Projectile.timeLeft = 300;
-
-            Projectile.minionSlots = 1;
             Projectile.minion = true;
-            Projectile.DamageType = DamageClass.Summon;
+            Projectile.usesIDStaticNPCImmunity = true;
 
+            Projectile.DamageType = DamageClass.Summon;
         }
 
         /// <summary>
@@ -67,11 +68,6 @@ namespace Coralite.Content.Projectiles.Projectile_Summon
         public override bool MinionContactDamage() => true;
 
         public override bool OnTileCollide(Vector2 oldVelocity) => false;
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.immune[Projectile.owner] = 20; //等效于普通无敌帧，但显示表示用于兼容多人模式
-        }
 
         #region AI
         private enum AIStates
@@ -85,9 +81,7 @@ namespace Coralite.Content.Projectiles.Projectile_Summon
         {
             // 玩家死亡会让召唤物消失
             if (!CheckActive(Owner))
-            {
                 return;
-            }
 
             //添加Buff
             Owner.AddBuff(BuffType<MushroomDragonBuff>(), 2);
@@ -148,7 +142,7 @@ namespace Coralite.Content.Projectiles.Projectile_Summon
             State = (int)AIStates.AIStates_Attack;
         }
 
-        private void PetAI(float offset, int closedLenth = 500)
+        public void PetAI(float offset, int closedLenth = 500)
         {
             Player owner = Main.player[Projectile.owner];
 
@@ -176,9 +170,7 @@ namespace Coralite.Content.Projectiles.Projectile_Summon
             float DistanceToOwner = (float)Math.Sqrt(DistanceToOwner_X * DistanceToOwner_X + DistanceToOwner_Y * DistanceToOwner_Y);
 
             if (DistanceToOwner > 2000f)//距离太远直接传送
-            {
                 Projectile.Center = owner.Center;
-            }
             else if (DistanceToOwner > ClosedLenth || Math.Abs(DistanceToOwner_Y) > 300f)//距离远了
             {
                 if (DistanceToOwner_Y > 0f && Projectile.velocity.Y < 0f)
@@ -521,14 +513,11 @@ namespace Coralite.Content.Projectiles.Projectile_Summon
             if (owner.dead || !owner.active)
             {
                 owner.ClearBuff(BuffType<MushroomDragonBuff>());
-
                 return false;
             }
 
             if (owner.HasBuff(BuffType<MushroomDragonBuff>()))
-            {
                 Projectile.timeLeft = 2;
-            }
 
             return true;
         }
@@ -543,50 +532,32 @@ namespace Coralite.Content.Projectiles.Projectile_Summon
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = Request<Texture2D>(Texture).Value;
+            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
 
             int frameWidth = mainTex.Width;
             int frameHeight = mainTex.Height / Main.projFrames[Type];
             Rectangle frameBox = new Rectangle(0, Projectile.frame * frameHeight, frameWidth, frameHeight);
-
-            SpriteEffects effects = SpriteEffects.None;
             Vector2 origin = new Vector2(frameWidth / 2, frameHeight / 2);
+            SpriteEffects effects = SpriteEffects.None;
 
             if (Projectile.spriteDirection != 1)
-            {
                 effects = SpriteEffects.FlipHorizontally;
-            }
 
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, Color.White, Projectile.rotation, origin, Projectile.scale, effects, 0f);
-            return false;
-        }
-
-        public override void PostDraw(Color lightColor)
-        {
             if (State == (int)AIStates.AIStates_RightClick && Timer > 61)
             {
-                Texture2D mainTex = Request<Texture2D>(Texture).Value;
-
-                int frameWidth = mainTex.Width;
-                int frameHeight = mainTex.Height / Main.projFrames[Type];
-                Rectangle frameBox = new Rectangle(0, Projectile.frame * frameHeight, frameWidth, frameHeight);
-
-                SpriteEffects effects = SpriteEffects.None;
-                Vector2 origin = new Vector2(frameWidth / 2, frameHeight / 2);
-
                 if (Projectile.spriteDirection != 1)
                 {
                     effects = SpriteEffects.FlipHorizontally;
                 }
 
                 for (int i = oldPosi.Length - 1; i > 0; i--)
-                {
                     if (oldPosi[i] != Vector2.Zero)
-                    {
-                        Main.spriteBatch.Draw(mainTex, oldPosi[i] - Main.screenPosition, frameBox, Color.White * 1 * (1 - 0.1f * i), Projectile.rotation, origin, 1 * (0.5f - 0.05f * i), effects, 0);
-                    }
-                }
+                        Main.spriteBatch.Draw(mainTex, oldPosi[i] - Main.screenPosition, frameBox, lightColor * 1 * (1 - 0.1f * i), Projectile.rotation, origin, 1 * (0.5f - 0.05f * i), effects, 0);
+
             }
+
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor, Projectile.rotation, origin, Projectile.scale, effects, 0f);
+            return false;
         }
     }
 }

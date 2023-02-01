@@ -22,7 +22,7 @@ namespace Coralite.Content.UI
         public static bool visible = false;
         public static CrossBreedMachineEntity machineEntity = null;
         public static UIImageButton crossBreedButton = new UIImageButton(Request<Texture2D>(AssetDirectory.UI + "CrossBreedButton", ReLogic.Content.AssetRequestMode.ImmediateLoad));
-        public static CrossBreedPanel panel= new CrossBreedPanel();
+        public static CrossBreedPanel panel = new CrossBreedPanel();
         public static PlantParentsSlot FatherSlot = new PlantParentsSlot();
         public static PlantParentsSlot MotherSlot = new PlantParentsSlot();
         public static PlantSonSlot SonSlot = new PlantSonSlot();
@@ -92,10 +92,10 @@ namespace Coralite.Content.UI
         {
             if (machineEntity is null)
                 return;
-            machineEntity.father=FatherSlot.Item;
-            machineEntity.mother= MotherSlot.Item;
-            machineEntity.son=SonSlot.Item;
-            machineEntity.catalyst=CatalystSlot.Item ;
+            machineEntity.father = FatherSlot.Item;
+            machineEntity.mother = MotherSlot.Item;
+            machineEntity.son = SonSlot.Item;
+            machineEntity.catalyst = CatalystSlot.Item;
         }
 
         private void CrossBreedButton_OnClick(UIMouseEvent evt, UIElement listeningElement)
@@ -139,77 +139,37 @@ namespace Coralite.Content.UI
                 return CrossBreedState.error;
             }
 
+            int fatherType = father.type;
+            int motherType = mother.type;
             //如果两个植物没有能突变的情况，直接随机父母
-            if (bFather.CrossBreedDatas == null && bMother.CrossBreedDatas == null)
+            if (!CrossBreedLoader.FindCrossBreedRecipe(fatherType, motherType, out CrossBreedData? data))
             {
                 sonPlantType = Main.rand.NextBool() ? father.type : mother.type;
                 return CrossBreedState.notfound;
             }
 
-            int fatherType = father.type;
-            int motherType = mother.type;
-            //检测父物品的杂交种类字典
-            if (bFather.CrossBreedDatas != null)
+            if (data is null)
+                throw new System.Exception("出大问题！！！！");
+
+
+            int mutantPower = 0;//催化剂效果
+            if (!catalyst.IsAir && catalyst.GetCatalystItem().isCatalyst)
+                mutantPower = catalyst.GetCatalystItem().mutantPower;
+
+            int percentage = data.Value.Percentage + mutantPower;//这个是突变成功的概率，最大为100
+            if (percentage > 100)
+                percentage = 100;
+
+            if (Main.rand.NextBool(percentage, 100))
             {
-                foreach (var item in bFather.CrossBreedDatas)
-                {
-                    if (item.Key == motherType)
-                    {
-                        int mutantPower = 0;//催化剂效果
-                        if (!catalyst.IsAir)
-                            if (catalyst.GetCatalystItem().isCatalyst)
-                                mutantPower = catalyst.GetCatalystItem().mutantPower;
-
-                        int percentage = item.Value.Percentage - mutantPower;//这个是突变成功的概率，最小为1
-                        if (percentage < 1)
-                            percentage = 1;
-
-                        if (Main.rand.NextBool(percentage))
-                        {
-                            sonPlantType = item.Value.MutantPlantType;
-                            return CrossBreedState.success;
-                        }
-                        else
-                        {
-                            sonPlantType = Main.rand.NextBool() ? father.type : mother.type;
-                            return CrossBreedState.failure;
-                        }
-                    }
-                }
+                sonPlantType = data.Value.MutantPlantType;
+                return CrossBreedState.success;
             }
-            //检测母物品的杂交种类字典
-            if (bMother.CrossBreedDatas != null)
+            else
             {
-                foreach (var item in bMother.CrossBreedDatas)
-                {
-                    if (item.Key == fatherType)
-                    {
-                        int mutantPower = 0;//催化剂效果
-                        if (!catalyst.IsAir)
-                            if (catalyst.GetCatalystItem().isCatalyst)
-                                mutantPower = catalyst.GetCatalystItem().mutantPower;
-
-                        int percentage = item.Value.Percentage - mutantPower;//这个是突变成功的概率，最小为1
-                        if (percentage < 1)
-                            percentage = 1;
-
-                        if (Main.rand.NextBool(percentage))
-                        {
-                            sonPlantType = item.Value.MutantPlantType;
-                            return CrossBreedState.success;
-                        }
-                        else
-                        {
-                            sonPlantType = Main.rand.NextBool() ? father.type : mother.type;
-                            return CrossBreedState.failure;
-                        }
-                    }
-                }
+                sonPlantType = Main.rand.NextBool() ? father.type : mother.type;
+                return CrossBreedState.failure;
             }
-
-            //遍历2个字典都没能找到能突变的情况的话直接在这里随机返回父母植物类型
-            sonPlantType = Main.rand.NextBool() ? father.type : mother.type;
-            return CrossBreedState.notfound;
         }
 
         /// <summary>
@@ -379,29 +339,28 @@ namespace Coralite.Content.UI
                 return;
             }
 
-            if (!Main.LocalPlayer.HeldItem.IsAir && Item.IsAir && Main.LocalPlayer.HeldItem.ModItem is not null) //鼠标有物品并且UI内为空，放入
+            if (!Main.mouseItem.IsAir && Item.IsAir ) //鼠标有物品并且UI内为空，放入
             {
-                Item = Main.LocalPlayer.HeldItem.Clone();
-                Main.LocalPlayer.HeldItem.TurnToAir();
+                Item = Main.mouseItem.Clone();
                 Main.mouseItem.TurnToAir();
                 SoundEngine.PlaySound(SoundID.Grab);
                 CrossBreedUI.SaveItem();
                 return;
             }
 
-            if (!Main.LocalPlayer.HeldItem.IsAir && !Item.IsAir&&Main.LocalPlayer.HeldItem.ModItem is not null) //都有物品，进行交换,或堆叠
+            if (!Main.mouseItem.IsAir && !Item.IsAir ) //都有物品，进行交换,或堆叠
             {
-                Item heldItem = Main.LocalPlayer.HeldItem;
+                Item heldItem = Main.mouseItem;
                 if (heldItem.type != Item.type)
                     goto Exchange;
 
                 BotanicalItem b1 = heldItem.GetBotanicalItem();
                 BotanicalItem b2 = Item.GetBotanicalItem();
 
-                if (b1.DominantGrowTime != b2.DominantGrowTime || b1.RecessiveGrowTime != b2.RecessiveGrowTime || b1.DominantLevel != b2.DominantLevel || b1.RecessiveLevel != b2.RecessiveLevel||b1.isIdentified!=b2.isIdentified)
+                if (b1.DominantGrowTime != b2.DominantGrowTime || b1.RecessiveGrowTime != b2.RecessiveGrowTime || b1.DominantLevel != b2.DominantLevel || b1.RecessiveLevel != b2.RecessiveLevel || b1.isIdentified != b2.isIdentified)
                     goto Exchange;
 
-                if (heldItem.stack==heldItem.maxStack||Item.stack==Item.maxStack)
+                if (heldItem.stack == heldItem.maxStack || Item.stack == Item.maxStack)
                     goto Exchange;
 
                 if ((heldItem.stack + Item.stack) <= Item.maxStack)//两物品数量和小于最大堆叠数，直接全放入
@@ -420,9 +379,9 @@ namespace Coralite.Content.UI
 
                 return;
 
-                Exchange:
+            Exchange:
                 var temp = Item;
-                Item = Main.LocalPlayer.HeldItem;
+                Item = Main.mouseItem;
                 Main.mouseItem = temp;
                 SoundEngine.PlaySound(SoundID.Grab);
                 CrossBreedUI.SaveItem();
@@ -441,7 +400,7 @@ namespace Coralite.Content.UI
                 BotanicalItem b1 = heldItem.GetBotanicalItem();
                 BotanicalItem b2 = Item.GetBotanicalItem();
 
-                if (b1.DominantGrowTime != b2.DominantGrowTime || b1.RecessiveGrowTime != b2.RecessiveGrowTime || b1.DominantLevel != b2.DominantLevel || b1.RecessiveLevel != b2.RecessiveLevel|| b1.isIdentified != b2.isIdentified)
+                if (b1.DominantGrowTime != b2.DominantGrowTime || b1.RecessiveGrowTime != b2.RecessiveGrowTime || b1.DominantLevel != b2.DominantLevel || b1.RecessiveLevel != b2.RecessiveLevel || b1.isIdentified != b2.isIdentified)
                     return;
 
                 heldItem.stack++;
@@ -457,7 +416,7 @@ namespace Coralite.Content.UI
 
             if (Main.mouseItem.IsAir && !Item.IsAir) //鼠标物品为空且UI内有物品，直接取出1个
             {
-                if (Item.stack>1)
+                if (Item.stack > 1)
                 {
                     Main.mouseItem = Item.Clone();
                     Main.mouseItem.stack = 1;
@@ -481,6 +440,8 @@ namespace Coralite.Content.UI
             Texture2D mainTex = Request<Texture2D>(AssetDirectory.UI + "ParentsSlot").Value;
             Vector2 pos = GetDimensions().Center();
             spriteBatch.Draw(mainTex, pos, null, Color.White, 0, mainTex.Size() / 2, 1, SpriteEffects.None, 0);
+            if (IsMouseHovering)
+                Main.LocalPlayer.mouseInterface = true;
             if (!Item.IsAir)
             {
                 Texture2D itemTex = TextureAssets.Item[Item.type].Value;
@@ -496,13 +457,13 @@ namespace Coralite.Content.UI
                 if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelWidth)
                 {
                     if (rectangle2.Width > itemTex.Height)
-                        itemScale = pixelWidth /rectangle2.Width;
+                        itemScale = pixelWidth / rectangle2.Width;
                     else
                         itemScale = pixelWidth / rectangle2.Height;
                 }
                 Vector2 pos2 = GetDimensions().Position();
-                pos2.X += mainTex.Width  / 2f - rectangle2.Width * itemScale / 2f;
-                pos2.Y += mainTex.Height  / 2f - rectangle2.Height * itemScale / 2f;
+                pos2.X += mainTex.Width / 2f - rectangle2.Width * itemScale / 2f;
+                pos2.Y += mainTex.Height / 2f - rectangle2.Height * itemScale / 2f;
 
                 spriteBatch.Draw(itemTex, pos2, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
                 if (Item.color != default(Color))
@@ -512,7 +473,6 @@ namespace Coralite.Content.UI
                     Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), pos + new Vector2(-3, 14), Color.White, 0.8f, 1, 0.5f);
                 if (IsMouseHovering)
                 {
-                    Main.LocalPlayer.mouseInterface = true;
                     Main.HoverItem = Item.Clone();
                     Main.hoverItemName = "CoraliteCrossBreed";
                 }
@@ -562,19 +522,18 @@ namespace Coralite.Content.UI
                 return;
             }
 
-            if (!Main.LocalPlayer.HeldItem.IsAir && Item.IsAir && Main.LocalPlayer.HeldItem.ModItem is not null) //鼠标有物品并且UI内为空，放入
+            if (!Main.mouseItem.IsAir && Item.IsAir) //鼠标有物品并且UI内为空，放入
             {
-                Item = Main.LocalPlayer.HeldItem.Clone();
-                Main.LocalPlayer.HeldItem.TurnToAir();
+                Item = Main.mouseItem.Clone();
                 Main.mouseItem.TurnToAir();
                 SoundEngine.PlaySound(SoundID.Grab);
                 CrossBreedUI.SaveItem();
                 return;
             }
 
-            if (!Main.LocalPlayer.HeldItem.IsAir && !Item.IsAir && Main.LocalPlayer.HeldItem.ModItem is not null) //都有物品，进行交换,或堆叠
+            if (!Main.mouseItem.IsAir && !Item.IsAir) //都有物品，进行交换,或堆叠
             {
-                Item heldItem = Main.LocalPlayer.HeldItem;
+                Item heldItem = Main.mouseItem;
                 if (heldItem.type != Item.type)
                     goto Exchange;
 
@@ -605,7 +564,7 @@ namespace Coralite.Content.UI
 
             Exchange:
                 var temp = Item;
-                Item = Main.LocalPlayer.HeldItem;
+                Item = Main.mouseItem;
                 Main.mouseItem = temp;
                 SoundEngine.PlaySound(SoundID.Grab);
                 CrossBreedUI.SaveItem();
@@ -620,7 +579,7 @@ namespace Coralite.Content.UI
                 Item heldItem = Main.mouseItem;
                 if (heldItem.type != Item.type)
                     return;
-
+                
                 BotanicalItem b1 = heldItem.GetBotanicalItem();
                 BotanicalItem b2 = Item.GetBotanicalItem();
 
@@ -664,6 +623,8 @@ namespace Coralite.Content.UI
             Texture2D mainTex = Request<Texture2D>(AssetDirectory.UI + "CatalystSlot").Value;
             Vector2 pos = GetDimensions().Center();
             spriteBatch.Draw(mainTex, pos, null, Color.White, 0, mainTex.Size() / 2, 1, SpriteEffects.None, 0);
+            if (IsMouseHovering)
+                Main.LocalPlayer.mouseInterface = true;
             if (!Item.IsAir)
             {
                 Texture2D itemTex = TextureAssets.Item[Item.type].Value;
@@ -695,7 +656,6 @@ namespace Coralite.Content.UI
                     Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), pos + new Vector2(-3, 14), Color.White, 0.8f, 1, 0.5f);
                 if (IsMouseHovering)
                 {
-                    Main.LocalPlayer.mouseInterface = true;
                     Main.HoverItem = Item.Clone();
                     Main.hoverItemName = "CoraliteCrossBreed";
                 }
@@ -751,6 +711,8 @@ namespace Coralite.Content.UI
             Texture2D mainTex = Request<Texture2D>(AssetDirectory.UI + "SonSlot").Value;
             Vector2 pos = GetDimensions().Center();
             spriteBatch.Draw(mainTex, pos, null, Color.White, 0, mainTex.Size() / 2, 1, SpriteEffects.None, 0);
+            if (IsMouseHovering)
+                Main.LocalPlayer.mouseInterface = true;
             if (!Item.IsAir)
             {
                 Texture2D itemTex = Request<Texture2D>(Item.ModItem.Texture).Value;
@@ -759,7 +721,6 @@ namespace Coralite.Content.UI
                     Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), pos + new Vector2(-3, 14), Color.White, 0.8f, 1, 0.5f);
                 if (IsMouseHovering)
                 {
-                    Main.LocalPlayer.mouseInterface = true;
                     Main.HoverItem = Item.Clone();
                     Main.hoverItemName = "CoraliteCrossBreed";
                 }
@@ -767,7 +728,7 @@ namespace Coralite.Content.UI
         }
     }
 
-    public class CrossBreedPanel:UIElement
+    public class CrossBreedPanel : UIElement
     {
         public override void OnInitialize()
         {
@@ -779,6 +740,10 @@ namespace Coralite.Content.UI
         {
             Texture2D mainTex = Request<Texture2D>(AssetDirectory.UI + "CrossBreedPanel").Value;
             spriteBatch.Draw(mainTex, GetDimensions().Center(), null, Color.White, 0, mainTex.Size() / 2, 1, SpriteEffects.None, 0);
+
+            if (IsMouseHovering)
+                Main.LocalPlayer.mouseInterface = true;
         }
+
     }
 }

@@ -89,9 +89,9 @@ namespace Coralite.Helpers
             TileObjectData data = TileObjectData.GetTileData(tile);
             int index = -1;
             //遍历！哈哈！
-            for (int m = -1; m < data.Width; m++)
+            for (int m = 0; m < data.Width; m++)
             {
-                for (int n = -1; n < data.Height; n++)
+                for (int n = 0; n < data.Height; n++)
                 {
                     index = ModContent.GetInstance<T>().Find(i - m, j - n);
                     if (index != -1)
@@ -164,7 +164,7 @@ namespace Coralite.Helpers
         /// <typeparam name="T"></typeparam>
         /// <param name="i"></param>
         /// <param name="j"></param>
-        public static void KillPlant<T>(int i, int j) where T : ModTileEntity
+        public static void KillPlantEntity<T>(int i, int j) where T : ModTileEntity
         {
             Point16 origin = BotanicalHelper.GetTileOrigin(i, j);
             ModContent.GetInstance<T>().Kill(origin.X, origin.Y);

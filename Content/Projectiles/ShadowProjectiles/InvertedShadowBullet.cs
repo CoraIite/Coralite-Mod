@@ -16,12 +16,14 @@ namespace Coralite.Content.Projectiles.ShadowProjectiles
         {
             Projectile.width = Projectile.height = 15;
 
-            Projectile.friendly = true;
-            Projectile.netImportant = true;
+            Projectile.extraUpdates = 1;
             Projectile.aiStyle = -1;
             Projectile.penetrate = 1;
-            Projectile.timeLeft = 900;
+            Projectile.timeLeft = 1800;
             Projectile.scale = 0.7f;
+
+            Projectile.friendly = true;
+            Projectile.netImportant = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.usesLocalNPCImmunity = true;

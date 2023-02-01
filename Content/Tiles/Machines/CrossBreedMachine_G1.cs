@@ -30,7 +30,7 @@ namespace Coralite.Content.Tiles.Machines
             TileObjectData.newTile.CoordinateHeights = new int[2] { 16, 16 };
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 0;
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<CrossBreedMachineEntity>().Hook_AfterPlacement, -1, 0, false);
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<CrossBreedMachineEntity>().Hook_AfterPlacement, -1, 0, true);
             TileObjectData.addTile(Type);
             MineResist = 1;
             MinPick = 20;
@@ -52,6 +52,9 @@ namespace Coralite.Content.Tiles.Machines
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i * 16, j * 16), ModContent.ItemType<CrossBreedMachine_G1Item>());
+            if(BotanicalHelper.TryGetTileEntityAs<CrossBreedMachineEntity>(i,j,out CrossBreedMachineEntity entity))
+                entity.Kill(i, j);
+
             CrossBreedUI.visible = false;
         }
     }

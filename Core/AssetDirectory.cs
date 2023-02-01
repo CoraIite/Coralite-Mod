@@ -40,6 +40,7 @@
         public const string ShadowItems =             Items + "Shadow/";
         public const string RedJadeItems =            Items + "RedJade/";
         public const string StarsItems =                  Items + "Stars/";
+        public const string DisturbanceItems =       Items + "Disturbance/";
         public const string BlazingItems =              Items + "Blazing/";
 
         public const string Materials =                 Items + "Materials/";

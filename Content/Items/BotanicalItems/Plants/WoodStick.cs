@@ -11,8 +11,14 @@ namespace Coralite.Content.Items.BotanicalItems.Plants
 
         public override void AddRecipes()
         {
+            //木头
+            Recipe recipe = CreateRecipe();
+            recipe.ReplaceResult(ItemID.Wood,5);
+            recipe.AddIngredient<WoodStick>(15);
+            recipe.Register();
+
             //木箭
-            Recipe recipe=CreateRecipe();
+            recipe=CreateRecipe();
             recipe.ReplaceResult(ItemID.WoodenArrow, 15);
             recipe.AddIngredient<WoodStick>();
             recipe.AddIngredient(ItemID.StoneBlock);

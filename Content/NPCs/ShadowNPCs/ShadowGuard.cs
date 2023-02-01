@@ -44,7 +44,7 @@ namespace Coralite.Content.NPCs.ShadowNPCs
 
         public override void Load()
         {
-            for (int i = 0; i <= 2; i++)
+            for (int i = 0; i < 3; i++)
                 GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.ShadowGores + "ShadowGuard_Gore" + i);
         }
 
@@ -78,7 +78,7 @@ namespace Coralite.Content.NPCs.ShadowNPCs
             if (NPC.spriteDirection != 1)
                 effects = SpriteEffects.FlipHorizontally;
 
-            Main.spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, Color.White, NPC.rotation, origin, NPC.scale, effects, 0f);
+            spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, Color.White, NPC.rotation, origin, NPC.scale, effects, 0f);
             return false;
         }
 
@@ -91,20 +91,20 @@ namespace Coralite.Content.NPCs.ShadowNPCs
                     Dust.NewDustPerfect(NPC.Center + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), DustID.Granite, null, 0, default, 1f);
 
                 if (NPC.life <= 0)
-                    for (int j = 0; j <= 2; j++)
+                    for (int j = 0; j < 3; j++)
                         Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("ShadowGuard_Gore" + j).Type);
             }
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShadowEnergy>(), 2, 3, 6));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShadowEnergy>(), 2, 1, 3));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (spawnInfo.Player.ZoneDungeon)
-                return 0.2f;
+                return 0.1f;
             return 0f;
         }
     }

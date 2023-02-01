@@ -1,15 +1,9 @@
 ﻿using Coralite.Core;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System.Collections.Generic;
 using System;
-using Terraria;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Xna.Framework;
 
 namespace Coralite
 {
@@ -17,6 +11,7 @@ namespace Coralite
 	{
         private List<IOrderedLoadable> loadCache;
 
+        //单例模式！
         public static Coralite Instance { get; set; }
 
         public Coralite()
@@ -42,7 +37,7 @@ namespace Coralite
             for (int k = 0; k < loadCache.Count; k++)
             {
                 loadCache[k].Load();
-                //SetLoadingText("Loading " + loadCache[k].GetType().Name);
+                //SetLoadingText("Loading " + loadCache[k].GetType().Name);     //使用反射来显示加载的内容，但我暂时不需要（
             }
         }
 		

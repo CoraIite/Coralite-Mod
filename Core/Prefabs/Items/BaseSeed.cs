@@ -1,6 +1,4 @@
-﻿using Coralite.Core.Systems.BotanicalSystem;
-using Coralite.Helpers;
-using System.Collections.Generic;
+﻿using Coralite.Helpers;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,12 +17,11 @@ namespace Coralite.Core.Prefabs.Items
         private readonly int RecessiveGrowTime;
         private readonly int DominantLevel;
         private readonly int RecessiveLevel;
-        private readonly Dictionary<int, CrossBreedData> CrossBreedData;
         private readonly int PlantTileType;
         private readonly string TexturePath;
         private readonly bool PathHasName;
 
-        protected BaseSeed(string name, string tooltip, int maxstack, int value, int rare,int DGrowTime,int RGrowTime,int DLevel,int RLevel, int plantTileType,Dictionary<int,CrossBreedData> crossBreedData=null ,string texturePath = AssetDirectory.Seeds, bool pathHasName = false)
+        protected BaseSeed(string name, string tooltip, int maxstack, int value, int rare,int DGrowTime,int RGrowTime,int DLevel,int RLevel, int plantTileType ,string texturePath = AssetDirectory.Seeds, bool pathHasName = false)
         {
             Seedname = name;
             Seedtooltip = tooltip;
@@ -36,7 +33,6 @@ namespace Coralite.Core.Prefabs.Items
             DominantLevel = DLevel;
             RecessiveLevel = RLevel;
             PlantTileType = plantTileType;
-            CrossBreedData = crossBreedData;
             TexturePath = texturePath;
             PathHasName = pathHasName;
         }
@@ -70,7 +66,6 @@ namespace Coralite.Core.Prefabs.Items
             Item.GetBotanicalItem().RecessiveGrowTime = RecessiveGrowTime;
             Item.GetBotanicalItem().DominantLevel = DominantLevel;
             Item.GetBotanicalItem().RecessiveLevel = RecessiveLevel;
-            Item.GetBotanicalItem().CrossBreedDatas = CrossBreedData;
             Item.createTile = PlantTileType;
         }
 

@@ -263,7 +263,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + origin * Projectile.scale - Main.screenPosition, source,
                                                     new Color(r, g, 255, 120 - i * 30), Projectile.oldRot[i], origin, Projectile.scale + i * 0.1f, SpriteEffects.None, 0);
             }
-            //最终颜色会是淡蓝到淡粉之间，很奇怪，总是喜欢用这样的颜色组合
+            //最终颜色会是淡蓝到淡粉之间
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
             return false;

@@ -1,12 +1,15 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.RedJadeItems;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -18,340 +21,266 @@ namespace Coralite.Content.Bosses.StoneImitator
     {
         public override string Texture => AssetDirectory.StoneImitator + "StoneImitator";
 
-        public override bool? CanFallThroughPlatforms() => true;
+        Player target => Main.player[NPC.target];
 
-        private float targetX;
-        private float targetY;
-
-        private bool spawned;
-
-        internal ref float GlobalTimer => ref NPC.ai[0];
+        internal ref float yFrame => ref NPC.ai[0];
         internal ref float State => ref NPC.ai[1];
-        internal ref float StateTimer => ref NPC.ai[2];
-        internal ref float RestDuration => ref NPC.ai[3];
+        internal ref float Timer => ref NPC.ai[2];
 
-        internal Vector2 TargetLocation
-        {
-            get => new Vector2(targetX, targetY);
-            set
-            {
-                targetX = value.X;
-                targetY = value.Y;
-            }
-        }
+        public bool exchangeState=true;
 
         #region tml hooks
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("岩石傀儡");
+            DisplayName.SetDefault("赤玉灵");
 
-            Main.npcFrameCount[Type] = 1;
+            Main.npcFrameCount[Type] = 13;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-
         }
 
         public override void SetDefaults()
         {
-            NPC.width = NPC.height = 110;
-            NPC.damage = 1;
-            NPC.lifeMax = 2000;
+            NPC.width = NPC.height = 70;
+            NPC.damage = 25;
+            NPC.defense = 8;
+            NPC.lifeMax = 770;
             NPC.knockBackResist = 0f;
-            NPC.noGravity = false;
-            NPC.noTileCollide = false;
-            NPC.value = Item.buyPrice(0, 0, 1, 0);
-            NPC.boss = true;
-
             NPC.aiStyle = -1;
             NPC.npcSlots = 10f;
+            NPC.value = Item.buyPrice(0, 2, 0, 0);
+
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.boss = true;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            base.ModifyNPCLoot(npcLoot);
+            int min = 12;
+            int max = 15;
+
+            if (Main.expertMode)
+            {
+                min = 17;
+                max = 20;
+            }
+
+            if (Main.masterMode)
+            {
+                min = 25;
+                max = 28;
+            }
+
+            npcLoot.Add(ItemDropRule.Common(ItemType<RedJade>(),1,min,max));
+
         }
 
         public override void OnKill()
         {
-            base.OnKill();
+            for (int j = 0; j < 3; j++)
+                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(2, 2), Mod.Find<ModGore>("StoneImitator_Gore0").Type);
+
+            Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(2, 2), Mod.Find<ModGore>("StoneImitator_Gore1").Type);
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Load()
         {
-            State = (int)AIStates.Idle;
-            StateTimer = 0;
-            RestDuration = 60f;
+            for (int i = 0; i < 2; i++)
+                GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.Gores + "StoneImitator_Gore" + i);
         }
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            base.HitEffect(hitDirection, damage);
+            SoundEngine.PlaySound(SoundID.Dig, NPC.Center);
         }
 
         #endregion
 
         #region AI
 
-        public enum AIStates
+        public override void OnSpawn(IEntitySource source)
         {
-            Idle = 0,
-            Move = 1,
-            Attack_Dash = 2,
-            Attack_Jump = 3,
-            Attack_Shoot = 4,
-            Attack_Jump_Fall = 5
+            NPC.TargetClosest(false);
         }
 
         public override void AI()
         {
-            //if (Main.netMode == NetmodeID.Server)
-            //{
-            //}
-
-            Main.NewText(State, Color.White);
-
-            if (!spawned)
+            NPC.frameCounter++;
+            if (NPC.frameCounter > 5)
             {
-                spawned = true;
-                NPC.TargetClosest(false);
-                State = (int)AIStates.Idle;
-
-                //生成粒子
-                if (Main.netMode != NetmodeID.Server)
-                {
-                    for (int i = 0; i < 20; i++)
-                        Dust.NewDustPerfect(NPC.Bottom, DustID.Stone, Vector2.UnitX.RotatedByRandom(6.28f) * 2f, 0, default, 2f);
-                }
-
-                SoundEngine.PlaySound(SoundID.Roar, Main.player[NPC.target].Center);
+                yFrame += 1;
+                if (yFrame == 13)
+                    yFrame = 0;
+                NPC.frameCounter = 0;
             }
 
-            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+            if (NPC.target < 0 || NPC.target == 255 || target.dead || !target.active || target.Distance(NPC.Center) > 3000)
                 NPC.TargetClosest();
 
-            if (Main.player[NPC.target].dead)
+            if (target.dead || !target.active || target.Distance(NPC.Center) > 3000)
             {
-                State = (int)AIStates.Idle;
-                NPC.noTileCollide = false;
-                NPC.noGravity = true;
-                NPC.velocity = Vector2.UnitY;
+                State = -1;
+                NPC.velocity.X *= 0.97f;
+                NPC.velocity.Y += 0.04f;
                 NPC.EncourageDespawn(10);
                 return;
             }
 
-            Player player = Main.player[NPC.target];
-
-
-            if (State != (int)AIStates.Attack_Dash && State != (int)AIStates.Attack_Jump)
-                NPC.rotation = 0f;
-
+            NPC.direction = NPC.spriteDirection = target.position.X > NPC.position.X ? 1 : -1;
+            NPC.directionY = target.Center.Y > NPC.Center.Y ? 1 : -1;
             switch (State)
             {
-                case (int)AIStates.Idle:
-                    if (Main.netMode == NetmodeID.Server && StateTimer == 0)
-                    {
-                        NPC.velocity = Vector2.Zero;
-                        NPC.direction = NPC.spriteDirection = Math.Sign(player.Center.X - NPC.Center.X);
-                        NPC.noGravity = false;
-                        NPC.netUpdate = true;
-                    }
-
-                    StateTimer++;
-
-                    if (StateTimer == RestDuration)
-                    {
-                        StateTimer = 0;
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                            State = Main.rand.Next(2, 5);
-                    }
-
-                    break;
-
-                case (int)AIStates.Move:
-                    float speed = 1f;
-                    if (Main.netMode == NetmodeID.Server && StateTimer == 0)
-                    {
-                        NPC.velocity = Vector2.Zero;
-                        NPC.direction = NPC.spriteDirection = Math.Sign(player.Center.X - NPC.Center.X);
-                        NPC.noGravity = false;
-                        NPC.noTileCollide = false;
-                    }
-
-                    StateTimer++;
-                    if (StateTimer != RestDuration)
-                        NPC.velocity.X = speed * NPC.direction;
-                    else
-                    {
-                        StateTimer = 0;
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            State = Main.rand.Next(2, 5);
-                        }
-                    }
-
-                    break;
-
-                case (int)AIStates.Attack_Dash:
-                    Dash(player, 8f, 400f);
-                    break;
-
-                case (int)AIStates.Attack_Jump:
-                    Jump(player, new Vector2(0, -480), 8f);
-                    break;
-
-                case (int)AIStates.Attack_Shoot:
-                    Shoot(player);
-                    break;
-
-                case (int)AIStates.Attack_Jump_Fall:
-                    Fall(player, 8f);
-                    break;
                 default:
-                    goto case (int)AIStates.Idle;
+                case (int)AIStates.explosion:       //追着玩家并爆炸
+                    //控制X方向的移动
+                    Helper.NPCMovment_OneLine(ref NPC.velocity.X, NPC.direction, 5.5f, 0.09f, 0.22f, 0.97f);
+
+                    //控制Y方向的移动
+                    float yLenth = Math.Abs(target.Center.Y - NPC.Center.Y);
+                    if (yLenth > 30)
+                        Helper.NPCMovment_OneLine(ref NPC.velocity.Y, NPC.directionY, 4f, 0.06f, 0.06f, 0.97f);
+                    else
+                        NPC.velocity.Y *= 0.96f;
+
+                    if (Timer % 80 == 0)//生成弹幕
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<SIP_Explosion>(), 40, 5f);
+
+                    if (Timer > 250)
+                        ResetState();
+
+                    break;
+
+                case (int)AIStates.upShoot:
+                    SlowDownAndGoUp();
+
+                    //隔固定时间射弹幕
+                    if (Timer % 25 == 0)
+                    {
+                        int damage = NPC.GetAttackDamage_ForProjectiles(15, 20);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(0, -8).RotatedBy(((Timer / 20) - 3) * 0.08f), ProjectileType<SIP_Strike>(), damage, 5f);
+                        SoundEngine.PlaySound(SoundID.Item5, NPC.Center);
+                    }
+
+                    if (Timer > 220)
+                        ResetState();
+                    break;
+
+                case (int)AIStates.magicShoot:      //蓄力射魔法弹幕
+                    SlowDownAndGoUp();
+
+                    if (Main.netMode != NetmodeID.Server && Timer % 3 == 0)
+                        for (int i = 0; i < 6; i++)
+                        {
+                            Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, Vector2.Zero, 0, default, 1.3f);
+                            dust.velocity = (NPC.Center - dust.position).SafeNormalize(Vector2.UnitY) * 3f;
+                            dust.noGravity = true;
+                        }
+
+                    if (Timer < 36)
+                        break;
+
+                    if (Timer % 35 == 0)//生成弹幕
+                    {
+                        int damage = NPC.GetAttackDamage_ForProjectiles(15, 20);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (target.Center - NPC.Center + new Vector2(0, 60 * (Timer / 30) == 1 ? 1 : -1)).SafeNormalize(Vector2.UnitY) * 10f, ProjectileType<SIP_Beam>(), damage, 5f);
+                        Helper.PlayPitched("RedJade/RedJadeBeam", 0.13f, 0f, NPC.Center);
+                    }
+
+                    if (Timer > 155)
+                        ResetState();
+
+                    break;
+
+                case (int)AIStates.summon:
+                    SlowDownAndGoUp();
+
+                    if (Main.netMode != NetmodeID.Server && Timer % 10 == 0)
+                        for (int i = 0; i < 6; i++)
+                        {
+                            Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(20, 20), DustID.GemRuby, Vector2.Zero, 0, default, 1.3f);
+                            dust.noGravity = true;
+                        }
+
+                    if (Timer % 40 == 0)
+                    {
+                        if (Main.npc.Count((n) => n.active && n.type == NPCType<StoneImitatorMinion>())<OwnedMinionMax())
+                            NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<StoneImitatorMinion>());
+                        else
+                            ResetState();
+
+                    }
+
+                    if (Timer>200)//防止出BUG
+                        ResetState();
+
+                    break;
+                    
             }
+
+            NPC.rotation = NPC.velocity.ToRotation() * 0.05f * NPC.direction;
+            Timer++;
         }
 
-        private void Dash(Player target, float speed, float distance)
+        public void ResetState()
         {
-            StateTimer++;
-            //瞄准
-            if (StateTimer == 30)
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return;
+
+            do
             {
-                TargetLocation = target.Center + (target.Center - NPC.Center).SafeNormalize(Vector2.UnitY) * distance;
-                NPC.direction = NPC.spriteDirection = Math.Sign(target.Center.X - NPC.Center.X);
-                NPC.rotation = NPC.direction > 0 ? NPC.velocity.ToRotation() : NPC.velocity.ToRotation() + 3.14f;
-
-                if (Main.netMode != NetmodeID.Server)
-                    Helper.PlayPitched(Name + "/Roar_Dash", 1f, 0.5f, NPC.Center);
-            }
-            //开冲！
-            if (StateTimer > 30)
-            {
-                float factor = (StateTimer - 15) / 45;
-                float accel = Helpers.Helper.BezierEase(factor);
-
-                Vector2 targetNormalize = (TargetLocation - NPC.Center).SafeNormalize(Vector2.UnitY);
-                NPC.velocity = targetNormalize * speed * (factor > 0.9f ? 1f : accel);
-                NPC.rotation += 0.1f;
-
-                NPC.noTileCollide = true;
-
-                //生成粒子
-                if (Main.netMode != NetmodeID.Server && StateTimer % 3 == 0)
+                if (exchangeState && NPC.life < NPC.lifeMax / 2)    //血量低于一半固定放小弟
                 {
-                    for (int i = 0; i < 3; i++)
-                        Dust.NewDustPerfect(NPC.Bottom, DustID.Stone, -NPC.velocity.SafeNormalize(Vector2.UnitX), 0, default, 2f);
+                    State = 4;
+                    exchangeState = false;
+                    break;
                 }
 
-                //冲到位了
-                if ((TargetLocation - NPC.Center).Length() < 16f || StateTimer > 1200)
+                if (NPC.life < NPC.lifeMax / 2)//血量低于一半的攻击动作，加入了放小弟的招式
                 {
-                    NPC.noTileCollide = false;
-                    StateTimer = 0;
-                    RestDuration = 60f;
-                    State = (int)AIStates.Attack_Shoot;
+                    if (State == 1)
+                        State = Main.rand.Next(3) switch
+                        {
+                            0 => 2,
+                            1 => 3,
+                            2 => 4,
+                            _ => 1
+                        };
+                    else
+                        State = 1;
+                    break;
                 }
-            }
-        }
 
-        public void Jump(Player target, Vector2 offset, float speed)
-        {
-            StateTimer++;
-
-            if (StateTimer < 30)//起跳准备
-            {
-                NPC.noGravity = true;
-                NPC.velocity = Vector2.Zero;
-
-                //生成粒子
-                if (Main.netMode != NetmodeID.Server && StateTimer % 3 == 0)
-                {
-                    for (int i = 0; i < 3; i++)
-                        Dust.NewDustPerfect(NPC.Bottom, DustID.Stone, -Vector2.UnitX.RotatedByRandom(3.14f), 0, default, 2f);
-                }
-            }
-            else if (StateTimer == 30)//瞄准
-            {
-                TargetLocation = target.Center;
-                TargetLocation += target.velocity * 2f + target.direction * Vector2.UnitX * 100f + offset;
-
-                NPC.direction = NPC.spriteDirection = Math.Sign(target.Center.X - NPC.Center.X);
-                NPC.noTileCollide = true;
-
-                if (Main.netMode != NetmodeID.Server)
-                    Helper.PlayPitched(Name + "/Roar_Dash", 1f, 0.5f, NPC.Center);
-            }
-            else if (StateTimer > 30)
-            {
-                if ((NPC.Center - TargetLocation).Length() > 16f)//冲到目标点
-                {
-                    NPC.velocity = (TargetLocation - NPC.Center).SafeNormalize(Vector2.UnitY) * speed;
-                    NPC.rotation = NPC.direction > 0 ? NPC.velocity.ToRotation() : NPC.velocity.ToRotation() + 3.14f;
-                }
+                if (State == 1)
+                    State = Main.rand.NextBool() ? 2 : 3;
                 else
-                {
-                    StateTimer = 0;
-                    State = (int)AIStates.Attack_Jump_Fall;
-                }
-            }
+                    State = 1;
+
+            } while (false);
+
+            Timer = 0;
+            NPC.netUpdate = true;
         }
 
-        public void Shoot(Player target)
+        public void SlowDownAndGoUp()
         {
-            if (StateTimer == 0)
-            {
-                NPC.direction = NPC.spriteDirection = Math.Sign(target.Center.X - NPC.Center.X);
-                TargetLocation = target.Center + target.velocity * 2f;
-            }
-
-            StateTimer++;
-            if (StateTimer == 30f)
-            {
-                float targetRotation = (TargetLocation - NPC.Center).ToRotation();
-                //生成弹幕
-                for (int i = -1; i < 2; i++)
-                {
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + Vector2.One * NPC.direction * 100f, Vector2.UnitX.RotatedBy(targetRotation + Math.PI * i / 8) * 10f, ProjectileType<SIP_StoneBall>(), 10, 0.3f);
-                }
-
-                if (Main.netMode != NetmodeID.Server)
-                    Helper.PlayPitched(Name + "/Roar_Shoot", 1f, 0.5f, NPC.Center);
-
-                RestDuration = 30f;
-                StateTimer = 0;
-                State = (int)AIStates.Move;
-            }
+            NPC.velocity.X *= 0.98f;
+            NPC.velocity.Y += -0.0005f;
+            if (NPC.velocity.Y > -0.8f)
+                NPC.velocity.Y = -0.8f;
         }
 
-        public void Fall(Player target, float speedY)
+        public int OwnedMinionMax()
         {
-            if (StateTimer == 0)
-            {
-                NPC.velocity = new Vector2(0, speedY);
-                NPC.noGravity = false;
-                NPC.noTileCollide = true;
+            if (Main.masterMode)
+                return 3;
 
-                if (Main.netMode != NetmodeID.Server)
-                    Helper.PlayPitched(Name + "/Roar_Fall", 1f, 0.5f, NPC.Center);
+            if (Main.expertMode)
+                return 3;
 
-            }
-
-            StateTimer++;
-            if (NPC.Center.Y <= target.Center.Y - 100f)
-                NPC.noTileCollide = true;
-            else
-            {
-                NPC.noTileCollide = false;
-                if (NPC.velocity.Y < 0.5f)
-                {
-                    //生成一个弹幕(效果大概是砸地面的效果)
-                    StateTimer = 0;
-                    RestDuration = 60f;
-                    State = (int)AIStates.Move;
-                }
-            }
+            return 2;
         }
 
         #endregion
@@ -360,13 +289,11 @@ namespace Coralite.Content.Bosses.StoneImitator
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D mainTex = Request<Texture2D>(Texture).Value;
+            Texture2D mainTex = TextureAssets.Npc[Type].Value;
 
             int frameWidth = mainTex.Width;
             int frameHeight = mainTex.Height / Main.npcFrameCount[NPC.type];
-            //Rectangle frameBox = new Rectangle(0, (yFrame * frameHeight), frameWidth, frameHeight);
-
-            Rectangle frameBox = new Rectangle(0, 0, frameWidth, frameHeight);
+            Rectangle frameBox = new Rectangle(0, (int)yFrame * frameHeight, frameWidth, frameHeight);
 
             SpriteEffects effects = SpriteEffects.None;
             Vector2 origin = new Vector2(frameWidth / 2, frameHeight / 2);
@@ -374,31 +301,19 @@ namespace Coralite.Content.Bosses.StoneImitator
             if (NPC.spriteDirection != 1)
                 effects = SpriteEffects.FlipHorizontally;
 
-            Main.spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, effects, 0f);
+            spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, effects, 0f);
             return false;
         }
 
         #endregion
+    }
 
-        #region Network
+    public enum AIStates : int
+    {
 
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(targetX);
-            writer.Write(targetY);
-
-            writer.Write(NPC.target);
-        }
-
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            targetX = reader.ReadSingle();
-            targetY = reader.ReadSingle();
-
-            NPC.target = reader.ReadInt32();
-        }
-
-        #endregion
-
+        explosion = 1,
+        upShoot,
+        magicShoot,
+        summon
     }
 }

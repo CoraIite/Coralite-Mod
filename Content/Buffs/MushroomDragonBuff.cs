@@ -29,5 +29,14 @@ namespace Coralite.Content.Buffs
                 buffIndex--;
             }
         }
+
+        public override bool RightClick(int buffIndex)
+        {
+            for (int i = 0; i < 1000; i++)
+                if (Main.projectile[i].active && Main.projectile[i].type == ProjectileType<MushroomDragon>() &&  Main.projectile[i].owner==Main.myPlayer)
+                    Main.projectile[i].Kill();
+
+            return true;
+        }
     }
 }

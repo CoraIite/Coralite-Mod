@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.BotanicalItems.Seeds;
+﻿using Coralite.Content.Items.BossSummons;
+using Coralite.Content.Items.BotanicalItems.Seeds;
 using Coralite.Content.Tiles.Plants;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -181,6 +182,18 @@ namespace Coralite.Content.GlobalTiles
                     }
                 }
                 #endregion
+                #region 各种宝石树
+                if (type == TileID.TreeTopaz || type == TileID.TreeAmethyst || type == TileID.TreeSapphire || type == TileID.TreeEmerald || type == TileID.TreeRuby || type == TileID.TreeDiamond || type == TileID.TreeAmber)
+                {
+                    //赤色果实
+                    if (Main.rand.NextBool(20))
+                    {
+                        Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
+                        Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, ItemType<RedBerry>());
+                        return false;
+                    }
+                }
+                #endregion
                 #region 丛林植物
                 if (type == TileID.JunglePlants || type == TileID.JunglePlants2)
                 {
@@ -193,6 +206,7 @@ namespace Coralite.Content.GlobalTiles
                     }
                 }
                 #endregion
+                
                 return true;
             }
             #endregion
@@ -200,7 +214,18 @@ namespace Coralite.Content.GlobalTiles
             #region 泥土层
             if (j < Main.rockLayer)
             {
-
+                #region 各种宝石树
+                if (type == TileID.TreeTopaz || type == TileID.TreeAmethyst || type == TileID.TreeSapphire || type == TileID.TreeEmerald || type == TileID.TreeRuby || type == TileID.TreeDiamond || type == TileID.TreeAmber)
+                {
+                    //赤色果实
+                    if (Main.rand.NextBool(20))
+                    {
+                        Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
+                        Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, ItemType<RedBerry>());
+                        return false;
+                    }
+                }
+                #endregion
                 return true;
             }
             #endregion
@@ -220,7 +245,18 @@ namespace Coralite.Content.GlobalTiles
                     }
                 }
                 #endregion
-
+                #region 各种宝石树
+                if (type == TileID.TreeTopaz || type == TileID.TreeAmethyst || type == TileID.TreeSapphire || type == TileID.TreeEmerald || type == TileID.TreeRuby || type == TileID.TreeDiamond || type == TileID.TreeAmber)
+                {
+                    //赤色果实
+                    if (Main.rand.NextBool(20))
+                    {
+                        Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
+                        Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, ItemType<RedBerry>());
+                        return false;
+                    }
+                }
+                #endregion
                 return true;
             }
             #endregion

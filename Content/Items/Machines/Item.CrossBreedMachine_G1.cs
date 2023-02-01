@@ -34,5 +34,20 @@ namespace Coralite.Content.Items.Machines
             Item.rare = ItemRarityID.Orange;
             Item.createTile = ModContent.TileType<CrossBreedMachine_G1>();
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient(ItemID.ShadowScale, 10)
+            .AddIngredient(ItemID.Wood, 20)
+            .AddTile(TileID.Anvils)
+            .Register();
+
+            CreateRecipe()
+            .AddIngredient(ItemID.TissueSample, 10)
+            .AddIngredient(ItemID.Wood, 20)
+            .AddTile(TileID.Anvils)
+            .Register();
+        }
     }
 }

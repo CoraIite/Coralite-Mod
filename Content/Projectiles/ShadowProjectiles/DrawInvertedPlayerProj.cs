@@ -68,7 +68,7 @@ namespace Coralite.Content.Projectiles.ShadowProjectiles
 
             Shadow.position = new Vector2(Owner.position.X + Owner.width, Owner.position.Y + Owner.height * 2 + DrawPlayerOffsetY);
             Vector2 shadowCenter = Shadow.position - new Vector2(Shadow.width / 2, Shadow.height / 2);
-            Projectile.NewProjectile(Projectile.GetSource_FromAI(), shadowCenter, (Main.MouseWorld - shadowCenter).SafeNormalize(Vector2.UnitX) * 30f, ProjectileType<InvertedShadowBullet>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+            Projectile.NewProjectile(Projectile.GetSource_FromAI(), shadowCenter, (Main.MouseWorld - shadowCenter).SafeNormalize(Vector2.UnitX) * 15f, ProjectileType<InvertedShadowBullet>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
             //Shadow.ResetEffects();    //<--由于不明原因可能会导致闪退，原因是什么初始化海盗船失败，总之很莫名其妙所以还是别用了吧
             Shadow.ResetVisibleAccessories();

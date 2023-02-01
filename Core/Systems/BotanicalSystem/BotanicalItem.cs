@@ -26,8 +26,6 @@ namespace Coralite.Core.Systems.BotanicalSystem
         public int DominantLevel;//显性强度基因
         public int RecessiveLevel;//隐性强度基因
 
-        public Dictionary<int, CrossBreedData> CrossBreedDatas = null;
-
         public override GlobalItem Clone(Item from, Item to)
         {
             if (from == null || to == null)
