@@ -15,12 +15,13 @@ namespace Coralite.Content.Projectiles.RedJadeProjectiles
 
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 48;
+            Projectile.width = Projectile.height = 64;
             Projectile.aiStyle = -1;
             Projectile.timeLeft = 5;
             Projectile.friendly = true;
             Projectile.penetrate = 3;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
         }
 
         public override void OnSpawn(IEntitySource source)

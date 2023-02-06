@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Weapons_Magic
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 215;
+            Item.damage = 265;
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.mana = 22;
@@ -38,7 +38,7 @@ namespace Coralite.Content.Items.Weapons_Magic
             Item.crit = 26;
 
             Item.value = Item.sellPrice(0, 20, 0, 0);
-            Item.rare = ItemRarityID.Lime;
+            Item.rare = ItemRarityID.Red;
             Item.shoot = ProjectileType<CosmosFractureProj1>();
 
             Item.useTurn = false;
@@ -75,9 +75,10 @@ namespace Coralite.Content.Items.Weapons_Magic
                 CoralitePlayer coralitePlayer = player.GetModPlayer<CoralitePlayer>();
                 if (coralitePlayer.RightClickReuseDelay == 0)
                 {
-                    coralitePlayer.RightClickReuseDelay = 120;
+                    coralitePlayer.RightClickReuseDelay = 200;
+
                     for (int i = 0; i < 6; i++)
-                        Projectile.NewProjectile(source, player.Center + (-1.57f + i * 1.047f).ToRotationVector2() * 120, Vector2.Zero, ProjectileType<CosmosFractureProj2>(), (int)(damage * 0.2f), knockback, player.whoAmI, 2, (-1.57f + i * 1.047f));
+                        Projectile.NewProjectile(source, player.Center + (-1.57f + i * 1.047f).ToRotationVector2() * 120, Vector2.Zero, ProjectileType<CosmosFractureProj2>(), (int)(damage * 0.2f), knockback, player.whoAmI, 2, (5.712f + i * 1.047f));
 
                     SoundEngine.PlaySound(SoundID.Item71, player.Center);
                     player.statMana -= 25;
@@ -86,7 +87,7 @@ namespace Coralite.Content.Items.Weapons_Magic
                     SoundEngine.PlaySound(SoundID.Item63, player.Center);
             }
             else
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage * 3, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI);
 
 
             return false;
@@ -96,8 +97,8 @@ namespace Coralite.Content.Items.Weapons_Magic
         {
             CreateRecipe(1)
             .AddIngredient(ItemID.SkyFracture, 1)
-            .AddIngredient(ItemID.SpectreBar, 14)
-            .AddTile(TileID.MythrilAnvil)
+            .AddIngredient(ItemID.LunarBar, 15)
+            .AddTile(TileID.LunarCraftingStation)
             .Register();
         }
     }

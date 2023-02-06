@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
+using System.Reflection;
 using Terraria;
+using static Humanizer.In;
 
 namespace Coralite.Helpers
 {
@@ -72,6 +74,31 @@ namespace Coralite.Helpers
                 }
             }
             return res;
+        }
+
+        /// <summary>
+        /// 找到
+        /// </summary>
+        /// <param name="projType"></param>
+        /// <param name="whoAmI"></param>
+        /// <param name="owner"></param>
+        /// <param name="index"></param>
+        /// <param name="totalIndexesInGroup"></param>
+        public static void GetMyProjIndexWithSameType(int projType,int whoAmI,int owner,out int index,out int totalIndexesInGroup)
+        {
+            index = 0;
+            totalIndexesInGroup = 0;
+            for (int i = 0; i < 1000; i++)
+            {
+                Projectile projectile = Main.projectile[i];
+                if (projectile.active && projectile.owner == owner && projectile.type == projType)
+                {
+                    if (whoAmI > i)
+                        index++;
+
+                    totalIndexesInGroup++;
+                }
+            }
         }
     }
 }

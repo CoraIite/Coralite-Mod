@@ -10,9 +10,6 @@ using Coralite.Content.Projectiles.Projectile_Summon;
 
 namespace Coralite.Content.Items.Weapons_Summon
 {
-    /// <summary>
-    /// 物品
-    /// </summary>
     public class MushroomStaff : ModItem
     {
         public override string Texture => AssetDirectory.Weapons_Summon + Name;

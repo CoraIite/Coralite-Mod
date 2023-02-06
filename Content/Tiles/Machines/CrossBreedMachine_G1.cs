@@ -25,6 +25,7 @@ namespace Coralite.Content.Tiles.Machines
             Main.tileLavaDeath[Type] = false;//会被岩浆烫
             Main.tileCut[Type] = false;//被弹幕切掉
             Main.tileBlockLight[Type] = false;//阻挡光转递
+            Main.tileLighted[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.CoordinateHeights = new int[2] { 16, 16 };
@@ -34,6 +35,13 @@ namespace Coralite.Content.Tiles.Machines
             TileObjectData.addTile(Type);
             MineResist = 1;
             MinPick = 20;
+        }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.423f;
+            g = 0.8f;
+            b = 0.8f;
         }
 
         public override bool RightClick(int i, int j)

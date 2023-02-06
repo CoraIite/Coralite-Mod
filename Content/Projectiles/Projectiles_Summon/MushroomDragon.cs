@@ -56,7 +56,7 @@ namespace Coralite.Content.Projectiles.Projectile_Summon
             Projectile.tileCollide = true;
             Projectile.netImportant = true;
             Projectile.minion = true;
-            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.usesLocalNPCImmunity = true;
 
             Projectile.DamageType = DamageClass.Summon;
         }
@@ -559,5 +559,6 @@ namespace Coralite.Content.Projectiles.Projectile_Summon
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor, Projectile.rotation, origin, Projectile.scale, effects, 0f);
             return false;
         }
+
     }
 }

@@ -8,7 +8,7 @@
 
         public const string Bosses = Assets + "Bosses/";
 
-        public const string StoneImitator = Bosses + "StoneImitator/";
+        public const string Rediancie = Bosses + "Rediancie/";
 
         #endregion
 
@@ -80,6 +80,7 @@
 
         public const string PlantTiles =        Tiles + "Plants/";
         public const string MachineTiles = Tiles + "Machines/";
+        public const string RedJadeTiles = Tiles + "RedJades/";
 
         #endregion
 

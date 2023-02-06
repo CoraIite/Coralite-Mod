@@ -2,14 +2,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using static Terraria.ModLoader.ModContent;
 using Terraria.Audio;
 using Terraria.ID;
 using Coralite.Helpers;
 using Terraria.Graphics.CameraModifiers;
 using Coralite.Core.Prefabs.Projectiles;
-using System;
 using Terraria.GameContent;
+using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Projectiles.Projectiles_Magic
 {
@@ -25,8 +24,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         protected int fractureFrameX = 0;
         protected int fractureFrameY = 0;
 
-        protected byte channelCount;
-        protected float magicScale=0f;
+        protected float magicScale = 0f;
 
         public ref Vector2 TargetDirection => ref Projectile.velocity;
         protected Vector2 Center;
@@ -52,10 +50,11 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         protected override void AIBefore()
         {
-            if(!completeAndRelease)
+            if (!completeAndRelease)
                 Owner.itemTime = Owner.itemAnimation = 2;//这个东西不为0的时候就无法使用其他物品
             Owner.itemRotation = Owner.direction > 0 ? _Rotation : _Rotation + 3.141f;
         }
+
         protected override void AIAfter()
         {
             _Rotation = -1.57f;
@@ -65,58 +64,80 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         protected override void OnChannel()
         {
             Projectile.timeLeft = 2;
+            if (Main.myPlayer == Owner.whoAmI)
+            {
+                Projectile.rotation = (Main.MouseWorld - Owner.Center).ToRotation();
+                Projectile.netUpdate = true;
+            }
+
+            if (timer < 100)
+                magicScale += 0.8f / 100;
+
+            magicScale += 0.004f * Helper.Sin(timer * 0.1f);
             //蓄力之前，无事发生
             if (timer < 14)
             {
                 canDrawMagic = true;
-                magicScale += 0.8f / 14;
-            }
-                
-            if (Main.myPlayer == Owner.whoAmI)
-                Projectile.rotation = (Main.MouseWorld - Owner.Center).ToRotation();
-            //每隔一小段时间召唤一把剑
-            if (timer <= 140)
-            {
-                switch (timer)
-                {
-                    case 20:
-                    case 40:
-                    case 60:
-                    case 80:
-                    case 100:
-                    case 120:
-                        ChannelUpdate();
-                        break;
-
-                    case 140:
-                        SoundEngine.PlaySound(SoundID.Item4, Projectile.Center);
-                        //生成粒子
-                        break;
-                    default: break;
-                }
                 return;
+            }
+
+            //每隔一小段时间召唤一把剑
+            switch (timer)
+            {
+                case 15:
+                case 60:
+                case 100:
+                    ChannelUpdate(1);
+                    break;
+                case 135:
+                case 165:
+                    ChannelUpdate(2);
+                    break;
+                case 190:
+                case 210:
+                    ChannelUpdate(3);
+                    break;
+                default: break;
+            }
+
+            if (timer > 210 && (timer - 210) % 20 == 0)
+            {
+                ChannelUpdate(3);
             }
         }
 
-        protected void ChannelUpdate()
+        protected void ChannelUpdate(int count)
         {
-            channelCount++;
-            if (Owner.statMana > 5)
+            if (Owner.statMana > 4)
             {
-                Owner.statMana -= 5;
-                //生成小剑，射向玩家
-                //从竖直向上依次增加60°
-                float r = -1.57f + ((timer / 20) - 1) * 1.0471f;
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + r.ToRotationVector2() * 100, Vector2.Zero,
-                                                      ProjectileType<CosmosFractureProj2>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Owner.whoAmI, 1, r);
+                Owner.statMana -= 4;
 
-                Helper.PlayPitched("Weapons_Magic/MagicAcc", 0.4f, ((timer / 20) - 1) * 0.18f,Projectile.Center);
+                for (int i = 0; i < count; i++)
+                {
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + Main.rand.NextVector2CircularEdge(70, 70), Vector2.Zero,
+                                        ProjectileType<CosmosFractureProj2>(), (int)(Projectile.damage * count * 0.2f), Projectile.knockBack, Owner.whoAmI, 0);
+                }
+
                 if (Main.netMode != NetmodeID.Server)
-                    for (float i = 0; i < 6.28; i += 0.2f)
-                    {
-                        Dust dust = Dust.NewDustPerfect(Owner.Center, DustID.FrostStaff, i.ToRotationVector2() * Main.rand.Next(5, 8));
-                        dust.noGravity = true;//生成粒子
-                    }
+                {
+                    SoundStyle buling = SoundID.Item9;
+                    buling.Volume = 0.2f + ((timer / 20) - 1) * 0.05f;
+                    buling.PitchRange = (0f, 0f);
+                    SoundEngine.PlaySound(buling, Owner.Center);
+                }
+                if (timer < 210)
+                    Helper.PlayPitched("Weapons_Magic/MagicAcc", 0.4f, ((timer / 20) - 1) * 0.2f, Projectile.Center);
+                else if (timer == 210)
+                {
+                    SoundEngine.PlaySound(SoundID.Item4, Owner.Center);
+                    if (Main.netMode != NetmodeID.Server)
+                        for (float i = 0; i < 6.28; i += 0.2f)
+                        {
+                            Dust dust = Dust.NewDustPerfect(Owner.Center, DustID.FrostStaff, i.ToRotationVector2() * Main.rand.Next(8, 11), 0, default, 2f);
+                            dust.noGravity = true;//生成粒子
+                        }
+                }
+
             }
             else
                 canChannel = false;
@@ -125,40 +146,16 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         protected override void OnRelease()
         {
             base.OnRelease();
-            Projectile.timeLeft = 2;
-            //直接松手，召唤1把小剑(可能会改动)
-
-            if (timer < 9)
+            if (timer > 210)
             {
-                //生成小剑
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + Main.rand.NextVector2Circular(60, 60), Vector2.Zero,
-                                                        ProjectileType<CosmosFractureProj2>(), (int)(Projectile.damage * 0.08f), Projectile.knockBack, Owner.whoAmI, 0);
-                Projectile.Kill();
-                return;
+                TargetDirection = Vector2.Normalize(Main.MouseWorld - Owner.Center);
+                if (Main.myPlayer == Owner.whoAmI)
+                    Center = Projectile.Center + (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitY) * 80f;
+
+                OnChannelComplete(76, 40);
             }
-
-            if (timer < 140)
-            {
-                //生成小剑
-                for (byte i = 0; i < channelCount + 1; i++)
-                {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + Main.rand.NextVector2CircularEdge(60, 60), Vector2.Zero,
-                                        ProjectileType<CosmosFractureProj2>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Owner.whoAmI, 0);
-                }
-                SoundEngine.PlaySound(SoundID.Item28, Projectile.Center);
+            else
                 Projectile.Kill();
-                return;
-            }
-
-            #region 蓄力完成释放后的初始化操作
-
-            TargetDirection = Vector2.Normalize(Main.MouseWorld - Owner.Center);
-            if (Main.myPlayer == Owner.whoAmI)
-                Center = Projectile.Center + (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitY) * 80f;
-
-            OnChannelComplete(76, 40);
-
-            #endregion
         }
 
         protected override void CompleteAndRelease()
@@ -179,7 +176,6 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                         fractureFrameX = 0;
                     }
                 }
-
             }
             else
             {
@@ -197,18 +193,23 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                 Projectile.height += 80;
                 Projectile.width += 24;
                 Projectile.Center = Center;
-                return;   
+                return;
             }
 
-            if (timer <= 10)
+            if (timer <= 20)
             {
-                _Rotation += Owner.direction * 0.42f;
+                float factor = (float)timer / 20;
+                float x_1 = factor - 1;
+                _Rotation = -1.57f + Owner.direction * (1 + (2.6f * x_1 * x_1 * x_1) + (1.6f * x_1 * x_1)) * 4f;        //控制挥舞曲线
                 if (timer == 10)
                 {
-                    SoundStyle Slash = SoundID.Item71;
-                    Slash.Volume += 1f;
-                    Slash.PitchRange = (-0.8f,-0.6f);
-                    SoundEngine.PlaySound(Slash, Owner.Center);
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        SoundStyle Slash = SoundID.Item71;
+                        Slash.Volume += 1f;
+                        Slash.PitchRange = (-0.8f, -0.6f);
+                        SoundEngine.PlaySound(Slash, Owner.Center);
+                    }
                     var modifier = new PunchCameraModifier(Owner.position, TargetDirection, 5, 6f, 10, 1000f);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
@@ -229,11 +230,14 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
                 if (timer == 32)
                 {
-                    SoundStyle Slash = SoundID.Item4;
-                    Slash.Volume -= 0.7f;
-                    Slash.PitchRange = (-0.8f, -0.7f);
-                    SoundEngine.PlaySound(Slash, Owner.Center);
-                    var modifier = new PunchCameraModifier(Owner.position, TargetDirection, 12, 12f, 15, 1000f);
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        SoundStyle Slash = SoundID.Item4;
+                        Slash.Volume -= 0.7f;
+                        Slash.PitchRange = (-0.8f, -0.7f);
+                        SoundEngine.PlaySound(Slash, Owner.Center);
+                    }
+                    var modifier = new PunchCameraModifier(Owner.position, TargetDirection, 18, 10f, 18, 1000f);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
             }
@@ -264,27 +268,14 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-
+            SpriteBatch sb = Main.spriteBatch;
+            sb.End();
+            sb.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
             //绘制魔法阵
             if (canDrawMagic)
                 DrawMagic();
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-            return false;
-        }
-
-        public override void PostDraw(Color lightColor)
-        {
-            SpriteBatch sb = Main.spriteBatch;
-
-            sb.End();
-            sb.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-
-            //绘制自己
-            if(canDrawSelf)
+            if (canDrawSelf)
                 DrawSelf(lightColor, sb);
 
             if (completeAndRelease)
@@ -297,6 +288,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
             sb.End();
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            return false;
         }
 
         protected void DrawMagic()
@@ -315,33 +307,35 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             }
 
             float cosProgress = Helper.Cos(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
-            int r = (int)(174.5f + cosProgress * 42.5);
-            int r2= (int)(174.5f - cosProgress * 42.5);
+            int r = (int)(174.5f - cosProgress * 42.5);
             int b = (int)(245 + cosProgress * 10);
-            int b2 = (int)(245 - cosProgress * 10);
-            alpha *= 255;
+            alpha *= 200;
             //绘制中心
             Rectangle source = new Rectangle(0, 0, 256, 256);       //<---因为知道贴图多大所以就暴力填数字了
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
-                                                new Color(r2, 241, b, alpha), Projectile.rotation, origin, magicScale, SpriteEffects.None, 0f);
-
-            //绘制外层圈圈
-            float rotation = timer * 0.01f;
-            source = new Rectangle(0, 256, 256, 256);
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
-                                            new Color(r, 233, b2, alpha), rotation, origin, magicScale, SpriteEffects.None, 0f);
+                                                new Color(r, 241, b, alpha), Projectile.rotation, origin, magicScale, SpriteEffects.None, 0f);
 
             //绘制文字层
-            rotation = timer * -0.015f;
+            float rotation = timer * -0.015f;
             source = new Rectangle(0, 512, 256, 256);
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
-                                            new Color(r2, 241, b, alpha), rotation, origin, magicScale, SpriteEffects.None, 0f);
+                                            new Color(r, 241, b, alpha), rotation, origin, magicScale, SpriteEffects.None, 0f);
+
+            //绘制外层圈圈
+            float scale = timer < 100 ? 0.8f * timer / 100 : 0.8f;
+            rotation = -0.785f + cosProgress * 0.05f;
+            r = (int)(174.5f + cosProgress * 42.5);
+            b = (int)(245 - cosProgress * 10);
+            source = new Rectangle(0, 256, 256, 256);
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
+                                            new Color(r, 233, b, alpha), rotation, origin, scale, SpriteEffects.None, 0f);
+
         }
 
         protected void DrawSelf(Color lightColor, SpriteBatch sb)
         {
             Texture2D mainTex = Request<Texture2D>(AssetDirectory.Weapons_Magic + "CosmosFracture").Value;
-            sb.Draw(mainTex, Owner.Center + _Rotation.ToRotationVector2()*64 - Main.screenPosition, mainTex.Frame(), lightColor, _Rotation+0.785f, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 1, SpriteEffects.None, 0);
+            sb.Draw(mainTex, Owner.Center + _Rotation.ToRotationVector2() * 64 - Main.screenPosition, mainTex.Frame(), lightColor, _Rotation + 0.785f, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 1, SpriteEffects.None, 0);
         }
 
         protected void DrawFracture2(SpriteBatch sb)
@@ -371,3 +365,35 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         #endregion
     }
 }
+
+//垃圾堆，2023/2/3日重构，大幅修改了攻击方式
+//┑(￣Д ￣)┍ ┑(￣Д ￣)┍ ┑(￣Д ￣)┍ ┑(￣Д ￣)┍ ┑(￣Д ￣)┍ ┑(￣Д ￣)┍ ┑(￣Д ￣)┍)
+
+//原OnRelease，原本是释放后生成小剑，改了
+//if (timer < 9)
+//{
+//    //生成小剑
+//    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + Main.rand.NextVector2Circular(60, 60), Vector2.Zero,
+//                                            ProjectileType<CosmosFractureProj2>(), (int)(Projectile.damage * 0.08f), Projectile.knockBack, Owner.whoAmI, 0);
+//    Projectile.Kill();
+//    return;
+//}
+
+//if (timer < 140)
+//{
+//    //生成小剑
+//    for (byte i = 0; i < channelCount + 1; i++)
+//    {
+//        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + Main.rand.NextVector2CircularEdge(60, 60), Vector2.Zero,
+//                            ProjectileType<CosmosFractureProj2>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Owner.whoAmI, 0);
+//    }
+//    SoundEngine.PlaySound(SoundID.Item28, Projectile.Center);
+//    Projectile.Kill();
+//    return;
+//}
+
+//原蓄力动作
+//float r = -1.57f + ((timer / 20) - 1) * 1.0471f;
+//Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + r.ToRotationVector2() * 100, Vector2.Zero,
+//                                      ProjectileType<CosmosFractureProj2>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Owner.whoAmI, 1, r);
+

@@ -175,10 +175,10 @@ namespace Coralite.Core.Systems.BotanicalSystem
 
         public override void RightClick(Item item, Player player)
         {
-            item.stack++;
-
-            if (item.IsAir)
+            if (!botanicalItem|| item.IsAir)
                 return;
+
+            item.stack++;
 
             if (!player.HasItem(ItemType<IdentifyLoupe>()))
                 return;

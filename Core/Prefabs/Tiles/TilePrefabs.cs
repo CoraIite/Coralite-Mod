@@ -43,7 +43,7 @@ namespace Coralite.Core.Prefabs.Tiles
             Main.tileBlockLight[tile.Type] = false;//阻挡光转递
 
             TileID.Sets.SwaysInWindBasic[tile.Type] = true;//随风摇摆a
-            TileID.Sets.ReplaceTileBreakUp[tile.Type] = true;//成熟后可以用种子快速补种
+            TileID.Sets.ReplaceTileBreakUp[tile.Type] = true;//
             TileID.Sets.IgnoredInHouseScore[tile.Type] = true;//不计入NPC住房得分系统中
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
             TileObjectData.newTile.Width = 1;
@@ -98,7 +98,7 @@ namespace Coralite.Core.Prefabs.Tiles
             Main.tileBlockLight[tile.Type] = false;//阻挡光转递
 
             TileID.Sets.VineThreads[tile.Type] = true;//像藤蔓那样在风中摇摆
-            TileID.Sets.ReplaceTileBreakUp[tile.Type] = true;//成熟后可以用种子快速补种
+            TileID.Sets.ReplaceTileBreakUp[tile.Type] = true;//
             TileID.Sets.IgnoredInHouseScore[tile.Type] = true;//不计入NPC住房得分系统中
             TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 1;

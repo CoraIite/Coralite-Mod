@@ -7,9 +7,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Coralite.Content.Bosses.StoneImitator
+namespace Coralite.Content.Bosses.Rediancie
 {
-    public class StoneImitatorMinion : ModNPC
+    public class RediancieMinion : ModNPC
     {
         public override string Texture => AssetDirectory.RedJadeProjectiles + "RedBink";
 
@@ -76,7 +76,7 @@ namespace Coralite.Content.Bosses.StoneImitator
                 if (Timer == 118)
                 {
                     int damage = NPC.GetAttackDamage_ForProjectiles(20, 30);
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ModContent.ProjectileType<SIP_Explosion>(), damage, 5f);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), damage, 5f);
                 }
 
                 if (Timer < 120)

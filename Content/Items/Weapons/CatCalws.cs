@@ -174,16 +174,17 @@ namespace Coralite.Content.Items.Weapons
 
         private byte tripleCombo = 0;
 
+        public CatClawsProj_Slash() : base(3.141f,trailLength: 30) { }
+
         public override void SetDefs()
         {
+            Projectile.localNPCHitCooldown = 30;
             Projectile.width = 22;
             Projectile.height = 62;
-            spriteRotation = 3.141f;
-            distanceToOwner = 40;
+            distanceToOwner = 10;
             minTime = 0;
-            TrailTexture = AssetDirectory.OtherProjectiles + "CatClawsTrail2";
-            color1 = Color.Orange;
-            color2 = Color.OrangeRed;
+            TrailTexture = AssetDirectory.OtherProjectiles + "CatClawsTrail3";
+            onHitFreeze = 20;
         }
 
         protected override void Initializer()
@@ -192,41 +193,38 @@ namespace Coralite.Content.Items.Weapons
             {
                 case -1://右键
                     maxTime = 45;
-                    startAngle = 1.2f;
-                    endAngle = 0f;
+                    startAngle = 1.9f;
+                    totalAngle = 3.8f;
                     useSlashTrail = true;
-                    trailLengh = 30;
-                    trailWidth = 20;
+                    trailBottomWidth = 40;
                     Projectile.extraUpdates = 2;
                     break;
 
                 case 0://普通挥舞0：上至下小幅度
                     maxTime = 45;
-                    startAngle = 0.9f;
-                    endAngle = 0.1f;
+                    startAngle = 1.3f;
+                    totalAngle = 1.3f;
                     Projectile.extraUpdates = 2;
                     break;
 
                 case 1://普通挥舞1：下至上小幅度
                     maxTime = 45;
-                    startAngle = -0.9f;
-                    endAngle = 0.1f;
+                    startAngle = -1.3f;
+                    totalAngle = -1.3f;
                     Projectile.extraUpdates = 2;
                     break;
 
                 case 3://普通挥舞2：上至下大幅度
                     maxTime = 60;
                     startAngle = 1.8f;
-                    endAngle = 0f;
+                    totalAngle = 3.5f;
                     Projectile.extraUpdates = 2;
                     break;
 
                 case 4://强化攻击0：三连击
                     maxTime = 26;
-                    startAngle = 0.6f;
-                    endAngle = 0f;
-                    projImmune = 5;
-                    trailLengh = 25;
+                    startAngle = 1f;
+                    totalAngle = 0.8f;
                     useSlashTrail = true;
                     Projectile.extraUpdates = 1;
                     break;
@@ -237,8 +235,6 @@ namespace Coralite.Content.Items.Weapons
 
                 default: goto case 0;
             }
-
-            Smoother = new Fast2SlowSmoother(0.8f, 3.5f, 0.15f, 5);
 
             base.Initializer();
         }
@@ -266,7 +262,7 @@ namespace Coralite.Content.Items.Weapons
                     break;
 
                 case 5:
-                    if (timer <= 2)
+                    if ((int)timer <= 2)
                     {
                         if (Owner.whoAmI == Main.myPlayer)
                         {
@@ -274,9 +270,9 @@ namespace Coralite.Content.Items.Weapons
                             Owner.velocity += Vector2.Normalize(Main.MouseWorld - Owner.Center) * 7;
                         }
                     }
-                    else if (timer < 30)
+                    else if ((int)timer < 30)
                         Slasher();
-                    else if (timer > 30)
+                    else if ((int)timer > 30)
                         Projectile.Kill();
 
                     break;

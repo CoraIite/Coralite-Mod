@@ -3,6 +3,10 @@
 目前为早期测试版本，可能会有一大堆BUG
 目前不支持多人
 
+英文翻译将在tml更新1.4.4后逐渐完善
+The English translation will be gradually improved after tModLoader update 1.4.4
+(well...most are based on machine translation, because I am not good at english)
+
 目前已添加内容：
 	- 一些植物
 	- 植物杂交系统

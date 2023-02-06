@@ -24,5 +24,6 @@ namespace Coralite.Helpers
                     velocity = direction * velocityLimit;
             }
         }
+
     }
 }

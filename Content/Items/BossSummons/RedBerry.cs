@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Bosses.StoneImitator;
+﻿using Coralite.Content.Bosses.Rediancie;
 using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.BossSummons
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
 
-            NPCID.Sets.MPAllowedEnemies[ModContent.NPCType<StoneImitator>()] = true;
+            NPCID.Sets.MPAllowedEnemies[ModContent.NPCType<Rediancie>()] = true;
         }
 
         public override void SetDefaults()
@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.BossSummons
             {
                 SoundEngine.PlaySound(SoundID.Roar, player.position);
 
-                int type = ModContent.NPCType<StoneImitator>();
+                int type = ModContent.NPCType<Rediancie>();
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);

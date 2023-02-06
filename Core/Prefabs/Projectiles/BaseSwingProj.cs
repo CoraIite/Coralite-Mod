@@ -34,18 +34,17 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected byte onHitFreeze = 5;
 
         protected int shadowCount = 5;
-        public int projImmune = 10;
         protected int minTime = 0;
         protected int maxTime = 60;
-        protected int trailWidth = 10;
+        protected int trailTopWidth = 10;
+        protected int trailBottomWidth = 10;
         protected float startAngle = 2.5f;
-        protected float endAngle = 2.5f;
-        public ref float PerAngle=>ref Projectile.localAI[0];// 挥舞时每一帧旋转的角度
+        protected float totalAngle = 2.5f;
         public ref float _Rotation => ref Projectile.ai[1];// 实际角度，通过一系列计算得到的每一帧的弹幕角度
-        protected float spriteRotation = 2.356f;//2.445?之前写的是这个数，但我忘了当时是怎么得到这个数的，重新算了一下发现不对劲
-        public int timer = 0;
+        protected readonly float spriteRotation;//2.445?之前写的是这个数，但我忘了当时是怎么得到这个数的，重新算了一下发现不对劲
+        public ref float timer =>ref Projectile.localAI[0];
 
-        protected short trailLengh = 15;
+        protected readonly short trailLength;
         public float distanceToOwner = 15;
 
         protected ISmoother Smoother;
@@ -53,6 +52,12 @@ namespace Coralite.Core.Prefabs.Projectiles
         public ref Vector2 RotateVec2 => ref Projectile.velocity;
         public Vector2 Top;
         private Vector2 Bottom;
+
+        public BaseSwingProj(float spriteRotation=2.356f,short trailLength=15)
+        {
+            this.spriteRotation = spriteRotation;
+            this.trailLength = trailLength;
+        }
 
         public sealed override void SetDefaults()
         {
@@ -72,14 +77,14 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// 需要设定的值（等号后面的是默认值）
         /// <para>开始挥舞前的时间  minTime = 0，挥舞所用时间 maxTime = 60</para>
         /// <para>起始角度，为正时则从人物头顶向下挥舞 startAngle = 2.5f，终止角度 endAngle = 2.5f</para>
-        /// <para>弹幕中心与玩家中心的距离 distanceToOwner = 15，无敌帧ProjImmune = 10</para>
+        /// <para>弹幕中心与玩家中心的距离 distanceToOwner = 15</para>
         /// <para>贴图旋转角度 SpriteRotation（竖直向下:  0f ;右上斜45度: +2.356f）</para>
         /// <para>卡肉时长 onHitFreeze = 5</para>
         /// <![CDATA[拖尾部分]]>
         /// <para>是否应用影子拖尾 useShadowTrail = false，是否应用刀光效果useSlashTrail = false，刀光贴图TrailTexture</para>
         /// <para>是否可绘制自己的贴图 canDrawSelf = true</para>
         /// <para>影子拖尾数量 ShadowCount，拖尾数组长度 TrailLengh = 15，刀光渐变色 color1，color2</para>
-        /// <para>刀光拖尾宽度 trailLenth = 10</para>
+        /// <para>刀光拖尾宽度 trailBottomLenth = 10,trailTopWidth = 10</para>
         /// <para>是否为对称的，是的话就不需要多加Filp贴图 isSymmetrical = true</para>
         /// 除此之外的变量不要乱改！除非你知道你在做什么（笑）
         /// </summary>
@@ -93,7 +98,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             if (onHit != 0 && onHit < onHitFreeze)//轻微的卡肉效果
             {
-                Projectile.Center = Owner.Center + RotateVec2 * distanceToOwner;
+                Projectile.Center = Owner.Center + RotateVec2 * (Projectile.height/2+distanceToOwner);
                 onHit++;
                 return;
             }
@@ -104,12 +109,12 @@ namespace Coralite.Core.Prefabs.Projectiles
                 return;
             }
 
-            if (timer <= minTime)//弹幕生成到开始挥舞之前
+            if ((int)timer <= minTime)//弹幕生成到开始挥舞之前
             {
                 Owner.direction = Main.MouseWorld.X < Owner.Center.X ? -1 : 1;
                 BeforeSlash();
             }
-            else if (timer <= maxTime)//挥舞过程中
+            else if ((int)timer <= maxTime)//挥舞过程中
             {
                 Slash();
                 SpawnDustOnSlash();
@@ -137,7 +142,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// </summary>
         protected virtual void AIAfter()
         {
-            Top = Projectile.Center + RotateVec2 * (Projectile.height / 2);
+            Top = Projectile.Center + RotateVec2 * (Projectile.height/2+trailTopWidth);
             Bottom = Projectile.Center - RotateVec2 * (Projectile.height / 2);//弹幕的底端和顶端计算，用于检测碰撞以及绘制
 
             if (useShadowTrail || useSlashTrail)
@@ -151,22 +156,32 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
-                _Rotation = (Main.MouseWorld - Owner.Center).ToRotation() - Owner.direction * startAngle;//设定起始角度
-
-            PerAngle = Owner.direction * Math.Sign(startAngle) * (Math.Abs(endAngle) + Math.Abs(startAngle)) / maxTime;//计算每一帧应当旋转的角度
-
+            {
+                _Rotation = startAngle = GetStartAngle() - Owner.direction * startAngle;//设定起始角度
+                totalAngle *= Owner.direction;
+            }
+                
             Slasher();
-            Smoother.ReCalculate(minTime, maxTime);
+            Smoother.ReCalculate(maxTime-minTime);
 
             if (useShadowTrail || useSlashTrail)
             {
-                oldRotate = new float[trailLengh];
-                oldDistanceToOwner = new float[trailLengh];
+                oldRotate = new float[trailLength];
+                oldDistanceToOwner = new float[trailLength];
                 InitializeCaches();
             }
 
             onStart = false;
             Projectile.netUpdate = true;
+        }
+
+        /// <summary>
+        /// 获取起始角度，一般是鼠标的角度，也可以固定成指定的角度
+        /// </summary>
+        /// <returns></returns>
+        protected virtual float GetStartAngle()
+        {
+            return (Main.MouseWorld - Owner.Center).ToRotation();
         }
 
         /// <summary>
@@ -187,7 +202,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual void Slash()
         {
-            _Rotation += PerAngle * Smoother.Smoother(timer, minTime, maxTime);
+            _Rotation = startAngle+totalAngle * Smoother.Smoother((int)timer-minTime, maxTime-minTime);
             Slasher();
             Projectile.netUpdate = true;
         }
@@ -208,7 +223,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected void Slasher()
         {
             RotateVec2 = _Rotation.ToRotationVector2();
-            Projectile.Center = Owner.Center + RotateVec2 * distanceToOwner;
+            Projectile.Center = Owner.Center + RotateVec2 * (Projectile.height/2+distanceToOwner);
             Projectile.rotation = _Rotation - 1.57f;
         }
 
@@ -216,7 +231,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual void UpdateCaches()
         {
-            for (int i = trailLengh - 1; i > 0; i--)
+            for (int i = trailLength - 1; i > 0; i--)
             {
                 oldRotate[i] = oldRotate[i - 1];
                 oldDistanceToOwner[i] = oldDistanceToOwner[i - 1];
@@ -228,7 +243,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual void InitializeCaches()
         {
-            for (int j = trailLengh - 1; j >= 0; j--)
+            for (int j = trailLength - 1; j >= 0; j--)
             {
                 oldRotate[j] = 100f;
                 oldDistanceToOwner[0] = distanceToOwner;
@@ -246,7 +261,6 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (onHit == 0)
                 onHit = 1;
 
-            target.immune[Projectile.owner] = projImmune;
             OnHitEvent(target);
         }
 
@@ -257,7 +271,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if (timer < minTime)
+            if ((int)timer < minTime)
                 return false;
 
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Top, Bottom, Projectile.width / 2, ref Projectile.localAI[1]);
@@ -304,15 +318,23 @@ namespace Coralite.Core.Prefabs.Projectiles
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
             List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
 
+            float lenth = 1;
+            for (int i = 1; i < oldRotate.Length; i++)
+            {
+                if (oldRotate[i] == 100f)
+                    continue;
+                lenth += 1;
+            }
+
             for (int i = 1; i < oldRotate.Length; i++)
             {
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = i / (float)oldRotate.Length;
+                float factor = i / lenth;
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (Projectile.height / 2 + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (Projectile.height / 2 - trailWidth * (1 - factor) + oldDistanceToOwner[i]);
+                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (Projectile.height + trailTopWidth + oldDistanceToOwner[i]);
+                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (Projectile.height - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
 
                 var color = Color.Lerp(color1, color2, factor);
                 var w = Helper.Lerp(0.5f, 0.05f, factor);
@@ -349,7 +371,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected void DrawShadowTrail(Texture2D mainTex, Vector2 origin, Color lightColor)
         {
-            if (timer > minTime)
+            if ((int)timer > minTime)
             {
                 for (int i = shadowCount; i > 0; i--)
                 {
@@ -360,9 +382,14 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
         }
 
+        protected virtual float ControlTrailBottomWidth(float factor)
+        {
+            return trailBottomWidth * (1 - factor);
+        }
+
         protected string CheckTexture()
         {
-            if (PerAngle > 0)
+            if (totalAngle > 0)
                 return Texture;
 
             if (isSymmetrical)
@@ -393,20 +420,6 @@ namespace Coralite.Core.Prefabs.Projectiles
             return Owner.Center;
         }
 
-
-        #endregion
-
-        #region 联机同步
-
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(timer);
-        }
-
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            timer = reader.ReadInt32();
-        }
 
         #endregion
     }

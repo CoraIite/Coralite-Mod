@@ -1,21 +1,49 @@
 ﻿using Coralite.Content.Items.BotanicalItems.Seeds;
+using Coralite.Content.Items.RedJadeItems;
+using Coralite.Content.Projectiles.RedJadeProjectiles;
 using Microsoft.Xna.Framework;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.ModPlayers
 {
     public class CoralitePlayer : ModPlayer
     {
-        public byte RightClickReuseDelay = 0;
+        public short RightClickReuseDelay = 0;
+        public bool RedJadePendant;
 
         #region 各种更新
 
         public override void PostUpdate()
         {
+            RedJadePendant = false;
             if (RightClickReuseDelay > 0)
                 RightClickReuseDelay--;
+        }
+
+        #endregion
+
+        #region 受击与攻击
+
+        public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
+        {
+            if (RedJadePendant && damage > 5 && Main.rand.NextBool(3))
+            {
+                Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<RedJadePendant>())),
+                    Player.Center + (proj.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<RedJadeBoom>(), 80, 8f, Player.whoAmI);
+            }
+        }
+
+        public override void OnHitByNPC(NPC npc, int damage, bool crit)
+        {
+            if (RedJadePendant && damage > 5 && Main.rand.NextBool(3))
+            {
+                Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<RedJadePendant>())),
+                    Player.Center + (npc.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<RedJadeBoom>(), 80, 8f, Player.whoAmI);
+            }
         }
 
         #endregion
