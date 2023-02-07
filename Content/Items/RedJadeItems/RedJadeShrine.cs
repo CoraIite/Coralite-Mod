@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.RedJadeItems
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 10;
+            Item.damage = 16;
             Item.useTime = 35;
             Item.useAnimation = 18;
             Item.knockBack = 4f;

@@ -48,6 +48,7 @@
         public const string Weapons_Melee =        Items + "Weapons_Melee/";
         public const string Weapons_Magic =      Items + "Weapons_Magic/";
         public const string Weapons_Summon = Items + "Weapons_Summon/";
+        public const string YujianHulu =                Items + "YujianHulu/";
 
         public const string MachineItems =        Items + "Machines/";
         public const string BotanicalItems =       Items + "BotanicalItems/";

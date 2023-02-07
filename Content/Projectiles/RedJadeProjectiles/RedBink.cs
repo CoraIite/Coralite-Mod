@@ -183,7 +183,6 @@ namespace Coralite.Content.Projectiles.RedJadeProjectiles
                             if (target is null || !target.active)
                             {
                                 ResetStates();
-                                rightClick = false;
                                 return;
                             }
 
