@@ -3,6 +3,7 @@ using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -21,6 +22,11 @@ namespace Coralite.Content.Tiles.RedJades
             TileID.Sets.FramesOnKillWall[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
+            TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
+            TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
+            TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
 
             AddMapEntry(new Color(120, 85, 60), Language.GetText("MapObject.Trophy"));

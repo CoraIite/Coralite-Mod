@@ -44,6 +44,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             Projectile.timeLeft = 300;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 5;
         }
 
         #region AI
@@ -115,7 +117,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                 for (int i = 0; i < count; i++)
                 {
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + Main.rand.NextVector2CircularEdge(70, 70), Vector2.Zero,
-                                        ProjectileType<CosmosFractureProj2>(), (int)(Projectile.damage * count * 0.2f), Projectile.knockBack, Owner.whoAmI, 0);
+                                        ProjectileType<CosmosFractureProj2>(), (int)(Projectile.damage * count * 0.1f), Projectile.knockBack, Owner.whoAmI, 0);
                 }
 
                 if (Main.netMode != NetmodeID.Server)

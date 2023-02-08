@@ -87,8 +87,7 @@ namespace Coralite.Content.Items.Weapons_Magic
                     SoundEngine.PlaySound(SoundID.Item63, player.Center);
             }
             else
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI);
-
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage*3, knockback, player.whoAmI);
 
             return false;
         }

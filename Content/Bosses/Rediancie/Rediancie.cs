@@ -83,7 +83,7 @@ namespace Coralite.Content.Bosses.Rediancie
             npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
 
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
-            notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<RedJade>(), 1, 13, 16));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<RedJade>(), 1, 20, 24));
             npcLoot.Add(notExpertRule);
         }
 
@@ -276,9 +276,9 @@ namespace Coralite.Content.Bosses.Rediancie
         public void SlowDownAndGoUp()
         {
             NPC.velocity.X *= 0.98f;
-            NPC.velocity.Y += -0.0005f;
-            if (NPC.velocity.Y > -0.8f)
-                NPC.velocity.Y = -0.8f;
+            NPC.velocity.Y += -0.001f;
+            if (NPC.velocity.Y > -0.4f)
+                NPC.velocity.Y = -0.4f;
         }
 
         public static int OwnedMinionMax()

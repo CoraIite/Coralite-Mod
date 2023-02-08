@@ -4,11 +4,14 @@ using System;
 using Terraria.ModLoader;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Xna.Framework;
 
 namespace Coralite
 {
 	public class Coralite : Mod
 	{
+        public readonly Color RedJadeRed;
+
         private List<IOrderedLoadable> loadCache;
 
         //单例模式！
@@ -17,6 +20,7 @@ namespace Coralite
         public Coralite()
         {
             Instance = this;
+            RedJadeRed = new Color(221, 50, 50);
         }
 
         public override void Load()

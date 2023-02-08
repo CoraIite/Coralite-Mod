@@ -1,5 +1,7 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
+using Coralite.Content.Items.RedJadeItems;
 using Coralite.Core;
+using System.Security.Cryptography.X509Certificates;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
@@ -15,7 +17,7 @@ namespace Coralite.Content.Items.BossSummons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("赤色果实");
-            Tooltip.SetDefault("吸引一块奇异的赤色石头\n召唤赤玉灵");
+            Tooltip.SetDefault("偶尔生长在水晶树上，能吸引一块奇异的赤色石头\n召唤赤玉灵");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
@@ -51,6 +53,45 @@ namespace Coralite.Content.Items.BossSummons
             }
 
             return true;
+        }
+
+        public override void AddRecipes()
+        {
+            //黄玉
+            CreateRecipe()
+    .AddIngredient<RedJade>(3)
+    .AddIngredient(ItemID.GemTreeTopazSeed)
+    .Register();
+            //紫晶
+            CreateRecipe()
+    .AddIngredient<RedJade>(3)
+    .AddIngredient(ItemID.GemTreeAmethystSeed)
+    .Register();
+            //蓝玉
+            CreateRecipe()
+    .AddIngredient<RedJade>(3)
+    .AddIngredient(ItemID.GemTreeSapphireSeed)
+    .Register();
+            //翡翠
+            CreateRecipe()
+    .AddIngredient<RedJade>(3)
+    .AddIngredient(ItemID.GemTreeEmeraldSeed)
+    .Register();
+            //红玉
+            CreateRecipe()
+                .AddIngredient<RedJade>(3)
+                .AddIngredient(ItemID.GemTreeRubySeed)
+                .Register();
+            //钻石
+            CreateRecipe()
+    .AddIngredient<RedJade>(3)
+    .AddIngredient(ItemID.GemTreeDiamondSeed)
+    .Register();
+            //琥珀
+            CreateRecipe()
+    .AddIngredient<RedJade>(3)
+    .AddIngredient(ItemID.GemTreeAmberSeed)
+    .Register();
         }
     }
 }
