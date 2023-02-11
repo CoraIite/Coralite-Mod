@@ -1,4 +1,6 @@
 ﻿using Coralite.Core;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -13,16 +15,16 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void SetStaticDefaults()
         {
-            Main.tileLighted[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileSolid[Type] = false;
             Main.tileLavaDeath[Type] = true;
             Main.tileFrameImportant[Type] = true;
-            TileID.Sets.DisableSmartCursor[Type] = true;
 
+            AnimationFrameHeight = 54;
             DustType = DustID.GemRuby;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
+            TileObjectData.newTile.StyleHorizontal = false;
             TileObjectData.addTile(Type);
 
             ModTranslation name = CreateMapEntryName();
@@ -38,6 +40,34 @@ namespace Coralite.Content.Tiles.RedJades
         public override void KillMultiTile(int x, int y, int frameX, int frameY)
         {
             Item.NewItem(new EntitySource_TileBreak(x, y), x * 16, y * 16, 48, 48, ModContent.ItemType<Items.RedJadeItems.MagicCraftStation>());
+        }
+
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            Tile tile = Main.tile[i, j];
+
+            Texture2D glowTexture = ModContent.Request<Texture2D>("Coralite/Assets/Tiles/RedJades/MagicCraftStation_Glow").Value;
+
+            Vector2 zero = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
+            int frameYOffset = Main.tileFrame[Type] * AnimationFrameHeight;
+
+            spriteBatch.Draw(glowTexture,
+                    new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero,
+                    new Rectangle(tile.TileFrameX, tile.TileFrameY + frameYOffset, 16, 16),
+                    Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+        }
+
+        public override void AnimateTile(ref int frame, ref int frameCounter)
+        {
+            frameCounter++;
+
+            if (frameCounter>5)
+            {
+                frame++;
+                if (frame > 8)
+                    frame = 0;
+                frameCounter = 0;
+            }
         }
     }
 }

@@ -200,6 +200,11 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
             if (timer <= 20)
             {
+                TargetDirection = Vector2.Normalize(Main.MouseWorld - Owner.Center);
+                Projectile.Center = Owner.Center;
+                if (Main.myPlayer == Owner.whoAmI)
+                    Center = Projectile.Center + (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitY) * 80f;
+
                 float factor = (float)timer / 20;
                 float x_1 = factor - 1;
                 _Rotation = -1.57f + Owner.direction * (1 + (2.6f * x_1 * x_1 * x_1) + (1.6f * x_1 * x_1)) * 4f;        //控制挥舞曲线

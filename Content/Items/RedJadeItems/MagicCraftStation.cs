@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.RedJadeItems
 {
     public class MagicCraftStation : ModItem
     {
-        public override string Texture => AssetDirectory.RedJadeItems+Name;
+        public override string Texture => AssetDirectory.RedJadeItems + Name;
 
         public override void SetStaticDefaults()
         {

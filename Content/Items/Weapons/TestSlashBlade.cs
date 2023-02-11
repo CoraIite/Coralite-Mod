@@ -15,7 +15,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Weapons
 {
-    public class TestSlashBlade : ModItem
+    public abstract class TestSlashBlade : ModItem
     {
         public override string Texture => AssetDirectory.ShadowItems+"ShadowSword";
 
@@ -46,7 +46,7 @@ namespace Coralite.Content.Items.Weapons
         }
     }
 
-    public class TestSlash : SlashBladeProj
+    public abstract class TestSlash : SlashBladeProj
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "Yamato";
 

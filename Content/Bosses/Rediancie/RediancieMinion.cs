@@ -54,18 +54,18 @@ namespace Coralite.Content.Bosses.Rediancie
 
             do
             {
-                if (Timer < 45)//原地旋转
+                if (Timer < 100)//原地旋转
                 {
                     NPC.rotation += 0.2f;
                     NPC.velocity += ReadyRotation.ToRotationVector2() * 0.01f;
                     if (NPC.velocity.Length() > 0.8f)
                         NPC.velocity = ReadyRotation.ToRotationVector2() * 0.8f;
 
-                    alpha += 4f;
+                    alpha += 3f;
                     break;
                 }
 
-                if (Timer == 45)
+                if (Timer == 100)
                 {
                     NPC.TargetClosest();
                     NPC.velocity = (target.Center - NPC.Center).SafeNormalize(Vector2.UnitY) * 8f;
@@ -73,20 +73,20 @@ namespace Coralite.Content.Bosses.Rediancie
                     break;
                 }
 
-                if (Timer == 118)
+                if (Timer == 158)
                 {
                     int damage = NPC.GetAttackDamage_ForProjectiles(20, 30);
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), damage, 5f);
                 }
 
-                if (Timer < 120)
+                if (Timer < 150)
                     break;
 
-                if (Timer > 119 && Timer < 160)
+                if (Timer < 230)
                 {
                     NPC.velocity *= 0.96f;
                     NPC.rotation = Helper.Lerp(NPC.rotation, 0, 0.1f);
-                    alpha -= 25;
+                    alpha -= 40;
                     if (alpha < 0)
                         alpha = 0;
                     break;
@@ -104,7 +104,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            if (Timer < 46)
+            if (Timer < 101)
             {
                 Texture2D mainTex = TextureAssets.Npc[Type].Value;
                 spriteBatch.Draw(mainTex, NPC.Center - screenPos, mainTex.Frame(), new Color(248, 40, 24, (int)alpha), NPC.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 1 + alpha/255, SpriteEffects.None, 0f);

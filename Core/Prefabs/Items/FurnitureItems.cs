@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Core.Prefabs.Items
 {
-    public class BaseDoorItem : ModItem
+    public abstract class BaseDoorItem : ModItem
     {
         private readonly int Value;
         private readonly int Rare;
@@ -46,7 +46,7 @@ namespace Coralite.Core.Prefabs.Items
 
     }
 
-    public class BaseBedItem : ModItem
+    public abstract class BaseBedItem : ModItem
     {
         private readonly int Value;
         private readonly int Rare;
@@ -87,7 +87,7 @@ namespace Coralite.Core.Prefabs.Items
         }
     }
 
-    public class BaseWorkBenchItem : ModItem
+    public abstract class BaseWorkBenchItem : ModItem
     {
         private readonly int Value;
         private readonly int Rare;
@@ -128,7 +128,7 @@ namespace Coralite.Core.Prefabs.Items
         }
     }
 
-    public class BaseTableItem : ModItem
+    public abstract class BaseTableItem : ModItem
     {
         private readonly int Value;
         private readonly int Rare;
@@ -163,7 +163,7 @@ namespace Coralite.Core.Prefabs.Items
         }
     }
 
-    public class BaseChairItem : ModItem
+    public abstract class BaseChairItem : ModItem
     {
         private readonly int Value;
         private readonly int Rare;
@@ -198,7 +198,7 @@ namespace Coralite.Core.Prefabs.Items
         }
     }
 
-    public class BaseDroplightItem:ModItem
+    public abstract class BaseDroplightItem : ModItem
     {
         private readonly int Value;
         private readonly int Rare;
@@ -239,7 +239,7 @@ namespace Coralite.Core.Prefabs.Items
         }
     }
 
-    public class BaseCandleItem : ModItem
+    public abstract class BaseCandleItem : ModItem
     {
         private readonly int Value;
         private readonly int Rare;
@@ -276,6 +276,82 @@ namespace Coralite.Core.Prefabs.Items
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.consumable = true;
+            Item.createTile = CreateTile;
+        }
+    }
+
+    public abstract class BaseToiletItem : ModItem
+    {
+        private readonly int Value;
+        private readonly int Rare;
+        private readonly int CreateTile;
+        private readonly string TexturePath;
+        private readonly bool PathHasName;
+
+        public BaseToiletItem(int value, int rare, int createTile, string texturePath, bool pathHasName = false)
+        {
+            Value = value;
+            Rare = rare;
+            CreateTile = createTile;
+            TexturePath = texturePath;
+            PathHasName = pathHasName;
+        }
+
+        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
+
+        public override void SetStaticDefaults()
+        {
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.DefaultToPlaceableTile(CreateTile);
+            Item.rare = Rare;
+            Item.value = Value;
+            Item.maxStack = 99;
+            Item.width = 16;
+            Item.height = 24;
+        }
+    }
+
+    public abstract class BaseChestItem : ModItem
+    {
+        private readonly int Value;
+        private readonly int Rare;
+        private readonly int CreateTile;
+        private readonly string TexturePath;
+        private readonly bool PathHasName;
+
+        public BaseChestItem(int value, int rare, int createTile, string texturePath, bool pathHasName = false)
+        {
+            Value = value;
+            Rare = rare;
+            CreateTile = createTile;
+            TexturePath = texturePath;
+            PathHasName = pathHasName;
+        }
+
+        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
+
+        public override void SetStaticDefaults()
+        {
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.width = 26;
+            Item.height = 22;
+            Item.maxStack = 99;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.consumable = true;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.rare = Rare;
+            Item.value = Value;
             Item.createTile = CreateTile;
         }
     }

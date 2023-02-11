@@ -5,13 +5,14 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.RedJadeItems
 {
+    [AutoloadEquip(EquipType.Waist)]
     public class RedJadePendant : ModItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
 
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("装备后在受击时有概率产生爆炸");
+            Tooltip.SetDefault("受到攻击时有概率产生爆炸");
         }
 
         public override void SetDefaults()

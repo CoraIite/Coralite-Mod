@@ -15,7 +15,7 @@ namespace Coralite.Content.Dusts
             dust.noGravity = true;
             dust.frame = new Rectangle(0, 0, 126, 93);
             dust.fadeIn = 0;
-            //dust.position -= new Vector2(63, 46.5f);
+            dust.position -= new Vector2(63, 46.5f) * dust.scale;
             dust.shader = new Terraria.Graphics.Shaders.ArmorShaderData(new Ref<Effect>(Coralite.Instance.Assets.Request<Effect>("Effects/StarsDust", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "StarsDustPass");
         }
 

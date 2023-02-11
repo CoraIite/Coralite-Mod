@@ -90,6 +90,7 @@
         public const string NPCs =                  Assets + "NPCs/";
 
         public const string ShadowNPCs =     NPCs + "ShadowNPCs/";
+        public const string OtherNPC =          NPCs + "OtherNPC/";
 
         #endregion
 

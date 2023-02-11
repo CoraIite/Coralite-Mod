@@ -12,11 +12,9 @@
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\NPCs\RedJadeNPCs\" />
     <Folder Include="Content\Items\Accessories\" />
     <Folder Include="Content\Items\Pets\" />
     <Folder Include="Content\Items\AstronomyItems\" />
-    <Folder Include="Content\NPCs\RedJadeNPCs\" />
     <Folder Include="Core\Systems\MagliteSystem\" />
     <Folder Include="Core\Systems\AstronomySystem\" />
     <Folder Include="Sounds\Shadows\" />
