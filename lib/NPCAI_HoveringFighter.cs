@@ -16,13 +16,13 @@ namespace Coralite.lib
                 int num297 = 16;
                 bool flag19 = false;
                 bool flag20 = false;
-                if (NPC.position.X > NPC.ai[0] - (float)num297 && NPC.position.X < NPC.ai[0] + (float)num297)
+                if (NPC.position.X > NPC.ai[0] - num297 && NPC.position.X < NPC.ai[0] + num297)
                     flag19 = true;
                 else if ((NPC.velocity.X < 0f && NPC.direction > 0) || (NPC.velocity.X > 0f && NPC.direction < 0))
                     flag19 = true;
 
                 num297 += 24;
-                if (NPC.position.Y > NPC.ai[1] - (float)num297 && NPC.position.Y < NPC.ai[1] + (float)num297)
+                if (NPC.position.Y > NPC.ai[1] - num297 && NPC.position.Y < NPC.ai[1] + num297)
                     flag20 = true;
 
                 if (flag19 && flag20)
@@ -63,7 +63,7 @@ namespace Coralite.lib
             bool flag21 = true;
             int num300 = 3;
 
-            if (NPC.position.Y + (float)NPC.height > Main.player[NPC.target].position.Y)
+            if (NPC.position.Y + NPC.height > Main.player[NPC.target].position.Y)
             {
                 for (int num329 = num299; num329 < num299 + num300; num329++)
                 {
@@ -105,7 +105,7 @@ namespace Coralite.lib
             }
             else
             {
-                 if (NPC.directionY < 0 && NPC.velocity.Y > 0f)
+                if (NPC.directionY < 0 && NPC.velocity.Y > 0f)
                     NPC.velocity.Y -= 0.1f;
 
                 if (NPC.velocity.Y < -4f)

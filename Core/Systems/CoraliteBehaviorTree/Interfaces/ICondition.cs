@@ -3,7 +3,7 @@
     /// <summary>
     /// 条件基接口
     /// </summary>
-    public interface ICondition:IBehaviour
+    public interface ICondition : IBehaviour
     {
         bool IsNegation();
 

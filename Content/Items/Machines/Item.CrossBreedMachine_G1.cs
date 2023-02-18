@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.Machines
 {
     public class CrossBreedMachine_G1Item : ModItem
     {
-        public override string Texture => AssetDirectory.MachineItems+Name;
+        public override string Texture => AssetDirectory.MachineItems + Name;
 
         public override void SetStaticDefaults()
         {

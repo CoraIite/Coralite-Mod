@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.ShadowItems
             Item.useTime = 25;
             Item.useAnimation = 25;
             Item.knockBack = 2;
-            
+
             Item.autoReuse = true;
             Item.useTurn = false;
             Item.noMelee = true;
@@ -46,12 +46,12 @@ namespace Coralite.Content.Items.ShadowItems
 
         public override Vector2? HoldoutOffset()
         {
-            return new Vector2(-10,0);
+            return new Vector2(-10, 0);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DrawInvertedPlayerProj>(), (int)(damage*1.2f), knockback, player.whoAmI);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DrawInvertedPlayerProj>(), (int)(damage * 1.2f), knockback, player.whoAmI);
             return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }
     }

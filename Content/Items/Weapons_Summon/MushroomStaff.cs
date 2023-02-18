@@ -1,12 +1,12 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Projectiles.Projectile_Summon;
+using Coralite.Core;
+using Microsoft.Xna.Framework;
+using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
 using static Terraria.ModLoader.ModContent;
-using System.Linq;
-using Coralite.Content.Projectiles.Projectile_Summon;
 
 namespace Coralite.Content.Items.Weapons_Summon
 {
@@ -82,7 +82,7 @@ namespace Coralite.Content.Items.Weapons_Summon
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ItemID.Mushroom,10);
+            recipe.AddIngredient(ItemID.Mushroom, 10);
             recipe.AddTile(TileID.MushroomPlants);
             recipe.Register();
         }

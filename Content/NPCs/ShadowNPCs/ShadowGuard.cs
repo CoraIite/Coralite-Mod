@@ -1,13 +1,13 @@
-﻿using Coralite.Core;
-using Coralite.Content.Items.ShadowItems;
-using Terraria.GameContent.ItemDropRules;
+﻿using Coralite.Content.Items.ShadowItems;
+using Coralite.Core;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using System;
-using Coralite.Helpers;
 
 namespace Coralite.Content.NPCs.ShadowNPCs
 {

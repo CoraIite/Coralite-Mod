@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
-using Microsoft.Xna.Framework;
-using Coralite.Helpers;
 
 namespace Coralite.lib
 {
@@ -48,7 +48,7 @@ namespace Coralite.lib
             if (target.Hitbox.Intersects(NPC.Hitbox))
                 NPC.ai[3] = 0f;
 
-            if (NPC.ai[3] < ai3Count && DespawnEncouragement_AIStyle3_Fighters_NotDiscouraged( NPC.position, NPC))
+            if (NPC.ai[3] < ai3Count && DespawnEncouragement_AIStyle3_Fighters_NotDiscouraged(NPC.position, NPC))
             {
                 NPC.TargetClosest();
                 if (NPC.directionY > 0 && target.Center.Y <= NPC.Bottom.Y)
@@ -59,7 +59,7 @@ namespace Coralite.lib
                 if (Main.dayTime && (double)(NPC.position.Y / 16f) < Main.worldSurface)
                     NPC.EncourageDespawn(10);
 
-                if (NPC.velocity.X == 0f&& NPC.velocity.Y == 0f)
+                if (NPC.velocity.X == 0f && NPC.velocity.Y == 0f)
                 {
                     NPC.ai[0] += 1f;
                     if (NPC.ai[0] >= 2f)
@@ -139,7 +139,7 @@ namespace Coralite.lib
                         NPC.ai[2] = 4f;
                 }
 
-                if (NPC.velocity.Y != 0f  || NPC.ai[1] <= 0f)
+                if (NPC.velocity.Y != 0f || NPC.ai[1] <= 0f)
                 {
                     NPC.ai[2] = 0f;
                     NPC.ai[1] = 0f;
@@ -151,7 +151,7 @@ namespace Coralite.lib
                 }
             }
 
-            if (NPC.ai[2] <= 0f  && NPC.velocity.Y == 0f  && NPC.ai[1] <= 0f && !target.dead)
+            if (NPC.ai[2] <= 0f && NPC.velocity.Y == 0f && NPC.ai[1] <= 0f && !target.dead)
             {
                 bool CanHitPlayer = Collision.CanHit(NPC.position, NPC.width, NPC.height, target.position, target.width, target.height);
 
@@ -164,7 +164,7 @@ namespace Coralite.lib
                     Vector2 NPCCenter = NPC.Center;
                     float Distance2PlayerX = target.Center.X - NPCCenter.X;
                     float num154 = Math.Abs(Distance2PlayerX) * 0.1f;
-                    float Distance2PlayerY = target.Center.Y- NPCCenter.Y - num154;
+                    float Distance2PlayerY = target.Center.Y - NPCCenter.Y - num154;
                     //随机加距离
                     Distance2PlayerX += Main.rand.Next(-40, 41);
                     Distance2PlayerY += Main.rand.Next(-40, 41);
@@ -212,13 +212,13 @@ namespace Coralite.lib
                 //控制X方向的移动，大概就是起步加速。
                 else if (Math.Sign(NPC.velocity.X) == NPC.direction)
                 {
-                    NPC.velocity.X +=NPC.direction* accelX;
+                    NPC.velocity.X += NPC.direction * accelX;
                     if (Math.Abs(NPC.velocity.X) > VelocityLimitX)
-                        NPC.velocity.X = NPC.direction* VelocityLimitX;
+                        NPC.velocity.X = NPC.direction * VelocityLimitX;
                 }
             }
 
-            if (NPC.velocity.Y == 0f )
+            if (NPC.velocity.Y == 0f)
             {
                 int num164 = (int)(NPC.Bottom.Y + 7f) / 16;
                 int num165 = (int)(NPC.Top.Y - 9f) / 16;
@@ -262,7 +262,7 @@ namespace Coralite.lib
                 int num173 = (int)((position3.Y + NPC.height - 1f) / 16f);
                 if (WorldGen.InWorld(num172, num173, 4))
                 {
-                    if ((num172 * 16) < position3.X + NPC.width && (num172 * 16 + 16) > position3.X && ((Main.tile[num172, num173].HasUnactuatedTile && !Main.tile[num172, num173].topSlope() && !Main.tile[num172, num173 - 1].topSlope() && Main.tileSolid[Main.tile[num172, num173].TileType] && !Main.tileSolidTop[Main.tile[num172, num173].TileType]) || (Main.tile[num172, num173 - 1].IsHalfBlock && Main.tile[num172, num173 - 1].HasUnactuatedTile)) && (!Main.tile[num172, num173 - 1].HasUnactuatedTile || !Main.tileSolid[Main.tile[num172, num173 - 1].TileType] || Main.tileSolidTop[Main.tile[num172, num173 - 1].TileType] || (Main.tile[num172, num173 - 1].IsHalfBlock && (!Main.tile[num172, num173 - 4].HasUnactuatedTile || !Main.tileSolid[Main.tile[num172, num173 - 4].TileType] || Main.tileSolidTop[Main.tile[num172, num173 - 4].TileType]))) && (!Main.tile[num172, num173 - 2].HasUnactuatedTile|| !Main.tileSolid[Main.tile[num172, num173 - 2].TileType] || Main.tileSolidTop[Main.tile[num172, num173 - 2].TileType]) && (!Main.tile[num172, num173 - 3].HasUnactuatedTile || !Main.tileSolid[Main.tile[num172, num173 - 3].TileType] || Main.tileSolidTop[Main.tile[num172, num173 - 3].TileType]) && (!Main.tile[num172 - VelocityXDir, num173 - 3].HasUnactuatedTile || !Main.tileSolid[Main.tile[num172 - VelocityXDir, num173 - 3].TileType]))
+                    if ((num172 * 16) < position3.X + NPC.width && (num172 * 16 + 16) > position3.X && ((Main.tile[num172, num173].HasUnactuatedTile && !Main.tile[num172, num173].topSlope() && !Main.tile[num172, num173 - 1].topSlope() && Main.tileSolid[Main.tile[num172, num173].TileType] && !Main.tileSolidTop[Main.tile[num172, num173].TileType]) || (Main.tile[num172, num173 - 1].IsHalfBlock && Main.tile[num172, num173 - 1].HasUnactuatedTile)) && (!Main.tile[num172, num173 - 1].HasUnactuatedTile || !Main.tileSolid[Main.tile[num172, num173 - 1].TileType] || Main.tileSolidTop[Main.tile[num172, num173 - 1].TileType] || (Main.tile[num172, num173 - 1].IsHalfBlock && (!Main.tile[num172, num173 - 4].HasUnactuatedTile || !Main.tileSolid[Main.tile[num172, num173 - 4].TileType] || Main.tileSolidTop[Main.tile[num172, num173 - 4].TileType]))) && (!Main.tile[num172, num173 - 2].HasUnactuatedTile || !Main.tileSolid[Main.tile[num172, num173 - 2].TileType] || Main.tileSolidTop[Main.tile[num172, num173 - 2].TileType]) && (!Main.tile[num172, num173 - 3].HasUnactuatedTile || !Main.tileSolid[Main.tile[num172, num173 - 3].TileType] || Main.tileSolidTop[Main.tile[num172, num173 - 3].TileType]) && (!Main.tile[num172 - VelocityXDir, num173 - 3].HasUnactuatedTile || !Main.tileSolid[Main.tile[num172 - VelocityXDir, num173 - 3].TileType]))
                     {
                         float num174 = num173 * 16;
                         if (Main.tile[num172, num173].IsHalfBlock)
@@ -457,9 +457,9 @@ namespace Coralite.lib
             #endregion
         }
 
-        public static bool DespawnEncouragement_AIStyle3_Fighters_NotDiscouraged( Vector2 position, NPC npcInstance)
+        public static bool DespawnEncouragement_AIStyle3_Fighters_NotDiscouraged(Vector2 position, NPC npcInstance)
         {
-            if (!Main.eclipse && Main.dayTime && !npcInstance.SpawnedFromStatue && !(position.Y > Main.worldSurface * 16.0) && ( !Main.player[npcInstance.target].ZoneGraveyard))
+            if (!Main.eclipse && Main.dayTime && !npcInstance.SpawnedFromStatue && !(position.Y > Main.worldSurface * 16.0) && (!Main.player[npcInstance.target].ZoneGraveyard))
             {
                 return false;
             }

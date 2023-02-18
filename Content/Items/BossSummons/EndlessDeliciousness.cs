@@ -1,9 +1,9 @@
-﻿using Terraria.GameContent.Creative;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
-using Coralite.Core;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
 {
@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.BossSummons
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.VilePowder,40)
+                .AddIngredient(ItemID.VilePowder, 40)
                 .AddIngredient(ItemID.RottenChunk, 45)
                 .AddIngredient(ItemID.ManaCrystal)
                 .AddTile(TileID.DemonAltar)

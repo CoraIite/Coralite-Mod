@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.RedJades
 {
-    public class RedJadeDoorOpen:ModTile
+    public class RedJadeDoorOpen : ModTile
     {
         public override void SetStaticDefaults()
         {

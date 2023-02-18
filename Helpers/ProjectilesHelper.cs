@@ -1,9 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
-using System.Reflection;
 using Terraria;
-using static Humanizer.In;
+using Terraria.ModLoader;
 
 namespace Coralite.Helpers
 {
@@ -77,14 +76,14 @@ namespace Coralite.Helpers
         }
 
         /// <summary>
-        /// 找到
+        /// 找到同类弹幕并知道自己是第几个弹幕
         /// </summary>
         /// <param name="projType"></param>
         /// <param name="whoAmI"></param>
         /// <param name="owner"></param>
         /// <param name="index"></param>
         /// <param name="totalIndexesInGroup"></param>
-        public static void GetMyProjIndexWithSameType(int projType,int whoAmI,int owner,out int index,out int totalIndexesInGroup)
+        public static void GetMyProjIndexWithSameType(int projType, int whoAmI, int owner, out int index, out int totalIndexesInGroup)
         {
             index = 0;
             totalIndexesInGroup = 0;
@@ -94,6 +93,23 @@ namespace Coralite.Helpers
                 if (projectile.active && projectile.owner == owner && projectile.type == projType)
                 {
                     if (whoAmI > i)
+                        index++;
+
+                    totalIndexesInGroup++;
+                }
+            }
+        }
+
+        public static void GetMyProjIndexWhihModProj<T>(Projectile Projectile, out int index, out int totalIndexesInGroup) where T : ModProjectile
+        {
+            index = 0;
+            totalIndexesInGroup = 0;
+            for (int i = 0; i < 1000; i++)
+            {
+                Projectile projectile = Main.projectile[i];
+                if (projectile.active && projectile.owner == Projectile.owner && projectile.ModProjectile is T)
+                {
+                    if (Projectile.whoAmI > i)
                         index++;
 
                     totalIndexesInGroup++;

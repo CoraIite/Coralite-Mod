@@ -277,7 +277,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
-            drawSelf:
+        drawSelf:
             //绘制本体的地方
             sinProgress = (float)Math.Sin(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
             r = (int)(174.5f + sinProgress * 42.5f);

@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.RedJadeItems
             Item.maxStack = 99;
             Item.useAnimation = 15;
             Item.useTime = 10;
-            Item.value = Item.sellPrice(0,0,10,0);
+            Item.value = Item.sellPrice(0, 0, 10, 0);
             Item.rare = ItemRarityID.Blue;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTurn = true;

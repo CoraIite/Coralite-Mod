@@ -12,7 +12,7 @@ namespace Coralite.Content.Bosses.Rediancie
     public class RediancieBossBar : ModBossBar
     {
         private int bossHeadIndex = -1;
-        public override string Texture => AssetDirectory.Rediancie+Name;
+        public override string Texture => AssetDirectory.Rediancie + Name;
 
         public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame)
         {
@@ -36,7 +36,7 @@ namespace Coralite.Content.Bosses.Rediancie
             Point topLeftOffset = new Point(66, 20); //框框左上角的位置
             int frameCount = 4;
 
-            int scale = (int)(barSize.X * npc.life / npc.lifeMax);
+            int scale = barSize.X * npc.life / npc.lifeMax;
             scale -= scale % 2;
 
             Rectangle barPosition = Utils.CenteredRectangle(barCenter, (barSize + new Point(4, 0)).ToVector2());
@@ -54,7 +54,7 @@ namespace Coralite.Content.Bosses.Rediancie
             topLeft = barTopLeft - topLeftOffset.ToVector2();
 
             // 条条
-            Rectangle barFrame = barTexture.Frame(verticalFrames: frameCount, frameY: 1);   //这里和原版的不i一样 抄的时候注意点
+            Rectangle barFrame = barTexture.Frame(verticalFrames: frameCount, frameY: 1);   //这里和原版的不一样 抄的时候注意点
             barFrame.X += topLeftOffset.X;
             barFrame.Y += topLeftOffset.Y;
             barFrame.Width = 2;
@@ -65,7 +65,7 @@ namespace Coralite.Content.Bosses.Rediancie
             spriteBatch.Draw(barTexture, barTopLeft, barFrame, barColor, 0f, Vector2.Zero, stretchScale, SpriteEffects.None, 0f);
 
             // 顶端的绘制
-            Rectangle tipFrame = barTexture.Frame(verticalFrames: frameCount, frameY: 2);  //这里和原版的不i一样 抄的时候注意点
+            Rectangle tipFrame = barTexture.Frame(verticalFrames: frameCount, frameY: 2);  //这里和原版的不一样 抄的时候注意点
             tipFrame.X += topLeftOffset.X;
             tipFrame.Y += topLeftOffset.Y;
             tipFrame.Width = 2;
@@ -77,7 +77,7 @@ namespace Coralite.Content.Bosses.Rediancie
             Rectangle frameFrame = barTexture.Frame(verticalFrames: frameCount, frameY: 0);
             spriteBatch.Draw(barTexture, topLeft, frameFrame, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
-            //图标的绘制 
+            //图标的绘制
             Vector2 iconOffset = new Vector2(34f, 14f);     //应该在哪绘制图标
             Vector2 iconSize = new Vector2(26f, 28f);   //这个要跟着贴图变化
             Vector2 iconPos = iconOffset + iconSize / 2f;

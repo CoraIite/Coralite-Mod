@@ -1,6 +1,4 @@
-﻿
-using System.Collections.Generic;
-using Terraria.ModLoader.Default;
+﻿using System.Collections.Generic;
 using Terraria.UI;
 
 namespace Coralite.Core

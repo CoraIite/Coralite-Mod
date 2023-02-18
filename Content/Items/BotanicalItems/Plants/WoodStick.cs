@@ -5,7 +5,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.BotanicalItems.Plants
 {
-    public class WoodStick:BaseMaterial
+    public class WoodStick : BaseMaterial
     {
         public WoodStick() : base("木棍", "就只是木棍而已", 9999, 0, ItemRarityID.White, AssetDirectory.OtherItems) { }
 
@@ -13,12 +13,12 @@ namespace Coralite.Content.Items.BotanicalItems.Plants
         {
             //木头
             Recipe recipe = CreateRecipe();
-            recipe.ReplaceResult(ItemID.Wood,5);
+            recipe.ReplaceResult(ItemID.Wood, 5);
             recipe.AddIngredient<WoodStick>(15);
             recipe.Register();
 
             //木箭
-            recipe=CreateRecipe();
+            recipe = CreateRecipe();
             recipe.ReplaceResult(ItemID.WoodenArrow, 15);
             recipe.AddIngredient<WoodStick>();
             recipe.AddIngredient(ItemID.StoneBlock);
@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.BotanicalItems.Plants
             recipe = CreateRecipe();
             recipe.ReplaceResult(ItemID.HolyArrow, 250);
             recipe.AddIngredient<WoodStick>(25);
-            recipe.AddIngredient(ItemID.PixieDust,2);
+            recipe.AddIngredient(ItemID.PixieDust, 2);
             recipe.AddIngredient(ItemID.UnicornHorn);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();

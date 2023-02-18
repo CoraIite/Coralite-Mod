@@ -1,13 +1,13 @@
-﻿using Terraria.GameContent.Creative;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
-using Coralite.Core;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class EternalFlower:ModItem
+    public class EternalFlower : ModItem
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 
@@ -59,9 +59,9 @@ namespace Coralite.Content.Items.BossSummons
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.Ectoplasm,33)
+                .AddIngredient(ItemID.Ectoplasm, 33)
                 .AddIngredient(ItemID.Vine, 3)
-                .AddIngredient(ItemID.JungleSpores,9)
+                .AddIngredient(ItemID.JungleSpores, 9)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

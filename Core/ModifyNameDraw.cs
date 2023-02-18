@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
@@ -18,7 +17,7 @@ namespace Coralite.Core
     /// 我只是简单的复制黏贴（甚至删了一堆注释）
     /// 请支持原作者Cyril大大
     /// </summary>
-    public class ModifyNameDraw:ModSystem
+    public class ModifyNameDraw : ModSystem
     {
         public static Type _uiModItemType;
         public static MethodInfo _drawMethod;
@@ -69,7 +68,7 @@ namespace Coralite.Core
                 _renderTarget2D = null;
         }
 
-        private void DrawMyName(DrawDelegate orig,object uiModItem,SpriteBatch spriteBatch)
+        private void DrawMyName(DrawDelegate orig, object uiModItem, SpriteBatch spriteBatch)
         {
             orig.Invoke(uiModItem, spriteBatch);
 

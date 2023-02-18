@@ -66,7 +66,7 @@ namespace Coralite.Core.Prefabs.Tiles
             name.SetDefault(mapName);
             tile.AddMapEntry(mapColor, name);
         }
-        
+
         /// <summary>
         /// 设置种在天花板上的植物基本信息
         /// <para>AnchorValidTiles默认应为TileID.Grass</para>

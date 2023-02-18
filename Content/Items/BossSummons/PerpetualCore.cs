@@ -1,9 +1,9 @@
-﻿using Terraria.GameContent.Creative;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
-using Coralite.Core;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
 {

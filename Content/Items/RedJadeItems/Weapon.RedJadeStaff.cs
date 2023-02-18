@@ -9,16 +9,16 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.RedJadeItems
 {
-    public class RedJadeStaff:ModItem
+    public class RedJadeStaff : ModItem
     {
-        public override string Texture => AssetDirectory.RedJadeItems+Name;
+        public override string Texture => AssetDirectory.RedJadeItems + Name;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("赤岩杖");
 
             Tooltip.SetDefault("射出赤玉光束，偶尔会产生爆炸");
-            
+
         }
 
         public override void SetDefaults()
@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.RedJadeItems
             Item.autoReuse = true;
             Item.useTurn = false;
             Item.noMelee = true;
-            Item.staff[Item.type] = true;
+            Item.staff[Type] = true;
             Item.shoot = ModContent.ProjectileType<RedJadeBeam>();
             Item.value = Item.sellPrice(0, 0, 50, 0);
             Item.rare = ItemRarityID.Green;

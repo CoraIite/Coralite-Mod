@@ -33,7 +33,7 @@ namespace Coralite.Core.Prefabs.Tiles
             //没有物块直接放
             if (!tile.HasTile)
                 return true;
-            if (!topTile.HasTile&&WorldGen.SolidTile(topTile))//顶部必须有方块
+            if (!topTile.HasTile && WorldGen.SolidTile(topTile))//顶部必须有方块
                 return false;
 
             //有物块的时候，这个物块和自己是不是一样的物块，并且如果这个物块状态是成熟那就直接替换

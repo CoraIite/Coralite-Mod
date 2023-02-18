@@ -36,10 +36,10 @@ namespace Coralite.Content.Items.ShadowItems
 
         public override void AddRecipes()
         {
-             CreateRecipe()
-            .AddIngredient(ModContent.ItemType<ShadowCrystal>(), 8)
-            .AddTile(TileID.Anvils)
-            .Register();
+            CreateRecipe()
+           .AddIngredient(ModContent.ItemType<ShadowCrystal>(), 8)
+           .AddTile(TileID.Anvils)
+           .Register();
         }
     }
 }

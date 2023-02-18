@@ -14,7 +14,7 @@ namespace Coralite.Core.Prefabs.Items
         private readonly string TexturePath;
         private readonly bool PathHasName;
 
-        protected BasePlantMaterial(string name, string tooltip, int maxstack, int value, int rare, string texturePath=AssetDirectory.Plants, bool pathHasName = false)
+        protected BasePlantMaterial(string name, string tooltip, int maxstack, int value, int rare, string texturePath = AssetDirectory.Plants, bool pathHasName = false)
         {
             _Name = name;
             _Tooltip = tooltip;

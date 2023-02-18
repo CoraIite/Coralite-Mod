@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,7 +19,7 @@ namespace Coralite.Content.Items.Weapons
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.Pink;
- 
+
             Item.damage = 10;
             Item.DamageType = DamageClass.Melee;
             Item.useStyle = ItemUseStyleID.Swing;

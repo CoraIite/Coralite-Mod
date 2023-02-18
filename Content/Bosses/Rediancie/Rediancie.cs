@@ -45,10 +45,12 @@ namespace Coralite.Content.Bosses.Rediancie
 
         Player target => Main.player[NPC.target];
 
-        internal ref float yFrame => ref NPC.ai[0];
         internal ref float State => ref NPC.ai[1];
         internal ref float Timer => ref NPC.ai[2];
 
+        public readonly Color red = new Color(221, 50, 50);
+        public readonly Color grey = new Color(91, 93, 102);
+        public const int ON_KILL_ANIM_TIME = 250;
         public bool exchangeState = true;
 
         #region tml hooks
@@ -65,7 +67,8 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void SetDefaults()
         {
-            NPC.width = NPC.height = 70;
+            NPC.width = 60;
+            NPC.height = 85;
             NPC.damage = 25;
             NPC.defense = 8;
             NPC.lifeMax = 1500;
@@ -79,6 +82,10 @@ namespace Coralite.Content.Bosses.Rediancie
             NPC.boss = true;
 
             NPC.BossBar = GetInstance<RediancieBossBar>();
+
+            //if (!Main.dedServ)
+            //    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/RediancieMusic");
+
         }
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -97,6 +104,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<RediancieRelic>()));
             npcLoot.Add(ItemDropRule.BossBag(ItemType<RediancieBossBag>()));
             npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
 
@@ -108,15 +116,20 @@ namespace Coralite.Content.Bosses.Rediancie
         public override void OnKill()
         {
             for (int j = 0; j < 3; j++)
-                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(2, 2), Mod.Find<ModGore>("StoneImitator_Gore0").Type);
+            {
+                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, 1).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore2").Type);
+                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, 1).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore3").Type);
+                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, -3).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore4").Type);
+                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, -3).RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)), Mod.Find<ModGore>("Rediancie_Gore0").Type);
+            }
 
-            Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(2, 2), Mod.Find<ModGore>("StoneImitator_Gore1").Type);
+            Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, -3).RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)), Mod.Find<ModGore>("Rediancie_Gore1").Type);
         }
 
         public override void Load()
         {
-            for (int i = 0; i < 2; i++)
-                GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.Gores + "StoneImitator_Gore" + i);
+            for (int i = 0; i < 5; i++)
+                GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.BossGores + "Rediancie_Gore" + i);
         }
 
         public override void HitEffect(int hitDirection, double damage)
@@ -131,26 +144,37 @@ namespace Coralite.Content.Bosses.Rediancie
         public override void OnSpawn(IEntitySource source)
         {
             NPC.TargetClosest(false);
-            if (Main.netMode!=NetmodeID.MultiplayerClient)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                if (Main.masterMode)
-                    State = (int)AIStates.dash;
-                else
-                    State = (int)AIStates.explosion;
-
+                State = (int)AIStates.onSpawnAnim;
+                NPC.Center = target.Center - new Vector2(0, 600);
                 NPC.netUpdate = true;
             }
+        }
+
+        public enum AIStates : int
+        {
+            onKillAnim = -3,
+            onSpawnAnim = -2,
+            accumulate = -1,
+            dash = 0,
+            explosion = 1,
+            upShoot = 2,
+            magicShoot = 3,
+            summon = 4
         }
 
         public override void AI()
         {
             #region frame
             NPC.frameCounter++;
-            if (NPC.frameCounter > 5)
+            int frameTime = State == -3 ? 10 : 5;
+
+            if (NPC.frameCounter > frameTime)
             {
-                yFrame += 1;
-                if (yFrame == 13)
-                    yFrame = 0;
+                NPC.frame.Y += 1;
+                if (NPC.frame.Y == 13)
+                    NPC.frame.Y = 0;
                 NPC.frameCounter = 0;
             }
             #endregion
@@ -167,32 +191,64 @@ namespace Coralite.Content.Bosses.Rediancie
                 return;
             }
 
-            NPC.direction = NPC.spriteDirection = target.position.X > NPC.position.X ? 1 : -1;
+            NPC.direction = NPC.spriteDirection = target.Center.X > NPC.Center.X ? 1 : -1;
             NPC.directionY = target.Center.Y > NPC.Center.Y ? 1 : -1;
             switch (State)
             {
-                case (int)AIStates.Accumulate:          //追逐玩家并蓄力爆炸
+                case (int)AIStates.onKillAnim:
                     {
-                        //控制X方向的移动
-                        if (Timer < 225)
-                        {
-                            Helper.NPCMovment_OneLine(ref NPC.velocity.X, NPC.direction, 7f, 0.1f, 0.15f, 0.97f);
+                        SlowDownAndGoUp(0.96f, -0.05f, -0.5f);
+                        if (Timer < 30)
+                            break;
 
-                            //控制Y方向的移动
-                            float yLenth = Math.Abs(target.Center.Y - NPC.Center.Y);
-                            if (yLenth > 30)
-                                Helper.NPCMovment_OneLine(ref NPC.velocity.Y, NPC.directionY, 4.5f, 0.06f, 0.08f, 0.97f);
-                            else
-                                NPC.velocity.Y *= 0.96f;
-                        }
-                        else
+                        if (Timer > 40 && Timer % 20 == 0 && Main.netMode != NetmodeID.Server)
                         {
-                            NPC.velocity *= 0.99f;
+                            Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, 1).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore2").Type);
+                            Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, 1).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore3").Type);
+                            Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, -3).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore4").Type);
+                        }
+
+                        if (Timer < 230 && Timer % 15 == 0 && Main.netMode != NetmodeID.Server)
+                        {
+                            Helper.PlayPitched("RedJade/RedJadeBoom", 0.4f, 0f, NPC.Center);
+
+                            Vector2 center = NPC.Center + Main.rand.NextVector2Circular(30, 40);
+                            for (int i = 0; i < 8; i++)
+                            {
+                                Dust.NewDustPerfect(center, DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(6, 6), 0, red, Main.rand.NextFloat(1f, 1.5f));
+                                Dust.NewDustPerfect(center, DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(4, 4), 0, grey, Main.rand.NextFloat(0.8f, 1.2f));
+                            }
+                        }
+
+                        if (Timer == 245)
+                        {
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
+                            if (Main.netMode != NetmodeID.Server)
+                            {
+                                var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
+                                Main.instance.CameraModifiers.Add(modifier);
+                            }
+
+
+                        }
+
+                        if (Timer > ON_KILL_ANIM_TIME)
+                            NPC.Kill();
+                    }
+                    break;
+                case (int)AIStates.onSpawnAnim:         //生成时的动画
+                    {
+                        if (Timer == 0)
+                        {
+                            //生成动画弹幕
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_OnSpawnAnim>(), 0, 0);
+                            NPC.velocity = new Vector2(0, 1.5f);
+                            NPC.dontTakeDamage = true;
                         }
 
                         if (Timer % 5 == 0 && Main.netMode != NetmodeID.Server)
                         {
-                            int count = (int)Timer / 20;
+                            int count = (int)Timer / 25;
                             for (int i = 0; i < count; i++)
                             {
                                 Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
@@ -200,7 +256,59 @@ namespace Coralite.Content.Bosses.Rediancie
                             }
                         }
 
-                        if (Timer == 235)       //生成弹幕
+                        if (Timer > 120)
+                            NPC.velocity *= 0.998f;
+
+                        if (Timer == 260)
+                        {
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
+                            if (Main.netMode != NetmodeID.Server)
+                            {
+                                var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
+                                Main.instance.CameraModifiers.Add(modifier);
+                            }
+                        }
+
+                        if (Timer == 270 && Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            State = (int)AIStates.explosion;
+                            Timer = 0;
+                            NPC.TargetClosest();
+                            NPC.dontTakeDamage = false;
+                            NPC.netUpdate = true;
+                        }
+                    }
+                    break;
+                case (int)AIStates.accumulate:          //追逐玩家并蓄力爆炸
+                    {
+                        //控制X方向的移动
+                        if (Timer < 325)
+                        {
+                            Helper.Movment_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 7f, 0.1f, 0.15f, 0.97f);
+
+                            //控制Y方向的移动
+                            float yLenth = Math.Abs(target.Center.Y - NPC.Center.Y);
+                            if (yLenth > 50)
+                                Helper.Movment_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4.5f, 0.06f, 0.08f, 0.97f);
+                            else
+                                NPC.velocity.Y *= 0.96f;
+
+                            if (Timer % 5 == 0 && Main.netMode != NetmodeID.Server)
+                            {
+                                int count = (int)Timer / 25;
+                                for (int i = 0; i < count; i++)
+                                {
+                                    Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
+                                    dust.noGravity = true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            NPC.velocity *= 0.995f;
+                        }
+
+                        if (Timer == 330)       //生成弹幕
                         {
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
                             if (Main.netMode != NetmodeID.Server)
@@ -210,7 +318,7 @@ namespace Coralite.Content.Bosses.Rediancie
                             }
                         }
 
-                        if (Timer > 250)
+                        if (Timer > 340)
                             ResetState();
 
                     }
@@ -229,19 +337,19 @@ namespace Coralite.Content.Bosses.Rediancie
 
                             if (realTime < 20)
                             {
-                                Helper.NPCMovment_OneLine(ref NPC.velocity.X, NPC.direction, 2f, 0.1f, 0.1f, 0.97f);
+                                Helper.Movment_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 2f, 0.1f, 0.1f, 0.97f);
 
                                 //控制Y方向的移动
                                 float yLenth = Math.Abs(target.Center.Y - NPC.Center.Y);
-                                if (yLenth > 30)
-                                    Helper.NPCMovment_OneLine(ref NPC.velocity.Y, NPC.directionY, 2f, 0.1f, 0.1f, 0.97f);
+                                if (yLenth > 50)
+                                    Helper.Movment_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 2f, 0.1f, 0.1f, 0.97f);
                                 else
                                     NPC.velocity.Y *= 0.96f;
                                 break;
                             }
 
                             if (realTime == 22)
-                                NPC.velocity = (target.Center + new Vector2(0, (int)Timer / 100 % 2 == 0 ? 250 : -250) - NPC.Center).SafeNormalize(Vector2.One) * 10f;
+                                NPC.velocity = (target.Center + new Vector2(0, (int)Timer / 100 % 2 == 0 ? 200 : -200) - NPC.Center).SafeNormalize(Vector2.One) * 10f;
 
                             //边冲边炸
                             if (realTime < 71)
@@ -263,12 +371,12 @@ namespace Coralite.Content.Bosses.Rediancie
                 case (int)AIStates.explosion:       //追着玩家并爆炸
                     {
                         //控制X方向的移动
-                        Helper.NPCMovment_OneLine(ref NPC.velocity.X, NPC.direction, 6f, 0.09f, 0.22f, 0.97f);
+                        Helper.Movment_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6f, 0.09f, 0.22f, 0.97f);
 
                         //控制Y方向的移动
                         float yLenth2 = Math.Abs(target.Center.Y - NPC.Center.Y);
-                        if (yLenth2 > 30)
-                            Helper.NPCMovment_OneLine(ref NPC.velocity.Y, NPC.directionY, 4.5f, 0.06f, 0.06f, 0.97f);
+                        if (yLenth2 > 50)
+                            Helper.Movment_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4.5f, 0.06f, 0.06f, 0.97f);
                         else
                             NPC.velocity.Y *= 0.96f;
 
@@ -291,7 +399,7 @@ namespace Coralite.Content.Bosses.Rediancie
                     break;
                 case (int)AIStates.upShoot:         //朝上连续射击
                     {
-                        SlowDownAndGoUp();
+                        SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
 
                         //隔固定时间射弹幕
                         if (Timer % 25 == 0)
@@ -307,7 +415,7 @@ namespace Coralite.Content.Bosses.Rediancie
                     break;
                 case (int)AIStates.magicShoot:      //蓄力射3发魔法弹幕
                     {
-                        SlowDownAndGoUp();
+                        SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
 
                         if (Main.netMode != NetmodeID.Server && Timer % 3 == 0)
                             for (int i = 0; i < 6; i++)
@@ -333,7 +441,7 @@ namespace Coralite.Content.Bosses.Rediancie
                     break;
                 case (int)AIStates.summon:          //召唤小赤玉灵
                     {
-                        SlowDownAndGoUp();
+                        SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
 
                         if (Main.netMode != NetmodeID.Server && Timer % 10 == 0)
                             for (int i = 0; i < 6; i++)
@@ -358,7 +466,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
             }
 
-            NPC.rotation = NPC.velocity.ToRotation() * 0.05f * NPC.direction;
+            NPC.rotation = NPC.velocity.ToRotation() * 0.06f * NPC.direction;
             Timer++;
         }
 
@@ -387,7 +495,7 @@ namespace Coralite.Content.Bosses.Rediancie
                             _ => (int)AIStates.upShoot
                         };
                     else if (Main.masterMode)
-                        State = (int)(Main.rand.NextBool() ? AIStates.Accumulate : AIStates.dash);
+                        State = (int)(Main.rand.NextBool() ? AIStates.accumulate : AIStates.dash);
                     else
                         State = (int)AIStates.explosion;
 
@@ -397,8 +505,8 @@ namespace Coralite.Content.Bosses.Rediancie
                 //正常时的招式
                 if (State <= 1)
                     State = Main.rand.NextBool() ? (int)AIStates.upShoot : (int)AIStates.magicShoot;
-                else if(Main.masterMode)
-                    State = Main.rand.NextBool() ? (int)AIStates.explosion : (int)AIStates.Accumulate;
+                else if (Main.masterMode)
+                    State = Main.rand.NextBool() ? (int)AIStates.explosion : (int)AIStates.accumulate;
                 else
                     State = (int)AIStates.explosion;
 
@@ -409,12 +517,12 @@ namespace Coralite.Content.Bosses.Rediancie
             NPC.netUpdate = true;
         }
 
-        public void SlowDownAndGoUp()
+        public void SlowDownAndGoUp(float slowDownX, float accelY, float velocityLimitY)
         {
-            NPC.velocity.X *= 0.98f;
-            NPC.velocity.Y += -0.1f;
-            if (NPC.velocity.Y < -1f)
-                NPC.velocity.Y = -1f;
+            NPC.velocity.X *= slowDownX;
+            NPC.velocity.Y += accelY;
+            if (NPC.velocity.Y < velocityLimitY)
+                NPC.velocity.Y = velocityLimitY;
         }
 
         public static int OwnedMinionMax()
@@ -430,6 +538,20 @@ namespace Coralite.Content.Bosses.Rediancie
 
         #endregion
 
+        public override bool CheckDead()
+        {
+            if (State != -3)
+            {
+                State = -3;
+                Timer = 0;
+                NPC.dontTakeDamage = true;
+                NPC.life = 1;
+                return false;
+            }
+
+            return true;
+        }
+
         #region Draw
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -438,7 +560,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
             int frameWidth = mainTex.Width;
             int frameHeight = mainTex.Height / Main.npcFrameCount[NPC.type];
-            Rectangle frameBox = new Rectangle(0, (int)yFrame * frameHeight, frameWidth, frameHeight);
+            Rectangle frameBox = new Rectangle(0, NPC.frame.Y * frameHeight, frameWidth, frameHeight);
 
             SpriteEffects effects = SpriteEffects.None;
             Vector2 origin = new Vector2(frameWidth / 2, frameHeight / 2);
@@ -451,15 +573,5 @@ namespace Coralite.Content.Bosses.Rediancie
         }
 
         #endregion
-    }
-
-    public enum AIStates : int
-    {
-        Accumulate = -1,
-        dash = 0,
-        explosion = 1,
-        upShoot = 2,
-        magicShoot = 3,
-        summon = 4
     }
 }

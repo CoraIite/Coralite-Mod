@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using On.Terraria.Graphics.Effects;
+﻿using Coralite.Core;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using On.Terraria.Graphics.Effects;
 using Terraria;
-using Coralite.Core;
 
 namespace Coralite.Content.CustomHooks
 {
@@ -11,7 +11,7 @@ namespace Coralite.Content.CustomHooks
         //抄自yiyang233的MEAC
         //应该不会对别的东西有什么影响
         public override SafetyLevel Safety => base.Safety;
-        
+
         public override void Load()
         {
             FilterManager.EndCapture += new FilterManager.hook_EndCapture(FilterManager_EndCapture);

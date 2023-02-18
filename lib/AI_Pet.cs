@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
-using Microsoft.Xna.Framework;
 
 namespace Coralite.lib
 {
     public class AI_Pet
     {
-        static float  gravityAccel = 0.4f;
+        static float gravityAccel = 0.4f;
 
-        public void PetAI(Projectile Projectile,float offset,int closedLenth=500)
+        public void PetAI(Projectile Projectile, float offset, int closedLenth = 500)
         {
             Player owner = Main.player[Projectile.owner];
 
@@ -26,7 +26,7 @@ namespace Coralite.lib
             int ClosedLenth = closedLenth;
             int Lenth_85 = 85;
 
-            float State =  Projectile.ai[0];
+            float State = Projectile.ai[0];
 
             // 判断弹幕在人物左还是右
             if (owner.Center.X - owner.direction * offset < Projectile.Center.X - Lenth_85)
@@ -40,7 +40,7 @@ namespace Coralite.lib
 
             Vector2 Center = Projectile.Center;
 
-            float DistanceToOwner_X = owner.Center.X-owner.direction*offset - Center.X;
+            float DistanceToOwner_X = owner.Center.X - owner.direction * offset - Center.X;
             float DistanceToOwner_Y = owner.Center.Y - Center.Y;
             float DistanceToOwner = (float)Math.Sqrt(DistanceToOwner_X * DistanceToOwner_X + DistanceToOwner_Y * DistanceToOwner_Y);
 
@@ -239,7 +239,7 @@ namespace Coralite.lib
                     if (WorldGen.SolidTile(ProjToTile_X, ProjToTilePlus1_Y))
                         Projectile.tileCollide = false;
                     else
-                        Projectile.tileCollide=true;
+                        Projectile.tileCollide = true;
                 }
 
                 if (Projectile.velocity.X > speedmax)
@@ -248,10 +248,10 @@ namespace Coralite.lib
                 if (Projectile.velocity.X < 0f - speedmax)
                     Projectile.velocity.X = 0f - speedmax;
 
-                if(Projectile.velocity.X!=0f)
+                if (Projectile.velocity.X != 0f)
                     Projectile.direction = Math.Sign(Projectile.velocity.X);
                 else
-                    Projectile.direction = Math.Sign(owner.position.X-Projectile.position.X);
+                    Projectile.direction = Math.Sign(owner.position.X - Projectile.position.X);
 
                 if (Projectile.velocity.X > accel || projInLeft)
                     Projectile.direction = 1;
@@ -262,11 +262,11 @@ namespace Coralite.lib
                 Projectile.spriteDirection = -Projectile.direction;
 
                 //重力以及最大速度
-                Gravity(Projectile,gravityAccel);
+                Gravity(Projectile, gravityAccel);
             }
         }
 
-        public void Gravity(Projectile Projectile,float grivityAccel)
+        public void Gravity(Projectile Projectile, float grivityAccel)
         {
             Projectile.velocity.Y += grivityAccel;
             if (Projectile.velocity.Y > 10f)

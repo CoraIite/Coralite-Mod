@@ -1,8 +1,8 @@
-﻿using Coralite.Core;
-using Terraria.ModLoader;
+﻿using Coralite.Content.Projectiles.RedJadeProjectiles;
+using Coralite.Core;
 using Terraria;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using Coralite.Content.Projectiles.RedJadeProjectiles;
 
 namespace Coralite.Content.Buffs
 {

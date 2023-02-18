@@ -23,9 +23,9 @@ namespace Coralite.Content.NPCs.ShadowNPCs
         public const int FRAME_HEIGHT = 64;
 
         public ref float TargetTimer => ref NPC.ai[0];
-        public ref float JumpCount=>ref NPC.ai[1];
-        public ref float FrameX=>ref NPC.localAI[0];
-        public ref float FrameY=>ref NPC.localAI[1];
+        public ref float JumpCount => ref NPC.ai[1];
+        public ref float FrameX => ref NPC.localAI[0];
+        public ref float FrameY => ref NPC.localAI[1];
 
         public override void SetStaticDefaults()
         {
@@ -70,9 +70,9 @@ namespace Coralite.Content.NPCs.ShadowNPCs
                     if (NPC.frameCounter % 8 == 0)//8帧动一下
                     {
                         FrameY++;
-                        if (FrameY==9)//生成弹幕
+                        if (FrameY == 9)//生成弹幕
                             Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Top + new Vector2(0, -8), (Target.Center - (NPC.Top + new Vector2(0, -8))).SafeNormalize(Vector2.UnitY) * 8f, ModContent.ProjectileType<ShadowGolemBall>(), 40, 4);
-                        else if (FrameY>=11)//发射完成，回到默认状态
+                        else if (FrameY >= 11)//发射完成，回到默认状态
                         {
                             TargetTimer = 0;
                             FrameX = 0;
@@ -84,7 +84,7 @@ namespace Coralite.Content.NPCs.ShadowNPCs
                     break;
 
                 case 0f://寻找玩家
-                    JumpCount -=2f;
+                    JumpCount -= 2f;
                     NPC.TargetClosest(true);
                     if (Main.rand.NextBool(3))//进入发射弹幕状态
                     {
@@ -95,7 +95,7 @@ namespace Coralite.Content.NPCs.ShadowNPCs
                     else//默认状态
                     {
                         FrameX = 0;
-                        if (Main.netMode!=NetmodeID.MultiplayerClient)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                             TargetTimer = Main.rand.Next(200, 330);
                     }
 
@@ -156,7 +156,7 @@ namespace Coralite.Content.NPCs.ShadowNPCs
             bool FaceSoildTile = false;
 
             int Top2Tile_X = (int)NPC.Top.X / 16;
-            int Top2Tile_Y = (int)(NPC.Top.Y / 16)-1;
+            int Top2Tile_Y = (int)(NPC.Top.Y / 16) - 1;
             int Position2Tile_X = (int)NPC.Center.X / 16;
             int Position2Tile_Y = (int)NPC.Center.Y / 16;
 
@@ -170,7 +170,7 @@ namespace Coralite.Content.NPCs.ShadowNPCs
 
             //如果面对的是实心物块以及头顶上有实心物块那么就跳不起来
             for (int i = -1; i < 2; i++)
-                if (WorldGen.SolidTile(Top2Tile_X + i, Top2Tile_Y)&&FaceSoildTile)
+                if (WorldGen.SolidTile(Top2Tile_X + i, Top2Tile_Y) && FaceSoildTile)
                 {
                     JumpCount += 0.1f;
                     return;
@@ -189,8 +189,8 @@ namespace Coralite.Content.NPCs.ShadowNPCs
                         jumpAccel = -MathF.Sqrt(i) * 3.3f - 0.1f;
                 }
 
-                NPC.velocity.Y=jumpAccel;
-                    JumpCount += 1f;
+                NPC.velocity.Y = jumpAccel;
+                JumpCount += 1f;
 
             }
         }
@@ -211,7 +211,7 @@ namespace Coralite.Content.NPCs.ShadowNPCs
 
         public override void Load()
         {
-            for (int i = 0; i <2; i++)
+            for (int i = 0; i < 2; i++)
                 GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.ShadowGores + "ShadowGolem_Gore" + i);
 
         }

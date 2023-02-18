@@ -1,15 +1,17 @@
 ﻿using Coralite.Core;
-using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using System;
-using Terraria.ModLoader;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Xna.Framework;
+using Terraria.ModLoader;
 
 namespace Coralite
 {
-	public class Coralite : Mod
-	{
+    public class Coralite : Mod
+    {
+        public const int YujianHuluContainsMax = 10;
+
         public readonly Color RedJadeRed;
 
         private List<IOrderedLoadable> loadCache;
@@ -24,7 +26,7 @@ namespace Coralite
         }
 
         public override void Load()
-		{
+        {
             loadCache = new List<IOrderedLoadable>();
 
             foreach (Type type in Code.GetTypes())
@@ -44,9 +46,9 @@ namespace Coralite
                 //SetLoadingText("Loading " + loadCache[k].GetType().Name);     //使用反射来显示加载的内容，但我暂时不需要（
             }
         }
-		
-		public override void Unload()
-		{
+
+        public override void Unload()
+        {
             foreach (var loadable in loadCache)
             {
                 loadable.Unload();

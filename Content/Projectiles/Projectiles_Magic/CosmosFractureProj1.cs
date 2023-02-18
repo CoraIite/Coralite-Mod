@@ -1,13 +1,13 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
-using Coralite.Helpers;
-using Terraria.Graphics.CameraModifiers;
-using Coralite.Core.Prefabs.Projectiles;
 using Terraria.GameContent;
+using Terraria.Graphics.CameraModifiers;
+using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Projectiles.Projectiles_Magic

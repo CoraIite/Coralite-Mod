@@ -1,6 +1,4 @@
-﻿using Terraria;
-using Terraria.ModLoader;
-
+﻿
 //namespace Coralite.Core.Loaders
 //{
 //    class KeybindLoader : IOrderedLoadable

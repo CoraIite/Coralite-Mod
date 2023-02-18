@@ -26,7 +26,7 @@ namespace Coralite.Content.Tiles.Plants
 
         public override void DropItemWithStaffOfRegrowth(PlantStage stage, ref int rarePlantStack, ref int plantItemStack, ref int seedItemStack)
         {
-            if (stage==PlantStage.Grown)
+            if (stage == PlantStage.Grown)
                 plantItemStack = Main.rand.Next(3, 5);
 
             seedItemStack = Main.rand.Next(1, 3);

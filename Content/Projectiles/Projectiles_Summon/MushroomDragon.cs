@@ -1,14 +1,14 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Buffs;
+using Coralite.Core;
 using Coralite.Helpers;
-using System;
-using Terraria.ModLoader;
-using Terraria;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Coralite.Content.Buffs;
-using static Terraria.ModLoader.ModContent;
+using System;
+using Terraria;
 using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Projectiles.Projectile_Summon
 {

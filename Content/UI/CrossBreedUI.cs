@@ -339,7 +339,7 @@ namespace Coralite.Content.UI
                 return;
             }
 
-            if (!Main.mouseItem.IsAir && Item.IsAir ) //鼠标有物品并且UI内为空，放入
+            if (!Main.mouseItem.IsAir && Item.IsAir) //鼠标有物品并且UI内为空，放入
             {
                 Item = Main.mouseItem.Clone();
                 Main.mouseItem.TurnToAir();
@@ -348,7 +348,7 @@ namespace Coralite.Content.UI
                 return;
             }
 
-            if (!Main.mouseItem.IsAir && !Item.IsAir ) //都有物品，进行交换,或堆叠
+            if (!Main.mouseItem.IsAir && !Item.IsAir) //都有物品，进行交换,或堆叠
             {
                 Item heldItem = Main.mouseItem;
                 if (heldItem.type != Item.type)
@@ -579,7 +579,7 @@ namespace Coralite.Content.UI
                 Item heldItem = Main.mouseItem;
                 if (heldItem.type != Item.type)
                     return;
-                
+
                 BotanicalItem b1 = heldItem.GetBotanicalItem();
                 BotanicalItem b2 = Item.GetBotanicalItem();
 
@@ -739,7 +739,7 @@ namespace Coralite.Content.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = Request<Texture2D>(AssetDirectory.UI + "CrossBreedPanel").Value;
-            spriteBatch.Draw(mainTex, GetDimensions().Center(), null, Color.White, 0, mainTex.Size() / 2, 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(mainTex, GetDimensions().Center(), Color.White);
 
             if (IsMouseHovering)
                 Main.LocalPlayer.mouseInterface = true;

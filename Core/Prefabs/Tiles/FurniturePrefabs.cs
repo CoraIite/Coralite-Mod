@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
-using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -13,7 +12,7 @@ namespace Coralite.Core.Prefabs.Tiles
 {
     public static class FurniturePrefabs
     {
-        public static void DoorOpenPrefab(this ModTile tile, int closeDoorID, int dustType, string mapName, Color mapColor,bool LavaDeath=true)
+        public static void DoorOpenPrefab(this ModTile tile, int closeDoorID, int dustType, string mapName, Color mapColor, bool LavaDeath = true)
         {
             Main.tileFrameImportant[tile.Type] = true;
             Main.tileSolid[tile.Type] = false;

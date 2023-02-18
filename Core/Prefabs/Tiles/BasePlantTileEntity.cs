@@ -1,9 +1,9 @@
 ﻿using Coralite.Core.Systems.BotanicalSystem;
-using Terraria.ID;
-using Terraria.ModLoader.IO;
-using Terraria.ModLoader;
-using Terraria;
 using Coralite.Helpers;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Prefabs.Tiles
 {

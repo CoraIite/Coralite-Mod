@@ -1,8 +1,8 @@
 ﻿using Coralite.Core;
 using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.ShadowItems
 {
@@ -24,9 +24,9 @@ namespace Coralite.Content.Items.ShadowItems
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.Orange;
-            Item.value = Item.sellPrice(0,0,5,50);
+            Item.value = Item.sellPrice(0, 0, 5, 50);
             Item.maxStack = 999;
-            Item.height = Item.width= 40;
+            Item.height = Item.width = 40;
         }
     }
 }

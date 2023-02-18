@@ -81,7 +81,7 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
 
         public void OnChannel()
         {
-            if (timer ==0)
+            if (timer == 0)
             {
                 direction = (Projectile.Center - Owner.Center).ToRotation();
                 lenth = (Owner.Center - Projectile.Center).Length();

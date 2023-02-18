@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
 using Coralite.Content.Items.RedJadeItems;
 using Coralite.Core;
-using System.Security.Cryptography.X509Certificates;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;

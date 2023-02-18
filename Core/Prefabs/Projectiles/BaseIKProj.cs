@@ -1,14 +1,9 @@
 ﻿using Coralite.Core.Systems.IKSystem;
-using Coralite.Helpers;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using System;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
-using static Coralite.Core.VertexInfos;
-using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {

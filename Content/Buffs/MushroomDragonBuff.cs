@@ -1,7 +1,7 @@
-﻿using Coralite.Core;
-using Terraria.ModLoader;
+﻿using Coralite.Content.Projectiles.Projectile_Summon;
+using Coralite.Core;
 using Terraria;
-using Coralite.Content.Projectiles.Projectile_Summon;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Buffs
@@ -33,7 +33,7 @@ namespace Coralite.Content.Buffs
         public override bool RightClick(int buffIndex)
         {
             for (int i = 0; i < 1000; i++)
-                if (Main.projectile[i].active && Main.projectile[i].type == ProjectileType<MushroomDragon>() &&  Main.projectile[i].owner==Main.myPlayer)
+                if (Main.projectile[i].active && Main.projectile[i].type == ProjectileType<MushroomDragon>() && Main.projectile[i].owner == Main.myPlayer)
                     Main.projectile[i].Kill();
 
             return true;

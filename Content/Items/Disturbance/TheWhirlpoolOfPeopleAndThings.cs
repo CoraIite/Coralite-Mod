@@ -2,13 +2,12 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Disturbance
 {
     public class TheWhirlpoolOfPeopleAndThings : ModItem
     {
-        public override string Texture => AssetDirectory.DisturbanceItems+Name;
+        public override string Texture => AssetDirectory.DisturbanceItems + Name;
 
         public override void SetStaticDefaults()
         {
@@ -30,7 +29,7 @@ namespace Coralite.Content.Items.Disturbance
             Item.DamageType = DamageClass.Magic;
             Item.value = Item.sellPrice(0, 20, 0, 0);
             Item.rare = ItemRarityID.Red;
-           // Item.shoot = ProjectileType<StarBookProj1>();
+            // Item.shoot = ProjectileType<StarBookProj1>();
 
             Item.useTurn = true;
             Item.noMelee = true;

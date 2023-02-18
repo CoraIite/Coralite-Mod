@@ -73,16 +73,16 @@ namespace Coralite.Helpers
                 return false;
             }
 
-            entity=(T)TileEntity.ByID[index];
+            entity = (T)TileEntity.ByID[index];
             return true;
         }
 
-        public static bool TryGetTileEntityForMultTile<T>(ushort tileType,int i, int j, out T entity) where T : ModTileEntity
+        public static bool TryGetTileEntityForMultTile<T>(ushort tileType, int i, int j, out T entity) where T : ModTileEntity
         {
             Tile tile = Framing.GetTileSafely(i, j);
-            if (tile.TileType!=tileType)
+            if (tile.TileType != tileType)
             {
-                entity=null;
+                entity = null;
                 return false;
             }
 
@@ -105,7 +105,7 @@ namespace Coralite.Helpers
                 return false;
             }
 
-            finded:
+        finded:
             entity = (T)TileEntity.ByID[index];
             return true;
         }

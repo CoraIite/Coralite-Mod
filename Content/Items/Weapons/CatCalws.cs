@@ -174,7 +174,7 @@ namespace Coralite.Content.Items.Weapons
 
         private byte tripleCombo = 0;
 
-        public CatClawsProj_Slash() : base(3.141f,trailLength: 30) { }
+        public CatClawsProj_Slash() : base(3.141f, trailLength: 30) { }
 
         public override void SetDefs()
         {

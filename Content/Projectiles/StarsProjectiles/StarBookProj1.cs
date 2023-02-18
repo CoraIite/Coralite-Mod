@@ -6,12 +6,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.Audio;
-using Terraria.ID;
 using Terraria.DataStructures;
-using static Terraria.ModLoader.ModContent;
+using Terraria.GameContent;
+using Terraria.ID;
 using static Coralite.Core.VertexInfos;
+using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Projectiles.StarsProjectiles
 {
@@ -50,9 +50,9 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
 
         public override void OnSpawn(IEntitySource source)
         {
-            if (Main.myPlayer==Projectile.owner)
+            if (Main.myPlayer == Projectile.owner)
             {
-                _Rotation = Main.rand.Next(8) * 0.785f-1.57f;
+                _Rotation = Main.rand.Next(8) * 0.785f - 1.57f;
                 Projectile.netUpdate = true;
             }
         }
@@ -77,7 +77,7 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
             }
 
             //添加光亮
-            Lighting.AddLight(Projectile.Center, new Vector3(1f, 0.97f, 0.5f)*1.8f);
+            Lighting.AddLight(Projectile.Center, new Vector3(1f, 0.97f, 0.5f) * 1.8f);
 
             //控制scale，主要是绘制会变
             if (canExplore && LightScale < 0.4f)
@@ -92,7 +92,7 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
                     LightScale -= 0.03f;
                     Projectile.alpha -= 30;
                 }
-                    
+
                 if (LightScale < 0.2f)
                     Projectile.Kill();
             }
@@ -121,7 +121,7 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
             if (timer < 22 && timer % 3 == 0)
             {
                 //发射小符文
-                float rotate =_Rotation + 0.785f * (timer / 3);
+                float rotate = _Rotation + 0.785f * (timer / 3);
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + rotate.ToRotationVector2() * 120f, Vector2.Zero, ProjectileType<StarBookProj2>(), (int)(Projectile.damage * 0.7f * ((timer / 3) + 1) / 8), Projectile.knockBack, Projectile.owner);
             }
 
@@ -141,7 +141,7 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
             //控制所有的小符文转状态
             int projType = ProjectileType<StarBookProj2>();
             for (int i = 0; i < 1000; i++)
-                if (Main.projectile[i].type == projType && Main.projectile[i].owner == Projectile.owner && Main.projectile[i].ai[0]==0)
+                if (Main.projectile[i].type == projType && Main.projectile[i].owner == Projectile.owner && Main.projectile[i].ai[0] == 0)
                 {
                     Main.projectile[i].ai[0] = 1;
                     Main.projectile[i].velocity = Vector2.Normalize(Main.projectile[i].Center - Owner.Center) * 18f;
@@ -158,7 +158,7 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (completeAndRelease&&timer>1)
+            if (completeAndRelease && timer > 1)
             {
                 //绘制拖尾
                 DrawTrail();
@@ -219,7 +219,7 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
         public void DrawSelf()
         {
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
-            Vector2 origin = new Vector2(128,128);
+            Vector2 origin = new Vector2(128, 128);
 
             float cosProgress = Helper.Cos(timer * 0.1f);
             float currentScale = LightScale * (1f + (cosProgress * 0.1f));
@@ -235,7 +235,7 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
             currentScale = LightScale * (1.5f + (cosProgress * 0.3f));
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
                                     Color.White, timer * 0.15f, origin, currentScale, SpriteEffects.None, 0f);
-            a= (int)(140 + (cosProgress * 40));
+            a = (int)(140 + (cosProgress * 40));
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
                         new Color(255, 255, 255, a), -timer * 0.17f, origin, currentScale, SpriteEffects.FlipVertically, 0f);
 
@@ -253,7 +253,7 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
             Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 6);
             Rectangle source = new Rectangle(0, 255, 256, 256);
 
-            Main.spriteBatch.Draw(mainTex, Projectile.Center+new Vector2(Owner.direction * 20,-20) - Main.screenPosition, source, Color.White, timer * 0.1f, origin, LightScale, SpriteEffects.None, 0f) ;
+            Main.spriteBatch.Draw(mainTex, Projectile.Center + new Vector2(Owner.direction * 20, -20) - Main.screenPosition, source, Color.White, timer * 0.1f, origin, LightScale, SpriteEffects.None, 0f);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
@@ -282,7 +282,7 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
                 Color starYellow = new Color(255, 254, 191);
                 if (Main.netMode != NetmodeID.Server)
                     for (int i = 0; i < 2; i++)
-                        Dust.NewDustPerfect(target.position+ Main.rand.NextVector2CircularEdge(8, 8), DustType<HorizontalStar>(), Main.rand.NextVector2CircularEdge(1, 1), 0, starYellow, 0.3f);
+                        Dust.NewDustPerfect(target.position + Main.rand.NextVector2CircularEdge(8, 8), DustType<HorizontalStar>(), Main.rand.NextVector2CircularEdge(1, 1), 0, starYellow, 0.3f);
             }
         }
 
@@ -291,7 +291,7 @@ namespace Coralite.Content.Projectiles.StarsProjectiles
             Color starYellow = new Color(255, 254, 191);
             if (Main.netMode != NetmodeID.Server)
                 for (int i = 0; i < 6; i++)
-                    Dust.NewDustPerfect(Projectile.Center , DustType<HorizontalStar>(), Vector2.Normalize(Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.4f,0.4f)))*Main.rand.Next(6,9), 0, starYellow, 0.3f);
+                    Dust.NewDustPerfect(Projectile.Center, DustType<HorizontalStar>(), Vector2.Normalize(Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f))) * Main.rand.Next(6, 9), 0, starYellow, 0.3f);
         }
         #endregion
     }

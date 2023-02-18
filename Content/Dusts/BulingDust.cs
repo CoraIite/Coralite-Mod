@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Dusts
 {
-    public class BulingDust:ModDust
+    public class BulingDust : ModDust
     {
         public override string Texture => AssetDirectory.Dusts + "Buling2";
 

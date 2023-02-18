@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.RedJadeItems
 
             Tooltip.SetDefault("射出赤玉碎片，偶尔会产生爆炸");
         }
-        
+
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;

@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using System.Reflection;
-using static Terraria.ModLoader.Core.TmodFile;
-using Terraria.Graphics.Effects;
-using Terraria.ModLoader.Core;
-using Terraria.ModLoader;
 using Terraria;
+using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
+using Terraria.ModLoader;
+using Terraria.ModLoader.Core;
+using static Terraria.ModLoader.Core.TmodFile;
 
 namespace Coralite.Core.Loaders
 {

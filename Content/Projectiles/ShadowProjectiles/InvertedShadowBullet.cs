@@ -10,7 +10,7 @@ namespace Coralite.Content.Projectiles.ShadowProjectiles
     public class InvertedShadowBullet : ModProjectile
     {
         public override string Texture => AssetDirectory.ShadowProjectiles + Name;
-        public override string GlowTexture => AssetDirectory.ShadowProjectiles+Name+"_Glow";
+        public override string GlowTexture => AssetDirectory.ShadowProjectiles + Name + "_Glow";
 
         public override void SetDefaults()
         {
@@ -44,9 +44,9 @@ namespace Coralite.Content.Projectiles.ShadowProjectiles
             float direction = Projectile.velocity.ToRotation();
             for (int i = 0; i < 8; i++)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(5, 5), DustID.Granite, (direction + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.Next(6,8), 0, default, Main.rand.NextFloat(1.3f, 1.8f));
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(5, 5), DustID.Granite, (direction + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.Next(6, 8), 0, default, Main.rand.NextFloat(1.3f, 1.8f));
                 dust.noGravity = true;
-                dust= Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(5, 5), DustID.Shadowflame, (direction + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.Next(5, 7), 0, default, Main.rand.NextFloat(1.2f, 1.6f));
+                dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(5, 5), DustID.Shadowflame, (direction + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.Next(5, 7), 0, default, Main.rand.NextFloat(1.2f, 1.6f));
                 dust.noGravity = true;
             }
         }

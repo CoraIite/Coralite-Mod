@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Coralite.Core.Systems.BotanicalSystem;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Coralite.Core.Systems.BotanicalSystem;
 using Terraria;
 using Terraria.ModLoader;
 

@@ -5,12 +5,13 @@
 
 英文翻译将在tml更新1.4.4后逐渐完善
 The English translation will be gradually improved after tModLoader update 1.4.4
-(well...most are based on machine translation, because I am not good at english)
+(well...most are based on machine translation, because I am not good at English)
 
 目前已添加内容：
 	- 一些植物
 	- 植物杂交系统
-	- 一些新物品
+	- 一些物品
+	-一些武器
 	- 一些敌怪，包括一个小BOSS
 
 	后续将会完善植物学系统，植物学内容如下

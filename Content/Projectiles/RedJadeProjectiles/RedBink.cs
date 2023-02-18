@@ -1,14 +1,14 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Buffs;
+using Coralite.Core;
 using Coralite.Helpers;
-using Terraria.ModLoader;
-using Terraria;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Coralite.Content.Buffs;
-using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.DataStructures;
 using System;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Projectiles.RedJadeProjectiles
@@ -108,8 +108,8 @@ namespace Coralite.Content.Projectiles.RedJadeProjectiles
                     if (Math.Abs(idlePosition.Y - Projectile.Center.Y) < 1f)
                         directionY = 0;
 
-                    Helper.NPCMovment_OneLine(ref Projectile.velocity.X, Projectile.direction, 7f, 0.1f, 0.3f, 0.97f);
-                    Helper.NPCMovment_OneLine(ref Projectile.velocity.Y, directionY, 5f, 0.1f, 0.3f, 0.97f);
+                    Helper.Movment_SimpleOneLine(ref Projectile.velocity.X, Projectile.direction, 7f, 0.1f, 0.3f, 0.97f);
+                    Helper.Movment_SimpleOneLine(ref Projectile.velocity.Y, directionY, 5f, 0.1f, 0.3f, 0.97f);
 
                     Projectile.rotation = Projectile.velocity.ToRotation() * 0.03f;
 
@@ -190,7 +190,7 @@ namespace Coralite.Content.Projectiles.RedJadeProjectiles
                             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
                             break;
                         }
-                        
+
                         if (Timer < 90)
                             break;
 

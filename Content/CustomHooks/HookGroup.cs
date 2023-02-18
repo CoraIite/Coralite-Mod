@@ -2,7 +2,7 @@
 
 namespace Coralite.Content.CustomHooks
 {
-    public class HookGroup: IOrderedLoadable
+    public class HookGroup : IOrderedLoadable
     {
         public virtual SafetyLevel Safety => SafetyLevel.Severe;
 

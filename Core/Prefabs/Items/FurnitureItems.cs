@@ -355,4 +355,36 @@ namespace Coralite.Core.Prefabs.Items
             Item.createTile = CreateTile;
         }
     }
+
+    public abstract class BaseRelicItem : ModItem
+    {
+        private readonly int CreateTile;
+        private readonly string TexturePath;
+        private readonly bool PathHasName;
+
+        public BaseRelicItem(int createTile, string texturePath, bool pathHasName = false)
+        {
+            CreateTile = createTile;
+            TexturePath = texturePath;
+            PathHasName = pathHasName;
+        }
+
+        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
+
+        public override void SetStaticDefaults()
+        {
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.DefaultToPlaceableTile(CreateTile, 0);
+            Item.width = 30;
+            Item.height = 40;
+            Item.maxStack = 99;
+            Item.rare = ItemRarityID.Master;
+            Item.master = true;
+            Item.value = Terraria.Item.buyPrice(0, 5);
+        }
+    }
 }

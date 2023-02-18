@@ -21,7 +21,7 @@ namespace Coralite.Core.Prefabs.Items
         private readonly string TexturePath;
         private readonly bool PathHasName;
 
-        protected BaseSeed(string name, string tooltip, int maxstack, int value, int rare,int DGrowTime,int RGrowTime,int DLevel,int RLevel, int plantTileType ,string texturePath = AssetDirectory.Seeds, bool pathHasName = false)
+        protected BaseSeed(string name, string tooltip, int maxstack, int value, int rare, int DGrowTime, int RGrowTime, int DLevel, int RLevel, int plantTileType, string texturePath = AssetDirectory.Seeds, bool pathHasName = false)
         {
             Seedname = name;
             Seedtooltip = tooltip;

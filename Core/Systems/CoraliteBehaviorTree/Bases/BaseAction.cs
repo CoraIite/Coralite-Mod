@@ -2,7 +2,7 @@
 
 namespace Coralite.Systems.CoraliteBehaviorTree.Bases
 {
-    public abstract class BaseAction: BaseBehavior, IAction
+    public abstract class BaseAction : BaseBehavior, IAction
     {
 
     }

@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Coralite.Core;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Coralite.Core;
 
 namespace Coralite.Content.CustomHooks
 {

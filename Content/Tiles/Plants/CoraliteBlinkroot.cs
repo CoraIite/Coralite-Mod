@@ -13,7 +13,7 @@ namespace Coralite.Content.Tiles.Plants
 
         public override void SetStaticDefaults()
         {
-            (this).SoildBottomPlantPrefab<NormalPlantTileEntity>(new int[] { TileID.Dirt,TileID.Mud }, new int[] { TileID.ClayPot, TileID.PlanterBox }, new int[] { 20 }, 2, SoundID.Grass, DustID.Grass, Color.Brown, 16, "闪耀根", 1, 0);
+            (this).SoildBottomPlantPrefab<NormalPlantTileEntity>(new int[] { TileID.Dirt, TileID.Mud }, new int[] { TileID.ClayPot, TileID.PlanterBox }, new int[] { 20 }, 2, SoundID.Grass, DustID.Grass, Color.Brown, 16, "闪耀根", 1, 0);
         }
 
         public override void DropItemNormally(ref int rarePlantStack, ref int plantItemStack, ref int seedItemStack)

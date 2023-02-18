@@ -13,7 +13,7 @@ namespace Coralite.Content.Tiles.RedJades
     {
         public const int NextStyleHeight = 40; // 通过添加应用于所有CoordinateHeights + 所有CoordinatePaddingFix.Y + 2 来计算
 
-        public override string Texture => AssetDirectory.RedJadeTiles+Name;
+        public override string Texture => AssetDirectory.RedJadeTiles + Name;
 
         public override void SetStaticDefaults()
         {

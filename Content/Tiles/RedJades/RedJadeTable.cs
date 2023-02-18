@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.RedJades
 {
-    public class RedJadeTable:ModTile
+    public class RedJadeTable : ModTile
     {
-        public override string Texture => AssetDirectory.RedJadeTiles+Name;
+        public override string Texture => AssetDirectory.RedJadeTiles + Name;
 
         public override void SetStaticDefaults()
         {

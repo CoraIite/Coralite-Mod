@@ -9,7 +9,7 @@ namespace Coralite.Content.Items.RedJadeItems
 {
     public class RedJadeDoor : BaseDoorItem
     {
-        public RedJadeDoor() : base(Item.sellPrice(0,0,10), ItemRarityID.White, ModContent.TileType<RedJadeDoorClosed>(), AssetDirectory.RedJadeItems) { }
+        public RedJadeDoor() : base(Item.sellPrice(0, 0, 10), ItemRarityID.White, ModContent.TileType<RedJadeDoorClosed>(), AssetDirectory.RedJadeItems) { }
 
         public override void AddRecipes()
         {

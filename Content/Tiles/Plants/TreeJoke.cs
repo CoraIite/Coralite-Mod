@@ -12,7 +12,7 @@ namespace Coralite.Content.Tiles.Plants
 {
     public class TreeJoke : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
     {
-        public TreeJoke() : base(AssetDirectory.PlantTiles, 16, 2, ItemType<TreeJokeSeed>(), ItemType<WoodStick>(),ItemID.SlimeStaff) { }
+        public TreeJoke() : base(AssetDirectory.PlantTiles, 16, 2, ItemType<TreeJokeSeed>(), ItemType<WoodStick>(), ItemID.SlimeStaff) { }
 
         public override void SetStaticDefaults()
         {
@@ -24,7 +24,7 @@ namespace Coralite.Content.Tiles.Plants
             if (Main.rand.NextBool(2000))
                 rarePlantStack = 1;
 
-            plantItemStack = Main.rand.Next(5,15);
+            plantItemStack = Main.rand.Next(5, 15);
             seedItemStack = Main.rand.Next(3);
         }
 

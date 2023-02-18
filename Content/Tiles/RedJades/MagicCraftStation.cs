@@ -11,7 +11,7 @@ namespace Coralite.Content.Tiles.RedJades
 {
     public class MagicCraftStation : ModTile
     {
-        public override string Texture => AssetDirectory.RedJadeTiles+Name;
+        public override string Texture => AssetDirectory.RedJadeTiles + Name;
 
         public override void SetStaticDefaults()
         {
@@ -61,7 +61,7 @@ namespace Coralite.Content.Tiles.RedJades
         {
             frameCounter++;
 
-            if (frameCounter>5)
+            if (frameCounter > 5)
             {
                 frame++;
                 if (frame > 8)

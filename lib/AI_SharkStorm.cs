@@ -187,8 +187,8 @@ namespace Coralite.lib
 
                 if (LenthToOwner > 2000f)//距离过远直接传送
                 {
-                    projectile.position.X = Main.player[projectile.owner].Center.X - (float)(projectile.width / 2);
-                    projectile.position.Y = Main.player[projectile.owner].Center.Y - (float)(projectile.width / 2);
+                    projectile.position.X = Main.player[projectile.owner].Center.X - projectile.width / 2;
+                    projectile.position.Y = Main.player[projectile.owner].Center.Y - projectile.width / 2;
                 }
 
                 if (Math.Abs(DistanceToOwner.X) > 40f || Math.Abs(DistanceToOwner.Y) > 10f)//距离玩家有一定距离时候

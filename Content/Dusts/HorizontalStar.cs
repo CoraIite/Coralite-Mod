@@ -28,7 +28,7 @@ namespace Coralite.Content.Dusts
         {
             dust.shader.UseColor(dust.color);
 
-            Vector2 center = dust.position+new Vector2(63,46.5f)*dust.scale;
+            Vector2 center = dust.position + new Vector2(63, 46.5f) * dust.scale;
             if (dust.fadeIn < 10)
             {
                 dust.scale *= 1.06f;
@@ -47,7 +47,7 @@ namespace Coralite.Content.Dusts
 
             Lighting.AddLight(center, new Vector3(1f, 0.97f, 0.5f));
 
-            dust.position= center - new Vector2(63, 46.5f) * dust.scale+dust.velocity;
+            dust.position = center - new Vector2(63, 46.5f) * dust.scale + dust.velocity;
             dust.fadeIn++;
 
             if (dust.fadeIn > 23)

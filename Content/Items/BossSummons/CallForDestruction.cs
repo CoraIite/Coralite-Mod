@@ -1,13 +1,13 @@
-﻿using Terraria.GameContent.Creative;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
-using Coralite.Core;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class CallForDestruction:ModItem
+    public class CallForDestruction : ModItem
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 
@@ -65,12 +65,12 @@ namespace Coralite.Content.Items.BossSummons
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
 
-           CreateRecipe()
-                .AddIngredient(ItemID.Vertebrae, 18)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 15)
-                .AddIngredient(ItemID.SoulofNight, 18)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
+            CreateRecipe()
+                 .AddIngredient(ItemID.Vertebrae, 18)
+                 .AddRecipeGroup(RecipeGroupID.IronBar, 15)
+                 .AddIngredient(ItemID.SoulofNight, 18)
+                 .AddTile(TileID.MythrilAnvil)
+                 .Register();
         }
     }
 }

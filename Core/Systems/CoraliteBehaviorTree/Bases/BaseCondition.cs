@@ -1,5 +1,4 @@
-﻿using Coralite.Systems.CoraliteBehaviorTree.Enums;
-using Coralite.Systems.CoraliteBehaviorTree.Interfaces;
+﻿using Coralite.Systems.CoraliteBehaviorTree.Interfaces;
 
 namespace Coralite.Systems.CoraliteBehaviorTree.Bases
 {

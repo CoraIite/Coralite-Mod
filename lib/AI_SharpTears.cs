@@ -17,9 +17,9 @@ namespace Coralite.lib
             int _30 = 30;
             int maxValue = 6;
 
-            bool flag = Projectile.ai[0] < (float)_20;
-            bool flag2 = Projectile.ai[0] >= (float)_20;
-            bool flag3 = Projectile.ai[0] >= (float)_30;
+            bool flag = Projectile.ai[0] < _20;
+            bool flag2 = Projectile.ai[0] >= _20;
+            bool flag3 = Projectile.ai[0] >= _30;
 
             Projectile.ai[0] += 1f;
 

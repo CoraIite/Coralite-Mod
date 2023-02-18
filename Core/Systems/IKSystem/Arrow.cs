@@ -22,16 +22,16 @@ namespace Coralite.Core.Systems.IKSystem
             }
         }
 
-        public void CalculateStartAndEnd(Vector2 origin,Vector2 right)
+        public void CalculateStartAndEnd(Vector2 origin, Vector2 right)
         {
             StartPos = origin;
             EndPos = StartPos + Rotate(right, angle) * len;
         }
 
-        private Vector2 Rotate(Vector2 v,float a)
+        private Vector2 Rotate(Vector2 v, float a)
         {
             a = a * Helper.Deg2Rad + Helper.Atan2(v.Y, v.X);
-            return new Vector2(Helper.Cos(a),Helper.Sin(a));
+            return new Vector2(Helper.Cos(a), Helper.Sin(a));
         }
     }
 }

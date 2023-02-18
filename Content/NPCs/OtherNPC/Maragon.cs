@@ -1,8 +1,6 @@
 ﻿using Coralite.Content.Items.Materials;
-using Coralite.Content.Items.ShadowItems;
 using Coralite.Core;
 using Coralite.Core.Prefabs.NPCs;
-using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;

@@ -3,13 +3,12 @@ using Coralite.Core.Prefabs.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Weapons
 {
-    public class IceBloodKnives:ModItem
+    public class IceBloodKnives : ModItem
     {
-        public override string Texture => AssetDirectory.Weapons_Melee+Name;
+        public override string Texture => AssetDirectory.Weapons_Melee + Name;
 
         public override void SetStaticDefaults()
         {
@@ -40,7 +39,7 @@ namespace Coralite.Content.Items.Weapons
 
     public class BloodKniefSwing : BaseSwingProj
     {
-        public override string Texture => AssetDirectory.Projectiles_Melee+Name;
+        public override string Texture => AssetDirectory.Projectiles_Melee + Name;
 
         public override void SetDefs()
         {

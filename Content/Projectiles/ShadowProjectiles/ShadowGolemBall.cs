@@ -1,10 +1,10 @@
 ﻿using Coralite.Core;
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Projectiles.ShadowProjectiles
 {

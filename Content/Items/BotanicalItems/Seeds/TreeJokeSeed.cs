@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Tiles.Plants;
-using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
 using Terraria.ID;

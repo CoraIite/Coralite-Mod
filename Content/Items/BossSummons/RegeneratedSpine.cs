@@ -1,13 +1,13 @@
-﻿using Terraria.GameContent.Creative;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
-using Coralite.Core;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class RegeneratedSpine:ModItem
+    public class RegeneratedSpine : ModItem
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 
@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.BossSummons
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.ViciousPowder,40)
+                .AddIngredient(ItemID.ViciousPowder, 40)
                 .AddIngredient(ItemID.Vertebrae, 45)
                 .AddIngredient(ItemID.LifeCrystal)
                 .AddTile(TileID.DemonAltar)

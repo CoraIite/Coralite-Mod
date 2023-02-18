@@ -33,7 +33,7 @@ namespace Coralite.Content.Dusts
             dust.scale *= 0.92f;
             dust.shader.UseColor(dust.color);
 
-            if (dust.fadeIn>20)
+            if (dust.fadeIn > 20)
                 dust.active = false;
 
             return false;

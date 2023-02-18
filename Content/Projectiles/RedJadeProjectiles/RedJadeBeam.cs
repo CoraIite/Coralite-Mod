@@ -1,6 +1,4 @@
-﻿using Coralite.Content.Dusts;
-using Coralite.Core;
-using Coralite.Helpers;
+﻿using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;

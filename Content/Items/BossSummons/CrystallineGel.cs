@@ -1,13 +1,13 @@
-﻿using Terraria.GameContent.Creative;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
-using Coralite.Core;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class CrystallineGel:ModItem
+    public class CrystallineGel : ModItem
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 
@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.BossSummons
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.QueenSlimeCrystal,3)
+                .AddIngredient(ItemID.QueenSlimeCrystal, 3)
                 .AddIngredient(ItemID.Gel, 100)
                 .AddTile(TileID.WorkBenches)
                 .Register();

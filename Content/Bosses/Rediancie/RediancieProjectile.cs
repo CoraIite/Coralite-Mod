@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -154,10 +155,10 @@ namespace Coralite.Content.Bosses.Rediancie
             Helper.PlayPitched("RedJade/RedJadeBoom", 0.8f, -1f, Projectile.Center);
             Color red = new Color(221, 50, 50);
             Color grey = new Color(91, 93, 102);
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 18; i++)
             {
-                Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(12, 12), 0, red, Main.rand.NextFloat(1.8f, 2.3f));
-                Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(8, 8), 0, grey, Main.rand.NextFloat(1.5f, 1.9f));
+                Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(13, 13), 0, red, Main.rand.NextFloat(1.8f, 2.3f));
+                Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(9, 9), 0, grey, Main.rand.NextFloat(1.5f, 1.9f));
             }
         }
 
@@ -168,6 +169,109 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override bool PreDraw(ref Color lightColor)
         {
+            return false;
+        }
+
+        public override bool CanHitPlayer(Player target)
+        {
+            return Vector2.Distance(Projectile.Center, target.Center) < 256;
+        }
+    }
+
+    public class Rediancie_OnSpawnAnim : ModProjectile
+    {
+        public override string Texture => AssetDirectory.Rediancie + "RediancieNameLine";
+
+        public Color drawCharColor;
+        public Color drawPicColor;
+        public readonly Color blankColor = new Color(0, 0, 0, 0);
+
+        public override void SetDefaults()
+        {
+            Projectile.width = Projectile.height = 10;
+            Projectile.friendly = true;
+            Projectile.timeLeft = 260;
+        }
+
+        public override bool? CanCutTiles() => false;
+        public override bool? CanDamage() => false;
+        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitPlayer(Player target) => false;
+        public override bool CanHitPvp(Player target) => false;
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            drawCharColor = new Color(0, 0, 0, 0);
+            drawPicColor = new Color(0, 0, 0, 0);
+        }
+
+        public override void AI()
+        {
+            int timer = 260 - Projectile.timeLeft;
+
+            //文字渐出
+            if (timer < 21)
+            {
+                drawCharColor = Color.Lerp(blankColor, Coralite.Instance.RedJadeRed, (float)timer / 20);
+                drawPicColor = Color.Lerp(blankColor, Color.White, (float)timer / 20);
+                return;
+            }
+
+            //闪烁
+            if (timer > 119 && timer < 240)
+            {
+                float r;
+                if (timer < 151)
+                    r = 0.104f;     //Pi/30
+                else if (timer < 171)
+                    r = 0.157f;     //Pi/20
+                else
+                    r = 0.314f;       //Pi/10
+                float cosProgress = -MathF.Cos((timer - 120) * r) * 0.5f + 0.5f;
+                drawCharColor = Color.Lerp(Coralite.Instance.RedJadeRed, Color.White, cosProgress);
+            }
+
+            //生成粒子和声音
+            if (timer > 190 && timer % 8 == 0 && Main.netMode != NetmodeID.Server)
+            {
+                Helper.PlayPitched("RedJade/RedJadeBoom", 0.4f, 0f, Projectile.Center);
+                Color red = new Color(221, 50, 50);
+                Color grey = new Color(91, 93, 102);
+                Vector2 center = Main.LocalPlayer.Center - new Vector2(0, 250) + Main.rand.NextVector2Circular(200, 140);
+                for (int i = 0; i < 8; i++)
+                {
+                    Dust.NewDustPerfect(center, ModContent.DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(6, 6), 0, red, Main.rand.NextFloat(1f, 1.5f));
+                    Dust.NewDustPerfect(center, ModContent.DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(4, 4), 0, grey, Main.rand.NextFloat(0.8f, 1.2f));
+                }
+            }
+
+            //文字减淡
+            if (timer > 239)
+            {
+                drawCharColor = Color.Lerp(Coralite.Instance.RedJadeRed, blankColor, (float)(timer - 240) / 20);
+                drawPicColor = Color.Lerp(Color.White, blankColor, (float)(timer - 240) / 20);
+            }
+
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            SpriteBatch sb = Main.spriteBatch;
+            //sb.End();
+            //sb.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+
+            Texture2D maintex = TextureAssets.Projectile[Type].Value;
+            Vector2 screenPosition = Main.screenPosition;
+
+            Utils.DrawBorderStringBig(sb, "赤玉灵", Main.LocalPlayer.Center - new Vector2(100, 305) - screenPosition, drawCharColor, 1.4f);
+
+            sb.Draw(maintex, Main.LocalPlayer.Center - new Vector2(160, 225) - screenPosition, maintex.Frame(), drawPicColor, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+
+            Utils.DrawBorderStringBig(sb, "Rediancie", Main.LocalPlayer.Center - new Vector2(75, 180) - screenPosition, drawCharColor, 0.8f);
+
+            //sb.End();
+            //sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
             return false;
         }
     }

@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Weapons
                 if (Projectile.velocity.Y > 10)
                     Projectile.velocity.Y = 10;
 
-                Projectile.rotation += Projectile.direction*0.25f;
+                Projectile.rotation += Projectile.direction * 0.25f;
             }
             else
                 Projectile.rotation = Projectile.velocity.ToRotation() + (Projectile.direction > 0 ? 0.785f : 2.355f);

@@ -30,7 +30,7 @@ namespace Coralite.Systems.CoraliteBehaviorTree.Tree
 
         public CoraliteBT End()
         {
-            while (!(behaviours.Count==0))
+            while (!(behaviours.Count == 0))
                 behaviours.Pop();
 
             CoraliteBT tmp = new CoraliteBT(treeRoot);

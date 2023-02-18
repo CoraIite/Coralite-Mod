@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Prefabs.Tiles
 {
@@ -16,7 +15,7 @@ namespace Coralite.Core.Prefabs.Tiles
         public readonly int PlantType;
         public readonly int RarePlantType;
 
-        public BaseBottomSoildSeedPlantTile( string texture, short frameWidth, int frameCount, int seedType = 0, int plantType = 0, int rarePlantType = 0, bool pathHasName = false) : base((short)(frameWidth + 2), frameCount)
+        public BaseBottomSoildSeedPlantTile(string texture, short frameWidth, int frameCount, int seedType = 0, int plantType = 0, int rarePlantType = 0, bool pathHasName = false) : base((short)(frameWidth + 2), frameCount)
         {
             _Texture = texture;
             PathHasName = pathHasName;
@@ -79,7 +78,7 @@ namespace Coralite.Core.Prefabs.Tiles
             int seedStack = 0;
 
             if (nearestPlayer.active && nearestPlayer.HeldItem.type == ItemID.StaffofRegrowth)
-                DropItemWithStaffOfRegrowth(stage,ref rarePlantStack, ref plantStack, ref seedStack);
+                DropItemWithStaffOfRegrowth(stage, ref rarePlantStack, ref plantStack, ref seedStack);
             else if (stage == PlantStage.Grown)
                 DropItemNormally(ref rarePlantStack, ref plantStack, ref seedStack);
 
@@ -122,7 +121,7 @@ namespace Coralite.Core.Prefabs.Tiles
             //生成种子掉落物
             if (SeedType > 0 && seedStack > 0)
             {
-                int id= Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, SeedType, seedStack);
+                int id = Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, SeedType, seedStack);
                 if (BotanicalHelper.TryGetTileEntityAs(i, j, out T entity))
                 {
                     Item plantItem = Main.item[id];
@@ -147,7 +146,7 @@ namespace Coralite.Core.Prefabs.Tiles
         /// <param name="rarePlantStack">稀有物品数量</param>
         /// <param name="plantItemStack">植物物品数量</param>
         /// <param name="seedItemStack">种子物品数量</param>
-        public abstract void DropItemWithStaffOfRegrowth(PlantStage stage,ref int rarePlantStack, ref int plantItemStack, ref int seedItemStack);
+        public abstract void DropItemWithStaffOfRegrowth(PlantStage stage, ref int rarePlantStack, ref int plantItemStack, ref int seedItemStack);
 
         /// <summary>
         /// 正常情况下掉落物品，仅成熟时候

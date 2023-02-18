@@ -130,12 +130,12 @@ namespace Coralite.Core.Prefabs.NPCs
             if (!canFly)
                 for (int x = position2Tile_Xless1; x < right2Tile_Xplus2; x++)
                     for (int y = Position2Tile_Yless1; y < bottom2Tile_Yplus2; y++)
-                        if (Main.tile[x, y] != null && (Main.tile[x, y].HasUnactuatedTile && (Main.tileSolid[(int)Main.tile[x, y].TileType] || Main.tileSolidTop[(int)Main.tile[x, y].TileType] && Main.tile[x, y].TileFrameY == 0) || Main.tile[x, y].LiquidAmount > 64))
+                        if (Main.tile[x, y] != null && (Main.tile[x, y].HasUnactuatedTile && (Main.tileSolid[Main.tile[x, y].TileType] || Main.tileSolidTop[Main.tile[x, y].TileType] && Main.tile[x, y].TileFrameY == 0) || Main.tile[x, y].LiquidAmount > 64))
                         {
                             Vector2 vector17;
                             vector17.X = (x * 16);
                             vector17.Y = (y * 16);
-                            if (NPC.position.X + (float)NPC.width > vector17.X && NPC.position.X < vector17.X + 16f && NPC.position.Y + (float)NPC.height > vector17.Y && NPC.position.Y < vector17.Y + 16f)
+                            if (NPC.position.X + NPC.width > vector17.X && NPC.position.X < vector17.X + 16f && NPC.position.Y + NPC.height > vector17.Y && NPC.position.Y < vector17.Y + 16f)
                             {
                                 canFly = true;
                                 if (Main.rand.NextBool(100) && NPC.behindTiles && Main.tile[x, y].HasUnactuatedTile)
@@ -183,7 +183,7 @@ namespace Coralite.Core.Prefabs.NPCs
             {
                 try
                 {
-                    center2TopLeft = new Vector2(NPC.position.X + NPC.width * 0.5f, NPC.position.Y + (float)NPC.height * 0.5f);
+                    center2TopLeft = new Vector2(NPC.position.X + NPC.width * 0.5f, NPC.position.Y + NPC.height * 0.5f);
                     distance2TargetX = Main.npc[(int)NPC.ai[1]].position.X + (Main.npc[(int)NPC.ai[1]].width / 2) - center2TopLeft.X;
                     distance2TargetY = Main.npc[(int)NPC.ai[1]].position.Y + (Main.npc[(int)NPC.ai[1]].height / 2) - center2TopLeft.Y;
                 }
@@ -257,7 +257,7 @@ namespace Coralite.Core.Prefabs.NPCs
 
                         if (flag20)
                         {
-                            if (Main.netMode != NetmodeID.MultiplayerClient && (double)(NPC.position.Y / 16f) > (Main.rockLayer + (double)Main.maxTilesY) / 2.0)
+                            if (Main.netMode != NetmodeID.MultiplayerClient && (double)(NPC.position.Y / 16f) > (Main.rockLayer + Main.maxTilesY) / 2.0)
                             {
                                 NPC.active = false;
                                 int num200 = (int)NPC.ai[0];
@@ -278,9 +278,9 @@ namespace Coralite.Core.Prefabs.NPCs
                         }
                     }
 
-                        if (NPC.velocity.X > 0f && distance2TargetX > 0f || NPC.velocity.X < 0f && distance2TargetX < 0f || NPC.velocity.Y > 0f && distance2TargetY > 0f || NPC.velocity.Y < 0f && distance2TargetY < 0f)
-                        {
-                            if (NPC.velocity.X < distance2TargetX)
+                    if (NPC.velocity.X > 0f && distance2TargetX > 0f || NPC.velocity.X < 0f && distance2TargetX < 0f || NPC.velocity.Y > 0f && distance2TargetY > 0f || NPC.velocity.Y < 0f && distance2TargetY < 0f)
+                    {
+                        if (NPC.velocity.X < distance2TargetX)
                             NPC.velocity.X = NPC.velocity.X + turnSpeed;
                         else if (NPC.velocity.X > distance2TargetX)
                             NPC.velocity.X = NPC.velocity.X - turnSpeed;

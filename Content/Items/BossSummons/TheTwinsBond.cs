@@ -1,9 +1,9 @@
-﻿using Terraria.GameContent.Creative;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
-using Coralite.Core;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
 {
@@ -67,9 +67,9 @@ namespace Coralite.Content.Items.BossSummons
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.Lens,6)
-                .AddRecipeGroup(RecipeGroupID.IronBar,10)
-                .AddIngredient(ItemID.SoulofLight,12)
+                .AddIngredient(ItemID.Lens, 6)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 10)
+                .AddIngredient(ItemID.SoulofLight, 12)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

@@ -1,13 +1,13 @@
-﻿using Terraria.GameContent.Creative;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
-using Coralite.Core;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class CannedLarva:ModItem
+    public class CannedLarva : ModItem
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 
@@ -59,9 +59,9 @@ namespace Coralite.Content.Items.BossSummons
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.BottledHoney,10)
-                .AddIngredient(ItemID.Stinger,5)
-                .AddIngredient(ItemID.Hive,25)
+                .AddIngredient(ItemID.BottledHoney, 10)
+                .AddIngredient(ItemID.Stinger, 5)
+                .AddIngredient(ItemID.Hive, 25)
                 .Register();
         }
     }

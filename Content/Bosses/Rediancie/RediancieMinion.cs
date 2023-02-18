@@ -75,7 +75,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
                 if (Timer == 158)
                 {
-                    int damage = NPC.GetAttackDamage_ForProjectiles(20, 30);
+                    int damage = NPC.GetAttackDamage_ForProjectiles(10, 15);
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), damage, 5f);
                 }
 
@@ -98,7 +98,6 @@ namespace Coralite.Content.Bosses.Rediancie
 
             } while (false);
 
-
             Timer++;
         }
 
@@ -107,13 +106,13 @@ namespace Coralite.Content.Bosses.Rediancie
             if (Timer < 101)
             {
                 Texture2D mainTex = TextureAssets.Npc[Type].Value;
-                spriteBatch.Draw(mainTex, NPC.Center - screenPos, mainTex.Frame(), new Color(248, 40, 24, (int)alpha), NPC.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 1 + alpha/255, SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, NPC.Center - screenPos, mainTex.Frame(), new Color(248, 40, 24, (int)alpha), NPC.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 1 + alpha / 255, SpriteEffects.None, 0f);
             }
             else
             {
                 Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.RedJadeProjectiles + "RedBinkRush").Value;
                 int color = (int)alpha;
-                spriteBatch.Draw(mainTex,NPC.Center-NPC.velocity - screenPos, mainTex.Frame(), new Color(color,color,color,color), NPC.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 0.8f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, NPC.Center - NPC.velocity - screenPos, mainTex.Frame(), new Color(color, color, color, color), NPC.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 0.8f, SpriteEffects.None, 0f);
             }
             return true;
         }

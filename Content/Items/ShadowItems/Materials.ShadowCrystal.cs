@@ -17,14 +17,14 @@ namespace Coralite.Content.Items.ShadowItems
             Tooltip.SetDefault("影子能量的结晶");
 
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 3));
-            ItemID.Sets.AnimatesAsSoul[Item.type] = true; 
-            ItemID.Sets.ItemIconPulse[Item.type] = true; 
+            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
+            ItemID.Sets.ItemIconPulse[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.Orange;
-            Item.value = Item.sellPrice(0,0,18,0);
+            Item.value = Item.sellPrice(0, 0, 18, 0);
             Item.maxStack = 9999;
             Item.height = Item.width = 40;
         }

@@ -1,11 +1,10 @@
-﻿using Terraria;
-using Terraria.ModLoader;
+﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using Coralite.Helpers;
+using Terraria;
+using Terraria.ModLoader;
 using static Coralite.Core.VertexInfos;
 using static Terraria.ModLoader.ModContent;
 
@@ -42,7 +41,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected float totalAngle = 2.5f;
         public ref float _Rotation => ref Projectile.ai[1];// 实际角度，通过一系列计算得到的每一帧的弹幕角度
         protected readonly float spriteRotation;//2.445?之前写的是这个数，但我忘了当时是怎么得到这个数的，重新算了一下发现不对劲
-        public ref float timer =>ref Projectile.localAI[0];
+        public ref float timer => ref Projectile.localAI[0];
 
         protected readonly short trailLength;
         public float distanceToOwner = 15;
@@ -53,7 +52,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public Vector2 Top;
         private Vector2 Bottom;
 
-        public BaseSwingProj(float spriteRotation=2.356f,short trailLength=15)
+        public BaseSwingProj(float spriteRotation = 2.356f, short trailLength = 15)
         {
             this.spriteRotation = spriteRotation;
             this.trailLength = trailLength;
@@ -98,7 +97,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             if (onHit != 0 && onHit < onHitFreeze)//轻微的卡肉效果
             {
-                Projectile.Center = Owner.Center + RotateVec2 * (Projectile.height/2+distanceToOwner);
+                Projectile.Center = Owner.Center + RotateVec2 * (Projectile.height / 2 + distanceToOwner);
                 onHit++;
                 return;
             }
@@ -142,7 +141,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// </summary>
         protected virtual void AIAfter()
         {
-            Top = Projectile.Center + RotateVec2 * (Projectile.height/2+trailTopWidth);
+            Top = Projectile.Center + RotateVec2 * (Projectile.height / 2 + trailTopWidth);
             Bottom = Projectile.Center - RotateVec2 * (Projectile.height / 2);//弹幕的底端和顶端计算，用于检测碰撞以及绘制
 
             if (useShadowTrail || useSlashTrail)
@@ -160,9 +159,9 @@ namespace Coralite.Core.Prefabs.Projectiles
                 _Rotation = startAngle = GetStartAngle() - Owner.direction * startAngle;//设定起始角度
                 totalAngle *= Owner.direction;
             }
-                
+
             Slasher();
-            Smoother.ReCalculate(maxTime-minTime);
+            Smoother.ReCalculate(maxTime - minTime);
 
             if (useShadowTrail || useSlashTrail)
             {
@@ -202,7 +201,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual void Slash()
         {
-            _Rotation = startAngle+totalAngle * Smoother.Smoother((int)timer-minTime, maxTime-minTime);
+            _Rotation = startAngle + totalAngle * Smoother.Smoother((int)timer - minTime, maxTime - minTime);
             Slasher();
             Projectile.netUpdate = true;
         }
@@ -223,7 +222,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected void Slasher()
         {
             RotateVec2 = _Rotation.ToRotationVector2();
-            Projectile.Center = Owner.Center + RotateVec2 * (Projectile.height/2+distanceToOwner);
+            Projectile.Center = Owner.Center + RotateVec2 * (Projectile.height / 2 + distanceToOwner);
             Projectile.rotation = _Rotation - 1.57f;
         }
 

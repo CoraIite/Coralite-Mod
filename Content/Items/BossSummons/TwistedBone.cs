@@ -1,13 +1,13 @@
-﻿using Terraria.GameContent.Creative;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
-using Coralite.Core;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class TwistedBone:ModItem
+    public class TwistedBone : ModItem
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 
@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public override bool CanUseItem(Player player)
         {
-            return !Main.dayTime&&!NPC.AnyNPCs(NPCID.SkeletronHead);
+            return !Main.dayTime && !NPC.AnyNPCs(NPCID.SkeletronHead);
         }
 
         public override bool? UseItem(Player player)
@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.BossSummons
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.Bone,100)
+                .AddIngredient(ItemID.Bone, 100)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

@@ -1,9 +1,21 @@
 ﻿using System;
+using Terraria;
 
 namespace Coralite.Helpers
 {
     public static partial class Helper
     {
+        public static void Kill(this NPC NPC)
+        {
+            bool ModNPCDontDie = NPC.ModNPC?.CheckDead() == false;
+            if (ModNPCDontDie)
+                return;
+            NPC.life = 0;
+            NPC.checkDead();
+            NPC.HitEffect();
+            NPC.active = false;
+        }
+
         /// <summary>
         /// 简易NPC运动，控制单个方向上的运动，做匀加速和匀减速运动
         /// </summary>
@@ -13,7 +25,7 @@ namespace Coralite.Helpers
         /// <param name="accel">加速度</param>
         /// <param name="turnAccel">转向加速度</param>
         /// <param name="slowDownPercent">减速系数</param>
-        public static void NPCMovment_OneLine(ref float velocity, int direction, float velocityLimit, float accel, float turnAccel, float slowDownPercent)
+        public static void Movment_SimpleOneLine(ref float velocity, int direction, float velocityLimit, float accel, float turnAccel, float slowDownPercent)
         {
             if (Math.Abs(velocity) > velocityLimit)
                 velocity *= slowDownPercent;

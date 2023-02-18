@@ -1,15 +1,15 @@
-﻿using Terraria.Graphics.Effects;
-using Coralite.Core;
+﻿using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
+using Terraria.GameContent;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent;
-using Coralite.Helpers;
-using System.Linq;
 using static Coralite.Core.VertexInfos;
 using static Terraria.ModLoader.ModContent;
 
@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Weapons
 {
     public abstract class TestSlashBlade : ModItem
     {
-        public override string Texture => AssetDirectory.ShadowItems+"ShadowSword";
+        public override string Texture => AssetDirectory.ShadowItems + "ShadowSword";
 
         public override void SetStaticDefaults()
         {
@@ -52,7 +52,7 @@ namespace Coralite.Content.Items.Weapons
 
         protected override void BeforeSlash()
         {
-            
+
         }
 
         public override void SetDefs()
@@ -69,18 +69,18 @@ namespace Coralite.Content.Items.Weapons
         {
             Projectile.friendly = false;
             Projectile.Center = Owner.Center + RotateVec2 * (projScale / 2 + distanceToHand);
-            if (Timer>26)
+            if (Timer > 26)
                 Projectile.Kill();
 
         }
 
         protected override void SpawnDustOnSlash()
         {
-            
+
         }
     }
 
-    public abstract class SlashBladeProj : ModProjectile,IDrawWarp
+    public abstract class SlashBladeProj : ModProjectile, IDrawWarp
     {
         protected Texture2D WarpTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "Warp0").Value;//扭曲贴图
         public Player Owner => Main.player[Projectile.owner];
@@ -92,15 +92,15 @@ namespace Coralite.Content.Items.Weapons
         /// <summary>
         /// 是否为第零帧
         /// </summary>
-        private bool onStart=false;
+        private bool onStart = false;
         /// <summary>
         /// 是否锁定角度为玩家面朝的角度
         /// </summary>
-        protected bool hasStaticAngle=false;
+        protected bool hasStaticAngle = false;
         /// <summary>
         /// 是否应用圆形轨迹
         /// </summary>
-        protected bool CircleTrail=true;
+        protected bool CircleTrail = true;
 
         /// <summary>
         /// 开始挥舞前的时间
@@ -109,12 +109,12 @@ namespace Coralite.Content.Items.Weapons
         /// <summary>
         /// 挥舞所用时间
         /// </summary>
-        protected  int maxTime=60;
+        protected int maxTime = 60;
         //关于角度控制
         /// <summary>
         /// 起始角度，起始角度为正时则从人物头顶向下挥舞
         /// </summary>
-        protected  float startAngle=2.5f;
+        protected float startAngle = 2.5f;
         /// <summary>
         /// 终止角度，挥舞结束时的角度
         /// </summary>
@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.Weapons
         /// 弹幕大小，应用圆形轨迹时为最大缩放值
         /// 应用椭圆形轨迹时根据最小缩放值和最大缩放值计算得值
         /// </summary>
-        protected float projScale=100f;
+        protected float projScale = 100f;
         /// <summary>
         /// 弹幕宽度的缩放
         /// </summary>
@@ -157,15 +157,15 @@ namespace Coralite.Content.Items.Weapons
         /// <summary>
         /// 最大缩放值,同时也是椭圆轨迹的长轴半长
         /// </summary>
-        protected float CircleScale=1f;
+        protected float CircleScale = 1f;
         /// <summary>
         /// 椭圆的长半轴长,a
         /// </summary>
-        protected float halfLongAxis=1f;
+        protected float halfLongAxis = 1f;
         /// <summary>
         /// 椭圆的短半轴长,b
         /// </summary>
-        protected float halfShortAxis=0.5f;
+        protected float halfShortAxis = 0.5f;
         /// <summary>
         /// 椭圆焦距半长平方,c的2次方
         /// </summary>
@@ -173,7 +173,7 @@ namespace Coralite.Content.Items.Weapons
         /// <summary>
         /// 弹幕大小
         /// </summary>
-        protected float projLenth=100;
+        protected float projLenth = 100;
 
         protected Vector2 RotateVec2;
         private Vector2 Top;
@@ -224,7 +224,7 @@ namespace Coralite.Content.Items.Weapons
                     targetAngle = (Main.MouseWorld - Owner.Center).ToRotation();
                 else
                     targetAngle = Owner.direction > 0 ? 0f : 3.14f;
-                RotateAngle = targetAngle - Owner.direction* startAngle;//设定起始角度
+                RotateAngle = targetAngle - Owner.direction * startAngle;//设定起始角度
                 RotateVec2 = RotateAngle.ToRotationVector2();//设定起始角度的方向向量
                 if (CircleTrail)//判断是否为圆形轨迹，如果不是则进行椭圆的计算
                     projScale = CircleScale * projLenth;
@@ -235,7 +235,7 @@ namespace Coralite.Content.Items.Weapons
                     projScale = projLenth * halfLongAxis * halfShortAxis / i;
                 }
                 perAngle = Owner.direction * Math.Sign(startAngle) * (Math.Abs(endAngle) + Math.Abs(startAngle)) / maxTime;//计算每一帧应当旋转的角度
-                Projectile.Center = Owner.Center + RotateVec2 * ( projScale / 2 + distanceToHand);//设置弹幕中心，虽说并没有使用原版的碰撞检测方法，但是为了绘制的时候方便所以还是计算了一下
+                Projectile.Center = Owner.Center + RotateVec2 * (projScale / 2 + distanceToHand);//设置弹幕中心，虽说并没有使用原版的碰撞检测方法，但是为了绘制的时候方便所以还是计算了一下
                 Projectile.rotation = RotateAngle - 1.57f;//设置旋转
                 onStart = true;//这个其实只用于初始化拖尾数组
                 Projectile.netUpdate = true;
@@ -248,14 +248,14 @@ namespace Coralite.Content.Items.Weapons
                 }
                 else if (Timer < maxTime)//挥舞过程中
                 {
-                    RotateAngle = targetAngle - Owner.direction * startAngle + (Timer-minTime) * perAngle;//和前面基本一样，不多赘述
+                    RotateAngle = targetAngle - Owner.direction * startAngle + (Timer - minTime) * perAngle;//和前面基本一样，不多赘述
                     RotateVec2 = RotateAngle.ToRotationVector2();
-                    if(!CircleTrail)
+                    if (!CircleTrail)
                     {
                         float i = (float)Math.Sqrt(halfLongAxis * halfLongAxis - halfFocalLength2 * (Math.Cos(2 * (RotateAngle - targetAngle)) + 1) / 2);//椭圆极坐标方程的分母
                         projScale = projLenth * halfLongAxis * halfShortAxis / i;
                     }
-                    Projectile.Center = Owner.Center + RotateVec2 * ( projScale / 2 + distanceToHand);// 似乎用不上这个了（补充：并不，这里不计算一下的话绘制的时候还得计算）
+                    Projectile.Center = Owner.Center + RotateVec2 * (projScale / 2 + distanceToHand);// 似乎用不上这个了（补充：并不，这里不计算一下的话绘制的时候还得计算）
                     Projectile.rotation = RotateAngle - 1.57f;
                     SpawnDustOnSlash();
                 }
@@ -290,8 +290,8 @@ namespace Coralite.Content.Items.Weapons
         protected virtual void AIAfter()
         {
             Timer++;
-            Bottom =  Owner.Center + RotateVec2 * distanceToHand;//弹幕的底端和顶端计算，用于检测碰撞以及绘制
-            Top = Owner.Center + RotateVec2 * ( projScale + distanceToHand);
+            Bottom = Owner.Center + RotateVec2 * distanceToHand;//弹幕的底端和顶端计算，用于检测碰撞以及绘制
+            Top = Owner.Center + RotateVec2 * (projScale + distanceToHand);
             ManageCaches();
             if (Main.myPlayer != Owner.whoAmI)
                 checkHits();
@@ -317,7 +317,7 @@ namespace Coralite.Content.Items.Weapons
         {
             if (!onStart)
             {
-                if (maxTime<30)
+                if (maxTime < 30)
                 {
                     for (int i = TrailLengh - 1; i > 0; i--)
                     {
@@ -325,7 +325,7 @@ namespace Coralite.Content.Items.Weapons
                         oldScale[i] = oldScale[i - 1];
                     }
                     oldRotate[0] = RotateAngle - perAngle / 2;
-                    float r = (float)Math.Sqrt(halfLongAxis * halfLongAxis - halfFocalLength2 * (Math.Cos(2 * (oldRotate[0]-targetAngle)) + 1) / 2);//椭圆极坐标方程的分母
+                    float r = (float)Math.Sqrt(halfLongAxis * halfLongAxis - halfFocalLength2 * (Math.Cos(2 * (oldRotate[0] - targetAngle)) + 1) / 2);//椭圆极坐标方程的分母
                     oldScale[0] = projLenth * halfLongAxis * halfShortAxis / r;
                 }
                 for (int i = TrailLengh - 1; i > 0; i--)
@@ -375,9 +375,9 @@ namespace Coralite.Content.Items.Weapons
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if (Timer>1&& Helper .CheckLinearCollision(Bottom, Top, targetHitbox, out Vector2 hitPoint))
+            if (Timer > 1 && Helper.CheckLinearCollision(Bottom, Top, targetHitbox, out Vector2 hitPoint))
                 return true;
-                
+
             return false;
         }
         #endregion
@@ -389,7 +389,7 @@ namespace Coralite.Content.Items.Weapons
         public override void PostDraw(Color lightColor)
         {
             SpriteBatch sb = Main.spriteBatch;
-            DrawSelf(sb,lightColor);
+            DrawSelf(sb, lightColor);
         }
         //绘制扭曲
         public void DrawWarp()
@@ -449,7 +449,7 @@ namespace Coralite.Content.Items.Weapons
                 default,
                 Projectile.GetAlpha(lightColor),
                 Projectile.rotation, origin,
-                new Vector2(xScale, projScale/projLenth) * Projectile.scale,
+                new Vector2(xScale, projScale / projLenth) * Projectile.scale,
                 (Owner.direction == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
@@ -511,7 +511,7 @@ namespace Coralite.Content.Items.Weapons
             }
             return MathHelper.Lerp(0.5f, 0.7f, factor);
         }
-        public BlendState TrailBlendState()=> BlendState.Additive;
+        public BlendState TrailBlendState() => BlendState.Additive;
 
         #endregion
     }

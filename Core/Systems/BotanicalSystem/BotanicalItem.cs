@@ -1,14 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Coralite.Content.Items.BotanicalItems;
+using Coralite.Content.Tiles.Plants;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Coralite.Helpers;
 using Terraria.ModLoader.IO;
-using Coralite.Content.Tiles.Plants;
 using static Terraria.ModLoader.ModContent;
-using Terraria.Audio;
-using Coralite.Content.Items.BotanicalItems;
 
 namespace Coralite.Core.Systems.BotanicalSystem
 {
@@ -112,13 +112,13 @@ namespace Coralite.Core.Systems.BotanicalSystem
                     SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteFireblossom>());
                     break;
 
-                case ItemID.Daybloom: 
-                case ItemID.Blinkroot: 
-                case ItemID.Moonglow: 
-                case ItemID.Waterleaf: 
-                case ItemID.Shiverthorn: 
-                case ItemID.Deathweed: 
-                case ItemID.Fireblossom: 
+                case ItemID.Daybloom:
+                case ItemID.Blinkroot:
+                case ItemID.Moonglow:
+                case ItemID.Waterleaf:
+                case ItemID.Shiverthorn:
+                case ItemID.Deathweed:
+                case ItemID.Fireblossom:
                     botanicalItem = true;
                     DominantGrowTime = 10;
                     RecessiveGrowTime = 10;
@@ -170,12 +170,12 @@ namespace Coralite.Core.Systems.BotanicalSystem
 
         public override bool CanRightClick(Item item)
         {
-            return botanicalItem && !isIdentified&&Main.LocalPlayer.HasItem(ItemType<IdentifyLoupe>());
+            return botanicalItem && !isIdentified && Main.LocalPlayer.HasItem(ItemType<IdentifyLoupe>());
         }
 
         public override void RightClick(Item item, Player player)
         {
-            if (!botanicalItem|| item.IsAir)
+            if (!botanicalItem || item.IsAir)
                 return;
 
             item.stack++;
@@ -216,13 +216,13 @@ namespace Coralite.Core.Systems.BotanicalSystem
             RecessiveLevel = tag.GetInt("RecessiveLevel");
         }
 
-        public void SetVanillaPlant(Item item,int DGrowTime,int RGrowTime,int DLevel,int Rlevel,int TileType)
+        public void SetVanillaPlant(Item item, int DGrowTime, int RGrowTime, int DLevel, int Rlevel, int TileType)
         {
             botanicalItem = true;
             DominantGrowTime = DGrowTime;
             RecessiveGrowTime = RGrowTime;
             DominantLevel = DLevel;
-            RecessiveLevel=Rlevel;
+            RecessiveLevel = Rlevel;
             item.createTile = TileType;
         }
     }

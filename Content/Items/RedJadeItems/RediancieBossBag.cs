@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.RedJadeItems
 {
-    public class RediancieBossBag:ModItem
+    public class RediancieBossBag : ModItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
 
@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.RedJadeItems
         public override void SetDefaults()
         {
             Item.width = Item.height = 24;
-            Item.maxStack =999;
+            Item.maxStack = 999;
 
             Item.consumable = true;
             Item.expert = true;

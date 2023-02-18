@@ -2,6 +2,7 @@
 using Coralite.Content.Items.RedJadeItems;
 using Coralite.Content.Projectiles.RedJadeProjectiles;
 using Microsoft.Xna.Framework;
+using System;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -12,16 +13,36 @@ namespace Coralite.Content.ModPlayers
 {
     public class CoralitePlayer : ModPlayer
     {
+        public bool ownedYujianProj;
+        public float Nianli;
+        public float NianliMax = 100f;
+        public float NianliRegain = 1f;
+
         public short RightClickReuseDelay = 0;
+
         public bool RedJadePendant;
 
         #region 各种更新
+
+        public override void PreUpdate()
+        {
+            NianliRegain = 1f;
+            NianliMax = 100f;
+        }
+
+        public override void PostUpdateEquips()
+        {
+            Nianli += NianliRegain;
+            Nianli = Math.Clamp(Nianli, 0f, NianliMax);
+        }
 
         public override void PostUpdate()
         {
             RedJadePendant = false;
             if (RightClickReuseDelay > 0)
                 RightClickReuseDelay--;
+
+            Nianli = Math.Clamp(Nianli, 0f, NianliMax);  //只是防止意外发生
         }
 
         #endregion
@@ -54,7 +75,7 @@ namespace Coralite.Content.ModPlayers
         {
             bool inWater = !attempt.inLava && !attempt.inHoney;
 
-            if (inWater&& Player.ZoneBeach && attempt.common&& !attempt.crate)
+            if (inWater && Player.ZoneBeach && attempt.common && !attempt.crate)
             {
                 if (Main.rand.NextBool(15))
                     itemDrop = ModContent.ItemType<NacliteSeedling>();
