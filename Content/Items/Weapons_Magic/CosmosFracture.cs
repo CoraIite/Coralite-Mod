@@ -73,9 +73,9 @@ namespace Coralite.Content.Items.Weapons_Magic
             if (rightClick && player.statMana > 25)
             {
                 CoralitePlayer coralitePlayer = player.GetModPlayer<CoralitePlayer>();
-                if (coralitePlayer.RightClickReuseDelay == 0)
+                if (coralitePlayer.rightClickReuseDelay == 0)
                 {
-                    coralitePlayer.RightClickReuseDelay = 200;
+                    coralitePlayer.rightClickReuseDelay = 200;
 
                     for (int i = 0; i < 6; i++)
                         Projectile.NewProjectile(source, player.Center + (-1.57f + i * 1.047f).ToRotationVector2() * 120, Vector2.Zero, ProjectileType<CosmosFractureProj2>(), (int)(damage * 0.2f), knockback, player.whoAmI, 2, (5.712f + i * 1.047f));

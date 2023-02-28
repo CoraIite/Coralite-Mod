@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Projectiles.RedJadeProjectiles;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Microsoft.Xna.Framework;
 using System.Linq;
 using Terraria;

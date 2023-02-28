@@ -26,15 +26,14 @@ namespace Coralite.Content.Items.Weapons_Magic
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.reuseDelay = 25;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.DamageType = DamageClass.Magic;
             Item.mana = 18;
             Item.knockBack = 6;
 
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.DamageType = DamageClass.Magic;
             Item.value = Item.sellPrice(0, 0, 1, 0);
             Item.rare = ItemRarityID.Blue;
             Item.shoot = ProjectileType<MagicalAshesProj>();
-            Item.shootSpeed = 0.1f;
 
             Item.useTurn = false;
             Item.noMelee = true;

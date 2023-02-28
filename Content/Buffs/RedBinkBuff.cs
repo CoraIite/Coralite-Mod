@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Projectiles.RedJadeProjectiles;
+﻿using Coralite.Content.Items.RedJadeItems;
 using Coralite.Core;
 using Terraria;
 using Terraria.ModLoader;

@@ -31,7 +31,16 @@ namespace Coralite.Content.Items.ShadowItems
             return body.type == ItemType<ShadowChest>() && legs.type == ItemType<ShadowLegs>();
         }
 
+        public override void UpdateEquip(Player player)
+        {
+            player.GetDamage (DamageClass.Magic)+= 0.08f;
+            player.statManaMax += 40;
+        }
 
+        public override void UpdateArmorSet(Player player)
+        {
+            player.setBonus = "影铠法环守护着你";
+        }
     }
 
     [AutoloadEquip(EquipType.Body)]
@@ -52,6 +61,12 @@ namespace Coralite.Content.Items.ShadowItems
             Item.rare = ItemRarityID.LightRed;
             Item.defense = 8;
         }
+
+        public override void UpdateEquip(Player player)
+        {
+            player.GetCritChance(DamageClass.Magic) += 0.04f;
+            player.statManaMax += 20;
+        }
     }
 
     [AutoloadEquip(EquipType.Legs)]
@@ -71,6 +86,12 @@ namespace Coralite.Content.Items.ShadowItems
             Item.value = Item.sellPrice(0, 0, 80, 0);
             Item.rare = ItemRarityID.LightRed;
             Item.defense = 6;
+        }
+
+        public override void UpdateEquip(Player player)
+        {
+            player.manaCost -= 0.1f;
+            player.GetCritChance(DamageClass.Magic) += 0.06f;
         }
     }
 }

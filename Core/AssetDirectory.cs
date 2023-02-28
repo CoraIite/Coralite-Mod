@@ -9,6 +9,7 @@
         public const string Bosses = Assets + "Bosses/";
 
         public const string Rediancie = Bosses + "Rediancie/";
+        public const string BabyIceDragon = Bosses + "BabyIceDragon/";
 
         #endregion
 
@@ -39,15 +40,18 @@
 
         public const string ShadowItems = Items + "Shadow/";
         public const string RedJadeItems = Items + "RedJade/";
+        public const string IcicleItems = Items + "Icicle/";
         public const string StarsItems = Items + "Stars/";
         public const string DisturbanceItems = Items + "Disturbance/";
         public const string BlazingItems = Items + "Blazing/";
 
         public const string Materials = Items + "Materials/";
         public const string Accessories = Items + "Accessories/";
+        public const string Placeable = Items + "Placeable/";
         public const string Weapons_Melee = Items + "Weapons_Melee/";
         public const string Weapons_Magic = Items + "Weapons_Magic/";
         public const string Weapons_Summon = Items + "Weapons_Summon/";
+        public const string Weapons_Shoot = Items + "Weapons_Shoot/";
         public const string YujianHulu = Items + "YujianHulu/";
 
         public const string MachineItems = Items + "Machines/";
@@ -72,6 +76,7 @@
         public const string Projectiles_Melee = Projectiles + "Projectiles_Melee/";
         public const string Projectiles_Summon = Projectiles + "Projectiles_Summon/";
         public const string Projectiles_Magic = Projectiles + "Projectiles_Magic/";
+        public const string Projectiles_Shoot = Items + "Projectiles_Shoot/";
 
         #endregion
 
@@ -80,6 +85,7 @@
         public const string Tiles = Assets + "Tiles/";
 
         public const string PlantTiles = Tiles + "Plants/";
+        public const string TreeTiles = Tiles + "Trees/";
         public const string MachineTiles = Tiles + "Machines/";
         public const string RedJadeTiles = Tiles + "RedJades/";
 

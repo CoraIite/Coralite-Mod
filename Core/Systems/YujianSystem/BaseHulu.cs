@@ -67,8 +67,11 @@ namespace Coralite.Core.Systems.YujianSystem
 
             Item.DamageType = ModContent.GetInstance<YujianDamage>();
             Item.useStyle = ItemUseStyleID.HoldUp;
+
+            Item.noMelee = true;
             Item.channel = true;
 
+            Item.shoot = 1;         //只是为了能够去调用shoot方法而已
         }
 
         public override void SaveData(TagCompound tag)
@@ -170,9 +173,9 @@ namespace Coralite.Core.Systems.YujianSystem
         public bool CanUseSlot(int index)
         {
             if (index < slotCount)
-                return false;
+                return true;
 
-            return true;
+            return false;
         }
 
         /// <summary>

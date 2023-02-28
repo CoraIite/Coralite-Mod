@@ -6,6 +6,12 @@ namespace Coralite.Core.Prefabs.Projectiles
     {
         void ReCalculate(int maxTime);
 
+        /// <summary>
+        /// 一般返回一个0-1之间的插值
+        /// </summary>
+        /// <param name="timer"></param>
+        /// <param name="maxTime"></param>
+        /// <returns></returns>
         float Smoother(int timer, int maxTime);
     }
 
@@ -33,4 +39,17 @@ namespace Coralite.Core.Prefabs.Projectiles
             return Helper.BezierEase((float)timer / maxTime);
         }
     }
+
+    public class HeavySmoother : ISmoother
+    {
+        public void ReCalculate(int maxTime) { }
+
+        public float Smoother(int timer, int maxTime)
+        {
+            float factor=(float)timer / maxTime;
+            float x_1 = factor - 1;
+            return 1 + (2.6f * x_1 * x_1 * x_1) + (1.6f * x_1 * x_1);
+        }
+    }
+
 }

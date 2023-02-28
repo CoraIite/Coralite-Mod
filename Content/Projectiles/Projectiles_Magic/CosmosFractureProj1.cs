@@ -12,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Projectiles.Projectiles_Magic
 {
-    public class CosmosFractureProj1 : BaseChannelProj
+    public class CosmosFractureProj1 : BaseChannelProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Projectiles_Magic + Name;
 
@@ -275,27 +275,25 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         public override bool PreDraw(ref Color lightColor)
         {
-            SpriteBatch sb = Main.spriteBatch;
-            sb.End();
-            sb.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+            return false;
+        }
+
+        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
             //绘制魔法阵
             if (canDrawMagic)
                 DrawMagic();
 
             if (canDrawSelf)
-                DrawSelf(lightColor, sb);
+                DrawSelf(spriteBatch);
 
             if (completeAndRelease)
             {
                 //绘制时空裂隙效果
-                DrawFracture2(sb);
+                DrawFracture2(spriteBatch);
                 //绘制大剑
-                DrawBigSword(sb);
+                DrawBigSword(spriteBatch);
             }
-
-            sb.End();
-            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-            return false;
         }
 
         protected void DrawMagic()
@@ -339,10 +337,10 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         }
 
-        protected void DrawSelf(Color lightColor, SpriteBatch sb)
+        protected void DrawSelf(SpriteBatch sb)
         {
             Texture2D mainTex = Request<Texture2D>(AssetDirectory.Weapons_Magic + "CosmosFracture").Value;
-            sb.Draw(mainTex, Owner.Center + _Rotation.ToRotationVector2() * 64 - Main.screenPosition, mainTex.Frame(), lightColor, _Rotation + 0.785f, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 1, SpriteEffects.None, 0);
+            sb.Draw(mainTex, Owner.Center + _Rotation.ToRotationVector2() * 64 - Main.screenPosition, mainTex.Frame(), Color.White, _Rotation + 0.785f, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 1, SpriteEffects.None, 0);
         }
 
         protected void DrawFracture2(SpriteBatch sb)

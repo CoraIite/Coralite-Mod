@@ -195,5 +195,11 @@ namespace Coralite.Helpers
 
             return SoundEngine.PlaySound(style, position);
         }
+
+        public static void NotOnServer(Action method)
+        {
+            if (Main.netMode != NetmodeID.Server)
+                method();
+        }
     }
 }

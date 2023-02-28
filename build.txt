@@ -1,3 +1,4 @@
 displayName = 珊瑚石 [Early Access]
 author = 瓶中微光
 version = 0.0.0.4
+hideResources = true

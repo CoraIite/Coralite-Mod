@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Projectiles.ShadowProjectiles;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;

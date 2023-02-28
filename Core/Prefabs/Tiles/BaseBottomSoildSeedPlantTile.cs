@@ -149,7 +149,7 @@ namespace Coralite.Core.Prefabs.Tiles
         public abstract void DropItemWithStaffOfRegrowth(PlantStage stage, ref int rarePlantStack, ref int plantItemStack, ref int seedItemStack);
 
         /// <summary>
-        /// 正常情况下掉落物品，仅成熟时候
+        /// 正常情况下掉落物品，仅成熟时候，注意，稀有植物物品掉落会使正常植物和种子不会掉落
         /// </summary>
         /// <param name="rarePlantStack">稀有物品数量</param>
         /// <param name="plantItemStack">植物物品数量</param>

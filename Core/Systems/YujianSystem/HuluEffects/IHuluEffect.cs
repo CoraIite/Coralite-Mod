@@ -5,9 +5,9 @@ namespace Coralite.Core.Systems.YujianSystem.HuluEffects
 {
     public interface IHuluEffect
     {
-        void AIEffect(BaseYujianProj yujianProj);
-        void HitEffect(NPC target, int damage, float knockback, bool crit);
-        bool PreDrawEffect(ref Color lightColor);
-        void PostDrawEffect(Color lightColor);
+        void AIEffect(Projectile projectile);
+        void HitEffect(Projectile projectile,NPC target, int damage, float knockback, bool crit);
+        void PreDrawEffect(Projectile projectile,ref Color lightColor);
+        void PostDrawEffect(Projectile projectile, Color lightColor);
     }
 }

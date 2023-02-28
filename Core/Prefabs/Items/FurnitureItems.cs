@@ -38,6 +38,7 @@ namespace Coralite.Core.Prefabs.Items
             Item.useAnimation = 15;
             Item.useTime = 10;
             Item.useStyle = ItemUseStyleID.Swing;
+            Item.noMelee = true;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.consumable = true;
@@ -80,6 +81,7 @@ namespace Coralite.Core.Prefabs.Items
             Item.value = Value;
             Item.rare = Rare;
             Item.useStyle = ItemUseStyleID.Swing;
+            Item.noMelee = true;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.consumable = true;
@@ -121,6 +123,7 @@ namespace Coralite.Core.Prefabs.Items
             Item.value = Value;
             Item.rare = Rare;
             Item.useStyle = ItemUseStyleID.Swing;
+            Item.noMelee = true;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.consumable = true;
@@ -232,6 +235,7 @@ namespace Coralite.Core.Prefabs.Items
             Item.value = Value;
             Item.rare = Rare;
             Item.useStyle = ItemUseStyleID.Swing;
+            Item.noMelee = true;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.consumable = true;
@@ -273,6 +277,7 @@ namespace Coralite.Core.Prefabs.Items
             Item.value = Value;
             Item.rare = Rare;
             Item.useStyle = ItemUseStyleID.Swing;
+            Item.noMelee = true;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.consumable = true;
@@ -346,6 +351,7 @@ namespace Coralite.Core.Prefabs.Items
             Item.maxStack = 99;
             Item.useAnimation = 15;
             Item.useTime = 10;
+            Item.noMelee = true;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.consumable = true;

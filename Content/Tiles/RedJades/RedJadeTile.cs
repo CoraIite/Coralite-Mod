@@ -20,9 +20,14 @@ namespace Coralite.Content.Tiles.RedJades
             Main.tileMergeDirt[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
+
             DustType = DustID.GemRuby;
             ItemDrop = ModContent.ItemType<RedJade>();
             HitSound = SoundID.Tink;
+
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("赤玉矿");
+            AddMapEntry(Coralite.Instance.RedJadeRed, name);
         }
     }
 }

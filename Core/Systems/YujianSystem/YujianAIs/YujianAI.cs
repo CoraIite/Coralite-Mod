@@ -1,13 +1,16 @@
-﻿namespace Coralite.Core.Systems.YujianSystem.YujianAIs
+﻿using Microsoft.Xna.Framework.Graphics;
+
+namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 {
     public abstract class YujianAI
     {
         /// <summary>
         /// 开始攻击时的时间
         /// </summary>
-        public abstract int StartTime { get; }
+        public int StartTime { get; init;}
 
-        public bool IsAimingMouse { get; private set; }
+        public bool IsAimingMouse { get => _isAimingMouse; private set => _isAimingMouse = value; }
+        private bool _isAimingMouse;
 
         /// <summary>
         /// 仅供外部调用的AI
@@ -15,13 +18,6 @@
         /// <param name="yujianProj"></param>
         public void AttackAI(BaseYujianProj yujianProj)
         {
-            if (yujianProj.Timer == StartTime)
-            {
-                OnStartAttack(yujianProj);
-                IsAimingMouse = yujianProj.AimMouse;
-                yujianProj.AimMouse = false;
-            }
-
             Attack(yujianProj);
 
             if (UpdateTime(yujianProj))
@@ -32,24 +28,48 @@
         }
 
         /// <summary>
+        /// 仅供外部调用的方法，在刚开始时调用
+        /// </summary>
+        /// <param name="yujianProj"></param>
+        public void OnStart(BaseYujianProj yujianProj)
+        {
+            OnStartAttack(yujianProj);
+            BaseYujianProj.StartAttack(yujianProj.Projectile);
+            yujianProj.Timer = StartTime;
+            IsAimingMouse = yujianProj.AimMouse;
+            yujianProj.AimMouse = false;
+            yujianProj.Projectile.netUpdate = true;
+        }
+
+        /// <summary>
         /// 开始攻击时执行的AI
         /// </summary>
-        /// <param name="YujianProj"></param>
-        protected virtual void OnStartAttack(BaseYujianProj YujianProj) { }
+        /// <param name="yujianProj"></param>
+        protected virtual void OnStartAttack(BaseYujianProj yujianProj) { }
 
         /// <summary>
         /// 每帧执行的具体攻击AI
         /// </summary>
-        /// <param name="YujianProj"></param>
-        protected abstract void Attack(BaseYujianProj YujianProj);
+        /// <param name="yujianProj"></param>
+        protected abstract void Attack(BaseYujianProj yujianProj);
 
         /// <summary>
         /// 决定是否能让时间减少
         /// </summary>
         /// <returns></returns>
-        public virtual bool UpdateTime(BaseYujianProj yujianProj) => true;
+        protected virtual bool UpdateTime(BaseYujianProj yujianProj) => true;
 
-
+        /// <summary>
+        /// 一般用于绘制影子拖尾
+        /// </summary>
+        /// <param name="yujianProj"></param>
+        public virtual void DrawAdditive(SpriteBatch spriteBatch,BaseYujianProj yujianProj) { }
+        
+        /// <summary>
+        /// 一般用于绘制拖尾
+        /// </summary>
+        /// <param name="yujianProj"></param>
+        public virtual void DrawPrimitives(BaseYujianProj yujianProj) { }
     }
 
 }

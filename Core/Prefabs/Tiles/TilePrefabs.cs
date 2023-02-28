@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -28,7 +29,7 @@ namespace Coralite.Core.Prefabs.Tiles
         /// <param name="mapName"></param>
         /// <param name="MineResist"></param>
         /// <param name="MinPick"></param>
-        public static void SoildBottomPlantPrefab<T>(this ModTile tile, int[] AnchorValidTiles, int[] AnchorAlternateTiles, int[] CoordinatePadding, int DrawYOffset, SoundStyle? HitSound, int DustType, Color mapColor, int CoordinateWidth = 16, string mapName = "", float MineResist = 1f, int MinPick = 0, bool tileLighted = false) where T : ModTileEntity
+        public static void SoildBottomPlantPrefab<T>(this ModTile tile, int[] AnchorValidTiles, int[] AnchorAlternateTiles, int[] CoordinateHeights, int DrawYOffset, SoundStyle? HitSound, int DustType, Color mapColor, int CoordinateWidth = 16, string mapName = "", float MineResist = 1f, int MinPick = 0, bool tileLighted = false) where T : ModTileEntity
         {
             Main.tileFrameImportant[tile.Type] = true;//帧重要
             Main.tileObsidianKill[tile.Type] = true;
@@ -48,7 +49,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
             TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 1;
-            TileObjectData.newTile.CoordinateHeights = CoordinatePadding;
+            TileObjectData.newTile.CoordinateHeights = CoordinateHeights;
             TileObjectData.newTile.CoordinateWidth = CoordinateWidth;
             TileObjectData.newTile.DrawYOffset = DrawYOffset;
             TileObjectData.newTile.CoordinatePadding = 2;
@@ -123,6 +124,40 @@ namespace Coralite.Core.Prefabs.Tiles
             ModTranslation name = tile.CreateMapEntryName();
             name.SetDefault(mapName);
             tile.AddMapEntry(mapColor, name);
+        }
+
+        public static void SaplingPrefab(this ModTile tile, int[] AnchorValidTiles,int dustType,Color mapColor)
+        {
+            Main.tileFrameImportant[tile.Type] = true;
+            Main.tileNoAttach[tile.Type] = true;
+            Main.tileLavaDeath[tile.Type] = true;
+
+            TileObjectData.newTile.Width = 1;
+            TileObjectData.newTile.Height = 2;
+            TileObjectData.newTile.Origin = new Point16(0, 1);
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
+            TileObjectData.newTile.CoordinateWidth = 16;
+            TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.newTile.AnchorValidTiles = AnchorValidTiles;
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.DrawFlipHorizontal = true;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.LavaDeath = true;
+            TileObjectData.newTile.RandomStyleRange = 3;
+            TileObjectData.newTile.StyleMultiplier = 3;
+            TileObjectData.addTile(tile.Type);
+
+            tile.AddMapEntry(mapColor);
+
+            TileID.Sets.TreeSapling[tile.Type] = true;
+            TileID.Sets.CommonSapling[tile.Type] = true;
+            TileID.Sets.SwaysInWindBasic[tile.Type] = true;
+            TileMaterials.SetForTileId(tile.Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
+
+            tile.DustType = dustType;
+            tile.AdjTiles = new int[] { TileID.Saplings };
         }
 
     }

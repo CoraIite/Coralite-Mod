@@ -82,7 +82,7 @@ namespace Coralite.Content.NPCs.OtherNPC
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (spawnInfo.Player.ZoneOverworldHeight)
-                return 0.08f;
+                return 0.04f;
             return 0f;
         }
     }

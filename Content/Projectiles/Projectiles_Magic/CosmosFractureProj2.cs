@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +22,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
     /// <para>1：法阵蓄力时特化的发射状态</para>
     /// <para>2：右键发射状态</para>
     /// </summary>
-    public class CosmosFractureProj2 : ModProjectile
+    public class CosmosFractureProj2 : ModProjectile, IDrawAdditive
     {
         public override string Texture => AssetDirectory.Projectiles_Magic + Name;
 
@@ -255,43 +256,40 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Main.spriteBatch.Draw(TextureAssets.Projectile[Type].Value, Projectile.Center - Main.screenPosition, new Rectangle(38 * textureType, 0, 38, 36),
+                                                    new Color(217, 241, 255, 180), Projectile.rotation, new Vector2(19, 18), Projectile.scale, SpriteEffects.None, 0);
+            return false;
+        }
+
+        public void DrawAdditive(SpriteBatch spriteBatch)
+        {
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             Rectangle source = new Rectangle(38 * textureType, 0, 38, 36);      //<---简单粗暴地填数字了，前提是贴图不能有改动
             Vector2 origin = new Vector2(19, 18);
 
-            if (Projectile.ai[0] == 0 && timer < 33)
-                goto drawSelf;
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(0, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-
-            float sinProgress = (float)Math.Sin(timer * 0.05f);      //<---别问我这是什么神秘数字，问就是乱写的
-            int r = (int)(128 - sinProgress * 128);
-            int g = (int)(150 + sinProgress * 60);
-            for (int i = 0; i < 3; i++)     //这里是绘制类似于影子拖尾的东西，简单讲就是随机位置画几个透明度低的自己
+            float sinProgress;
+            int r;
+            int g;
+            if (Projectile.ai[0] != 0 || timer > 32)
             {
-                Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + origin * Projectile.scale - Main.screenPosition, source,
-                                                    new Color(r, g, 255, 160 - i * 30), Projectile.oldRot[i], origin, Projectile.scale + i * 0.3f, SpriteEffects.None, 0);
+                sinProgress = (float)Math.Sin(timer * 0.05f);      //<---别问我这是什么神秘数字，问就是乱写的
+                r = (int)(128 - sinProgress * 128);
+                g = (int)(150 + sinProgress * 60);
+                for (int i = 0; i < 3; i++)     //这里是绘制类似于影子拖尾的东西，简单讲就是随机位置画几个透明度低的自己
+                {
+                    spriteBatch.Draw(mainTex, Projectile.oldPos[i] + origin * Projectile.scale - Main.screenPosition, source,
+                                                        new Color(r, g, 255, 160 - i * 30), Projectile.oldRot[i], origin, Projectile.scale + i * 0.3f, SpriteEffects.None, 0);
+                }
             }
-            //最终颜色会是淡蓝到淡粉之间
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
-        drawSelf:
             //绘制本体的地方
-            sinProgress = (float)Math.Sin(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
-            r = (int)(174.5f + sinProgress * 42.5f);
-            g = (int)(237 + sinProgress * 4);
-            int a = (int)(150 + sinProgress * 30);
+            //sinProgress = (float)Math.Sin(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
+            //r = (int)(174.5f + sinProgress * 42.5f);
+            //g = (int)(237 + sinProgress * 4);
+            //int a = (int)(150 + sinProgress * 30);
 
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
-                                                    new Color(r, g, 255, a), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
-            return false;
-        }
-
-        public override void PostDraw(Color lightColor)
-        {
-
+            //spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
+            //                                        new Color(r, g, 255, a), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
         }
 
         #endregion
@@ -304,5 +302,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             if (Projectile.ai[0] != 1)
                 SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
         }
+
+
     }
 }

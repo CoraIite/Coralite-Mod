@@ -1,48 +1,98 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent;
 
 namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 {
     public class Yujian_Spurts : YujianAI
     {
-        private readonly int _startTime;
-        public override int StartTime => _startTime;
+        private readonly float spurtsSpeed;
+        private readonly float turnSpeed;
+        private readonly float roughlyVelocity;
+        private bool canSpurts = false;
 
-        public Yujian_Spurts(int startTime)
+        public int SpurtsLenth { get; init; }
+
+        public Yujian_Spurts(int startTime, float spurtsSpeed,int spurtsLenth, float turnSpeed, float roughlyVelocity)
         {
-            _startTime = startTime;
+            StartTime = startTime;
+            this.SpurtsLenth = spurtsLenth;
+            this.spurtsSpeed = spurtsSpeed;
+            this.turnSpeed = turnSpeed;
+            this.roughlyVelocity = roughlyVelocity;
         }
 
-        protected override void OnStartAttack(BaseYujianProj YujianProj)
+        protected override void Attack(BaseYujianProj yujianProj)
         {
-            Projectile Projectile = YujianProj.Projectile;
+            //先尝试靠近目标，再向目标方向突刺
+            Projectile Projectile = yujianProj.Projectile;
 
-            Projectile.localAI[0] = Projectile.Center.X;
-            Projectile.localAI[1] = Projectile.Center.Y;
+            if (canSpurts)
+            {
+                if (yujianProj.Timer < StartTime * 0.2f)
+                    Projectile.velocity *= 0.96f;
+
+                return;
+            }
+
+            //尝试靠近敌人
+            Vector2 targetCenter = yujianProj.GetTargetCenter(IsAimingMouse);
+            Vector2 targetDirection = (targetCenter - Projectile.Center).SafeNormalize(Vector2.Zero);
+            float distance = Vector2.Distance(targetCenter, Projectile.Center);
+            float targetAngle = targetDirection.ToRotation();
+
+            if (distance > SpurtsLenth * 2)
+                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;
+
+            //控制旋转，接近时逐渐转到对应的角度
+            float factor = 0.008f * turnSpeed + 0.01f * roughlyVelocity;
+            Projectile.rotation = Projectile.rotation.AngleLerp(targetAngle + 1.57f, factor);
+
+            if (distance < SpurtsLenth * 2)
+            {
+                canSpurts = true;
+                Projectile.velocity = targetDirection * spurtsSpeed;
+                Projectile.rotation = targetAngle + 1.57f;
+                yujianProj.InitTrailCache();
+            }
         }
 
-        protected override void Attack(BaseYujianProj YujianProj)
+        protected override void OnStartAttack(BaseYujianProj yujianProj)
         {
-            float factor = YujianProj.Timer / StartTime;
-            Projectile Projectile = YujianProj.Projectile;
+            Projectile Projectile = yujianProj.Projectile;
 
-            Vector2 targetCenter = YujianProj.GetTargetCenter(IsAimingMouse);
+            Projectile.velocity = new Vector2(-Projectile.velocity.Y, Projectile.velocity.X)*2f;
+            canSpurts = false;
+        }
 
-            Vector2 originCenter = new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
-            originCenter += new Vector2(0f, Utils.GetLerpValue(0f, 0.4f, factor, clamped: true) * -100f);
-            Vector2 v = targetCenter - originCenter;
-            Vector2 vector6 = v.SafeNormalize(Vector2.Zero) * MathHelper.Clamp(v.Length(), 60f, 150f);
-            Vector2 value = targetCenter + vector6;
+        protected override bool UpdateTime(BaseYujianProj yujianProj)
+        {
+            return canSpurts;
+        }
 
-            float lerpValue3 = Utils.GetLerpValue(0.4f, 0.6f, factor, clamped: true);
-            float lerpValue4 = Utils.GetLerpValue(0.6f, 1f, factor, clamped: true);
-            float targetAngle = v.SafeNormalize(Vector2.Zero).ToRotation() + (float)Math.PI / 2f;
+        public override void DrawAdditive(SpriteBatch spriteBatch,BaseYujianProj yujianProj)
+        {
+            if (!canSpurts)
+                return;
 
-            Projectile.rotation = Projectile.rotation.AngleTowards(targetAngle, (float)Math.PI / 5f);
-            Projectile.Center = Vector2.Lerp(originCenter, targetCenter, lerpValue3);
-            if (lerpValue4 > 0f)
-                Projectile.Center = Vector2.Lerp(targetCenter, value, lerpValue4);
+            Projectile Projectile = yujianProj.Projectile;
+
+            //绘制影子拖尾
+            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle source = mainTex.Frame();
+            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
+            float scale = 1.8f + yujianProj.trailCacheLenth * 0.02f;
+
+            for (int i = yujianProj.trailCacheLenth - 1; i > 0; i -= 3)
+            {
+                Color shadowColor = Color.Lerp(yujianProj.color1, yujianProj.color2, (float)i / yujianProj.trailCacheLenth);
+                int a = 20 + i * 8;
+                if (a >255)
+                    a = 255;
+                shadowColor.A = (byte)a;
+                spriteBatch.Draw(mainTex, Projectile.oldPos[i]-Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - i * 0.02f, SpriteEffects.None, 0f);
+            }
         }
     }
 }

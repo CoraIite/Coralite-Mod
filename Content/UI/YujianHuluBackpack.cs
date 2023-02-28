@@ -21,7 +21,7 @@ namespace Coralite.Content.UI
         public static HuluBackpackSlot[] huluBackpackSlots;
         public static HuluBackpackPanel panel = new HuluBackpackPanel();
 
-        public static Vector2 basePos = new Vector2(0, -300);
+        public static Vector2 basePos = new Vector2((Main.screenWidth / 2) - 159, (Main.screenHeight / 2) - 200 - 47);
 
         public YujianHuluBackpack()
         {
@@ -40,15 +40,15 @@ namespace Coralite.Content.UI
         {
             Elements.Clear();
 
-            panel.Top.Set(basePos.Y - 47, 0.5f);
-            panel.Left.Set(basePos.X - 159, 0.5f);
+            panel.Top.Set(basePos.Y, 0f);
+            panel.Left.Set(basePos.X, 0f);
             Append(panel);
 
             for (int i = 0; i < Coralite.YujianHuluContainsMax; i++)
             {
-                huluBackpackSlots[i].Top.Set(basePos.Y - 59, 0.5f);
+                huluBackpackSlots[i].Top.Set(basePos.Y +12, 0f);
                 //(- 318 / 2) + 10 = -149 就是最左边一个的位置
-                huluBackpackSlots[i].Left.Set(basePos.X - 149 + 28 * i, 0.5f);
+                huluBackpackSlots[i].Left.Set(basePos.X +10 + 30 * i, 0f);
                 Append(huluBackpackSlots[i]);
             }
 
@@ -156,26 +156,27 @@ namespace Coralite.Content.UI
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            Vector2 position = GetDimensions().Position();
             Vector2 center = GetDimensions().Center();
-
             //如果能放置就进行对应的绘制，不行的话就绘制个小锁头
             if (YujianHuluBackpack.huluItem.CanUseSlot(slotIndex))
             {
-                if (YujianHuluBackpack.huluItem.CanChannel[slotIndex])
+                if (YujianHuluBackpack.huluItem.CanChannel[slotIndex])      //绘制特效
                 {
                     Texture2D canChannelAnim = ModContent.Request<Texture2D>(AssetDirectory.UI + "CanChannelAnim").Value;
 
-                    int frame = (int)(Main.GlobalTimeWrappedHourly % 36) / 3;
-                    Rectangle source = new Rectangle(frame * 28, 0, 28, 72);        //贴图长宽这里就直接写了
+                    int frame = (int)(Main.timeForVisualEffects % 36) / 3;
+                    Rectangle source = new Rectangle(frame * 30, 0, 30, 72);        //贴图长宽这里就直接写了
 
-                    spriteBatch.Draw(canChannelAnim, center, source, Color.White);
+                    spriteBatch.Draw(canChannelAnim, position, source, Color.White);
                 }
 
                 Texture2D mainTex;
                 if (YujianHuluBackpack.huluItem.Yujians[slotIndex].IsAir)
                 {
+
                     mainTex = ModContent.Request<Texture2D>(AssetDirectory.UI + "HuluEmpty").Value;
-                    spriteBatch.Draw(mainTex, center, Color.White);
+                    spriteBatch.Draw(mainTex, center,mainTex.Frame(), Color.White,0f,new Vector2(mainTex.Width/2,mainTex.Height/2),1f,SpriteEffects.None,0f);
                 }
                 else
                 {
@@ -198,19 +199,20 @@ namespace Coralite.Content.UI
                         else
                             itemScale = pixelWidth / rectangle2.Height;
                     }
-                    Vector2 pos2 = GetDimensions().Position();
-                    pos2.X += 14 - rectangle2.Width * itemScale / 2f;
-                    pos2.Y += 36 - rectangle2.Height * itemScale / 2f;      //魔法数字，是一半的物品栏宽和高
 
-                    spriteBatch.Draw(mainTex, pos2, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
+                    position.X += 14 - rectangle2.Width * itemScale / 2f;
+                    position.Y += 36 - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
+
+                    spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
                     if (Item.color != default(Color))
-                        spriteBatch.Draw(mainTex, pos2, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
+                        spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
                 }
             }
             else
             {
                 Texture2D lockTex = ModContent.Request<Texture2D>(AssetDirectory.UI + "HuluLock").Value;
-                spriteBatch.Draw(lockTex, center, Color.White);
+                spriteBatch.Draw(lockTex, center, lockTex.Frame(), Color.White, 0f, new Vector2(lockTex.Width / 2, lockTex.Height / 2), 1f, SpriteEffects.None, 0f);
+
             }
         }
     }
@@ -232,7 +234,7 @@ namespace Coralite.Content.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.UI + "YujianHuluBackpack").Value;
-            spriteBatch.Draw(mainTex, GetDimensions().Center(), Color.White);
+            spriteBatch.Draw(mainTex, GetDimensions().Position(), Color.White);
         }
     }
 }

@@ -63,18 +63,39 @@ namespace Coralite.Content.GlobalTiles
                     return;
                 }
                 #endregion
-                #region 雪块&冰块
-                if (type == TileID.SnowBlock || type == TileID.IceBlock)
+                #region 雪块
+                if (type == TileID.SnowBlock)
                 {
                     //冷水花
                     if (Main.rand.NextBool(3000))
-                        if (CanPlace(i, j, out Tile upTile))
+                        if (CanPlace(i, j, out _))
                         {
                             WorldGen.Place1x1(i, j - 1, TileType<PileaNotata>());
                             //upTile.TileFrameX = 54;
                             return;
                         }
+                    //雪融花
+                    if (Main.rand.NextBool(2800))
+                        if (CanPlace(i, j, out Tile upTile))
+                        {
+                            WorldGen.Place1x1(i, j - 1, TileType<SnoowFlower>());
+                            upTile.TileFrameX = 150;
+                            return;
+                        }
                     return;
+                }
+                #endregion
+                #region 冰块
+                if (type == TileID.IceBlock)
+                {
+                    //冷水花
+                    if (Main.rand.NextBool(3000))
+                        if (CanPlace(i, j, out _))
+                        {
+                            WorldGen.Place1x1(i, j - 1, TileType<PileaNotata>());
+                            //upTile.TileFrameX = 54;
+                            return;
+                        }
                 }
                 #endregion
                 return;

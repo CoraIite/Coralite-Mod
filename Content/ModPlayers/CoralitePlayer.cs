@@ -1,11 +1,13 @@
 ﻿using Coralite.Content.Items.BotanicalItems.Seeds;
 using Coralite.Content.Items.RedJadeItems;
-using Coralite.Content.Projectiles.RedJadeProjectiles;
+using Coralite.Content.UI;
 using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -13,36 +15,79 @@ namespace Coralite.Content.ModPlayers
 {
     public class CoralitePlayer : ModPlayer
     {
+        public float yujianUIAlpha;
         public bool ownedYujianProj;
-        public float Nianli;
-        public float NianliMax = 100f;
-        public float NianliRegain = 1f;
+        public float nianli;
+        public float nianliMax = 300f;
+        public float nianliRegain = 1f;
 
-        public short RightClickReuseDelay = 0;
+        public short rightClickReuseDelay = 0;
 
-        public bool RedJadePendant;
+        public bool redJadePendant;
 
         #region 各种更新
 
         public override void PreUpdate()
         {
-            NianliRegain = 1f;
-            NianliMax = 100f;
+            nianliRegain = 1f;
+            nianliMax = 300f;
         }
 
         public override void PostUpdateEquips()
         {
-            Nianli += NianliRegain;
-            Nianli = Math.Clamp(Nianli, 0f, NianliMax);
+            if (ownedYujianProj)
+            {
+                bool justCompleteCharge = nianli < nianliMax;
+                nianli += nianliRegain;
+                nianli = Math.Clamp(nianli, 0f, nianliMax);
+                if (nianli == nianliMax && justCompleteCharge)      //蓄力完成的时刻发出声音
+                    SoundEngine.PlaySound(SoundID.Item4);
+            }
+            else
+                nianli = 0f;
+
+        }
+
+        public override void PostUpdateMiscEffects()
+        {
+            //有御剑弹幕那就让透明度增加，没有御剑减小透明度直到为0
+            if (ownedYujianProj)
+            {
+                if (yujianUIAlpha < 1f)
+                {
+                    yujianUIAlpha += 0.035f;
+                    yujianUIAlpha = MathHelper.Clamp(yujianUIAlpha, 0f, 1f);
+                    NianliChargingBar.visible = true;
+                }
+            }
+            else if (yujianUIAlpha > 0f)
+            {
+                yujianUIAlpha -= 0.035f;
+                yujianUIAlpha = MathHelper.Clamp(yujianUIAlpha, 0f, 1f);
+                if (yujianUIAlpha <= 0f)
+                    NianliChargingBar.visible = false;
+            }
         }
 
         public override void PostUpdate()
         {
-            RedJadePendant = false;
-            if (RightClickReuseDelay > 0)
-                RightClickReuseDelay--;
+            redJadePendant = false;
+            if (rightClickReuseDelay > 0)
+                rightClickReuseDelay--;
 
-            Nianli = Math.Clamp(Nianli, 0f, NianliMax);  //只是防止意外发生
+            nianli = Math.Clamp(nianli, 0f, nianliMax);  //只是防止意外发生
+        }
+
+        public override void UpdateDead()
+        {
+            if (yujianUIAlpha > 0f)
+            {
+                yujianUIAlpha -= 0.035f;
+                yujianUIAlpha = MathHelper.Clamp(yujianUIAlpha, 0f, 1f);
+            }
+
+            rightClickReuseDelay = 0;
+            redJadePendant = false;
         }
 
         #endregion
@@ -51,7 +96,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
         {
-            if (RedJadePendant && damage > 5 && Main.rand.NextBool(3))
+            if (redJadePendant && damage > 5 && Main.rand.NextBool(3))
             {
                 Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<RedJadePendant>())),
                     Player.Center + (proj.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<RedJadeBoom>(), 80, 8f, Player.whoAmI);
@@ -60,7 +105,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnHitByNPC(NPC npc, int damage, bool crit)
         {
-            if (RedJadePendant && damage > 5 && Main.rand.NextBool(3))
+            if (redJadePendant && damage > 5 && Main.rand.NextBool(3))
             {
                 Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<RedJadePendant>())),
                     Player.Center + (npc.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<RedJadeBoom>(), 80, 8f, Player.whoAmI);
