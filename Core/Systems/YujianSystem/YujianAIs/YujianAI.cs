@@ -2,16 +2,21 @@
 
 namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 {
+    /// <summary>
+    /// 所有御剑AI的基类，总时间不能大于600！！！
+    /// </summary>
     public abstract class YujianAI
     {
         /// <summary>
         /// 开始攻击时的时间
         /// </summary>
-        public int StartTime { get; init;}
+        public int StartTime { get; init; }
 
         public bool IsAimingMouse { get => _isAimingMouse; private set => _isAimingMouse = value; }
         private bool _isAimingMouse;
 
+        private short _innerTimer;
+        public bool canDamage;
         /// <summary>
         /// 仅供外部调用的AI
         /// </summary>
@@ -25,6 +30,14 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 
             if (yujianProj.Timer <= 0f)
                 yujianProj.ChangeState();
+
+            _innerTimer++;
+            if (_innerTimer > 600)
+            {
+                yujianProj.State = -1f;
+                yujianProj.Timer = 0f;
+                yujianProj.Projectile.netUpdate = true;
+            }
         }
 
         /// <summary>
@@ -34,10 +47,12 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
         public void OnStart(BaseYujianProj yujianProj)
         {
             OnStartAttack(yujianProj);
-            BaseYujianProj.StartAttack(yujianProj.Projectile);
-            yujianProj.Timer = StartTime;
-            IsAimingMouse = yujianProj.AimMouse;
+            BaseYujianProj.StartAttack(yujianProj.Projectile);  //清空无敌帧
+            yujianProj.Timer = StartTime;       //设置开始时间
+            IsAimingMouse = yujianProj.AimMouse;        //设置是否瞄准鼠标
             yujianProj.AimMouse = false;
+            _innerTimer = 0;
+            yujianProj.ResetTileCollide();
             yujianProj.Projectile.netUpdate = true;
         }
 
@@ -63,8 +78,8 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
         /// 一般用于绘制影子拖尾
         /// </summary>
         /// <param name="yujianProj"></param>
-        public virtual void DrawAdditive(SpriteBatch spriteBatch,BaseYujianProj yujianProj) { }
-        
+        public virtual void DrawAdditive(SpriteBatch spriteBatch, BaseYujianProj yujianProj) { }
+
         /// <summary>
         /// 一般用于绘制拖尾
         /// </summary>

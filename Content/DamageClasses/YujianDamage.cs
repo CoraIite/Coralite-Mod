@@ -5,6 +5,11 @@ namespace Coralite.Content.DamageClasses
 {
     public class YujianDamage : DamageClass
     {
+        public override void SetStaticDefaults()
+        {
+            ClassName.SetDefault("念力伤害");
+        }
+
         //会受到一半的魔法和召唤伤害加成
         public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)
         {

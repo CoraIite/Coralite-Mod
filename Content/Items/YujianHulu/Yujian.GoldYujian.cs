@@ -9,9 +9,9 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.YujianHulu
 {
-    public class GoldYujian:BaseYujian
+    public class GoldYujian : BaseYujian
     {
-        public GoldYujian() : base(Item.sellPrice(0, 0, 18, 0), 12, 1.3f) { }
+        public GoldYujian() : base(ItemRarityID.Blue,Item.sellPrice(0, 0, 18, 0), 8, 1.3f) { }
 
         public override int ProjType => ModContent.ProjectileType<GoldYujianProj>();
 
@@ -24,32 +24,32 @@ namespace Coralite.Content.Items.YujianHulu
         }
     }
 
-    public class GoldYujianProj:BaseYujianProj
+    public class GoldYujianProj : BaseYujianProj
     {
         public override string SlashTexture => AssetDirectory.OtherProjectiles + "LiteSlash";
 
         public GoldYujianProj() : base(
             new YujianAI[]
             {
-                new Yujian_Spurts(35,2.5f,100,3,0),
-                new Yujian_Spurts(40,3f,120,4,0),
+                 new Yujian_Spurts(80, 4.5f, 60, 1.3f, 0.4f),
+                 new Yujian_Spurts(90, 5.2f, 80, 1.3f, 0.4f),
             },
             null,
-            new Yujian_Slash(startTime: 130,
+            new Yujian_PreciseSlash(startTime: 130,
                     slashWidth: 70,
                     slashTime: 90,
-                    startAngle: -1.8f,
+                    startAngle: -2f,
                     totalAngle: 3f,
                     turnSpeed: 2,
                     roughlyVelocity: 0,
                     halfShortAxis: 1f,
                     halfLongAxis: 1.5f,
                     new HeavySmoother()),
-            PowerfulAttackCost:50,
-            width: 40, height: 58,
-             new Color(40, 40, 40), new Color(150, 150, 150),
-             trailCacheLenth: 18,
-            AssetDirectory.YujianHulu + "GoldYujian", true
+            PowerfulAttackCost: 150,
+            attackLenth: 290,
+            width: 30, height: 58,
+            Color.DarkRed, Color.Gold,
+            trailCacheLenth: 18
             )
         { }
 

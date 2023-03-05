@@ -174,7 +174,6 @@ namespace Coralite.Content.UI
                 Texture2D mainTex;
                 if (YujianHuluBackpack.huluItem.Yujians[slotIndex].IsAir)
                 {
-
                     mainTex = ModContent.Request<Texture2D>(AssetDirectory.UI + "HuluEmpty").Value;
                     spriteBatch.Draw(mainTex, center,mainTex.Frame(), Color.White,0f,new Vector2(mainTex.Width/2,mainTex.Height/2),1f,SpriteEffects.None,0f);
                 }
@@ -187,7 +186,7 @@ namespace Coralite.Content.UI
                     if (Main.itemAnimations[Item.type] != null)
                         rectangle2 = Main.itemAnimations[Item.type].GetFrame(mainTex, -1);
                     else
-                        rectangle2 = Utils.Frame(mainTex, 1, 1, 0, 0, 0, 0);
+                        rectangle2 = mainTex.Frame();
 
                     float itemScale = 1f;
                     float pixelWidth = 20;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
@@ -197,7 +196,7 @@ namespace Coralite.Content.UI
                         if (rectangle2.Width > mainTex.Height)
                             itemScale = pixelWidth / rectangle2.Width;
                         else
-                            itemScale = pixelWidth / rectangle2.Height;
+                            itemScale = pixelHeight / rectangle2.Height;
                     }
 
                     position.X += 14 - rectangle2.Width * itemScale / 2f;
@@ -206,13 +205,18 @@ namespace Coralite.Content.UI
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
                     if (Item.color != default(Color))
                         spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
+
+                    if (IsMouseHovering)
+                    {
+                        Main.HoverItem = Item.Clone();
+                        Main.hoverItemName = "Yujian";
+                    }
                 }
             }
             else
             {
                 Texture2D lockTex = ModContent.Request<Texture2D>(AssetDirectory.UI + "HuluLock").Value;
                 spriteBatch.Draw(lockTex, center, lockTex.Frame(), Color.White, 0f, new Vector2(lockTex.Width / 2, lockTex.Height / 2), 1f, SpriteEffects.None, 0f);
-
             }
         }
     }

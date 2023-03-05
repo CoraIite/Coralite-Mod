@@ -12,6 +12,7 @@
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Compat\BloodSoul\" />
     <Folder Include="Content\Items\Accessories\" />
     <Folder Include="Content\Items\Pets\" />
     <Folder Include="Content\Items\AstronomyItems\" />

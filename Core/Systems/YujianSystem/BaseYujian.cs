@@ -14,6 +14,7 @@ namespace Coralite.Core.Systems.YujianSystem
     {
         private readonly string TexturePath;
         private readonly bool PathHasName;
+        private readonly int Rare;
         private readonly int Value;
         private readonly int Damage;
         private readonly float Knockback;
@@ -22,8 +23,9 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
 
-        public BaseYujian(int value, int damage, float knockback, string texturePath = AssetDirectory.YujianHulu, bool pathHasName = false)
+        public BaseYujian(int rare, int value, int damage, float knockback, string texturePath = AssetDirectory.YujianHulu, bool pathHasName = false)
         {
+            Rare= rare;
             Value = value;
             Damage = damage;
             Knockback = knockback;
@@ -36,6 +38,7 @@ namespace Coralite.Core.Systems.YujianSystem
             Item.width = Item.height = 40;
             Item.maxStack = 1;
 
+            Item.rare = Rare;
             Item.value = Value;
             Item.damage = Damage;
             Item.knockBack = Knockback;

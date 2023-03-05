@@ -5,7 +5,7 @@ namespace Coralite.Content.Items.Yujian
 {
     public class WoodenHulu : BaseHulu
     {
-        public WoodenHulu() : base(1, 0,8,1f) { }
+        public WoodenHulu() : base(1, ItemRarityID.White, 0,3,1f) { }
 
         public override void AddRecipes()
         {

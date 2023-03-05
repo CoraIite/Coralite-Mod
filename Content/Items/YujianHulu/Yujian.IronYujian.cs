@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.YujianHulu
 {
     public class IronYujian : BaseYujian
     {
-        public IronYujian() : base(Item.sellPrice(0, 0, 10, 0), 10, 1.3f) { }
+        public IronYujian() : base(ItemRarityID.White,Item.sellPrice(0, 0, 10, 0), 7, 1.3f) { }
 
         public override int ProjType => ModContent.ProjectileType<IronYujianProj>();
 
@@ -31,25 +31,25 @@ namespace Coralite.Content.Items.YujianHulu
         public IronYujianProj() : base(
             new YujianAI[]
             {
-                 new Yujian_Spurts(50, 4f, 40, 1.2f, 0.5f),
-                 new Yujian_Spurts(55, 4.8f, 60, 1.2f, 0.5f),
+                 new Yujian_Spurts(120, 2.8f, 70, 0.8f, 0.4f),
+                 new Yujian_Spurts(140, 3f, 80, 1f, 0.4f),
             },
             null,
-            new Yujian_Slash(startTime: 130,
-                    slashWidth: 70,
-                    slashTime: 90,
-                    startAngle: -1.8f,
+            new Yujian_PreciseSlash(startTime: 150,
+                    slashWidth: 55,
+                    slashTime: 100,
+                    startAngle: -2f,
                     totalAngle: 3f,
                     turnSpeed: 2,
                     roughlyVelocity: 0,
                     halfShortAxis: 1f,
                     halfLongAxis: 1.5f,
                     new HeavySmoother()),
-            PowerfulAttackCost: 50,
-            width: 40, height: 58,
-             new Color(42, 37, 41), new Color(199, 192, 175),
-             trailCacheLenth: 18,
-            AssetDirectory.YujianHulu + "IronYujian", true
+            PowerfulAttackCost: 150,
+            attackLenth: 220,
+            width: 30, height: 58,
+            new Color(42, 37, 41), new Color(169, 162, 135),
+             trailCacheLenth: 16
             )
         { }
 

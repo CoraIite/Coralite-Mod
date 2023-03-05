@@ -1,5 +1,4 @@
-﻿using Coralite.Core;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
@@ -36,6 +35,9 @@ namespace Coralite.Content.Tiles.Trees
             if (Main.rand.NextBool(25))
                 return ItemID.PinkGel;
 
+            if (Main.rand.NextBool(8))
+                return ModContent.ItemType<Items.Placeable.SlimeSapling>();
+
             return ItemID.Gel;
         }
 
@@ -45,7 +47,7 @@ namespace Coralite.Content.Tiles.Trees
 
         public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
         {
-            throw new System.NotImplementedException();
+
         }
 
         public override int SaplingGrowthType(ref int style)
@@ -54,5 +56,14 @@ namespace Coralite.Content.Tiles.Trees
             return ModContent.TileType<SlimeSapling>();
         }
 
+        public override bool CanDropAcorn()
+        {
+            return false;
+        }
+
+        public override int TreeLeaf()
+        {
+            return GoreID.TreeLeaf_Hallow;
+        }
     }
 }

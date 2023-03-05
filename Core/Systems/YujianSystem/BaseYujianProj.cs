@@ -27,10 +27,12 @@ namespace Coralite.Core.Systems.YujianSystem
         private readonly string TexturePath;
         private readonly bool PathHasName;
         private readonly float PowerfulAttackCost;
+        private readonly bool TileCollide;
         public bool AimMouse;
         public bool canChannel;
         public int targetIndex;
         public int channelTime;
+        private int attackLenth;
         public Vector2 aimCenter;
         public IHuluEffect huluEffect;
         public YujianAI[] yujianAIs;
@@ -40,15 +42,16 @@ namespace Coralite.Core.Systems.YujianSystem
         public const float SpecialMoveState = 0.1f;
         public const float PowerfulMoveState = 0.2f;
 
+        public int AttackLenth { get => attackLenth; set => attackLenth = value; }
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
         public Player Owner => Main.player[Projectile.owner];
 
         public virtual string SlashTexture => AssetDirectory.OtherProjectiles + "NormalSlashTrail";
 
-        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
+        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name.Replace("Proj", ""));
 
-        public BaseYujianProj(YujianAI[] yujianAIs, YujianAI specialAI, YujianAI powerfulAI,float PowerfulAttackCost, int width, int height, Color color1, Color color2, int trailCacheLenth = 30, string texturePath = AssetDirectory.YujianHulu, bool pathHasName = false)
+        public BaseYujianProj(YujianAI[] yujianAIs, YujianAI specialAI, YujianAI powerfulAI, float PowerfulAttackCost, int attackLenth, int width, int height, Color color1, Color color2, int trailCacheLenth = 30, bool tileCollide = true, string texturePath = AssetDirectory.YujianHulu, bool pathHasName = false)
         {
             if (yujianAIs is null || powerfulAI is null)
                 throw new Exception("普通攻击或强化攻击不能为null ! ! ! ! ! ! ! ! ! ! ! !");
@@ -57,11 +60,13 @@ namespace Coralite.Core.Systems.YujianSystem
             this.specialAI = specialAI;
             this.powerfulAI = powerfulAI;
             this.PowerfulAttackCost = PowerfulAttackCost;
+            AttackLenth = attackLenth;
             Width = width;
             Height = height;
             this.color1 = color1;
             this.color2 = color2;
             this.trailCacheLenth = trailCacheLenth;
+            TileCollide = tileCollide;
             TexturePath = texturePath;
             PathHasName = pathHasName;
         }
@@ -84,11 +89,15 @@ namespace Coralite.Core.Systems.YujianSystem
             Projectile.extraUpdates = 2;
 
             Projectile.ignoreWater = false;
-            Projectile.tileCollide = false;
+            Projectile.tileCollide = TileCollide;
             Projectile.friendly = true;
             Projectile.netImportant = true;
             Projectile.usesLocalNPCImmunity = true;
+
+            PostSetDefaults();
         }
+
+        public virtual void PostSetDefaults() { }
 
         #endregion
 
@@ -99,7 +108,7 @@ namespace Coralite.Core.Systems.YujianSystem
             Projectile.oldPos = new Vector2[trailCacheLenth];
             Projectile.oldRot = new float[trailCacheLenth];
 
-            InitTrailCache();
+            InitTrailCaches();
         }
 
         public sealed override void AI()
@@ -131,15 +140,6 @@ namespace Coralite.Core.Systems.YujianSystem
                 }
             }
 
-            for (int i = 0; i < trailCacheLenth - 1; i++)
-            {
-                Projectile.oldRot[i] = Projectile.oldRot[i + 1];
-                Projectile.oldPos[i] = Projectile.oldPos[i + 1];
-            }
-
-            Projectile.oldPos[trailCacheLenth - 1] = Projectile.Center;
-            Projectile.oldRot[trailCacheLenth - 1] = Projectile.rotation;
-
             if (!AIBefore())
                 return;
 
@@ -151,6 +151,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
             currentAI.AttackAI(this);
 
+            UpdateCaches();
             huluEffect?.AIEffect(Projectile);
             AIEffect();
         }
@@ -182,6 +183,7 @@ namespace Coralite.Core.Systems.YujianSystem
                     Projectile.velocity = Vector2.Zero;
                     Projectile.Center = Projectile.Center.MoveTowards(idleSpot, 10f);
                     Projectile.rotation = Projectile.rotation.AngleLerp(idleRotation, 0.08f);
+                    Projectile.tileCollide = false;
                     if (Projectile.Distance(idleSpot) < 2f)
                     {
                         State = 0f;
@@ -193,26 +195,16 @@ namespace Coralite.Core.Systems.YujianSystem
                     ProjectilesHelper.GetMyProjIndexWhihModProj<BaseYujianProj>(Projectile, out var index2, out var totalIndexesInGroup2);
                     GetIdlePosition(index2, totalIndexesInGroup2, out var idleSpot2, out var idleRotation2);
                     Projectile.velocity = Vector2.Zero;
-                    Projectile.Center = Vector2.SmoothStep(Projectile.Center, idleSpot2, 0.15f);
-                    Projectile.rotation = Projectile.rotation.AngleLerp(idleRotation2, 0.15f);
+                    Projectile.Center = Vector2.SmoothStep(Projectile.Center, idleSpot2, 0.18f);
+                    Projectile.rotation = Projectile.rotation.AngleLerp(idleRotation2, 0.18f);
+                    Projectile.tileCollide = false;
 
-                    if (AimMouse && cp.nianli >PowerfulAttackCost)
-                    {
-                        State = PowerfulMoveState;
-                        powerfulAI.OnStart(this);
-                        cp.nianli -= PowerfulAttackCost;
+                    if (ChangeState(cp))
                         break;
-                    }
-                    else if (AimMouse)
-                    {
-                        State = Main.rand.Next(1, yujianAIs.Length + 1);
-                        yujianAIs[(int)State - 1].OnStart(this);
-                        break;
-                    }
 
                     if (Main.rand.NextBool(20))
                     {
-                        int targetNPCIndex = TryAttackingNPCs(Projectile, true);
+                        int targetNPCIndex = TryAttackingNPCs(Projectile);
                         if (targetNPCIndex != -1)
                         {
                             //随机一个攻击状态，或进行指定攻击状态
@@ -232,21 +224,11 @@ namespace Coralite.Core.Systems.YujianSystem
         public void ChangeState()
         {
             CoralitePlayer cp = Owner.GetModPlayer<CoralitePlayer>();
-            if (AimMouse && cp.nianli == cp.nianliMax)
-            {
-                State = PowerfulMoveState;
-                powerfulAI.OnStart(this);
-                cp.nianli-=PowerfulAttackCost;
-                return;
-            }
-            else if (AimMouse)
-            {
-                State = Main.rand.Next(1, yujianAIs.Length + 1);
-                yujianAIs[(int)State - 1].OnStart(this);
-                return;
-            }
 
-            int targetNPCIndex = TryAttackingNPCs(Projectile, true);
+            if (ChangeState(cp))
+                return;
+
+            int targetNPCIndex = TryAttackingNPCs(Projectile);
             if (targetNPCIndex != -1)
             {
                 //随机一个攻击状态，或进行指定攻击状态
@@ -260,6 +242,27 @@ namespace Coralite.Core.Systems.YujianSystem
                 Timer = 0f;
                 Projectile.netUpdate = true;
             }
+        }
+
+        private bool ChangeState(CoralitePlayer cp)
+        {
+            bool CanAttack = AimMouse && Vector2.Distance(GetTargetCenter(true), Owner.Center) < AttackLenth;
+            if (CanAttack && cp.nianli > PowerfulAttackCost)
+            {
+                State = PowerfulMoveState;
+                powerfulAI.OnStart(this);
+                cp.nianli -= PowerfulAttackCost;
+                return true;
+            }
+            else if (CanAttack)
+            {
+                State = Main.rand.Next(1, yujianAIs.Length + 1);
+                yujianAIs[(int)State - 1].OnStart(this);
+                return true;
+            }
+
+            AimMouse = false;
+            return false;
         }
 
         public Vector2 GetTargetCenter(bool isAimingMouse)
@@ -290,7 +293,7 @@ namespace Coralite.Core.Systems.YujianSystem
         {
             idleRotation = (float)Math.PI + Owner.direction * 0.3f;
             float num2 = (totalIndexes - 1f) / 2f;
-            idleSpot = Owner.Center - Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 40f;
+            idleSpot = Owner.Center - Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 33f - new Vector2(Owner.direction * 8, 8);
         }
 
         public virtual void AIEffect() { }
@@ -305,7 +308,7 @@ namespace Coralite.Core.Systems.YujianSystem
             }
         }
 
-        public static int TryAttackingNPCs(Projectile Projectile, bool skipBodyCheck = false)
+        public int TryAttackingNPCs(Projectile Projectile)
         {
             Vector2 ownerCenter = Main.player[Projectile.owner].Center;
             int result = -1;
@@ -316,10 +319,9 @@ namespace Coralite.Core.Systems.YujianSystem
                 NPC nPC = Main.npc[i];
                 if (nPC.CanBeChasedBy(Projectile))
                 {
-                    float npcDistance2Owner = nPC.Distance(ownerCenter);
-                    if (npcDistance2Owner <= 1000f && 
-                            (npcDistance2Owner <= num || num == -1f) && 
-                            (skipBodyCheck || Projectile.CanHitWithOwnBody(nPC)) &&
+                    float npcDistance2Owner = Vector2.Distance(ownerCenter, nPC.Center);
+                    if (npcDistance2Owner <= AttackLenth &&
+                            (npcDistance2Owner <= num || num == -1f) &&
                             Collision.CanHitLine(Projectile.Center, 1, 1, nPC.Center, 1, 1))
                     {
                         num = npcDistance2Owner;
@@ -353,7 +355,12 @@ namespace Coralite.Core.Systems.YujianSystem
             return target.CanBeChasedBy();
         }
 
-        public void InitTrailCache()
+        public void ResetTileCollide()
+        {
+            Projectile.tileCollide = TileCollide;
+        }
+
+        public void InitTrailCaches()
         {
             for (int i = 0; i < trailCacheLenth; i++)
             {
@@ -362,24 +369,60 @@ namespace Coralite.Core.Systems.YujianSystem
             }
         }
 
+        public void UpdateCaches()
+        {
+            for (int i = 0; i < trailCacheLenth - 1; i++)
+            {
+                Projectile.oldRot[i] = Projectile.oldRot[i + 1];
+                Projectile.oldPos[i] = Projectile.oldPos[i + 1];
+            }
+
+            Projectile.oldPos[trailCacheLenth - 1] = Projectile.Center;
+            Projectile.oldRot[trailCacheLenth - 1] = Projectile.rotation;
+
+        }
+
         #endregion
 
         #endregion
 
         #region Collision
 
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            height = width;
+            return true;
+        }
+
+        //public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        //{
+        //    Vector2 dir = (Projectile.rotation - 1.57f).ToRotationVector2() * Projectile.height / 2;
+        //    float a = 0f;
+
+        //    return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center + dir, Projectile.Center - dir, Projectile.width / 2, ref  a) &&
+        //    Collision.CanHitLine(targetHitbox.Center.ToVector2(), 1, 1, Projectile.Center, 1, 1);
+        //}
+
         public override bool? CanDamage()
         {
-            return State > 0f;
+            if (State > 0f)
+                return GetCurrentAI().canDamage;
+
+            return false;
         }
 
         public sealed override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             HitEffect(target, damage, knockback, crit);
-            huluEffect?.HitEffect(Projectile,target, damage, knockback, crit);
+            huluEffect?.HitEffect(Projectile, target, damage, knockback, crit);
         }
 
         public virtual void HitEffect(NPC target, int damage, float knockback, bool crit) { }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return false;
+        }
 
         #endregion
 
@@ -394,7 +437,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public sealed override bool PreDraw(ref Color lightColor)
         {
-            huluEffect?.PreDrawEffect(Projectile,ref lightColor);
+            huluEffect?.PreDrawEffect(Projectile, ref lightColor);
             PreDrawEffect(ref lightColor);
             if (State < 0.01f)
                 DrawSelf(Main.spriteBatch, lightColor);

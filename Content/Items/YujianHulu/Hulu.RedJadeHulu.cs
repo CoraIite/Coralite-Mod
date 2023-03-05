@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.YujianHulu
 {
     public class RedJadeHulu : BaseHulu
     {
-        public RedJadeHulu() : base(2, Item.sellPrice(0, 0, 20, 0), 10, 1.5f) { }
+        public RedJadeHulu() : base(2, ItemRarityID.Blue, Item.sellPrice(0, 0, 20, 0), 8, 1.5f) { }
 
         public override IHuluEffect SetHuluEffect()
         {
@@ -42,10 +42,10 @@ namespace Coralite.Content.Items.YujianHulu
         }
 
         public void HitEffect(Projectile projectile, NPC target, int damage, float knockback, bool crit)
-        {       //0.25概率产生爆炸
+        {       //6分之一概率产生爆炸
             Helpers.Helper.NotOnServer(() =>
             {
-                if (Main.rand.NextBool(4))
+                if (Main.rand.NextBool(6))
                     Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), projectile.damage, projectile.knockBack, projectile.owner);
             });
         }

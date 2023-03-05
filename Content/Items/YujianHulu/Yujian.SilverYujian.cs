@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.YujianHulu
 {
     public class SilverYujian : BaseYujian
     {
-        public SilverYujian() : base(Item.sellPrice(0, 0, 15, 0), 11, 1.3f) { }
+        public SilverYujian() : base(ItemRarityID.White,Item.sellPrice(0, 0, 15, 0), 7, 1.3f) { }
 
         public override int ProjType => ModContent.ProjectileType<SilverYujianProj>();
 
@@ -31,28 +31,27 @@ namespace Coralite.Content.Items.YujianHulu
         public SilverYujianProj() : base(
             new YujianAI[]
             {
-                new Yujian_Spurts(30,2.5f,100,3,0),
-                new Yujian_Spurts(35,3f,120,3,0),
+                 new Yujian_Spurts(120, 2.8f, 70, 0.8f, 0.4f),
+                 new Yujian_Spurts(140, 3f, 80, 1f, 0.4f),
             },
             null,
-            new Yujian_Slash(startTime: 130,
+            new Yujian_PreciseSlash(startTime: 130,
                     slashWidth: 70,
                     slashTime: 90,
-                    startAngle: -1.8f,
+                    startAngle: -2f,
                     totalAngle: 3f,
                     turnSpeed: 2,
                     roughlyVelocity: 0,
                     halfShortAxis: 1f,
                     halfLongAxis: 1.5f,
                     new HeavySmoother()),
-            PowerfulAttackCost: 50,
-            width: 40, height: 58,
+            PowerfulAttackCost: 150,
+            attackLenth: 260,
+            width: 30, height: 58,
              new Color(40, 40, 40), new Color(150, 150, 150),
-             trailCacheLenth: 18,
-            AssetDirectory.YujianHulu + "SilverYujian", true
+             trailCacheLenth: 16
             )
         { }
-
     }
 
 }

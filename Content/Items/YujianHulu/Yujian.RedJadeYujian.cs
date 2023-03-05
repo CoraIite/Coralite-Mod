@@ -6,12 +6,13 @@ using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Terraria;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace Coralite.Content.Items.YujianHulu
 {
     public class RedJadeYujian : BaseYujian
     {
-        public RedJadeYujian() : base(Item.sellPrice(0, 0, 20, 0), 14, 1f) { }
+        public RedJadeYujian() : base(ItemRarityID.Blue,Item.sellPrice(0, 0, 20, 0), 8, 1f) { }
 
         public override int ProjType => ModContent.ProjectileType<RedJadeYujianProj>();
 
@@ -35,11 +36,11 @@ namespace Coralite.Content.Items.YujianHulu
                     slashWidth: 55,
                     slashTime: 40,
                     startAngle: -1.6f,
-                    totalAngle: 1.8f,
+                    totalAngle: 1.84f,
                     turnSpeed: 2.5f,
                     roughlyVelocity: 0.4f,
                     halfShortAxis: 1f,
-                    halfLongAxis: 5f,
+                    halfLongAxis: 4.5f,
                     new NoSmoother()),
                 new Yujian_Slash(startTime: 90,
                     slashWidth: 60,
@@ -53,21 +54,21 @@ namespace Coralite.Content.Items.YujianHulu
                     new NoSmoother()),
             },
             null,
-            new Yujian_Slash(startTime: 130,
+            new Yujian_PreciseSlash(startTime: 130,
                     slashWidth: 60,
                     slashTime: 90,
-                    startAngle: -1.8f,
-                    totalAngle: 3.5f,
+                    startAngle: -2f,
+                    totalAngle: 3.8f,
                     turnSpeed: 2,
                     roughlyVelocity: 0.5f,
                     halfShortAxis: 1f,
                     halfLongAxis: 1.5f,
                     new HeavySmoother()),
-            PowerfulAttackCost: 50,
-            width: 40, height: 60,
-             new Color(43, 43, 51), Coralite.Instance.RedJadeRed,
-             trailCacheLenth: 18,
-            AssetDirectory.YujianHulu + "RedJadeYujian", true
+            PowerfulAttackCost: 150,
+            attackLenth: 350,
+            width: 30, height: 60,
+            new Color(43, 43, 51), Coralite.Instance.RedJadeRed,
+            trailCacheLenth: 18
             )
         { }
 
@@ -75,7 +76,7 @@ namespace Coralite.Content.Items.YujianHulu
         {
             Helpers.Helper.NotOnServer(() =>
             {
-                if (Main.rand.NextBool(4))
+                if (Main.rand.NextBool(5))
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             });
         }

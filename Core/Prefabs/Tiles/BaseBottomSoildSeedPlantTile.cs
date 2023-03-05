@@ -169,9 +169,14 @@ namespace Coralite.Core.Prefabs.Tiles
             BotanicalHelper.UpdatePlant<T>(i, j, FrameWidth, FrameCount);
         }
 
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+        {
+            BotanicalHelper.KillSinglePlantEntity<T>(i, j);
+        }
+
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            BotanicalHelper.KillPlantEntity<T>(i, j);
+            BotanicalHelper.KillSinglePlantEntity<T>(i, j);
         }
 
     }

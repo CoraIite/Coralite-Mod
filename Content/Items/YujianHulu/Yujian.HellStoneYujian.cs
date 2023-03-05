@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.YujianHulu
 {
     public class HellStoneYujian : BaseYujian
     {
-        public HellStoneYujian() : base(Item.sellPrice(0, 0, 20, 0), 14, 1.5f) { }
+        public HellStoneYujian() : base(ItemRarityID.Orange,Item.sellPrice(0, 0, 20, 0), 14, 1.8f) { }
 
         public override int ProjType => ModContent.ProjectileType<HellStoneYujianProj>();
 
@@ -26,25 +26,15 @@ namespace Coralite.Content.Items.YujianHulu
 
     public class HellStoneYujianProj : BaseYujianProj
     {
+        public override string SlashTexture => AssetDirectory.OtherProjectiles+ "FireTrail";
+
         public HellStoneYujianProj() : base(
             new YujianAI[]
             {
-                 new Yujian_Spurts(40, 3f,120, 3, 0),
-                 new Yujian_Spurts(45, 3.5f,150, 3, 0),
-                 new Yujian_Slash(startTime: 200,
-                    slashWidth: 40,
-                    slashTime: 180,
-                    startAngle: -2f,
-                    totalAngle: 10f,
-                    turnSpeed: 4,
-                    roughlyVelocity: 0,
-                    halfShortAxis: 1f,
-                    halfLongAxis: 1f,
-                    new NoSmoother()),
-            },
-            null,
-            new Yujian_Slash(startTime: 130,
-                    slashWidth: 100,
+                 new Yujian_Spurts(90, 4.5f, 80, 1.5f, 0.4f),
+                 new Yujian_Spurts(100, 5.2f, 80, 1.5f, 0.4f),
+                 new Yujian_PreciseSlash(startTime: 130,
+                    slashWidth: 70,
                     slashTime: 90,
                     startAngle: -1.8f,
                     totalAngle: 3.5f,
@@ -53,14 +43,42 @@ namespace Coralite.Content.Items.YujianHulu
                     halfShortAxis: 1f,
                     halfLongAxis: 1.5f,
                     new HeavySmoother()),
-            PowerfulAttackCost: 50,
-            width: 40, height: 64,
-             new Color(80, 80, 80), new Color(200, 200, 200),
-             trailCacheLenth: 18,
-            AssetDirectory.YujianHulu + "HellStoneYujian", true
+            },
+            null,
+            new Yujian_PreciseSlash(startTime: 145,
+               slashWidth: 50,
+               slashTime: 110,
+               startAngle: -2f,
+               totalAngle: 14f,
+               turnSpeed: 2.3f,
+               roughlyVelocity: 0.5f,
+               halfShortAxis: 1f,
+               halfLongAxis: 1.3f,
+               new NoSmoother()),
+            PowerfulAttackCost: 125,
+            attackLenth: 360,
+            width: 30, height: 64,
+            new Color(20, 22, 30,100), new Color(247, 225, 180),
+             trailCacheLenth: 20
             )
         { }
 
+        public override void AIEffect()
+        {
+            Helpers.Helper.NotOnServer(() =>
+            {
+                if (Main.rand.NextBool(8))
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(20, 45), DustID.FlameBurst, -Projectile.velocity);
+                    dust.noGravity = true;
+                }
+            });
+        }
+
+        public override void HitEffect(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(BuffID.OnFire, Main.rand.Next(120,240));
+        }
     }
 
 }

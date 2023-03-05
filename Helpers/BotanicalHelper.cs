@@ -43,7 +43,7 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="i">The tile X-coordinate</param>
         /// <param name="j">The tile Y-coordinate</param>
-        public static Point16 GetTileOrigin(int i, int j)
+        public static Point16 GetTileOriginForMultTile(int i, int j)
         {
             //Framing.GetTileSafely ensures that the returned Tile instance is not null
             //Do note that neither this method nor Framing.GetTileSafely check if the wanted coordiates are in the world!
@@ -56,7 +56,7 @@ namespace Coralite.Helpers
         }
 
         /// <summary>
-        /// 使用 <seealso cref="GetTileOrigin(int, int)"/> 去获取这个多块物块的entity (<paramref name="i"/>, <paramref name="j"/>).
+        /// 使用 <seealso cref="GetTileOriginForMultTile(int, int)"/> 去获取这个多块物块的entity (<paramref name="i"/>, <paramref name="j"/>).
         /// </summary>
         /// <typeparam name="T">尝试获取的entity的type</typeparam>
         /// <param name="i">物块X坐标</param>
@@ -164,9 +164,9 @@ namespace Coralite.Helpers
         /// <typeparam name="T"></typeparam>
         /// <param name="i"></param>
         /// <param name="j"></param>
-        public static void KillPlantEntity<T>(int i, int j) where T : ModTileEntity
+        public static void KillSinglePlantEntity<T>(int i, int j) where T : ModTileEntity
         {
-            Point16 origin = BotanicalHelper.GetTileOrigin(i, j);
+            Point16 origin = new Point16(i, j);
             ModContent.GetInstance<T>().Kill(origin.X, origin.Y);
         }
     }

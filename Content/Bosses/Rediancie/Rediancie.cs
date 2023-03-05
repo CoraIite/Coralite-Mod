@@ -194,7 +194,8 @@ namespace Coralite.Content.Bosses.Rediancie
                 return;
             }
 
-            NPC.direction = NPC.spriteDirection = target.Center.X > NPC.Center.X ? 1 : -1;
+            NPC.direction =  target.Center.X > NPC.Center.X ? 1 : -1;
+            NPC.spriteDirection = Math.Abs(NPC.velocity.X) > 0.1f ? NPC.direction : 1;
             NPC.directionY = target.Center.Y > NPC.Center.Y ? 1 : -1;
             switch (State)
             {

@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Compat.BossCheckList;
+using Coralite.Core;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,10 @@ namespace Coralite
             UIProgress_set_SubProgressText.Invoke(Interface_loadMods.GetValue(null), new object[] { text });
         }
 
-
+        public override void PostSetupContent()
+        {
+            BossCheckListCalls.CallBossCheckList();
+        }
 
     }
 }

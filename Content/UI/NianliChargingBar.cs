@@ -41,6 +41,8 @@ namespace Coralite.Content.UI
 
         public override void Recalculate()
         {
+            ChargingBar.Top.Set(basePos.Y, 0f);
+            ChargingBar.Left.Set(basePos.X, 0f);
             base.Recalculate();
         }
     }

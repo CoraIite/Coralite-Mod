@@ -10,7 +10,7 @@ namespace Coralite.Content.Items.YujianHulu
 {
     public class WoodenYujian : BaseYujian
     {
-        public WoodenYujian() : base(0, 6, 1f) { }
+        public WoodenYujian() : base(ItemRarityID.White, 0, 5, 1f) { }
 
         public override int ProjType => ModContent.ProjectileType<WoodenYujianProj>();
 
@@ -30,25 +30,29 @@ namespace Coralite.Content.Items.YujianHulu
             new YujianAI[]
             {
                  new Yujian_Spurts(120, 2.6f, 60, 1f, 0.3f),
-                 new Yujian_Spurts(140, 3f, 70, 1f, 0.3f),
             },
             null,
-            new Yujian_Slash(startTime: 130,
-                    slashWidth: 60,
-                    slashTime: 90,
-                    startAngle: -1.8f,
+            new Yujian_PreciseSlash(startTime: 160,
+                    slashWidth: 40,
+                    slashTime: 100,
+                    startAngle: -1.6f,
                     totalAngle: 3f,
-                    turnSpeed: 2,
+                    turnSpeed: 1.6f,
                     roughlyVelocity: 0,
                     halfShortAxis: 1f,
-                    halfLongAxis: 1.5f,
+                    halfLongAxis: 1.3f,
                     new HeavySmoother()),
-            PowerfulAttackCost: 50,
-            width: 40, height: 58,
+            PowerfulAttackCost: 150,
+            attackLenth: 200,
+            width: 30, height: 58,
             new Color(16, 7, 17), new Color(107, 82, 75), 
-            trailCacheLenth: 18,
-            AssetDirectory.YujianHulu + "WoodenYujian", true
+            trailCacheLenth: 12
             )
         { }
+
+        public override void PostSetDefaults()
+        {
+            Projectile.localNPCHitCooldown = 35;
+        }
     }
 }
