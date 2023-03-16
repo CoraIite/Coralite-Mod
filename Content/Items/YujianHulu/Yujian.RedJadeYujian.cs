@@ -74,11 +74,8 @@ namespace Coralite.Content.Items.YujianHulu
 
         public override void HitEffect(NPC target, int damage, float knockback, bool crit)
         {
-            Helpers.Helper.NotOnServer(() =>
-            {
-                if (Main.rand.NextBool(5))
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
-            });
+            if (Main.myPlayer == Projectile.owner && Main.rand.NextBool(5))
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
         }
 
     }

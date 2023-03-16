@@ -120,7 +120,7 @@ namespace Coralite.Core.Systems.YujianSystem
                 if (Owner.channel)
                 {
                     channelTime++;
-                    Owner.itemTime = Owner.itemAnimation = 2;
+                    Owner.itemTime = Owner.itemAnimation = 10;
                     if (channelTime == 30 && specialAI is not null)
                     {
                         State = SpecialMoveState;

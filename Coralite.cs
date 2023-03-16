@@ -12,8 +12,9 @@ namespace Coralite
     public class Coralite : Mod
     {
         public const int YujianHuluContainsMax = 10;
-
+        public const int MaxParticleCount = 401;
         public readonly Color RedJadeRed;
+        public readonly Color IcicleCyan;
 
         private List<IOrderedLoadable> loadCache;
 
@@ -24,6 +25,7 @@ namespace Coralite
         {
             Instance = this;
             RedJadeRed = new Color(221, 50, 50);
+            IcicleCyan = new Color(43, 255, 198);
         }
 
         public override void Load()

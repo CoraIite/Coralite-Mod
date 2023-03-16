@@ -67,27 +67,6 @@ namespace Coralite.Helpers
         }
 
         /// <summary>
-        /// 仅仅是多了转float的Atan2
-        /// </summary>
-        /// <param name="y"></param>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        public static float Atan2(float y, float x)
-        {
-            return (float)Math.Atan2(y, x);
-        }
-
-        public static float Cos(float f)
-        {
-            return (float)Math.Cos(f);
-        }
-
-        public static float Sin(float f)
-        {
-            return (float)Math.Sin(f);
-        }
-
-        /// <summary>
         /// 检测线段碰撞（两个点之间连线和hitbox是否发生了碰撞）
         /// </summary>
         public static bool CheckLinearCollision(Vector2 point1, Vector2 point2, Rectangle hitbox, out Vector2 intersectPoint)
@@ -100,6 +79,7 @@ namespace Coralite.Helpers
                 LinesIntersect(point1, point2, hitbox.BottomLeft(), hitbox.BottomRight(), out intersectPoint) ||
                 LinesIntersect(point1, point2, hitbox.TopRight(), hitbox.BottomRight(), out intersectPoint);
         }
+
         /// <summary>
         /// 计算两个线段的相交点
         /// </summary>
@@ -135,6 +115,13 @@ namespace Coralite.Helpers
             return false;
         }
 
+        #region 各种插值函数
+        
+        /// <summary>
+        /// 两端平滑的贝塞尔曲线
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public static float BezierEase(float time)
         {
             return time * time / (2f * (time * time - time) + 1f);
@@ -146,15 +133,14 @@ namespace Coralite.Helpers
         }
 
         /// <summary>
-        /// f为0时返回a,为1时返回b
+        /// 快速到达1后持续增大一小段最后再减小回1的曲线
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <param name="f"></param>
+        /// <param name="time"></param>
         /// <returns></returns>
-        public static float Lerp(float a, float b, float f)
+        public static float HeavyEase(float time)
         {
-            return (a * (1.0f - f)) + (b * f);
+            float x_1 = time - 1;
+            return 1 + (2.6f * x_1 * x_1 * x_1) + (1.6f * x_1 * x_1);
         }
 
         /// <summary>
@@ -169,6 +155,20 @@ namespace Coralite.Helpers
             float halfFocalLength2 = halfLongAxis * halfLongAxis - halfShortAxis * halfShortAxis;
             float cosx = (float)Math.Cos(rotation);
             return (float)(halfLongAxis * halfShortAxis / Math.Sqrt(halfLongAxis * halfLongAxis - halfFocalLength2 * cosx * cosx));
+        }
+
+        #endregion
+
+        /// <summary>
+        /// f为0时返回a,为1时返回b
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        public static float Lerp(float a, float b, float f)
+        {
+            return (a * (1.0f - f)) + (b * f);
         }
 
         public static T[] FastUnion<T>(this T[] front, T[] back)
@@ -195,6 +195,12 @@ namespace Coralite.Helpers
 
             return SoundEngine.PlaySound(style, position);
         }
+
+        public static bool OnScreen(Vector2 pos) => pos.X > -16 && pos.X < Main.screenWidth + 16 && pos.Y > -16 && pos.Y < Main.screenHeight + 16;
+
+        public static bool OnScreen(Rectangle rect) => rect.Intersects(new Rectangle(0, 0, Main.screenWidth, Main.screenHeight));
+
+        public static bool OnScreen(Vector2 pos, Vector2 size) => OnScreen(new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y));
 
         public static void NotOnServer(Action method)
         {

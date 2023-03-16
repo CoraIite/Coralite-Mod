@@ -27,6 +27,12 @@
 
         #endregion
 
+        #region 自己的粒子
+
+        public const string Particles = Assets + "Particles/";
+
+        #endregion
+
         #region 物品部分！
 
         public const string Items = Assets + "Items/";
@@ -71,6 +77,7 @@
 
         public const string ShadowProjectiles = Projectiles + "Shadow/";
         public const string RedJadeProjectiles = Projectiles + "RedJade/";
+        public const string IcicleProjectiles = Projectiles + "Icicle/";
         public const string StarsProjectiles = Projectiles + "Stars/";
 
         public const string Projectiles_Melee = Projectiles + "Projectiles_Melee/";

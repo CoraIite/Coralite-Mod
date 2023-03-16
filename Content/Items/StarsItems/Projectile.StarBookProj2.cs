@@ -3,6 +3,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -130,7 +131,7 @@ namespace Coralite.Content.Items.StarsItems
             Rectangle source = new Rectangle(16 * textureType, 0, 16, 16);     //<---简单粗暴地填数字了，前提是贴图不能有改动
             Vector2 origin = new Vector2(8, 8);
 
-            float sinProgress = Helper.Sin(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
+            float sinProgress = MathF.Sin(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
             int r = (int)(238.5f + sinProgress * 16.5f);
             int g = (int)(230.5f + sinProgress * 23.5f);
             int b = (int)(156 + sinProgress * 35);

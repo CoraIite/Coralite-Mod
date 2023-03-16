@@ -1,7 +1,9 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Content.Items.RedJadeItems;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -44,7 +46,7 @@ namespace Coralite.Content.Bosses.Rediancie
     {
         public override string Texture => AssetDirectory.Rediancie + Name;
 
-        Player target => Main.player[NPC.target];
+        Player Target => Main.player[NPC.target];
 
         internal ref float State => ref NPC.ai[1];
         internal ref float Timer => ref NPC.ai[2];
@@ -137,7 +139,24 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            SoundEngine.PlaySound(SoundID.Dig, NPC.Center);
+            Helper.NotOnServer(() =>
+            {
+                SoundEngine.PlaySound(SoundID.Dig, NPC.Center);
+            });
+        }
+
+        public override bool CheckDead()
+        {
+            if (State != (int)AIStates.onKillAnim)
+            {
+                State = (int)AIStates.onKillAnim;
+                Timer = 0;
+                NPC.dontTakeDamage = true;
+                NPC.life = 1;
+                return false;
+            }
+
+            return true;
         }
 
         #endregion
@@ -150,7 +169,7 @@ namespace Coralite.Content.Bosses.Rediancie
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 State = (int)AIStates.onSpawnAnim;
-                NPC.Center = target.Center - new Vector2(0, 600);
+                NPC.Center = Target.Center - new Vector2(0, 600);
                 NPC.netUpdate = true;
             }
         }
@@ -182,21 +201,21 @@ namespace Coralite.Content.Bosses.Rediancie
             }
             #endregion
 
-            if (NPC.target < 0 || NPC.target == 255 || target.dead || !target.active || target.Distance(NPC.Center) > 3000)
+            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
                 NPC.TargetClosest();
 
-            if (target.dead || !target.active || target.Distance(NPC.Center) > 3000)//没有玩家存活时离开
+            if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)//没有玩家存活时离开
             {
-                State = -1;
+                State = -0.1f;
                 NPC.velocity.X *= 0.97f;
                 NPC.velocity.Y += 0.04f;
                 NPC.EncourageDespawn(10);
                 return;
             }
 
-            NPC.direction =  target.Center.X > NPC.Center.X ? 1 : -1;
-            NPC.spriteDirection = Math.Abs(NPC.velocity.X) > 0.1f ? NPC.direction : 1;
-            NPC.directionY = target.Center.Y > NPC.Center.Y ? 1 : -1;
+            NPC.direction =  Target.Center.X > NPC.Center.X ? 1 : -1;
+            NPC.spriteDirection = Math.Abs(NPC.velocity.X) > 0.5f ? NPC.direction : 1;
+            NPC.directionY = Target.Center.Y > NPC.Center.Y ? 1 : -1;
             switch (State)
             {
                 case (int)AIStates.onKillAnim:
@@ -232,8 +251,6 @@ namespace Coralite.Content.Bosses.Rediancie
                                 var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
                                 Main.instance.CameraModifiers.Add(modifier);
                             }
-
-
                         }
 
                         if (Timer > ON_KILL_ANIM_TIME)
@@ -291,7 +308,7 @@ namespace Coralite.Content.Bosses.Rediancie
                             Helper.Movment_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 7f, 0.1f, 0.15f, 0.97f);
 
                             //控制Y方向的移动
-                            float yLenth = Math.Abs(target.Center.Y - NPC.Center.Y);
+                            float yLenth = Math.Abs(Target.Center.Y - NPC.Center.Y);
                             if (yLenth > 50)
                                 Helper.Movment_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4.5f, 0.06f, 0.08f, 0.97f);
                             else
@@ -333,10 +350,15 @@ namespace Coralite.Content.Bosses.Rediancie
 
                         do
                         {
+                            if (realTime < 18 && realTime % 3 == 0)
+                            {
+                                Dust.NewDustPerfect(NPC.Center, DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(6, 6), 0, red, Main.rand.NextFloat(1f, 1.5f));
+                                Dust.NewDustPerfect(NPC.Center, DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(4, 4), 0, grey, Main.rand.NextFloat(0.8f, 1.2f));
+                            }
                             if (realTime == 18 && Main.netMode != NetmodeID.Server)
                             {
                                 SoundEngine.PlaySound(SoundID.Item4, NPC.Center);
-                                Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) - new Vector2(63, 46.5f), DustType<HorizontalStar>(), null, 0, Coralite.Instance.RedJadeRed, 1.5f);
+                                Particle.NewParticle(NPC.Center + new Vector2(0, -16), Vector2.Zero, CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.RedJadeRed, 1.5f);
                             }
 
                             if (realTime < 20)
@@ -344,7 +366,7 @@ namespace Coralite.Content.Bosses.Rediancie
                                 Helper.Movment_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 2f, 0.1f, 0.1f, 0.97f);
 
                                 //控制Y方向的移动
-                                float yLenth = Math.Abs(target.Center.Y - NPC.Center.Y);
+                                float yLenth = Math.Abs(Target.Center.Y - NPC.Center.Y);
                                 if (yLenth > 50)
                                     Helper.Movment_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 2f, 0.1f, 0.1f, 0.97f);
                                 else
@@ -353,7 +375,7 @@ namespace Coralite.Content.Bosses.Rediancie
                             }
 
                             if (realTime == 22)
-                                NPC.velocity = (target.Center + new Vector2(0, (int)Timer / 100 % 2 == 0 ? 200 : -200) - NPC.Center).SafeNormalize(Vector2.One) * 10f;
+                                NPC.velocity = (Target.Center + new Vector2(0, (int)Timer / 100 % 2 == 0 ? 200 : -200) - NPC.Center).SafeNormalize(Vector2.One) * 10f;
 
                             //边冲边炸
                             if (realTime < 71)
@@ -378,7 +400,7 @@ namespace Coralite.Content.Bosses.Rediancie
                         Helper.Movment_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6f, 0.09f, 0.22f, 0.97f);
 
                         //控制Y方向的移动
-                        float yLenth2 = Math.Abs(target.Center.Y - NPC.Center.Y);
+                        float yLenth2 = Math.Abs(Target.Center.Y - NPC.Center.Y);
                         if (yLenth2 > 50)
                             Helper.Movment_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4.5f, 0.06f, 0.06f, 0.97f);
                         else
@@ -435,7 +457,7 @@ namespace Coralite.Content.Bosses.Rediancie
                         if (Timer % 35 == 0)//生成弹幕
                         {
                             int damage = NPC.GetAttackDamage_ForProjectiles(15, 20);
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (target.Center - NPC.Center + new Vector2(0, 60 * (Timer / 30) == 1 ? 1 : -1)).SafeNormalize(Vector2.UnitY) * 10f, ProjectileType<Rediancie_Beam>(), damage, 5f);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, (Target.Center - NPC.Center + new Vector2(0, 60 * (Timer / 30) == 1 ? 1 : -1)).SafeNormalize(Vector2.UnitY) * 10f, ProjectileType<Rediancie_Beam>(), damage, 5f);
                             Helper.PlayPitched("RedJade/RedJadeBeam", 0.13f, 0f, NPC.Center);
                         }
 
@@ -470,7 +492,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
             }
 
-            NPC.rotation = NPC.velocity.ToRotation() * 0.06f * NPC.direction;
+            NPC.rotation = Math.Abs(NPC.velocity.X) > 0.5f ? NPC.velocity.ToRotation() * 0.06f * NPC.direction : 0f;
             Timer++;
         }
 
@@ -541,20 +563,6 @@ namespace Coralite.Content.Bosses.Rediancie
         }
 
         #endregion
-
-        public override bool CheckDead()
-        {
-            if (State != (int)AIStates.onKillAnim)
-            {
-                State = (int)AIStates.onKillAnim;
-                Timer = 0;
-                NPC.dontTakeDamage = true;
-                NPC.life = 1;
-                return false;
-            }
-
-            return true;
-        }
 
         #region Draw
 

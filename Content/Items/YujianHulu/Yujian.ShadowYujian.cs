@@ -64,6 +64,7 @@ namespace Coralite.Content.Items.YujianHulu
         {
             target.StrikeNPC(damage, 0, target.direction);
             target.StrikeNPC(damage, 0, target.direction);
+            Owner.addDPS(damage * 2);
         }
     }
 }

@@ -1,7 +1,11 @@
-﻿using Coralite.Content.Items.IcicleItems;
+﻿using Coralite.Content.Bosses.Rediancie;
+using Coralite.Content.Items.IcicleItems;
 using Coralite.Core;
+using Microsoft.Xna.Framework;
+using Mono.Cecil;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,9 +23,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
     //
 
     [AutoloadBossHead]
-    public class BabyIceDragon : ModNPC
+    public partial class BabyIceDragon : ModNPC
     {
         public override string Texture => AssetDirectory.BabyIceDragon + Name;
+
+        Player Target => Main.player[NPC.target];
 
         internal ref float State => ref NPC.ai[1];
         internal ref float Timer => ref NPC.ai[2];
@@ -96,14 +102,25 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         #region AI
 
+        public override void OnSpawn(IEntitySource source)
+        {
+            NPC.TargetClosest(false);
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                State = (int)AIStates.onSpawnAnim;
+                NPC.noTileCollide = false;
+                NPC.netUpdate = true;
+            }
+        }
+
         public enum AIStates : int
         {
-            onKillAnmi = -3,
-            onSpawnAnmi = -2,
+            onKillAnim = -3,
+            onSpawnAnim = -2,
             dizzy = -1,
             //以上是仅动画，以下是攻击动作
             dive = 0,
-            Accumulate = 1,
+            accumulate = 1,
             iceBreath = 2,
             horizontalDash = 3,
             smashDown = 4,
@@ -115,18 +132,43 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void AI()
         {
+            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
+                NPC.TargetClosest();
+
+            if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)//没有玩家存活时离开
+            {
+                State = -1;
+                NPC.velocity.X *= 1.02f;
+                NPC.velocity.Y -= 0.04f;
+                NPC.EncourageDespawn(10);
+                return;
+            }
+
             switch (State)
             {
-                case (int)AIStates.onKillAnmi:      //死亡时的动画
+                case (int)AIStates.onKillAnim:      //死亡时的动画
                     break;
-                case (int)AIStates.onSpawnAnmi:      //生成时的动画
+                case (int)AIStates.onSpawnAnim:      //生成时的动画
+                    {
+                        if (Timer == 0)
+                        {
+                            //生成动画弹幕
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<BabyIceDragon_OnSpawnAnim>(), 0, 0);
+                            NPC.dontTakeDamage = true;
+                        }
+
+
+                    }
+
                     break;
                 case (int)AIStates.dizzy:      //原地眩晕
+
+
                     break;
                 default:
                 case (int)AIStates.dive:      //俯冲攻击，先飞上去（如果飞不上去就取消攻击），在俯冲向玩家，期间如果撞墙则原地眩晕
                     break;
-                case (int)AIStates.Accumulate:      //蓄力弹幕，如果蓄力途中收到一定伤害会失衡并使冰块砸到自己，眩晕一定时间
+                case (int)AIStates.accumulate:      //蓄力弹幕，如果蓄力途中收到一定伤害会失衡并使冰块砸到自己，眩晕一定时间
                     break;
                 case (int)AIStates.iceBreath:      //冰吐息
                     break;

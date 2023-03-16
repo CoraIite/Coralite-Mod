@@ -3,6 +3,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -125,6 +126,14 @@ namespace Coralite.Content.Bosses.Rediancie
                     Dust dust = Dust.NewDustPerfect(NPC.Center, DustID.GemRuby, Main.rand.NextVector2CircularEdge(5, 5), 0, default, 1.3f);
                     dust.noGravity = true;
                 }
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            Helper.NotOnServer(() =>
+            {
+                SoundEngine.PlaySound(SoundID.Dig, NPC.Center);
+            });
         }
     }
 }

@@ -28,14 +28,11 @@ namespace Coralite.Content.Items.YujianHulu
     {
         public void AIEffect(Projectile projectile)
         {
-            Helpers.Helper.NotOnServer(() =>
+            if (Main.rand.NextBool(8))
             {
-                if (Main.rand.NextBool(8))
-                {
-                    Dust dust = Dust.NewDustPerfect(projectile.Center + Main.rand.NextVector2Circular(20, 45), DustID.FlameBurst, -projectile.velocity);
-                    dust.noGravity = true;
-                }
-            });
+                Dust dust = Dust.NewDustPerfect(projectile.Center + Main.rand.NextVector2Circular(20, 45), DustID.FlameBurst, -projectile.velocity);
+                dust.noGravity = true;
+            }
         }
 
         public void HitEffect(Projectile projectile, NPC target, int damage, float knockback, bool crit)

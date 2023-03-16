@@ -1,5 +1,6 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -297,7 +298,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 4; i++)
-                Dust.NewDustPerfect(Projectile.Center, DustType<HorizontalStar>(), Main.rand.NextVector2Unit() * 3f, 0, new Color(138, 255, 254), Main.rand.NextFloat(0.2f, 0.4f));
+                Particle.NewParticle(Projectile.Center, Main.rand.NextVector2Unit() * 3f, CoraliteContent.ParticleType<HorizontalStar>(),
+                     new Color(138, 255, 254), Main.rand.NextFloat(0.2f, 0.4f));
 
             if (Projectile.ai[0] != 1)
                 SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);

@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.RedJadeItems
 
         public override void Kill(int timeLeft)
         {
-            if (Projectile.ai[0] == 0)
+            if (Projectile.ai[0] == 0 && Main.myPlayer == Projectile.owner)
             {
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner);
                 return;

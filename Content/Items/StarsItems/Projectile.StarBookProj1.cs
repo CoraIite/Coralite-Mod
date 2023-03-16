@@ -1,9 +1,12 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -174,7 +177,7 @@ namespace Coralite.Content.Items.StarsItems
             Vector2 Top = Projectile.oldPos[0] + dir * 30;
             Vector2 Bottom = Projectile.oldPos[0] - dir * 30;
 
-            Color starYellow = new Color(255, 254, 191, (int)(150 + Helper.Cos(timer * 0.1f) * 100));
+            Color starYellow = new Color(255, 254, 191, (int)(150 + MathF.Cos(timer * 0.1f) * 100));
             var w = 1f;
             bars.Add(new(Top - Main.screenPosition, starYellow, new Vector3(1, 1, w)));
             bars.Add(new(Bottom - Main.screenPosition, starYellow, new Vector3(1, 0, w)));
@@ -214,7 +217,7 @@ namespace Coralite.Content.Items.StarsItems
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             Vector2 origin = new Vector2(128, 128);
 
-            float cosProgress = Helper.Cos(timer * 0.1f);
+            float cosProgress = MathF.Cos(timer * 0.1f);
             float currentScale = LightScale * (1f + cosProgress * 0.1f);
             int a = (int)(160 - cosProgress * 40);
             //绘制圈圈
@@ -281,7 +284,9 @@ namespace Coralite.Content.Items.StarsItems
                 Color starYellow = new Color(255, 254, 191);
                 if (Main.netMode != NetmodeID.Server)
                     for (int i = 0; i < 2; i++)
-                        Dust.NewDustPerfect(target.position + Main.rand.NextVector2CircularEdge(8, 8), DustType<HorizontalStar>(), Main.rand.NextVector2CircularEdge(1, 1), 0, starYellow, 0.3f);
+                        Particle.NewParticle(target.position + Main.rand.NextVector2CircularEdge(target.width, target.height),
+                            Main.rand.NextVector2CircularEdge(1, 1), CoraliteContent.ParticleType<HorizontalStar>(), starYellow, 0.3f);
+
             }
         }
 
@@ -290,7 +295,8 @@ namespace Coralite.Content.Items.StarsItems
             Color starYellow = new Color(255, 254, 191);
             if (Main.netMode != NetmodeID.Server)
                 for (int i = 0; i < 6; i++)
-                    Dust.NewDustPerfect(Projectile.Center, DustType<HorizontalStar>(), Vector2.Normalize(Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f))) * Main.rand.Next(6, 9), 0, starYellow, 0.3f);
+                    Particle.NewParticle(Projectile.Center, Vector2.Normalize(Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f))) * Main.rand.Next(6, 9),
+                       CoraliteContent.ParticleType<HorizontalStar>(), starYellow, 0.3f);
         }
 
         #endregion

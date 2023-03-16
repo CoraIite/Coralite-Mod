@@ -1,5 +1,6 @@
 ﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Coralite.Core.Systems.IKSystem
 {
@@ -30,8 +31,8 @@ namespace Coralite.Core.Systems.IKSystem
 
         private Vector2 Rotate(Vector2 v, float a)
         {
-            a = a * Helper.Deg2Rad + Helper.Atan2(v.Y, v.X);
-            return new Vector2(Helper.Cos(a), Helper.Sin(a));
+            a = a * Helper.Deg2Rad + MathF.Atan2(v.Y, v.X);
+            return new Vector2(MathF.Cos(a), MathF.Sin(a));
         }
     }
 }

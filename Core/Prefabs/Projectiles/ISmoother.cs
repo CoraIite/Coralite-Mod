@@ -46,9 +46,8 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public float Smoother(int timer, int maxTime)
         {
-            float factor=(float)timer / maxTime;
-            float x_1 = factor - 1;
-            return 1 + (2.6f * x_1 * x_1 * x_1) + (1.6f * x_1 * x_1);
+            float factor = (float)timer / maxTime;
+            return Helper.HeavyEase(factor);
         }
     }
 

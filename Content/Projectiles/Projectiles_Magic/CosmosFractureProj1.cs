@@ -3,6 +3,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -75,7 +76,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             if (timer < 100)
                 magicScale += 0.8f / 100;
 
-            magicScale += 0.004f * Helper.Sin(timer * 0.1f);
+            magicScale += 0.004f * MathF.Sin(timer * 0.1f);
             //蓄力之前，无事发生
             if (timer < 14)
             {
@@ -311,7 +312,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                     alpha = 1;
             }
 
-            float cosProgress = Helper.Cos(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
+            float cosProgress = MathF.Cos(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
             int r = (int)(174.5f - cosProgress * 42.5);
             int b = (int)(245 + cosProgress * 10);
             alpha *= 200;

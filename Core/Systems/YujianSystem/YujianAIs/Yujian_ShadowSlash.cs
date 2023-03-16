@@ -1,5 +1,6 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.Particles;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -77,18 +78,15 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 
         private void SpawnShadowDust(Projectile Projectile)
         {
-            Helper.NotOnServer(() =>
+            float r = 0f;
+            for (int i = 0; i < 14; i++)
             {
-                float r = 0f;
-                for (int i = 0; i < 14; i++)
-                {
-                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Granite, r.ToRotationVector2() * Main.rand.NextFloat(1.6f, 2.5f), default, default, Main.rand.NextFloat(1.4f, 2f));
-                    dust.noGravity = true;
-                    r += 0.45f;
-                }
-                Dust.NewDustPerfect(Projectile.Center - new Vector2(10, 6), ModContent.DustType<HorizontalStar>(), Vector2.Zero, 0, Color.Purple, 0.2f);
-            });
+                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Granite, r.ToRotationVector2() * Main.rand.NextFloat(1.6f, 2.5f), default, default, Main.rand.NextFloat(1.4f, 2f));
+                dust.noGravity = true;
+                r += 0.45f;
+            }
 
+            Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<HorizontalStar>(), Color.Purple, 0.2f);
         }
 
         protected override void OnStartAttack(BaseYujianProj yujianProj)

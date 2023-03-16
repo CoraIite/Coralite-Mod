@@ -1,5 +1,7 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
@@ -203,14 +205,14 @@ namespace Coralite.Content.Items.Weapons
                 case 0://普通挥舞0：上至下小幅度
                     maxTime = 45;
                     startAngle = 1.3f;
-                    totalAngle = 1.3f;
+                    totalAngle = 2f;
                     Projectile.extraUpdates = 2;
                     break;
 
                 case 1://普通挥舞1：下至上小幅度
                     maxTime = 45;
                     startAngle = -1.3f;
-                    totalAngle = -1.3f;
+                    totalAngle = -2f;
                     Projectile.extraUpdates = 2;
                     break;
 
@@ -277,6 +279,12 @@ namespace Coralite.Content.Items.Weapons
 
                     break;
             }
+        }
+
+        protected override void OnHitEvent(NPC target)
+        {
+            Particle particle = Particle.NewParticleDirect(Vector2.Lerp(Projectile.Center,target.Center,0.5f), Vector2.Zero, CoraliteContent.ParticleType<Strike>(), 0, Color.Orange, 1f);
+            particle.rotation = _Rotation + 2.2f + Main.rand.NextFloat(-0.5f, 0.5f);
         }
 
     }

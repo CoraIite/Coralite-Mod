@@ -31,23 +31,17 @@ namespace Coralite.Content.Items.YujianHulu
     {
         public void AIEffect(Projectile projectile)     //随机生成红色粒子
         {
-            Helper.NotOnServer(() =>
+            if (Main.rand.NextBool(8))
             {
-                if (Main.rand.NextBool(8))
-                {
-                    Dust dust = Dust.NewDustPerfect(projectile.Center + Main.rand.NextVector2Circular(20, 45), DustID.GemRuby, -projectile.velocity);
-                    dust.noGravity = true;
-                }
-            });
+                Dust dust = Dust.NewDustPerfect(projectile.Center + Main.rand.NextVector2Circular(20, 45), DustID.GemRuby, -projectile.velocity);
+                dust.noGravity = true;
+            }
         }
 
         public void HitEffect(Projectile projectile, NPC target, int damage, float knockback, bool crit)
         {       //6分之一概率产生爆炸
-            Helpers.Helper.NotOnServer(() =>
-            {
-                if (Main.rand.NextBool(6))
-                    Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), projectile.damage, projectile.knockBack, projectile.owner);
-            });
+            if (Main.myPlayer == projectile.owner && Main.rand.NextBool(6))
+                Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), projectile.damage, projectile.knockBack, projectile.owner);
         }
 
         public void PostDrawEffect(Projectile projectile, Color lightColor) { }
