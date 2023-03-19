@@ -226,7 +226,7 @@ namespace Coralite.Content.Items.Weapons
                 case 4://强化攻击0：三连击
                     maxTime = 26;
                     startAngle = 1f;
-                    totalAngle = 0.8f;
+                    totalAngle = 1.4f;
                     useSlashTrail = true;
                     Projectile.extraUpdates = 1;
                     break;
@@ -258,7 +258,7 @@ namespace Coralite.Content.Items.Weapons
                         Projectile.Kill();
 
                     tripleCombo++;
-                    startAngle = -startAngle;
+                    startAngle *= -1;
                     timer = 0;
                     onStart = true;
                     break;
@@ -283,7 +283,7 @@ namespace Coralite.Content.Items.Weapons
 
         protected override void OnHitEvent(NPC target)
         {
-            Particle particle = Particle.NewParticleDirect(Vector2.Lerp(Projectile.Center,target.Center,0.5f), Vector2.Zero, CoraliteContent.ParticleType<Strike>(), 0, Color.Orange, 1f);
+            Particle particle = Particle.NewParticleDirect(Vector2.Lerp(Projectile.Center,target.Center,0.5f), Vector2.Zero, CoraliteContent.ParticleType<Strike>(), Color.Orange, 1f);
             particle.rotation = _Rotation + 2.2f + Main.rand.NextFloat(-0.5f, 0.5f);
         }
 

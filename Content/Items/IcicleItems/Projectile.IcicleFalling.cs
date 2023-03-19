@@ -31,6 +31,7 @@ namespace Coralite.Content.Items.IcicleItems
             Projectile.width = Projectile.height = 16;
             Projectile.timeLeft = 25;
             Projectile.aiStyle = -1;
+            Projectile.scale = 1.1f;
 
             Projectile.friendly = true;
             Projectile.ignoreWater = false;

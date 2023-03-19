@@ -101,6 +101,8 @@ namespace Coralite.Core.Systems.Trails
 
             // k = 0 indicates starting at the end of the trail (furthest from the origin of it).
             //k = 0 表示从路径的末端开始（离原点最远）。
+            int texCoordA_Y = filpVertical ? 1 : 0;
+            int texCoordC_Y = filpVertical ? 0 : 1;
             for (int k = 0; k < Positions.Length; k++)
             {
                 // 1 at k = Positions.Length - 1 (start) and 0 at k = 0 (end).
@@ -139,8 +141,8 @@ namespace Coralite.Core.Systems.Trails
                  * 为了实现这一点，我们令 A 的 Y 坐标为 0，C 的 Y 坐标为 1，而 X 坐标只是沿轨迹的因子。
                  * 这会导致跟踪中最后一个点的 X 坐标为 0，第一个点的 Y 坐标为 1。
                  */
-                Vector2 texCoordA = new Vector2(factorAlongTrail, filpVertical ? 1 : 0);
-                Vector2 texCoordC = new Vector2(factorAlongTrail, filpVertical ? 0 : 1);
+                Vector2 texCoordA = new Vector2(factorAlongTrail, texCoordA_Y);
+                Vector2 texCoordC = new Vector2(factorAlongTrail, texCoordC_Y);
 
                 // Calculates the color for each vertex based on its texture coordinates. This acts like a very simple shader (for more complex effects you can use the actual shader).
                 //根据每个顶点的纹理坐标计算其颜色。这就像一个非常简单的shader（对于更复杂的效果，建议使用真正的shader）。

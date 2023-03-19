@@ -42,11 +42,13 @@ namespace Coralite.Content.Items.IcicleItems
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 4; i++)
             {
                 Particle.NewParticle(Projectile.Center, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-1.2f, 1.2f)) * Main.rand.NextFloat(0.05f,0.2f),
                     CoraliteContent.ParticleType<SnowFlower>(), Color.White, Main.rand.NextFloat(0.4f, 0.6f));
             }
+
+            Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<IceHalo>(), Color.White, 0.2f);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -55,7 +57,7 @@ namespace Coralite.Content.Items.IcicleItems
             if (Main.myPlayer == Projectile.owner)
                 for (int i = 0; i < 3; i++)
                 {
-                    Vector2 center = Projectile.Center - new Vector2(0, Main.rand.Next(140, 260)).RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f));
+                    Vector2 center = Projectile.Center - new Vector2(0, Main.rand.Next(140, 220)).RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f));
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, Vector2.One,
                         ModContent.ProjectileType<IcicleFalling>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner,
                         Projectile.Center.X + Main.rand.Next(-24, 24), Projectile.Center.Y);
@@ -68,7 +70,7 @@ namespace Coralite.Content.Items.IcicleItems
             if (Main.myPlayer == Projectile.owner)
                 for (int i = 0; i < 3; i++)
                 {
-                    Vector2 center = Projectile.Center - new Vector2(0, Main.rand.Next(140, 260)).RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f));
+                    Vector2 center = Projectile.Center - new Vector2(0, Main.rand.Next(140, 220)).RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f));
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, Vector2.One,
                         ModContent.ProjectileType<IcicleFalling>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner,
                         Projectile.Center.X + Main.rand.Next(-24, 24), Projectile.Center.Y);

@@ -15,11 +15,11 @@ namespace Coralite.Content.Items.IcicleItems
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 30;
+            Item.damage = 20;
             Item.useTime = 14;
             Item.useAnimation = 14;
             Item.knockBack = 3f;
-            Item.mana = 20;
+            Item.mana = 10;
             Item.crit = 0;
             Item.reuseDelay = 0;
 
@@ -31,7 +31,8 @@ namespace Coralite.Content.Items.IcicleItems
             //Item.UseSound = CoraliteSoundID.Swing_Item1;
 
             Item.useTurn = false;
-            Item.noUseGraphic = false;
+            Item.noUseGraphic = true;
+            Item.noMelee = true;
             Item.autoReuse = true;
         }
 

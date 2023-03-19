@@ -78,7 +78,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             filpVertical: StartAngle < 0
             );
 
-            trail.Positions = yujianProj. Projectile.oldPos;
+            trail.Positions = yujianProj.Projectile.oldPos;
             return canSlash;
         }
 

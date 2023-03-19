@@ -55,12 +55,12 @@ namespace Coralite.Core
         /// <summary>
         /// 前期各种矿物法杖法杖，一些NPC的声音，类似weng~
         /// </summary>
-        public static  SoundStyle Magic_Item8 => SoundID.Item8;
+        public static  SoundStyle MagicStaff_Item8 => SoundID.Item8;
 
         /// <summary>
         /// 魔晶风暴，裂天剑等的声音，类似Xiu~
         /// </summary>
-        public static SoundStyle Magic2_Item9 => SoundID.Item9;
+        public static SoundStyle MagicShoot_Item9 => SoundID.Item9;
 
         /// <summary>
         /// 石巨人拳头之类的，还有子弹落地的声音，Da!
@@ -115,7 +115,7 @@ namespace Coralite.Core
         /// <summary>
         /// 类似火焰的声音，另外星云拳套，恶魔三叉戟等也用到了
         /// </summary>
-        public static readonly SoundStyle Flame_Item20 = SoundID.Item20;
+        public static SoundStyle Flame_Item20 => SoundID.Item20;
 
         /// <summary>
         /// 水箭魔法书的声音
@@ -176,6 +176,103 @@ namespace Coralite.Core
         /// 翅膀飞行的声音
         /// </summary>
         public static SoundStyle Wing_Item32 => SoundID.Item32;
+
+        /// <summary>
+        /// 射激光的声音，比方说激光眼的射击声音，啾！啾！啾！
+        /// </summary>
+        public static SoundStyle LaserShoot_Item33 => SoundID.Item33;
+
+        /// <summary>
+        /// 喷火器的声音
+        /// </summary>
+        public static SoundStyle Flamethrower_Item34 => SoundID.Item34;
+
+        /// <summary>
+        /// 铃铛的声音，叮~（听起来可能更接近于噔~）
+        /// </summary>
+        public static SoundStyle Bell_Item35 => SoundID.Item35;
+
+        /// <summary>
+        /// 霰弹枪的声音，特点是枪声之后会有个抛弹壳的声音
+        /// </summary>
+        public static SoundStyle Shotgun_Item36 => SoundID.Item36;
+
+        /// <summary>
+        /// 锤子敲铁砧的声音，也是哥布林重铸的声音
+        /// </summary>
+        public static SoundStyle Knock_Item37 => SoundID.Item37;
+
+        /// <summary>
+        /// 霰弹枪的声音，只有枪声，没有抛弹壳的声音
+        /// </summary>
+        public static SoundStyle Shotgun2_Item38 => SoundID.Item38;
+
+        /// <summary>
+        /// 扔飞刀的声音，吸血鬼刀，腐化灾兵，剃刀松使用的音效。
+        /// </summary>
+        public static SoundStyle ThrowKnives_Item39 => SoundID.Item39;
+
+        /// <summary>
+        /// 太空海豚枪，狙击步枪使用的音效
+        /// </summary>
+        public static SoundStyle Gun2_Item40 => SoundID.Item40;
+
+        /// <summary>
+        /// 一些机枪和手枪使用的音效，比如凤凰冲击波
+        /// </summary>
+        public static SoundStyle Gun3_Item41 => SoundID.Item41;
+
+        /// <summary>
+        /// 哀木等的扔火球的声音
+        /// </summary>
+        public static SoundStyle FireThrow_Item42 => SoundID.Item42;
+
+        /// <summary>
+        /// 高级些的法杖的使用音效，比如雷电法杖，毒液法杖等
+        /// </summary>
+        public static SoundStyle MagicStaff2_Item43 => SoundID.Item42;
+
+        /// <summary>
+        /// 一些召唤杖的声音，比如史莱姆法杖
+        /// </summary>
+        public static SoundStyle SummonStaff_Item44 => SoundID.Item44;
+
+        /// <summary>
+        /// 巨鹿掉的眼球塔召唤杖的攻击音效
+        /// </summary>
+        public static SoundStyle FireBall_Item45 => SoundID.Item45;
+
+        /// <summary>
+        /// 蜘蛛女王召唤杖和冰霜九头蛇召唤杖的声音
+        /// </summary>
+        public static SoundStyle HorribleSummon_Item46 => SoundID.Item46;
+
+        /// <summary>
+        /// The Axe ：电吉他斧的声音
+        /// </summary>
+        public static SoundStyle ElectricGuitar_Item47 => SoundID.Item47;
+
+        /// <summary>
+        /// 挖冰雪块的声音
+        /// </summary>
+        public static SoundStyle DigIce_Item48 => SoundID.Item48;
+
+        /// <summary>
+        /// 挖冰雪块的声音
+        /// </summary>
+        public static SoundStyle DigIce2_Item49 => SoundID.Item49;
+
+        /// <summary>
+        /// 挖冰雪块的声音
+        /// </summary>
+        public static SoundStyle DigIce3_Item50 => SoundID.Item50;
+
+
+
+
+
+
+
 
         #endregion
     }

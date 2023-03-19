@@ -1,7 +1,4 @@
 ﻿using Coralite.Core.Loaders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -63,10 +60,20 @@ namespace Coralite.Core.Systems.ParticleSystem
                 //不在游戏暂停时运行
                 if (!Main.gameInactive)
                 {
-                    ModParticle modParticle= ParticleLoader.GetParticle(particle.type);
+                    ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
                     modParticle.Update(particle);
                     if (modParticle.ShouldUpdateCenter(particle))
                         particle.center += particle.velocity;
+
+                    //在粒子不活跃时把一些东西释放掉
+                    if (!particle.active)
+                    {
+                        particle.shader = null;
+                        particle.oldCenter = null;
+                        particle.oldRot = null;
+                        particle.trail = null;
+                        particle.datas = null;
+                    }
                 }
 
                 //一些防止粒子持续时间过长的措施，额...还是建议在update里手动设置active比较好

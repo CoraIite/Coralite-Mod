@@ -15,11 +15,11 @@ namespace Coralite.Content.Particles
         public override void Update(Particle particle)
         {
             particle.rotation += 0.02f;
-            particle.scale *= 0.96f;
-            particle.color *= 0.975f;
+            particle.scale *= 0.955f;
+            particle.color *= 0.97f;
             particle.fadeIn++;
 
-            if (particle.fadeIn > 20)
+            if (particle.fadeIn > 24)
                 particle.active = false;
         }
     }

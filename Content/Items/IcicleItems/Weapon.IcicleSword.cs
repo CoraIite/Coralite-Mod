@@ -49,15 +49,15 @@ namespace Coralite.Content.Items.IcicleItems
             //每挥舞5次最后一次使这把剑碎裂并射出更多弹幕
             if (useCount > 4)
             {
-                Item.useTime = 60;
-                Item.useAnimation = 60;
+                Item.useTime = 50;
+                Item.useAnimation = 50;
                 Item.noUseGraphic = true;
                 Item.noMelee = true;
             }
             else
             {
-                Item.useTime = 30;
-                Item.useAnimation = 30;
+                Item.useTime = 26;
+                Item.useAnimation = 26;
                 Item.noUseGraphic = false;
                 Item.noMelee = false;
             }

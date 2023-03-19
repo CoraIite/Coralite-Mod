@@ -48,13 +48,24 @@ namespace Coralite.Content.Bosses.Rediancie
 
         Player Target => Main.player[NPC.target];
 
+        public bool ExchangeState
+        {
+            get => NPC.ai[0] == 0f;
+            set
+            {
+                if (value)
+                    NPC.ai[0] = 0f;
+                else
+                    NPC.ai[0] = 1f;
+            }
+        }
+
         internal ref float State => ref NPC.ai[1];
         internal ref float Timer => ref NPC.ai[2];
 
         public readonly Color red = new Color(221, 50, 50);
         public readonly Color grey = new Color(91, 93, 102);
         public const int ON_KILL_ANIM_TIME = 250;
-        public bool exchangeState = true;
 
         #region tml hooks
 
@@ -503,10 +514,10 @@ namespace Coralite.Content.Bosses.Rediancie
 
             do
             {
-                if (exchangeState && NPC.life < NPC.lifeMax / 2)    //血量低于一半固定放小弟
+                if (ExchangeState && NPC.life < NPC.lifeMax / 2)    //血量低于一半固定放小弟
                 {
                     State = (int)AIStates.summon;
-                    exchangeState = false;
+                    ExchangeState = false;
                     break;
                 }
 

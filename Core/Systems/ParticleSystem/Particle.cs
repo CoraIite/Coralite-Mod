@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Loaders;
+using Coralite.Core.Systems.Trails;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Graphics.Shaders;
@@ -9,10 +10,12 @@ namespace Coralite.Core.Systems.ParticleSystem
     public class Particle
     {
         public Vector2 center;
+        public Vector2[] oldCenter;
         public Vector2 velocity;
         public float fadeIn;
         public float scale;
         public float rotation;
+        public float[] oldRot;
         //public bool noLight;
         public bool active;
         public Color color;
@@ -20,6 +23,12 @@ namespace Coralite.Core.Systems.ParticleSystem
         public Rectangle frame;
         public ArmorShaderData shader;
         public int type;
+        public Trail trail;
+
+        /// <summary>
+        /// 用于存储数据的地方，可以自由地在这里存储各种数据
+        /// </summary>
+        public object[] datas;
 
         /// <summary>
         /// 生成粒子，返回粒子实例
@@ -27,7 +36,6 @@ namespace Coralite.Core.Systems.ParticleSystem
         /// <param name="center"></param>
         /// <param name="velocity"></param>
         /// <param name="type"></param>
-        /// <param name="Alpha"></param>
         /// <param name="newColor"></param>
         /// <param name="Scale"></param>
         /// <returns></returns>
@@ -42,7 +50,6 @@ namespace Coralite.Core.Systems.ParticleSystem
         /// <param name="center"></param>
         /// <param name="velocity"></param>
         /// <param name="type"></param>
-        /// <param name="Alpha"></param>
         /// <param name="newColor"></param>
         /// <param name="Scale"></param>
         /// <returns></returns>
@@ -83,5 +90,48 @@ namespace Coralite.Core.Systems.ParticleSystem
 
             return result;
         }
+
+        /// <summary>
+        /// 初始化中心数组
+        /// </summary>
+        /// <param name="lenth"></param>
+        public void InitOldCenters(int lenth)
+        {
+            oldCenter = new Vector2[lenth];
+            for (int i = 0; i < lenth; i++)
+            {
+                oldCenter[i] = center;
+            }
+        }
+
+        /// <summary>
+        /// 初始化旋转数组
+        /// </summary>
+        /// <param name="lenth"></param>
+        public void InitOldRotates(int lenth)
+        {
+            oldRot = new float[lenth];
+            for (int i = 0; i < lenth; i++)
+            {
+                oldRot[i] = rotation;
+            }
+        }
+
+        /// <summary>
+        /// 初始化旧的中心和旋转数组
+        /// </summary>
+        /// <param name="lenth"></param>
+        public void InitOldCaches(int lenth)
+        {
+            oldCenter = new Vector2[lenth];
+            oldRot = new float[lenth];
+            for (int i = 0; i < lenth; i++)
+            {
+                oldCenter[i] = center;
+                oldRot[i] = rotation;
+            }
+
+        }
+
     }
 }

@@ -1,7 +1,5 @@
-﻿using Coralite.Core.Loaders;
-using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Particles
@@ -24,16 +22,6 @@ namespace Coralite.Content.Particles
             particle.fadeIn++;
             if (particle.fadeIn > 30)
                 particle.active = false;
-        }
-
-        public override void Draw(SpriteBatch spriteBatch, Particle particle)
-        {
-            ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
-            Rectangle frame = particle.frame;
-            Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
-
-            spriteBatch.Draw(modParticle.Texture2D.Value, particle.center - Main.screenPosition, frame, particle.color, particle.rotation, origin, particle.scale, SpriteEffects.None, 0f);
-
         }
     }
 }

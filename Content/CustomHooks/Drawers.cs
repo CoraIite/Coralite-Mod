@@ -20,6 +20,7 @@ namespace Coralite.Content.CustomHooks
 
             On.Terraria.Main.DrawDust += Drawer;
         }
+
         /// <summary>
         /// 在绘制粒子之后插一段，使用自己的渲染方式
         /// </summary>
@@ -31,7 +32,7 @@ namespace Coralite.Content.CustomHooks
                 return;
 
             //绘制拖尾
-            SpriteBatch spriteBatch=Main.spriteBatch;
+            SpriteBatch spriteBatch = Main.spriteBatch;
             Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
             for (int k = 0; k < Main.maxProjectiles; k++) // Projectiles.
@@ -41,6 +42,14 @@ namespace Coralite.Content.CustomHooks
             for (int k = 0; k < Main.maxNPCs; k++) // NPCs.
                 if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawPrimitive)
                     (Main.npc[k].ModNPC as IDrawPrimitive).DrawPrimitives();
+
+            for (int k = 0; k < Coralite.MaxParticleCount - 1; k++) // Particles.
+                if (ParticleSystem.Particles[k].active)
+                {
+                    ModParticle modParticle = ParticleLoader.GetParticle(ParticleSystem.Particles[k].type);
+                    if (modParticle is IDrawParticlePrimitive)
+                        (modParticle as IDrawParticlePrimitive).DrawPrimitives(ParticleSystem.Particles[k]);
+                }
 
             //绘制Non
             spriteBatch.Begin(default, BlendState.NonPremultiplied, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.ZoomMatrix);
@@ -65,7 +74,7 @@ namespace Coralite.Content.CustomHooks
                 if (!particle.active)
                     continue;
 
-                if (!Helper.OnScreen(particle.center-Main.screenPosition))
+                if (!Helper.OnScreen(particle.center - Main.screenPosition))
                     continue;
 
                 if (particle.shader != armorShaderData)
@@ -80,6 +89,7 @@ namespace Coralite.Content.CustomHooks
                         particle.shader.Apply(null);
                     }
                 }
+
                 ParticleLoader.GetParticle(ParticleSystem.Particles[i].type).Draw(spriteBatch, particle);
             }
 

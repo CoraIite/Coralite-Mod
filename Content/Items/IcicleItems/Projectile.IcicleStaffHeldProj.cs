@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -81,7 +82,7 @@ namespace Coralite.Content.Items.IcicleItems
 
                 //旋转中心点，旋转角度，看上去像挥舞过去一样
                 Projectile.rotation = Projectile.rotation.AngleLerp(Rotate, 0.2f);
-                Lenth += 0.2f;
+                Lenth += 0.8f;
                 Projectile.Center = Owner.Center + (Projectile.rotation-0.785f).ToRotationVector2() * Lenth;
 
                 float factor = 1 - ((Timer - SWING_TIME) / 15);
@@ -98,7 +99,7 @@ namespace Coralite.Content.Items.IcicleItems
             } while (false);
 
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemTime = Owner.itemAnimation = 2;
+            Owner.itemTime = Owner.itemAnimation = 3;
             Owner.itemRotation = Projectile.rotation + (Owner.direction > 0 ? -0.6f :2.2f);
             Projectile.timeLeft = 2;
 
