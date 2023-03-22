@@ -25,7 +25,7 @@ namespace Coralite.Helpers
         /// <param name="accel">加速度</param>
         /// <param name="turnAccel">转向加速度</param>
         /// <param name="slowDownPercent">减速系数</param>
-        public static void Movment_SimpleOneLine(ref float velocity, int direction, float velocityLimit, float accel, float turnAccel, float slowDownPercent)
+        public static void Movement_SimpleOneLine(ref float velocity, int direction, float velocityLimit, float accel, float turnAccel, float slowDownPercent)
         {
             if (Math.Abs(velocity) > velocityLimit)
                 velocity *= slowDownPercent;

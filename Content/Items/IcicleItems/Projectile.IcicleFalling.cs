@@ -57,7 +57,6 @@ namespace Coralite.Content.Items.IcicleItems
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation() - 1.57f;
-
         }
 
         public override void Kill(int timeLeft)

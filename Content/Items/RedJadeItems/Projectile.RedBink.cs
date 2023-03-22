@@ -108,8 +108,8 @@ namespace Coralite.Content.Items.RedJadeItems
                     if (Math.Abs(idlePosition.Y - Projectile.Center.Y) < 1f)
                         directionY = 0;
 
-                    Helper.Movment_SimpleOneLine(ref Projectile.velocity.X, Projectile.direction, 7f, 0.1f, 0.3f, 0.97f);
-                    Helper.Movment_SimpleOneLine(ref Projectile.velocity.Y, directionY, 5f, 0.1f, 0.3f, 0.97f);
+                    Helper.Movement_SimpleOneLine(ref Projectile.velocity.X, Projectile.direction, 7f, 0.1f, 0.3f, 0.97f);
+                    Helper.Movement_SimpleOneLine(ref Projectile.velocity.Y, directionY, 5f, 0.1f, 0.3f, 0.97f);
 
                     Projectile.rotation = Projectile.velocity.ToRotation() * 0.03f;
 

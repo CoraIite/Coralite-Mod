@@ -1,4 +1,6 @@
-﻿
+﻿using Microsoft.Xna.Framework;
+using Terraria;
+
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
     public partial class BabyIceDragon
@@ -8,41 +10,97 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         /// </summary>
         public void Dive()
         {
-            do
+            switch (movePhase)
             {
-                if (NPC.Center.Y > Target.Center.Y + 200)
-                {
+                case 0:     //飞上去的阶段
+                    {
+                        if (NPC.Center.Y > Target.Center.Y + 200)
+                        {
+                            FlyUp();
 
-                }
+                            if (Timer > 400)
+                                ChangeToDive();
 
+                            break;
+                        }
 
-            } while (false);
+                        ChangeToDive();
+                    }
 
-        }
-
-        public void FlyUp()
-        {
-            //根据帧图来改变速度，大概效果是扇一下翅膀向上飞一小段
-            NPC.velocity.X *= 0.98f;
-
-            //只有扇翅膀的时候才会有向上加速度，否则减速
-            switch (NPC.frame.Y)
-            {
-                default:
-                case 0:
-                case 3:
-                case 4:
-                    NPC.velocity.Y *= 0.96f;
                     break;
-                case 1:
-                case 2:
-                    NPC.velocity.Y -= 3f;
+                default:
+                case 1:    //俯冲阶段
+                    do
+                    {
+                        if (Timer < 3)
+                            SetDirection();
+
+                        if (Timer == 3)
+                        {
+                            NPC.velocity.X = NPC.direction * 8f;
+                            NPC.velocity.Y = 1f;
+                            NPC.rotation = NPC.velocity.ToRotation();
+                        }
+
+                        if (Timer < 250)
+                        {
+                            //生成粒子
+
+
+                            //检测面前的物块，如果有物块那么就会撞晕自己
+                            Point position = (NPC.direction > 0 ? NPC.TopLeft : NPC.TopRight).ToPoint();
+                            for (int i = 0; i < 3; i++)
+                            {
+                                Tile tile = Framing.GetTileSafely(position);
+                                ushort type = tile.TileType;
+                                if (tile.HasTile && Main.tileSolid[type] && !Main.tileSolidTop[type])
+                                {
+                                    int dizzyTime = Main.masterMode ? 180 : 300;
+                                    NPC.velocity.X *= -1;
+                                    NPC.velocity.Y = -3f;
+                                    Dizzy(dizzyTime);
+                                    return;
+                                }
+
+                                position.Y += 1;
+                            }
+                            break;
+                        }
+
+                        if (Timer < 300)
+                        {
+                            NPC.velocity *= 0.99f;
+                            break;
+                        }
+
+                        ResetStates();
+
+                    } while (false);
+
                     break;
             }
 
-            if (NPC.velocity.Y < -10)
-                NPC.velocity.Y = -10;
+            Timer++;
+        }
 
+        public void ChangeToDive()
+        {
+            if (Main.myPlayer == NPC.target)
+            {
+                bool canDive = NPC.Center.Y > Target.Center.Y + 100;
+
+                if (canDive)
+                {
+                    //前往下潜攻击
+                    movePhase = 1;
+                    Timer = 0;
+                    NPC.netUpdate = true;
+                    
+                }
+                else
+                    //结束该行动
+                    ResetStates();
+            }
         }
     }
 }

@@ -284,7 +284,7 @@ namespace Coralite.Content.Items.StarsItems
                 Color starYellow = new Color(255, 254, 191);
                 if (Main.netMode != NetmodeID.Server)
                     for (int i = 0; i < 2; i++)
-                        Particle.NewParticle(target.position + Main.rand.NextVector2CircularEdge(target.width, target.height),
+                        Particle.NewParticle(target.Center + Main.rand.NextVector2Circular(target.width, target.height),
                             Main.rand.NextVector2CircularEdge(1, 1), CoraliteContent.ParticleType<HorizontalStar>(), starYellow, 0.3f);
 
             }
@@ -295,7 +295,7 @@ namespace Coralite.Content.Items.StarsItems
             Color starYellow = new Color(255, 254, 191);
             if (Main.netMode != NetmodeID.Server)
                 for (int i = 0; i < 6; i++)
-                    Particle.NewParticle(Projectile.Center, Vector2.Normalize(Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f))) * Main.rand.Next(6, 9),
+                    Particle.NewParticle(Projectile.Center, Vector2.Normalize(Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f))) * Main.rand.Next(2, 5),
                        CoraliteContent.ParticleType<HorizontalStar>(), starYellow, 0.3f);
         }
 

@@ -298,8 +298,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 4; i++)
-                Particle.NewParticle(Projectile.Center, Main.rand.NextVector2Unit() * 3f, CoraliteContent.ParticleType<HorizontalStar>(),
-                     new Color(138, 255, 254), Main.rand.NextFloat(0.2f, 0.4f));
+                Particle.NewParticle(Projectile.Center, Main.rand.NextVector2Unit() * 1.5f, CoraliteContent.ParticleType<HorizontalStar>(),
+                     new Color(138, 255, 254), Main.rand.NextFloat(0.1f, 0.3f));
 
             if (Projectile.ai[0] != 1)
                 SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
