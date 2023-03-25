@@ -1,106 +1,104 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Coralite.Helpers;
+using Microsoft.Xna.Framework;
 using Terraria;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public partial class BabyIceDragon
-    {
-        /// <summary>
-        /// 俯冲攻击，先飞上去（如果飞不上去就取消攻击），在俯冲向玩家，期间如果撞墙则原地眩晕
-        /// </summary>
-        public void Dive()
-        {
-            switch (movePhase)
-            {
-                case 0:     //飞上去的阶段
-                    {
-                        if (NPC.Center.Y > Target.Center.Y + 200)
-                        {
-                            FlyUp();
+   public partial class BabyIceDragon
+   {
+      /// <summary>
+      /// 俯冲攻击，先飞上去（如果飞不上去就取消攻击），在俯冲向玩家，期间如果撞墙则原地眩晕
+      /// </summary>
+      public void Dive()
+      {
+         switch (movePhase)
+         {
+            case 0:     //飞上去的阶段
+               {
+                  if (NPC.Center.Y > Target.Center.Y + 200)
+                  {
+                     FlyUp();
 
-                            if (Timer > 400)
-                                ChangeToDive();
-
-                            break;
-                        }
-
+                     if (Timer > 400)
                         ChangeToDive();
-                    }
 
-                    break;
-                default:
-                case 1:    //俯冲阶段
-                    do
-                    {
-                        if (Timer < 3)
-                            SetDirection();
+                     break;
+                  }
 
-                        if (Timer == 3)
+                  ChangeToDive();
+               }
+
+               break;
+            default:
+            case 1:    //俯冲阶段
+               do
+               {
+                  if (Timer < 3)
+                     SetDirection();
+
+                  if (Timer == 3)
+                  {
+                     NPC.velocity.X = NPC.direction * 8f;
+                     NPC.velocity.Y = 1f;
+                     NPC.rotation = NPC.velocity.ToRotation();
+                  }
+
+                  if (Timer < 250)
+                  {
+                     //生成粒子
+
+                     //检测面前的物块，如果有物块那么就会撞晕自己
+                     Point position = (NPC.direction > 0 ? NPC.TopLeft : NPC.TopRight).ToPoint();
+                     for (int i = 0; i < 3; i++)
+                     {
+                        Tile tile = Framing.GetTileSafely(position);
+                        if (tile.HasSolidTile())
                         {
-                            NPC.velocity.X = NPC.direction * 8f;
-                            NPC.velocity.Y = 1f;
-                            NPC.rotation = NPC.velocity.ToRotation();
+                           int dizzyTime = Main.masterMode ? 180 : 300;
+                           NPC.velocity.X *= -1;
+                           NPC.velocity.Y = -3f;
+                           Dizzy(dizzyTime);
+                           return;
                         }
 
-                        if (Timer < 250)
-                        {
-                            //生成粒子
+                        position.Y += 1;
+                     }
+                     break;
+                  }
 
+                  if (Timer < 300)
+                  {
+                     NPC.velocity *= 0.99f;
+                     break;
+                  }
 
-                            //检测面前的物块，如果有物块那么就会撞晕自己
-                            Point position = (NPC.direction > 0 ? NPC.TopLeft : NPC.TopRight).ToPoint();
-                            for (int i = 0; i < 3; i++)
-                            {
-                                Tile tile = Framing.GetTileSafely(position);
-                                ushort type = tile.TileType;
-                                if (tile.HasTile && Main.tileSolid[type] && !Main.tileSolidTop[type])
-                                {
-                                    int dizzyTime = Main.masterMode ? 180 : 300;
-                                    NPC.velocity.X *= -1;
-                                    NPC.velocity.Y = -3f;
-                                    Dizzy(dizzyTime);
-                                    return;
-                                }
+                  ResetStates();
 
-                                position.Y += 1;
-                            }
-                            break;
-                        }
+               } while (false);
 
-                        if (Timer < 300)
-                        {
-                            NPC.velocity *= 0.99f;
-                            break;
-                        }
+               break;
+         }
 
-                        ResetStates();
+         Timer++;
+      }
 
-                    } while (false);
+      public void ChangeToDive()
+      {
+         if (Main.myPlayer == NPC.target)
+         {
+            bool canDive = NPC.Center.Y > Target.Center.Y + 100;
 
-                    break;
-            }
-
-            Timer++;
-        }
-
-        public void ChangeToDive()
-        {
-            if (Main.myPlayer == NPC.target)
+            if (canDive)
             {
-                bool canDive = NPC.Center.Y > Target.Center.Y + 100;
-
-                if (canDive)
-                {
-                    //前往下潜攻击
-                    movePhase = 1;
-                    Timer = 0;
-                    NPC.netUpdate = true;
-                    
-                }
-                else
-                    //结束该行动
-                    ResetStates();
+               //前往下潜攻击
+               movePhase = 1;
+               Timer = 0;
+               NPC.netUpdate = true;
             }
-        }
-    }
+            else
+               //结束该行动
+               ResetStates();
+         }
+      }
+   }
 }

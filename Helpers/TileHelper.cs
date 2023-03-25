@@ -13,5 +13,10 @@ namespace Coralite.Helpers
 
             return true;
         }
+
+        public static bool HasSolidTile(this Tile tile)
+        {
+            return tile.HasTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType];
+        }
     }
 }

@@ -16,8 +16,8 @@ namespace Coralite.Content.Particles
         {
             particle.velocity *= 0.98f;
             particle.rotation += 0.01f;
-            particle.scale *= 0.99f;
-            particle.color *= 0.95f;
+            particle.scale *= 0.997f;
+            particle.color *= 0.94f;
 
             particle.fadeIn++;
             if (particle.fadeIn > 30)

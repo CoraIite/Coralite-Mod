@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using Coralite.Content.Items.IcicleItems;
+using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,6 +12,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -66,8 +69,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void SetDefaults()
         {
-            NPC.width = 60;
-            NPC.height = 85;
+            NPC.width = 64;
+            NPC.height = 40;
             NPC.damage = 40;
             NPC.defense = 10;
             NPC.lifeMax = 2500;
@@ -125,9 +128,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override void OnSpawn(IEntitySource source)
         {
             NPC.TargetClosest(false);
+            NPC.frame.Y = 2;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 State = (int)AIStates.onSpawnAnim;
+                NPC.ai[0] = 0f;
+                Timer = 0;
+                NormalMoveCount = 0;
                 NPC.noTileCollide = false;
                 NPC.netUpdate = true;
             }
@@ -171,8 +178,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 return;
             }
 
-            NPC.spriteDirection = Math.Abs(NPC.velocity.X) > 0.5f ? NPC.direction : 1;
-
             switch (State)
             {
                 case (int)AIStates.onKillAnim:      //死亡时的动画
@@ -180,19 +185,60 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     break;
                 case (int)AIStates.onSpawnAnim:      //生成时的动画
                     {
-                        if (Timer == 0)
+                        do
                         {
-                            //生成动画弹幕
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<BabyIceDragon_OnSpawnAnim>(), 0, 0);
-                            NPC.dontTakeDamage = true;
-                        }
+                            if (Timer == 0)
+                            {
+                                //生成动画弹幕
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<BabyIceDragon_OnSpawnAnim>(), 0, 0);
+                                NPC.dontTakeDamage = true;
+                                NPC.velocity.Y = -0.2f;
+                                break;
+                            }
 
-                        if (Timer == 270 && Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            NPC.dontTakeDamage = false;
-                            ResetStates();
-                            break;
-                        }
+                            if (Timer == 100)
+                            {
+                                NPC.frame.Y = 0;
+                                NPC.velocity *= 0;
+                                GetMouseCenter(out _, out Vector2 mouseCenter);
+                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
+                            }
+
+                            if (Timer < 110)
+                            {
+                                ChangeFrameNormally();
+                                break;
+                            }
+
+                            if (Timer == 110)
+                            {
+                                SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
+                                GetMouseCenter(out _, out Vector2 mouseCenter);
+                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                PunchCameraModifier modifier = new PunchCameraModifier(NPC.Center, new Vector2(0.3f, 0.3f), 5f, 6f, 60, 1000f, "BabyIceDragon");
+                                Main.instance.CameraModifiers.Add(modifier);
+                            }
+
+                            if (Timer > 110 && Timer < 170)
+                            {
+                                GetMouseCenter(out _, out Vector2 mouseCenter);
+                                if (Timer % 10 == 0)
+                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
+                                if (Timer % 20 == 0)
+                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+
+                                break;
+                            }
+
+                            FlyUp();
+
+                            if (Timer >= 260)
+                            {
+                                NPC.dontTakeDamage = false;
+                                ResetStates();
+                                break;
+                            }
+                        } while (false);
 
                         Timer++;
                     }
@@ -219,16 +265,70 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         Timer--;
                         ChangeFrameNormally();
-
                     }
                     break;
                 default:
                 case (int)AIStates.dive:      //俯冲攻击，先飞上去（如果飞不上去就取消攻击），在俯冲向玩家，期间如果撞墙则原地眩晕
                     Dive();
-
                     break;
                 case (int)AIStates.accumulate:      //蓄力弹幕，如果蓄力途中收到一定伤害会失衡并使冰块砸到自己，眩晕一定时间
+                    {
+                        ChangeFrameNormally();
+                        do
+                        {
+                            if (Timer < 60)
+                            {
+                                SetDirection();
+                                NPC.directionY = Target.Center.Y > NPC.Center.Y ? 1 : -1;
+                                float yLength = Math.Abs(Target.Center.Y - 40 - NPC.Center.Y);
+                                if (yLength > 50)
+                                    Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6f, 0.14f, 0.1f, 0.96f);
+                                else
+                                    NPC.velocity.Y *= 0.96f;
 
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 3f, 0.08f, 0.08f, 0.96f);
+                                break;
+                            }
+
+                            if (Timer < 80)
+                            {
+                                NPC.velocity *= 0.92f;
+                                break;
+                            }
+
+                            if (Timer == 80)
+                            {
+                                //生成冰块弹幕
+                                NPC.velocity *= 0;
+                                NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + NPC.direction * 64, (int)NPC.Center.Y, NPCType<IceCube>());
+                            }
+
+                            if (Timer % 20 == 0)
+                            {
+                                //控制冰块弹幕，让它变大
+                                int index = -1;
+                                int iceCubeType = NPCType<IceCube>();
+                                for (int i = 0; i < Main.maxNPCs; i++)
+                                {
+                                    NPC npc = Main.npc[i];
+                                    if (npc.active && npc.type == iceCubeType)
+                                    {
+                                        index = i;
+                                        break;
+                                    }
+                                }
+
+                                if (index == -1)
+                                    ResetStates();
+
+                                Main.npc[index].ai[0] = 1;
+                            }
+
+                            if (Timer > 1000)
+                                ResetStates();
+                        } while (false);
+                        Timer++;
+                    }
                     break;
                 case (int)AIStates.iceBreath:      //冰吐息
                     {
@@ -245,7 +345,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                     NPC.velocity.Y *= 0.96f;
 
                                 Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 3f, 0.08f, 0.08f, 0.96f);
-
                                 ChangeFrameNormally();
                                 break;
                             }
@@ -262,12 +361,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 //生成冰吐息弹幕
                                 if (Timer % 10 == 0)
                                 {
-                                    Vector2 targetDir = NPC.rotation.ToRotationVector2();
-                                    Vector2 center = NPC.Center + targetDir * 20;
+                                    GetMouseCenter(out Vector2 targetDir, out Vector2 mouseCenter);
                                     for (int i = -1; i < 2; i++)
-                                    {
-                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), center, targetDir.RotatedBy(i * 0.3f) * 12f, ProjectileType<IceBreath>(), 30, 5f);
-                                    }
+                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(i * 0.3f) * 12f, ProjectileType<IceBreath>(), 30, 5f);
                                 }
                                 break;
                             }
@@ -302,6 +398,23 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             }
 
                             //冲向玩家方向
+                            if (Timer == 100)
+                            {
+                                NPC.velocity.Y = 0f;
+                                NPC.velocity.X = NPC.direction * 15f;
+                                float factor = (NPC.Center.Y - Target.Center.Y) / 100;
+                                factor = Math.Clamp(factor, -1, 1);
+                                NPC.velocity.RotatedBy(factor * 0.6f);
+                            }
+
+                            if (Timer > 180)
+                            {
+                                NPC.velocity *= 0.99f;
+                                break;
+                            }
+
+                            if (Timer == 240)
+                                ResetStates();
 
                         } while (false);
 
@@ -310,17 +423,78 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     break;
                 case (int)AIStates.smashDown:      //飞得高点然后下砸，并在周围生成冰刺弹幕
                     {
-                        if (Timer<100)
+                        do
                         {
-                            FlyUp();
-                        }
+                            if (Timer < 100)
+                            {
+                                FlyUp();
+                                break;
+                            }
+
+                            if (Timer == 100)
+                            {
+                                NPC.velocity.X *= 0;
+                                NPC.velocity.Y = -3;
+                                NPC.noGravity = false;
+                                NPC.noTileCollide = true;
+                                SetDirection();
+                            }
+                            //TODO:控制旋转
+
+
+                            //向玩家加速
+                            if (Timer < 140)
+                            {
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 3, 0.08f, 0.08f, 0.96f);
+                                break;
+                            }
+
+                            //TODO:生成下落特效的粒子
+                            //下落
+                            NPC.velocity.X *= 0.96f;
+                            NPC.velocity.Y += 0.02f;
+                            if (NPC.velocity.Y > 16)
+                                NPC.velocity.Y = 16;
+
+                            if (Timer < 240)
+                                break;
+
+                            if (Timer == 240)
+                                NPC.noTileCollide = false;
+
+                            if (Timer > 240)
+                            {
+                                //检测下方物块
+                                Point position = NPC.BottomLeft.ToPoint();
+                                position.Y += 1;
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    if (WorldGen.ActiveAndWalkableTile(position.X, position.Y))    //砸地，生成冰刺弹幕
+                                    {
+                                        SpawnIceThorns();
+                                        int restTime = Main.masterMode ? 80 : 140;
+                                        HaveARest(restTime);
+                                    }
+                                    position.X += 1;
+                                }
+                            }
+
+                            if (Timer > 480)
+                            {
+                                int restTime2 = Main.masterMode ? 80 : 140;
+                                HaveARest(restTime2);
+                            }
+                        } while (false);
+
+                        Timer++;
                     }
                     break;
                 case (int)AIStates.iceTornado:      //简单准备后冲向玩家并在轨迹上留下冰龙卷风一样的东西
-
+                    IceTornado();
                     break;
                 case (int)AIStates.iciclesFall:      //冰雹弹幕攻击，先由下至上吐出一群冰锥，再在玩家头顶随机位置落下冰锥
-
+                                                     //暂时先不写
+                    ResetStates();
                     break;
             }
         }
@@ -331,7 +505,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public void FlyUp()
         {
             //根据帧图来改变速度，大概效果是扇一下翅膀向上飞一小段
-            NPC.velocity.X *= 0.98f;
+            NPC.velocity.X *= 0.99f;
 
             //只有扇翅膀的时候才会有向上加速度，否则减速
             switch (NPC.frame.Y)
@@ -340,13 +514,21 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 case 0:
                 case 3:
                 case 4:
-                    NPC.velocity.Y *= 0.98f;
+                    NPC.velocity.Y *= 0.99f;
                     break;
                 case 1:
                 case 2:
-                    NPC.velocity.Y -= 3f;
+                    NPC.velocity.Y -= 0.15f;
                     break;
             }
+
+            if (NPC.velocity.Y < -10)
+                NPC.velocity.Y = -10;
+
+            ChangeFrameNormally();
+
+            if (State == (int)AIStates.onSpawnAnim)
+                return;
 
             if (NPC.velocity.Y < -10)
                 NPC.velocity.Y = -10;
@@ -358,17 +540,105 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             for (int i = -1; i < 5; i++)
             {
                 //检测NPC头顶的一排物块
-
                 Tile tile = Framing.GetTileSafely(position);
-                ushort type = tile.TileType;
-
-                if (tile.HasTile && Main.tileSolid[type] && !Main.tileSolidTop[type])
+                if (tile.HasSolidTile())
                     ResetStates();
 
                 position.X += 1;
             }
 
-            ChangeFrameNormally();
+        }
+
+        public void GetMouseCenter(out Vector2 targetDir,out Vector2 mouseCenter)
+        {
+            targetDir = (NPC.rotation+ (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2();
+            mouseCenter = NPC.Center + targetDir * 20 ;
+        }
+
+        public void SpawnIceThorns()
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return;
+
+            Point sourceTileCoords = NPC.Bottom.ToTileCoordinates();
+            sourceTileCoords.X += 3;
+
+            PunchCameraModifier modifier = new PunchCameraModifier(NPC.Center, new Vector2(0f, 1f), 20f, 6f, 30, 1000f, "BabyIceDragon");
+            Main.instance.CameraModifiers.Add(modifier);
+
+            for (int i = 0; i < 4; i++)
+                TryMakingSpike(ref sourceTileCoords, 1, 20, i, 1);
+            sourceTileCoords.X -= 6;
+            for (int i = 0; i < 4; i++)
+                TryMakingSpike(ref sourceTileCoords, -1, 20, i, 1);
+        }
+
+        private void TryMakingSpike(ref Point sourceTileCoords, int dir, int howMany, int whichOne, int xOffset)
+        {
+            int num = 13;
+            int position_X = sourceTileCoords.X + xOffset * dir;
+            int position_Y = TryMakingSpike_FindBestY(ref sourceTileCoords, position_X);
+            if (WorldGen.ActiveAndWalkableTile(position_X, position_Y))
+            {
+                Vector2 position = new Vector2(position_X * 16 + 8, position_Y * 16 - 8);
+                Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, num, 0f, Main.myPlayer, 0f, 0.1f + Main.rand.NextFloat() * 0.1f + xOffset * 1.1f / howMany);
+            }
+        }
+
+        private int TryMakingSpike_FindBestY(ref Point sourceTileCoords, int x)
+        {
+            int position_Y = sourceTileCoords.Y;
+            NPCAimedTarget targetData = NPC.GetTargetData();
+            if (!targetData.Invalid)
+            {
+                Rectangle hitbox = targetData.Hitbox;
+                Vector2 vector = new Vector2(hitbox.Center.X, hitbox.Bottom);
+                int num2 = (int)(vector.Y / 16f);
+                int num3 = Math.Sign(num2 - position_Y);
+                int num4 = num2 + num3 * 15;
+                int? num5 = null;
+                float num6 = float.PositiveInfinity;
+                for (int i = position_Y; i != num4; i += num3)
+                {
+                    if (WorldGen.ActiveAndWalkableTile(x, i))
+                    {
+                        float num7 = new Point(x, i).ToWorldCoordinates().Distance(vector);
+                        if (!num5.HasValue || !(num7 >= num6))
+                        {
+                            num5 = i;
+                            num6 = num7;
+                        }
+                    }
+                }
+
+                if (num5.HasValue)
+                    position_Y = num5.Value;
+            }
+
+            for (int j = 0; j < 20; j++)
+            {
+                if (position_Y < 10)
+                    break;
+
+                if (!WorldGen.SolidTile(x, position_Y))
+                    break;
+
+                position_Y--;
+            }
+
+            for (int k = 0; k < 20; k++)
+            {
+                if (position_Y > Main.maxTilesY - 10)
+                    break;
+
+                if (WorldGen.ActiveAndWalkableTile(x, position_Y))
+                    break;
+
+                position_Y++;
+            }
+
+            return position_Y;
         }
 
         public void ResetStates()
@@ -454,7 +724,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public void SetDirection()
         {
-            NPC.direction = NPC.Center.X > Target.Center.X ? 1 : -1;
+            if (Math.Abs(NPC.Center.X - Target.Center.X) < 16)
+                return;
+
+            NPC.spriteDirection = NPC.direction = NPC.Center.X > Target.Center.X ? 1 : -1;
         }
 
         #region 特殊行动

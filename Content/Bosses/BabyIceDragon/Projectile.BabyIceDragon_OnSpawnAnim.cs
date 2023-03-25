@@ -1,20 +1,16 @@
-﻿using Coralite.Content.Dusts;
-using Coralite.Core;
-using Coralite.Helpers;
+﻿using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
     public class BabyIceDragon_OnSpawnAnim : ModProjectile
     {
-        public override string Texture => AssetDirectory.Rediancie + "RediancieNameLine";
+        public override string Texture => AssetDirectory.BabyIceDragon + "BIDNameLine";
 
         public Color drawCharColor;
         public Color drawPicColor;
@@ -66,11 +62,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             Texture2D maintex = TextureAssets.Projectile[Type].Value;
             Vector2 screenPosition = Main.screenPosition;
 
-            Utils.DrawBorderStringBig(sb, "冰龙宝宝", Main.LocalPlayer.Center - new Vector2(100, 305) - screenPosition, drawCharColor, 1.4f);
+            Utils.DrawBorderStringBig(sb, "冰龙宝宝", Main.LocalPlayer.Center - new Vector2(95, 315) - screenPosition, drawCharColor, 1f);
 
             sb.Draw(maintex, Main.LocalPlayer.Center - new Vector2(0, 225) - screenPosition, maintex.Frame(), drawPicColor, 0f, new Vector2(maintex.Width / 2, maintex.Height / 2), 2f, SpriteEffects.None, 0f);
 
-            Utils.DrawBorderStringBig(sb, "BabyIceDragon", Main.LocalPlayer.Center - new Vector2(75, 180) - screenPosition, drawCharColor, 0.8f);
+            Utils.DrawBorderStringBig(sb, "BabyIceDragon", Main.LocalPlayer.Center - new Vector2(90, 190) - screenPosition, drawCharColor, 0.6f);
 
             return false;
         }
