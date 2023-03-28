@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Coralite.Helpers;
 using Terraria;
-using static Coralite.Core.Systems.Trails.DelegateFunctions;
 
 namespace Coralite.Core.Systems.Trails
 {

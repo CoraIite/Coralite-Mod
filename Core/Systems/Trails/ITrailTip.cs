@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using static Coralite.Core.Systems.Trails.DelegateFunctions;
 
 namespace Coralite.Core.Systems.Trails
 {

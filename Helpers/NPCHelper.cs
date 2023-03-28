@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Terraria;
 
 namespace Coralite.Helpers
@@ -37,5 +38,25 @@ namespace Coralite.Helpers
             }
         }
 
+        /// <summary>
+        /// 返回NPC的索引，如果没找到则返回-1
+        /// </summary>
+        /// <param name="npcType"></param>
+        /// <returns></returns>
+        public static int GetNPCByType(int npcType)
+        {
+            int index = -1;
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc.active && npc.type == npcType)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
+        }
     }
 }

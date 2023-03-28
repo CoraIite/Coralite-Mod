@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Particles;
+﻿using Coralite.Content.Items.IcicleItems;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;

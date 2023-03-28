@@ -94,11 +94,11 @@ namespace Coralite.Core.Systems.ParticleSystem
         /// <summary>
         /// 初始化中心数组
         /// </summary>
-        /// <param name="lenth"></param>
-        public void InitOldCenters(int lenth)
+        /// <param name="length"></param>
+        public void InitOldCenters(int length)
         {
-            oldCenter = new Vector2[lenth];
-            for (int i = 0; i < lenth; i++)
+            oldCenter = new Vector2[length];
+            for (int i = 0; i < length; i++)
             {
                 oldCenter[i] = center;
             }
@@ -107,11 +107,11 @@ namespace Coralite.Core.Systems.ParticleSystem
         /// <summary>
         /// 初始化旋转数组
         /// </summary>
-        /// <param name="lenth"></param>
-        public void InitOldRotates(int lenth)
+        /// <param name="length"></param>
+        public void InitOldRotates(int length)
         {
-            oldRot = new float[lenth];
-            for (int i = 0; i < lenth; i++)
+            oldRot = new float[length];
+            for (int i = 0; i < length; i++)
             {
                 oldRot[i] = rotation;
             }
@@ -120,17 +120,32 @@ namespace Coralite.Core.Systems.ParticleSystem
         /// <summary>
         /// 初始化旧的中心和旋转数组
         /// </summary>
-        /// <param name="lenth"></param>
-        public void InitOldCaches(int lenth)
+        /// <param name="length"></param>
+        public void InitOldCaches(int length)
         {
-            oldCenter = new Vector2[lenth];
-            oldRot = new float[lenth];
-            for (int i = 0; i < lenth; i++)
+            oldCenter = new Vector2[length];
+            oldRot = new float[length];
+            for (int i = 0; i < length; i++)
             {
                 oldCenter[i] = center;
                 oldRot[i] = rotation;
             }
 
+        }
+
+        /// <summary>
+        /// 普普通通地更新记录点
+        /// </summary>
+        /// <param name="length"></param>
+        public void UpdateCachesNormally(int length)
+        {
+            if (oldCenter is null || length > oldCenter.Length)
+                return;
+
+            for (int i = 0; i < length - 1; i++)
+                oldCenter[i] = oldCenter[i + 1];
+
+            oldCenter[length - 1] = center;
         }
 
     }

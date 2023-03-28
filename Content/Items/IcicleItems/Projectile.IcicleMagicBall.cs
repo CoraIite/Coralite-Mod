@@ -31,12 +31,12 @@ namespace Coralite.Content.Items.IcicleItems
             dust.noGravity = true;
 
             Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(8, 8), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f)) * 0.1f,
-                    CoraliteContent.ParticleType<IceFog>(),  Color.AliceBlue,  Main.rand.NextFloat(0.6f, 0.8f));
+                    CoraliteContent.ParticleType<IceFog>(), Color.AliceBlue, Main.rand.NextFloat(0.6f, 0.8f));
 
             if (Projectile.timeLeft % 2 == 0)
             {
                 Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * 0.1f,
-                    CoraliteContent.ParticleType<SnowFlower>(),  Color.White,  Main.rand.NextFloat(0.2f, 0.3f));
+                    CoraliteContent.ParticleType<SnowFlower>(), Color.White, Main.rand.NextFloat(0.2f, 0.3f));
             }
         }
 
@@ -44,7 +44,7 @@ namespace Coralite.Content.Items.IcicleItems
         {
             for (int i = 0; i < 4; i++)
             {
-                Particle.NewParticle(Projectile.Center, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-1.2f, 1.2f)) * Main.rand.NextFloat(0.05f,0.2f),
+                Particle.NewParticle(Projectile.Center, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-1.2f, 1.2f)) * Main.rand.NextFloat(0.05f, 0.2f),
                     CoraliteContent.ParticleType<SnowFlower>(), Color.White, Main.rand.NextFloat(0.4f, 0.6f));
             }
 

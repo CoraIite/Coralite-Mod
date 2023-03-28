@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using static Coralite.Core.Systems.Trails.DelegateFunctions;
 
 namespace Coralite.Core.Systems.Trails
 {

@@ -97,8 +97,9 @@ namespace Coralite.Content.Bosses.Rediancie
 
             NPC.BossBar = GetInstance<RediancieBossBar>();
 
-            //if (!Main.dedServ)
-            //    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/RediancieMusic");
+            //BGM：赤色激流
+            if (!Main.dedServ)
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/RedTorrent");
 
         }
 

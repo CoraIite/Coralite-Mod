@@ -83,7 +83,7 @@ namespace Coralite.Core.Systems.ParticleSystem
                 if (particle.scale < 0.01f)
                     particle.active = false;
 
-                if (particle.fadeIn > 200)
+                if (particle.fadeIn > 1000)
                     particle.active = false;
             }
         }
