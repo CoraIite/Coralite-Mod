@@ -6,6 +6,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
@@ -40,6 +41,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             //随着ai1的增大而增大，随后爆炸
             if (ExtendTrigger == 1f)
             {
+                if (ExtendCount < 17)
+                    SoundEngine.PlaySound(CoraliteSoundID.CrushedIce_Item27, NPC.Center);
                 ExtendTrigger = 0f;
                 ExtendCount++;
                 Vector2 center = NPC.Center;
@@ -72,7 +75,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (ExtendCount >= 19)
             {
                 //大于多少后产生爆炸
-                PunchCameraModifier modifier = new PunchCameraModifier(NPC.Center, new Vector2(2f, 2f), 16f, 12f, 25, 1000f, "BabyIceDragon");
+                PunchCameraModifier modifier = new PunchCameraModifier(NPC.Center, new Vector2(2f, 2f), 16f, 20f, 25, 1000f, "BabyIceDragon");
                 Main.instance.CameraModifiers.Add(modifier);
                 Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<IceBurst>(), 90, 10f);
                 NPC.Kill();
@@ -102,7 +105,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             }
 
             //寻找到冰龙宝宝并让它眩晕
-            Helper.PlayPitched("Icicle/Broken", 0.4f, 0f, NPC.Center);
             (Main.npc[index].ModNPC as BabyIceDragon).Dizzy(240);
         }
 

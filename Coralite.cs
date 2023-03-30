@@ -12,7 +12,7 @@ namespace Coralite
     public class Coralite : Mod
     {
         public const int YujianHuluContainsMax = 10;
-        public const int MaxParticleCount = 401;
+        public const int MaxParticleCount = 801;
         public readonly Color RedJadeRed;
         public readonly Color IcicleCyan;
 

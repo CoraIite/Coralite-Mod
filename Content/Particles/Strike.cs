@@ -35,7 +35,7 @@ namespace Coralite.Content.Particles
         public override void Draw(SpriteBatch spriteBatch, Particle particle)
         {
             ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
-            Vector2 origin = new Vector2(128 * 0.75f, 128 * 0.75f);
+            Vector2 origin = new Vector2(96, 96);
 
             spriteBatch.Draw(modParticle.Texture2D.Value, particle.center - Main.screenPosition, particle.frame, particle.color, particle.rotation, origin, particle.scale, SpriteEffects.None, 0f);
 

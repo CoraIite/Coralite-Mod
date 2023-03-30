@@ -36,19 +36,28 @@ namespace Coralite.Content.Particles
             particle.oldRot = new float[1];
             particle.frame = new Rectangle(0, 0, 22, 26);
             particle.scale = 1f;
-            particle.InitOldCenters(8);
-            particle.trail = new Trail(Main.instance.GraphicsDevice, 8, new NoTip(), factor => 2, factor => Color.Lerp(new Color(0, 0, 0, 0), Color.Yellow, factor.X));
+            particle.InitOldCaches(12);
+            particle.trail = new Trail(Main.instance.GraphicsDevice, 12, new NoTip(), factor => 2, factor => Color.Lerp(new Color(0, 0, 0, 0), Color.Yellow, factor.X));
         }
 
         public override void Update(Particle particle)
         {
             if (GetDatas(particle, out float length, out GetCenter function))
             {
-                particle.center = function.Invoke() + particle.rotation.ToRotationVector2() * length * Helper.EllipticalEase(particle.rotation, 1, 2.4f);
-                particle.rotation += 0.1f;
+                Vector2 center = function.Invoke();
+                particle.center = center + particle.rotation.ToRotationVector2() * length * Helper.EllipticalEase(particle.rotation, 1, 2.4f);
+                particle.rotation += 0.12f;
                 particle.scale = 0.6f + MathF.Sin(particle.rotation) * 0.2f;
-                particle.UpdateCachesNormally(8);
+
+                //控制顶点，感觉计算量爆炸了
+                for (int i = 0; i < 11; i++)
+                    particle.oldRot[i] = particle.oldRot[i + 1];
+
+                particle.oldRot[11] = particle.rotation;
+                for (int i = 0; i < 12; i++)
+                    particle.oldCenter[i] = center + particle.oldRot[i].ToRotationVector2() * length * Helper.EllipticalEase(particle.oldRot[i], 1, 2.4f);
                 particle.trail.Positions = particle.oldCenter;
+
                 //简单粗暴地控制帧图，直接填数字了，具体多少可以去看看落星的帧图
                 particle.oldRot[0] += 1f;
                 if (particle.oldRot[0] > 3f)

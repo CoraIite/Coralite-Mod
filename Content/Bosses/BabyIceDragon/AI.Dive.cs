@@ -1,104 +1,106 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Content.Items.IcicleItems;
+using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
+using System.Runtime.Serialization.Formatters;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-   public partial class BabyIceDragon
-   {
-      /// <summary>
-      /// 俯冲攻击，先飞上去（如果飞不上去就取消攻击），在俯冲向玩家，期间如果撞墙则原地眩晕
-      /// </summary>
-      public void Dive()
-      {
-         switch (movePhase)
-         {
-            case 0:     //飞上去的阶段
-               {
-                  if (NPC.Center.Y > Target.Center.Y + 200)
-                  {
-                     FlyUp();
-
-                     if (Timer > 400)
-                        ChangeToDive();
-
-                     break;
-                  }
-
-                  ChangeToDive();
-               }
-
-               break;
-            default:
-            case 1:    //俯冲阶段
-               do
-               {
-                  if (Timer < 3)
-                     SetDirection();
-
-                  if (Timer == 3)
-                  {
-                     NPC.velocity.X = NPC.direction * 8f;
-                     NPC.velocity.Y = 1f;
-                     NPC.rotation = NPC.velocity.ToRotation();
-                  }
-
-                  if (Timer < 250)
-                  {
-                     //生成粒子
-
-                     //检测面前的物块，如果有物块那么就会撞晕自己
-                     Point position = (NPC.direction > 0 ? NPC.TopLeft : NPC.TopRight).ToPoint();
-                     for (int i = 0; i < 3; i++)
-                     {
-                        Tile tile = Framing.GetTileSafely(position);
-                        if (tile.HasSolidTile())
+    public partial class BabyIceDragon
+    {
+        /// <summary>
+        /// 俯冲攻击，先飞上去（如果飞不上去就取消攻击），在俯冲向玩家，期间如果撞墙则原地眩晕
+        /// </summary>
+        public void Dive()
+        {
+            switch (movePhase)
+            {
+                case 0:     //飞上去的阶段
+                    {
+                        if (NPC.Center.Y > (Target.Center.Y - 400))
                         {
-                           int dizzyTime = Main.masterMode ? 180 : 300;
-                           NPC.velocity.X *= -1;
-                           NPC.velocity.Y = -3f;
-                           Dizzy(dizzyTime);
-                           return;
+                            SetDirection();
+                            NPC.velocity.X *= 0.97f;
+                            NPC.rotation = NPC.rotation.AngleTowards(0f, 0.08f);
+                            FlyUp();
+
+                            if (Timer > 400)
+                            {
+                                ResetStates();
+                                return;
+                            }
+
+                            break;
                         }
 
-                        position.Y += 1;
-                     }
-                     break;
-                  }
+                        //前往下潜攻击
+                        SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
+                        movePhase = 1;
+                        NPC.frame.Y = 0;
+                        Timer = 0;
+                        NPC.netUpdate = true;
+                    }
 
-                  if (Timer < 300)
-                  {
-                     NPC.velocity *= 0.99f;
-                     break;
-                  }
+                    break;
+                default:
+                case 1:    //俯冲阶段
+                    do
+                    {
+                        if (Timer < 3)
+                            SetDirection();
 
-                  ResetStates();
+                        if (Timer == 3)
+                        {
+                            NPC.velocity = (Target.Center - new Vector2(0, 30) - NPC.Center).SafeNormalize(Vector2.Zero) * 10f;
+                            NPC.rotation = NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f);
+                        }
 
-               } while (false);
+                        if (Timer < 100)
+                        {
+                            //生成粒子
+                            if (NPC.Center.Y>(Target.Center.Y-20))
+                            {
+                                Timer = 100;
+                                NPC.netUpdate = true;
+                                break;
+                            }
 
-               break;
-         }
+                            //检测面前的物块，如果有物块那么就会撞晕自己
+                            GetMouseCenter(out Vector2 targetDir, out Vector2 mouseCenter);
+                            for (int i = -1; i < 2; i++)
+                            {
+                                Vector2 position = mouseCenter + i * 16 * targetDir.RotatedBy(1.57f);
+                                Tile tile = Framing.GetTileSafely(position);
+                                if (tile.HasSolidTile())
+                                {
+                                    int dizzyTime = Main.masterMode ? 180 : 300;
+                                    Dizzy(dizzyTime);
+                                    return;
+                                }
+                            }
+                            break;
+                        }
 
-         Timer++;
-      }
+                        if (Timer < 130)
+                        {
+                            NPC.velocity *= 0.97f;
+                            NPC.rotation = NPC.rotation.AngleTowards(0f, 0.08f);
+                            ChangeFrameNormally();
+                            break;
+                        }
 
-      public void ChangeToDive()
-      {
-         if (Main.myPlayer == NPC.target)
-         {
-            bool canDive = NPC.Center.Y > Target.Center.Y + 100;
+                        ResetStates();
 
-            if (canDive)
-            {
-               //前往下潜攻击
-               movePhase = 1;
-               Timer = 0;
-               NPC.netUpdate = true;
+                    } while (false);
+
+                    break;
             }
-            else
-               //结束该行动
-               ResetStates();
-         }
-      }
-   }
+
+            Timer++;
+        }
+    }
 }

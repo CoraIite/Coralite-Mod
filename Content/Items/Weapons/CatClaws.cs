@@ -15,6 +15,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Weapons
 {
+    /// <summary>
+    /// 唯一指定用调试物品，用来测试各种乱七八糟的东西，可能有时候忘了删除调试用代码
+    /// </summary>
     public class CatClaws : ModItem
     {
         public override string Texture => AssetDirectory.Weapons_Melee + Name;
