@@ -1,7 +1,12 @@
-﻿
+﻿using Coralite.Content.Particles;
+using Coralite.Core.Systems.ParticleSystem;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
@@ -12,82 +17,107 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             switch (movePhase)
             {
                 case 0:
-                    if (NPC.Center.Y - Target.Center.Y > -240)
                     {
-                        FlyUp();
-                        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 3, 0.08f, 0.08f, 0.96f);
-                        if (Timer > 300)
+                        bool lowerThanTarget = NPC.Center.Y > (Target.Center.Y - 430);
+                        float xLength = Math.Abs(NPC.Center.X - Target.Center.X);
+                        if (lowerThanTarget || xLength > 350)
                         {
-                            ResetStates();
-                            return;
+                            SetDirection();
+                            if (lowerThanTarget)
+                                FlyUp();
+                            else
+                            {
+                                NPC.velocity.Y *= 0.9f;
+                                ChangeFrameNormally();
+                            }
+                            if (xLength > 150)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6, 0.2f, 0.2f, 0.96f);
+                            else
+                                NPC.velocity.X *= 0.96f;
+
+                            if (Timer > 300)
+                            {
+                                ResetStates();
+                                return;
+                            }
+
+                            break;
                         }
-                    }
-                    else
-                    {
+
                         movePhase = 1;
                         Timer = 0;
-                        NPC.velocity.X *= 0;
-                        NPC.velocity.Y = -3;
+                        NPC.frame.Y = 0;
+                        NPC.velocity.X *= 0.4f;
+                        NPC.velocity.Y *= 0;
                         NPC.noGravity = false;
                         NPC.noTileCollide = true;
                         SetDirection();
+                        Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.IcicleCyan, 0.8f);
+                        SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                         NPC.netUpdate = true;
                     }
-
                     break;
-                case 1:
-                    NPC.rotation = NPC.rotation.AngleTowards(NPC.velocity.ToRotation(), 0.04f);
-
-                    //向玩家加速
-                    if (Timer < 40)
+                case 1:     //下落
                     {
-                        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 3, 0.08f, 0.08f, 0.96f);
-                        break;
-                    }
+                        NPC.rotation = NPC.rotation.AngleTowards(NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f), 0.14f);
+                        NPC.velocity.Y += 0.5f;
 
-                    //TODO:生成下落特效的粒子
-                    //下落
-                    NPC.velocity.X *= 0.96f;
-                    NPC.velocity.Y += 0.02f;
-                    if (NPC.velocity.Y > 16)
-                        NPC.velocity.Y = 16;
-
-                    if (Timer < 60)
-                        break;
-
-                    if (Timer == 60)
-                        NPC.noTileCollide = false;
-
-                    if (Timer > 60)
-                    {
-                        //检测下方物块
-                        Point position = NPC.BottomLeft.ToPoint();
-                        position.Y += 1;
-                        for (int i = 0; i < 3; i++)
+                        if (Timer % 2 == 0)
                         {
-                            if (WorldGen.ActiveAndWalkableTile(position.X, position.Y))    //砸地，生成冰刺弹幕
+                            Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), DustID.FrostStaff, -NPC.velocity * 0.3f, Scale: Main.rand.NextFloat(1.8f, 2f));
+                            dust.noGravity = true;
+                        }
+
+                        //向玩家加速
+                        if (Timer < 40)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 4f, 0.3f, 0.3f, 0.96f);
+                        else
+                            NPC.velocity.X *= 0.96f;
+
+                        //TODO:生成下落特效的粒子
+                        if (Timer < 60)
+                        {
+                            if (NPC.Center.Y > (Target.Top.Y - 32))
                             {
-                                SpawnIceThorns();
-                                movePhase = 2;
-                                Timer = 0;
-                                NPC.netUpdate = true;
+                                Timer = 61;
+                                NPC.noTileCollide = false;
                             }
-                            position.X += 1;
+                            break;
+                        }
+
+                        if (Timer == 60)
+                            NPC.noTileCollide = false;
+
+                        if (Timer > 60)   //检测下方物块
+                        {
+                            Vector2 position = NPC.BottomLeft;
+                            position /= 16;
+                            for (int i = 0; i < 4; i++)
+                            {
+                                if (WorldGen.ActiveAndWalkableTile((int)position.X + i, (int)position.Y))    //砸地，生成冰刺弹幕
+                                {
+                                    SpawnIceThorns();
+                                    NPC.velocity *= 0;
+                                    HaveARest(30);
+                                    return;
+                                }
+                            }
+                        }
+
+                        if (Timer > 200)
+                        {
+                            NPC.velocity *= 0;
+                            HaveARest(30);
                         }
                     }
-
-                    if (Timer > 300)
-                    {
-                        NPC.velocity *= 0;
-                        int restTime2 = Main.masterMode ? 80 : 140;
-                        HaveARest(restTime2);
-                    }
-
                     break;
                 default:
                     ResetStates();
                     return;
             }
+
+            if (NPC.velocity.Y > 16)
+                NPC.velocity.Y = 16;
 
             Timer++;
         }

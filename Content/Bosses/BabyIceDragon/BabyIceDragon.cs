@@ -50,7 +50,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         /// </summary>
         internal ref float NormalMoveCount => ref NPC.ai[3];
 
-        private int movePhase;
+        public int movePhase;
+        public bool canDrawShadows;
 
         #region tmlHooks
 
@@ -68,9 +69,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             NPC.width = 64;
             NPC.height = 40;
-            NPC.damage = 40;
+            NPC.damage = 35;
             NPC.defense = 10;
-            NPC.lifeMax = 2500;
+            NPC.lifeMax = 4000;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 10f;
@@ -80,20 +81,20 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.noTileCollide = true;
             NPC.boss = true;
 
+            NPC.BossBar = GetInstance<BabyIceDragonBossBar>();
         }
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            //NPC.lifeMax = (int)(1700 * bossLifeScale) + numPlayers * 350;
-            //NPC.damage = 30;
-            //NPC.defense = 10;
+            NPC.lifeMax = (int)(4320 * bossLifeScale) + numPlayers * 1000;
+            NPC.damage = 40;
+            NPC.defense = 12;
 
-            //if (Main.masterMode)
-            //{
-            //    NPC.lifeMax = (int)(2200 * bossLifeScale) + numPlayers * 550;
-            //    NPC.damage = 45;
-            //    NPC.defense = 12;
-            //}
+            if (Main.masterMode)
+            {
+                NPC.lifeMax = (int)(5000 * bossLifeScale) + numPlayers * 1800;
+                NPC.damage = 45;
+            }
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -120,7 +121,21 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override bool? CanFallThroughPlatforms()
         {
-            return State != (int)AIStates.smashDown;
+            return State != (int)AIStates.smashDown && State != (int)AIStates.dizzy;
+        }
+
+        public override bool CheckDead()
+        {
+            if (State != (int)AIStates.onKillAnim)
+            {
+                State = (int)AIStates.onKillAnim;
+                Timer = 0;
+                NPC.dontTakeDamage = true;
+                NPC.life = 1;
+                return false;
+            }
+
+            return true;
         }
 
         #endregion
@@ -129,6 +144,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void OnSpawn(IEntitySource source)
         {
+            NPC.oldPos = new Vector2[5];
             NPC.TargetClosest(false);
             NPC.frame.Y = 2;
             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -152,16 +168,20 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             //非攻击动作，也非动画
             dizzy = -2,
             rest = -1,
+
             //有可能会有破绽的攻击动作
             dive = 0,
             accumulate = 1,
+
             //普通攻击动作
             iceBreath = 2,
             horizontalDash = 3,
-            //二阶段追加攻击动作
             smashDown = 4,
+
+            //二阶段追加攻击动作
             iceThornsTrap = 5,
-            //以下是大师模式专属，特殊攻击动作
+
+            //大师模式专属，特殊攻击动作
             iceTornado = 6,
             iciclesFall = 7
         }
@@ -183,7 +203,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             switch (State)
             {
                 case (int)AIStates.onKillAnim:      //死亡时的动画
-
+                    NPC.Kill();
                     break;
                 case (int)AIStates.onSpawnAnim:      //生成时的动画
                     {
@@ -192,36 +212,39 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             if (Timer == 0)
                             {
                                 //生成动画弹幕
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<BabyIceDragon_OnSpawnAnim>(), 0, 0);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<BabyIceDragon_OnSpawnAnim>(), 0, 0);
                                 NPC.dontTakeDamage = true;
                                 NPC.velocity.Y = -0.2f;
                                 break;
                             }
 
-                            if (Timer == 100)
-                            {
-                                NPC.frame.Y = 0;
-                                NPC.velocity *= 0;
-                                GetMouseCenter(out _, out Vector2 mouseCenter);
-                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
-                            }
-
-                            if (Timer < 110)
+                            if (Timer < 100)
                             {
                                 ChangeFrameNormally();
                                 break;
                             }
 
-                            if (Timer == 110)
+                            if (Timer == 100)
                             {
+                                NPC.frame.Y = 2;
+                                NPC.velocity *= 0;
+                            }
+
+                            if (Timer < 130)
+                                break;
+
+                            if (Timer == 130)
+                            {
+                                NPC.frame.Y = 0;
                                 SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
                                 Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
-                                PunchCameraModifier modifier = new PunchCameraModifier(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 6f, 60, 1000f, "BabyIceDragon");
+                                PunchCameraModifier modifier = new PunchCameraModifier(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
                                 Main.instance.CameraModifiers.Add(modifier);
                             }
 
-                            if (Timer > 110 && Timer < 170)
+                            if (Timer < 170)
                             {
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
                                 if (Timer % 10 == 0)
@@ -264,27 +287,67 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     }
                     break;
                 case (int)AIStates.roaringAnim:         //吼叫
+                    {
+                        do
+                        {
+                            NPC.velocity *= 0.98f;
 
+                            if (Timer == 20)
+                            {
+                                NPC.frame.Y = 2;
+                                NPC.velocity *= 0;
+                            }
+
+                            if (Timer < 40)
+                                break;
+
+                            if (Timer == 40)
+                            {
+                                NPC.frame.Y = 0;
+                                SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
+                                GetMouseCenter(out _, out Vector2 mouseCenter);
+                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                PunchCameraModifier modifier = new PunchCameraModifier(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
+                                Main.instance.CameraModifiers.Add(modifier);
+                            }
+
+                            if (Timer < 80)
+                            {
+                                GetMouseCenter(out _, out Vector2 mouseCenter);
+                                if (Timer % 10 == 0)
+                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
+                                if (Timer % 20 == 0)
+                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+
+                                break;
+                            }
+
+                            ResetStates();
+
+                        } while (false);
+
+                        Timer++;
+                    }
                     break;
                 case (int)AIStates.dizzy:      //原地眩晕
-                    if (Timer < 1)
-                        ResetStates();
+                    {
+                        if (Timer < 1)
+                            ResetStates();
 
-                    NPC.velocity *= 0.96f;
-                    Timer--;
-                    
+                        NPC.velocity *= 0.96f;
+                        Timer--;
+                    }
                     break;
                 case (int)AIStates.rest:        //休息，原地悬停一会
                     {
-                        NPC.velocity.X *= 0.96f;
+                        NPC.velocity.X *= 0.97f;
                         NPC.rotation = NPC.rotation.AngleTowards(0f, 0.08f);
-                        NPC.directionY =( Target.Center.Y - 200 )> NPC.Center.Y ? 1 : -1;
-                        float yLength = Math.Abs(Target.Center.Y-200 - NPC.Center.Y);
+                        NPC.directionY = (Target.Center.Y - 100) > NPC.Center.Y ? 1 : -1;
+                        float yLength = Math.Abs(Target.Center.Y - 100 - NPC.Center.Y);
                         if (yLength > 50)
                             Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6f, 0.14f, 0.1f, 0.96f);
                         else
                             NPC.velocity.Y *= 0.96f;
-
 
                         if (Timer < 0)
                         {
@@ -296,7 +359,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         ChangeFrameNormally();
                     }
                     break;
-                default:
                 case (int)AIStates.dive:      //俯冲攻击，先飞上去再俯冲向玩家，俯冲时如果撞墙会眩晕
                     Dive();
                     break;
@@ -310,7 +372,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 NPC.noGravity = true;
                                 SetDirection();
                                 NPC.directionY = Target.Center.Y > NPC.Center.Y ? 1 : -1;
-                                float yLength = Math.Abs(Target.Center.Y  - NPC.Center.Y);
+                                float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
                                 if (yLength > 50)
                                     Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6f, 0.14f, 0.1f, 0.96f);
                                 else
@@ -341,12 +403,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             }
 
                             //生成冰块弹幕
-                            if (Timer == 110)
+                            if (Timer == 110 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 movePhase = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + NPC.direction * 120, (int)NPC.Center.Y + 20, NPCType<IceCube>());
                                 NPC.netUpdate = true;
                                 NPC.noTileCollide = true;
                                 NPC.noGravity = true;
+                                NPC.netUpdate = true;
                             }
 
                             Vector2 targetDir = (Main.npc[movePhase].Center - NPC.Center).SafeNormalize(Vector2.One);
@@ -377,61 +440,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     }
                     break;
                 case (int)AIStates.iceBreath:      //冰吐息
-                    {
-                        do
-                        {
-                            SetDirection();
-                            NPC.directionY = (Target.Center.Y - 200) > NPC.Center.Y ? 1 : -1;
-                            float yLength = Math.Abs(Target.Center.Y - 200 - NPC.Center.Y);
-                            if (yLength > 50)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4f, 0.14f, 0.1f, 0.96f);
-                            else
-                                NPC.velocity.Y *= 0.96f;
-
-                            if (Math.Abs(Target.Center.X - NPC.Center.X) > 160)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6f, 0.14f, 0.08f, 0.96f);
-                            else
-                                NPC.velocity.X *= 0.98f;
-                            ChangeFrameNormally();
-
-                            if (Timer == 120)
-                            {
-                                SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
-                                GetMouseCenter(out _, out Vector2 mouseCenter2);
-                                for (int i = 0; i < 4; i++)
-                                    IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
-                                    {
-                                        return NPC.Center + (NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30;
-                                    });
-                                Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
-                                Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
-                            }
-
-                            if (Timer < 140)
-                                break;
-
-                            if (Timer < 161)
-                            {
-                                //生成冰吐息弹幕
-                                if (Timer % 5 == 0)
-                                {
-                                    SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, NPC.Center);
-                                    Vector2 targetDir = (Target.Center + Main.rand.NextVector2CircularEdge(30, 30) - NPC.Center).SafeNormalize(Vector2.Zero);
-                                    GetMouseCenter(out _, out Vector2 mouseCenter);
-                                    for (int i = -1; i < 1; i++)
-                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(i * 0.05f) * 10f, ProjectileType<IceBreath>(), 30, 5f);
-                                }
-                                break;
-                            }
-
-                            int restTime = Main.masterMode ? 20 : 40;
-                            HaveARest(restTime);
-                            return;
-
-                        } while (false);
-
-                        Timer++;
-                    }
+                    IceBreath();
                     break;
                 case (int)AIStates.horizontalDash:      //龙车，或者就叫做水平方向冲刺
                     HorizontalDash();
@@ -440,15 +449,25 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     SmashDown();
                     break;
                 case (int)AIStates.iceThornsTrap:       //冰陷阱，吼叫一声并在目标玩家周围放出冰刺NPC
-                    ResetStates();
+                    IceThronsTrap();
                     break;
                 case (int)AIStates.iceTornado:      //简单准备后冲向玩家并在轨迹上留下冰龙卷风一样的东西
                     IceTornado();
                     break;
                 case (int)AIStates.iciclesFall:      //冰雹弹幕攻击，先由下至上吐出一群冰锥，再在玩家头顶随机位置落下冰锥
-                                                     //暂时先不写
+                    IciclesFall();
+                    break;
+                default:
                     ResetStates();
                     break;
+            }
+
+            if (canDrawShadows)
+            {
+                for (int i = 0; i < 4; i++)
+                    NPC.oldPos[i] = NPC.oldPos[i + 1];
+
+                NPC.oldPos[4] = NPC.Center;
             }
         }
 
@@ -465,7 +484,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 case 0:
                 case 3:
                 case 4:
-                    NPC.velocity.Y *= 0.96f;
+                    NPC.velocity.Y *= 0.94f;
                     break;
                 case 1:
                 case 2:
@@ -473,8 +492,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     break;
             }
 
-            if (NPC.velocity.Y < -12)
-                NPC.velocity.Y = -12;
+            if (NPC.velocity.Y < -8)
+                NPC.velocity.Y = -8;
 
             ChangeFrameNormally();
         }
@@ -485,6 +504,26 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             mouseCenter = NPC.Center + targetDir * 30;
         }
 
+        public void SetDirection()
+        {
+            if (Math.Abs(NPC.Center.X - Target.Center.X) < 16)
+                return;
+
+            NPC.direction = NPC.Center.X > Target.Center.X ? -1 : 1;
+            NPC.spriteDirection = NPC.direction;
+        }
+
+        public Vector2 GetDizzyStarCenter()
+        {
+            return NPC.Center + new Vector2(NPC.direction * 18, -20);
+        }
+
+        public void InitCaches()
+        {
+            for (int i = 0; i < 5; i++)
+                NPC.oldPos[i] = NPC.Center;
+        }
+
         #region 冰刺
 
         public void SpawnIceThorns()
@@ -492,20 +531,27 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
-            Point sourceTileCoords = NPC.Bottom.ToTileCoordinates();
-            sourceTileCoords.X += 3;
-
             PunchCameraModifier modifier = new PunchCameraModifier(NPC.Center, new Vector2(0f, 1f), 20f, 6f, 30, 1000f, "BabyIceDragon");
             Main.instance.CameraModifiers.Add(modifier);
 
+            Point sourceTileCoords = NPC.Bottom.ToTileCoordinates();
+            //sourceTileCoords.X += 1;
             for (int i = 0; i < 4; i++)
-                TryMakingSpike(ref sourceTileCoords, 1, 20, i, 1);
-            sourceTileCoords.X -= 6;
+            {
+                TryMakingSpike(ref sourceTileCoords, 1, 20, i * 6, 1, i * 0.2f);
+                sourceTileCoords.X += 2;
+            }
+
+            sourceTileCoords = NPC.Bottom.ToTileCoordinates();
+            //sourceTileCoords.X -= 1;
             for (int i = 0; i < 4; i++)
-                TryMakingSpike(ref sourceTileCoords, -1, 20, i, 1);
+            {
+                TryMakingSpike(ref sourceTileCoords, -1, 20, i * 6, 1, i * 0.2f);
+                sourceTileCoords.X -= 2;
+            }
         }
 
-        private void TryMakingSpike(ref Point sourceTileCoords, int dir, int howMany, int whichOne, int xOffset)
+        private void TryMakingSpike(ref Point sourceTileCoords, int dir, int howMany, int whichOne, int xOffset, float scaleOffect)
         {
             int num = 13;
             int position_X = sourceTileCoords.X + xOffset * dir;
@@ -514,7 +560,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 Vector2 position = new Vector2(position_X * 16 + 8, position_Y * 16 - 8);
                 Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, num, 0f, Main.myPlayer, 0f, 0.1f + Main.rand.NextFloat() * 0.1f + xOffset * 1.1f / howMany);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, num, 0f, Main.myPlayer, 0f, 0.4f + scaleOffect + xOffset * 1.1f / howMany);
             }
         }
 
@@ -548,7 +594,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     position_Y = num5.Value;
             }
 
-            for (int j = 0; j < 20; j++)
+            for (int j = 0; j < 8; j++)
             {
                 if (position_Y < 10)
                     break;
@@ -559,7 +605,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 position_Y--;
             }
 
-            for (int k = 0; k < 20; k++)
+            for (int k = 0; k < 8; k++)
             {
                 if (position_Y > Main.maxTilesY - 10)
                     break;
@@ -575,9 +621,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         #endregion
 
+        #region 状态切换相关
+
         public void ResetStates()
         {
             movePhase = 0;
+            canDrawShadows = false;
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
@@ -589,13 +638,16 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             else
                 phase = NPC.life < (NPC.lifeMax / 2) ? 2 : 1;
 
-            do
+            float oldstate = State;
+            int count = 0;
+            while (count < 10)
             {
+                count++;
                 if (ExchangeState && phase == 2)    //进入2阶段时固定进入吼叫动画
                 {
                     State = (int)AIStates.roaringAnim;
                     ExchangeState = false;
-                    break;
+                    goto Check;
                 }
 
                 //有破绽的行动
@@ -607,10 +659,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         0 => (int)AIStates.dive,
                         _ => (int)AIStates.accumulate
                     };
-
-                    NPC.noTileCollide = true;
-                    NPC.noGravity = true;
-                    break;
+                    goto Check;
                 }
 
                 //特殊行动，大师模式专属
@@ -622,15 +671,22 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         0 => (int)AIStates.iceTornado,
                         _ => (int)AIStates.iciclesFall
                     };
-                    break;
+                    goto Check;
                 }
 
                 //普通行动
                 NormalMove(phase);
 
-            } while (false);
+            Check:
+                if (State == oldstate)
+                    continue;
+                else
+                    break;
+            }
 
-            //State = (int)AIStates.accumulate;
+            //State = (int)AIStates.iciclesFall;
+            NPC.noTileCollide = true;
+            NPC.noGravity = true;
             Timer = 0;
             NPC.TargetClosest(false);
             NPC.netUpdate = true;
@@ -638,6 +694,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public void Dizzy(int dizzyTime)
         {
+            movePhase = 0;
+            canDrawShadows = false;
             Helper.PlayPitched("Icicle/Broken", 0.4f, 0f, NPC.Center);
             SetDirection();
             DizzyStar.Spawn(NPC.Center, -1.57f, dizzyTime, 10, GetDizzyStarCenter);
@@ -666,13 +724,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.netUpdate = true;
         }
 
-        public Vector2 GetDizzyStarCenter()
-        {
-            return NPC.Center + new Vector2(NPC.direction * 18, -20);
-        }
-
         public void HaveARest(int restTime)
         {
+            movePhase = 0;
+            canDrawShadows = false;
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
@@ -686,16 +741,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.netUpdate = true;
         }
 
-        public void SetDirection()
-        {
-            if (Math.Abs(NPC.Center.X - Target.Center.X) < 16)
-                return;
-
-            NPC.direction = NPC.Center.X > Target.Center.X ? -1 : 1;
-            NPC.spriteDirection = NPC.direction;
-        }
-
-        public bool CanSpecialMove(int phase)
+        public static bool CanSpecialMove(int phase)
         {
             if (phase != 2)
                 return false;
@@ -703,27 +749,23 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             return Main.masterMode && Main.rand.NextBool(3);
         }
 
-        /// <summary>
-        /// 普通的动作
-        /// </summary>
         public void NormalMove(int phase)
         {
             //这个switch表达式或许让它的可读性变得更加差了......
             State = phase switch
             {
-                //2阶段
-                2 => Main.rand.Next(4) switch
+                2 => Main.rand.Next(4) switch  //2阶段
                 {
                     0 => (int)AIStates.iceBreath,
                     1 => (int)AIStates.horizontalDash,
                     2 => (int)AIStates.smashDown,
                     _ => (int)AIStates.iceThornsTrap
                 },
-                //一阶段及其他
-                _ => Main.rand.Next(2) switch
+                _ => Main.rand.Next(3) switch  //一阶段及其他
                 {
                     0 => (int)AIStates.iceBreath,
-                    _ => (int)AIStates.horizontalDash
+                    1 => (int)AIStates.horizontalDash,
+                    _ => (int)AIStates.smashDown
                 },
             };
 
@@ -734,15 +776,20 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public bool CanVulnerableMove()
         {
-            //大师模式行动每5次进行一次有破绽动作
-            if (Main.masterMode && NormalMoveCount > 4)
+            //大师模式行动每6次进行一次有破绽动作
+            if (Main.masterMode)
             {
-                NormalMoveCount = 0;
-                return true;
+                if (NormalMoveCount > 5)
+                {
+                    NormalMoveCount = 0;
+                    return true;
+                }
+
+                return false;
             }
 
-            //其他模式每3次动作进行一次
-            if (NormalMoveCount > 2)
+            //其他模式每4次动作进行一次
+            if (NormalMoveCount > 3)
             {
                 NormalMoveCount = 0;
                 return true;
@@ -750,6 +797,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
             return false;
         }
+
+        #endregion
 
         #endregion
 
@@ -787,6 +836,18 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
             if (NPC.spriteDirection != 1)
                 effects = SpriteEffects.FlipHorizontally;
+
+            if (canDrawShadows)
+            {
+                Color color = new Color(43, 255, 198, 100);
+                float scale = NPC.scale;
+                for (int i = 3; i > -1; i--)
+                {
+                    spriteBatch.Draw(mainTex, NPC.oldPos[i] - screenPos, frameBox, color, NPC.rotation, origin, scale, effects, 0f);
+                    color *= 0.5f;
+                    scale *= 0.98f;
+                }
+            }
 
             spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, effects, 0f);
             return false;

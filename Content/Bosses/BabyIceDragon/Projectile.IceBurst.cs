@@ -76,6 +76,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             return Vector2.Distance(Projectile.Center, target.Center) < Length;
         }
 
+        public override bool? CanHitNPC(NPC target)
+        {
+            return Vector2.Distance(Projectile.Center, target.Center) < Length;
+        }
+
         public override bool PreDraw(ref Color lightColor) => false;
     }
 }

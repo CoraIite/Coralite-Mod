@@ -1219,7 +1219,7 @@ namespace Coralite.Core
         public static SoundStyle MoonLord2_NPCDeath62 => SoundID.NPCDeath62;
 
         /// <summary>不知道什么音效，但名字叫做月总</summary>
-        public static SoundStyle MoonLord_NPCKilled10 => SoundID.MoonLord;
+        public static SoundStyle MoonLord => SoundID.MoonLord;
 
         #endregion
         #region BOSS-史莱姆皇后

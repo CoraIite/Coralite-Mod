@@ -5,6 +5,7 @@ using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -18,6 +19,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
     {
         public override string Texture => AssetDirectory.BabyIceDragon + Name;
 
+        public SlotId soundSlotID;
+
         public ref float ExtendTrigger => ref NPC.ai[0];
         public ref float ExtendCount => ref NPC.ai[1];
         public ref float Timer => ref NPC.localAI[0];
@@ -30,10 +33,20 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.width = 68;
             NPC.height = 138;
             NPC.scale = 0.2f;
-            NPC.lifeMax = 250;
+            NPC.lifeMax = 300;
             NPC.knockBackResist = 0f;
+            NPC.defense = 5;
+            NPC.damage = 2;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
+        }
+
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        {
+            NPC.lifeMax = 250 + numPlayers * 100;
+            NPC.defense = 8;
+            if (Main.masterMode)
+                NPC.defense = 10;
         }
 
         public override void AI()
@@ -59,7 +72,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
             if (ExtendCount == 14 && NPC.localAI[2] == 0f)
             {
-                Helper.PlayPitched("Icicle/Burst", 0.4f, 0f, NPC.Center);
+                soundSlotID=Helper.PlayPitched("Icicle/Burst", 0.4f, 0f, NPC.Center);
                 NPC.localAI[2] = 1f;
             }
 
@@ -104,7 +117,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 return;
             }
 
-            //寻找到冰龙宝宝并让它眩晕
+            //寻找到冰龙宝宝并让它眩晕，把爆炸音效给停了
+            if (ExtendCount >= 14)
+                if (SoundEngine.TryGetActiveSound(soundSlotID, out ActiveSound result))
+                    result.Stop();
             (Main.npc[index].ModNPC as BabyIceDragon).Dizzy(240);
         }
 

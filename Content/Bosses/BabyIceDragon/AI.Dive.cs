@@ -1,12 +1,8 @@
-﻿using Coralite.Content.Items.IcicleItems;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
-using System.Runtime.Serialization.Formatters;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
@@ -21,7 +17,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 case 0:     //飞上去的阶段
                     {
-                        if (NPC.Center.Y > (Target.Center.Y - 400))
+                        if (NPC.Center.Y > (Target.Center.Y - 460))
                         {
                             SetDirection();
                             NPC.velocity.X *= 0.97f;
@@ -55,14 +51,16 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if (Timer == 3)
                         {
-                            NPC.velocity = (Target.Center - new Vector2(0, 30) - NPC.Center).SafeNormalize(Vector2.Zero) * 10f;
+                            NPC.velocity = (Target.Center - new Vector2(0, 30) - NPC.Center).SafeNormalize(Vector2.Zero) * 12f;
                             NPC.rotation = NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f);
+                            canDrawShadows = true;
+                            InitCaches();
                         }
 
                         if (Timer < 100)
                         {
                             //生成粒子
-                            if (NPC.Center.Y>(Target.Center.Y-20))
+                            if (NPC.Center.Y > (Target.Center.Y - 20))
                             {
                                 Timer = 100;
                                 NPC.netUpdate = true;
@@ -87,7 +85,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if (Timer < 130)
                         {
-                            NPC.velocity *= 0.97f;
+                            canDrawShadows = false;
+                            NPC.velocity *= 0.95f;
                             NPC.rotation = NPC.rotation.AngleTowards(0f, 0.08f);
                             ChangeFrameNormally();
                             break;

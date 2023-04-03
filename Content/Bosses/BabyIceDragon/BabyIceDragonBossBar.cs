@@ -12,7 +12,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
     public class BabyIceDragonBossBar : ModBossBar
     {
         private int bossHeadIndex = -1;
-        public override string Texture => AssetDirectory.Rediancie + Name;
+        public override string Texture => AssetDirectory.BabyIceDragon + "BIDBossBar";
 
         public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame)
         {

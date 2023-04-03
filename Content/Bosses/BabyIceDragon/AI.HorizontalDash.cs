@@ -17,13 +17,18 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 case 0:
                     {
-                        if (Math.Abs(NPC.Center.Y - Target.Center.Y) > 30 ||
-                            Math.Abs(NPC.Center.X - Target.Center.X) > 260)
+                        float yLength = Math.Abs(NPC.Center.Y - Target.Center.Y);
+                        if (yLength > 32 ||
+                            Math.Abs(NPC.Center.X - Target.Center.X) > 400)
                         {
                             SetDirection();
                             NPC.directionY = Target.Center.Y > NPC.Center.Y ? 1 : -1;
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6f, 0.14f, 0.1f, 0.96f);
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 2f, 0.08f, 0.08f, 0.96f);
+                            if (yLength > 32)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6f, 0.2f, 0.2f, 0.96f);
+                            else
+                                NPC.velocity.Y *= 0.96f;
+
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 8f, 0.25f, 0.25f, 0.96f);
                             ChangeFrameNormally();
 
                             if (Timer > 400)
@@ -41,6 +46,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                         movePhase = 1;
                         NPC.frame.Y = 0;
+                        NPC.velocity *= 0;
                         Timer = 0;
                         NPC.netUpdate = true;
                     }
@@ -50,23 +56,30 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         if (Timer == 20)
                         {
                             NPC.velocity.Y = 0f;
-                            NPC.velocity.X = NPC.direction * 15f;
-                            float factor = (NPC.Center.Y - Target.Center.Y) / 100;
-                            factor = Math.Clamp(factor, -1, 1);
-                            NPC.velocity.RotatedBy(factor * 0.6f);
+                            NPC.velocity.X = NPC.direction * 18f;
+                            canDrawShadows = true;
+                            InitCaches();
+                            SetDirection();
                         }
 
-                        if (Timer < 85 && NPC.direction * (NPC.Center.X - Target.Center.X) > 260)
+                        if (Timer < 30)
+                            break;
+
+                        if (Timer < 85)
                         {
-                            Timer = 85;
+                            //if (Timer % 10 == 0)
+                            //    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(NPC.direction, 0) * 10f, ModContent.ProjectileType<IceBreath>(), 30, 5f);
+                            if (NPC.direction * (NPC.Center.X - Target.Center.X) > 300)
+                                Timer = 85;
                             break;
                         }
 
                         if (Timer > 85)
                         {
-                            NPC.velocity *= 0.97f;
+                            canDrawShadows = false;
+                            NPC.velocity *= 0.93f;
                             ChangeFrameNormally();
-                            if (Timer > 105)
+                            if (Timer > 100)
                                 ResetStates();
                             break;
                         }

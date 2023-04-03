@@ -123,7 +123,7 @@ namespace Coralite.Content.ModPlayers
             if (inWater && Player.ZoneBeach && attempt.common && !attempt.crate)
             {
                 if (Main.rand.NextBool(15))
-                    itemDrop = ModContent.ItemType<NacliteSeedling>();
+                    itemDrop = ItemType<NacliteSeedling>();
             }
         }
 
