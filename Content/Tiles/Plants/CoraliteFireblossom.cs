@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class CoraliteFireblossom : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
+    public class CoraliteFireblossom : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
         public CoraliteFireblossom() : base(AssetDirectory.PlantTiles, 16, 3, ItemID.FireblossomSeeds, ItemID.Fireblossom) { }
 

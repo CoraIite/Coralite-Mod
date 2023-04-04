@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.IcicleItems;
+﻿using Coralite.Content.Items.Icicle;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core;
 using Coralite.Helpers;
@@ -19,18 +19,18 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 case 0:
                     {
-                        if (Vector2.Distance(NPC.Center, Target.Center) > 400)
+                        if (Vector2.Distance(NPC.Center, Target.Center) > 440)
                         {
                             SetDirection();
                             NPC.directionY = (Target.Center.Y - 200) > NPC.Center.Y ? 1 : -1;
                             float yLength = Math.Abs(Target.Center.Y - 200 - NPC.Center.Y);
                             if (yLength > 50)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4f, 0.14f, 0.1f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6f, 0.16f, 0.1f, 0.96f);
                             else
                                 NPC.velocity.Y *= 0.96f;
 
                             if (Math.Abs(Target.Center.X - NPC.Center.X) > 160)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6f, 0.14f, 0.08f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 8f, 0.16f, 0.1f, 0.96f);
                             else
                                 NPC.velocity.X *= 0.98f;
                             ChangeFrameNormally();

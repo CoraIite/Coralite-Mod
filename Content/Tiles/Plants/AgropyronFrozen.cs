@@ -1,5 +1,5 @@
-﻿using Coralite.Content.Items.BotanicalItems.Plants;
-using Coralite.Content.Items.BotanicalItems.Seeds;
+﻿using Coralite.Content.Items.Botanical.Plants;
+using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
@@ -13,7 +13,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class AgropyronFrozen : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
+    public class AgropyronFrozen : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
         public AgropyronFrozen() : base(AssetDirectory.PlantTiles, 24, 3, ItemType<AgropyronSeed>(), ItemType<AgropyronFreezer>()) { }
 

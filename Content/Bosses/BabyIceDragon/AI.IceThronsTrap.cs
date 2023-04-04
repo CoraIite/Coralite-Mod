@@ -7,14 +7,14 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.Audio;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Coralite.Content.Items.IcicleItems;
+using Coralite.Content.Items.Icicle;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
     public partial class BabyIceDragon
     {
-        public void IceThronsTrap()
+        public void IceThornsTrap()
         {
             switch (movePhase)
             {

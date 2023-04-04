@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class CoraliteShiverthorn : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
+    public class CoraliteShiverthorn : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
         public CoraliteShiverthorn() : base(AssetDirectory.PlantTiles, 16, 3, ItemID.MoonglowSeeds, ItemID.Moonglow) { }
 

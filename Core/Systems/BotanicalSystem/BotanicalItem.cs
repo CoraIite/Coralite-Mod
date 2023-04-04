@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.BotanicalItems;
+﻿using Coralite.Content.Items.Botanical;
 using Coralite.Content.Tiles.Plants;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;

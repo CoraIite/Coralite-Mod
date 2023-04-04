@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.RedJadeItems;
+﻿using Coralite.Content.Items.RedJades;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core;
 using Coralite.Core.Systems.YujianSystem;

@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class CoraliteDeathweed : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
+    public class CoraliteDeathweed : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
         public CoraliteDeathweed() : base(AssetDirectory.PlantTiles, 16, 3, ItemID.DeathweedSeeds, ItemID.Deathweed) { }
 

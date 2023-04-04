@@ -26,7 +26,7 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<Items.RedJadeItems.RedJadeToilet>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<Items.RedJades.RedJadeToilet>());
         }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
@@ -82,7 +82,7 @@ namespace Coralite.Content.Tiles.RedJades
 
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
-            player.cursorItemIconID = ModContent.ItemType<Items.RedJadeItems.RedJadeToilet>();
+            player.cursorItemIconID = ModContent.ItemType<Items.RedJades.RedJadeToilet>();
 
             if (Main.tile[i, j].TileFrameX / 18 < 1)
                 player.cursorItemIconReversed = true;

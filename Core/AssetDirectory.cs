@@ -37,15 +37,13 @@
 
         public const string Items = Assets + "Items/";
 
-        /// <summary>
-        /// 默认物品贴图
-        /// </summary>
+        /// <summary> 默认物品贴图 </summary>
         public const string DefaultItem = Items + "DefaultItem";
 
         public const string OtherItems = Items + "Others/";
 
         public const string ShadowItems = Items + "Shadow/";
-        public const string RedJadeItems = Items + "RedJade/";
+        public const string RedJadeItems = Items + "RedJades/";
         public const string IcicleItems = Items + "Icicle/";
         public const string StarsItems = Items + "Stars/";
         public const string DisturbanceItems = Items + "Disturbance/";
@@ -61,7 +59,7 @@
         public const string YujianHulu = Items + "YujianHulu/";
 
         public const string MachineItems = Items + "Machines/";
-        public const string BotanicalItems = Items + "BotanicalItems/";
+        public const string BotanicalItems = Items + "Botanical/";
         public const string Seeds = BotanicalItems + "Seeds/";
         public const string Plants = BotanicalItems + "Plants/";
 
@@ -83,7 +81,7 @@
         public const string Projectiles_Melee = Projectiles + "Projectiles_Melee/";
         public const string Projectiles_Summon = Projectiles + "Projectiles_Summon/";
         public const string Projectiles_Magic = Projectiles + "Projectiles_Magic/";
-        public const string Projectiles_Shoot = Items + "Projectiles_Shoot/";
+        public const string Projectiles_Shoot = Projectiles + "Projectiles_Shoot/";
 
         #endregion
 
@@ -102,7 +100,7 @@
 
         public const string NPCs = Assets + "NPCs/";
 
-        public const string ShadowNPCs = NPCs + "ShadowNPCs/";
+        public const string ShadowNPCs = NPCs + "Shadow/";
         public const string OtherNPC = NPCs + "OtherNPC/";
 
         #endregion

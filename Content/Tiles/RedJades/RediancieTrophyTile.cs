@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.RedJadeItems;
+﻿using Coralite.Content.Items.RedJades;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;

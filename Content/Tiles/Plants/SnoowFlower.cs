@@ -1,5 +1,5 @@
-﻿using Coralite.Content.Items.BotanicalItems.Plants;
-using Coralite.Content.Items.BotanicalItems.Seeds;
+﻿using Coralite.Content.Items.Botanical.Plants;
+using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
 using Coralite.Helpers;
@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class SnoowFlower : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
+    public class SnoowFlower : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
         public SnoowFlower() : base(AssetDirectory.PlantTiles, 28, 6, ItemType<SnoowSeed>(), ItemID.SnowBlock) { }
 

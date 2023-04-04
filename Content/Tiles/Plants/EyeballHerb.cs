@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.BotanicalItems.Seeds;
+﻿using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
 using Coralite.Helpers;
@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class EyeballHerb : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
+    public class EyeballHerb : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
         public EyeballHerb() : base(AssetDirectory.PlantTiles, 24, 4, ModContent.ItemType<EyeballSeed>(), ItemID.Lens,ItemID.BlackLens) { }
 

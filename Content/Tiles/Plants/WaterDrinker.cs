@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.BotanicalItems.Seeds;
+﻿using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
 using Coralite.Helpers;
@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class WaterDrinker : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
+    public class WaterDrinker : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
         public WaterDrinker() : base(AssetDirectory.PlantTiles, 16, 4, ItemType<WaterDrinkerSeed>(), ItemID.WetBomb) { }
 

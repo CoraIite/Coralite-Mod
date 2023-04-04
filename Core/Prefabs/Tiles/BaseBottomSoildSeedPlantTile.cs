@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Core.Prefabs.Tiles
 {
-    public abstract class BaseBottomSoildSeedPlantTile<T> : BasePlantTile where T : BasePlantTileEntity
+    public abstract class BaseBottomSolidSeedPlantTile<T> : BasePlantTile where T : BasePlantTileEntity
     {
         private readonly string _Texture;
         private readonly bool PathHasName;
@@ -15,7 +15,7 @@ namespace Coralite.Core.Prefabs.Tiles
         public readonly int PlantType;
         public readonly int RarePlantType;
 
-        public BaseBottomSoildSeedPlantTile(string texture, short frameWidth, int frameCount, int seedType = 0, int plantType = 0, int rarePlantType = 0, bool pathHasName = false) : base((short)(frameWidth + 2), frameCount)
+        public BaseBottomSolidSeedPlantTile(string texture, short frameWidth, int frameCount, int seedType = 0, int plantType = 0, int rarePlantType = 0, bool pathHasName = false) : base((short)(frameWidth + 2), frameCount)
         {
             _Texture = texture;
             PathHasName = pathHasName;

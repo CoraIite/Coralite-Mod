@@ -23,7 +23,7 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void KillMultiTile(int x, int y, int frameX, int frameY)
         {
-            Item.NewItem(new EntitySource_TileBreak(x, y), x * 16, y * 16, 48, 32, ModContent.ItemType<Items.RedJadeItems.RedJadeTable>());
+            Item.NewItem(new EntitySource_TileBreak(x, y), x * 16, y * 16, 48, 32, ModContent.ItemType<Items.RedJades.RedJadeTable>());
         }
     }
 }

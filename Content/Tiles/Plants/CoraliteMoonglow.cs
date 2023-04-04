@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class CoraliteMoonglow : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
+    public class CoraliteMoonglow : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
         public CoraliteMoonglow() : base(AssetDirectory.PlantTiles, 16, 3, ItemID.MoonglowSeeds, ItemID.Moonglow) { }
 

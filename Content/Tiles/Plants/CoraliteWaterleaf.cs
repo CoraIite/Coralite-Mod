@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class CoraliteWaterleaf : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
+    public class CoraliteWaterleaf : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
         public CoraliteWaterleaf() : base(AssetDirectory.PlantTiles, 16, 3, ItemID.WaterleafSeeds, ItemID.Waterleaf) { }
 

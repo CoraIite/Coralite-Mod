@@ -1,6 +1,6 @@
-﻿using Coralite.Content.Items.BotanicalItems.Seeds;
+﻿using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Content.Items.Placeable;
-using Coralite.Content.Items.ShadowItems;
+using Coralite.Content.Items.Shadow;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;

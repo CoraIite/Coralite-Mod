@@ -1,5 +1,5 @@
-﻿using Coralite.Content.Items.BotanicalItems.Seeds;
-using Coralite.Content.Items.RedJadeItems;
+﻿using Coralite.Content.Items.Botanical.Seeds;
+using Coralite.Content.Items.RedJades;
 using Coralite.Content.UI;
 using Microsoft.Xna.Framework;
 using System;

@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class CoraliteDaybloom : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
+    public class CoraliteDaybloom : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
         public CoraliteDaybloom() : base(AssetDirectory.PlantTiles, 16, 3, ItemID.DaybloomSeeds, ItemID.Daybloom) { }
 

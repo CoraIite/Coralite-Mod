@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Coralite.Content.Items.IcicleItems;
+using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
@@ -449,7 +449,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     SmashDown();
                     break;
                 case (int)AIStates.iceThornsTrap:       //冰陷阱，吼叫一声并在目标玩家周围放出冰刺NPC
-                    IceThronsTrap();
+                    IceThornsTrap();
                     break;
                 case (int)AIStates.iceTornado:      //简单准备后冲向玩家并在轨迹上留下冰龙卷风一样的东西
                     IceTornado();
@@ -551,7 +551,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             }
         }
 
-        private void TryMakingSpike(ref Point sourceTileCoords, int dir, int howMany, int whichOne, int xOffset, float scaleOffect)
+        private void TryMakingSpike(ref Point sourceTileCoords, int dir, int howMany, int whichOne, int xOffset, float scaleOffset)
         {
             int num = 13;
             int position_X = sourceTileCoords.X + xOffset * dir;
@@ -560,7 +560,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 Vector2 position = new Vector2(position_X * 16 + 8, position_Y * 16 - 8);
                 Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, num, 0f, Main.myPlayer, 0f, 0.4f + scaleOffect + xOffset * 1.1f / howMany);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, num, 0f, Main.myPlayer, 0f, 0.4f + scaleOffset + xOffset * 1.1f / howMany);
             }
         }
 
@@ -638,7 +638,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             else
                 phase = NPC.life < (NPC.lifeMax / 2) ? 2 : 1;
 
-            float oldstate = State;
+            float oldState = State;
             int count = 0;
             while (count < 10)
             {
@@ -678,7 +678,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 NormalMove(phase);
 
             Check:
-                if (State == oldstate)
+                if (State == oldState)
                     continue;
                 else
                     break;

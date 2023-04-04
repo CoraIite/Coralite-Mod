@@ -1,5 +1,5 @@
-﻿using Coralite.Content.Items.BotanicalItems.Plants;
-using Coralite.Content.Items.BotanicalItems.Seeds;
+﻿using Coralite.Content.Items.Botanical.Plants;
+using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
 using Coralite.Helpers;
@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class TreeJoke : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
+    public class TreeJoke : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
         public TreeJoke() : base(AssetDirectory.PlantTiles, 16, 2, ItemType<TreeJokeSeed>(), ItemType<WoodStick>(), ItemID.SlimeStaff) { }
 

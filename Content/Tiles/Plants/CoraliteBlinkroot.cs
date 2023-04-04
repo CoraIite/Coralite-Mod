@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class CoraliteBlinkroot : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
+    public class CoraliteBlinkroot : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
         public CoraliteBlinkroot() : base(AssetDirectory.PlantTiles, 16, 3, ItemID.BlinkrootSeeds, ItemID.Blinkroot) { }
 

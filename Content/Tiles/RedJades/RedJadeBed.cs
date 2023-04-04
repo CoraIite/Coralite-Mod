@@ -43,7 +43,7 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 32, ModContent.ItemType<Items.RedJadeItems.RedJadeBed>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 32, ModContent.ItemType<Items.RedJades.RedJadeBed>());
         }
 
         public override bool RightClick(int i, int j)
@@ -102,7 +102,7 @@ namespace Coralite.Content.Tiles.RedJades
             {
                 player.noThrow = 2;
                 player.cursorItemIconEnabled = true;
-                player.cursorItemIconID = ModContent.ItemType<Items.RedJadeItems.RedJadeBed>();
+                player.cursorItemIconID = ModContent.ItemType<Items.RedJades.RedJadeBed>();
             }
         }
     }

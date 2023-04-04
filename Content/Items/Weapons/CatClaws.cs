@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.IcicleItems;
-using Coralite.Content.Particles;
+﻿using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
@@ -28,7 +27,7 @@ namespace Coralite.Content.Items.Weapons
         public int comboBoost = 0;
         public int count = 0;
         public bool rightClick = false;
-        public bool cancount = false;
+        public bool canCount = false;
         public bool reinforced = false;
 
         public override void SetStaticDefaults()
@@ -61,7 +60,7 @@ namespace Coralite.Content.Items.Weapons
 
         public override void HoldItem(Player player)
         {
-            if (!cancount)
+            if (!canCount)
                 return;
             count++;
             if (count == 60)
@@ -81,7 +80,7 @@ namespace Coralite.Content.Items.Weapons
 
                 count = 0;
                 reinforced = false;
-                cancount = false;
+                canCount = false;
             }
 
         }
@@ -102,7 +101,7 @@ namespace Coralite.Content.Items.Weapons
             {
                 Projectile.NewProjectile(source, position, velocity, type, (int)(damage * 1.5f), knockback, player.whoAmI, -1);
                 reinforced = false;
-                cancount = true;
+                canCount = true;
                 comboBoost = 0;
                 count = 0;
 
@@ -126,7 +125,7 @@ namespace Coralite.Content.Items.Weapons
                     case 2:
                         Projectile.NewProjectile(source, position, velocity, type, damage * 2, 3, player.whoAmI, 5);
                         comboBoost = 0;
-                        cancount = false;
+                        canCount = false;
                         reinforced = false;
                         count = 0;
                         return false;
@@ -134,14 +133,14 @@ namespace Coralite.Content.Items.Weapons
 
                 SoundEngine.PlaySound(SoundID.Item1, player.Center);
                 comboBoost++;
-                cancount = true;
+                canCount = true;
                 reinforced = false;
                 count = 0;
                 return false;
             }
 
             count = 0;
-            cancount = false;
+            canCount = false;
             switch (comboNormal)
             {
                 default:

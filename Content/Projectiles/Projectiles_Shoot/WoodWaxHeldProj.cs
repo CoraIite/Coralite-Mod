@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
+using Microsoft.Xna.Framework;
+using Terraria;
 
 namespace Coralite.Content.Projectiles.Projectiles_Shoot
 {
-    internal class WoodWaxHeldProj
+    public class WoodWaxHeldProj : BaseGunHeldProj
     {
+        public WoodWaxHeldProj() : base(0.6f, 8, AssetDirectory.Weapons_Shoot + "WoodWax", true) { }
+
+        public override void ModifyAI(float factor)
+        {
+            Lighting.AddLight(Projectile.Center, new Vector3(0.1f, 0.6f, 0.1f));
+        }
     }
 }

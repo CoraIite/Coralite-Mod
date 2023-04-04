@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.RedJadeItems;
+﻿using Coralite.Content.Items.RedJades;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.HuluEffects;
 using Coralite.Helpers;

@@ -11,7 +11,7 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void SetStaticDefaults()
         {
-            this.CandlePrefab(ModContent.ItemType<Items.RedJadeItems.RedJadeCandle>(), "赤玉桌灯", DustID.GemRuby, Coralite.Instance.RedJadeRed);
+            this.CandlePrefab(ModContent.ItemType<Items.RedJades.RedJadeCandle>(), "赤玉桌灯", DustID.GemRuby, Coralite.Instance.RedJadeRed);
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

@@ -5,7 +5,7 @@ using Coralite.Helpers;
 using System;
 using Terraria.Audio;
 using Microsoft.Xna.Framework;
-using Coralite.Content.Items.IcicleItems;
+using Coralite.Content.Items.Icicle;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

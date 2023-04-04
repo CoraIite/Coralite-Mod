@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.BotanicalItems.Plants;
+﻿using Coralite.Content.Items.Botanical.Plants;
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Terraria;

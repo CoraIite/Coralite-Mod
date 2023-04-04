@@ -16,7 +16,7 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void SetStaticDefaults()
         {
-            this.ChestPrefab(DustID.GemRuby, ModContent.ItemType<Items.RedJadeItems.RedJadeChest>(), "赤玉箱", Coralite.Instance.RedJadeRed, "赤玉箱", MapChestName);
+            this.ChestPrefab(DustID.GemRuby, ModContent.ItemType<Items.RedJades.RedJadeChest>(), "赤玉箱", Coralite.Instance.RedJadeRed, "赤玉箱", MapChestName);
         }
 
         public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
@@ -152,7 +152,7 @@ namespace Coralite.Content.Tiles.RedJades
                 player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "赤玉箱";
                 if (player.cursorItemIconText == "赤玉箱")
                 {
-                    player.cursorItemIconID = ModContent.ItemType<Items.RedJadeItems.RedJadeChest>();
+                    player.cursorItemIconID = ModContent.ItemType<Items.RedJades.RedJadeChest>();
 
                     player.cursorItemIconText = "";
                 }

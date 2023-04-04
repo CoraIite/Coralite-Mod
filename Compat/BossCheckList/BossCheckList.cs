@@ -16,10 +16,10 @@ namespace Coralite.Compat.BossCheckList
                 List<int> RediancieCollection = new List<int>()
                 {
                     //ItemType<Content.Items.RedJadeItems.RedJade>(),
-                    ItemType<Content.Items.RedJadeItems.RediancieBossBag>(),
-                    ItemType<Content.Items.RedJadeItems.RedJadePendant>(),
-                    ItemType<Content.Items.RedJadeItems.RediancieRelic>(),
-                    ItemType<Content.Items.RedJadeItems.RediancieTrophy>()
+                    ItemType<Content.Items.RedJades.RediancieBossBag>(),
+                    ItemType<Content.Items.RedJades.RedJadePendant>(),
+                    ItemType<Content.Items.RedJades.RediancieRelic>(),
+                    ItemType<Content.Items.RedJades.RediancieTrophy>()
                 };
 
                 string RediancieInfo = "一块奇异的巨石，通过不稳定的红色能量来驱动自身。";

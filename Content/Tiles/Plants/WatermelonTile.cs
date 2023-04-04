@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.BotanicalItems.Seeds;
+﻿using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
@@ -12,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Tiles.Plants
 {
-    public class WatermelonTile : BaseBottomSoildSeedPlantTile<NormalPlantTileEntity>
+    public class WatermelonTile : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
         public WatermelonTile() : base(AssetDirectory.PlantTiles, 30, 4, ItemType<WatermelonSeed>(), ItemType<Watermelon>()) { }
 

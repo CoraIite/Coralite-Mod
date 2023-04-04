@@ -6,7 +6,7 @@ namespace Coralite.Content.Tiles.RedJades
 {
     public class RediancieRelic : BaseBossRelicTile
     {
-        public RediancieRelic() : base(ModContent.ItemType<Items.RedJadeItems.RediancieRelic>()) { }
+        public RediancieRelic() : base(ModContent.ItemType<Items.RedJades.RediancieRelic>()) { }
 
         public override string RelicTextureName => AssetDirectory.RedJadeTiles + Name;
     }

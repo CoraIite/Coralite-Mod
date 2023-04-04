@@ -1,5 +1,5 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
-using Coralite.Content.Items.RedJadeItems;
+using Coralite.Content.Items.RedJades;
 using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
