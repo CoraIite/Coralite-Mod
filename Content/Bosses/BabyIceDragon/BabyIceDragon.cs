@@ -70,8 +70,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.width = 64;
             NPC.height = 40;
             NPC.damage = 35;
-            NPC.defense = 10;
-            NPC.lifeMax = 4000;
+            NPC.defense = 6;
+            NPC.lifeMax = 3800;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 10f;
@@ -86,14 +86,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(4320 * bossLifeScale) + numPlayers * 1000;
-            NPC.damage = 40;
-            NPC.defense = 12;
+            NPC.lifeMax = (int)(4120 * bossLifeScale) + numPlayers * 900;
+            NPC.damage = 37;
+            NPC.defense = 8;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = (int)(5000 * bossLifeScale) + numPlayers * 1800;
-                NPC.damage = 45;
+                NPC.lifeMax = (int)(4800 * bossLifeScale) + numPlayers * 1600;
+                NPC.damage = 40;
             }
         }
 
@@ -194,9 +194,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)//没有玩家存活时离开
             {
                 State = -1;
-                NPC.velocity.X *= 1.02f;
-                NPC.velocity.Y -= 0.04f;
-                NPC.EncourageDespawn(10);
+                NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
+                canDrawShadows = false;
+                NPC.velocity.X *= 0.98f;
+                FlyUp();
+                NPC.EncourageDespawn(30);
                 return;
             }
 
@@ -332,7 +334,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 case (int)AIStates.dizzy:      //原地眩晕
                     {
                         if (Timer < 1)
-                            ResetStates();
+                            HaveARest(20);
 
                         NPC.velocity *= 0.96f;
                         Timer--;
@@ -342,7 +344,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     {
                         NPC.velocity.X *= 0.97f;
                         NPC.rotation = NPC.rotation.AngleTowards(0f, 0.08f);
-                        NPC.directionY = (Target.Center.Y - 100) > NPC.Center.Y ? 1 : -1;
+                        NPC.directionY = (Target.Center.Y - 150) > NPC.Center.Y ? 1 : -1;
                         float yLength = Math.Abs(Target.Center.Y - 100 - NPC.Center.Y);
                         if (yLength > 50)
                             Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6f, 0.14f, 0.1f, 0.96f);
@@ -367,7 +369,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         ChangeFrameNormally();
                         do
                         {
-                            if (Timer < 80)
+                            if (Timer < 50)
                             {
                                 NPC.noGravity = true;
                                 SetDirection();
@@ -383,7 +385,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 break;
                             }
 
-                            if (Timer == 92)
+                            if (Timer == 62)
                             {
                                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                                 GetMouseCenter(out _, out Vector2 mouseCenter2);
@@ -396,14 +398,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                     });
                             }
 
-                            if (Timer < 110)
+                            if (Timer < 80)
                             {
                                 NPC.velocity *= 0.92f;
                                 break;
                             }
 
                             //生成冰块弹幕
-                            if (Timer == 110 && Main.netMode != NetmodeID.MultiplayerClient)
+                            if (Timer == 80 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 movePhase = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + NPC.direction * 120, (int)NPC.Center.Y + 20, NPCType<IceCube>());
                                 NPC.netUpdate = true;
@@ -432,7 +434,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 Main.npc[npcIndex].ai[0] = 1;
                             }
 
-                            if (Timer > 1000)
+                            if (Timer > 900)
                                 ResetStates();
                         } while (false);
 
@@ -488,7 +490,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     break;
                 case 1:
                 case 2:
-                    NPC.velocity.Y -= 0.4f;
+                    NPC.velocity.Y -= 0.7f;
                     break;
             }
 
@@ -553,14 +555,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         private void TryMakingSpike(ref Point sourceTileCoords, int dir, int howMany, int whichOne, int xOffset, float scaleOffset)
         {
-            int num = 13;
             int position_X = sourceTileCoords.X + xOffset * dir;
             int position_Y = TryMakingSpike_FindBestY(ref sourceTileCoords, position_X);
             if (WorldGen.ActiveAndWalkableTile(position_X, position_Y))
             {
                 Vector2 position = new Vector2(position_X * 16 + 8, position_Y * 16 - 8);
                 Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, num, 0f, Main.myPlayer, 0f, 0.4f + scaleOffset + xOffset * 1.1f / howMany);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, 11, 0f, Main.myPlayer, 0f, 0.4f + scaleOffset + xOffset * 1.1f / howMany);
             }
         }
 
@@ -684,7 +685,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     break;
             }
 
-            //State = (int)AIStates.iciclesFall;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
             Timer = 0;
@@ -776,10 +776,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public bool CanVulnerableMove()
         {
-            //大师模式行动每6次进行一次有破绽动作
+            //大师模式行动每7次进行一次有破绽动作
             if (Main.masterMode)
             {
-                if (NormalMoveCount > 5)
+                if (NormalMoveCount > 6)
                 {
                     NormalMoveCount = 0;
                     return true;
@@ -788,8 +788,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 return false;
             }
 
-            //其他模式每4次动作进行一次
-            if (NormalMoveCount > 3)
+            //其他模式每5次动作进行一次
+            if (NormalMoveCount > 4)
             {
                 NormalMoveCount = 0;
                 return true;

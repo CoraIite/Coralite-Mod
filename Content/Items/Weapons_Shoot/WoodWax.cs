@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Weapons_Shoot
 
         public override void SetDefaults()
         {
-            Item.damage = 20;
+            Item.damage = 19;
             Item.useTime = 26;
             Item.useAnimation = 26;
             Item.knockBack = 4;
@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Weapons_Shoot
                 {
                     Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
                     for (int i = 0; i < 3; i++)
-                        Projectile.NewProjectile(source, player.Center, targetDir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(6f, 8f), ProjectileType<WoodWaxBullet>(), damage * 5 / 12, knockback / 2, player.whoAmI);
+                        Projectile.NewProjectile(source, player.Center, targetDir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(6f, 8f), ProjectileType<WoodWaxBullet>(), (int)(damage * (5 / 12f)), knockback / 2, player.whoAmI);
 
                     return false;
                 }

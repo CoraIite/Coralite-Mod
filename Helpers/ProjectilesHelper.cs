@@ -100,7 +100,7 @@ namespace Coralite.Helpers
             }
         }
 
-        public static void GetMyProjIndexWhihModProj<T>(Projectile Projectile, out int index, out int totalIndexesInGroup) where T : ModProjectile
+        public static void GetMyProjIndexWithModProj<T>(Projectile Projectile, out int index, out int totalIndexesInGroup) where T : ModProjectile
         {
             index = 0;
             totalIndexesInGroup = 0;

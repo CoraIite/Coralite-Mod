@@ -11,6 +11,7 @@ namespace Coralite.Core.Prefabs.Projectiles
     {
         protected readonly float heldPositionX;
         protected readonly float recoilAngle;
+        protected readonly float recoilLength;
         private readonly string TexturePath;
         private readonly bool PathHasName;
 
@@ -20,6 +21,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected ref float TargetRot => ref Projectile.ai[0];
         /// <summary> 总时间 </summary>
         protected ref float MaxTime => ref Projectile.ai[1];
+
+        protected ref float HeldPositionX => ref Projectile.localAI[0];
 
         public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
 
@@ -33,10 +36,11 @@ namespace Coralite.Core.Prefabs.Projectiles
         public override bool? CanDamage() => false;
         public override bool ShouldUpdatePosition() => false;
 
-        protected BaseGunHeldProj(float recoilAngle,float heldPositionX, string texturePath, bool pathHasName = false)
+        protected BaseGunHeldProj(float recoilAngle,float heldPositionX,float recoilLength, string texturePath, bool pathHasName = false)
         {
             this.recoilAngle = recoilAngle;
             this.heldPositionX = heldPositionX;
+            this.recoilLength = recoilLength;
             TexturePath = texturePath;
             PathHasName = pathHasName;
         }
@@ -64,24 +68,26 @@ namespace Coralite.Core.Prefabs.Projectiles
                     TargetRot = 0.0001f;
             }
 
+            HeldPositionX = heldPositionX;
             Projectile.netUpdate = true;
         }
 
         /// <summary>
-        /// 获取曲线，默认为 x * sinx 的曲线，返回值从0到1再到0
+        /// 获取曲线，默认为 x * sin(x * x) 的曲线，返回值从0到1再到0
         /// 哦！数学魔法！
         /// </summary>
         /// <returns></returns>
         public virtual float Ease()
         {
-            float x = 3.141f * Projectile.timeLeft / MaxTime;
-            return x * x * MathF.Sin(x) / 3.945f;
+            float x = 1.772f * Projectile.timeLeft / MaxTime;
+            return x * MathF.Sin(x * x) / 1.3076f;
         }
 
         public virtual void ApplyRecoil(float factor)
         {
             Projectile.rotation = TargetRot - Owner.direction * factor * recoilAngle;
-            Projectile.Center = Owner.Center + Owner.direction * Projectile.rotation.ToRotationVector2() * heldPositionX;
+            HeldPositionX = heldPositionX + factor * recoilLength;
+            Projectile.Center = Owner.Center + Owner.direction * Projectile.rotation.ToRotationVector2() *HeldPositionX;
         }
 
         public virtual void ModifyAI(float factor) { }
@@ -89,7 +95,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void AfterAI(float factor)
         {
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemRotation = Projectile.rotation;
+            Owner.itemRotation = Projectile.rotation + Owner.direction * 0.3f;
         }
 
         public override bool PreDraw(ref Color lightColor)

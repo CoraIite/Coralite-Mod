@@ -25,12 +25,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             NPC.directionY = (Target.Center.Y - 200) > NPC.Center.Y ? 1 : -1;
                             float yLength = Math.Abs(Target.Center.Y - 200 - NPC.Center.Y);
                             if (yLength > 50)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6f, 0.16f, 0.1f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 8f, 0.18f, 0.2f, 0.96f);
                             else
                                 NPC.velocity.Y *= 0.96f;
 
-                            if (Math.Abs(Target.Center.X - NPC.Center.X) > 160)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 8f, 0.16f, 0.1f, 0.96f);
+                            if (Math.Abs(Target.Center.X - NPC.Center.X) > 200)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 16f, 0.3f, 0.25f, 0.96f);
                             else
                                 NPC.velocity.X *= 0.98f;
                             ChangeFrameNormally();
@@ -40,6 +40,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             break;
                         }
 
+                        SetDirection();
                         movePhase = 1;
                         Timer = 0;
                         NPC.netUpdate = true;
@@ -48,7 +49,24 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     break;
                 case 1:
                     {
-                        if (Timer == 20)
+                        ChangeFrameNormally();
+                        if (Vector2.Distance(NPC.Center, Target.Center) > 200)
+                        {
+                            SetDirection();
+                            NPC.directionY = (Target.Center.Y - 200) > NPC.Center.Y ? 1 : -1;
+                            float yLength = Math.Abs(Target.Center.Y - 200 - NPC.Center.Y);
+                            if (yLength > 50)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 3f, 0.14f, 0.1f, 0.96f);
+                            else
+                                NPC.velocity.Y *= 0.96f;
+
+                            if (Math.Abs(Target.Center.X - NPC.Center.X) > 160)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 3f, 0.14f, 0.1f, 0.96f);
+                            else
+                                NPC.velocity.X *= 0.98f;
+                        }
+
+                        if (Timer == 10)
                         {
                             SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                             GetMouseCenter(out _, out Vector2 mouseCenter2);
@@ -61,10 +79,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
                         }
 
-                        if (Timer < 40)
+                        if (Timer < 30)
                             break;
 
-                        if (Timer < 56)
+                        if (Timer < 41)
                         {
                             //生成冰吐息弹幕
                             if (Timer % 5 == 0)
@@ -79,7 +97,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             break;
                         }
 
-                        int restTime = Main.masterMode ? 20 : 40;
+                        int restTime = Main.masterMode ? 10 : 30;
                         HaveARest(restTime);
                         return;
                     }

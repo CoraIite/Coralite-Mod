@@ -89,11 +89,11 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
             Rectangle source = mainTex.Frame();
             Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
-            float scale = 1.6f + yujianProj.trailCacheLenth * 0.015f;
+            float scale = 1.6f + yujianProj.trailCacheLength * 0.015f;
 
-            for (int i = yujianProj.trailCacheLenth - 1; i > 0; i -= 3)
+            for (int i = yujianProj.trailCacheLength - 1; i > 0; i -= 3)
             {
-                Color shadowColor = Color.Lerp(yujianProj.color1, yujianProj.color2, (float)i / yujianProj.trailCacheLenth);
+                Color shadowColor = Color.Lerp(yujianProj.color1, yujianProj.color2, (float)i / yujianProj.trailCacheLength);
                 int a = 20 + i * 6;
                 if (a >255)
                     a = 255;

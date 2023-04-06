@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.Icicle
             Item.useTime = 14;
             Item.useAnimation = 14;
             Item.knockBack = 3f;
-            Item.mana = 10;
+            Item.mana = 16;
             Item.crit = 0;
             Item.reuseDelay = 0;
 

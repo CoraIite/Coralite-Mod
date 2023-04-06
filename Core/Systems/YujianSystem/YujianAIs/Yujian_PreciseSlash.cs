@@ -57,7 +57,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                 canDamage = true;
                 StartSlash(Projectile, targetAngle);
                 yujianProj.InitTrailCaches();
-                trail?.SetVetical(StartAngle < 0);      //开始角度为正时设为false
+                trail?.SetVertical(StartAngle < 0);      //开始角度为正时设为false
                 SoundEngine.PlaySound(SoundID.Item1, Projectile.Center);
             }
         }
@@ -87,7 +87,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             {
                 return Color.Lerp(yujianProj.color1, yujianProj.color2, factor.X) * 0.8f;
             },
-            filpVertical: StartAngle < 0
+            flipVertical: StartAngle < 0
             );
 
             trail.Positions = yujianProj.Projectile.oldPos;
@@ -97,7 +97,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
         public override void DrawPrimitives(BaseYujianProj yujianProj)
         {
             int time = StartTime - (int)yujianProj.Timer;
-            if (!canSlash || time > SlashTime || time < yujianProj.trailCacheLenth || smoother.Smoother(time, SlashTime) > 0.99f)
+            if (!canSlash || time > SlashTime || time < yujianProj.trailCacheLength || smoother.Smoother(time, SlashTime) > 0.99f)
                 return;
 
             Effect effect = Filters.Scene["SimpleTrail"].GetShader().Shader;

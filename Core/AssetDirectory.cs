@@ -42,6 +42,7 @@
 
         public const string OtherItems = Items + "Others/";
 
+        public const string MushroomItems = Items + "Mushroom/";
         public const string ShadowItems = Items + "Shadow/";
         public const string RedJadeItems = Items + "RedJades/";
         public const string IcicleItems = Items + "Icicle/";
@@ -88,6 +89,8 @@
         #region 物块部分！
 
         public const string Tiles = Assets + "Tiles/";
+
+        public const string MushroomTiles = Tiles + "Mushroom/";
 
         public const string PlantTiles = Tiles + "Plants/";
         public const string TreeTiles = Tiles + "Trees/";

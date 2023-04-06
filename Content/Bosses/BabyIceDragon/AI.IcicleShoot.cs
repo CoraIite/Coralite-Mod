@@ -21,9 +21,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 case 0:    // 追踪玩家
                     {
-                        bool lowerThanTarget = NPC.Center.Y > (Target.Center.Y - 200);
+                        bool lowerThanTarget = NPC.Center.Y > (Target.Center.Y - 100);
                         float xLength = Math.Abs(NPC.Center.X - Target.Center.X);
-                        if (lowerThanTarget || xLength > 300)
+                        if (lowerThanTarget || xLength > 500)
                         {
                             SetDirection();
                             if (lowerThanTarget)
@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 ChangeFrameNormally();
                             }
                             if (xLength > 300)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6, 0.2f, 0.2f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 8, 0.24f, 0.24f, 0.96f);
                             else
                                 NPC.velocity.X *= 0.96f;
 
@@ -81,7 +81,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                             if (Timer % 12 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir * 10, ModContent.ProjectileType<IcicleProj_Hostile>(), 30, 8f);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir * 12, ModContent.ProjectileType<IcicleProj_Hostile>(), 13, 8f);
                                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                             }
                             break;
@@ -109,11 +109,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             Main.instance.CameraModifiers.Add(modifier);
                         }
 
-                        if (Timer % 10 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                        if (Timer % 6 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile projectile= Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), Target.Center+new Vector2(Main.rand.Next(-100,100),-500), 
-                                Vector2.Zero, ModContent.ProjectileType<IcicleFalling_Hostile>(), 30, 8f);
-                            projectile.velocity = (Target.Center + Main.rand.NextVector2Circular(40, 40) - projectile.Center).SafeNormalize(Vector2.Zero) * 10;
+                                Vector2.Zero, ModContent.ProjectileType<IcicleFalling_Hostile>(), 13, 8f);
+                            projectile.velocity = (Target.Center + Main.rand.NextVector2Circular(40, 40) - projectile.Center).SafeNormalize(Vector2.Zero) * 12;
                             projectile.netUpdate = true;
                         }
 

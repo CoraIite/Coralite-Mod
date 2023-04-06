@@ -51,7 +51,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if (Timer == 3)
                         {
-                            NPC.velocity = (Target.Center - new Vector2(0, 30) - NPC.Center).SafeNormalize(Vector2.Zero) * 12f;
+                            NPC.velocity = (Target.Center - new Vector2(0, 30) - NPC.Center).SafeNormalize(Vector2.Zero) * 13f;
                             NPC.rotation = NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f);
                             canDrawShadows = true;
                             InitCaches();
@@ -75,8 +75,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 Tile tile = Framing.GetTileSafely(position);
                                 if (tile.HasSolidTile())
                                 {
-                                    int dizzyTime = Main.masterMode ? 180 : 300;
-                                    Dizzy(dizzyTime);
+                                    Dizzy(360);
                                     return;
                                 }
                             }

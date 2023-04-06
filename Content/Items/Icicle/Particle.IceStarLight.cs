@@ -23,7 +23,6 @@ namespace Coralite.Content.Items.Icicle
          {
             effect = new BasicEffect(Main.instance.GraphicsDevice);
             effect.VertexColorEnabled = true;
-            //effect.TextureEnabled = true;
          });
       }
 

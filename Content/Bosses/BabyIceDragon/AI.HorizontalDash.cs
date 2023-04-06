@@ -18,17 +18,22 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 case 0:
                     {
                         float yLength = Math.Abs(NPC.Center.Y - Target.Center.Y);
+                        float xLength = Math.Abs(NPC.Center.X - Target.Center.X);
                         if (yLength > 32 ||
-                            Math.Abs(NPC.Center.X - Target.Center.X) > 400)
+                            xLength > 350)
                         {
                             SetDirection();
                             NPC.directionY = Target.Center.Y > NPC.Center.Y ? 1 : -1;
                             if (yLength > 32)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6f, 0.2f, 0.2f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 8f, 0.2f, 0.3f, 0.96f);
                             else
                                 NPC.velocity.Y *= 0.96f;
 
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 8f, 0.25f, 0.25f, 0.96f);
+                            if (xLength > 250)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 16f, 0.25f, 0.25f, 0.96f);
+                            else
+                                NPC.velocity.X *= 0.96f;
+
                             ChangeFrameNormally();
 
                             if (Timer > 400)
@@ -53,7 +58,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     break;
                 case 1:
                     {
-                        if (Timer == 20)
+                        if (Timer == 10)
                         {
                             NPC.velocity.Y = 0f;
                             NPC.velocity.X = NPC.direction * 18f;
@@ -62,24 +67,24 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             SetDirection();
                         }
 
-                        if (Timer < 30)
+                        if (Timer < 35)
                             break;
 
-                        if (Timer < 85)
+                        if (Timer < 75)
                         {
                             //if (Timer % 10 == 0)
                             //    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(NPC.direction, 0) * 10f, ModContent.ProjectileType<IceBreath>(), 30, 5f);
-                            if (NPC.direction * (NPC.Center.X - Target.Center.X) > 300)
-                                Timer = 85;
+                            if (Math.Abs(NPC.Center.X - Target.Center.X) > 240)
+                                Timer = 75;
                             break;
                         }
 
-                        if (Timer > 85)
+                        if (Timer > 75)
                         {
                             canDrawShadows = false;
                             NPC.velocity *= 0.93f;
                             ChangeFrameNormally();
-                            if (Timer > 100)
+                            if (Timer > 85)
                                 ResetStates();
                             break;
                         }

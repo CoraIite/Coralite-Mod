@@ -26,8 +26,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override void AI()
         {
             Projectile.velocity.Y -= 0.08f;
-            if (Projectile.velocity.Y < -4)
-                Projectile.velocity.Y = -4;
+            if (Projectile.velocity.Y < -16)
+                Projectile.velocity.Y = -16;
 
             if (Projectile.timeLeft < 40)
                 Projectile.velocity.X *= 0.98f;

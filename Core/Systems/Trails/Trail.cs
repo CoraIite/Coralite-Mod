@@ -52,13 +52,13 @@ namespace Coralite.Core.Systems.Trails
         /// <param name="tip">尖端如何处理</param>
         /// <param name="trailWidthFunction">宽度委托</param>
         /// <param name="trailColorFunction">颜色委托</param>
-        public Trail(GraphicsDevice device, int maxPointCount, ITrailTip tip, TrailWidthFunction trailWidthFunction, TrailColorFunction trailColorFunction, bool filpVertical = false)
+        public Trail(GraphicsDevice device, int maxPointCount, ITrailTip tip, TrailWidthFunction trailWidthFunction, TrailColorFunction trailColorFunction, bool flipVertical = false)
         {
             this.tip = tip ?? new NoTip();
             this.maxPointCount = maxPointCount;
             this.trailWidthFunction = trailWidthFunction;
             this.trailColorFunction = trailColorFunction;
-            this.filpVertical = filpVertical;
+            this.filpVertical = flipVertical;
 
             /* A---B---C
              * |    / |    / |
@@ -244,7 +244,7 @@ namespace Coralite.Core.Systems.Trails
         /// <summary>
         /// 竖直方向上进行翻转
         /// </summary>
-        public void SetVetical(bool filpVertical)
+        public void SetVertical(bool filpVertical)
         {
             this.filpVertical = filpVertical;
         }

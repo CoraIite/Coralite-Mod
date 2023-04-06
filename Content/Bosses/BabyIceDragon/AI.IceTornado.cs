@@ -26,7 +26,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             NPC.directionY = (Target.Center.Y - 200) > NPC.Center.Y ? 1 : -1;
                             float yLength = Math.Abs(Target.Center.Y - 200 - NPC.Center.Y);
                             if (yLength > 50)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 5f, 0.18f, 0.12f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 8f, 0.18f, 0.12f, 0.96f);
                             else
                                 NPC.velocity.Y *= 0.96f;
 
@@ -72,7 +72,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         movePhase = 2;
                         SetDirection();
                         Timer = 0;
-                        NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitX).RotatedBy(1.57f) * 10;
+                        NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitX).RotatedBy(0.9f) * 12;
                         NPC.dontTakeDamage = true;
                         NPC.netUpdate = true;
                     }
@@ -83,22 +83,22 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         {
                             float distance = Vector2.Distance(Target.Center, NPC.Center);
 
-                            if (distance < 120)
-                                NPC.velocity += Vector2.Normalize(Target.Center - NPC.Center)*1.25f;
+                            if (distance < 160)
+                                NPC.velocity += Vector2.Normalize(Target.Center - NPC.Center)*1.35f;
                             else
-                                NPC.velocity += Vector2.Normalize(Target.Center - NPC.Center)*0.5f;
+                                NPC.velocity += Vector2.Normalize(Target.Center - NPC.Center)*0.75f;
 
-                            if (NPC.velocity.Length() > 10)
-                                NPC.velocity = Vector2.Normalize(NPC.velocity) * 10;
+                            if (NPC.velocity.Length() > 12)
+                                NPC.velocity = Vector2.Normalize(NPC.velocity) * 12;
 
                             NPC.rotation = NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f);
-                            
+
                             if (Timer % 20 == 0)
                                 Helper.PlayPitched("Icicle/Wind" + Main.rand.Next(1, 3).ToString(), 0.2f, 0f, NPC.Center);
 
                             if (Timer % 8 == 0 && Main.netMode != NetmodeID.MultiplayerClient)     //生成透明弹幕
                             {
-                                Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity * 0.2f, ModContent.ProjectileType<IceTornado>(), 15, 10f);
+                                Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity * 0.2f, ModContent.ProjectileType<IceTornado>(), 13, 10f);
                                 projectile.timeLeft = 40;
                                 projectile.netUpdate = true;
                             }
@@ -123,6 +123,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if (Timer < 210)
                         {
+                            NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
                             NPC.dontTakeDamage = false;
                             NPC.velocity *= 0.98f;
                             break;

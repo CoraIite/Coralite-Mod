@@ -20,7 +20,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     {
                         bool lowerThanTarget = NPC.Center.Y > (Target.Center.Y - 430);
                         float xLength = Math.Abs(NPC.Center.X - Target.Center.X);
-                        if (lowerThanTarget || xLength > 350)
+                        if (lowerThanTarget || xLength > 250)
                         {
                             SetDirection();
                             if (lowerThanTarget)
@@ -31,7 +31,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 ChangeFrameNormally();
                             }
                             if (xLength > 150)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6, 0.2f, 0.2f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 16f, 0.3f, 0.25f, 0.96f);
                             else
                                 NPC.velocity.X *= 0.96f;
 
@@ -49,7 +49,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         NPC.frame.Y = 0;
                         NPC.velocity.X *= 0.4f;
                         NPC.velocity.Y *= 0;
-                        NPC.noGravity = false;
+                        NPC.noGravity = true;
                         NPC.noTileCollide = true;
                         SetDirection();
                         Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.IcicleCyan, 0.8f);
@@ -60,7 +60,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 case 1:     //下落
                     {
                         NPC.rotation = NPC.rotation.AngleTowards(NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f), 0.14f);
-                        NPC.velocity.Y += 0.5f;
+                        NPC.velocity.Y += 0.9f;
 
                         if (Timer % 2 == 0)
                         {
@@ -70,11 +70,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         //向玩家加速
                         if (Timer < 40)
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 4f, 0.3f, 0.3f, 0.96f);
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 5f, 0.4f, 0.3f, 0.96f);
                         else
                             NPC.velocity.X *= 0.96f;
 
-                        //TODO:生成下落特效的粒子
                         if (Timer < 60)
                         {
                             if (NPC.Center.Y > (Target.Top.Y - 32))
@@ -93,15 +92,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             Vector2 position = NPC.BottomLeft;
                             position /= 16;
                             for (int i = 0; i < 4; i++)
-                            {
-                                if (WorldGen.ActiveAndWalkableTile((int)position.X + i, (int)position.Y))    //砸地，生成冰刺弹幕
-                                {
-                                    SpawnIceThorns();
-                                    NPC.velocity *= 0;
-                                    HaveARest(30);
-                                    return;
-                                }
-                            }
+                                for (int j = 0; j < 2; j++)
+                                    if (WorldGen.ActiveAndWalkableTile((int)position.X + i, (int)position.Y + j))    //砸地，生成冰刺弹幕
+                                    {
+                                        SpawnIceThorns();
+                                        NPC.velocity *= 0;
+                                        HaveARest(30);
+                                        return;
+                                    }
                         }
 
                         if (Timer > 200)
@@ -116,8 +114,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     return;
             }
 
-            if (NPC.velocity.Y > 16)
-                NPC.velocity.Y = 16;
+            if (NPC.velocity.Y > 24)
+                NPC.velocity.Y = 24;
 
             Timer++;
         }

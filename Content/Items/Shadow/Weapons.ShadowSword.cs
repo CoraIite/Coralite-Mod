@@ -24,7 +24,6 @@ namespace Coralite.Content.Items.Shadow
         public override void SetDefaults()
         {
             Item.height = Item.width = 40;
-
             Item.damage = 24;
             Item.useTime = 16;
             Item.useAnimation = 16;

@@ -17,6 +17,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             Projectile.width = Projectile.height = 10;
             Projectile.extraUpdates = 1;
             Projectile.timeLeft = 100;
+            Projectile.aiStyle = -1;
             Projectile.friendly = true;
             Projectile.netImportant = true;
         }

@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Coralite.Content.Items.Icicle;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
@@ -20,20 +21,20 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 case 0:
                     {
-                        if (Vector2.Distance(NPC.Center, Target.Center) > 400)
+                        if (Vector2.Distance(NPC.Center, Target.Center) > 440)
                         {
                             SetDirection();
                             NPC.directionY = (Target.Center.Y - 200) > NPC.Center.Y ? 1 : -1;
                             float yLength = Math.Abs(Target.Center.Y - 200 - NPC.Center.Y);
                             if (yLength > 50)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 5f, 0.18f, 0.12f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 8f, 0.25f, 0.3f, 0.96f);
                             else
                                 NPC.velocity.Y *= 0.96f;
 
                             if (Math.Abs(Target.Center.X - NPC.Center.X) > 160)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 8f, 0.2f, 0.1f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 16f, 0.25f, 0.3f, 0.96f);
                             else
-                                NPC.velocity.X *= 0.98f;
+                                NPC.velocity.X *= 0.96f;
                             ChangeFrameNormally();
                             if (Timer > 400)
                                 ResetStates();
@@ -50,18 +51,18 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     {
                         do
                         {
-                            NPC.velocity *= 0.98f;
+                            NPC.velocity *= 0.97f;
 
-                            if (Timer == 40)
+                            if (Timer == 30)
                             {
                                 NPC.frame.Y = 2;
                                 NPC.velocity *= 0;
                             }
 
-                            if (Timer < 60)
+                            if (Timer < 50)
                                 break;
 
-                            if (Timer == 60)
+                            if (Timer == 50)
                             {
                                 NPC.frame.Y = 0;
                                 SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
@@ -71,25 +72,26 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 Main.instance.CameraModifiers.Add(modifier);
                             }
 
-                            if (Timer == 70)        //生成冰刺NPC
+                            if (Timer == 60 && Main.netMode != NetmodeID.MultiplayerClient)        //生成冰刺NPC
                             {
-                                int howMany = 3;
+                                int howMany = 4;
                                 if (Main.expertMode)
-                                    howMany = 4;
-                                if (Main.masterMode)
                                     howMany = 5;
+                                if (Main.masterMode)
+                                    howMany = 6;
 
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
                                 Vector2 Position = Vector2.Zero;
                                 for (int i = 0; i < howMany; i++)
                                 {
-                                    Vector2 randomPosition = Main.rand.NextVector2CircularEdge(250, 250);
+                                    int randomWidth = Main.rand.Next(240, 350);
+                                    Vector2 randomPosition = Main.rand.NextVector2CircularEdge(randomWidth, randomWidth);
                                     for (int k = 0; k < 5; k++)
                                     {
                                         if (Vector2.Distance(randomPosition, Position) > 60)
                                             break;
 
-                                        randomPosition = Main.rand.NextVector2CircularEdge(250, 250);
+                                        randomPosition = Main.rand.NextVector2CircularEdge(randomWidth, randomWidth);
                                     }
 
                                     Position = randomPosition;
@@ -102,7 +104,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 }
                             }
 
-                            if (Timer < 100)
+                            if (Timer < 90)
                             {
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
                                 if (Timer % 10 == 0)
@@ -115,7 +117,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                             ChangeFrameNormally();
 
-                            if (Timer > 140)
+                            if (Timer > 120)
                                 ResetStates();
 
                         } while (false);

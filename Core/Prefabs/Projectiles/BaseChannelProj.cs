@@ -61,7 +61,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected virtual void AIAfter() { }
 
         /// <summary>
-        /// 完成蓄力且释放后执行，将completeAndRelease设置为ture即可执行这里，建议在途中不要在此更改这个变量了，否则会出现难以预料的后果
+        /// 完成蓄力且释放后执行，将completeAndRelease设置为true即可执行这里，建议在途中不要在此更改这个变量了，否则会出现难以预料的后果
         /// </summary>
         protected virtual void CompleteAndRelease() { }
 

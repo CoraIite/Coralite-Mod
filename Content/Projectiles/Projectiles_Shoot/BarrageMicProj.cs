@@ -17,7 +17,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             Projectile.friendly = true;
 
             Projectile.aiStyle = -1;
-            Projectile.maxPenetrate = -1;
+            Projectile.penetrate = -1;
         }
 
         public override void OnSpawn(IEntitySource source)

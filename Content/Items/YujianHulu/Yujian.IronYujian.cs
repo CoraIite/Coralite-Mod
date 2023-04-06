@@ -46,10 +46,10 @@ namespace Coralite.Content.Items.YujianHulu
                     halfLongAxis: 1.5f,
                     new HeavySmoother()),
             PowerfulAttackCost: 150,
-            attackLenth: 220,
+            attackLength: 220,
             width: 30, height: 58,
             new Color(42, 37, 41), new Color(169, 162, 135),
-             trailCacheLenth: 16
+             trailCacheLength: 16
             )
         { }
 

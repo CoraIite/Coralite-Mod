@@ -21,7 +21,7 @@ namespace Coralite.Core.Systems.YujianSystem
     {
         public readonly Color color1;
         public readonly Color color2;
-        public readonly int trailCacheLenth;
+        public readonly int trailCacheLength;
         private readonly int Width;
         private readonly int Height;
         private readonly string TexturePath;
@@ -32,7 +32,7 @@ namespace Coralite.Core.Systems.YujianSystem
         public bool canChannel;
         public int targetIndex;
         public int channelTime;
-        private int attackLenth;
+        private int attackLength;
         public Vector2 aimCenter;
         public IHuluEffect huluEffect;
         public YujianAI[] yujianAIs;
@@ -42,7 +42,7 @@ namespace Coralite.Core.Systems.YujianSystem
         public const float SpecialMoveState = 0.1f;
         public const float PowerfulMoveState = 0.2f;
 
-        public int AttackLenth { get => attackLenth; set => attackLenth = value; }
+        public int AttackLength { get => attackLength; set => attackLength = value; }
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
         public Player Owner => Main.player[Projectile.owner];
@@ -51,7 +51,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name.Replace("Proj", ""));
 
-        public BaseYujianProj(YujianAI[] yujianAIs, YujianAI specialAI, YujianAI powerfulAI, float PowerfulAttackCost, int attackLenth, int width, int height, Color color1, Color color2, int trailCacheLenth = 30, bool tileCollide = true, string texturePath = AssetDirectory.YujianHulu, bool pathHasName = false)
+        public BaseYujianProj(YujianAI[] yujianAIs, YujianAI specialAI, YujianAI powerfulAI, float PowerfulAttackCost, int attackLength, int width, int height, Color color1, Color color2, int trailCacheLength = 30, bool tileCollide = true, string texturePath = AssetDirectory.YujianHulu, bool pathHasName = false)
         {
             if (yujianAIs is null || powerfulAI is null)
                 throw new Exception("普通攻击或强化攻击不能为null ! ! ! ! ! ! ! ! ! ! ! !");
@@ -60,12 +60,12 @@ namespace Coralite.Core.Systems.YujianSystem
             this.specialAI = specialAI;
             this.powerfulAI = powerfulAI;
             this.PowerfulAttackCost = PowerfulAttackCost;
-            AttackLenth = attackLenth;
+            AttackLength = attackLength;
             Width = width;
             Height = height;
             this.color1 = color1;
             this.color2 = color2;
-            this.trailCacheLenth = trailCacheLenth;
+            this.trailCacheLength = trailCacheLength;
             TileCollide = tileCollide;
             TexturePath = texturePath;
             PathHasName = pathHasName;
@@ -105,8 +105,8 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.oldPos = new Vector2[trailCacheLenth];
-            Projectile.oldRot = new float[trailCacheLenth];
+            Projectile.oldPos = new Vector2[trailCacheLength];
+            Projectile.oldRot = new float[trailCacheLength];
 
             InitTrailCaches();
         }
@@ -178,7 +178,7 @@ namespace Coralite.Core.Systems.YujianSystem
                 default:
                     break;
                 case -1f:       //回到玩家身边
-                    ProjectilesHelper.GetMyProjIndexWhihModProj<BaseYujianProj>(Projectile, out var index, out var totalIndexesInGroup);
+                    ProjectilesHelper.GetMyProjIndexWithModProj<BaseYujianProj>(Projectile, out var index, out var totalIndexesInGroup);
                     GetIdlePosition(index, totalIndexesInGroup, out var idleSpot, out var idleRotation);
                     Projectile.velocity = Vector2.Zero;
                     Projectile.Center = Projectile.Center.MoveTowards(idleSpot, 10f);
@@ -192,7 +192,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
                     return false;
                 case 0f:        //尝试开始攻击
-                    ProjectilesHelper.GetMyProjIndexWhihModProj<BaseYujianProj>(Projectile, out var index2, out var totalIndexesInGroup2);
+                    ProjectilesHelper.GetMyProjIndexWithModProj<BaseYujianProj>(Projectile, out var index2, out var totalIndexesInGroup2);
                     GetIdlePosition(index2, totalIndexesInGroup2, out var idleSpot2, out var idleRotation2);
                     Projectile.velocity = Vector2.Zero;
                     Projectile.Center = Vector2.SmoothStep(Projectile.Center, idleSpot2, 0.18f);
@@ -246,7 +246,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         private bool ChangeState(CoralitePlayer cp)
         {
-            bool CanAttack = AimMouse && Vector2.Distance(GetTargetCenter(true), Owner.Center) < AttackLenth;
+            bool CanAttack = AimMouse && Vector2.Distance(GetTargetCenter(true), Owner.Center) < AttackLength;
             if (CanAttack && cp.nianli > PowerfulAttackCost)
             {
                 State = PowerfulMoveState;
@@ -320,7 +320,7 @@ namespace Coralite.Core.Systems.YujianSystem
                 if (nPC.CanBeChasedBy(Projectile))
                 {
                     float npcDistance2Owner = Vector2.Distance(ownerCenter, nPC.Center);
-                    if (npcDistance2Owner <= AttackLenth &&
+                    if (npcDistance2Owner <= AttackLength &&
                             (npcDistance2Owner <= num || num == -1f) &&
                             Collision.CanHitLine(Projectile.Center, 1, 1, nPC.Center, 1, 1))
                     {
@@ -362,7 +362,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public void InitTrailCaches()
         {
-            for (int i = 0; i < trailCacheLenth; i++)
+            for (int i = 0; i < trailCacheLength; i++)
             {
                 Projectile.oldPos[i] = Projectile.Center;
                 Projectile.oldRot[i] = Projectile.rotation;
@@ -371,14 +371,14 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public void UpdateCaches()
         {
-            for (int i = 0; i < trailCacheLenth - 1; i++)
+            for (int i = 0; i < trailCacheLength - 1; i++)
             {
                 Projectile.oldRot[i] = Projectile.oldRot[i + 1];
                 Projectile.oldPos[i] = Projectile.oldPos[i + 1];
             }
 
-            Projectile.oldPos[trailCacheLenth - 1] = Projectile.Center;
-            Projectile.oldRot[trailCacheLenth - 1] = Projectile.rotation;
+            Projectile.oldPos[trailCacheLength - 1] = Projectile.Center;
+            Projectile.oldRot[trailCacheLength - 1] = Projectile.rotation;
 
         }
 

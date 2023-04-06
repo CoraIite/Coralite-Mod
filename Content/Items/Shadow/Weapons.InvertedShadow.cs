@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.Shadow
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 18;
+            Item.damage = 17;
             Item.crit = 1;
             Item.shootSpeed = 15f;
             Item.useTime = 25;
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.Shadow
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DrawInvertedPlayerProj>(), (int)(damage * 1.2f), knockback, player.whoAmI);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DrawInvertedPlayerProj>(), damage, knockback, player.whoAmI);
             return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }
     }

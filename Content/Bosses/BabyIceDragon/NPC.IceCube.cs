@@ -121,7 +121,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (ExtendCount >= 14)
                 if (SoundEngine.TryGetActiveSound(soundSlotID, out ActiveSound result))
                     result.Stop();
-            (Main.npc[index].ModNPC as BabyIceDragon).Dizzy(240);
+            (Main.npc[index].ModNPC as BabyIceDragon).Dizzy(360);
         }
 
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
