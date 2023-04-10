@@ -59,7 +59,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
                             {
                                 return NPC.Center + (NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30;
-                            });
+                            }, 16);
                         NPC.netUpdate = true;
                     }
                     break;
@@ -73,7 +73,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         if (Timer < 100)
                         {
                             float factor = Timer / 80;
-                            NPC.rotation = NPC.rotation.AngleLerp(NPC.direction*(1f - factor * 1.3f), 0.06f);
+                            NPC.rotation = NPC.rotation.AngleLerp(NPC.direction * (1f - factor * 1.3f), 0.06f);
 
                             GetMouseCenter(out Vector2 targetDir, out Vector2 mouseCenter);
                             if (Timer % 2 == 0)
@@ -111,7 +111,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if (Timer % 6 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile projectile= Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), Target.Center+new Vector2(Main.rand.Next(-100,100),-500), 
+                            Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-100, 100), -500),
                                 Vector2.Zero, ModContent.ProjectileType<IcicleFalling_Hostile>(), 13, 8f);
                             projectile.velocity = (Target.Center + Main.rand.NextVector2Circular(40, 40) - projectile.Center).SafeNormalize(Vector2.Zero) * 12;
                             projectile.netUpdate = true;

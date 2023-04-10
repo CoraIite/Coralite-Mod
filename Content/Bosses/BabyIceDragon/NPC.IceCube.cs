@@ -68,11 +68,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
             //生成特效粒子
             if (ExtendCount < 17 && Timer % 6 == 0)
-                IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(80, 80), Main.rand.NextVector2CircularEdge(5, 5), 0.5f, () => NPC.Center);
+                IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(80, 80), Main.rand.NextVector2CircularEdge(5, 5), 0.5f, () => NPC.Center, 12);
 
             if (ExtendCount == 14 && NPC.localAI[2] == 0f)
             {
-                soundSlotID=Helper.PlayPitched("Icicle/Burst", 0.4f, 0f, NPC.Center);
+                soundSlotID = Helper.PlayPitched("Icicle/Burst", 0.4f, 0f, NPC.Center);
                 NPC.localAI[2] = 1f;
             }
 

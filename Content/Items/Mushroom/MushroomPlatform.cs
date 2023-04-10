@@ -1,11 +1,12 @@
 using Coralite.Core;
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Mushroom
 {
-    public class MushroomPlatform:ModItem
+    public class MushroomPlatform : ModItem
     {
         public override string Texture => AssetDirectory.MushroomItems + Name;
 
@@ -33,6 +34,11 @@ namespace Coralite.Content.Items.Mushroom
             CreateRecipe(2)
             .AddIngredient(ItemID.Mushroom)
             .Register();
+
+            Recipe recipe = CreateRecipe();
+            recipe.ReplaceResult(ItemID.Mushroom);
+            recipe.AddIngredient<MushroomPlatform>(2);
+            recipe.Register();
         }
     }
 }

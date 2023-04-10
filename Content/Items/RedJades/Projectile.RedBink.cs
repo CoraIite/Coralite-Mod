@@ -76,7 +76,7 @@ namespace Coralite.Content.Items.RedJades
             //添加Buff
             Owner.AddBuff(BuffType<RedBinkBuff>(), 2);
 
-            NPC target = ProjectilesHelper.FindCloestEnemy(Projectile.Center, 1200f, (n) =>
+            NPC target = ProjectilesHelper.FindClosestEnemy(Projectile.Center, 1200f, (n) =>
                    n.CanBeChasedBy() && !n.dontTakeDamage && Collision.CanHitLine(Projectile.Center, 1, 1, n.Center, 1, 1));
 
             if (Timer == 0 && target != null)
@@ -93,8 +93,8 @@ namespace Coralite.Content.Items.RedJades
                 case (int)AIStates.idle://回到玩家身边
 
                     Timer = 0;
-                    ProjectilesHelper.GetMyProjIndexWithSameType(Type, Projectile.whoAmI, Projectile.owner, out int index, out int totalIndexs);
-                    Vector2 idlePosition = Owner.Center + new Vector2(0, -48 - totalIndexs * 2).RotatedBy(6.282 * index / totalIndexs);
+                    ProjectilesHelper.GetMyProjIndexWithSameType(Type, Projectile.whoAmI, Projectile.owner, out int index, out int totalIndexes);
+                    Vector2 idlePosition = Owner.Center + new Vector2(0, -48 - totalIndexes * 2).RotatedBy(6.282 * index / totalIndexes);
 
                     if (Vector2.Distance(idlePosition, Projectile.position) > 2000)
                         Projectile.Center = idlePosition;
@@ -212,10 +212,7 @@ namespace Coralite.Content.Items.RedJades
                     break;
             }
 
-
-
             Timer++;
-
         }
 
         public void ResetStates()

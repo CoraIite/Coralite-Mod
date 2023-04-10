@@ -61,6 +61,7 @@ namespace Coralite.Content.NPCs.Shadow
                 else
                     yFrame = 0;
             }
+
             NPC.spriteDirection = Math.Sign(Target.Center.X - NPC.Center.X);
         }
 

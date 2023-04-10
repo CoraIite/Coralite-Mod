@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
@@ -13,7 +12,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
-using static Coralite.Core.VertexInfos;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Stars

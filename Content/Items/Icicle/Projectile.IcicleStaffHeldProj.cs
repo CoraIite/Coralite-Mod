@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Icicle
         public const int SWING_TIME = 30;
 
         public ref float Timer => ref Projectile.localAI[0];
-        public ref float Lenth => ref Projectile.localAI[1];
+        public ref float Length => ref Projectile.localAI[1];
         public ref float Shoot => ref Projectile.ai[0];
         public ref float Rotate => ref Projectile.ai[1];
         public float visualEffectScale = 0f;
@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Icicle
 
             Projectile.friendly = true;
             Projectile.ignoreWater = false;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.Icicle
                     if (Main.myPlayer == Projectile.owner)
                     {
                         Rotate = (Main.MouseWorld - Projectile.Center).ToRotation() + 0.785f;
-                        Lenth = (Projectile.Center - Owner.Center).Length();
+                        Length = (Projectile.Center - Owner.Center).Length();
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         Projectile.netUpdate = true;
                     }
@@ -81,8 +81,8 @@ namespace Coralite.Content.Items.Icicle
 
                 //旋转中心点，旋转角度，看上去像挥舞过去一样
                 Projectile.rotation = Projectile.rotation.AngleLerp(Rotate, 0.2f);
-                Lenth += 0.8f;
-                Projectile.Center = Owner.Center + (Projectile.rotation-0.785f).ToRotationVector2() * Lenth;
+                Length += 0.8f;
+                Projectile.Center = Owner.Center + (Projectile.rotation-0.785f).ToRotationVector2() * Length;
 
                 float factor = 1 - ((Timer - SWING_TIME) / 15);
                 visualEffectScale = factor * 0.5f;

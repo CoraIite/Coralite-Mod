@@ -100,7 +100,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                     for (int j = 0; j < 2; j++)
                                         IceStarLight.Spawn(mouseCenter,
                                             (npc.Center - NPC.Center).SafeNormalize(Vector2.One).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * 10,
-                                            1f, () => npc.Center);
+                                            1f, () => npc.Center, 16);
                                 }
                             }
 

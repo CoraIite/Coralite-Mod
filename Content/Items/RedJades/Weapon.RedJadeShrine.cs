@@ -38,7 +38,7 @@ namespace Coralite.Content.Items.RedJades
             Item.autoReuse = false;
 
             Item.shoot = ModContent.ProjectileType<RedBink>();
-            Item.UseSound = SoundID.Item5;
+            Item.UseSound = CoraliteSoundID.Bow_Item5;
             Item.value = Item.sellPrice(0, 0, 40, 0);
             Item.rare = ItemRarityID.Green;
             Item.DamageType = DamageClass.Summon;
@@ -57,25 +57,23 @@ namespace Coralite.Content.Items.RedJades
             return true;
         }
 
-        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
-        {
-            position = Main.MouseWorld;
-        }
-
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (rightClick)
+            if (Main.myPlayer == player.whoAmI)
             {
-                foreach (var proj in Main.projectile.Where(p => p.active && p.friendly && p.type == Item.shoot && p.owner == player.whoAmI))
+                if (rightClick)
                 {
-                    RedBink pro = (RedBink)proj.ModProjectile;
-                    pro.rightClick = true;
+                    foreach (var proj in Main.projectile.Where(p => p.active && p.friendly && p.type == Item.shoot && p.owner == player.whoAmI))
+                    {
+                        RedBink pro = (RedBink)proj.ModProjectile;
+                        pro.rightClick = true;
+                    }
+                    return false;
                 }
-                return false;
-            }
 
-            var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
-            projectile.originalDamage = damage;
+                var projectile = Projectile.NewProjectileDirect(source, Main.MouseWorld, velocity, type, damage, knockback, Main.myPlayer);
+                projectile.originalDamage = damage;
+            }
             return false;
         }
 

@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Projectiles.Projectile_Summon;
+﻿using Coralite.Content.Items.Mushroom;
 using Coralite.Core;
 using Terraria;
 using Terraria.ModLoader;

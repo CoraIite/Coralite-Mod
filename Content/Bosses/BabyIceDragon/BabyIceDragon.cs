@@ -101,7 +101,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<RediancieRelic>()));
             //npcLoot.Add(ItemDropRule.BossBag(ItemType<RediancieBossBag>()));
-            //npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ItemType<BabyIceDragonTrophy>(), 10));
 
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<IcicleCrystal>(), 1, 3, 5));
@@ -395,7 +395,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                     IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
                                     {
                                         return NPC.Center + (NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30;
-                                    });
+                                    },16);
                             }
 
                             if (Timer < 80)

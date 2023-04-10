@@ -15,17 +15,6 @@ namespace Coralite.Content.Items.Icicle
     {
         public override string Texture => AssetDirectory.IcicleProjectiles + "Old_IcicleProj";
 
-        public Vector2 TargetCenter
-        {
-            get => new Vector2(Projectile.ai[0], Projectile.ai[1]);
-            set
-            {
-                Projectile.ai[0] = value.X;
-                Projectile.ai[1] = value.Y;
-                Projectile.netUpdate = true;
-            }
-        }
-
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 16;
@@ -41,12 +30,6 @@ namespace Coralite.Content.Items.Icicle
 
         public override void OnSpawn(IEntitySource source)
         {
-            if (Main.myPlayer == Projectile.owner)
-            {
-                TargetCenter += Main.rand.NextVector2CircularEdge(8, 8);
-                Projectile.velocity = (TargetCenter - Projectile.Center).SafeNormalize(Vector2.Zero) * 12f;
-            }
-
             for (int i = 0; i < 8; i++)
             {
                 Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Frost, -Vector2.UnitY.RotatedBy(i * 0.785f)*1.5f);

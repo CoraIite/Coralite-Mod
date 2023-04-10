@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Projectiles.Projectile_Summon;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Microsoft.Xna.Framework;
 using System.Linq;
 using Terraria;
@@ -8,11 +7,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Weapons_Summon
+namespace Coralite.Content.Items.Mushroom
 {
     public class MushroomStaff : ModItem
     {
-        public override string Texture => AssetDirectory.Weapons_Summon + Name;
+        public override string Texture => AssetDirectory.MushroomItems + Name;
 
         public override void SetStaticDefaults()
         {

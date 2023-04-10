@@ -10,7 +10,6 @@ using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Coralite.Core.VertexInfos;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Weapons

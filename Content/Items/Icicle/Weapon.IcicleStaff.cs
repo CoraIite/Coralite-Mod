@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Icicle
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 20;
+            Item.damage = 18;
             Item.useTime = 14;
             Item.useAnimation = 14;
             Item.knockBack = 3f;
@@ -28,7 +28,6 @@ namespace Coralite.Content.Items.Icicle
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Orange;
             Item.shoot = ProjectileType<IcicleStaffHeldProj>();
-            //Item.UseSound = CoraliteSoundID.Swing_Item1;
 
             Item.useTurn = false;
             Item.noUseGraphic = true;
@@ -46,5 +45,12 @@ namespace Coralite.Content.Items.Icicle
             return false;
         }
 
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient<IcicleCrystal>(2)
+            .AddTile(TileID.IceMachine)
+            .Register();
+        }
     }
 }

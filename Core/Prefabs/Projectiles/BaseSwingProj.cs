@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
-using static Coralite.Core.VertexInfos;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Prefabs.Projectiles
@@ -82,9 +81,9 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <![CDATA[拖尾部分]]>
         /// <para>是否应用影子拖尾 useShadowTrail = false，是否应用刀光效果useSlashTrail = false，刀光贴图TrailTexture</para>
         /// <para>是否可绘制自己的贴图 canDrawSelf = true</para>
-        /// <para>影子拖尾数量 ShadowCount，拖尾数组长度 TrailLengh = 15，刀光渐变色 color1，color2</para>
-        /// <para>刀光拖尾宽度 trailBottomLenth = 10,trailTopWidth = 10</para>
-        /// <para>是否为对称的，是的话就不需要多加Filp贴图 isSymmetrical = true</para>
+        /// <para>影子拖尾数量 ShadowCount，拖尾数组长度 TrailLength = 15，刀光渐变色 color1，color2</para>
+        /// <para>刀光拖尾宽度 trailBottomLength = 10,trailTopWidth = 10</para>
+        /// <para>是否为对称的，是的话就不需要多加Flip贴图 isSymmetrical = true</para>
         /// 除此之外的变量不要乱改！除非你知道你在做什么（笑）
         /// </summary>
         public abstract void SetDefs();
@@ -132,7 +131,6 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Owner.heldProj = Projectile.whoAmI;//让弹幕图层在在玩家手中
             Owner.itemTime = Owner.itemAnimation = 2;//这个东西不为0的时候就无法使用其他物品
-            Owner.itemRotation = Owner.direction > 0 ? _Rotation : _Rotation - 3.141f;
         }
 
         /// <summary>
@@ -143,6 +141,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Top = Projectile.Center + RotateVec2 * (Projectile.height / 2 + trailTopWidth);
             Bottom = Projectile.Center - RotateVec2 * (Projectile.height / 2);//弹幕的底端和顶端计算，用于检测碰撞以及绘制
+            Owner.itemRotation = Owner.direction > 0 ? _Rotation : _Rotation - 3.141f;
 
             if (useShadowTrail || useSlashTrail)
                 UpdateCaches();
@@ -270,7 +269,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if ((int)timer < minTime)
+            if ((int)timer < minTime||!Collision.CanHitLine(Owner.Center,1,1,targetHitbox.Center.ToVector2(),1,1))
                 return false;
 
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Top, Bottom, Projectile.width / 2, ref Projectile.localAI[1]);
@@ -317,12 +316,12 @@ namespace Coralite.Core.Prefabs.Projectiles
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
             List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
 
-            float lenth = 1;
+            float length = 1;
             for (int i = 1; i < oldRotate.Length; i++)
             {
                 if (oldRotate[i] == 100f)
                     continue;
-                lenth += 1;
+                length += 1;
             }
 
             for (int i = 1; i < oldRotate.Length; i++)
@@ -330,7 +329,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = i / lenth;
+                float factor = i / length;
                 Vector2 Center = GetCenter(i);
                 Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (Projectile.height + trailTopWidth + oldDistanceToOwner[i]);
                 Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (Projectile.height - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
@@ -394,7 +393,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (isSymmetrical)
                 return Texture;
 
-            return Texture + "_Filp";
+            return Texture + "_Flip";
         }
 
         private SpriteEffects CheckEffect()

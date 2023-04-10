@@ -106,7 +106,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             effect.View = view;
             effect.Projection = projection;
 
-            trail.Render(effect);
+            trail?.Render(effect);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

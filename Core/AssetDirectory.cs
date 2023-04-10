@@ -96,6 +96,8 @@
         public const string TreeTiles = Tiles + "Trees/";
         public const string MachineTiles = Tiles + "Machines/";
         public const string RedJadeTiles = Tiles + "RedJades/";
+        public const string IcicleTiles = Tiles + "Icicle/";
+
 
         #endregion
 

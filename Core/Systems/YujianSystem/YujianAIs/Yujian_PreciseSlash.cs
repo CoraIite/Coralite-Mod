@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 {
     public class Yujian_PreciseSlash : Yujian_BaseSlash
     {
-        protected readonly float canSlashLenth;
+        protected readonly float canSlashLength;
 
         private bool canSlash = false;
 
@@ -21,7 +21,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 
         public Yujian_PreciseSlash(int startTime, int slashWidth, int slashTime, float startAngle, float totalAngle, float turnSpeed, float roughlyVelocity, float halfShortAxis, float halfLongAxis, ISmoother smoother) : base(startTime, slashWidth, slashTime, startAngle, totalAngle, turnSpeed, roughlyVelocity, halfShortAxis, halfLongAxis, smoother)
         {
-            canSlashLenth = SlashWidth * halfLongAxis / startElliptical;
+            canSlashLength = SlashWidth * halfLongAxis / startElliptical;
         }
 
         protected override void Attack(BaseYujianProj yujianProj)
@@ -51,7 +51,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 
             TryGetClosed2Target(yujianProj, out float distance, out float targetAngle);
 
-            if (distance < canSlashLenth && distance > canSlashLenth * 0.8f)
+            if (distance < canSlashLength && distance > canSlashLength * 0.8f)
             {
                 canSlash = true;
                 canDamage = true;
@@ -64,9 +64,9 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 
         public override void UpdateVelocityWhenTracking(Projectile Projectile, float distance, Vector2 targetDirection)
         {
-            if (distance > canSlashLenth)
+            if (distance > canSlashLength)
                 Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;
-            else if (distance < canSlashLenth * 0.8f)
+            else if (distance < canSlashLength * 0.8f)
                 Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) - targetDirection * turnSpeed) / 21f;
             else if (Projectile.velocity == Vector2.Zero)
                 Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;

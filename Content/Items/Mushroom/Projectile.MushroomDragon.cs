@@ -10,11 +10,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Projectiles.Projectile_Summon
+namespace Coralite.Content.Items.Mushroom
 {
     public class MushroomDragon : ModProjectile
     {
-        public override string Texture => AssetDirectory.Projectiles_Summon + Name;
+        public override string Texture => AssetDirectory.MushroomItems + Name;
 
         internal ref float Timer => ref Projectile.ai[0];
         internal ref float PetAIState => ref Projectile.ai[0];
@@ -88,7 +88,7 @@ namespace Coralite.Content.Projectiles.Projectile_Summon
             Projectile.netUpdate = true;
 
             //寻敌
-            NPC target = ProjectilesHelper.FindCloestEnemy(Projectile.Center, 1200f, (n) =>
+            NPC target = ProjectilesHelper.FindClosestEnemy(Projectile.Center, 1200f, (n) =>
             {
                 return n.CanBeChasedBy() &&
                 !n.dontTakeDamage && Collision.CanHitLine(Projectile.Center, 1, 1, n.Center, 1, 1);

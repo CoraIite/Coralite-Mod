@@ -1,7 +1,10 @@
-﻿using Coralite.Core;
+﻿using System.Dynamic;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,94 +21,97 @@ namespace Coralite.Content.Items.Icicle
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 30;
-            Item.useTime = 14;
-            Item.useAnimation = 14;
-            Item.knockBack = 3f;
-            Item.crit = 0;
-            Item.reuseDelay = 0;
+            Item.damage = 21;
+            Item.useTime = 24;
+            Item.useAnimation = 24;
+            Item.knockBack = 1f;
 
-            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Melee;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Orange;
-            Item.shoot = ProjectileType<CrushedIceProj>();
-            Item.UseSound = CoraliteSoundID.Swing_Item1;
+            Item.shoot = ProjectileType<IcicleSwordSplash>();
 
-            Item.useTurn = false;
-            Item.noUseGraphic = false;
+            Item.noUseGraphic = true;
+            Item.noMelee = true;
             Item.autoReuse = true;
-        }
-
-        public override void Load()
-        {
-            for (int i = 0; i < 3; i++)
-                GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.IcicleItems + Name + "_Gore" + i);
         }
 
         public override bool CanUseItem(Player player)
         {
-            //每挥舞5次最后一次使这把剑碎裂并射出更多弹幕
-            if (useCount > 4)
+            if (useCount==3)
             {
-                Item.useTime = 50;
-                Item.useAnimation = 50;
-                Item.noUseGraphic = true;
-                Item.noMelee = true;
+                Item.useTime = 18;
+                Item.useAnimation = 18;
             }
             else
             {
-                Item.useTime = 26;
-                Item.useAnimation = 26;
-                Item.noUseGraphic = false;
-                Item.noMelee = false;
+                Item.useTime = 24;
+                Item.useAnimation = 24;
             }
-
-            return true;
+            return base.CanUseItem(player);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                if (useCount == 5)
+                Vector2 dir = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.One);
+                float factor = Math.Clamp(1 - (player.itemTimeMax * 2 / 54f), 0f, 1f);
+                float rotate = dir.ToRotation();
+
+                if (useCount == 3)
                 {
-                    Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
-                    //射出3根冰锥
-                    for (int i = 0; i < 3; i++)
-                    {
-                        Projectile.NewProjectile(source, player.Center, dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * 10f, ProjectileType<IcicleProj>(),
-                            (int)(damage * 0.8f), knockback, player.whoAmI, i * 8);
-                        //生成碎剑gore
-                        Gore.NewGore(source, player.Center, new Vector2(player.direction, 0).RotatedBy(-player.direction * Main.rand.NextFloat(1.57f)) * Main.rand.Next(2, 3), 
-                            Mod.Find<ModGore>("IcicleSword_Gore" + i.ToString()).Type);
-                    }
-                    //射出5个碎冰弹幕
-                    for (int i = 0; i < 5; i++)
-                    {
-                        Vector2 dir2 = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
-                        Projectile.NewProjectile(source, player.Center, dir2 * Main.rand.NextFloat(4.5f, 6f), ProjectileType<CrushedIceProj>(),
-                            (int)(damage * 0.6f), knockback, player.whoAmI, 0.2f);
+                    Projectile.NewProjectile(source, player.Center, dir * 14, ProjectileType<IcicleSpurt>(), damage, knockback, player.whoAmI, player.direction, (int)(24 * (1f + factor)));
+                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<IcicleSpurtHeldProj>(), damage, knockback, player.whoAmI, 0, rotate);
 
-                        //生成一堆粒子
-                        for (int j = 0; j < 3; j++)
-                            Dust.NewDustPerfect(player.Center, DustID.FrostStaff, dir2 * Main.rand.Next(2, 5), 0, default, Main.rand.NextFloat(0.8f, 1.3f));
-
-                    }
                     Helper.PlayPitched("Icicle/IcicleSword", 0.4f, 0f, player.Center);
                     useCount = 0;
                     return false;
                 }
-                else
-                {
-                    //射出碎冰弹幕
-                    Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 10f, ProjectileType<CrushedIceProj>(),
-                        (int)(damage * 0.6f), knockback, player.whoAmI, 0.04f);
-                }
+
+                //生成普通斩击和剑气
+                //将角度限制在一定范围
+                //            \     X        X     /         OK
+                //                 \           /        OK
+                //         OK         O           <---这个角是90°
+                //                /             \       OK
+                //            /    X       X       \        OK
+                if (rotate < 0)
+                    rotate += 6.282f;
+                if (rotate > 3.926f && rotate < 5.497f)
+                    rotate = player.direction > 0 ? 5.497f : 3.926f;
+                if (rotate > 0.785f && rotate < 2.355f)
+                    rotate = player.direction > 0 ? 0.785f : 2.355f;
+
+                Projectile.NewProjectile(source, player.Center, rotate.ToRotationVector2() * 8, type, damage, knockback, player.whoAmI, player.direction, (int)(24 * (1f + factor)));
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<IcicleSwordHeldProj>(), damage, knockback, player.whoAmI, useCount);
+                SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, player.Center);
             }
 
             useCount++;
             return false;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient<IcicleCrystal>(2)
+            .AddTile(TileID.IceMachine)
+            .Register();
+
+            Recipe recipe = CreateRecipe();
+            recipe.ReplaceResult(ItemID.IceMachine);
+            recipe.AddIngredient<IcicleCrystal>();
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+
+            recipe = CreateRecipe();
+            recipe.ReplaceResult(ItemID.IceRod);
+            recipe.AddIngredient<IcicleCrystal>();
+            recipe.AddTile(TileID.IceMachine);
+            recipe.Register();
+
         }
     }
 }

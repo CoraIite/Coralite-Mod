@@ -32,7 +32,7 @@ namespace Coralite.Content.Particles
 
         public override void OnSpawn(Particle particle)
         {
-            //ÓÃÕâ¸öÀ´´æÒ»ÏÂÖ¡Í¼¿ØÖÆ
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ö¡Í¼ï¿½ï¿½ï¿½ï¿½
             particle.oldRot = new float[1];
             particle.frame = new Rectangle(0, 0, 22, 26);
             particle.scale = 1f;
@@ -49,7 +49,7 @@ namespace Coralite.Content.Particles
                 particle.rotation += 0.12f;
                 particle.scale = 0.6f + MathF.Sin(particle.rotation) * 0.2f;
 
-                //¿ØÖÆ¶¥µã£¬¸Ð¾õ¼ÆËãÁ¿±¬Õ¨ÁË
+                //ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ã£¬ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¨ï¿½ï¿½
                 for (int i = 0; i < 11; i++)
                     particle.oldRot[i] = particle.oldRot[i + 1];
 
@@ -58,7 +58,7 @@ namespace Coralite.Content.Particles
                     particle.oldCenter[i] = center + particle.oldRot[i].ToRotationVector2() * length * Helper.EllipticalEase(particle.oldRot[i], 1, 2.4f);
                 particle.trail.Positions = particle.oldCenter;
 
-                //¼òµ¥´Ö±©µØ¿ØÖÆÖ¡Í¼£¬Ö±½ÓÌîÊý×ÖÁË£¬¾ßÌå¶àÉÙ¿ÉÒÔÈ¥¿´¿´ÂäÐÇµÄÖ¡Í¼
+                //ï¿½òµ¥´Ö±ï¿½ï¿½Ø¿ï¿½ï¿½ï¿½Ö¡Í¼ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¿ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½Ö¡Í¼
                 particle.oldRot[0] += 1f;
                 if (particle.oldRot[0] > 3f)
                 {
@@ -98,7 +98,7 @@ namespace Coralite.Content.Particles
             effect.View = view;
             effect.Projection = projection;
 
-            particle.trail.Render(effect);
+            particle.trail?.Render(effect);
         }
 
 

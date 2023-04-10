@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 
 namespace Coralite.Helpers
@@ -17,7 +19,7 @@ namespace Coralite.Helpers
         /// <param name="distanceMax">最大追踪距离</param>
         public static bool AutomaticTracking(Projectile projectile, float offset, float chasingSpeed = 0, float distanceMax = 1000f)
         {
-            NPC target = FindCloestEnemy(projectile.Center, distanceMax, (n) =>
+            NPC target = FindClosestEnemy(projectile.Center, distanceMax, (n) =>
             {
                 return n.CanBeChasedBy() &&
                 !n.dontTakeDamage && Collision.CanHitLine(projectile.Center, 1, 1, n.Center, 1, 1);
@@ -27,9 +29,9 @@ namespace Coralite.Helpers
             if (target != null)
             {
                 Vector2 plrToTheNearestNPC = Vector2.Normalize(target.Center - projectile.Center);
-                float origionSpeed = projectile.velocity.Length();
+                float originSpeed = projectile.velocity.Length();
                 projectile.velocity += plrToTheNearestNPC * offset;
-                projectile.velocity = Vector2.Normalize(projectile.velocity) * (chasingSpeed == 0 ? origionSpeed : chasingSpeed);
+                projectile.velocity = Vector2.Normalize(projectile.velocity) * (chasingSpeed == 0 ? originSpeed : chasingSpeed);
                 return true;
             }
             return false;
@@ -44,7 +46,7 @@ namespace Coralite.Helpers
         /// <param name="distanceMax">最大瞄准距离</param>
         public static void AimingTheNearestNPC(Projectile projectile, float speed, float distanceMax = 1000f)
         {
-            NPC target = FindCloestEnemy(projectile.Center, distanceMax, (n) =>
+            NPC target = FindClosestEnemy(projectile.Center, distanceMax, (n) =>
             {
                 return n.CanBeChasedBy() &&
                 !n.dontTakeDamage && Collision.CanHitLine(projectile.Center, 1, 1, n.Center, 1, 1);
@@ -59,7 +61,7 @@ namespace Coralite.Helpers
         /// <param name="projectile">弹幕</param>
         /// <param name="distanceMax">最大追踪距离</param>
         /// <returns></returns>
-        public static NPC FindCloestEnemy(Vector2 position, float maxDistance, Func<NPC, bool> predicate)
+        public static NPC FindClosestEnemy(Vector2 position, float maxDistance, Func<NPC, bool> predicate)
         {
             float maxDis = maxDistance;
             NPC res = null;
@@ -115,6 +117,27 @@ namespace Coralite.Helpers
                     totalIndexesInGroup++;
                 }
             }
+        }
+
+
+
+
+        public static void DrawPrettyStarSparkle(float opacity, SpriteEffects dir, Vector2 drawPos, Color drawColor, Color shineColor, float flareCounter, float fadeInStart, float fadeInEnd, float fadeOutStart, float fadeOutEnd, float rotation, Vector2 scale, Vector2 fatness)
+        {
+            Texture2D value = TextureAssets.Extra[98].Value;
+            Color color = shineColor * opacity * 0.5f;
+            color.A = 0;
+            Vector2 origin = value.Size() / 2f;
+            Color color2 = drawColor * 0.5f;
+            float num = Utils.GetLerpValue(fadeInStart, fadeInEnd, flareCounter, clamped: true) * Utils.GetLerpValue(fadeOutEnd, fadeOutStart, flareCounter, clamped: true);
+            Vector2 vector = new Vector2(fatness.X * 0.5f, scale.X) * num;
+            Vector2 vector2 = new Vector2(fatness.Y * 0.5f, scale.Y) * num;
+            color *= num;
+            color2 *= num;
+            Main.EntitySpriteDraw(value, drawPos, null, color, (float)Math.PI / 2f + rotation, origin, vector, dir, 0);
+            Main.EntitySpriteDraw(value, drawPos, null, color, 0f + rotation, origin, vector2, dir, 0);
+            Main.EntitySpriteDraw(value, drawPos, null, color2, (float)Math.PI / 2f + rotation, origin, vector * 0.6f, dir, 0);
+            Main.EntitySpriteDraw(value, drawPos, null, color2, 0f + rotation, origin, vector2 * 0.6f, dir, 0);
         }
     }
 }

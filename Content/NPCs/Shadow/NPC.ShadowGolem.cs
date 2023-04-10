@@ -212,7 +212,6 @@ namespace Coralite.Content.NPCs.Shadow
         {
             for (int i = 0; i < 2; i++)
                 GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.ShadowGores + "ShadowGolem_Gore" + i);
-
         }
 
         public override void HitEffect(int hitDirection, double damage)
@@ -222,17 +221,17 @@ namespace Coralite.Content.NPCs.Shadow
                 Helper.PlayPitched("Shadows/Shadow_Hurt0", 0.4f, 0f, NPC.Center);
                 for (int i = 0; i < 3; i++)
                     Dust.NewDustPerfect(NPC.Center + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), DustID.Granite, null, 0, default, 1f);
-
             }
         }
 
         public override void OnKill()
         {
-            for (int j = 0; j < 2; j++)
-            {
-                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("ShadowGolem_Gore" + j).Type);
-                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("ShadowGolem_Gore" + j).Type);
-            }
+            if (Main.netMode != NetmodeID.Server)
+                for (int j = 0; j < 2; j++)
+                {
+                    Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("ShadowGolem_Gore" + j).Type);
+                    Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("ShadowGolem_Gore" + j).Type);
+                }
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

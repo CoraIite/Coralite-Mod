@@ -123,10 +123,10 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
                 if (Main.netMode != NetmodeID.Server)
                 {
-                    SoundStyle buling = SoundID.Item9;
-                    buling.Volume = 0.2f + ((timer / 20) - 1) * 0.05f;
-                    buling.PitchRange = (0f, 0f);
-                    SoundEngine.PlaySound(buling, Owner.Center);
+                    SoundStyle buLing = SoundID.Item9;
+                    buLing.Volume = 0.2f + ((timer / 20) - 1) * 0.05f;
+                    buLing.PitchRange = (0f, 0f);
+                    SoundEngine.PlaySound(buLing, Owner.Center);
                 }
                 if (timer < 210)
                     Helper.PlayPitched("Weapons_Magic/MagicAcc", 0.4f, ((timer / 20) - 1) * 0.2f, Projectile.Center);
