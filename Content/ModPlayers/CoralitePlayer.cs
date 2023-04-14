@@ -238,7 +238,7 @@ namespace Coralite.Content.ModPlayers
 
         public bool CanUseIcicleBowDash()
         {
-            return Player.HeldItem.ModItem is IcicleBow
+            return Player.HeldItem.type==ModContent.ItemType<IcicleBow>()
                 && Player.dashType == 0
                 && !Player.setSolar
                 && !Player.mount.Active;

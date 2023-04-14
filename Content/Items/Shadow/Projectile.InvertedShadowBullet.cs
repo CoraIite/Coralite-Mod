@@ -64,5 +64,11 @@ namespace Coralite.Content.Items.Shadow
 
             return base.OnTileCollide(oldVelocity);
         }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            lightColor = Color.White;
+            return true;
+        }
     }
 }

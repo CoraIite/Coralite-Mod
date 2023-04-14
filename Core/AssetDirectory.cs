@@ -18,6 +18,7 @@
         public const string Buffs = Assets + "Buffs/";
 
         public const string Minions = Buffs + "Minions/";
+        public const string Debuffs = Buffs + "Debuffs/";
 
         #endregion
 

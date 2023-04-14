@@ -32,8 +32,7 @@ namespace Coralite.Content.Particles
 
         public override void OnSpawn(Particle particle)
         {
-            //���������һ��֡ͼ����
-            particle.oldRot = new float[1];
+            //使用oldRot充当改变帧图的 frameCounter
             particle.frame = new Rectangle(0, 0, 22, 26);
             particle.scale = 1f;
             particle.InitOldCaches(12);
@@ -49,7 +48,7 @@ namespace Coralite.Content.Particles
                 particle.rotation += 0.12f;
                 particle.scale = 0.6f + MathF.Sin(particle.rotation) * 0.2f;
 
-                //���ƶ��㣬�о���������ը��
+                //更新拖尾数组
                 for (int i = 0; i < 11; i++)
                     particle.oldRot[i] = particle.oldRot[i + 1];
 
@@ -58,11 +57,11 @@ namespace Coralite.Content.Particles
                     particle.oldCenter[i] = center + particle.oldRot[i].ToRotationVector2() * length * Helper.EllipticalEase(particle.oldRot[i], 1, 2.4f);
                 particle.trail.Positions = particle.oldCenter;
 
-                //�򵥴ֱ��ؿ���֡ͼ��ֱ���������ˣ�������ٿ���ȥ�������ǵ�֡ͼ
-                particle.oldRot[0] += 1f;
-                if (particle.oldRot[0] > 3f)
+                //使用oldRot充当改变帧图的 frameCounter
+                particle.velocity.X += 1f;
+                if (particle.velocity.X > 3f)
                 {
-                    particle.oldRot[0] = 0f;
+                    particle.velocity.X = 0f;
                     particle.frame.Y += 26;
                     if (particle.frame.Y > 181)
                         particle.frame.Y = 0;

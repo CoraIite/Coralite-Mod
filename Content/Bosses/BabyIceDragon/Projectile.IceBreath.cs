@@ -41,7 +41,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             }
 
             Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f) )* 0.2f - Vector2.UnitY * 2,
-                   CoraliteContent.ParticleType<IceFog>(), Color.AliceBlue, Main.rand.NextFloat(0.8f, 0.9f));
+                   CoraliteContent.ParticleType<Fog>(), Color.AliceBlue, Main.rand.NextFloat(0.8f, 0.9f));
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

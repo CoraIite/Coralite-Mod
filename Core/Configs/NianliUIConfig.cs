@@ -28,9 +28,9 @@ namespace Coralite.Core.Configs
 
         public override void OnChanged()
         {
-            NianliChargingBar.basePos = new Microsoft.Xna.Framework.Vector2(nianliUI_X, nianliUI_Y);
             try
             {
+                NianliChargingBar.basePos = new Microsoft.Xna.Framework.Vector2(nianliUI_X, nianliUI_Y);
                 UILoader.GetUIState<NianliChargingBar>().Recalculate();
             }
             catch (System.Exception)

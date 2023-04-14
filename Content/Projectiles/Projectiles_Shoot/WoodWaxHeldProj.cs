@@ -7,7 +7,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
 {
     public class WoodWaxHeldProj : BaseGunHeldProj
     {
-        public WoodWaxHeldProj() : base(0.6f, 10,-8, AssetDirectory.Weapons_Shoot + "WoodWax", true) { }
+        public WoodWaxHeldProj() : base(0.6f, 10,-8, AssetDirectory.Weapons_Shoot) { }
 
         public override void ModifyAI(float factor)
         {

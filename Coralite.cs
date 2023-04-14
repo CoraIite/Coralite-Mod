@@ -52,13 +52,15 @@ namespace Coralite
 
         public override void Unload()
         {
-            foreach (var loadable in loadCache)
+            if (loadCache is not null)
             {
-                loadable.Unload();
+                foreach (var loadable in loadCache)
+                {
+                    loadable.Unload();
+                }
+
+                loadCache = null;
             }
-
-            loadCache = null;
-
         }
 
         /// <summary>

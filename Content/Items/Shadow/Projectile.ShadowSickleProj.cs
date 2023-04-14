@@ -181,7 +181,7 @@ namespace Coralite.Content.Items.Shadow
                 float num2 = timer / 50f/*(float)Owner.itemTimeMax*/;
                 float num3 = Utils.Remap(num2, 0f, 0.6f, 0f, 1f) * Utils.Remap(num2, 0.6f, 1f, 1f, 0f);
                 float num4 = 0.975f;
-                float fromValue = lightColor.ToVector3().Length() / (float)Math.Sqrt(3.0);
+                float fromValue = lightColor.ToVector3().Length() / MathF.Sqrt(3f);
                 fromValue = Utils.Remap(fromValue, 0.2f, 1f, 0f, 1f);
                 Color color = new Color(40, 20, 60);
                 spriteBatch.Draw(slashTex.Value, center, rectangle, color * fromValue * num3, _Rotation + Owner.direction * ((float)Math.PI / 4f) * -1f * (1f - num2), origin, num * num4, effects, 0f);
@@ -196,8 +196,8 @@ namespace Coralite.Content.Items.Shadow
                 spriteBatch.Draw(slashTex.Value, center, rectangle, color2 * fromValue * Alpha * 0.7f, _Rotation, origin, num * num4, effects, 0f);
 
                 spriteBatch.Draw(slashTex.Value, center, slashTex.Frame(1, 4, 0, 3), Color.White * 0.3f * Alpha * (1f - fromValue * 0.7f), _Rotation + Owner.direction * 0.01f, origin, num, effects, 0f);
-                Vector2 drawpos = center + (_Rotation + Utils.Remap(num2, 0f, 1.4f, 0f, (float)Math.PI / 2f) * Owner.direction).ToRotationVector2() * (slashTex.Width() * 0.5f - 4f) * num;
-                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, drawpos, new Color(255, 255, 255, 0) * num3 * 0.5f, color2, num2, 0f, 0.5f, 0.5f, 1f, (float)Math.PI / 4f, new Vector2(2f, 2f), Vector2.One);
+                Vector2 drawPos = center + (_Rotation + Utils.Remap(num2, 0f, 1.4f, 0f, (float)Math.PI / 2f) * Owner.direction).ToRotationVector2() * (slashTex.Width() * 0.5f - 4f) * num;
+                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, drawPos, new Color(255, 255, 255, 0) * num3 * 0.5f, color2, num2, 0f, 0.5f, 0.5f, 1f, (float)Math.PI / 4f, new Vector2(2f, 2f), Vector2.One);
             }
 
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;

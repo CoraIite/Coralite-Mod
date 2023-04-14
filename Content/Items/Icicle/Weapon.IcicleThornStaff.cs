@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleThornStaff:ModItem
+    public class IcicleThornStaff : ModItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
 
@@ -18,8 +18,8 @@ namespace Coralite.Content.Items.Icicle
         {
             Item.width = Item.height = 40;
             Item.damage = 16;
-            Item.useTime = 35;
-            Item.useAnimation = 18;
+            Item.useTime = 24;
+            Item.useAnimation = 24;
             Item.knockBack = 4f;
             Item.maxStack = 1;
             Item.mana = 25;
@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Icicle
             Item.value = Item.sellPrice(0, 0, 40, 0);
             Item.rare = ItemRarityID.Orange;
             Item.DamageType = DamageClass.Summon;
-            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.useStyle = ItemUseStyleID.Swing;
         }
 
         public override bool AltFunctionUse(Player Player) => true;
@@ -59,6 +59,8 @@ namespace Coralite.Content.Items.Icicle
                     {
                         IcicleThorn pro = (IcicleThorn)proj.ModProjectile;
                         pro.rightClick = true;
+                        if (pro.State == 1||pro.State==0)
+                            pro.ResetStates();
                     }
                     return false;
                 }
@@ -66,9 +68,16 @@ namespace Coralite.Content.Items.Icicle
                 var projectile = Projectile.NewProjectileDirect(source, Main.MouseWorld, velocity, type, damage, knockback, Main.myPlayer);
                 projectile.originalDamage = damage;
             }
+
             return false;
         }
 
-
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient<IcicleCrystal>(2)
+            .AddTile(TileID.IceMachine)
+            .Register();
+        }
     }
 }

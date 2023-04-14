@@ -93,14 +93,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (Main.masterMode)
             {
                 NPC.lifeMax = (int)(4800 * bossLifeScale) + numPlayers * 1600;
-                NPC.damage = 40;
+                NPC.damage = 45;
             }
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<RediancieRelic>()));
-            //npcLoot.Add(ItemDropRule.BossBag(ItemType<RediancieBossBag>()));
+            npcLoot.Add(ItemDropRule.BossBag(ItemType<BabyIceDragonBossBag>()));
             npcLoot.Add(ItemDropRule.Common(ItemType<BabyIceDragonTrophy>(), 10));
 
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
@@ -419,7 +419,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             NPC.rotation = NPC.rotation.AngleTowards(NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f), 0.14f);
                             GetMouseCenter(out _, out Vector2 mouseCenter);
                             Particle.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * 8f,
-                                    CoraliteContent.ParticleType<IceFog>(), Color.AliceBlue, Main.rand.NextFloat(0.6f, 0.8f));
+                                    CoraliteContent.ParticleType<Fog>(), Color.AliceBlue, Main.rand.NextFloat(0.6f, 0.8f));
 
                             if (Timer % 20 == 0)
                             {
@@ -561,7 +561,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 Vector2 position = new Vector2(position_X * 16 + 8, position_Y * 16 - 8);
                 Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, 11, 0f, Main.myPlayer, 0f, 0.4f + scaleOffset + xOffset * 1.1f / howMany);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, 16, 0f, Main.myPlayer, 0f, 0.4f + scaleOffset + xOffset * 1.1f / howMany);
             }
         }
 

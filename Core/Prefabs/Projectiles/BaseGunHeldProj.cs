@@ -7,6 +7,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
+    /// <summary>
+    /// 命名规则："XXX" + "HeldProj"
+    /// </summary>
     public abstract class BaseGunHeldProj : ModProjectile
     {
         protected readonly float heldPositionX;
@@ -24,7 +27,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected ref float HeldPositionX => ref Projectile.localAI[0];
 
-        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
+        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : (TexturePath + (PathHasName ? string.Empty : Name)).Replace("HeldProj","");
 
         public override void SetDefaults()
         {

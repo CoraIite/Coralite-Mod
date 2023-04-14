@@ -10,10 +10,9 @@ The English translation will be gradually improved after tModLoader update 1.4.4
 目前已添加内容：
 	- 一些植物
 	- 植物杂交系统
-	- 一些物品
-    - 一些家具
-	- 一些武器
-	- 一些敌怪，包括2个BOSS
+	- 100+物品
+    - 30+物块
+	- 10+敌怪，包括2个BOSS
 
 后续将会完善植物学系统，植物学内容如下
 	- 采集和种植更加多样化的植物，并培育它们（已完成，将持续新增内容）
@@ -24,4 +23,4 @@ The English translation will be gradually improved after tModLoader update 1.4.4
 	- 植物装饰物（计划中）
 
 程序：瓶中微光
-贴图：阿形，rin
+贴图：阿形，Rin

@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Icicle
             dust.noGravity = true;
 
             Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(8, 8), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f)) * 0.1f,
-                    CoraliteContent.ParticleType<IceFog>(), Color.AliceBlue, Main.rand.NextFloat(0.6f, 0.8f));
+                    CoraliteContent.ParticleType<Fog>(), Color.AliceBlue, Main.rand.NextFloat(0.6f, 0.8f));
 
             if (Projectile.timeLeft % 2 == 0)
             {

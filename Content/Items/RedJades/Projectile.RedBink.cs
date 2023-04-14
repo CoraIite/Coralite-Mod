@@ -94,7 +94,7 @@ namespace Coralite.Content.Items.RedJades
 
                     Timer = 0;
                     ProjectilesHelper.GetMyProjIndexWithSameType(Type, Projectile.whoAmI, Projectile.owner, out int index, out int totalIndexes);
-                    Vector2 idlePosition = Owner.Center + new Vector2(0, -48 - totalIndexes * 2).RotatedBy(6.282 * index / totalIndexes);
+                    Vector2 idlePosition = Owner.Center + new Vector2(0, -48 - totalIndexes * 2).RotatedBy(6.282f * index / totalIndexes);
 
                     if (Vector2.Distance(idlePosition, Projectile.position) > 2000)
                         Projectile.Center = idlePosition;

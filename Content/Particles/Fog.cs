@@ -4,7 +4,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class IceFog : ModParticle
+    public class Fog : ModParticle
     {
         public override void OnSpawn(Particle particle)
         {
@@ -20,7 +20,7 @@ namespace Coralite.Content.Particles
             particle.color *= 0.94f;
 
             particle.fadeIn++;
-            if (particle.fadeIn > 30)
+            if (particle.fadeIn > 120 || particle.color.A < 10)
                 particle.active = false;
         }
     }

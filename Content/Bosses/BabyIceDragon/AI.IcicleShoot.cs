@@ -77,11 +77,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                             GetMouseCenter(out Vector2 targetDir, out Vector2 mouseCenter);
                             if (Timer % 2 == 0)
-                                Particle.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)) * 4, CoraliteContent.ParticleType<IceFog>(), Color.White, 0.8f);
+                                Particle.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)) * 4, CoraliteContent.ParticleType<Fog>(), Color.White, 0.8f);
 
                             if (Timer % 12 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir * 12, ModContent.ProjectileType<IcicleProj_Hostile>(), 13, 8f);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir * 12, ModContent.ProjectileType<IcicleProj_Hostile>(), 18, 8f);
                                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                             }
                             break;
@@ -112,7 +112,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         if (Timer % 6 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-100, 100), -500),
-                                Vector2.Zero, ModContent.ProjectileType<IcicleFalling_Hostile>(), 13, 8f);
+                                Vector2.Zero, ModContent.ProjectileType<IcicleFalling_Hostile>(), 18, 8f);
                             projectile.velocity = (Target.Center + Main.rand.NextVector2Circular(40, 40) - projectile.Center).SafeNormalize(Vector2.Zero) * 12;
                             projectile.netUpdate = true;
                         }

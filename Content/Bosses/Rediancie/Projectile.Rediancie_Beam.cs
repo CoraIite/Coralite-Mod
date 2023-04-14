@@ -8,7 +8,7 @@ namespace Coralite.Content.Bosses.Rediancie
 {
     public class Rediancie_Beam : ModProjectile
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Blank48x48";
+        public override string Texture => AssetDirectory.OtherProjectiles + "Blank";
 
         public override void SetDefaults()
         {

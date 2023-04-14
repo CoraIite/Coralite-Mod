@@ -19,15 +19,20 @@ namespace Coralite.Content.Items.Weapons_Shoot
     {
         public override string Texture => AssetDirectory.Weapons_Shoot + Name;
 
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ToolTipDamageMultiplier[Type] = 0.7f;
+        }
+
         public int shootCount;
 
         public override void SetDefaults()
         {
-            Item.damage = 40;
-            Item.useTime = 30;
-            Item.useAnimation = 30;
+            Item.damage = 39;
+            Item.useTime = 26;
+            Item.useAnimation = 26;
             Item.knockBack = 6;
-            Item.shootSpeed = 9f;
+            Item.shootSpeed = 10f;
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Ranged;
@@ -56,7 +61,7 @@ namespace Coralite.Content.Items.Weapons_Shoot
                 if (shootCount > 3)
                 {
                     Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
-                    Projectile.NewProjectile(source, player.Center, targetDir * 13, ProjectileType<ArethusaBullet>(), (int)(damage * 1.35f), knockback, player.whoAmI);
+                    Projectile.NewProjectile(source, player.Center, targetDir * 14, ProjectileType<ArethusaBullet>(), (int)(damage * 1.35f), knockback, player.whoAmI);
                     SoundEngine.PlaySound(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, player.Center);
                     shootCount = 0;
                     return false;
@@ -74,7 +79,18 @@ namespace Coralite.Content.Items.Weapons_Shoot
             CreateRecipe()
             .AddIngredient<InvertedShadow>()
             .AddIngredient<WoodWax>()
+            .AddIngredient(ItemID.Musket)
+            .AddIngredient(ItemID.PhoenixBlaster)
             .AddIngredient(ItemID.Moonglow,5)
+            .AddTile(TileID.Anvils)
+            .Register();
+
+            CreateRecipe()
+            .AddIngredient<InvertedShadow>()
+            .AddIngredient<WoodWax>()
+            .AddIngredient(ItemID.TheUndertaker)
+            .AddIngredient(ItemID.PhoenixBlaster)
+            .AddIngredient(ItemID.Moonglow, 5)
             .AddTile(TileID.Anvils)
             .Register();
         }

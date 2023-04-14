@@ -98,7 +98,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                             if (Timer % 8 == 0 && Main.netMode != NetmodeID.MultiplayerClient)     //生成透明弹幕
                             {
-                                Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity * 0.2f, ModContent.ProjectileType<IceTornado>(), 13, 10f);
+                                Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity * 0.2f, ModContent.ProjectileType<IceTornado>(), 16, 10f);
                                 projectile.timeLeft = 40;
                                 projectile.netUpdate = true;
                             }
