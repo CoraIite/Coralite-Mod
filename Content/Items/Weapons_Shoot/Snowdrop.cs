@@ -1,9 +1,7 @@
-using System.Linq;
 using Coralite.Content.Projectiles.Projectiles_Shoot;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -66,16 +64,9 @@ namespace Coralite.Content.Items.Weapons_Shoot
         {
             CreateRecipe()
             .AddIngredient<Arethusa>()
-            .AddIngredient(ItemID.SoulofNight, 5)
-            .AddIngredient(ItemID.SoulofMight, 5)
-            .AddTile(TileID.MythrilAnvil)
-            .Register();
-
-            //供普通模式使用
-            CreateRecipe()
-            .AddIngredient<ArethusaNormalMode>()
-            .AddIngredient(ItemID.SoulofNight, 5)
-            .AddIngredient(ItemID.SoulofMight, 5)
+            .AddIngredient(ItemID.FrostCore)
+            .AddIngredient(ItemID.ChlorophyteBar,12)
+            .AddIngredient(ItemID.SoulofLight, 5)
             .AddTile(TileID.MythrilAnvil)
             .Register();
         }

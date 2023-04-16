@@ -6,6 +6,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Coralite.Content.Items.Weapons_Shoot;
 
 namespace Coralite.Content.NPCs.VanillaNPC
 {
@@ -24,6 +25,23 @@ namespace Coralite.Content.NPCs.VanillaNPC
             if (Main.slimeRainNPC[npc.type])
             {
                 npcLoot.Add(ItemDropRule.Common(ItemType<SlimeSapling>(), 50));
+            }
+        }
+
+        public override void SetupShop(int type, Chest shop, ref int nextSlot)
+        {
+            switch (type)
+            {
+                case NPCID.ArmsDealer:
+                    {
+                        if (NPC.downedPlantBoss)    //花后售卖远古核心
+                        {
+                            shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientCore>());
+                            nextSlot++;
+                        }
+                        break;
+                    }
+                default: break;
             }
         }
     }

@@ -53,9 +53,9 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             Projectile.rotation += 0.2f;
 
             Lighting.AddLight(Projectile.Center, new Vector3(0.4f, 0.4f, 0.8f));
-            if (Projectile.timeLeft > 193)
+            if (Projectile.timeLeft > 192)
                 Projectile.velocity = Projectile.velocity.RotatedBy(0.02f);
-            else if ((Projectile.timeLeft + 7) % 40 < 21)
+            else if ((Projectile.timeLeft + 8) % 40 < 20)
                 Projectile.velocity = Projectile.velocity.RotatedBy(0.02f);
             else
                 Projectile.velocity = Projectile.velocity.RotatedBy(-0.02f);

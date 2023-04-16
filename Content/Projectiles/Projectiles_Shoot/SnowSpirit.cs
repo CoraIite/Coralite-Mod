@@ -1,16 +1,11 @@
 using System;
-using Coralite.Content.Buffs.Debuffs;
-using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Projectiles.Projectiles_Shoot
@@ -132,7 +127,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
                 if (factor.X > 0.7f)
                     return Color.Lerp(new Color(152, 192, 70, 60), Color.White, (factor.X - 0.7f) / 0.3f);
 
-                return Color.Lerp(new Color(0, 0, 0, 0), new Color(152, 192, 70, 60), factor.X / 0.7f);//new Color(99, 83, 142, 0)
+                return Color.Lerp(new Color(0, 0, 0, 0), new Color(152, 192, 70, 60), factor.X / 0.7f);
             });
 
             for (int i = 0; i < 23; i++)

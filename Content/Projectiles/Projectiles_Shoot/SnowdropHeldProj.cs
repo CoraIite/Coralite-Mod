@@ -6,7 +6,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
 {
     public class SnowdropHeldProj:BaseGunHeldProj
     {
-        public SnowdropHeldProj() : base(1f, 18, -6, AssetDirectory.Weapons_Shoot) { }
+        public SnowdropHeldProj() : base(1f, 18, -10, AssetDirectory.Weapons_Shoot) { }
 
         public override float Ease()
         {

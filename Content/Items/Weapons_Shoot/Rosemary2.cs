@@ -82,11 +82,25 @@ namespace Coralite.Content.Items.Weapons_Shoot
             .AddTile(TileID.MythrilAnvil)
             .Register();
 
+            CreateRecipe()
+            .AddIngredient<Arethusa>()
+            .AddIngredient(ItemID.SoulofNight, 5)
+            .AddIngredient(ItemID.SoulofFright, 5)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+
             //供普通模式使用
             CreateRecipe()
             .AddIngredient<ArethusaNormalMode>()
             .AddIngredient(ItemID.SoulofNight, 5)
             .AddIngredient(ItemID.SoulofMight, 5)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+
+            CreateRecipe()
+            .AddIngredient<ArethusaNormalMode>()
+            .AddIngredient(ItemID.SoulofNight, 5)
+            .AddIngredient(ItemID.SoulofFright, 5)
             .AddTile(TileID.MythrilAnvil)
             .Register();
         }
