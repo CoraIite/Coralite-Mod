@@ -20,9 +20,9 @@ namespace Coralite.Content.Items.Weapons_Shoot
 
         public override void SetDefaults()
         {
-            Item.damage = 68;
-            Item.useTime = 18;
-            Item.useAnimation = 18;
+            Item.damage = 70;
+            Item.useTime = 17;
+            Item.useAnimation = 17;
             Item.knockBack = 3;
             Item.shootSpeed = 12f;
 
@@ -104,7 +104,7 @@ namespace Coralite.Content.Items.Weapons_Shoot
                  */
                 for (int i = 0; i < 2; i++)
                 {
-                    Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)), type, (int)(damage * 0.5f), knockback, player.whoAmI, 1, 1);
+                    Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)), type, (int)(damage * 0.65f), knockback, player.whoAmI, 1, 1);
                 }
                 SoundEngine.PlaySound(CoraliteSoundID.Gun2_Item40, player.Center);
 

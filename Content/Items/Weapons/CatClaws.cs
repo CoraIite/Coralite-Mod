@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.Weapons
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 75;
+            Item.damage = 60;
             Item.useTime = 15;
             Item.useAnimation = 15;
             Item.knockBack = 6;

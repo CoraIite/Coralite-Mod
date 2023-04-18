@@ -29,7 +29,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         public readonly int textureType;
         public ref float timer => ref Projectile.localAI[0];
-        public ref float lenth => ref Projectile.localAI[1];//蓄力特化状态专用变量
+        public ref float length => ref Projectile.localAI[1];//蓄力特化状态专用变量
         public Vector2 Target;
 
         public CosmosFractureProj2()
@@ -139,7 +139,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             Target = Main.player[Projectile.owner].Center;
             Projectile.netUpdate = true;
             if (timer == 0)
-                lenth = (Target - Projectile.Center).Length();
+                length = (Target - Projectile.Center).Length();
 
             if (timer == 2)
             {
@@ -153,8 +153,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             {
                 Projectile.velocity *= 0;
                 Projectile.rotation += 0.524f;
-                lenth += 5f;
-                Projectile.Center = Target + Projectile.ai[1].ToRotationVector2() * lenth;
+                length += 5f;
+                Projectile.Center = Target + Projectile.ai[1].ToRotationVector2() * length;
 
                 return;
             }
@@ -163,8 +163,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             if (timer < 30)
             {
                 Projectile.friendly = true;
-                lenth -= 10f;
-                Projectile.Center = Target + (Projectile.rotation + 2.357f).ToRotationVector2() * lenth;
+                length -= 10f;
+                Projectile.Center = Target + (Projectile.rotation + 2.357f).ToRotationVector2() * length;
 
                 return;
             }

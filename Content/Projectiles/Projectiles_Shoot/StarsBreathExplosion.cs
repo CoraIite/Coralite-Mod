@@ -44,7 +44,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             {
                 Vector2 center = Projectile.Center;
                 Projectile.scale = Projectile.ai[0];
-                Projectile.width = Projectile.height = (int)(Projectile.scale * 112);
+                Projectile.width = Projectile.height = (int)(Projectile.scale * 132);
 
                 Projectile.Center = center;
                 Projectile.localAI[1] = 1;
@@ -65,7 +65,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
 
                         int width = (int)(Projectile.width * 0.25f);
                         Particle.NewParticle(Projectile.Center + Main.rand.NextVector2CircularEdge(width, width), Vector2.Zero,
-                            CoraliteContent.ParticleType<HorizontalStar>(), color, Projectile.scale * 0.2f);
+                            CoraliteContent.ParticleType<HorizontalStar>(), color, Projectile.scale * 0.3f);
                     }
 
                     frameX = 0;

@@ -14,18 +14,26 @@ namespace Coralite.Content.NPCs.VanillaNPC
     {
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-            if (npc.type == NPCID.DarkCaster)
-                npcLoot.Add(ItemDropRule.Common(ItemType<ShadowEnergy>(), 3, 1, 3));
-
-            if (npc.type == NPCID.DemonEye || npc.type == NPCID.DemonEye2)
-                npcLoot.Add(ItemDropRule.Common(ItemType<EyeballSeed>(), 50));
-            if (npc.type == NPCID.WanderingEye)
-                npcLoot.Add(ItemDropRule.Common(ItemType<EyeballSeed>(), 25));
+            switch (npc.type)
+            {
+                default: break;
+                case NPCID.DemonEye:
+                case NPCID.DemonEye2:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<EyeballSeed>(), 50));
+                    break;
+                case NPCID.DarkCaster:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<ShadowEnergy>(), 3, 1, 3));
+                    break;
+                case NPCID.WanderingEye:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<EyeballSeed>(), 25));
+                    break;
+                case NPCID.DukeFishron:
+                    npcLoot.Add(ItemDropRule.ByCondition(new DownedGolemCondition(), ItemType<DukeFishronSkin>(), 1, 3, 5));
+                    break;
+            }
 
             if (Main.slimeRainNPC[npc.type])
-            {
                 npcLoot.Add(ItemDropRule.Common(ItemType<SlimeSapling>(), 50));
-            }
         }
 
         public override void SetupShop(int type, Chest shop, ref int nextSlot)

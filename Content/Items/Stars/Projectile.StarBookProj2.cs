@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.Stars
 
         public readonly int textureType;
 
-        public ref float lenth => ref Projectile.ai[1];//蓄力特化状态专用变量
+        public ref float length => ref Projectile.ai[1];//蓄力特化状态专用变量
 
         public ref float timer => ref Projectile.localAI[0];
         public ref float direction => ref Projectile.localAI[1];
@@ -85,13 +85,13 @@ namespace Coralite.Content.Items.Stars
             if (timer == 0)
             {
                 direction = (Projectile.Center - Owner.Center).ToRotation();
-                lenth = (Owner.Center - Projectile.Center).Length();
+                length = (Owner.Center - Projectile.Center).Length();
             }
 
-            if (lenth > 16)
+            if (length > 16)
             {
-                lenth -= 5f;
-                Projectile.Center = Owner.Center + direction.ToRotationVector2() * lenth;
+                length -= 5f;
+                Projectile.Center = Owner.Center + direction.ToRotationVector2() * length;
             }
             else
             {

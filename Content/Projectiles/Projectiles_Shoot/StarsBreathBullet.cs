@@ -23,7 +23,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             Projectile.width = Projectile.height = 16;
             Projectile.timeLeft = 70;
             Projectile.aiStyle = -1;
-            Projectile.penetrate = 3;
+            Projectile.penetrate = -1;
             Projectile.extraUpdates = 1;
             Projectile.localNPCHitCooldown = 10;
             Projectile.tileCollide = true;
@@ -62,7 +62,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
         public void PlaySound()
         {
             SoundStyle style = CoraliteSoundID.TerraBlade_Item60;
-            style.Volume = 0.6f;
+            style.Volume = 0.9f;
             style.Pitch = 1f;
             SoundEngine.PlaySound(style, Projectile.Center);
         }
@@ -72,7 +72,9 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             if (Projectile.timeLeft > 32)
                 Projectile.timeLeft = 31;
 
-            Projectile.damage = (int)(Projectile.damage * 0.4f);
+            Projectile.damage = (int)(Projectile.damage * 0.75f);
+            if (Projectile.damage < 5)
+                Projectile.damage = 5;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -101,7 +103,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             };
             shineColor *= 0.8f;
 
-            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center, new Color(255, 255, 255, 0) * 0.5f, shineColor, 0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, new Vector2(3, 1.5f), Vector2.One);
+            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center, new Color(255, 255, 255, 0) * 0.7f, shineColor, 0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, new Vector2(3, 1.5f), Vector2.One);
 
             return false;
         }

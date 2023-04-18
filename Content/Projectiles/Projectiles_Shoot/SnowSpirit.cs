@@ -122,7 +122,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             }
 
 
-            trail ??= new Trail(Main.instance.GraphicsDevice, 24, new NoTip(), factor => Helper.Lerp(0,2,factor), factor =>
+            trail ??= new Trail(Main.instance.GraphicsDevice, 24, new NoTip(), factor => Helper.Lerp(0, 2, factor), factor =>
             {
                 if (factor.X > 0.7f)
                     return Color.Lerp(new Color(152, 192, 70, 60), Color.White, (factor.X - 0.7f) / 0.3f);

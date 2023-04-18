@@ -41,12 +41,13 @@ namespace Coralite.Content.Items.Weapons_Shoot
             {
                 Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
                 int bulletType = ProjectileType<SnowBullet>();
-                int snowDamage = (int)(damage * 0.8f);
+                int snowDamage = (int)(damage * 0.9f);
                 for (int i = 0; i < 3; i++) //射出4发白雪弹
                 {
                     int timeLeft = Main.rand.Next(24, 28);
                     int index = Projectile.NewProjectile(source, player.Center, dir.RotatedBy(Main.rand.NextFloat(-0.24f, 0.24f)) * 14, bulletType, snowDamage, knockback, player.whoAmI, timeLeft - 2);
                     Main.projectile[index].timeLeft = timeLeft;
+                    Main.projectile[index].netUpdate = true;
                 }
 
                 int timeLeft2 = Main.rand.Next(24, 28);

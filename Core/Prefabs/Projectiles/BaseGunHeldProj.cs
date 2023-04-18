@@ -34,6 +34,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.width = Projectile.height = 16;
             Projectile.timeLeft = 10;
             Projectile.friendly = true;
+            Projectile.tileCollide = false;
         }
 
         public override bool? CanDamage() => false;
