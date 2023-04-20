@@ -139,5 +139,20 @@ namespace Coralite.Helpers
             Main.EntitySpriteDraw(value, drawPos, null, color2, (float)Math.PI / 2f + rotation, origin, vector * 0.6f, dir, 0);
             Main.EntitySpriteDraw(value, drawPos, null, color2, 0f + rotation, origin, vector2 * 0.6f, dir, 0);
         }
+
+        public static void DrawPrettyLine(float opacity, SpriteEffects dir, Vector2 drawPos, Color drawColor, Color shineColor, float flareCounter, float fadeInStart, float fadeInEnd, float fadeOutStart, float fadeOutEnd, float rotation, float scale, Vector2 fatness)
+        {
+            Texture2D value = TextureAssets.Extra[98].Value;
+            Color color = shineColor * opacity * 0.5f;
+            color.A = 0;
+            Vector2 origin = value.Size() / 2f;
+            Color color2 = drawColor * 0.5f;
+            float num = Utils.GetLerpValue(fadeInStart, fadeInEnd, flareCounter, clamped: true) * Utils.GetLerpValue(fadeOutEnd, fadeOutStart, flareCounter, clamped: true);
+            Vector2 vector = new Vector2(fatness.X * 0.5f, scale) * num;
+            color *= num;
+            color2 *= num;
+            Main.EntitySpriteDraw(value, drawPos, null, color, (float)Math.PI / 2f + rotation, origin, vector, dir, 0);
+            Main.EntitySpriteDraw(value, drawPos, null, color2, (float)Math.PI / 2f + rotation, origin, vector * 0.6f, dir, 0);
+        }
     }
 }

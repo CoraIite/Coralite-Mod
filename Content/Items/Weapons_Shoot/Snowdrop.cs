@@ -64,7 +64,6 @@ namespace Coralite.Content.Items.Weapons_Shoot
         public override void AddRecipes()
         {
             CreateRecipe()
-            .AddIngredient<Arethusa>()
             .AddIngredient(ItemID.FrostCore)
             .AddIngredient(ItemID.ChlorophyteBar,12)
             .AddIngredient(ItemID.SoulofLight, 5)

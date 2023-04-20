@@ -11,7 +11,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Weapons_Shoot
 {
-    public class Hyacinth:ModItem
+    public class Hyacinth : ModItem
     {
         public override string Texture => AssetDirectory.DefaultItem;
 
@@ -20,14 +20,14 @@ namespace Coralite.Content.Items.Weapons_Shoot
         public override void SetDefaults()
         {
             Item.damage = 190;
-            Item.useTime = 16;
-            Item.useAnimation = 16;
+            Item.useTime = 14;
+            Item.useAnimation = 14;
             Item.knockBack = 3;
             Item.shootSpeed = 11f;
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Ranged;
-            Item.value = Item.sellPrice(0, 3, 0, 0);
+            Item.value = Item.sellPrice(0, 50, 0, 0);
             Item.rare = ItemRarityID.Red;
             Item.shoot = 10;
             Item.useAmmo = AmmoID.Bullet;
@@ -50,15 +50,15 @@ namespace Coralite.Content.Items.Weapons_Shoot
                 {
                     float angle = shootAngle + i * MathHelper.TwoPi / 3;
                     int textureType = Main.rand.NextFromList(textureList.ToArray());
-                    Projectile.NewProjectile(source, player.Center + angle.ToRotationVector2() * 40, Vector2.Zero, ProjectileType<HyacinthPhantomGun>(), damage, knockback, player.whoAmI, textureType, i);
+                    Projectile.NewProjectile(source, player.Center + angle.ToRotationVector2() * 40, Vector2.Zero, ProjectileType<HyacinthPhantomGun>(), (int)(damage * 0.75f), knockback, player.whoAmI, textureType, i);
                     textureList.Remove(textureType);
                 }
 
                 shootAngle += MathHelper.TwoPi / 12;
-                shootAngle = shootAngle % MathHelper.TwoPi;
+                shootAngle %= MathHelper.TwoPi;
 
                 //生成手持弹幕以及红色子弹
-
+                Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.One) * 16, ProjectileType<HyacinthRedBullet>(), damage, knockback, player.whoAmI);
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<HyacinthHeldProj>(), damage, knockback, player.whoAmI);
 
                 SoundStyle style = CoraliteSoundID.Gun_Item11;

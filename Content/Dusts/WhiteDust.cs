@@ -26,7 +26,7 @@ namespace Coralite.Content.Dusts
             dust.scale *= 0.8f;
             dust.color *= 0.8f;
             dust.fadeIn++;
-            if (dust.fadeIn > 4)
+            if (dust.fadeIn > 5)
                 dust.active = false;
             return false;
         }

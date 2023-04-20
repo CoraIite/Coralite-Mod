@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Coralite.Content.Items.Weapons_Shoot;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -54,9 +55,12 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             Player Owner = Main.player[Projectile.owner];
 
             rotation -= 0.06f;
-            length += 0.5f;
-            Projectile.Center = Owner.Center + rotation.ToRotationVector2() * length;
+            if (Timer < 30)
+                length += 1.3f;
+            else
+                length -= 1.4f;
 
+            Projectile.Center = Owner.Center + rotation.ToRotationVector2() * length;
 
             if (fadeIn)
             {
@@ -68,8 +72,11 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
                 }
             }
 
-            float targetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (Main.MouseWorld.X > Owner.Center.X ? 0f : 3.141f);
-
+            if (Main.myPlayer == Projectile.owner)
+                Projectile.spriteDirection = Main.MouseWorld.X > Main.player[Projectile.owner].Center.X ? 0 : 1;
+            else
+                Projectile.spriteDirection = Main.player[Projectile.owner].direction > 0 ? 0 : 1;
+            float targetRot = (Main.MouseWorld - Owner.Center).ToRotation() + Projectile.spriteDirection * 3.141f;
             do
             {
                 if (Timer < 60)
@@ -77,16 +84,22 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
                     if (Timer % 20 == 0)
                     {
                         //生成弹幕
-                        if (Main.myPlayer==Projectile.owner)
+                        if (Main.myPlayer == Projectile.owner)
                         {
-                            float alpha = 1.3f - (Timer / 20) * 0.3f;
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, 
-                                (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.One).RotatedBy(Main.rand.NextFloat(-0.03f, 0.03f)) * Main.rand.NextFloat(14f, 16f), 
-                                ModContent.ProjectileType<HyacinthBullet>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.ai[0], alpha);
+                            float count = Timer / 20;
+                            float alpha = 1.3f - count * 0.3f;
+                            int projType = Main.rand.Next(2) switch
+                            {
+                                0 => ModContent.ProjectileType<HyacinthBullet2>(),
+                                _ => ModContent.ProjectileType<HyacinthBullet>()
+                            };
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,
+                                (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.One).RotatedBy(Main.rand.NextFloat(-0.03f, 0.03f)) * Main.rand.NextFloat(14f, 16f),
+                                projType, Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.ai[0], alpha);
                         }
 
-                        if (Projectile.ai[1] == 1)
-                        {
+                        //if (Projectile.ai[1] == 1)
+                        //{
                             //原本想随机发声音，但是实际效果太过奇怪所以还是算了吧
                             /*                             SoundStyle style = Main.rand.Next(5) switch
                                                         {
@@ -96,8 +109,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
                                                             3 => CoraliteSoundID.Shotgun2_Item38,
                                                             _ => CoraliteSoundID.TripleGun_Item31
                                                         }; */
-                            SoundEngine.PlaySound(CoraliteSoundID.Gun2_Item40, Projectile.Center);
-                        }
+                        //    SoundEngine.PlaySound(CoraliteSoundID.Gun2_Item40, Projectile.Center);
+                        //}
                     }
 
                     if (Main.myPlayer == Projectile.owner)
@@ -127,13 +140,20 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             int textureType = GetTexture();
             Main.instance.LoadItem(textureType);
             Texture2D mainTex = TextureAssets.Item[textureType].Value;
+            Vector2 center = Projectile.Center - Main.screenPosition;
             SpriteEffects effects;
-            if (Main.myPlayer == Projectile.owner)
-                effects = Main.MouseWorld.X > Main.player[Projectile.owner].Center.X ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            else
-                effects = Main.player[Projectile.owner].direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            effects = Projectile.spriteDirection < 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, Color.White * 0.8f * alpha, Projectile.rotation, mainTex.Size() / 2, 0.8f, effects, 0f);
+            Color backgroundColor = Color.Lerp(new Color(200, 0, 0, 0), new Color(0, 0, 0, 50), Timer / 60);
+            Main.spriteBatch.Draw(mainTex, center, null, backgroundColor * alpha, Projectile.rotation, mainTex.Size() / 2, 1f, effects, 0f);
+            Main.spriteBatch.Draw(mainTex, center, null, new Color(204,204,204) * alpha, Projectile.rotation, mainTex.Size() / 2, 0.8f, effects, 0f);
+
+            if (Timer < 30)
+            {
+                float factor = Timer / 30;
+                Color shineColor = GetColor() * 0.8f;
+                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + Projectile.rotation.ToRotationVector2() * 8, new Color(204, 204, 204, 0), shineColor * 0.8f, factor, 0f, 0.5f, 0.5f, 1f, Timer * 0.04f, new Vector2(3f, 3f), Vector2.One);
+            }
             return false;
         }
 
@@ -189,6 +209,60 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             }
 
             return (int)Projectile.ai[0];
+        }
+
+        public Color GetColor()
+        {
+            switch (-Projectile.ai[0])
+            {
+                default: break;
+                case 1:     //彩弹枪
+                    return Color.Silver;
+                case 2:     //超级星星炮
+                    return Color.LightYellow;
+                case 3:     //星星炮
+                    return Color.Yellow;
+                case 4:     //玛瑙爆破枪
+                    return Color.Purple;
+                case 5:     //维纳斯万能枪
+                    return new Color(140, 255, 102);
+                case 6:     //链式机枪
+                    return new Color(196, 17, 18);
+                case 7:     //外星泡泡枪
+                    return new Color(233, 148, 248);
+                case 8:     //星旋机枪
+                    return new Color(0, 242, 170);
+                case 9:     //太空海豚机枪
+                    return new Color(147, 227, 236);
+                case 10:    //邓氏鲨
+                    return new Color(57, 140, 125);
+                case 11:    //巨兽鲨
+                    return new Color(147, 98, 103);
+                case 12:    //迷你鲨
+                    return new Color(195, 131, 49);
+                case 13:    //满天星
+                    return Color.White;
+                case 14:    //雪花莲
+                    return new Color(152, 192, 70);
+                case 15:    //迷迭香
+                    return new Color(235, 141, 207);
+                case 16:    //迷迭香2
+                    return new Color(235, 141, 207);
+                case 17:    //幽兰
+                    return new Color(95, 120, 233);
+                case 18:    //木蜡
+                    return new Color(125, 165, 79);
+                case 19:    //火枪
+                    return new Color(165, 165, 165);
+                case 20:    //夺命枪
+                    return new Color(237, 28, 36);
+                case 21:    //凤凰爆破枪
+                    return new Color(252, 145, 28);
+                case 22:    //手枪
+                    return new Color(127, 127, 127);
+            }
+
+            return Color.White;
         }
 
         public override void SendExtraAI(BinaryWriter writer)

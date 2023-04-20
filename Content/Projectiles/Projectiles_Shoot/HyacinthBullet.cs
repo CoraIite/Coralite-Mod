@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using Coralite.Content.Dusts;
 using Coralite.Core;
-using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,7 +21,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
 
         public int npcIndex;
         public bool fadeIn=true;
-
+public float factor;
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 16;
@@ -130,33 +129,38 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
 
             #endregion
 
-            if (Projectile.timeLeft > 20)
+            Color color = Color.Lerp(GetColor(), Color.Red, factor) * 0.8f * Projectile.ai[1];
+
+            if (Projectile.timeLeft > 60)
             {
                 if (Framing.GetTileSafely(Projectile.Center).HasSolidTile())
                 {
-                    Projectile.timeLeft = 20;
+                    Projectile.timeLeft = 60;
                     Projectile.netUpdate = true;
                 }
-                Projectile.rotation = Projectile.velocity.ToRotation();
-                Color color = GetColor() * 0.75f * Projectile.ai[1];
                 for (int i = 0; i < 4; i++)
-                    Dust.NewDustPerfect(Projectile.Center - i * Projectile.velocity / 4, ModContent.DustType<WhiteDust>(), newColor: color, Scale: Main.rand.NextFloat(1.5f, 1.6f));
+                    Dust.NewDustPerfect(Projectile.Center - i * Projectile.velocity / 4, ModContent.DustType<WhiteDust>(), newColor: color, Scale: Main.rand.NextFloat(0.8f, 1f));
 
-                Lighting.AddLight(Projectile.Center, color.ToVector3() * 0.5f);
             }
             else
-            {
-                Projectile.localAI[1] -= 0.025f;
-            }
+                Projectile.localAI[1] -= 0.006f;
 
+            Lighting.AddLight(Projectile.Center, color.ToVector3() * 0.5f);
+            Projectile.rotation = Projectile.velocity.ToRotation();
+
+            if (factor < 1)
+            {
+                factor += 1 / 60f;
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             Vector2 center = Projectile.Center - Main.screenPosition;
 
-            Color shineColor = GetColor();
-            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center, new Color(204, 204, 204, 0)* Projectile.ai[1], shineColor, Projectile.localAI[1], 0f, 0.5f, 0.5f, 1f, Projectile.rotation, new Vector2(1.5f, 0.35f), Vector2.One);
+            Color shineColor = Color.Lerp(GetColor(), Color.Red, factor);
+            ProjectilesHelper.DrawPrettyLine(Projectile.Opacity, SpriteEffects.None, center, new Color(204, 204, 204, 0) * Projectile.ai[1], shineColor, Projectile.localAI[1], 0f, 0.5f, 0.5f, 1f, Projectile.rotation, 1.75f, Vector2.One);
+            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center, new Color(100, 100, 100, 0) * Projectile.ai[1], shineColor * 0.8f, Projectile.localAI[1], 0f, 0.5f, 0.5f, 1f, Projectile.rotation + Projectile.timeLeft * 0.08f, new Vector2(0.7f, 0.7f), Vector2.One);
             //ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None,center, new Color(153, 153, 153, 0), shineColor, Projectile.localAI[1], 0f, 0.5f, 0.5f, 1f, Projectile.rotation+0.785f, new Vector2(0.25f, 0.25f), Vector2.One);
 
             return false;

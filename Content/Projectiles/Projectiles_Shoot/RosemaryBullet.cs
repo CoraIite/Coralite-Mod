@@ -96,10 +96,10 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             }
 
             float roughlySpeed = length / 12f;
-            FlowLine.Spawn(Projectile.Center + dir * 8, dir * roughlySpeed, 2, 12, 0.04f,new Color(95, 120, 233, 100));
-            for (int i = -1; i < 4; i+=2)
+            FlowLine.Spawn(Projectile.Center + dir * 8, dir * roughlySpeed, 2, 12, 0.04f, new Color(95, 120, 233, 100));
+            for (int i = -1; i < 4; i += 2)
             {
-                FlowLine.Spawn(Projectile.Center + dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * (32+i*8), dir * roughlySpeed * 0.5f, 1, 12, Math.Sign(i) * 0.1f ,new Color(255, 179, 251, 60));
+                FlowLine.Spawn(Projectile.Center + dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * (32 + i * 8), dir * roughlySpeed * 0.5f, 1, 12, Math.Sign(i) * 0.1f, new Color(255, 179, 251, 60));
             }
 
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), targetCenter, Vector2.Zero,
