@@ -9,9 +9,7 @@ namespace Coralite.Helpers
 {
     public static partial class Helper
     {
-        /// <summary>
-        /// 角度转弧度系数
-        /// </summary>
+        /// <summary> 角度转弧度系数 </summary>
         public const float Deg2Rad = 0.0174532924f;
 
         public static Vector3 Vec3(this Vector2 vector) => new Vector3(vector.X, vector.Y, 0);

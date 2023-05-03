@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Core;
 using Terraria.UI;
 
 namespace Coralite.Core.Loaders
@@ -24,7 +25,7 @@ namespace Coralite.Core.Loaders
             UserInterfaces = new List<UserInterface>();
             UIStates = new List<BetterUIState>();
 
-            foreach (Type t in Mod.Code.GetTypes())
+            foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))
             {
                 if (t.IsSubclassOf(typeof(BetterUIState)))
                 {
@@ -66,6 +67,13 @@ namespace Coralite.Core.Loaders
         /// <typeparam name="T">UI状态</typeparam>
         /// <returns></returns>
         public static T GetUIState<T>() where T : BetterUIState => UIStates.FirstOrDefault(n => n is T) as T;
+
+        /// <summary>
+        /// 用于获取UserInterface
+        /// </summary>
+        /// <typeparam name="T">UI状态</typeparam>
+        /// <returns></returns>
+        public static UserInterface GetUserInterface<T>() where T : BetterUIState => UserInterfaces.FirstOrDefault(n => n.CurrentState is T);
     }
 
     class UISystem : ModSystem

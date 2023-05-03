@@ -31,27 +31,26 @@ namespace Coralite.Content.Items.YujianHulu
         public GoldYujianProj() : base(
             new YujianAI[]
             {
-                 new Yujian_Spurts(80, 4.5f, 60, 1.3f, 0.4f),
-                 new Yujian_Spurts(90, 5.2f, 80, 1.3f, 0.4f),
+                new Yujian_Spurts(80, 4.5f, 60, 1.3f, 0.4f),
+                new Yujian_Spurts(90, 5.2f, 80, 1.3f, 0.4f),
             },
             null,
             new Yujian_PreciseSlash(startTime: 130,
-                    slashWidth: 70,
-                    slashTime: 90,
-                    startAngle: -2f,
-                    totalAngle: 3f,
-                    turnSpeed: 2,
-                    roughlyVelocity: 0,
-                    halfShortAxis: 1f,
-                    halfLongAxis: 1.5f,
-                    new HeavySmoother()),
+                slashWidth: 70,
+                slashTime: 90,
+                startAngle: -2f,
+                totalAngle: 3f,
+                turnSpeed: 2,
+                roughlyVelocity: 0,
+                halfShortAxis: 1f,
+                halfLongAxis: 1.5f,
+                new HeavySmoother()),
             PowerfulAttackCost: 150,
             attackLength: 290,
             width: 30, height: 58,
             Color.DarkRed, Color.Gold,
             trailCacheLength: 18
             )
-        { }
-
+        {}
     }
 }

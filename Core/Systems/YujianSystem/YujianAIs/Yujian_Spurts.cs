@@ -12,12 +12,12 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
         private readonly float roughlyVelocity;
         private bool canSpurts = false;
 
-        public int SpurtsLenth { get; init; }
+        public int SpurtsLength { get; init; }
 
-        public Yujian_Spurts(int startTime, float spurtsSpeed,int spurtsLenth, float turnSpeed, float roughlyVelocity)
+        public Yujian_Spurts(int startTime, float spurtsSpeed,int spurtsLength, float turnSpeed, float roughlyVelocity)
         {
             StartTime = startTime;
-            this.SpurtsLenth = spurtsLenth;
+            this.SpurtsLength = spurtsLength;
             this.spurtsSpeed = spurtsSpeed;
             this.turnSpeed = turnSpeed;
             this.roughlyVelocity = roughlyVelocity;
@@ -45,16 +45,16 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             float distance = Vector2.Distance(targetCenter, Projectile.Center);
             float targetAngle = targetDirection.ToRotation();
 
-            if (distance > SpurtsLenth * 2)
+            if (distance > SpurtsLength * 2)
                 Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;
-            else if (distance < SpurtsLenth * 1.8f)
+            else if (distance < SpurtsLength * 1.8f)
                 Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) - targetDirection * turnSpeed) / 21f;
 
             //控制旋转，接近时逐渐转到对应的角度
             float factor = 0.008f * turnSpeed + 0.01f * roughlyVelocity;
             Projectile.rotation = Projectile.rotation.AngleLerp(targetAngle + 1.57f, factor);
 
-            if (distance < SpurtsLenth * 2 && distance > SpurtsLenth * 1.8f)
+            if (distance < SpurtsLength * 2 && distance > SpurtsLength * 1.8f)
             {
                 canSpurts = true;
                 canDamage = true;

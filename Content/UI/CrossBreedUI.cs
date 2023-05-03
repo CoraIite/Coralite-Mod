@@ -115,7 +115,7 @@ namespace Coralite.Content.UI
 
         /// <summary>
         /// 杂交并突变，仅改变该植物的类型，其他数值请自行调整
-        /// 输入父植物，母植物，催化剂，根据父母植物中的字典来判断是否会产生突变
+        /// 输入父植物，母植物，催化剂，字典的来判断是否会产生突变
         /// </summary>
         /// <param name="father">父物品</param>
         /// <param name="mother">母物品</param>

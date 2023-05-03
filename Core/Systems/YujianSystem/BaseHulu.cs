@@ -154,11 +154,12 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public override void RightClick(Player player)
         {
-            Item.stack++;
             YujianHuluBackpack.visible = true;
             YujianHuluBackpack.huluItem = this;
             UILoader.GetUIState<YujianHuluBackpack>().Recalculate();
         }
+
+        public override bool ConsumeItem(Player player) => false;
 
         /// <summary>
         /// 供UI调用的方法，用于存储物品

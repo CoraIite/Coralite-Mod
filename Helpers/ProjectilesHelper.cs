@@ -56,25 +56,26 @@ namespace Coralite.Helpers
         }
 
         /// <summary>
-        ///  找到距离弹幕最近的敌人
+        /// 找到距离弹幕最近的敌人
         /// </summary>
-        /// <param name="projectile">弹幕</param>
-        /// <param name="distanceMax">最大追踪距离</param>
+        /// <param name="position"></param>
+        /// <param name="maxDistance"></param>
+        /// <param name="predicate"></param>
         /// <returns></returns>
         public static NPC FindClosestEnemy(Vector2 position, float maxDistance, Func<NPC, bool> predicate)
         {
             float maxDis = maxDistance;
-            NPC res = null;
+            NPC target = null;
             foreach (var npc in Main.npc.Where(n => n.active && !n.friendly && predicate(n)))
             {
                 float dis = Vector2.Distance(position, npc.Center);
                 if (dis < maxDis)
                 {
                     maxDis = dis;
-                    res = npc;
+                    target = npc;
                 }
             }
-            return res;
+            return target;
         }
 
         /// <summary>

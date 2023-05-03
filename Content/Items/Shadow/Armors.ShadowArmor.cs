@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Shadow
         public override void UpdateEquip(Player player)
         {
             player.GetDamage (DamageClass.Magic)+= 0.08f;
-            player.statManaMax += 40;
+            player.statManaMax += 40;   //TODO: 有BUG，会让200法变400法，待修改
         }
 
         public override void UpdateArmorSet(Player player)

@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Weapons_Shoot
 {
     public class Hyacinth : ModItem
     {
-        public override string Texture => AssetDirectory.DefaultItem;
+        public override string Texture => AssetDirectory.Weapons_Shoot+Name;
 
         public float shootAngle;
 

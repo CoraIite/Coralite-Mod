@@ -72,7 +72,7 @@ namespace Coralite.Content.Bosses.Rediancie
         {
             DisplayName.SetDefault("赤玉灵");
 
-            Main.npcFrameCount[Type] = 13;
+            Main.npcFrameCount[Type] = 6;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
@@ -204,12 +204,12 @@ namespace Coralite.Content.Bosses.Rediancie
         {
             #region frame
             NPC.frameCounter++;
-            int frameTime = State == -3 ? 10 : 5;
+            int frameTime = State == -3 ? 8 : 4;
 
             if (NPC.frameCounter > frameTime)
             {
                 NPC.frame.Y += 1;
-                if (NPC.frame.Y == 13)
+                if (NPC.frame.Y == Main.npcFrameCount[Type])
                     NPC.frame.Y = 0;
                 NPC.frameCounter = 0;
             }
@@ -227,8 +227,9 @@ namespace Coralite.Content.Bosses.Rediancie
                 return;
             }
 
-            NPC.direction =  Target.Center.X > NPC.Center.X ? 1 : -1;
-            NPC.spriteDirection = Math.Abs(NPC.velocity.X) > 0.5f ? NPC.direction : 1;
+            float distanceX = Target.Center.X - NPC.Center.X;
+            NPC.direction = distanceX > 0 ? 1 : -1;
+            NPC.spriteDirection = (Math.Abs(distanceX) > 24) ? NPC.direction : 1;
             NPC.directionY = Target.Center.Y > NPC.Center.Y ? 1 : -1;
             switch (State)
             {
@@ -319,7 +320,7 @@ namespace Coralite.Content.Bosses.Rediancie
                         //控制X方向的移动
                         if (Timer < 325)
                         {
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 7f, 0.1f, 0.15f, 0.97f);
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 7.5f, 0.12f, 0.15f, 0.97f);
 
                             //控制Y方向的移动
                             float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
@@ -411,7 +412,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 case (int)AIStates.explosion:       //追着玩家并爆炸
                     {
                         //控制X方向的移动
-                        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6f, 0.09f, 0.22f, 0.97f);
+                        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6.5f, 0.12f, 0.22f, 0.97f);
 
                         //控制Y方向的移动
                         float yLength2 = Math.Abs(Target.Center.Y - NPC.Center.Y);
@@ -506,7 +507,8 @@ namespace Coralite.Content.Bosses.Rediancie
 
             }
 
-            NPC.rotation = Math.Abs(NPC.velocity.X) > 0.5f ? NPC.velocity.ToRotation() * 0.06f * NPC.direction : 0f;
+            float targetRot = NPC.velocity.Length() * 0.04f * NPC.direction;
+            NPC.rotation = NPC.rotation.AngleTowards(targetRot,0.01f);
             Timer++;
         }
 

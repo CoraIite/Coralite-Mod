@@ -221,11 +221,11 @@ namespace Coralite.lib
                 float num9 = (center - vector).ToRotation();
                 float num10 = (center.X > vector.X) ? (-(float)Math.PI) : ((float)Math.PI);
                 float num11 = num10 + (0f - num10) * lerpValue * 2f;
-                Vector2 spinningpoint = num11.ToRotationVector2();
-                spinningpoint.Y *= (float)Math.Sin(Projectile.identity * 2.3f) * 0.5f;
-                spinningpoint = spinningpoint.RotatedBy(num9);
+                Vector2 spinningPoint = num11.ToRotationVector2();
+                spinningPoint.Y *= (float)Math.Sin(Projectile.identity * 2.3f) * 0.5f;
+                spinningPoint = spinningPoint.RotatedBy(num9);
                 float num12 = (center - vector).Length() / 2f;
-                Vector2 center2 = Vector2.Lerp(vector, center, 0.5f) + spinningpoint * num12;
+                Vector2 center2 = Vector2.Lerp(vector, center, 0.5f) + spinningPoint * num12;
                 Projectile.Center = center2;
                 Vector2 vector2 = MathHelper.WrapAngle(num9 + num11 + 0f).ToRotationVector2() * 10f;
                 Projectile.velocity = vector2;
@@ -341,12 +341,12 @@ namespace Coralite.lib
 
                 //nnd 这一大堆是什么玩意 反正我是真没看懂
                 float num22 = Pi + (0f - Pi) * lerpValue2 * 2f;
-                Vector2 spinningpoint2 = num22.ToRotationVector2();
-                spinningpoint2.Y *= 0.5f;
-                spinningpoint2.Y *= 0.8f + (float)Math.Sin(Projectile.identity * 2.3f) * 0.2f;
-                spinningpoint2 = spinningpoint2.RotatedBy(center2TargetRotate);
-                float target2CenterLenthOver2 = (targetCenter - originCenter).Length() / 2f;
-                Vector2 realCenter = Vector2.Lerp(originCenter, targetCenter, 0.5f) + spinningpoint2 * target2CenterLenthOver2;
+                Vector2 spinningPoint2 = num22.ToRotationVector2();
+                spinningPoint2.Y *= 0.5f;
+                spinningPoint2.Y *= 0.8f + (float)Math.Sin(Projectile.identity * 2.3f) * 0.2f;
+                spinningPoint2 = spinningPoint2.RotatedBy(center2TargetRotate);
+                float target2CenterLengthOver2 = (targetCenter - originCenter).Length() / 2f;
+                Vector2 realCenter = Vector2.Lerp(originCenter, targetCenter, 0.5f) + spinningPoint2 * target2CenterLengthOver2;
                 Projectile.Center = realCenter;
                 float num24 = MathHelper.WrapAngle(center2TargetRotate + num22 + 0f);
                 Projectile.rotation = num24 + (float)Math.PI / 2f;
@@ -360,6 +360,8 @@ namespace Coralite.lib
             {
                 //饿啊 太复杂了 实在是太难看懂了
                 //有需要的自己尝试分析分析吧
+                //在一般时间之前先缓慢地靠近
+                //之后快速突刺到目标身后
                 Vector2 originCenter = new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
                 originCenter += new Vector2(0f, Utils.GetLerpValue(0f, 0.4f, lerpValue2, clamped: true) * -100f);
                 Vector2 v = target.Center - originCenter;
