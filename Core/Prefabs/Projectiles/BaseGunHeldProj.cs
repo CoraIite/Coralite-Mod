@@ -27,6 +27,8 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected ref float HeldPositionX => ref Projectile.localAI[0];
 
+        public bool initialized;
+
         public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : (TexturePath + (PathHasName ? string.Empty : Name)).Replace("HeldProj","");
 
         public override void SetDefaults()
@@ -51,8 +53,11 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public sealed override void AI()
         {
-            if (TargetRot == 0)
+            if (!initialized)
+            {
                 Initialize();
+                initialized = true;
+            }
 
             float factor = Ease();
             ApplyRecoil(factor);
@@ -68,8 +73,6 @@ namespace Coralite.Core.Prefabs.Projectiles
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                 TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (Owner.direction > 0 ? 0f : 3.141f);
-                if (TargetRot == 0f)
-                    TargetRot = 0.0001f;
             }
 
             HeldPositionX = heldPositionX;

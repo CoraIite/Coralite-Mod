@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.YujianHulu
 {
     public class RedJadeHulu : BaseHulu
     {
-        public RedJadeHulu() : base(2, ItemRarityID.Blue, Item.sellPrice(0, 0, 20, 0), 8, 1.5f) { }
+        public RedJadeHulu() : base(2, ItemRarityID.Blue, Item.sellPrice(0, 0, 20, 0), 9, 1.5f) { }
 
         public override IHuluEffect SetHuluEffect()
         {

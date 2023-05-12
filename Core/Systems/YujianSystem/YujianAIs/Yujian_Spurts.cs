@@ -91,7 +91,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
             float scale = 1.6f + yujianProj.trailCacheLength * 0.015f;
 
-            for (int i = yujianProj.trailCacheLength - 1; i > 0; i -= 3)
+            for (int i = yujianProj.trailCacheLength - 1; i > 0; i -= 4)
             {
                 Color shadowColor = Color.Lerp(yujianProj.color1, yujianProj.color2, (float)i / yujianProj.trailCacheLength);
                 int a = 20 + i * 6;

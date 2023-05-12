@@ -88,7 +88,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
                         {
                             float count = Timer / 20;
                             float alpha = 1.3f - count * 0.3f;
-                            int projType = Main.rand.Next(2) switch
+                            int projType = Main.rand.Next(3) switch
                             {
                                 0 => ModContent.ProjectileType<HyacinthBullet2>(),
                                 _ => ModContent.ProjectileType<HyacinthBullet>()

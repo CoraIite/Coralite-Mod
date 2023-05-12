@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.YujianHulu
 {
     public class IronYujian : BaseYujian
     {
-        public IronYujian() : base(ItemRarityID.White,Item.sellPrice(0, 0, 10, 0), 7, 1.3f) { }
+        public IronYujian() : base(ItemRarityID.White,Item.sellPrice(0, 0, 10, 0), 8, 1.3f) { }
 
         public override int ProjType => ModContent.ProjectileType<IronYujianProj>();
 
@@ -31,27 +31,45 @@ namespace Coralite.Content.Items.YujianHulu
         public IronYujianProj() : base(
             new YujianAI[]
             {
-                 new Yujian_Spurts(120, 2.8f, 70, 0.8f, 0.4f),
-                 new Yujian_Spurts(140, 3f, 80, 1f, 0.4f),
+                new YujianAI_BetterSpurt(70,22,25,130,0.93f),
             },
             null,
-            new Yujian_PreciseSlash(startTime: 150,
-                    slashWidth: 55,
-                    slashTime: 100,
-                    startAngle: -2f,
-                    totalAngle: 3f,
-                    turnSpeed: 2,
-                    roughlyVelocity: 0,
-                    halfShortAxis: 1f,
-                    halfLongAxis: 1.5f,
-                    new HeavySmoother()),
+            new IronYujianAI_DoubleSlash(),
             PowerfulAttackCost: 150,
-            attackLength: 220,
+            attackLength: 340,
             width: 30, height: 58,
             new Color(42, 37, 41), new Color(169, 162, 135),
-             trailCacheLength: 16
+             trailCacheLength: 24
             )
         { }
+    }
 
+    public class IronYujianAI_DoubleSlash : YujianAI_DoubleSlash
+    {
+        public IronYujianAI_DoubleSlash() : base(90, 65, 34, -2.5f, 4f, 2, 1f, 1f, 1.5f, Coralite.Instance.NoSmootherInstance) { }
+
+        public override void Reset()
+        {
+            StartTime = 130;
+
+            SlashTime = 100;
+            StartAngle = 2f;
+
+            halfShortAxis = 1.5f;
+            halfLongAxis = 1f;
+            smoother = Coralite.Instance.HeavySmootherInstance;
+        }
+
+        public override void Init()
+        {
+            StartTime = 90;
+
+            SlashTime = 40;
+            StartAngle = -2f;
+
+            halfShortAxis = 1.5f;
+            halfLongAxis = 1f;
+            smoother = Coralite.Instance.NoSmootherInstance;
+        }
     }
 }

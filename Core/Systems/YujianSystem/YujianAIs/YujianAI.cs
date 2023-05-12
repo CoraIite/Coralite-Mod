@@ -10,7 +10,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
         /// <summary>
         /// 开始攻击时的时间
         /// </summary>
-        public int StartTime { get; init; }
+        public int StartTime { get; protected set; }
 
         public bool IsAimingMouse { get => _isAimingMouse; private set => _isAimingMouse = value; }
         private bool _isAimingMouse;

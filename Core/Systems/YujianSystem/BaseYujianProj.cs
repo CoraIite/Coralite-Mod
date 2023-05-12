@@ -27,7 +27,7 @@ namespace Coralite.Core.Systems.YujianSystem
         private readonly string TexturePath;
         private readonly bool PathHasName;
         private readonly float PowerfulAttackCost;
-        private readonly bool TileCollide;
+        public readonly bool TileCollide;
         public bool AimMouse;
         public bool canChannel;
         public int targetIndex;
@@ -120,7 +120,7 @@ namespace Coralite.Core.Systems.YujianSystem
                 if (Owner.channel)
                 {
                     channelTime++;
-                    Owner.itemTime = Owner.itemAnimation = 10;
+                    Owner.itemTime = Owner.itemAnimation = 18;
                     if (channelTime == 30 && specialAI is not null)
                     {
                         State = SpecialMoveState;
@@ -293,7 +293,8 @@ namespace Coralite.Core.Systems.YujianSystem
         {
             idleRotation = (float)Math.PI + Owner.direction * 0.3f;
             float num2 = (totalIndexes - 1f) / 2f;
-            idleSpot = Owner.Center - Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 33f - new Vector2(Owner.direction * 8, 8);
+            idleSpot = Owner.Center - Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 33f - new Vector2(Owner.direction * 16, 8);
+            idleSpot+=Main.GlobalTimeWrappedHourly.ToRotationVector2()*8;
         }
 
         public virtual void AIEffect() { }

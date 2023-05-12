@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 {
-    public class Yujian_ShadowSlash : Yujian_BaseSlash
+    public class Yujian_ShadowSlash : YujianAI_BaseSlash
     {
         private bool canSlash = false;
 

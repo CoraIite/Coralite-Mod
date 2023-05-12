@@ -1,5 +1,6 @@
 ﻿using Coralite.Compat.BossCheckList;
 using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,19 @@ namespace Coralite
 
         private List<IOrderedLoadable> loadCache;
 
+        public NoSmoother NoSmootherInstance;
+        public HeavySmoother  HeavySmootherInstance;
+
         //单例模式！
-        public static Coralite Instance { get; set; }
+        public static Coralite Instance { get; private set; }
 
         public Coralite()
         {
             Instance = this;
+
+            NoSmootherInstance=new NoSmoother();
+            HeavySmootherInstance = new HeavySmoother();
+
             RedJadeRed = new Color(221, 50, 50);
             IcicleCyan = new Color(43, 255, 198);
         }

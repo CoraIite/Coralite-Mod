@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.Icicle
         {
             if (Main.myPlayer == Projectile.owner)
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-            Smoother = new HeavySmoother();
+            Smoother = Coralite.Instance.HeavySmootherInstance;
             maxTime = Owner.itemTimeMax * 2;
             Projectile.extraUpdates = 1;
             startAngle = 2.2f;
