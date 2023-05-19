@@ -85,6 +85,16 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
         /// </summary>
         /// <param name="yujianProj"></param>
         public virtual void DrawPrimitives(BaseYujianProj yujianProj) { }
+
+        /// <summary>
+        /// 获取绘制时的翻转
+        /// </summary>
+        /// <param name="yujianProj"></param>
+        public virtual SpriteEffects GetSpriteEffect(BaseYujianProj yujianProj)
+        {
+            return SpriteEffects.None;
+        }
+
     }
 
 }

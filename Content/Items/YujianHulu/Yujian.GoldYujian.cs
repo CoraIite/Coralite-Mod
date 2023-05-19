@@ -172,7 +172,7 @@ namespace Coralite.Content.Items.YujianHulu
 
     public class GlodenSpurtProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Blank";
+        public override string Texture => AssetDirectory.Blank;
 
         public ref float maxTime => ref Projectile.ai[0];
         public ref float Width => ref Projectile.ai[1];
@@ -227,6 +227,9 @@ namespace Coralite.Content.Items.YujianHulu
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
+            if (Projectile.timeLeft < 12)
+                return false;
+
             float a = 0;
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), center, Projectile.Center, Width, ref a);
         }

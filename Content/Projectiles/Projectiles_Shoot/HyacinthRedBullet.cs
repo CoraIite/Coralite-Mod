@@ -16,7 +16,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
 {
     public class HyacinthRedBullet : ModProjectile, IDrawPrimitive
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Blank";
+        public override string Texture => AssetDirectory.Blank;
 
         private Trail trail;
 

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Dusts;
+﻿using System.Collections.Generic;
+using Coralite.Content.Dusts;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -47,24 +48,27 @@ namespace Coralite.Content.Bosses.Rediancie
 
         Player Target => Main.player[NPC.target];
 
-        public bool ExchangeState
-        {
-            get => NPC.ai[0] == 0f;
-            set
-            {
-                if (value)
-                    NPC.ai[0] = 0f;
-                else
-                    NPC.ai[0] = 1f;
-            }
-        }
+        public bool ExchangeState=true;
 
+        internal ref float DamageCount => ref NPC.ai[0];
         internal ref float State => ref NPC.ai[1];
-        internal ref float Timer => ref NPC.ai[2];
+        /// <summary> 招式循环的方式，具体使用MoveCycling查看 </summary>
+        internal ref float MoveCyclingType => ref NPC.ai[2];
 
-        public readonly Color red = new Color(221, 50, 50);
-        public readonly Color grey = new Color(91, 93, 102);
+        /// <summary> 拥有的“弹药”数量 </summary>
+        internal ref float OwnedFollowersCount => ref NPC.ai[3];
+
+        internal ref float Timer => ref NPC.localAI[0];
+        /// <summary> 目前的AI循环的计数 </summary>
+        internal ref float MoveCount => ref NPC.localAI[1];
+
+        internal readonly Color red = new Color(221, 50, 50);
+        internal readonly Color grey = new Color(91, 93, 102);
         public const int ON_KILL_ANIM_TIME = 250;
+
+
+
+        public List<RediancieFollower> followers;
 
         #region tml hooks
 
@@ -72,7 +76,7 @@ namespace Coralite.Content.Bosses.Rediancie
         {
             DisplayName.SetDefault("赤玉灵");
 
-            Main.npcFrameCount[Type] = 6;
+            //Main.npcFrameCount[Type] = 6;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
@@ -104,15 +108,20 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(1700 * bossLifeScale) + numPlayers * 350;
+            NPC.lifeMax = (int)(1900 * bossLifeScale) + numPlayers * 550;
             NPC.damage = 30;
-            NPC.defense = 10;
+            NPC.defDefense = 6;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = (int)(2200 * bossLifeScale) + numPlayers * 550;
+                NPC.lifeMax = (int)(2400 * bossLifeScale) + numPlayers * 750;
                 NPC.damage = 45;
-                NPC.defense = 12;
+            }
+
+            if (Main.getGoodWorld)
+            {
+                NPC.lifeMax = (int)(3000 * bossLifeScale) + numPlayers * 921;
+                NPC.defDefense = 4;//因为FTW种能够拥有非常多的弹药所以就降低一下基础防御了
             }
         }
 
@@ -142,11 +151,14 @@ namespace Coralite.Content.Bosses.Rediancie
                 Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, -3).RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)), Mod.Find<ModGore>("Rediancie_Gore1").Type);
             }
 
+            followers.ForEach(fo => fo = null);
+            followers = null;
             DownedBossSystem.DownRediancie();
         }
 
         public override void Load()
         {
+            RediancieFollower.mainTex = ModContent.Request<Texture2D>(AssetDirectory.Rediancie + "RediancieFollower");
             for (int i = 0; i < 5; i++)
                 GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.BossGores + "Rediancie_Gore" + i);
         }
@@ -157,6 +169,29 @@ namespace Coralite.Content.Bosses.Rediancie
             {
                 SoundEngine.PlaySound(SoundID.Dig, NPC.Center);
             });
+        }
+
+        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        {
+            OnHit(damage);
+        }
+
+        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+        {
+            OnHit(damage);
+        }
+
+        public void OnHit(int damage)
+        {
+            DamageCount += damage;
+            int value = Helper.ScaleValueForDiffMode(50, 60, 75, 100);
+            while (DamageCount > value)
+            {
+                DamageCount -= value;
+                DespawnFollowers(1);
+            }
+
+            NPC.netUpdate = true;
         }
 
         public override bool CheckDead()
@@ -179,6 +214,9 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void OnSpawn(IEntitySource source)
         {
+            followers = new List<RediancieFollower>();
+            SpawnFollowers(3);
+
             NPC.TargetClosest(false);
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
@@ -190,8 +228,10 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public enum AIStates : int
         {
-            onKillAnim = -3,
-            onSpawnAnim = -2,
+            onKillAnim = -5,
+            onSpawnAnim = -4,
+            pulse = -3,
+            firework = -2,
             accumulate = -1,
             dash = 0,
             explosion = 1,
@@ -200,20 +240,30 @@ namespace Coralite.Content.Bosses.Rediancie
             summon = 4
         }
 
+        public enum CyclingType : int
+        {
+            /// <summary> 一次近战一次远程循环 </summary>
+            one_one,
+            /// <summary> 两次近战一次远程循环 </summary>
+            two_one,
+            /// <summary> 两次近战两次远程循环 </summary>
+            two_two,
+        }
+
         public override void AI()
         {
-            #region frame
-            NPC.frameCounter++;
-            int frameTime = State == -3 ? 8 : 4;
+            //#region frame
+            //NPC.frameCounter++;
+            //int frameTime = State == -3 ? 8 : 4;
 
-            if (NPC.frameCounter > frameTime)
-            {
-                NPC.frame.Y += 1;
-                if (NPC.frame.Y == Main.npcFrameCount[Type])
-                    NPC.frame.Y = 0;
-                NPC.frameCounter = 0;
-            }
-            #endregion
+            //if (NPC.frameCounter > frameTime)
+            //{
+            //    NPC.frame.Y += 1;
+            //    if (NPC.frame.Y == Main.npcFrameCount[Type])
+            //        NPC.frame.Y = 0;
+            //    NPC.frameCounter = 0;
+            //}
+            //#endregion
 
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
                 NPC.TargetClosest();
@@ -229,7 +279,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
             float distanceX = Target.Center.X - NPC.Center.X;
             NPC.direction = distanceX > 0 ? 1 : -1;
-            NPC.spriteDirection = (Math.Abs(distanceX) > 24) ? NPC.direction : 1;
+            //NPC.spriteDirection = (Math.Abs(distanceX) > 24) ? NPC.direction : 1;
             NPC.directionY = Target.Center.Y > NPC.Center.Y ? 1 : -1;
             switch (State)
             {
@@ -270,13 +320,14 @@ namespace Coralite.Content.Bosses.Rediancie
 
                         if (Timer > ON_KILL_ANIM_TIME)
                             NPC.Kill();
+
+                        ChangeRotationNormally();
                     }
                     break;
                 case (int)AIStates.onSpawnAnim:         //生成时的动画
                     {
-                        if (Timer == 0)
+                        if (Timer == 0) //生成动画弹幕
                         {
-                            //生成动画弹幕
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_OnSpawnAnim>(), 0, 0);
                             NPC.velocity = new Vector2(0, 1.5f);
                             NPC.dontTakeDamage = true;
@@ -313,6 +364,21 @@ namespace Coralite.Content.Bosses.Rediancie
                             NPC.dontTakeDamage = false;
                             NPC.netUpdate = true;
                         }
+
+                        ChangeRotationNormally();
+                        UpdateFollower_Idle();
+                    }
+                    break;
+                case (int)AIStates.pulse:               //蓄力射出大型弹幕
+                    {
+                        ChangeRotationNormally();
+
+                    }
+                    break;
+                case (int)AIStates.firework:            //向四周生成弹幕，类似烟花一样
+                {
+                        ChangeRotationNormally();
+
                     }
                     break;
                 case (int)AIStates.accumulate:          //追逐玩家并蓄力爆炸
@@ -340,9 +406,7 @@ namespace Coralite.Content.Bosses.Rediancie
                             }
                         }
                         else
-                        {
                             NPC.velocity *= 0.995f;
-                        }
 
                         if (Timer == 330)       //生成弹幕
                         {
@@ -352,11 +416,14 @@ namespace Coralite.Content.Bosses.Rediancie
                                 var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
                                 Main.instance.CameraModifiers.Add(modifier);
                             }
+                            SpawnFollowers(6);
                         }
 
                         if (Timer > 340)
                             ResetState();
 
+                        ChangeRotationNormally();
+                        UpdateFollower_Idle();
                     }
                     break;
                 case (int)AIStates.dash:            //连续3次冲刺攻击
@@ -379,21 +446,24 @@ namespace Coralite.Content.Bosses.Rediancie
                             if (realTime < 20)
                             {
                                 Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 2f, 0.1f, 0.1f, 0.97f);
-
-                                //控制Y方向的移动
                                 float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
-                                if (yLength > 50)
+
+                                if (yLength > 50)//控制Y方向的移动
                                     Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 2f, 0.1f, 0.1f, 0.97f);
                                 else
                                     NPC.velocity.Y *= 0.96f;
+
                                 break;
                             }
 
-                            if (realTime == 22)
-                                NPC.velocity = (Target.Center + new Vector2(0, (int)Timer / 100 % 2 == 0 ? 200 : -200) - NPC.Center).SafeNormalize(Vector2.One) * 10f;
+                            if (realTime == 22)//开始冲刺
+                            {
+                                SpawnFollowers(2);
+                                NPC.velocity = (Target.Center + new Vector2(0, (int)Timer / 100 % 2 == 0 ? 160 : -160) - NPC.Center).SafeNormalize(Vector2.One) * 10f;
+                                NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                            }
 
-                            //边冲边炸
-                            if (realTime < 71)
+                            if (realTime < 71)//边冲边炸
                             {
                                 if (realTime % 10 == 0)
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_Explosion>(), 20, 5f);
@@ -401,11 +471,16 @@ namespace Coralite.Content.Bosses.Rediancie
                                 break;
                             }
 
+                            float targetRot = NPC.velocity.Length() * 0.04f * NPC.direction;
+                            NPC.rotation = NPC.rotation.AngleLerp(targetRot, 0.08f);
+
                             NPC.velocity *= 0.98f;
                         } while (false);
 
                         if (Timer > 300)
                             ResetState();
+
+                        UpdateFollower_Idle();
                     }
                     break;
                 default:
@@ -432,18 +507,22 @@ namespace Coralite.Content.Bosses.Rediancie
                         }
 
                         if (Timer % 80 == 0)//生成弹幕
+                        {
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_Explosion>(), 30, 5f);
-
+                            SpawnFollowers(1);
+                        }
                         if (Timer > 250)
                             ResetState();
+
+                        ChangeRotationNormally();
+                        UpdateFollower_Idle();
                     }
                     break;
                 case (int)AIStates.upShoot:         //朝上连续射击
                     {
                         SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
 
-                        //隔固定时间射弹幕
-                        if (Timer % 25 == 0)
+                        if (Timer % 25 == 0)//隔固定时间射弹幕
                         {
                             int damage = NPC.GetAttackDamage_ForProjectiles(15, 20);
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(0, -8).RotatedBy(((Timer / 20) - 3) * 0.08f), ProjectileType<Rediancie_Strike>(), damage, 5f);
@@ -452,6 +531,8 @@ namespace Coralite.Content.Bosses.Rediancie
 
                         if (Timer > 220)
                             ResetState();
+
+                        ChangeRotationNormally();
                     }
                     break;
                 case (int)AIStates.magicShoot:      //蓄力射3发魔法弹幕
@@ -478,6 +559,8 @@ namespace Coralite.Content.Bosses.Rediancie
 
                         if (Timer > 155)
                             ResetState();
+
+                        ChangeRotationNormally();
                     }
                     break;
                 case (int)AIStates.summon:          //召唤小赤玉灵
@@ -493,7 +576,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
                         if (Timer % 40 == 0)
                         {
-                            if (Main.npc.Count((n) => n.active && n.type == NPCType<RediancieMinion>()) < OwnedMinionMax())
+                            if (Main.npc.Count((n) => n.active && n.type == NPCType<RediancieMinion>()) < Helper.ScaleValueForDiffMode(2,3,3,6))
                                 NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<RediancieMinion>());
                             else
                                 ResetState();
@@ -502,13 +585,12 @@ namespace Coralite.Content.Bosses.Rediancie
 
                         if (Timer > 200)//防止出BUG
                             ResetState();
+
+                        ChangeRotationNormally();
                     }
                     break;
-
             }
 
-            float targetRot = NPC.velocity.Length() * 0.04f * NPC.direction;
-            NPC.rotation = NPC.rotation.AngleTowards(targetRot,0.01f);
             Timer++;
         }
 
@@ -559,6 +641,34 @@ namespace Coralite.Content.Bosses.Rediancie
             NPC.netUpdate = true;
         }
 
+        /// <summary>
+        /// 获取一次攻击动作循环种AI的近战类与远程类的具体个数
+        /// </summary>
+        /// <param name="cyclingType"></param>
+        /// <param name="meleeMoveCount"></param>
+        /// <param name="ShootMoveCount"></param>
+        public void GetAICycling(CyclingType cyclingType, out int meleeMoveCount, out int ShootMoveCount)
+        {
+            switch (cyclingType)
+            {
+                default:
+                case CyclingType.one_one:
+                    meleeMoveCount = 1;
+                    ShootMoveCount = 1;
+                    break;
+                case CyclingType.two_one:
+                    meleeMoveCount = 2;
+                    ShootMoveCount = 1;
+                    break;
+                case CyclingType.two_two:
+                    meleeMoveCount = 2;
+                    ShootMoveCount = 2;
+                    break;
+            }
+        }
+
+        #region HelperMethods
+
         public void SlowDownAndGoUp(float slowDownX, float accelY, float velocityLimitY)
         {
             NPC.velocity.X *= slowDownX;
@@ -567,15 +677,100 @@ namespace Coralite.Content.Bosses.Rediancie
                 NPC.velocity.Y = velocityLimitY;
         }
 
-        public static int OwnedMinionMax()
+        /// <summary> 最普通的改变旋转角度的方式 </summary>
+        public void ChangeRotationNormally()
         {
-            if (Main.masterMode)
-                return 3;
+            float targetRot = NPC.velocity.Length() * 0.04f * NPC.direction;
+            NPC.rotation = NPC.rotation.AngleTowards(targetRot, 0.01f);
+        }
+        #endregion
 
-            if (Main.expertMode)
-                return 3;
+        #endregion
 
-            return 2;
+        #region Followers
+
+        /// <summary>
+        /// 获得弹药
+        /// </summary>
+        /// <param name="howMany">获得弹药的数量</param>
+        public void SpawnFollowers(int howMany)
+        {
+            int maxFollowers = Helper.ScaleValueForDiffMode(6, 9, 12, 24);
+            if (OwnedFollowersCount >= maxFollowers)    ///弹药数已经达到上限
+                return;
+
+            if (OwnedFollowersCount + howMany > maxFollowers)   ///弹药数加上获得的弹药超出弹药上限时
+            {
+                int count = maxFollowers - (int)OwnedFollowersCount;
+                OwnedFollowersCount = maxFollowers;
+                for (int i = 0; i < count; i++)
+                {
+                    followers.Add(new RediancieFollower(NPC.Center));
+                }
+
+                NPC.defense = NPC.defDefense + (int)OwnedFollowersCount;
+                return;
+            }
+
+            ///正常情况下
+            OwnedFollowersCount += howMany;
+            for (int i = 0; i < howMany; i++)
+            {
+                followers.Add(new RediancieFollower(NPC.Center));
+            }
+
+            NPC.defense = NPC.defDefense + (int)OwnedFollowersCount;
+        }
+
+        /// <summary>
+        /// 消耗弹药
+        /// </summary>
+        /// <param name="howMany"></param>
+        /// <returns></returns>
+        public bool DespawnFollowers(int howMany)
+        {
+            if (OwnedFollowersCount == 0)
+                return false;
+
+            OwnedFollowersCount -= 1;
+            followers.RemoveAt(followers.Count - 1);
+            NPC.defense = NPC.defDefense + (int)OwnedFollowersCount;
+
+            return true;
+        }
+        public void UpdateFollower_Idle()
+        {
+            float velLength = NPC.velocity.Length();
+            float baseRot = Timer * 0.06f + velLength * 0.25f;
+            float length = 38 + velLength / 2;
+            ///额...总之是非常复杂的立体解析几何，用于计算当前这个圆以X轴为轴的旋转角度，根据玩家位置来的
+            float CircleRot = 1.57f - Math.Clamp((Target.Center.Y -NPC.Center.Y)/200, -1f, 1f) * 0.4f;
+            for (int i = 0; i < followers.Count; i++)
+            {
+                FollowersAI_Idle(followers[i], i, baseRot, length,CircleRot);
+            }
+        }
+
+        /// <summary>
+        /// 默认动作，在赤玉灵身边环绕，需要输入计算好的角度及长度数值
+        /// </summary>
+        /// <param name="follower"></param>
+        public void FollowersAI_Idle(RediancieFollower follower, int whoamI, float baseRot, float length,float CircleRot)
+        {
+            float rot = baseRot + (whoamI / (float)followers.Count) * MathHelper.TwoPi;
+
+            Vector2 vector2D = rot.ToRotationVector2();
+            Vector3 vector3D = Vector3.Transform(new Vector3(vector2D.X, vector2D.Y, 0), Matrix.CreateRotationX(CircleRot));///将二维的向量转为3维的并绕着X轴旋转一下
+            vector3D = Vector3.Transform(vector3D, Matrix.CreateRotationZ(NPC.rotation));///以Z为轴旋转，用来配合赤玉灵自身的旋转
+
+            //将3维向量投影到二维
+            float k1 = -1000 / (vector3D.Z - 1000);
+            Vector2 targetDir = k1 * new Vector2(vector3D.X, vector3D.Y);
+            Vector2 targetCenter = NPC.Center + targetDir * length + new Vector2(0, MathF.Sin(whoamI * 0.3f) * 8);
+            follower.center = Vector2.Lerp(follower.center, targetCenter, 0.6f);
+            follower.rotation = follower.rotation.AngleLerp(NPC.rotation, 0.2f);
+            follower.drawBehind = vector3D.Z > 0;
+            follower.scale = 0.9f - vector3D.Z * 0.2f;
         }
 
         #endregion
@@ -584,19 +779,29 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            foreach (var follower in followers)
+            {
+                if (follower.drawBehind)
+                    follower.Draw(spriteBatch, drawColor);
+            }
+
             Texture2D mainTex = TextureAssets.Npc[Type].Value;
 
-            int frameWidth = mainTex.Width;
-            int frameHeight = mainTex.Height / Main.npcFrameCount[NPC.type];
-            Rectangle frameBox = new Rectangle(0, NPC.frame.Y * frameHeight, frameWidth, frameHeight);
+            //int frameWidth = mainTex.Width;
+            //int frameHeight = mainTex.Height / Main.npcFrameCount[NPC.type];
+            //Rectangle frameBox = new Rectangle(0, NPC.frame.Y * frameHeight, frameWidth, frameHeight);
 
-            SpriteEffects effects = SpriteEffects.None;
-            Vector2 origin = new Vector2(frameWidth / 2, frameHeight / 2);
+            Vector2 origin = mainTex.Size() / 2;
+            //= new Vector2(frameWidth / 2, frameHeight / 2);
 
-            if (NPC.spriteDirection != 1)
-                effects = SpriteEffects.FlipHorizontally;
+            spriteBatch.Draw(mainTex, NPC.Center - screenPos, null, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
 
-            spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, effects, 0f);
+            foreach (var follower in followers)
+            {
+                if (!follower.drawBehind)
+                    follower.Draw(spriteBatch, drawColor);
+            }
+
             return false;
         }
 

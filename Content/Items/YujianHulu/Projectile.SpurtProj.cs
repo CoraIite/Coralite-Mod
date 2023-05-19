@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.YujianHulu
     /// </summary>
     public class SpurtProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Blank";
+        public override string Texture => AssetDirectory.Blank;
 
         public ref float maxTime => ref Projectile.ai[0];
         public ref float Width => ref Projectile.ai[1];

@@ -10,7 +10,7 @@ namespace Coralite.Content.Particles
 {
     public class FlowLine : ModParticle, IDrawParticlePrimitive
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Blank";
+        public override string Texture => AssetDirectory.Blank;
 
         BasicEffect effect;
 

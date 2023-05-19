@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.Icicle
 {
     public class IcicleThornExplosion:ModProjectile
     {
-        public override string Texture => AssetDirectory.OtherProjectiles+"Blank";
+        public override string Texture => AssetDirectory.Blank;
 
         public override void SetDefaults()
         {

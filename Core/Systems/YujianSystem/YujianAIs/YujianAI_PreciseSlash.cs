@@ -95,7 +95,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
         public override void DrawPrimitives(BaseYujianProj yujianProj)
         {
             int time = StartTime - (int)yujianProj.Timer;
-            if (!canSlash || time > SlashTime || time < yujianProj.trailCacheLength || smoother.Smoother(time, SlashTime) > 0.99f)
+            if (!canSlash || time > SlashTime || time < yujianProj.trailCacheLength || smoother.Smoother(time, SlashTime) > 1f)
                 return;
 
             Effect effect = Filters.Scene["SimpleTrail"].GetShader().Shader;

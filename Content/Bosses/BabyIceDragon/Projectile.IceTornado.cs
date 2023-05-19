@@ -9,7 +9,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
     /// </summary>
     public class IceTornado : ModProjectile
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Blank";
+        public override string Texture => AssetDirectory.Blank;
 
         //public override bool ShouldUpdatePosition() => false;
 

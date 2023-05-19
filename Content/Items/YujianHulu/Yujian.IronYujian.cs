@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.YujianHulu
                 new YujianAI_BetterSpurt(70,22,25,130,0.93f),
             },
             null,
-            new IronYujianAI_DoubleSlash(),
+            new YujianAI_IronDoubleSlash(),
             PowerfulAttackCost: 150,
             attackLength: 340,
             width: 30, height: 58,
@@ -44,9 +44,9 @@ namespace Coralite.Content.Items.YujianHulu
         { }
     }
 
-    public class IronYujianAI_DoubleSlash : YujianAI_DoubleSlash
+    public class YujianAI_IronDoubleSlash : YujianAI_DoubleSlash
     {
-        public IronYujianAI_DoubleSlash() : base(90, 65, 34, -2.5f, 4f, 2, 1f, 1f, 1.5f, Coralite.Instance.NoSmootherInstance) { }
+        public YujianAI_IronDoubleSlash() : base(90, 65, 40, -2f, 4f, 2, 1f, 1f, 1.5f, Coralite.Instance.NoSmootherInstance) { }
 
         public override void Reset()
         {

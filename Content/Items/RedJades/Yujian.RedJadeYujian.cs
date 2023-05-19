@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.RedJades;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Terraria;
@@ -11,12 +10,13 @@ using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Content.Particles;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Coralite.Content.Items.YujianHulu;
 
-namespace Coralite.Content.Items.YujianHulu
+namespace Coralite.Content.Items.RedJades
 {
     public class RedJadeYujian : BaseYujian
     {
-        public RedJadeYujian() : base(ItemRarityID.Blue,Item.sellPrice(0, 0, 20, 0), 11, 1f) { }
+        public RedJadeYujian() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 20, 0), 11, 1f, AssetDirectory.RedJadeItems) { }
 
         public override int ProjType => ModContent.ProjectileType<RedJadeYujianProj>();
 
@@ -63,7 +63,8 @@ namespace Coralite.Content.Items.YujianHulu
             attackLength: 430,
             width: 30, height: 60,
             new Color(43, 43, 51), Coralite.Instance.RedJadeRed,
-            trailCacheLength: 24
+            trailCacheLength: 24,
+            texturePath: AssetDirectory.RedJadeItems
             )
         { }
 
@@ -74,7 +75,7 @@ namespace Coralite.Content.Items.YujianHulu
         }
     }
 
-    public class YujianAI_RedDash:YujianAI
+    public class YujianAI_RedDash : YujianAI
     {
         /// <summary> 大于此时间时为准备阶段 </summary>
         public readonly int firstPhaseTime;
@@ -108,7 +109,7 @@ namespace Coralite.Content.Items.YujianHulu
             if (yujianProj.Timer > firstPhaseTime)  //准备阶段
             {
                 //从1到0
-                float factor = (yujianProj.Timer - firstPhaseTime) / (float)(StartTime - firstPhaseTime);
+                float factor = (yujianProj.Timer - firstPhaseTime) / (StartTime - firstPhaseTime);
 
                 Vector2 targetCenter = yujianProj.GetTargetCenter(IsAimingMouse);
                 Vector2 targetVector = targetCenter - Projectile.Center;
@@ -143,7 +144,7 @@ namespace Coralite.Content.Items.YujianHulu
 
                 if (Main.myPlayer == Projectile.owner)
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity * (Projectile.extraUpdates + 1), ModContent.ProjectileType<SpurtProj>(),
-                        Projectile.damage, Projectile.knockBack, Projectile.owner, spurtTime / (Projectile.extraUpdates + 1),32);
+                        Projectile.damage, Projectile.knockBack, Projectile.owner, spurtTime / (Projectile.extraUpdates + 1), 32);
 
                 Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.RedJadeRed, 0.8f);
                 SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);

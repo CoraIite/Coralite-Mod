@@ -16,7 +16,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
     /// </summary>
     public class StarsBreathBullet : ModProjectile
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Blank";
+        public override string Texture => AssetDirectory.Blank;
 
         public override void SetDefaults()
         {

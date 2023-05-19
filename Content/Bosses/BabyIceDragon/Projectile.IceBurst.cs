@@ -11,7 +11,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 {
     public class IceBurst : ModProjectile
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Blank";
+        public override string Texture => AssetDirectory.Blank;
 
         public ref float Length => ref Projectile.ai[0];
 

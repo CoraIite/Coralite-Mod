@@ -1,17 +1,16 @@
-﻿using Coralite.Content.Items.RedJades;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.HuluEffects;
-using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Coralite.Content.Items.YujianHulu
+namespace Coralite.Content.Items.RedJades
 {
     public class RedJadeHulu : BaseHulu
     {
-        public RedJadeHulu() : base(2, ItemRarityID.Blue, Item.sellPrice(0, 0, 20, 0), 9, 1.5f) { }
+        public RedJadeHulu() : base(2, ItemRarityID.Blue, Item.sellPrice(0, 0, 20, 0), 9, 1.5f,AssetDirectory.RedJadeItems) { }
 
         public override IHuluEffect SetHuluEffect()
         {

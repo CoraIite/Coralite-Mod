@@ -19,7 +19,6 @@
   <ItemGroup>
     <Folder Include="Assets\Items\Weapons_Summon\" />
     <Folder Include="Compat\BloodSoul\" />
-    <Folder Include="Content\Items\Accessories\" />
     <Folder Include="Content\Items\Pets\" />
     <Folder Include="Content\Items\Weapons_Summon\" />
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />

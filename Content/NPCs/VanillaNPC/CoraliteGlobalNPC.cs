@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Coralite.Content.Items.Weapons_Shoot;
+using Coralite.Content.Items.YujianHulu;
 
 namespace Coralite.Content.NPCs.VanillaNPC
 {
@@ -21,11 +22,25 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 case NPCID.DemonEye2:
                     npcLoot.Add(ItemDropRule.Common(ItemType<EyeballSeed>(), 50));
                     break;
+                case NPCID.WanderingEye:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<EyeballSeed>(), 25));
+                    break;
+
                 case NPCID.DarkCaster:
                     npcLoot.Add(ItemDropRule.Common(ItemType<ShadowEnergy>(), 3, 1, 3));
                     break;
-                case NPCID.WanderingEye:
-                    npcLoot.Add(ItemDropRule.Common(ItemType<EyeballSeed>(), 25));
+
+                case NPCID.EaterofSouls:
+                case NPCID.CorruptGoldfish:
+                case NPCID.DevourerHead:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<AncientDemoniteYujian>(), 100));
+                    break;
+
+                case NPCID.Crimera:
+                case NPCID.FaceMonster:
+                case NPCID.BloodCrawler:
+                case NPCID.CrimsonGoldfish:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<AncientCrimtaneYujian>(), 100));
                     break;
                 case NPCID.DukeFishron:
                     npcLoot.Add(ItemDropRule.ByCondition(new DownedGolemCondition(), ItemType<DukeFishronSkin>(), 1, 3, 5));

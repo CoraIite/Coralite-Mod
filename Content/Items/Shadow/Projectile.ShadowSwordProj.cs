@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.Shadow
                 projectile.rotation = projectile.velocity.ToRotation() + 0.785f;
                 projectile.velocity = new Vector2(0, -0.03f);
 
-                if (proj.Timer % 3 == 0 && Main.netMode != NetmodeID.Server)
+                if (proj.Timer % 3 == 0)
                 {
                     Dust dust = Dust.NewDustPerfect(projectile.position + new Vector2(Main.rand.Next(projectile.width), Main.rand.Next(projectile.height)), DustID.Granite);
                     dust.noGravity = true;
@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.Shadow
 
                 proj.Timer++;
                 projectile.rotation = projectile.velocity.ToRotation() + 0.785f;
-                if (proj.Timer % 3 == 0 && Main.netMode != NetmodeID.Server)
+                if (proj.Timer % 3 == 0)
                 {
                     Dust dust = Dust.NewDustPerfect(projectile.position + new Vector2(Main.rand.Next(projectile.width), Main.rand.Next(projectile.height)), DustID.Granite);
                     dust.noGravity = true;
@@ -101,7 +101,7 @@ namespace Coralite.Content.Items.Shadow
                 float factor = proj.Timer / 550f;
                 projectile.rotation += 0.18f * factor;
 
-                if (proj.Timer % 3 == 0 && Main.netMode != NetmodeID.Server)
+                if (proj.Timer % 3 == 0)
                 {
                     Dust dust = Dust.NewDustPerfect(projectile.position + new Vector2(Main.rand.Next(projectile.width), Main.rand.Next(projectile.height)), DustID.Granite);
                     dust.noGravity = true;

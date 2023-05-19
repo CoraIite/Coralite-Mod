@@ -249,6 +249,7 @@ namespace Coralite.Content.Items.YujianHulu
             }
 
             Timer += 1;
+            Lighting.AddLight(Projectile.Center, new Vector3(0.6f, 0.6f, 0.6f));
         }
 
         public override bool? CanDamage() => canDamage;
@@ -277,7 +278,7 @@ namespace Coralite.Content.Items.YujianHulu
             float factor = Timer / MaxTime;
             float num3 = Utils.Remap(factor, 0f, 0.6f, 0f, 1f) * Utils.Remap(factor, 0.6f, 1f, 1f, 0f);
 
-            Main.spriteBatch.Draw(mainTex.Value, center, null, lightColor * Alpha, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, effects, 0f);
+            Main.spriteBatch.Draw(mainTex.Value, center, null, Color.White*0.8f * Alpha, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, effects, 0f);
 
             float rotation = Projectile.rotation - OwnerDirection * 0.4f;
             for (int i = -1; i < 2; i++)

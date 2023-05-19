@@ -44,7 +44,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                 //从1到0
                 float factor = (yujianProj.Timer - firstPhaseTime) / (float)(StartTime - firstPhaseTime);
 
-                Vector2 targetCenter = yujianProj.GetTargetCenter(IsAimingMouse);
+                targetCenter = yujianProj.GetTargetCenter(IsAimingMouse);
                 Vector2 targetVector = targetCenter - Projectile.Center;
                 Vector2 targetDirection = targetVector.SafeNormalize(Vector2.Zero);
                 float targetAngle = targetDirection.ToRotation();
@@ -53,20 +53,13 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                 float length = targetVector.Length();
 
                 if (length > distanceToKeep + 20)
-                {
                     Projectile.velocity = (Projectile.velocity * 20f + targetDirection * 2) / 21f;
-                }
                 else if (length < distanceToKeep - 20)
-                {
                     Projectile.velocity = (Projectile.velocity * 20f + targetDirection * -2) / 21f;
-                }
                 else
-                {
                     Projectile.velocity *= slowdownFactor;
-                }
 
                 Projectile.velocity += targetDirection.RotatedBy(1.57f) * factor * 0.2f;
-
                 return;
             }
 
@@ -76,9 +69,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                 int spurtTime = firstPhaseTime - SecondPhaseTime;
                 float speed = (Vector2.Distance(targetCenter, Projectile.Center) + distanceToKeep * 0.3f) / spurtTime;
                 Projectile.velocity = (targetCenter - Projectile.Center).SafeNormalize(Vector2.One) * speed;
-
                 Projectile.rotation = (targetCenter - Projectile.Center).ToRotation() + 1.57f;
-
                 Projectile.tileCollide = false;
 
                 yujianProj.InitTrailCaches();
@@ -127,6 +118,17 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                 shadowColor.A = (byte)a;
                 spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - i * 0.015f, SpriteEffects.None, 0f);
             }
+        }
+
+        protected override bool UpdateTime(BaseYujianProj yujianProj)
+        {
+            if (yujianProj.Timer > firstPhaseTime)
+            {
+                float length = (targetCenter - yujianProj.Projectile.Center).Length();
+                return length < distanceToKeep * 2;
+            }
+
+            return true;
         }
     }
 }

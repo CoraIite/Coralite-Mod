@@ -21,14 +21,17 @@ namespace Coralite.Content.ModPlayers
         public const int DashUp = 1;
         public const int DashRight = 2;
         public const int DashLeft = 3;
+
         public int DashDir = -1;
 
 
         public float yujianUIAlpha;
         public bool ownedYujianProj;
         public float nianli;
-        public float nianliMax = 300f;
-        public float nianliRegain = 1f;
+        public const float BaseNianliMax = 300f;
+        public float nianliMax = BaseNianliMax;
+        public const float BaseNianliRegain = 0.5f;
+        public float nianliRegain = BaseNianliRegain;
 
         public short rightClickReuseDelay = 0;
 
@@ -58,8 +61,8 @@ namespace Coralite.Content.ModPlayers
 
         public override void PreUpdate()
         {
-            nianliRegain = 1f;
-            nianliMax = 300f;
+            nianliRegain = BaseNianliRegain;
+            nianliMax = BaseNianliMax;
         }
 
         public override void PreUpdateMovement()

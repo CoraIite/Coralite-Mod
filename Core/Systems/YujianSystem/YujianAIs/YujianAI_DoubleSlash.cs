@@ -16,7 +16,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
         protected readonly float canSlashLength;
 
         private bool canSlash = false;
-        private bool doubleSlash = true;
+        protected bool doubleSlash = true;
         private Trail trail;
 
         public YujianAI_DoubleSlash(int startTime, int slashWidth, int slashTime, float startAngle, float totalAngle, float turnSpeed, float roughlyVelocity, float halfShortAxis, float halfLongAxis, ISmoother smoother) : base(startTime, slashWidth, slashTime, startAngle, totalAngle, turnSpeed, roughlyVelocity, halfShortAxis, halfLongAxis, smoother)

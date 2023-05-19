@@ -151,8 +151,8 @@ namespace Coralite.Helpers
         public static float EllipticalEase(float rotation, float halfShortAxis, float halfLongAxis)
         {
             float halfFocalLength2 = halfLongAxis * halfLongAxis - halfShortAxis * halfShortAxis;
-            float cosx = (float)Math.Cos(rotation);
-            return (float)(halfLongAxis * halfShortAxis / Math.Sqrt(halfLongAxis * halfLongAxis - halfFocalLength2 * cosx * cosx));
+            float cosX = MathF.Cos(rotation);
+            return halfLongAxis * halfShortAxis / MathF.Sqrt(halfLongAxis * halfLongAxis - halfFocalLength2 * cosX * cosX);
         }
 
         #endregion
@@ -204,6 +204,31 @@ namespace Coralite.Helpers
         {
             if (Main.netMode != NetmodeID.Server)
                 method();
+        }
+
+
+        /// <summary>
+        /// 将你的值根据不同模式来改变
+        /// </summary>
+        /// <param name="normalModeValue">普通模式</param>
+        /// <param name="expertModeValue">专家模式</param>
+        /// <param name="masterModeValue">大师模式</param>
+        /// <param name="FTWModeValue">For The Worthy模式（传奇难度）</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T ScaleValueForDiffMode<T>(T normalModeValue, T expertModeValue, T masterModeValue, T FTWModeValue)
+        {
+            T value = normalModeValue;
+            if (Main.expertMode)
+                value = expertModeValue;
+
+            if (Main.masterMode)
+                value = masterModeValue;
+
+            if (Main.getGoodWorld)
+                value = FTWModeValue;
+
+            return value;
         }
     }
 }

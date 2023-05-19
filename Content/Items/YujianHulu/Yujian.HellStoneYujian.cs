@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Microsoft.Xna.Framework;
@@ -11,7 +10,7 @@ namespace Coralite.Content.Items.YujianHulu
 {
     public class HellStoneYujian : BaseYujian
     {
-        public HellStoneYujian() : base(ItemRarityID.Orange,Item.sellPrice(0, 0, 20, 0), 14, 1.8f) { }
+        public HellStoneYujian() : base(ItemRarityID.Orange, Item.sellPrice(0, 0, 20, 0), 19, 6f) { }
 
         public override int ProjType => ModContent.ProjectileType<HellStoneYujianProj>();
 
@@ -26,40 +25,31 @@ namespace Coralite.Content.Items.YujianHulu
 
     public class HellStoneYujianProj : BaseYujianProj
     {
-        public override string SlashTexture => AssetDirectory.OtherProjectiles+ "FireTrail";
+        public override string SlashTexture => AssetDirectory.OtherProjectiles + "FireTrail";
 
         public HellStoneYujianProj() : base(
             new YujianAI[]
             {
-                 new Yujian_Spurts(90, 4.5f, 80, 1.5f, 0.4f),
-                 new Yujian_Spurts(100, 5.2f, 80, 1.5f, 0.4f),
-                 new YujianAI_PreciseSlash(startTime: 130,
-                    slashWidth: 70,
-                    slashTime: 90,
-                    startAngle: -1.8f,
-                    totalAngle: 3.5f,
-                    turnSpeed: 2,
-                    roughlyVelocity: 0,
-                    halfShortAxis: 1f,
-                    halfLongAxis: 1.5f,
-                    Coralite.Instance.HeavySmootherInstance),
+                 new YujianAI_BetterSpurt(70, 16, 20, 160, 0.94f),
+                 new YujianAI_BetterSpurt(70, 18, 20, 180, 0.94f),
+                 new YujianAI_HellStoneDoubleSlash(),
             },
             null,
-            new YujianAI_PreciseSlash(startTime: 145,
-               slashWidth: 50,
-               slashTime: 110,
+            new YujianAI_PreciseSlash(startTime: 135,
+               slashWidth: 55,
+               slashTime: 125,
                startAngle: -2f,
-               totalAngle: 14f,
+               totalAngle: 22f,
                turnSpeed: 2.3f,
                roughlyVelocity: 0.5f,
                halfShortAxis: 1f,
-               halfLongAxis: 1.3f,
+               halfLongAxis: 1f,
                Coralite.Instance.NoSmootherInstance),
-            PowerfulAttackCost: 125,
-            attackLength: 360,
+            PowerfulAttackCost: 100,
+            attackLength: 460,
             width: 30, height: 64,
-            new Color(20, 22, 30,100), new Color(247, 225, 180),
-             trailCacheLength: 20
+            new Color(20, 22, 30, 100), new Color(247, 225, 180),
+             trailCacheLength: 16
             )
         { }
 
@@ -74,8 +64,36 @@ namespace Coralite.Content.Items.YujianHulu
 
         public override void HitEffect(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(BuffID.OnFire, Main.rand.Next(120,240));
+            target.AddBuff(BuffID.OnFire, Main.rand.Next(120, 240));
         }
     }
 
+    public class YujianAI_HellStoneDoubleSlash : YujianAI_DoubleSlash
+    {
+        public YujianAI_HellStoneDoubleSlash() : base(90, 70, 70, -2.4f, 4.5f, 2f, 0.6f, 1f, 1f, Coralite.Instance.NoSmootherInstance) { }
+
+        public override void Reset()
+        {
+            StartTime = 85;
+
+            SlashTime = 65;
+            StartAngle = 2f;
+
+            halfShortAxis = 1f;
+            halfLongAxis = 1f;
+            smoother = Coralite.Instance.HeavySmootherInstance;
+        }
+
+        public override void Init()
+        {
+            StartTime = 85;
+
+            SlashTime = 35;
+            StartAngle = -2f;
+
+            halfShortAxis = 1f;
+            halfLongAxis = 2f;
+            smoother = Coralite.Instance.NoSmootherInstance;
+        }
+    }
 }

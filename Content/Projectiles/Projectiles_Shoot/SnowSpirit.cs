@@ -24,7 +24,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             });
         }
 
-        public override string Texture => AssetDirectory.OtherProjectiles+"Blank";
+        public override string Texture => AssetDirectory.Blank;
 
         public override void SetDefaults()
         {

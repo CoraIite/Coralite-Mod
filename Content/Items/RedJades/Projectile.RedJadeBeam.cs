@@ -10,7 +10,7 @@ namespace Coralite.Content.Items.RedJades
 {
     public class RedJadeBeam : ModProjectile
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Blank";
+        public override string Texture => AssetDirectory.Blank;
 
         public override void SetDefaults()
         {

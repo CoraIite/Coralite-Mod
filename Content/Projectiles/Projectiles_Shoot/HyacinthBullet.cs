@@ -17,7 +17,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
     /// </summary>
     public class HyacinthBullet:ModProjectile
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Blank";
+        public override string Texture => AssetDirectory.Blank;
 
         public int npcIndex;
         public bool fadeIn=true;

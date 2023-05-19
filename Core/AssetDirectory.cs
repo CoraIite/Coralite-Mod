@@ -73,6 +73,9 @@
 
         public const string Projectiles = Assets + "Projectiles/";
 
+        /// <summary> 空白1*1 </summary>
+        public const string Blank = OtherProjectiles + "Blank";
+
         public const string OtherProjectiles = Projectiles + "Others/";
 
         public const string ShadowProjectiles = Projectiles + "Shadow/";
