@@ -13,8 +13,8 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("不灭的娃娃");
-            Tooltip.SetDefault("黑曜石制成的向导巫毒娃娃，现在可以不怕岩浆了\n在地狱召唤血肉墙，不消耗");
+            // DisplayName.SetDefault("不灭的娃娃");
+            // Tooltip.SetDefault("黑曜石制成的向导巫毒娃娃，现在可以不怕岩浆了\n在地狱召唤血肉墙，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.BossSummons
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
 
             return true;

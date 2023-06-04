@@ -27,17 +27,17 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void AI()
         {
-            if (Main.netMode != NetmodeID.Server)
-                for (int i = 0; i < 3; i++)
-                {
-                    Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, -Projectile.velocity * 0.4f, 0, default, Projectile.scale);
-                    dust.noGravity = true;
-                }
+            for (int i = 0; i < 3; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, -Projectile.velocity * 0.4f, 0, default, Projectile.scale);
+                dust.noGravity = true;
+            }
         }
 
         public override void Kill(int timeLeft)
         {
-            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner);
+            if (Main.myPlayer == Projectile.owner)
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Stars
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("星之书-星符文");
+            // DisplayName.SetDefault("星之书-星符文");
         }
 
         public override void SetDefaults()

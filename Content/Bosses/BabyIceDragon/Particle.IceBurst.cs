@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
-using Terraria;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
@@ -14,6 +13,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             particle.color = Color.White;
             particle.rotation = 0f;
             particle.frame = new Rectangle(0, 0, 128, 128);
+            particle.shouldKilledOutScreen = false;
         }
 
         public override void Update(Particle particle)

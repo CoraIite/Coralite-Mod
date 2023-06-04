@@ -87,7 +87,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             return false;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.velocity *= 0.65f;
             if (Projectile.velocity.Length() < 2f)

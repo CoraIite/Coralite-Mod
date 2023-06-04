@@ -13,8 +13,8 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("圣洁的光蛉");
-            Tooltip.SetDefault("它光彩夺目，可得轻拿轻放\n在神圣地形召唤光之女皇，不消耗");
+            // DisplayName.SetDefault("圣洁的光蛉");
+            // Tooltip.SetDefault("它光彩夺目，可得轻拿轻放\n在神圣地形召唤光之女皇，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.BossSummons
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
 
             return true;

@@ -12,9 +12,9 @@ namespace Coralite.Content.Items.Shadow
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("影水晶");
+            // DisplayName.SetDefault("影水晶");
 
-            Tooltip.SetDefault("影子能量的结晶");
+            // Tooltip.SetDefault("影子能量的结晶");
 
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 3));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;

@@ -9,6 +9,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.Rediancie
 {
+    /// <summary>
+    /// 使用ai[0]控制是否发出声音，为0时会发出声音
+    /// </summary>
     public class Rediancie_Explosion : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
@@ -26,10 +29,6 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void OnSpawn(IEntitySource source)
         {
-            if (Main.netMode == NetmodeID.Server)
-                return;
-
-            Helper.PlayPitched("RedJade/RedJadeBoom", 0.4f, 0f, Projectile.Center);
             Color red = new Color(221, 50, 50);
             Color grey = new Color(91, 93, 102);
             for (int i = 0; i < 8; i++)
@@ -39,8 +38,15 @@ namespace Coralite.Content.Bosses.Rediancie
             }
         }
 
-        public override bool PreAI() => false;
-
+        public override void AI()
+        {
+            if (Projectile.localAI[0]==0)
+            {
+                if (Projectile.ai[0]==0)
+                    Helper.PlayPitched("RedJade/RedJadeBoom", 0.4f, 0f, Projectile.Center);
+                Projectile.localAI[0] = 1;
+            }
+        }
         public override bool PreDraw(ref Color lightColor) => false;
     }
 }

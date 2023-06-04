@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override bool? CanDamage() => canDamage;
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.damage = (int)(Projectile.damage * 0.8f);
             if (Projectile.damage < 1)

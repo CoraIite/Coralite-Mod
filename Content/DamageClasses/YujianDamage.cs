@@ -7,7 +7,7 @@ namespace Coralite.Content.DamageClasses
     {
         public override void SetStaticDefaults()
         {
-            ClassName.SetDefault("念力伤害");
+            // DisplayName.SetDefault("念力伤害");
         }
 
         //会受到一半的魔法和召唤伤害加成

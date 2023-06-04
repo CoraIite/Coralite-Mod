@@ -14,9 +14,9 @@ namespace Coralite.Content.Items.Weapons_Magic
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("蕴魔灰烬");
+            // DisplayName.SetDefault("蕴魔灰烬");
 
-            Tooltip.SetDefault("它尝起来是甜的");
+            // Tooltip.SetDefault("它尝起来是甜的");
         }
 
         public override void SetDefaults()
@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.Weapons_Magic
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("蕴魔灰烬");
+            // DisplayName.SetDefault("蕴魔灰烬");
 
             Main.projFrames[Type] = 2;
         }
@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.Weapons_Magic
             }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.velocity *= 0.8f;
             Projectile.alpha += 20;

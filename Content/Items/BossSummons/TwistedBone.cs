@@ -13,8 +13,8 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("扭曲的骨头");
-            Tooltip.SetDefault("形态扭曲的骨头，似乎能直接招来诅咒，但并不是诅咒的根源\n在夜晚召唤骷髅王，不消耗");
+            // DisplayName.SetDefault("扭曲的骨头");
+            // Tooltip.SetDefault("形态扭曲的骨头，似乎能直接招来诅咒，但并不是诅咒的根源\n在夜晚召唤骷髅王，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.BossSummons
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
 
             return true;

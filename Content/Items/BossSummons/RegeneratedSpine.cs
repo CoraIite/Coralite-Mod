@@ -13,8 +13,8 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("再生的脊椎");
-            Tooltip.SetDefault("它充满了生命力，似乎可以不断地再生\n在猩红地形召唤克苏鲁之脑，不消耗");
+            // DisplayName.SetDefault("再生的脊椎");
+            // Tooltip.SetDefault("它充满了生命力，似乎可以不断地再生\n在猩红地形召唤克苏鲁之脑，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.BossSummons
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
 
             return true;

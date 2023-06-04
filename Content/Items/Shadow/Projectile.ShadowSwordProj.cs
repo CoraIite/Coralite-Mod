@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Shadow
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("潜伏分身");
+            // DisplayName.SetDefault("潜伏分身");
         }
 
         public override void SetDefaults()
@@ -123,7 +123,7 @@ namespace Coralite.Content.Items.Shadow
             return true;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.netMode != NetmodeID.Server)
                 Dust.NewDustDirect(Projectile.Center, 32, 32, DustID.Granite, 0.2f, 0.2f, 0, default, 1.2f);

@@ -51,7 +51,7 @@ namespace Coralite.Content.NPCs.Shadow
             return false;
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             float direction = Projectile.velocity.ToRotation();
             for (int i = 0; i < 8; i++)

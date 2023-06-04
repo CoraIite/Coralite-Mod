@@ -14,9 +14,9 @@ namespace Coralite.Content.Items.Accessories
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("翡翠念珠");
-            Tooltip.SetDefault("念力回复速度微量增加\n" +
-                "念力伤害 +3");
+            // DisplayName.SetDefault("翡翠念珠");
+            /* Tooltip.SetDefault("念力回复速度微量增加\n" +
+                "念力伤害 +3"); */
         }
 
         public override void SetDefaults()

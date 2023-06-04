@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.Icicle
             Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<IceHalo>(), Color.White, 0.2f);
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             //生成3个冰锥弹幕
             if (Main.myPlayer == Projectile.owner)
@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.Icicle
                 }
         }
 
-        public override void OnHitPvp(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             //生成3个冰锥弹幕
             if (Main.myPlayer == Projectile.owner)

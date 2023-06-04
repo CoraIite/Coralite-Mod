@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("受到攻击时有概率产生爆炸");
+            // Tooltip.SetDefault("受到攻击时有概率产生爆炸");
         }
 
         public override void SetDefaults()

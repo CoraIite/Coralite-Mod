@@ -14,7 +14,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("赤玉刺");
+            // DisplayName.SetDefault("赤玉刺");
         }
 
         public override void SetDefaults()
@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.RedJades
             Projectile.netImportant = true;
             Projectile.aiStyle = -1;
             Projectile.penetrate = 1;
-            Projectile.timeLeft = 900;
+            Projectile.timeLeft = 55;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = false;
         }
@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.RedJades
         public override void AI()
         {
             if (Projectile.velocity.Y < 14)
-                Projectile.velocity.Y += 0.08f;
+                Projectile.velocity.Y += 0.04f;
 
             Projectile.rotation = Projectile.velocity.ToRotation();
 

@@ -12,7 +12,7 @@ namespace Coralite.Content.Bosses.Rediancie
 {
     public class RediancieMinion : ModNPC
     {
-        public override string Texture => AssetDirectory.RedJadeProjectiles + "RedBink";
+        public override string Texture => AssetDirectory.Rediancie + "RedBink_BossMinion";
 
         Player target => Main.player[NPC.target];
         public ref float Timer => ref NPC.ai[0];
@@ -21,16 +21,16 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("小赤玉灵");
+            // DisplayName.SetDefault("小赤玉灵");
 
             Main.npcFrameCount[Type] = 1;
-
             NPCID.Sets.MPAllowedEnemies[Type] = true;
         }
 
         public override void SetDefaults()
         {
-            NPC.width = NPC.height = 20;
+            NPC.width = NPC.height = 36;
+            NPC.scale = 0.8f;
             NPC.damage = 5;
             NPC.defense = 0;
             NPC.lifeMax = 10;
@@ -104,18 +104,21 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Texture2D mainTex = TextureAssets.Npc[Type].Value;
+            Vector2 drawPos = NPC.Center - screenPos;
+            Vector2 origin = mainTex.Size() / 2;
+
             if (Timer < 101)
-            {
-                Texture2D mainTex = TextureAssets.Npc[Type].Value;
-                spriteBatch.Draw(mainTex, NPC.Center - screenPos, mainTex.Frame(), new Color(248, 40, 24, (int)alpha), NPC.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 1 + alpha / 255, SpriteEffects.None, 0f);
-            }
+                spriteBatch.Draw(mainTex, drawPos, null, new Color(248, 40, 24,(int)alpha), NPC.rotation, origin, NPC.scale + 0.5f*(alpha / 255), SpriteEffects.None, 0f);
             else
             {
-                Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.RedJadeProjectiles + "RedBinkRush").Value;
+                Texture2D extraTex = ModContent.Request<Texture2D>(AssetDirectory.RedJadeProjectiles + "RedBinkRush").Value;
                 int color = (int)alpha;
-                spriteBatch.Draw(mainTex, NPC.Center - NPC.velocity - screenPos, mainTex.Frame(), new Color(color, color, color, color), NPC.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 0.8f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(extraTex, NPC.Center - NPC.velocity - screenPos, null, new Color(color, color, color, color), NPC.rotation, extraTex.Size() / 2, 0.85f, SpriteEffects.None, 0f);
             }
-            return true;
+
+            spriteBatch.Draw(mainTex, drawPos, null, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
+            return false;
         }
 
         public override void OnKill()
@@ -128,7 +131,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 }
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             Helper.NotOnServer(() =>
             {

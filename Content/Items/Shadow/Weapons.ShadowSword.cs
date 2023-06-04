@@ -16,9 +16,9 @@ namespace Coralite.Content.Items.Shadow
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("潜伏");
+            // DisplayName.SetDefault("潜伏");
 
-            Tooltip.SetDefault("尽管是把剑，但却充满魔力！");
+            // Tooltip.SetDefault("尽管是把剑，但却充满魔力！");
         }
 
         public override void SetDefaults()

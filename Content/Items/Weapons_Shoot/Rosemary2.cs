@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Coralite.Content.Projectiles.Projectiles_Shoot;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Weapons_Shoot
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rosemary");
+            // DisplayName.SetDefault("Rosemary");
             ItemID.Sets.ToolTipDamageMultiplier[Type] = 1.7f;
         }
 

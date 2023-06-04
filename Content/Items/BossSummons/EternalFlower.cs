@@ -13,8 +13,8 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("永恒的花朵");
-            Tooltip.SetDefault("象征着永恒的花朵，无论过去多少个世纪它都不会凋零\n在地下丛林召唤世纪之花，不消耗");
+            // DisplayName.SetDefault("永恒的花朵");
+            // Tooltip.SetDefault("象征着永恒的花朵，无论过去多少个世纪它都不会凋零\n在地下丛林召唤世纪之花，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.BossSummons
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
 
             return true;

@@ -74,17 +74,17 @@ namespace Coralite.Core.Systems.ParticleSystem
                         particle.trail = null;
                         particle.datas = null;
                     }
+
+                    //一些防止粒子持续时间过长的措施，额...还是建议在update里手动设置active比较好
+                    if (particle.shouldKilledOutScreen && !Helpers.Helper.OnScreen(particle.center - Main.screenPosition))
+                        particle.active = false;
+
+                    if (particle.scale < 0.01f)
+                        particle.active = false;
+
+                    if (particle.fadeIn > 1000)
+                        particle.active = false;
                 }
-
-                //一些防止粒子持续时间过长的措施，额...还是建议在update里手动设置active比较好
-                if (particle.center.Y > Main.screenPosition.Y + Main.screenHeight)
-                    particle.active = false;
-
-                if (particle.scale < 0.01f)
-                    particle.active = false;
-
-                if (particle.fadeIn > 1000)
-                    particle.active = false;
             }
         }
     }

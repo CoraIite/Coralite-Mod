@@ -14,8 +14,8 @@ namespace Coralite.Content.Items.Shadow
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("影子兜帽");
-            Tooltip.SetDefault("最大魔力值增加40\n魔法伤害增加8%");
+            // DisplayName.SetDefault("影子兜帽");
+            // Tooltip.SetDefault("最大魔力值增加40\n魔法伤害增加8%");
         }
 
         public override void SetDefaults()
@@ -50,8 +50,8 @@ namespace Coralite.Content.Items.Shadow
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("影子胸甲");
-            Tooltip.SetDefault("最大魔力值增加20\n魔法暴击率增加4%");
+            // DisplayName.SetDefault("影子胸甲");
+            // Tooltip.SetDefault("最大魔力值增加20\n魔法暴击率增加4%");
         }
 
         public override void SetDefaults()
@@ -76,8 +76,8 @@ namespace Coralite.Content.Items.Shadow
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("影子护腿");
-            Tooltip.SetDefault("魔力消耗减少10%\n魔法暴击率增加6%");
+            // DisplayName.SetDefault("影子护腿");
+            // Tooltip.SetDefault("魔力消耗减少10%\n魔法暴击率增加6%");
         }
 
         public override void SetDefaults()

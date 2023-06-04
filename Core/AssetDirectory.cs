@@ -17,7 +17,8 @@
 
         public const string Buffs = Assets + "Buffs/";
 
-        public const string Minions = Buffs + "Minions/";
+        public const string MinionBuffs = Buffs + "Minions/";
+        public const string PetBuffs = Buffs + "Pets/";
         public const string Debuffs = Buffs + "Debuffs/";
 
         #endregion
@@ -110,6 +111,7 @@
         public const string NPCs = Assets + "NPCs/";
 
         public const string ShadowNPCs = NPCs + "Shadow/";
+        public const string IcicleNPCs = NPCs + "Icicle/";
         public const string OtherNPC = NPCs + "OtherNPC/";
 
         #endregion

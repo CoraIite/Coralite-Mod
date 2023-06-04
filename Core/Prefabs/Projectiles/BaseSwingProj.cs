@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -40,7 +41,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected float totalAngle = 2.5f;
         public ref float _Rotation => ref Projectile.ai[1];// 实际角度，通过一系列计算得到的每一帧的弹幕角度
         protected readonly float spriteRotation;//2.445?之前写的是这个数，但我忘了当时是怎么得到这个数的，重新算了一下发现不对劲
-        public ref float timer => ref Projectile.localAI[0];
+        public ref float Timer => ref Projectile.localAI[0];
 
         protected readonly short trailLength;
         public float distanceToOwner = 15;
@@ -51,7 +52,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public Vector2 Top;
         private Vector2 Bottom;
 
-        public BaseSwingProj(float spriteRotation = 2.356f, short trailLength = 15)
+        public BaseSwingProj(float spriteRotation = 0.785f, short trailLength = 15)
         {
             this.spriteRotation = spriteRotation;
             this.trailLength = trailLength;
@@ -107,12 +108,12 @@ namespace Coralite.Core.Prefabs.Projectiles
                 return;
             }
 
-            if ((int)timer <= minTime)//弹幕生成到开始挥舞之前
+            if ((int)Timer <= minTime)//弹幕生成到开始挥舞之前
             {
                 Owner.direction = Main.MouseWorld.X < Owner.Center.X ? -1 : 1;
                 BeforeSlash();
             }
-            else if ((int)timer <= maxTime)//挥舞过程中
+            else if ((int)Timer <= maxTime)//挥舞过程中
             {
                 Slash();
                 SpawnDustOnSlash();
@@ -187,7 +188,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// </summary>
         protected virtual void TimeUpdater()
         {
-            timer++;
+            Timer++;
         }
 
         #region 关于挥舞
@@ -200,7 +201,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual void Slash()
         {
-            _Rotation = startAngle + totalAngle * Smoother.Smoother((int)timer - minTime, maxTime - minTime);
+            _Rotation = startAngle + totalAngle * Smoother.Smoother((int)Timer - minTime, maxTime - minTime);
             Slasher();
             Projectile.netUpdate = true;
         }
@@ -222,7 +223,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             RotateVec2 = _Rotation.ToRotationVector2();
             Projectile.Center = Owner.Center + RotateVec2 * (Projectile.height / 2 + distanceToOwner);
-            Projectile.rotation = _Rotation - 1.57f;
+            Projectile.rotation = _Rotation;
         }
 
         #endregion
@@ -254,7 +255,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         #region 碰撞部分
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (onHit == 0)
                 onHit = 1;
@@ -269,7 +270,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if ((int)timer < minTime||!Collision.CanHitLine(Owner.Center,1,1,targetHitbox.Center.ToVector2(),1,1))
+            if ((int)Timer < minTime||!Collision.CanHitLine(Owner.Center,1,1,targetHitbox.Center.ToVector2(),1,1))
                 return false;
 
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Top, Bottom, Projectile.width / 2, ref Projectile.localAI[1]);
@@ -288,28 +289,31 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override void PostDraw(Color lightColor)
         {
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(0, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+            //Main.spriteBatch.End();
+            //Main.spriteBatch.Begin(0, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
-            Texture2D mainTex = Request<Texture2D>(CheckTexture()).Value;
+            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
 
+            int dir= Math.Sign(totalAngle);
+            float extraRot = Owner.direction == -1 ? 3.141f : 0;
+            extraRot += Owner.direction == dir ?   0: 3.141f;
+            extraRot += spriteRotation * dir;
+
             if (useShadowTrail)
-                DrawShadowTrail(mainTex, origin, lightColor);
+                DrawShadowTrail(mainTex, origin, lightColor,extraRot);
 
             if (canDrawSelf)
-                Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(),
-                                                    lightColor, Projectile.rotation + spriteRotation, origin, Projectile.scale, CheckEffect(), 0f);
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                DrawSelf(mainTex, origin, lightColor,extraRot);
+            //Main.spriteBatch.End();
+            //Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         }
 
-        //public void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor)
-        //{
-        //    Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(),
-        //                        lightColor, Projectile.rotation + SpriteRotation, origin, Projectile.scale, CheckEffect(), 0f);
-        //}
+        protected virtual void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor,float extraRot)
+        {
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(),
+                                                lightColor, Projectile.rotation + + extraRot, origin, Projectile.scale, CheckEffect(), 0f);
+        }
 
         protected void DrawSlashTrail()
         {
@@ -367,15 +371,15 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
         }
 
-        protected void DrawShadowTrail(Texture2D mainTex, Vector2 origin, Color lightColor)
+        protected void DrawShadowTrail(Texture2D mainTex, Vector2 origin, Color lightColor,float extraRot)
         {
-            if ((int)timer > minTime)
+            if ((int)Timer > minTime)
             {
                 for (int i = shadowCount; i > 0; i--)
                 {
                     if (oldRotate[i] != 100f)
                         Main.spriteBatch.Draw(mainTex, Owner.Center + oldRotate[i].ToRotationVector2() * oldDistanceToOwner[i] - Main.screenPosition, mainTex.Frame(),
-                                                            new Color(lightColor.R, lightColor.G, lightColor.B, 0.1f + i * 0.01f), oldRotate[i] - 1.57f + spriteRotation, origin, Projectile.scale * (1f - i * 0.1f), CheckEffect(), 0);
+                                                            lightColor * (0.1f + i * 0.01f), oldRotate[i] +extraRot, origin, Projectile.scale * (1f - i * 0.1f), CheckEffect(), 0);
                 }
             }
         }
@@ -385,25 +389,28 @@ namespace Coralite.Core.Prefabs.Projectiles
             return trailBottomWidth * (1 - factor);
         }
 
-        protected string CheckTexture()
-        {
-            if (totalAngle > 0)
-                return Texture;
+        //protected string CheckTexture()
+        //{
+        //    if (totalAngle > 0)
+        //        return Texture;
 
-            if (isSymmetrical)
-                return Texture;
+        //    if (isSymmetrical)
+        //        return Texture;
 
-            return Texture + "_Flip";
-        }
+        //    return Texture + "_Flip";
+        //}
 
         private SpriteEffects CheckEffect()
         {
-            if (spriteRotation != 0f)
-                return SpriteEffects.None;
-
             if (Owner.direction == -1)
-                return SpriteEffects.None;
+            {
+                if (totalAngle > 0)
+                    return SpriteEffects.None;
+                return SpriteEffects.FlipHorizontally;
+            }
 
+            if (totalAngle > 0)
+                return SpriteEffects.None;
             return SpriteEffects.FlipHorizontally;
         }
 

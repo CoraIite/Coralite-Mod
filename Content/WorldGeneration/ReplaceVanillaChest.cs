@@ -13,6 +13,9 @@ namespace Coralite.Content.WorldGeneration
         {
             foreach (var chest in Main.chest)
             {
+                if (chest == null)
+                    continue;
+
                 Tile tile = Framing.GetTileSafely(chest.x, chest.y);
                 switch (tile.TileType)
                 {

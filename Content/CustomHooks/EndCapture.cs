@@ -1,8 +1,8 @@
 ﻿using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using On.Terraria.Graphics.Effects;
 using Terraria;
+using Terraria.Graphics.Effects;
 
 namespace Coralite.Content.CustomHooks
 {
@@ -14,12 +14,12 @@ namespace Coralite.Content.CustomHooks
 
         public override void Load()
         {
-            FilterManager.EndCapture += new FilterManager.hook_EndCapture(FilterManager_EndCapture);
+            On_FilterManager.EndCapture += new On_FilterManager.hook_EndCapture(FilterManager_EndCapture);
         }
 
         public static RenderTarget2D screen;
 
-        private void FilterManager_EndCapture(FilterManager.orig_EndCapture orig, Terraria.Graphics.Effects.FilterManager self, RenderTarget2D finalTexture, RenderTarget2D screenTarget1, RenderTarget2D screenTarget2, Color clearColor)
+        private void FilterManager_EndCapture(On_FilterManager.orig_EndCapture orig, Terraria.Graphics.Effects.FilterManager self, RenderTarget2D finalTexture, RenderTarget2D screenTarget1, RenderTarget2D screenTarget2, Color clearColor)
         {
             if (screen == null)
                 CreateRender();

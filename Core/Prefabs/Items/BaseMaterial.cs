@@ -28,8 +28,8 @@ namespace Coralite.Core.Prefabs.Items
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault(_Name);
-            Tooltip.SetDefault(_Tooltip);
+            // DisplayName.SetDefault(_Name);
+            // Tooltip.SetDefault(_Tooltip);
         }
 
         public override void SetDefaults()

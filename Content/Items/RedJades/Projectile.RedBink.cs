@@ -20,14 +20,13 @@ namespace Coralite.Content.Items.RedJades
         public Player Owner => Main.player[Projectile.owner];
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
-        public float alpha;
         public float ReadyRotation;
         public bool rightClick;
         public int originDamage;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("小赤玉灵");
+            // DisplayName.SetDefault("小赤玉灵");
 
             ProjectileID.Sets.MinionSacrificable[Type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Type] = true;
@@ -174,7 +173,7 @@ namespace Coralite.Content.Items.RedJades
                             if (Projectile.velocity.Length() > 0.8f)
                                 Projectile.velocity = ReadyRotation.ToRotationVector2() * 0.8f;
 
-                            alpha += 4f;
+                            Projectile.alpha += 4;
                             break;
                         }
 
@@ -198,9 +197,9 @@ namespace Coralite.Content.Items.RedJades
                         {
                             Projectile.velocity *= 0.96f;
                             Projectile.rotation = Helper.Lerp(Projectile.rotation, 0, 0.1f);
-                            alpha -= 25;
-                            if (alpha < 0)
-                                alpha = 0;
+                            Projectile.alpha -= 25;
+                            if (Projectile.alpha < 0)
+                                Projectile.alpha = 0;
                             break;
                         }
 
@@ -219,7 +218,7 @@ namespace Coralite.Content.Items.RedJades
         {
             State = 0;
             Timer = 0;
-            alpha = 0;
+            Projectile.alpha = 0;
             Projectile.originalDamage = originDamage;
             Projectile.netUpdate = true;
         }
@@ -238,7 +237,7 @@ namespace Coralite.Content.Items.RedJades
             return true;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (rightClick && Timer > 30 && Timer < 90)
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileType<RedJadeBoom>(), damage, 5f);
@@ -250,23 +249,26 @@ namespace Coralite.Content.Items.RedJades
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Vector2 drawPos = Projectile.Center - Main.screenPosition;
+            Vector2 origin = mainTex.Size() / 2;
+
             if (rightClick)
             {
                 if (Timer < 31)
-                {
-                    Texture2D mainTex = TextureAssets.Projectile[Type].Value;
-                    Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(), new Color(248, 40, 24, (int)alpha), Projectile.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 1 + alpha / 255, SpriteEffects.None, 0f);
-                }
+                    Main.spriteBatch.Draw(mainTex, drawPos, null, new Color(248, 40, 24, (byte)Projectile.alpha), Projectile.rotation, origin, 1 + Projectile.alpha / 255, SpriteEffects.None, 0f);
                 else
                 {
-                    Texture2D mainTex = Request<Texture2D>(AssetDirectory.RedJadeProjectiles + "RedBinkRush").Value;
-                    int color = (int)alpha;
-                    Main.spriteBatch.Draw(mainTex, Projectile.Center - Projectile.velocity - Main.screenPosition, mainTex.Frame(), new Color(color, color, color, color), Projectile.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 0.8f, SpriteEffects.None, 0f);
+                    Texture2D rushTex = Request<Texture2D>(AssetDirectory.RedJadeProjectiles + "RedBinkRush").Value;
+                    int color = Projectile.alpha;
+                    Main.spriteBatch.Draw(rushTex, drawPos ,null, new Color(color, color, color, color), Projectile.rotation, rushTex.Size()/2, 0.8f, SpriteEffects.None, 0f);
                 }
             }
 
-            return true;
+            Main.spriteBatch.Draw(mainTex, drawPos, null, lightColor, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
+            return false;
         }
+
         #endregion
 
         public enum AIStates : int
@@ -276,6 +278,4 @@ namespace Coralite.Content.Items.RedJades
             specialAttack = 2
         }
     }
-
-
 }

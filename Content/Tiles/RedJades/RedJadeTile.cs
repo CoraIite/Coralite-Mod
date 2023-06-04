@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.RedJades
@@ -22,11 +23,11 @@ namespace Coralite.Content.Tiles.RedJades
             Main.tileBlockLight[Type] = true;
 
             DustType = DustID.GemRuby;
-            ItemDrop = ModContent.ItemType<RedJade>();
+            ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<RedJade>();
             HitSound = SoundID.Tink;
 
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("赤玉矿");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("赤玉矿");
             AddMapEntry(Coralite.Instance.RedJadeRed, name);
         }
     }

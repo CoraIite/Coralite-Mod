@@ -1,4 +1,4 @@
-using Coralite.Content.Particles;
+﻿using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
@@ -67,7 +67,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             SoundEngine.PlaySound(style, Projectile.Center);
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.timeLeft > 32)
                 Projectile.timeLeft = 31;

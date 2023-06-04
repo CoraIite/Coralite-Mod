@@ -24,7 +24,7 @@ namespace Coralite.Content.Tiles.Mushroom
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 
             DustType = DustID.OrangeStainedGlass;
-            ItemDrop = ModContent.ItemType<Items.Mushroom.MushroomPlatform>();
+            ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<Items.Mushroom.MushroomPlatform>();
             AdjTiles = new int[] { TileID.Platforms };
 
             TileObjectData.newTile.CoordinateHeights = new[] { 16 };

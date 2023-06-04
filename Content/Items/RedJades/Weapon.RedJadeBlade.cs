@@ -11,36 +11,58 @@ namespace Coralite.Content.Items.RedJades
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
 
+        public int shootCount;
+        /// <summary> 使用多少次后进行强化大爆炸的射击 </summary>
+        public int useBigBoom = 8;
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("赤玉刃");
+            // DisplayName.SetDefault("赤玉刃");
 
-            Tooltip.SetDefault("射出赤玉碎片，偶尔会产生爆炸");
+            // Tooltip.SetDefault("射出赤玉碎片");
         }
 
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 17;
-            Item.useTime = 35;
-            Item.useAnimation = 18;
+            Item.damage = 16;
+            Item.useTime = 16;
+            Item.useAnimation = 16;
             Item.knockBack = 4f;
             Item.maxStack = 1;
 
             Item.autoReuse = true;
             Item.useTurn = false;
-
-            Item.shoot = ModContent.ProjectileType<RedJadeStrike>();
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+            Item.shoot = ModContent.ProjectileType<RedJadeBladeHeldProj>();
             Item.UseSound = SoundID.Item1;
             Item.value = Item.sellPrice(0, 0, 50, 0);
             Item.rare = ItemRarityID.Green;
             Item.DamageType = DamageClass.Melee;
-            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useStyle = ItemUseStyleID.Rapier;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.UnitX) * 10f, type, damage, knockback, player.whoAmI, Main.rand.Next(3));
+            if (Main.myPlayer != player.whoAmI)
+                return false;
+
+            if (shootCount >= useBigBoom) //使用强力挥舞
+            {
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, 3);
+
+                shootCount = 0;
+                useBigBoom = Main.rand.Next(6, 9);
+            }
+            else
+            {
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, shootCount % 3);
+                Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.UnitX) * 10f,
+                    ModContent.ProjectileType<RedJadeStrike>(), (int)(damage * 0.75f), knockback, player.whoAmI, Main.rand.Next(3));
+            }
+
+            shootCount++;
             return false;
         }
 

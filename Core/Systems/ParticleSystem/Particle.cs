@@ -18,6 +18,7 @@ namespace Coralite.Core.Systems.ParticleSystem
         public float[] oldRot;
         //public bool noLight;
         public bool active;
+        public bool shouldKilledOutScreen=true;
         public Color color;
         //public int alpha;
         public Rectangle frame;

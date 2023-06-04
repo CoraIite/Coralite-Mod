@@ -7,10 +7,13 @@ namespace Coralite.Core.Systems.BossSystems
     public partial class DownedBossSystem : ModSystem
     {
         public static bool downedRediancie;
+        public static bool downedBabyIceDragon;
 
         public override void PostWorldGen()
         {
             downedRediancie = false;
+            downedBabyIceDragon = false;
+
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -19,6 +22,9 @@ namespace Coralite.Core.Systems.BossSystems
             if (downedRediancie)
                 downed.Add("Rediancie");
 
+            if (downedBabyIceDragon)
+                downed.Add("BabyIceDragon");
+
             tag.Add("downed", downed);
         }
 
@@ -26,6 +32,8 @@ namespace Coralite.Core.Systems.BossSystems
         {
             IList<string> list = tag.GetList<string>("downed");
             downedRediancie = list.Contains("Rediancie");
+            downedBabyIceDragon = list.Contains("BabyIceDragon");
+
         }
     }
 }

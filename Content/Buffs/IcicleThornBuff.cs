@@ -1,4 +1,4 @@
-using Coralite.Content.Items.Icicle;
+﻿using Coralite.Content.Items.Icicle;
 using Coralite.Core;
 using Terraria;
 using Terraria.ModLoader;
@@ -8,12 +8,12 @@ namespace Coralite.Content.Buffs
 {
     public class IcicleThornBuff : ModBuff
     {
-        public override string Texture => AssetDirectory.Minions + Name;
+        public override string Texture => AssetDirectory.MinionBuffs + Name;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("冰魔刺");
-            Description.SetDefault("请勿触摸");
+            // DisplayName.SetDefault("冰魔刺");
+            // Description.SetDefault("请勿触摸");
 
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;

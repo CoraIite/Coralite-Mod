@@ -1,4 +1,4 @@
-using Coralite.Content.Items.Shadow;
+﻿using Coralite.Content.Items.Shadow;
 using Coralite.Content.Projectiles.Projectiles_Shoot;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Weapons_Shoot
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Arethusa");
+            // DisplayName.SetDefault("Arethusa");
         }
 
         public override void SetDefaults()

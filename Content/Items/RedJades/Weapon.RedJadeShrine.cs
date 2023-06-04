@@ -16,10 +16,10 @@ namespace Coralite.Content.Items.RedJades
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("赤玉祭坛");
+            // DisplayName.SetDefault("赤玉祭坛");
 
-            Tooltip.SetDefault("召唤小赤玉灵为你作战\n"
-                                         + $"[c/00bbff:消耗1召唤栏]");
+            /* Tooltip.SetDefault("召唤小赤玉灵为你作战\n"
+                                         + $"[c/00bbff:消耗1召唤栏]"); */
         }
 
         public override void SetDefaults()

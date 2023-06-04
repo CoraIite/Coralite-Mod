@@ -12,9 +12,9 @@ namespace Coralite.Content.Items.Stars
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("星之书");
+            // DisplayName.SetDefault("星之书");
 
-            Tooltip.SetDefault("汇聚群星的能量\n蓄力吸取星之符文，完成后释放星光球\n取消蓄力释放追踪的星之符文");
+            // Tooltip.SetDefault("汇聚群星的能量\n蓄力吸取星之符文，完成后释放星光球\n取消蓄力释放追踪的星之符文");
         }
 
         public override void SetDefaults()

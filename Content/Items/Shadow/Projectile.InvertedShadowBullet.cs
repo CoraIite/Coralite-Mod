@@ -39,7 +39,7 @@ namespace Coralite.Content.Items.Shadow
             Projectile.localAI[0]++;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             float direction = Projectile.velocity.ToRotation();
             for (int i = 0; i < 8; i++)

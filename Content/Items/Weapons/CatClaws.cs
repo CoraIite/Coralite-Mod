@@ -32,9 +32,9 @@ namespace Coralite.Content.Items.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("猫猫爪");
+            // DisplayName.SetDefault("猫猫爪");
 
-            Tooltip.SetDefault("猫猫最爱的武器\n喵~喵喵喵~");
+            // Tooltip.SetDefault("猫猫最爱的武器\n喵~喵喵喵~");
         }
 
         public override void SetDefaults()
@@ -200,7 +200,7 @@ namespace Coralite.Content.Items.Weapons
 
         private byte tripleCombo = 0;
 
-        public CatClawsProj_Slash() : base(3.141f, trailLength: 30) { }
+        public CatClawsProj_Slash() : base(1.57f, trailLength: 30) { }
 
         public override void SetDefs()
         {
@@ -283,12 +283,12 @@ namespace Coralite.Content.Items.Weapons
 
                     tripleCombo++;
                     startAngle *= -1;
-                    timer = 0;
+                    Timer = 0;
                     onStart = true;
                     break;
 
                 case 5:
-                    if ((int)timer <= 2)
+                    if ((int)Timer <= 2)
                     {
                         if (Owner.whoAmI == Main.myPlayer)
                         {
@@ -296,9 +296,9 @@ namespace Coralite.Content.Items.Weapons
                             Owner.velocity += Vector2.Normalize(Main.MouseWorld - Owner.Center) * 7;
                         }
                     }
-                    else if ((int)timer < 30)
+                    else if ((int)Timer < 30)
                         Slasher();
-                    else if ((int)timer > 30)
+                    else if ((int)Timer > 30)
                         Projectile.Kill();
 
                     break;

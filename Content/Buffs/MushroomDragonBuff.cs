@@ -8,12 +8,12 @@ namespace Coralite.Content.Buffs
 {
     public class MushroomDragonBuff : ModBuff
     {
-        public override string Texture => AssetDirectory.Minions + Name;
+        public override string Texture => AssetDirectory.MinionBuffs + Name;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("蘑菇幼龙");
-            Description.SetDefault("蘑菇幼龙会为你战斗");
+            // DisplayName.SetDefault("蘑菇幼龙");
+            // Description.SetDefault("蘑菇幼龙会为你战斗");
 
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;

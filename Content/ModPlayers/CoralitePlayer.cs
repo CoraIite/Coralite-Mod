@@ -163,7 +163,7 @@ namespace Coralite.Content.ModPlayers
 
         #region 受击与攻击
 
-        public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
+        public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
         {
             if (redJadePendant && Main.myPlayer == Player.whoAmI && damage > 5 && Main.rand.NextBool(3))
             {
@@ -172,7 +172,7 @@ namespace Coralite.Content.ModPlayers
             }
         }
 
-        public override void OnHitByNPC(NPC npc, int damage, bool crit)
+        public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
         {
             if (redJadePendant && Main.myPlayer == Player.whoAmI && damage > 5 && Main.rand.NextBool(3))
             {
@@ -198,7 +198,7 @@ namespace Coralite.Content.ModPlayers
 
         #endregion
 
-        public bool UsingVanillaDash()=>Player.dashType == 0 && !Player.setSolar && !Player.mount.Active;
+        public bool UsingVanillaDash()=>Player.dashType != 0 && Player.setSolar && Player.mount.Active;
 
 
     }

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,19 +18,16 @@ namespace Coralite.Content.NPCs.Shadow
 
         public Player Target => Main.player[NPC.target];
 
-        public int yFrame = 0;
-        public int frameCounter = 0;
-
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("影子守卫");
-            Main.npcFrameCount[NPC.type] = 4;
+            // DisplayName.SetDefault("影子守卫");
+            Main.npcFrameCount[NPC.type] = 3;
         }
 
         public override void SetDefaults()
         {
-            NPC.width = 26;
-            NPC.height = 50;
+            NPC.width = 60;
+            NPC.height = 64;
             NPC.lifeMax = 75;
             NPC.damage = 15;
             NPC.defense = 8;
@@ -48,18 +46,16 @@ namespace Coralite.Content.NPCs.Shadow
                 GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.ShadowGores + "ShadowGuard_Gore" + i);
         }
 
-        public override void AI()
+        public override void PostAI()
         {
-            base.AI();
-            frameCounter++;
-            if (frameCounter > 10)
+            NPC.frameCounter+=1;
+            if (NPC.frameCounter > 10)
             {
-                frameCounter = 0;
+                NPC. frameCounter = 0;
+                NPC.frame.Y++;
 
-                if (yFrame != 3)
-                    yFrame++;
-                else
-                    yFrame = 0;
+                if (NPC.frame.Y > 2)
+                    NPC.frame.Y = 0;
             }
 
             NPC.spriteDirection = Math.Sign(Target.Center.X - NPC.Center.X);
@@ -67,23 +63,23 @@ namespace Coralite.Content.NPCs.Shadow
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D mainTex = ModContent.Request<Texture2D>(Texture).Value;
+            Texture2D mainTex = TextureAssets.Npc[Type].Value;
 
             int frameWidth = mainTex.Width;
             int frameHeight = mainTex.Height / Main.npcFrameCount[NPC.type];
-            Rectangle frameBox = new Rectangle(0, yFrame * frameHeight, frameWidth, frameHeight);
+            Rectangle frameBox = new Rectangle(0, NPC.frame.Y * frameHeight, frameWidth, frameHeight);
 
-            SpriteEffects effects = SpriteEffects.None;
+            SpriteEffects effects = SpriteEffects.FlipHorizontally;
             Vector2 origin = new Vector2(frameWidth / 2, frameHeight / 2);
 
             if (NPC.spriteDirection != 1)
-                effects = SpriteEffects.FlipHorizontally;
+                effects = SpriteEffects.None;
 
-            spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, Color.White, NPC.rotation, origin, NPC.scale, effects, 0f);
+            spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, Color.White * 0.8f, NPC.rotation, origin, NPC.scale, effects, 0f);
             return false;
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (Main.netMode != NetmodeID.Server)
             {

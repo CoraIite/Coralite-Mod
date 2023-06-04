@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -27,8 +28,8 @@ namespace Coralite.Content.Tiles.RedJades
             TileObjectData.newTile.StyleHorizontal = false;
             TileObjectData.addTile(Type);
 
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("魔导台");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("魔导台");
             AddMapEntry(Coralite.Instance.RedJadeRed, name);
         }
 

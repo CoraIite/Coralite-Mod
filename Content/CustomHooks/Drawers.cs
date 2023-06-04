@@ -18,13 +18,13 @@ namespace Coralite.Content.CustomHooks
             if (Main.dedServ)
                 return;
 
-            On.Terraria.Main.DrawDust += Drawer;
+            Terraria.On_Main.DrawDust += Drawer;
         }
 
         /// <summary>
         /// 在绘制粒子之后插一段，使用自己的渲染方式
         /// </summary>
-        private void Drawer(On.Terraria.Main.orig_DrawDust orig, Main self)
+        private void Drawer(Terraria.On_Main.orig_DrawDust orig, Main self)
         {
             orig(self);
 

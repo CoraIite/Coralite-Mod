@@ -3,6 +3,7 @@ using System.IO;
 using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -57,7 +58,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("冰龙宝宝");
+            // DisplayName.SetDefault("冰龙宝宝");
 
             Main.npcFrameCount[Type] = 5;
 
@@ -82,24 +83,28 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.boss = true;
 
             NPC.BossBar = GetInstance<BabyIceDragonBossBar>();
+
+            //BGM：冰洁寒流
+            if (!Main.dedServ)
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/IcyColdStream");
         }
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(4120 * bossLifeScale) + numPlayers * 900;
+            NPC.lifeMax = (int)(4120 * bossAdjustment) + numPlayers * 900;
             NPC.damage = 37;
-            NPC.defense = 8;
+            NPC.defense = 12;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = (int)(4800 * bossLifeScale) + numPlayers * 1600;
+                NPC.lifeMax = (int)(4800 * bossAdjustment) + numPlayers * 1600;
                 NPC.damage = 45;
             }
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<RediancieRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<BabyIceDragonRelic>()));
             npcLoot.Add(ItemDropRule.BossBag(ItemType<BabyIceDragonBossBag>()));
             npcLoot.Add(ItemDropRule.Common(ItemType<BabyIceDragonTrophy>(), 10));
 
@@ -114,9 +119,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             //    GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.BossGores + "Rediancie_Gore" + i);
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             SoundEngine.PlaySound(CoraliteSoundID.DigIce, NPC.Center);
+        }
+
+        public override void OnKill()
+        {
+            DownedBossSystem.DownBabyIceDragon();
         }
 
         public override bool? CanFallThroughPlatforms()

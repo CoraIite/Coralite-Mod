@@ -45,7 +45,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             return State > 2;
         }
 
-        public override bool? CanHitNPC(NPC target)
+        public override bool CanHitNPC(NPC target)/* tModPorter Suggestion: Return true instead of null */
         {
             return State > 2;
         }

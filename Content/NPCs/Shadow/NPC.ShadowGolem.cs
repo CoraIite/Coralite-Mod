@@ -28,7 +28,7 @@ namespace Coralite.Content.NPCs.Shadow
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("影子巨像");
+            // DisplayName.SetDefault("影子巨像");
             Main.npcFrameCount[NPC.type] = 11;
         }
 
@@ -214,7 +214,7 @@ namespace Coralite.Content.NPCs.Shadow
                 GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.ShadowGores + "ShadowGolem_Gore" + i);
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (Main.netMode != NetmodeID.Server)
             {

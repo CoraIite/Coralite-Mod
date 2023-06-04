@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Icicle
             return false;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.timeLeft > 15)
                 Projectile.timeLeft -= 10;

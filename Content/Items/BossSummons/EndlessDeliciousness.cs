@@ -13,8 +13,8 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("无尽的美味");
-            Tooltip.SetDefault("注入了魔法的腐烂食物，重要的是，它可以无限吃！\n在腐化地形召唤世界吞噬怪，不消耗");
+            // DisplayName.SetDefault("无尽的美味");
+            // Tooltip.SetDefault("注入了魔法的腐烂食物，重要的是，它可以无限吃！\n在腐化地形召唤世界吞噬怪，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.BossSummons
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
 
             return true;

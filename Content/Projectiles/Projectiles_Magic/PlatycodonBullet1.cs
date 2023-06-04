@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -121,7 +121,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             return false;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             FadeOut();
         }

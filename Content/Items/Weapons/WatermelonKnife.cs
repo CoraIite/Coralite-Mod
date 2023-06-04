@@ -16,9 +16,9 @@ namespace Coralite.Content.Items.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("切瓜小刀");
+            // DisplayName.SetDefault("切瓜小刀");
 
-            Tooltip.SetDefault("丢中西瓜就可以将它切成西瓜片");
+            // Tooltip.SetDefault("丢中西瓜就可以将它切成西瓜片");
         }
 
         public override void SetDefaults()
@@ -68,7 +68,7 @@ namespace Coralite.Content.Items.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("切瓜小刀");
+            // DisplayName.SetDefault("切瓜小刀");
 
         }
 

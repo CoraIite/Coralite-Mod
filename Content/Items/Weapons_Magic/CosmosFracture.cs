@@ -20,15 +20,15 @@ namespace Coralite.Content.Items.Weapons_Magic
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("异界裂隙");
+            // DisplayName.SetDefault("异界裂隙");
 
-            Tooltip.SetDefault("划破空间，来自异界的武器将撕裂你的敌人");
+            // Tooltip.SetDefault("划破空间，来自异界的武器将撕裂你的敌人");
         }
 
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 265;
+            Item.damage = 275;
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.mana = 22;
@@ -70,6 +70,8 @@ namespace Coralite.Content.Items.Weapons_Magic
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            if (Main.myPlayer != player.whoAmI)
+                return false;
             if (rightClick && player.statMana > 25)
             {
                 CoralitePlayer coralitePlayer = player.GetModPlayer<CoralitePlayer>();

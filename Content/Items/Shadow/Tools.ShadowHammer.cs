@@ -11,9 +11,9 @@ namespace Coralite.Content.Items.Shadow
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("影子锤");
+            // DisplayName.SetDefault("影子锤");
 
-            Tooltip.SetDefault("影子凝聚在这把锤子中");
+            // Tooltip.SetDefault("影子凝聚在这把锤子中");
         }
 
         public override void SetDefaults()

@@ -41,8 +41,8 @@ namespace Coralite.Core.Prefabs.Items
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault(Seedname);
-            Tooltip.SetDefault(Seedtooltip);
+            // DisplayName.SetDefault(Seedname);
+            // Tooltip.SetDefault(Seedtooltip);
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
         }

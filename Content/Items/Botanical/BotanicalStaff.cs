@@ -15,9 +15,9 @@ namespace Coralite.Content.Items.Botanical
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("植物魔杖宽1");
+            // DisplayName.SetDefault("植物魔杖宽1");
 
-            Tooltip.SetDefault("使植物生长状态+1");
+            // Tooltip.SetDefault("使植物生长状态+1");
         }
 
         public override void SetDefaults()

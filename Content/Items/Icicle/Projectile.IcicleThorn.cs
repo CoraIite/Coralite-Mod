@@ -1,4 +1,4 @@
-using Coralite.Content.Buffs;
+﻿using Coralite.Content.Buffs;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Content.Bosses.BabyIceDragon;
@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("冰魔刺");
+            // DisplayName.SetDefault("冰魔刺");
 
             ProjectileID.Sets.MinionSacrificable[Type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Type] = true;

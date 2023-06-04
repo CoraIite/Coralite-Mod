@@ -1,4 +1,4 @@
-using Coralite.Content.Items.Icicle;
+﻿using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
@@ -25,7 +25,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public ref float ExtendCount => ref NPC.ai[1];
         public ref float Timer => ref NPC.localAI[0];
 
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target)/* tModPorter Suggestion: Return true instead of null */ => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
 
         public override void SetDefaults()
@@ -41,7 +41,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.noTileCollide = true;
         }
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
             NPC.lifeMax = 250 + numPlayers * 100;
             NPC.defense = 8;
@@ -124,7 +124,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             (Main.npc[index].ModNPC as BabyIceDragon).Dizzy(360);
         }
 
-        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             for (int i = 0; i < 3; i++)
             {

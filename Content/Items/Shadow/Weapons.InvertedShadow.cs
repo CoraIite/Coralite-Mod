@@ -14,9 +14,9 @@ namespace Coralite.Content.Items.Shadow
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("倒影");
+            // DisplayName.SetDefault("倒影");
 
-            Tooltip.SetDefault("你的倒影将与你一同攻击");
+            // Tooltip.SetDefault("你的倒影将与你一同攻击");
         }
 
         public override void SetDefaults()

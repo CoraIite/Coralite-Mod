@@ -53,7 +53,7 @@ namespace Coralite.Core
             _drawMethod = _uiModItemType.GetMethod("Draw", BindingFlags.Instance | BindingFlags.Public);
 
             if (_drawMethod is not null)
-                HookEndpointManager.Add(_drawMethod, DrawMyName);
+                MonoModHooks.Add(_drawMethod, DrawMyName);
         }
 
         public override void Unload()

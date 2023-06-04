@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Stars
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("星之书-星光球");
+            // DisplayName.SetDefault("星之书-星光球");
         }
 
         public override void SetDefaults()
@@ -271,7 +271,7 @@ namespace Coralite.Content.Items.Stars
             return false;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (completeAndRelease && !canExplore)
             {

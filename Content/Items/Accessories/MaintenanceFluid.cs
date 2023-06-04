@@ -11,9 +11,9 @@ namespace Coralite.Content.Items.Accessories
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("护剑精油");
-            Tooltip.SetDefault("给你的剑定期保养一下吧！\n" +
-                "念力伤害 +2");
+            // DisplayName.SetDefault("护剑精油");
+            /* Tooltip.SetDefault("给你的剑定期保养一下吧！\n" +
+                "念力伤害 +2"); */
         }
 
         public override void SetDefaults()

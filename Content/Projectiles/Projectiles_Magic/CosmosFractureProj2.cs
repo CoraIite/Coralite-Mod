@@ -39,7 +39,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("寰宇裂隙--亚空裂斩");
+            // DisplayName.SetDefault("寰宇裂隙--亚空裂斩");
         }
 
         public override void SetDefaults()
@@ -213,21 +213,18 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         protected void SpawnFractureDust(float widthDarker, float widthLighter)
         {
-            if (Main.netMode != NetmodeID.Server)
+            //生成粒子
+            float r = (Target - Projectile.Center).ToRotation();
+            for (int i = 0; i < 20; i++)
             {
-                //生成粒子
-                float r = (Target - Projectile.Center).ToRotation();
-                for (int i = 0; i < 20; i++)
-                {
-                    r += 0.314f;
-                    Vector2 dir = r.ToRotationVector2() * Helper.EllipticalEase(1.85f + 0.314f * i, 1f, 3f) * 0.5f;
+                r += 0.314f;
+                Vector2 dir = r.ToRotationVector2() * Helper.EllipticalEase(1.85f + 0.314f * i, 1f, 3f) * 0.5f;
 
-                    //Vector2 dir = new Vector2((float)Math.Cos(1.57f + 0.314f*i ), (float)Math.Sin(1.57f + 0.314f*i +0.5f));       //<--这样不行  : (
-                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Skyware, dir * widthDarker, 0, default, 1.2f);
-                    dust.noGravity = true;
-                    Dust dust2 = Dust.NewDustPerfect(Projectile.Center, DustID.FrostStaff, dir * widthLighter, 0, default, 1.7f);
-                    dust2.noGravity = true;
-                }
+                //Vector2 dir = new Vector2((float)Math.Cos(1.57f + 0.314f*i ), (float)Math.Sin(1.57f + 0.314f*i +0.5f));       //<--这样不行  : (
+                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Skyware, dir * widthDarker, 0, default, 1.2f);
+                dust.noGravity = true;
+                Dust dust2 = Dust.NewDustPerfect(Projectile.Center, DustID.FrostStaff, dir * widthLighter, 0, default, 1.7f);
+                dust2.noGravity = true;
             }
         }
 

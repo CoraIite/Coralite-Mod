@@ -1,4 +1,4 @@
-using System.Reflection.Metadata;
+﻿using System.Reflection.Metadata;
 using System;
 using Coralite.Content.Buffs.Debuffs;
 using Coralite.Content.Particles;
@@ -46,12 +46,12 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             Lighting.AddLight(Projectile.Center, new Vector3(0.3f, 0.3f, 0.3f));
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<SnowDebuff>(), 30);
         }
 
-        public override void OnHitPvp(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(ModContent.BuffType<SnowDebuff>(), 30);
         }

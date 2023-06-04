@@ -8,6 +8,7 @@ namespace Coralite.Content.Tiles.RedJades
     {
         public RediancieRelic() : base(ModContent.ItemType<Items.RedJades.RediancieRelic>()) { }
 
+        public override string Texture => AssetDirectory.RedJadeTiles + "RediancieRelicPedestal";
         public override string RelicTextureName => AssetDirectory.RedJadeTiles + Name;
     }
 }

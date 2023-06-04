@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
@@ -37,7 +37,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             Lighting.AddLight(Projectile.Center, new Color(255,179,251).ToVector3()*0.5f);   //粉色的魔法数字
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             for (int i = 0; i < 2; i++)
             {

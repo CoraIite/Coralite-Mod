@@ -91,7 +91,7 @@ namespace Coralite.Content.UI
                 Main.LocalPlayer.mouseInterface = true;
         }
 
-        public override void Click(UIMouseEvent evt)
+        public override void LeftClick(UIMouseEvent evt)
         {
             if (!YujianHuluBackpack.huluItem.CanUseSlot(slotIndex))
             {

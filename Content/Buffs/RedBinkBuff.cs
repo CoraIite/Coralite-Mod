@@ -8,12 +8,12 @@ namespace Coralite.Content.Buffs
 {
     public class RedBinkBuff : ModBuff
     {
-        public override string Texture => AssetDirectory.Minions + Name;
+        public override string Texture => AssetDirectory.MinionBuffs + Name;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("小赤玉灵");
-            Description.SetDefault("小小的也很可爱");
+            // DisplayName.SetDefault("小赤玉灵");
+            // Description.SetDefault("小小的也很可爱");
 
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;

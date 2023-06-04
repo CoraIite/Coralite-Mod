@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Mushroom
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("蘑菇幼龙");
+            // DisplayName.SetDefault("蘑菇幼龙");
 
             Main.projFrames[Type] = 7;
             Main.projPet[Projectile.type] = true;

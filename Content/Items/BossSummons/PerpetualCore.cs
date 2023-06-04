@@ -13,8 +13,8 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("永动的核心");
-            Tooltip.SetDefault("来自丛林神庙的黑科技，无穷无尽地向外释放着能量\n在丛林祭坛附近召唤石巨人，不消耗");
+            // DisplayName.SetDefault("永动的核心");
+            // Tooltip.SetDefault("来自丛林神庙的黑科技，无穷无尽地向外释放着能量\n在丛林祭坛附近召唤石巨人，不消耗");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.BossSummons
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
 
             return true;

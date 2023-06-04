@@ -178,7 +178,7 @@ namespace Coralite.Content.GlobalTiles
             #endregion
         }
 
-        public override bool Drop(int i, int j, int type)
+        public override void Drop(int i, int j, int type)/* tModPorter Suggestion: Use CanDrop to decide if items can drop, use this method to drop additional items. See documentation. */
         {
             #region 天空层
             if (j < Main.worldSurface * 0.35f)

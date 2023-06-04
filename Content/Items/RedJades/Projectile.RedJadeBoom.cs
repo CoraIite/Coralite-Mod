@@ -39,14 +39,12 @@ namespace Coralite.Content.Items.RedJades
             }
         }
 
-        public override bool PreAI()
-        {
-            return false;
-        }
+        public override bool PreAI() => false;
+        public override bool PreDraw(ref Color lightColor) => false;
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool? CanHitNPC(NPC target)
         {
-            return false;
+            return Collision.CanHitLine(Projectile.Center, 1, 1, target.Center, 1, 1) && Vector2.Distance(Projectile.Center, target.Center) < 64;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Coralite.Content.UI
             crossBreedButton.Top.Set(basePos.Y + 98, 0);
             crossBreedButton.Width.Set(64, 0);
             crossBreedButton.Height.Set(38, 0);
-            crossBreedButton.OnClick += CrossBreedButton_OnClick;
+            crossBreedButton.OnLeftClick += CrossBreedButton_OnClick;
 
             Append(crossBreedButton);
 
@@ -313,7 +313,7 @@ namespace Coralite.Content.UI
             Height.Set(56, 0);
         }
 
-        public override void Click(UIMouseEvent evt)
+        public override void LeftClick(UIMouseEvent evt)
         {
             //快捷取回到玩家背包中
             if (PlayerInput.Triggers.Current.SmartSelect)
@@ -496,7 +496,7 @@ namespace Coralite.Content.UI
             Height.Set(56, 0);
         }
 
-        public override void Click(UIMouseEvent evt)
+        public override void LeftClick(UIMouseEvent evt)
         {
             //快捷取回到玩家背包中
             if (PlayerInput.Triggers.Current.SmartSelect)
@@ -679,7 +679,7 @@ namespace Coralite.Content.UI
             Height.Set(56, 0);
         }
 
-        public override void Click(UIMouseEvent evt)
+        public override void LeftClick(UIMouseEvent evt)
         {
             //快捷取回到玩家背包中
             if (PlayerInput.Triggers.Current.SmartSelect)

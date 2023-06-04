@@ -12,9 +12,9 @@ namespace Coralite.Content.Items.Machines
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("植物杂交机1型");
+            // DisplayName.SetDefault("植物杂交机1型");
 
-            Tooltip.SetDefault("放置下后右键打开植物杂交UI，放入植物后给予魔能，点击按钮进行杂交");
+            // Tooltip.SetDefault("放置下后右键打开植物杂交UI，放入植物后给予魔能，点击按钮进行杂交");
         }
 
         public override void SetDefaults()

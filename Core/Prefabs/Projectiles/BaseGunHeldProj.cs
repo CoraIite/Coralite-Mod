@@ -110,7 +110,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
 
             SpriteEffects effects = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), Projectile.scale, effects, 0f);
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, effects, 0f);
             return false;
         }
     }

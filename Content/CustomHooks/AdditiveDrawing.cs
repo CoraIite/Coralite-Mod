@@ -14,10 +14,10 @@ namespace Coralite.Content.CustomHooks
             if (Main.dedServ)
                 return;
 
-            On.Terraria.Main.DrawDust += DrawAdditive;
+            Terraria.On_Main.DrawDust += DrawAdditive;
         }
 
-        private void DrawAdditive(On.Terraria.Main.orig_DrawDust orig, Main self)
+        private void DrawAdditive(Terraria.On_Main.orig_DrawDust orig, Main self)
         {
             orig(self);
             SpriteBatch spriteBatch = Main.spriteBatch;

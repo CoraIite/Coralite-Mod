@@ -26,10 +26,10 @@ namespace Coralite.Core.Prefabs.Tiles
 
             tile.DustType = dustType;
             tile.AdjTiles = new int[] { TileID.OpenDoor };
-            tile.CloseDoorID = closeDoorID;
+            tile.CloseDoorID/* tModPorter Note: Removed. Use TileID.Sets.CloseDoorID instead */ = closeDoorID;
 
-            ModTranslation name = tile.CreateMapEntryName();
-            name.SetDefault(mapName);
+            LocalizedText name = tile.CreateMapEntryName();
+            // name.SetDefault(mapName);
             tile.AddMapEntry(mapColor, name);
 
             TileObjectData.newTile.Width = 2;
@@ -89,10 +89,10 @@ namespace Coralite.Core.Prefabs.Tiles
 
             tile.DustType = dustType;
             tile.AdjTiles = new int[] { TileID.ClosedDoor };
-            tile.OpenDoorID = openDoorID;
+            tile.OpenDoorID/* tModPorter Note: Removed. Use TileID.Sets.OpenDoorID instead */ = openDoorID;
 
-            ModTranslation name = tile.CreateMapEntryName();
-            name.SetDefault(mapName);
+            LocalizedText name = tile.CreateMapEntryName();
+            // name.SetDefault(mapName);
             tile.AddMapEntry(mapColor, name);
 
             TileObjectData.newTile.Width = 1;
@@ -134,8 +134,8 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
             TileObjectData.addTile(tile.Type);
 
-            ModTranslation name = tile.CreateMapEntryName();
-            name.SetDefault(mapName);
+            LocalizedText name = tile.CreateMapEntryName();
+            // name.SetDefault(mapName);
             tile.AddMapEntry(mapColor, name);
         }
 
@@ -157,8 +157,8 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.newTile.CoordinateHeights = new[] { 18 };
             TileObjectData.addTile(tile.Type);
 
-            ModTranslation name = tile.CreateMapEntryName();
-            name.SetDefault(mapName);
+            LocalizedText name = tile.CreateMapEntryName();
+            // name.SetDefault(mapName);
             tile.AddMapEntry(mapColor, name);
 
         }
@@ -184,8 +184,8 @@ namespace Coralite.Core.Prefabs.Tiles
 
             tile.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 
-            ModTranslation name = tile.CreateMapEntryName();
-            name.SetDefault(mapName);
+            LocalizedText name = tile.CreateMapEntryName();
+            // name.SetDefault(mapName);
             tile.AddMapEntry(mapColor, name);
         }
 
@@ -244,8 +244,8 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.newTile.CoordinateHeights = coordinateHeights;
             TileObjectData.addTile(tile.Type);
 
-            ModTranslation name = tile.CreateMapEntryName();
-            name.SetDefault(mapName);
+            LocalizedText name = tile.CreateMapEntryName();
+            // name.SetDefault(mapName);
             tile.AddMapEntry(mapColor, name);
         }
 
@@ -259,7 +259,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileID.Sets.DisableSmartCursor[tile.Type] = true;
 
             tile.DustType = dustType;
-            tile.ItemDrop = itemDrop;
+            tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = itemDrop;
 
             tile.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 
@@ -270,8 +270,8 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.newTile.DrawYOffset = -4;
             TileObjectData.addTile(tile.Type);
 
-            ModTranslation name = tile.CreateMapEntryName();
-            name.SetDefault(mapName);
+            LocalizedText name = tile.CreateMapEntryName();
+            // name.SetDefault(mapName);
             tile.AddMapEntry(mapColor, name);
         }
 
@@ -322,12 +322,12 @@ namespace Coralite.Core.Prefabs.Tiles
 
             tile.DustType = dustType;
             tile.AdjTiles = new int[] { TileID.Containers };
-            tile.ChestDrop = chestDrop;
+            tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = chestDrop;
 
-            tile.ContainerName.SetDefault(containerName);
+            tile.ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault(containerName);
 
-            ModTranslation name = tile.CreateMapEntryName();
-            name.SetDefault(mapName);
+            LocalizedText name = tile.CreateMapEntryName();
+            // name.SetDefault(mapName);
             tile.AddMapEntry(mapColor, name, MapChestName);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);

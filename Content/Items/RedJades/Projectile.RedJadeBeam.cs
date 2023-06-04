@@ -1,13 +1,14 @@
 ﻿using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.RedJades
 {
+    /// <summary>
+    /// 使用ai[0]来控制是否能产生大爆炸，为1能大爆炸
+    /// </summary>
     public class RedJadeBeam : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
@@ -25,40 +26,48 @@ namespace Coralite.Content.Items.RedJades
             Projectile.ignoreWater = false;
         }
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                return;
-
-            if (Projectile.ai[0] == 0)//用于同步输入的ai0，这个ai0是用于控制弹幕是否能爆炸的
-                Projectile.scale = 1.6f;
-
-            Projectile.netUpdate = true;
-        }
-
         public override void AI()
         {
-            for (int i = 0; i < 3; i++)
+            if (Projectile.localAI[0] == 0)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, -Projectile.velocity * 0.4f, 0, default, Projectile.scale);
-                dust.noGravity = true;
+                Vector2 center = Projectile.Center;
+                if (Projectile.ai[0] == 1)
+                {
+                    Projectile.scale = 1.6f;
+                    Projectile.localAI[1] = 588;
+                }
+                else
+                {
+                    Projectile.localAI[1] = 596;
+                }
+
+                Projectile.Center = center;
+                Projectile.localAI[0] = 1;
             }
+            if (Projectile.timeLeft < Projectile.localAI[1])
+                for (int i = 0; i < 3; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, -Projectile.velocity * 0.4f, 0, default, Projectile.scale);
+                    dust.noGravity = true;
+                }
         }
 
         public override void Kill(int timeLeft)
         {
-            if (Projectile.ai[0] == 0&&Main.myPlayer==Projectile.owner)
+            if (Main.myPlayer == Projectile.owner)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner);
-                return;
+                if (Projectile.ai[0] == 1)
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBigBoom>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
+                else
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
             }
 
-            SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
-            for (int i = 0; i < 12; i++)
-            {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.GemRuby, Main.rand.NextVector2Circular(4, 4), 0, default, Main.rand.NextFloat(1f, 1.3f));
-                dust.noGravity = true;
-            }
+            //SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
+            //for (int i = 0; i < 12; i++)
+            //{
+            //    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.GemRuby, Main.rand.NextVector2Circular(4, 4), 0, default, Main.rand.NextFloat(1f, 1.3f));
+            //    dust.noGravity = true;
+            //}
         }
 
         public override bool PreDraw(ref Color lightColor)

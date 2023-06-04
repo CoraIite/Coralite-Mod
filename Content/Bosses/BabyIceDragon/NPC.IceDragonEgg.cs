@@ -48,7 +48,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             }
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             //受击时摇晃一下
             NPC.ai[0] += 6.282f;

@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -56,7 +56,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
 
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.damage = (int)(Projectile.damage * 0.85f);
         }

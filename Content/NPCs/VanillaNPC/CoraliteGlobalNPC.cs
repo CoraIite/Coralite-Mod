@@ -51,7 +51,7 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 npcLoot.Add(ItemDropRule.Common(ItemType<SlimeSapling>(), 50));
         }
 
-        public override void SetupShop(int type, Chest shop, ref int nextSlot)
+        public override void ModifyActiveShop(NPC npc, string shopName, Item[] items)
         {
             switch (type)
             {

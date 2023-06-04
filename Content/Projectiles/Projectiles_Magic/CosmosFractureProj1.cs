@@ -32,7 +32,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("异界裂隙--亚空裂斩");
+            // DisplayName.SetDefault("异界裂隙--亚空裂斩");
         }
 
         public override void SetDefaults()

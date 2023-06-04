@@ -27,8 +27,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             Projectile.rotation = Projectile.velocity.ToRotation() - 1.57f;
 
             Projectile.velocity.Y += 0.06f;
-            if (Projectile.velocity.Y > 8f)
-                Projectile.velocity.Y = 8f;
+            if (Projectile.velocity.Y > 10f)
+                Projectile.velocity.Y = 10f;
 
             if (Projectile.timeLeft % 2 == 0)
             {
@@ -46,11 +46,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 Dust.NewDustPerfect(Projectile.Center, DustID.SnowBlock, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * Main.rand.NextFloat(0.1f, 0.3f));
             }
 
-            Helper.NotOnServer(() =>
-            {
-                SoundEngine.PlaySound(CoraliteSoundID.CrushedIce_Item27, Projectile.Center);
-            });
-
+            SoundEngine.PlaySound(CoraliteSoundID.CrushedIce_Item27, Projectile.Center);
         }
     }
 }
