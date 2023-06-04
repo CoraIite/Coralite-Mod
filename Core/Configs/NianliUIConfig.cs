@@ -7,7 +7,7 @@ using Terraria.ModLoader.Config;
 namespace Coralite.Core.Configs
 {
     [BackgroundColor(51,179,189)]
-    [Label("念力值显示位置")]
+    //[Label("念力值显示位置")]
     public class NianliUIConfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;

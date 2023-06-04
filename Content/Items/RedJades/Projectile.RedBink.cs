@@ -240,7 +240,7 @@ namespace Coralite.Content.Items.RedJades
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (rightClick && Timer > 30 && Timer < 90)
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileType<RedJadeBoom>(), damage, 5f);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileType<RedJadeBoom>(), hit.Damage, 5f);
         }
 
         #endregion

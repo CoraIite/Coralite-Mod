@@ -26,8 +26,8 @@ namespace Coralite.Core.Prefabs.Tiles
 
             tile.DustType = dustType;
             tile.AdjTiles = new int[] { TileID.OpenDoor };
-            tile.CloseDoorID/* tModPorter Note: Removed. Use TileID.Sets.CloseDoorID instead */ = closeDoorID;
-
+            //tile.CloseDoorID/* tModPorter Note: Removed. Use TileID.Sets.CloseDoorID instead */ = closeDoorID;
+            TileID.Sets.CloseDoorID[tile.Type] = closeDoorID;
             LocalizedText name = tile.CreateMapEntryName();
             // name.SetDefault(mapName);
             tile.AddMapEntry(mapColor, name);
@@ -89,8 +89,8 @@ namespace Coralite.Core.Prefabs.Tiles
 
             tile.DustType = dustType;
             tile.AdjTiles = new int[] { TileID.ClosedDoor };
-            tile.OpenDoorID/* tModPorter Note: Removed. Use TileID.Sets.OpenDoorID instead */ = openDoorID;
-
+            //tile.OpenDoorID/* tModPorter Note: Removed. Use TileID.Sets.OpenDoorID instead */ = openDoorID;
+            TileID.Sets.OpenDoorID[tile.Type] = openDoorID;
             LocalizedText name = tile.CreateMapEntryName();
             // name.SetDefault(mapName);
             tile.AddMapEntry(mapColor, name);
@@ -259,7 +259,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileID.Sets.DisableSmartCursor[tile.Type] = true;
 
             tile.DustType = dustType;
-            tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = itemDrop;
+            //tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = itemDrop;
 
             tile.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 
@@ -322,9 +322,9 @@ namespace Coralite.Core.Prefabs.Tiles
 
             tile.DustType = dustType;
             tile.AdjTiles = new int[] { TileID.Containers };
-            tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = chestDrop;
+            //tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = chestDrop;
 
-            tile.ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault(containerName);
+            //tile.ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault(containerName);
 
             LocalizedText name = tile.CreateMapEntryName();
             // name.SetDefault(mapName);

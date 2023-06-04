@@ -1,0 +1,14 @@
+Mods:{
+    Coralite:{
+        Items:{
+            EmeraldRosary:{
+                DisplayName:"翡翠念珠"
+                Tooltip:
+                '''
+                念力回复速度微量增加
+                念力伤害 +3
+                '''
+            }
+        }
+    }
+}

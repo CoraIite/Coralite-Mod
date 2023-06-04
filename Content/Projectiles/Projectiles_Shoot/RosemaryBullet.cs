@@ -48,7 +48,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
             if (Main.myPlayer != Projectile.owner || Projectile.ai[0] != 0)
                 return;
 
-            if (crit)
+            if (hit.Crit)
             {
                 SpawnFogProj();
                 return;

@@ -52,8 +52,10 @@ namespace Coralite.Content.Items.YujianHulu
 
         public override void HitEffect(NPC target, int damage, float knockback, bool crit)
         {
-            target.StrikeNPC(damage, 0, target.direction);
-            target.StrikeNPC(damage, 0, target.direction);
+            //target.StrikeNPC(damage, );
+            //target.StrikeNPC(damage, 0, target.direction);
+            //TODO: 把它的3连击加回来
+            //TODO: 为多人模式适配，添加联机信息发送
             Owner.addDPS(damage * 2);
         }
     }

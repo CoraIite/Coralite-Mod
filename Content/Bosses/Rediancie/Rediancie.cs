@@ -107,19 +107,19 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
-            NPC.lifeMax = (int)(1800 * bossLifeScale) + numPlayers * 450;
+            NPC.lifeMax = (int)(1800 * bossAdjustment) + numPlayers * 450;
             NPC.damage = 30;
             NPC.defense = 6;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = (int)(2000 * bossLifeScale) + numPlayers * 550;
+                NPC.lifeMax = (int)(2000 * bossAdjustment) + numPlayers * 550;
                 NPC.damage = 45;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = (int)(2300 * bossLifeScale) + numPlayers * 600;
+                NPC.lifeMax = (int)(2300 * bossAdjustment) + numPlayers * 600;
                 NPC.defense = 4;//因为FTW种能够拥有非常多的弹药所以就降低一下基础防御了
             }
         }
@@ -172,12 +172,12 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
-            OnHit(damage);
+            OnHit(hit.Damage);
         }
 
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
-            OnHit(damage);
+            OnHit(hit.Damage);
         }
 
         public void OnHit(int damage)

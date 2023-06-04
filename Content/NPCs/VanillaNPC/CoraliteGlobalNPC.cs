@@ -53,14 +53,20 @@ namespace Coralite.Content.NPCs.VanillaNPC
 
         public override void ModifyActiveShop(NPC npc, string shopName, Item[] items)
         {
-            switch (type)
+            switch (npc.type)
             {
                 case NPCID.ArmsDealer:
                     {
                         if (NPC.downedPlantBoss)    //花后售卖远古核心
                         {
-                            shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientCore>());
-                            nextSlot++;
+                            int i = 0;
+                            for (; i < items.Length - 1; i++)
+                            {
+                                if (items[i].IsAir)
+                                    break;
+                            }
+
+                            items[i].SetDefaults(ModContent.ItemType<AncientCore>());
                         }
                         break;
                     }

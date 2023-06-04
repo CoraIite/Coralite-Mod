@@ -414,8 +414,8 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public sealed override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            HitEffect(target, damage, knockback, crit);
-            huluEffect?.HitEffect(Projectile, target, damage, knockback, crit);
+            HitEffect(target, hit.Damage, hit.Knockback, hit.Crit);
+            huluEffect?.HitEffect(Projectile, target, hit.Damage, hit.Knockback, hit.Crit);
         }
 
         public virtual void HitEffect(NPC target, int damage, float knockback, bool crit) { }
