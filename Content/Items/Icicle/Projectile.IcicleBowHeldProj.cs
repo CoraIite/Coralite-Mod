@@ -79,14 +79,14 @@ namespace Coralite.Content.Items.Icicle
                         if (Timer < 21)
                         {
                             Rotation += 0.3141f; //1/10 Pi
-                            if (Owner.channel)
+                            if (Owner.controlUseItem)
                                 canShoot = true;
 
                             Owner.itemTime = Owner.itemAnimation = 2;
                             break;
                         }
 
-                        if (Owner.channel)
+                        if (Owner.controlUseItem)
                         {
                             canShoot = true;
                             if (Main.myPlayer == Projectile.owner)

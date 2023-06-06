@@ -65,6 +65,15 @@ namespace Coralite.Helpers
         }
 
         /// <summary>
+        /// 随机一个角度的方向向量
+        /// </summary>
+        /// <returns></returns>
+        public static Vector2 NextVec2Dir()
+        {
+            return Main.rand.NextFloat(MathHelper.TwoPi).ToRotationVector2();
+        }
+
+        /// <summary>
         /// 检测线段碰撞（两个点之间连线和hitbox是否发生了碰撞）
         /// </summary>
         public static bool CheckLinearCollision(Vector2 point1, Vector2 point2, Rectangle hitbox, out Vector2 intersectPoint)

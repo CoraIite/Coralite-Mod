@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Coralite.Content.Dusts;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -310,18 +309,9 @@ namespace Coralite.Content.Bosses.Rediancie
                             Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, 1).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore3").Type);
                             Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, -3).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore4").Type);
                         }
-
-                        if (Timer < 230 && Timer % 15 == 0 && Main.netMode != NetmodeID.Server)
-                        {
-                            Helper.PlayPitched("RedJade/RedJadeBoom", 0.4f, 0f, NPC.Center);
-
-                            Vector2 center = NPC.Center + Main.rand.NextVector2Circular(30, 40);
-                            for (int i = 0; i < 8; i++)
-                            {
-                                Dust.NewDustPerfect(center, DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(6, 6), 0, red, Main.rand.NextFloat(1f, 1.5f));
-                                Dust.NewDustPerfect(center, DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(4, 4), 0, grey, Main.rand.NextFloat(0.8f, 1.2f));
-                            }
-                        }
+                        
+                        if (Timer < 230 && Timer % 15 == 0 )
+                            Helper.RedJadeExplosion(NPC.Center + Main.rand.NextVector2Circular(30, 40));
 
                         if (Timer == 245)
                         {
@@ -550,11 +540,6 @@ namespace Coralite.Content.Bosses.Rediancie
 
                         do
                         {
-                            if (realTime < 18 && realTime % 3 == 0)
-                            {
-                                Dust.NewDustPerfect(NPC.Center, DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(6, 6), 0, red, Main.rand.NextFloat(1f, 1.5f));
-                                Dust.NewDustPerfect(NPC.Center, DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(4, 4), 0, grey, Main.rand.NextFloat(0.8f, 1.2f));
-                            }
                             if (realTime == 18 && Main.netMode != NetmodeID.Server)
                             {
                                 SoundEngine.PlaySound(SoundID.Item4, NPC.Center);
@@ -583,7 +568,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
                             if (realTime < 71)//边冲边炸
                             {
-                                if (realTime % 10 == 0)
+                                if (realTime % 10 == 0&&Main.netMode!=NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_Explosion>(), 20, 5f);
 
                                 break;

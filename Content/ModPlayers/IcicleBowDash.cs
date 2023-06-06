@@ -28,7 +28,7 @@ namespace Coralite.Content.ModPlayers
                     return false;
             }
 
-            DashDelay = 120;
+            DashDelay = 80;
             DashTimer = 20;
             Player.immuneTime = 20;
             Player.immune = true;

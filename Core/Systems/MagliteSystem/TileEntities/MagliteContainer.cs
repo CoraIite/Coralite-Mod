@@ -1,12 +1,15 @@
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.MagliteSystem.TileEntities
 {
-    public class MagliteContainer:ModTileEntity
+    public abstract class MagliteContainer : ModTileEntity
     {
         public int maglite;
         public readonly int magliteMax;
-        
+
+        public abstract ushort TileType { get; }
+
         public MagliteContainer(int magliteMax)
         {
             this.magliteMax = magliteMax;
@@ -14,7 +17,7 @@ namespace Coralite.Core.Systems.MagliteSystem.TileEntities
 
         public override bool IsTileValidForEntity(int x, int y)
         {
-            return false;
+            return Framing.GetTileSafely(x, y).TileType == TileType;
         }
     }
 }

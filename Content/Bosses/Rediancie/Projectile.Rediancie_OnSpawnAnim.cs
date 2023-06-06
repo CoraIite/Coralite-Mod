@@ -66,18 +66,8 @@ namespace Coralite.Content.Bosses.Rediancie
             }
 
             //生成粒子和声音
-            if (timer > 190 && timer % 8 == 0 && Main.netMode != NetmodeID.Server)
-            {
-                Helper.PlayPitched("RedJade/RedJadeBoom", 0.4f, 0f, Projectile.Center);
-                Color red = new Color(221, 50, 50);
-                Color grey = new Color(91, 93, 102);
-                Vector2 center = Main.LocalPlayer.Center - new Vector2(0, 250) + Main.rand.NextVector2Circular(200, 140);
-                for (int i = 0; i < 8; i++)
-                {
-                    Dust.NewDustPerfect(center, ModContent.DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(6, 6), 0, red, Main.rand.NextFloat(1f, 1.5f));
-                    Dust.NewDustPerfect(center, ModContent.DustType<HalfCircleDust>(), Main.rand.NextVector2CircularEdge(4, 4), 0, grey, Main.rand.NextFloat(0.8f, 1.2f));
-                }
-            }
+            if (timer > 190 && timer % 8 == 0)
+                Helper.RedJadeExplosion(Main.LocalPlayer.Center - new Vector2(0, 250) + Main.rand.NextVector2Circular(200, 140));
 
             //文字减淡
             if (timer > 239)

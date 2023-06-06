@@ -47,8 +47,9 @@ namespace Coralite.Core.Systems.ParticleSystem
         /// </summary>
         public static void UpdateParticle()
         {
-            //不在服务器上运行
-            if (Main.netMode == NetmodeID.Server)
+            if (Main.netMode == NetmodeID.Server)//不在服务器上运行
+                return;
+            if (Main.gameInactive)//不在游戏暂停时运行
                 return;
 
             for (int i = 0; i < Coralite.MaxParticleCount; i++)
@@ -57,34 +58,30 @@ namespace Coralite.Core.Systems.ParticleSystem
                 if (!particle.active)
                     continue;
 
-                //不在游戏暂停时运行
-                if (!Main.gameInactive)
+                ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
+                modParticle.Update(particle);
+                if (modParticle.ShouldUpdateCenter(particle))
+                    particle.center += particle.velocity;
+
+                //在粒子不活跃时把一些东西释放掉
+                if (!particle.active)
                 {
-                    ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
-                    modParticle.Update(particle);
-                    if (modParticle.ShouldUpdateCenter(particle))
-                        particle.center += particle.velocity;
-
-                    //在粒子不活跃时把一些东西释放掉
-                    if (!particle.active)
-                    {
-                        particle.shader = null;
-                        particle.oldCenter = null;
-                        particle.oldRot = null;
-                        particle.trail = null;
-                        particle.datas = null;
-                    }
-
-                    //一些防止粒子持续时间过长的措施，额...还是建议在update里手动设置active比较好
-                    if (particle.shouldKilledOutScreen && !Helpers.Helper.OnScreen(particle.center - Main.screenPosition))
-                        particle.active = false;
-
-                    if (particle.scale < 0.01f)
-                        particle.active = false;
-
-                    if (particle.fadeIn > 1000)
-                        particle.active = false;
+                    particle.shader = null;
+                    particle.oldCenter = null;
+                    particle.oldRot = null;
+                    particle.trail = null;
+                    particle.datas = null;
                 }
+
+                //一些防止粒子持续时间过长的措施，额...还是建议在update里手动设置active比较好
+                if (particle.shouldKilledOutScreen && !Helpers.Helper.OnScreen(particle.center - Main.screenPosition))
+                    particle.active = false;
+
+                if (particle.scale < 0.01f)
+                    particle.active = false;
+
+                if (particle.fadeIn > 1000)
+                    particle.active = false;
             }
         }
     }

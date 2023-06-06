@@ -24,7 +24,7 @@ float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
 
 	float avg = ((uColor.x + uColor.y + uColor.z) / 3.0);
 
-	return float4(bright, color.w * avg) * avg;
+    return float4(bright, color.w * avg) * avg * uOpacity;
 }
 
 technique Technique1

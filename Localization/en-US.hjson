@@ -1,0 +1,803 @@
+Mods: {
+	Coralite: {
+		Items: {
+			EmeraldRosary: {
+				DisplayName: Emerald Rosary
+				Tooltip:
+					'''
+					Willpower recovery speed increased slightly
+					Willpower damage +3
+					'''
+			}
+
+			MaintenanceFluid: {
+				DisplayName: Sword Protection Oil
+				Tooltip:
+					'''
+					Give your sword a regular maintenance！
+					Willpower damage +2
+					'''
+			}
+
+			CallForDestruction: {
+				DisplayName: Call For Destruction
+				Tooltip: ""
+			}
+
+			CannedLarva: {
+				DisplayName: Canned Larva
+				Tooltip: ""
+			}
+
+			ChainedEye: {
+				DisplayName: Chained Eye
+				Tooltip: ""
+			}
+
+			CrystallineGel: {
+				DisplayName: Crystalline Gel
+				Tooltip: ""
+			}
+
+			EndlessDeliciousness: {
+				DisplayName: Endless Deliciousness
+				Tooltip: ""
+			}
+
+			EternalFlower: {
+				DisplayName: Eternal Flower
+				Tooltip: ""
+			}
+
+			HolyLacewing: {
+				DisplayName: Holy Lacewing
+				Tooltip: ""
+			}
+
+			ImmortalDoll: {
+				DisplayName: Immortal Doll
+				Tooltip: ""
+			}
+
+			MachinerySoars: {
+				DisplayName: Machinery Soars
+				Tooltip: ""
+			}
+
+			PerpetualCore: {
+				DisplayName: Perpetual Core
+				Tooltip: ""
+			}
+
+			RedBerry: {
+				DisplayName: Red Berry
+				Tooltip: ""
+			}
+
+			RegeneratedSpine: {
+				DisplayName: Regenerated Spine
+				Tooltip: ""
+			}
+
+			SymbolOfRoyal: {
+				DisplayName: Symbol Of Royal
+				Tooltip: ""
+			}
+
+			TheTwinsBond: {
+				DisplayName: The Twins Bond
+				Tooltip: ""
+			}
+
+			TwistedBone: {
+				DisplayName: Twisted Bone
+				Tooltip: ""
+			}
+
+			BotanicalStaff: {
+				DisplayName: Botanical Staff
+				Tooltip: ""
+			}
+
+			IdentifyLoupe: {
+				DisplayName: Identify Loupe
+				Tooltip: ""
+			}
+
+			AgropyronFreezer: {
+				DisplayName: Agropyron Freezer
+				Tooltip: ""
+			}
+
+			GloomMushrooms: {
+				DisplayName: Gloom Mushrooms
+				Tooltip: ""
+			}
+
+			PileaNotatata: {
+				DisplayName: Pilea Notatata
+				Tooltip: ""
+			}
+
+			WoodStick: {
+				DisplayName: Wood Stick
+				Tooltip: ""
+			}
+
+			AgropyronSeed: {
+				DisplayName: Agropyron Seed
+				Tooltip: ""
+			}
+
+			DandelionSeed: {
+				DisplayName: Dandelion Seed
+				Tooltip: ""
+			}
+
+			EgenolfiaBuds: {
+				DisplayName: Egenolfia Buds
+				Tooltip: ""
+			}
+
+			EyeballSeed: {
+				DisplayName: Eyeball Seed
+				Tooltip: ""
+			}
+
+			GloomSpores: {
+				DisplayName: Gloom Spores
+				Tooltip: ""
+			}
+
+			JungleBuds: {
+				DisplayName: Jungle Buds
+				Tooltip: ""
+			}
+
+			NacliteSeedling: {
+				DisplayName: Naclite Seedling
+				Tooltip: ""
+			}
+
+			Naclite: {
+				DisplayName: Naclite
+				Tooltip: ""
+			}
+
+			PileaNotataSeedling: {
+				DisplayName: Pilea Notata Seedling
+				Tooltip: ""
+			}
+
+			SnoowSeed: {
+				DisplayName: Snoow Seed
+				Tooltip: ""
+			}
+
+			TreeJokeSeed: {
+				DisplayName: Tree Joke Seed
+				Tooltip: ""
+			}
+
+			WaterDrinkerSeed: {
+				DisplayName: Water Drinker Seed
+				Tooltip: ""
+			}
+
+			WatermelonSeed: {
+				DisplayName: Watermelon Seed
+				Tooltip: ""
+			}
+
+			Watermelon: {
+				DisplayName: Watermelon
+				Tooltip: ""
+			}
+
+			BabyIceDragonBossBag: {
+				DisplayName: Baby Ice Dragon Boss Bag
+				Tooltip: ""
+			}
+
+			BabyIceDragonRelic: {
+				DisplayName: Baby Ice Dragon Relic
+				Tooltip: ""
+			}
+
+			BabyIceDragonTrophy: {
+				DisplayName: Baby Ice Dragon Trophy
+				Tooltip: ""
+			}
+
+			IcicleBow: {
+				DisplayName: Icicle Bow
+				Tooltip: ""
+			}
+
+			IcicleCrystal: {
+				DisplayName: Icicle Crystal
+				Tooltip: ""
+			}
+
+			IcicleStaff: {
+				DisplayName: Icicle Staff
+				Tooltip: ""
+			}
+
+			IcicleSword: {
+				DisplayName: Icicle Sword
+				Tooltip: ""
+			}
+
+			IcicleThornStaff: {
+				DisplayName: Icicle Thorn Staff
+				Tooltip: ""
+			}
+
+			IcicleYujian: {
+				DisplayName: Icicle Yujian
+				Tooltip: ""
+			}
+
+			CrossBreedMachine_G1Item: {
+				DisplayName: Cross Breed Machine_ G1 Item
+				Tooltip: ""
+			}
+
+			IceyDust: {
+				DisplayName: Icey Dust
+				Tooltip: ""
+			}
+
+			MagliteDust: {
+				DisplayName: Maglite Dust
+				Tooltip: ""
+			}
+
+			SandliteDust: {
+				DisplayName: Sandlite Dust
+				Tooltip: ""
+			}
+
+			ShlimmerMushrooms: {
+				DisplayName: Shlimmer Mushrooms
+				Tooltip: ""
+			}
+
+			WatermelonSlices: {
+				DisplayName: Watermelon Slices
+				Tooltip: ""
+			}
+
+			MushroomPlatform: {
+				DisplayName: Mushroom Platform
+				Tooltip: ""
+			}
+
+			MushroomStaff: {
+				DisplayName: Mushroom Staff
+				Tooltip: ""
+			}
+
+			SlimeSapling: {
+				DisplayName: Slime Sapling
+				Tooltip: ""
+			}
+
+			MagicCraftStation: {
+				DisplayName: Magic Craft Station
+				Tooltip: ""
+			}
+
+			RediancieBossBag: {
+				DisplayName: Rediancie Boss Bag
+				Tooltip: ""
+			}
+
+			RedianciePet: {
+				DisplayName: Rediancie Pet
+				Tooltip: ""
+			}
+
+			RediancieRelic: {
+				DisplayName: Rediancie Relic
+				Tooltip: ""
+			}
+
+			RediancieTrophy: {
+				DisplayName: Rediancie Trophy
+				Tooltip: ""
+			}
+
+			RedJade: {
+				DisplayName: Red Jade
+				Tooltip: ""
+			}
+
+			RedJadeBed: {
+				DisplayName: Red Jade Bed
+				Tooltip: ""
+			}
+
+			RedJadeBlade: {
+				DisplayName: Red Jade Blade
+				Tooltip: ""
+			}
+
+			RedJadeCandle: {
+				DisplayName: Red Jade Candle
+				Tooltip: ""
+			}
+
+			RedJadeChair: {
+				DisplayName: Red Jade Chair
+				Tooltip: ""
+			}
+
+			RedJadeChest: {
+				DisplayName: Red Jade Chest
+				Tooltip: ""
+			}
+
+			RedJadeDoor: {
+				DisplayName: Red Jade Door
+				Tooltip: ""
+			}
+
+			RedJadeDroplight: {
+				DisplayName: Red Jade Droplight
+				Tooltip: ""
+			}
+
+			RedJadeHulu: {
+				DisplayName: Red Jade Hulu
+				Tooltip: ""
+			}
+
+			RedJadePendant: {
+				DisplayName: Red Jade Pendant
+				Tooltip: ""
+			}
+
+			RedJadeShrine: {
+				DisplayName: Red Jade Shrine
+				Tooltip: ""
+			}
+
+			RedJadeStaff: {
+				DisplayName: Red Jade Staff
+				Tooltip: ""
+			}
+
+			RedJadeTable: {
+				DisplayName: Red Jade Table
+				Tooltip: ""
+			}
+
+			RedJadeToilet: {
+				DisplayName: Red Jade Toilet
+				Tooltip: ""
+			}
+
+			RedJadeWorkBench: {
+				DisplayName: Red Jade Work Bench
+				Tooltip: ""
+			}
+
+			RedJadeYujian: {
+				DisplayName: Red Jade Yujian
+				Tooltip: ""
+			}
+
+			InvertedShadow: {
+				DisplayName: Inverted Shadow
+				Tooltip: ""
+			}
+
+			ShadowChest: {
+				DisplayName: Shadow Chest
+				Tooltip: ""
+			}
+
+			ShadowCrystal: {
+				DisplayName: Shadow Crystal
+				Tooltip: ""
+			}
+
+			ShadowEnergy: {
+				DisplayName: Shadow Energy
+				Tooltip: ""
+			}
+
+			ShadowHammer: {
+				DisplayName: Shadow Hammer
+				Tooltip: ""
+			}
+
+			ShadowHead: {
+				DisplayName: Shadow Head
+				Tooltip: ""
+			}
+
+			ShadowLegs: {
+				DisplayName: Shadow Legs
+				Tooltip: ""
+			}
+
+			ShadowPickaxe: {
+				DisplayName: Shadow Pickaxe
+				Tooltip: ""
+			}
+
+			ShadowSickle: {
+				DisplayName: Shadow Sickle
+				Tooltip: ""
+			}
+
+			ShadowSword: {
+				DisplayName: Shadow Sword
+				Tooltip: ""
+			}
+
+			StarBook: {
+				DisplayName: Star Book
+				Tooltip: ""
+			}
+
+			CosmosFracture: {
+				DisplayName: Cosmos Fracture
+				Tooltip: ""
+			}
+
+			MagicalAshes: {
+				DisplayName: Magical Ashes
+				Tooltip: ""
+			}
+
+			AncientCore: {
+				DisplayName: Ancient Core
+				Tooltip: ""
+			}
+
+			Arethusa: {
+				DisplayName: Arethusa
+				Tooltip: ""
+			}
+
+			ArethusaNormalMode: {
+				DisplayName: Arethusa Normal Mode
+				Tooltip: ""
+			}
+
+			Astrosniper: {
+				DisplayName: Astrosniper
+				Tooltip: ""
+			}
+
+			BarrageMic: {
+				DisplayName: Barrage Mic
+				Tooltip: ""
+			}
+
+			DukeFishronSkin: {
+				DisplayName: Duke Fishron Skin
+				Tooltip: ""
+			}
+
+			Dunkleosteus: {
+				DisplayName: Dunkleosteus
+				Tooltip: ""
+			}
+
+			Hyacinth: {
+				DisplayName: Hyacinth
+				Tooltip: ""
+			}
+
+			Rosemary: {
+				DisplayName: Rosemary
+				Tooltip: ""
+			}
+
+			Rosemary2: {
+				DisplayName: Rosemary2
+				Tooltip: ""
+			}
+
+			Snowdrop: {
+				DisplayName: Snowdrop
+				Tooltip: ""
+			}
+
+			StarsBreath: {
+				DisplayName: Stars Breath
+				Tooltip: ""
+			}
+
+			WoodWax: {
+				DisplayName: Wood Wax
+				Tooltip: ""
+			}
+
+			CatClaws: {
+				DisplayName: Cat Claws
+				Tooltip: ""
+			}
+
+			WateringPot: {
+				DisplayName: Watering Pot
+				Tooltip: ""
+			}
+
+			WatermelonKnife: {
+				DisplayName: Watermelon Knife
+				Tooltip: ""
+			}
+
+			WoodenHulu: {
+				DisplayName: Wooden Hulu
+				Tooltip: ""
+			}
+
+			AncientCrimtaneYujian: {
+				DisplayName: Ancient Crimtane Yujian
+				Tooltip: ""
+			}
+
+			AncientDemoniteYujian: {
+				DisplayName: Ancient Demonite Yujian
+				Tooltip: ""
+			}
+
+			CrimtaneYujian: {
+				DisplayName: Crimtane Yujian
+				Tooltip: ""
+			}
+
+			DemoniteYujian: {
+				DisplayName: Demonite Yujian
+				Tooltip: ""
+			}
+
+			GoldYujian: {
+				DisplayName: Gold Yujian
+				Tooltip: ""
+			}
+
+			HellStoneHulu: {
+				DisplayName: Hell Stone Hulu
+				Tooltip: ""
+			}
+
+			HellStoneYujian: {
+				DisplayName: Hell Stone Yujian
+				Tooltip: ""
+			}
+
+			IronHulu: {
+				DisplayName: Iron Hulu
+				Tooltip: ""
+			}
+
+			IronYujian: {
+				DisplayName: Iron Yujian
+				Tooltip: ""
+			}
+
+			PlatinumYujian: {
+				DisplayName: Platinum Yujian
+				Tooltip: ""
+			}
+
+			ShadowYujian: {
+				DisplayName: Shadow Yujian
+				Tooltip: ""
+			}
+
+			SilverYujian: {
+				DisplayName: Silver Yujian
+				Tooltip: ""
+			}
+
+			WoodenYujian: {
+				DisplayName: Wooden Yujian
+				Tooltip: ""
+			}
+		}
+
+		Tiles: {
+			RedJadeWorkBench.MapEntry: Red Jade Work Bench
+			RedJadeTile.MapEntry: Red Jade Tile
+			RedJadeTable.MapEntry: Red Jade Table
+			RedJadeDroplight.MapEntry: Red Jade Droplight
+			RedJadeDoorOpen.MapEntry: Red Jade Door Open
+			RedJadeDoorClosed.MapEntry: Red Jade Door Closed
+			RedJadeChest.MapEntry: Red Jade Chest
+			RedJadeCandle.MapEntry: Red Jade Candle
+			RedJadeBed.MapEntry: Red Jade Bed
+			MagicCraftStation.MapEntry: Magic Craft Station
+			WatermelonTile.MapEntry: Watermelon Tile
+			WaterDrinker.MapEntry: Water Drinker
+			TreeJoke.MapEntry: Tree Joke
+			SnoowFlower.MapEntry: Snoow Flower
+			PileaNotata.MapEntry: Pilea Notata
+			NacliteMoss.MapEntry: Naclite Moss
+			GloomMushroom.MapEntry: Gloom Mushroom
+			EyeballHerb.MapEntry: Eyeball Herb
+			EgenolfiaSandy.MapEntry: Egenolfia Sandy
+			Dandelion.MapEntry: Dandelion
+			CoraliteWaterleaf.MapEntry: Coralite Waterleaf
+			CoraliteShiverthorn.MapEntry: Coralite Shiverthorn
+			CoraliteMoonglow.MapEntry: Coralite Moonglow
+			CoraliteJungleSpores.MapEntry: Coralite Jungle Spores
+			CoraliteFireblossom.MapEntry: Coralite Fireblossom
+			CoraliteDeathweed.MapEntry: Coralite Deathweed
+			CoraliteDaybloom.MapEntry: Coralite Daybloom
+			CoraliteBlinkroot.MapEntry: Coralite Blinkroot
+			AgropyronFrozen.MapEntry: Agropyron Frozen
+		}
+
+		Buffs: {
+			SnowDebuff: {
+				DisplayName: Snow Debuff
+				Description: Mods.Coralite.Buffs.SnowDebuff.Description
+			}
+
+			IcicleThornBuff: {
+				DisplayName: Icicle Thorn Buff
+				Description: Mods.Coralite.Buffs.IcicleThornBuff.Description
+			}
+
+			MushroomDragonBuff: {
+				DisplayName: Mushroom Dragon Buff
+				Description: Mods.Coralite.Buffs.MushroomDragonBuff.Description
+			}
+
+			RedBinkBuff: {
+				DisplayName: Red Bink Buff
+				Description: Mods.Coralite.Buffs.RedBinkBuff.Description
+			}
+
+			RedianciePetBuff: {
+				DisplayName: Rediancie Pet Buff
+				Description: Mods.Coralite.Buffs.RedianciePetBuff.Description
+			}
+		}
+
+		NPCs: {
+			BabyIceDragon.DisplayName: Baby Ice Dragon
+			IceCube.DisplayName: Ice Cube
+			IceDragonEgg.DisplayName: Ice Dragon Egg
+			IceThornsTrap.DisplayName: Ice Thorns Trap
+			Rediancie.DisplayName: Rediancie
+			RediancieMinion.DisplayName: Rediancie Minion
+			IcicleSpirit.DisplayName: Icicle Spirit
+			MaragonBody.DisplayName: Maragon Body
+			MaragonHead.DisplayName: Maragon Head
+			MaragonTrail.DisplayName: Maragon Trail
+			ShadowGolem.DisplayName: Shadow Golem
+			ShadowGuard.DisplayName: Shadow Guard
+		}
+
+		Prefixes.支配.DisplayName: 支配
+
+		Projectiles: {
+			BabyIceDragon_OnSpawnAnim.DisplayName: Baby Ice Dragon_ On Spawn Anim
+			IceBreath.DisplayName: Ice Breath
+			IceBurst.DisplayName: Ice Burst
+			IceThorn.DisplayName: Ice Thorn
+			IceTornado.DisplayName: Ice Tornado
+			IcicleAttack.DisplayName: Icicle Attack
+			IcicleFalling_Hostile.DisplayName: Icicle Falling_ Hostile
+			IcicleFalling.DisplayName: Icicle Falling
+			IcicleProj_Hostile.DisplayName: Icicle Proj_ Hostile
+			IcicleProj.DisplayName: Icicle Proj
+			RedFirework.DisplayName: Red Firework
+			Rediancie_Beam.DisplayName: Rediancie_ Beam
+			Rediancie_BigBoom.DisplayName: Rediancie_ Big Boom
+			Rediancie_Explosion.DisplayName: Rediancie_ Explosion
+			Rediancie_OnSpawnAnim.DisplayName: Rediancie_ On Spawn Anim
+			Rediancie_Strike.DisplayName: Rediancie_ Strike
+			RedPulse.DisplayName: Red Pulse
+			CrushedIceProj.DisplayName: Crushed Ice Proj
+			IcicleArrow.DisplayName: Icicle Arrow
+			IcicleBowHeldProj.DisplayName: Icicle Bow Held Proj
+			IcicleMagicBall.DisplayName: Icicle Magic Ball
+			IcicleSpurt.DisplayName: Icicle Spurt
+			IcicleSpurtHeldProj.DisplayName: Icicle Spurt Held Proj
+			IcicleStaffHeldProj.DisplayName: Icicle Staff Held Proj
+			IcicleStarArrow.DisplayName: Icicle Star Arrow
+			IcicleSwordHeldProj.DisplayName: Icicle Sword Held Proj
+			IcicleSwordSplash.DisplayName: Icicle Sword Splash
+			IcicleThorn.DisplayName: Icicle Thorn
+			IcicleThornExplosion.DisplayName: Icicle Thorn Explosion
+			IcicleYujianProj.DisplayName: Icicle Yujian Proj
+			MushroomDragon.DisplayName: Mushroom Dragon
+			RedBink.DisplayName: Red Bink
+			RedianciePetProj.DisplayName: Rediancie Pet Proj
+			RedJadeBeam.DisplayName: Red Jade Beam
+			RedJadeBigBoom.DisplayName: Red Jade Big Boom
+			RedJadeBladeHeldProj.DisplayName: Red Jade Blade Held Proj
+			RedJadeBoom.DisplayName: Red Jade Boom
+			RedJadeStaffHeldProj.DisplayName: Red Jade Staff Held Proj
+			RedJadeStrike.DisplayName: Red Jade Strike
+			RedJadeYujianProj.DisplayName: Red Jade Yujian Proj
+			DrawInvertedPlayerProj.DisplayName: Draw Inverted Player Proj
+			InvertedShadowBullet.DisplayName: Inverted Shadow Bullet
+			ShadowSickleProj.DisplayName: Shadow Sickle Proj
+			ShadowSwordProj.DisplayName: Shadow Sword Proj
+			StarBookProj1.DisplayName: Star Book Proj1
+			StarBookProj2.DisplayName: Star Book Proj2
+			MagicalAshesProj.DisplayName: Magical Ashes Proj
+			CatClawsProj_shield.DisplayName: Cat Claws Proj_shield
+			CatClawsProj_Slash.DisplayName: Cat Claws Proj_ Slash
+			WateringPotProj.DisplayName: Watering Pot Proj
+			WatermelonKnifeProj.DisplayName: Watermelon Knife Proj
+			AncientCrimtaneYujianProj.DisplayName: Ancient Crimtane Yujian Proj
+			AncientDemoniteYujianProj.DisplayName: Ancient Demonite Yujian Proj
+			CrimtaneYujianProj.DisplayName: Crimtane Yujian Proj
+			DemoniteSpurt.DisplayName: Demonite Spurt
+			DemoniteStrike.DisplayName: Demonite Strike
+			DemoniteYujianProj.DisplayName: Demonite Yujian Proj
+			GlodenSpurtProj.DisplayName: Gloden Spurt Proj
+			GoldYujianProj.DisplayName: Gold Yujian Proj
+			HellStoneYujianProj.DisplayName: Hell Stone Yujian Proj
+			IronYujianProj.DisplayName: Iron Yujian Proj
+			PlatinumSplash.DisplayName: Platinum Splash
+			PlatinumYujianProj.DisplayName: Platinum Yujian Proj
+			ShadowYujianProj.DisplayName: Shadow Yujian Proj
+			ShadowYujianSummons.DisplayName: Shadow Yujian Summons
+			SilverYujianProj.DisplayName: Silver Yujian Proj
+			SpurtProj.DisplayName: Spurt Proj
+			WoodenYujianProj.DisplayName: Wooden Yujian Proj
+			ShadowGolemBall.DisplayName: Shadow Golem Ball
+			CosmosFractureProj1.DisplayName: Cosmos Fracture Proj1
+			CosmosFractureProj2.DisplayName: Cosmos Fracture Proj2
+			PlatycodonBullet1.DisplayName: Platycodon Bullet1
+			PlatycodonBullet2.DisplayName: Platycodon Bullet2
+			ArethusaBullet.DisplayName: Arethusa Bullet
+			ArethusaExplosion.DisplayName: Arethusa Explosion
+			ArethusaHeldProj.DisplayName: Arethusa Held Proj
+			AstrosniperHeldProj.DisplayName: Astrosniper Held Proj
+			BarrageMicProj.DisplayName: Barrage Mic Proj
+			DunkleosteusHeldProj.DisplayName: Dunkleosteus Held Proj
+			HyacinthBullet.DisplayName: Hyacinth Bullet
+			HyacinthBullet2.DisplayName: Hyacinth Bullet2
+			HyacinthExplosion.DisplayName: Hyacinth Explosion
+			HyacinthHeldProj.DisplayName: Hyacinth Held Proj
+			HyacinthPhantomGun.DisplayName: Hyacinth Phantom Gun
+			HyacinthRedBullet.DisplayName: Hyacinth Red Bullet
+			RosemaryBullet.DisplayName: Rosemary Bullet
+			RosemaryFog.DisplayName: Rosemary Fog
+			RosemaryHeldProj.DisplayName: Rosemary Held Proj
+			RosemaryHeldProj2.DisplayName: Rosemary Held Proj2
+			SnowBullet.DisplayName: Snow Bullet
+			SnowdropBloom.DisplayName: Snowdrop Bloom
+			SnowdropBud.DisplayName: Snowdrop Bud
+			SnowdropHeldProj.DisplayName: Snowdrop Held Proj
+			SnowSpirit.DisplayName: Snow Spirit
+			StarsBreathBullet.DisplayName: Stars Breath Bullet
+			StarsBreathExplosion.DisplayName: Stars Breath Explosion
+			StarsBreathHeldProj.DisplayName: Stars Breath Held Proj
+			WoodWaxBullet.DisplayName: Wood Wax Bullet
+			WoodWaxHeldProj.DisplayName: Wood Wax Held Proj
+			BaseIKProj.DisplayName: Base I K Proj
+		}
+
+		Configs: {
+			NianliUIConfig: {
+				DisplayName: Nianli U I Config
+
+				nianliUI_X: {
+					Label: nianli U I_ X
+					Tooltip: ""
+				}
+
+				nianliUI_Y: {
+					Label: nianli U I_ Y
+					Tooltip: ""
+				}
+			}
+		}
+	}
+}

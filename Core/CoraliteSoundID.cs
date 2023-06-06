@@ -41,7 +41,7 @@ namespace Coralite.Core
         public static SoundStyle Run => SoundID.Run;
 
         /// <summary>微光BUFF消失时的音效</summary>
-        //public static SoundStyle ShimmeringExpires_XXX => SoundID.XXX;
+        //public static SoundStyle ShimmeringExpires_XXX => SoundID.sh;
 
         #endregion
 
@@ -505,19 +505,19 @@ namespace Coralite.Core
         public static SoundStyle Zenith_Item169 => SoundID.Item169;
 
         /// <summary> 1.4.4蜂后召唤物，幼虫的声音 </summary>
-        //public static SoundStyle BugsScream_Item173 => SoundID.Item173;
+        public static SoundStyle BugsScream_Item173 => SoundID.Item173;
 
         /// <summary>1.4.4KO大炮的声音</summary>
-        //public static SoundStyle KOCannon_Item174 => SoundID.Item174;
+        public static SoundStyle KOCannon_Item174 => SoundID.Item174;
 
         /// <summary> 1.4.4拍拍手的声音（超高击退的那个玩具武器） </summary>
-        //public static SoundStyle SlapHand_Item175 => SoundID.Item175;
+        public static SoundStyle SlapHand_Item175 => SoundID.Item175;
 
         /// <summary> 1.4.4便便的声音 </summary>
-        //public static SoundStyle Poo_Item177 => SoundID.Item177;
+        public static SoundStyle Poo_Item177 => SoundID.Item177;
 
         /// <summary>1.4.4华夫铁的声音 </summary>
-        //public static SoundStyle WafflesIron_Item178 => SoundID.Item178;
+        public static SoundStyle WafflesIron_Item178 => SoundID.Item178;
 
         /// <summary> 钱币放置，堆叠，从NPC处买卖物品的音效 </summary>
         public static SoundStyle Coins => SoundID.Coins;
@@ -1526,10 +1526,10 @@ namespace Coralite.Core
         public static SoundStyle Drip => SoundID.Drip;
 
         /// <summary> 接触微光的音效 </summary>
-        //public static SoundStyle Shimmer_XXX => SoundID.XXX;
+        //public static SoundStyle Shimmer_XXX => SoundID.sh;
 
         /// <summary>1.4.4微光的声音 </summary>
-        //public static SoundStyle Shlimmer_Item176 => SoundID.Item176;
+        public static SoundStyle Shlimmer_Item176 => SoundID.Item176;
 
         /// <summary> 原版未使用，也是液体流动的音效 </summary>
         //public static SoundStyle NoUse_XXX => SoundID.XXX;
