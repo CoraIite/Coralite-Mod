@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
@@ -14,6 +15,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void SetDefaults()
         {
+            NPC.npcSlots = 0;
             NPC.width = 38;
             NPC.height = 36;
             NPC.damage = 0;
@@ -28,14 +30,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override void Load()
         {
 
-        }
-
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            if (spawnInfo.Player.ZoneSnow&&spawnInfo.Player.ZoneDirtLayerHeight)
-                return 0.02f;
-
-            return 0f;
         }
 
         public override void AI()
@@ -59,6 +53,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             //生成冰龙宝宝
             NPC.NewNPCDirect(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BabyIceDragon>());
             //生成蛋壳gore
+
+            if (Main.netMode!=NetmodeID.MultiplayerClient)
+            {
+                IceEggSpawner.EggDestroyed();
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

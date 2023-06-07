@@ -127,6 +127,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override void OnKill()
         {
             DownedBossSystem.DownBabyIceDragon();
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                IceEggSpawner.BabyIceDragonSlain();
+            }
+
         }
 
         public override bool? CanFallThroughPlatforms()

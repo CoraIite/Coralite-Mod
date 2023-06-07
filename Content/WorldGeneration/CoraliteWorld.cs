@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria.GameContent.Generation;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
@@ -17,14 +19,21 @@ namespace Coralite.Content.WorldGeneration
             if (ShiniesIndex!=-1)
             {
                 tasks.Insert(IceBiomeIndex + 1, new PassLegacy("Coralite Ice Dragon Nest", GenIceDragonNest));
-
-            }
-
-            if (FinalCleanup!=-1)
-            {
                 tasks.Insert(FinalCleanup + 1, new PassLegacy("Coralite Replase Vanilla Chest", ReplaceVanillaChest));
-            }
 
+            }
+        }
+
+        public override void SaveWorldData(TagCompound tag)
+        {
+            tag.Add("IceNestCenterX", NestCenter.X);
+            tag.Add("IceNestCenterY", NestCenter.Y);
+        }
+
+        public override void LoadWorldData(TagCompound tag)
+        {
+            NestCenter.X = tag.Get<int>("IceNestCenterX");
+            NestCenter.Y = tag.Get<int>("IceNestCenterY");
         }
     }
 }

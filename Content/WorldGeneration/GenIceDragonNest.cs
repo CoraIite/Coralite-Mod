@@ -3,6 +3,13 @@ using Terraria;
 using Terraria.IO;
 using Terraria.WorldBuilding;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using Terraria.ModLoader;
+using Coralite.Core;
+using Coralite.Content.WorldGeneration.Generators;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Coralite.Content.WorldGeneration
 {
@@ -13,78 +20,68 @@ namespace Coralite.Content.WorldGeneration
         /// </summary>
         public static Point NestCenter;
 
-        public void GenIceDragonNest(GenerationProgress progress, GameConfiguration configuration)
+        public async void GenIceDragonNest(GenerationProgress progress, GameConfiguration configuration)
         {
-            //#region TODO: 1.4.4之后得改
-            //int dungeonSide = 0;
+            progress.Message = "制作冰龙巢穴";
+            //随机选择雪原上的某个地方
+            int nestCenter_x = GenVars.snowOriginLeft+WorldGen.genRand.Next(GenVars.snowOriginRight - GenVars.snowOriginLeft);
+            int nestCenter_y = 10;
 
-            //dungeonSide = ((WorldGen.genRand.Next(2) != 0) ? 1 : (-1));
+            for (; nestCenter_y < Main.worldSurface; nestCenter_y++)
+            {
+                Tile tile = Framing.GetTileSafely(nestCenter_x, nestCenter_y);
+                if (tile.HasTile)
+                    break;
+            }
 
-            //int num938 = WorldGen.genRand.Next(Main.maxTilesX);
-            //if (WorldGen.drunkWorldGen)
-            //    dungeonSide *= -1;
+            nestCenter_y += 5;
 
-            //if (dungeonSide == 1)
-            //{
-            //    while ((float)num938 < (float)Main.maxTilesX * 0.6f || (float)num938 > (float)Main.maxTilesX * 0.75f)
-            //    {
-            //        num938 = WorldGen.genRand.Next(Main.maxTilesX);
-            //    }
-            //}
-            //else
-            //{
-            //    while ((float)num938 < (float)Main.maxTilesX * 0.25f || (float)num938 > (float)Main.maxTilesX * 0.4f)
-            //    {
-            //        num938 = WorldGen.genRand.Next(Main.maxTilesX);
-            //    }
-            //}
+            Texture2D nestTex = ModContent.Request<Texture2D>(AssetDirectory.IceNest + "IceNest", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.IceNest + "IceNestClear", AssetRequestMode.ImmediateLoad).Value;
+            
+            int genOrigin_x = nestCenter_x - clearTex.Width / 2;
+            int genOrigin_y = nestCenter_y - clearTex.Height / 2;
 
+            NestCenter = new Point(genOrigin_x + 52, genOrigin_y + 20);
 
-            //int num939 = WorldGen.genRand.Next(50, 90);
-            //float num940 = Main.maxTilesX / 4200;
-            //num939 += (int)((float)WorldGen.genRand.Next(20, 40) * num940);
-            //num939 += (int)((float)WorldGen.genRand.Next(20, 40) * num940);
-            //int num941 = num938 - num939;
-            //num939 = WorldGen.genRand.Next(50, 90);
-            //num939 += (int)((float)WorldGen.genRand.Next(20, 40) * num940);
-            //num939 += (int)((float)WorldGen.genRand.Next(20, 40) * num940);
-            //int num942 = num938 + num939;
-            //if (num941 < 0)
-            //    num941 = 0;
+            Dictionary<Color, int> clearDic = new Dictionary<Color, int>()
+            {
+                [Color.White] = -2,
+                [Color.Black] = -1
+            };
+            Dictionary<Color, int> nestDic = new Dictionary<Color, int>()
+            {
+                [new Color(95, 205, 228)] = TileID.IceBlock,
+                [new Color(215, 123, 186)] = TileID.IceBrick,
+                [new Color(99, 155, 255)] = TileID.SnowBlock,
+                [new Color(63, 63, 116)] = TileID.BreakableIce,
+                [Color.Black] = -1
+            };
 
-            //if (num942 > Main.maxTilesX)
-            //    num942 = Main.maxTilesX;
-            //#endregion
+            await Task.Run(() =>
+            {
+                Main.QueueMainThreadAction(() =>
+                {
+                    //清理范围
+                    Texture2TileGenerator clearGenerator = Texture2TileGeneratorDatas.GetTexGenerator(clearTex, clearDic);
+                    clearGenerator.Generate(genOrigin_x, genOrigin_y, true);
 
-            ///*Terraria.WorldBuilding.GenVars.snowOriginLeft*/
-            //int snowBiomeLeft = num941;
-            //int snowBiomeRight = num942;
+                    //生成主体地形
+                    Texture2TileGenerator nestGenerator = Texture2TileGeneratorDatas.GetTexGenerator(nestTex, nestDic);
+                    nestGenerator.Generate(genOrigin_x, genOrigin_y, true);
+                });
+            });
 
-            //int nest_X = WorldGen.genRand.Next(snowBiomeLeft, snowBiomeRight);
-            //int nest_Y = 0;
+            //生成装饰物
+            WorldGenHelper.PlaceOnTopDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.Stalactite, 10, 0);
+            WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.SmallPiles, 10, 5);
+            WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.SmallPiles, 10, 6);
+            WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.SmallPiles, 3, 24);
+            WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.LargePiles, 3, 8);
 
-            //while (nest_Y < (int)Main.rockLayer)
-            //{
-            //    //没有物块，则向下一格
-            //    if (!Main.tile[nest_X, nest_Y].HasTile)
-            //    {
-            //        nest_Y++;
-            //        continue;
-            //    }
-
-            //    //必须得是冰雪块才行
-            //    ushort tileType = Main.tile[nest_X, nest_Y].TileType;
-            //    if (tileType == TileID.SnowBlock || tileType == TileID.IceBlock)
-            //    {
-            //        NestCenter = new Point(nest_X, nest_Y);
-            //        break;
-            //    }
-            //}
-
-            //生成冰龙巢中心位置
-
-            //生成冰龙巢的周围冰刺
-
+            //添加斜坡
+            WorldGenHelper.SmoothSlope(genOrigin_x,genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.IceBlock, 5);
+            WorldGenHelper.SmoothSlope(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.SnowBlock, 5);
         }
     }
 }

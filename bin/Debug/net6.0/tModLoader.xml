@@ -3046,10 +3046,10 @@
         </member>
         <member name="F:Terraria.ID.ItemID.Sets.StaffMinionSlotsRequired">
             <summary>
-            Determines the number of minion slots a player needs to sacrifice to use this item.
-            <br/> This is only used when <see cref="F:Terraria.ID.ProjectileID.Sets.MinionSacrificable"/>[<see cref="F:Terraria.Item.shoot"/>] is <see langword="true"/> and when the player tries to summon a new minion.
-            <br/> The retrieved value's worth of minion slots (<see cref="F:Terraria.Projectile.minionSlots"/>) will be killed to make room for the projectile.
-            <br/> Defaults to <c>1</c>.
+            How many minion slots one usage of this item will spawn.
+            <br/> This is only used when <see cref="F:Terraria.ID.ProjectileID.Sets.MinionSacrificable"/>[<see cref="F:Terraria.Item.shoot"/>] and <see cref="F:Terraria.Main.projPet"/> are <see langword="true"/> and when the player tries to summon a new minion.
+            <br/> The retrieved value's worth of minion slots (<see cref="F:Terraria.Projectile.minionSlots"/>) will be killed, if necessary, to make room for the minion projectiles prior to spawning them.
+            <br/> Defaults to <c>1f</c>. If the value is greater than 1f, make sure to check <see cref="F:Terraria.Player.maxMinions"/> in <see cref="M:Terraria.ModLoader.ModItem.CanUseItem(Terraria.Player)"/> as well.
             </summary>
             <remarks>
             The full process for sacrificing minions can be found at <see cref="M:Terraria.Player.FreeUpPetsAndMinions(Terraria.Item)"/>.
@@ -5861,7 +5861,7 @@
         </member>
         <member name="F:Terraria.ID.ProjectileID.Sets.MinionSacrificable">
             <summary>
-            If <see langword="true"/> for a given projectile type (<see cref="F:Terraria.Projectile.type"/>), then that projectile can be sacrificed to summon other minions.
+            If <see langword="true"/> for a given projectile type (<see cref="F:Terraria.Projectile.type"/>), then other minions will be sacrificed to make room to summon this minion.
             <br/> Used for all standard minions.
             <br/> Defaults to <see langword="false"/>.
             </summary>
@@ -21688,6 +21688,7 @@
         <member name="F:Terraria.Projectile.minionSlots">
             <summary>
             Set to 1f on a minion to count it towards the minion limit of the summoning player (Optic Staff summons two minions at once with 0.5f each)
+            <br/> Make sure to set <see cref="F:Terraria.ID.ItemID.Sets.StaffMinionSlotsRequired"/> for the minion summoning item to the sum of the minionSlots values of the minions that will be spawned.
             <br/> Defaults to 0f.
             </summary>
         </member>

@@ -1,4 +1,5 @@
-﻿namespace Coralite.Core
+﻿
+namespace Coralite.Core
 {
     public static class AssetDirectory
     {
@@ -131,5 +132,8 @@
 
         #endregion
 
+        public const string WorldGen = Assets + "WorldGeneration/";
+
+        public const string IceNest = WorldGen + "IceNest/";
     }
 }
