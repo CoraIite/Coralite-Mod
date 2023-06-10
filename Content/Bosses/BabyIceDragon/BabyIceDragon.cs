@@ -84,7 +84,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
             NPC.BossBar = GetInstance<BabyIceDragonBossBar>();
 
-            //BGM：冰洁寒流
+            //BGM：冰结寒流
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/IcyColdStream");
         }
@@ -130,8 +130,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 IceEggSpawner.BabyIceDragonSlain();
+                Main.StopRain();
+                Main.SyncRain();
             }
-
         }
 
         public override bool? CanFallThroughPlatforms()
@@ -663,6 +664,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 {
                     State = (int)AIStates.roaringAnim;
                     ExchangeState = false;
+                    Main.StartRain();
+                    Main.SyncRain();
                     goto Check;
                 }
 

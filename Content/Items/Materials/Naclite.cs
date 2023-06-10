@@ -7,6 +7,6 @@ namespace Coralite.Content.Items.Materials
 {
     public class Naclite : BaseMaterial
     {
-        public Naclite() : base("盐晶", "氯化钠晶体，尝起来咸咸的", 9999, Item.sellPrice(0, 0, 0, 25), ItemRarityID.Green, AssetDirectory.Materials) { }
+        public Naclite() : base( 9999, Item.sellPrice(0, 0, 0, 25), ItemRarityID.Green, AssetDirectory.Materials) { }
     }
 }

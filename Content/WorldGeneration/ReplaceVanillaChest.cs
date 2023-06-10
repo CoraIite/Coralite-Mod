@@ -11,6 +11,8 @@ namespace Coralite.Content.WorldGeneration
     {
         public void ReplaceVanillaChest(GenerationProgress progress, GameConfiguration configuration)
         {
+            progress.Message = "将额外的战利品塞入箱子";
+
             foreach (var chest in Main.chest)
             {
                 if (chest == null)

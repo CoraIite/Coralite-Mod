@@ -92,17 +92,21 @@ Mods: {
 			}
 
 			MachinerySoars: {
+				DisplayName: 飞升的头骨
+				Tooltip:
+					'''
+					血肉苦楚，机械飞升
+					在夜晚召唤机械骷髅王，不消耗
+					'''
+			}
+
+			PerpetualCore: {
 				DisplayName: 永动的核心
 				Tooltip:
 					'''
 					来自丛林神庙的黑科技，无穷无尽地向外释放着能量
 					在丛林祭坛附近召唤石巨人，不消耗
 					'''
-			}
-
-			PerpetualCore: {
-				// DisplayName: Perpetual Core
-				// Tooltip: ""
 			}
 
 			RedBerry: {
@@ -151,13 +155,17 @@ Mods: {
 			}
 
 			BotanicalStaff: {
-				// DisplayName: Botanical Staff
-				// Tooltip: ""
+				DisplayName: 植物法杖
+				Tooltip: ！测试用物品！
 			}
 
 			IdentifyLoupe: {
-				// DisplayName: Identify Loupe
-				// Tooltip: ""
+				DisplayName: 鉴定镜
+				Tooltip:
+					'''
+					消耗20魔力
+					放在背包中时可以通过右键未鉴定的植物以查看它们的基因
+					'''
 			}
 
 			AgropyronFreezer: {
@@ -176,8 +184,8 @@ Mods: {
 			}
 
 			WoodStick: {
-				// DisplayName: Wood Stick
-				// Tooltip: ""
+				DisplayName: 木棍
+				Tooltip: "就只是木棍而已"
 			}
 
 			AgropyronSeed: {
@@ -216,8 +224,8 @@ Mods: {
 			}
 
 			Naclite: {
-				// DisplayName: Naclite
-				// Tooltip: ""
+				DisplayName: 盐晶
+				Tooltip: "氯化钠晶体，尝起来咸咸的"
 			}
 
 			PileaNotataSeedling: {
@@ -246,53 +254,66 @@ Mods: {
 			}
 
 			Watermelon: {
-				// DisplayName: Watermelon
-				// Tooltip: ""
+				DisplayName: 西瓜
+				Tooltip: "用切瓜小刀丢向它来切成西瓜片"
 			}
 
 			BabyIceDragonBossBag: {
-				// DisplayName: Baby Ice Dragon Boss Bag
-				// Tooltip: ""
+				DisplayName: 宝藏袋（冰龙宝宝）
+				Tooltip: ""
 			}
 
 			BabyIceDragonRelic: {
-				// DisplayName: Baby Ice Dragon Relic
-				// Tooltip: ""
+				DisplayName: 冰龙宝宝圣物
+				Tooltip: ""
 			}
 
 			BabyIceDragonTrophy: {
-				// DisplayName: Baby Ice Dragon Trophy
-				// Tooltip: ""
+				DisplayName: 冰龙宝宝纪念章
+				Tooltip: ""
 			}
 
 			IcicleBow: {
-				// DisplayName: Icicle Bow
-				// Tooltip: ""
+				DisplayName: 冰晶弓
+				Tooltip:
+					'''
+					将箭矢转化为冰晶箭
+					双击A/D进行滑步
+					滑步时按住鼠标左键汇聚冰魔法，之后松开左键射出冰光箭
+					'''
 			}
 
 			IcicleCrystal: {
-				// DisplayName: Icicle Crystal
-				// Tooltip: ""
+				DisplayName: 冰晶
+				Tooltip: 蕴含冰之魔力
 			}
 
 			IcicleStaff: {
-				// DisplayName: Icicle Staff
-				// Tooltip: ""
+				DisplayName: 霜华杖
+				Tooltip: 射出冰光球
 			}
 
 			IcicleSword: {
-				// DisplayName: Icicle Sword
-				// Tooltip: ""
+				DisplayName: 冰晶剑
+				Tooltip:
+					'''
+					挥动时释放冰晶波
+					挥舞3次后戳刺并射出冰块
+					'''
 			}
 
 			IcicleThornStaff: {
-				// DisplayName: Icicle Thorn Staff
-				// Tooltip: ""
+				DisplayName: 冰魔杖
+				Tooltip:
+					'''
+					召唤冰刺球
+					[c/00bbff:消耗1召唤栏]
+					'''
 			}
 
 			IcicleYujian: {
-				// DisplayName: Icicle Yujian
-				// Tooltip: ""
+				DisplayName: 霜晶刃
+				Tooltip: ""
 			}
 
 			CrossBreedMachine_G1Item: {
@@ -301,28 +322,28 @@ Mods: {
 			}
 
 			IceyDust: {
-				// DisplayName: Icey Dust
-				// Tooltip: ""
+				DisplayName: 冰魔粉
+				Tooltip: "含有微弱的冰魔力"
 			}
 
 			MagliteDust: {
-				// DisplayName: Maglite Dust
-				// Tooltip: ""
+				DisplayName: 魔粉
+				Tooltip: "含有微弱的魔力"
 			}
 
 			SandliteDust: {
-				// DisplayName: Sandlite Dust
-				// Tooltip: ""
+				DisplayName: 沙魔粉
+				Tooltip: "含有微弱的沙漠魔力"
 			}
 
 			ShlimmerMushrooms: {
-				// DisplayName: Shlimmer Mushrooms
-				// Tooltip: ""
+				DisplayName: 微光蘑菇
+				Tooltip: "能发出微小的光"
 			}
 
 			WatermelonSlices: {
-				// DisplayName: Watermelon Slices
-				// Tooltip: ""
+				DisplayName: 西瓜片
+				Tooltip: ""
 			}
 
 			MushroomPlatform: {
@@ -341,123 +362,139 @@ Mods: {
 			}
 
 			MagicCraftStation: {
-				// DisplayName: Magic Craft Station
-				// Tooltip: ""
+				DisplayName: 魔导台
+				Tooltip: ""
 			}
 
 			RediancieBossBag: {
-				// DisplayName: Rediancie Boss Bag
-				// Tooltip: ""
+				DisplayName: 宝藏袋（赤玉灵）
+				Tooltip: ""
 			}
 
 			RedianciePet: {
-				// DisplayName: Rediancie Pet
-				// Tooltip: ""
+				DisplayName: 小赤玉灵
+				Tooltip: "召唤一个发出微弱光亮的小赤玉灵"
 			}
 
 			RediancieRelic: {
-				// DisplayName: Rediancie Relic
-				// Tooltip: ""
+				DisplayName: 赤玉灵圣物
+				Tooltip: ""
 			}
 
 			RediancieTrophy: {
-				// DisplayName: Rediancie Trophy
-				// Tooltip: ""
+				DisplayName: 赤玉灵纪念章
+				Tooltip: ""
 			}
 
 			RedJade: {
-				// DisplayName: Red Jade
-				// Tooltip: ""
+				DisplayName: 赤玉
+				Tooltip: ""
 			}
 
 			RedJadeBed: {
-				// DisplayName: Red Jade Bed
-				// Tooltip: ""
+				DisplayName: 赤玉床
+				Tooltip: ""
 			}
 
 			RedJadeBlade: {
-				// DisplayName: Red Jade Blade
-				// Tooltip: ""
+				DisplayName: 赤玉刃
+				Tooltip:
+                    '''
+                    射出偶尔会产生爆炸的赤玉碎片
+                    挥舞一定次数后产生大爆炸
+                    '''
 			}
 
 			RedJadeCandle: {
-				// DisplayName: Red Jade Candle
-				// Tooltip: ""
+				DisplayName: 赤玉台灯
+				Tooltip: ""
 			}
 
 			RedJadeChair: {
-				// DisplayName: Red Jade Chair
-				// Tooltip: ""
+				DisplayName: 赤玉椅
+				Tooltip: ""
 			}
 
 			RedJadeChest: {
-				// DisplayName: Red Jade Chest
-				// Tooltip: ""
+				DisplayName: 赤玉箱
+				Tooltip: ""
 			}
 
 			RedJadeDoor: {
-				// DisplayName: Red Jade Door
-				// Tooltip: ""
+				DisplayName: 赤玉门
+				Tooltip: ""
 			}
 
 			RedJadeDroplight: {
-				// DisplayName: Red Jade Droplight
-				// Tooltip: ""
+				DisplayName: 赤玉吊灯
+				Tooltip: ""
 			}
 
 			RedJadeHulu: {
-				// DisplayName: Red Jade Hulu
-				// Tooltip: ""
+				DisplayName: 赤玉葫芦
+				Tooltip: "召唤出的剑在命中时偶尔产生爆炸"
 			}
 
 			RedJadePendant: {
-				// DisplayName: Red Jade Pendant
-				// Tooltip: ""
+				DisplayName: 赤玉吊坠
+				Tooltip: "受伤时偶尔产生爆炸"
 			}
 
 			RedJadeShrine: {
-				// DisplayName: Red Jade Shrine
-				// Tooltip: ""
+				DisplayName: 赤玉祭坛
+                Tooltip:
+					'''
+					召唤小赤玉
+					[c/00bbff:消耗1召唤栏]
+					'''
 			}
 
 			RedJadeStaff: {
-				// DisplayName: Red Jade Staff
-				// Tooltip: ""
+				DisplayName: 赤岩杖
+				Tooltip:
+                    '''
+                    射出会产生爆炸的赤色光束
+                    射击一定次数后射出大光束并产生大爆炸
+                    '''
 			}
 
 			RedJadeTable: {
-				// DisplayName: Red Jade Table
-				// Tooltip: ""
+				DisplayName: 赤玉桌
+				Tooltip: ""
 			}
 
 			RedJadeToilet: {
-				// DisplayName: Red Jade Toilet
-				// Tooltip: ""
+				DisplayName: 赤玉马桶
+				Tooltip: ""
 			}
 
 			RedJadeWorkBench: {
-				// DisplayName: Red Jade Work Bench
-				// Tooltip: ""
+				DisplayName: 赤玉工作台
+				Tooltip: ""
 			}
 
 			RedJadeYujian: {
-				// DisplayName: Red Jade Yujian
-				// Tooltip: ""
+				DisplayName: 赤玉御剑
+				Tooltip: ""
 			}
 
 			InvertedShadow: {
-				// DisplayName: Inverted Shadow
-				// Tooltip: ""
+				DisplayName: 倒影
+				Tooltip: "你的影子与你同在"
 			}
 
 			ShadowChest: {
-				// DisplayName: Shadow Chest
-				// Tooltip: ""
+				DisplayName: 影子胸甲
+				Tooltip:
+                    '''
+                    伤害 +10%
+                    暴击率 +6%
+                    '''
 			}
 
 			ShadowCrystal: {
-				// DisplayName: Shadow Crystal
-				// Tooltip: ""
+				DisplayName: 影水晶
+				Tooltip: ""
 			}
 
 			ShadowEnergy: {
@@ -511,23 +548,23 @@ Mods: {
 			}
 
 			AncientCore: {
-				// DisplayName: Ancient Core
-				// Tooltip: ""
+				DisplayName: 远古核心
+				Tooltip: "军火商压箱底的宝贝，来自远古文明的能量核心"
 			}
 
 			Arethusa: {
-				// DisplayName: Arethusa
-				// Tooltip: ""
+				DisplayName: 幽兰
+				Tooltip: "迟来的爱"
 			}
 
 			ArethusaNormalMode: {
-				// DisplayName: Arethusa Normal Mode
-				// Tooltip: ""
+				DisplayName: 幽兰
+				Tooltip: "迟来的爱"
 			}
 
 			Astrosniper: {
-				// DisplayName: Astrosniper
-				// Tooltip: ""
+				DisplayName: 天文狙击枪
+				Tooltip: "去狙击那颗垂死的星星吧！"
 			}
 
 			BarrageMic: {
@@ -536,43 +573,43 @@ Mods: {
 			}
 
 			DukeFishronSkin: {
-				// DisplayName: Duke Fishron Skin
-				// Tooltip: ""
+				DisplayName: 巨型鲨鱼皮
+				Tooltip: "巨型鲨鱼的粗糙韧皮，摸起来感觉不错"
 			}
 
 			Dunkleosteus: {
-				// DisplayName: Dunkleosteus
-				// Tooltip: ""
+				DisplayName: 邓氏鲨
+				Tooltip: "远古巨鲨，极致的火力压制"
 			}
 
 			Hyacinth: {
-				// DisplayName: Hyacinth
-				// Tooltip: ""
+				DisplayName: 风信子
+				Tooltip: "[c/ff3333:你的爱充满我心中]"
 			}
 
 			Rosemary: {
-				// DisplayName: Rosemary
-				// Tooltip: ""
+				DisplayName: 迷迭香
+				Tooltip: "留住美好的回忆"
 			}
 
 			Rosemary2: {
-				// DisplayName: Rosemary2
-				// Tooltip: ""
+				DisplayName: 迷迭香
+				Tooltip: "留住美好的回忆"
 			}
 
 			Snowdrop: {
-				// DisplayName: Snowdrop
-				// Tooltip: ""
+				DisplayName: 雪花莲
+				Tooltip: "怀抱希望"
 			}
 
 			StarsBreath: {
-				// DisplayName: Stars Breath
-				// Tooltip: ""
+				DisplayName: 满天星
+				Tooltip: "一切美好的祝愿"
 			}
 
 			WoodWax: {
-				// DisplayName: Wood Wax
-				// Tooltip: ""
+				DisplayName: 木蜡
+				Tooltip: "孢子喷发"
 			}
 
 			CatClaws: {
@@ -581,8 +618,8 @@ Mods: {
 			}
 
 			WateringPot: {
-				// DisplayName: Watering Pot
-				// Tooltip: ""
+				DisplayName: 洒水壶
+				Tooltip: "注入魔法后不太稳定的洒水壶，并不能为你的花草浇水"
 			}
 
 			WatermelonKnife: {
@@ -659,22 +696,32 @@ Mods: {
 				// DisplayName: Wooden Yujian
 				// Tooltip: ""
 			}
+
+			IcicleCoccyx: {
+				DisplayName: 冰寒刺骨
+				Tooltip:
+					'''
+					左键挥动一定次数后获得充能
+					充能完成后双击W/D键冲刺
+					充能完成后右键释放冰晶龙卷风
+					'''
+			}
 		}
 
 		Tiles: {
-			// RedJadeWorkBench.MapEntry: Red Jade Work Bench
-			// RedJadeTile.MapEntry: Red Jade Tile
-			// RedJadeTable.MapEntry: Red Jade Table
-			// RedJadeDroplight.MapEntry: Red Jade Droplight
-			// RedJadeDoorOpen.MapEntry: Red Jade Door Open
-			// RedJadeDoorClosed.MapEntry: Red Jade Door Closed
-			// RedJadeChest.MapEntry: Red Jade Chest
-			// RedJadeCandle.MapEntry: Red Jade Candle
-			// RedJadeBed.MapEntry: Red Jade Bed
-			// MagicCraftStation.MapEntry: Magic Craft Station
-			// WatermelonTile.MapEntry: Watermelon Tile
-			// WaterDrinker.MapEntry: Water Drinker
-			// TreeJoke.MapEntry: Tree Joke
+			RedJadeWorkBench.MapEntry: 赤玉工作台
+			RedJadeTile.MapEntry: 赤玉
+			RedJadeTable.MapEntry: 赤玉桌
+			RedJadeDroplight.MapEntry: 赤玉吊灯
+			RedJadeDoorOpen.MapEntry: 赤玉门
+			RedJadeDoorClosed.MapEntry: 赤玉门
+			RedJadeChest.MapEntry: 赤玉箱
+			RedJadeCandle.MapEntry: 赤玉台灯
+			RedJadeBed.MapEntry: 赤玉床
+			MagicCraftStation.MapEntry: 魔导台
+			WatermelonTile.MapEntry: 西瓜
+			WaterDrinker.MapEntry: 饮水棘
+			TreeJoke.MapEntry: 树生树树果
 			// SnoowFlower.MapEntry: Snoow Flower
 			// PileaNotata.MapEntry: Pilea Notata
 			// NacliteMoss.MapEntry: Naclite Moss
@@ -700,8 +747,8 @@ Mods: {
 			}
 
 			IcicleThornBuff: {
-				// DisplayName: Icicle Thorn Buff
-				// Description: Mods.Coralite.Buffs.IcicleThornBuff.Description
+				DisplayName: 冰魔刺
+				Description: 冰魔刺为你战斗
 			}
 
 			MushroomDragonBuff: {
@@ -718,56 +765,61 @@ Mods: {
 				// DisplayName: Rediancie Pet Buff
 				// Description: Mods.Coralite.Buffs.RedianciePetBuff.Description
 			}
+
+			ShadowCircleBuff: {
+				// DisplayName: Shadow Circle Buff
+				// Description: Mods.Coralite.Buffs.ShadowCircleBuff.Description
+			}
 		}
 
 		NPCs: {
-			// BabyIceDragon.DisplayName: Baby Ice Dragon
-			// IceCube.DisplayName: Ice Cube
-			// IceDragonEgg.DisplayName: Ice Dragon Egg
-			// IceThornsTrap.DisplayName: Ice Thorns Trap
-			// Rediancie.DisplayName: Rediancie
-			// RediancieMinion.DisplayName: Rediancie Minion
-			// IcicleSpirit.DisplayName: Icicle Spirit
+			BabyIceDragon.DisplayName: 冰龙宝宝
+			IceCube.DisplayName: 冰块
+			IceDragonEgg.DisplayName: 冰龙蛋
+			IceThornsTrap.DisplayName: 冰刺陷阱
+			Rediancie.DisplayName: 赤玉灵
+			RediancieMinion.DisplayName: 小赤玉灵
+			IcicleSpirit.DisplayName: 霜灵
 			// MaragonBody.DisplayName: Maragon Body
 			// MaragonHead.DisplayName: Maragon Head
 			// MaragonTrail.DisplayName: Maragon Trail
-			// ShadowGolem.DisplayName: Shadow Golem
-			// ShadowGuard.DisplayName: Shadow Guard
+			ShadowGolem.DisplayName: 影子巨像
+			ShadowGuard.DisplayName: 影子守卫
 		}
 
 		// Prefixes.支配.DisplayName: 支配
 
 		Projectiles: {
-			// BabyIceDragon_OnSpawnAnim.DisplayName: Baby Ice Dragon_ On Spawn Anim
-			// IceBreath.DisplayName: Ice Breath
-			// IceBurst.DisplayName: Ice Burst
-			// IceThorn.DisplayName: Ice Thorn
-			// IceTornado.DisplayName: Ice Tornado
-			// IcicleAttack.DisplayName: Icicle Attack
-			// IcicleFalling_Hostile.DisplayName: Icicle Falling_ Hostile
-			// IcicleFalling.DisplayName: Icicle Falling
-			// IcicleProj_Hostile.DisplayName: Icicle Proj_ Hostile
-			// IcicleProj.DisplayName: Icicle Proj
-			// RedFirework.DisplayName: Red Firework
-			// Rediancie_Beam.DisplayName: Rediancie_ Beam
-			// Rediancie_BigBoom.DisplayName: Rediancie_ Big Boom
-			// Rediancie_Explosion.DisplayName: Rediancie_ Explosion
-			// Rediancie_OnSpawnAnim.DisplayName: Rediancie_ On Spawn Anim
-			// Rediancie_Strike.DisplayName: Rediancie_ Strike
-			// RedPulse.DisplayName: Red Pulse
-			// CrushedIceProj.DisplayName: Crushed Ice Proj
-			// IcicleArrow.DisplayName: Icicle Arrow
-			// IcicleBowHeldProj.DisplayName: Icicle Bow Held Proj
-			// IcicleMagicBall.DisplayName: Icicle Magic Ball
-			// IcicleSpurt.DisplayName: Icicle Spurt
-			// IcicleSpurtHeldProj.DisplayName: Icicle Spurt Held Proj
-			// IcicleStaffHeldProj.DisplayName: Icicle Staff Held Proj
-			// IcicleStarArrow.DisplayName: Icicle Star Arrow
-			// IcicleSwordHeldProj.DisplayName: Icicle Sword Held Proj
-			// IcicleSwordSplash.DisplayName: Icicle Sword Splash
-			// IcicleThorn.DisplayName: Icicle Thorn
-			// IcicleThornExplosion.DisplayName: Icicle Thorn Explosion
-			// IcicleYujianProj.DisplayName: Icicle Yujian Proj
+			BabyIceDragon_OnSpawnAnim.DisplayName: 冰龙宝宝生成动画
+			IceBreath.DisplayName: 冰之吐息
+			IceBurst.DisplayName: 霜华绽放
+			IceThorn.DisplayName: 冰刺
+			IceTornado.DisplayName: 冰晶龙卷风
+			IcicleAttack.DisplayName: 冰锥
+			IcicleFalling_Hostile.DisplayName: 冰锥
+			IcicleFalling.DisplayName: 冰锥
+			IcicleProj_Hostile.DisplayName: 冰锥
+			IcicleProj.DisplayName: 冰锥
+			RedFirework.DisplayName: 赤色烟花
+			Rediancie_Beam.DisplayName: 赤色光束
+			Rediancie_BigBoom.DisplayName: 赤玉大爆炸
+			Rediancie_Explosion.DisplayName: 赤玉爆炸
+			Rediancie_OnSpawnAnim.DisplayName: 赤玉灵生成动画
+			Rediancie_Strike.DisplayName: 赤玉攻击
+			RedPulse.DisplayName: 赤色脉冲
+			CrushedIceProj.DisplayName: 碎冰
+			IcicleArrow.DisplayName: 冰晶箭
+			IcicleBowHeldProj.DisplayName: 冰晶弓
+			IcicleMagicBall.DisplayName: 冰光球
+			IcicleSpurt.DisplayName: 冰块
+			IcicleSpurtHeldProj.DisplayName: 冰晶剑
+			IcicleStaffHeldProj.DisplayName: 霜华杖
+			IcicleStarArrow.DisplayName: 冰光箭
+			IcicleSwordHeldProj.DisplayName: 冰晶剑
+			IcicleSwordSplash.DisplayName: 冰晶波
+			IcicleThorn.DisplayName: 冰魔刺
+			IcicleThornExplosion.DisplayName: 冰魔刺爆炸
+			IcicleYujianProj.DisplayName: 霜晶刃
 			// MushroomDragon.DisplayName: Mushroom Dragon
 			// RedBink.DisplayName: Red Bink
 			// RedianciePetProj.DisplayName: Rediancie Pet Proj
@@ -838,19 +890,24 @@ Mods: {
 			// WoodWaxBullet.DisplayName: Wood Wax Bullet
 			// WoodWaxHeldProj.DisplayName: Wood Wax Held Proj
 			// BaseIKProj.DisplayName: Base I K Proj
+			IcicleCoccyxSpurt_N.DisplayName: 冰寒刺骨
+			IcicleCoccyx_Ex1.DisplayName: 冰寒刺骨
+			IcicleCoccyx_Ex2.DisplayName: 冰寒刺骨
+			IcicleCoccyx_Ex3.DisplayName: 冰寒刺骨
+			ShadowCircle.DisplayName: 影铠法环
 		}
 
 		Configs: {
 			NianliUIConfig: {
-				// DisplayName: Nianli U I Config
+				DisplayName: 念力UI设置
 
 				nianliUI_X: {
-					// Label: nianli U I_ X
+					// Label: nianli UI X
 					// Tooltip: ""
 				}
 
 				nianliUI_Y: {
-					// Label: nianli U I_ Y
+					// Label: nianli UI Y
 					// Tooltip: ""
 				}
 			}

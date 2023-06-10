@@ -21,12 +21,20 @@ Mods: {
 
 			CallForDestruction: {
 				DisplayName: Call For Destruction
-				Tooltip: ""
-			}
+				Tooltip:
+					'''
+					It invokes the incarnation of destruction, but in the form of a phone call
+					Summon the Destroyer in the night, without consuming
+					'''
+            }
 
 			CannedLarva: {
 				DisplayName: Canned Larva
-				Tooltip: ""
+				Tooltip:
+					'''
+					Bee larvae in a jar so it don't get poked easily
+					Summon Queen Bee in jungle, without consuming
+					'''
 			}
 
 			ChainedEye: {
@@ -121,7 +129,7 @@ Mods: {
 
 			WoodStick: {
 				DisplayName: Wood Stick
-				Tooltip: ""
+				Tooltip: "It's just a wooden stick"
 			}
 
 			AgropyronSeed: {
@@ -161,7 +169,7 @@ Mods: {
 
 			Naclite: {
 				DisplayName: Naclite
-				Tooltip: ""
+				Tooltip: "Sodium chloride crystals, tastes salty"
 			}
 
 			PileaNotataSeedling: {
@@ -191,7 +199,7 @@ Mods: {
 
 			Watermelon: {
 				DisplayName: Watermelon
-				Tooltip: ""
+				Tooltip: "Throw a melon cutter at it to cut into watermelon slices"
 			}
 
 			BabyIceDragonBossBag: {
@@ -211,27 +219,40 @@ Mods: {
 
 			IcicleBow: {
 				DisplayName: Icicle Bow
-				Tooltip: ""
+				Tooltip:
+					'''
+					Convert arrows into icicle arrows
+					Double click A/D for slide
+					Hold down the left mouse button while sliding to gather ice magic, then release the left button to shoot ice light arrows
+					'''
 			}
 
 			IcicleCrystal: {
 				DisplayName: Icicle Crystal
-				Tooltip: ""
+				Tooltip: Contains the magic of ice
 			}
 
 			IcicleStaff: {
 				DisplayName: Icicle Staff
-				Tooltip: ""
+				Tooltip: Shoot the ice ball of light
 			}
 
 			IcicleSword: {
 				DisplayName: Icicle Sword
-				Tooltip: ""
+				Tooltip:
+					'''
+					Release ice wave when swinging
+					Pokes and shoots ice after 3 swings
+					'''
 			}
 
 			IcicleThornStaff: {
 				DisplayName: Icicle Thorn Staff
-				Tooltip: ""
+				Tooltip:
+					'''
+					Summon Ice Spike Ball
+					[c/00bbff:Consumption 1 summoning slot]
+					'''
 			}
 
 			IcicleYujian: {
@@ -246,22 +267,22 @@ Mods: {
 
 			IceyDust: {
 				DisplayName: Icey Dust
-				Tooltip: ""
+				Tooltip: "Contains a weak ice magic"
 			}
 
 			MagliteDust: {
 				DisplayName: Maglite Dust
-				Tooltip: ""
+				Tooltip: "Contains a faint magic power"
 			}
 
 			SandliteDust: {
-				DisplayName: Sandlite Dust
-				Tooltip: ""
+				DisplayName: Sand Magic Powder
+				Tooltip: "Contains a faint desert magic"
 			}
 
 			ShlimmerMushrooms: {
 				DisplayName: Shlimmer Mushrooms
-				Tooltip: ""
+				Tooltip: "Can emit tiny light"
 			}
 
 			WatermelonSlices: {
@@ -295,8 +316,8 @@ Mods: {
 			}
 
 			RedianciePet: {
-				DisplayName: Rediancie Pet
-				Tooltip: ""
+				DisplayName: Small Rediancie
+				Tooltip: "Summon a small Rediancie that emits a faint light"
 			}
 
 			RediancieRelic: {
@@ -321,7 +342,10 @@ Mods: {
 
 			RedJadeBlade: {
 				DisplayName: Red Jade Blade
-				Tooltip: ""
+                    '''
+                    Shoots fragments of Red Jade that occasionally produce explosions
+                    Generate a big explosion after a certain number of swings
+                    '''
 			}
 
 			RedJadeCandle: {
@@ -351,22 +375,30 @@ Mods: {
 
 			RedJadeHulu: {
 				DisplayName: Red Jade Hulu
-				Tooltip: ""
+				Tooltip: "Summoned swords occasionally produce an explosion when hit"
 			}
 
 			RedJadePendant: {
 				DisplayName: Red Jade Pendant
-				Tooltip: ""
+				Tooltip: "Occasional explosion when the player takes damage"
 			}
 
 			RedJadeShrine: {
 				DisplayName: Red Jade Shrine
-				Tooltip: ""
+                Tooltip:
+					'''
+					Summon a small red jade
+					[c/00bbff:Consumption 1 summoning slot]
+					'''
 			}
 
 			RedJadeStaff: {
 				DisplayName: Red Jade Staff
-				Tooltip: ""
+				Tooltip:
+                    '''
+                    Shoot the red light beam that will produce an explosion
+                    Shoot a certain number of times after shooting a large beam and produce a large explosion
+                    '''
 			}
 
 			RedJadeTable: {
@@ -391,12 +423,16 @@ Mods: {
 
 			InvertedShadow: {
 				DisplayName: Inverted Shadow
-				Tooltip: ""
+				Tooltip: "Your shadow is with you"
 			}
 
 			ShadowChest: {
 				DisplayName: Shadow Chest
-				Tooltip: ""
+				Tooltip:
+                    '''
+                    damage +10%
+                    crit chance +6%
+                    '''
 			}
 
 			ShadowCrystal: {
@@ -456,22 +492,22 @@ Mods: {
 
 			AncientCore: {
 				DisplayName: Ancient Core
-				Tooltip: ""
+				Tooltip: "Arms dealer's treasure, the energy core from ancient civilizations"
 			}
 
 			Arethusa: {
 				DisplayName: Arethusa
-				Tooltip: ""
+				Tooltip: "Late Love"
 			}
 
 			ArethusaNormalMode: {
-				DisplayName: Arethusa Normal Mode
-				Tooltip: ""
+				DisplayName: Arethusa
+				Tooltip: "Late Love"
 			}
 
 			Astrosniper: {
 				DisplayName: Astrosniper
-				Tooltip: ""
+				Tooltip: "Go snipe that dying star!"
 			}
 
 			BarrageMic: {
@@ -481,42 +517,42 @@ Mods: {
 
 			DukeFishronSkin: {
 				DisplayName: Duke Fishron Skin
-				Tooltip: ""
+				Tooltip: "The rough and tough skin of the giant shark feels good to the touch"
 			}
 
 			Dunkleosteus: {
 				DisplayName: Dunkleosteus
-				Tooltip: ""
+				Tooltip: "Ancient giant shark, the ultimate in firepower suppression"
 			}
 
 			Hyacinth: {
 				DisplayName: Hyacinth
-				Tooltip: ""
+				Tooltip: "[c/ff3333:Your love fills my heart]"
 			}
 
 			Rosemary: {
 				DisplayName: Rosemary
-				Tooltip: ""
+				Tooltip: "Keeping the good memories"
 			}
 
 			Rosemary2: {
-				DisplayName: Rosemary2
-				Tooltip: ""
+				DisplayName: Rosemary
+				Tooltip: "Keeping the good memories"
 			}
 
 			Snowdrop: {
 				DisplayName: Snowdrop
-				Tooltip: ""
+				Tooltip: "Embracing Hope"
 			}
 
 			StarsBreath: {
 				DisplayName: Stars Breath
-				Tooltip: ""
+				Tooltip: "All good wishes"
 			}
 
 			WoodWax: {
 				DisplayName: Wood Wax
-				Tooltip: ""
+				Tooltip: "Spore Eruption"
 			}
 
 			CatClaws: {
@@ -526,11 +562,11 @@ Mods: {
 
 			WateringPot: {
 				DisplayName: Watering Pot
-				Tooltip: ""
+				Tooltip: "Sprinklers that are not very stable when injected with magic. Does not water your plants and flowers"
 			}
 
 			WatermelonKnife: {
-				DisplayName: Watermelon Knife
+				DisplayName: Melon Cutter
 				Tooltip: ""
 			}
 
@@ -603,20 +639,30 @@ Mods: {
 				DisplayName: Wooden Yujian
 				Tooltip: ""
 			}
+
+			IcicleCoccyx: {
+				DisplayName: Icicle Coccyx
+				Tooltip:
+					'''
+					Left click to gain charge after a certain number of swings
+					Double-click the W/D button to sprint after charging is complete
+					Right click to release the ice crystal tornado after charging is completed
+					'''
+			}
 		}
 
 		Tiles: {
 			RedJadeWorkBench.MapEntry: Red Jade Work Bench
-			RedJadeTile.MapEntry: Red Jade Tile
+			RedJadeTile.MapEntry: Red Jade
 			RedJadeTable.MapEntry: Red Jade Table
 			RedJadeDroplight.MapEntry: Red Jade Droplight
-			RedJadeDoorOpen.MapEntry: Red Jade Door Open
-			RedJadeDoorClosed.MapEntry: Red Jade Door Closed
+			RedJadeDoorOpen.MapEntry: Red Jade Door
+			RedJadeDoorClosed.MapEntry: Red Jade Door
 			RedJadeChest.MapEntry: Red Jade Chest
 			RedJadeCandle.MapEntry: Red Jade Candle
 			RedJadeBed.MapEntry: Red Jade Bed
 			MagicCraftStation.MapEntry: Magic Craft Station
-			WatermelonTile.MapEntry: Watermelon Tile
+			WatermelonTile.MapEntry: Watermelon
 			WaterDrinker.MapEntry: Water Drinker
 			TreeJoke.MapEntry: Tree Joke
 			SnoowFlower.MapEntry: Snoow Flower
@@ -644,8 +690,8 @@ Mods: {
 			}
 
 			IcicleThornBuff: {
-				DisplayName: Icicle Thorn Buff
-				Description: Mods.Coralite.Buffs.IcicleThornBuff.Description
+				DisplayName: Icicle Thorn
+				Description: Icicle Thorn Fight for you
 			}
 
 			MushroomDragonBuff: {
@@ -661,6 +707,11 @@ Mods: {
 			RedianciePetBuff: {
 				DisplayName: Rediancie Pet Buff
 				Description: Mods.Coralite.Buffs.RedianciePetBuff.Description
+			}
+
+			ShadowCircleBuff: {
+				DisplayName: Shadow Circle Buff
+				Description: Mods.Coralite.Buffs.ShadowCircleBuff.Description
 			}
 		}
 
@@ -682,36 +733,36 @@ Mods: {
 		Prefixes.支配.DisplayName: 支配
 
 		Projectiles: {
-			BabyIceDragon_OnSpawnAnim.DisplayName: Baby Ice Dragon_ On Spawn Anim
+			BabyIceDragon_OnSpawnAnim.DisplayName: Baby Ice Dragon On Spawn Anim
 			IceBreath.DisplayName: Ice Breath
 			IceBurst.DisplayName: Ice Burst
 			IceThorn.DisplayName: Ice Thorn
 			IceTornado.DisplayName: Ice Tornado
-			IcicleAttack.DisplayName: Icicle Attack
-			IcicleFalling_Hostile.DisplayName: Icicle Falling_ Hostile
-			IcicleFalling.DisplayName: Icicle Falling
-			IcicleProj_Hostile.DisplayName: Icicle Proj_ Hostile
-			IcicleProj.DisplayName: Icicle Proj
+			IcicleAttack.DisplayName: Icicle
+			IcicleFalling_Hostile.DisplayName: Icicle
+			IcicleFalling.DisplayName: Icicle
+			IcicleProj_Hostile.DisplayName: Icicle
+			IcicleProj.DisplayName: Icicle
 			RedFirework.DisplayName: Red Firework
-			Rediancie_Beam.DisplayName: Rediancie_ Beam
-			Rediancie_BigBoom.DisplayName: Rediancie_ Big Boom
-			Rediancie_Explosion.DisplayName: Rediancie_ Explosion
-			Rediancie_OnSpawnAnim.DisplayName: Rediancie_ On Spawn Anim
-			Rediancie_Strike.DisplayName: Rediancie_ Strike
+			Rediancie_Beam.DisplayName: Rediancie Beam
+			Rediancie_BigBoom.DisplayName: Rediancie Big Boom
+			Rediancie_Explosion.DisplayName: Rediancie Explosion
+			Rediancie_OnSpawnAnim.DisplayName: Rediancie On Spawn Anim
+			Rediancie_Strike.DisplayName: Rediancie Strike
 			RedPulse.DisplayName: Red Pulse
 			CrushedIceProj.DisplayName: Crushed Ice Proj
 			IcicleArrow.DisplayName: Icicle Arrow
-			IcicleBowHeldProj.DisplayName: Icicle Bow Held Proj
+			IcicleBowHeldProj.DisplayName: Icicle Bow
 			IcicleMagicBall.DisplayName: Icicle Magic Ball
 			IcicleSpurt.DisplayName: Icicle Spurt
-			IcicleSpurtHeldProj.DisplayName: Icicle Spurt Held Proj
-			IcicleStaffHeldProj.DisplayName: Icicle Staff Held Proj
+			IcicleSpurtHeldProj.DisplayName: Icicle Spurt
+			IcicleStaffHeldProj.DisplayName: Icicle Staff
 			IcicleStarArrow.DisplayName: Icicle Star Arrow
-			IcicleSwordHeldProj.DisplayName: Icicle Sword Held Proj
+			IcicleSwordHeldProj.DisplayName: Icicle Sword
 			IcicleSwordSplash.DisplayName: Icicle Sword Splash
 			IcicleThorn.DisplayName: Icicle Thorn
 			IcicleThornExplosion.DisplayName: Icicle Thorn Explosion
-			IcicleYujianProj.DisplayName: Icicle Yujian Proj
+			IcicleYujianProj.DisplayName: Icicle Yujian
 			MushroomDragon.DisplayName: Mushroom Dragon
 			RedBink.DisplayName: Red Bink
 			RedianciePetProj.DisplayName: Rediancie Pet Proj
@@ -782,19 +833,24 @@ Mods: {
 			WoodWaxBullet.DisplayName: Wood Wax Bullet
 			WoodWaxHeldProj.DisplayName: Wood Wax Held Proj
 			BaseIKProj.DisplayName: Base I K Proj
+			IcicleCoccyxSpurt_N.DisplayName: Icicle Coccyx
+			IcicleCoccyx_Ex1.DisplayName: Icicle Coccyx
+			IcicleCoccyx_Ex2.DisplayName: Icicle Coccyx
+			IcicleCoccyx_Ex3.DisplayName: Icicle Coccyx
+			ShadowCircle.DisplayName: Shadow Circle
 		}
 
 		Configs: {
 			NianliUIConfig: {
-				DisplayName: Nianli U I Config
+				DisplayName: Nianli UI Config
 
 				nianliUI_X: {
-					Label: nianli U I_ X
+					Label: nianli UI X
 					Tooltip: ""
 				}
 
 				nianliUI_Y: {
-					Label: nianli U I_ Y
+					Label: nianli UI Y
 					Tooltip: ""
 				}
 			}

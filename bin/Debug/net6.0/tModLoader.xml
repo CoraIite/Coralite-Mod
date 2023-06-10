@@ -957,7 +957,7 @@
         <member name="F:Terraria.DataStructures.FishingAttempt.waterQuality">
             <summary>
             If positive, the percent decrease in fishing power this attempt has from missing liquid tiles.
-            <br/> This is <strong>not</strong> how gull the body of liquid is.
+            <br/> This is <strong>not</strong> how full the body of liquid is.
             </summary>
         </member>
         <member name="F:Terraria.DataStructures.FishingAttempt.chumsInWater">
@@ -19911,6 +19911,12 @@
             </summary>
             <param name="buffIndex">The index of the buff to remove.</param>
         </member>
+        <member name="M:Terraria.NPC.UpdateNPC_UpdateGravity">
+            <summary>
+            Updates <see cref="P:Terraria.NPC.maxFallSpeed"/> and <see cref="P:Terraria.NPC.gravity"/> in line with vanilla behavior and resets <see cref="F:Terraria.NPC.GravityMultiplier"/>. Behavior can be modified with <see cref="F:Terraria.NPC.GravityIgnoresType"/>, <see cref="F:Terraria.NPC.GravityIgnoresSpace"/>, and <see cref="F:Terraria.NPC.GravityIgnoresLiquid"/>.<br/>
+            Certain NPC type ids may also cap velocity, see <see cref="F:Terraria.NPC.GravityIgnoresType"/>.
+            </summary>
+        </member>
         <member name="M:Terraria.NPC.GetGlobalNPC``1">
             <summary> Gets the instance of the specified GlobalNPC type. This will throw exceptions on failure. </summary>
             <exception cref="T:System.Collections.Generic.KeyNotFoundException"/>
@@ -19995,6 +20001,68 @@
             Returns the gore type of the party hat this NPC is currently wearing. If the NPC isn't wearing a party hat, 0 is returned.
             </summary>
             <returns></returns>
+        </member>
+        <member name="F:Terraria.NPC.vanillaGravity">
+            <summary>
+            Used to keep vanilla and modded gravity effects working neatly
+            </summary>
+        </member>
+        <member name="F:Terraria.NPC.GravityMultiplier">
+            <summary>
+            Multiply this value in order to change the NPCs active gravity, this can be done in AI as gravity values are reset slightly beforehand, and used slightly after.
+            </summary>
+        </member>
+        <member name="P:Terraria.NPC.gravity">
+            <summary>
+            The current change in velocity due to gravity applied every frame. <br/>
+            Multiply <see cref="F:Terraria.NPC.GravityMultiplier"/> to modify this value
+            </summary>
+        </member>
+        <member name="F:Terraria.NPC.vanillaMaxFallSpeed">
+            <summary>
+            Used to keep vanilla and modded gravity effects working neatly
+            </summary>
+        </member>
+        <member name="F:Terraria.NPC.MaxFallSpeedMultiplier">
+            <summary>
+            Multiply this value in order to change the NPCs active maxFallSpeed, this can be done in AI as gravity values are reset slightly beforehand
+            </summary>
+        </member>
+        <member name="P:Terraria.NPC.maxFallSpeed">
+            <summary>
+            The current fall speed cap in velocity applied every frame. <br/>
+            Multiply <see cref="F:Terraria.NPC.MaxFallSpeedMultiplier"/> to modify this value
+            </summary>
+        </member>
+        <member name="P:Terraria.NPC.GravityWetMultipliers">
+            <summary>
+            The effect of different liquids on NPC gravity. Provided for reference only, modifying these will have no effect. <br/>
+            Corresponds with wet, lavaWet, honetWet, and shimmerWet.
+            </summary>
+        </member>
+        <member name="P:Terraria.NPC.MaxFallSpeedWetMultipliers">
+            <summary>
+            The effect of different liquids on NPC maxFallSpeed. Provided for reference only, modifying these will have no effect. <br/>
+            Corresponds with wet, lavaWet, honetWet, and shimmerWet.
+            </summary>
+        </member>
+        <member name="F:Terraria.NPC.GravityIgnoresType">
+            <summary>
+            Set to disable vanilla type and AI based NPC gravity calculations. <br/>
+            Affects types 258, 425, 576, 577, 427, 426, 541, and the aiStyle 7. <br/>
+            Use with caution
+            </summary>
+        </member>
+        <member name="F:Terraria.NPC.GravityIgnoresSpace">
+            <summary>
+            Set to disable the effect of being in space on NPC gravity.
+            </summary>
+        </member>
+        <member name="F:Terraria.NPC.GravityIgnoresLiquid">
+            <summary>
+            Set to disable the effect of being submerged in liquid on NPC gravity. <br/>
+            Note that being submerged in liquid overrides both type and space effects.
+            </summary>
         </member>
         <member name="T:Terraria.NPC.HitModifiers">
             <summary>

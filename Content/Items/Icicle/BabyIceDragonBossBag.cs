@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            //itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<RedJadePendant>()));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<IcicleCoccyx>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<IcicleCrystal>(), 1, 3, 4));
             itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<BabyIceDragon>()));
         }

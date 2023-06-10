@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-
 namespace Coralite.Content.Items.Shadow
 {
     [AutoloadEquip(EquipType.Head)]
@@ -33,8 +32,8 @@ namespace Coralite.Content.Items.Shadow
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage (DamageClass.Magic)+= 0.08f;
-            player.statManaMax += 40;   //TODO: 有BUG，会让200法变400法，待修改
+            player.manaCost -= 0.10f;
+            player.statManaMax2 += 60;
         }
 
         public override void UpdateArmorSet(Player player)
@@ -64,8 +63,8 @@ namespace Coralite.Content.Items.Shadow
 
         public override void UpdateEquip(Player player)
         {
-            player.GetCritChance(DamageClass.Magic) += 0.04f;
-            player.statManaMax += 20;
+            player.GetDamage(DamageClass.Generic) += 0.10f;
+            player.GetCritChance(DamageClass.Generic) += 0.06f;
         }
     }
 
@@ -90,8 +89,8 @@ namespace Coralite.Content.Items.Shadow
 
         public override void UpdateEquip(Player player)
         {
-            player.manaCost -= 0.1f;
-            player.GetCritChance(DamageClass.Magic) += 0.06f;
+            player.GetAttackSpeed(DamageClass.Generic) += 0.08f;
+            player.GetKnockback(DamageClass.Generic) += 0.06f;
         }
     }
 }

@@ -72,8 +72,9 @@ namespace Coralite.Content.ModPlayers
                 {
                     if (UsingVanillaDash())
                         break;
-
                     if (UsingIcicleBowDash())//冰晶弓冲刺
+                        break;
+                    if (UsingIcicleCoccyxDash())//冰寒刺骨冲刺
                         break;
 
                 } while (false);

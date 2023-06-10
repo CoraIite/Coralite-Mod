@@ -7,7 +7,7 @@ namespace Coralite.Content.Items.Botanical.Plants
 {
     public class WoodStick : BaseMaterial
     {
-        public WoodStick() : base("木棍", "就只是木棍而已", 9999, 0, ItemRarityID.White, AssetDirectory.OtherItems) { }
+        public WoodStick() : base( 9999, 0, ItemRarityID.White, AssetDirectory.OtherItems) { }
 
         public override void AddRecipes()
         {

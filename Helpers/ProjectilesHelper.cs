@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent;
@@ -122,6 +123,28 @@ namespace Coralite.Helpers
 
 
 
+
+        public static void DrawLine(List<Vector2> list, Color originColor)
+        {
+            Texture2D texture = TextureAssets.FishingLine.Value;
+            Rectangle frame = texture.Frame();
+            Vector2 origin = new Vector2(frame.Width / 2, 2);
+
+            Vector2 pos = list[0];
+            for (int i = 0; i < list.Count - 1; i++)
+            {
+                Vector2 element = list[i];
+                Vector2 diff = list[i + 1] - element;
+
+                float rotation = diff.ToRotation() - MathHelper.PiOver2;
+                Color color = Lighting.GetColor(element.ToTileCoordinates(), originColor);
+                Vector2 scale = new Vector2(1, (diff.Length() + 2) / frame.Height);
+
+                Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0);
+
+                pos += diff;
+            }
+        }
 
         public static void DrawPrettyStarSparkle(float opacity, SpriteEffects dir, Vector2 drawPos, Color drawColor, Color shineColor, float flareCounter, float fadeInStart, float fadeInEnd, float fadeOutStart, float fadeOutEnd, float rotation, Vector2 scale, Vector2 fatness)
         {

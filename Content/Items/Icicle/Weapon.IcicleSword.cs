@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Icicle
             Item.damage = 21;
             Item.useTime = 24;
             Item.useAnimation = 24;
-            Item.knockBack = 1f;
+            Item.knockBack = 2f;
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Melee;
@@ -39,7 +39,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override bool CanUseItem(Player player)
         {
-            if (useCount==3)
+            if (useCount == 3)
             {
                 Item.useTime = 18;
                 Item.useAnimation = 18;
@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.Icicle
                 //                /             \       OK
                 //            /    X       X       \        OK
                 if (rotate < 0)
-                    rotate += 6.282f;
+                    rotate += 6.282f;           //全是Magic Number。。。。
                 if (rotate > 3.926f && rotate < 5.497f)
                     rotate = player.direction > 0 ? 5.497f : 3.926f;
                 if (rotate > 0.785f && rotate < 2.355f)
