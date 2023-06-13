@@ -169,93 +169,97 @@ Mods: {
 			}
 
 			AgropyronFreezer: {
-				// DisplayName: Agropyron Freezer
-				// Tooltip: ""
+				DisplayName: 寒霜冰草
+				Tooltip: 尝起来冰冰的，很新鲜
 			}
 
 			GloomMushrooms: {
-				// DisplayName: Gloom Mushrooms
-				// Tooltip: ""
+				DisplayName: 吸光蘑菇
+				Tooltip: 它周围一片黑暗
 			}
 
 			PileaNotatata: {
-				// DisplayName: Pilea Notatata
-				// Tooltip: ""
+				DisplayName: 冷水花
+				Tooltip: ""
 			}
 
 			WoodStick: {
 				DisplayName: 木棍
-				Tooltip: "就只是木棍而已"
+				Tooltip: 就只是木棍而已
 			}
 
 			AgropyronSeed: {
-				// DisplayName: Agropyron Seed
-				// Tooltip: ""
+				DisplayName: 寒霜冰草种子
+				Tooltip: 成熟后收获寒霜冰草
 			}
 
 			DandelionSeed: {
-				// DisplayName: Dandelion Seed
-				// Tooltip: ""
+				DisplayName: 蒲公英种子
+				Tooltip: 世纪小花
 			}
 
 			EgenolfiaBuds: {
-				// DisplayName: Egenolfia Buds
-				// Tooltip: ""
+				DisplayName: 刺蕨孢子
+				Tooltip: 含有微弱的沙漠魔力
 			}
 
 			EyeballSeed: {
-				// DisplayName: Eyeball Seed
-				// Tooltip: ""
+				DisplayName: 眼球草种子
+				Tooltip: ""
 			}
 
 			GloomSpores: {
-				// DisplayName: Gloom Spores
-				// Tooltip: ""
+				DisplayName: 吸光蘑菇孢子
+				Tooltip: 成熟后收获吸光蘑菇
 			}
 
 			JungleBuds: {
-				// DisplayName: Jungle Buds
-				// Tooltip: ""
+				DisplayName: 丛林芽孢
+				Tooltip: 成熟后能释放出丛林孢子
 			}
 
 			NacliteSeedling: {
-				// DisplayName: Naclite Seedling
-				// Tooltip: ""
+				DisplayName: 盐晶苔藓幼体
+				Tooltip: NaClTiXe
 			}
 
 			Naclite: {
 				DisplayName: 盐晶
-				Tooltip: "氯化钠晶体，尝起来咸咸的"
+				Tooltip: 氯化钠晶体，尝起来咸咸的
 			}
 
 			PileaNotataSeedling: {
-				// DisplayName: Pilea Notata Seedling
-				// Tooltip: ""
+				DisplayName: 冷水花幼苗
+				Tooltip: 成熟后收获冷水花
 			}
 
 			SnoowSeed: {
-				// DisplayName: Snoow Seed
-				// Tooltip: ""
+				DisplayName: 雪融花种子
+				Tooltip: 成熟后能掉出雪块
 			}
 
 			TreeJokeSeed: {
-				// DisplayName: Tree Joke Seed
-				// Tooltip: ""
+				DisplayName: 树生树树果
+				Tooltip: “你没搞错吧？”
 			}
 
 			WaterDrinkerSeed: {
-				// DisplayName: Water Drinker Seed
-				// Tooltip: ""
+				DisplayName: 饮水棘种子
+				Tooltip:
+					'''
+					它强大的根茎甚至能在沙漠中汲取水分
+					不是饮水机
+					'''
 			}
 
 			WatermelonSeed: {
-				// DisplayName: Watermelon Seed
-				// Tooltip: ""
+				DisplayName: 西瓜种子
+				Tooltip: ""
 			}
 
 			Watermelon: {
 				DisplayName: 西瓜
-				Tooltip: "用切瓜小刀丢向它来切成西瓜片"
+				Tooltip: 用切瓜小刀丢向它来切成西瓜片
 			}
 
 			BabyIceDragonBossBag: {
@@ -317,28 +321,35 @@ Mods: {
 			}
 
 			CrossBreedMachine_G1Item: {
-				// DisplayName: Cross Breed Machine_ G1 Item
-				// Tooltip: ""
+				DisplayName: 植物杂交机1型
+				Tooltip:
+					'''
+					放置后右键打开面板
+					左侧和右侧的物品格中放入父植物和母植物，中间物品格可放入催化剂
+					点击按钮并消耗一定的魔能进行杂交
+					杂交消耗父植物和母植物并在下方的物品格中输出子代植物
+					部分植物杂交时概率产生突变
+					'''
 			}
 
 			IceyDust: {
 				DisplayName: 冰魔粉
-				Tooltip: "含有微弱的冰魔力"
+				Tooltip: 含有微弱的冰魔力
 			}
 
 			MagliteDust: {
 				DisplayName: 魔粉
-				Tooltip: "含有微弱的魔力"
+				Tooltip: 含有微弱的魔力
 			}
 
 			SandliteDust: {
 				DisplayName: 沙魔粉
-				Tooltip: "含有微弱的沙漠魔力"
+				Tooltip: 含有微弱的沙漠魔力
 			}
 
 			ShlimmerMushrooms: {
 				DisplayName: 微光蘑菇
-				Tooltip: "能发出微小的光"
+				Tooltip: 能发出微小的光
 			}
 
 			WatermelonSlices: {
@@ -347,18 +358,22 @@ Mods: {
 			}
 
 			MushroomPlatform: {
-				// DisplayName: Mushroom Platform
-				// Tooltip: ""
+				DisplayName: 蘑菇平台
+				Tooltip: ""
 			}
 
 			MushroomStaff: {
-				// DisplayName: Mushroom Staff
-				// Tooltip: ""
+				DisplayName: 蘑菇共生杖
+				Tooltip:
+					'''
+					召唤蘑菇龙
+					[c/00bbff:消耗1召唤栏]
+					'''
 			}
 
 			SlimeSapling: {
-				// DisplayName: Slime Sapling
-				// Tooltip: ""
+				DisplayName: 史莱姆树苗
+				Tooltip: 看样子不能用于制作骑士史莱姆合金
 			}
 
 			MagicCraftStation: {
@@ -373,7 +388,7 @@ Mods: {
 
 			RedianciePet: {
 				DisplayName: 小赤玉灵
-				Tooltip: "召唤一个发出微弱光亮的小赤玉灵"
+				Tooltip: 召唤一个发出微弱光亮的小赤玉灵
 			}
 
 			RediancieRelic: {
@@ -399,10 +414,10 @@ Mods: {
 			RedJadeBlade: {
 				DisplayName: 赤玉刃
 				Tooltip:
-                    '''
-                    射出偶尔会产生爆炸的赤玉碎片
-                    挥舞一定次数后产生大爆炸
-                    '''
+					'''
+					射出偶尔会产生爆炸的赤玉碎片
+					挥舞一定次数后产生大爆炸
+					'''
 			}
 
 			RedJadeCandle: {
@@ -432,17 +447,17 @@ Mods: {
 
 			RedJadeHulu: {
 				DisplayName: 赤玉葫芦
-				Tooltip: "召唤出的剑在命中时偶尔产生爆炸"
+				Tooltip: 召唤出的剑在命中时偶尔产生爆炸
 			}
 
 			RedJadePendant: {
 				DisplayName: 赤玉吊坠
-				Tooltip: "受伤时偶尔产生爆炸"
+				Tooltip: 受伤时偶尔产生爆炸
 			}
 
 			RedJadeShrine: {
 				DisplayName: 赤玉祭坛
-                Tooltip:
+				Tooltip:
 					'''
 					召唤小赤玉
 					[c/00bbff:消耗1召唤栏]
@@ -452,10 +467,10 @@ Mods: {
 			RedJadeStaff: {
 				DisplayName: 赤岩杖
 				Tooltip:
-                    '''
-                    射出会产生爆炸的赤色光束
-                    射击一定次数后射出大光束并产生大爆炸
-                    '''
+					'''
+					射出会产生爆炸的赤色光束
+					射击一定次数后射出大光束并产生大爆炸
+					'''
 			}
 
 			RedJadeTable: {
@@ -480,91 +495,104 @@ Mods: {
 
 			InvertedShadow: {
 				DisplayName: 倒影
-				Tooltip: "你的影子与你同在"
+				Tooltip: 你的影子与你同在
 			}
 
-			ShadowChest: {
+			ShadowBreastplate: {
 				DisplayName: 影子胸甲
 				Tooltip:
-                    '''
-                    伤害 +10%
-                    暴击率 +6%
-                    '''
+					'''
+					伤害 +10%
+					暴击率 +6%
+					'''
 			}
 
 			ShadowCrystal: {
 				DisplayName: 影水晶
-				Tooltip: ""
+				Tooltip: 影子能量的结晶
 			}
 
 			ShadowEnergy: {
-				// DisplayName: Shadow Energy
-				// Tooltip: ""
+				DisplayName: 影子能量
+				Tooltip: 它是无形的
 			}
 
 			ShadowHammer: {
-				// DisplayName: Shadow Hammer
-				// Tooltip: ""
+				DisplayName: 影子锤
+				Tooltip: ""
 			}
 
 			ShadowHead: {
-				// DisplayName: Shadow Head
-				// Tooltip: ""
+				DisplayName: 影子兜帽
+				Tooltip:
+					'''
+					最大魔力值 +60
+					魔力消耗 -10%
+					'''
 			}
 
 			ShadowLegs: {
-				// DisplayName: Shadow Legs
-				// Tooltip: ""
+				DisplayName: 影子护腿
+				Tooltip:
+					'''
+					攻速 +8%
+					击退 +6%
+					'''
 			}
 
 			ShadowPickaxe: {
-				// DisplayName: Shadow Pickaxe
-				// Tooltip: ""
+				DisplayName: 影子镐
+				Tooltip: ""
 			}
 
 			ShadowSickle: {
-				// DisplayName: Shadow Sickle
-				// Tooltip: ""
+				DisplayName: 影子镰刀
+				Tooltip: 长按蓄力，蓄力一定时间后松手释放斩击
 			}
 
 			ShadowSword: {
-				// DisplayName: Shadow Sword
-				// Tooltip: ""
+				DisplayName: 潜伏
+				Tooltip: 挥动时召唤出它的分身攻击敌人
 			}
 
 			StarBook: {
-				// DisplayName: Star Book
-				// Tooltip: ""
+				DisplayName: 星之书
+				Tooltip:
+					'''
+					汇聚群星的能量
+					蓄力吸取星之符文，完成后释放星光球
+					取消蓄力释放追踪的星之符文
+					'''
 			}
 
 			CosmosFracture: {
-				// DisplayName: Cosmos Fracture
-				// Tooltip: ""
+				DisplayName: 异界裂隙
+				Tooltip: 划破空间，来自异界的武器将撕裂你的敌人
 			}
 
 			MagicalAshes: {
-				// DisplayName: Magical Ashes
-				// Tooltip: ""
+				DisplayName: 蕴魔灰烬
+				Tooltip: 它尝起来是甜的
 			}
 
 			AncientCore: {
 				DisplayName: 远古核心
-				Tooltip: "军火商压箱底的宝贝，来自远古文明的能量核心"
+				Tooltip: 军火商压箱底的宝贝，来自远古文明的能量核心
 			}
 
 			Arethusa: {
 				DisplayName: 幽兰
-				Tooltip: "迟来的爱"
+				Tooltip: 迟来的爱
 			}
 
 			ArethusaNormalMode: {
 				DisplayName: 幽兰
-				Tooltip: "迟来的爱"
+				Tooltip: 迟来的爱
 			}
 
 			Astrosniper: {
 				DisplayName: 天文狙击枪
-				Tooltip: "去狙击那颗垂死的星星吧！"
+				Tooltip: 去狙击那颗垂死的星星吧！
 			}
 
 			BarrageMic: {
@@ -574,12 +602,12 @@ Mods: {
 
 			DukeFishronSkin: {
 				DisplayName: 巨型鲨鱼皮
-				Tooltip: "巨型鲨鱼的粗糙韧皮，摸起来感觉不错"
+				Tooltip: 巨型鲨鱼的粗糙韧皮，摸起来感觉不错
 			}
 
 			Dunkleosteus: {
 				DisplayName: 邓氏鲨
-				Tooltip: "远古巨鲨，极致的火力压制"
+				Tooltip: 远古巨鲨，极致的火力压制
 			}
 
 			Hyacinth: {
@@ -589,112 +617,116 @@ Mods: {
 
 			Rosemary: {
 				DisplayName: 迷迭香
-				Tooltip: "留住美好的回忆"
+				Tooltip: 留住美好的回忆
 			}
 
 			Rosemary2: {
 				DisplayName: 迷迭香
-				Tooltip: "留住美好的回忆"
+				Tooltip: 留住美好的回忆
 			}
 
 			Snowdrop: {
 				DisplayName: 雪花莲
-				Tooltip: "怀抱希望"
+				Tooltip: 怀抱希望
 			}
 
 			StarsBreath: {
 				DisplayName: 满天星
-				Tooltip: "一切美好的祝愿"
+				Tooltip: 一切美好的祝愿
 			}
 
 			WoodWax: {
 				DisplayName: 木蜡
-				Tooltip: "孢子喷发"
+				Tooltip: 孢子喷发
 			}
 
 			CatClaws: {
-				// DisplayName: Cat Claws
-				// Tooltip: ""
+				DisplayName: 猫猫爪
+				Tooltip:
+					'''
+					猫猫最爱的武器
+					喵~喵喵喵~
+					'''
 			}
 
 			WateringPot: {
 				DisplayName: 洒水壶
-				Tooltip: "注入魔法后不太稳定的洒水壶，并不能为你的花草浇水"
+				Tooltip: 注入魔法后不太稳定的洒水壶，并不能为你的花草浇水
 			}
 
 			WatermelonKnife: {
-				// DisplayName: Watermelon Knife
-				// Tooltip: ""
+				DisplayName: 切瓜小刀
+				Tooltip: 丢中西瓜就可以将它切成西瓜片
 			}
 
 			WoodenHulu: {
-				// DisplayName: Wooden Hulu
-				// Tooltip: ""
+				DisplayName: 木葫芦
+				Tooltip: ""
 			}
 
 			AncientCrimtaneYujian: {
-				// DisplayName: Ancient Crimtane Yujian
-				// Tooltip: ""
+				DisplayName: 远古血腥御剑
+				Tooltip: ""
 			}
 
 			AncientDemoniteYujian: {
-				// DisplayName: Ancient Demonite Yujian
-				// Tooltip: ""
+				DisplayName: 远古腐化御剑
+				Tooltip: ""
 			}
 
 			CrimtaneYujian: {
-				// DisplayName: Crimtane Yujian
-				// Tooltip: ""
+				DisplayName: 血腥御剑
+				Tooltip: ""
 			}
 
 			DemoniteYujian: {
-				// DisplayName: Demonite Yujian
-				// Tooltip: ""
+				DisplayName: 魔化御剑
+				Tooltip: ""
 			}
 
 			GoldYujian: {
-				// DisplayName: Gold Yujian
-				// Tooltip: ""
+				DisplayName: 金御剑
+				Tooltip: ""
 			}
 
 			HellStoneHulu: {
-				// DisplayName: Hell Stone Hulu
-				// Tooltip: ""
+				DisplayName: 狱岩葫芦
+				Tooltip: ""
 			}
 
 			HellStoneYujian: {
-				// DisplayName: Hell Stone Yujian
-				// Tooltip: ""
+				DisplayName: 狱岩长剑
+				Tooltip: ""
 			}
 
 			IronHulu: {
-				// DisplayName: Iron Hulu
-				// Tooltip: ""
+				DisplayName: 铁葫芦
+				Tooltip: ""
 			}
 
 			IronYujian: {
-				// DisplayName: Iron Yujian
-				// Tooltip: ""
+				DisplayName: 铁御剑
+				Tooltip: ""
 			}
 
 			PlatinumYujian: {
-				// DisplayName: Platinum Yujian
-				// Tooltip: ""
+				DisplayName: 铂金御剑
+				Tooltip: ""
 			}
 
 			ShadowYujian: {
-				// DisplayName: Shadow Yujian
-				// Tooltip: ""
+				DisplayName: 影咒刃
+				Tooltip: ""
 			}
 
 			SilverYujian: {
-				// DisplayName: Silver Yujian
-				// Tooltip: ""
+				DisplayName: 银御剑
+				Tooltip: ""
 			}
 
 			WoodenYujian: {
-				// DisplayName: Wooden Yujian
-				// Tooltip: ""
+				DisplayName: 木御剑
+				Tooltip: ""
 			}
 
 			IcicleCoccyx: {
@@ -722,28 +754,28 @@ Mods: {
 			WatermelonTile.MapEntry: 西瓜
 			WaterDrinker.MapEntry: 饮水棘
 			TreeJoke.MapEntry: 树生树树果
-			// SnoowFlower.MapEntry: Snoow Flower
-			// PileaNotata.MapEntry: Pilea Notata
-			// NacliteMoss.MapEntry: Naclite Moss
-			// GloomMushroom.MapEntry: Gloom Mushroom
-			// EyeballHerb.MapEntry: Eyeball Herb
-			// EgenolfiaSandy.MapEntry: Egenolfia Sandy
-			// Dandelion.MapEntry: Dandelion
-			// CoraliteWaterleaf.MapEntry: Coralite Waterleaf
-			// CoraliteShiverthorn.MapEntry: Coralite Shiverthorn
-			// CoraliteMoonglow.MapEntry: Coralite Moonglow
-			// CoraliteJungleSpores.MapEntry: Coralite Jungle Spores
-			// CoraliteFireblossom.MapEntry: Coralite Fireblossom
-			// CoraliteDeathweed.MapEntry: Coralite Deathweed
-			// CoraliteDaybloom.MapEntry: Coralite Daybloom
-			// CoraliteBlinkroot.MapEntry: Coralite Blinkroot
-			// AgropyronFrozen.MapEntry: Agropyron Frozen
+			SnoowFlower.MapEntry: 雪融花
+			PileaNotata.MapEntry: 冷水花
+			NacliteMoss.MapEntry: 盐晶苔藓
+			GloomMushroom.MapEntry: 吸光蘑菇
+			EyeballHerb.MapEntry: 眼球草
+			EgenolfiaSandy.MapEntry: 刺蕨
+			Dandelion.MapEntry: 蒲公英
+			CoraliteWaterleaf.MapEntry: 幌菊
+			CoraliteShiverthorn.MapEntry: 寒颤棘
+			CoraliteMoonglow.MapEntry: 月光草
+			CoraliteJungleSpores.MapEntry: 丛林芽孢
+			CoraliteFireblossom.MapEntry: 火焰花
+			CoraliteDeathweed.MapEntry: 死亡草
+			CoraliteDaybloom.MapEntry: 太阳花
+			CoraliteBlinkroot.MapEntry: 闪耀根
+			AgropyronFrozen.MapEntry: 寒霜冰草
 		}
 
 		Buffs: {
 			SnowDebuff: {
-				// DisplayName: Snow Debuff
-				// Description: Mods.Coralite.Buffs.SnowDebuff.Description
+				DisplayName: 白雪
+				Description: 被雪花包围了
 			}
 
 			IcicleThornBuff: {
@@ -752,22 +784,22 @@ Mods: {
 			}
 
 			MushroomDragonBuff: {
-				// DisplayName: Mushroom Dragon Buff
-				// Description: Mods.Coralite.Buffs.MushroomDragonBuff.Description
+				DisplayName: 蘑菇龙
+				Description: 蘑菇龙为你战斗
 			}
 
 			RedBinkBuff: {
-				// DisplayName: Red Bink Buff
-				// Description: Mods.Coralite.Buffs.RedBinkBuff.Description
+				DisplayName: 小赤玉
+				Description: 小小的也很可爱
 			}
 
 			RedianciePetBuff: {
-				// DisplayName: Rediancie Pet Buff
-				// Description: Mods.Coralite.Buffs.RedianciePetBuff.Description
+				DisplayName: 小赤玉灵
+				Description: 小赤玉灵环绕在你身边
 			}
 
 			ShadowCircleBuff: {
-				// DisplayName: Shadow Circle Buff
+				DisplayName: a
 				// Description: Mods.Coralite.Buffs.ShadowCircleBuff.Description
 			}
 		}
@@ -780,14 +812,14 @@ Mods: {
 			Rediancie.DisplayName: 赤玉灵
 			RediancieMinion.DisplayName: 小赤玉灵
 			IcicleSpirit.DisplayName: 霜灵
-			// MaragonBody.DisplayName: Maragon Body
-			// MaragonHead.DisplayName: Maragon Head
-			// MaragonTrail.DisplayName: Maragon Trail
+			MaragonBody.DisplayName: 魔龙身体
+			MaragonHead.DisplayName: 魔龙头
+			MaragonTrail.DisplayName: 魔龙尾
 			ShadowGolem.DisplayName: 影子巨像
 			ShadowGuard.DisplayName: 影子守卫
 		}
 
-		// Prefixes.支配.DisplayName: 支配
+		Prefixes.支配.DisplayName: 支配
 
 		Projectiles: {
 			BabyIceDragon_OnSpawnAnim.DisplayName: 冰龙宝宝生成动画
@@ -820,81 +852,86 @@ Mods: {
 			IcicleThorn.DisplayName: 冰魔刺
 			IcicleThornExplosion.DisplayName: 冰魔刺爆炸
 			IcicleYujianProj.DisplayName: 霜晶刃
-			// MushroomDragon.DisplayName: Mushroom Dragon
-			// RedBink.DisplayName: Red Bink
-			// RedianciePetProj.DisplayName: Rediancie Pet Proj
-			// RedJadeBeam.DisplayName: Red Jade Beam
-			// RedJadeBigBoom.DisplayName: Red Jade Big Boom
-			// RedJadeBladeHeldProj.DisplayName: Red Jade Blade Held Proj
-			// RedJadeBoom.DisplayName: Red Jade Boom
-			// RedJadeStaffHeldProj.DisplayName: Red Jade Staff Held Proj
-			// RedJadeStrike.DisplayName: Red Jade Strike
-			// RedJadeYujianProj.DisplayName: Red Jade Yujian Proj
-			// DrawInvertedPlayerProj.DisplayName: Draw Inverted Player Proj
-			// InvertedShadowBullet.DisplayName: Inverted Shadow Bullet
-			// ShadowSickleProj.DisplayName: Shadow Sickle Proj
-			// ShadowSwordProj.DisplayName: Shadow Sword Proj
-			// StarBookProj1.DisplayName: Star Book Proj1
-			// StarBookProj2.DisplayName: Star Book Proj2
-			// MagicalAshesProj.DisplayName: Magical Ashes Proj
-			// CatClawsProj_shield.DisplayName: Cat Claws Proj_shield
-			// CatClawsProj_Slash.DisplayName: Cat Claws Proj_ Slash
-			// WateringPotProj.DisplayName: Watering Pot Proj
-			// WatermelonKnifeProj.DisplayName: Watermelon Knife Proj
-			// AncientCrimtaneYujianProj.DisplayName: Ancient Crimtane Yujian Proj
-			// AncientDemoniteYujianProj.DisplayName: Ancient Demonite Yujian Proj
-			// CrimtaneYujianProj.DisplayName: Crimtane Yujian Proj
-			// DemoniteSpurt.DisplayName: Demonite Spurt
-			// DemoniteStrike.DisplayName: Demonite Strike
-			// DemoniteYujianProj.DisplayName: Demonite Yujian Proj
-			// GlodenSpurtProj.DisplayName: Gloden Spurt Proj
-			// GoldYujianProj.DisplayName: Gold Yujian Proj
-			// HellStoneYujianProj.DisplayName: Hell Stone Yujian Proj
-			// IronYujianProj.DisplayName: Iron Yujian Proj
-			// PlatinumSplash.DisplayName: Platinum Splash
-			// PlatinumYujianProj.DisplayName: Platinum Yujian Proj
-			// ShadowYujianProj.DisplayName: Shadow Yujian Proj
-			// ShadowYujianSummons.DisplayName: Shadow Yujian Summons
-			// SilverYujianProj.DisplayName: Silver Yujian Proj
-			// SpurtProj.DisplayName: Spurt Proj
-			// WoodenYujianProj.DisplayName: Wooden Yujian Proj
-			// ShadowGolemBall.DisplayName: Shadow Golem Ball
-			// CosmosFractureProj1.DisplayName: Cosmos Fracture Proj1
-			// CosmosFractureProj2.DisplayName: Cosmos Fracture Proj2
-			// PlatycodonBullet1.DisplayName: Platycodon Bullet1
-			// PlatycodonBullet2.DisplayName: Platycodon Bullet2
-			// ArethusaBullet.DisplayName: Arethusa Bullet
-			// ArethusaExplosion.DisplayName: Arethusa Explosion
-			// ArethusaHeldProj.DisplayName: Arethusa Held Proj
-			// AstrosniperHeldProj.DisplayName: Astrosniper Held Proj
-			// BarrageMicProj.DisplayName: Barrage Mic Proj
-			// DunkleosteusHeldProj.DisplayName: Dunkleosteus Held Proj
-			// HyacinthBullet.DisplayName: Hyacinth Bullet
-			// HyacinthBullet2.DisplayName: Hyacinth Bullet2
-			// HyacinthExplosion.DisplayName: Hyacinth Explosion
-			// HyacinthHeldProj.DisplayName: Hyacinth Held Proj
-			// HyacinthPhantomGun.DisplayName: Hyacinth Phantom Gun
-			// HyacinthRedBullet.DisplayName: Hyacinth Red Bullet
-			// RosemaryBullet.DisplayName: Rosemary Bullet
-			// RosemaryFog.DisplayName: Rosemary Fog
-			// RosemaryHeldProj.DisplayName: Rosemary Held Proj
-			// RosemaryHeldProj2.DisplayName: Rosemary Held Proj2
-			// SnowBullet.DisplayName: Snow Bullet
-			// SnowdropBloom.DisplayName: Snowdrop Bloom
-			// SnowdropBud.DisplayName: Snowdrop Bud
-			// SnowdropHeldProj.DisplayName: Snowdrop Held Proj
-			// SnowSpirit.DisplayName: Snow Spirit
-			// StarsBreathBullet.DisplayName: Stars Breath Bullet
-			// StarsBreathExplosion.DisplayName: Stars Breath Explosion
-			// StarsBreathHeldProj.DisplayName: Stars Breath Held Proj
-			// WoodWaxBullet.DisplayName: Wood Wax Bullet
-			// WoodWaxHeldProj.DisplayName: Wood Wax Held Proj
-			// BaseIKProj.DisplayName: Base I K Proj
+			MushroomDragon.DisplayName: 蘑菇龙
+			RedBink.DisplayName: 小赤玉
+			RedianciePetProj.DisplayName: 小赤玉灵
+			RedJadeBeam.DisplayName: 赤玉光束
+			RedJadeBigBoom.DisplayName: 赤玉大爆炸
+			RedJadeBladeHeldProj.DisplayName: 赤玉刃
+			RedJadeBoom.DisplayName: 赤玉爆炸
+			RedJadeStaffHeldProj.DisplayName: 赤岩杖
+			RedJadeStrike.DisplayName: 赤玉攻击
+			RedJadeYujianProj.DisplayName: 赤玉御剑
+			DrawInvertedPlayerProj.DisplayName: 倒影
+			InvertedShadowBullet.DisplayName: 影子子弹
+			ShadowSickleProj.DisplayName: 影子镰刀
+			ShadowSwordProj.DisplayName: 潜伏分身
+			StarBookProj1.DisplayName: 星光球
+			StarBookProj2.DisplayName: 星符文
+			MagicalAshesProj.DisplayName: Magical Ashes Proj
+			CatClawsProj_shield.DisplayName: 猫猫盾
+			CatClawsProj_Slash.DisplayName: 猫猫爪
+			WateringPotProj.DisplayName: 洒水壶
+			WatermelonKnifeProj.DisplayName: 切瓜小刀
+			AncientCrimtaneYujianProj.DisplayName: 远古血腥御剑
+			AncientDemoniteYujianProj.DisplayName: 远古腐化御剑
+			CrimtaneYujianProj.DisplayName: 血腥御剑
+			DemoniteSpurt.DisplayName: 魔化突刺
+			DemoniteStrike.DisplayName: 魔化冲击
+			DemoniteYujianProj.DisplayName: 魔化御剑
+			GlodenSpurtProj.DisplayName: 金光突刺
+			GoldYujianProj.DisplayName: 金御剑
+			HellStoneYujianProj.DisplayName: 狱岩长剑
+			IronYujianProj.DisplayName: 铁御剑
+			PlatinumSplash.DisplayName: 铂金剑气
+			PlatinumYujianProj.DisplayName: 铂金御剑
+			ShadowYujianProj.DisplayName: 影子御剑
+			ShadowYujianSummons.DisplayName: 影子剑
+			SilverYujianProj.DisplayName: 银御剑
+			SpurtProj.DisplayName: 突刺
+			WoodenYujianProj.DisplayName: 木御剑
+			ShadowGolemBall.DisplayName: 影子球
+			CosmosFractureProj1.DisplayName: 异界裂隙
+			CosmosFractureProj2.DisplayName: 异界之刃
+			PlatycodonBullet1.DisplayName: ？
+			PlatycodonBullet2.DisplayName: ？
+			ArethusaBullet.DisplayName: 幽兰花苞
+			ArethusaExplosion.DisplayName: 幽兰绽放
+			ArethusaHeldProj.DisplayName: 幽兰
+			AstrosniperHeldProj.DisplayName: 天文狙击枪
+			BarrageMicProj.DisplayName: ？
+			DunkleosteusHeldProj.DisplayName: 邓氏鲨
+			HyacinthBullet.DisplayName: 红色光芒
+			HyacinthBullet2.DisplayName: 红色回忆
+			HyacinthExplosion.DisplayName: 血色的爱
+			HyacinthHeldProj.DisplayName: 风信子
+			HyacinthPhantomGun.DisplayName: 风信子的挚友
+			HyacinthRedBullet.DisplayName: 血色的爱
+			RosemaryBullet.DisplayName: 迷迭香子弹
+			RosemaryFog.DisplayName: 引渡亡魂的花雾
+			RosemaryHeldProj.DisplayName: 迷迭香
+			RosemaryHeldProj2.DisplayName: 迷迭香
+			SnowBullet.DisplayName: 白雪弹
+			SnowdropBloom.DisplayName: 消融冰雪之绽放
+			SnowdropBud.DisplayName: 花苞弹
+			SnowdropHeldProj.DisplayName: 雪花莲
+			SnowSpirit.DisplayName: 绿意
+			StarsBreathBullet.DisplayName: 群星之息
+			StarsBreathExplosion.DisplayName: 爆破的新星
+			StarsBreathHeldProj.DisplayName: 满天星
+			WoodWaxBullet.DisplayName: 孢子
+			WoodWaxHeldProj.DisplayName: 木蜡
+			BaseIKProj.DisplayName: ？
 			IcicleCoccyxSpurt_N.DisplayName: 冰寒刺骨
 			IcicleCoccyx_Ex1.DisplayName: 冰寒刺骨
 			IcicleCoccyx_Ex2.DisplayName: 冰寒刺骨
 			IcicleCoccyx_Ex3.DisplayName: 冰寒刺骨
 			ShadowCircle.DisplayName: 影铠法环
+			// ShadowCircle_ChasingMagicBall.DisplayName: Shadow Circle_ Chasing Magic Ball
+			// ShadowCircle_CrystalMinion.DisplayName: Shadow Circle_ Crystal Minion
+			// ShadowCircle_HighSpeedShoot.DisplayName: Shadow Circle_ High Speed Shoot
+			// ShadowCircle_MeleeClaw.DisplayName: Shadow Circle_ Melee Claw
+			// ShadowCircle_MeleeTrack.DisplayName: Shadow Circle_ Melee Track
 		}
 
 		Configs: {
@@ -902,15 +939,17 @@ Mods: {
 				DisplayName: 念力UI设置
 
 				nianliUI_X: {
-					// Label: nianli UI X
-					// Tooltip: ""
+					Label: 念力UI显示位置X坐标
+					Tooltip: ""
 				}
 
 				nianliUI_Y: {
-					// Label: nianli UI Y
-					// Tooltip: ""
+					Label: 念力UI显示位置Y坐标
+					Tooltip: ""
 				}
 			}
 		}
+
+		// Keybinds.套装效果.DisplayName: 套装效果
 	}
 }

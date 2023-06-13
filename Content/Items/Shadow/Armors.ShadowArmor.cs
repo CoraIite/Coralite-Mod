@@ -7,15 +7,9 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Items.Shadow
 {
     [AutoloadEquip(EquipType.Head)]
-    public class ShadowHead : ModItem
+    public class ShadowHead : ModItem,IControllableArmorBonus
     {
         public override string Texture => AssetDirectory.ShadowItems + Name;
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("影子兜帽");
-            // Tooltip.SetDefault("最大魔力值增加40\n魔法伤害增加8%");
-        }
 
         public override void SetDefaults()
         {
@@ -27,7 +21,7 @@ namespace Coralite.Content.Items.Shadow
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == ItemType<ShadowChest>() && legs.type == ItemType<ShadowLegs>();
+            return body.type == ItemType<ShadowBreastplate>() && legs.type == ItemType<ShadowLegs>();
         }
 
         public override void UpdateEquip(Player player)
@@ -38,20 +32,38 @@ namespace Coralite.Content.Items.Shadow
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "影铠法环守护着你";
+            player.setBonus = "影铠法环守护着你"+
+                "\n使用物品时根据使用时间为法环充能"+
+                "\n能量不足时按下套装奖励键，无事发生" +
+                "\n能量较少时按下套装奖励键进行较弱的攻击"+
+                "\n能量充足时按下套装奖励键根据当前使用武器类型发射不同弹幕攻击"+
+                "\n套装奖励键可在模组配置中更改";
+            if (Main.myPlayer == player.whoAmI && player.ownedProjectileCounts[ProjectileType<ShadowCircle>()] < 1)
+            {
+                //生成弹幕
+                Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center, Microsoft.Xna.Framework.Vector2.Zero,
+                    ProjectileType<ShadowCircle>(), 50, 0, player.whoAmI);
+            }
+        }
+
+        public void UseArmorBonus(Player player)
+        {
+            foreach (var proj in Main.projectile)
+            {
+                if (proj.active&&proj.owner==player.whoAmI&&proj.type== ProjectileType<ShadowCircle>())
+                {
+                    //设置特殊行动
+                    (proj.ModProjectile as ShadowCircle).StartAttack();
+                    break;
+                }
+            }
         }
     }
 
     [AutoloadEquip(EquipType.Body)]
-    public class ShadowChest : ModItem
+    public class ShadowBreastplate : ModItem
     {
         public override string Texture => AssetDirectory.ShadowItems + Name;
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("影子胸甲");
-            // Tooltip.SetDefault("最大魔力值增加20\n魔法暴击率增加4%");
-        }
 
         public override void SetDefaults()
         {
@@ -72,12 +84,6 @@ namespace Coralite.Content.Items.Shadow
     public class ShadowLegs : ModItem
     {
         public override string Texture => AssetDirectory.ShadowItems + Name;
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("影子护腿");
-            // Tooltip.SetDefault("魔力消耗减少10%\n魔法暴击率增加6%");
-        }
 
         public override void SetDefaults()
         {

@@ -2,6 +2,7 @@ using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleBow : ModItem
+    public class IcicleBow : ModItem, IDashable
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
 
@@ -55,6 +56,57 @@ namespace Coralite.Content.Items.Icicle
             .AddIngredient<IcicleCrystal>(2)
             .AddTile(TileID.IceMachine)
             .Register();
+        }
+
+        public bool Dash(Player Player, int DashDir)
+        {
+            Vector2 newVelocity = Player.velocity;
+            switch (DashDir)
+            {
+                case CoralitePlayer.DashLeft:
+                case CoralitePlayer.DashRight:
+                    {
+                        float dashDirection = DashDir == CoralitePlayer.DashRight ? 1 : -1;
+                        newVelocity.X = dashDirection * 10;
+                        break;
+                    }
+                default:
+                    return false;
+            }
+
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 80;
+            Player.GetModPlayer<CoralitePlayer>().DashTimer = 20;
+            Player.immuneTime = 20;
+            Player.immune = true;
+            Player.velocity = newVelocity;
+
+            if (Player.whoAmI == Main.myPlayer)
+            {
+                SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, Player.Center);
+                for (int i = 0; i < 4; i++)//生成冰晶粒子
+                {
+                    Vector2 center = Player.Center + (-1.57f + i * 1.57f).ToRotationVector2() * 64;
+                    Vector2 velocity = (i * 1.57f).ToRotationVector2() * 4;
+                    IceStarLight.Spawn(center, velocity, 1f, () => Player.Center, 16);
+                }
+
+                for (int i = 0; i < 1000; i++)
+                {
+                    Projectile proj = Main.projectile[i];
+                    if (proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.ModProjectile is IcicleBowHeldProj)
+                    {
+                        proj.Kill();
+                        break;
+                    }
+                }
+
+                //生成手持弹幕
+                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ModContent.ProjectileType<IcicleBowHeldProj>(),
+                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, (Main.MouseWorld - Player.Center).ToRotation(), 1);
+            }
+
+            return true;
+
         }
     }
 }

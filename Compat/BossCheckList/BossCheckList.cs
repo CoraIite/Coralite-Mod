@@ -33,9 +33,9 @@ namespace Coralite.Compat.BossCheckList
                 {
                     ItemType<Content.Items.Icicle.IcicleCrystal>(),
                     ItemType<Content.Items.Icicle.BabyIceDragonBossBag>(),
-                    //ItemType<Content.Items.Icicle.RedJadePendant>(),
+                    ItemType<Content.Items.Icicle.IcicleCoccyx>(),
                     ItemType<Content.Items.Icicle.BabyIceDragonTrophy>(),
-                    //ItemType<Content.Items.Icicle.RediancieRelic>(),
+                    ItemType<Content.Items.Icicle.BabyIceDragonRelic>(),
                     //ItemType<Content.Items.Icicle.RedianciePet>(),
                 };
 

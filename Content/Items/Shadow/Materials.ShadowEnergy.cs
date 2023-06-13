@@ -12,9 +12,6 @@ namespace Coralite.Content.Items.Shadow
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("影子能量");
-            // Tooltip.SetDefault("它是无形的");
-
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 7));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             ItemID.Sets.ItemIconPulse[Item.type] = true;

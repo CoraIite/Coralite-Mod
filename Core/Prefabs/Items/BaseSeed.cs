@@ -8,9 +8,7 @@ namespace Coralite.Core.Prefabs.Items
 {
     public class BaseSeed : ModItem
     {
-        private readonly string Seedname;
-        private readonly string Seedtooltip;
-        private readonly int Maxstack;
+        private readonly int MaxStack;
         private readonly int Value;
         private readonly int Rare;
         private readonly int DominantGrowTime;
@@ -21,11 +19,9 @@ namespace Coralite.Core.Prefabs.Items
         private readonly string TexturePath;
         private readonly bool PathHasName;
 
-        protected BaseSeed(string name, string tooltip, int maxstack, int value, int rare, int DGrowTime, int RGrowTime, int DLevel, int RLevel, int plantTileType, string texturePath = AssetDirectory.Seeds, bool pathHasName = false)
+        protected BaseSeed(int maxStack, int value, int rare, int DGrowTime, int RGrowTime, int DLevel, int RLevel, int plantTileType, string texturePath = AssetDirectory.Seeds, bool pathHasName = false)
         {
-            Seedname = name;
-            Seedtooltip = tooltip;
-            Maxstack = maxstack;
+            MaxStack = maxStack;
             Value = value;
             Rare = rare;
             DominantGrowTime = DGrowTime;
@@ -41,9 +37,6 @@ namespace Coralite.Core.Prefabs.Items
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault(Seedname);
-            // Tooltip.SetDefault(Seedtooltip);
-
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
         }
 
@@ -58,7 +51,7 @@ namespace Coralite.Core.Prefabs.Items
             Item.width = 16;
             Item.height = 16;
             Item.placeStyle = 0;
-            Item.maxStack = Maxstack;
+            Item.maxStack = MaxStack;
             Item.value = Value;
             Item.rare = Rare;
             Item.GetBotanicalItem().botanicalItem = true;

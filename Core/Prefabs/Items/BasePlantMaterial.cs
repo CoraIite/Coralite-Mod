@@ -6,19 +6,15 @@ namespace Coralite.Core.Prefabs.Items
 {
     public abstract class BasePlantMaterial : ModItem
     {
-        private readonly string _Name;
-        private readonly string _Tooltip;
-        private readonly int Maxstack;
+        private readonly int MaxStack;
         private readonly int Value;
         private readonly int Rare;
         private readonly string TexturePath;
         private readonly bool PathHasName;
 
-        protected BasePlantMaterial(string name, string tooltip, int maxstack, int value, int rare, string texturePath = AssetDirectory.Plants, bool pathHasName = false)
+        protected BasePlantMaterial(int maxStack, int value, int rare, string texturePath = AssetDirectory.Plants, bool pathHasName = false)
         {
-            _Name = name;
-            _Tooltip = tooltip;
-            Maxstack = maxstack;
+            MaxStack = maxStack;
             Value = value;
             Rare = rare;
             TexturePath = texturePath;
@@ -26,12 +22,6 @@ namespace Coralite.Core.Prefabs.Items
         }
 
         public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault(_Name);
-            // Tooltip.SetDefault(_Tooltip);
-        }
 
         public override void SetDefaults()
         {
@@ -43,7 +33,7 @@ namespace Coralite.Core.Prefabs.Items
             Item.width = 16;
             Item.height = 16;
             Item.placeStyle = 0;
-            Item.maxStack = Maxstack;
+            Item.maxStack = MaxStack;
             Item.value = Value;
             Item.rare = Rare;
 

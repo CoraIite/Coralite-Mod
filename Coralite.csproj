@@ -22,7 +22,6 @@
     <Folder Include="Content\Items\Pets\" />
     <Folder Include="Content\Items\Weapons_Summon\" />
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />
-    <Folder Include="Core\Systems\MagliteSystem\" />
     <Folder Include="Core\Systems\AstronomySystem\" />
     <Folder Include="Sounds\Shadows\" />
   </ItemGroup>

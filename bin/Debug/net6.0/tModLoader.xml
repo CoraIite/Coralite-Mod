@@ -4213,7 +4213,7 @@
         </member>
         <member name="F:Terraria.ID.NPCID.Sets.BossBestiaryPriority">
             <summary>
-            The order of boss NPC types (<see cref="F:Terraria.NPC.type"/>) in thhe Bestiary.
+            The order of boss NPC types (<see cref="F:Terraria.NPC.type"/>) in the Bestiary.
             </summary>
         </member>
         <member name="F:Terraria.ID.NPCID.Sets.TownNPCBestiaryPriority">

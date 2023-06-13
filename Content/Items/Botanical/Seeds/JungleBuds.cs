@@ -8,6 +8,6 @@ namespace Coralite.Content.Items.Botanical.Seeds
 {
     public class JungleBuds : BaseSeed
     {
-        public JungleBuds() : base("丛林芽孢", "成熟后能释放出丛林孢子", 9999, Item.sellPrice(0, 0, 0, 20), ItemRarityID.Blue, 20, 20, 0, 0, ModContent.TileType<CoraliteJungleSpores>()) { }
+        public JungleBuds() : base(9999, Item.sellPrice(0, 0, 0, 20), ItemRarityID.Blue, 20, 20, 0, 0, ModContent.TileType<CoraliteJungleSpores>()) { }
     }
 }

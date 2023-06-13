@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.Botanical.Seeds;
-using Coralite.Content.Items.Icicle;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.UI;
 using Coralite.Core;
@@ -9,6 +8,7 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -72,12 +72,23 @@ namespace Coralite.Content.ModPlayers
                 {
                     if (UsingVanillaDash())
                         break;
-                    if (UsingIcicleBowDash())//冰晶弓冲刺
-                        break;
-                    if (UsingIcicleCoccyxDash())//冰寒刺骨冲刺
-                        break;
+
+                    if (Player.HeldItem.ModItem is IDashable dashItem)
+                        if (dashItem.Dash(Player, DashDir))
+                            break;
+
+                    for (int i = 3; i < 10; i++)
+                    {
+                        if (!Player.armor[i].IsAir && Player.armor[i].ModItem is IDashable dashItem2)
+                        {
+                            if (dashItem2.Dash(Player, DashDir))
+                                goto checkDashOver;
+                        }
+                    }
 
                 } while (false);
+
+            checkDashOver:
 
             if (DashDelay > 0)
             {
@@ -100,7 +111,6 @@ namespace Coralite.Content.ModPlayers
                 Player.armorEffectDrawShadowEOCShield = true;
                 DashTimer--;
             }
-
         }
 
         public override void PostUpdateEquips()
@@ -199,7 +209,23 @@ namespace Coralite.Content.ModPlayers
 
         #endregion
 
-        public bool UsingVanillaDash()=>Player.dashType != 0 && Player.setSolar && Player.mount.Active;
+        public override void ProcessTriggers(TriggersSet triggersSet)
+        {
+            if (Core.Loaders.KeybindLoader.ArmorBonus.JustPressed && Main.myPlayer == Player.whoAmI)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (Player.armor[i].ModItem.IsArmorSet(Player.armor[0], Player.armor[1], Player.armor[2])
+                        && Player.armor[i].ModItem is IControllableArmorBonus conrtolableArmor)
+                    {
+                        conrtolableArmor.UseArmorBonus(Player);   //使用套装效果
+                        break;
+                    }
+                }
+            }
+        }
+
+        public bool UsingVanillaDash() => Player.dashType != 0 && Player.setSolar && Player.mount.Active;
 
 
     }

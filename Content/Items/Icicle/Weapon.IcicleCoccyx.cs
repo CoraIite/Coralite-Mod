@@ -18,7 +18,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleCoccyx : ModItem
+    public class IcicleCoccyx : ModItem,IDashable
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
 
@@ -101,6 +101,36 @@ namespace Coralite.Content.Items.Icicle
             if (useCount > 11)
                 useCount = 0;
             return false;
+        }
+
+        public bool Dash(Player Player, int DashDir)
+        {
+            if (!canDash)
+                return false;
+
+            (Player.HeldItem.ModItem as IcicleCoccyx).canDash = false;
+            switch (DashDir)
+            {
+                case CoralitePlayer.DashLeft:
+                case CoralitePlayer.DashRight:
+                    break;
+                default:
+                    return false;
+            }
+
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 80;
+            Player.GetModPlayer<CoralitePlayer>().DashTimer = 20;
+            Player.immuneTime = 20;
+            Player.immune = true;
+
+            if (Player.heldProj > 0 && Main.projectile[Player.heldProj].active && Main.projectile[Player.heldProj].owner == Player.whoAmI)
+                Main.projectile[Player.heldProj].Kill();
+
+            if (Player.whoAmI == Main.myPlayer)//生成手持弹幕
+                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ModContent.ProjectileType<IcicleCoccyx_Ex3>(),
+                    Player.HeldItem.damage * 2, Player.HeldItem.knockBack, Player.whoAmI, DashDir);
+
+            return true;
         }
     }
 

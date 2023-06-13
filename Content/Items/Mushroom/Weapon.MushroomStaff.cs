@@ -13,14 +13,6 @@ namespace Coralite.Content.Items.Mushroom
     {
         public override string Texture => AssetDirectory.MushroomItems + Name;
 
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("蘑菇共生杖");
-
-            /* Tooltip.SetDefault("召唤一只可爱的蘑菇幼龙\n"
-                                            + $"[c/00bbff:消耗1召唤栏]"); */
-        }
-
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;

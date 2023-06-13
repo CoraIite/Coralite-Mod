@@ -6,6 +6,6 @@ namespace Coralite.Content.Items.Botanical.Plants
 {
     public class GloomMushrooms : BasePlantMaterial
     {
-        public GloomMushrooms() : base("吸光蘑菇", "它周围一片黑暗", 999, Item.sellPrice(0, 0, 3, 0), ItemRarityID.Green) { }
+        public GloomMushrooms() : base(9999, Item.sellPrice(0, 0, 3, 0), ItemRarityID.Green) { }
     }
 }

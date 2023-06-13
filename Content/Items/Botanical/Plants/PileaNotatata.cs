@@ -6,6 +6,6 @@ namespace Coralite.Content.Items.Botanical.Plants
 {
     public class PileaNotatata : BasePlantMaterial
     {
-        public PileaNotatata() : base("冷水花", "", 999, Item.sellPrice(0, 0, 1, 0), ItemRarityID.Blue) { }
+        public PileaNotatata() : base(9999, Item.sellPrice(0, 0, 1, 0), ItemRarityID.Blue) { }
     }
 }

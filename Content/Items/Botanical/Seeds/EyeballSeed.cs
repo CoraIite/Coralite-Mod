@@ -8,6 +8,6 @@ namespace Coralite.Content.Items.Botanical.Seeds
 {
     public class EyeballSeed : BaseSeed
     {
-        public EyeballSeed() : base("眼球草种子", "", 9999, Item.sellPrice(0, 0, 10, 0), ItemRarityID.Blue, 10, 10, 0, 0, ModContent.TileType<EyeballHerb>()) { }
+        public EyeballSeed() : base(9999, Item.sellPrice(0, 0, 10, 0), ItemRarityID.Blue, 10, 10, 0, 0, ModContent.TileType<EyeballHerb>()) { }
     }
 }

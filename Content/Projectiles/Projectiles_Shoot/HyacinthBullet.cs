@@ -15,13 +15,13 @@ namespace Coralite.Content.Projectiles.Projectiles_Shoot
     /// 使用ai0控制拖尾绘制的颜色
     /// ai1用于控制alpha
     /// </summary>
-    public class HyacinthBullet:ModProjectile
+    public class HyacinthBullet : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
         public int npcIndex;
-        public bool fadeIn=true;
-public float factor;
+        public bool fadeIn = true;
+        public float factor;
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 16;
@@ -33,10 +33,6 @@ public float factor;
             Projectile.netImportant = true;
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
-        }
-
-        public override void OnSpawn(IEntitySource source)
-        {
         }
 
         public override void AI()
@@ -117,6 +113,8 @@ public float factor;
                 Projectile.velocity.Y = (Projectile.velocity.Y * (chase - 1) + num199) / chase;
             }
 
+            #endregion
+
             if (fadeIn)
             {
                 Projectile.localAI[1] += 0.05f;
@@ -126,8 +124,6 @@ public float factor;
                     fadeIn = false;
                 }
             }
-
-            #endregion
 
             Color color = Color.Lerp(GetColor(), Color.Red, factor) * 0.8f * Projectile.ai[1];
 
@@ -166,7 +162,8 @@ public float factor;
             return false;
         }
 
-        public Color GetColor(){
+        public Color GetColor()
+        {
             switch (-Projectile.ai[0])
             {
                 default: break;

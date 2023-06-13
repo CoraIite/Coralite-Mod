@@ -32,9 +32,9 @@ namespace Coralite.Content.Items.Weapons
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("猫猫爪");
+            // DisplayName.SetDefault("");
 
-            // Tooltip.SetDefault("猫猫最爱的武器\n喵~喵喵喵~");
+            // Tooltip.SetDefault("");
         }
 
         public override void SetDefaults()

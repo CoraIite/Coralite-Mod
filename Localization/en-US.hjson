@@ -24,102 +24,158 @@ Mods: {
 				Tooltip:
 					'''
 					It invokes the incarnation of destruction, but in the form of a phone call
-					Summon the Destroyer in the night, without consuming
+					Summon The Destroyer at night, without consuming
 					'''
-            }
+			}
 
 			CannedLarva: {
 				DisplayName: Canned Larva
 				Tooltip:
 					'''
 					Bee larvae in a jar so it don't get poked easily
-					Summon Queen Bee in jungle, without consuming
+					Summon the Queen Bee in jungle, without consuming
 					'''
 			}
 
 			ChainedEye: {
 				DisplayName: Chained Eye
-				Tooltip: ""
+				Tooltip:
+					'''
+					Haha, now you can't run away from it
+					Summon the Eye of Cthulhu at night, without consuming
+					'''
 			}
 
 			CrystallineGel: {
 				DisplayName: Crystalline Gel
-				Tooltip: ""
+				Tooltip:
+					'''
+					The core of the Slime Queen, tastes delicious but a little hard
+					Summon the Queen Slime in hallow, without consuming
+					'''
 			}
 
 			EndlessDeliciousness: {
-				DisplayName: Endless Deliciousness
-				Tooltip: ""
+				DisplayName: Endlessly delicious
+				Tooltip:
+					'''
+					Magic-infused rotten food, and importantly, it can be eaten indefinitely!
+					Summon the Eater of Worlds in corrupt, without consuming
+					'''
 			}
 
 			EternalFlower: {
 				DisplayName: Eternal Flower
-				Tooltip: ""
+				Tooltip:
+					'''
+					A flower that symbolizes eternity and will not fade no matter how many centuries pass
+					Summon the Plantera in the underground jungle, without consuming
+					'''
 			}
 
 			HolyLacewing: {
 				DisplayName: Holy Lacewing
-				Tooltip: ""
+				Tooltip:
+					'''
+					It is gorgeous and should be handled lightly
+					Summon the Empress of Light in hallow, without consuming
+					'''
 			}
 
 			ImmortalDoll: {
 				DisplayName: Immortal Doll
-				Tooltip: ""
+				Tooltip:
+					'''
+					Voodoo dolls made of obsidian can now not be afraid of lava
+					Summon the Wall of Flesh in hell, without consuming
+					'''
 			}
 
 			MachinerySoars: {
 				DisplayName: Machinery Soars
-				Tooltip: ""
+				Tooltip:
+					'''
+					Flesh and blood suffering, mechanical soaring
+					Summon the Skeletron Prime at night, without consuming
+					'''
 			}
 
 			PerpetualCore: {
 				DisplayName: Perpetual Core
-				Tooltip: ""
+				Tooltip:
+					'''
+					Ancient technology from the jungle temple, endlessly releasing energy to the outside
+					Summon the Golem near the jungle altar, without consuming
+					'''
 			}
 
 			RedBerry: {
 				DisplayName: Red Berry
-				Tooltip: ""
+				Tooltip:
+					'''
+					Occasionally grows on a crystal tree that attracts a strange ruddy stone
+					Summon the Rediancie
+					'''
 			}
 
 			RegeneratedSpine: {
 				DisplayName: Regenerated Spine
-				Tooltip: ""
+				Tooltip:
+					'''
+					It is full of life and seems to be constantly regenerating
+					Summon the Brain of Cthulhu in Crimson, without consuming
+					'''
 			}
 
 			SymbolOfRoyal: {
 				DisplayName: Symbol Of Royal
-				Tooltip: ""
+				Tooltip:
+					'''
+					This Slime colony symbolizes the throne, possessing it is the supreme glory
+					Summon the King Slime, without consuming
+					'''
 			}
 
 			TheTwinsBond: {
 				DisplayName: The Twins Bond
-				Tooltip: ""
+				Tooltip:
+					'''
+					Mechanical twins, they are inseparable
+					Summon The Twins at night, without consuming
+					'''
 			}
 
 			TwistedBone: {
 				DisplayName: Twisted Bone
-				Tooltip: ""
+				Tooltip:
+					'''
+					The twisted shape of the bones seems to attract the curse directly, but not the source of the curse
+					Summon the Skeletron at night, without consuming
+					'''
 			}
 
 			BotanicalStaff: {
 				DisplayName: Botanical Staff
-				Tooltip: ""
+				Tooltip: !!! Only For Debuging !!!
 			}
 
 			IdentifyLoupe: {
 				DisplayName: Identify Loupe
-				Tooltip: ""
+				Tooltip:
+					'''
+					Consume 20 magic
+					You can view the genes of unidentified plants by right-clicking on them while they are in your backpack
+					'''
 			}
 
 			AgropyronFreezer: {
 				DisplayName: Agropyron Freezer
-				Tooltip: ""
+				Tooltip: Tastes icy and fresh
 			}
 
 			GloomMushrooms: {
-				DisplayName: Gloom Mushrooms
-				Tooltip: ""
+				DisplayName: Gloom Mushroom
+				Tooltip: It is surrounded by darkness
 			}
 
 			PileaNotatata: {
@@ -129,22 +185,22 @@ Mods: {
 
 			WoodStick: {
 				DisplayName: Wood Stick
-				Tooltip: "It's just a wooden stick"
+				Tooltip: It's just a wooden stick
 			}
 
 			AgropyronSeed: {
 				DisplayName: Agropyron Seed
-				Tooltip: ""
+				Tooltip: Harvest Agropyron Freezer when mature
 			}
 
 			DandelionSeed: {
 				DisplayName: Dandelion Seed
-				Tooltip: ""
+				Tooltip: Little Plantera
 			}
 
 			EgenolfiaBuds: {
 				DisplayName: Egenolfia Buds
-				Tooltip: ""
+				Tooltip: Contains a faint desert magic
 			}
 
 			EyeballSeed: {
@@ -154,42 +210,46 @@ Mods: {
 
 			GloomSpores: {
 				DisplayName: Gloom Spores
-				Tooltip: ""
+				Tooltip: Harvest Gloom Mushrooms when mature
 			}
 
 			JungleBuds: {
 				DisplayName: Jungle Buds
-				Tooltip: ""
+				Tooltip: Harvest Jungle Spores when mature
 			}
 
 			NacliteSeedling: {
 				DisplayName: Naclite Seedling
-				Tooltip: ""
+				Tooltip: NaCl
 			}
 
 			Naclite: {
 				DisplayName: Naclite
-				Tooltip: "Sodium chloride crystals, tastes salty"
+				Tooltip: Sodium chloride crystals, tastes salty
 			}
 
 			PileaNotataSeedling: {
 				DisplayName: Pilea Notata Seedling
-				Tooltip: ""
+				Tooltip: Harvest Pilea Notatata when mature
 			}
 
 			SnoowSeed: {
 				DisplayName: Snoow Seed
-				Tooltip: ""
+				Tooltip: Harvest snow block when mature
 			}
 
 			TreeJokeSeed: {
 				DisplayName: Tree Joke Seed
-				Tooltip: ""
+				Tooltip: Really?
 			}
 
 			WaterDrinkerSeed: {
 				DisplayName: Water Drinker Seed
-				Tooltip: ""
+				Tooltip:
+					'''
+					Its powerful rhizome can even draw water in the desert
+					Not a water dispenser
+					'''
 			}
 
 			WatermelonSeed: {
@@ -199,7 +259,7 @@ Mods: {
 
 			Watermelon: {
 				DisplayName: Watermelon
-				Tooltip: "Throw a melon cutter at it to cut into watermelon slices"
+				Tooltip: Throw a melon cutter at it to cut into watermelon slices
 			}
 
 			BabyIceDragonBossBag: {
@@ -267,22 +327,22 @@ Mods: {
 
 			IceyDust: {
 				DisplayName: Icey Dust
-				Tooltip: "Contains a weak ice magic"
+				Tooltip: Contains a weak ice magic
 			}
 
 			MagliteDust: {
 				DisplayName: Maglite Dust
-				Tooltip: "Contains a faint magic power"
+				Tooltip: Contains a faint magic power
 			}
 
 			SandliteDust: {
 				DisplayName: Sand Magic Powder
-				Tooltip: "Contains a faint desert magic"
+				Tooltip: Contains a faint desert magic
 			}
 
 			ShlimmerMushrooms: {
 				DisplayName: Shlimmer Mushrooms
-				Tooltip: "Can emit tiny light"
+				Tooltip: Can emit tiny light
 			}
 
 			WatermelonSlices: {
@@ -297,12 +357,16 @@ Mods: {
 
 			MushroomStaff: {
 				DisplayName: Mushroom Staff
-				Tooltip: ""
+				Tooltip:
+					'''
+					Summon Mushroom Dragon
+					[c/00bbff:Consumption 1 summoning slot]
+					'''
 			}
 
 			SlimeSapling: {
 				DisplayName: Slime Sapling
-				Tooltip: ""
+				Tooltip: It looks like can't be used to make Knight Slime alloy
 			}
 
 			MagicCraftStation: {
@@ -317,7 +381,7 @@ Mods: {
 
 			RedianciePet: {
 				DisplayName: Small Rediancie
-				Tooltip: "Summon a small Rediancie that emits a faint light"
+				Tooltip: Summon a small Rediancie that emits a faint light
 			}
 
 			RediancieRelic: {
@@ -342,10 +406,11 @@ Mods: {
 
 			RedJadeBlade: {
 				DisplayName: Red Jade Blade
-                    '''
-                    Shoots fragments of Red Jade that occasionally produce explosions
-                    Generate a big explosion after a certain number of swings
-                    '''
+				Tooltip:
+					'''
+					Shoots fragments of Red Jade that occasionally produce explosions
+					Generate a big explosion after a certain number of swings
+					'''
 			}
 
 			RedJadeCandle: {
@@ -375,17 +440,17 @@ Mods: {
 
 			RedJadeHulu: {
 				DisplayName: Red Jade Hulu
-				Tooltip: "Summoned swords occasionally produce an explosion when hit"
+				Tooltip: Summoned swords occasionally produce an explosion when hit
 			}
 
 			RedJadePendant: {
 				DisplayName: Red Jade Pendant
-				Tooltip: "Occasional explosion when the player takes damage"
+				Tooltip: Occasional explosion when the player takes damage
 			}
 
 			RedJadeShrine: {
 				DisplayName: Red Jade Shrine
-                Tooltip:
+				Tooltip:
 					'''
 					Summon a small red jade
 					[c/00bbff:Consumption 1 summoning slot]
@@ -395,10 +460,10 @@ Mods: {
 			RedJadeStaff: {
 				DisplayName: Red Jade Staff
 				Tooltip:
-                    '''
-                    Shoot the red light beam that will produce an explosion
-                    Shoot a certain number of times after shooting a large beam and produce a large explosion
-                    '''
+					'''
+					Shoot the red light beam that will produce an explosion
+					Shoot a certain number of times after shooting a large beam and produce a large explosion
+					'''
 			}
 
 			RedJadeTable: {
@@ -423,26 +488,26 @@ Mods: {
 
 			InvertedShadow: {
 				DisplayName: Inverted Shadow
-				Tooltip: "Your shadow is with you"
+				Tooltip: Your shadow is with you
 			}
 
-			ShadowChest: {
-				DisplayName: Shadow Chest
+			ShadowBreastplate: {
+				DisplayName: Shadow Breastplate
 				Tooltip:
-                    '''
-                    damage +10%
-                    crit chance +6%
-                    '''
+					'''
+					damage +10%
+					crit chance +6%
+					'''
 			}
 
 			ShadowCrystal: {
 				DisplayName: Shadow Crystal
-				Tooltip: ""
+				Tooltip: The crystallization of shadow energy
 			}
 
 			ShadowEnergy: {
 				DisplayName: Shadow Energy
-				Tooltip: ""
+				Tooltip: It is intangible
 			}
 
 			ShadowHammer: {
@@ -451,13 +516,21 @@ Mods: {
 			}
 
 			ShadowHead: {
-				DisplayName: Shadow Head
-				Tooltip: ""
+				DisplayName: Shadow Hood
+				Tooltip:
+					'''
+					Max mana +60
+					Mana cost -10%
+					'''
 			}
 
 			ShadowLegs: {
 				DisplayName: Shadow Legs
-				Tooltip: ""
+				Tooltip:
+					'''
+					AttackSpeed +8%
+					Knockback +6%
+					'''
 			}
 
 			ShadowPickaxe: {
@@ -467,47 +540,56 @@ Mods: {
 
 			ShadowSickle: {
 				DisplayName: Shadow Sickle
-				Tooltip: ""
+				Tooltip:
+					'''
+					Long press to accumulate power
+					Accumulate power for a certain period of time and then release the chopping attack
+					'''
 			}
 
 			ShadowSword: {
 				DisplayName: Shadow Sword
-				Tooltip: ""
+				Tooltip: Summons its doppelganger to attack the enemy when swing
 			}
 
 			StarBook: {
 				DisplayName: Star Book
-				Tooltip: ""
+				Tooltip:
+					'''
+					Gathering the energy of the stars
+					Storing up the Star Rune and releasing the Starlight Sphere when finished
+					Cancellation of storing and releasing the tracking rune of the star
+					'''
 			}
 
 			CosmosFracture: {
 				DisplayName: Cosmos Fracture
-				Tooltip: ""
+				Tooltip: Slash through space, weapons from other worlds will tear your enemies
 			}
 
 			MagicalAshes: {
 				DisplayName: Magical Ashes
-				Tooltip: ""
+				Tooltip: It tastes sweet
 			}
 
 			AncientCore: {
 				DisplayName: Ancient Core
-				Tooltip: "Arms dealer's treasure, the energy core from ancient civilizations"
+				Tooltip: Arms dealer's treasure, the energy core from ancient civilizations
 			}
 
 			Arethusa: {
 				DisplayName: Arethusa
-				Tooltip: "Late Love"
+				Tooltip: Late Love
 			}
 
 			ArethusaNormalMode: {
 				DisplayName: Arethusa
-				Tooltip: "Late Love"
+				Tooltip: Late Love
 			}
 
 			Astrosniper: {
 				DisplayName: Astrosniper
-				Tooltip: "Go snipe that dying star!"
+				Tooltip: Go snipe that dying star!
 			}
 
 			BarrageMic: {
@@ -517,12 +599,12 @@ Mods: {
 
 			DukeFishronSkin: {
 				DisplayName: Duke Fishron Skin
-				Tooltip: "The rough and tough skin of the giant shark feels good to the touch"
+				Tooltip: The rough and tough skin of the giant shark feels good to the touch
 			}
 
 			Dunkleosteus: {
 				DisplayName: Dunkleosteus
-				Tooltip: "Ancient giant shark, the ultimate in firepower suppression"
+				Tooltip: Ancient giant shark, the ultimate in firepower suppression
 			}
 
 			Hyacinth: {
@@ -532,42 +614,46 @@ Mods: {
 
 			Rosemary: {
 				DisplayName: Rosemary
-				Tooltip: "Keeping the good memories"
+				Tooltip: Keeping the good memories
 			}
 
 			Rosemary2: {
 				DisplayName: Rosemary
-				Tooltip: "Keeping the good memories"
+				Tooltip: Keeping the good memories
 			}
 
 			Snowdrop: {
 				DisplayName: Snowdrop
-				Tooltip: "Embracing Hope"
+				Tooltip: Embracing Hope
 			}
 
 			StarsBreath: {
 				DisplayName: Stars Breath
-				Tooltip: "All good wishes"
+				Tooltip: All good wishes
 			}
 
 			WoodWax: {
 				DisplayName: Wood Wax
-				Tooltip: "Spore Eruption"
+				Tooltip: Spore Eruption
 			}
 
 			CatClaws: {
 				DisplayName: Cat Claws
-				Tooltip: ""
+				Tooltip:
+					'''
+					Cat's favorite weapon
+					Meow~ Meow Meow~
+					'''
 			}
 
 			WateringPot: {
 				DisplayName: Watering Pot
-				Tooltip: "Sprinklers that are not very stable when injected with magic. Does not water your plants and flowers"
+				Tooltip: Sprinklers that are not very stable when injected with magic. Does not water your plants and flowers
 			}
 
 			WatermelonKnife: {
 				DisplayName: Melon Cutter
-				Tooltip: ""
+				Tooltip: Throw in a watermelon and you can cut it into watermelon slices
 			}
 
 			WoodenHulu: {
@@ -672,21 +758,21 @@ Mods: {
 			EyeballHerb.MapEntry: Eyeball Herb
 			EgenolfiaSandy.MapEntry: Egenolfia Sandy
 			Dandelion.MapEntry: Dandelion
-			CoraliteWaterleaf.MapEntry: Coralite Waterleaf
-			CoraliteShiverthorn.MapEntry: Coralite Shiverthorn
-			CoraliteMoonglow.MapEntry: Coralite Moonglow
-			CoraliteJungleSpores.MapEntry: Coralite Jungle Spores
-			CoraliteFireblossom.MapEntry: Coralite Fireblossom
-			CoraliteDeathweed.MapEntry: Coralite Deathweed
-			CoraliteDaybloom.MapEntry: Coralite Daybloom
-			CoraliteBlinkroot.MapEntry: Coralite Blinkroot
+			CoraliteWaterleaf.MapEntry: Waterleaf
+			CoraliteShiverthorn.MapEntry: Shiverthorn
+			CoraliteMoonglow.MapEntry: Moonglow
+			CoraliteJungleSpores.MapEntry: Jungle Spores
+			CoraliteFireblossom.MapEntry: Fireblossom
+			CoraliteDeathweed.MapEntry: Deathweed
+			CoraliteDaybloom.MapEntry: Daybloom
+			CoraliteBlinkroot.MapEntry: Blinkroot
 			AgropyronFrozen.MapEntry: Agropyron Frozen
 		}
 
 		Buffs: {
 			SnowDebuff: {
-				DisplayName: Snow Debuff
-				Description: Mods.Coralite.Buffs.SnowDebuff.Description
+				DisplayName: Snow
+				Description: Surrounded by snowflakes
 			}
 
 			IcicleThornBuff: {
@@ -695,18 +781,18 @@ Mods: {
 			}
 
 			MushroomDragonBuff: {
-				DisplayName: Mushroom Dragon Buff
-				Description: Mods.Coralite.Buffs.MushroomDragonBuff.Description
+				DisplayName: Mushroom Dragon
+				Description: Mushroom Dragon Fight for you
 			}
 
 			RedBinkBuff: {
-				DisplayName: Red Bink Buff
-				Description: Mods.Coralite.Buffs.RedBinkBuff.Description
+				DisplayName: Red Bink
+				Description: The little one is also very cute
 			}
 
 			RedianciePetBuff: {
-				DisplayName: Rediancie Pet Buff
-				Description: Mods.Coralite.Buffs.RedianciePetBuff.Description
+				DisplayName: Little Rediancie
+				Description: Little Rediancie surrounds you
 			}
 
 			ShadowCircleBuff: {
@@ -750,7 +836,7 @@ Mods: {
 			Rediancie_OnSpawnAnim.DisplayName: Rediancie On Spawn Anim
 			Rediancie_Strike.DisplayName: Rediancie Strike
 			RedPulse.DisplayName: Red Pulse
-			CrushedIceProj.DisplayName: Crushed Ice Proj
+			CrushedIceProj.DisplayName: Crushed Ice
 			IcicleArrow.DisplayName: Icicle Arrow
 			IcicleBowHeldProj.DisplayName: Icicle Bow
 			IcicleMagicBall.DisplayName: Icicle Magic Ball
@@ -765,79 +851,84 @@ Mods: {
 			IcicleYujianProj.DisplayName: Icicle Yujian
 			MushroomDragon.DisplayName: Mushroom Dragon
 			RedBink.DisplayName: Red Bink
-			RedianciePetProj.DisplayName: Rediancie Pet Proj
+			RedianciePetProj.DisplayName: Little Rediancie
 			RedJadeBeam.DisplayName: Red Jade Beam
 			RedJadeBigBoom.DisplayName: Red Jade Big Boom
-			RedJadeBladeHeldProj.DisplayName: Red Jade Blade Held Proj
+			RedJadeBladeHeldProj.DisplayName: Red Jade Blade
 			RedJadeBoom.DisplayName: Red Jade Boom
-			RedJadeStaffHeldProj.DisplayName: Red Jade Staff Held Proj
+			RedJadeStaffHeldProj.DisplayName: Red Jade Staff
 			RedJadeStrike.DisplayName: Red Jade Strike
-			RedJadeYujianProj.DisplayName: Red Jade Yujian Proj
-			DrawInvertedPlayerProj.DisplayName: Draw Inverted Player Proj
-			InvertedShadowBullet.DisplayName: Inverted Shadow Bullet
-			ShadowSickleProj.DisplayName: Shadow Sickle Proj
-			ShadowSwordProj.DisplayName: Shadow Sword Proj
-			StarBookProj1.DisplayName: Star Book Proj1
-			StarBookProj2.DisplayName: Star Book Proj2
-			MagicalAshesProj.DisplayName: Magical Ashes Proj
-			CatClawsProj_shield.DisplayName: Cat Claws Proj_shield
-			CatClawsProj_Slash.DisplayName: Cat Claws Proj_ Slash
-			WateringPotProj.DisplayName: Watering Pot Proj
-			WatermelonKnifeProj.DisplayName: Watermelon Knife Proj
-			AncientCrimtaneYujianProj.DisplayName: Ancient Crimtane Yujian Proj
-			AncientDemoniteYujianProj.DisplayName: Ancient Demonite Yujian Proj
-			CrimtaneYujianProj.DisplayName: Crimtane Yujian Proj
+			RedJadeYujianProj.DisplayName: Red Jade Yujian
+			DrawInvertedPlayerProj.DisplayName: Inverted Shadow
+			InvertedShadowBullet.DisplayName: Shadow Bullet
+			ShadowSickleProj.DisplayName: Shadow Sickle
+			ShadowSwordProj.DisplayName: Shadow Sword
+			StarBookProj1.DisplayName: Starlight Ball
+			StarBookProj2.DisplayName: Star Rune
+			MagicalAshesProj.DisplayName: Magical Ashes
+			CatClawsProj_shield.DisplayName: Cat Shield
+			CatClawsProj_Slash.DisplayName: Cat Claws
+			WateringPotProj.DisplayName: Watering Pot
+			WatermelonKnifeProj.DisplayName: Watermelon Knife
+			AncientCrimtaneYujianProj.DisplayName: Ancient Crimtane Yujian
+			AncientDemoniteYujianProj.DisplayName: Ancient Demonite Yujian
+			CrimtaneYujianProj.DisplayName: Crimtane Yujian
 			DemoniteSpurt.DisplayName: Demonite Spurt
 			DemoniteStrike.DisplayName: Demonite Strike
-			DemoniteYujianProj.DisplayName: Demonite Yujian Proj
-			GlodenSpurtProj.DisplayName: Gloden Spurt Proj
-			GoldYujianProj.DisplayName: Gold Yujian Proj
-			HellStoneYujianProj.DisplayName: Hell Stone Yujian Proj
-			IronYujianProj.DisplayName: Iron Yujian Proj
+			DemoniteYujianProj.DisplayName: Demonite Yujian
+			GlodenSpurtProj.DisplayName: Gloden Spurt
+			GoldYujianProj.DisplayName: Gold Yujian
+			HellStoneYujianProj.DisplayName: Hell Stone Yujian
+			IronYujianProj.DisplayName: Iron Yujian
 			PlatinumSplash.DisplayName: Platinum Splash
-			PlatinumYujianProj.DisplayName: Platinum Yujian Proj
-			ShadowYujianProj.DisplayName: Shadow Yujian Proj
+			PlatinumYujianProj.DisplayName: Platinum Yujian
+			ShadowYujianProj.DisplayName: Shadow Yujian
 			ShadowYujianSummons.DisplayName: Shadow Yujian Summons
-			SilverYujianProj.DisplayName: Silver Yujian Proj
-			SpurtProj.DisplayName: Spurt Proj
-			WoodenYujianProj.DisplayName: Wooden Yujian Proj
+			SilverYujianProj.DisplayName: Silver Yujian
+			SpurtProj.DisplayName: Spurt
+			WoodenYujianProj.DisplayName: Wooden Yujian
 			ShadowGolemBall.DisplayName: Shadow Golem Ball
-			CosmosFractureProj1.DisplayName: Cosmos Fracture Proj1
-			CosmosFractureProj2.DisplayName: Cosmos Fracture Proj2
-			PlatycodonBullet1.DisplayName: Platycodon Bullet1
-			PlatycodonBullet2.DisplayName: Platycodon Bullet2
+			CosmosFractureProj1.DisplayName: Cosmos Fracture
+			CosmosFractureProj2.DisplayName: Cosmos Fracture
+			PlatycodonBullet1.DisplayName: ?
+			PlatycodonBullet2.DisplayName: ?
 			ArethusaBullet.DisplayName: Arethusa Bullet
 			ArethusaExplosion.DisplayName: Arethusa Explosion
-			ArethusaHeldProj.DisplayName: Arethusa Held Proj
-			AstrosniperHeldProj.DisplayName: Astrosniper Held Proj
-			BarrageMicProj.DisplayName: Barrage Mic Proj
-			DunkleosteusHeldProj.DisplayName: Dunkleosteus Held Proj
-			HyacinthBullet.DisplayName: Hyacinth Bullet
-			HyacinthBullet2.DisplayName: Hyacinth Bullet2
-			HyacinthExplosion.DisplayName: Hyacinth Explosion
-			HyacinthHeldProj.DisplayName: Hyacinth Held Proj
-			HyacinthPhantomGun.DisplayName: Hyacinth Phantom Gun
-			HyacinthRedBullet.DisplayName: Hyacinth Red Bullet
+			ArethusaHeldProj.DisplayName: Arethusa
+			AstrosniperHeldProj.DisplayName: Astrosniper
+			BarrageMicProj.DisplayName: ?
+			DunkleosteusHeldProj.DisplayName: Dunkleosteus
+			HyacinthBullet.DisplayName: Scarlet light
+			HyacinthBullet2.DisplayName: Scarlet Memory
+			HyacinthExplosion.DisplayName: Bloody Love
+			HyacinthHeldProj.DisplayName: Hyacinth
+			HyacinthPhantomGun.DisplayName: Hyacinth's Best Friend
+			HyacinthRedBullet.DisplayName: Bloody Love
 			RosemaryBullet.DisplayName: Rosemary Bullet
-			RosemaryFog.DisplayName: Rosemary Fog
-			RosemaryHeldProj.DisplayName: Rosemary Held Proj
-			RosemaryHeldProj2.DisplayName: Rosemary Held Proj2
+			RosemaryFog.DisplayName: The mist of flowers that leads the souls
+			RosemaryHeldProj.DisplayName: Rosemary
+			RosemaryHeldProj2.DisplayName: Rosemary
 			SnowBullet.DisplayName: Snow Bullet
 			SnowdropBloom.DisplayName: Snowdrop Bloom
 			SnowdropBud.DisplayName: Snowdrop Bud
-			SnowdropHeldProj.DisplayName: Snowdrop Held Proj
+			SnowdropHeldProj.DisplayName: Snowdrop
 			SnowSpirit.DisplayName: Snow Spirit
 			StarsBreathBullet.DisplayName: Stars Breath Bullet
 			StarsBreathExplosion.DisplayName: Stars Breath Explosion
-			StarsBreathHeldProj.DisplayName: Stars Breath Held Proj
-			WoodWaxBullet.DisplayName: Wood Wax Bullet
-			WoodWaxHeldProj.DisplayName: Wood Wax Held Proj
-			BaseIKProj.DisplayName: Base I K Proj
+			StarsBreathHeldProj.DisplayName: Stars Breath
+			WoodWaxBullet.DisplayName: Wood Wax Spores
+			WoodWaxHeldProj.DisplayName: Wood Wax
+			BaseIKProj.DisplayName: ?
 			IcicleCoccyxSpurt_N.DisplayName: Icicle Coccyx
 			IcicleCoccyx_Ex1.DisplayName: Icicle Coccyx
 			IcicleCoccyx_Ex2.DisplayName: Icicle Coccyx
 			IcicleCoccyx_Ex3.DisplayName: Icicle Coccyx
 			ShadowCircle.DisplayName: Shadow Circle
+			ShadowCircle_ChasingMagicBall.DisplayName: Shadow Circle_ Chasing Magic Ball
+			ShadowCircle_CrystalMinion.DisplayName: Shadow Circle_ Crystal Minion
+			ShadowCircle_HighSpeedShoot.DisplayName: Shadow Circle_ High Speed Shoot
+			ShadowCircle_MeleeClaw.DisplayName: Shadow Circle_ Melee Claw
+			ShadowCircle_MeleeTrack.DisplayName: Shadow Circle_ Melee Track
 		}
 
 		Configs: {
@@ -845,15 +936,17 @@ Mods: {
 				DisplayName: Nianli UI Config
 
 				nianliUI_X: {
-					Label: nianli UI X
+					Label: Willpower UI Position X
 					Tooltip: ""
 				}
 
 				nianliUI_Y: {
-					Label: nianli UI Y
+					Label: Willpower UI Position Y
 					Tooltip: ""
 				}
 			}
 		}
+
+		Keybinds.套装效果.DisplayName: 套装效果
 	}
 }

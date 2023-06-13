@@ -25,7 +25,6 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected Color color2 = Color.White;
 
         protected bool onStart = true;
-        protected bool isSymmetrical = true;
         protected bool canDrawSelf = true;
         protected bool useShadowTrail = false;
         protected bool useSlashTrail = false;
@@ -84,7 +83,6 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <para>是否可绘制自己的贴图 canDrawSelf = true</para>
         /// <para>影子拖尾数量 ShadowCount，拖尾数组长度 TrailLength = 15，刀光渐变色 color1，color2</para>
         /// <para>刀光拖尾宽度 trailBottomLength = 10,trailTopWidth = 10</para>
-        /// <para>是否为对称的，是的话就不需要多加Flip贴图 isSymmetrical = true</para>
         /// 除此之外的变量不要乱改！除非你知道你在做什么（笑）
         /// </summary>
         public abstract void SetDefs();
@@ -295,9 +293,9 @@ namespace Coralite.Core.Prefabs.Projectiles
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
 
-            int dir= Math.Sign(totalAngle);
+            int dir = Math.Sign(totalAngle);
             float extraRot = Owner.direction == -1 ? 3.141f : 0;
-            extraRot += Owner.direction == dir ?   0: 3.141f;
+            extraRot += Owner.direction == dir ? 0 : 3.141f;
             extraRot += spriteRotation * dir;
 
             if (useShadowTrail)
@@ -312,7 +310,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected virtual void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor,float extraRot)
         {
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(),
-                                                lightColor, Projectile.rotation + + extraRot, origin, Projectile.scale, CheckEffect(), 0f);
+                                                lightColor, Projectile.rotation + extraRot, origin, Projectile.scale, CheckEffect(), 0f);
         }
 
         protected void DrawSlashTrail()
@@ -402,7 +400,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         private SpriteEffects CheckEffect()
         {
-            if (Owner.direction == -1)
+            if (Owner.direction < 0)
             {
                 if (totalAngle > 0)
                     return SpriteEffects.None;
