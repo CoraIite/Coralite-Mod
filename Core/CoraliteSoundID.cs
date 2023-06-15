@@ -41,7 +41,7 @@ namespace Coralite.Core
         public static SoundStyle Run => SoundID.Run;
 
         /// <summary>微光BUFF消失时的音效</summary>
-        //public static SoundStyle ShimmeringExpires_XXX => SoundID.sh;
+        public static SoundStyle ShimmeringExpires => SoundID.Shimmer2;
 
         #endregion
 
@@ -1504,7 +1504,7 @@ namespace Coralite.Core
         public static SoundStyle Chest_Unlock => SoundID.Unlock;
 
         /// <summary> 以太块/镒块产生时的音效 </summary>
-        //public static SoundStyle AetheriumBlock_XXX => SoundID.XXX;
+        public static SoundStyle AetheriumBlock => SoundID.ShimmerWeak1;
 
         #endregion
 
@@ -1525,14 +1525,14 @@ namespace Coralite.Core
         /// <summary> 滴落的液体的声音，共3种 </summary>
         public static SoundStyle Drip => SoundID.Drip;
 
-        /// <summary> 接触微光的音效 </summary>
-        //public static SoundStyle Shimmer_XXX => SoundID.sh;
+        /// <summary> 接触微光或离开微光的音效 </summary>
+        public static SoundStyle ShimmerContract => SoundID.Shimmer1;
 
         /// <summary>1.4.4微光的声音 </summary>
         public static SoundStyle Shlimmer_Item176 => SoundID.Item176;
 
-        /// <summary> 原版未使用，也是液体流动的音效 </summary>
-        //public static SoundStyle NoUse_XXX => SoundID.XXX;
+        /// <summary> 不知道在哪用了，反正也是液体流动的音效 </summary>
+        public static SoundStyle IDontKnow_ShimmerWeak2 => SoundID.ShimmerWeak2;
 
         #endregion
 

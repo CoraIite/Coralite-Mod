@@ -56,14 +56,16 @@ namespace Coralite.Core
         public const string Materials = Items + "Materials/";
         public const string Accessories = Items + "Accessories/";
         public const string Placeable = Items + "Placeable/";
-        public const string Weapons_Melee = Items + "Weapons_Melee/";
-        public const string Weapons_Magic = Items + "Weapons_Magic/";
-        public const string Weapons_Summon = Items + "Weapons_Summon/";
-        public const string Weapons_Shoot = Items + "Weapons_Shoot/";
+        public const string Misc = Items + "Misc/";
+        public const string Misc_Melee = Items + "Misc_Melee/";
+        public const string Misc_Magic = Items + "Misc_Magic/";
+        public const string Misc_Summon = Items + "Misc_Summon/";
+        public const string Misc_Shoot = Items + "Misc_Shoot/";
         public const string YujianHulu = Items + "YujianHulu/";
 
         public const string MachineItems = Items + "Machines/";
         public const string BotanicalItems = Items + "Botanical/";
+        public const string MagikeItems = Items + "Magike/";
         public const string Seeds = BotanicalItems + "Seeds/";
         public const string Plants = BotanicalItems + "Plants/";
 

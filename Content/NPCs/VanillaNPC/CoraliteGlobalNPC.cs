@@ -6,8 +6,8 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using Coralite.Content.Items.Weapons_Shoot;
 using Coralite.Content.Items.YujianHulu;
+using Coralite.Content.Items.Misc;
 
 namespace Coralite.Content.NPCs.VanillaNPC
 {
