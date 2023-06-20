@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 using Terraria;
 
@@ -43,6 +44,7 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="npcType"></param>
         /// <returns></returns>
+        [DebuggerHidden]
         public static int GetNPCByType(int npcType)
         {
             int index = -1;

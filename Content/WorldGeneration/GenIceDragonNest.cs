@@ -20,7 +20,7 @@ namespace Coralite.Content.WorldGeneration
         /// </summary>
         public static Point NestCenter;
 
-        public async void GenIceDragonNest(GenerationProgress progress, GameConfiguration configuration)
+        public void GenIceDragonNest(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "制作冰龙巢穴";
             //随机选择雪原上的某个地方
@@ -58,19 +58,10 @@ namespace Coralite.Content.WorldGeneration
                 [Color.Black] = -1
             };
 
-            await Task.Run(() =>
+            Task.Run(async () =>
             {
-                Main.QueueMainThreadAction(() =>
-                {
-                    //清理范围
-                    Texture2TileGenerator clearGenerator = Texture2TileGeneratorDatas.GetTexGenerator(clearTex, clearDic);
-                    clearGenerator.Generate(genOrigin_x, genOrigin_y, true);
-
-                    //生成主体地形
-                    Texture2TileGenerator nestGenerator = Texture2TileGeneratorDatas.GetTexGenerator(nestTex, nestDic);
-                    nestGenerator.Generate(genOrigin_x, genOrigin_y, true);
-                });
-            });
+                await GenIceNestWithTex(clearTex, nestTex, clearDic, nestDic, genOrigin_x, genOrigin_y);
+            }).Wait();
 
             //生成装饰物
             WorldGenHelper.PlaceOnTopDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.Stalactite, 10, 0);
@@ -82,6 +73,31 @@ namespace Coralite.Content.WorldGeneration
             //添加斜坡
             WorldGenHelper.SmoothSlope(genOrigin_x,genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.IceBlock, 5);
             WorldGenHelper.SmoothSlope(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.SnowBlock, 5);
+        }
+
+        private Task GenIceNestWithTex(Texture2D clearTex, Texture2D nestTex, Dictionary<Color, int> clearDic, Dictionary<Color, int> nestDic, int genOrigin_x, int genOrigin_y)
+        {
+            bool genned = false;
+            bool placed = false;
+            while (!genned)
+            {
+                if (placed)
+                    continue;
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    //清理范围
+                    Texture2TileGenerator clearGenerator = Texture2TileGeneratorDatas.GetTexGenerator(clearTex, clearDic);
+                    clearGenerator.Generate(genOrigin_x, genOrigin_y, true);
+
+                    //生成主体地形
+                    Texture2TileGenerator nestGenerator = Texture2TileGeneratorDatas.GetTexGenerator(nestTex, nestDic);
+                    nestGenerator.Generate(genOrigin_x, genOrigin_y, true);
+                    genned = true;
+                });
+                placed = true;
+            }
+            return Task.CompletedTask;
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent;
@@ -18,6 +19,7 @@ namespace Coralite.Helpers
         /// <param name="offset">追踪力度</param>
         /// <param name="chasingSpeed">追踪速度</param>
         /// <param name="distanceMax">最大追踪距离</param>
+        [DebuggerHidden]
         public static bool AutomaticTracking(Projectile projectile, float offset, float chasingSpeed = 0, float distanceMax = 1000f)
         {
             NPC target = FindClosestEnemy(projectile.Center, distanceMax, (n) =>
@@ -45,6 +47,7 @@ namespace Coralite.Helpers
         /// <param name="projectile">弹幕</param>
         /// <param name="speed">速度</param>
         /// <param name="distanceMax">最大瞄准距离</param>
+        [DebuggerHidden]
         public static void AimingTheNearestNPC(Projectile projectile, float speed, float distanceMax = 1000f)
         {
             NPC target = FindClosestEnemy(projectile.Center, distanceMax, (n) =>
@@ -63,6 +66,7 @@ namespace Coralite.Helpers
         /// <param name="maxDistance"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
+        [DebuggerHidden]
         public static NPC FindClosestEnemy(Vector2 position, float maxDistance, Func<NPC, bool> predicate)
         {
             float maxDis = maxDistance;
@@ -87,6 +91,7 @@ namespace Coralite.Helpers
         /// <param name="owner"></param>
         /// <param name="index"></param>
         /// <param name="totalIndexesInGroup"></param>
+        [DebuggerHidden]
         public static void GetMyProjIndexWithSameType(int projType, int whoAmI, int owner, out int index, out int totalIndexesInGroup)
         {
             index = 0;
@@ -104,6 +109,7 @@ namespace Coralite.Helpers
             }
         }
 
+        [DebuggerHidden]
         public static void GetMyProjIndexWithModProj<T>(Projectile Projectile, out int index, out int totalIndexesInGroup) where T : ModProjectile
         {
             index = 0;

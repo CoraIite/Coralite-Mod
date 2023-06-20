@@ -124,7 +124,7 @@ namespace Coralite.Content.UI
                 return;
             }
 
-            if (!Main.mouseItem.IsAir && Item.IsAir) //鼠标有物品并且UI内为空，放入
+            if (!Main.mouseItem.IsAir && Item.IsAir && Main.mouseItem.ModItem is BaseYujian) //鼠标有物品并且UI内为空，放入
             {
                 YujianHuluBackpack.huluItem.SaveItem(slotIndex, Main.mouseItem.Clone());
                 Main.mouseItem.TurnToAir();
@@ -132,7 +132,7 @@ namespace Coralite.Content.UI
                 return;
             }
 
-            if (!Main.mouseItem.IsAir && !Item.IsAir) //都有物品，进行交换
+            if (!Main.mouseItem.IsAir && !Item.IsAir && Main.mouseItem.ModItem is BaseYujian) //都有物品，进行交换
             {
                 var temp = Item;
                 YujianHuluBackpack.huluItem.SaveItem(slotIndex, Main.mouseItem.Clone());
@@ -200,7 +200,7 @@ namespace Coralite.Content.UI
                     }
 
                     position.X += 14 - rectangle2.Width * itemScale / 2f;
-                    position.Y += 36 - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
+                    position.Y += 36 - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高的一半
 
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
                     if (Item.color != default(Color))

@@ -141,7 +141,7 @@ namespace Coralite.Helpers
         }
 
         /// <summary>
-        /// 放置植物事使用
+        /// 放置植物时使用
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="i"></param>

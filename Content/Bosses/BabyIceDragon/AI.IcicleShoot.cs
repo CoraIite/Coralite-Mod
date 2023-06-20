@@ -23,7 +23,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     {
                         bool lowerThanTarget = NPC.Center.Y > (Target.Center.Y - 100);
                         float xLength = Math.Abs(NPC.Center.X - Target.Center.X);
-                        if (lowerThanTarget || xLength > 500)
+                        if (lowerThanTarget || xLength > 600)
                         {
                             SetDirection();
                             if (lowerThanTarget)
@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 ChangeFrameNormally();
                             }
                             if (xLength > 300)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 8, 0.24f, 0.24f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 14f, 0.24f, 0.24f, 0.96f);
                             else
                                 NPC.velocity.X *= 0.96f;
 

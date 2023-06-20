@@ -678,8 +678,8 @@ namespace Coralite.Content.Items.Shadow
             Projectile.localNPCHitCooldown = 20;
             Projectile.tileCollide = false;
             Projectile.friendly = true;
-            ProjectileID.Sets.TrailCacheLength[Type] = 10;
             ProjectileID.Sets.TrailingMode[Type] = 2;
+            ProjectileID.Sets.TrailCacheLength[Type] = 10;
         }
 
         public override void Kill(int timeLeft)

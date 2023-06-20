@@ -31,7 +31,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 ChangeFrameNormally();
                             }
                             if (xLength > 150)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 16f, 0.3f, 0.25f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 14f, 0.3f, 0.25f, 0.96f);
                             else
                                 NPC.velocity.X *= 0.96f;
 

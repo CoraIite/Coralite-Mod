@@ -30,7 +30,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 NPC.velocity.Y *= 0.96f;
 
                             if (Math.Abs(Target.Center.X - NPC.Center.X) > 200)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 16f, 0.3f, 0.25f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 14f, 0.3f, 0.25f, 0.96f);
                             else
                                 NPC.velocity.X *= 0.98f;
                             ChangeFrameNormally();

@@ -292,7 +292,7 @@ namespace Coralite.Content.Bosses.Rediancie
             NPC.direction = distanceX > 0 ? 1 : -1;
             //NPC.spriteDirection = (Math.Abs(distanceX) > 24) ? NPC.direction : 1;
             NPC.directionY = Target.Center.Y > NPC.Center.Y ? 1 : -1;
-            switch (State)
+            switch ((int)State)
             {
                 case (int)AIStates.onKillAnim:
                     {
@@ -1225,28 +1225,37 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            foreach (var follower in followers)
+            var groups = from f in followers 
+                     group f by f.drawBehind;
+            
+            foreach (var group in groups)
             {
-                if (follower.drawBehind)
-                    follower.Draw(spriteBatch, drawColor);
+                if (group.Key)
+                {
+                    foreach (var follower in group) //绘制身后的
+                        follower.Draw(spriteBatch, drawColor);
+
+                    //绘制自己
+                    Texture2D mainTex = TextureAssets.Npc[Type].Value;
+                    //int frameWidth = mainTex.Width;
+                    //int frameHeight = mainTex.Height / Main.npcFrameCount[NPC.type];
+                    //Rectangle frameBox = new Rectangle(0, NPC.frame.Y * frameHeight, frameWidth, frameHeight);
+                    Vector2 origin = mainTex.Size() / 2;
+                    //= new Vector2(frameWidth / 2, frameHeight / 2);
+
+                    spriteBatch.Draw(mainTex, NPC.Center - screenPos, null, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
+                }
+                else
+                    foreach (var follower in group) //绘制身前的
+                        follower.Draw(spriteBatch, drawColor);
             }
 
-            Texture2D mainTex = TextureAssets.Npc[Type].Value;
 
-            //int frameWidth = mainTex.Width;
-            //int frameHeight = mainTex.Height / Main.npcFrameCount[NPC.type];
-            //Rectangle frameBox = new Rectangle(0, NPC.frame.Y * frameHeight, frameWidth, frameHeight);
-
-            Vector2 origin = mainTex.Size() / 2;
-            //= new Vector2(frameWidth / 2, frameHeight / 2);
-
-            spriteBatch.Draw(mainTex, NPC.Center - screenPos, null, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
-
-            foreach (var follower in followers)
-            {
-                if (!follower.drawBehind)
-                    follower.Draw(spriteBatch, drawColor);
-            }
+            //foreach (var follower in followers)
+            //{
+            //    if (!follower.drawBehind)
+            //        follower.Draw(spriteBatch, drawColor);
+            //}
 
             return false;
         }

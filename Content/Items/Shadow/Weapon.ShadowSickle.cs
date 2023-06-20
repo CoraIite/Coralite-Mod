@@ -21,8 +21,8 @@ namespace Coralite.Content.Items.Shadow
         {
             Item.height = Item.width = 40;
             Item.damage = 24;
-            Item.useTime = 40;
-            Item.useAnimation = 40;
+            Item.useTime = 5;
+            Item.useAnimation = 5;
             Item.knockBack = 0f;
             
             Item.value = Item.sellPrice(0, 3, 0, 0);

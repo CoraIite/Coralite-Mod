@@ -18,11 +18,6 @@ namespace Coralite.Content.Items.Misc_Shoot
     {
         public override string Texture => AssetDirectory.Misc_Shoot + Name;
 
-        public override void SetStaticDefaults()
-        {
-            ItemID.Sets.ToolTipDamageMultiplier[Type] = 0.7f;
-        }
-
         public int shootCount;
 
         public override void SetDefaults()
@@ -100,11 +95,6 @@ namespace Coralite.Content.Items.Misc_Shoot
         public override string Texture => AssetDirectory.Misc_Shoot + "Arethusa";
 
         public int shootCount;
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Arethusa");
-        }
 
         public override void SetDefaults()
         {

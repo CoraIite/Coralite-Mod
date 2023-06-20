@@ -225,7 +225,7 @@ namespace Coralite.Content.ModPlayers
             }
         }
 
-        public bool UsingVanillaDash() => Player.dashType != 0 && Player.setSolar && Player.mount.Active;
+        public bool UsingVanillaDash() => Player.dashType != 0 || Player.setSolar || Player.mount.Active;
 
 
     }

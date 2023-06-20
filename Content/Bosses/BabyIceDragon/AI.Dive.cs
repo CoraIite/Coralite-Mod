@@ -75,7 +75,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 Tile tile = Framing.GetTileSafely(position);
                                 if (tile.HasSolidTile())
                                 {
-                                    Dizzy(360);
+                                    Dizzy(300);
                                     return;
                                 }
                             }

@@ -16,6 +16,8 @@ namespace Coralite
         public const int MaxParticleCount = 801;
         public readonly Color RedJadeRed;
         public readonly Color IcicleCyan;
+        public readonly Color MagicCrystalPink;
+        public readonly Color CrystallineMagikePurple;
 
         private List<IOrderedLoadable> loadCache;
 
@@ -34,6 +36,8 @@ namespace Coralite
 
             RedJadeRed = new Color(221, 50, 50);
             IcicleCyan = new Color(43, 255, 198);
+            MagicCrystalPink = new Color(255, 190, 236);
+            CrystallineMagikePurple = new Color(140, 130, 252);
         }
 
         public override void Load()

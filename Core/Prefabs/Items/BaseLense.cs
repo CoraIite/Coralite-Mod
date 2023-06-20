@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Core.Prefabs.Items
 {
-    public class BaseLense : ModItem
+    public class BaseMagikePlaceableItem : ModItem
     {
         private readonly int tileIDToPlace;
         private readonly int Value;
@@ -12,7 +12,7 @@ namespace Coralite.Core.Prefabs.Items
         private readonly string TexturePath;
         private readonly bool PathHasName;
 
-        public BaseLense(int tileIDToPlace, int value, int rare, int magikeAmount = -1, string texturePath = AssetDirectory.MagikeItems, bool pathHasName = false)
+        public BaseMagikePlaceableItem(int tileIDToPlace, int value, int rare, int magikeAmount = -1, string texturePath = AssetDirectory.MagikeItems, bool pathHasName = false)
         {
             this.tileIDToPlace = tileIDToPlace;
             Value = value;

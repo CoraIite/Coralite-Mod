@@ -1,5 +1,7 @@
+using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -21,37 +23,33 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// <summary> 物块类型 </summary>
         public abstract ushort TileType { get; }
 
+        public event Action OnCharged;
+        public event Action OnDisCharged;
+
         public MagikeContainer(int magikeMax)
         {
             this.magikeMax = magikeMax;
         }
 
-        /// <summary> 限制魔能量，让它不超过上限 </summary>
-        public void Limit()
-        {
-            magike = Math.Clamp(magike, 0, magikeMax);
-        }
+        public virtual void OnReceiveVisualEffect() { }
 
         public override bool IsTileValidForEntity(int x, int y)
         {
             return Framing.GetTileSafely(x, y).TileType == TileType;
         }
 
-        /// <summary>
-        /// 给改魔能容器充能的方法，需要先获取到实例才行（
-        /// </summary>
-        /// <param name="howManyMagite">充多少</param>
-        public virtual bool Charge(int howManyMagite)
+        public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
-            if (magike >= magikeMax)
-                return false;
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                NetMessage.SendTileSquare(Main.myPlayer, i, j, TileChangeType.HoneyLava);
+                NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type, 0f, 0, 0, 0);
+                return -1;
+            }
 
-            magike += howManyMagite;
-            Limit();
-            if (magike > 0)
-                active = true;
-            return true;
+            return Place(i, j);
         }
+
 
         public override void SaveData(TagCompound tag)
         {
@@ -62,5 +60,44 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             magike = tag.GetInt("Magike");
         }
+
+        //===================以下是帮助方法========================
+
+        /// <summary> 限制魔能量，让它不超过上限 </summary>
+        public void Limit()
+        {
+            magike = Math.Clamp(magike, 0, magikeMax);
+        }
+
+        /// <summary>
+        /// 给改魔能容器充能的方法，需要先获取到实例才行
+        /// </summary>
+        /// <param name="howManyMagite">充多少</param>
+        public bool Charge(int howManyMagite)
+        {
+            bool ChargeOrDischarge = howManyMagite >= 0;
+            if (magike >= magikeMax && ChargeOrDischarge)
+                return false;
+
+            if (ChargeOrDischarge)
+            {
+                OnCharged?.Invoke();
+                OnReceiveVisualEffect();
+            }
+            else
+                OnDisCharged?.Invoke();
+
+            magike += howManyMagite;
+            Limit();
+            active = magike > 0;
+
+            return true;
+        }
+
+        public virtual Vector2 GetWorldPosition()
+        {
+            return Position.ToWorldCoordinates(16);
+        }
+
     }
 }

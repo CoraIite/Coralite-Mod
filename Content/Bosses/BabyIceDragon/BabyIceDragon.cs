@@ -70,9 +70,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             NPC.width = 64;
             NPC.height = 40;
-            NPC.damage = 35;
+            NPC.damage = 30;
             NPC.defense = 6;
-            NPC.lifeMax = 3800;
+            NPC.lifeMax = 3400;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 10f;
@@ -91,14 +91,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(4120 * bossAdjustment) + numPlayers * 900;
-            NPC.damage = 37;
-            NPC.defense = 12;
+            NPC.lifeMax = (int)(3820 * bossAdjustment) + numPlayers * 900;
+            NPC.damage = 35;
+            NPC.defense = 10;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = (int)(4800 * bossAdjustment) + numPlayers * 1600;
-                NPC.damage = 45;
+                NPC.lifeMax = (int)(4420 * bossAdjustment) + numPlayers * 1200;
+                NPC.damage = 40;
             }
         }
 

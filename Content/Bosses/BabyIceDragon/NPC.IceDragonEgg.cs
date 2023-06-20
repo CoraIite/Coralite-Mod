@@ -20,7 +20,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.height = 36;
             NPC.damage = 0;
             NPC.defense = 0;
-            NPC.lifeMax = 1200;
+            NPC.lifeMax = 600;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 1f;

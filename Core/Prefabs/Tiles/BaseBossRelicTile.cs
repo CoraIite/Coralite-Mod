@@ -87,7 +87,6 @@ namespace Coralite.Core.Prefabs.Tiles
             //这使我们能够在SpecialDraw中绘制内容
             if (drawData.tileFrameX % FrameWidth == 0 && drawData.tileFrameY % FrameHeight == 0)
                 Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
-
         }
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)

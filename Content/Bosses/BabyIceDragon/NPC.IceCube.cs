@@ -43,10 +43,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
-            NPC.lifeMax = 250 + numPlayers * 100;
-            NPC.defense = 8;
+            NPC.lifeMax = (int)(175 * bossAdjustment) + numPlayers * 100;
+            NPC.defense = 6;
             if (Main.masterMode)
-                NPC.defense = 10;
+                NPC.defense = 8;
         }
 
         public override void AI()
@@ -121,7 +121,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (ExtendCount >= 14)
                 if (SoundEngine.TryGetActiveSound(soundSlotID, out ActiveSound result))
                     result.Stop();
-            (Main.npc[index].ModNPC as BabyIceDragon).Dizzy(360);
+            (Main.npc[index].ModNPC as BabyIceDragon).Dizzy(300);
         }
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)

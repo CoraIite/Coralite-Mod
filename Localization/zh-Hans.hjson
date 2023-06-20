@@ -738,6 +738,98 @@ Mods: {
 					充能完成后右键释放冰晶龙卷风
 					'''
 			}
+
+			CrystalLens: {
+				DisplayName: 水晶透镜
+				Tooltip: ""
+				RecipeCondition: 学习“书页：魔能基础”后可合成
+			}
+
+			DebugStick: {
+				DisplayName: 魔能调试棒
+				Tooltip: 这是一个测试专用物品，鼠标点击魔能存储器将其魔能充满
+			}
+
+			MagConnectStaff: {
+				DisplayName: 魔能连接仪
+				Tooltip:
+					'''
+					第一次左键选择接收器，第二次左键选择发送器，之后在二者之间建立连接
+					发送器有距离限制，
+					右键清空所选内容
+					'''
+				RecipeCondition: 学习“书页：魔能基础”后可合成
+			}
+
+			MagicCrystal: {
+				DisplayName: 魔力晶体
+				Tooltip: 蕴含微弱的魔能
+			}
+
+			CrimtaneLens: {
+				DisplayName: 猩红透镜
+				Tooltip: ""
+			}
+
+			DemoniteLens: {
+				DisplayName: 魔化透镜
+				Tooltip: ""
+			}
+
+			BrilliantLens: {
+				DisplayName: 璀璨透镜
+				Tooltip: ""
+				RecipeCondition: 学习“卷轴：强化魔能提炼”后可合成
+			}
+
+			CrystallineMagike: {
+				DisplayName: 蕴魔水晶
+				Tooltip: "蕴含充沛的魔能"
+			}
+
+			CrystalRefractor: {
+				DisplayName: 水晶广角镜
+				Tooltip: ""
+				RecipeCondition: 学习“书页：魔能基础”后可合成
+			}
+
+			BrilliantRefractor: {
+				DisplayName: 璀璨广角镜
+				Tooltip: ""
+				RecipeCondition: 学习“卷轴：强化魔能提炼”后可合成
+			}
+
+			CrimtaneRefractor: {
+				DisplayName: 猩红广角镜
+				Tooltip: ""
+			}
+
+			DemoniteRefractor: {
+				DisplayName: 魔化广角镜
+				Tooltip: ""
+			}
+
+			BrilliantColumn: {
+				DisplayName: 璀璨水晶柱
+				Tooltip: ""
+				RecipeCondition: 学习“卷轴：强化魔能提炼”后可合成
+			}
+
+			CrimtaneColumn: {
+				DisplayName: 猩红水晶柱
+				Tooltip: ""
+			}
+
+			CrystalColumn: {
+				DisplayName: 水晶柱
+				Tooltip: ""
+				RecipeCondition: 学习“书页：魔能基础”后可合成
+			}
+
+			DemoniteColumn: {
+				DisplayName: 魔化水晶柱
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -927,11 +1019,11 @@ Mods: {
 			IcicleCoccyx_Ex2.DisplayName: 冰寒刺骨
 			IcicleCoccyx_Ex3.DisplayName: 冰寒刺骨
 			ShadowCircle.DisplayName: 影铠法环
-			// ShadowCircle_ChasingMagicBall.DisplayName: Shadow Circle_ Chasing Magic Ball
-			// ShadowCircle_CrystalMinion.DisplayName: Shadow Circle_ Crystal Minion
-			// ShadowCircle_HighSpeedShoot.DisplayName: Shadow Circle_ High Speed Shoot
-			// ShadowCircle_MeleeClaw.DisplayName: Shadow Circle_ Melee Claw
-			// ShadowCircle_MeleeTrack.DisplayName: Shadow Circle_ Melee Track
+			ShadowCircle_ChasingMagicBall.DisplayName: 影铠法球
+			ShadowCircle_CrystalMinion.DisplayName: 影火
+			ShadowCircle_HighSpeedShoot.DisplayName: 影子狙击
+			ShadowCircle_MeleeClaw.DisplayName: 影子撕裂
+			ShadowCircle_MeleeTrack.DisplayName: 影子追猎者
 		}
 
 		Configs: {

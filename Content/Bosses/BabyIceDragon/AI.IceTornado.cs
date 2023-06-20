@@ -20,7 +20,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 case 0:     //飞向玩家
                     {
-                        if (Vector2.Distance(NPC.Center, Target.Center) > 400)
+                        if (Vector2.Distance(NPC.Center, Target.Center) > 600)
                         {
                             SetDirection();
                             NPC.directionY = (Target.Center.Y - 200) > NPC.Center.Y ? 1 : -1;
@@ -31,7 +31,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 NPC.velocity.Y *= 0.96f;
 
                             if (Math.Abs(Target.Center.X - NPC.Center.X) > 160)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 8f, 0.2f, 0.1f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 14f, 0.2f, 0.1f, 0.96f);
                             else
                                 NPC.velocity.X *= 0.98f;
                             if (Timer > 400)
