@@ -828,6 +828,34 @@ Mods: {
 				DisplayName: Demonite Column
 				Tooltip: ""
 			}
+
+			Diprism: {
+				DisplayName: Diprism
+				Tooltip: ""
+				RecipeCondition: Mods.Coralite.Items.Diprism.RecipeCondition
+			}
+
+			BrilliantRemodelPool: {
+				DisplayName: Brilliant Remodel Pool
+				Tooltip: ""
+			}
+
+			CondensedCrystalBall: {
+				DisplayName: Condensed Crystal Ball
+				Tooltip: ""
+				RecipeCondition: Mods.Coralite.Items.CondensedCrystalBall.RecipeCondition
+			}
+
+			MagikeActivator: {
+				DisplayName: Magike Activator
+				Tooltip: ""
+				RecipeCondition: Mods.Coralite.Items.MagikeActivator.RecipeCondition
+			}
+
+			SunlightLens: {
+				DisplayName: Sunlight Lens
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1035,6 +1063,15 @@ Mods: {
 
 				nianliUI_Y: {
 					Label: Willpower UI Position Y
+					Tooltip: ""
+				}
+			}
+
+			MagikeUIConfig: {
+				DisplayName: Magike UI Config
+
+				UIScale: {
+					Label: UI Scale
 					Tooltip: ""
 				}
 			}

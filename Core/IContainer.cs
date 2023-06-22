@@ -3,9 +3,12 @@ using Terraria;
 
 namespace Coralite.Core
 {
-    public interface IContainer
+    public interface ISingleItemContainer
     {
         bool InsertItem(Item item);
-        bool TryOutputItem(Func<bool> rule,out Item item);
+        bool CanInsertItem(Item item);
+        Item GetItem();
+        bool CanGetItem();
+        bool TryOutputItem(Func<bool> rule, out Item item);
     }
 }

@@ -58,7 +58,7 @@ namespace Coralite.Content.Bosses.Rediancie
         /// <summary> 拥有的“弹药”数量 </summary>
         internal ref float OwnedFollowersCount => ref NPC.ai[3];
 
-        internal float Timer;
+        internal int Timer;
         /// <summary> 目前的AI循环的计数 </summary>
         internal ref float MoveCount => ref NPC.localAI[1];
 
@@ -1216,7 +1216,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            Timer = reader.ReadSingle();
+            Timer = reader.ReadInt32();
         }
 
         #endregion

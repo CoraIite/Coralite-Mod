@@ -76,10 +76,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             NPC.rotation = NPC.rotation.AngleLerp(NPC.direction * (1f - factor * 1.3f), 0.06f);
 
                             GetMouseCenter(out Vector2 targetDir, out Vector2 mouseCenter);
-                            if (Timer % 2 == 0)
+                            if ((int)Timer % 2 == 0)
                                 Particle.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)) * 4, CoraliteContent.ParticleType<Fog>(), Color.White, 0.8f);
 
-                            if (Timer % 12 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                            if ((int)Timer % 12 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir * 12, ModContent.ProjectileType<IcicleProj_Hostile>(), 18, 8f);
                                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
@@ -99,7 +99,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         if (Timer < 20)
                             break;
 
-                        if (Timer == 20)
+                        if ((int)Timer == 20)
                         {
                             NPC.frame.Y = 0;
                             SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
@@ -109,7 +109,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             Main.instance.CameraModifiers.Add(modifier);
                         }
 
-                        if (Timer % 6 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                        if ((int)Timer % 6 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-100, 100), -500),
                                 Vector2.Zero, ModContent.ProjectileType<IcicleFalling_Hostile>(), 18, 8f);
@@ -120,9 +120,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         if (Timer < 80)
                         {
                             GetMouseCenter(out _, out Vector2 mouseCenter);
-                            if (Timer % 10 == 0)
+                            if ((int)Timer % 10 == 0)
                                 Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
-                            if (Timer % 20 == 0)
+                            if ((int)Timer % 20 == 0)
                                 Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
 
                             break;

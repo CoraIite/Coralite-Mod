@@ -66,7 +66,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 NPC.velocity.X *= 0.98f;
                         }
 
-                        if (Timer == 10)
+                        if ((int)Timer == 10)
                         {
                             SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                             GetMouseCenter(out _, out Vector2 mouseCenter2);
@@ -85,7 +85,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         if (Timer < 41)
                         {
                             //生成冰吐息弹幕
-                            if (Timer % 5 == 0)
+                            if ((int)Timer % 5 == 0)
                             {
                                 SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, NPC.Center);
                                 Vector2 targetDir = (Target.Center + Main.rand.NextVector2CircularEdge(30, 30) - NPC.Center).SafeNormalize(Vector2.Zero);

@@ -39,7 +39,7 @@ namespace Coralite.Content.ModPlayers
         public int DashTimer = 0;
 
         public bool redJadePendant;
-
+        
         public override void ResetEffects()
         {
             redJadePendant = false;

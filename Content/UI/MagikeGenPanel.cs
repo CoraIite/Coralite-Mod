@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -17,9 +18,10 @@ namespace Coralite.Content.UI
 {
     public class MagikeGenPanel : BetterUIState
     {
+        public static float scale=1f;
         public static bool visible = false;
         public static MagikeGenerator_FromMagItem generator = null;
-        public static GeneratorSlot slot = new GeneratorSlot();
+        public static SingleItemSlot slot = new SingleItemSlot();
         public static CloseButton closeButton = new CloseButton();
 
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
@@ -58,6 +60,12 @@ namespace Coralite.Content.UI
             }
 
             Vector2 worldPos = generator.GetWorldPosition().ToScreenPosition();
+            if (!Helper.OnScreen(worldPos))
+            {
+                visible = false;
+                return;
+            }
+
             if (basePos != worldPos)
             {
                 basePos = worldPos;
@@ -67,22 +75,38 @@ namespace Coralite.Content.UI
             }
         }
 
+        public override void Recalculate()
+        {
+            scale = ModContent.GetInstance<MagikeUIConfig>().UIScale;
+            slot.SetContainer(generator);
+            base.Recalculate();
+        }
     }
 
-    public class GeneratorSlot : UIElement
+    public class SingleItemSlot : UIElement
     {
+        public ISingleItemContainer container;
+
         public override void OnInitialize()
         {
-            Width.Set(52 * 0.8f, 0f);
-            Height.Set(52 * 0.8f, 0f);
+            Width.Set(52 * MagikeGenPanel.scale, 0f);
+            Height.Set(52 * MagikeGenPanel.scale, 0f);
         }
 
         public override void LeftClick(UIMouseEvent evt)
         {
-            if (MagikeGenPanel.generator is null)
+            if (container is null)
                 return;
-            Item Item = MagikeGenPanel.generator.itemToCosume;
-            bool canInsert = MagikeGenPanel.generator.CanInsertItem(Main.mouseItem);
+            Item Item = container.GetItem();
+            bool canInsert = true;
+
+            if (!Main.mouseItem.IsAir)
+                canInsert= container.CanInsertItem(Main.mouseItem);
+            if (Item is null)
+                return;
+
+            if (!container.CanGetItem())
+                return;
 
             //快捷取回到玩家背包中
             if (PlayerInput.Triggers.Current.SmartSelect)
@@ -96,41 +120,49 @@ namespace Coralite.Content.UI
                     SoundEngine.PlaySound(SoundID.Grab);
                 }
 
-                return;
+                goto baseClick;
             }
-            
+
             if (Main.mouseItem.IsAir && !Item.IsAir) //鼠标物品为空且UI内有物品，直接取出
             {
                 Main.mouseItem = Item.Clone();
                 Item.TurnToAir();
                 SoundEngine.PlaySound(SoundID.Grab);
-                return;
+                goto baseClick;
             }
 
             if (!Main.mouseItem.IsAir && Item.IsAir && canInsert) //鼠标有物品并且UI内为空，放入
             {
-                MagikeGenPanel.generator.InsertItem(Main.mouseItem.Clone());
+                container.InsertItem(Main.mouseItem.Clone());
                 Main.mouseItem.TurnToAir();
                 SoundEngine.PlaySound(SoundID.Grab);
-                return;
+                goto baseClick;
             }
 
             if (!Main.mouseItem.IsAir && !Item.IsAir && canInsert) //都有物品，进行交换
             {
                 var temp = Item;
-                MagikeGenPanel.generator.InsertItem(Main.mouseItem.Clone());
+                container.InsertItem(Main.mouseItem.Clone());
                 Main.mouseItem = temp;
                 SoundEngine.PlaySound(SoundID.Grab);
-                return;
+                goto baseClick;
             }
+
+        baseClick:
+            base.LeftClick(evt);
         }
 
         public override void RightClick(UIMouseEvent evt)
         {
-            if (MagikeGenPanel.generator is null)
+            if (container is null)
                 return;
 
-            Item Item = MagikeGenPanel.generator.itemToCosume;
+            Item Item = container.GetItem();
+            if (Item is null)
+                return;
+
+            if (!container.CanGetItem())
+                return;
 
             if (!Main.mouseItem.IsAir && !Item.IsAir ) //都有物品，且种类相同,一个个取出
             {
@@ -145,7 +177,7 @@ namespace Coralite.Content.UI
                     Item.TurnToAir();
 
                 //SoundEngine.PlaySound(SoundID.Grab);
-                return;
+                goto baseClick;
             }
 
             if (Main.mouseItem.IsAir && !Item.IsAir) //鼠标物品为空且UI内有物品，直接取出1个
@@ -164,11 +196,15 @@ namespace Coralite.Content.UI
                     //SoundEngine.PlaySound(SoundID.Grab);
                 }
             }
+
+        baseClick:
+            base.RightClick(evt);
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (MagikeGenPanel.generator is null)
+            if (container is null)
                 return;
 
             if (IsMouseHovering)
@@ -178,11 +214,12 @@ namespace Coralite.Content.UI
             Vector2 center = GetDimensions().Center();
 
             Texture2D backTex = TextureAssets.InventoryBack.Value;
-            spriteBatch.Draw(backTex, center, null, Color.White, 0, backTex.Size() / 2, 0.8f, SpriteEffects.None, 0);
-
-            if (!MagikeGenPanel.generator.itemToCosume.IsAir)
+            spriteBatch.Draw(backTex, center, null, Color.White, 0, backTex.Size() / 2, MagikeGenPanel.scale, SpriteEffects.None, 0);
+            
+            Item Item = container.GetItem();
+            if (Item is not null && !Item.IsAir)
             {
-                Item Item = MagikeGenPanel.generator.itemToCosume;
+                Main.instance.LoadItem(Item.type);
                 Texture2D mainTex =TextureAssets.Item[Item.type].Value; ;
                 Rectangle rectangle2;
 
@@ -192,7 +229,7 @@ namespace Coralite.Content.UI
                     rectangle2 = mainTex.Frame();
 
                 float itemScale = 1f;
-                float pixelWidth = 40*0.8f ;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                float pixelWidth = 40 * MagikeGenPanel.scale;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
                 float pixelHeight = pixelWidth;
                 if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
                 {
@@ -202,30 +239,38 @@ namespace Coralite.Content.UI
                         itemScale = pixelHeight / rectangle2.Height;
                 }
 
-                position.X += 26 * 0.8f - rectangle2.Width * itemScale / 2f;
-                position.Y += 26 * 0.8f - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
+                position.X += 26 * MagikeGenPanel.scale - rectangle2.Width * itemScale / 2f;
+                position.Y += 26 * MagikeGenPanel.scale - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
 
                 spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
                 if (Item.color != default(Color))
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
 
                 if (Item.stack > 1)
-                    Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), center + new Vector2(12, 16), Color.White, 0.8f, 1, 0.5f);
+                    Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), center + new Vector2(12, 16), Color.White, MagikeGenPanel.scale, 1, 0.5f);
                 if (IsMouseHovering)
                 {
                     Main.HoverItem = Item.Clone();
                     Main.hoverItemName = "Coralite: MagikeGenerator_ContainItem";
                 }
             }
+        }
 
+        public void SetContainer(ISingleItemContainer container)
+        {
+            this.container = container;
         }
     }
 
     public class CloseButton : UIImageButton
     {
-        public CloseButton() : base(ModContent.Request<Texture2D>(AssetDirectory.UI+"CloseButton",ReLogic.Content.AssetRequestMode.ImmediateLoad))
+        public CloseButton() : base(ModContent.Request<Texture2D>(AssetDirectory.UI + "CloseButton", ReLogic.Content.AssetRequestMode.ImmediateLoad)) { }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
         {
+            if (IsMouseHovering)
+                Main.LocalPlayer.mouseInterface = true;
+            base.DrawSelf(spriteBatch);
         }
     }
-
 }

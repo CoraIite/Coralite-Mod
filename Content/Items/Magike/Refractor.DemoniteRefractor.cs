@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.Magike
         }
     }
 
-    public class DemoniteRefractorEntity : MagikeSender
+    public class DemoniteRefractorEntity : MagikeSender_Line
     {
         public const int sendDelay = 4 * 60+30;
         public int sendTimer;

@@ -57,11 +57,11 @@ namespace Coralite.Content.Items.Magike
         }
     }
 
-    public class CrystalColumnEntity : MagikeSender
+    public class CrystalColumnEntity : MagikeSender_Line
     {
         public const int sendDelay = 5 * 60;
         public int sendTimer;
-        public CrystalColumnEntity() : base(250, 5 * 16) { }
+        public CrystalColumnEntity() : base(500, 5 * 16) { }
 
         public override ushort TileType => (ushort)TileType<CrystalColumnTile>();
 

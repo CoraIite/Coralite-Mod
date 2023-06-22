@@ -12,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike
 {
-    public class DemoniteColumn: BaseMagikePlaceableItem
+    public class DemoniteColumn : BaseMagikePlaceableItem
     {
         public DemoniteColumn() : base(TileType<DemoniteColumnTile>(), Item.sellPrice(0, 0, 25, 0), RarityType<MagikeCrystalRarity>(), 50)
         { }
@@ -54,11 +54,11 @@ namespace Coralite.Content.Items.Magike
         }
     }
 
-    public class DemoniteColumnEntity : MagikeSender
+    public class DemoniteColumnEntity : MagikeSender_Line
     {
-        public const int sendDelay = 4 * 60+30;
+        public const int sendDelay = 4 * 60 + 30;
         public int sendTimer;
-        public DemoniteColumnEntity() : base(350, 5 * 16) { }
+        public DemoniteColumnEntity() : base(750, 5 * 16) { }
 
         public override ushort TileType => (ushort)TileType<DemoniteColumnTile>();
 

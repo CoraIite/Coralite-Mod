@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike
         }
     }
 
-    public class CrimtaneLensTile : BaseLensTile
+    public class CrimtaneLensTile : BaseCostItemLensTile
     {
         public override void SetStaticDefaults()
         {

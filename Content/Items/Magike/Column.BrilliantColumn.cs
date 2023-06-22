@@ -10,11 +10,10 @@ using Coralite.Content.Raritys;
 using Coralite.Core.Systems.MagikeSystem;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using System.ComponentModel;
 
 namespace Coralite.Content.Items.Magike
 {
-    public class BrilliantColumn: BaseMagikePlaceableItem
+    public class BrilliantColumn : BaseMagikePlaceableItem
     {
         public BrilliantColumn() : base(TileType<BrilliantColumnTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<CrystallineMagikeRarity>(), 600)
         { }
@@ -57,7 +56,6 @@ namespace Coralite.Content.Items.Magike
             };
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<BrilliantColumnEntity>().Hook_AfterPlacement, -1, 0, true);
-
             TileObjectData.addTile(Type);
 
             AddMapEntry(Coralite.Instance.CrystallineMagikePurple);
@@ -65,11 +63,11 @@ namespace Coralite.Content.Items.Magike
         }
     }
 
-    public class BrilliantColumnEntity : MagikeSender
+    public class BrilliantColumnEntity : MagikeSender_Line
     {
-        public const int sendDelay = 3 * 60+30;
+        public const int sendDelay = 3 * 60 + 30;
         public int sendTimer;
-        public BrilliantColumnEntity() : base(3000, 5 * 16) { }
+        public BrilliantColumnEntity() : base(6000, 5 * 16) { }
 
         public override ushort TileType => (ushort)TileType<BrilliantColumnTile>();
 

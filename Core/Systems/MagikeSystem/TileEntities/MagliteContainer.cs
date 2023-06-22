@@ -89,9 +89,14 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
             magike += howManyMagite;
             Limit();
-            active = magike > 0;
+            CheckActive();
 
             return true;
+        }
+
+        public virtual void CheckActive()
+        {
+            active = magike > 0;
         }
 
         public virtual Vector2 GetWorldPosition()

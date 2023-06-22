@@ -53,7 +53,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         {
                             NPC.velocity *= 0.97f;
 
-                            if (Timer == 30)
+                            if ((int)Timer == 30)
                             {
                                 NPC.frame.Y = 2;
                                 NPC.velocity *= 0;
@@ -62,7 +62,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             if (Timer < 50)
                                 break;
 
-                            if (Timer == 50)
+                            if ((int)Timer == 50)
                             {
                                 NPC.frame.Y = 0;
                                 SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
@@ -72,7 +72,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 Main.instance.CameraModifiers.Add(modifier);
                             }
 
-                            if (Timer == 60 && Main.netMode != NetmodeID.MultiplayerClient)        //生成冰刺NPC
+                            if ((int)Timer == 60 && Main.netMode != NetmodeID.MultiplayerClient)        //生成冰刺NPC
                             {
                                 int howMany = 4;
                                 if (Main.expertMode)
@@ -107,9 +107,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             if (Timer < 90)
                             {
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
-                                if (Timer % 10 == 0)
+                                if ((int)Timer % 10 == 0)
                                     Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
-                                if (Timer % 20 == 0)
+                                if ((int)Timer % 20 == 0)
                                     Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
 
                                 break;

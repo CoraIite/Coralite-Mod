@@ -62,7 +62,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         NPC.rotation = NPC.rotation.AngleTowards(NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f), 0.14f);
                         NPC.velocity.Y += 0.9f;
 
-                        if (Timer % 2 == 0)
+                        if ((int)Timer % 2 == 0)
                         {
                             Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), DustID.FrostStaff, -NPC.velocity * 0.3f, Scale: Main.rand.NextFloat(1.8f, 2f));
                             dust.noGravity = true;
@@ -84,7 +84,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             break;
                         }
 
-                        if (Timer == 60)
+                        if ((int)Timer == 60)
                             NPC.noTileCollide = false;
 
                         if (Timer > 60)   //检测下方物块

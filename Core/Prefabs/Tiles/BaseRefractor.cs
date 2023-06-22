@@ -44,7 +44,7 @@ namespace Coralite.Core.Prefabs.Tiles
             SoundEngine.PlaySound(CoraliteSoundID.GlassBroken_Shatter, new Vector2(i, j) * 16);
             int x = i - frameX / 18;
             int y = j - frameY / 18;
-            if (MagikeHelper.TryGetEntityWithTopLeft(x, y, out MagikeSender sender))
+            if (MagikeHelper.TryGetEntityWithTopLeft(x, y, out MagikeSender_Line sender))
                 sender.Kill(x, y);
         }
 
@@ -93,7 +93,7 @@ namespace Coralite.Core.Prefabs.Tiles
 
             Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
             float rotation = 0;
-            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out MagikeSender sender))
+            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out MagikeSender_Line sender))
             {
                 if (sender.receiverPoints[0] == Point16.NegativeOne)
                     drawPos += new Vector2(0, halfHeight - 8);

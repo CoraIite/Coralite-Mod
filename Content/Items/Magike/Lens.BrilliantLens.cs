@@ -39,7 +39,7 @@ namespace Coralite.Content.Items.Magike
         }
     }
 
-    public class BrilliantLensTile : BaseLensTile
+    public class BrilliantLensTile : BaseCostItemLensTile
     {
         public override string Texture => AssetDirectory.MagikeTiles+ "CrystalLensTile";
 

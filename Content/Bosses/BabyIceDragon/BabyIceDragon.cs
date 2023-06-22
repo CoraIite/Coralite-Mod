@@ -218,7 +218,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 return;
             }
 
-            switch (State)
+            switch ((int)State)
             {
                 case (int)AIStates.onKillAnim:      //死亡时的动画
                     NPC.Kill();
@@ -227,7 +227,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     {
                         do
                         {
-                            if (Timer == 0)
+                            if ((int)Timer == 0)
                             {
                                 //生成动画弹幕
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -243,7 +243,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 break;
                             }
 
-                            if (Timer == 100)
+                            if ((int)Timer == 100)
                             {
                                 NPC.frame.Y = 2;
                                 NPC.velocity *= 0;
@@ -252,7 +252,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             if (Timer < 130)
                                 break;
 
-                            if (Timer == 130)
+                            if ((int)Timer == 130)
                             {
                                 NPC.frame.Y = 0;
                                 SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
@@ -265,9 +265,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             if (Timer < 170)
                             {
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
-                                if (Timer % 10 == 0)
+                                if ((int)Timer % 10 == 0)
                                     Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
-                                if (Timer % 20 == 0)
+                                if ((int)Timer % 20 == 0)
                                     Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
 
                                 break;
@@ -310,7 +310,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         {
                             NPC.velocity *= 0.98f;
 
-                            if (Timer == 20)
+                            if ((int)Timer == 20)
                             {
                                 NPC.frame.Y = 2;
                                 NPC.velocity *= 0;
@@ -319,7 +319,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             if (Timer < 40)
                                 break;
 
-                            if (Timer == 40)
+                            if ((int)Timer == 40)
                             {
                                 NPC.frame.Y = 0;
                                 SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
@@ -401,7 +401,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 break;
                             }
 
-                            if (Timer == 62)
+                            if ((int)Timer == 62)
                             {
                                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                                 GetMouseCenter(out _, out Vector2 mouseCenter2);
@@ -421,7 +421,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             }
 
                             //生成冰块弹幕
-                            if (Timer == 80 && Main.netMode != NetmodeID.MultiplayerClient)
+                            if ((int)Timer == 80 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 movePhase = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + NPC.direction * 120, (int)NPC.Center.Y + 20, NPCType<IceCube>());
                                 NPC.netUpdate = true;
@@ -437,7 +437,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             Particle.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * 8f,
                                     CoraliteContent.ParticleType<Fog>(), Color.AliceBlue, Main.rand.NextFloat(0.6f, 0.8f));
 
-                            if (Timer % 20 == 0)
+                            if ((int)Timer % 20 == 0)
                             {
                                 //控制冰块弹幕，让它变大
                                 int npcIndex = Helper.GetNPCByType(NPCType<IceCube>());

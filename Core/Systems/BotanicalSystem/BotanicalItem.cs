@@ -47,14 +47,8 @@ namespace Coralite.Core.Systems.BotanicalSystem
 
         public override bool CanStack(Item item1, Item item2)
         {
-            if (item1 == null || item2 == null)
-                return false;
-
-            if (item1.IsAir || item2.IsAir || item1.type != item2.type)
-                return false;
-
-            BotanicalItem botanicalItem1 = item1.GetBotanicalItem();
-            BotanicalItem botanicalItem2 = item2.GetBotanicalItem();
+            if (!item1.TryGetGlobalItem(out BotanicalItem botanicalItem1) || !item2.TryGetGlobalItem(out BotanicalItem botanicalItem2))
+                return base.CanStack(item1,item2);
 
             if (!botanicalItem1.botanicalItem)
                 return base.CanStack(item1, item2);

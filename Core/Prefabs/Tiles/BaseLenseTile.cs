@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Core.Prefabs.Tiles
 {
-    public abstract class BaseLensTile : ModTile
+    public abstract class BaseLensTile:ModTile
     {
         public override string Texture => AssetDirectory.MagikeTiles + Name;
         public virtual string TopTextureName => AssetDirectory.MagikeTiles + Name + "_Top";
@@ -49,18 +49,6 @@ namespace Coralite.Core.Prefabs.Tiles
             int y = j - frameY / 18;
             if (MagikeHelper.TryGetEntityWithTopLeft(x, y, out MagikeGenerator generator))
                 generator.Kill(x, y);
-        }
-
-        public override bool RightClick(int i, int j)
-        {
-            if (MagikeHelper.TryGetEntity(i, j, out MagikeGenerator_FromMagItem generator))
-            {
-                MagikeGenPanel.visible = true;
-                MagikeGenPanel.generator = generator;
-                UILoader.GetUIState<MagikeGenPanel>().Recalculate();
-            }
-
-            return true;
         }
 
         public override void MouseOver(int i, int j)
@@ -130,6 +118,23 @@ namespace Coralite.Core.Prefabs.Tiles
             //effectColor = effectColor * 0.1f * scale;
             //for (float m = 0f; m < 1f; m += 355f / (678f * (float)Math.PI))
             //    spriteBatch.Draw(texture, drawPos + (TwoPi * m).ToRotationVector2() * (6f + offset * 2f), frame, effectColor, 0f, origin, 1f, effects, 0f);
+        }
+
+    }
+
+
+    public abstract class BaseCostItemLensTile : BaseLensTile
+    {
+        public override bool RightClick(int i, int j)
+        {
+            if (MagikeHelper.TryGetEntity(i, j, out MagikeGenerator_FromMagItem generator))
+            {
+                MagikeGenPanel.visible = true;
+                MagikeGenPanel.generator = generator;
+                UILoader.GetUIState<MagikeGenPanel>().Recalculate();
+            }
+
+            return true;
         }
     }
 }

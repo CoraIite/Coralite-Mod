@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.Magike
         }
     }
 
-    public class CrimtaneRefractorEntity : MagikeSender
+    public class CrimtaneRefractorEntity : MagikeSender_Line
     {
         public const int sendDelay = 4 * 60 + 30;
         public int sendTimer;

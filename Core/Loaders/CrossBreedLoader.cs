@@ -24,7 +24,7 @@ namespace Coralite.Core.Loaders
 
             foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))
             {
-                if (t.GetInterfaces().Contains(typeof(ICrossBreedable)))
+                if (!t.IsAbstract&&t.GetInterfaces().Contains(typeof(ICrossBreedable)))
                 {
                     ICrossBreedable items = Activator.CreateInstance(t) as ICrossBreedable;
                     items.AddCrossBreedRecipe();

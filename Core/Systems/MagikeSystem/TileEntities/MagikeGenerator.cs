@@ -12,7 +12,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     /// <summary>
     /// 魔能生产器，能够存储，发送和生产魔能，如何生产请自定义
     /// </summary>
-    public abstract class MagikeGenerator : MagikeSender
+    public abstract class MagikeGenerator : MagikeSender_Line
     {
         public MagikeGenerator(int magikeMax, int connectLenghMax, int howManyCanConnect = 1) : base(magikeMax, connectLenghMax, howManyCanConnect)
         { }
@@ -37,51 +37,91 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public virtual void Generate() { }
     }
 
-    /// <summary>
-    /// 通过放入含有魔能的物品并消耗它来获取魔能
-    /// </summary>
-    public abstract class MagikeGenerator_FromMagItem : MagikeGenerator
+    public abstract class MagikeGenerator_Normal : MagikeGenerator
     {
-        /// <summary> 内部存储的物品，仅当物品魔能含量不小于0是才能消耗物品并获得魔能  </summary>
-        public Item itemToCosume = new Item();
         /// <summary> 计时器 </summary>
         public int generateTimer;
         /// <summary> 每隔多久生成一次魔能  </summary>
         public readonly int generateDelay;
 
-        public MagikeGenerator_FromMagItem(int magikeMax, int connectLenghMax,int generateDelay, int howManyCanConnect = 1) : base(magikeMax, connectLenghMax, howManyCanConnect)
+        protected MagikeGenerator_Normal(int magikeMax, int connectLenghMax, int generateDelay, int howManyCanConnect = 1) : base(magikeMax, connectLenghMax, howManyCanConnect)
         {
             this.generateDelay = generateDelay;
         }
 
         public override void Generate()
         {
-            if (itemToCosume.IsAir)
-                return;
-
             generateTimer++;
             if (generateTimer < generateDelay) //每隔固定时间检测物品，并消耗
                 return;
 
             generateTimer = 0;
-            int add = itemToCosume.GetMagikeItem().magiteAmount;    //消耗前检测一下，防止出现意外事故
+            CheckActive();
+            if (!CanGenerate())
+                return;
+
+            int add = HowManyToGenerate;    //消耗前检测一下，防止出现意外事故
             if (add <= 0 || magike + add > magikeMax)
                 return;
 
-            itemToCosume.stack--;
-            if (itemToCosume.stack < 1)
-            {
-                itemToCosume.TurnToAir();   //消耗物品并获得魔能
-                active = false;
-            }
-
-            Generate(add);
+            OnGenerate(add);
         }
 
+        public override void CheckActive()
+        {
+            active = CanGenerate();
+        }
+
+        /// <summary>
+        /// 是否能生产
+        /// </summary>
+        /// <returns></returns>
+        public abstract bool CanGenerate();
+
+        /// <summary>
+        /// 每次生产多少
+        /// </summary>
+        /// <returns></returns>
+        public abstract int HowManyToGenerate { get; }
+
+        /// <summary>
+        /// ！重要！请在这个方法中调用Generate(add)!!!!!!
+        /// </summary>
+        public abstract void OnGenerate(int howMany);
+    }
+
+    /// <summary>
+    /// 通过放入含有魔能的物品并消耗它来获取魔能
+    /// </summary>
+    public abstract class MagikeGenerator_FromMagItem : MagikeGenerator_Normal, ISingleItemContainer
+    {
+        /// <summary> 内部存储的物品，仅当物品魔能含量不小于0是才能消耗物品并获得魔能  </summary>
+        public Item itemToCosume = new Item();
+
+        public MagikeGenerator_FromMagItem(int magikeMax, int connectLenghMax,int generateDelay, int howManyCanConnect = 1) : base(magikeMax, connectLenghMax,generateDelay, howManyCanConnect)  {  }
+
+        public override void OnGenerate(int howMany)
+        {
+            itemToCosume.stack--;
+            if (itemToCosume.stack < 1)
+                itemToCosume.TurnToAir();   //消耗物品并获得魔能
+
+            Generate(howMany);
+        }
+
+        public override bool CanGenerate()=> !itemToCosume.IsAir;
+
+        public override int HowManyToGenerate => itemToCosume.GetMagikeItem().magiteAmount;
+
+
+        public override void CheckActive()
+        {
+            active = !itemToCosume.IsAir;
+        }
 
         public override void OnKill()
         {
-            MagikeGenPanel.visible = true;
+            MagikeGenPanel.visible = false;
             UILoader.GetUIState<MagikeGenPanel>().Recalculate();
 
             if (!itemToCosume.IsAir)
@@ -93,10 +133,24 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             return item.GetMagikeItem().magiteAmount > 0;
         }
 
-        public void InsertItem(Item item)
+        public bool InsertItem(Item item)
         {
             itemToCosume = item;
+            return true;
         }
+
+        bool ISingleItemContainer.TryOutputItem(Func<bool> rule, out Item item)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Item GetItem()
+        {
+            return itemToCosume;
+        }
+
+        public bool CanGetItem() => true;
+
 
         public override void SaveData(TagCompound tag)
         {
@@ -115,5 +169,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 itemToCosume = item;
             }
         }
+
+
     }
 }

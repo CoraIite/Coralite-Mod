@@ -49,7 +49,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         if (Timer < 3)
                             SetDirection();
 
-                        if (Timer == 3)
+                        if ((int)Timer == 3)
                         {
                             NPC.velocity = (Target.Center - new Vector2(0, 30) - NPC.Center).SafeNormalize(Vector2.Zero) * 13f;
                             NPC.rotation = NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f);

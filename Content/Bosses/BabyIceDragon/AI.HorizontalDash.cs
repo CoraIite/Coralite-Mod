@@ -58,7 +58,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     break;
                 case 1:
                     {
-                        if (Timer == 10)
+                        if ((int)Timer == 10)
                         {
                             NPC.velocity.Y = 0f;
                             NPC.velocity.X = NPC.direction * 18f;

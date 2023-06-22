@@ -1,29 +1,62 @@
 ﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
-using System.ComponentModel;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
-    /// <summary>
-    /// 魔能发送器，能够存储魔能，同时可以发送魔能，使用howManyCanConnect来决定能连接多少魔能容器
-    /// </summary>
     public abstract class MagikeSender : MagikeContainer
+    {
+        /// <summary> 每次发送多少，可以自定义 </summary>
+        public abstract int HowManyPerSend { get; }
+
+        public event Action<MagikeContainer> OnSended;
+
+        public MagikeSender(int magikeMax) : base(magikeMax)
+        { }
+
+        public override void Update()
+        {
+            Send();
+        }
+
+        public virtual void Send() { }
+
+        /// <summary>
+        /// 是否能发送
+        /// </summary>
+        /// <returns></returns>
+        public abstract bool CanSend();
+
+        public virtual void OnSend(int howMany, MagikeContainer receiver)
+        {
+            Charge(-howMany);
+            SendVisualEffect(receiver);
+            OnSended?.Invoke(receiver);
+        }
+
+        /// <summary>
+        /// 发送时产生的视觉效果
+        /// </summary>
+        /// <param name="container"></param>
+        public virtual void SendVisualEffect(MagikeContainer container) { }
+    }
+
+    /// <summary>
+    /// 线性魔能发送器，能够存储魔能，同时可以发送魔能，使用howManyCanConnect来决定能连接多少魔能容器
+    /// </summary>
+    public abstract class MagikeSender_Line : MagikeSender
     {
         /// <summary> 接收者的位置 </summary>
         public Point16[] receiverPoints;
         /// <summary> 距离多少才能连接 </summary>
         public readonly int connectLenghMax;
-        /// <summary> 每次发送多少，可以自定义 </summary>
-        public abstract int HowManyPerSend { get; }
 
         public event Action<MagikeContainer> OnConnected;
-        public event Action<MagikeContainer> OnSended;
 
-        public MagikeSender(int magikeMax, int connectLenghMax, int howManyCanConnect = 1) : base(magikeMax)
+        public MagikeSender_Line(int magikeMax, int connectLenghMax, int howManyCanConnect = 1) : base(magikeMax)
         {
             this.connectLenghMax = connectLenghMax;
             receiverPoints = new Point16[howManyCanConnect];
@@ -37,25 +70,17 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 receiverPoints[k] = Point16.NegativeOne;
         }
 
-        public override void Update()
-        {
-            Send();
-        }
-
-        public virtual void Send()
+        public override void Send()
         {
             if (!CanSend())
                 return;
 
             int howMany = HowManyPerSend;
+            CheckActive();
             if (magike == 0)   //当前量为0时直接返回
-            {
-                active = false;
                 return;
-            }
             else
             {
-                active = true;
                 if (magike < howMany)   //不够发送时直接把自身剩下的全发送了
                     howMany = magike;
             }
@@ -69,9 +94,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                     bool isZero = container.magike == 0;//接收者是否为0
                     if ((overflowOrNot || isZero) && container.Charge(howMany))//魔能不满时才能发送给接收者，发送后会防止越界情况出现
                     {
-                        Charge(-howMany);
-                        SendVisualEffect(container);
-                        OnSended?.Invoke(container);
+                        OnSend(howMany, container);
                         if (magike < howMany)   //发送完之后如果剩余量不能够继续发送那么直接返回
                             return;
                     }
@@ -79,14 +102,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 else
                     receiverPoints[i] = Point16.NegativeOne;
             }
-
         }
-
-        /// <summary>
-        /// 是否能发送
-        /// </summary>
-        /// <returns></returns>
-        public abstract bool CanSend();
 
         /// <summary>
         /// 一个简单的帮助方法，展示目前和谁连接了
@@ -103,11 +119,6 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             }
         }
 
-        /// <summary>
-        /// 发送时产生的视觉效果
-        /// </summary>
-        /// <param name="container"></param>
-        public virtual void SendVisualEffect(MagikeContainer container) { }
 
         /// <summary>
         /// 帮助方法，判断两个魔能容器的距离并根据自身的connectLenghMax决定是否能发送给对方

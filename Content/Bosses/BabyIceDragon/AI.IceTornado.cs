@@ -93,10 +93,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                             NPC.rotation = NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f);
 
-                            if (Timer % 20 == 0)
+                            if ((int)Timer % 20 == 0)
                                 Helper.PlayPitched("Icicle/Wind" + Main.rand.Next(1, 3).ToString(), 0.2f, 0f, NPC.Center);
 
-                            if (Timer % 8 == 0 && Main.netMode != NetmodeID.MultiplayerClient)     //生成透明弹幕
+                            if ((int)Timer % 8 == 0 && Main.netMode != NetmodeID.MultiplayerClient)     //生成透明弹幕
                             {
                                 Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity * 0.2f, ModContent.ProjectileType<IceTornado>(), 16, 10f);
                                 projectile.timeLeft = 40;
@@ -104,7 +104,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             }
 
                             //生成龙卷风粒子
-                            if (Timer % 2 == 0)
+                            if ((int)Timer % 2 == 0)
                             {
                                 Dust dust= Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), DustID.FrostStaff, -NPC.velocity * 0.3f,Scale:Main.rand.NextFloat(1.8f,2f));
                                 dust.noGravity = true;
