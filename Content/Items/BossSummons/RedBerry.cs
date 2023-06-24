@@ -37,6 +37,11 @@ namespace Coralite.Content.Items.BossSummons
             Item.consumable = true;
         }
 
+        public override bool CanUseItem(Player player)
+        {
+            return !NPC.AnyNPCs(ModContent.NPCType<Rediancie>());
+        }
+
         public override bool? UseItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer)

@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Magike
         {
             CreateRecipe()
                 .AddIngredient<MagicCrystal>(10)
-                .AddCondition(this.GetLocalization("RecipeCondition"), () => MagikeSystem.learnedMagikeBase)
+                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
@@ -45,8 +45,9 @@ namespace Coralite.Content.Items.Magike
             TileObjectData.newTile.CoordinateHeights = new int[3] {
                 16,
                 16,
-                18
+                16
             };
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<CrystalColumnEntity>().Hook_AfterPlacement, -1, 0, true);
 

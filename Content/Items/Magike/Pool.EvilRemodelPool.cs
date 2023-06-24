@@ -1,14 +1,14 @@
 ﻿using Coralite.Core.Prefabs.Tiles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Helpers;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ObjectData;
 using Terraria;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Content.Raritys;
-using Coralite.Core.Systems.MagikeSystem;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Microsoft.Xna.Framework;
@@ -17,36 +17,36 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike
 {
-    public class BrilliantRemodelPool : BaseMagikePlaceableItem
+    public class EvilRemodelPool : BaseMagikePlaceableItem
     {
-        public BrilliantRemodelPool() : base(TileType<BrilliantRemodelPoolTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<CrystallineMagikeRarity>(), 600)
+        public EvilRemodelPool() : base(TileType<EvilRemodelPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagikeCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()
         {
-            //CreateRecipe()
-            //    .AddIngredient<CrimtaneColumn>()
-            //    .AddIngredient<CrystallineMagike>(10)
-            //    .AddIngredient(ItemID.SoulofLight, 8)
-            //    .AddCondition(this.GetLocalization("RecipeCondition"), () => MagikeSystem.learnedMagikeAdvanced)
-            //    .AddTile(TileID.MythrilAnvil)
-            //    .Register();
+            CreateRecipe()
+                .AddIngredient<CrystalRemodelPool>()
+                .AddIngredient(ItemID.DemoniteBar, 10)
+                .AddIngredient(ItemID.ShadowScale, 10)
+                .AddTile(TileID.Anvils)
+                .Register();
 
-            //CreateRecipe()
-            //    .AddIngredient<DemoniteColumn>()
-            //    .AddIngredient<CrystallineMagike>(10)
-            //    .AddIngredient(ItemID.SoulofLight, 8)
-            //    .AddCondition(this.GetLocalization("RecipeCondition"), () => MagikeSystem.learnedMagikeAdvanced)
-            //    .AddTile(TileID.MythrilAnvil)
-            //    .Register();
+            CreateRecipe()
+                .AddIngredient<CrystalRemodelPool>()
+                .AddIngredient(ItemID.CrimtaneBar, 10)
+                .AddIngredient(ItemID.TissueSample, 10)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 
-    public class BrilliantRemodelPoolTile : BaseRemodelPool
+    public class EvilRemodelPoolTile : BaseRemodelPool
     {
+        public override string ExtraTextureName => AssetDirectory.MagikeTiles + "BrilliantRemodelPoolTile_Top";
+
         public override void SetStaticDefaults()
         {
-            Main.tileShine[Type] = 400;
+            //Main.tileShine[Type] = 400;
             Main.tileFrameImportant[Type] = true;
             Main.tileNoFail[Type] = true; //不会出现挖掘失败的情况
             TileID.Sets.IgnoredInHouseScore[Type] = true;
@@ -55,15 +55,16 @@ namespace Coralite.Content.Items.Magike
             TileObjectData.newTile.Height = 2;
             TileObjectData.newTile.CoordinateHeights = new int[2] {
                 16,
-                18,
+                16
             };
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<BrilliantRemodelPoolEntity>().Hook_AfterPlacement, -1, 0, true);
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<EvilRemodelPoolEntity>().Hook_AfterPlacement, -1, 0, true);
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.CrystallineMagikePurple);
-            DustType = DustID.PurpleTorch;
+            AddMapEntry(Coralite.Instance.MagicCrystalPink);
+            DustType = DustID.CrystalSerpent_Pink;
         }
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
@@ -94,7 +95,6 @@ namespace Coralite.Content.Items.Magike
             bool direction = tile.TileFrameY / FrameHeight != 0;
             SpriteEffects effects = direction ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
-            // 一些数学魔法，使其随着时间的推移平稳地上下移动
             Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
             if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out MagikeFactory_RemodelPool pool))
             {
@@ -123,12 +123,12 @@ namespace Coralite.Content.Items.Magike
         }
     }
 
-    public class BrilliantRemodelPoolEntity : MagikeFactory_RemodelPool
+    public class EvilRemodelPoolEntity : MagikeFactory_RemodelPool
     {
-        public BrilliantRemodelPoolEntity() : base(600, 3 * 60) { }
+        public EvilRemodelPoolEntity() : base(450, 4 * 60) { }
 
-        public override ushort TileType => (ushort)TileType<BrilliantRemodelPoolTile>();
+        public override ushort TileType => (ushort)TileType<EvilRemodelPoolTile>();
 
-        public override Color MainColor => Coralite.Instance.CrystallineMagikePurple;
+        public override Color MainColor => Coralite.Instance.MagicCrystalPink;
     }
 }

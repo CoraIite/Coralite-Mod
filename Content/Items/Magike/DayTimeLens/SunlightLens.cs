@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Raritys;
-using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Tiles;
 using Coralite.Core.Systems.MagikeSystem;
@@ -11,13 +10,12 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.DayTimeLens
 {
-    public class SunlightLens: BaseMagikePlaceableItem
+    public class SunlightLens : BaseMagikePlaceableItem
     {
         public SunlightLens() : base(TileType<SunlightLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagikeCrystalRarity>(), 50)
         { }
@@ -26,8 +24,8 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
         {
             CreateRecipe()
                 .AddIngredient<MagicCrystal>(2)
-                .AddIngredient(ItemID.Sunflower,5)
-                .AddCondition(this.GetLocalization("RecipeCondition"), () => MagikeSystem.learnedMagikeBase)
+                .AddIngredient(ItemID.Sunflower, 5)
+                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
@@ -35,8 +33,6 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
 
     public class SunlightLensTile : BaseCostItemLensTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles+ "CrystalLensTile";
-        
         public override void SetStaticDefaults()
         {
             Main.tileShine[Type] = 400;
@@ -49,8 +45,9 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
             TileObjectData.newTile.CoordinateHeights = new int[3] {
                 16,
                 16,
-                18
+                16
             };
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<SunlightLensEntity>().Hook_AfterPlacement, -1, 0, true);
 
@@ -77,7 +74,7 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
             Texture2D texture = TopTexture.Value;
 
             // 根据项目的地点样式拾取图纸上的框架
-            Rectangle frame = texture.Frame( 1, 2, 0, 1);
+            Rectangle frame = texture.Frame(2, 10, 1, 0);
 
             Vector2 origin = frame.Size() / 2f;
             Vector2 worldPos = p.ToWorldCoordinates(halfWidth, halfHeight);
@@ -97,7 +94,8 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
                     const float TwoPi = (float)Math.PI * 2f;
                     float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
                     drawPos += new Vector2(0f, offset * 4f);
-                    frame = texture.Frame(1, 2, 0, 0);
+                    int yframe = (int)(5 * Main.GlobalTimeWrappedHourly % 10);
+                    frame = texture.Frame(2, 10, 0, yframe);
                 }
                 else
                     drawPos += new Vector2(0, halfHeight - 16);
@@ -114,7 +112,7 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
         public int sendTimer;
         public SunlightLensEntity() : base(20, 5 * 16, 12 * 60) { }
 
-        public override ushort TileType => (ushort)TileType<CrystalLensTile>();
+        public override ushort TileType => (ushort)TileType<SunlightLensTile>();
 
         public override int HowManyPerSend => 2;
         public override int HowManyToGenerate => 1;
@@ -145,7 +143,7 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.Orange);
+            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.Orange, DustID.FireworksRGB);
         }
     }
 }

@@ -742,7 +742,6 @@ Mods: {
 			CrystalLens: {
 				DisplayName: 水晶透镜
 				Tooltip: ""
-				RecipeCondition: 学习“书页：魔能基础”后可合成
 			}
 
 			DebugStick: {
@@ -758,7 +757,6 @@ Mods: {
 					发送器有距离限制，
 					右键清空所选内容
 					'''
-				RecipeCondition: 学习“书页：魔能基础”后可合成
 			}
 
 			MagicCrystal: {
@@ -779,7 +777,6 @@ Mods: {
 			BrilliantLens: {
 				DisplayName: 璀璨透镜
 				Tooltip: ""
-				RecipeCondition: 学习“卷轴：强化魔能提炼”后可合成
 			}
 
 			CrystallineMagike: {
@@ -790,13 +787,11 @@ Mods: {
 			CrystalRefractor: {
 				DisplayName: 水晶广角镜
 				Tooltip: ""
-				RecipeCondition: 学习“书页：魔能基础”后可合成
 			}
 
 			BrilliantRefractor: {
 				DisplayName: 璀璨广角镜
 				Tooltip: ""
-				RecipeCondition: 学习“卷轴：强化魔能提炼”后可合成
 			}
 
 			CrimtaneRefractor: {
@@ -812,7 +807,6 @@ Mods: {
 			BrilliantColumn: {
 				DisplayName: 璀璨水晶柱
 				Tooltip: ""
-				RecipeCondition: 学习“卷轴：强化魔能提炼”后可合成
 			}
 
 			CrimtaneColumn: {
@@ -823,7 +817,6 @@ Mods: {
 			CrystalColumn: {
 				DisplayName: 水晶柱
 				Tooltip: ""
-				RecipeCondition: 学习“书页：魔能基础”后可合成
 			}
 
 			DemoniteColumn: {
@@ -833,31 +826,80 @@ Mods: {
 
 			Diprism: {
 				DisplayName: 二相镜
-				Tooltip: "连接数量: 2"
-				RecipeCondition: 学习“书页：魔能基础”后可合成
+				Tooltip: 连接数量: 2
 			}
 
 			BrilliantRemodelPool: {
 				DisplayName: 璀璨重塑池
-				Tooltip: "右键打开UI，放入物品并选择指定合成表后激活以进行物品重塑"
+				Tooltip: 右键打开UI，放入物品并选择指定合成表后激活以进行物品重塑
 			}
 
 			CondensedCrystalBall: {
 				DisplayName: 凝聚态水晶球
-				Tooltip: "为鼠标位置的魔能容器充能"
-				RecipeCondition: 学习“书页：魔能基础”后可合成
+				Tooltip: 为鼠标位置的魔能容器充能
 			}
 
 			MagikeActivator: {
 				DisplayName: 魔能激活杖
-				Tooltip: "激活鼠标位置的魔能机器"
-				RecipeCondition: 学习“书页：魔能基础”后可合成
+				Tooltip: 激活鼠标位置的魔能机器
 			}
 
 			SunlightLens: {
 				DisplayName: 日光透镜
-				Tooltip: "在白天缓慢生产魔能"
-				RecipeCondition: 学习“书页：魔能基础”后可合成
+				Tooltip: 在白天缓慢生产魔能
+			}
+
+			CrystalRemodelPool: {
+				DisplayName: 水晶重塑池
+				Tooltip: 右键打开UI，放入物品并选择指定合成表后激活以进行物品重塑
+			}
+
+			EvilRemodelPool: {
+				DisplayName: 邪化重塑池
+				Tooltip: 右键打开UI，放入物品并选择指定合成表后激活以进行物品重塑
+			}
+
+			MoonlightLens: {
+				DisplayName: 月光透镜
+				Tooltip: 在夜晚缓慢生产魔能
+			}
+
+			FeatheredLens: {
+				DisplayName: 羽蛇透镜
+				Tooltip: ""
+			}
+
+			HolylightLens: {
+				DisplayName: 圣光透镜
+				Tooltip: 在白天生产魔能
+			}
+
+			BloodMoonLens: {
+				DisplayName: 红月透镜
+				Tooltip: 在夜晚生产魔能
+			}
+
+			IcicleHeart: {
+				DisplayName: 冰龙心
+				Tooltip:
+					'''
+					它仿佛还在跳动
+					召唤冰龙宝宝，不消耗
+					'''
+			}
+
+			RedJadeCore: {
+				DisplayName: 赤晶核
+				Tooltip:
+					'''
+					产生“爆竹能量”的核心部位
+					召唤赤玉灵，不消耗
+					'''
+			}
+
+			WaterflowLens: {
+				DisplayName: 水流透镜
+				Tooltip: "淹没在水中时缓慢生产魔能"
 			}
 		}
 
@@ -1071,15 +1113,22 @@ Mods: {
 			}
 
 			MagikeUIConfig: {
-				// DisplayName: Magike U I Config
+				// DisplayName: Magike UI Config
 
 				UIScale: {
-					// Label: U I Scale
+					// Label: UI Scale
 					// Tooltip: ""
 				}
 			}
 		}
 
 		// Keybinds.套装效果.DisplayName: 套装效果
+
+		MagikeSystem: {
+			MagikeSystem: {
+				learnedMagikeAdvanced: 学习“卷轴：强化魔能提炼”后可合成
+				learnedMagikeBase: 学习“书页：魔能基础”后可合成
+			}
+		}
 	}
 }

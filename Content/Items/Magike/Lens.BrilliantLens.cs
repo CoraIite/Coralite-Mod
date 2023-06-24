@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.Magike
                 .AddIngredient<CrimtaneLens>()
                 .AddIngredient<CrystallineMagike>(10)
                 .AddIngredient(ItemID.SoulofLight, 8)
-                .AddCondition(this.GetLocalization("RecipeCondition"), () => MagikeSystem.learnedMagikeAdvanced)
+                .AddCondition(MagikeSystem.Instance.LearnedMagikeAdvanced, () => MagikeSystem.learnedMagikeAdvanced)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
 
@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Magike
                 .AddIngredient<DemoniteLens>()
                 .AddIngredient<CrystallineMagike>(10)
                 .AddIngredient(ItemID.SoulofLight, 8)
-                .AddCondition(this.GetLocalization("RecipeCondition"), () => MagikeSystem.learnedMagikeAdvanced)
+                .AddCondition(MagikeSystem.Instance.LearnedMagikeAdvanced, () => MagikeSystem.learnedMagikeAdvanced)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
@@ -55,8 +55,9 @@ namespace Coralite.Content.Items.Magike
             TileObjectData.newTile.CoordinateHeights = new int[3] {
                 16,
                 16,
-                18
+                16
             };
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<BrilliantLensEntity>().Hook_AfterPlacement, -1, 0, true);
 

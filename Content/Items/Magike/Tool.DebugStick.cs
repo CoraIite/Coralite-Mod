@@ -3,6 +3,7 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,19 +13,65 @@ namespace Coralite.Content.Items.Magike
     {
         public override string Texture => AssetDirectory.DefaultItem;
 
+        private int mode;
+
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useAnimation = Item.useTime = 20;
             Item.useTurn = true;
-
         }
+
+        public override bool AltFunctionUse(Player player) => true;
 
         public override bool CanUseItem(Player player)
         {
-            Point point = Main.MouseWorld.ToTileCoordinates();
-            if (MagikeHelper.TryGetEntity(point.X, point.Y, out MagikeContainer magikeContainer))
-                magikeContainer.Charge(magikeContainer.magikeMax);
+            Point16 pos = Main.MouseWorld.ToTileCoordinates16();
+            Rectangle rectangle = new Rectangle((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
+
+            if (player.altFunctionUse==2)
+            {
+                mode++;
+                if (mode>1)
+                    mode = 0;
+
+                switch (mode)
+                {
+                    default:
+                    case 0: //充能模式
+                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "充能模式");
+                        break;
+                    case 1: //清空模式
+                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "清空模式");
+                        break;
+                }
+
+                return true;
+            }
+
+            switch (mode)
+            {
+                default:
+                case 0:
+                    if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeContainer magikeContainer))    //找到了
+                    {
+                        magikeContainer.Charge(magikeContainer.magikeMax);
+                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "已充能");
+                    }
+                    else
+                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "未找到容器");
+                    break;
+                case 1:
+                    if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeContainer magikeContainer2))    //找到了
+                    {
+                        magikeContainer2.Charge(-magikeContainer2.magikeMax);
+                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "已清空");
+                    }
+                    else
+                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "未找到容器");
+
+                    break;
+            }
 
             return true;
         }

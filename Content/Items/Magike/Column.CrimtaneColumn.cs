@@ -43,8 +43,9 @@ namespace Coralite.Content.Items.Magike
             TileObjectData.newTile.CoordinateHeights = new int[3] {
                 16,
                 16,
-                18
+                16
             };
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<CrimtaneColumnEntity>().Hook_AfterPlacement, -1, 0, true);
 

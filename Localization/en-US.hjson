@@ -739,7 +739,6 @@ Mods: {
 			CrystalLens: {
 				DisplayName: Crystal Lens
 				Tooltip: ""
-				RecipeCondition: After learning "Pages: Basic Magike".
 			}
 
 			DebugStick: {
@@ -751,12 +750,15 @@ Mods: {
 				DisplayName: Mag Connect Staff
 				Tooltip:
 					'''
+					Connect mode: 
 					The first left click selects the receiver and the second left click selects the sender
-					Then establish a connection between them
-					Sender has distance limitation，
-					Right click to clear selsects.
+					Then establish a connection between them. Sender has distance limitation
+					View mode:
+					Left click a magike sender to show connection.
+					Interrupt mode: 
+					Left click a magike sender to interrupt connections.
+					Right click to change mode.
 					'''
-				RecipeCondition: After learning "Pages: Basic Magike".
 			}
 
 			MagicCrystal: {
@@ -777,24 +779,21 @@ Mods: {
 			BrilliantLens: {
 				DisplayName: Brilliant Lens
 				Tooltip: ""
-				RecipeCondition: Mods.Coralite.Items.BrilliantLens.RecipeCondition
 			}
 
 			CrystallineMagike: {
 				DisplayName: Crystalline Magike
-				Tooltip: ""
+				Tooltip: Contains abundant magike
 			}
 
 			CrystalRefractor: {
 				DisplayName: Crystal Refractor
 				Tooltip: ""
-				RecipeCondition: Mods.Coralite.Items.CrystalRefractor.RecipeCondition
 			}
 
 			BrilliantRefractor: {
 				DisplayName: Brilliant Refractor
 				Tooltip: ""
-				RecipeCondition: Mods.Coralite.Items.BrilliantRefractor.RecipeCondition
 			}
 
 			CrimtaneRefractor: {
@@ -810,7 +809,6 @@ Mods: {
 			BrilliantColumn: {
 				DisplayName: Brilliant Column
 				Tooltip: ""
-				RecipeCondition: Mods.Coralite.Items.BrilliantColumn.RecipeCondition
 			}
 
 			CrimtaneColumn: {
@@ -821,7 +819,6 @@ Mods: {
 			CrystalColumn: {
 				DisplayName: Crystal Column
 				Tooltip: ""
-				RecipeCondition: Mods.Coralite.Items.CrystalColumn.RecipeCondition
 			}
 
 			DemoniteColumn: {
@@ -831,30 +828,80 @@ Mods: {
 
 			Diprism: {
 				DisplayName: Diprism
-				Tooltip: ""
-				RecipeCondition: Mods.Coralite.Items.Diprism.RecipeCondition
+				Tooltip: Number of connections: 2
 			}
 
 			BrilliantRemodelPool: {
 				DisplayName: Brilliant Remodel Pool
-				Tooltip: ""
+				Tooltip: Right-click to open the UI, put in item and select a remodel recipe and activate it to remodel item
 			}
 
 			CondensedCrystalBall: {
 				DisplayName: Condensed Crystal Ball
 				Tooltip: ""
-				RecipeCondition: Mods.Coralite.Items.CondensedCrystalBall.RecipeCondition
 			}
 
 			MagikeActivator: {
 				DisplayName: Magike Activator
 				Tooltip: ""
-				RecipeCondition: Mods.Coralite.Items.MagikeActivator.RecipeCondition
 			}
 
 			SunlightLens: {
 				DisplayName: Sunlight Lens
+				Tooltip: "Produce magike in the daytime. "
+			}
+
+			CrystalRemodelPool: {
+				DisplayName: Crystal Remodel Pool
+				Tooltip: Right-click to open the UI, put in item and select a remodel recipe and activate it to remodel item
+			}
+
+			EvilRemodelPool: {
+				DisplayName: Evil Remodel Pool
+				Tooltip: Right-click to open the UI, put in item and select a remodel recipe and activate it to remodel item
+			}
+
+			MoonlightLens: {
+				DisplayName: Moonlight Lens
+				Tooltip: "Produce magike at night "
+			}
+
+			FeatheredLens: {
+				DisplayName: Feathered Lens
 				Tooltip: ""
+			}
+
+			HolylightLens: {
+				DisplayName: Holylight Lens
+				Tooltip: "Produce magike in the daytime. "
+			}
+
+			BloodMoonLens: {
+				DisplayName: Blood Moon Lens
+				Tooltip: "Produce magike at night. "
+			}
+
+			IcicleHeart: {
+				DisplayName: Icicle Heart
+				Tooltip:
+					'''
+					A heart that still seems to be beating
+					Summon the Baby Ice Dragon at snow biome, without consuming
+					'''
+			}
+
+			RedJadeCore: {
+				DisplayName: Red Jade Core
+				Tooltip:
+					'''
+					The core part that can generate "firecracker energy"
+					Summon the Rediancie, without consuming
+					'''
+			}
+
+			WaterflowLens: {
+				DisplayName: Waterflow Lens
+				Tooltip: "Produce magike while submerged in water"
 			}
 		}
 
@@ -1078,5 +1125,12 @@ Mods: {
 		}
 
 		Keybinds.套装效果.DisplayName: 套装效果
+
+		MagikeSystem: {
+			MagikeSystem: {
+				learnedMagikeAdvanced: After learning "Scroll: Enhanced Magike Refining"
+				learnedMagikeBase: After learning "Pages: Basic Magike".
+			}
+		}
 	}
 }

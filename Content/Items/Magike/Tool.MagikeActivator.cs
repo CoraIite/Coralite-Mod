@@ -17,8 +17,8 @@ namespace Coralite.Content.Items.Magike
 
         public override void SetDefaults()
         {
-            Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.useAnimation = Item.useTime = 45;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useAnimation = Item.useTime = 15;
             Item.useTurn = true;
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 0, 10, 0);
@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.Magike
                 if (magF.StartWork())
                     CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "已激活");
                 else
-                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "正在工作中！");
+                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "无法激活！");
             }
             else    //没找到
                 CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "未找到魔能工厂");
@@ -48,7 +48,7 @@ namespace Coralite.Content.Items.Magike
         {
             CreateRecipe()
                 .AddIngredient<MagicCrystal>(2)
-                .AddCondition(this.GetLocalization("RecipeCondition"), () => MagikeSystem.learnedMagikeBase)
+                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

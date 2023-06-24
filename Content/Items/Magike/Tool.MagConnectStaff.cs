@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.Magike
                     case 1: //查看模式
                         CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "查看模式");
                         break;
-                        case 2: //断连模式
+                    case 2: //断连模式
                         CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "断连模式");
                         break;
                 }
@@ -127,7 +127,7 @@ namespace Coralite.Content.Items.Magike
         {
             CreateRecipe()
                 .AddIngredient<MagicCrystal>(10)
-                .AddCondition(this.GetLocalization("RecipeCondition"), () => MagikeSystem.learnedMagikeBase)
+                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

@@ -17,10 +17,10 @@ namespace Coralite.Content.Items.Magike
 
         public override void SetDefaults()
         {
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.useAnimation = Item.useTime = 15;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.useAnimation = Item.useTime = 45;
             Item.useTurn = true;
-            Item.mana = 100;
+            Item.mana = 200;
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 0, 10, 0);
             Item.UseSound = CoraliteSoundID.ManaCrystal_Item29;
@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.Magike
 
             if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeContainer magC)) //TODO: 添加本地化
             {
-                if (magC.Charge(1))
+                if (player.statMana > 200 && magC.Charge(1))
                     return true;
 
                 CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "无法充能！");
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.Magike
         {
             CreateRecipe()
                 .AddIngredient<MagicCrystal>(2)
-                .AddCondition(this.GetLocalization("RecipeCondition"), () => MagikeSystem.learnedMagikeBase)
+                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

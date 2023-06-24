@@ -25,7 +25,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public override bool StartWork()
         {
             if (containsItem is not null && !containsItem.IsAir &&
-                chooseRecipe is not null && chooseRecipe.CanRemodel(magike, containsItem.type, containsItem.stack))
+                chooseRecipe is not null && chooseRecipe.CanRemodel(containsItem,magike, containsItem.type, containsItem.stack))
                 return base.StartWork();
 
             return false;
@@ -60,7 +60,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             itemScale = 1;
             itemAlpha = 1;
             if (containsItem is not null && !containsItem.IsAir &&
-                chooseRecipe is not null && chooseRecipe.CanRemodel(magike, containsItem.type, containsItem.stack))
+                chooseRecipe is not null && chooseRecipe.CanRemodel(containsItem,magike, containsItem.type, containsItem.stack))
             {
                 Charge(-chooseRecipe.magikeCost);
                 containsItem.stack -= chooseRecipe.selfRequiredNumber;
@@ -68,7 +68,16 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                     containsItem.TurnToAir();
 
                 Vector2 position = Position.ToWorldCoordinates(24, -8);
-                Item.NewItem(new EntitySource_TileEntity(this), position, chooseRecipe.itemToRemodel.Clone());
+
+                Item item = chooseRecipe.itemToRemodel.Clone();
+                if (item.TryGetGlobalItem(out MagikeItem magikeItem))
+                {
+                    magikeItem.magikeRemodelRequired = -1;
+                    magikeItem.stackRemodelRequired = 0;
+                    magikeItem.condition = null;
+                }
+
+                Item.NewItem(new EntitySource_TileEntity(this), position, item);
                 SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, position);
                 MagikeHelper.SpawnDustOnGenerate(3, 2, Position+new Point16(0,-2), MainColor);
             }

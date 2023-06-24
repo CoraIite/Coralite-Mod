@@ -30,7 +30,6 @@ namespace Coralite.Content.UI
         public static SingleItemSlot selfSlot = new SingleItemSlot();
         public static RemodelImage image = new RemodelImage();
         public static UIList list = new UIList();
-        public static UIList conditionList = new UIList();
 
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
@@ -62,13 +61,6 @@ namespace Coralite.Content.UI
             list.Height.Set(200, 0f);
 
             Append(list);
-            conditionList.OverflowHidden = true;
-            conditionList.ListPadding = 4;
-            conditionList.Top.Set(-44, 0f);
-            conditionList.Left.Set(100+52, 0);
-            conditionList.Width.Set(52, 0f);
-            conditionList.Height.Set(200, 0f);
-            Append(conditionList);
 
             UIScrollbar scrollbar = new UIScrollbar();
             scrollbar.SetView(100f, 1000f);
@@ -77,7 +69,6 @@ namespace Coralite.Content.UI
             scrollbar.HAlign = 1f;
             Append(scrollbar);
             list.SetScrollbar(scrollbar);
-            conditionList.SetScrollbar(scrollbar);
         }
 
         private void SelfSlot_OnLeftClick(UIMouseEvent evt, UIElement listeningElement)
@@ -93,20 +84,20 @@ namespace Coralite.Content.UI
 
         public override void Recalculate()
         {
-            list.Width.Set(52 * scale + 4, 0f);
-            conditionList.Left.Set(100 + 52 * scale, 0);
-            conditionList.Width.Set(52 * scale, 0f);
+            list.Width.Set(52 * 2 * scale + 4, 0f);
 
             selfSlot.SetContainer(remodelPool);
             //寻找当前物品的合成表
             scale = ModContent.GetInstance<MagikeUIConfig>().UIScale;
             if (remodelPool is not null)
             {
-                remodelPool.chooseRecipe = null;
+                if (remodelPool.containsItem is not null && remodelPool.containsItem.IsAir)
+                {
+                    image.showItem = null;
+                    remodelPool.chooseRecipe = null;
+                }
 
                 list.Clear();
-                conditionList.Clear();
-                image.showItem = null;
                 Item item = remodelPool.GetItem();
                 if (item is not null && !item.IsAir)
                 {
@@ -117,8 +108,6 @@ namespace Coralite.Content.UI
                         {
                             RemodelItemButton shower = new RemodelItemButton(recipe);
                             list.Add(shower);
-                            RemodelConditions condition = new RemodelConditions(recipe);
-                            conditionList.Add(condition);
                         }
                     }
                 }
@@ -169,7 +158,7 @@ namespace Coralite.Content.UI
 
         public RemodelImage()
         {
-            Width.Set(52 * MagikeRemodelUI.scale, 0f);
+            Width.Set(52  * MagikeRemodelUI.scale, 0f);
             Height.Set(52 * MagikeRemodelUI.scale, 0f);
         }
 
@@ -230,12 +219,13 @@ namespace Coralite.Content.UI
     /// </summary>
     public class RemodelItemButton : UIElement
     {
+        public bool canRemodel;
         public RemodelRecipe recipe;
 
         public RemodelItemButton(RemodelRecipe recipe)
         {
             this.recipe = recipe;
-            Width.Set(52 * MagikeRemodelUI.scale, 0f);
+            Width.Set(52 * 2 * MagikeRemodelUI.scale, 0f);
             Height.Set(52 * MagikeRemodelUI.scale, 0f);
         }
 
@@ -246,7 +236,7 @@ namespace Coralite.Content.UI
             if (!MagikeRemodelUI.remodelPool.CanGetItem())
                 return;
 
-            if (recipe.CanRemodel(MagikeRemodelUI.remodelPool.magike, MagikeRemodelUI.remodelPool.containsItem.type, MagikeRemodelUI.remodelPool.containsItem.stack))
+            if (recipe.CanRemodel(MagikeRemodelUI.remodelPool.GetItem(), MagikeRemodelUI.remodelPool.magike, MagikeRemodelUI.remodelPool.containsItem.type, MagikeRemodelUI.remodelPool.containsItem.stack))
             {
                 MagikeRemodelUI.image.showItem = recipe.itemToRemodel;
                 MagikeRemodelUI.remodelPool.chooseRecipe = recipe;
@@ -266,12 +256,17 @@ namespace Coralite.Content.UI
 
             Vector2 position = GetDimensions().Position();
             Vector2 center = GetDimensions().Center();
+            float height = GetDimensions().Height;
 
+            //绘制背景框
             Texture2D backTex = TextureAssets.InventoryBack.Value;
-            spriteBatch.Draw(backTex, center, null, drawColor, 0, backTex.Size() / 2, MagikeRemodelUI.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(backTex, position + new Vector2(height, height) / 2, null, drawColor, 0, backTex.Size() / 2, MagikeRemodelUI.scale, SpriteEffects.None, 0);
 
+            #region 绘制物品
             Item showItem = recipe.itemToRemodel;
-            if (showItem != null && !showItem.IsAir)
+            if (showItem is null)
+                return;
+            if (!showItem.IsAir)
             {
                 Main.instance.LoadItem(showItem.type);
                 Texture2D mainTex = TextureAssets.Item[showItem.type].Value; ;
@@ -301,61 +296,30 @@ namespace Coralite.Content.UI
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
 
                 if (showItem.stack > 1)
-                    Utils.DrawBorderString(spriteBatch, showItem.stack.ToString(), center + new Vector2(12, 16), Color.White, MagikeRemodelUI.scale, 1, 0.5f);
+                    Utils.DrawBorderString(spriteBatch, showItem.stack.ToString(), center + new Vector2(12-height/2, 16), Color.White, MagikeRemodelUI.scale, 1, 0.5f);
                 if (IsMouseHovering)
                 {
                     Main.HoverItem = showItem.Clone();
                     Main.hoverItemName = "Coralite: MagikeRemodelRecipe";
                 }
             }
-        }
-    }
+            #endregion
 
-    public class RemodelConditions:UIElement
-    {
-        public bool canRemodel;
-        public RemodelRecipe recipe;
-
-        public RemodelConditions(RemodelRecipe recipe)
-        {
-            Width.Set(52 * MagikeRemodelUI.scale, 0f);
-            Height.Set(52 * MagikeRemodelUI.scale, 0f);
-            this.recipe = recipe;
-        }
-
-        public override void MouseOver(UIMouseEvent evt)
-        {
-
-            base.MouseOver(evt);
-        }
-
-        protected override void DrawSelf(SpriteBatch spriteBatch)
-        {
-            if (recipe is null)
-                return;
-
-            if (IsMouseHovering)
-            {
-                Main.LocalPlayer.mouseInterface = true;
-                string condition = recipe.condition == null ? "" : ("\n" + recipe.condition.Description);
-                Main.instance.MouseText("消耗魔能量: " + recipe.magikeCost.ToString() + condition);
-
-            }
-
-            Vector2 center = GetDimensions().Center();
-
+            //绘制显示条
             Texture2D exTex;
-            bool conditionCanRemodel = recipe.condition == null ? true : recipe.condition.CanRemodel();
+            Item item = MagikeRemodelUI.remodelPool.GetItem();
+            bool stackEnough = item is null ? false : item.stack >= recipe.selfRequiredNumber;
+            bool conditionCanRemodel = recipe.condition == null ? true : recipe.condition.CanRemodel(item);
             bool magikeEnough = MagikeRemodelUI.remodelPool.magike >= recipe.magikeCost;
 
-            canRemodel = conditionCanRemodel && magikeEnough;
+            canRemodel = conditionCanRemodel && magikeEnough && stackEnough;
 
             if (canRemodel)
                 exTex = MagikeRemodelUI.okTex.Value;
             else
                 exTex = MagikeRemodelUI.notOKTex.Value;
 
-            spriteBatch.Draw(exTex, center, null, Color.White, 0, exTex.Size() / 2, 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(exTex, center + new Vector2(height / 2, 0), null, Color.White, 0, exTex.Size() / 2, 1, SpriteEffects.None, 0);
 
         }
     }

@@ -10,6 +10,6 @@ namespace Coralite.Core.Systems.MagikeSystem.RemodelConditions
 
         public string Description => "大师模式以上可重塑";
 
-        public bool CanRemodel() => Main.masterMode;
+        public bool CanRemodel(Item item) => Main.masterMode;
     }
 }
