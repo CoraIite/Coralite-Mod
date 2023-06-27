@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;

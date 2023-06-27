@@ -12,7 +12,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     /// <summary>
     /// 魔能生产器，能够存储，发送和生产魔能，如何生产请自定义
     /// </summary>
-    public abstract class MagikeGenerator : MagikeSender_Line
+    public abstract class MagikeGenerator : MagikeSender_Line, IMagikeGenerator
     {
         public MagikeGenerator(int magikeMax, int connectLenghMax, int howManyCanConnect = 1) : base(magikeMax, connectLenghMax, howManyCanConnect)
         { }
@@ -25,7 +25,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             base.Update();//基类中包含了send方法
         }
 
-        public virtual void Generate(int howMany)
+        public virtual void GenerateAndChargeSelf(int howMany)
         {
             Charge(howMany);
             OnGenerated?.Invoke();
@@ -35,6 +35,24 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// 如何生产魔能
         /// </summary>
         public virtual void Generate() { }
+
+        /// <summary>
+        /// 是否能生产
+        /// </summary>
+        /// <returns></returns>
+        public abstract bool CanGenerate();
+
+        /// <summary>
+        /// 每次生产多少
+        /// </summary>
+        /// <returns></returns>
+        public abstract int HowManyToGenerate { get; }
+
+        /// <summary>
+        /// ！重要！请在这个方法中调用Generate(add)!!!!!!
+        /// </summary>
+        public abstract void OnGenerate(int howMany);
+
     }
 
     public abstract class MagikeGenerator_Normal : MagikeGenerator
@@ -71,23 +89,6 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             active = CanGenerate();
         }
-
-        /// <summary>
-        /// 是否能生产
-        /// </summary>
-        /// <returns></returns>
-        public abstract bool CanGenerate();
-
-        /// <summary>
-        /// 每次生产多少
-        /// </summary>
-        /// <returns></returns>
-        public abstract int HowManyToGenerate { get; }
-
-        /// <summary>
-        /// ！重要！请在这个方法中调用Generate(add)!!!!!!
-        /// </summary>
-        public abstract void OnGenerate(int howMany);
     }
 
     /// <summary>
@@ -106,7 +107,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             if (itemToCosume.stack < 1)
                 itemToCosume.TurnToAir();   //消耗物品并获得魔能
 
-            Generate(howMany);
+            GenerateAndChargeSelf(howMany);
         }
 
         public override bool CanGenerate()=> !itemToCosume.IsAir;

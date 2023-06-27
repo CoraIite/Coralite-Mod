@@ -901,7 +901,51 @@ Mods: {
 
 			WaterflowLens: {
 				DisplayName: Waterflow Lens
-				Tooltip: "Produce magike while submerged in water"
+				Tooltip: Produce magike while bottom submerged in water
+			}
+
+			RedJadeLens: {
+				DisplayName: Red Jade Lens
+				Tooltip: ""
+			}
+
+			RedJadeColumn: {
+				DisplayName: Red Jade Column
+				Tooltip: "Produce magike when subjected to explosions"
+			}
+
+			RedJadeRefractor: {
+				DisplayName: Red Jade Refractor
+				Tooltip: ""
+			}
+
+			RedJadeCluster: {
+				DisplayName: Red Jade Cluster
+				Tooltip: 
+					'''
+					Produce an explosion upon activation
+					Magike cost: 50
+					'''
+			}
+
+			LavaLens: {
+				DisplayName: Lava Lens
+				Tooltip: Produce magike while bottom submerged in lava
+
+			}
+
+			SweetLens: {
+				DisplayName: Sweet Lens
+				Tooltip: Produce magike while bottom submerged in honey
+			}
+
+			CrystalSpotlighter: {
+				DisplayName: Crystal Spotlighter
+				Tooltip: 
+					'''
+					Shoot light beam upon activation
+					Magike cost: 25
+					'''
 			}
 		}
 
@@ -1097,6 +1141,7 @@ Mods: {
 			ShadowCircle_HighSpeedShoot.DisplayName: Shadow Circle_ High Speed Shoot
 			ShadowCircle_MeleeClaw.DisplayName: Shadow Circle_ Melee Claw
 			ShadowCircle_MeleeTrack.DisplayName: Shadow Circle_ Melee Track
+			MagicBeam.DisplayName: Magic Beam
 		}
 
 		Configs: {

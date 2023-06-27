@@ -1,10 +1,9 @@
-using Coralite.Content.Dusts;
 using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.RedJades
@@ -20,6 +19,7 @@ namespace Coralite.Content.Items.RedJades
             Projectile.timeLeft = 10;
 
             Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
             Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 10;
@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override bool? CanHitNPC(NPC target)
         {
-            return Collision.CanHitLine(Projectile.Center,1,1,target.Center,1,1)&&Vector2.Distance(Projectile.Center,target.Center)<200;
+            return Collision.CanHitLine(Projectile.Center, 1, 1, target.Center, 1, 1) && Vector2.Distance(Projectile.Center, target.Center) < 200;
         }
     }
 }

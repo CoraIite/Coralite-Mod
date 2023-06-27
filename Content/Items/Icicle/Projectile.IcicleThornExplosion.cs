@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleThornExplosion:ModProjectile
+    public class IcicleThornExplosion : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -19,7 +19,6 @@ namespace Coralite.Content.Items.Icicle
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
-
         }
 
         public override void OnSpawn(IEntitySource source)

@@ -3,24 +3,72 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
-    public abstract class MagikeSender : MagikeContainer
+    public abstract class MagikeSender : ModTileEntity, IMagikeSender
     {
+        /// <summary> 当前魔能量 </summary>
+        public int magike;
+        /// <summary> 魔能最大值 </summary>
+        public readonly int magikeMax;
+        /// <summary> 当前的装置是否在使用状态 </summary>
+        public bool active;
+
         /// <summary> 每次发送多少，可以自定义 </summary>
         public abstract int HowManyPerSend { get; }
+        public abstract ushort TileType { get; }
 
-        public event Action<MagikeContainer> OnSended;
+        public int Magike => magike;
+        public int MagikeMax => magikeMax;
+        public bool Active => active;
+        public Point16 GetPosition => Position;
 
-        public MagikeSender(int magikeMax) : base(magikeMax)
-        { }
+        public event Action<IMagikeContainer> OnSended;
+        public event Action OnCharged;
+        public event Action OnDisCharged;
+
+        public MagikeSender(int magikeMax)
+        {
+            this.magikeMax = magikeMax;
+        }
 
         public override void Update()
         {
             Send();
         }
+
+        public override bool IsTileValidForEntity(int x, int y)
+        {
+            return Framing.GetTileSafely(x, y).TileType == TileType;
+        }
+
+        public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                NetMessage.SendTileSquare(Main.myPlayer, i, j, TileChangeType.HoneyLava);
+                NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type, 0f, 0, 0, 0);
+                return -1;
+            }
+
+            return Place(i, j);
+        }
+
+
+        public override void SaveData(TagCompound tag)
+        {
+            tag.Add("Magike", magike);
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            magike = tag.GetInt("Magike");
+        }
+
 
         public virtual void Send() { }
 
@@ -30,7 +78,38 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// <returns></returns>
         public abstract bool CanSend();
 
-        public virtual void OnSend(int howMany, MagikeContainer receiver)
+        /// <summary> 限制魔能量，让它不超过上限 </summary>
+        public virtual void Limit()
+        {
+            magike = Math.Clamp(magike, 0, magikeMax);
+        }
+
+        /// <summary>
+        /// 给改魔能容器充能的方法，需要先获取到实例才行
+        /// </summary>
+        /// <param name="howManyMagite">充多少</param>
+        public virtual bool Charge(int howManyMagite)
+        {
+            bool ChargeOrDischarge = howManyMagite >= 0;
+            if (magike >= magikeMax && ChargeOrDischarge)
+                return false;
+
+            if (ChargeOrDischarge)
+            {
+                OnCharged?.Invoke();
+                OnReceiveVisualEffect();
+            }
+            else
+                OnDisCharged?.Invoke();
+
+            magike += howManyMagite;
+            Limit();
+            CheckActive();
+
+            return true;
+        }
+
+        public void OnSend(int howMany, IMagikeContainer receiver)
         {
             Charge(-howMany);
             SendVisualEffect(receiver);
@@ -41,7 +120,19 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// 发送时产生的视觉效果
         /// </summary>
         /// <param name="container"></param>
-        public virtual void SendVisualEffect(MagikeContainer container) { }
+        public virtual void SendVisualEffect(IMagikeContainer container) { }
+
+        public virtual void OnReceiveVisualEffect() { }
+
+        public virtual void CheckActive()
+        {
+            active = magike > 0;
+        }
+
+        public virtual Vector2 GetWorldPosition()
+        {
+            return Position.ToWorldCoordinates(16);
+        }
     }
 
     /// <summary>
@@ -54,7 +145,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// <summary> 距离多少才能连接 </summary>
         public readonly int connectLenghMax;
 
-        public event Action<MagikeContainer> OnConnected;
+        public event Action<IMagikeContainer> OnConnected;
 
         public MagikeSender_Line(int magikeMax, int connectLenghMax, int howManyCanConnect = 1) : base(magikeMax)
         {
@@ -88,10 +179,10 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             for (int i = 0; i < receiverPoints.Length; i++)
             {
                 Point16 position = receiverPoints[i];
-                if (position != Point16.NegativeOne && ByPosition.ContainsKey(position) && ByPosition[position] is MagikeContainer container)
+                if (position != Point16.NegativeOne && ByPosition.ContainsKey(position) && ByPosition[position] is IMagikeContainer container)
                 {
-                    bool overflowOrNot = container.magike + howMany <= container.magikeMax;//是否溢出
-                    bool isZero = container.magike == 0;//接收者是否为0
+                    bool overflowOrNot = (container.Magike + howMany) <= container.MagikeMax;//是否溢出
+                    bool isZero = container.Magike == 0;//接收者是否为0
                     if ((overflowOrNot || isZero) && container.Charge(howMany))//魔能不满时才能发送给接收者，发送后会防止越界情况出现
                     {
                         OnSend(howMany, container);
@@ -113,7 +204,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             {
                 if (receiverPoints[i] != Point16.NegativeOne)
                 {
-                    if (MagikeHelper.TryGetEntityWithTopLeft(receiverPoints[i].X, receiverPoints[i].Y, out MagikeContainer container))
+                    if (MagikeHelper.TryGetEntityWithTopLeft(receiverPoints[i].X, receiverPoints[i].Y, out IMagikeContainer container))
                         SendVisualEffect(container);
                 }
             }
@@ -124,9 +215,9 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// 帮助方法，判断两个魔能容器的距离并根据自身的connectLenghMax决定是否能发送给对方
         /// </summary>
         /// <returns></returns>
-        public virtual bool CanConnect(MagikeContainer container)
+        public virtual bool CanConnect(IMagikeContainer container)
         {
-            return Vector2.Distance(container.Position.ToVector2() * 16, Position.ToVector2() * 16) < connectLenghMax;
+            return Vector2.Distance(container.GetPosition.ToVector2() * 16, Position.ToVector2() * 16) < connectLenghMax;
         }
 
         /// <summary>
@@ -138,7 +229,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// </remarks>
         /// <param name="container"></param>
         /// <returns></returns>
-        public bool ConnectToRecevier(MagikeContainer container)
+        public bool ConnectToRecevier(IMagikeContainer container)
         {
             if (CanConnect(container))
             {
@@ -147,14 +238,14 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 {
                     if (receiverPoints[i] == Point16.NegativeOne)
                     {
-                        receiverPoints[i] = container.Position;
+                        receiverPoints[i] = container.GetPosition;
                         hasSlot = true;
                         break;
                     }
                 }
 
                 if (!hasSlot)
-                    receiverPoints[0] = container.Position;
+                    receiverPoints[0] = container.GetPosition;
 
                 OnConnected?.Invoke(container);
                 return true;
@@ -194,7 +285,5 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                     receiverPoints[i] = Point16.NegativeOne;
             }
         }
-
-
     }
 }

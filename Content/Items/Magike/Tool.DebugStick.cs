@@ -53,18 +53,18 @@ namespace Coralite.Content.Items.Magike
             {
                 default:
                 case 0:
-                    if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeContainer magikeContainer))    //找到了
+                    if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeContainer magC))    //找到了
                     {
-                        magikeContainer.Charge(magikeContainer.magikeMax);
+                        magC.Charge(magC.MagikeMax);
                         CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "已充能");
                     }
                     else
                         CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "未找到容器");
                     break;
                 case 1:
-                    if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeContainer magikeContainer2))    //找到了
+                    if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeContainer magC2))    //找到了
                     {
-                        magikeContainer2.Charge(-magikeContainer2.magikeMax);
+                        magC2.Charge(-magC2.MagikeMax);
                         CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "已清空");
                     }
                     else

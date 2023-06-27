@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 using Coralite.Content.UI;
 using Coralite.Core.Loaders;
 
-namespace Coralite.Core.Prefabs.Tiles
+namespace Coralite.Core.Systems.MagikeSystem.Base
 {
     public abstract class BaseRemodelPool : ModTile
     {

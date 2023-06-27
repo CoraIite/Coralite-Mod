@@ -1,11 +1,9 @@
 ﻿using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
-using System.ComponentModel;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.PlayerDrawLayer;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework;
 
@@ -18,15 +16,15 @@ namespace Coralite.Helpers
             return item.GetGlobalItem<MagikeItem>();
         }
 
-        public static void SpawnDustOnSend(int selfWidth, int selfHeight, Point16 Position, MagikeContainer container, Color dustColor, int dustType = DustID.Teleporter)
+        public static void SpawnDustOnSend(int selfWidth, int selfHeight, Point16 Position, IMagikeContainer container, Color dustColor, int dustType = DustID.Teleporter)
         {
-            Tile tile = Framing.GetTileSafely(container.Position);
+            Tile tile = Framing.GetTileSafely(container.GetPosition);
             TileObjectData data = TileObjectData.GetTileData(tile);
             int xOffset = data == null ? 16 : data.Width * 8;
             int yOffset = data == null ? 24 : data.Height * 8;
 
             Vector2 selfPos = Position.ToWorldCoordinates(selfWidth * 8, selfHeight * 8);
-            Vector2 receiverPos = container.Position.ToWorldCoordinates(xOffset, yOffset);
+            Vector2 receiverPos = container.GetPosition.ToWorldCoordinates(xOffset, yOffset);
             Vector2 dir = selfPos.DirectionTo(receiverPos);
             float length = Vector2.Distance(selfPos, receiverPos);
 
@@ -58,7 +56,7 @@ namespace Coralite.Helpers
         /// <param name="j"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static bool TryGetEntity<T>(int i, int j, out T entity) where T : ModTileEntity
+        public static bool TryGetEntity<T>(int i, int j, out T entity) where T : class
         {
             Tile tile = Framing.GetTileSafely(i, j);
 
@@ -76,7 +74,7 @@ namespace Coralite.Helpers
             return false;
         }
 
-        public static bool TryGetEntityWithTopLeft<T>(int top, int left, out T entity) where T : ModTileEntity
+        public static bool TryGetEntityWithTopLeft<T>(int top, int left, out T entity) where T : class
         {
             Point16 position = new Point16(top, left);
 
@@ -97,8 +95,8 @@ namespace Coralite.Helpers
         /// <param name="j"></param>
         public static void ShowMagikeNumber(int i, int j)
         {
-            if (TryGetEntity(i, j, out MagikeContainer magikeContainer))
-                Main.instance.MouseText(magikeContainer.magike + " / " + magikeContainer.magikeMax, 0, 0, -1, -1, -1, -1);
+            if (TryGetEntity(i, j, out IMagikeContainer magikeContainer))
+                Main.instance.MouseText(magikeContainer.Magike + " / " + magikeContainer.MagikeMax, 0, 0, -1, -1, -1, -1);
         }
     }
 }

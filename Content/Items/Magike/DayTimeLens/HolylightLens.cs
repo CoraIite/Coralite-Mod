@@ -1,8 +1,8 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
-using Coralite.Core.Prefabs.Tiles;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -105,9 +105,9 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
 
             // 一些数学魔法，使其随着时间的推移平稳地上下移动
             Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
-            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out MagikeContainer container))
+            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out IMagikeContainer container))
             {
-                if (container.active)   //如果处于活动状态那么就会上下移动，否则就落在底座上
+                if (container.Active)   //如果处于活动状态那么就会上下移动，否则就落在底座上
                 {
                     int yframe = (int)(6 * Main.GlobalTimeWrappedHourly % 18);
 
@@ -162,12 +162,12 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
 
         public override void OnGenerate(int howMany)
         {
-            Generate(howMany);
+            GenerateAndChargeSelf(howMany);
         }
 
         public override bool CanGenerate() => Main.dayTime;
 
-        public override void SendVisualEffect(MagikeContainer container)
+        public override void SendVisualEffect(IMagikeContainer container)
         {
             MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Color.Orange);
         }

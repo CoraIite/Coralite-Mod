@@ -54,7 +54,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.NewNPCDirect(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BabyIceDragon>());
             //生成蛋壳gore
 
-            if (Main.netMode!=NetmodeID.MultiplayerClient)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 IceEggSpawner.EggDestroyed();
             }

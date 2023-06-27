@@ -8,7 +8,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
-namespace Coralite.Core.Prefabs.Tiles
+namespace Coralite.Core.Systems.MagikeSystem.Base
 {
     public abstract class BaseRefractorTile : ModTile
     {

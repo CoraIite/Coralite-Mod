@@ -9,7 +9,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
-namespace Coralite.Core.Prefabs.Tiles
+namespace Coralite.Core.Systems.MagikeSystem.Base
 {
     public abstract class BaseColumnTile : ModTile
     {
@@ -45,8 +45,8 @@ namespace Coralite.Core.Prefabs.Tiles
             SoundEngine.PlaySound(CoraliteSoundID.GlassBroken_Shatter, new Vector2(i, j) * 16);
             int x = i - frameX / 18;
             int y = j - frameY / 18;
-            if (MagikeHelper.TryGetEntityWithTopLeft(x, y, out MagikeSender_Line generator))
-                generator.Kill(x, y);
+            if (MagikeHelper.TryGetEntityWithTopLeft(x, y, out MagikeSender_Line sender))
+                sender.Kill(x, y);
         }
 
         public override void MouseOver(int i, int j)
@@ -94,9 +94,9 @@ namespace Coralite.Core.Prefabs.Tiles
 
             // 一些数学魔法，使其随着时间的推移平稳地上下移动
             Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
-            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out MagikeContainer container))
+            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out IMagikeContainer container))
             {
-                if (container.active)   //如果处于活动状态那么就会上下移动，否则就落在底座上
+                if (container.Active)   //如果处于活动状态那么就会上下移动，否则就落在底座上
                 {
                     const float TwoPi = (float)Math.PI * 2f;
                     float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);

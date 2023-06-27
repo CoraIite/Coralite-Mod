@@ -76,7 +76,7 @@ namespace Coralite.Content.Items.Magike
                         }
                         else   //第二次左键
                         {
-                            if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeContainer magC))  //找到了，查看是否能连接
+                            if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeContainer magC))  //找到了，查看是否能连接
                             {
                                 if (sender.ConnectToRecevier(magC))  //能连接，建立连接
                                 {

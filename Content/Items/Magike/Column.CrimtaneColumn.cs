@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Prefabs.Tiles;
-using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -10,6 +9,7 @@ using Coralite.Content.Raritys;
 using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
 using System.ComponentModel;
+using Coralite.Core.Systems.MagikeSystem.Base;
 
 namespace Coralite.Content.Items.Magike
 {
@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.Magike
             return false;
         }
 
-        public override void SendVisualEffect(MagikeContainer container)
+        public override void SendVisualEffect(IMagikeContainer container)
         {
             MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Color.Red);
         }

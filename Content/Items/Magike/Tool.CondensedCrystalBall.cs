@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Magike
             Point16 pos = Main.MouseWorld.ToTileCoordinates16();
             Rectangle rectangle = new Rectangle((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
 
-            if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeContainer magC)) //TODO: 添加本地化
+            if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeContainer magC)) //TODO: 添加本地化
             {
                 if (player.statMana > 200 && magC.Charge(1))
                     return true;

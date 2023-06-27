@@ -899,7 +899,50 @@ Mods: {
 
 			WaterflowLens: {
 				DisplayName: 水流透镜
-				Tooltip: "淹没在水中时缓慢生产魔能"
+				Tooltip: 底座淹没在水中时缓慢生产魔能
+			}
+
+			RedJadeLens: {
+				DisplayName: 赤玉透镜
+				Tooltip: "受到爆炸时生产魔能"
+			}
+
+			RedJadeColumn: {
+				DisplayName: 赤玉晶柱
+				Tooltip: "不会被爆炸摧毁"
+			}
+
+			RedJadeRefractor: {
+				DisplayName: 赤玉广角镜
+				Tooltip: "不会被爆炸摧毁"
+			}
+
+			RedJadeCluster: {
+				DisplayName: 赤晶簇
+				Tooltip: 
+					'''
+					激活后产生大爆炸
+					魔能消耗量：50
+					'''
+			}
+
+			LavaLens: {
+				DisplayName: 熔岩透镜
+				Tooltip: "底座淹没在岩浆中时生产魔能"
+			}
+
+			SweetLens: {
+				DisplayName: 甜蜜透镜
+				Tooltip: "底座淹没在蜂蜜中时生产魔能"
+			}
+
+			CrystalSpotlighter: {
+				DisplayName: 晶体炮
+				Tooltip: 
+					'''
+					激活后发射光束
+					魔能消耗量：25
+					'''
 			}
 		}
 
@@ -1095,6 +1138,7 @@ Mods: {
 			ShadowCircle_HighSpeedShoot.DisplayName: 影子狙击
 			ShadowCircle_MeleeClaw.DisplayName: 影子撕裂
 			ShadowCircle_MeleeTrack.DisplayName: 影子追猎者
+			// MagicBeam.DisplayName: Magic Beam
 		}
 
 		Configs: {

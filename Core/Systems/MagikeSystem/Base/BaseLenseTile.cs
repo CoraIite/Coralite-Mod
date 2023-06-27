@@ -11,9 +11,9 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
-namespace Coralite.Core.Prefabs.Tiles
+namespace Coralite.Core.Systems.MagikeSystem.Base
 {
-    public abstract class BaseLensTile:ModTile
+    public abstract class BaseLensTile : ModTile
     {
         public override string Texture => AssetDirectory.MagikeTiles + Name;
         public virtual string TopTextureName => AssetDirectory.MagikeTiles + Name + "_Top";
@@ -96,9 +96,9 @@ namespace Coralite.Core.Prefabs.Tiles
 
             // 一些数学魔法，使其随着时间的推移平稳地上下移动
             Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
-            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out MagikeContainer container))
+            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out IMagikeContainer container))
             {
-                if (container.active)   //如果处于活动状态那么就会上下移动，否则就落在底座上
+                if (container.Active)   //如果处于活动状态那么就会上下移动，否则就落在底座上
                 {
                     const float TwoPi = (float)Math.PI * 2f;
                     float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);

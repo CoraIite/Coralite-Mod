@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Prefabs.Tiles;
-using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Helpers;
 using Terraria.DataStructures;
@@ -14,6 +13,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using static Terraria.ModLoader.ModContent;
+using Coralite.Core.Systems.MagikeSystem.Base;
 
 namespace Coralite.Content.Items.Magike
 {

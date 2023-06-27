@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core.Prefabs.Items;
-using Coralite.Core.Prefabs.Tiles;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -36,7 +36,6 @@ namespace Coralite.Content.Items.Magike.LiquidLens
                 .AddTile(TileID.Anvils)
                 .Register();
         }
-
     }
 
     public class WaterflowLensTile : BaseCostItemLensTile
@@ -56,8 +55,9 @@ namespace Coralite.Content.Items.Magike.LiquidLens
                 16
             };
             TileObjectData.newTile.DrawYOffset = 2;
-            TileObjectData.newTile.LavaDeath = false;
-            //TileObjectData.newTile.WaterPlacement = Terraria.Enums.LiquidPlacement.OnlyInFullLiquid;
+            TileObjectData.newTile.LavaDeath = true;
+            TileObjectData.newTile.WaterDeath = false;
+            TileObjectData.newTile.WaterPlacement = Terraria.Enums.LiquidPlacement.Allowed;
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<WaterflowLensEntity>().Hook_AfterPlacement, -1, 0, true);
 
             TileObjectData.addTile(Type);
@@ -92,16 +92,17 @@ namespace Coralite.Content.Items.Magike.LiquidLens
 
         public override void OnGenerate(int howMany)
         {
-            Generate(howMany);
+            GenerateAndChargeSelf(howMany);
         }
 
         public override bool CanGenerate()
         {
-            Tile tile = Framing.GetTileSafely(Position);
+            Point point = new Point(Position.X, Position.Y + 2);
+            Tile tile = Framing.GetTileSafely(point);
             return tile.LiquidType == LiquidID.Water && tile.LiquidAmount > 128;
         }
 
-        public override void SendVisualEffect(MagikeContainer container)
+        public override void SendVisualEffect(IMagikeContainer container)
         {
             MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Color.Aqua);
         }
@@ -111,5 +112,4 @@ namespace Coralite.Content.Items.Magike.LiquidLens
             MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.Aqua, DustID.FireworksRGB);
         }
     }
-
 }

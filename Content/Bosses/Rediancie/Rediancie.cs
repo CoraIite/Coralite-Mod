@@ -503,9 +503,9 @@ namespace Coralite.Content.Bosses.Rediancie
                             else
                                 NPC.velocity.Y *= 0.96f;
 
-                            if (Timer % 5 == 0 && Main.netMode != NetmodeID.Server)
+                            if (Timer % 5 == 0)
                             {
-                                int count = (int)Timer / 25;
+                                int count = Timer / 25;
                                 for (int i = 0; i < count; i++)
                                 {
                                     Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);

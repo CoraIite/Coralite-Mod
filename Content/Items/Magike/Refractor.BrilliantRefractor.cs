@@ -1,8 +1,8 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
-using Coralite.Core.Prefabs.Tiles;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Terraria;
@@ -89,7 +89,7 @@ namespace Coralite.Content.Items.Magike
             return false;
         }
 
-        public override void SendVisualEffect(MagikeContainer container)
+        public override void SendVisualEffect(IMagikeContainer container)
         {
             MagikeHelper.SpawnDustOnSend(1, 2, Position, container, Coralite.Instance.MagicCrystalPink);
         }
