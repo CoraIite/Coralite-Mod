@@ -8,7 +8,6 @@ using Coralite.Core.Prefabs.Items;
 using Coralite.Content.Raritys;
 using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
-using System.ComponentModel;
 using Coralite.Core.Systems.MagikeSystem.Base;
 
 namespace Coralite.Content.Items.Magike

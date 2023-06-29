@@ -38,11 +38,6 @@ namespace Coralite.Content.Tiles.RedJades
             num = fail ? 1 : 3;
         }
 
-        public override void KillMultiTile(int x, int y, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(x, y), x * 16, y * 16, 48, 48, ModContent.ItemType<Items.RedJades.MagicCraftStation>());
-        }
-
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Main.tile[i, j];

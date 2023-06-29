@@ -24,11 +24,6 @@ namespace Coralite.Content.Tiles.RedJades
             num = fail ? 1 : 3;
         }
 
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<Items.RedJades.RedJadeToilet>());
-        }
-
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
         {
             return settings.player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance); // 避免能够从远距离触发它

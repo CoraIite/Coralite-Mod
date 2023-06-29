@@ -53,7 +53,6 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            //Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */);
             Chest.DestroyChest(i, j);
         }
 

@@ -135,6 +135,5 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 containsItem = item;
             }
         }
-
     }
 }

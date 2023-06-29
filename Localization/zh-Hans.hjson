@@ -904,22 +904,22 @@ Mods: {
 
 			RedJadeLens: {
 				DisplayName: 赤玉透镜
-				Tooltip: "受到爆炸时生产魔能"
+				Tooltip: 受到爆炸时生产魔能
 			}
 
 			RedJadeColumn: {
 				DisplayName: 赤玉晶柱
-				Tooltip: "不会被爆炸摧毁"
+				Tooltip: 不会被爆炸摧毁
 			}
 
 			RedJadeRefractor: {
 				DisplayName: 赤玉广角镜
-				Tooltip: "不会被爆炸摧毁"
+				Tooltip: 不会被爆炸摧毁
 			}
 
 			RedJadeCluster: {
 				DisplayName: 赤晶簇
-				Tooltip: 
+				Tooltip:
 					'''
 					激活后产生大爆炸
 					魔能消耗量：50
@@ -928,21 +928,56 @@ Mods: {
 
 			LavaLens: {
 				DisplayName: 熔岩透镜
-				Tooltip: "底座淹没在岩浆中时生产魔能"
+				Tooltip: 底座淹没在岩浆中时生产魔能
 			}
 
 			SweetLens: {
 				DisplayName: 甜蜜透镜
-				Tooltip: "底座淹没在蜂蜜中时生产魔能"
+				Tooltip: 底座淹没在蜂蜜中时生产魔能
 			}
 
 			CrystalSpotlighter: {
 				DisplayName: 晶体炮
-				Tooltip: 
+				Tooltip:
 					'''
 					激活后发射光束
 					魔能消耗量：25
 					'''
+			}
+
+			OceanLens: {
+				// DisplayName: Ocean Lens
+				// Tooltip: ""
+			}
+
+			BrilliantQuadprism: {
+				// DisplayName: Brilliant Quadprism
+				// Tooltip: ""
+			}
+
+			CrimtaneTriprism: {
+				// DisplayName: Crimtane Triprism
+				// Tooltip: ""
+			}
+
+			DemoniteTriprism: {
+				// DisplayName: Demonite Triprism
+				// Tooltip: ""
+			}
+
+			RedJadeDiprism: {
+				// DisplayName: Red Jade Diprism
+				// Tooltip: ""
+			}
+
+			Basalt: {
+				// DisplayName: Basalt
+				// Tooltip: ""
+			}
+
+			MagikeCrystalBlock: {
+				// DisplayName: Magike Crystal Block
+				// Tooltip: ""
 			}
 		}
 

@@ -19,10 +19,14 @@ namespace Coralite
         public readonly Color MagicCrystalPink;
         public readonly Color CrystallineMagikePurple;
 
+
+
+
         private List<IOrderedLoadable> loadCache;
 
         public NoSmoother NoSmootherInstance;
         public HeavySmoother  HeavySmootherInstance;
+
 
         //单例模式！
         public static Coralite Instance { get; private set; }

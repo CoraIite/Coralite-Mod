@@ -911,7 +911,7 @@ Mods: {
 
 			RedJadeColumn: {
 				DisplayName: Red Jade Column
-				Tooltip: "Produce magike when subjected to explosions"
+				Tooltip: Produce magike when subjected to explosions
 			}
 
 			RedJadeRefractor: {
@@ -921,7 +921,7 @@ Mods: {
 
 			RedJadeCluster: {
 				DisplayName: Red Jade Cluster
-				Tooltip: 
+				Tooltip:
 					'''
 					Produce an explosion upon activation
 					Magike cost: 50
@@ -931,7 +931,6 @@ Mods: {
 			LavaLens: {
 				DisplayName: Lava Lens
 				Tooltip: Produce magike while bottom submerged in lava
-
 			}
 
 			SweetLens: {
@@ -941,11 +940,46 @@ Mods: {
 
 			CrystalSpotlighter: {
 				DisplayName: Crystal Spotlighter
-				Tooltip: 
+				Tooltip:
 					'''
 					Shoot light beam upon activation
 					Magike cost: 25
 					'''
+			}
+
+			OceanLens: {
+				DisplayName: Ocean Lens
+				Tooltip: ""
+			}
+
+			BrilliantQuadprism: {
+				DisplayName: Brilliant Quadprism
+				Tooltip: ""
+			}
+
+			CrimtaneTriprism: {
+				DisplayName: Crimtane Triprism
+				Tooltip: ""
+			}
+
+			DemoniteTriprism: {
+				DisplayName: Demonite Triprism
+				Tooltip: ""
+			}
+
+			RedJadeDiprism: {
+				DisplayName: Red Jade Diprism
+				Tooltip: ""
+			}
+
+			Basalt: {
+				DisplayName: Basalt
+				Tooltip: ""
+			}
+
+			MagikeCrystalBlock: {
+				DisplayName: Magike Crystal Block
+				Tooltip: ""
 			}
 		}
 

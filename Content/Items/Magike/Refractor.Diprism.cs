@@ -11,7 +11,6 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
@@ -49,6 +48,7 @@ namespace Coralite.Content.Items.Magike
                 16,
                 16
             };
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<DiprismEntity>().Hook_AfterPlacement, -1, 0, true);
 
@@ -93,12 +93,12 @@ namespace Coralite.Content.Items.Magike
             {
                 if (container.Active)   //如果处于活动状态那么就会上下移动，否则就落在底座上
                 {
-                    const float TwoPi = (float)Math.PI * 2f;
+                    const float TwoPi = (float)Math.PI * 4f;
                     float offset = MathF.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
                     drawPos += new Vector2(0f, offset * 2f);
                 }
                 else
-                    drawPos += new Vector2(0, halfHeight - 16);
+                    drawPos += new Vector2(0, halfHeight - 8);
             }
 
             // 绘制主帖图
@@ -138,5 +138,4 @@ namespace Coralite.Content.Items.Magike
             MagikeHelper.SpawnDustOnGenerate(1, 2, Position, Coralite.Instance.MagicCrystalPink);
         }
     }
-
 }

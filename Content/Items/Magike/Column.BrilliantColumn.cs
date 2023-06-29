@@ -7,7 +7,6 @@ using Terraria;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Content.Raritys;
 using Coralite.Core.Systems.MagikeSystem;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Coralite.Core.Systems.MagikeSystem.Base;
 

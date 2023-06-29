@@ -22,8 +22,8 @@ namespace Coralite.Content.Items.Icicle
         {
             Item.width = Item.height = 40;
             Item.damage = 23;
-            Item.useTime = 24;
-            Item.useAnimation = 24;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
             Item.knockBack = 2f;
 
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -41,13 +41,13 @@ namespace Coralite.Content.Items.Icicle
         {
             if (useCount == 3)
             {
-                Item.useTime = 18;
-                Item.useAnimation = 18;
+                Item.useTime = 16;
+                Item.useAnimation = 16;
             }
             else
             {
-                Item.useTime = 24;
-                Item.useAnimation = 24;
+                Item.useTime = 20;
+                Item.useAnimation = 20;
             }
             return base.CanUseItem(player);
         }

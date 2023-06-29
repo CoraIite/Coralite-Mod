@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.RedJades;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

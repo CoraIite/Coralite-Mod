@@ -1,5 +1,7 @@
 ﻿using Terraria.ModLoader;
 using Terraria;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
 
 namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 {
@@ -20,9 +22,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         /// <summary> 这个附魔词条应该在哪个位置上 </summary>
         public readonly int whichSlot;
 
-        public abstract float EnchantChance { get; }
-
-        public string Description { get; }
+        public virtual string Description { get; }
 
         public EnchantData(int level, int whichSlot)
         {
@@ -30,7 +30,23 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
             this.whichSlot = whichSlot;
         }
 
-        public abstract void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage);
+        public virtual void OnEnchant(Item item) { }
+
+        //基础加成部分
+        public virtual void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage) { }
+        public virtual void UpdateEquip(Item item, Player player) { }
+        public virtual void UpdateAccessory(Item item, Player player, bool hideVisual) { }
+
+        //其他加成部分
+        public virtual float UseSpeedMultiplier(Item item, Player player) => 1;
+        public virtual void ModifyManaCost(Item item, Player player, ref float reduce, ref float mult) { }
+        public virtual void ModifyItemScale(Item item, Player player, ref float scale) { }
+        public virtual void ModifyWeaponCrit(Item item, Player player, ref float crit) { }
+        public virtual void ModifyWeaponKnockback(Item item, Player player, ref StatModifier knockback) { }
+
+        //特殊加成部分
+        public virtual void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) { }
+        public virtual void Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) { }
     }
 
     public abstract class BasicBonusEnchant : EnchantData
@@ -38,19 +54,37 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public BasicBonusEnchant(int level) : base(level, 0)
         { }
 
+        public override sealed float UseSpeedMultiplier(Item item, Player player) => 1f;
+        public override sealed void ModifyManaCost(Item item, Player player, ref float reduce, ref float mult) { }
+        public override sealed void ModifyItemScale(Item item, Player player, ref float scale) { }
+        public override sealed void ModifyWeaponCrit(Item item, Player player, ref float crit) { }
+        public override sealed void ModifyWeaponKnockback(Item item, Player player, ref StatModifier knockback) { }
 
 
+        public override sealed void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) { }
+        public override sealed void Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) { }
     }
 
     public abstract class OtherBonusEnchant : EnchantData
     {
         public OtherBonusEnchant(int level) : base(level, 1)
         { }
+
+        public override sealed void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) { }
+        public override sealed void Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) { }
+
     }
 
     public abstract class SpecialEnchant : EnchantData
     {
         public SpecialEnchant(int level) : base(level, 2)
         { }
+
+        public override sealed float UseSpeedMultiplier(Item item, Player player) => 1f;
+        public override sealed void ModifyManaCost(Item item, Player player, ref float reduce, ref float mult) { }
+        public override sealed void ModifyItemScale(Item item, Player player, ref float scale) { }
+        public override sealed void ModifyWeaponCrit(Item item, Player player, ref float crit) { }
+        public override sealed void ModifyWeaponKnockback(Item item, Player player, ref StatModifier knockback) { }
+
     }
 }

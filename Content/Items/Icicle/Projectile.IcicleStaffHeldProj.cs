@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.Icicle
              * 先根据玩家方向以及手的方向得到初始位置，然后在初始位置稍微转两圈
              * 然后转向鼠标方向
              */
-            if (Timer > 40)
+            if (Timer > 35)
                 return;
 
             do
@@ -80,18 +80,18 @@ namespace Coralite.Content.Items.Icicle
                 }
 
                 //旋转中心点，旋转角度，看上去像挥舞过去一样
-                Projectile.rotation = Projectile.rotation.AngleLerp(Rotate, 0.2f);
+                Projectile.rotation = Projectile.rotation.AngleLerp(Rotate, 0.3f);
                 Length += 0.8f;
                 Projectile.Center = Owner.Center + (Projectile.rotation-0.785f).ToRotationVector2() * Length;
 
                 float factor = 1 - ((Timer - SWING_TIME) / 15);
                 visualEffectScale = factor * 0.5f;
 
-                if (Main.myPlayer == Projectile.owner && Timer == 40)
+                if (Main.myPlayer == Projectile.owner && (int)Timer == 35)
                 {
                     Shoot = 1f;
                     Projectile.netUpdate = true;
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.One) * 14f,
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.One) * 16f,
                         ModContent.ProjectileType<IcicleMagicBall>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 }
 

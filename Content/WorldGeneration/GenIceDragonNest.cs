@@ -22,9 +22,10 @@ namespace Coralite.Content.WorldGeneration
 
         public void GenIceDragonNest(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = "制作冰龙巢穴";
+            progress.Message = "正在制作冰龙巢穴";
+            progress.Set(0);
             //随机选择雪原上的某个地方
-            int nestCenter_x = GenVars.snowOriginLeft+WorldGen.genRand.Next(GenVars.snowOriginRight - GenVars.snowOriginLeft);
+            int nestCenter_x = GenVars.snowOriginLeft + WorldGen.genRand.Next(GenVars.snowOriginRight - GenVars.snowOriginLeft);
             int nestCenter_y = 10;
 
             for (; nestCenter_y < Main.worldSurface; nestCenter_y++)
@@ -36,9 +37,10 @@ namespace Coralite.Content.WorldGeneration
 
             nestCenter_y += 5;
 
-            Texture2D nestTex = ModContent.Request<Texture2D>(AssetDirectory.IceNest + "IceNest", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.IceNest + "IceNestClear", AssetRequestMode.ImmediateLoad).Value;
-            
+            int whichOne = WorldGen.genRand.Next(3);
+            Texture2D nestTex = ModContent.Request<Texture2D>(AssetDirectory.IceNest + "IceNest" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
+            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.IceNest + "IceNestClear" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
+
             int genOrigin_x = nestCenter_x - clearTex.Width / 2;
             int genOrigin_y = nestCenter_y - clearTex.Height / 2;
 
@@ -63,6 +65,7 @@ namespace Coralite.Content.WorldGeneration
                 await GenIceNestWithTex(clearTex, nestTex, clearDic, nestDic, genOrigin_x, genOrigin_y);
             }).Wait();
 
+            progress.Set(0.75);
             //生成装饰物
             WorldGenHelper.PlaceOnTopDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.Stalactite, 10, 0);
             WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.SmallPiles, 10, 5);

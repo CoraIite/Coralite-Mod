@@ -132,15 +132,15 @@ namespace Coralite.Content.Items.Icicle
 
                     if (Timer == 0)
                     {
-                        Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.UnitY) * 10f;
+                        Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.UnitY) * 16f;
                         Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
                         break;
                     }
 
-                    if (Timer < 40)
+                    if (Timer < 30)
                         break;
 
-                    if (Timer < 50)
+                    if (Timer < 40)
                     {
                         Projectile.velocity *= 0.96f;
                         Projectile.rotation = Helper.Lerp(Projectile.rotation, 0, 0.1f);

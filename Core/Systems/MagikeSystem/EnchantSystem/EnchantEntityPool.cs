@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 {
@@ -6,43 +7,24 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
     public class EnchantEntityPool
     {
         //一个附魔对象池，内部包含一堆附魔
-        private readonly List<BasicBonusEnchant> _basicData;
-        private readonly List<OtherBonusEnchant> _othersData;
-        private readonly List<SpecialEnchant> _specialData;
+        private readonly List<EnchantData> _datas;
 
         public EnchantEntityPool()
         {
-            _basicData = new List<BasicBonusEnchant>();
-            _othersData = new List<OtherBonusEnchant>();
-            _specialData = new List<SpecialEnchant>();
+            _datas = new List<EnchantData>();
         }
 
-        public EnchantEntityPool AddBasicBonus(BasicBonusEnchant newEnchant)
+        public EnchantEntityPool AddBasicBonus(EnchantData newEnchant)
         {
-            _basicData.Add(newEnchant);
+            _datas.Add(newEnchant);
             return this;
         }
 
-        public float GetAllChance(int whichSlot)
+        public IEnumerable<EnchantData> GetPool(int whichSlot,int level)
         {
-            float all = 0;
-            switch (whichSlot)
-            {
-                default:
-                case 0: //基础
-                    foreach (var item in _basicData)
-                        all += item.EnchantChance;
-                    break;
-                case 1: //其他
-                    foreach (var item in _othersData)
-                        all += item.EnchantChance;
-                    break;
-                case 2: //特殊
-                    foreach (var item in _specialData)
-                        all += item.EnchantChance;
-                    break;
-            }
-            return all;
+            return from d in _datas
+                   where d.whichSlot == whichSlot && d.level == level
+                   select d;
         }
     }
 }

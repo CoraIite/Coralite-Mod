@@ -1,5 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Coralite.Core;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent.Drawing;
+using Terraria.ID;
 using Terraria.ObjectData;
 
 namespace Coralite.Helpers
@@ -22,13 +26,21 @@ namespace Coralite.Helpers
 
         public static Vector2 FindTopLeft(int x, int y)
         {
-            Tile tile = Main.tile[x, y]; 
-            if (tile == null) 
+            Tile tile = Main.tile[x, y];
+            if (tile == null)
                 return new Vector2(x, y);
             TileObjectData data = TileObjectData.GetTileData(tile.TileType, 0);
             x -= tile.TileFrameX / 18 % data.Width;
             y -= tile.TileFrameY / 18 % data.Height;
             return new Vector2(x, y);
         }
+
+
+
+
+
+
+
+
     }
 }

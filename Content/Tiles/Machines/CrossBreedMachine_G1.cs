@@ -59,7 +59,6 @@ namespace Coralite.Content.Tiles.Machines
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i * 16, j * 16), ModContent.ItemType<CrossBreedMachine_G1Item>());
             if (BotanicalHelper.TryGetTileEntityAs<CrossBreedMachineEntity>(i, j, out CrossBreedMachineEntity entity))
                 entity.Kill(i, j);
 

@@ -19,12 +19,6 @@ namespace Coralite.Core.Prefabs.Tiles
         public const int FrameHeight = 18 * 4;
         public const int HorizontalFrames = 1;
         public const int VerticalFrames = 1;
-        public readonly int itemDrop;
-
-        public BaseBossRelicTile(int itemDrop)
-        {
-            this.itemDrop = itemDrop;
-        }
 
         public abstract string RelicTextureName { get; }
 
@@ -59,11 +53,6 @@ namespace Coralite.Core.Prefabs.Tiles
         public override void Unload()
         {
             RelicTexture = null;
-        }
-
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, itemDrop);
         }
 
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)

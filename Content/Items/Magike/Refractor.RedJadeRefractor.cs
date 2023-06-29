@@ -43,6 +43,7 @@ namespace Coralite.Content.Items.Magike
                 16,
                 16
             };
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<RedJadeRefractorEntity>().Hook_AfterPlacement, -1, 0, true);
 
