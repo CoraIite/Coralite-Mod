@@ -981,6 +981,16 @@ Mods: {
 				DisplayName: Magike Crystal Block
 				Tooltip: ""
 			}
+
+			CrystalBasalt: {
+				DisplayName: Crystal Basalt
+				Tooltip: ""
+			}
+
+			WorldGenTester: {
+				DisplayName: World Gen Tester
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {

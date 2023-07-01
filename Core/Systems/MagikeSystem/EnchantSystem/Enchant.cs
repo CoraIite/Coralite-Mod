@@ -11,20 +11,36 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
         public Enchant()
         {
-            datas = new EnchantData[3];
+            datas = new EnchantData[3]
+            {
+                new NothingEnchant(0),
+                new NothingEnchant(1),
+                new NothingEnchant(2)
+            };
+        }
+
+        public enum Level
+        {
+            Nothing,
+            One,
+            Two,
+            Three,
+            Four,
+            Five,
+            Max
         }
     }
 
     public abstract class EnchantData
     {
         /// <summary> 当前的词条等级 </summary>
-        public int level;
+        public Enchant.Level level;
         /// <summary> 这个附魔词条应该在哪个位置上 </summary>
         public readonly int whichSlot;
 
         public virtual string Description { get; }
 
-        public EnchantData(int level, int whichSlot)
+        public EnchantData(Enchant.Level level, int whichSlot)
         {
             this.level = level;
             this.whichSlot = whichSlot;
@@ -51,7 +67,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
     public abstract class BasicBonusEnchant : EnchantData
     {
-        public BasicBonusEnchant(int level) : base(level, 0)
+        public BasicBonusEnchant(Enchant.Level level) : base(level, 0)
         { }
 
         public override sealed float UseSpeedMultiplier(Item item, Player player) => 1f;
@@ -67,7 +83,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
     public abstract class OtherBonusEnchant : EnchantData
     {
-        public OtherBonusEnchant(int level) : base(level, 1)
+        public OtherBonusEnchant(Enchant.Level level) : base(level, 1)
         { }
 
         public override sealed void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) { }
@@ -77,7 +93,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
     public abstract class SpecialEnchant : EnchantData
     {
-        public SpecialEnchant(int level) : base(level, 2)
+        public SpecialEnchant(Enchant.Level level) : base(level, 2)
         { }
 
         public override sealed float UseSpeedMultiplier(Item item, Player player) => 1f;
@@ -86,5 +102,11 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public override sealed void ModifyWeaponCrit(Item item, Player player, ref float crit) { }
         public override sealed void ModifyWeaponKnockback(Item item, Player player, ref StatModifier knockback) { }
 
+    }
+
+    public class NothingEnchant : EnchantData
+    {
+        public NothingEnchant(int whichSlot) : base(0,whichSlot)  {  }
+        public override string Description => "无加成";
     }
 }

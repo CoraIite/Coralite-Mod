@@ -1,8 +1,9 @@
-﻿using Coralite.Content.UI;
-using Coralite.Core.Loaders;
+﻿using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -19,19 +20,54 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public abstract Color MainColor { get; }
 
+        public override bool CanWork()
+        {
+            if (containsItem is not null && !containsItem.IsAir &&
+                (containsItem.damage > 0 || containsItem.accessory || containsItem.defense > 0) &&
+                magike >= GetMagikeCost(this, containsItem))
+            {
+                return base.CanWork();
+            }
+
+            return false;
+        }
+
         public override void WorkFinish()
         {
+            
             if (containsItem is not null && !containsItem.IsAir &&
                 (containsItem.damage > 0 || containsItem.accessory || containsItem.defense > 0))
             {
+                int cost = GetMagikeCost(this, containsItem);
+                if (magike < cost)
+                    return;
 
+                int whichslot = Main.rand.NextFromList(0, 0, 0, 0, 0, 0, 1, 1, 1, 2);//60%概率为0，30概率为1，10%概率为2
+
+                Enchant enchant = containsItem.GetGlobalItem<MagikeItem>().Enchant;
+                if (enchant.datas == null)
+                    return;
+
+                //检测当前的注魔是否为最高等级，如果为最高等级就判断一下其他的等级
+                LevelCheck(enchant, whichslot, out int checkedSlot);
+                //获取注魔词条池
+                EnchantEntityPool pool = GetEnchantPool(containsItem);
+                //获取子注魔词条池
+                IEnumerable<EnchantData> sonPool = pool.GetPool(checkedSlot, GetLevel(enchant.datas[checkedSlot].level));
+                if (!sonPool.Any())
+                    return;
+
+                //从子词条池中随机挑选一个
+                EnchantData finalData = sonPool.OrderBy(d => Guid.NewGuid()).FirstOrDefault();
+                enchant.datas[finalData.whichSlot] = finalData;
+
+                Charge(-cost);
                 Vector2 position = Position.ToWorldCoordinates(24, -8);
 
                 SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, position);
                 MagikeHelper.SpawnDustOnGenerate(3, 2, Position + new Point16(0, -2), MainColor);
             }
         }
-
 
         public virtual bool CanInsertItem(Item item)
         {
@@ -78,5 +114,91 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             }
         }
 
+
+
+
+
+
+        public static int GetMagikeCost(IMagikeContainer container,Item item)
+        {
+            return item.rare switch
+            {
+                ItemRarityID.White => 50,
+                ItemRarityID.Blue=>100,
+                ItemRarityID.Green => 150,
+                ItemRarityID.Orange => 200,
+                ItemRarityID.LightRed => 300,
+                ItemRarityID.Pink => 400,
+                ItemRarityID.LightPurple => 600,
+                ItemRarityID.Lime => 800,
+                ItemRarityID.Yellow => 1000,
+                ItemRarityID.Cyan => 1200,
+                ItemRarityID.Red => 1600,
+                ItemRarityID.Purple => 2000,
+
+                _ =>container.MagikeMax
+            };
+        }
+
+        public static void LevelCheck(Enchant enchant,int currentSlot,out int checkedSlot)
+        {
+            EnchantData currentData = enchant.datas[currentSlot];
+            if (currentData.level == Enchant.Level.Max)
+            {
+                IEnumerable<EnchantData> otherData = from d in enchant.datas
+                                                     where d.whichSlot != currentData.whichSlot
+                                                     select d;
+
+                foreach (var data in otherData)
+                {
+                    if (data.level != Enchant.Level.Max)
+                    {
+                        checkedSlot = data.whichSlot;
+                        return;
+                    }
+                }
+            }
+
+            checkedSlot = currentSlot;
+        }
+
+        public static EnchantEntityPool GetEnchantPool(Item item)
+        {
+            if (item.ModItem is ISpecialEnchantable special)
+                return special.GetEntityPool();
+
+            if (EnchantEntityPools.TryGetSlecialEnchantPool(item, out EnchantEntityPool pool))
+                return pool;
+
+            if (item.accessory)
+                return EnchantEntityPools.accessoryPool;
+
+            if (item.defense > 0)
+                return EnchantEntityPools.armorPool;
+
+            return EnchantEntityPools.weaponPool;
+        }
+
+        public static Enchant.Level GetLevel(Enchant.Level currentLevel)
+        {
+            switch (currentLevel)
+            {
+                default:
+                case Enchant.Level.Nothing:
+                    return Enchant.Level.One;
+                case Enchant.Level.One:
+                    return Enchant.Level.Two;
+                case Enchant.Level.Two:
+                    return Enchant.Level.Three;
+                case Enchant.Level.Three:
+                    return Enchant.Level.Four;
+                case Enchant.Level.Four:
+                    return Enchant.Level.Five;
+                case Enchant.Level.Five:
+                    return Enchant.Level.Max;
+                case Enchant.Level.Max:
+                    return Enchant.Level.Max;
+            }
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike
         {
             Point16 pos = Main.MouseWorld.ToTileCoordinates16();
             Rectangle rectangle = new Rectangle((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
-
+            Main.NewText(pos);
             if (player.altFunctionUse==2)
             {
                 mode++;

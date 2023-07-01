@@ -2,8 +2,6 @@
 using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
-using Coralite.Helpers;
-using System.Collections.Generic;
 
 namespace Coralite.Content.Tiles.Magike
 {
@@ -13,6 +11,9 @@ namespace Coralite.Content.Tiles.Magike
 
         public override void SetStaticDefaults()
         {
+            Main.tileLighted[Type] = true;
+            Main.tileShine2[Type] = true;
+            Main.tileShine[Type] = 600;
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
             //Main.tileMerge[Type][ModContent.TileType<BasaltTile>()] = true;
@@ -28,6 +29,13 @@ namespace Coralite.Content.Tiles.Magike
         {
             TileFraming.CustomMergeFrame(i, j, Type, ModContent.TileType<BasaltTile>(), true, true, false);
             return false;
+        }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.1f;
+            g = 0.05f;
+            b = 0.1f;
         }
 
     }

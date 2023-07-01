@@ -8,6 +8,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
     {
         public void AddMagikeRemodelRecipe()
         {
+            //石头
+            AddRemodelRecipe(ItemID.StoneBlock, 1, ItemID.CopperOre);
+            AddRemodelRecipe(ItemID.StoneBlock, 1, ItemID.TinOre);
+
             //铜和锡
             AddRemodelRecipe(ItemID.CopperOre, 1, ItemID.IronOre);
             AddRemodelRecipe(ItemID.CopperOre, 1, ItemID.LeadOre);

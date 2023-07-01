@@ -21,6 +21,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.Bone, 150, ItemID.BonePickaxe, selfRequiredNumber: 20);
             AddRemodelRecipe(ItemID.Bone, 150, ItemID.BoneSword, selfRequiredNumber: 20);
 
+            //琥珀
+            AddRemodelRecipe(ItemID.Amber, 150, ItemID.AmberMosquito, selfRequiredNumber: 99);
+
         }
     }
 }

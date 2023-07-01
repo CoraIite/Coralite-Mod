@@ -10,6 +10,9 @@ namespace Coralite.Core
      * 部分码其实需要改一改，比方说没什么意义的额外补充贴图
      * 但是.......改起来难度过于地高了，所以还算放弃了
      */
+
+    //TODO: 增加在改变自身进入到CustomMergeConditionalTree方法中之前检测融合的物块的各种半砖或斜坡
+
     public class TileFraming:ModSystem
     {
         public static bool[][] tileMergeTypes;
@@ -23,6 +26,7 @@ namespace Coralite.Core
             }
 
             tileMergeTypes[TileID.Dirt][ModContent.TileType<BasaltTile>()] = true;
+            //tileMergeTypes[ModContent.TileType<BasaltTile>()][ModContent.TileType<CrystalBasaltTile>()] = true;
             tileMergeTypes[ModContent.TileType<BasaltTile>()][ModContent.TileType<MagikeCrystalBlockTile>()] = true;
         }
 
@@ -51,30 +55,22 @@ namespace Coralite.Core
         private static Similarity GetSimilarity(Tile check, int myType, int mergeType)
         {
             if (!check.HasTile)
-            {
-                return TileFraming.Similarity.None;
-            }
-            if ((int)(check.TileType) == myType || Main.tileMerge[myType][(int)(check.TileType)])
-            {
-                return TileFraming.Similarity.Same;
-            }
-            if ((int)(check.TileType) == mergeType)
-            {
-                return TileFraming.Similarity.MergeLink;
-            }
-            return TileFraming.Similarity.None;
+                return Similarity.None;
+            if (check.TileType == myType || Main.tileMerge[myType][check.TileType])
+                return Similarity.Same;
+            if (check.TileType == mergeType)
+                return Similarity.MergeLink;
+
+            return Similarity.None;
         }
 
         public static void CustomMergeFrame(int x, int y, int myType, int mergeType, bool myTypeBrimFrame = false, bool mergeTypeBrimFrame = false, bool overrideBrimStates = false)
         {
-            if (x < 0 || x >= Main.maxTilesX)
-            {
+             if (x < 0 || x >= Main.maxTilesX)
                 return;
-            }
             if (y < 0 || y >= Main.maxTilesY)
-            {
                 return;
-            }
+
             bool forceSameUp = false;
             bool forceSameDown = false;
             bool forceSameLeft = false;
@@ -83,520 +79,518 @@ namespace Coralite.Core
             Tile south = Main.tile[x, y + 1];
             Tile west = Main.tile[x - 1, y];
             Tile east = Main.tile[x + 1, y];
-            bool flag;
-            bool flag2;
-            bool flag3;
-            if (north != null && north.HasTile && tileMergeTypes[north.TileType ][myType])
-                CustomMergeFrameExplicit(x, y - 1, north.TileType, myType, out flag, out flag2, out flag3, out forceSameUp, false, false, false, false, false, mergeTypeBrimFrame, true);
-            if (west != null && west.HasTile && tileMergeTypes[west.TileType ][myType])
-                CustomMergeFrameExplicit(x - 1, y, west.TileType, myType, out flag3, out flag2, out forceSameLeft, out flag, false, false, false, false, false, mergeTypeBrimFrame, true);
-            if (east != null && east.HasTile && tileMergeTypes[east.TileType][myType])
-                CustomMergeFrameExplicit(x + 1, y, (int)(east.TileType), myType, out flag, out forceSameRight, out flag2, out flag3, false, false, false, false, false, mergeTypeBrimFrame, true);
-            if (south != null && south.HasTile && tileMergeTypes[south.TileType ][myType])
-                CustomMergeFrameExplicit(x, y + 1, (int)(south.TileType), myType, out forceSameDown, out flag3, out flag2, out flag, false, false, false, false, false, mergeTypeBrimFrame, false);
-            bool flag4;
-            CustomMergeFrameExplicit(x, y, myType, mergeType, out flag, out flag2, out flag3, out flag4, forceSameDown, forceSameUp, forceSameLeft, forceSameRight, true, myTypeBrimFrame, overrideBrimStates);
+
+            if (north != null && north.HasTile && tileMergeTypes[myType][north.TileType])
+                CustomMergeFrameExplicit(x, y - 1, north.TileType, myType, out _, out _, out _, out forceSameUp, false, false, false, false, false, mergeTypeBrimFrame, true);
+            if (west != null && west.HasTile && tileMergeTypes[ myType][west.TileType])
+                CustomMergeFrameExplicit(x - 1, y, west.TileType, myType, out _, out _, out forceSameLeft, out _, false, false, false, false, false, mergeTypeBrimFrame, true);
+            if (east != null && east.HasTile && tileMergeTypes[myType][east.TileType])
+                CustomMergeFrameExplicit(x + 1, y, east.TileType, myType, out _, out forceSameRight, out _, out _, false, false, false, false, false, mergeTypeBrimFrame, true);
+            if (south != null && south.HasTile && tileMergeTypes[myType ][south.TileType])
+                CustomMergeFrameExplicit(x, y + 1, south.TileType, myType, out forceSameDown, out _, out _, out _, false, false, false, false, false, mergeTypeBrimFrame, false);
+            
+            CustomMergeFrameExplicit(x, y, myType, mergeType, out _, out _, out _, out _, forceSameDown, forceSameUp, forceSameLeft, forceSameRight, true, myTypeBrimFrame, overrideBrimStates);
         }
 
-        private static void CustomMergeConditionalTree(int x, int y, int randomFrame, Similarity leftSim, TileFraming.Similarity rightSim, TileFraming.Similarity upSim, TileFraming.Similarity downSim, TileFraming.Similarity topLeftSim, TileFraming.Similarity topRightSim, TileFraming.Similarity bottomLeftSim, TileFraming.Similarity bottomRightSim, ref bool mergedLeft, ref bool mergedRight, ref bool mergedUp, ref bool mergedDown)
+        private static void CustomMergeConditionalTree(int x, int y, int randomFrame, Similarity leftSim, Similarity rightSim, Similarity upSim, Similarity downSim, Similarity topLeftSim, Similarity topRightSim, Similarity bottomLeftSim, Similarity bottomRightSim, ref bool mergedLeft, ref bool mergedRight, ref bool mergedUp, ref bool mergedDown)
         {
-            if (leftSim == TileFraming.Similarity.None)
+            if (leftSim == Similarity.None)
             {
-                if (upSim == TileFraming.Similarity.Same)
+                if (upSim == Similarity.Same)
                 {
-                    if (downSim == TileFraming.Similarity.Same)
+                    if (downSim == Similarity.Same)
                     {
-                        if (rightSim == TileFraming.Similarity.Same)
+                        if (rightSim == Similarity.Same)
                         {
-                            TileFraming.SetFrameAt(x, y, 0, 18 * randomFrame);
+                            SetFrameAt(x, y, 0, 18 * randomFrame);
                             return;
                         }
-                        if (rightSim == TileFraming.Similarity.MergeLink)
+                        if (rightSim == Similarity.MergeLink)
                         {
                             mergedRight = true;
-                            TileFraming.SetFrameAt(x, y, 234 + 18 * randomFrame, 36);
+                            SetFrameAt(x, y, 234 + 18 * randomFrame, 36);
                             return;
                         }
-                        TileFraming.SetFrameAt(x, y, 90, 18 * randomFrame);
+                        SetFrameAt(x, y, 90, 18 * randomFrame);
                         return;
                     }
-                    else if (downSim == TileFraming.Similarity.MergeLink)
+                    else if (downSim == Similarity.MergeLink)
                     {
-                        if (rightSim == TileFraming.Similarity.Same)
+                        if (rightSim == Similarity.Same)
                         {
                             mergedDown = true;
-                            TileFraming.SetFrameAt(x, y, 72, 90 + 18 * randomFrame);
+                            SetFrameAt(x, y, 72, 90 + 18 * randomFrame);
                             return;
                         }
-                        if (rightSim == TileFraming.Similarity.MergeLink)
+                        if (rightSim == Similarity.MergeLink)
                         {
-                            TileFraming.SetFrameAt(x, y, 108 + 18 * randomFrame, 54);
+                            SetFrameAt(x, y, 108 + 18 * randomFrame, 54);
                             return;
                         }
                         mergedDown = true;
-                        TileFraming.SetFrameAt(x, y, 126, 90 + 18 * randomFrame);
+                        SetFrameAt(x, y, 126, 90 + 18 * randomFrame);
                         return;
                     }
                     else
                     {
-                        if (rightSim == TileFraming.Similarity.Same)
+                        if (rightSim == Similarity.Same)
                         {
-                            TileFraming.SetFrameAt(x, y, 36 * randomFrame, 72);
+                            SetFrameAt(x, y, 36 * randomFrame, 72);
                             return;
                         }
-                        TileFraming.SetFrameAt(x, y, 108 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 108 + 18 * randomFrame, 54);
                         return;
                     }
                 }
-                else if (upSim == TileFraming.Similarity.MergeLink)
+                else if (upSim == Similarity.MergeLink)
                 {
-                    if (downSim == TileFraming.Similarity.Same)
+                    if (downSim == Similarity.Same)
                     {
-                        if (rightSim == TileFraming.Similarity.Same)
+                        if (rightSim == Similarity.Same)
                         {
                             mergedUp = true;
-                            TileFraming.SetFrameAt(x, y, 72, 144 + 18 * randomFrame);
+                            SetFrameAt(x, y, 72, 144 + 18 * randomFrame);
                             return;
                         }
-                        if (rightSim == TileFraming.Similarity.MergeLink)
+                        if (rightSim == Similarity.MergeLink)
                         {
-                            TileFraming.SetFrameAt(x, y, 108 + 18 * randomFrame, 0);
+                            SetFrameAt(x, y, 108 + 18 * randomFrame, 0);
                             return;
                         }
                         mergedUp = true;
-                        TileFraming.SetFrameAt(x, y, 126, 144 + 18 * randomFrame);
+                        SetFrameAt(x, y, 126, 144 + 18 * randomFrame);
                         return;
                     }
-                    else if (downSim == TileFraming.Similarity.MergeLink)
+                    else if (downSim == Similarity.MergeLink)
                     {
-                        if (rightSim == TileFraming.Similarity.Same)
+                        if (rightSim == Similarity.Same)
                         {
-                            TileFraming.SetFrameAt(x, y, 162, 18 * randomFrame);
+                            SetFrameAt(x, y, 162, 18 * randomFrame);
                             return;
                         }
-                        if (rightSim == TileFraming.Similarity.MergeLink)
+                        if (rightSim == Similarity.MergeLink)
                         {
-                            TileFraming.SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                            SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
                             return;
                         }
                         mergedUp = true;
                         mergedDown = true;
-                        TileFraming.SetFrameAt(x, y, 108, 216 + 18 * randomFrame);
+                        SetFrameAt(x, y, 108, 216 + 18 * randomFrame);
                         return;
                     }
                     else
                     {
-                        if (rightSim == TileFraming.Similarity.Same)
+                        if (rightSim == Similarity.Same)
                         {
-                            TileFraming.SetFrameAt(x, y, 162, 18 * randomFrame);
+                            SetFrameAt(x, y, 162, 18 * randomFrame);
                             return;
                         }
-                        if (rightSim == TileFraming.Similarity.MergeLink)
+                        if (rightSim == Similarity.MergeLink)
                         {
-                            TileFraming.SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                            SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
                             return;
                         }
                         mergedUp = true;
-                        TileFraming.SetFrameAt(x, y, 108, 144 + 18 * randomFrame);
+                        SetFrameAt(x, y, 108, 144 + 18 * randomFrame);
                         return;
                     }
                 }
-                else if (downSim == TileFraming.Similarity.Same)
+                else if (downSim == Similarity.Same)
                 {
-                    if (rightSim == TileFraming.Similarity.Same)
+                    if (rightSim == Similarity.Same)
                     {
-                        TileFraming.SetFrameAt(x, y, 36 * randomFrame, 54);
+                        SetFrameAt(x, y, 36 * randomFrame, 54);
                         return;
                     }
-                    TileFraming.SetFrameAt(x, y, 108 + 18 * randomFrame, 0);
+                    SetFrameAt(x, y, 108 + 18 * randomFrame, 0);
                     return;
                 }
-                else if (downSim == TileFraming.Similarity.MergeLink)
+                else if (downSim == Similarity.MergeLink)
                 {
-                    if (rightSim == TileFraming.Similarity.Same)
+                    if (rightSim == Similarity.Same)
                     {
-                        TileFraming.SetFrameAt(x, y, 162, 18 * randomFrame);
+                        SetFrameAt(x, y, 162, 18 * randomFrame);
                         return;
                     }
-                    if (rightSim == TileFraming.Similarity.MergeLink)
+                    if (rightSim == Similarity.MergeLink)
                     {
-                        TileFraming.SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
                         return;
                     }
                     mergedDown = true;
-                    TileFraming.SetFrameAt(x, y, 108, 90 + 18 * randomFrame);
+                    SetFrameAt(x, y, 108, 90 + 18 * randomFrame);
                     return;
                 }
                 else
                 {
-                    if (rightSim == TileFraming.Similarity.Same)
+                    if (rightSim == Similarity.Same)
                     {
-                        TileFraming.SetFrameAt(x, y, 162, 18 * randomFrame);
+                        SetFrameAt(x, y, 162, 18 * randomFrame);
                         return;
                     }
-                    if (rightSim == TileFraming.Similarity.MergeLink)
+                    if (rightSim == Similarity.MergeLink)
                     {
                         mergedRight = true;
-                        TileFraming.SetFrameAt(x, y, 54 + 18 * randomFrame, 234);
+                        SetFrameAt(x, y, 54 + 18 * randomFrame, 234);
                         return;
                     }
-                    TileFraming.SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                    SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
                     return;
                 }
             }
-            else if (leftSim == TileFraming.Similarity.MergeLink)
+            else if (leftSim == Similarity.MergeLink)
             {
-                if (upSim == TileFraming.Similarity.Same)
+                if (upSim == Similarity.Same)
                 {
-                    if (downSim == TileFraming.Similarity.Same)
+                    if (downSim == Similarity.Same)
                     {
-                        if (rightSim == TileFraming.Similarity.Same)
+                        if (rightSim == Similarity.Same)
                         {
                             mergedLeft = true;
-                            TileFraming.SetFrameAt(x, y, 162, 126 + 18 * randomFrame);
+                            SetFrameAt(x, y, 162, 126 + 18 * randomFrame);
                             return;
                         }
-                        if (rightSim == TileFraming.Similarity.MergeLink)
+                        if (rightSim == Similarity.MergeLink)
                         {
                             mergedLeft = true;
                             mergedRight = true;
-                            TileFraming.SetFrameAt(x, y, 180, 126 + 18 * randomFrame);
+                            SetFrameAt(x, y, 180, 126 + 18 * randomFrame);
                             return;
                         }
                         mergedLeft = true;
-                        TileFraming.SetFrameAt(x, y, 234 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 234 + 18 * randomFrame, 54);
                         return;
                     }
-                    else if (downSim == TileFraming.Similarity.MergeLink)
+                    else if (downSim == Similarity.MergeLink)
                     {
-                        if (rightSim == TileFraming.Similarity.Same)
+                        if (rightSim == Similarity.Same)
                         {
                             mergedLeft = (mergedDown = true);
-                            TileFraming.SetFrameAt(x, y, 36, 108 + 36 * randomFrame);
+                            SetFrameAt(x, y, 36, 108 + 36 * randomFrame);
                             return;
                         }
-                        if (rightSim == TileFraming.Similarity.MergeLink)
+                        if (rightSim == Similarity.MergeLink)
                         {
                             mergedLeft = (mergedRight = (mergedDown = true));
-                            TileFraming.SetFrameAt(x, y, 198, 144 + 18 * randomFrame);
+                            SetFrameAt(x, y, 198, 144 + 18 * randomFrame);
                             return;
                         }
-                        TileFraming.SetFrameAt(x, y, 108 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 108 + 18 * randomFrame, 54);
                         return;
                     }
                     else
                     {
-                        if (rightSim == TileFraming.Similarity.Same)
+                        if (rightSim == Similarity.Same)
                         {
                             mergedLeft = true;
-                            TileFraming.SetFrameAt(x, y, 18 * randomFrame, 216);
+                            SetFrameAt(x, y, 18 * randomFrame, 216);
                             return;
                         }
-                        TileFraming.SetFrameAt(x, y, 108 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 108 + 18 * randomFrame, 54);
                         return;
                     }
                 }
-                else if (upSim == TileFraming.Similarity.MergeLink)
+                else if (upSim == Similarity.MergeLink)
                 {
-                    if (downSim == TileFraming.Similarity.Same)
+                    if (downSim == Similarity.Same)
                     {
-                        if (rightSim == TileFraming.Similarity.Same)
+                        if (rightSim == Similarity.Same)
                         {
                             mergedUp = (mergedLeft = true);
-                            TileFraming.SetFrameAt(x, y, 36, 90 + 36 * randomFrame);
+                            SetFrameAt(x, y, 36, 90 + 36 * randomFrame);
                             return;
                         }
-                        if (rightSim == TileFraming.Similarity.MergeLink)
+                        if (rightSim == Similarity.MergeLink)
                         {
                             mergedLeft = (mergedRight = (mergedUp = true));
-                            TileFraming.SetFrameAt(x, y, 198, 90 + 18 * randomFrame);
+                            SetFrameAt(x, y, 198, 90 + 18 * randomFrame);
                             return;
                         }
-                        TileFraming.SetFrameAt(x, y, 108 + 18 * randomFrame, 0);
+                        SetFrameAt(x, y, 108 + 18 * randomFrame, 0);
                         return;
                     }
-                    else if (downSim == TileFraming.Similarity.MergeLink)
+                    else if (downSim == Similarity.MergeLink)
                     {
-                        if (rightSim == TileFraming.Similarity.Same)
+                        if (rightSim == Similarity.Same)
                         {
                             mergedUp = (mergedLeft = (mergedDown = true));
-                            TileFraming.SetFrameAt(x, y, 216, 90 + 18 * randomFrame);
+                            SetFrameAt(x, y, 216, 90 + 18 * randomFrame);
                             return;
                         }
-                        if (rightSim == TileFraming.Similarity.MergeLink)
+                        if (rightSim == Similarity.MergeLink)
                         {
                             mergedDown = (mergedLeft = (mergedRight = (mergedUp = true)));
-                            TileFraming.SetFrameAt(x, y, 108 + 18 * randomFrame, 198);
+                            SetFrameAt(x, y, 108 + 18 * randomFrame, 198);
                             return;
                         }
-                        TileFraming.SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
                         return;
                     }
                     else
                     {
-                        if (rightSim == TileFraming.Similarity.Same)
+                        if (rightSim == Similarity.Same)
                         {
-                            TileFraming.SetFrameAt(x, y, 162, 18 * randomFrame);
+                            SetFrameAt(x, y, 162, 18 * randomFrame);
                             return;
                         }
-                        TileFraming.SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
                         return;
                     }
                 }
-                else if (downSim == TileFraming.Similarity.Same)
+                else if (downSim == Similarity.Same)
                 {
-                    if (rightSim == TileFraming.Similarity.Same)
+                    if (rightSim == Similarity.Same)
                     {
                         mergedLeft = true;
-                        TileFraming.SetFrameAt(x, y, 18 * randomFrame, 198);
+                        SetFrameAt(x, y, 18 * randomFrame, 198);
                         return;
                     }
-                    TileFraming.SetFrameAt(x, y, 108 + 18 * randomFrame, 0);
+                    SetFrameAt(x, y, 108 + 18 * randomFrame, 0);
                     return;
                 }
-                else if (downSim == TileFraming.Similarity.MergeLink)
+                else if (downSim == Similarity.MergeLink)
                 {
-                    if (rightSim == TileFraming.Similarity.Same)
+                    if (rightSim == Similarity.Same)
                     {
-                        TileFraming.SetFrameAt(x, y, 162, 18 * randomFrame);
+                        SetFrameAt(x, y, 162, 18 * randomFrame);
                         return;
                     }
-                    TileFraming.SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                    SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
                     return;
                 }
                 else
                 {
-                    if (rightSim == TileFraming.Similarity.Same)
+                    if (rightSim == Similarity.Same)
                     {
                         mergedLeft = true;
-                        TileFraming.SetFrameAt(x, y, 18 * randomFrame, 252);
+                        SetFrameAt(x, y, 18 * randomFrame, 252);
                         return;
                     }
-                    if (rightSim == TileFraming.Similarity.MergeLink)
+                    if (rightSim == Similarity.MergeLink)
                     {
                         mergedRight = (mergedLeft = true);
-                        TileFraming.SetFrameAt(x, y, 162 + 18 * randomFrame, 198);
+                        SetFrameAt(x, y, 162 + 18 * randomFrame, 198);
                         return;
                     }
                     mergedLeft = true;
-                    TileFraming.SetFrameAt(x, y, 18 * randomFrame, 234);
+                    SetFrameAt(x, y, 18 * randomFrame, 234);
                     return;
                 }
             }
-            else if (upSim == TileFraming.Similarity.Same)
+            else if (upSim == Similarity.Same)
             {
-                if (downSim == TileFraming.Similarity.Same)
+                if (downSim == Similarity.Same)
                 {
-                    if (rightSim == TileFraming.Similarity.Same)
+                    if (rightSim == Similarity.Same)
                     {
-                        if (topLeftSim != TileFraming.Similarity.MergeLink && topRightSim != TileFraming.Similarity.MergeLink && bottomLeftSim != TileFraming.Similarity.MergeLink && bottomRightSim != TileFraming.Similarity.MergeLink)
+                        if (topLeftSim != Similarity.MergeLink && topRightSim != Similarity.MergeLink && bottomLeftSim != Similarity.MergeLink && bottomRightSim != Similarity.MergeLink)
                         {
-                            if (topLeftSim == TileFraming.Similarity.Same)
+                            if (topLeftSim == Similarity.Same)
                             {
-                                if (topRightSim == TileFraming.Similarity.Same)
+                                if (topRightSim == Similarity.Same)
                                 {
-                                    if (bottomLeftSim == TileFraming.Similarity.Same)
+                                    if (bottomLeftSim == Similarity.Same)
                                     {
-                                        TileFraming.SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                                        SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
                                         return;
                                     }
-                                    if (bottomRightSim == TileFraming.Similarity.Same)
+                                    if (bottomRightSim == Similarity.Same)
                                     {
-                                        TileFraming.SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                                        SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
                                         return;
                                     }
-                                    TileFraming.SetFrameAt(x, y, 108 + 18 * randomFrame, 36);
+                                    SetFrameAt(x, y, 108 + 18 * randomFrame, 36);
                                     return;
                                 }
-                                else if (bottomLeftSim == TileFraming.Similarity.Same)
+                                else if (bottomLeftSim == Similarity.Same)
                                 {
-                                    if (bottomRightSim != TileFraming.Similarity.Same)
+                                    if (bottomRightSim != Similarity.Same)
                                     {
-                                        TileFraming.SetFrameAt(x, y, 198, 18 * randomFrame);
+                                        SetFrameAt(x, y, 198, 18 * randomFrame);
                                         return;
                                     }
-                                    if (topRightSim == TileFraming.Similarity.MergeLink)
+                                    if (topRightSim == Similarity.MergeLink)
                                     {
-                                        TileFraming.SetFrameAt(x, y, 0, 108 + 36 * randomFrame);
+                                        SetFrameAt(x, y, 0, 108 + 36 * randomFrame);
                                         return;
                                     }
-                                    TileFraming.SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                                    SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
                                     return;
                                 }
                             }
-                            else if (topLeftSim == TileFraming.Similarity.None)
+                            else if (topLeftSim == Similarity.None)
                             {
-                                if (topRightSim != TileFraming.Similarity.Same)
+                                if (topRightSim != Similarity.Same)
                                 {
-                                    TileFraming.SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                                    SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
                                     return;
                                 }
-                                if (bottomRightSim == TileFraming.Similarity.Same)
+                                if (bottomRightSim == Similarity.Same)
                                 {
-                                    TileFraming.SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                                    SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
                                     return;
                                 }
-                                TileFraming.SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                                SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
                                 return;
                             }
-                            TileFraming.SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                            SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
                             return;
                         }
-                        if (bottomRightSim == TileFraming.Similarity.MergeLink)
+                        if (bottomRightSim == Similarity.MergeLink)
                         {
-                            TileFraming.SetFrameAt(x, y, 0, 90 + 36 * randomFrame);
+                            SetFrameAt(x, y, 0, 90 + 36 * randomFrame);
                             return;
                         }
-                        if (bottomLeftSim == TileFraming.Similarity.MergeLink)
+                        if (bottomLeftSim == Similarity.MergeLink)
                         {
-                            TileFraming.SetFrameAt(x, y, 18, 90 + 36 * randomFrame);
+                            SetFrameAt(x, y, 18, 90 + 36 * randomFrame);
                             return;
                         }
-                        if (topRightSim == TileFraming.Similarity.MergeLink)
+                        if (topRightSim == Similarity.MergeLink)
                         {
-                            TileFraming.SetFrameAt(x, y, 0, 108 + 36 * randomFrame);
+                            SetFrameAt(x, y, 0, 108 + 36 * randomFrame);
                             return;
                         }
-                        TileFraming.SetFrameAt(x, y, 18, 108 + 36 * randomFrame);
+                        SetFrameAt(x, y, 18, 108 + 36 * randomFrame);
                         return;
                     }
                     else
                     {
-                        if (rightSim == TileFraming.Similarity.MergeLink)
+                        if (rightSim == Similarity.MergeLink)
                         {
                             mergedRight = true;
-                            TileFraming.SetFrameAt(x, y, 144, 126 + 18 * randomFrame);
+                            SetFrameAt(x, y, 144, 126 + 18 * randomFrame);
                             return;
                         }
-                        TileFraming.SetFrameAt(x, y, 72, 18 * randomFrame);
+                        SetFrameAt(x, y, 72, 18 * randomFrame);
                         return;
                     }
                 }
-                else if (downSim == TileFraming.Similarity.MergeLink)
+                else if (downSim == Similarity.MergeLink)
                 {
-                    if (rightSim == TileFraming.Similarity.Same)
+                    if (rightSim == Similarity.Same)
                     {
                         mergedDown = true;
-                        TileFraming.SetFrameAt(x, y, 144 + 18 * randomFrame, 90);
+                        SetFrameAt(x, y, 144 + 18 * randomFrame, 90);
                         return;
                     }
-                    if (rightSim == TileFraming.Similarity.MergeLink)
+                    if (rightSim == Similarity.MergeLink)
                     {
                         mergedDown = (mergedRight = true);
-                        TileFraming.SetFrameAt(x, y, 54, 108 + 36 * randomFrame);
+                        SetFrameAt(x, y, 54, 108 + 36 * randomFrame);
                         return;
                     }
                     mergedDown = true;
-                    TileFraming.SetFrameAt(x, y, 90, 90 + 18 * randomFrame);
+                    SetFrameAt(x, y, 90, 90 + 18 * randomFrame);
                     return;
                 }
                 else
                 {
-                    if (rightSim == TileFraming.Similarity.Same)
+                    if (rightSim == Similarity.Same)
                     {
-                        TileFraming.SetFrameAt(x, y, 18 + 18 * randomFrame, 36);
+                        SetFrameAt(x, y, 18 + 18 * randomFrame, 36);
                         return;
                     }
-                    if (rightSim == TileFraming.Similarity.MergeLink)
+                    if (rightSim == Similarity.MergeLink)
                     {
                         mergedRight = true;
-                        TileFraming.SetFrameAt(x, y, 54 + 18 * randomFrame, 216);
+                        SetFrameAt(x, y, 54 + 18 * randomFrame, 216);
                         return;
                     }
-                    TileFraming.SetFrameAt(x, y, 18 + 36 * randomFrame, 72);
+                    SetFrameAt(x, y, 18 + 36 * randomFrame, 72);
                     return;
                 }
             }
-            else if (upSim == TileFraming.Similarity.MergeLink)
+            else if (upSim == Similarity.MergeLink)
             {
-                if (downSim == TileFraming.Similarity.Same)
+                if (downSim == Similarity.Same)
                 {
-                    if (rightSim == TileFraming.Similarity.Same)
+                    if (rightSim == Similarity.Same)
                     {
                         mergedUp = true;
-                        TileFraming.SetFrameAt(x, y, 144 + 18 * randomFrame, 108);
+                        SetFrameAt(x, y, 144 + 18 * randomFrame, 108);
                         return;
                     }
-                    if (rightSim == TileFraming.Similarity.MergeLink)
+                    if (rightSim == Similarity.MergeLink)
                     {
                         mergedRight = (mergedUp = true);
-                        TileFraming.SetFrameAt(x, y, 54, 90 + 36 * randomFrame);
+                        SetFrameAt(x, y, 54, 90 + 36 * randomFrame);
                         return;
                     }
                     mergedUp = true;
-                    TileFraming.SetFrameAt(x, y, 90, 144 + 18 * randomFrame);
+                    SetFrameAt(x, y, 90, 144 + 18 * randomFrame);
                     return;
                 }
-                else if (downSim == TileFraming.Similarity.MergeLink)
+                else if (downSim == Similarity.MergeLink)
                 {
-                    if (rightSim == TileFraming.Similarity.Same)
+                    if (rightSim == Similarity.Same)
                     {
                         mergedUp = (mergedDown = true);
-                        TileFraming.SetFrameAt(x, y, 144 + 18 * randomFrame, 180);
+                        SetFrameAt(x, y, 144 + 18 * randomFrame, 180);
                         return;
                     }
-                    if (rightSim == TileFraming.Similarity.MergeLink)
+                    if (rightSim == Similarity.MergeLink)
                     {
                         mergedUp = (mergedRight = (mergedDown = true));
-                        TileFraming.SetFrameAt(x, y, 216, 144 + 18 * randomFrame);
+                        SetFrameAt(x, y, 216, 144 + 18 * randomFrame);
                         return;
                     }
-                    TileFraming.SetFrameAt(x, y, 216, 18 * randomFrame);
+                    SetFrameAt(x, y, 216, 18 * randomFrame);
                     return;
                 }
                 else
                 {
-                    if (rightSim == TileFraming.Similarity.Same)
+                    if (rightSim == Similarity.Same)
                     {
                         mergedUp = true;
-                        TileFraming.SetFrameAt(x, y, 234 + 18 * randomFrame, 18);
+                        SetFrameAt(x, y, 234 + 18 * randomFrame, 18);
                         return;
                     }
-                    TileFraming.SetFrameAt(x, y, 216, 18 * randomFrame);
+                    SetFrameAt(x, y, 216, 18 * randomFrame);
                     return;
                 }
             }
-            else if (downSim == TileFraming.Similarity.Same)
+            else if (downSim == Similarity.Same)
             {
-                if (rightSim == TileFraming.Similarity.Same)
+                if (rightSim == Similarity.Same)
                 {
-                    TileFraming.SetFrameAt(x, y, 18 + 18 * randomFrame, 0);
+                    SetFrameAt(x, y, 18 + 18 * randomFrame, 0);
                     return;
                 }
-                if (rightSim == TileFraming.Similarity.MergeLink)
+                if (rightSim == Similarity.MergeLink)
                 {
                     mergedRight = true;
-                    TileFraming.SetFrameAt(x, y, 54 + 18 * randomFrame, 198);
+                    SetFrameAt(x, y, 54 + 18 * randomFrame, 198);
                     return;
                 }
-                TileFraming.SetFrameAt(x, y, 18 + 36 * randomFrame, 54);
+                SetFrameAt(x, y, 18 + 36 * randomFrame, 54);
                 return;
             }
-            else if (downSim == TileFraming.Similarity.MergeLink)
+            else if (downSim == Similarity.MergeLink)
             {
-                if (rightSim == TileFraming.Similarity.Same)
+                if (rightSim == Similarity.Same)
                 {
                     mergedDown = true;
-                    TileFraming.SetFrameAt(x, y, 234 + 18 * randomFrame, 0);
+                    SetFrameAt(x, y, 234 + 18 * randomFrame, 0);
                     return;
                 }
-                TileFraming.SetFrameAt(x, y, 216, 18 * randomFrame);
+                SetFrameAt(x, y, 216, 18 * randomFrame);
                 return;
             }
             else
             {
-                if (rightSim == TileFraming.Similarity.Same)
+                if (rightSim == Similarity.Same)
                 {
-                    TileFraming.SetFrameAt(x, y, 108 + 18 * randomFrame, 72);
+                    SetFrameAt(x, y, 108 + 18 * randomFrame, 72);
                     return;
                 }
-                if (rightSim == TileFraming.Similarity.MergeLink)
+                if (rightSim == Similarity.MergeLink)
                 {
                     mergedRight = true;
-                    TileFraming.SetFrameAt(x, y, 54 + 18 * randomFrame, 252);
+                    SetFrameAt(x, y, 54 + 18 * randomFrame, 252);
                     return;
                 }
-                TileFraming.SetFrameAt(x, y, 216, 18 * randomFrame);
+                SetFrameAt(x, y, 216, 18 * randomFrame);
                 return;
             }
         }
@@ -609,6 +603,7 @@ namespace Coralite.Core
                 return;
             }
             Main.tileMerge[myType][mergeType] = false;
+            Tile self = Main.tile[x, y];
             Tile tileLeft = Main.tile[x - 1, y];
             Tile tileRight = Main.tile[x + 1, y];
             Tile tileUp = Main.tile[x, y - 1];
@@ -617,14 +612,49 @@ namespace Coralite.Core
             Tile tileTopRight = Main.tile[x + 1, y - 1];
             Tile tileBottomLeft = Main.tile[x - 1, y + 1];
             Tile tileBottomRight = Main.tile[x + 1, y + 1];
-            TileFraming.Similarity leftSim = forceSameLeft ? TileFraming.Similarity.Same : TileFraming.GetSimilarity(tileLeft, myType, mergeType);
-            TileFraming.Similarity rightSim = forceSameRight ? TileFraming.Similarity.Same : TileFraming.GetSimilarity(tileRight, myType, mergeType);
-            TileFraming.Similarity upSim = forceSameUp ? TileFraming.Similarity.Same : TileFraming.GetSimilarity(tileUp, myType, mergeType);
-            TileFraming.Similarity downSim = forceSameDown ? TileFraming.Similarity.Same : TileFraming.GetSimilarity(tileDown, myType, mergeType);
-            TileFraming.Similarity topLeftSim = TileFraming.GetSimilarity(tileTopLeft, myType, mergeType);
-            TileFraming.Similarity topRightSim = TileFraming.GetSimilarity(tileTopRight, myType, mergeType);
-            TileFraming.Similarity bottomLeftSim = TileFraming.GetSimilarity(tileBottomLeft, myType, mergeType);
-            TileFraming.Similarity bottomRightSim = TileFraming.GetSimilarity(tileBottomRight, myType, mergeType);
+            Similarity leftSim = forceSameLeft ? Similarity.Same : GetSimilarity(tileLeft, myType, mergeType);
+            if (tileLeft.Slope is SlopeType.SlopeDownLeft or SlopeType.SlopeUpLeft)
+                leftSim = Similarity.None;
+
+            Similarity rightSim = forceSameRight ? Similarity.Same : GetSimilarity(tileRight, myType, mergeType);
+            if (tileRight.Slope is SlopeType.SlopeDownRight or SlopeType.SlopeUpRight)
+                rightSim = Similarity.None;
+
+            Similarity upSim = forceSameUp ? Similarity.Same : GetSimilarity(tileUp, myType, mergeType);
+            if (tileUp.Slope is SlopeType.SlopeUpLeft or SlopeType.SlopeUpRight || self.IsHalfBlock)
+                upSim = Similarity.None;
+
+            Similarity downSim = forceSameDown ? Similarity.Same : GetSimilarity(tileDown, myType, mergeType);
+            if (tileDown.Slope is SlopeType.SlopeDownLeft or SlopeType.SlopeDownRight || tileDown.IsHalfBlock)
+                downSim = Similarity.None;
+
+            switch (self.Slope)
+            {
+                default:
+                case SlopeType.Solid:
+                    break;
+                case SlopeType.SlopeDownLeft:
+                    upSim = Similarity.None;
+                    rightSim = Similarity.None;
+                    break;
+                case SlopeType.SlopeDownRight:
+                    upSim = Similarity.None;
+                    leftSim = Similarity.None;
+                    break;
+                case SlopeType.SlopeUpLeft:
+                    downSim = Similarity.None;
+                    rightSim = Similarity.None;
+                    break;
+                case SlopeType.SlopeUpRight:
+                    downSim = Similarity.None;
+                    leftSim = Similarity.None;
+                    break;
+            }
+
+            Similarity topLeftSim = GetSimilarity(tileTopLeft, myType, mergeType);
+            Similarity topRightSim = GetSimilarity(tileTopRight, myType, mergeType);
+            Similarity bottomLeftSim = GetSimilarity(tileBottomLeft, myType, mergeType);
+            Similarity bottomRightSim = GetSimilarity(tileBottomRight, myType, mergeType);
             int randomFrame;
             if (resetFrame)
             {
@@ -636,7 +666,7 @@ namespace Coralite.Core
                 randomFrame = Main.tile[x, y].TileFrameNumber;
             }
             mergedDown = (mergedLeft = (mergedRight = (mergedUp = false)));
-            if (myTypeBrimFrame && !overrideBrimStates && !TileFraming.BrimstoneFraming(x, y, resetFrame, forceSameDown, forceSameUp, forceSameRight, forceSameLeft, false, false, false, false))
+            if (myTypeBrimFrame && !overrideBrimStates && !BrimstoneFraming(x, y, resetFrame, forceSameDown, forceSameUp, forceSameRight, forceSameLeft, false, false, false, false))
             {
                 return;
             }
@@ -684,8 +714,8 @@ namespace Coralite.Core
             }
             if (!up && down && !left && right && !downRight)
             {
-                Main.tile[x, y].TileFrameX = (short)( randomFrame * 36);
-                Main.tile[x, y].TileFrameY = 0;
+                Main.tile[x, y].TileFrameX = (short)(randomFrame * 36);
+                Main.tile[x, y].TileFrameY = 54;
                 return false;
             }
             if (!up && down && left && !right && !downLeft)
@@ -853,7 +883,7 @@ namespace Coralite.Core
             if (up && down && !left && right && !downLeft && downRight && !upLeft && !upRight)
             {
                 Main.tile[x, y].TileFrameX = 0;
-                Main.tile[x, y].TileFrameY = (short)(randomFrame * 36);
+                Main.tile[x, y].TileFrameY = (short)(randomFrame * 18);
                 return false;
             }
             if (up && down && left && !right && !downLeft && !downRight && upLeft && !upRight)
@@ -890,45 +920,51 @@ namespace Coralite.Core
             upRight = false;
             downLeft = false;
             downRight = false;
-            if (TileFraming.GetMerge(tile, north) && ( north.Slope == SlopeType.SlopeDownLeft || north.Slope == SlopeType.SlopeDownRight))
+            if (GetMerge(tile, north) && !tile.IsHalfBlock&&
+                (tile.Slope is not SlopeType.SlopeDownLeft or SlopeType.SlopeDownRight) &&
+                (north.Slope is SlopeType.Solid or  SlopeType.SlopeDownLeft or SlopeType.SlopeDownRight))
             {
                 up = true;
             }
-            if (TileFraming.GetMerge(tile, south) && (south.Slope == SlopeType.SlopeUpLeft || south.Slope == SlopeType.SlopeUpRight))
+            if (GetMerge(tile, south) && !south.IsHalfBlock &&
+                (tile.Slope is not SlopeType.SlopeUpLeft or SlopeType.SlopeUpRight) &&
+                (south.Slope is SlopeType.Solid or SlopeType.SlopeUpLeft or SlopeType.SlopeUpRight))
             {
                 down = true;
             }
-            if (TileFraming.GetMerge(tile, west) && (west.Slope ==  SlopeType.SlopeDownRight || west.Slope == SlopeType.SlopeUpRight))
+            if (GetMerge(tile, west) && (west.Slope == SlopeType.Solid || west.Slope == SlopeType.SlopeDownRight || west.Slope == SlopeType.SlopeUpRight))
             {
                 left = true;
             }
-            if (TileFraming.GetMerge(tile, east) && ( east.Slope == SlopeType.SlopeDownLeft || east.Slope == SlopeType.SlopeUpLeft))
+            if (GetMerge(tile, east) && (east.Slope == SlopeType.Solid || east.Slope == SlopeType.SlopeDownLeft || east.Slope == SlopeType.SlopeUpLeft))
             {
                 right = true;
             }
-            if (GetMerge(tile, north) && GetMerge(tile, west) && GetMerge(tile, northwest) &&  
-                northwest.Slope == SlopeType.SlopeDownRight && ( north.Slope == SlopeType.SlopeDownLeft || north.Slope == SlopeType.SlopeUpLeft) &&
-                ( west.Slope == SlopeType.SlopeUpLeft || west.Slope == SlopeType.SlopeUpRight))
+            if (GetMerge(tile, north) && GetMerge(tile, west) && GetMerge(tile, northwest) &&
+                (northwest.Slope == SlopeType.Solid || northwest.Slope == SlopeType.SlopeDownRight) &&
+                (north.Slope == SlopeType.Solid || north.Slope == SlopeType.SlopeDownLeft || north.Slope == SlopeType.SlopeUpLeft) && 
+                (west.Slope == SlopeType.Solid || west.Slope == SlopeType.SlopeUpLeft || west.Slope == SlopeType.SlopeUpRight))
             {
                 upLeft = true;
             }
-            if (TileFraming.GetMerge(tile, north) && TileFraming.GetMerge(tile, east) && TileFraming.GetMerge(tile, northeast) &&  
-                northeast.Slope == SlopeType.SlopeDownLeft && ( north.Slope == SlopeType.SlopeDownRight || north.Slope == SlopeType.SlopeUpRight) && 
-                (east.Slope == SlopeType.SlopeUpLeft || east.Slope == SlopeType.SlopeUpRight))
+            if (GetMerge(tile, north) && GetMerge(tile, east) && GetMerge(tile, northeast) &&
+                (northeast.Slope == SlopeType.Solid || northeast.Slope == SlopeType.SlopeDownLeft) &&
+                (north.Slope == SlopeType.Solid || north.Slope == SlopeType.SlopeDownRight || north.Slope == SlopeType.SlopeUpRight) &&
+                (east.Slope == SlopeType.Solid || east.Slope == SlopeType.SlopeUpLeft || east.Slope == SlopeType.SlopeUpRight))
             {
                 upRight = true;
             }
             if (GetMerge(tile, south) && GetMerge(tile, west) && GetMerge(tile, southwest) &&
-                !southwest.IsHalfBlock &&  southwest.Slope == SlopeType.SlopeUpRight &&
-                (south.Slope == SlopeType.SlopeDownLeft || south.Slope == SlopeType.SlopeUpLeft) &&
-                ( west.Slope == SlopeType.SlopeDownLeft || west.Slope == SlopeType.SlopeDownRight))
+                !southwest.IsHalfBlock && (southwest.Slope == SlopeType.Solid || southwest.Slope == SlopeType.SlopeUpRight) &&
+                (south.Slope == SlopeType.Solid || south.Slope == SlopeType.SlopeDownLeft || south.Slope == SlopeType.SlopeUpLeft) &&
+                (west.Slope == SlopeType.Solid || west.Slope == SlopeType.SlopeDownLeft || west.Slope == SlopeType.SlopeDownRight))
             {
                 downLeft = true;
             }
-            if (GetMerge(tile, south) && GetMerge(tile, east) && GetMerge(tile, southeast) &&
-                !southeast.IsHalfBlock && (southeast.Slope == SlopeType.SlopeUpLeft) &&
-                (south.Slope == SlopeType.SlopeDownRight || south.Slope == SlopeType.SlopeUpRight) &&
-                (east.Slope == SlopeType.SlopeDownLeft || east.Slope == SlopeType.SlopeDownRight))
+            if (GetMerge(tile, south) && GetMerge(tile, east) && GetMerge(tile, southeast) && 
+                !southeast.IsHalfBlock && (southeast.Slope == SlopeType.Solid || southeast.Slope == SlopeType.SlopeUpLeft) && 
+                (south.Slope == SlopeType.Solid || south.Slope == SlopeType.SlopeDownRight || south.Slope == SlopeType.SlopeUpRight) && 
+                (east.Slope == SlopeType.Solid || east.Slope == SlopeType.SlopeDownLeft || east.Slope == SlopeType.SlopeDownRight))
             {
                 downRight = true;
             }

@@ -7,7 +7,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
     {
         private readonly float bonus;
 
-        public BasicEnchant_WeaponAttackBonus(int level, float bonus) : base(level)
+        public BasicEnchant_WeaponAttackBonus(Enchant.Level level, float bonus) : base(level)
         {
             this.bonus = bonus;
         }
@@ -24,7 +24,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
     {
         private readonly float bonus;
 
-        public OtherEnchant_WeaponAttackBonus(int level, float bonus) : base(level)
+        public OtherEnchant_WeaponAttackBonus(Enchant.Level level, float bonus) : base(level)
         {
             this.bonus = bonus;
         }
@@ -41,7 +41,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
     {
         private readonly float bonus;
 
-        public SpecialEnchant_WeaponAttackBonus(int level, float bonus) : base(level)
+        public SpecialEnchant_WeaponAttackBonus(Enchant.Level level, float bonus) : base(level)
         {
             this.bonus = bonus;
         }
@@ -59,7 +59,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
     {
         private readonly float bonus;
 
-        public BasicEnchant_ArmorAttackBonus(int level, float bonus) : base(level)
+        public BasicEnchant_ArmorAttackBonus(Enchant.Level level, float bonus) : base(level)
         {
             this.bonus = bonus;
         }
@@ -76,7 +76,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
     {
         private readonly float bonus;
 
-        public OtherEnchant_ArmorAttackBonus(int level, float bonus) : base(level)
+        public OtherEnchant_ArmorAttackBonus(Enchant.Level level, float bonus) : base(level)
         {
             this.bonus = bonus;
         }
@@ -93,7 +93,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
     {
         private readonly float bonus;
 
-        public BasicSpecialEnchant_ArmorAttackBonus(int level, float bonus) : base(level)
+        public BasicSpecialEnchant_ArmorAttackBonus(Enchant.Level level, float bonus) : base(level)
         {
             this.bonus = bonus;
         }
@@ -111,7 +111,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
     {
         private readonly float bonus;
 
-        public BasicEnchant_AccessoryAttackBonus(int level, float bonus) : base(level)
+        public BasicEnchant_AccessoryAttackBonus(Enchant.Level level, float bonus) : base(level)
         {
             this.bonus = bonus;
         }
@@ -128,7 +128,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
     {
         private readonly float bonus;
 
-        public OtherEnchant_AccessoryAttackBonus(int level, float bonus) : base(level)
+        public OtherEnchant_AccessoryAttackBonus(Enchant.Level level, float bonus) : base(level)
         {
             this.bonus = bonus;
         }
@@ -145,7 +145,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
     {
         private readonly float bonus;
 
-        public BasicSpecialEnchant_AccessoryAttackBonus(int level, float bonus) : base(level)
+        public BasicSpecialEnchant_AccessoryAttackBonus(Enchant.Level level, float bonus) : base(level)
         {
             this.bonus = bonus;
         }

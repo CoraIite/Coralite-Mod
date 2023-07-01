@@ -99,7 +99,7 @@ namespace Coralite.Content.WorldGeneration
                     for (int m = 0; m < width; m++)
                     {
                         tile = Framing.GetTileSafely(current_x + m, current_y + height);
-                        if (!tile.HasTile)
+                        if (!tile.HasTile || tile.Slope is SlopeType.SlopeDownLeft or SlopeType.SlopeDownRight || tile.IsHalfBlock)
                             goto over1;
 
                         if (bottomTileType != -1)
@@ -146,8 +146,104 @@ namespace Coralite.Content.WorldGeneration
                     //判断顶部一条是不是都有方块,且方块类型是不是指定的
                     for (int m = 0; m < width; m++)
                     {
-                        tile = Framing.GetTileSafely(current_x + m, current_y -1);
-                        if (!tile.HasTile)
+                        tile = Framing.GetTileSafely(current_x + m, current_y - 1);
+                        if (!tile.HasTile || tile.Slope is SlopeType.SlopeUpLeft or SlopeType.SlopeUpRight)
+                            goto over1;
+
+                        if (topTileType != -1)
+                            if (tile.TileType != topTileType)
+                                goto over1;
+                    }
+
+                    for (int m = 0; m < width; m++)
+                        for (int n = 0; n < height; n++)
+                        {
+                            tile = Framing.GetTileSafely(current_x + i + m, current_y + n);
+                            if (tile.HasTile)
+                                goto over1;
+                        }
+
+                    //添加一些随机性
+                    if (WorldGen.genRand.NextBool(random))
+                    {
+                        int currentStyle;
+                        if (randomTile <= 1)
+                            currentStyle = 0;
+                        else
+                            currentStyle = WorldGen.genRand.Next(0, randomTile);
+                        ObjectPlace(current_x, current_y, tileType, currentStyle);
+                    }
+
+                over1: continue;             //<--因为不知道有没有什么办法直接跳出2层for，索性写了个goto
+                }
+        }
+
+        public static void PlaceOnLeftDecorations(int origin_x, int origin_y, int startX, int startY, int endX, int endY, ushort tileType, int random = 10, int style = 0, int topTileType = -1)
+        {
+            TileObjectData data = TileObjectData.GetTileData(tileType, style);
+            int width = data == null ? 1 : data.Width;
+            int height = data == null ? 1 : data.Height;
+            int randomTile = data == null ? 1 : data.RandomStyleRange;
+
+            for (int i = startX; i < endX; i++)
+                for (int j = startY; j < endY; j++)
+                {
+                    Tile tile;
+                    int current_x = origin_x + i;
+                    int current_y = origin_y + j;
+                    //判断左边一条是不是都有方块,且方块类型是不是指定的
+                    for (int m = 0; m < height; m++)
+                    {
+                        tile = Framing.GetTileSafely(current_x - 1, current_y + m);
+                        if (!tile.HasTile || tile.Slope is SlopeType.SlopeUpLeft or SlopeType.SlopeDownLeft||tile.IsHalfBlock)
+                            goto over1;
+
+                        if (topTileType != -1)
+                            if (tile.TileType != topTileType)
+                                goto over1;
+                    }
+
+                    for (int m = 0; m < width; m++)
+                        for (int n = 0; n < height; n++)
+                        {
+                            tile = Framing.GetTileSafely(current_x + i + m, current_y + n);
+                            if (tile.HasTile)
+                                goto over1;
+                        }
+
+                    //添加一些随机性
+                    if (WorldGen.genRand.NextBool(random))
+                    {
+                        int currentStyle;
+                        if (randomTile <= 1)
+                            currentStyle = 0;
+                        else
+                            currentStyle = WorldGen.genRand.Next(0, randomTile);
+                        ObjectPlace(current_x, current_y, tileType, currentStyle);
+                    }
+
+                over1: continue;             //<--因为不知道有没有什么办法直接跳出2层for，索性写了个goto
+                }
+        }
+
+        public static void PlaceOnRightDecorations(int origin_x, int origin_y, int startX, int startY, int endX, int endY, ushort tileType, int random = 10, int style = 0, int topTileType = -1)
+        {
+            TileObjectData data = TileObjectData.GetTileData(tileType, style);
+            int width = data == null ? 1 : data.Width;
+            int height = data == null ? 1 : data.Height;
+            int randomTile = data == null ? 1 : data.RandomStyleRange;
+
+            for (int i = startX; i < endX; i++)
+                for (int j = startY; j < endY; j++)
+                {
+                    Tile tile;
+                    int current_x = origin_x + i;
+                    int current_y = origin_y + j;
+                    //判断右边一条是不是都有方块,且方块类型是不是指定的
+                    for (int m = 0; m < height; m++)
+                    {
+                        tile = Framing.GetTileSafely(current_x + width, current_y + m);
+                        if (!tile.HasTile || tile.Slope is SlopeType.SlopeUpRight or SlopeType.SlopeDownRight || tile.IsHalfBlock)
                             goto over1;
 
                         if (topTileType != -1)

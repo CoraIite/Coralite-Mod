@@ -13,12 +13,16 @@ namespace Coralite.Content.Tiles.Magike
 
         public override void SetStaticDefaults()
         {
-            Main.tileMergeDirt[Type] = true;
+            //Main.tileMergeDirt[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
             //Main.tileMerge[Type][ModContent.TileType<MagikeCrystalBlockTile>()] = true;
             
-            //Main.tileMerge[Type][TileID.Stone] = true;
+            Main.tileMerge[TileID.Dirt][Type] = true;
+            
+            Main.tileMerge[Type][ModContent.TileType<CrystalBasaltTile>()] = true;
+            Main.tileMerge[ModContent.TileType<CrystalBasaltTile>()][Type] = true;
+
 
             TileID.Sets.ChecksForMerge[Type] = true;
 
