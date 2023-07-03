@@ -19,9 +19,6 @@ namespace Coralite
         public readonly Color MagicCrystalPink;
         public readonly Color CrystallineMagikePurple;
 
-
-
-
         private List<IOrderedLoadable> loadCache;
 
         public NoSmoother NoSmootherInstance;

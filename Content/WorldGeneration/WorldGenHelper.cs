@@ -110,7 +110,7 @@ namespace Coralite.Content.WorldGeneration
                     for (int m = 0; m < width; m++)
                         for (int n = 0; n < height; n++)
                         {
-                            tile = Framing.GetTileSafely(current_x + i + m, current_y + n);
+                            tile = Framing.GetTileSafely(current_x + m, current_y + n);
                             if (tile.HasTile)
                                 goto over1;
                         }
@@ -158,7 +158,7 @@ namespace Coralite.Content.WorldGeneration
                     for (int m = 0; m < width; m++)
                         for (int n = 0; n < height; n++)
                         {
-                            tile = Framing.GetTileSafely(current_x + i + m, current_y + n);
+                            tile = Framing.GetTileSafely(current_x + m, current_y + n);
                             if (tile.HasTile)
                                 goto over1;
                         }
@@ -206,7 +206,7 @@ namespace Coralite.Content.WorldGeneration
                     for (int m = 0; m < width; m++)
                         for (int n = 0; n < height; n++)
                         {
-                            tile = Framing.GetTileSafely(current_x + i + m, current_y + n);
+                            tile = Framing.GetTileSafely(current_x + m, current_y + n);
                             if (tile.HasTile)
                                 goto over1;
                         }
@@ -254,7 +254,7 @@ namespace Coralite.Content.WorldGeneration
                     for (int m = 0; m < width; m++)
                         for (int n = 0; n < height; n++)
                         {
-                            tile = Framing.GetTileSafely(current_x + i + m, current_y + n);
+                            tile = Framing.GetTileSafely(current_x + m, current_y + n);
                             if (tile.HasTile)
                                 goto over1;
                         }
@@ -402,5 +402,31 @@ namespace Coralite.Content.WorldGeneration
             }
 
         }
+    
+        public static void Texture2WallGenerate(int x, int y, int wall)
+        {
+            try
+            {
+                Tile Mtile = Main.tile[x, y];
+                if (!WorldGen.InWorld(x, y))
+                    return;
+
+                if (wall != -1)
+                {
+                    if (wall == -2)
+                        wall = 0; 
+                    Main.tile[x, y].WallType = 0;
+                    WorldGen.PlaceWall(x, y, wall, true);
+                }
+            }
+            catch (Exception e)
+            {
+                DEBUGHelper.LogFancy("Coralite:TILEGEN ERROR:", e);
+            }
+
+        }
+
+
+
     }
 }

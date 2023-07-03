@@ -307,7 +307,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.addTile(tile.Type);
         }
 
-        public static void ChestPrefab(this ModTile tile, int dustType, int chestDrop, string containerName, Color mapColor, string mapName, Func<string, int, int, string> MapChestName, int tileShine = 1200)
+        public static void ChestPrefab(this ModTile tile, int dustType, Color mapColor, Func<string, int, int, string> MapChestName, int tileShine = 1200)
         {
             Main.tileSpelunker[tile.Type] = true;
             Main.tileContainer[tile.Type] = true;

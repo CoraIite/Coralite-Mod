@@ -3,7 +3,7 @@ namespace Coralite.Content.WorldGeneration.Generators
 {
     public class TileInfo
     {
-        public int tileID = 0;
+        public int tileID = -1;
         public int tileStyle;
         public int liquidAmt;
 
@@ -12,6 +12,15 @@ namespace Coralite.Content.WorldGeneration.Generators
             this.tileID = tileID;
             tileStyle = style;
         }
+    }
 
+    public class WallInfo
+    {
+        public int wallID = -1;
+
+        public WallInfo(int wallID)
+        {
+            this.wallID = wallID;
+        }
     }
 }

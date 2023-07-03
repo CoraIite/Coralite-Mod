@@ -13,6 +13,8 @@ namespace Coralite.Content.Tiles.Magike
 
         public override void SetStaticDefaults()
         {
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+
             Main.tileShine2[Type] = true;
             Main.tileShine[Type] = 1000;
             Main.tileMergeDirt[Type] = true;
@@ -39,7 +41,7 @@ namespace Coralite.Content.Tiles.Magike
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {
-            TileFraming.CustomMergeFrame(i, j, Type, TileID.Dirt, true, true, false);
+            TileFraming.CustomMergeFrame(i, j, Type,ModContent.TileType<BasaltTile>(), true, true, false);
             return false;
         }
 

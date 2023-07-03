@@ -53,7 +53,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 //获取注魔词条池
                 EnchantEntityPool pool = GetEnchantPool(containsItem);
                 //获取子注魔词条池
-                IEnumerable<EnchantData> sonPool = pool.GetPool(checkedSlot, GetLevel(enchant.datas[checkedSlot].level));
+                Enchant.Level level = enchant.datas[checkedSlot] == null ? Enchant.Level.Nothing : enchant.datas[checkedSlot].level;
+                IEnumerable<EnchantData> sonPool = pool.GetSonPool(checkedSlot, GetLevel(level));
                 if (!sonPool.Any())
                     return;
 
@@ -143,6 +144,12 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public static void LevelCheck(Enchant enchant,int currentSlot,out int checkedSlot)
         {
             EnchantData currentData = enchant.datas[currentSlot];
+            if (currentData is null)
+            {
+                checkedSlot = currentSlot;
+                return;
+            }
+
             if (currentData.level == Enchant.Level.Max)
             {
                 IEnumerable<EnchantData> otherData = from d in enchant.datas
@@ -181,24 +188,16 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public static Enchant.Level GetLevel(Enchant.Level currentLevel)
         {
-            switch (currentLevel)
+            return currentLevel switch
             {
-                default:
-                case Enchant.Level.Nothing:
-                    return Enchant.Level.One;
-                case Enchant.Level.One:
-                    return Enchant.Level.Two;
-                case Enchant.Level.Two:
-                    return Enchant.Level.Three;
-                case Enchant.Level.Three:
-                    return Enchant.Level.Four;
-                case Enchant.Level.Four:
-                    return Enchant.Level.Five;
-                case Enchant.Level.Five:
-                    return Enchant.Level.Max;
-                case Enchant.Level.Max:
-                    return Enchant.Level.Max;
-            }
+                Enchant.Level.One => Enchant.Level.Two,
+                Enchant.Level.Two => Enchant.Level.Three,
+                Enchant.Level.Three => Enchant.Level.Four,
+                Enchant.Level.Four => Enchant.Level.Five,
+                Enchant.Level.Five => Enchant.Level.Max,
+                Enchant.Level.Max => Enchant.Level.Max,
+                _ => Enchant.Level.One,
+            };
         }
     }
 }

@@ -11,15 +11,10 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
         public Enchant()
         {
-            datas = new EnchantData[3]
-            {
-                new NothingEnchant(0),
-                new NothingEnchant(1),
-                new NothingEnchant(2)
-            };
+            datas = new EnchantData[3] ;
         }
 
-        public enum Level
+        public enum Level:int
         {
             Nothing,
             One,
@@ -37,6 +32,10 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public Enchant.Level level;
         /// <summary> 这个附魔词条应该在哪个位置上 </summary>
         public readonly int whichSlot;
+
+        public float bonus0;
+        public float bonus1;
+        public float bonus2;
 
         public virtual string Description { get; }
 
@@ -102,11 +101,5 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public override sealed void ModifyWeaponCrit(Item item, Player player, ref float crit) { }
         public override sealed void ModifyWeaponKnockback(Item item, Player player, ref StatModifier knockback) { }
 
-    }
-
-    public class NothingEnchant : EnchantData
-    {
-        public NothingEnchant(int whichSlot) : base(0,whichSlot)  {  }
-        public override string Description => "无加成";
     }
 }

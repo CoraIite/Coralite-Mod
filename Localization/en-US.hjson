@@ -828,7 +828,7 @@ Mods: {
 
 			Diprism: {
 				DisplayName: Diprism
-				Tooltip: Number of connections: 2
+				Tooltip: Connections: 2
 			}
 
 			BrilliantRemodelPool: {
@@ -949,27 +949,27 @@ Mods: {
 
 			OceanLens: {
 				DisplayName: Ocean Lens
-				Tooltip: ""
+				Tooltip: Produce magike in ocean biome
 			}
 
 			BrilliantQuadprism: {
 				DisplayName: Brilliant Quadprism
-				Tooltip: ""
+				Tooltip: Connections: 4
 			}
 
 			CrimtaneTriprism: {
 				DisplayName: Crimtane Triprism
-				Tooltip: ""
+				Tooltip: Connections: 3
 			}
 
 			DemoniteTriprism: {
 				DisplayName: Demonite Triprism
-				Tooltip: ""
+				Tooltip: Connections: 3
 			}
 
 			RedJadeDiprism: {
 				DisplayName: Red Jade Diprism
-				Tooltip: ""
+				Tooltip: Connections: 2
 			}
 
 			Basalt: {
@@ -989,6 +989,85 @@ Mods: {
 
 			WorldGenTester: {
 				DisplayName: World Gen Tester
+				Tooltip: !!!! Debug Item !!!
+			}
+
+			BoneLens: {
+				DisplayName: Bone Lens
+				Tooltip: Produce magike in dungeon
+			}
+
+			ForestLens: {
+				DisplayName: Forest Lens
+				Tooltip: Produce magike in forest
+			}
+
+			GlowingMushroomLens: {
+				DisplayName: Glowing Mushroom Lens
+				Tooltip: Produce magike in glowing mushroon biome
+			}
+
+			BrightnessLens: {
+				DisplayName: Brightness Lens
+				Tooltip: Produce magike in light
+			}
+
+			DarknessLens: {
+				DisplayName: Darkness Lens
+				Tooltip: Produce magike in dark
+			}
+
+			BasaltChest: {
+				DisplayName: Basalt Chest
+				Tooltip: ""
+			}
+
+			MagicCrystalBlock: {
+				DisplayName: Magic Crystal Block
+				Tooltip: ""
+			}
+
+			MagicCrystalBrick: {
+				DisplayName: Magic Crystal Brick
+				Tooltip: ""
+			}
+
+			Page_MagikeBase: {
+				DisplayName: Page: Magike Base
+				Tooltip:
+					'''
+					Left click use to learn the basis of magic energy
+					"Magike, a mysterious energy, is usually considered to be highly concentrated magic. "
+					"Because of its extremely high concentration, it cannot provide magic power for people like magic potions."
+					"In order to rationalize the control and use of magic energy, various kinds of lenses, wide-angle mirrors, and crystal pillars have been invented"
+					"Through the lens to produce magic energy, wide angle mirror to transmit magic energy, crystal pillar to store magic energy"
+					"In order to use these devices, a magic energy connector is essential, which can connect the device with sending function to the receiving device"
+					"After being able to control the magic energy, people made various devices that consume magic energy to perform various tasks by consuming magic energy"
+					'''
+			}
+
+			HardBasalt: {
+				DisplayName: Hard Basalt
+				Tooltip: ""
+			}
+
+			HellLens: {
+				DisplayName: Hell Lens
+				Tooltip: Produce magike in underworld
+			}
+
+			BreezeLens: {
+				DisplayName: Breeze Lens
+				Tooltip: Produce magike depend on wind speed
+			}
+
+			DrizzleLens: {
+				DisplayName: Drizzle Lens
+				Tooltip: Produce magike while raining
+			}
+
+			HardBasaltWall: {
+				DisplayName: Hard Basalt Wall
 				Tooltip: ""
 			}
 		}
@@ -1023,6 +1102,7 @@ Mods: {
 			CoraliteDaybloom.MapEntry: Daybloom
 			CoraliteBlinkroot.MapEntry: Blinkroot
 			AgropyronFrozen.MapEntry: Agropyron Frozen
+			BasaltChestTile.MapEntry: Basalt Chest Tile
 		}
 
 		Buffs: {
@@ -1070,6 +1150,8 @@ Mods: {
 			MaragonTrail.DisplayName: Maragon Trail
 			ShadowGolem.DisplayName: Shadow Golem
 			ShadowGuard.DisplayName: Shadow Guard
+			CrystalFairy.DisplayName: Crystal Fairy
+			CrystalSpirit.DisplayName: Crystal Spirit
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1213,12 +1295,19 @@ Mods: {
 			}
 		}
 
-		Keybinds.套装效果.DisplayName: 套装效果
+		Keybinds.套装效果.DisplayName: Armor bonus Keybind
 
 		MagikeSystem: {
 			MagikeSystem: {
 				learnedMagikeAdvanced: After learning "Scroll: Enhanced Magike Refining"
 				learnedMagikeBase: After learning "Pages: Basic Magike".
+			}
+		}
+
+		Biomes: {
+			MagicCrystalCave: {
+				DisplayName: Magic Crystal Cave
+				TownNPCDialogueName: the Magic Crystal Cave
 			}
 		}
 	}

@@ -946,47 +946,125 @@ Mods: {
 			}
 
 			OceanLens: {
-				// DisplayName: Ocean Lens
-				// Tooltip: ""
+				DisplayName: 海洋透镜
+				Tooltip: 在海洋环境中生产魔能
 			}
 
 			BrilliantQuadprism: {
-				// DisplayName: Brilliant Quadprism
-				// Tooltip: ""
+				DisplayName: 璀璨四棱镜
+				Tooltip: 连接数量：4
 			}
 
 			CrimtaneTriprism: {
-				// DisplayName: Crimtane Triprism
-				// Tooltip: ""
+				DisplayName: 猩红三棱镜
+				Tooltip: 连接数量：3
 			}
 
 			DemoniteTriprism: {
-				// DisplayName: Demonite Triprism
-				// Tooltip: ""
+				DisplayName: 魔化三棱镜
+				Tooltip: 连接数量：3
 			}
 
 			RedJadeDiprism: {
-				// DisplayName: Red Jade Diprism
-				// Tooltip: ""
+				DisplayName: 赤玉二相镜
+				Tooltip: 连接数量：2
 			}
 
 			Basalt: {
-				// DisplayName: Basalt
-				// Tooltip: ""
+				DisplayName: 玄武岩
+				Tooltip: ""
 			}
 
 			MagikeCrystalBlock: {
-				// DisplayName: Magike Crystal Block
-				// Tooltip: ""
+				DisplayName: 魔力晶体块
+				Tooltip: ""
 			}
 
 			CrystalBasalt: {
-				// DisplayName: Crystal Basalt
-				// Tooltip: ""
+				DisplayName: 水晶玄武岩
+				Tooltip: ""
 			}
 
 			WorldGenTester: {
-				// DisplayName: World Gen Tester
+				DisplayName: 世界生成测试器
+				Tooltip: ！测试用物品！
+			}
+
+			BoneLens: {
+				DisplayName: 骸骨透镜
+				Tooltip: 在地牢生产魔能
+			}
+
+			ForestLens: {
+				DisplayName: 森林透镜
+				Tooltip: 在森林生产魔能
+			}
+
+			GlowingMushroomLens: {
+				DisplayName: 夜光蘑菇透镜
+				Tooltip: 在夜光蘑菇环境生产魔能
+			}
+
+			BrightnessLens: {
+				DisplayName: 光明透镜
+				Tooltip: 在明亮的地方生产魔能
+			}
+
+			DarknessLens: {
+				DisplayName: 黑暗透镜
+				Tooltip: 在黑暗的地方生产魔能
+			}
+
+			BasaltChest: {
+				DisplayName: 玄武岩箱
+				Tooltip: ""
+			}
+
+			MagicCrystalBlock: {
+				DisplayName: 魔力水晶块
+				Tooltip: ""
+			}
+
+			MagicCrystalBrick: {
+				DisplayName: 魔力水晶砖
+				Tooltip: ""
+			}
+
+			Page_MagikeBase: {
+				DisplayName: 书页：魔能基础
+				Tooltip:
+					'''
+					左键使用以学习魔能的基础
+					“魔能，一种神秘的能量，通常认为是高度浓缩的魔力。由于其浓度极高，所以无法像魔力药水那样为人提供魔力。”
+					“为了合理地掌控与运用魔能，人们发明了各式各样的透镜，广角镜，与水晶柱”
+					“通过透镜来生产魔能，广角镜来传递魔能，水晶柱来存储魔能”
+					“要想使用这些装置，一个魔能连接仪是必不可少的，它能够将具有发送功能的装置连接到接受装置上”
+					"能够掌控魔能之后，人们制造出了各种消耗魔能的装置，通过消耗魔能来进行各种各样的工作"
+					'''
+			}
+
+			HardBasalt: {
+				DisplayName: 硬化玄武岩
+				Tooltip: ""
+			}
+
+			HellLens: {
+				DisplayName: 地狱透镜
+				Tooltip: 在地狱生产魔能
+			}
+
+			BreezeLens: {
+				DisplayName: 微风透镜
+				Tooltip: 根据风速生产魔能
+			}
+
+			DrizzleLens: {
+				DisplayName: 细雨透镜
+				Tooltip: 下雨时生产魔能
+			}
+
+			HardBasaltWall: {
+				// DisplayName: Hard Basalt Wall
 				// Tooltip: ""
 			}
 		}
@@ -1021,6 +1099,7 @@ Mods: {
 			CoraliteDaybloom.MapEntry: 太阳花
 			CoraliteBlinkroot.MapEntry: 闪耀根
 			AgropyronFrozen.MapEntry: 寒霜冰草
+			BasaltChestTile.MapEntry: 玄武岩箱
 		}
 
 		Buffs: {
@@ -1068,6 +1147,8 @@ Mods: {
 			MaragonTrail.DisplayName: 魔龙尾
 			ShadowGolem.DisplayName: 影子巨像
 			ShadowGuard.DisplayName: 影子守卫
+			// CrystalFairy.DisplayName: Crystal Fairy
+			// CrystalSpirit.DisplayName: Crystal Spirit
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1211,12 +1292,19 @@ Mods: {
 			}
 		}
 
-		// Keybinds.套装效果.DisplayName: 套装效果
+		Keybinds.套装效果.DisplayName: 套装效果键
 
 		MagikeSystem: {
 			MagikeSystem: {
 				learnedMagikeAdvanced: 学习“卷轴：强化魔能提炼”后可合成
 				learnedMagikeBase: 学习“书页：魔能基础”后可合成
+			}
+		}
+
+		Biomes: {
+			MagicCrystalCave: {
+				DisplayName: 魔力水晶洞
+				TownNPCDialogueName: 魔力水晶洞
 			}
 		}
 	}

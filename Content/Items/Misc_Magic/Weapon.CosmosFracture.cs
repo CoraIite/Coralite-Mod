@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Misc_Magic
             Item.damage = 275;
             Item.useTime = 20;
             Item.useAnimation = 20;
-            Item.mana = 22;
+            Item.mana = 18;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Magic;
             Item.knockBack = 4;
@@ -93,13 +93,13 @@ namespace Coralite.Content.Items.Misc_Magic
             return false;
         }
 
-        public override void AddRecipes()
-        {
-            CreateRecipe(1)
-            .AddIngredient(ItemID.SkyFracture, 1)
-            .AddIngredient(ItemID.LunarBar, 15)
-            .AddTile(TileID.LunarCraftingStation)
-            .Register();
-        }
+        //public override void AddRecipes()
+        //{
+        //    CreateRecipe(1)
+        //    .AddIngredient(ItemID.SkyFracture, 1)
+        //    .AddIngredient(ItemID.LunarBar, 15)
+        //    .AddTile(TileID.LunarCraftingStation)
+        //    .Register();
+        //}
     }
 }

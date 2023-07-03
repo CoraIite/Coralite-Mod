@@ -2,7 +2,6 @@
 using Coralite.Core.Prefabs.Tiles;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
@@ -16,7 +15,7 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void SetStaticDefaults()
         {
-            this.ChestPrefab(DustID.GemRuby, ModContent.ItemType<Items.RedJades.RedJadeChest>(), "赤玉箱", Coralite.Instance.RedJadeRed, "赤玉箱", MapChestName);
+            this.ChestPrefab(DustID.GemRuby, Coralite.Instance.RedJadeRed, MapChestName);
         }
 
         public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);

@@ -108,6 +108,12 @@ namespace Coralite.Core
 
         public const string MagikeTiles = Tiles + "Magike/";
 
+
+
+        public const string Walls = Assets + "Walls/";
+
+        public const string MagikeWalls = Walls + "Magike/";
+
         #endregion
 
         #region NPC部分！
@@ -116,6 +122,7 @@ namespace Coralite.Core
 
         public const string ShadowNPCs = NPCs + "Shadow/";
         public const string IcicleNPCs = NPCs + "Icicle/";
+        public const string MagikeNPCs = NPCs + "Magike/";
         public const string OtherNPC = NPCs + "OtherNPC/";
 
         #endregion
@@ -135,8 +142,12 @@ namespace Coralite.Core
 
         #endregion
 
+        public const string Backgrounds = Assets + "Backgrounds/";
+
         public const string WorldGen = Assets + "WorldGeneration/";
 
         public const string IceNest = WorldGen + "IceNest/";
+        public const string Shrines = WorldGen + "Shrines/";
+
     }
 }

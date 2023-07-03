@@ -97,5 +97,4 @@ namespace Coralite.Content.Items.Magike.BiomeLens
             MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.Aqua, DustID.BubbleBurst_Blue);
         }
     }
-
 }

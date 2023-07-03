@@ -5,12 +5,14 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.Magike
 {
-    public class MagikeCrystalBlockTile : ModTile
+    public class MagicCrystalBlockTile : ModTile
     {
         public override string Texture => AssetDirectory.MagikeTiles + Name;
 
         public override void SetStaticDefaults()
         {
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+
             Main.tileLighted[Type] = true;
             Main.tileShine2[Type] = true;
             Main.tileShine[Type] = 600;

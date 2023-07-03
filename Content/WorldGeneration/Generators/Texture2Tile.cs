@@ -27,42 +27,5 @@ namespace Coralite.Content.WorldGeneration.Generators
                         WorldGenHelper.Texture2TileGenerate(current_x, current_y, info.tileID, info.tileStyle, info.tileID > -1, info.liquidAmt == 0, false, sync);
                 }
         }
-
     }
-
-    public class Texture2TileGeneratorDatas
-    {
-        /// <summary>
-        /// 长宽必须和贴图相等！
-        /// </summary>
-        /// <param name="tileTex"></param>
-        /// <param name="colorToTile"></param>
-        /// <returns></returns>
-        public static Texture2TileGenerator GetTexGenerator(Texture2D tileTex, Dictionary<Color, int> colorToTile)
-        {
-            Color[] tileData = new Color[tileTex.Width * tileTex.Height];
-            tileTex.GetData(0, tileTex.Bounds, tileData, 0, tileTex.Width * tileTex.Height);
-
-            int x = 0;
-            int y = 0;
-            Texture2TileGenerator gen = new(tileTex.Width, tileTex.Height);
-            for (int m = 0; m < tileData.Length; m++)
-            {
-                Color tileColor = tileData[m];
-                int tileID = colorToTile.ContainsKey(tileColor) ? colorToTile[tileColor] : -1; //if no key assume no action
-                gen.tileGen[x, y] = new TileInfo(tileID, 0);
-                x++;
-                if (x >= tileTex.Width)
-                {
-                    x = 0; 
-                    y++;
-                }
-                if (y >= tileTex.Height) 
-                    break; //you've somehow reached the end of the texture! (this shouldn't happen!)
-            }
-
-            return gen;
-        }
-    }
-
 }

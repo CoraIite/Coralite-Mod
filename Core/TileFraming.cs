@@ -26,8 +26,10 @@ namespace Coralite.Core
             }
 
             tileMergeTypes[TileID.Dirt][ModContent.TileType<BasaltTile>()] = true;
-            //tileMergeTypes[ModContent.TileType<BasaltTile>()][ModContent.TileType<CrystalBasaltTile>()] = true;
-            tileMergeTypes[ModContent.TileType<BasaltTile>()][ModContent.TileType<MagikeCrystalBlockTile>()] = true;
+
+            tileMergeTypes[ModContent.TileType<BasaltTile>()][ModContent.TileType<CrystalBasaltTile>()] = true;
+            tileMergeTypes[ModContent.TileType<BasaltTile>()][ModContent.TileType<MagicCrystalBlockTile>()] = true;
+            tileMergeTypes[ModContent.TileType<BasaltTile>()][ModContent.TileType<HardBasaltTile>()] = true;
         }
 
         public override void Unload()

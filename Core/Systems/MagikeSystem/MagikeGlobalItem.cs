@@ -1,10 +1,11 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
-using Humanizer;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem
 {
@@ -27,6 +28,16 @@ namespace Coralite.Core.Systems.MagikeSystem
                 enchant ??= new Enchant();
                 return enchant;
             }
+        }
+
+        public override void HorizontalWingSpeeds(Item item, Player player, ref float speed, ref float acceleration)
+        {
+            base.HorizontalWingSpeeds(item, player, ref speed, ref acceleration);
+        }
+
+        public override void VerticalWingSpeeds(Item item, Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
+        {
+            base.VerticalWingSpeeds(item, player, ref ascentWhenFalling, ref ascentWhenRising, ref maxCanAscendMultiplier, ref maxAscentMultiplier, ref constantAscend);
         }
 
         #region  普通加成
@@ -104,10 +115,67 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         #endregion
 
+        public override void SaveData(Item item, TagCompound tag)
+        {
+            if (enchant != null)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (enchant.datas[i] != null)
+                    {
+                        string main = "Enchant" + i.ToString();
+                        tag.Add(main+"_name", enchant.datas[i].GetType().FullName);
+                        tag.Add(main + "_level", (int)enchant.datas[i].level);
+                        tag.Add(main + "_bonus0", enchant.datas[0].bonus0);
+                        tag.Add(main + "_bonus1", enchant.datas[0].bonus1);
+                        tag.Add(main + "_bonus2", enchant.datas[0].bonus2);
+                    }
+                }
+            }
+        }
 
+        public override void LoadData(Item item, TagCompound tag)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                string main = "Enchant" + i.ToString();
+                if (tag.ContainsKey(main+"_name"))
+                {
+                    try
+                    {
+                        var t = Type.GetType(tag.GetString(main + "_name"));
+                        if (t is null)
+                            continue;
+
+                        var data = (EnchantData)Activator.CreateInstance(t);
+                        data.level =(Enchant.Level) tag.GetInt(main + "_level");
+                        data.bonus0 = tag.GetFloat(main + "_bonus0");
+                        data.bonus1 = tag.GetFloat(main + "_bonus1");
+                        data.bonus2 = tag.GetFloat(main + "_bonus2");
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+            }       
+        }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
+            if (enchant!=null)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (enchant.datas[i] != null)
+                    {
+                        TooltipLine line = new TooltipLine(Mod, "enchant" + i.ToString(), enchant.datas[i].Description);
+                        line.OverrideColor = GetColor(enchant.datas[i].level);
+                        tooltips.Add(line);
+                    }
+                }
+            }
+
             if (MagikeSystem.remodelRecipes.ContainsKey(item.type))
                 tooltips.Add(new TooltipLine(Mod, "canRemodel", "可重塑"));
 
@@ -138,6 +206,21 @@ namespace Coralite.Core.Systems.MagikeSystem
                 //}
                 tooltips.Add(line);
             }
+        }
+
+
+        private static Color GetColor(Enchant.Level level)
+        {
+            return level switch
+            {
+                Enchant.Level.Nothing=>Color.Gray,
+                Enchant.Level.One=>Color.White,
+                Enchant.Level.Two => Color.Pink,
+                Enchant.Level.Three => Color.Aqua,
+                Enchant.Level.Four => Color.Green,
+                Enchant.Level.Five => Color.Yellow,
+                _=>Color.Orange
+            };
         }
     }
 }

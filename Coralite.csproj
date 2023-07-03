@@ -18,6 +18,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Items\Misc_Summon\" />
+    <Folder Include="Assets\Walls\Magike\" />
+    <Folder Include="Assets\WorldGeneration\Shrines\" />
     <Folder Include="Compat\BloodSoul\" />
     <Folder Include="Content\Items\Pets\" />
     <Folder Include="Content\Items\Misc_Summon\" />
