@@ -46,6 +46,7 @@ namespace Coralite.Core
         public const string OtherItems = Items + "Others/";
 
         public const string MushroomItems = Items + "Mushroom/";
+        public const string CrimsonItems = Items + "Crimson/";
         public const string ShadowItems = Items + "Shadow/";
         public const string RedJadeItems = Items + "RedJades/";
         public const string IcicleItems = Items + "Icicle/";

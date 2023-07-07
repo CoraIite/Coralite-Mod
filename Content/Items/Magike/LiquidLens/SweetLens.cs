@@ -104,5 +104,4 @@ namespace Coralite.Content.Items.Magike.LiquidLens
             MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.OrangeRed, DustID.FireworksRGB);
         }
     }
-
 }

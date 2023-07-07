@@ -3,6 +3,7 @@ using Coralite.Core;
 using Terraria.ModLoader;
 using Terraria;
 using Coralite.Content.Raritys;
+using Terraria.ID;
 
 namespace Coralite.Content.Items.Magike.OtherPlaceables
 {
@@ -16,5 +17,12 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
             Item.rare = ModContent.RarityType<MagikeCrystalRarity>();
         }
 
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<MagicCrystalBlock>(2)
+                .AddTile(TileID.HeavyWorkBench)
+                .Register();
+        }
     }
 }

@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using static Terraria.ModLoader.ModContent;
 using Coralite.Core.Systems.MagikeSystem.Base;
+using Coralite.Content.Items.Magike.OtherPlaceables;
 
 namespace Coralite.Content.Items.Magike.RemodelPools
 {
@@ -26,6 +27,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
         {
             CreateRecipe()
                 .AddIngredient<MagicCrystal>(10)
+                .AddIngredient<Basalt>(10)
                 .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();

@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Graphics;
 using static Terraria.ModLoader.ModContent;
 using Coralite.Content.Raritys;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Content.Items.Magike.OtherPlaceables;
 
 namespace Coralite.Content.Items.Magike.Towers
 {
@@ -25,6 +26,7 @@ namespace Coralite.Content.Items.Magike.Towers
         {
             CreateRecipe()
                 .AddIngredient<MagicCrystal>(2)
+                .AddIngredient<Basalt>(10)
                 .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();

@@ -26,7 +26,8 @@ namespace Coralite.Content.NPCs.Magike
 
             NPC.lifeMax = 40;
             NPC.aiStyle = NPCAIStyleID.FlyingFish;
-            NPC.HitSound = NPC.DeathSound = CoraliteSoundID.GlassBroken_Shatter;
+            NPC.HitSound = CoraliteSoundID.DigStone_Tink;
+            NPC.DeathSound = CoraliteSoundID.GlassBroken_Shatter;
             NPC.knockBackResist = 0.8f;
             NPC.noGravity = true;
             NPC.value = Item.buyPrice(0, 0, 20, 0);

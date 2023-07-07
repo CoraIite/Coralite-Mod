@@ -59,6 +59,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public sealed override void SetDefaults()
         {
+            Projectile.scale = 1;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.friendly = true;
@@ -95,7 +96,9 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             if (onHit != 0 && onHit < onHitFreeze)//轻微的卡肉效果
             {
-                Projectile.Center = Owner.Center + RotateVec2 * (Projectile.height / 2 + distanceToOwner);
+                Projectile.Center = Owner.Center + RotateVec2 * (Projectile.scale * Projectile.height / 2 + distanceToOwner);
+                Top = Projectile.Center + RotateVec2 * (Projectile.scale * Projectile.height / 2 + trailTopWidth);
+                Bottom = Projectile.Center - RotateVec2 * (Projectile.scale * Projectile.height / 2);//弹幕的底端和顶端计算，用于检测碰撞以及绘制
                 onHit++;
                 return;
             }
@@ -113,7 +116,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
             else if ((int)Timer <= maxTime)//挥舞过程中
             {
-                Slash();
+                OnSlash();
                 SpawnDustOnSlash();
             }
             else
@@ -138,8 +141,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// </summary>
         protected virtual void AIAfter()
         {
-            Top = Projectile.Center + RotateVec2 * (Projectile.height / 2 + trailTopWidth);
-            Bottom = Projectile.Center - RotateVec2 * (Projectile.height / 2);//弹幕的底端和顶端计算，用于检测碰撞以及绘制
+            Top = Projectile.Center + RotateVec2 * (Projectile.scale * Projectile.height / 2 + trailTopWidth);
+            Bottom = Projectile.Center - RotateVec2 * (Projectile.scale * Projectile.height / 2);//弹幕的底端和顶端计算，用于检测碰撞以及绘制
             Owner.itemRotation = Owner.direction > 0 ? _Rotation : _Rotation - 3.141f;
 
             if (useShadowTrail || useSlashTrail)
@@ -197,7 +200,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// </summary>
         protected virtual void BeforeSlash() { }
 
-        protected virtual void Slash()
+        protected virtual void OnSlash()
         {
             _Rotation = startAngle + totalAngle * Smoother.Smoother((int)Timer - minTime, maxTime - minTime);
             Slasher();
@@ -220,7 +223,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected void Slasher()
         {
             RotateVec2 = _Rotation.ToRotationVector2();
-            Projectile.Center = Owner.Center + RotateVec2 * (Projectile.height / 2 + distanceToOwner);
+            Projectile.Center = Owner.Center + RotateVec2 * (Projectile.scale * Projectile.height / 2 + distanceToOwner);
             Projectile.rotation = _Rotation;
         }
 
@@ -426,5 +429,4 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         #endregion
     }
-
 }

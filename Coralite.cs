@@ -23,7 +23,8 @@ namespace Coralite
 
         public NoSmoother NoSmootherInstance;
         public HeavySmoother  HeavySmootherInstance;
-
+        public SqrtSmoother SqrtSmoother;
+        public X2Smoother X2Smoother;
 
         //单例模式！
         public static Coralite Instance { get; private set; }
@@ -34,6 +35,8 @@ namespace Coralite
 
             NoSmootherInstance=new NoSmoother();
             HeavySmootherInstance = new HeavySmoother();
+            SqrtSmoother = new SqrtSmoother();
+            X2Smoother = new X2Smoother();
 
             RedJadeRed = new Color(221, 50, 50);
             IcicleCyan = new Color(43, 255, 198);

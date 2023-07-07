@@ -20,7 +20,8 @@ namespace Coralite.Content.NPCs.Magike
 
             NPC.lifeMax = 10;
             NPC.aiStyle = NPCAIStyleID.Firefly;
-            NPC.HitSound=NPC.DeathSound=CoraliteSoundID.DigIce;
+            NPC.HitSound = CoraliteSoundID.DigStone_Tink;
+            NPC.DeathSound = CoraliteSoundID.DigIce;
             NPC.npcSlots = 0.2f;
             NPC.noGravity = true;
         }

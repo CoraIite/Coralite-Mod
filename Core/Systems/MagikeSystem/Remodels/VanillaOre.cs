@@ -79,6 +79,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.GoldBar, 15, ItemID.DemoniteBar);
             AddRemodelRecipe(ItemID.GoldBar, 15, ItemID.MeteoriteBar);
             AddRemodelRecipe(ItemID.GoldBar, 150, ItemID.AncientGoldHelmet,selfRequiredNumber:10);
+            AddRemodelRecipe(ItemID.GoldBar, 400, ItemID.GoldenKey, selfRequiredNumber: 20, condition: DownedSkeletronCondition.Instance);
             AddRemodelRecipe(ItemID.PlatinumBar, 15, ItemID.CrimtaneBar);
             AddRemodelRecipe(ItemID.PlatinumBar, 15, ItemID.DemoniteBar);
             AddRemodelRecipe(ItemID.PlatinumBar, 15, ItemID.MeteoriteBar);

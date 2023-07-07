@@ -3,6 +3,7 @@ using Coralite.Content.Tiles.Magike;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike.OtherPlaceables
@@ -11,5 +12,14 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
     {
         public BasaltChest() : base(Item.sellPrice(0,0,0,10),ModContent.RarityType<MagikeCrystalRarity>(),ModContent.TileType<BasaltChestTile>(),AssetDirectory.MagikeItems)
         { }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<MagicCrystal>(2)
+                .AddIngredient<Basalt>(10)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
     }
 }

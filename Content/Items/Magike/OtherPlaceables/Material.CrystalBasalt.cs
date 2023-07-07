@@ -1,6 +1,8 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Content.Tiles.Magike;
 using Coralite.Core;
+using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike.OtherPlaceables
@@ -13,6 +15,16 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<CrystalBasaltTile>());
             Item.rare = ModContent.RarityType<MagikeCrystalRarity>();
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<MagicCrystal>()
+                .AddIngredient<Basalt>()
+                .AddTile(TileID.HeavyWorkBench)
+                .AddCondition(Condition.InGraveyard)
+                .Register();
         }
 
     }

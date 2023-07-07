@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Tiles.Magike;
 using Coralite.Core;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike.OtherPlaceables
@@ -11,6 +12,14 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<HardBasaltTile>());
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<Basalt>(2)
+                .AddTile(TileID.HeavyWorkBench)
+                .Register();
         }
     }
 }

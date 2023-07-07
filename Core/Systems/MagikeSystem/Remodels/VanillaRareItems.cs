@@ -24,6 +24,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             //琥珀
             AddRemodelRecipe(ItemID.Amber, 150, ItemID.AmberMosquito, selfRequiredNumber: 99);
 
+            //黑曜石
+            AddRemodelRecipe(ItemID.Obsidian, 400, ItemID.ShadowKey, selfRequiredNumber: 99,condition:DownedSkeletronCondition.Instance);
+
+            //冰冻箱子
+            AddRemodelRecipe(ItemID.IceChest, 150, ItemID.Fish, selfRequiredNumber: 25);
         }
     }
 }

@@ -10,6 +10,7 @@ using Coralite.Content.Raritys;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
 using static Terraria.ModLoader.ModContent;
+using Coralite.Content.Items.Magike.OtherPlaceables;
 
 namespace Coralite.Content.Items.Magike.Columns
 {
@@ -22,6 +23,7 @@ namespace Coralite.Content.Items.Magike.Columns
         {
             CreateRecipe()
                 .AddIngredient<MagicCrystal>(10)
+                .AddIngredient<Basalt>(10)
                 .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();

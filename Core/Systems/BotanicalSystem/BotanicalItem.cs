@@ -76,50 +76,50 @@ namespace Coralite.Core.Systems.BotanicalSystem
 
         public override void SetDefaults(Item item)
         {
-            switch (item.type)
-            {
-                case ItemID.DaybloomSeeds://太阳花种子
-                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteDaybloom>());
-                    break;
+            //switch (item.type)
+            //{
+            //    case ItemID.DaybloomSeeds://太阳花种子
+            //        SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteDaybloom>());
+            //        break;
 
-                case ItemID.BlinkrootSeeds://闪耀根种子
-                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteBlinkroot>());
-                    break;
+            //    case ItemID.BlinkrootSeeds://闪耀根种子
+            //        SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteBlinkroot>());
+            //        break;
 
-                case ItemID.MoonglowSeeds://月光草种子
-                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteMoonglow>());
-                    break;
+            //    case ItemID.MoonglowSeeds://月光草种子
+            //        SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteMoonglow>());
+            //        break;
 
-                case ItemID.WaterleafSeeds://幌菊种子
-                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteWaterleaf>());
-                    break;
+            //    case ItemID.WaterleafSeeds://幌菊种子
+            //        SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteWaterleaf>());
+            //        break;
 
-                case ItemID.ShiverthornSeeds://寒颤棘种子
-                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteShiverthorn>());
-                    break;
+            //    case ItemID.ShiverthornSeeds://寒颤棘种子
+            //        SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteShiverthorn>());
+            //        break;
 
-                case ItemID.DeathweedSeeds://死亡草种子
-                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteDeathweed>());
-                    break;
+            //    case ItemID.DeathweedSeeds://死亡草种子
+            //        SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteDeathweed>());
+            //        break;
 
-                case ItemID.FireblossomSeeds://火焰花种子
-                    SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteFireblossom>());
-                    break;
+            //    case ItemID.FireblossomSeeds://火焰花种子
+            //        SetVanillaPlant(item, 10, 10, 0, 0, TileType<CoraliteFireblossom>());
+            //        break;
 
-                case ItemID.Daybloom:
-                case ItemID.Blinkroot:
-                case ItemID.Moonglow:
-                case ItemID.Waterleaf:
-                case ItemID.Shiverthorn:
-                case ItemID.Deathweed:
-                case ItemID.Fireblossom:
-                    botanicalItem = true;
-                    DominantGrowTime = 10;
-                    RecessiveGrowTime = 10;
-                    break;
+            //    case ItemID.Daybloom:
+            //    case ItemID.Blinkroot:
+            //    case ItemID.Moonglow:
+            //    case ItemID.Waterleaf:
+            //    case ItemID.Shiverthorn:
+            //    case ItemID.Deathweed:
+            //    case ItemID.Fireblossom:
+            //        botanicalItem = true;
+            //        DominantGrowTime = 10;
+            //        RecessiveGrowTime = 10;
+            //        break;
 
-                default: break;
-            }
+            //    default: break;
+            //}
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
@@ -127,39 +127,38 @@ namespace Coralite.Core.Systems.BotanicalSystem
             if (!botanicalItem)
                 return;
 
-            string Genotypes;
-            if (isIdentified)
-            {
-                //显性生长时间
-                Genotypes = $"生长时间: {DominantGrowTime}";
-                TooltipLine line = new TooltipLine(Mod, "DGrowTime", Genotypes);
-                tooltips.Add(line);
+            //string Genotypes;
+            //if (isIdentified)
+            //{
+            //    //显性生长时间
+            //    Genotypes = $"生长时间: {DominantGrowTime}";
+            //    TooltipLine line = new TooltipLine(Mod, "DGrowTime", Genotypes);
+            //    tooltips.Add(line);
 
-                //隐性生长时间
-                Genotypes = $"生长时间: {RecessiveGrowTime}";
-                line = new TooltipLine(Mod, "DGrowTime", Genotypes);
-                line.OverrideColor = Color.Gray;
-                tooltips.Add(line);
+            //    //隐性生长时间
+            //    Genotypes = $"生长时间: {RecessiveGrowTime}";
+            //    line = new TooltipLine(Mod, "DGrowTime", Genotypes);
+            //    line.OverrideColor = Color.Gray;
+            //    tooltips.Add(line);
 
-                //显性强度
-                Genotypes = $"等级: {DominantLevel}";
-                line = new TooltipLine(Mod, "DGrowTime", Genotypes);
-                tooltips.Add(line);
+            //    //显性强度
+            //    Genotypes = $"等级: {DominantLevel}";
+            //    line = new TooltipLine(Mod, "DGrowTime", Genotypes);
+            //    tooltips.Add(line);
 
-                //隐性强度
-                Genotypes = $"等级: {RecessiveLevel}";
-                line = new TooltipLine(Mod, "DGrowTime", Genotypes);
-                line.OverrideColor = Color.Gray;
-                tooltips.Add(line);
-            }
-            else
-            {
-                string notDentified = "该植物还未被鉴定";
-                TooltipLine line = new TooltipLine(Mod, "NotDentified", notDentified);
-                line.OverrideColor = Color.Gray;
-                tooltips.Add(line);
-            }
-
+            //    //隐性强度
+            //    Genotypes = $"等级: {RecessiveLevel}";
+            //    line = new TooltipLine(Mod, "DGrowTime", Genotypes);
+            //    line.OverrideColor = Color.Gray;
+            //    tooltips.Add(line);
+            //}
+            //else
+            //{
+            //    string notDentified = "该植物还未被鉴定";
+            //    TooltipLine line = new TooltipLine(Mod, "NotDentified", notDentified);
+            //    line.OverrideColor = Color.Gray;
+            //    tooltips.Add(line);
+            //}
         }
 
         public override bool CanRightClick(Item item)

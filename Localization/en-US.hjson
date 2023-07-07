@@ -1070,6 +1070,26 @@ Mods: {
 				DisplayName: Hard Basalt Wall
 				Tooltip: ""
 			}
+
+			GraniteLens: {
+				DisplayName: Granite Lens
+				Tooltip: ""
+			}
+
+			MarbleLens: {
+				DisplayName: Marble Lens
+				Tooltip: ""
+			}
+
+			HoneypotLens: {
+				DisplayName: Honeypot Lens
+				Tooltip: ""
+			}
+
+			BloodyHook: {
+				DisplayName: Bloody Hook
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1135,6 +1155,11 @@ Mods: {
 				DisplayName: Shadow Circle Buff
 				Description: Mods.Coralite.Buffs.ShadowCircleBuff.Description
 			}
+
+			BloodyHookDebuff: {
+				DisplayName: Bloody Hook Debuff
+				Description: Mods.Coralite.Buffs.BloodyHookDebuff.Description
+			}
 		}
 
 		NPCs: {
@@ -1152,6 +1177,7 @@ Mods: {
 			ShadowGuard.DisplayName: Shadow Guard
 			CrystalFairy.DisplayName: Crystal Fairy
 			CrystalSpirit.DisplayName: Crystal Spirit
+			CrystalGolem.DisplayName: Crystal Golem
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1268,6 +1294,9 @@ Mods: {
 			ShadowCircle_MeleeClaw.DisplayName: Shadow Circle_ Melee Claw
 			ShadowCircle_MeleeTrack.DisplayName: Shadow Circle_ Melee Track
 			MagicBeam.DisplayName: Magic Beam
+			CrystalLaser.DisplayName: Crystal Laser
+			BloodHookChain.DisplayName: Blood Hook Chain
+			BloodHookSlash.DisplayName: Blood Hook Slash
 		}
 
 		Configs: {

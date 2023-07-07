@@ -3,6 +3,7 @@ using ReLogic.Utilities;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Helpers
@@ -71,6 +72,33 @@ namespace Coralite.Helpers
         public static Vector2 NextVec2Dir()
         {
             return Main.rand.NextFloat(MathHelper.TwoPi).ToRotationVector2();
+        }
+
+        public static bool PointInTile(Vector2 point)
+        {
+            var startCoords = new Point16((int)point.X / 16, (int)point.Y / 16);
+            for (int x = -1; x <= 1; x++)
+            {
+                for (int y = -1; y <= 1; y++)
+                {
+                    Point16 thisPoint = startCoords + new Point16(x, y);
+
+                    if (!WorldGen.InWorld(thisPoint.X, thisPoint.Y))
+                        return false;
+
+                    Tile tile = Framing.GetTileSafely(thisPoint);
+
+                    if (Main.tileSolid[tile.TileType] && tile.HasTile)
+                    {
+                        var rect = new Rectangle(thisPoint.X * 16, thisPoint.Y * 16, 16, 16);
+
+                        if (rect.Contains(point.ToPoint()))
+                            return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         /// <summary>

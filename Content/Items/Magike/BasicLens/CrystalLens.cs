@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.Items.Magike.OtherPlaceables;
+using Coralite.Content.Raritys;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -22,6 +23,7 @@ namespace Coralite.Content.Items.Magike.BasicLens
         {
             CreateRecipe()
                 .AddIngredient<MagicCrystal>(10)
+                .AddIngredient<Basalt>(10)
                 .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();

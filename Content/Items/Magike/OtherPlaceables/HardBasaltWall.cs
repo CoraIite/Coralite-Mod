@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike.OtherPlaceables
@@ -10,6 +11,14 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableWall(ModContent.WallType<Walls.Magike.HardBasaltWall>());
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe(4)
+                .AddIngredient<HardBasalt>()
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 }

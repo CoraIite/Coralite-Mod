@@ -1,5 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.RemodelConditions;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -10,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Magic
 {
-    public class CosmosFracture : ModItem
+    public class CosmosFracture : ModItem,IMagikeRemodelable
     {
         public override string Texture => AssetDirectory.Misc_Magic + Name;
         public override bool AltFunctionUse(Player Player) => true;
@@ -91,6 +93,11 @@ namespace Coralite.Content.Items.Misc_Magic
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage * 3, knockback, player.whoAmI);
 
             return false;
+        }
+
+        public void AddMagikeRemodelRecipe()
+        {
+            MagikeSystem.AddRemodelRecipe<CosmosFracture>(0f, ItemID.SkyFracture, 1_0000, condition: EnchantCondition.Instance);
         }
 
         //public override void AddRecipes()

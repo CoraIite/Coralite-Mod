@@ -9,8 +9,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
     {
         public void AddMagikeRemodelRecipe()
         {
-            //异界裂隙
-            AddRemodelRecipe<CosmosFracture>(0f, ItemID.SkyFracture, 1_0000, condition: EnchantCondition.Instance);
 
         }
     }
