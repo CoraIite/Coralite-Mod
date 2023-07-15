@@ -25,15 +25,15 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             NPC.directionY = (Target.Center.Y - 200) > NPC.Center.Y ? 1 : -1;
                             float yLength = Math.Abs(Target.Center.Y - 200 - NPC.Center.Y);
                             if (yLength > 50)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 8f, 0.18f, 0.2f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 8f, 0.18f, 0.6f, 0.96f);
                             else
                                 NPC.velocity.Y *= 0.96f;
 
                             if (Math.Abs(Target.Center.X - NPC.Center.X) > 200)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 14f, 0.3f, 0.25f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 14f, 0.3f, 0.6f, 0.96f);
                             else
                                 NPC.velocity.X *= 0.98f;
-                            ChangeFrameNormally();
+                            NormallyFlyingFrame();
                             if (Timer > 400)
                                 ResetStates();
 
@@ -49,7 +49,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     break;
                 case 1:
                     {
-                        ChangeFrameNormally();
+                        NormallyFlyingFrame(1);
                         if (Vector2.Distance(NPC.Center, Target.Center) > 200)
                         {
                             SetDirection();

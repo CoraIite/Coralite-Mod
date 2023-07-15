@@ -36,7 +36,7 @@ namespace Coralite.Content.NPCs.Magike
         public override void SetDefaults()
         {
             Projectile.hostile = true;
-            Projectile.timeLeft = 45;
+            Projectile.timeLeft = 85;
             Projectile.width = Projectile.height = 2;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
@@ -98,13 +98,13 @@ namespace Coralite.Content.NPCs.Magike
 
             do
             {
-                if (Projectile.timeLeft > 41)
+                if (Projectile.timeLeft > 81)
                 {
                     LaserHeight += 0.8f;
                     break;
                 }
 
-                if (Projectile.timeLeft > 38)
+                if (Projectile.timeLeft > 78)
                 {
                     LaserHeight -= 0.6f;
                     break;

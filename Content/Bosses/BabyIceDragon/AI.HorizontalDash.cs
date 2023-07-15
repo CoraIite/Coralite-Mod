@@ -20,21 +20,21 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         float yLength = Math.Abs(NPC.Center.Y - Target.Center.Y);
                         float xLength = Math.Abs(NPC.Center.X - Target.Center.X);
                         if (yLength > 32 ||
-                            xLength > 350)
+                            xLength > 450)
                         {
                             SetDirection();
                             NPC.directionY = Target.Center.Y > NPC.Center.Y ? 1 : -1;
                             if (yLength > 32)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 8f, 0.2f, 0.3f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 8f, 0.2f, 0.6f, 0.96f);
                             else
                                 NPC.velocity.Y *= 0.96f;
 
-                            if (xLength > 250)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 14f, 0.25f, 0.25f, 0.96f);
+                            if (xLength > 400)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 14f, 0.25f, 0.6f, 0.96f);
                             else
-                                NPC.velocity.X *= 0.96f;
+                                NPC.velocity.X *= 0.93f;
 
-                            ChangeFrameNormally();
+                            NormallyFlyingFrame();
 
                             if (Timer > 400)
                             {
@@ -47,10 +47,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         //前往冲刺攻击
                         SetDirection();
-                        Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.IcicleCyan, 0.8f);
+                        Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.IcicleCyan, 1.2f);
                         SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                         movePhase = 1;
-                        NPC.frame.Y = 0;
                         NPC.velocity *= 0;
                         Timer = 0;
                         NPC.netUpdate = true;
@@ -58,6 +57,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     break;
                 case 1:
                     {
+                        NormallyFlyingFrame(1);
                         if ((int)Timer == 10)
                         {
                             NPC.velocity.Y = 0f;
@@ -83,7 +83,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         {
                             canDrawShadows = false;
                             NPC.velocity *= 0.93f;
-                            ChangeFrameNormally();
                             if (Timer > 85)
                                 ResetStates();
                             break;
@@ -91,7 +90,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     }
                     break;
                 default:
-                    ResetEffects();
+                    ResetStates();
                     break;
             }
 

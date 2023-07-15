@@ -10,7 +10,7 @@ namespace Coralite.Content.NPCs.Magike
         {
             if (spawnInfo.Player.InModBiome<MagicCrystalCave>())
             {
-                pool[0] = 0;
+                pool[0] = 0.02f;
             }
         }
     }

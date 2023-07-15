@@ -764,6 +764,7 @@ Mods: {
 			MagicCrystal: {
 				DisplayName: Magic Crystal
 				Tooltip: ""
+				MoreDescription: “Go underground and look for the crystal caves that contain the knowledge of how to use magike”
 			}
 
 			CrimtaneLens: {
@@ -1073,21 +1074,95 @@ Mods: {
 
 			GraniteLens: {
 				DisplayName: Granite Lens
-				Tooltip: ""
+				Tooltip: Produce magike in granite biome
 			}
 
 			MarbleLens: {
 				DisplayName: Marble Lens
-				Tooltip: ""
+				Tooltip: Produce magike in marble biome
 			}
 
 			HoneypotLens: {
 				DisplayName: Honeypot Lens
-				Tooltip: ""
+				Tooltip: Produce magike while bottom submerged in honey
 			}
 
 			BloodyHook: {
 				DisplayName: Bloody Hook
+				Tooltip:
+					'''
+						Right click to fling the hook
+						Right click again after the hook is hit to pull the player towards the hook
+					'''
+			}
+
+			ChlorophyteLens: {
+				DisplayName: Chlorophyte Lens
+				Tooltip: Produce magike in jungle
+			}
+
+			ParadiseLens: {
+				DisplayName: Paradise Lens
+				Tooltip: Produce magike in sky
+			}
+
+			DemoniteEnchantPool: {
+				DisplayName: Demonite Enchant Pool
+				Tooltip: Bringing extra enhancement for your equipments
+			}
+
+			ScorchingLens: {
+				DisplayName: Scorching Lens
+				Tooltip: Produce magike while bottom submerged in lava
+			}
+
+			CopperRing: {
+				DisplayName: Copper Ring
+				Tooltip: attack -6%
+			}
+
+			TinRing: {
+				DisplayName: Tin Ring
+				Tooltip: attack -6%
+			}
+
+			CogLens: {
+				DisplayName: Cog Lens
+				Tooltip: Produce magike automatically
+			}
+
+			IronRing: {
+				DisplayName: Iron Ring
+				Tooltip:
+					'''
+					“Are you sure to make jewelry with this metal? ”
+					damageReduce 8%
+					moveSpeed -10%
+					'''
+			}
+
+			LeadRing: {
+				DisplayName: Lead Ring
+				Tooltip:
+					'''
+					“Are you sure to make jewelry with this metal? ”
+					damageReduce 7%
+					moveSpeed -10%
+					'''
+			}
+
+			SoulRemodelPool: {
+				DisplayName: Soul Remodel Pool
+				Tooltip: ""
+			}
+
+			RainstormLens: {
+				DisplayName: Rainstorm Lens
+				Tooltip: ""
+			}
+
+			SplendorMagicore: {
+				DisplayName: Splendor Magicore
 				Tooltip: ""
 			}
 		}
@@ -1158,7 +1233,7 @@ Mods: {
 
 			BloodyHookDebuff: {
 				DisplayName: Bloody Hook Debuff
-				Description: Mods.Coralite.Buffs.BloodyHookDebuff.Description
+				Description: You are bloody!
 			}
 		}
 
@@ -1178,6 +1253,7 @@ Mods: {
 			CrystalFairy.DisplayName: Crystal Fairy
 			CrystalSpirit.DisplayName: Crystal Spirit
 			CrystalGolem.DisplayName: Crystal Golem
+			CrystalEye.DisplayName: Crystal Eye
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1297,6 +1373,7 @@ Mods: {
 			CrystalLaser.DisplayName: Crystal Laser
 			BloodHookChain.DisplayName: Blood Hook Chain
 			BloodHookSlash.DisplayName: Blood Hook Slash
+			IceyCloud.DisplayName: Icey Cloud
 		}
 
 		Configs: {

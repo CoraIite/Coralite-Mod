@@ -28,10 +28,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             else
                             {
                                 NPC.velocity.Y *= 0.9f;
-                                ChangeFrameNormally();
+                                NormallyFlyingFrame();
                             }
                             if (xLength > 150)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 14f, 0.3f, 0.25f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 14f, 0.3f, 0.6f, 0.96f);
                             else
                                 NPC.velocity.X *= 0.96f;
 
@@ -46,7 +46,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         movePhase = 1;
                         Timer = 0;
-                        NPC.frame.Y = 0;
+                        NPC.frame.X = 1;
+                        NPC.frame.Y = 5;
                         NPC.velocity.X *= 0.4f;
                         NPC.velocity.Y *= 0;
                         NPC.noGravity = true;
@@ -59,13 +60,18 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     break;
                 case 1:     //下落
                     {
-                        NPC.rotation = NPC.rotation.AngleTowards(NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f), 0.14f);
+                        NPC.rotation = NPC.rotation.AngleTowards(NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f), 0.6f);
                         NPC.velocity.Y += 0.9f;
 
                         if ((int)Timer % 2 == 0)
                         {
-                            Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), DustID.FrostStaff, -NPC.velocity * 0.3f, Scale: Main.rand.NextFloat(1.8f, 2f));
+                            Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), DustID.FrostStaff, -NPC.velocity * 0.5f, Scale: Main.rand.NextFloat(1.8f, 2f));
                             dust.noGravity = true;
+                            for (int i = 0; i < 2; i++)
+                            {
+                                Dust dust2 = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(48, 48), DustID.ApprenticeStorm, -NPC.velocity * 0.3f, Scale: Main.rand.NextFloat(1f, 1.5f));
+                                dust2.noGravity = true;
+                            }
                         }
 
                         //向玩家加速
@@ -95,6 +101,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 for (int j = 0; j < 2; j++)
                                     if (WorldGen.ActiveAndWalkableTile((int)position.X + i, (int)position.Y + j))    //砸地，生成冰刺弹幕
                                     {
+                                        NPC.rotation = 0;
                                         SpawnIceThorns();
                                         NPC.velocity *= 0;
                                         HaveARest(30);
@@ -104,6 +111,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if (Timer > 200)
                         {
+                            SetDirection();
+                            NPC.rotation = 0;
                             NPC.velocity *= 0;
                             HaveARest(30);
                         }

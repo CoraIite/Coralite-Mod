@@ -38,6 +38,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.width = NPC.height = 80;
             NPC.knockBackResist = 0f;
             NPC.noGravity = true;
+            NPC.HitSound = CoraliteSoundID.DigIce;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -61,11 +62,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             if (State > 2)
             {
-
                 if (Timer > 60)
                 {
                     Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceHalo>(), Color.White, 0.25f);
-                    NPC.life -= 10;
+                    NPC.life -= NPC.lifeMax / 15;
                     Timer = 0;
                 }
 

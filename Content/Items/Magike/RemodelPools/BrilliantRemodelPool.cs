@@ -116,7 +116,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
 
     public class BrilliantRemodelPoolEntity : MagikeFactory_RemodelPool
     {
-        public BrilliantRemodelPoolEntity() : base(600, 3 * 60) { }
+        public BrilliantRemodelPoolEntity() : base(4500, 3 * 60) { }
 
         public override ushort TileType => (ushort)TileType<BrilliantRemodelPoolTile>();
 

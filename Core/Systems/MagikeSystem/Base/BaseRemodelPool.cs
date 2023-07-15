@@ -81,6 +81,5 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
             if (drawData.tileFrameX % FrameWidth == 0 && drawData.tileFrameY % FrameHeight == 0)
                 Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
         }
-
     }
 }

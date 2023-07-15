@@ -1,5 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 
@@ -25,13 +27,74 @@ namespace Coralite.Content.Items.Icicle
         {
             if (Main.myPlayer == Projectile.owner)
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-            Smoother = Coralite.Instance.HeavySmootherInstance;
-            maxTime = Owner.itemTimeMax * 2;
+
             Projectile.extraUpdates = 1;
-            startAngle = 2.2f;
-            totalAngle = 4.2f;
+
+            switch (Combo)
+            {
+                default:
+                case 0:
+                    startAngle = 2.2f;
+                    totalAngle = 3.6f;
+                    maxTime = Owner.itemTimeMax * 2;
+                    Smoother = Coralite.Instance.HeavySmootherInstance;
+                    break;
+                case 1:
+                    startAngle =1.4f;
+                    totalAngle = 3.8f;
+                    maxTime = Owner.itemTimeMax * 2;
+                    Smoother = Coralite.Instance.HeavySmootherInstance;
+                    Projectile.scale = 0.9f;
+
+                    break;
+                case 2:
+                    startAngle = -1.6f;
+                    totalAngle = -4.2f;
+                    maxTime = (int)(Owner.itemTimeMax*1.5f);
+
+                    Smoother = Coralite.Instance.SqrtSmoother;
+                    break;
+            }
 
             base.Initializer();
+        }
+
+        protected override void OnSlash()
+        {
+            if (Timer<3*maxTime/4f)
+            {
+                Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
+                Dust dust = Dust.NewDustPerfect(Top-14*RotateVec2 + Main.rand.NextVector2Circular(22, 22), DustID.ApprenticeStorm,
+                       dir * Main.rand.NextFloat(0.5f, 2f),Scale:Main.rand.NextFloat(1f,1.5f));
+                dust.noGravity = true;
+            }
+
+            switch (Combo)
+            {
+                default:
+                case 0:
+                    if (Timer < maxTime / 4f)
+                        Projectile.scale += 0.04f;
+                    else
+                        Projectile.scale -= 0.01f;
+
+                    break;
+                case 1:
+                    if (Timer <  maxTime / 8f)
+                        Projectile.scale += 0.10f;
+                    else
+                        Projectile.scale -= 0.015f;
+
+                    break;
+                case 2:
+                    if (Timer < maxTime / 2f)
+                        Projectile.scale += 0.03f;
+                    else
+                        Projectile.scale -= 0.03f;
+
+                    break;
+            }
+            base.OnSlash();
         }
 
         protected override float GetStartAngle() => Owner.direction > 0 ? 0f : 3.141f;

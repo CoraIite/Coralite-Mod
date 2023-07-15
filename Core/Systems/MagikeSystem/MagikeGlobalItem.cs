@@ -28,6 +28,19 @@ namespace Coralite.Core.Systems.MagikeSystem
                 enchant ??= new Enchant();
                 return enchant;
             }
+            set
+            {
+                enchant = value;
+            }
+        }
+
+        public override GlobalItem Clone(Item from, Item to)
+        {
+            if (to.TryGetGlobalItem(out MagikeItem mItem) && from.TryGetGlobalItem(out MagikeItem fromItem))
+            {
+                mItem.Enchant = fromItem.enchant;
+            }
+            return base.Clone(from, to);
         }
 
         public override void HorizontalWingSpeeds(Item item, Player player, ref float speed, ref float acceleration)
@@ -126,9 +139,9 @@ namespace Coralite.Core.Systems.MagikeSystem
                         string main = "Enchant" + i.ToString();
                         tag.Add(main+"_name", enchant.datas[i].GetType().FullName);
                         tag.Add(main + "_level", (int)enchant.datas[i].level);
-                        tag.Add(main + "_bonus0", enchant.datas[0].bonus0);
-                        tag.Add(main + "_bonus1", enchant.datas[0].bonus1);
-                        tag.Add(main + "_bonus2", enchant.datas[0].bonus2);
+                        tag.Add(main + "_bonus0", enchant.datas[i].bonus0);
+                        tag.Add(main + "_bonus1", enchant.datas[i].bonus1);
+                        tag.Add(main + "_bonus2", enchant.datas[i].bonus2);
                     }
                 }
             }
@@ -147,11 +160,13 @@ namespace Coralite.Core.Systems.MagikeSystem
                         if (t is null)
                             continue;
 
-                        var data = (EnchantData)Activator.CreateInstance(t);
-                        data.level =(Enchant.Level) tag.GetInt(main + "_level");
-                        data.bonus0 = tag.GetFloat(main + "_bonus0");
-                        data.bonus1 = tag.GetFloat(main + "_bonus1");
-                        data.bonus2 = tag.GetFloat(main + "_bonus2");
+                        Enchant.Level level = (Enchant.Level)tag.GetInt(main + "_level");
+                        float bonus0 = tag.GetFloat(main + "_bonus0");
+                        float bonus1 = tag.GetFloat(main + "_bonus1");
+                        float bonus2 = tag.GetFloat(main + "_bonus2");
+                        var data = (EnchantData)Activator.CreateInstance(t, level, bonus0, bonus1, bonus2);
+
+                        Enchant.datas[i] = data;
                     }
                     catch
                     {
@@ -187,6 +202,11 @@ namespace Coralite.Core.Systems.MagikeSystem
                     line.OverrideColor = Coralite.Instance.MagicCrystalPink;
                 else if (magiteAmount < 1000)
                     line.OverrideColor = Coralite.Instance.CrystallineMagikePurple;
+                else if (magiteAmount < 2_0000)
+                    line.OverrideColor = Coralite.Instance.SplendorMagicoreLightBlue;
+                else
+                    line.OverrideColor = Color.Orange;
+
                 tooltips.Add(line);
             }
 
@@ -200,26 +220,26 @@ namespace Coralite.Core.Systems.MagikeSystem
                     line.OverrideColor = Coralite.Instance.MagicCrystalPink;
                 else if (magikeRemodelRequired < 1000)
                     line.OverrideColor = Coralite.Instance.CrystallineMagikePurple;
-                //else if (true)
-                //{
+                else if (magiteAmount < 2_0000)
+                    line.OverrideColor = Coralite.Instance.SplendorMagicoreLightBlue;
+                else
+                    line.OverrideColor = Color.Orange;
 
-                //}
                 tooltips.Add(line);
             }
         }
-
 
         private static Color GetColor(Enchant.Level level)
         {
             return level switch
             {
-                Enchant.Level.Nothing=>Color.Gray,
-                Enchant.Level.One=>Color.White,
-                Enchant.Level.Two => Color.Pink,
+                Enchant.Level.Nothing => Color.Gray,
+                Enchant.Level.One => Color.White,
+                Enchant.Level.Two => Color.Blue,
                 Enchant.Level.Three => Color.Aqua,
-                Enchant.Level.Four => Color.Green,
+                Enchant.Level.Four => Color.Pink,
                 Enchant.Level.Five => Color.Yellow,
-                _=>Color.Orange
+                _ => Color.Orange
             };
         }
     }

@@ -4,11 +4,10 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 {
-    public class BasicEnchant_WeaponAttackBonus : BasicBonusEnchant
+    public class BasicEnchant_WeaponAttackBonus : BasicEnchant
     {
-        public BasicEnchant_WeaponAttackBonus(Enchant.Level level, float bonus) : base(level)
+        public BasicEnchant_WeaponAttackBonus(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, bonus0, bonus1, bonus2)
         {
-            bonus0 = bonus;
         }
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
@@ -19,11 +18,10 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public override string Description => $"攻击力 +{(int)bonus0}%";
     }
 
-    public class OtherEnchant_WeaponAttackBonus : BasicBonusEnchant
+    public class OtherEnchant_WeaponAttackBonus : OtherEnchant
     {
-        public OtherEnchant_WeaponAttackBonus(Enchant.Level level, float bonus) : base(level)
+        public OtherEnchant_WeaponAttackBonus(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, bonus0, bonus1, bonus2)
         {
-            bonus0 = bonus;
         }
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
@@ -34,9 +32,11 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public override string Description => $"攻击力 +{(int)bonus0}%";
     }
 
-    public class SpecialEnchant_WeaponAttackBonus : BasicBonusEnchant
+    public class SpecialEnchant_WeaponAttackBonus : SpecialEnchant
     {
-        public SpecialEnchant_WeaponAttackBonus(Enchant.Level level, float bonus) : base(level) { bonus0 = bonus; }
+        public SpecialEnchant_WeaponAttackBonus(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, bonus0, bonus1, bonus2)
+        {
+        }
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
@@ -47,11 +47,10 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
     }
 
 
-    public class BasicEnchant_ArmorAttackBonus : BasicBonusEnchant
+    public class BasicEnchant_ArmorAttackBonus : BasicEnchant
     {
-        public BasicEnchant_ArmorAttackBonus(Enchant.Level level, float bonus) : base(level)
+        public BasicEnchant_ArmorAttackBonus(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, bonus0, bonus1, bonus2)
         {
-            bonus0 = bonus;
         }
 
         public override void UpdateEquip(Item item, Player player)
@@ -62,9 +61,11 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public override string Description => $"攻击力 +{(int)bonus0}%";
     }
 
-    public class OtherEnchant_ArmorAttackBonus : BasicBonusEnchant
+    public class OtherEnchant_ArmorAttackBonus : OtherEnchant
     {
-        public OtherEnchant_ArmorAttackBonus(Enchant.Level level, float bonus) : base(level) { bonus0 = bonus; }
+        public OtherEnchant_ArmorAttackBonus(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, bonus0, bonus1, bonus2)
+        {
+        }
 
         public override void UpdateEquip(Item item, Player player)
         {
@@ -72,22 +73,13 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         }
 
         public override string Description => $"攻击力 +{(int)bonus0}%";
-
-        public static OtherEnchant_ArmorAttackBonus DeserializeData(TagCompound tag)
-        {
-            int whichslot = tag.GetInt("whichSlot");
-            Enchant.Level level = (Enchant.Level)tag.GetInt("level");
-            float bonus0 = tag.GetFloat("_bonus0");
-            float bonus1 = tag.GetFloat("_bonus1");
-            float bonus2 = tag.GetFloat("_bonus2");
-
-            return new OtherEnchant_ArmorAttackBonus(level, bonus0);
-        }
     }
 
-    public class SpecialEnchant_ArmorAttackBonus : BasicBonusEnchant
+    public class SpecialEnchant_ArmorAttackBonus : SpecialEnchant
     {
-        public SpecialEnchant_ArmorAttackBonus(Enchant.Level level, float bonus) : base(level) { bonus0 = bonus; }
+        public SpecialEnchant_ArmorAttackBonus(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, bonus0, bonus1, bonus2)
+        {
+        }
 
         public override void UpdateEquip(Item item, Player player)
         {
@@ -98,9 +90,11 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
     }
 
 
-    public class BasicEnchant_AccessoryAttackBonus : BasicBonusEnchant
+    public class BasicEnchant_AccessoryAttackBonus : BasicEnchant
     {
-        public BasicEnchant_AccessoryAttackBonus(Enchant.Level level, float bonus) : base(level) { bonus0 = bonus; }
+        public BasicEnchant_AccessoryAttackBonus(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, bonus0, bonus1, bonus2)
+        {
+        }
 
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
@@ -110,9 +104,11 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public override string Description => $"攻击力 +{(int)bonus0}%";
     }
 
-    public class OtherEnchant_AccessoryAttackBonus : BasicBonusEnchant
+    public class OtherEnchant_AccessoryAttackBonus : OtherEnchant
     {
-        public OtherEnchant_AccessoryAttackBonus(Enchant.Level level, float bonus) : base(level) { bonus0 = bonus; }
+        public OtherEnchant_AccessoryAttackBonus(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, bonus0, bonus1, bonus2)
+        {
+        }
 
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
@@ -122,9 +118,11 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public override string Description => $"攻击力 +{(int)bonus0}%";
     }
 
-    public class SpecialEnchant_AccessoryAttackBonus : BasicBonusEnchant
+    public class SpecialEnchant_AccessoryAttackBonus : SpecialEnchant
     {
-        public SpecialEnchant_AccessoryAttackBonus(Enchant.Level level, float bonus) : base(level) { bonus0 = bonus; }
+        public SpecialEnchant_AccessoryAttackBonus(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, bonus0, bonus1, bonus2)
+        {
+        }
 
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {

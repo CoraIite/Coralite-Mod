@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.RemodelConditions;
 using Coralite.Helpers;
 using System.Collections.Generic;
 using Terraria;
@@ -9,9 +10,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike
 {
-    public class MagicCrystal : BaseMaterial
+    public class MagicCrystal : BaseMaterial, IMagikeRemodelable
     {
-        public MagicCrystal() : base(Item.CommonMaxStack, Item.sellPrice(0,0,1), ModContent.RarityType<MagikeCrystalRarity>(), AssetDirectory.MagikeItems)
+        public MagicCrystal() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 1), ModContent.RarityType<MagikeCrystalRarity>(), AssetDirectory.MagikeItems)
         { }
 
         public override void SetDefaults()
@@ -24,6 +25,11 @@ namespace Coralite.Content.Items.Magike
         {
             if (!MagikeSystem.learnedMagikeBase)
                 tooltips.Add(new TooltipLine(Mod, "MoreDescription", this.GetLocalizedValue("MoreDescription")));
+        }
+
+        public void AddMagikeRemodelRecipe()
+        {
+            MagikeSystem.AddRemodelRecipe<MagicCrystal, CrystallineMagike>(275, condition: HardModeCondition.Instance);
         }
     }
 }

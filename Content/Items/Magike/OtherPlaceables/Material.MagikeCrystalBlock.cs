@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria;
 using Coralite.Content.Raritys;
 using Terraria.ID;
+using Coralite.Helpers;
 
 namespace Coralite.Content.Items.Magike.OtherPlaceables
 {
@@ -15,11 +16,12 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<MagicCrystalBlockTile>());
             Item.rare = ModContent.RarityType<MagikeCrystalRarity>();
+            Item.GetMagikeItem().magiteAmount = 5;
         }
 
         public override void AddRecipes()
         {
-            CreateRecipe()
+            CreateRecipe(4)
                 .AddIngredient<MagicCrystal>()
                 .AddTile(TileID.Anvils)
                 .Register();

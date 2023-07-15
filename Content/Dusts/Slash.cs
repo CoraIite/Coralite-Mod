@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Dusts
 {
-    public class Slash:ModDust
+    public class Slash : ModDust
     {
-        public override string Texture => AssetDirectory.Dusts+Name;
+        public override string Texture => AssetDirectory.Dusts + Name;
 
         public override void OnSpawn(Dust dust)
         {
@@ -18,8 +18,8 @@ namespace Coralite.Content.Dusts
 
         public override bool PreDraw(Dust dust)
         {
-            Texture2D mainTex = ModContent.Request<Texture2D>(Texture).Value;
-            Main.spriteBatch.Draw(mainTex, dust.position-Main.screenPosition, dust.frame, dust.color, dust.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 12), dust.scale, 0, 0);
+            Texture2D mainTex = Texture2D.Value;
+            Main.spriteBatch.Draw(mainTex, dust.position - Main.screenPosition, dust.frame, dust.color, dust.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 12), dust.scale, 0, 0);
             return false;
         }
 

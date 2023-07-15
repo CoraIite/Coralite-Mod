@@ -29,7 +29,6 @@ namespace Coralite.Content.Items.Shadow
         {
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.Amethyst, 2);
-            recipe.AddIngredient(ItemID.Obsidian, 1);
             recipe.AddIngredient(ModContent.ItemType<ShadowEnergy>(), 3);
             recipe.AddTile(TileID.Hellforge);
             recipe.Register();

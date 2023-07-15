@@ -18,6 +18,7 @@ namespace Coralite
         public readonly Color IcicleCyan;
         public readonly Color MagicCrystalPink;
         public readonly Color CrystallineMagikePurple;
+        public readonly Color SplendorMagicoreLightBlue;
 
         private List<IOrderedLoadable> loadCache;
 
@@ -42,6 +43,7 @@ namespace Coralite
             IcicleCyan = new Color(43, 255, 198);
             MagicCrystalPink = new Color(255, 190, 236);
             CrystallineMagikePurple = new Color(140, 130, 252);
+            SplendorMagicoreLightBlue = new Color(190, 225, 235);
         }
 
         public override void Load()

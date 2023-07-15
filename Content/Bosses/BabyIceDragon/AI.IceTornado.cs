@@ -15,7 +15,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
     {
         public void IceTornado()
         {
-            ChangeFrameNormally();
             switch (movePhase)
             {
                 case 0:     //飞向玩家
@@ -23,15 +22,17 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         if (Vector2.Distance(NPC.Center, Target.Center) > 600)
                         {
                             SetDirection();
+                            NormallyFlyingFrame();
+
                             NPC.directionY = (Target.Center.Y - 200) > NPC.Center.Y ? 1 : -1;
                             float yLength = Math.Abs(Target.Center.Y - 200 - NPC.Center.Y);
                             if (yLength > 50)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 8f, 0.18f, 0.12f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 8f, 0.18f, 0.6f, 0.96f);
                             else
                                 NPC.velocity.Y *= 0.96f;
 
                             if (Math.Abs(Target.Center.X - NPC.Center.X) > 160)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 14f, 0.2f, 0.1f, 0.96f);
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 14f, 0.2f, 0.6f, 0.96f);
                             else
                                 NPC.velocity.X *= 0.98f;
                             if (Timer > 400)
@@ -52,15 +53,21 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     break;
                 case 1:     //准备动作
                     {
-                        if (Timer < 20)
+                        NormallyFlyingFrame(changeRot: false);
+
+                        if (Timer<2)
+                        {
+                            NPC.velocity = Vector2.UnitY*6;      //2Pi / 20
+                        }
+                        if (Timer < 30)
                         {
                             SetDirection();
-                            NPC.velocity = NPC.velocity.RotatedBy(0.3141);      //2Pi / 20
+                            NPC.velocity = NPC.velocity.RotatedBy(MathHelper.TwoPi / 30);  
                             NPC.rotation = NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f);
                             break;
                         }
 
-                        if (Timer < 40)
+                        if (Timer < 60)
                         {
                             SetDirection();
                             NPC.velocity = -(Target.Center - NPC.Center).SafeNormalize(Vector2.Zero)*2;
@@ -81,6 +88,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     {
                         if (Timer < 200)
                         {
+                            NormallyFlyingFrame(1,false);
                             float distance = Vector2.Distance(Target.Center, NPC.Center);
 
                             if (distance < 160)
@@ -98,7 +106,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                             if ((int)Timer % 8 == 0 && Main.netMode != NetmodeID.MultiplayerClient)     //生成透明弹幕
                             {
-                                Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity * 0.2f, ModContent.ProjectileType<IceTornado>(), 16, 10f);
+                                Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center + NPC.velocity * 6, NPC.velocity * 0.2f, ModContent.ProjectileType<IceTornado>(), 16, 10f);
                                 projectile.timeLeft = 40;
                                 projectile.netUpdate = true;
                             }
@@ -116,13 +124,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 1 => new Color(120, 211, 231, 200),
                                 _ => new Color(252, 255, 255, 200)
                             };
-                            Tornado.Spawn(NPC.Center, NPC.velocity*0.2f, tornadoColor, 60, NPC.velocity.ToRotation(), Main.rand.NextFloat(0.5f, 0.6f));
+                            Tornado.Spawn(NPC.Center + NPC.velocity * 8, NPC.velocity * 0.05f, tornadoColor, 60, NPC.velocity.ToRotation(), Main.rand.NextFloat(0.5f, 0.6f));
 
                             break;
                         }
 
                         if (Timer < 210)
                         {
+                            NormallyFlyingFrame();
                             NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
                             NPC.dontTakeDamage = false;
                             NPC.velocity *= 0.98f;

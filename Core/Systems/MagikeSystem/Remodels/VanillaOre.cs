@@ -8,9 +8,47 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
     {
         public void AddMagikeRemodelRecipe()
         {
+            //木头
+            AddRemodelRecipe(ItemID.Wood, 5, ItemID.Coal, selfRequiredNumber: 20);
+
+            //煤
+            AddRemodelRecipe(ItemID.Coal, 200, ItemID.Diamond, selfRequiredNumber: 20);
+
+            //沙漠化石
+            AddRemodelRecipe(ItemID.DesertFossil, 1, ItemID.Amber, selfRequiredNumber: 10);
+
+            //黄玉
+            AddRemodelRecipe(ItemID.Topaz, 25, ItemID.GemSquirrelTopaz);
+            AddRemodelRecipe(ItemID.Topaz, 25, ItemID.GemBunnyTopaz);
+
+            //紫晶
+            AddRemodelRecipe(ItemID.Amethyst, 25, ItemID.GemSquirrelAmethyst);
+            AddRemodelRecipe(ItemID.Amethyst, 25, ItemID.GemBunnyAmethyst);
+
+            //蓝宝石
+            AddRemodelRecipe(ItemID.Sapphire, 25, ItemID.GemSquirrelSapphire);
+            AddRemodelRecipe(ItemID.Sapphire, 25, ItemID.GemBunnySapphire);
+
+            //绿宝石
+            AddRemodelRecipe(ItemID.Emerald, 25, ItemID.GemSquirrelEmerald);
+            AddRemodelRecipe(ItemID.Emerald, 25, ItemID.GemBunnyEmerald);
+
+            //红宝石
+            AddRemodelRecipe(ItemID.Ruby, 25, ItemID.GemSquirrelRuby);
+            AddRemodelRecipe(ItemID.Ruby, 25, ItemID.GemBunnyRuby);
+
+            //钻石
+            AddRemodelRecipe(ItemID.Diamond, 25, ItemID.GemSquirrelDiamond);
+            AddRemodelRecipe(ItemID.Diamond, 25, ItemID.GemBunnyDiamond);
+
             //石头
-            AddRemodelRecipe(ItemID.StoneBlock, 1, ItemID.CopperOre);
-            AddRemodelRecipe(ItemID.StoneBlock, 1, ItemID.TinOre);
+            AddRemodelRecipe(ItemID.StoneBlock, 1, ItemID.CopperOre, selfRequiredNumber: 20);
+            AddRemodelRecipe(ItemID.StoneBlock, 1, ItemID.TinOre, selfRequiredNumber: 20);
+            AddRemodelRecipe(ItemID.StoneBlock, 50, ItemID.Amethyst, selfRequiredNumber: 100);
+            AddRemodelRecipe(ItemID.StoneBlock, 50, ItemID.Topaz, selfRequiredNumber: 100);
+            AddRemodelRecipe(ItemID.StoneBlock, 100, ItemID.Sapphire, selfRequiredNumber: 200);
+            AddRemodelRecipe(ItemID.StoneBlock, 100, ItemID.Emerald, selfRequiredNumber: 200);
+            AddRemodelRecipe(ItemID.StoneBlock, 200, ItemID.Ruby, selfRequiredNumber: 300);
 
             //铜和锡
             AddRemodelRecipe(ItemID.CopperOre, 1, ItemID.IronOre);
@@ -166,6 +204,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.HallowedBar, 230, ItemID.ChlorophyteBar, condition: DownedAllMachineBossCondition.Instance);
 
             //叶绿矿
+            AddRemodelRecipe(ItemID.ChlorophyteOre, 500, ItemID.LunarOre, condition: DownedMoonlordCondition.Instance);
+            AddRemodelRecipe(ItemID.ChlorophyteBar, 500, ItemID.LunarBar, condition: DownedMoonlordCondition.Instance);
         }
     }
 }

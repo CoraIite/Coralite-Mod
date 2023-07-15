@@ -31,7 +31,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             else
                             {
                                 NPC.velocity.Y *= 0.9f;
-                                ChangeFrameNormally();
+                                NormallyFlyingFrame();
                             }
                             if (xLength > 300)
                                 Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 14f, 0.24f, 0.24f, 0.96f);
@@ -63,31 +63,38 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         NPC.netUpdate = true;
                     }
                     break;
-                case 1:     //从下至上射出冰锥
+                case 1:     //瞄准玩家射出冰锥
                     {
-                        ChangeFrameNormally();
+                        NormallyFlyingFrame(1, false) ;
                         NPC.velocity *= 0.97f;
                         if (Timer < 20)
+                        {
+                            NPC.rotation = 0;
                             break;
+                        }
 
                         if (Timer < 100)
                         {
                             float factor = Timer / 80;
-                            NPC.rotation = NPC.rotation.AngleLerp(NPC.direction * (1f - factor * 1.3f), 0.06f);
+                            NPC.rotation = NPC.direction * (Target.Center.Y - NPC.Center.Y) * 0.008f;
+                            NPC.rotation = Math.Clamp(NPC.rotation, -0.45f, 0.45f);
 
-                            GetMouseCenter(out Vector2 targetDir, out Vector2 mouseCenter);
+                            SetDirection();
+                            GetMouseCenter(out _, out Vector2 mouseCenter);
+                            Vector2 targetDir = (Target.Center - NPC.Center).SafeNormalize(Vector2.One);
                             if ((int)Timer % 2 == 0)
                                 Particle.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)) * 4, CoraliteContent.ParticleType<Fog>(), Color.White, 0.8f);
 
                             if ((int)Timer % 12 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir * 12, ModContent.ProjectileType<IcicleProj_Hostile>(), 18, 8f);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.4f,0.4f)) * 12, ModContent.ProjectileType<IcicleProj_Hostile>(), 18, 8f);
                                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                             }
                             break;
                         }
 
                         movePhase = 2;
+                        NPC.frame.X = 0;
                         NPC.frame.Y = 2;
                         NPC.velocity *= 0;
                         Timer = 0;
@@ -101,6 +108,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if ((int)Timer == 20)
                         {
+                            NPC.frame.X = 1;
                             NPC.frame.Y = 0;
                             SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                             GetMouseCenter(out _, out Vector2 mouseCenter);

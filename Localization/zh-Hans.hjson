@@ -762,6 +762,7 @@ Mods: {
 			MagicCrystal: {
 				DisplayName: 魔力晶体
 				Tooltip: 蕴含微弱的魔能
+				MoreDescription: “去地下寻找水晶洞穴把，其中藏有如何使用魔能的知识”
 			}
 
 			CrimtaneLens: {
@@ -1064,27 +1065,100 @@ Mods: {
 			}
 
 			HardBasaltWall: {
-				// DisplayName: Hard Basalt Wall
-				// Tooltip: ""
+				DisplayName: 硬化玄武岩墙
+				Tooltip: ""
 			}
 
 			GraniteLens: {
-				// DisplayName: Granite Lens
-				// Tooltip: ""
+				DisplayName: 花岗岩透镜
+				Tooltip: 在花岗岩地形生产魔能
 			}
 
 			MarbleLens: {
-				// DisplayName: Marble Lens
-				// Tooltip: ""
+				DisplayName: 大理石透镜
+				Tooltip: 在大理石环境产生魔能
 			}
 
 			HoneypotLens: {
-				// DisplayName: Honeypot Lens
-				// Tooltip: ""
+				DisplayName: 甘甜透镜
+				Tooltip: 底座淹没在蜂蜜中时生产魔能
 			}
 
 			BloodyHook: {
-				// DisplayName: Bloody Hook
+				DisplayName: 血骨钩
+				Tooltip:
+					'''
+						右键甩动钩子
+						钩中后再次右键将玩家拉向钩子
+					'''
+			}
+
+			ChlorophyteLens: {
+				DisplayName: 叶绿透镜
+				Tooltip: 在丛林生产魔能
+			}
+
+			ParadiseLens: {
+				DisplayName: 天堂透镜
+				Tooltip: 在天空生产魔能
+			}
+
+			DemoniteEnchantPool: {
+				DisplayName: 魔化注魔池
+				Tooltip: 为你的装备带来额外的强化
+			}
+
+			ScorchingLens: {
+				DisplayName: 灼岩透镜
+				Tooltip: 底座淹没在岩浆中时生产魔能
+			}
+
+			CopperRing: {
+				DisplayName: 铜戒指
+				Tooltip: 攻击 -6%
+			}
+
+			TinRing: {
+				DisplayName: 锡戒指
+				Tooltip: 攻击 -6%
+			}
+
+			CogLens: {
+				DisplayName: 齿轮透镜
+				Tooltip: 自动生产魔能
+			}
+
+			IronRing: {
+				DisplayName: 铁戒指
+				Tooltip:
+					'''
+					伤害减免 8%
+					移动速度 -10%
+					'''
+			}
+
+			LeadRing: {
+				DisplayName: 铅戒指
+				Tooltip:
+					'''
+					“你确定要用这种金属做首饰？”
+					伤害减免 7%
+					移动速度 -10%
+					'''
+			}
+
+			SoulRemodelPool: {
+				// DisplayName: Soul Remodel Pool
+				// Tooltip: ""
+			}
+
+			RainstormLens: {
+				// DisplayName: Rainstorm Lens
+				// Tooltip: ""
+			}
+
+			SplendorMagicore: {
+				// DisplayName: Splendor Magicore
 				// Tooltip: ""
 			}
 		}
@@ -1154,8 +1228,8 @@ Mods: {
 			}
 
 			BloodyHookDebuff: {
-				// DisplayName: Bloody Hook Debuff
-				// Description: Mods.Coralite.Buffs.BloodyHookDebuff.Description
+				DisplayName: 鲜血斩击
+				Description: 你在流血！
 			}
 		}
 
@@ -1172,9 +1246,10 @@ Mods: {
 			MaragonTrail.DisplayName: 魔龙尾
 			ShadowGolem.DisplayName: 影子巨像
 			ShadowGuard.DisplayName: 影子守卫
-			// CrystalFairy.DisplayName: Crystal Fairy
-			// CrystalSpirit.DisplayName: Crystal Spirit
-			// CrystalGolem.DisplayName: Crystal Golem
+			CrystalFairy.DisplayName: 晶体仙灵
+			CrystalSpirit.DisplayName: 晶体妖精
+			CrystalGolem.DisplayName: 晶体巨人
+			CrystalEye.DisplayName: 晶体眼球
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1226,7 +1301,7 @@ Mods: {
 			ShadowSwordProj.DisplayName: 潜伏分身
 			StarBookProj1.DisplayName: 星光球
 			StarBookProj2.DisplayName: 星符文
-			MagicalAshesProj.DisplayName: Magical Ashes Proj
+			MagicalAshesProj.DisplayName: 蕴魔灰烬
 			CatClawsProj_shield.DisplayName: 猫猫盾
 			CatClawsProj_Slash.DisplayName: 猫猫爪
 			WateringPotProj.DisplayName: 洒水壶
@@ -1290,10 +1365,11 @@ Mods: {
 			ShadowCircle_HighSpeedShoot.DisplayName: 影子狙击
 			ShadowCircle_MeleeClaw.DisplayName: 影子撕裂
 			ShadowCircle_MeleeTrack.DisplayName: 影子追猎者
-			// MagicBeam.DisplayName: Magic Beam
-			// CrystalLaser.DisplayName: Crystal Laser
-			// BloodHookChain.DisplayName: Blood Hook Chain
-			// BloodHookSlash.DisplayName: Blood Hook Slash
+			MagicBeam.DisplayName: 魔能光束
+			CrystalLaser.DisplayName: 晶体闪光
+			BloodHookChain.DisplayName: 鲜血之钩
+			BloodHookSlash.DisplayName: 鲜血斩击
+			IceyCloud.DisplayName: 冰云
 		}
 
 		Configs: {
@@ -1312,11 +1388,11 @@ Mods: {
 			}
 
 			MagikeUIConfig: {
-				// DisplayName: Magike UI Config
+				DisplayName: 魔能UI设置
 
 				UIScale: {
-					// Label: UI Scale
-					// Tooltip: ""
+					Label: UI Scale
+					Tooltip: ""
 				}
 			}
 		}

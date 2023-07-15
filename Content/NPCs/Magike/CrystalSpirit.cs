@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.Magike.OtherPlaceables;
+using Coralite.Content.Biomes;
 
 namespace Coralite.Content.NPCs.Magike
 {
@@ -54,7 +55,8 @@ namespace Coralite.Content.NPCs.Magike
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (!Main.dayTime && spawnInfo.Player.ZoneForest)
+            if ((!Main.dayTime && spawnInfo.Player.ZoneForest)
+                ||spawnInfo.Player.InModBiome<MagicCrystalCave>())
                 return 0.08f;
 
             return 0;

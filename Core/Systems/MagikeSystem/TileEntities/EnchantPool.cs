@@ -29,12 +29,29 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 return base.CanWork();
             }
 
+            workTimer = -1;
             return false;
+        }
+
+        public override void DuringWork()
+        {
+            float factor = workTimer / (float)workTimeMax;
+
+            Vector2 center = Position.ToWorldCoordinates(24, -16);
+            if (workTimer % 8 == 0)
+            {
+                Dust dust = Dust.NewDustPerfect(center + new Vector2(Main.rand.Next(-16, 16), 32), DustID.FireworksRGB, -Vector2.UnitY * Main.rand.NextFloat(0.8f, 3f), newColor: MainColor);
+                dust.noGravity = true;
+            }
+
+            float width = 24 - factor * 22;
+
+            Dust dust2 = Dust.NewDustPerfect(center + Main.rand.NextVector2CircularEdge(width, width), DustID.LastPrism, Vector2.Zero, newColor: MainColor);
+            dust2.noGravity = true;
         }
 
         public override void WorkFinish()
         {
-            
             if (containsItem is not null && !containsItem.IsAir &&
                 (containsItem.damage > 0 || containsItem.accessory || containsItem.defense > 0))
             {
@@ -42,7 +59,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 if (magike < cost)
                     return;
 
-                int whichslot = Main.rand.NextFromList(0, 0, 0, 0, 0, 0, 1, 1, 1, 2);//60%概率为0，30概率为1，10%概率为2
+                int whichslot = Main.rand.NextFromList(0, 0, 0, 0, 0, 1, 1, 1, 2, 2);//50%概率为0，30概率为1，20%概率为2
 
                 Enchant enchant = containsItem.GetGlobalItem<MagikeItem>().Enchant;
                 if (enchant.datas == null)
@@ -97,6 +114,11 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             return true;
         }
 
+        public override Vector2 GetWorldPosition()
+        {
+            return Position.ToWorldCoordinates(16,-16);
+        }
+
         public override void SaveData(TagCompound tag)
         {
             base.SaveData(tag);
@@ -115,17 +137,12 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             }
         }
 
-
-
-
-
-
         public static int GetMagikeCost(IMagikeContainer container,Item item)
         {
             return item.rare switch
             {
                 ItemRarityID.White => 50,
-                ItemRarityID.Blue=>100,
+                ItemRarityID.Blue => 100,
                 ItemRarityID.Green => 150,
                 ItemRarityID.Orange => 200,
                 ItemRarityID.LightRed => 300,
@@ -136,8 +153,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 ItemRarityID.Cyan => 1200,
                 ItemRarityID.Red => 1600,
                 ItemRarityID.Purple => 2000,
-
-                _ =>container.MagikeMax
+                _ => container.MagikeMax
             };
         }
 

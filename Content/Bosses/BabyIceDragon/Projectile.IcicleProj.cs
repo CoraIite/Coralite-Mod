@@ -4,6 +4,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Coralite.Core;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
@@ -20,6 +22,15 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             Projectile.hostile = true;
             Projectile.ignoreWater = false;
             Projectile.tileCollide = true;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Frost, -Vector2.UnitY.RotatedBy(i * 0.785f) * 1.5f);
+                dust.noGravity = true;
+            }
         }
 
         public override void AI()

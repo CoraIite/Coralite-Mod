@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.Icicle
         public override void AI()
         {
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemRotation = _Rotation;
+            Owner.itemRotation = _Rotation+(Owner.direction>0?0:MathHelper.Pi);
             Owner.itemTime = 2;
             Projectile.Center = Owner.Center + _Rotation.ToRotationVector2() * DistanceToOwner;
 
@@ -58,13 +58,13 @@ namespace Coralite.Content.Items.Icicle
                     DistanceToOwner += 8;
                 }
             }
-            else if (DistanceToOwner < 36)
-                DistanceToOwner += 4;
+            else if (DistanceToOwner < 42)
+                DistanceToOwner += 6;
 
-            if (Projectile.timeLeft < 10)
+            if (Projectile.timeLeft < 5)
             {
                 if (Alpha > 0)
-                    Alpha -= 0.1f;
+                    Alpha -= 0.2f;
             }
         }
 

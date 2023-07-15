@@ -260,7 +260,7 @@ namespace Coralite.Content.Items.Crimson
 
         public Player Owner => Main.player[Projectile.owner];
 
-        Vector2 offset;
+        private Vector2 offset;
 
         public override void SetDefaults()
         {
@@ -349,7 +349,7 @@ namespace Coralite.Content.Items.Crimson
 
                     if ((int)Timer == 0)
                     {
-                        Owner.immuneTime = 20;
+                        Owner.immuneTime = 30;
                         Owner.immune = true;
                     }
 

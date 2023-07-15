@@ -107,5 +107,4 @@ namespace Coralite.Content.Items.Magike.WeatherLens
             MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.DeepSkyBlue,DustID.Water);
         }
     }
-
 }

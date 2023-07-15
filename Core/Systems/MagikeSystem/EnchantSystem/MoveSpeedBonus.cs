@@ -2,11 +2,10 @@
 
 namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 {
-    public class SpecialEnchant_ArmorMoveSpeedBonus:OtherBonusEnchant
+    public class SpecialEnchant_ArmorMoveSpeedBonus:SpecialEnchant
     {
-        public SpecialEnchant_ArmorMoveSpeedBonus(Enchant.Level level, float bonus) : base(level)
+        public SpecialEnchant_ArmorMoveSpeedBonus(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, bonus0, bonus1, bonus2)
         {
-            bonus0 = bonus;
         }
 
         public override void UpdateEquip(Item item, Player player)
@@ -17,11 +16,10 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public override string Description => $"移动速度 +{(int)bonus0}%";
     }
 
-    public class SpecialEnchant_AccessoryMoveSpeedBonus : OtherBonusEnchant
+    public class SpecialEnchant_AccessoryMoveSpeedBonus : SpecialEnchant
     {
-        public SpecialEnchant_AccessoryMoveSpeedBonus(Enchant.Level level, float bonus) : base(level)
+        public SpecialEnchant_AccessoryMoveSpeedBonus(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, bonus0, bonus1, bonus2)
         {
-            bonus0 = bonus;
         }
 
         public override void UpdateEquip(Item item, Player player)

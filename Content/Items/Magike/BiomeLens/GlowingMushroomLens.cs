@@ -120,7 +120,6 @@ namespace Coralite.Content.Items.Magike.BiomeLens
             // 绘制主帖图
             spriteBatch.Draw(texture, drawPos, frame, color, 0f, origin, 1f, effects, 0f);
         }
-
     }
 
     public class GlowingMushroomLensEntity : MagikeGenerator_Normal

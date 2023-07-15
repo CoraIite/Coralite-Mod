@@ -3,11 +3,10 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 {
-    public class OtherEnchant_ItemScaleBonus : OtherBonusEnchant
+    public class OtherEnchant_ItemScaleBonus : OtherEnchant
     {
-        public OtherEnchant_ItemScaleBonus(Enchant.Level level, float bonus) : base(level)
+        public OtherEnchant_ItemScaleBonus(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, bonus0, bonus1, bonus2)
         {
-            bonus0 = bonus;
         }
 
         public override void ModifyItemScale(Item item, Player player, ref float scale)

@@ -10,6 +10,7 @@ using Terraria;
 using Coralite.Content.Items.Icicle;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
@@ -35,7 +36,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 16f, 0.25f, 0.3f, 0.96f);
                             else
                                 NPC.velocity.X *= 0.96f;
-                            ChangeFrameNormally();
+                            NormallyFlyingFrame();
                             if (Timer > 400)
                                 ResetStates();
 
@@ -52,9 +53,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         do
                         {
                             NPC.velocity *= 0.97f;
-
+                            NPC.rotation = NPC.rotation.AngleTowards(0, 0.04f);
                             if ((int)Timer == 30)
                             {
+                                NPC.frame.X = 0;
                                 NPC.frame.Y = 2;
                                 NPC.velocity *= 0;
                             }
@@ -64,6 +66,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                             if ((int)Timer == 50)
                             {
+                                NPC.frame.X = 1;
                                 NPC.frame.Y = 0;
                                 SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
@@ -81,26 +84,20 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                     howMany = 6;
 
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
-                                Vector2 Position = Vector2.Zero;
+                                float rot = Main.rand.NextFloat(MathHelper.TwoPi);
                                 for (int i = 0; i < howMany; i++)
                                 {
                                     int randomWidth = Main.rand.Next(240, 350);
-                                    Vector2 randomPosition = Main.rand.NextVector2CircularEdge(randomWidth, randomWidth);
-                                    for (int k = 0; k < 5; k++)
-                                    {
-                                        if (Vector2.Distance(randomPosition, Position) > 60)
-                                            break;
+                                    Vector2 randomPosition = rot.ToRotationVector2() * randomWidth;
 
-                                        randomPosition = Main.rand.NextVector2CircularEdge(randomWidth, randomWidth);
-                                    }
-
-                                    Position = randomPosition;
                                     NPC npc = NPC.NewNPCDirect(NPC.GetSource_FromAI(), Target.Center + randomPosition,
                                         ModContent.NPCType<IceThornsTrap>());
                                     for (int j = 0; j < 2; j++)
                                         IceStarLight.Spawn(mouseCenter,
                                             (npc.Center - NPC.Center).SafeNormalize(Vector2.One).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * 10,
                                             1f, () => npc.Center, 16);
+
+                                    rot += MathHelper.TwoPi / howMany;
                                 }
                             }
 
@@ -115,7 +112,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 break;
                             }
 
-                            ChangeFrameNormally();
+                            NormallyFlyingFrame();
 
                             if (Timer > 120)
                                 ResetStates();

@@ -12,4 +12,9 @@ namespace Coralite.Content.Raritys
     {
         public override Color RarityColor => Coralite.Instance.CrystallineMagikePurple;
     }
+
+    public class SplendorMagicoreRarity : ModRarity
+    {
+        public override Color RarityColor => Coralite.Instance.SplendorMagicoreLightBlue;
+    }
 }

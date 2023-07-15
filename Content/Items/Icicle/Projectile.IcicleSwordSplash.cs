@@ -57,8 +57,11 @@ namespace Coralite.Content.Items.Icicle
                 }
             }
 
-            Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(44, 44), DustID.FrostStaff, -Projectile.velocity * 0.6f);
-            dust.noGravity = true;
+            if (Main.rand.NextBool(2))
+            {
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(44, 44), DustID.FrostStaff, -Projectile.velocity * 0.6f);
+                dust.noGravity = true;
+            }
 
             if (canDamage)
             {

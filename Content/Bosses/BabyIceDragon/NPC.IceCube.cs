@@ -51,6 +51,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void AI()
         {
+            if (Timer > 20)
+            {
+                ExtendTrigger = 1f;
+                Timer = 0;
+            }
+
             //随着ai1的增大而增大，随后爆炸
             if (ExtendTrigger == 1f)
             {
@@ -121,7 +127,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (ExtendCount >= 14)
                 if (SoundEngine.TryGetActiveSound(soundSlotID, out ActiveSound result))
                     result.Stop();
-            (Main.npc[index].ModNPC as BabyIceDragon).Dizzy(300);
+            if ((int)Main.npc[index].ai[1] != -5)
+                (Main.npc[index].ModNPC as BabyIceDragon).Dizzy(300);
         }
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)

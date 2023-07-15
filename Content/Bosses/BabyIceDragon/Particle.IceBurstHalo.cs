@@ -5,30 +5,31 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-   public class IceBurstHalo : ModParticle
-   {
-      public override string Texture => AssetDirectory.Particles + "IceHalo";
+    public class IceBurstHalo : ModParticle
+    {
+        public override string Texture => AssetDirectory.Particles + "IceHalo";
 
-      public override bool ShouldUpdateCenter(Particle particle) => false;
+        public override bool ShouldUpdateCenter(Particle particle) => false;
 
-      public override void OnSpawn(Particle particle)
-      {
-         particle.scale = 0.02f;
-         particle.color = Color.White;
-         particle.rotation = Main.rand.NextFloat(6.282f);
-         particle.frame = new Rectangle(0, 0, 128, 128);
-      }
+        public override void OnSpawn(Particle particle)
+        {
+            particle.scale = 0.02f;
+            particle.color = Color.White;
+            particle.rotation = Main.rand.NextFloat(6.282f);
+            particle.frame = new Rectangle(0, 0, 128, 128);
+            particle.shouldKilledOutScreen = false;
+        }
 
-      public override void Update(Particle particle)
-      {
-         if (particle.fadeIn >14)
-            particle.color *= 0.88f;
+        public override void Update(Particle particle)
+        {
+            if (particle.fadeIn > 14)
+                particle.color *= 0.88f;
 
-         particle.scale += 0.875f;
+            particle.scale += 0.875f;
 
-         particle.fadeIn++;
-         if (particle.fadeIn > 20)
-            particle.active = false;
-      }
-   }
+            particle.fadeIn++;
+            if (particle.fadeIn > 20)
+                particle.active = false;
+        }
+    }
 }

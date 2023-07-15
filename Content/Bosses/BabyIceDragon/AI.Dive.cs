@@ -36,7 +36,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         //前往下潜攻击
                         SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                         movePhase = 1;
-                        NPC.frame.Y = 0;
+                        NPC.frame.X = 1;
+                        NPC.frame.Y = 5;
                         Timer = 0;
                         NPC.netUpdate = true;
                     }
@@ -59,7 +60,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if (Timer < 100)
                         {
-                            //生成粒子
                             if (NPC.Center.Y > (Target.Center.Y - 20))
                             {
                                 Timer = 100;
@@ -87,7 +87,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             canDrawShadows = false;
                             NPC.velocity *= 0.95f;
                             NPC.rotation = NPC.rotation.AngleTowards(0f, 0.08f);
-                            ChangeFrameNormally();
+                            NormallyFlyingFrame();
                             break;
                         }
 
