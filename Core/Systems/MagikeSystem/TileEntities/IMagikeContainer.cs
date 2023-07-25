@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
@@ -18,5 +18,6 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         void OnReceiveVisualEffect();
         void CheckActive();
+        Vector2 GetWorldPosition();
     }
 }

@@ -72,9 +72,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             Main.instance.CameraModifiers.Add(modifier);
                         }
 
-                        if ((int)Timer == 60 && Main.netMode != NetmodeID.MultiplayerClient)        //生成冰刺NPC
+                        if ((int)Timer == 60 && Main.netMode != NetmodeID.MultiplayerClient)        //生成冰云NPC
                         {
-                            Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-80, 80), -200),
+                            Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-80, 80), -300),
                                 Vector2.Zero, ModContent.ProjectileType<IceyCloud>(), 1, 1, NPC.target);
                             GetMouseCenter(out _, out Vector2 mouseCenter);
 

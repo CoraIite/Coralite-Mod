@@ -24,6 +24,7 @@ namespace Coralite.Content.Bosses.Rediancie
         {
             Projectile.width = Projectile.height = 10;
             Projectile.friendly = true;
+            Projectile.aiStyle = -1;
             Projectile.timeLeft = 260;
         }
 

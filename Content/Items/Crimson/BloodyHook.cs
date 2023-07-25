@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -226,13 +227,9 @@ namespace Coralite.Content.Items.Crimson
             Main.spriteBatch.Draw(chainTex, laserTarget, laserSource, lightColor, Projectile.rotation, origin, 0, 0);
 
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
 
             //绘制影子拖尾
-            for (int i = 1; i < 8; i += 2)
-            {
-                Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null, lightColor * (0.3f - i * 0.03f), Projectile.oldRot[i] + 2f, mainTex.Size() / 2, Projectile.scale, 0, 0);
-            }
+            Projectile.DrawShadowTrails(lightColor, 0.3f, 0.03f, 1, 8, 2, 2f);
 
             //绘制自己
 
@@ -274,6 +271,15 @@ namespace Coralite.Content.Items.Crimson
             Projectile.aiStyle = -1;
         }
 
+        private enum AIStates
+        {
+            back = -1,
+            rolling = 0,
+            shoot = 1,
+            onHit = 2,
+            drag = 3
+        }
+
         public override void Load()
         {
             ChainTex = Request<Texture2D>(AssetDirectory.CrimsonItems + "BloodyChain");
@@ -290,14 +296,14 @@ namespace Coralite.Content.Items.Crimson
             switch ((int)HookState)
             {
                 default:
-                case -1:    //返回玩家手中的状态
+                case (int)AIStates.back:    //返回玩家手中的状态
                     if (Vector2.Distance(Owner.Center, Projectile.Center) < 48)
                         Projectile.Kill();
 
                     Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.One) * 32;
                     Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation();
                     break;
-                case 0: //拿在手里转转转的状态
+                case (int)AIStates.rolling: //拿在手里转转转的状态
                     if (Main.mouseRight)
                     {
                         Owner.heldProj = Projectile.whoAmI;
@@ -316,16 +322,16 @@ namespace Coralite.Content.Items.Crimson
                         Projectile.Center = Owner.Center + dir * 64;
                         Projectile.velocity = dir * 20;
                         Projectile.rotation = dir.ToRotation();
-                        HookState = 1f;
+                        HookState = (int)AIStates.shoot;
                         Projectile.tileCollide = true;
                         Projectile.netUpdate = true;
                     }
                     break;
-                case 1://发射中的状态
+                case (int)AIStates.shoot://发射中的状态
                     if (Timer > 16)
                     {
                         Timer = 0;
-                        HookState = -1f;
+                        HookState = (int)AIStates.back;
                         Projectile.tileCollide = false;
                         Projectile.netUpdate = true;
                     }
@@ -333,19 +339,19 @@ namespace Coralite.Content.Items.Crimson
                     Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation();
                     Timer++;
                     break;
-                case 2://钩在敌人身上的状态
+                case (int)AIStates.onHit://钩在敌人身上的状态
                     if (Target < 0 || Target > Main.maxNPCs)
                         Projectile.Kill();
 
                     NPC npc = Main.npc[(int)Target];
-                    if (!npc.active || npc.Distance(Owner.Center) > 16 * 30 || !Collision.CanHitLine(Owner.Center, 1, 1, npc.Center, 1, 1))
+                    if (!npc.active || npc.dontTakeDamage || npc.Distance(Owner.Center) > 16 * 30 || !Collision.CanHitLine(Owner.Center, 1, 1, npc.Center, 1, 1))
                         Projectile.Kill();
 
                     Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation();
                     Projectile.Center = npc.Center + offset;
                     Timer = 0;
                     break;
-                case 3://将玩家拖拽过去的状态
+                case (int)AIStates.drag://将玩家拖拽过去的状态
 
                     if ((int)Timer == 0)
                     {
@@ -377,9 +383,9 @@ namespace Coralite.Content.Items.Crimson
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if ((int)HookState == 1)
+            if ((int)HookState == (int)AIStates.shoot)
             {
-                HookState = -1;
+                HookState = (int)AIStates.back;
                 Projectile.tileCollide = false;
             }
             return false;
@@ -403,7 +409,7 @@ namespace Coralite.Content.Items.Crimson
 
         public override bool? CanHitNPC(NPC target)
         {
-            if ((int)HookState == 3 && (int)Timer == 6)
+            if ((int)HookState == (int)AIStates.drag && (int)Timer == 6)
                 return true;
             if ((int)HookState < 2 && Collision.CanHitLine(Owner.Center, 1, 1, target.Center, 1, 1))
                 return null;
@@ -415,12 +421,12 @@ namespace Coralite.Content.Items.Crimson
         {
             Vector2 direction = (Owner.Center - target.Center).SafeNormalize(Vector2.One);
 
-            if ((int)HookState == 1)
+            if ((int)HookState == (int)AIStates.shoot)
             {
                 Projectile.velocity *= 0;
                 Target = target.whoAmI;
                 offset = Projectile.Center - target.Center;
-                HookState = 2;
+                HookState = (int)AIStates.onHit;
                 Timer = 0;
                 Projectile.netUpdate = true;
 
@@ -430,7 +436,7 @@ namespace Coralite.Content.Items.Crimson
                         Scale: Main.rand.NextFloat(1f, 2f));
                 }
             }
-            else if ((int)HookState == 3)
+            else if ((int)HookState == (int)AIStates.drag)
             {
                 target.AddBuff(BuffType<BloodyHookDebuff>(), 120);
 

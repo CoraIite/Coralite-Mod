@@ -129,9 +129,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
         {
             if (MagikeHelper.TryGetEntity(i, j, out MagikeGenerator_FromMagItem generator))
             {
-                MagikeGenPanel.visible = true;
-                MagikeGenPanel.generator = generator;
-                UILoader.GetUIState<MagikeGenPanel>().Recalculate();
+                MagikeItemSlotPanel.visible = true;
+                MagikeItemSlotPanel.tileEntity = generator;
+                UILoader.GetUIState<MagikeItemSlotPanel>().Recalculate();
             }
 
             return true;

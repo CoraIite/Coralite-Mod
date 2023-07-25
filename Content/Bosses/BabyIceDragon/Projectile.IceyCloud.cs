@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public class IceyCloud:ModProjectile
+    public class IceyCloud : ModProjectile
     {
-        public override string Texture => AssetDirectory.BabyIceDragon+Name;
+        public override string Texture => AssetDirectory.BabyIceDragon + Name;
 
         public override void SetStaticDefaults()
         {
@@ -45,7 +45,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override void AI()
         {
             Projectile.frameCounter++;
-            if (Projectile.frameCounter>5)
+            if (Projectile.frameCounter > 5)
             {
                 Projectile.frameCounter = 0;
                 Projectile.frame++;
@@ -53,16 +53,16 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     Projectile.frame = 0;
             }
 
-            if (Projectile.localAI[0]==0)
+            if (Projectile.localAI[0] == 0)
             {
                 Projectile.localAI[0] = 1;
                 Projectile.timeLeft = Helper.ScaleValueForDiffMode(8 * 60, 12 * 60, 18 * 60, 30 * 60);
             }
 
-            if (Projectile.ai[0]>30)
+            if (Projectile.ai[0] > 45)
             {
                 Projectile.ai[0] = 0;
-                if (Projectile.owner==Main.myPlayer)
+                if (Projectile.owner == Main.myPlayer)
                 {
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.position + new Microsoft.Xna.Framework.Vector2(Main.rand.Next(Projectile.width), 20),
                         Vector2.UnitY * 8, ModContent.ProjectileType<IcicleProj_Hostile>(), 10, 0);

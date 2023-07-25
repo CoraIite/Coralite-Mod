@@ -94,7 +94,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     /// <summary>
     /// 通过放入含有魔能的物品并消耗它来获取魔能
     /// </summary>
-    public abstract class MagikeGenerator_FromMagItem : MagikeGenerator_Normal, ISingleItemContainer
+    public abstract class MagikeGenerator_FromMagItem : MagikeGenerator_Normal, IMagikeSingleItemContainer
     {
         /// <summary> 内部存储的物品，仅当物品魔能含量不小于0是才能消耗物品并获得魔能  </summary>
         public Item itemToCosume = new Item();
@@ -122,8 +122,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public override void OnKill()
         {
-            MagikeGenPanel.visible = false;
-            UILoader.GetUIState<MagikeGenPanel>().Recalculate();
+            MagikeItemSlotPanel.visible = false;
+            UILoader.GetUIState<MagikeItemSlotPanel>().Recalculate();
 
             if (!itemToCosume.IsAir)
                 Item.NewItem(new EntitySource_TileEntity(this), new Rectangle(Position.X * 16, Position.Y * 16, 16, 16), itemToCosume);

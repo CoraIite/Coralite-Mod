@@ -1,19 +1,19 @@
-﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
-using Coralite.Helpers;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ObjectData;
-using Terraria;
+﻿using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
-using Coralite.Content.Raritys;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using static Terraria.ModLoader.ModContent;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
-using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ObjectData;
+using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.RemodelPools
 {
@@ -125,5 +125,4 @@ namespace Coralite.Content.Items.Magike.RemodelPools
 
         public override Color MainColor => Color.LightBlue;
     }
-
 }

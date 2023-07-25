@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Magike.EnchantPools
 {
     public class SoulEnchantPool : BaseMagikePlaceableItem
     {
-        public SoulEnchantPool() : base(TileType<SoulEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagikeCrystalRarity>(), 300)
+        public SoulEnchantPool() : base(TileType<SoulEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<CrystallineMagikeRarity>(), 300)
         { }
 
         public override void AddRecipes()
@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.Magike.EnchantPools
 
     public class SoulEnchantPoolEntity : MagikeFactory_EnchantPool
     {
-        public SoulEnchantPoolEntity() : base(1000, 6 * 60) { }
+        public SoulEnchantPoolEntity() : base(1000, 4 * 60) { }
 
         public override ushort TileType => (ushort)TileType<SoulEnchantPoolTile>();
 

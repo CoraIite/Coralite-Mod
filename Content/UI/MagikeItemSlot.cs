@@ -16,11 +16,11 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI
 {
-    public class MagikeGenPanel : BetterUIState
+    public class MagikeItemSlotPanel : BetterUIState
     {
         public static float scale=1f;
         public static bool visible = false;
-        public static MagikeGenerator_FromMagItem generator = null;
+        public static IMagikeSingleItemContainer tileEntity = null;
         public static SingleItemSlot slot = new SingleItemSlot();
         public static CloseButton closeButton = new CloseButton();
 
@@ -53,13 +53,13 @@ namespace Coralite.Content.UI
 
         public override void Update(GameTime gameTime)
         {
-            if (generator is null)
+            if (tileEntity is null)
             {
                 visible = false;
                 return;
             }
 
-            Vector2 worldPos = generator.GetWorldPosition().ToScreenPosition();
+            Vector2 worldPos = tileEntity.GetWorldPosition().ToScreenPosition();
             if (!Helper.OnScreen(worldPos))
             {
                 visible = false;
@@ -78,7 +78,7 @@ namespace Coralite.Content.UI
         public override void Recalculate()
         {
             scale = ModContent.GetInstance<MagikeUIConfig>().UIScale;
-            slot.SetContainer(generator);
+            slot.SetContainer(tileEntity);
             base.Recalculate();
         }
     }
@@ -89,8 +89,8 @@ namespace Coralite.Content.UI
 
         public override void OnInitialize()
         {
-            Width.Set(52 * MagikeGenPanel.scale, 0f);
-            Height.Set(52 * MagikeGenPanel.scale, 0f);
+            Width.Set(52 * MagikeItemSlotPanel.scale, 0f);
+            Height.Set(52 * MagikeItemSlotPanel.scale, 0f);
         }
 
         public override void LeftClick(UIMouseEvent evt)
@@ -214,7 +214,7 @@ namespace Coralite.Content.UI
             Vector2 center = GetDimensions().Center();
 
             Texture2D backTex = TextureAssets.InventoryBack.Value;
-            spriteBatch.Draw(backTex, center, null, Color.White, 0, backTex.Size() / 2, MagikeGenPanel.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(backTex, center, null, Color.White, 0, backTex.Size() / 2, MagikeItemSlotPanel.scale, SpriteEffects.None, 0);
             
             Item Item = container.GetItem();
             if (Item is not null && !Item.IsAir)
@@ -229,7 +229,7 @@ namespace Coralite.Content.UI
                     rectangle2 = mainTex.Frame();
 
                 float itemScale = 1f;
-                float pixelWidth = 40 * MagikeGenPanel.scale;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                float pixelWidth = 40 * MagikeItemSlotPanel.scale;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
                 float pixelHeight = pixelWidth;
                 if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
                 {
@@ -239,15 +239,15 @@ namespace Coralite.Content.UI
                         itemScale = pixelHeight / rectangle2.Height;
                 }
 
-                position.X += 26 * MagikeGenPanel.scale - rectangle2.Width * itemScale / 2f;
-                position.Y += 26 * MagikeGenPanel.scale - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
+                position.X += 26 * MagikeItemSlotPanel.scale - rectangle2.Width * itemScale / 2f;
+                position.Y += 26 * MagikeItemSlotPanel.scale - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
 
                 spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
                 if (Item.color != default(Color))
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
 
                 if (Item.stack > 1)
-                    Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), center + new Vector2(12, 16), Color.White, MagikeGenPanel.scale, 1, 0.5f);
+                    Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), center + new Vector2(12, 16), Color.White, MagikeItemSlotPanel.scale, 1, 0.5f);
                 if (IsMouseHovering)
                 {
                     Main.HoverItem = Item.Clone();

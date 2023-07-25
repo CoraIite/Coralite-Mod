@@ -46,7 +46,7 @@ namespace Coralite.Content.Bosses.Rediancie
     {
         public override string Texture => AssetDirectory.Rediancie + Name;
 
-        Player Target => Main.player[NPC.target];
+        private Player Target => Main.player[NPC.target];
 
         public bool ExchangeState = true;
 
@@ -62,8 +62,8 @@ namespace Coralite.Content.Bosses.Rediancie
         /// <summary> 目前的AI循环的计数 </summary>
         internal ref float MoveCount => ref NPC.localAI[1];
 
-        internal readonly Color red = new Color(221, 50, 50);
-        internal readonly Color grey = new Color(91, 93, 102);
+        internal static readonly Color red = new Color(221, 50, 50);
+        internal static readonly Color grey = new Color(91, 93, 102);
         public const int ON_KILL_ANIM_TIME = 250;
 
         public List<RediancieFollower> followers;
@@ -166,7 +166,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void HitEffect(NPC.HitInfo hit)
         {
-                SoundEngine.PlaySound(SoundID.Dig, NPC.Center);
+            SoundEngine.PlaySound(SoundID.Dig, NPC.Center);
         }
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
@@ -224,7 +224,7 @@ namespace Coralite.Content.Bosses.Rediancie
             }
         }
 
-        public enum AIStates : int
+        private enum AIStates : int
         {
             onKillAnim = -5,
             onSpawnAnim = -4,
@@ -270,19 +270,20 @@ namespace Coralite.Content.Bosses.Rediancie
             //    NPC.frameCounter = 0;
             //}
             //#endregion
-            
+
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
+            {
                 NPC.TargetClosest();
 
-            if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)//没有玩家存活时离开
-            {
-                State = -0.1f;
-                NPC.velocity.X *= 0.97f;
-                NPC.velocity.Y += 0.04f;
-                NPC.EncourageDespawn(10);
-                ChangeRotationNormally();
-                UpdateFollower_Idle();
-                return;
+                if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)//没有玩家存活时离开
+                {
+                    NPC.velocity.X *= 0.97f;
+                    NPC.velocity.Y += 0.04f;
+                    NPC.EncourageDespawn(10);
+                    ChangeRotationNormally();
+                    UpdateFollower_Idle();
+                    return;
+                }
             }
 
             if (OwnedFollowersCount != followers.Count)
@@ -309,8 +310,8 @@ namespace Coralite.Content.Bosses.Rediancie
                             Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, 1).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore3").Type);
                             Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, -3).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore4").Type);
                         }
-                        
-                        if (Timer < 230 && Timer % 15 == 0 )
+
+                        if (Timer < 230 && Timer % 15 == 0)
                             Helper.RedJadeExplosion(NPC.Center + Main.rand.NextVector2Circular(30, 40));
 
                         if (Timer == 245)
@@ -419,9 +420,9 @@ namespace Coralite.Content.Bosses.Rediancie
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int damage = NPC.GetAttackDamage_ForProjectiles(10, 15);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter, 
-                                    (Target.Center - NPC.Center + Main.rand.NextVector2CircularEdge(48,48)).SafeNormalize(Vector2.UnitY) * 12f, 
-                                    ProjectileType<RedPulse>(), damage, 5f,NPC.target);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter,
+                                    (Target.Center - NPC.Center + Main.rand.NextVector2CircularEdge(48, 48)).SafeNormalize(Vector2.UnitY) * 12f,
+                                    ProjectileType<RedPulse>(), damage, 5f, NPC.target);
                             }
 
                             Helper.PlayPitched("RedJade/RedJadeBeam", 0.13f, 0f, NPC.Center);
@@ -454,7 +455,7 @@ namespace Coralite.Content.Bosses.Rediancie
                         }
 
                         ChangeRotationNormally();
-                        if (OwnedFollowersCount == 0||followers.Count==0)
+                        if (OwnedFollowersCount == 0 || followers.Count == 0)
                         {
                             ResetState();
                             break;
@@ -465,7 +466,7 @@ namespace Coralite.Content.Bosses.Rediancie
                         if (Timer < 49)
                             break;
 
-                        if (Timer % 25 == 0&&Main.netMode!=NetmodeID.MultiplayerClient)
+                        if (Timer % 25 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             float rot = Main.rand.NextFloat(MathHelper.TwoPi);
                             int damage = NPC.GetAttackDamage_ForProjectiles(10, 15);
@@ -473,7 +474,7 @@ namespace Coralite.Content.Bosses.Rediancie
                             int howMany = Main.getGoodWorld ? 4 : 3;    //FTW能射出4个，其他模式只射3个
                             for (int i = 0; i < howMany; i++)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[^1].center, rot.ToRotationVector2() *12, ProjectileType<RedFirework>(), damage, 5f, NPC.target, 0, timeleft + i * 10);
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[^1].center, rot.ToRotationVector2() * 12, ProjectileType<RedFirework>(), damage, 5f, NPC.target, 0, timeleft + i * 10);
                                 rot += MathHelper.TwoPi / howMany;
                             }
 
@@ -568,7 +569,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
                             if (realTime < 71)//边冲边炸
                             {
-                                if (realTime % 10 == 0&&Main.netMode!=NetmodeID.MultiplayerClient)
+                                if (realTime % 10 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_Explosion>(), 20, 5f);
 
                                 break;
@@ -631,7 +632,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
                         ChangeRotationNormally();
 
-                        if (OwnedFollowersCount == 0|| followers.Count == 0)
+                        if (OwnedFollowersCount == 0 || followers.Count == 0)
                         {
                             ResetState();
                             break;
@@ -729,7 +730,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
                         ChangeRotationNormally();
 
-                        if (OwnedFollowersCount == 0|| followers.Count == 0)
+                        if (OwnedFollowersCount == 0 || followers.Count == 0)
                         {
                             ResetState();
                             break;
@@ -785,15 +786,15 @@ namespace Coralite.Content.Bosses.Rediancie
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
-            int phese = 1;
+            int phase = 1;
             if (NPC.life < NPC.lifeMax / 2)
-                phese = 2;
+                phase = 2;
 
             GetAICycling((CyclingType)MoveCyclingType, out int meleeCount, out int ShootCount);
             bool useMelee = MoveCount < meleeCount;
             bool useShoot = MoveCount < meleeCount + ShootCount;
 
-            switch (phese)
+            switch (phase)
             {
                 default:
                 case 1:
@@ -881,7 +882,7 @@ namespace Coralite.Content.Bosses.Rediancie
                     break;
             }
 
-        MoveCount += 1;
+            MoveCount += 1;
             if (MoveCount >= meleeCount + ShootCount)   //如果一轮全部执行完成那么就在次随机一下循环方式
             {
                 MoveCount = 0;
@@ -1118,7 +1119,7 @@ namespace Coralite.Content.Bosses.Rediancie
             }
 
             RediancieFollower lastFollower = followers[^1];
-            lastFollower.center = Vector2.Lerp(lastFollower.center, targetCenter+targetDir*16, 0.6f);
+            lastFollower.center = Vector2.Lerp(lastFollower.center, targetCenter + targetDir * 16, 0.6f);
             lastFollower.rotation = lastFollower.rotation.AngleLerp(targetDir.ToRotation() + 1.57f, 0.2f);
             lastFollower.drawBehind = false;
             lastFollower.scale = 1.3f;
@@ -1160,7 +1161,7 @@ namespace Coralite.Content.Bosses.Rediancie
             //将3维向量投影到二维
             float k1 = -1000 / (vector3D.Z - 1000);
             Vector2 targetDir = k1 * new Vector2(vector3D.X, vector3D.Y);
-            Vector2 targetCenter = NPC.Center + targetDir * length + new Vector2(0, MathF.Sin(whoamI*1.2f) * 6);
+            Vector2 targetCenter = NPC.Center + targetDir * length + new Vector2(0, MathF.Sin(whoamI * 1.2f) * 6);
             follower.center = Vector2.Lerp(follower.center, targetCenter, centerLerpSpeed);
             follower.rotation = follower.rotation.AngleLerp(NPC.rotation, 0.2f);
             follower.drawBehind = vector3D.Z > 0;
@@ -1225,9 +1226,9 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            var groups = from f in followers 
-                     group f by f.drawBehind;
-            
+            var groups = from f in followers
+                         group f by f.drawBehind;
+
             foreach (var group in groups)
             {
                 if (group.Key)
@@ -1249,7 +1250,6 @@ namespace Coralite.Content.Bosses.Rediancie
                     foreach (var follower in group) //绘制身前的
                         follower.Draw(spriteBatch, drawColor);
             }
-
 
             //foreach (var follower in followers)
             //{

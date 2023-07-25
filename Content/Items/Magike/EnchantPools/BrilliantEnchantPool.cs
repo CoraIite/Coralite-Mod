@@ -14,7 +14,7 @@ namespace Coralite.Content.Items.Magike.EnchantPools
 {
     public class BrilliantEnchantPool : BaseMagikePlaceableItem
     {
-        public BrilliantEnchantPool() : base(TileType<BrilliantEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagikeCrystalRarity>(), 300)
+        public BrilliantEnchantPool() : base(TileType<BrilliantEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<CrystallineMagikeRarity>(), 300)
         { }
 
         public override void AddRecipes()

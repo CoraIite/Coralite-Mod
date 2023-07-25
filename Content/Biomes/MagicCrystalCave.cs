@@ -12,6 +12,8 @@ namespace Coralite.Content.Biomes
 
         public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Coralite/MagicCrystalCaveBackground");
 
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CrystalCave");
+
         public override bool IsBiomeActive(Player player)
         {
             bool b1 = ModContent.GetInstance<MagicCrystalCaveTileCount>().BasaltTileCount >= 120;
@@ -29,6 +31,8 @@ namespace Coralite.Content.Biomes
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 
         public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Coralite/MagicCrystalCaveBackground");
+
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CrystalCave");
 
         public override bool IsSceneEffectActive(Player player)
         {

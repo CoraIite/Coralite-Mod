@@ -12,7 +12,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
-    public abstract class MagikeFactory_EnchantPool : MagikeFactory, ISingleItemContainer
+    public abstract class MagikeFactory_EnchantPool : MagikeFactory, IMagikeSingleItemContainer
     {
         public Item containsItem = new Item();
 
@@ -37,7 +37,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             float factor = workTimer / (float)workTimeMax;
 
-            Vector2 center = Position.ToWorldCoordinates(24, -16);
+            Vector2 center = Position.ToWorldCoordinates(16, -16);
             if (workTimer % 8 == 0)
             {
                 Dust dust = Dust.NewDustPerfect(center + new Vector2(Main.rand.Next(-16, 16), 32), DustID.FireworksRGB, -Vector2.UnitY * Main.rand.NextFloat(0.8f, 3f), newColor: MainColor);
@@ -83,7 +83,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 Vector2 position = Position.ToWorldCoordinates(24, -8);
 
                 SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, position);
-                MagikeHelper.SpawnDustOnGenerate(3, 2, Position + new Point16(0, -2), MainColor);
+                MagikeHelper.SpawnDustOnGenerate(2, 2, Position + new Point16(0, -2), MainColor);
             }
         }
 
@@ -116,7 +116,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public override Vector2 GetWorldPosition()
         {
-            return Position.ToWorldCoordinates(16,-16);
+            return Position.ToWorldCoordinates(16, -16);
         }
 
         public override void SaveData(TagCompound tag)

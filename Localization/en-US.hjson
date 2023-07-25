@@ -1165,6 +1165,41 @@ Mods: {
 				DisplayName: Splendor Magicore
 				Tooltip: ""
 			}
+
+			CorruptJavelin: {
+				DisplayName: Corrupt Javelin
+				Tooltip: ""
+			}
+
+			BrilliantEnchantPool: {
+				DisplayName: Brilliant Enchant Pool
+				Tooltip: ""
+			}
+
+			CrimtaneEnchantPool: {
+				DisplayName: Crimtane Enchant Pool
+				Tooltip: ""
+			}
+
+			CrystalEnchantPool: {
+				DisplayName: Crystal Enchant Pool
+				Tooltip: ""
+			}
+
+			SoulEnchantPool: {
+				DisplayName: Soul Enchant Pool
+				Tooltip: ""
+			}
+
+			SoulOfDeveloper: {
+				DisplayName: Soul Of Developer
+				Tooltip: ""
+			}
+
+			SplendorRemodelPool: {
+				DisplayName: Splendor Remodel Pool
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1254,6 +1289,8 @@ Mods: {
 			CrystalSpirit.DisplayName: Crystal Spirit
 			CrystalGolem.DisplayName: Crystal Golem
 			CrystalEye.DisplayName: Crystal Eye
+			SlimeEmperor.DisplayName: Slime Emperor
+			ElasticGelBall.DisplayName: Elastic Gel Ball
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1374,6 +1411,11 @@ Mods: {
 			BloodHookChain.DisplayName: Blood Hook Chain
 			BloodHookSlash.DisplayName: Blood Hook Slash
 			IceyCloud.DisplayName: Icey Cloud
+			CorruptJavelinProj.DisplayName: Corrupt Javelin Proj
+			CorruptJavelinSpecial.DisplayName: Corrupt Javelin Special
+			SmallCorruptJavelin.DisplayName: Small Corrupt Javelin
+			GelBall.DisplayName: Gel Ball
+			SmallGelBall.DisplayName: Small Gel Ball
 		}
 
 		Configs: {

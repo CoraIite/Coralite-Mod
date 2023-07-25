@@ -12,6 +12,8 @@ namespace Coralite.Core
         public const string Rediancie = Bosses + "Rediancie/";
         public const string BabyIceDragon = Bosses + "BabyIceDragon/";
 
+        public const string SlimeEmperor = Bosses + "SlimeEmperor/";
+
         #endregion
 
         #region Buff部分！
@@ -44,6 +46,8 @@ namespace Coralite.Core
         public const string DefaultItem = Items + "DefaultItem";
 
         public const string OtherItems = Items + "Others/";
+
+        public const string GelItems = Items + "Gel/";
 
         public const string MushroomItems = Items + "Mushroom/";
         public const string CrimsonItems = Items + "Crimson/";
