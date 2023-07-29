@@ -1200,6 +1200,11 @@ Mods: {
 				DisplayName: Splendor Remodel Pool
 				Tooltip: ""
 			}
+
+			GelInvitation: {
+				DisplayName: Gel Invitation
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1291,6 +1296,9 @@ Mods: {
 			CrystalEye.DisplayName: Crystal Eye
 			SlimeEmperor.DisplayName: Slime Emperor
 			ElasticGelBall.DisplayName: Elastic Gel Ball
+			SlimeAvatar.DisplayName: Slime Avatar
+			GelFlippy.DisplayName: Gel Flippy
+			HealGelBall.DisplayName: Heal Gel Ball
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1416,6 +1424,9 @@ Mods: {
 			SmallCorruptJavelin.DisplayName: Small Corrupt Javelin
 			GelBall.DisplayName: Gel Ball
 			SmallGelBall.DisplayName: Small Gel Ball
+			GelSpike.DisplayName: Gel Spike
+			SpikeGelBall.DisplayName: Spike Gel Ball
+			GelProj.DisplayName: Gel Proj
 		}
 
 		Configs: {

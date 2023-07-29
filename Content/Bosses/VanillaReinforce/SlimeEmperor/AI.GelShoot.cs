@@ -18,21 +18,29 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 case 0:  //小跳并向玩家发射弹弹凝胶球
                 case 1:
                     {
-                        Jump(6f, 8f, () =>
+                        Jump(2f, 6f, () =>
                         {
                             SonState++;
                             NPC.TargetClosest();
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int sign = Math.Sign(NPC.Center.X - Target.Center.X);
-                                int howMany = Helpers.Helper.ScaleValueForDiffMode(2, 2, 3, 4);
-                                int damage= Helpers.Helper.ScaleValueForDiffMode(20, 15, 12, 15);
+                                int directlyHowMany = Helpers.Helper.ScaleValueForDiffMode(1, 1, 2, 3);
+                                int damage = Helpers.Helper.ScaleValueForDiffMode(20, 15, 12, 15);
                                 SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
-                                for (int i = 0; i < howMany; i++)
+                                for (int i = 0; i < directlyHowMany; i++)
                                 {
-                                    Vector2 vel = (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitY).RotatedBy(sign * (0.2f + i * 0.05f))*16;
-                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width, NPC.height), vel, ModContent.ProjectileType<GelBall>(),
-                                        damage,4f,NPC.target);
+                                    Vector2 vel = (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitY).RotatedBy(sign * (1f + i * 0.3f)) * 7;
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<GelBall>(),
+                                        damage, 4f, NPC.target);
+                                }
+
+                                directlyHowMany = directlyHowMany > 1 ? directlyHowMany - 1 : 1;
+                                for (int i = 0; i < directlyHowMany; i++)
+                                {
+                                    Vector2 vel = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.5f,0.5f))*12;
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<GelBall>(),
+                                        damage, 4f, NPC.target);
                                 }
                             }
                         });

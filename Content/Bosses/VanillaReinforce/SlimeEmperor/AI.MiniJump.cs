@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
@@ -16,7 +17,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 case 0:
                 case 1:
                 case 2: //3次小跳，仅当落到地面之后才能够进行跳跃
-                    Jump(2f, 8f, () => SonState++);
+                    Jump(1f, 8f, () => SonState++);
                     break;
                 case 3:
                     //重置AI
@@ -38,7 +39,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             {
                                 NPC.frame.Y = 0;
                                 NPC.noGravity = true;
-                                CanDrawShadow = false;
                                 JumpState = (int)JumpStates.ReadyToJump;
                                 JumpTimer = -1;
                                 break;
@@ -46,46 +46,56 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
                             JumpTimer++;
 
-                            if (Math.Abs(NPC.velocity.Y) < 0.1f)
-                                for (int i = 0; i < NPC.width; i += 16) //如果脚下有方块且速度小于一定值，那么判断为在地上
-                                {
-                                    Tile tile = Framing.GetTileSafely(NPC.BottomLeft + new Vector2(i, 0));
-                                    if (tile.HasTile && Main.tileSolid[tile.TileType])
+                            if (Math.Abs(NPC.velocity.Y) < 0.05f)//如果脚下有方块且速度小于一定值，那么判断为在地上
+                            {
+                                if (NPC.Center.Y < (Target.Center.Y - 100)) //比玩家高，那么只判断实心物块
+                                    for (int i = 0; i < NPC.width; i += 16)
                                     {
-                                        NPC.frame.Y = 0;
-                                        NPC.noGravity = true;
-                                        CanDrawShadow = false;
-                                        JumpTimer = -1;
-                                        break;
+                                        Tile tile = Framing.GetTileSafely(NPC.BottomLeft + new Vector2(i, 0));
+                                        if (tile.HasTile && Main.tileSolid[tile.TileType])
+                                        {
+                                            NPC.frame.Y = 0;
+                                            NPC.noGravity = true;
+                                            JumpTimer = -1;
+                                            break;
+                                        }
                                     }
-                                }
-                            break;
+                                else    //比玩家低，那么要判断其他顶部实心的物块
+                                    for (int i = 0; i < NPC.width; i += 16)
+                                    {
+                                        Tile tile = Framing.GetTileSafely(NPC.BottomLeft + new Vector2(i, 0));
+                                        if (tile.HasTile && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType] || TileID.Sets.Platforms[tile.TileType]))
+                                        {
+                                            NPC.frame.Y = 0;
+                                            NPC.noGravity = true;
+                                            JumpTimer = -1;
+                                            break;
+                                        }
+                                    }
+                            }
 
+                            break;
                         case -1: //刚落地之后的变扁阶段
                             NPC.velocity *= 0f;
-                            Scale.X = MathHelper.Lerp(Scale.X, 0.95f, 0.15f);
-                            Scale.Y = MathHelper.Lerp(Scale.Y, 1.2f, 0.15f);
-                            if (Scale.Y > 1.1f)
+                            Scale = Vector2.Lerp(Scale, new Vector2(1.25f, 0.95f), 0.15f);
+                            if (Scale.X > 1.2f)
                             {
-                                if (Math.Abs(crown.Velocity_Y) < 0.3f)
-                                    crown.Velocity_Y -= 8f;
                                 JumpTimer = -2;
                             }
                             break;
 
                         case -2://回弹
-                            Scale.X = MathHelper.Lerp(Scale.X, 1.1f, 0.15f);
-                            Scale.Y = MathHelper.Lerp(Scale.Y, 0.85f, 0.15f);
-                            if (Scale.Y < 0.95f)
+                            Scale = Vector2.Lerp(Scale, new Vector2( 0.85f, 1.2f), 0.15f);
+                            if (Scale.X < 0.9f)
                             {
+                                CrownJumpUp(0.05f, 4f);
                                 JumpTimer = -3;
                             }
                             break;
 
                         case -3://回到正常大小
-                            Scale.X = MathHelper.Lerp(Scale.X, 1f, 0.15f);
-                            Scale.Y = MathHelper.Lerp(Scale.Y, 1f, 0.15f);
-                            if (Scale.Y - 1 < 0.05f)
+                            Scale = Vector2.Lerp(Scale, Vector2.One, 0.15f);
+                            if (Math.Abs(Scale.Y - 1) < 0.05f)
                             {
                                 Scale = Vector2.One;
                                 onLanding?.Invoke();
@@ -105,13 +115,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             NPC.frameCounter = 0;
                         }
 
-                        Scale.X = MathHelper.Lerp(Scale.X, 0.95f, 0.15f);
-                        Scale.Y = MathHelper.Lerp(Scale.Y, 1.1f, 0.15f);
+                        Scale = Vector2.Lerp(Scale, new Vector2(1.25f, 0.85f), 0.15f);
 
                         if (NPC.frame.Y == 3)
                         {
                             NPC.noGravity = false;
-                            CanDrawShadow = true;
                             onStartJump?.Invoke();
                             JumpState = (int)JumpStates.Jumping;
                             JumpTimer = 0;
@@ -121,9 +129,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     break;
 
                 case (int)JumpStates.Jumping:  //跳跃
-                    float targetScaleX = Math.Clamp(1 - jumpYVelocity / 50, 0.75f, 1f);
-                    Scale.X = MathHelper.Lerp(Scale.X, targetScaleX, 0.15f);
-                    Scale.Y = MathHelper.Lerp(Scale.Y, 1.05f, 0.15f);
+                    float targetScaleX = Math.Clamp(1 - jumpYVelocity / 15, 0.75f, 1f);
+                    Scale = Vector2.Lerp(Scale, new Vector2(targetScaleX, 1.2f), 0.15f);
 
                     if (NPC.frame.Y < 5)
                     {
@@ -134,18 +141,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             NPC.frame.Y++;
                         }
                     }
-
-                    if (JumpTimer < 4)
-                    {
-                        NPC.velocity.Y -= jumpYVelocity * (1 - (2 * JumpTimer / 16));
-                        NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, NPC.direction * jumpXVelocity * (1.8f - LifePercentScale), 0.2f);
-                    }
                     else
                     {
                         JumpTimer = 0;
-                        JumpState = (int)JumpStates.Jumping;
+                        JumpState = (int)JumpStates.CheckForLanding;
                         NPC.noGravity = false;
                         onJumpFinish?.Invoke();
+                    }
+
+                    if (JumpTimer < 4)
+                    {
+                        NPC.velocity.Y -= jumpYVelocity * (1 - (2 * JumpTimer / 16)) * (2f - LifePercentScale);
+                        NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, NPC.direction * jumpXVelocity * (1.8f - LifePercentScale), 0.2f);
                     }
 
                     JumpTimer++;
@@ -165,6 +172,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     if (tile.HasSolidTile())
                     {
                         JumpState = (int)JumpStates.ReadyToJump;
+                        NPC.frame.Y = 0;
                         return;
                     }
                 }

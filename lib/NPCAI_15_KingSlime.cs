@@ -198,7 +198,7 @@ namespace Coralite.lib
 
                 if (!flag8)
                 {
-                    for (int num249 = 0; num249 < 10; num249++)
+                    for (int i = 0; i < 10; i++)
                     {
                         int num250 = Dust.NewDust(NPC.position + Vector2.UnitX * -20f, NPC.width + 40, NPC.height, DustID.TintableDust, NPC.velocity.X, NPC.velocity.Y, 150, new Color(78, 136, 255, 80), 2f);
                         Main.dust[num250].noGravity = true;
@@ -229,7 +229,7 @@ namespace Coralite.lib
                     NPC.TargetClosest();
                 }
 
-                for (int num251 = 0; num251 < 10; num251++)
+                for (int i = 0; i < 10; i++)
                 {
                     int num252 = Dust.NewDust(NPC.position + Vector2.UnitX * -20f, NPC.width + 40, NPC.height, DustID.TintableDust, NPC.velocity.X, NPC.velocity.Y, 150, new Color(78, 136, 255, 80), 2f);
                     Main.dust[num252].noGravity = true;
@@ -310,9 +310,9 @@ namespace Coralite.lib
                 }
             }
 
-            int num254 = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.TintableDust, NPC.velocity.X, NPC.velocity.Y, 255, new Color(0, 80, 255, 80), NPC.scale * 1.2f);
-            Main.dust[num254].noGravity = true;
-            dust = Main.dust[num254];
+            int index = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.TintableDust, NPC.velocity.X, NPC.velocity.Y, 255, new Color(0, 80, 255, 80), NPC.scale * 1.2f);
+            Main.dust[index].noGravity = true;
+            dust = Main.dust[index];
             dust.velocity *= 0.5f;
             if (NPC.life <= 0)
                 return;

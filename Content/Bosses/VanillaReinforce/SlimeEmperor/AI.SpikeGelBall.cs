@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using Terraria.ModLoader;
+using Terraria;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
@@ -18,7 +20,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     {
                         SonState++;
                         //射刺球弹幕
+                        int howMany = Helpers.Helper.ScaleValueForDiffMode(2, 2, 3, 4);
+                        int damage = Helpers.Helper.ScaleValueForDiffMode(20, 15, 12, 15);
 
+                        for (int i = 0; i < howMany; i++)
+                        {
+                            Vector2 vel = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * 10;
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<SpikeGelBall>(),
+                                damage, 4f, NPC.target);
+                        }
                     }
                     break;
                 case 2:

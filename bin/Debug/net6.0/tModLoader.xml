@@ -6585,6 +6585,7 @@
         <member name="F:Terraria.Item.scale">
             <summary>
             The size multiplier of the item's sprite while the item is being used. Also increases range for melee weapons.
+            <br/> Use <see cref="M:Terraria.ModLoader.ModItem.ModifyItemScale(Terraria.Player,System.Single@)"/> for dynamic scale values.
             <br/> Defaults to 1f.
             </summary>
         </member>
@@ -6650,7 +6651,8 @@
         </member>
         <member name="F:Terraria.Item.mana">
             <summary>
-            The amount of mana this item consumes on use. Use <see cref="M:Terraria.ModLoader.ModItem.ModifyManaCost(Terraria.Player,System.Single@,System.Single@)"/> for dynamic mana costs.
+            The amount of mana this item consumes on use.
+            <br/> Use <see cref="M:Terraria.ModLoader.ModItem.ModifyManaCost(Terraria.Player,System.Single@,System.Single@)"/> for dynamic mana costs.
             <br/> Defaults to 0.
             </summary>
         </member>
@@ -6747,6 +6749,7 @@
         <member name="F:Terraria.Item.crit">
             <summary>
             The base critical chance for this item. Remember that the player has a base crit chance of 4.
+            <br/> Use <see cref="M:Terraria.ModLoader.ModItem.ModifyWeaponCrit(Terraria.Player,System.Single@)"/> for dynamic crit values.
             <br/> Defaults to 0
             </summary>
         </member>
@@ -7213,6 +7216,11 @@
             <param name="tileIDToPlace"></param>
             <param name="style"></param>
         </member>
+        <member name="M:Terraria.Item.MechSpawn(System.Single,System.Single,System.Int32)">
+            <summary>
+            Use to check if a mechanism is allowed to spawn an Item of the provided type at the provided world coordinates. Checks nearby area to see if the <see href="https://terraria.wiki.gg/wiki/Statues#Spawn_limits">Spawn Limits</see> have been reached.
+            </summary>
+        </member>
         <member name="M:Terraria.Item.buyPrice(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
             Converts the provided buy price into copper coins.
@@ -7579,6 +7587,7 @@
             <br/>
              The resulting LocalizedText should be stored statically. Should not be used to create 'throwaway' LocalizedText instances. <br/>
              Use <see cref="M:Terraria.Localization.LocalizedText.Format(System.Object[])"/> instead for repeated on-demand formatting with different args.
+             <br/> The <see href="https://github.com/tModLoader/tModLoader/wiki/Localization#string-formatting">Localization Guide</see> teaches more about using placeholders in localization.
              </summary>
              <param name="args">The substitution args</param>
              <returns></returns>
@@ -7753,6 +7762,12 @@
             Contrary to its name, this array isn't actually used for catching logic at all.<br/>
             It is instead used to determine if an NPC can be released back into the world after being caught.<br/>
             These NPC will be forced <see cref="F:Terraria.NPC.friendly"/> for 1.5 seconds if naturally spawned.<br/>
+            </summary>
+        </member>
+        <member name="F:Terraria.Main.screenPosition">
+            <summary>
+            The position of the top left corner of the screen in world coordinates. Modify in <see cref="M:Terraria.ModLoader.ModSystem.ModifyScreenPosition"/> or <see cref="M:Terraria.ModLoader.ModPlayer.ModifyScreenPosition"/>. Also consider using <c>Main.instance.CameraModifiers.Add(CameraModifier);</c> as shown in ExampleMods MinionBossBody for screen shakes.<br/><br/>
+            When manually drawing, subtracting Main.screenPosition from the world position of the thing being drawn will result in the correct screen coordinates for use in <see cref="T:Microsoft.Xna.Framework.Graphics.SpriteBatch"/>.Draw methods. When drawing tiles or walls, an additional offset calculated as <c>Vector2 zero = Main.drawToScreen? Vector2.Zero : new Vector2(Main.offScreenRange, Main.offScreenRange);</c> needs to be added to the coordinates.
             </summary>
         </member>
         <member name="F:Terraria.Main.myPlayer">
@@ -8410,6 +8425,13 @@
             Collects local mod status and saves it to a file.
             </summary>
         </member>
+        <member name="M:Terraria.ModLoader.Core.ModOrganizer.CleanupOldPublish(System.String)">
+            <summary>
+            Must Be called AFTER the new files are added to the publishing repo.
+            Assumes one .tmod per YYYY.XX folder in the publishing repo
+            </summary>
+            <param name="repo"></param>
+        </member>
         <member name="M:Terraria.ModLoader.Core.TmodFile.AddFile(System.String,System.Byte[])">
             <summary>
             Adds a (fileName -> content) entry to the compressed payload
@@ -8519,6 +8541,13 @@
             <param name="damageClass">The DamageClass you want to check if effects are inherited by this DamageClass.</param>
             <returns><see langword="true"/> if this damage class is inheriting effects from <paramref name="damageClass"/>, <see langword="false"/> otherwise</returns>
         </member>
+        <member name="M:Terraria.ModLoader.DamageClassLoader.GetDamageClass(System.Int32)">
+            <summary>
+            Gets the DamageClass instance corresponding to the specified type
+            </summary>
+            <param name="type">The <see cref="P:Terraria.ModLoader.DamageClass.Type"/> of the damage class</param>
+            <returns>The DamageClass instance, null if not found.</returns>
+        </member>
         <member name="T:Terraria.ModLoader.Default.DefaultBossBarStyle">
             <summary>
             This is the default boss bar style - the way vanilla draws boss bars.
@@ -8554,7 +8583,7 @@
             Updates vanity slot information on the player for Mod Slots, in a similar fashion to Player.UpdateVisibleAccessories()
             </summary>
         </member>
-        <member name="M:Terraria.ModLoader.Default.ModAccessorySlotPlayer.UpdateDyes">
+        <member name="M:Terraria.ModLoader.Default.ModAccessorySlotPlayer.UpdateDyes(System.Boolean)">
             <summary>
             Mirrors Player.UpdateDyes() for modded slots
             Runs On Player Select, so is Player instance sensitive!!!
@@ -9925,6 +9954,7 @@
         <member name="M:Terraria.ModLoader.GlobalItem.ModifyManaCost(Terraria.Item,Terraria.Player,System.Single@,System.Single@)">
             <summary>
             Allows you to temporarily modify the amount of mana an item will consume on use, based on player buffs, accessories, etc. This is only called for items with a mana value.
+            <br/><br/> <b>Do not</b> modify <see cref="F:Terraria.Item.mana"/>, modify the <paramref name="reduce"/> and <paramref name="mult"/> parameters.
             </summary>
             <param name="item">The item being used.</param>
             <param name="player">The player using the item.</param>
@@ -9953,6 +9983,7 @@
             <summary>
             Allows you to dynamically modify a weapon's damage based on player and item conditions.
             Can be utilized to modify damage beyond the tools that DamageClass has to offer.
+            <br/><br/> <b>Do not</b> modify <see cref="F:Terraria.Item.damage"/>, modify the <paramref name="damage"/> parameter.
             </summary>
             <param name="item">The item being used.</param>
             <param name="player">The player using the item.</param>
@@ -9990,6 +10021,7 @@
             <summary>
             Allows you to dynamically modify a weapon's knockback based on player and item conditions.
             Can be utilized to modify damage beyond the tools that DamageClass has to offer.
+            <br/><br/> <b>Do not</b> modify <see cref="F:Terraria.Item.knockBack"/>, modify the <paramref name="knockback"/> parameter.
             </summary>
             <param name="item">The item being used.</param>
             <param name="player">The player using the item.</param>
@@ -9999,6 +10031,7 @@
             <summary>
             Allows you to dynamically modify a weapon's crit chance based on player and item conditions.
             Can be utilized to modify damage beyond the tools that DamageClass has to offer.
+            <br/><br/> <b>Do not</b> modify <see cref="F:Terraria.Item.crit"/>, modify the <paramref name="crit"/> parameter.
             </summary>
             <param name="item">The item being used.</param>
             <param name="player">The player using the item.</param>
@@ -10160,6 +10193,7 @@
         <member name="M:Terraria.ModLoader.GlobalItem.ModifyItemScale(Terraria.Item,Terraria.Player,System.Single@)">
             <summary>
             Allows you to dynamically modify the given item's size for the given player, similarly to the effect of the Titan Glove.
+            <br/><br/> <b>Do not</b> modify <see cref="F:Terraria.Item.scale"/>, modify the <paramref name="scale"/> parameter.
             </summary>
             <param name="item">The item to modify the scale of.</param>
             <param name="player">The player wielding the given item.</param>
@@ -13912,6 +13946,7 @@
         <member name="M:Terraria.ModLoader.ModItem.ModifyManaCost(Terraria.Player,System.Single@,System.Single@)">
             <summary>
             Allows you to temporarily modify the amount of mana this item will consume on use, based on player buffs, accessories, etc. This is only called for items with a mana value.
+            <br/><br/> <b>Do not</b> modify <see cref="F:Terraria.Item.mana"/>, modify the <paramref name="reduce"/> and <paramref name="mult"/> parameters.
             </summary>
             <param name="player">The player using the item.</param>
             <param name="reduce">Used for decreasingly stacking buffs (most common). Only ever use -= on this field.</param>
@@ -13937,6 +13972,7 @@
             <summary>
             Allows you to dynamically modify a weapon's damage based on player and item conditions.
             Can be utilized to modify damage beyond the tools that DamageClass has to offer.
+            <br/><br/> <b>Do not</b> modify <see cref="F:Terraria.Item.damage"/>, modify the <paramref name="damage"/> parameter.
             </summary>
             <param name="player">The player using the item.</param>
             <param name="damage">The StatModifier object representing the totality of the various modifiers to be applied to the item's base damage.</param>
@@ -13968,6 +14004,7 @@
             <summary>
             Allows you to dynamically modify a weapon's knockback based on player and item conditions.
             Can be utilized to modify damage beyond the tools that DamageClass has to offer.
+            <br/><br/> <b>Do not</b> modify <see cref="F:Terraria.Item.knockBack"/>, modify the <paramref name="knockback"/> parameter.
             </summary>
             <param name="player">The player using the item.</param>
             <param name="knockback">The StatModifier object representing the totality of the various modifiers to be applied to the item's base knockback.</param>
@@ -13976,6 +14013,7 @@
             <summary>
             Allows you to dynamically modify a weapon's crit chance based on player and item conditions.
             Can be utilized to modify damage beyond the tools that DamageClass has to offer.
+            <br/><br/> <b>Do not</b> modify <see cref="F:Terraria.Item.crit"/>, modify the <paramref name="crit"/> parameter.
             </summary>
             <param name="player">The player using the item.</param>
             <param name="crit">The total crit chance of the item after all normal crit chance calculations.</param>
@@ -14130,6 +14168,7 @@
         <member name="M:Terraria.ModLoader.ModItem.ModifyItemScale(Terraria.Player,System.Single@)">
             <summary>
             Allows you to dynamically modify this item's size for the given player, similarly to the effect of the Titan Glove.
+            <br/><br/> <b>Do not</b> modify <see cref="F:Terraria.Item.scale"/>, modify the <paramref name="scale"/> parameter.
             </summary>
             <param name="player">The player wielding this item.</param>
             <param name="scale">
@@ -15653,7 +15692,8 @@
         </member>
         <member name="M:Terraria.ModLoader.ModTree.Shake(System.Int32,System.Int32,System.Boolean@)">
             <summary>
-            Executed on tree shake, return false to skip vanilla tree shake drops
+            Executed on tree shake, return false to skip vanilla tree shake drops.<br/>
+            The x and y coordinates correspond to the top of the tree, where items usually spawn.
             </summary>
             <returns></returns>
         </member>
@@ -16374,13 +16414,13 @@
         </member>
         <member name="M:Terraria.ModLoader.ModPlayer.ModifyHitByProjectile(Terraria.Projectile,Terraria.Player.HurtModifiers@)">
             <summary>
-            Allows you to modify the damage, etc., that a hostile projectile does to this player.br/>
+            Allows you to modify the damage, etc., that a hostile projectile does to this player. <br/>
             Runs on the local client. <br/>
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.ModPlayer.OnHitByProjectile(Terraria.Projectile,Terraria.Player.HurtInfo)">
             <summary>
-            Allows you to create special effects when a hostile projectile hits this player.br/>
+            Allows you to create special effects when a hostile projectile hits this player. <br/>
             Runs on the local client. <br/>
             </summary>
         </member>
@@ -16471,7 +16511,7 @@
         </member>
         <member name="M:Terraria.ModLoader.ModPlayer.ModifyScreenPosition">
             <summary>
-            Use this hook to modify Main.screenPosition after weapon zoom and camera lerp have taken place.
+            Use this hook to modify <see cref="F:Terraria.Main.screenPosition"/> after weapon zoom and camera lerp have taken place.
             <br/> Also consider using <c>Main.instance.CameraModifiers.Add(CameraModifier);</c> as shown in ExampleMods MinionBossBody for screen shakes.
             </summary>
         </member>
@@ -17490,7 +17530,8 @@
         </member>
         <member name="M:Terraria.ModLoader.ModSystem.ModifyScreenPosition">
             <summary>
-            Use this hook to modify Main.screenPosition after weapon zoom and camera lerp have taken place.
+            Use this hook to modify <see cref="F:Terraria.Main.screenPosition"/> after weapon zoom and camera lerp have taken place.
+            <br/> Also consider using <c>Main.instance.CameraModifiers.Add(CameraModifier);</c> as shown in ExampleMods MinionBossBody for screen shakes.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.ModSystem.ModifyTransformMatrix(Terraria.Graphics.SpriteViewMatrix@)">
@@ -19801,6 +19842,25 @@
             Some vanilla examples of given names are Andrew (for the Guide), Yorai (for the Princess), Whitney (for the Steampunker), or Scarlett (for the Stylist).<br/>
             </summary>
         </member>
+        <member name="M:Terraria.NPC.GetFullnameByID(System.Int32)">
+            <summary>
+            Returns the <see cref="P:Terraria.NPC.FullName"/> of the first active NPC of the given type in the world. If not found, the type name is returned instead.
+            </summary>
+            <param name="npcID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.NPC.GetFirstNPCNameOrNull(System.Int32)">
+            <summary>
+            Returns the <see cref="P:Terraria.NPC.GivenOrTypeName"/> of the first active NPC of the given type in the world. If not found, null is returned.
+            </summary>
+            <param name="npcType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.NPC.MechSpawn(System.Single,System.Single,System.Int32)">
+            <summary>
+            Use to check if a mechanism is allowed to spawn an NPC of the provided type at the provided world coordinates. Checks nearby area to see if the <see href="https://terraria.wiki.gg/wiki/Statues#Spawn_limits">Spawn Limits</see> have been reached.
+            </summary>
+        </member>
         <member name="M:Terraria.NPC.GetNPCInvasionGroup(System.Int32)">
             <summary>
             Gets the <see cref="T:Terraria.ID.InvasionID"/> associated with the given NPC type (<see cref="F:Terraria.NPC.type"/>).
@@ -20402,6 +20462,18 @@
             <br/> If <c><see cref="F:Terraria.Player.townNPCs"/> &gt; 2f</c>, then this player is in a town.
             </summary>
         </member>
+        <member name="F:Terraria.Player.armor">
+            <summary>
+            The player's armor and accessories. Indexes 0-2 hold head, chest, and legs armor while 10-12 hold the respective social armor items. Indexes 3-9 hold the accessories and 13-19 hold the social accessory items. Modded accessory slots are stored separately.<br/><br/>
+            Generally speaking, modders <b>should not be accessing this array</b> to check for specific accessories, that is not how Terraria is designed and is not scalable, especially since modded accessory slots exist and each can have special logic. Modders should be using <see cref="M:Terraria.ModLoader.ModItem.UpdateAccessory(Terraria.Player,System.Boolean)"/> to set fields in a <see cref="T:Terraria.ModLoader.ModPlayer"/> class, then use those values for gameplay effects. <see href="https://github.com/tModLoader/tModLoader/blob/1.4.4/ExampleMod/Old/SimpleModPlayer.cs">SimpleModPlayer.cs</see> shows the proper approach and explains this pattern.<br/><br/>
+            The corresponding dye items are found in <see cref="F:Terraria.Player.dye"/>. The player's inventory is <see cref="F:Terraria.Player.inventory"/>. For equipment, see <see cref="F:Terraria.Player.miscEquips"/> and <see cref="F:Terraria.Player.miscDyes"/>. <see cref="F:Terraria.Player.trashItem"/> is the trash slot.<br/><br/>
+            </summary>
+        </member>
+        <member name="F:Terraria.Player.miscEquips">
+            <summary>
+            The player's equipment items. From indexes 0-4: Pet, Light Pet, Minecart, Mount, and Hook.
+            </summary>
+        </member>
         <member name="F:Terraria.Player.buffType">
             <summary>
             The <see cref="T:Terraria.ID.BuffID"/>s of all buffs this player has active.
@@ -20428,6 +20500,13 @@
         <member name="F:Terraria.Player.setBonus">
             <summary>
             The text that is shown on armor (<see cref="F:Terraria.Item.wornArmor"/>) with an active set bonus.
+            </summary>
+        </member>
+        <member name="F:Terraria.Player.inventory">
+            <summary>
+            The player's normal inventory. Indexes 0-9 hold the hotbar items, 10-49 the rest of the main inventory, 50-53 are coin slots, 54-57 are ammo slots. Index 58 is used to store the mouse item in some situations.<br/>
+            Additional inventories are found in <see cref="F:Terraria.Player.bank"/> (Piggy Bank), <see cref="F:Terraria.Player.bank2"/> (Safe), <see cref="F:Terraria.Player.bank3"/> (Defender's Forge), and <see cref="F:Terraria.Player.bank4"/> (Void Vault).
+            For armor and accessories, see <see cref="F:Terraria.Player.armor"/> and <see cref="F:Terraria.Player.dye"/>. For equipment, see <see cref="F:Terraria.Player.miscEquips"/> and <see cref="F:Terraria.Player.miscDyes"/>. <see cref="F:Terraria.Player.trashItem"/> is the trash slot.<br/>
             </summary>
         </member>
         <member name="F:Terraria.Player.gfxOffY">
@@ -20474,7 +20553,7 @@
             </summary>
             <remarks>
             If you want to heal the player with the green text effect, use <see cref="M:Terraria.Player.Heal(System.Int32)"/>.
-            <br/> If you want to hurt the player, use <see cref="M:Terraria.Player.Hurt(Terraria.DataStructures.PlayerDeathReason,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Boolean,System.Single)"/>.
+            <br/> If you want to hurt the player, use <see cref="M:Terraria.Player.Hurt(Terraria.DataStructures.PlayerDeathReason,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Int32,System.Boolean,System.Single,System.Single,System.Single)"/>.
             </remarks>
         </member>
         <member name="F:Terraria.Player.statMana">
@@ -20587,6 +20666,13 @@
             If not <see langword="null"/>, this player will create damaging bee projectiles when taking damage.
             </summary>
         </member>
+        <member name="F:Terraria.Player.chest">
+            <summary>
+            Represents the chest the player currently has open. If -1, the player has no chest open.<br/>
+            Positive values indicate the index of the chest in <see cref="F:Terraria.Main.chest"/> the player currently has open.<br/>
+            Negative values are used to indicate additional inventories: Piggy Bank (-2), Safe (-3), Defender's Forge (-4), Void Vault (-5)
+            </summary>
+        </member>
         <member name="F:Terraria.Player.ownedProjectileCounts">
             <summary>
             Provides efficient access to the number of projectiles of the specified type owned by this player currently active in the game world.<br/>
@@ -20598,6 +20684,11 @@
         <member name="P:Terraria.Player.MountedCenter">
             <summary>
             Returns the player's center adjusted for mount and step stool usage. Typically used in conjunction with <see cref="M:Terraria.Player.RotatedRelativePoint(Microsoft.Xna.Framework.Vector2,System.Boolean,System.Boolean)"/> to retrieve a suitable position for positioning items and effects originating from the player.
+            </summary>
+        </member>
+        <member name="P:Terraria.Player.CCed">
+            <summary>
+            Checks if the player is currently "crowd controlled", meaning the player is <see cref="F:Terraria.Player.frozen"/>, <see cref="F:Terraria.Player.webbed"/>, or <see cref="F:Terraria.Player.stoned"/>. Used in various checks to prevent some player actions that shouldn't be possible while in those states, such as channeling attacks, quick using items, and swapping loadouts.
             </summary>
         </member>
         <member name="P:Terraria.Player.ZoneSkyHeight">
@@ -21561,6 +21652,14 @@
             Used for all other <see cref="T:Terraria.PopupText"/>s.
             </summary>
         </member>
+        <member name="M:Terraria.Program.PortFilesFromXtoY(System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Super Save Path is the parent directory containing both folders. Usually Program.SavePath or Steam Cloud
+            Source is of variety StableFolder, PreviewFolder... etc
+            Destination is of variety StableFolder, PreviewFolder... etc
+            maxVersionOfSource is used to determine if we even should port the files. Example: 1.4.3-Legacy has maxVersion of 2022.9
+            </summary>
+        </member>
         <member name="F:Terraria.Projectile.netImportant">
             <summary>
             Indicates that this projectile will be synced to a joining player (by default, any projectiles active before the player joins (besides projectiles with type in <see cref="F:Terraria.Main.projPet"/>) are not synced over). Example: glowsticks
@@ -22223,6 +22322,19 @@
             Here in case someone proves my statement wrong later.
             </summary>
         </member>
+        <member name="M:Terraria.Utilities.FileUtilities.ConvertToRelativePath(System.String,System.String)">
+            <summary>
+            Converts the full 'path' to remove the base path component.
+            Example: C://My Documents//Help Me I'm Hungry.txt is full 'path'
+            	basePath is C://My Documents
+            	Thus returns 'Help Me I'm Hungry.txt'
+            </summary>
+        </member>
+        <member name="M:Terraria.Utilities.FileUtilities.DetermineIfShouldOverwrite(System.Boolean,System.Boolean,System.String,System.String)">
+            <summary>
+            DEtermines if should overwrite the file at Destination with the file at Source
+            </summary>
+        </member>
         <member name="M:Terraria.Utilities.UnifiedRandom.Next(System.Int32,System.Int32)">
             <summary>
             Generates a random value between <paramref name="minValue"/> (inclusive) and <paramref name="maxValue"/> (exclusive). <br/>For example <c>Next(4, 8)</c> can return 4, 5, 6, or 7. It will not return 8.
@@ -22304,6 +22416,34 @@
             <summary>
             Receives the result of SendBitArray, and returns the corresponding BitArray
             </summary>
+        </member>
+        <member name="M:Terraria.Wiring.SkipWire(System.Int32,System.Int32)">
+            <summary>
+            Use to prevent wire signals from running for the provided coordinates. Typically used in multi-tiles to prevent a wire touching multiple tiles of the multi-tile from erroneously running wire code multiple times. In <see cref="M:Terraria.ModLoader.ModTile.HitWire(System.Int32,System.Int32)"/>, call SkipWire for all the coordinates the tile covers.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:Terraria.Wiring.SkipWire(Terraria.DataStructures.Point16)">
+            <inheritdoc cref="M:Terraria.Wiring.SkipWire(System.Int32,System.Int32)"/>
+        </member>
+        <member name="M:Terraria.Wiring.CheckMech(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns true if the wiring cooldown has been reached for the provided tile coordinates. The <paramref name="time"/> parameter will set the cooldown if wiring cooldown has elapsed. Use larger values for less frequent activations. Use this method to limit how often mechanisms can be triggerd. <see cref="M:Terraria.Item.MechSpawn(System.Single,System.Single,System.Int32)"/> and <see cref="M:Terraria.NPC.MechSpawn(System.Single,System.Single,System.Int32)"/> should also be checked for mechanisms spawning items or NPC, such as Statues.
+            </summary>
+            <param name="i"></param>
+            <param name="j"></param>
+            <param name="time"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Wiring.TripWire(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Used to send a single to wiring wired up to the specified area. The parameters represent the tile coordinates where wire signals will be sent. Mechanism tiles such as <see cref="F:Terraria.ID.TileID.Switches"/>, <see cref="F:Terraria.ID.TileID.PressurePlates"/>, <see cref="F:Terraria.ID.TileID.Timers"/>, and <see cref="F:Terraria.ID.TileID.LogicSensor"/> use this method as part of their interaction code.
+            </summary>
+            <param name="left"></param>
+            <param name="top"></param>
+            <param name="width"></param>
+            <param name="height"></param>
         </member>
         <member name="M:Terraria.WorldGen.Convert(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>

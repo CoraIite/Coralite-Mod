@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -34,7 +35,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
     ///                 \                                                  /
     ///                     ————————————
     /// </summary>
-   // [AutoloadBossHead]
+    [AutoloadBossHead]
     public partial class SlimeEmperor : ModNPC
     {
         public override string Texture => AssetDirectory.SlimeEmperor + Name;
@@ -53,7 +54,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         internal ref float JumpState => ref NPC.localAI[0];
         internal ref float JumpTimer => ref NPC.localAI[1];
 
-        private float LifePercentScale => Math.Clamp(NPC.life / (float)NPC.lifeMax, 0.5f, 1);
+        private float LifePercentScale => Math.Clamp(NPC.life / (float)NPC.lifeMax, 0.65f, 1);
 
         internal int shoot2State;
         internal int melee2State;
@@ -75,6 +76,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 6;
+            NPCID.Sets.TrailingMode[Type] = 1;
+            NPCID.Sets.TrailCacheLength[Type] = 12;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
         }
@@ -92,6 +95,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.aiStyle = -1;
             NPC.npcSlots = 20f;
             NPC.value = Item.buyPrice(0, 2, 0, 0);
+            NPC.HitSound = CoraliteSoundID.Fleshy_NPCHit1;
 
             NPC.noGravity = false;
             NPC.noTileCollide = true;
@@ -113,16 +117,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
             if (Main.masterMode)
             {
-                NPC.scale *= 1.5f;
+                NPC.scale *= 1.25f;
                 NPC.lifeMax = (int)(2000 * bossAdjustment) + numPlayers * 550;
                 NPC.damage = 45;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.scale *= 2f;
+                NPC.scale *= 1.25f;
                 NPC.lifeMax = (int)(2300 * bossAdjustment) + numPlayers * 600;
-                NPC.defense = 4;
+                NPC.defense = 8;
             }
         }
 
@@ -138,27 +142,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             //npcLoot.Add(notExpertRule);
         }
 
-        public override void OnKill()
-        {
-            if (Main.netMode != NetmodeID.Server)
-            {
-            }
-
-        }
-
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
+
             CrownTex = Request<Texture2D>(AssetDirectory.SlimeEmperor + "SlimeEmperorCrown");
+            //王冠gore
+
         }
 
         public override void Unload()
         {
             CrownTex = null;
-        }
-
-        public override void HitEffect(NPC.HitInfo hit)
-        {
-            //SoundEngine.PlaySound(SoundID.Dig, NPC.Center);
         }
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
@@ -188,6 +184,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
             return true;
         }
+
+        public override bool? CanFallThroughPlatforms() => NPC.Center.Y < (Target.Center.Y - NPC.height);
 
         #endregion
 
@@ -226,7 +224,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             {
                 case (int)AIStates.OnKillAnim:
                     {
+                        if (Main.netMode != NetmodeID.Server)
+                        {
+                            //生成王冠gore
+                        }
 
+                        NPC.Kill();
                     }
                     break;
                 case (int)AIStates.OnSpawnAnim:
@@ -236,28 +239,34 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     break;
                 default:
                 case (int)AIStates.GelShoot:
-                    GelShoot();
+                    GelShoot();   //√
                     break;
                 case (int)AIStates.CrownStrike:
-                    CrownStrike();
+                    CrownStrike();   //√
                     break;
                 case (int)AIStates.SpikeGelBall:
-                    SpikeGelBall();
+                    SpikeGelBall();   //√
                     break;
                 case (int)AIStates.PolymerizeShot:
+                    PolymerizeShot();
                     break;
                 case (int)AIStates.BodySlam:
+                    BodySlam();  //√
                     break;
                 case (int)AIStates.Split:
+                    Split();  //√
                     break;
                 case (int)AIStates.GelFlippy:
+                    GelFlippy(); //√
                     break;
                 case (int)AIStates.StickyGel:
+                    ResetStates();
                     break;
                 case (int)AIStates.TransportSplit:
+                    TransportSplit(); //√
                     break;
                 case (int)AIStates.MiniJump:
-                    ThreeMiniJump();
+                    ThreeMiniJump();   //√
                     break;
                 case (int)AIStates.BigJump:
                     {
@@ -265,15 +274,30 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         {
                             default:
                             case 0:
-                                Jump(10, 10, () => SonState++);
+                                Jump(3f, 10, () => SonState++, onStartJump: () =>
+                                {
+                                    if (Main.netMode!=NetmodeID.MultiplayerClient)
+                                    {
+                                        int howMany = Helper.ScaleValueForDiffMode(1, 2, 2, 3);
+                                        for (int i = 0; i < howMany; i++)
+                                        {
+                                            Point pos = NPC.Center.ToPoint();
+                                            pos.X += Main.rand.Next(-NPC.width, NPC.width);
+                                            pos.Y += Main.rand.Next(-32, 32);
+                                            NPC npc = NPC.NewNPCDirect(NPC.GetSource_FromAI(), pos.X, pos.Y, NPCType<ElasticGelBall>());
+                                            npc.velocity = -Vector2.UnitY * Main.rand.NextFloat(2, 5);
+                                        }
+                                    }
+                                });
                                 break;
                             case 1:
                                 ResetStates();
                                 break;
                         }
                     }
-                        break;
+                    break;   //√
                 case (int)AIStates.HealGelBall:
+                    ResetStates();
                     break;
             }
         }
@@ -287,8 +311,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 default:
                 case (int)MovingModeID.Normal:
                     {
-                        int newWidth = (int)(LifePercentScale *NPC.scale* WidthMax);
-                        int newHeight = (int)(LifePercentScale *NPC.scale* HeightMax);
+                        int newWidth = (int)(LifePercentScale * NPC.scale * WidthMax);
+                        int newHeight = (int)(LifePercentScale * NPC.scale * HeightMax);
                         if (NPC.width != newWidth || NPC.height != newHeight)
                         {
                             Vector2 bottom = NPC.Bottom;
@@ -297,31 +321,31 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             NPC.Bottom = bottom;
                         }
 
-                        int height = (int)(LifePercentScale * NPC.scale * 86);
+                        int height = GetCrownBottom();
                         float groundHeight = NPC.Bottom.Y - Scale.Y * height;
-                        crown.Bottom.X = MathHelper.Lerp(crown.Bottom.X, NPC.Center.X, 0.3f);
+                        crown.Bottom.X = MathHelper.Lerp(crown.Bottom.X, NPC.Center.X, 0.5f);
 
-                        if (crown.Bottom.Y < groundHeight - 16) //重力
+                        if (crown.Bottom.Y < groundHeight - 2) //重力
                         {
-                            crown.Velocity_Y += NPC.gravity;
-                            if (crown.Velocity_Y > 18)
-                                crown.Velocity_Y = 18;
+                            crown.Velocity_Y += NPC.gravity * 1.25f;
+                            if (crown.Velocity_Y > 16)
+                                crown.Velocity_Y = 16;
                         }
 
                         crown.Bottom.Y += crown.Velocity_Y;     //更新位置
                         if (crown.Bottom.Y > groundHeight)    //如果超过了地面那么就进行判断
                         {
                             crown.Bottom.Y = groundHeight;  //将位置拉回
-                            if (NPC.velocity.Y < 0.5f && crown.Velocity_Y > 12)  //速度很大，向上弹起
+                            if (NPC.velocity.Y < 0.5f && crown.Velocity_Y > 10)  //速度很大，向上弹起
                             {
                                 //随机一个角度
-                                float angle = Math.Clamp(crown.Velocity_Y / 40, 0, 0.35f);
+                                float angle = Math.Clamp(crown.Velocity_Y / 40, 0.1f, 0.55f);
                                 crown.Rotation = Main.rand.NextFloat(-angle, angle);
 
-                                crown.Velocity_Y *= -0.4f;
+                                crown.Velocity_Y *= -0.1f;
                             }
                             else
-                                crown.Velocity_Y *= 0;  //速度不够直接停止
+                                crown.Velocity_Y = NPC.velocity.Y;  //速度不够直接停止
                         }
 
                         crown.Rotation = crown.Rotation.AngleLerp(0, 0.04f);
@@ -329,11 +353,33 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
                     break;
                 case (int)MovingModeID.Crown:
-                    NPC.width = NPC.height = 68;
-
                     crown.Rotation += 0.3f;
                     break;
             }
+        }
+
+        private int GetCrownBottom()
+        {
+            int frameBaseHeight = NPC.frame.Y switch
+            {
+                0 => 80,  //108
+                1 => 80 + 6,  //114
+                2 => 80,  //108
+                3 => 80 - 6,  //100
+                4 => 80 - 4,  //104
+                _ => 80 - 4  //98
+            };
+
+            return (int)(LifePercentScale * NPC.scale * Scale.Y * frameBaseHeight);
+        }
+
+        private void CrownJumpUp(float velLimit, float JumpUpSpeed)
+        {
+            if (Math.Abs(crown.Velocity_Y) < velLimit)
+                crown.Velocity_Y -= JumpUpSpeed;
+
+            float angle = Math.Clamp(crown.Velocity_Y / 40, 0.1f, 0.55f);
+            crown.Rotation = Main.rand.NextFloat(-angle, angle);
         }
 
         #endregion
@@ -405,20 +451,20 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             }
 
             if (Main.getGoodWorld)
-                FTWSetState();
+                NormallySetState();
             else
                 NormallySetState();
 
             ResetProprieties:
 
-            State = (int)AIStates.MiniJump;
+            //State = (int)AIStates.Split;
 
             NPC.dontTakeDamage = false;
             NPC.noTileCollide = false;
             NPC.noGravity = false;
             Timer = 0;
             SonState = 0;
-            NPC.TargetClosest(false);
+            NPC.TargetClosest();
             NPC.netUpdate = true;
             StartJump();
         }
@@ -512,7 +558,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             MovingMode = (int)MovingModeID.Crown;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
-            NPC.defense = NPC.defDefense * 4;
+            NPC.defense = NPC.defDefense + 40;
+
+            Vector2 center = NPC.Center;
+            NPC.width = NPC.height = (int)(68 * NPC.scale);
+            NPC.Center = center;
         }
 
         /// <summary>
@@ -525,7 +575,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.noGravity = false;
             NPC.defense = NPC.defDefense;
 
-            crown.Rotation = 0;
+            crown.Rotation = Main.rand.NextFloat(MathHelper.Pi + MathHelper.Pi / 4, MathHelper.TwoPi - MathHelper.Pi / 4) + MathHelper.Pi / 2;
+            crown.Bottom = NPC.Top;
         }
 
         #endregion
@@ -556,7 +607,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             Rectangle frameBox = mainTex.Frame(1, Main.npcFrameCount[Type], 0, NPC.frame.Y);
             Vector2 origin = new Vector2(frameBox.Width / 2, frameBox.Height);
 
-            bool canDrawSelf = true;
             Vector2 crownOrigin;
             Vector2 crownPos;
 
@@ -566,17 +616,26 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 case (int)MovingModeID.Normal:
                     crownOrigin = new Vector2(crownTex.Width / 2, crownTex.Height);
                     crownPos = crown.Bottom - screenPos;
+                    //绘制本体，以底部为中心进行绘制
+                    Vector2 scale = Scale * NPC.scale * LifePercentScale;
+                    Vector2 offset = new Vector2(0, 4 * scale.Y) - Main.screenPosition;
+                    spriteBatch.Draw(mainTex, NPC.Bottom + offset, frameBox, drawColor, NPC.rotation, origin, scale, 0, 0f);
+                    if (CanDrawShadow)
+                    {
+                        Vector2 toBottom = new Vector2(NPC.width / 2, NPC.height);
+                        for (int i = 1; i < 12; i += 2)
+                        {
+                            spriteBatch.Draw(mainTex, NPC.oldPos[i] + toBottom + offset, frameBox, drawColor * (0.4f - i * 0.04f), NPC.rotation, origin, scale, 0, 0f);
+                        }
+                    }
+
                     break;
 
                 case (int)MovingModeID.Crown:
                     crownOrigin = crownTex.Size() / 2;
                     crownPos = NPC.Center - screenPos;
-                    canDrawSelf = false;
                     break;
             }
-
-            if (canDrawSelf)            //绘制本体，以底部为中心进行绘制
-                spriteBatch.Draw(mainTex, NPC.Bottom+new Vector2(0,4) - screenPos, frameBox, drawColor, NPC.rotation, origin, Scale, 0, 0f);
 
             //绘制王冠
             spriteBatch.Draw(crownTex, crownPos, null, drawColor, crown.Rotation, crownOrigin, NPC.scale, 0, 0f);
@@ -585,8 +644,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         }
 
         #endregion
-
-
 
         private struct CrownDatas
         {
