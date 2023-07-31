@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Magike.WeatherLens
 {
     public class DrizzleLens : BaseMagikePlaceableItem
     {
-        public DrizzleLens() : base(TileType<DrizzleLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagikeCrystalRarity>(), 50)
+        public DrizzleLens() : base(TileType<DrizzleLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()

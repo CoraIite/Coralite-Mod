@@ -14,7 +14,7 @@ namespace Coralite.Content.Items.Magike.Columns
 {
     public class DemoniteColumn : BaseMagikePlaceableItem
     {
-        public DemoniteColumn() : base(TileType<DemoniteColumnTile>(), Item.sellPrice(0, 0, 25, 0), RarityType<MagikeCrystalRarity>(), 50)
+        public DemoniteColumn() : base(TileType<DemoniteColumnTile>(), Item.sellPrice(0, 0, 25, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()

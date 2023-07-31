@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Magike.LiquidLens
 {
     public class HoneypotLens : BaseMagikePlaceableItem
     {
-        public HoneypotLens() : base(TileType<HoneypotLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagikeCrystalRarity>(), 50)
+        public HoneypotLens() : base(TileType<HoneypotLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()

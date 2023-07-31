@@ -10,7 +10,7 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
 {
     public class BasaltChest : BaseChestItem
     {
-        public BasaltChest() : base(Item.sellPrice(0,0,0,10),ModContent.RarityType<MagikeCrystalRarity>(),ModContent.TileType<BasaltChestTile>(),AssetDirectory.MagikeItems)
+        public BasaltChest() : base(Item.sellPrice(0,0,0,10),ModContent.RarityType<MagicCrystalRarity>(),ModContent.TileType<BasaltChestTile>(),AssetDirectory.MagikeItems)
         { }
 
         public override void AddRecipes()

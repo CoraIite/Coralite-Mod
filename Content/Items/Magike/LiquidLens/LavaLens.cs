@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Magike.LiquidLens
 {
     public class LavaLens : BaseMagikePlaceableItem
     {
-        public LavaLens() : base(TileType<LavaLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagikeCrystalRarity>(), 50)
+        public LavaLens() : base(TileType<LavaLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()

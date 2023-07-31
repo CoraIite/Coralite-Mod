@@ -29,154 +29,154 @@ namespace Coralite.Content.GlobalTiles
             }
         }
 
-        public override void RandomUpdate(int i, int j, int type)
-        {
-            #region 天空层
-            if (j < Main.worldSurface * 0.35f)
-            {
+        //public override void RandomUpdate(int i, int j, int type)
+        //{
+        //    #region 天空层
+        //    if (j < Main.worldSurface * 0.35f)
+        //    {
 
-                return;
-            }
-            #endregion
+        //        return;
+        //    }
+        //    #endregion
 
-            #region 世界表面层
-            if (j < Main.worldSurface)
-            {
-                #region 草
-                if (type == TileID.Grass)
-                {
+        //    #region 世界表面层
+        //    if (j < Main.worldSurface)
+        //    {
+        //        #region 草
+        //        if (type == TileID.Grass)
+        //        {
 
-                    return;
-                }
-                #endregion
-                #region 沙子
-                if (type == TileID.Sand)
-                {
-                    //饮水棘
-                    if (Main.rand.NextBool(3000))
-                        if (CanPlace(i, j, out Tile upTile))
-                        {
-                            WorldGen.Place1x1(i, j - 1, TileType<WaterDrinker>());
-                            upTile.TileFrameX = 54;
-                            return;
-                        }
-                    return;
-                }
-                #endregion
-                #region 雪块
-                if (type == TileID.SnowBlock)
-                {
-                    //冷水花
-                    if (Main.rand.NextBool(3000))
-                        if (CanPlace(i, j, out _))
-                        {
-                            WorldGen.Place1x1(i, j - 1, TileType<PileaNotata>());
-                            //upTile.TileFrameX = 54;
-                            return;
-                        }
-                    //雪融花
-                    if (Main.rand.NextBool(2800))
-                        if (CanPlace(i, j, out Tile upTile))
-                        {
-                            WorldGen.Place1x1(i, j - 1, TileType<SnoowFlower>());
-                            upTile.TileFrameX = 150;
-                            return;
-                        }
-                    return;
-                }
-                #endregion
-                #region 冰块
-                if (type == TileID.IceBlock)
-                {
-                    //冷水花
-                    if (Main.rand.NextBool(3000))
-                        if (CanPlace(i, j, out _))
-                        {
-                            WorldGen.Place1x1(i, j - 1, TileType<PileaNotata>());
-                            //upTile.TileFrameX = 54;
-                            return;
-                        }
-                }
-                #endregion
-                return;
-            }
-            #endregion
+        //            return;
+        //        }
+        //        #endregion
+        //        #region 沙子
+        //        if (type == TileID.Sand)
+        //        {
+        //            //饮水棘
+        //            if (Main.rand.NextBool(3000))
+        //                if (CanPlace(i, j, out Tile upTile))
+        //                {
+        //                    WorldGen.Place1x1(i, j - 1, TileType<WaterDrinker>());
+        //                    upTile.TileFrameX = 54;
+        //                    return;
+        //                }
+        //            return;
+        //        }
+        //        #endregion
+        //        #region 雪块
+        //        if (type == TileID.SnowBlock)
+        //        {
+        //            //冷水花
+        //            if (Main.rand.NextBool(3000))
+        //                if (CanPlace(i, j, out _))
+        //                {
+        //                    WorldGen.Place1x1(i, j - 1, TileType<PileaNotata>());
+        //                    //upTile.TileFrameX = 54;
+        //                    return;
+        //                }
+        //            //雪融花
+        //            if (Main.rand.NextBool(2800))
+        //                if (CanPlace(i, j, out Tile upTile))
+        //                {
+        //                    WorldGen.Place1x1(i, j - 1, TileType<SnoowFlower>());
+        //                    upTile.TileFrameX = 150;
+        //                    return;
+        //                }
+        //            return;
+        //        }
+        //        #endregion
+        //        #region 冰块
+        //        if (type == TileID.IceBlock)
+        //        {
+        //            //冷水花
+        //            if (Main.rand.NextBool(3000))
+        //                if (CanPlace(i, j, out _))
+        //                {
+        //                    WorldGen.Place1x1(i, j - 1, TileType<PileaNotata>());
+        //                    //upTile.TileFrameX = 54;
+        //                    return;
+        //                }
+        //        }
+        //        #endregion
+        //        return;
+        //    }
+        //    #endregion
 
-            #region 泥土层
-            if (j < Main.rockLayer)
-            {
+        //    #region 泥土层
+        //    if (j < Main.rockLayer)
+        //    {
 
-                return;
-            }
-            #endregion
+        //        return;
+        //    }
+        //    #endregion
 
-            #region 地下岩石层
-            if (j < Main.maxTilesX - 200)
-            {
-                #region 丛林草
-                if (type == TileID.JungleGrass)
-                {
-                    //丛林芽孢
-                    if (Main.rand.NextBool(2500))
-                        if (CanPlace(i, j, out Tile upTile))
-                        {
-                            WorldGen.Place1x1(i, j - 1, TileType<CoraliteJungleSpores>());
-                            upTile.TileFrameX = 36;
-                            return;
-                        }
-                    return;
-                }
+        //    #region 地下岩石层
+        //    if (j < Main.maxTilesX - 200)
+        //    {
+        //        #region 丛林草
+        //        if (type == TileID.JungleGrass)
+        //        {
+        //            //丛林芽孢
+        //            if (Main.rand.NextBool(2500))
+        //                if (CanPlace(i, j, out Tile upTile))
+        //                {
+        //                    WorldGen.Place1x1(i, j - 1, TileType<CoraliteJungleSpores>());
+        //                    upTile.TileFrameX = 36;
+        //                    return;
+        //                }
+        //            return;
+        //        }
 
-                #endregion
-                #region 雪块&冰块
-                if (type == TileID.SnowBlock || type == TileID.IceBlock)
-                {
-                    //寒霜冰草
-                    if (Main.rand.NextBool(3000))
-                        if (CanPlace(i, j, out Tile upTile))
-                        {
-                            WorldGen.Place1x1(i, j - 1, TileType<AgropyronFrozen>());
-                            upTile.TileFrameX = 52;
-                            return;
-                        }
-                    return;
-                }
-                #endregion
-                #region 沙石&硬化沙
-                if (type == TileID.Sandstone || type == TileID.HardenedSand)
-                {
-                    //刺蕨
-                    if (Main.rand.NextBool(3000))
-                        if (CanPlace(i, j, out Tile upTile))
-                        {
-                            WorldGen.Place1x1(i, j - 1, TileType<EgenolfiaSandy>());
-                            upTile.TileFrameX = 56;
-                            return;
-                        }
-                    return;
-                }
-                #endregion
-                #region 蘑菇草
-                if (type == TileID.MushroomGrass)
-                {
-                    //吸光蘑菇
-                    if (Main.rand.NextBool(2500))
-                        if (CanPlace(i, j, out Tile upTile) && Main.hardMode)
-                        {
-                            WorldGen.Place1x1(i, j - 1, TileType<GloomMushroom>());
-                            upTile.TileFrameX = 18;
-                            return;
-                        }
-                    return;
-                }
-                #endregion
-                return;
-            }
-            #endregion
+        //        #endregion
+        //        #region 雪块&冰块
+        //        if (type == TileID.SnowBlock || type == TileID.IceBlock)
+        //        {
+        //            //寒霜冰草
+        //            if (Main.rand.NextBool(3000))
+        //                if (CanPlace(i, j, out Tile upTile))
+        //                {
+        //                    WorldGen.Place1x1(i, j - 1, TileType<AgropyronFrozen>());
+        //                    upTile.TileFrameX = 52;
+        //                    return;
+        //                }
+        //            return;
+        //        }
+        //        #endregion
+        //        #region 沙石&硬化沙
+        //        if (type == TileID.Sandstone || type == TileID.HardenedSand)
+        //        {
+        //            //刺蕨
+        //            if (Main.rand.NextBool(3000))
+        //                if (CanPlace(i, j, out Tile upTile))
+        //                {
+        //                    WorldGen.Place1x1(i, j - 1, TileType<EgenolfiaSandy>());
+        //                    upTile.TileFrameX = 56;
+        //                    return;
+        //                }
+        //            return;
+        //        }
+        //        #endregion
+        //        #region 蘑菇草
+        //        if (type == TileID.MushroomGrass)
+        //        {
+        //            //吸光蘑菇
+        //            if (Main.rand.NextBool(2500))
+        //                if (CanPlace(i, j, out Tile upTile) && Main.hardMode)
+        //                {
+        //                    WorldGen.Place1x1(i, j - 1, TileType<GloomMushroom>());
+        //                    upTile.TileFrameX = 18;
+        //                    return;
+        //                }
+        //            return;
+        //        }
+        //        #endregion
+        //        return;
+        //    }
+        //    #endregion
 
-            #region 地狱层
-            #endregion
-        }
+        //    #region 地狱层
+        //    #endregion
+        //}
 
         public override bool CanDrop(int i, int j, int type)/* tModPorter Suggestion: Use CanDrop to decide if items can drop, use this method to drop additional items. See documentation. */
         {

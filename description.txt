@@ -1,16 +1,16 @@
 珊瑚石 Coralite Mod
 
-目前为早期测试版本，可能会有一大堆BUG
-目前暂时不支持多人
+目前可能依旧会有出乎作者意料的BUG
+暂时不支持多人
 
-目前已添加内容：
-	- 一些植物
-	-一些可能有趣的武器
-	- 100+物品
-    - 30+物块
-	- 10+敌怪，包括2个BOSS
+已添加内容：
+	- 200+ 物品
+    - 100+ 物块
+	- 10+ 敌怪，包括3个BOSS
+	- 魔能系统
 
 (Most of the English translations are based on machine translation, because I am not good at English)
+（部分英文翻译待完善）
 
 程序：瓶中微光
-贴图：阿形，Rin
+贴图：阿形，Rin，万圣

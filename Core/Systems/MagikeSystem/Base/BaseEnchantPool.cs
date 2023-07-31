@@ -134,7 +134,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
                     else
                         rectangle = itemTex.Frame();
 
-                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle), color, 0f, rectangle.Center(), 1f, effects, 0f);
+                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle), color, 0f, rectangle.Size() / 2, 1f, effects, 0f);
                 }
             }
         }

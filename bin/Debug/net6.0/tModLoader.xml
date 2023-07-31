@@ -4529,7 +4529,7 @@
             </summary>
             <remarks>
             You can modify most aspects of a town NPC's attack, including the item used and projectile shot, using any of the "TownNPCAttack" or "TownAttack" hooks in <see cref="T:Terraria.ModLoader.ModNPC"/> or <see cref="T:Terraria.ModLoader.GlobalNPC"/>.
-            <br/> You can change the color of a magic (<c>3</c>) NPC's aura using <see cref="F:Terraria.ID.NPCID.Sets.MagicAuraColor"/>.
+            <br/> You can change the color of a magic (<c>2</c>) NPC's aura using <see cref="F:Terraria.ID.NPCID.Sets.MagicAuraColor"/>.
             </remarks>
         </member>
         <member name="F:Terraria.ID.NPCID.Sets.PrettySafe">
@@ -5667,6 +5667,51 @@
         <member name="F:Terraria.ID.ProjAIStyleID.PrincessWeapon">
             <summary>
             Used by: <see cref="F:Terraria.ID.ProjectileID.PrincessWeapon"/>
+            </summary>
+        </member>
+        <member name="F:Terraria.ID.ProjAIStyleID.ShadowHand">
+            <summary>
+            Used by: <see cref="F:Terraria.ID.ProjectileID.InsanityShadowFriendly"/>, <see cref="F:Terraria.ID.ProjectileID.InsanityShadowHostile"/>
+            </summary>
+        </member>
+        <member name="F:Terraria.ID.ProjAIStyleID.LightsBane">
+            <summary>
+            Used by: <see cref="F:Terraria.ID.ProjectileID.LightsBane"/>
+            </summary>
+        </member>
+        <member name="F:Terraria.ID.ProjAIStyleID.Volcano">
+            <summary>
+            Used by: <see cref="F:Terraria.ID.ProjectileID.Volcano"/>
+            </summary>
+        </member>
+        <member name="F:Terraria.ID.ProjAIStyleID.NightsEdge">
+            <summary>
+            Used by: <see cref="F:Terraria.ID.ProjectileID.NightsEdge"/>,<see cref="F:Terraria.ID.ProjectileID.Excalibur"/>,<see cref="F:Terraria.ID.ProjectileID.TrueExcalibur"/>,<see cref="F:Terraria.ID.ProjectileID.TerraBlade2"/>,<see cref="F:Terraria.ID.ProjectileID.TheHorsemansBlade"/>
+            </summary>
+        </member>
+        <member name="F:Terraria.ID.ProjAIStyleID.TrueNightsEdge">
+            <summary>
+            Used by: <see cref="F:Terraria.ID.ProjectileID.TrueNightsEdge"/>, <see cref="F:Terraria.ID.ProjectileID.TerraBlade2Shot"/>
+            </summary>
+        </member>
+        <member name="F:Terraria.ID.ProjAIStyleID.JuminoAnimation">
+            <summary>
+            Used by: <see cref="F:Terraria.ID.ProjectileID.JuminoStardropAnimation"/>
+            </summary>
+        </member>
+        <member name="F:Terraria.ID.ProjAIStyleID.Flamethrower">
+            <summary>
+            Used by: <see cref="F:Terraria.ID.ProjectileID.Flames"/>
+            </summary>
+        </member>
+        <member name="F:Terraria.ID.ProjAIStyleID.HorsemanPumpkin">
+            <summary>
+            Used by: <see cref="F:Terraria.ID.ProjectileID.HorsemanPumpkin"/>
+            </summary>
+        </member>
+        <member name="F:Terraria.ID.ProjAIStyleID.JimsDrone">
+            <summary>
+            Used by: <see cref="F:Terraria.ID.ProjectileID.JimsDrone"/>
             </summary>
         </member>
         <member name="F:Terraria.ID.ProjectileID.Sets.CharacterPreviewAnimations">
@@ -21652,12 +21697,13 @@
             Used for all other <see cref="T:Terraria.PopupText"/>s.
             </summary>
         </member>
-        <member name="M:Terraria.Program.PortFilesFromXtoY(System.String,System.String,System.String,System.String,System.Boolean)">
+        <member name="M:Terraria.Program.PortFilesFromXtoY(System.String,System.String,System.String,System.String,System.Boolean,System.Boolean)">
             <summary>
             Super Save Path is the parent directory containing both folders. Usually Program.SavePath or Steam Cloud
             Source is of variety StableFolder, PreviewFolder... etc
             Destination is of variety StableFolder, PreviewFolder... etc
             maxVersionOfSource is used to determine if we even should port the files. Example: 1.4.3-Legacy has maxVersion of 2022.9
+            isAtomicLockable could be expressed as CopyToNewlyCreatedDestinationFolderViaTempFolder if that makes more sense to the reader.
             </summary>
         </member>
         <member name="F:Terraria.Projectile.netImportant">

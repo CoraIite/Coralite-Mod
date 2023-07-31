@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
 {
     public class CrystalRemodelPool : BaseMagikePlaceableItem
     {
-        public CrystalRemodelPool() : base(TileType<CrystalRemodelPoolTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagikeCrystalRarity>(), 50)
+        public CrystalRemodelPool() : base(TileType<CrystalRemodelPoolTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()
@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
                     else
                         rectangle = itemTex.Frame();
 
-                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle), color * pool.itemAlpha, 0f, rectangle.Center(), pool.itemScale, effects, 0f);
+                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle), color * pool.itemAlpha, 0f, rectangle.Size() / 2, pool.itemScale, effects, 0f);
                 }
             }
         }

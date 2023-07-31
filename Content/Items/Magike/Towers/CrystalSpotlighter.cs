@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.Magike.Towers
 {
     public class CrystalSpotlighter : BaseMagikePlaceableItem
     {
-        public CrystalSpotlighter() : base(TileType<CrystalSpotlighterTile>(), Item.sellPrice(0, 0, 10, 0),RarityType<MagikeCrystalRarity>(), 50)
+        public CrystalSpotlighter() : base(TileType<CrystalSpotlighterTile>(), Item.sellPrice(0, 0, 10, 0),RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()

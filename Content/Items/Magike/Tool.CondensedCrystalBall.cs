@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Magike
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 0, 10, 0);
             Item.UseSound = CoraliteSoundID.ManaCrystal_Item29;
-            Item.rare = ModContent.RarityType<MagikeCrystalRarity>();
+            Item.rare = ModContent.RarityType<MagicCrystalRarity>();
             Item.GetMagikeItem().magiteAmount = 50;
         }
 

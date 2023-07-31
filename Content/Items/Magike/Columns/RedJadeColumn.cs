@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Magike.Columns
 {
     public class RedJadeColumn : BaseMagikePlaceableItem
     {
-        public RedJadeColumn() : base(TileType<RedJadeColumnTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagikeCrystalRarity>(), 50)
+        public RedJadeColumn() : base(TileType<RedJadeColumnTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()

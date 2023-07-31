@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
 {
     public class SunlightLens : BaseMagikePlaceableItem
     {
-        public SunlightLens() : base(TileType<SunlightLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagikeCrystalRarity>(), 50)
+        public SunlightLens() : base(TileType<SunlightLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()

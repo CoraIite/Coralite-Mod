@@ -216,21 +216,15 @@ namespace Coralite.Content.NPCs.Magike
             return 0;
         }
 
-        public override void OnKill()
-        {
-            if (Main.netMode != NetmodeID.Server)
-            {
-                for (int i = 0; i < 5; i++)
-                    Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("CrystalGolem_Gore" + i).Type);
-            }
-        }
-
         public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
                 for (int i = 0; i < 6; i++)
                     Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Teleporter, Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2), 100, Coralite.Instance.MagicCrystalPink, 1f);
+                if (Main.netMode != NetmodeID.Server)
+                    for (int i = 0; i < 5; i++)
+                        Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("CrystalGolem_Gore" + i).Type);
             }
             else
             {
@@ -238,7 +232,7 @@ namespace Coralite.Content.NPCs.Magike
                 {
                     Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.CrystalSerpent_Pink);
                     dust.noGravity = true;
-                    dust.velocity = new Microsoft.Xna.Framework.Vector2(hit.HitDirection, 0).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * hit.Knockback * Main.rand.NextFloat(0.9f, 1.1f);
+                    dust.velocity = new Vector2(hit.HitDirection, 0).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * hit.Knockback * Main.rand.NextFloat(0.9f, 1.1f);
                 }
             }
         }

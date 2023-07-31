@@ -18,7 +18,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
     /// </summary>
     public class SlimeAvatar : ModNPC
     {
-        public override string Texture => AssetDirectory.SlimeEmperor + "SlimeEmperor";
+        public override string Texture => AssetDirectory.SlimeEmperor +Name;
 
         private Vector2 Scale;
 
@@ -33,17 +33,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[Type] = 6;
+            Main.npcFrameCount[Type] = 2;
         }
 
         public override void SetDefaults()
         {
-            NPC.width = 158;
-            NPC.height = 100;
-            NPC.scale = 0.5f;
-            NPC.lifeMax = 150;
+            NPC.width = 34;
+            NPC.height = 20;
+            NPC.scale = 1.5f;
+            NPC.lifeMax = 125;
             NPC.aiStyle = -1;
-            NPC.damage = 10;
+            NPC.damage = 15;
             NPC.aiStyle = -1;
             NPC.npcSlots = 0.1f;
             NPC.knockBackResist = 0.5f;
@@ -54,7 +54,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = 150;
+            NPC.lifeMax = 75 + numPlayers * 75;
         }
 
         public override bool? CanFallThroughPlatforms() => NPC.Center.Y < (Main.player[NPC.target].Center.Y - NPC.height);
@@ -79,14 +79,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             State++;
                     });
                     break;
-                case 9:
+                case 7:
                     Scale = Vector2.Lerp(Scale, new Vector2(1.25f, 0.8f), 0.1f);
                     if (Scale.X > 1.2f)
                     {
                         State++;
                     }
                     break;
-                case 10:
+                case 8:
                     Scale = Vector2.Lerp(Scale, new Vector2(0.8f, 1.25f), 0.1f);
                     if (Scale.Y > 1.2f)
                     {
@@ -94,14 +94,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         if (Main.netMode != NetmodeID.MultiplayerClient) //分裂成2个
                         {
                             int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Left.X, (int)NPC.Left.Y, ModContent.NPCType<SlimeAvatar>(), ai2: NPC.ai[2] + 1, Target: NPC.target);
-                            Main.npc[index].lifeMax = Main.npc[index].life = NPC.lifeMax / 2;
+                            Main.npc[index].lifeMax = Main.npc[index].life = NPC.lifeMax * 3 / 4;
                             Main.npc[index].width = NPC.width * 2 / 3;
                             Main.npc[index].height = NPC.height * 2 / 3;
                             Main.npc[index].scale = NPC.scale * 2 / 3;
                             Main.npc[index].netUpdate = true;
 
                             index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Right.X, (int)NPC.Right.Y, ModContent.NPCType<SlimeAvatar>(), ai2: NPC.ai[2] + 1, Target: NPC.target);
-                            Main.npc[index].lifeMax = Main.npc[index].life = NPC.lifeMax / 2;
+                            Main.npc[index].lifeMax = Main.npc[index].life = NPC.lifeMax * 3 / 4;
                             Main.npc[index].width = NPC.width * 2 / 3;
                             Main.npc[index].height = NPC.height * 2 / 3;
                             Main.npc[index].scale = NPC.scale * 2 / 3;
@@ -187,6 +187,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                                 Scale = Vector2.One;
                                 onLanding?.Invoke();
                                 JumpState = (int)JumpStates.ReadyToJump;
+                                NPC.frame.Y = 0;
                                 JumpTimer = 0;
                             }
                             break;
@@ -196,15 +197,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 case (int)JumpStates.ReadyToJump:  //起跳准备的阶段
                     {
                         NPC.frameCounter++;
-                        if (NPC.frameCounter > 4)
+                        if (NPC.frameCounter > 20)
                         {
                             NPC.frame.Y++;
                             NPC.frameCounter = 0;
                         }
 
-                        Scale = Vector2.Lerp(Scale, new Vector2(1.25f, 0.85f), 0.15f);
+                        Scale = Vector2.Lerp(Scale, new Vector2(1.25f, 0.85f), 0.1f);
 
-                        if (NPC.frame.Y == 3)
+                        if (NPC.frame.Y == 1)
                         {
                             NPC.noGravity = false;
                             onStartJump?.Invoke();
@@ -219,16 +220,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     float targetScaleX = Math.Clamp(1 - jumpYVelocity / 15, 0.75f, 1f);
                     Scale = Vector2.Lerp(Scale, new Vector2(targetScaleX, 1.2f), 0.15f);
 
-                    if (NPC.frame.Y < 5)
-                    {
-                        NPC.frameCounter++;
-                        if (NPC.frameCounter > 4)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y++;
-                        }
-                    }
-                    else
+                    if (JumpTimer > 8)
                     {
                         JumpTimer = 0;
                         JumpState = (int)JumpStates.CheckForLanding;
@@ -247,13 +239,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             }
         }
 
-        public override void OnKill()
+        public override void HitEffect(NPC.HitInfo hit)
         {
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 8; i++)
             {
                 Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(NPC.width, NPC.height), DustID.t_Slime,
                      Helper.NextVec2Dir() * Main.rand.NextFloat(1f, 2.5f), 150, new Color(78, 136, 255, 80), Main.rand.NextFloat(1f, 1.4f));
             }
+
+            if (NPC.life <= 0)
+                SoundEngine.PlaySound(CoraliteSoundID.Fleshy_NPCDeath1, NPC.Center);
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -287,6 +282,5 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             ReadyToJump = 1,
             Jumping = 2,
         }
-
     }
 }

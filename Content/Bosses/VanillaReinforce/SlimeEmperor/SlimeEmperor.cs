@@ -1,4 +1,6 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Gels;
+using Coralite.Core;
+using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,6 +10,7 @@ using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -60,7 +63,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         internal int melee2State;
 
         private bool CanDrawShadow;
-        private bool CanUseHealGelBall = true;
+        //private bool CanUseHealGelBall = true;
 
         internal int Timer { get; private set; }
         /// <summary> 纯属视觉效果的缩放 </summary>
@@ -88,13 +91,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.width = 60;
             NPC.height = 85;
             NPC.scale = 1.5f;
-            NPC.damage = 30;
-            NPC.defense = 6;
-            NPC.lifeMax = 3000;
+            NPC.damage = 25;
+            NPC.defense = 4;
+            NPC.lifeMax = 5100;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 20f;
-            NPC.value = Item.buyPrice(0, 2, 0, 0);
+            NPC.value = Item.buyPrice(0, 4, 0, 0);
             NPC.HitSound = CoraliteSoundID.Fleshy_NPCHit1;
 
             NPC.noGravity = false;
@@ -106,32 +109,35 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             //BGM：暂无
             //if (!Main.dedServ)
             //    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/？？？");
-
         }
 
-        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(1800 * bossAdjustment) + numPlayers * 450;
+            NPC.lifeMax = (int)(4600 * bossAdjustment) + numPlayers * 960;
             NPC.damage = 30;
             NPC.defense = 6;
 
             if (Main.masterMode)
             {
                 NPC.scale *= 1.25f;
-                NPC.lifeMax = (int)(2000 * bossAdjustment) + numPlayers * 550;
+                NPC.lifeMax = (int)(5200 * bossAdjustment) + numPlayers * 1230;
+                NPC.defense = 8;
                 NPC.damage = 45;
             }
 
             if (Main.getGoodWorld)
             {
+                NPC.damage = 85;
                 NPC.scale *= 1.25f;
-                NPC.lifeMax = (int)(2300 * bossAdjustment) + numPlayers * 600;
-                NPC.defense = 8;
+                NPC.lifeMax = (int)(5600 * bossAdjustment) + numPlayers * 1760;
+                NPC.defense = 10;
             }
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.BossBag(ItemType<EmperorSabre>()));
+
             //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<RediancieRelic>()));
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
             //npcLoot.Add(ItemDropRule.BossBag(ItemType<RediancieBossBag>()));
@@ -142,6 +148,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             //npcLoot.Add(notExpertRule);
         }
 
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
+        {
+            if ((projectile.penetrate < 0 || projectile.penetrate > 1) && modifiers.DamageType != DamageClass.Melee)
+                modifiers.SourceDamage *= 0.8f;
+        }
+
         public override void Load()
         {
             if (Main.dedServ)
@@ -149,12 +161,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
             CrownTex = Request<Texture2D>(AssetDirectory.SlimeEmperor + "SlimeEmperorCrown");
             //王冠gore
-
+            GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.SlimeEmperor + "SlimeEmperorCrown");
         }
 
         public override void Unload()
         {
             CrownTex = null;
+        }
+
+        public override void OnKill()
+        {
+            DownedBossSystem.DownSlimeEmperor();
         }
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
@@ -193,14 +210,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void OnSpawn(IEntitySource source)
         {
-            CanUseHealGelBall = true;
+            //CanUseHealGelBall = true;
             Scale = Vector2.One;
             crown = new CrownDatas();
             crown.Bottom = NPC.Top + new Vector2(0, -50);
             NPC.TargetClosest(false);
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                State = (int)AIStates.OnSpawnAnim;
+                State = (int)AIStates.BodySlam;
                 // NPC.Center = Target.Center - new Vector2(0, 600);
                 NPC.netUpdate = true;
             }
@@ -227,6 +244,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         if (Main.netMode != NetmodeID.Server)
                         {
                             //生成王冠gore
+                            Gore gore = Gore.NewGoreDirect(NPC.GetSource_Death(), crown.Bottom, Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("SlimeEmperorCrown").Type);
+                            gore.scale = NPC.scale;
                         }
 
                         NPC.Kill();
@@ -274,21 +293,34 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         {
                             default:
                             case 0:
-                                Jump(3f, 10, () => SonState++, onStartJump: () =>
-                                {
-                                    if (Main.netMode!=NetmodeID.MultiplayerClient)
+                                Jump(3f, 10, () => SonState++,
+                                    () =>
                                     {
-                                        int howMany = Helper.ScaleValueForDiffMode(1, 2, 2, 3);
-                                        for (int i = 0; i < howMany; i++)
+                                        if (Main.getGoodWorld && Main.netMode != NetmodeID.MultiplayerClient)
                                         {
-                                            Point pos = NPC.Center.ToPoint();
-                                            pos.X += Main.rand.Next(-NPC.width, NPC.width);
-                                            pos.Y += Main.rand.Next(-32, 32);
-                                            NPC npc = NPC.NewNPCDirect(NPC.GetSource_FromAI(), pos.X, pos.Y, NPCType<ElasticGelBall>());
-                                            npc.velocity = -Vector2.UnitY * Main.rand.NextFloat(2, 5);
+                                            for (int i = 0; i < 4; i++)
+                                            {
+                                                Vector2 vel = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * 10;
+                                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<SpikeGelBall>(),
+                                                    20, 4f, NPC.target);
+                                            }
                                         }
-                                    }
-                                });
+                                    },
+                                    onStartJump: () =>
+                                    {
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        {
+                                            int howMany = Helper.ScaleValueForDiffMode(1, 2, 2, 3);
+                                            for (int i = 0; i < howMany; i++)
+                                            {
+                                                Point pos = NPC.Center.ToPoint();
+                                                pos.X += Main.rand.Next(-NPC.width, NPC.width);
+                                                pos.Y += Main.rand.Next(-32, 32);
+                                                NPC npc = NPC.NewNPCDirect(NPC.GetSource_FromAI(), pos.X, pos.Y, NPCType<ElasticGelBall>());
+                                                npc.velocity = -Vector2.UnitY * Main.rand.NextFloat(2, 5);
+                                            }
+                                        }
+                                    });
                                 break;
                             case 1:
                                 ResetStates();
@@ -442,22 +474,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
-            if (CanUseHealGelBall &&
-                NPC.life / (float)NPC.lifeMax < 0.30f)      //首次到达30%血量以下时使用回血球
-            {
-                State = (int)AIStates.HealGelBall;
-                CanUseHealGelBall = false;
-                goto ResetProprieties;
-            }
+            //if (CanUseHealGelBall &&
+            //    NPC.life / (float)NPC.lifeMax < 0.30f)      //首次到达30%血量以下时使用回血球
+            //{
+            //    State = (int)AIStates.HealGelBall;
+            //    CanUseHealGelBall = false;
+            //    goto ResetProprieties;
+            //}
 
             if (Main.getGoodWorld)
                 NormallySetState();
             else
                 NormallySetState();
 
-            ResetProprieties:
+            //ResetProprieties:
 
-            //State = (int)AIStates.Split;
+            //State = (int)AIStates.BodySlam;
 
             NPC.dontTakeDamage = false;
             NPC.noTileCollide = false;

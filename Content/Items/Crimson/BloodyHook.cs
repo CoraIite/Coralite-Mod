@@ -26,13 +26,14 @@ namespace Coralite.Content.Items.Crimson
 
         public override void SetDefaults()
         {
-            Item.noUseGraphic = true;
-            Item.useAnimation = Item.useTime = 20;
+            Item.useAnimation = Item.useTime = 14;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.shoot = ProjectileType<BloodHookSlash>();
             Item.DamageType = DamageClass.Melee;
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Orange3, Item.sellPrice(0, 1, 0, 0));
-            Item.SetWeaponValues(22, 4);
+            Item.SetWeaponValues(27, 4);
+            Item.noUseGraphic = true;
+            Item.noMelee = true;
         }
 
         public override bool AltFunctionUse(Player player) => true;
@@ -58,7 +59,7 @@ namespace Coralite.Content.Items.Crimson
                 }
 
                 //生成弹幕
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<BloodHookChain>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<BloodHookChain>(), (int)(damage * 0.8f), knockback, player.whoAmI);
                 return false;
             }
 
@@ -117,21 +118,21 @@ namespace Coralite.Content.Items.Crimson
             {
                 default:
                 case 0:
-                    maxTime = 28;
+                    maxTime = Owner.itemTimeMax*2;
                     startAngle = 2f;
                     totalAngle = 4.6f;
                     distanceToOwner = 10;
                     Smoother = Coralite.Instance.SqrtSmoother;
                     break;
                 case 1:
-                    maxTime = 28;
+                    maxTime = Owner.itemTimeMax * 2;
                     startAngle = -2f;
                     totalAngle = -4.6f;
                     distanceToOwner = 10;
                     Smoother = Coralite.Instance.SqrtSmoother;
                     break;
                 case 2:
-                    maxTime = 46;
+                    maxTime = Owner.itemTimeMax * 3;
                     startAngle = 3f;
                     totalAngle = 12;
                     distanceToOwner = 10;

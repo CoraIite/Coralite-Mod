@@ -51,7 +51,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
                         if (Main.netMode != NetmodeID.MultiplayerClient) //分裂成好几个
                         {
-                            int howMany = Helpers.Helper.ScaleValueForDiffMode(1, 1, 2, 3);
+                            int howMany = Helpers.Helper.ScaleValueForDiffMode(1, 1, 2, 2);
                             for (int i = 0; i < howMany; i++)
                                 NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SlimeAvatar>(), Target: NPC.target);
                         }

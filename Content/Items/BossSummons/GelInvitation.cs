@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor;
+using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Terraria;
@@ -29,8 +30,8 @@ namespace Coralite.Content.Items.BossSummons
             Item.useAnimation = 30;
             Item.useTime = 30;
             Item.value = Item.sellPrice(0, 0, 10, 0);
+            Item.rare = ModContent.RarityType<MagicCrystalRarity>();
             Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.rare = ItemRarityID.Blue;
         }
 
         public override bool CanUseItem(Player player)

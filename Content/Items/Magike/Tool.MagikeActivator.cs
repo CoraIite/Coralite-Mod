@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.Magike
             Item.useTurn = true;
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 0, 10, 0);
-            Item.rare = ModContent.RarityType<MagikeCrystalRarity>();
+            Item.rare = ModContent.RarityType<MagicCrystalRarity>();
             Item.GetMagikeItem().magiteAmount = 25;
         }
 

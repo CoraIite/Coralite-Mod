@@ -28,8 +28,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     {
                         SonState++;
                         //召唤飞翼史莱姆
-                        int damage = Helpers.Helper.ScaleValueForDiffMode(20, 15, 12, 15);
-                        NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<GelFlippy>(), Target: NPC.target);
+                        int howMany= Helpers.Helper.ScaleValueForDiffMode(1, 1, 1, 2);
+                        int damage = Helpers.Helper.ScaleValueForDiffMode(20, 15, 18, 20);
+                        for (int i = 0; i < howMany; i++)
+                            NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<GelFlippy>(), Target: NPC.target);
                         SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
                     }
                     break;

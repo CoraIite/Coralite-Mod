@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 {
     public class CrystalRefractor : BaseMagikePlaceableItem
     {
-        public CrystalRefractor() : base(TileType<CrystalRefractorTile>(), Item.sellPrice(0, 0, 5, 0), RarityType<MagikeCrystalRarity>(), 25)
+        public CrystalRefractor() : base(TileType<CrystalRefractorTile>(), Item.sellPrice(0, 0, 5, 0), RarityType<MagicCrystalRarity>(), 25)
         { }
 
         public override void AddRecipes()

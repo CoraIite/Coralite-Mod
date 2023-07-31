@@ -19,7 +19,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected float[] oldRotate;
         protected float[] oldDistanceToOwner;
 
-        protected string TrailTexture = AssetDirectory.OtherProjectiles + "SlashTrail";
+        protected string TrailTexture = AssetDirectory.OtherProjectiles + "NormalSlashTrail";
 
         protected Color color1 = Color.White;
         protected Color color2 = Color.White;
@@ -204,7 +204,6 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             _Rotation = startAngle + totalAngle * Smoother.Smoother((int)Timer - minTime, maxTime - minTime);
             Slasher();
-            Projectile.netUpdate = true;
         }
 
         /// <summary>
@@ -246,7 +245,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             for (int j = trailLength - 1; j >= 0; j--)
             {
                 oldRotate[j] = 100f;
-                oldDistanceToOwner[0] = distanceToOwner;
+                oldDistanceToOwner[j] = distanceToOwner;
             }
         }
 
@@ -283,7 +282,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (useSlashTrail)
+            if (useSlashTrail && Timer > minTime)
                 DrawSlashTrail();
             return false;
         }
@@ -301,7 +300,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             extraRot += Owner.direction == dir ? 0 : 3.141f;
             extraRot += spriteRotation * dir;
 
-            if (useShadowTrail)
+            if (useShadowTrail && Timer > minTime)
                 DrawShadowTrail(mainTex, origin, lightColor,extraRot);
 
             if (canDrawSelf)
@@ -316,7 +315,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                                                 lightColor, Projectile.rotation + extraRot, origin, Projectile.scale, CheckEffect(), 0f);
         }
 
-        protected void DrawSlashTrail()
+        protected virtual void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
             List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
@@ -368,7 +367,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
                 Main.graphics.GraphicsDevice.RasterizerState = originalState;
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
             }
         }
 

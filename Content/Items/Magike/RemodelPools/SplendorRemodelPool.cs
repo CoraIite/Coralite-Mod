@@ -119,7 +119,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
                     else
                         rectangle = itemTex.Frame();
 
-                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle), color * pool.itemAlpha, 0f, rectangle.Center(), pool.itemScale, effects, 0f);
+                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle), color * pool.itemAlpha, 0f, rectangle.Size() / 2, pool.itemScale, effects, 0f);
                 }
             }
         }

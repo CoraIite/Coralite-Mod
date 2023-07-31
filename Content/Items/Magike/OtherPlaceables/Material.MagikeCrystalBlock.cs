@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<MagicCrystalBlockTile>());
-            Item.rare = ModContent.RarityType<MagikeCrystalRarity>();
+            Item.rare = ModContent.RarityType<MagicCrystalRarity>();
             Item.GetMagikeItem().magiteAmount = 5;
         }
 

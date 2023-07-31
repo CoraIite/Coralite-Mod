@@ -8,6 +8,7 @@ namespace Coralite.Core.Systems.BossSystems
     {
         public static bool downedRediancie;
         public static bool downedBabyIceDragon;
+        public static bool downedSlimeEmperor;
 
         public override void PostWorldGen()
         {
@@ -25,6 +26,8 @@ namespace Coralite.Core.Systems.BossSystems
             if (downedBabyIceDragon)
                 downed.Add("BabyIceDragon");
 
+            if (downedSlimeEmperor)
+                downed.Add("SlimeEmperor");
             tag.Add("downed", downed);
         }
 
@@ -33,7 +36,12 @@ namespace Coralite.Core.Systems.BossSystems
             IList<string> list = tag.GetList<string>("downed");
             downedRediancie = list.Contains("Rediancie");
             downedBabyIceDragon = list.Contains("BabyIceDragon");
+            downedSlimeEmperor = list.Contains("SlimeEmperor");
+        }
 
+        public static void DownSlimeEmperor()
+        {
+            downedSlimeEmperor = true;
         }
     }
 }

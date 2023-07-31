@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Magike.MultPrisms
 {
     public class DemoniteTriprism : BaseMagikePlaceableItem
     {
-        public DemoniteTriprism() : base(TileType<DemoniteTriprismTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagikeCrystalRarity>(), 25)
+        public DemoniteTriprism() : base(TileType<DemoniteTriprismTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 25)
         { }
 
         public override void AddRecipes()

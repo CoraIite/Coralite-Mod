@@ -1226,38 +1226,52 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            var groups = from f in followers
-                         group f by f.drawBehind;
+            //额....这个判断有那么亿点点特殊，所以暂时不用linq了 不太好用
+            //var groups = from f in followers
+            //             group f by f.drawBehind;
 
-            foreach (var group in groups)
-            {
-                if (group.Key)
-                {
-                    foreach (var follower in group) //绘制身后的
-                        follower.Draw(spriteBatch, drawColor);
-
-                    //绘制自己
-                    Texture2D mainTex = TextureAssets.Npc[Type].Value;
-                    //int frameWidth = mainTex.Width;
-                    //int frameHeight = mainTex.Height / Main.npcFrameCount[NPC.type];
-                    //Rectangle frameBox = new Rectangle(0, NPC.frame.Y * frameHeight, frameWidth, frameHeight);
-                    Vector2 origin = mainTex.Size() / 2;
-                    //= new Vector2(frameWidth / 2, frameHeight / 2);
-
-                    spriteBatch.Draw(mainTex, NPC.Center - screenPos, null, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
-                }
-                else
-                    foreach (var follower in group) //绘制身前的
-                        follower.Draw(spriteBatch, drawColor);
-            }
-
-            //foreach (var follower in followers)
+            //foreach (var group in groups)
             //{
-            //    if (!follower.drawBehind)
-            //        follower.Draw(spriteBatch, drawColor);
+            //    if (group.Key)
+            //    {
+            //        foreach (var follower in group) //绘制身后的
+            //            follower.Draw(spriteBatch, drawColor);
+            //    }
+            //    else
+            //    {
+            //        foreach (var follower in group) //绘制身前的
+            //            follower.Draw(spriteBatch, drawColor);
+            //    }
             //}
 
+            foreach (var follower in followers)
+            {
+                if (follower.drawBehind)
+                    follower.Draw(spriteBatch, drawColor);
+            }
+
+            DrawSelf(spriteBatch, screenPos, drawColor);
+
+            foreach (var follower in followers)
+            {
+                if (!follower.drawBehind)
+                    follower.Draw(spriteBatch, drawColor);
+            }
+
             return false;
+        }
+
+        private void DrawSelf(SpriteBatch spriteBatch,Vector2 screenPos,Color drawColor)
+        {
+            //绘制自己
+            Texture2D mainTex = TextureAssets.Npc[Type].Value;
+            //int frameWidth = mainTex.Width;
+            //int frameHeight = mainTex.Height / Main.npcFrameCount[NPC.type];
+            //Rectangle frameBox = new Rectangle(0, NPC.frame.Y * frameHeight, frameWidth, frameHeight);
+            Vector2 origin = mainTex.Size() / 2;
+            //= new Vector2(frameWidth / 2, frameHeight / 2);
+
+            spriteBatch.Draw(mainTex, NPC.Center - screenPos, null, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
         }
 
         #endregion

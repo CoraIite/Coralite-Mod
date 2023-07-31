@@ -26,11 +26,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             {
                                 int sign = Math.Sign(NPC.Center.X - Target.Center.X);
                                 int directlyHowMany = Helpers.Helper.ScaleValueForDiffMode(1, 1, 2, 3);
-                                int damage = Helpers.Helper.ScaleValueForDiffMode(20, 15, 12, 15);
+                                int damage = Helpers.Helper.ScaleValueForDiffMode(20, 15, 18, 20);
                                 SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
                                 for (int i = 0; i < directlyHowMany; i++)
                                 {
-                                    Vector2 vel = (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitY).RotatedBy(sign * (1f + i * 0.3f)) * 7;
+                                    Vector2 vel = (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitY).RotatedBy(sign * (1f + i * 0.3f)) * 12;
                                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<GelBall>(),
                                         damage, 4f, NPC.target);
                                 }
@@ -38,7 +38,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                                 directlyHowMany = directlyHowMany > 1 ? directlyHowMany - 1 : 1;
                                 for (int i = 0; i < directlyHowMany; i++)
                                 {
-                                    Vector2 vel = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.5f,0.5f))*12;
+                                    Vector2 vel = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.5f,0.5f))*16;
                                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<GelBall>(),
                                         damage, 4f, NPC.target);
                                 }

@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Magike.BasicLens
 {
     public class CrystalLens : BaseMagikePlaceableItem
     {
-        public CrystalLens() : base(TileType<CrystalLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagikeCrystalRarity>(), 50)
+        public CrystalLens() : base(TileType<CrystalLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()

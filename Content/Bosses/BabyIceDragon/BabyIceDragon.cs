@@ -70,6 +70,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void SetStaticDefaults()
         {
+            Main.npcFrameCount[Type] = 6;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
         }
@@ -100,13 +101,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(3820 * bossAdjustment) + numPlayers * 1500;
+            NPC.lifeMax = (int)(3520 * bossAdjustment) + numPlayers * 1200;
             NPC.damage = 35;
             NPC.defense = 10;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = (int)(4620 * bossAdjustment) + numPlayers * 1900;
+                NPC.lifeMax = (int)(4320 * bossAdjustment) + numPlayers * 1600;
                 NPC.damage = 40;
             }
         }

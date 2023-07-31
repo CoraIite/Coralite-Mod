@@ -14,7 +14,7 @@ namespace Coralite.Content.Items.Magike
 
         public override void SetDefaults()
         {
-            Item.rare = ModContent.RarityType<MagikeCrystalRarity>();
+            Item.rare = ModContent.RarityType<MagicCrystalRarity>();
             Item.useAnimation = Item.useTime = 30;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.UseSound = CoraliteSoundID.IceMagic_Item28;

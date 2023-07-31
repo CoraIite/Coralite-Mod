@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.DataStructures;
 using Terraria.Audio;
+using Coralite.Content.Items.Shadow;
 
 namespace Coralite.Content.Items.YujianHulu
 {
@@ -26,7 +27,7 @@ namespace Coralite.Content.Items.YujianHulu
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.PlatinumBar, 10)
+                .AddIngredient<ShadowCrystal>( 10)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

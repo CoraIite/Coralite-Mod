@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
 {
     public class BoneLens : BaseMagikePlaceableItem
     {
-        public BoneLens() : base(TileType<BoneLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagikeCrystalRarity>(), 50)
+        public BoneLens() : base(TileType<BoneLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()

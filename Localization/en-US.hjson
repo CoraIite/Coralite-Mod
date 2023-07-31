@@ -1203,6 +1203,15 @@ Mods: {
 
 			GelInvitation: {
 				DisplayName: Gel Invitation
+				Tooltip:
+					'''
+						A invitation touch sticky, a great monarch is waiting for you to attend its sticky banquet...
+						Summon Slime Emperor without cosuming. 
+					'''
+			}
+
+			EmperorSabre: {
+				DisplayName: Emperor Sabre
 				Tooltip: ""
 			}
 		}
@@ -1278,11 +1287,28 @@ Mods: {
 		}
 
 		NPCs: {
-			BabyIceDragon.DisplayName: Baby Ice Dragon
+			BabyIceDragon: {
+				DisplayName: Baby Ice Dragon
+
+				BossChecklistIntegration: {
+					SpawnInfo: 刚刚破壳而出的小冰龙，还不能完全掌握冰魔法的力量
+					DespawnMessage: 冰龙宝宝逃走了
+				}
+			}
+
 			IceCube.DisplayName: Ice Cube
 			IceDragonEgg.DisplayName: Ice Dragon Egg
 			IceThornsTrap.DisplayName: Ice Thorns Trap
-			Rediancie.DisplayName: Rediancie
+
+			Rediancie: {
+				DisplayName: Rediancie
+
+				BossChecklistIntegration: {
+					SpawnInfo: 一块奇异的巨石，通过不稳定的红色能量来驱动自身。
+					DespawnMessage: 赤玉灵回归了地底
+				}
+			}
+
 			RediancieMinion.DisplayName: Rediancie Minion
 			IcicleSpirit.DisplayName: Icicle Spirit
 			MaragonBody.DisplayName: Maragon Body
@@ -1427,6 +1453,11 @@ Mods: {
 			GelSpike.DisplayName: Gel Spike
 			SpikeGelBall.DisplayName: Spike Gel Ball
 			GelProj.DisplayName: Gel Proj
+			EmperorSabreSlash.DisplayName: Emperor Sabre Slash
+			EmperorSabreSlash2.DisplayName: Emperor Sabre Slash2
+			EmperorSabreSummon.DisplayName: Emperor Sabre Summon
+			GelChaser.DisplayName: Gel Chaser
+			GelSpawner.DisplayName: Gel Spawner
 		}
 
 		Configs: {
@@ -1467,6 +1498,25 @@ Mods: {
 			MagicCrystalCave: {
 				DisplayName: Magic Crystal Cave
 				TownNPCDialogueName: the Magic Crystal Cave
+			}
+		}
+
+		Compat: {
+			BossChecklist: {
+				Rediancie: {
+					SpawnInfo: aaa一块奇异的巨石，通过不稳定的红色能量来驱动自身。
+					Despawn: 赤玉灵回归了地底
+				}
+
+				BabyIceDragon: {
+					SpawnInfo: 刚刚破壳而出的小冰龙，还不能完全掌握冰魔法的力量
+					Despawn: 冰龙宝宝逃走了
+				}
+
+				SlimeEmperor: {
+					SpawnInfo: 一位伟大的凝胶领袖，在史莱姆中有着极高的地位
+					Despawn: 史莱姆皇帝回归了它的王国
+				}
 			}
 		}
 	}

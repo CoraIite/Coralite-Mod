@@ -45,7 +45,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void OnSpawn(IEntitySource source)
         {
-            NPC.ai[1] = -300 + Main.rand.Next(-40, 40);
+            NPC.ai[1] = -300 + Main.rand.Next(-80, 80);
         }
 
         public override void AI()
@@ -63,11 +63,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             }
 
             //尝试飞到玩家上方并隔一段时间滴出一个小凝胶球
-            Vector2 aimCenter = Target.Center + new Vector2(MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 100, NPC.ai[1]);
+            Vector2 aimCenter = Target.Center + new Vector2(MathF.Sin(Main.GlobalTimeWrappedHourly * 2 + NPC.ai[1]) * 100, NPC.ai[1]);
             float length2TargetX = aimCenter.X - NPC.Center.X;
             float length2TargetY = aimCenter.Y - NPC.Center.Y;
             bool shouldMoveX = Math.Abs(length2TargetX) > 40;
-            bool shouldMoveY = Math.Abs(length2TargetY) > 20;
+            bool shouldMoveY = Math.Abs(length2TargetY) > 10;
             NPC.direction = NPC.spriteDirection = Math.Abs(length2TargetX) < 10 ? 1 : Math.Sign(length2TargetX);
             NPC.directionY = Math.Sign(length2TargetY);
 
@@ -89,7 +89,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 Timer = 0;
                 //生成弹幕和音效，并掉血
                 SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.UnitY, ModContent.ProjectileType<SmallGelBall>(), 10, 0, NPC.target);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.UnitY*Main.rand.NextFloat(1f,3f), ModContent.ProjectileType<SmallGelBall>(), 15, 0, NPC.target);
 
                 NPC.life -= NPC.lifeMax / 6;
                 if (NPC.life < 1)

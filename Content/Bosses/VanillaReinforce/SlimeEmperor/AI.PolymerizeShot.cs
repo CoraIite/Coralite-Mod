@@ -69,7 +69,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     int type = ModContent.NPCType<SlimeAvatar>();
                     foreach (var npc in Main.npc.Where(n => n.active && n.type == type))
                     {
-                        damage += 5;
+                        damage += 10;
                         scale += 0.2f;
                         howMany += 1f;
                         speed += 1f;
@@ -83,8 +83,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         npc.Kill();
                     }
 
-                    if (speed > 22)
-                        speed = 22;
+                    if (speed > 28)
+                        speed = 28;
                     if (scale > 4f)
                         scale = 4f;
                     if (howMany > 20)
@@ -96,7 +96,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     {
                         for (int i = 0; i < howMany; i++)
                         {
-                            Projectile p = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, direction.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(speed - 2, speed + 2),
+                            Projectile p = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, direction.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(speed - 2, speed + 2),
                                  ModContent.ProjectileType<GelProj>(), damage, 4f, NPC.target);
                             p.scale = scale;
                             p.width = (int)(p.width * scale);

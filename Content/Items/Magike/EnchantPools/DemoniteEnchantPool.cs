@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Magike.EnchantPools
 {
     public class DemoniteEnchantPool : BaseMagikePlaceableItem
     {
-        public DemoniteEnchantPool() : base(TileType<DemoniteEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagikeCrystalRarity>(), 50)
+        public DemoniteEnchantPool() : base(TileType<DemoniteEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()

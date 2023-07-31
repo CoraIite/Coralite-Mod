@@ -20,6 +20,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public ref float State => ref NPC.ai[0];
 
+        public override void SetStaticDefaults()
+        {
+            Main.npcFrameCount[Type] = 7;
+        }
+
         public override void SetDefaults()
         {
             NPC.width = NPC.height = 42;
@@ -52,11 +57,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     NPC.ai[2] += 0.1f;  //膨胀小动画
                     NPC.velocity.X *= 0.99f;
                     if (NPC.velocity.Y < 16)
-                        NPC.velocity.Y += 0.5f;
+                        NPC.velocity.Y += 0.25f;
 
                     if (NPC.ai[2] > 1f)
                     {
-                        NPC.rotation = NPC.velocity.ToRotation();
+                        float targetRot = NPC.velocity.Length() * 0.04f;
+                        NPC.rotation = NPC.rotation.AngleTowards(targetRot, 0.01f);
                         State = 1;
                         NPC.ai[2] = 1f;
                     }

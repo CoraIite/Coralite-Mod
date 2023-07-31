@@ -114,9 +114,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             float oldVelX = Math.Abs(oldVelocity.X);
             float oldVelY = Math.Abs(oldVelocity.Y);
             if (oldVelX > newVelX)
-                Projectile.velocity.X = -oldVelX * 0.8f;
+                Projectile.velocity.X = -oldVelX * 0.9f;
             if (oldVelY > newVelY)
-                Projectile.velocity.Y = -oldVelY * 0.8f;
+                Projectile.velocity.Y = -oldVelY * 0.9f;
 
             Projectile.rotation = Projectile.velocity.ToRotation();
             for (int i = 0; i < 8; i++)

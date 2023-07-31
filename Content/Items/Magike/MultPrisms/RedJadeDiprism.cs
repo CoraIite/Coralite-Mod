@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Magike.MultPrisms
 {
     public class RedJadeDiprism : BaseMagikePlaceableItem
     {
-        public RedJadeDiprism() : base(TileType<RedJadeDiprismTile>(), Item.sellPrice(0, 0, 5, 0), RarityType<MagikeCrystalRarity>(), 25)
+        public RedJadeDiprism() : base(TileType<RedJadeDiprismTile>(), Item.sellPrice(0, 0, 5, 0), RarityType<MagicCrystalRarity>(), 25)
         { }
 
         public override void AddRecipes()

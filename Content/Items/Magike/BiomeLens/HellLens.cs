@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
 {
     public class HellLens : BaseMagikePlaceableItem
     {
-        public HellLens() : base(TileType<HellLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagikeCrystalRarity>(), 50)
+        public HellLens() : base(TileType<HellLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()

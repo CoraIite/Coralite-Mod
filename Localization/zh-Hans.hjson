@@ -1088,8 +1088,8 @@ Mods: {
 				DisplayName: 血骨钩
 				Tooltip:
 					'''
-						右键甩动钩子
-						钩中后再次右键将玩家拉向钩子
+					右键甩动钩子
+					钩中后再次右键将玩家拉向钩子
 					'''
 			}
 
@@ -1148,58 +1148,71 @@ Mods: {
 			}
 
 			SoulRemodelPool: {
-				// DisplayName: Soul Remodel Pool
-				// Tooltip: ""
+				DisplayName: 灵魂重塑池
+				Tooltip: ""
 			}
 
 			RainstormLens: {
-				// DisplayName: Rainstorm Lens
-				// Tooltip: ""
+				DisplayName: 骤雨透镜
+				Tooltip: ""
 			}
 
 			SplendorMagicore: {
-				// DisplayName: Splendor Magicore
-				// Tooltip: ""
+				DisplayName: 辉界晶核
+				Tooltip: ""
 			}
 
 			CorruptJavelin: {
-				// DisplayName: Corrupt Javelin
-				// Tooltip: ""
+				DisplayName: 腐烂标枪
+				Tooltip:
+					'''
+					召唤标枪射向目标位置
+					右键召回所有标枪并将它们拆分成小标枪后射出
+					'''
 			}
 
 			BrilliantEnchantPool: {
-				// DisplayName: Brilliant Enchant Pool
-				// Tooltip: ""
+				DisplayName: 璀璨注魔池
+				Tooltip: 为你的装备带来额外的强化
 			}
 
 			CrimtaneEnchantPool: {
-				// DisplayName: Crimtane Enchant Pool
-				// Tooltip: ""
+				DisplayName: 猩红注魔池
+				Tooltip: 为你的装备带来额外的强化
 			}
 
 			CrystalEnchantPool: {
-				// DisplayName: Crystal Enchant Pool
-				// Tooltip: ""
+				DisplayName: 水晶注魔池
+				Tooltip: 为你的装备带来额外的强化
 			}
 
 			SoulEnchantPool: {
-				// DisplayName: Soul Enchant Pool
-				// Tooltip: ""
+				DisplayName: 灵魂注魔池
+				Tooltip: 为你的装备带来额外的强化
 			}
 
 			SoulOfDeveloper: {
-				// DisplayName: Soul Of Developer
-				// Tooltip: ""
+				DisplayName: 开发者之魂
+				Tooltip: “很适合用来冒充开发者！”
 			}
 
 			SplendorRemodelPool: {
-				// DisplayName: Splendor Remodel Pool
-				// Tooltip: ""
+				DisplayName: 光辉重塑池
+				Tooltip: ""
 			}
 
 			GelInvitation: {
-				// DisplayName: Gel Invitation
-				// Tooltip: ""
+				DisplayName: 粘滑邀请函
+				Tooltip:
+					'''
+					摸上去黏黏的邀请函，一位伟大的君主正等着你出席它的粘滑宴会...
+					召唤史莱姆皇帝，不消耗
+					'''
+			}
+
+			EmperorSabre: {
+				DisplayName: 帝王佩刀
+				Tooltip: 至高无上的领袖之佩刀
 			}
 		}
 
@@ -1274,11 +1287,28 @@ Mods: {
 		}
 
 		NPCs: {
-			BabyIceDragon.DisplayName: 冰龙宝宝
+			BabyIceDragon: {
+				DisplayName: 冰龙宝宝
+
+				BossChecklistIntegration: {
+					// SpawnInfo: 刚刚破壳而出的小冰龙，还不能完全掌握冰魔法的力量
+					// DespawnMessage: 冰龙宝宝逃走了
+				}
+			}
+
 			IceCube.DisplayName: 冰块
 			IceDragonEgg.DisplayName: 冰龙蛋
 			IceThornsTrap.DisplayName: 冰刺陷阱
-			Rediancie.DisplayName: 赤玉灵
+
+			Rediancie: {
+				DisplayName: 赤玉灵
+
+				BossChecklistIntegration: {
+					// SpawnInfo: 一块奇异的巨石，通过不稳定的红色能量来驱动自身。
+					// DespawnMessage: 赤玉灵回归了地底
+				}
+			}
+
 			RediancieMinion.DisplayName: 小赤玉灵
 			IcicleSpirit.DisplayName: 霜灵
 			MaragonBody.DisplayName: 魔龙身体
@@ -1290,11 +1320,11 @@ Mods: {
 			CrystalSpirit.DisplayName: 晶体妖精
 			CrystalGolem.DisplayName: 晶体巨人
 			CrystalEye.DisplayName: 晶体眼球
-			SlimeEmperor.DisplayName: 凝胶君主
+			SlimeEmperor.DisplayName: 史莱姆皇帝
 			ElasticGelBall.DisplayName: 弹力凝胶球
 			SlimeAvatar.DisplayName: 史莱姆分身
 			GelFlippy.DisplayName: 飞翼史莱姆
-			// HealGelBall.DisplayName: Heal Gel Ball
+			HealGelBall.DisplayName: 治愈凝胶球
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1423,6 +1453,11 @@ Mods: {
 			// GelSpike.DisplayName: Gel Spike
 			// SpikeGelBall.DisplayName: Spike Gel Ball
 			// GelProj.DisplayName: Gel Proj
+			// EmperorSabreSlash.DisplayName: Emperor Sabre Slash
+			// EmperorSabreSlash2.DisplayName: Emperor Sabre Slash2
+			// EmperorSabreSummon.DisplayName: Emperor Sabre Summon
+			// GelChaser.DisplayName: Gel Chaser
+			// GelSpawner.DisplayName: Gel Spawner
 		}
 
 		Configs: {
@@ -1463,6 +1498,25 @@ Mods: {
 			MagicCrystalCave: {
 				DisplayName: 魔力水晶洞
 				TownNPCDialogueName: 魔力水晶洞
+			}
+		}
+
+		Compat: {
+			BossChecklist: {
+				Rediancie: {
+					SpawnInfo: 一块奇异的巨石，通过不稳定的红色能量来驱动自身。
+					Despawn: 赤玉灵回归了地底
+				}
+
+				BabyIceDragon: {
+					SpawnInfo: 刚刚破壳而出的小冰龙，还不能完全掌握冰魔法的力量
+					Despawn: 冰龙宝宝逃走了
+				}
+
+				SlimeEmperor: {
+					SpawnInfo: 一位伟大的凝胶领袖，在史莱姆中有着极高的地位
+					Despawn: 史莱姆皇帝回归了它的王国
+				}
 			}
 		}
 	}

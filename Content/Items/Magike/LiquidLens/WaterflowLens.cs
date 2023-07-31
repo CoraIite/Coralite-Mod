@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Magike.LiquidLens
 {
     public class WaterflowLens : BaseMagikePlaceableItem
     {
-        public WaterflowLens() : base(TileType<WaterflowLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagikeCrystalRarity>(), 50)
+        public WaterflowLens() : base(TileType<WaterflowLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()

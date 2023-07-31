@@ -26,7 +26,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             Projectile.timeLeft = 1800;
 
             Projectile.hostile = true;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
             Projectile.netImportant = true;
         }
 

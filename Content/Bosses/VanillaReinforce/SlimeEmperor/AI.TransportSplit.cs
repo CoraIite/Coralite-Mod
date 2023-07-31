@@ -96,9 +96,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         SoundEngine.PlaySound(CoraliteSoundID.SlimeMount_Item81, NPC.Center);
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            int howMany = 2;
+                            int howMany = 1;
                             if (Main.getGoodWorld)
-                                howMany = 3;
+                                howMany = 2;
                             for (int i = 0; i < howMany; i++)
                                 NPC.NewNPC(NPC.GetSource_FromAI(), (int)oldCenter.X, (int)oldCenter.Y, ModContent.NPCType<SlimeAvatar>(), Target: NPC.target);
                         }

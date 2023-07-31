@@ -145,8 +145,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         else
                             NPC.velocity += dir * 0.75f;
 
-                        if (NPC.velocity.Length() > 7)
-                            NPC.velocity = Vector2.Normalize(NPC.velocity) * 7;
+                        if (NPC.velocity.Length() > 10)
+                            NPC.velocity = Vector2.Normalize(NPC.velocity) * 10;
                         break;
                     }
 
@@ -200,7 +200,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                                         //生成砸地粒子
                                         SoundEngine.PlaySound(CoraliteSoundID.QueneSlimeFalling_Item167, NPC.Center);
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, Vector2.Zero, ProjectileID.QueenSlimeSmash, 20, 0f, Main.myPlayer);
+                                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, Vector2.Zero, ProjectileID.QueenSlimeSmash, 40, 0f, Main.myPlayer);
 
                                         for (int l = 0; l < 20; l++)
                                         {
