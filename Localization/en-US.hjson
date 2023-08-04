@@ -1214,6 +1214,11 @@ Mods: {
 				DisplayName: Emperor Sabre
 				Tooltip: ""
 			}
+
+			MagicCrystalHook: {
+				DisplayName: Magic Crystal Hook
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1452,12 +1457,14 @@ Mods: {
 			SmallGelBall.DisplayName: Small Gel Ball
 			GelSpike.DisplayName: Gel Spike
 			SpikeGelBall.DisplayName: Spike Gel Ball
-			GelProj.DisplayName: Gel Proj
+			GelProj.DisplayName: Gel
 			EmperorSabreSlash.DisplayName: Emperor Sabre Slash
-			EmperorSabreSlash2.DisplayName: Emperor Sabre Slash2
+			EmperorSabreSlash2.DisplayName: Emperor Sabre Slash
 			EmperorSabreSummon.DisplayName: Emperor Sabre Summon
 			GelChaser.DisplayName: Gel Chaser
 			GelSpawner.DisplayName: Gel Spawner
+			ShadowSwordHeldProj.DisplayName: Shadow Sword Held Proj
+			MagicCrystalHookProjectile.DisplayName: Magic Crystal Hook Projectile
 		}
 
 		Configs: {
@@ -1483,6 +1490,55 @@ Mods: {
 					Tooltip: ""
 				}
 			}
+
+			VisualEffectConfig: {
+				DisplayName: Visual Effect Config
+
+				HitEffect_Dusts: {
+					Label: Hit Effect: Dusts
+					Tooltip: ""
+				}
+
+				HitEffect_ScreenShaking: {
+					Label: Hit Effect: Screen Shaking
+					Tooltip: ""
+				}
+
+				HitEffect_Lightning: {
+					Label: Hit Effect: Lightning
+					Tooltip: ""
+				}
+
+				HitEffect_SpecialParticles: {
+					Label: Hit Effect: Special Particles
+					Tooltip: ""
+				}
+
+				DrawKniefLight: {
+					Label: Knief Light
+					Tooltip: ""
+				}
+
+				DrawWarp: {
+					Label: Warp
+					Tooltip: ""
+				}
+
+				Headers: {
+					HitEffects: Hit Effects
+					OtherVisualEffects: Other Visual Effects
+				}
+
+				HitEffect_HitFreeze: {
+					Label: Hit Effect: Hit Freeze
+					Tooltip: ""
+				}
+
+				DrawTrail: {
+					Label: Draw Trail
+					Tooltip: Most projectiles and particles trail
+				}
+			}
 		}
 
 		Keybinds.套装效果.DisplayName: Armor bonus Keybind
@@ -1504,7 +1560,7 @@ Mods: {
 		Compat: {
 			BossChecklist: {
 				Rediancie: {
-					SpawnInfo: aaa一块奇异的巨石，通过不稳定的红色能量来驱动自身。
+					SpawnInfo: 一块奇异的巨石，通过不稳定的红色能量来驱动自身。
 					Despawn: 赤玉灵回归了地底
 				}
 

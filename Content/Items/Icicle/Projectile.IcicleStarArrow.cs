@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Coralite.Core.Configs;
 
 namespace Coralite.Content.Items.Icicle
 {
@@ -86,9 +87,12 @@ namespace Coralite.Content.Items.Icicle
 
         public override void Kill(int timeLeft)
         {
-            float rot = Main.rand.NextFloat(6.282f);
-            for (int i = 0; i < 3; i++)
-                Particle.NewParticle(Projectile.Center, (rot + i * 2.094f).ToRotationVector2() , CoraliteContent.ParticleType<HorizontalStar>(), Coralite.Instance.IcicleCyan, Main.rand.NextFloat(0.2f, 0.3f));
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
+            {
+                float rot = Main.rand.NextFloat(6.282f);
+                for (int i = 0; i < 3; i++)
+                    Particle.NewParticle(Projectile.Center, (rot + i * 2.094f).ToRotationVector2(), CoraliteContent.ParticleType<HorizontalStar>(), Coralite.Instance.IcicleCyan, Main.rand.NextFloat(0.2f, 0.3f));
+            }
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
@@ -99,7 +103,7 @@ namespace Coralite.Content.Items.Icicle
                 return;
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix view = Main.GameViewMatrix.TransformationMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.World = world;

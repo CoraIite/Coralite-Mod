@@ -72,6 +72,7 @@ namespace Coralite.Core
         public const string MachineItems = Items + "Machines/";
         public const string BotanicalItems = Items + "Botanical/";
         public const string MagikeItems = Items + "Magike/";
+        public const string MagikeTools = MagikeItems + "Tools/";
         public const string Seeds = BotanicalItems + "Seeds/";
         public const string Plants = BotanicalItems + "Plants/";
 

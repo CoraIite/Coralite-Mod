@@ -24,7 +24,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 for (int i = 0; i < howMany; i++)
                 {
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + Main.rand.NextVector2Circular(Projectile.width, Projectile.height),
-                        -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1f, 1f)) * Main.rand.NextFloat(10, 14), ModContent.ProjectileType<GelSpike>(), Projectile.damage / 3, 0, Projectile.owner);
+                        -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1f, 1f)) * Main.rand.NextFloat(10, 14), ModContent.ProjectileType<GelSpike>(), Projectile.damage, 0, Projectile.owner);
                 }
             }
         }

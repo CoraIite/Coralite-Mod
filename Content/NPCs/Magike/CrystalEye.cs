@@ -21,6 +21,9 @@ namespace Coralite.Content.NPCs.Magike
         public override void SetDefaults()
         {
             NPC.CloneDefaults(NPCID.DemonEye);
+            NPC.damage = 12;
+            NPC.lifeMax = 50;
+
             NPC.HitSound = CoraliteSoundID.DigStone_Tink;
             NPC.DeathSound = CoraliteSoundID.GlassBroken_Shatter;
         }
@@ -45,9 +48,10 @@ namespace Coralite.Content.NPCs.Magike
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if ((!Main.dayTime && spawnInfo.Player.ZoneForest) ||
-                spawnInfo.Player.InModBiome<MagicCrystalCave>())
+            if ((!Main.dayTime && spawnInfo.Player.ZoneForest))
                 return 0.08f;
+            if (spawnInfo.Player.InModBiome<MagicCrystalCave>())
+                return 0.04f;
 
             return 0;
         }

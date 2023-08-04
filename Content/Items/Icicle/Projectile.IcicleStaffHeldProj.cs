@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleStaffHeldProj : ModProjectile, IDrawNonPremultiplied
+    public class IcicleStaffHeldProj : BaseHeldProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.IcicleItems + "IcicleStaff";
 
@@ -21,7 +22,6 @@ namespace Coralite.Content.Items.Icicle
         public ref float Rotate => ref Projectile.ai[1];
         public float visualEffectScale = 0f;
         public float visualEffectRotate = 0f;
-        public Player Owner => Main.player[Projectile.owner];
 
         public override void SetDefaults()
         {
@@ -37,11 +37,11 @@ namespace Coralite.Content.Items.Icicle
 
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.Center = Owner.Center + new Vector2(Owner.direction * 16, -16);
+            Projectile.Center = Owner.Center + new Vector2(OwnerDirection * 16, -16);
             if (Main.myPlayer == Projectile.owner)
             {
                 //大概是手持法杖的角度
-                Projectile.rotation = Rotate = Owner.direction * 0.3f - 1.57f + 0.785f;
+                Projectile.rotation = Rotate = OwnerDirection*  0.3f -Owner.gravDir* 1.57f + 0.785f;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.Icicle
                     Projectile.Center = Owner.Center/* + new Vector2(Owner.direction * 4, -4)*/;
                     float sinProgress = MathF.Sin(7.852f * Timer / SWING_TIME);
                     //摇晃一下
-                    Projectile.rotation = Rotate + sinProgress * -Owner.direction * 0.4f;
+                    Projectile.rotation = Rotate + sinProgress * -OwnerDirection * 0.4f;
 
                     visualEffectScale += 0.5f / SWING_TIME;
 
@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Icicle
 
             Owner.heldProj = Projectile.whoAmI;
             Owner.itemTime = Owner.itemAnimation = 3;
-            Owner.itemRotation = Projectile.rotation + (Owner.direction > 0 ? -0.6f :2.2f);
+            Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? -0.6f :2.2f);
             Projectile.timeLeft = 2;
 
             visualEffectRotate += 0.4f;

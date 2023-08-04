@@ -2,14 +2,12 @@
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Coralite.Content.Items.RedJades
 {
@@ -17,13 +15,13 @@ namespace Coralite.Content.Items.RedJades
     /// ai[0]用于控制状态，为0时为默认发射
     /// 为1时为蓄力攻击
     /// </summary>
-    public class RedJadeStaffHeldProj:ModProjectile,IDrawAdditive
+    public class RedJadeStaffHeldProj : ModProjectile, IDrawAdditive
     {
-        public override string Texture => AssetDirectory.RedJadeItems+ "RedJadeStaff";
+        public override string Texture => AssetDirectory.RedJadeItems + "RedJadeStaff";
 
         public ref float State => ref Projectile.ai[0];
         protected ref float TargetRot => ref Projectile.ai[1];
-        
+
         protected Player Owner => Main.player[Projectile.owner];
 
         private bool initialized;
@@ -51,7 +49,7 @@ namespace Coralite.Content.Items.RedJades
                     if (!initialized)
                         Initialize_Normal();
 
-                    Projectile.Center = Owner.Center + Owner.direction * Projectile.rotation.ToRotationVector2()*20;
+                    Projectile.Center = Owner.Center + Owner.direction * Projectile.rotation.ToRotationVector2() * 20;
 
                     break;
                 case 1: //强化
@@ -83,16 +81,16 @@ namespace Coralite.Content.Items.RedJades
                             //Vector2 dir = new Vector2((float)Math.Cos(1.57f + 0.314f*i ), (float)Math.Sin(1.57f + 0.314f*i +0.5f));       //<--这样不行  : (
                             Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, dir * 1.4f + targetDir * 6, Scale: 1.8f);
                             dust.noGravity = true;
-                            Dust dust2 = Dust.NewDustPerfect(center, DustID.GemRuby, dir*0.8f +targetDir*3, Scale: 1.5f);
+                            Dust dust2 = Dust.NewDustPerfect(center, DustID.GemRuby, dir * 0.8f + targetDir * 3, Scale: 1.5f);
                             dust2.noGravity = true;
                         }
                     }
 
                     if (Main.myPlayer == Projectile.owner)
-                        TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() ;
+                        TargetRot = (Main.MouseWorld - Owner.Center).ToRotation();
 
-                    Projectile.rotation = TargetRot+ (Owner.direction > 0 ? 0f : 3.141f);
-                    Projectile.velocity = TargetRot.ToRotationVector2() *32;
+                    Projectile.rotation = TargetRot + (Owner.direction > 0 ? 0f : MathHelper.Pi);
+                    Projectile.velocity = TargetRot.ToRotationVector2() * 32;
                     Projectile.Center = Owner.Center + Owner.direction * Projectile.rotation.ToRotationVector2() * 20;
                     Owner.itemRotation = Projectile.rotation + Owner.direction * 0.3f;
                     Projectile.netUpdate = true;
@@ -124,10 +122,10 @@ namespace Coralite.Content.Items.RedJades
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
-          Vector2 center = Projectile.Center - Main.screenPosition;
+            Vector2 center = Projectile.Center - Main.screenPosition;
 
             SpriteEffects effects = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Main.spriteBatch.Draw(mainTex,center, null, lightColor, Projectile.rotation + Owner.direction * 0.785f, mainTex.Size() / 2, Projectile.scale, effects, 0f);
+            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation + Owner.direction * 0.785f, mainTex.Size() / 2, Projectile.scale, effects, 0f);
 
             if (Projectile.ai[0] == 1)
             {
@@ -150,7 +148,7 @@ namespace Coralite.Content.Items.RedJades
                 {
                     Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.Rediancie + "RedShield").Value;
                     float factor = 1 - (36 - Projectile.timeLeft) / 14f;
-                    spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition + Projectile.velocity, null, Coralite.Instance.RedJadeRed * (Projectile.alpha / 255f), Projectile.timeLeft * 0.25f, mainTex.Size() / 2, MathF.Sin(factor*3.141f)* 0.3f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition + Projectile.velocity, null, Coralite.Instance.RedJadeRed * (Projectile.alpha / 255f), Projectile.timeLeft * 0.25f, mainTex.Size() / 2, MathF.Sin(factor * 3.141f) * 0.3f, SpriteEffects.None, 0f);
                 }
             }
         }

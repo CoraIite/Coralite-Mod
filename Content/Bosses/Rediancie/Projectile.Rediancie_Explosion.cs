@@ -1,11 +1,8 @@
-﻿using Coralite.Content.Dusts;
-using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
+﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.Rediancie

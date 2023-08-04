@@ -133,10 +133,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void HitEffect(NPC.HitInfo hit)
         {
-            Helper.NotOnServer(() =>
-            {
-                SoundEngine.PlaySound(SoundID.Dig, NPC.Center);
-            });
+            SoundEngine.PlaySound(SoundID.Dig, NPC.Center);
         }
     }
 }

@@ -5,6 +5,7 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.Rediancie
@@ -31,6 +32,9 @@ namespace Coralite.Content.Bosses.Rediancie
             Rectangle iconFrame = drawParams.IconFrame;
             Color iconColor = drawParams.IconColor;
             float iconScale = drawParams.IconScale;
+            bool showText = drawParams.ShowText;
+            float life = drawParams.Life;
+            float lifeMax = drawParams.LifeMax;
 
             Point barSize = new Point(406, 20); //条条尺寸
             Point topLeftOffset = new Point(66, 20); //框框左上角的位置
@@ -82,6 +86,11 @@ namespace Coralite.Content.Bosses.Rediancie
             Vector2 iconSize = new Vector2(26f, 28f);   //这个要跟着贴图变化
             Vector2 iconPos = iconOffset + iconSize / 2f;
             spriteBatch.Draw(iconTexture, topLeft + iconPos, iconFrame, iconColor, 0f, iconFrame.Size() / 2f, iconScale, SpriteEffects.None, 0f);
+
+            if (BigProgressBarSystem.ShowText && showText)
+            {
+                BigProgressBarHelper.DrawHealthText(spriteBatch, barPosition, drawParams.TextOffset, life, lifeMax);
+            }
 
             return false;
         }

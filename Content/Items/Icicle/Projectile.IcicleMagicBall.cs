@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -42,13 +43,14 @@ namespace Coralite.Content.Items.Icicle
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 4; i++)
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
             {
-                Particle.NewParticle(Projectile.Center, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-1.2f, 1.2f)) * Main.rand.NextFloat(0.05f, 0.2f),
-                    CoraliteContent.ParticleType<SnowFlower>(), Color.White, Main.rand.NextFloat(0.4f, 0.6f));
-            }
+                for (int i = 0; i < 4; i++)
+                    Particle.NewParticle(Projectile.Center, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-1.2f, 1.2f)) * Main.rand.NextFloat(0.05f, 0.2f),
+                        CoraliteContent.ParticleType<SnowFlower>(), Color.White, Main.rand.NextFloat(0.4f, 0.6f));
 
-            Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<IceHalo>(), Color.White, 0.2f);
+                Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<IceHalo>(), Color.White, 0.2f);
+            }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

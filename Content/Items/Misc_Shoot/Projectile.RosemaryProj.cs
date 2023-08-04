@@ -1,6 +1,7 @@
 ﻿using System;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
@@ -24,7 +25,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             if (Main.myPlayer == Projectile.owner)
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (Owner.direction > 0 ? 0f : 3.141f);
+                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (OwnerDirection > 0 ? 0f : MathHelper.Pi);
                 if (TargetRot == 0f)
                     TargetRot = 0.0001f;
             }
@@ -54,7 +55,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             if (Main.myPlayer == Projectile.owner)
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (Owner.direction > 0 ? 0f : 3.141f);
+                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (OwnerDirection > 0 ? 0f : MathHelper.Pi);
                 if (TargetRot == 0f)
                     TargetRot = 0.0001f;
             }
@@ -103,11 +104,12 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            for (int i = 0; i < 2; i++)
-            {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Ice_Purple, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(0.15f, 0.25f), Scale: Main.rand.NextFloat(1.4f, 1.6f));
-                dust.noGravity = true;
-            }
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 2; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Ice_Purple, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(0.15f, 0.25f), Scale: Main.rand.NextFloat(1.4f, 1.6f));
+                    dust.noGravity = true;
+                }
 
             if (Main.myPlayer != Projectile.owner || Projectile.ai[0] != 0)
                 return;
@@ -127,11 +129,12 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            for (int i = 0; i < 2; i++)
-            {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Ice_Purple, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(0.15f, 0.25f), Scale: Main.rand.NextFloat(1.4f, 1.6f));
-                dust.noGravity = true;
-            }
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 2; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Ice_Purple, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(0.15f, 0.25f), Scale: Main.rand.NextFloat(1.4f, 1.6f));
+                    dust.noGravity = true;
+                }
 
             return true;
         }
@@ -159,11 +162,12 @@ namespace Coralite.Content.Items.Misc_Shoot
                 targetCenter = Projectile.Center + dir * length;
             }
 
-            float roughlySpeed = length / 12f;
-            FlowLine.Spawn(Projectile.Center + dir * 8, dir * roughlySpeed, 2, 12, 0.04f, new Color(95, 120, 233, 100));
-            for (int i = -1; i < 4; i += 2)
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
             {
-                FlowLine.Spawn(Projectile.Center + dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * (32 + i * 8), dir * roughlySpeed * 0.5f, 1, 12, Math.Sign(i) * 0.1f, new Color(255, 179, 251, 60));
+                float roughlySpeed = length / 12f;
+                FlowLine.Spawn(Projectile.Center + dir * 8, dir * roughlySpeed, 2, 12, 0.04f, new Color(95, 120, 233, 100));
+                for (int i = -1; i < 4; i += 2)
+                    FlowLine.Spawn(Projectile.Center + dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * (32 + i * 8), dir * roughlySpeed * 0.5f, 1, 12, Math.Sign(i) * 0.1f, new Color(255, 179, 251, 60));
             }
 
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), targetCenter, Vector2.Zero,

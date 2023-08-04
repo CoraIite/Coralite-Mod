@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Reflection;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 
 namespace Coralite.Helpers
 {
@@ -59,6 +61,24 @@ namespace Coralite.Helpers
             }
 
             return index;
+        }
+
+        public static bool GetJourneyModeStrangth(out  float journeyScale,out NPCStrengthHelper nPCStrengthHelper)
+        {
+            if (!Main.GameModeInfo.IsJourneyMode) //从源码里抄过来的，只能说旅途模式写的什么B玩意
+            {
+                journeyScale = 1f;
+                nPCStrengthHelper = default;
+                return false;
+            }
+
+            journeyScale = 1f;
+            CreativePowers.DifficultySliderPower power = CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>();
+            if (power != null && power.GetIsUnlocked())
+                journeyScale = power.StrengthMultiplierToGiveNPCs;
+
+             nPCStrengthHelper = new NPCStrengthHelper(Main.GameModeInfo, journeyScale, Main.getGoodWorld);
+            return true;
         }
     }
 }

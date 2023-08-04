@@ -10,15 +10,13 @@ namespace Coralite.Core.Prefabs.Projectiles
     /// <summary>
     /// 命名规则："XXX" + "HeldProj"
     /// </summary>
-    public abstract class BaseGunHeldProj : ModProjectile
+    public abstract class BaseGunHeldProj : BaseHeldProj
     {
         protected readonly float heldPositionX;
         protected readonly float recoilAngle;
         protected readonly float recoilLength;
         private readonly string TexturePath;
         private readonly bool PathHasName;
-
-        protected Player Owner => Main.player[Projectile.owner];
 
         /// <summary> 目标角度 </summary>
         protected ref float TargetRot => ref Projectile.ai[0];
@@ -72,7 +70,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (Main.myPlayer == Projectile.owner)
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (Owner.direction > 0 ? 0f : 3.141f);
+                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (OwnerDirection > 0 ? 0f : MathHelper.Pi);
             }
 
             HeldPositionX = heldPositionX;
@@ -92,9 +90,9 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public virtual void ApplyRecoil(float factor)
         {
-            Projectile.rotation = TargetRot - Owner.direction * factor * recoilAngle;
+            Projectile.rotation = TargetRot - OwnerDirection * factor * recoilAngle;
             HeldPositionX = heldPositionX + factor * recoilLength;
-            Projectile.Center = Owner.Center + Owner.direction * Projectile.rotation.ToRotationVector2() *HeldPositionX;
+            Projectile.Center = Owner.Center + OwnerDirection * Projectile.rotation.ToRotationVector2() *HeldPositionX;
         }
 
         public virtual void ModifyAI(float factor) { }
@@ -102,14 +100,14 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void AfterAI(float factor)
         {
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemRotation = Projectile.rotation + Owner.direction * 0.3f;
+            Owner.itemRotation = Projectile.rotation + (Owner.gravDir > 0 ? 0f : MathHelper.Pi)+ OwnerDirection * 0.3f;
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
 
-            SpriteEffects effects = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects effects = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, effects, 0f);
             return false;
         }

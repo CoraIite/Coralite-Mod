@@ -7,13 +7,14 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.Audio;
+using Coralite.Core.Prefabs.Projectiles;
 
 namespace Coralite.Content.Items.Icicle
 {
     /// <summary>
     /// ai0用于判断玩家的手持方向,ai1用于控制是否是特殊的弹幕
     /// </summary>
-    public class IcicleBowHeldProj : ModProjectile
+    public class IcicleBowHeldProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.IcicleItems + "IcicleBow";
 
@@ -36,7 +37,6 @@ namespace Coralite.Content.Items.Icicle
 
         public override void AI()
         {
-            Player Owner = Main.player[Projectile.owner];
             Owner.heldProj = Projectile.whoAmI;
 
             if (Alpha == 0)
@@ -123,7 +123,7 @@ namespace Coralite.Content.Items.Icicle
                     break;
             }
 
-            Owner.itemRotation = Rotation + (Owner.direction > 0 ? 0 : 3.141f);
+            Owner.itemRotation = Rotation + (OwnerDirection > 0 ? 0 : 3.141f);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -131,7 +131,7 @@ namespace Coralite.Content.Items.Icicle
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             Vector2 center = Projectile.Center - Main.screenPosition;
 
-            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1.1f, Main.player[Projectile.owner].direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1.1f, OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
             if (Alpha > 0.001f)
             {

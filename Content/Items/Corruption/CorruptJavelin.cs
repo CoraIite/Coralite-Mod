@@ -1,8 +1,8 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Configs;
+using Coralite.Core.Prefabs.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -11,7 +11,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Humanizer.In;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Corruption
@@ -273,17 +272,13 @@ namespace Coralite.Content.Items.Corruption
                 Timer = 0;
                 Projectile.netUpdate = true;
 
-                Vector2 direction = -Projectile.rotation.ToRotationVector2();
-                Vector2 center = Vector2.Lerp(Projectile.Center, target.Center, 0.2f);
-
-                for (int j = 0; j < 2; j++)
+                if (VisualEffectSystem.HitEffect_Dusts)
                 {
-                    Vector2 dir = direction.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f));
-                    for (int i = 0; i < 6; i++)
-                    {
-                        Dust.NewDustPerfect(center, DustID.Corruption, dir.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f)) * Main.rand.NextFloat(0.5f, 5f),
-                            Scale: Main.rand.NextFloat(1f, 1.5f));
-                    }
+                    Vector2 direction = -Projectile.rotation.ToRotationVector2();
+                    Vector2 center = Vector2.Lerp(Projectile.Center, target.Center, 0.2f);
+
+                    Helpers.Helper.SpawnDirDustJet(center, () => direction.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)), 2, 6, (i) => Main.rand.NextFloat(0.5f, 5f),
+                        DustID.Corruption, Scale: Main.rand.NextFloat(1f, 1.5f), noGravity: false, extraRandRot: 0.1f);
                 }
             }
         }
@@ -338,7 +333,7 @@ namespace Coralite.Content.Items.Corruption
         }
     }
 
-    public class CorruptJavelinSpecial : ModProjectile
+    public class CorruptJavelinSpecial : BaseHeldProj
     {
         public override string Texture => AssetDirectory.CorruptionItems + "CorruptJavelinProj";
 
@@ -349,8 +344,6 @@ namespace Coralite.Content.Items.Corruption
         private float distanceToOwner;
         private float shadowRot;
         private float shadowDistance;
-
-        public Player Owner => Main.player[Projectile.owner];
 
         public override void SetDefaults()
         {
@@ -387,7 +380,7 @@ namespace Coralite.Content.Items.Corruption
             Owner.heldProj = Projectile.whoAmI;
             Owner.itemTime = Owner.itemAnimation = 2;
             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-            Owner.itemRotation = Projectile.rotation + (Owner.direction > 0 ? 0 : MathHelper.Pi);
+            Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
             Projectile.spriteDirection = Main.MouseWorld.X > Projectile.Center.X ? 1 : -1;
 
             do

@@ -5,14 +5,14 @@ using Terraria;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using System;
+using Coralite.Core.Prefabs.Projectiles;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleSpurtHeldProj : ModProjectile
+    public class IcicleSpurtHeldProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.IcicleItems + "IcicleSword";
 
-        public Player Owner => Main.player[Projectile.owner];
         public ref float DistanceToOwner => ref Projectile.ai[0];
 
         public ref float _Rotation => ref Projectile.ai[1];
@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.Icicle
         public override void AI()
         {
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemRotation = _Rotation+(Owner.direction>0?0:MathHelper.Pi);
+            Owner.itemRotation = _Rotation + (Owner.direction > 0 ? 0 : MathHelper.Pi);
             Owner.itemTime = 2;
             Projectile.Center = Owner.Center + _Rotation.ToRotationVector2() * DistanceToOwner;
 
@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 if (Alpha == 0f)
                 {
-                    Projectile.timeLeft = Math.Clamp(Owner.itemTimeMax,12,20);
+                    Projectile.timeLeft = Math.Clamp(Owner.itemTimeMax, 12, 20);
                     Projectile.rotation = _Rotation + 0.785f;
                     DistanceToOwner = 8;
                 }

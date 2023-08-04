@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
@@ -305,12 +306,14 @@ namespace Coralite.Content.Items.Misc_Melee
             }
         }
 
-        protected override void OnHitEvent(NPC target)
+        protected override void OnHitEvent(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Particle particle = Particle.NewParticleDirect(Vector2.Lerp(Projectile.Center,target.Center,0.5f), Vector2.Zero, CoraliteContent.ParticleType<Strike>(), Color.Orange, 1f);
-            particle.rotation = _Rotation + 2.2f + Main.rand.NextFloat(-0.5f, 0.5f);
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
+            {
+                Particle particle = Particle.NewParticleDirect(Vector2.Lerp(Projectile.Center, target.Center, 0.5f), Vector2.Zero, CoraliteContent.ParticleType<Strike>(), Color.Orange, 1f);
+                particle.rotation = _Rotation + 2.2f + Main.rand.NextFloat(-0.5f, 0.5f);
+            }
         }
-
     }
 
     /// <summary>

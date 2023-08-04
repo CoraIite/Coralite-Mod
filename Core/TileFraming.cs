@@ -13,7 +13,7 @@ namespace Coralite.Core
 
     //TODO: 增加在改变自身进入到CustomMergeConditionalTree方法中之前检测融合的物块的各种半砖或斜坡
 
-    public class TileFraming:ModSystem
+    public class TileFraming : ModSystem
     {
         public static bool[][] tileMergeTypes;
 
@@ -68,7 +68,7 @@ namespace Coralite.Core
 
         public static void CustomMergeFrame(int x, int y, int myType, int mergeType, bool myTypeBrimFrame = false, bool mergeTypeBrimFrame = false, bool overrideBrimStates = false)
         {
-             if (x < 0 || x >= Main.maxTilesX)
+            if (x < 0 || x >= Main.maxTilesX)
                 return;
             if (y < 0 || y >= Main.maxTilesY)
                 return;
@@ -84,13 +84,13 @@ namespace Coralite.Core
 
             if (north != null && north.HasTile && tileMergeTypes[myType][north.TileType])
                 CustomMergeFrameExplicit(x, y - 1, north.TileType, myType, out _, out _, out _, out forceSameUp, false, false, false, false, false, mergeTypeBrimFrame, true);
-            if (west != null && west.HasTile && tileMergeTypes[ myType][west.TileType])
+            if (west != null && west.HasTile && tileMergeTypes[myType][west.TileType])
                 CustomMergeFrameExplicit(x - 1, y, west.TileType, myType, out _, out _, out forceSameLeft, out _, false, false, false, false, false, mergeTypeBrimFrame, true);
             if (east != null && east.HasTile && tileMergeTypes[myType][east.TileType])
                 CustomMergeFrameExplicit(x + 1, y, east.TileType, myType, out _, out forceSameRight, out _, out _, false, false, false, false, false, mergeTypeBrimFrame, true);
-            if (south != null && south.HasTile && tileMergeTypes[myType ][south.TileType])
+            if (south != null && south.HasTile && tileMergeTypes[myType][south.TileType])
                 CustomMergeFrameExplicit(x, y + 1, south.TileType, myType, out forceSameDown, out _, out _, out _, false, false, false, false, false, mergeTypeBrimFrame, false);
-            
+
             CustomMergeFrameExplicit(x, y, myType, mergeType, out _, out _, out _, out _, forceSameDown, forceSameUp, forceSameLeft, forceSameRight, true, myTypeBrimFrame, overrideBrimStates);
         }
 
@@ -824,7 +824,7 @@ namespace Coralite.Core
             }
             if (up && down && left && right && downLeft && !downRight && !upLeft && upRight)
             {
-                Main.tile[x, y].TileFrameX =180;
+                Main.tile[x, y].TileFrameX = 180;
                 Main.tile[x, y].TileFrameY = (short)(randomFrame * 18);
                 return false;
             }
@@ -843,7 +843,7 @@ namespace Coralite.Core
             if (up && down && left && right && !downLeft && !downRight && upLeft && !upRight)
             {
                 Main.tile[x, y].TileFrameX = (short)(108 + randomFrame * 18);
-                Main.tile[x, y].TileFrameY = 18 ;
+                Main.tile[x, y].TileFrameY = 18;
                 return false;
             }
             if (up && down && left && right && downLeft && !downRight && !upLeft && !upRight)
@@ -879,7 +879,7 @@ namespace Coralite.Core
             if (up && down && !left && right && !downLeft && !downRight && !upLeft && upRight)
             {
                 Main.tile[x, y].TileFrameX = 0;
-                Main.tile[x, y].TileFrameY = (short)( randomFrame * 18);
+                Main.tile[x, y].TileFrameY = (short)(randomFrame * 18);
                 return false;
             }
             if (up && down && !left && right && !downLeft && downRight && !upLeft && !upRight)
@@ -922,9 +922,9 @@ namespace Coralite.Core
             upRight = false;
             downLeft = false;
             downRight = false;
-            if (GetMerge(tile, north) && !tile.IsHalfBlock&&
+            if (GetMerge(tile, north) && !tile.IsHalfBlock &&
                 (tile.Slope is not SlopeType.SlopeDownLeft or SlopeType.SlopeDownRight) &&
-                (north.Slope is SlopeType.Solid or  SlopeType.SlopeDownLeft or SlopeType.SlopeDownRight))
+                (north.Slope is SlopeType.Solid or SlopeType.SlopeDownLeft or SlopeType.SlopeDownRight))
             {
                 up = true;
             }
@@ -944,7 +944,7 @@ namespace Coralite.Core
             }
             if (GetMerge(tile, north) && GetMerge(tile, west) && GetMerge(tile, northwest) &&
                 (northwest.Slope == SlopeType.Solid || northwest.Slope == SlopeType.SlopeDownRight) &&
-                (north.Slope == SlopeType.Solid || north.Slope == SlopeType.SlopeDownLeft || north.Slope == SlopeType.SlopeUpLeft) && 
+                (north.Slope == SlopeType.Solid || north.Slope == SlopeType.SlopeDownLeft || north.Slope == SlopeType.SlopeUpLeft) &&
                 (west.Slope == SlopeType.Solid || west.Slope == SlopeType.SlopeUpLeft || west.Slope == SlopeType.SlopeUpRight))
             {
                 upLeft = true;
@@ -963,9 +963,9 @@ namespace Coralite.Core
             {
                 downLeft = true;
             }
-            if (GetMerge(tile, south) && GetMerge(tile, east) && GetMerge(tile, southeast) && 
-                !southeast.IsHalfBlock && (southeast.Slope == SlopeType.Solid || southeast.Slope == SlopeType.SlopeUpLeft) && 
-                (south.Slope == SlopeType.Solid || south.Slope == SlopeType.SlopeDownRight || south.Slope == SlopeType.SlopeUpRight) && 
+            if (GetMerge(tile, south) && GetMerge(tile, east) && GetMerge(tile, southeast) &&
+                !southeast.IsHalfBlock && (southeast.Slope == SlopeType.Solid || southeast.Slope == SlopeType.SlopeUpLeft) &&
+                (south.Slope == SlopeType.Solid || south.Slope == SlopeType.SlopeDownRight || south.Slope == SlopeType.SlopeUpRight) &&
                 (east.Slope == SlopeType.Solid || east.Slope == SlopeType.SlopeDownLeft || east.Slope == SlopeType.SlopeDownRight))
             {
                 downRight = true;

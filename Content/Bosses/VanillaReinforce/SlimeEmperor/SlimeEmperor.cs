@@ -103,7 +103,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.noGravity = false;
             NPC.noTileCollide = true;
             NPC.boss = true;
-
+            //NPC.hide = true;
             //NPC.BossBar = GetInstance<RediancieBossBar>();
 
             //BGM：暂无
@@ -113,23 +113,50 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(4600 * bossAdjustment) + numPlayers * 960;
+            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
+            {
+                if (nPCStrengthHelper.IsExpertMode)
+                {
+                    NPC.lifeMax = (int)((4600 + numPlayers * 960) / journeyScale);
+                    NPC.damage = 30;
+                    NPC.defense = 6;
+                }
+
+                if (nPCStrengthHelper.IsMasterMode)
+                {
+                    NPC.lifeMax = (int)((5200 + numPlayers * 1230) / journeyScale);
+                    NPC.scale *= 1.25f;
+                    NPC.defense = 8;
+                    NPC.damage = 45;
+                }
+
+                if (Main.getGoodWorld)
+                {
+                    NPC.damage = 120;
+                    NPC.scale *= 1.25f;
+                    NPC.defense = 10;
+                }
+
+                return;
+            }
+
+            NPC.lifeMax = 4600 + numPlayers * 960;
             NPC.damage = 30;
             NPC.defense = 6;
 
             if (Main.masterMode)
             {
+                NPC.lifeMax = 5200 + numPlayers * 1230;
                 NPC.scale *= 1.25f;
-                NPC.lifeMax = (int)(5200 * bossAdjustment) + numPlayers * 1230;
                 NPC.defense = 8;
                 NPC.damage = 45;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.damage = 85;
+                NPC.lifeMax = 5600 + numPlayers * 1760;
+                NPC.damage = 140;
                 NPC.scale *= 1.25f;
-                NPC.lifeMax = (int)(5600 * bossAdjustment) + numPlayers * 1760;
                 NPC.defense = 10;
             }
         }
@@ -414,6 +441,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             crown.Rotation = Main.rand.NextFloat(-angle, angle);
         }
 
+        private void ScaleToTarget(float targetX,float targetY,float amount,bool whenToStop,Action OnStop)
+        {
+            Scale = Vector2.Lerp(Scale, new Vector2(targetX, targetY), amount);
+
+            if (whenToStop)
+                OnStop.Invoke();
+        }
+
         #endregion
 
         #region States
@@ -630,6 +665,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         #endregion
 
         #region Draw
+
+        //public override void DrawBehind(int index)
+        //{
+        //    Main.instance.DrawCacheNPCsMoonMoon.Add(index);
+        //}
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

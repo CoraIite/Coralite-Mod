@@ -117,7 +117,6 @@ namespace Coralite.Content.Items.Stars
                     Projectile.velocity *= 0.98f;
         }
 
-
         #endregion
 
         #region 绘制

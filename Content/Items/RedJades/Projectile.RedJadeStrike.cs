@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Configs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -11,11 +12,6 @@ namespace Coralite.Content.Items.RedJades
     public class RedJadeStrike : ModProjectile
     {
         public override string Texture => AssetDirectory.RedJadeProjectiles + Name;
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("赤玉刺");
-        }
 
         public override void SetDefaults()
         {
@@ -66,11 +62,12 @@ namespace Coralite.Content.Items.RedJades
             }
 
             SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
-            for (int i = 0; i < 6; i++)
-            {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.GemRuby, Main.rand.NextVector2Circular(3, 3), 0, default, Main.rand.NextFloat(1f, 1.3f));
-                dust.noGravity = true;
-            }
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 6; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.GemRuby, Main.rand.NextVector2Circular(3, 3), 0, default, Main.rand.NextFloat(1f, 1.3f));
+                    dust.noGravity = true;
+                }
 
         }
     }

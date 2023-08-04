@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Botanical.Plants;
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -66,12 +67,6 @@ namespace Coralite.Content.Items.Misc_Melee
     {
         public override string Texture => AssetDirectory.Projectiles_Melee + Name;
 
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("切瓜小刀");
-
-        }
-
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 8;
@@ -119,14 +114,14 @@ namespace Coralite.Content.Items.Misc_Melee
                         Main.item[i].TurnToAir();
                     Item.NewItem(Projectile.GetSource_FromAI(), Projectile.Center, ItemType<WatermelonSlices>(), Main.rand.Next(3, 9));
                 }
-
             }
         }
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 8; i++)
-                Dust.NewDustPerfect(Projectile.Center, DustID.Iron, Main.rand.NextVector2Circular(2, 2), 0, default, 0.8f);
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 8; i++)
+                    Dust.NewDustPerfect(Projectile.Center, DustID.Iron, Main.rand.NextVector2Circular(2, 2), 0, default, 0.8f);
 
             SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
         }

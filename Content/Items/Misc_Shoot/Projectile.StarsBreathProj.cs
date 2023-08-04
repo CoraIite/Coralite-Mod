@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
@@ -26,7 +27,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         public override void Initialize()
         {
             base.Initialize();
-            float rotation = TargetRot + (Owner.direction > 0 ? 0 : 3.141f);
+            float rotation = TargetRot + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 center = Projectile.Center + dir * 54;
             for (int i = 0; i < 3; i++)
@@ -115,7 +116,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                 Vector2 center = Projectile.Center + Main.rand.NextVector2CircularEdge(8, 8);
 
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, Vector2.Zero, ModContent.ProjectileType<StarsBreathExplosion>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner, 0.6f);
-                Particle.NewParticle(center, Vector2.Zero, CoraliteContent.ParticleType<RainbowHalo>(), Color.White, 0.6f);
+                if (VisualEffectSystem.HitEffect_SpecialParticles)
+                    Particle.NewParticle(center, Vector2.Zero, CoraliteContent.ParticleType<RainbowHalo>(), Color.White, 0.6f);
                 if (Projectile.timeLeft > 31)
                     PlaySound();
             }

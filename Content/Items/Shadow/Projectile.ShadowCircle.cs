@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -38,6 +39,7 @@ namespace Coralite.Content.Items.Shadow
         public override bool? CanDamage() => false;
 
         #region AI
+
         private enum AIState : int
         {
             weaklyAttack = -1,
@@ -434,6 +436,7 @@ namespace Coralite.Content.Items.Shadow
         public ref float YScale => ref Projectile.localAI[1];
 
         private bool init = true;
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 8;
@@ -550,7 +553,8 @@ namespace Coralite.Content.Items.Shadow
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+            if (VisualEffectSystem.HitEffect_Dusts)
+                Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
             SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 
             return true;
@@ -684,8 +688,9 @@ namespace Coralite.Content.Items.Shadow
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 8; i++)
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Shadowflame);
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 8; i++)
+                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Shadowflame);
         }
 
         public override void AI()

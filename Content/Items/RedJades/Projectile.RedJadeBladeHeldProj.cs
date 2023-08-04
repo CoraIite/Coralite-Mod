@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.RedJades
             base.Initializer();
         }
 
-        protected override float GetStartAngle() => Owner.direction > 0 ? 0f : 3.141f;
+        protected override float GetStartAngle() => Owner.direction > 0 ? 0f : MathHelper.Pi;
 
         protected override void BeforeSlash()
         {
@@ -93,8 +93,7 @@ namespace Coralite.Content.Items.RedJades
             {
                 float factor = Timer / minTime;
                 ProjectilesHelper.DrawPrettyStarSparkle(1, SpriteEffects.None, Projectile.Center - Main.screenPosition + RotateVec2 * 20, new Color(255, 255, 255, 0) * 0.8f,
-                    Coralite.Instance.RedJadeRed, factor, 0, 0.4f, 0.6f, 1f, -Owner.direction*factor*1f , new Vector2(2, 1f), Vector2.One);
-
+                    Coralite.Instance.RedJadeRed, factor, 0, 0.4f, 0.6f, 1f, -Owner.direction * factor * 1f, new Vector2(2, 1f), Vector2.One);
             }
         }
     }

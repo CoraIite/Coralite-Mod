@@ -885,7 +885,7 @@ Mods: {
 				Tooltip:
 					'''
 					它仿佛还在跳动
-					召唤冰龙宝宝，不消耗
+					在雪地召唤冰龙宝宝，不消耗
 					'''
 			}
 
@@ -1214,6 +1214,11 @@ Mods: {
 				DisplayName: 帝王佩刀
 				Tooltip: 至高无上的领袖之佩刀
 			}
+
+			MagicCrystalHook: {
+				// DisplayName: Magic Crystal Hook
+				// Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1445,19 +1450,21 @@ Mods: {
 			BloodHookChain.DisplayName: 鲜血之钩
 			BloodHookSlash.DisplayName: 鲜血斩击
 			IceyCloud.DisplayName: 冰云
-			// CorruptJavelinProj.DisplayName: Corrupt Javelin Proj
-			// CorruptJavelinSpecial.DisplayName: Corrupt Javelin Special
-			// SmallCorruptJavelin.DisplayName: Small Corrupt Javelin
-			// GelBall.DisplayName: Gel Ball
-			// SmallGelBall.DisplayName: Small Gel Ball
-			// GelSpike.DisplayName: Gel Spike
-			// SpikeGelBall.DisplayName: Spike Gel Ball
-			// GelProj.DisplayName: Gel Proj
-			// EmperorSabreSlash.DisplayName: Emperor Sabre Slash
-			// EmperorSabreSlash2.DisplayName: Emperor Sabre Slash2
-			// EmperorSabreSummon.DisplayName: Emperor Sabre Summon
-			// GelChaser.DisplayName: Gel Chaser
-			// GelSpawner.DisplayName: Gel Spawner
+			CorruptJavelinProj.DisplayName: 腐烂标枪
+			CorruptJavelinSpecial.DisplayName: 腐烂标枪
+			SmallCorruptJavelin.DisplayName: 小腐烂标枪
+			GelBall.DisplayName: 凝胶球
+			SmallGelBall.DisplayName: 小凝胶球
+			GelSpike.DisplayName: 凝胶刺
+			SpikeGelBall.DisplayName: 尖刺凝胶球
+			GelProj.DisplayName: 聚合凝胶
+			EmperorSabreSlash.DisplayName: 帝王佩刀
+			EmperorSabreSlash2.DisplayName: 帝王佩刀
+			EmperorSabreSummon.DisplayName: 帝王佩刀
+			GelChaser.DisplayName: 小凝胶球
+			GelSpawner.DisplayName: 小凝胶球
+			// ShadowSwordHeldProj.DisplayName: Shadow Sword Held Proj
+			// MagicCrystalHookProjectile.DisplayName: Magic Crystal Hook Projectile
 		}
 
 		Configs: {
@@ -1481,6 +1488,63 @@ Mods: {
 				UIScale: {
 					Label: UI Scale
 					Tooltip: ""
+				}
+			}
+
+			VisualEffectConfig: {
+				DisplayName: 视觉效果设置
+
+				HitEffect_Dusts: {
+					Label: 命中时的粒子效果
+					Tooltip: 在武器命中时产生的粒子效果，如各种原版粒子
+				}
+
+				HitEffect_ScreenShaking: {
+					Label: 命中时的屏幕震动效果
+					Tooltip: 在武器命中时产生的屏幕震动效果
+				}
+
+				HitEffect_Lightning: {
+					Label: 命中时的光效
+					Tooltip: 在武器命中时产生的各类高亮光效，如斩击效果
+				}
+
+				HitEffect_SpecialParticles: {
+					Label: 命中时的其他粒子特效
+					Tooltip: 在武器命中时产生的特殊粒子效果，如光圈之类的
+				}
+
+				DrawKniefLight: {
+					Label: 刀光
+					Tooltip:
+						'''
+						是否会绘制近战武器的刀光
+						注：关闭刀光可能会让部分武器的效果变得奇怪
+						'''
+				}
+
+				DrawWarp: {
+					Label: 扭曲
+					Tooltip: 是否绘制各类扭曲效果
+				}
+
+				Headers: {
+					HitEffects: 命中效果
+					OtherVisualEffects: 其他视觉效果
+				}
+
+				HitEffect_HitFreeze: {
+					Label: 命中时的卡肉效果
+					Tooltip: 武器在命中时短暂地停滞效果
+				}
+
+				DrawTrail: {
+					Label: 拖尾
+					Tooltip:
+						'''
+						大部分弹幕，武器产生的拖尾效果
+						注：原版拖尾不包含在内（例：彩虹魔杖）
+						'''
 				}
 			}
 		}
@@ -1509,12 +1573,12 @@ Mods: {
 				}
 
 				BabyIceDragon: {
-					SpawnInfo: 刚刚破壳而出的小冰龙，还不能完全掌握冰魔法的力量
+					SpawnInfo: 刚刚破壳而出的小冰龙，还不能完全掌握冰魔法的力量。在击败邪恶BOSS后冰龙蛋将会出现在冰龙巢的中心位置。
 					Despawn: 冰龙宝宝逃走了
 				}
 
 				SlimeEmperor: {
-					SpawnInfo: 一位伟大的凝胶领袖，在史莱姆中有着极高的地位
+					SpawnInfo: 一位伟大的凝胶领袖，在史莱姆中有着极高的地位。
 					Despawn: 史莱姆皇帝回归了它的王国
 				}
 			}

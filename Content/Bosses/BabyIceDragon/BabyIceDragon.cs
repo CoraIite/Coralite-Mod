@@ -101,14 +101,43 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(3520 * bossAdjustment) + numPlayers * 1200;
+            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
+            {
+                if (nPCStrengthHelper.IsExpertMode)
+                {
+                    NPC.lifeMax = (int)((3520 + numPlayers * 1200) / journeyScale);
+                    NPC.damage = 35;
+                    NPC.defense = 10;
+                }
+
+                if (nPCStrengthHelper.IsMasterMode)
+                {
+                    NPC.lifeMax = (int)((4320 + numPlayers * 1600) / journeyScale);
+                    NPC.damage = 40;
+                }
+
+                if (Main.getGoodWorld)
+                {
+                    NPC.damage = 60;
+                }
+
+                return;
+            }
+
+            NPC.lifeMax = 3520  + numPlayers * 1200;
             NPC.damage = 35;
             NPC.defense = 10;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = (int)(4320 * bossAdjustment) + numPlayers * 1600;
+                NPC.lifeMax = 4320 + numPlayers * 1600;
                 NPC.damage = 40;
+            }
+
+            if (Main.getGoodWorld)
+            {
+                NPC.lifeMax = 5320 + numPlayers * 1600;
+                NPC.damage = 60;
             }
         }
 

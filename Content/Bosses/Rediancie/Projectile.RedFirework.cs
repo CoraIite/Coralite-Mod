@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -11,7 +12,7 @@ namespace Coralite.Content.Bosses.Rediancie
     /// <summary>
     /// 使用ai1控制时间
     /// </summary>
-    public class RedFirework:ModProjectile
+    public class RedFirework : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -56,12 +57,8 @@ namespace Coralite.Content.Bosses.Rediancie
 
             Projectile.rotation = Projectile.velocity.ToRotation();
 
-            if (Main.netMode != NetmodeID.Server)
-                for (int i = 0; i < 2; i++)
-                {
-                    Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, -Projectile.velocity * 0.4f, 0, default, 1f);
-                    dust.noGravity = true;
-                }
+            for (int i = 0; i < 2; i++)
+                Projectile.SpawnTrailDust(DustID.GemRuby, 0.4f);
         }
 
         public override void Kill(int timeLeft)

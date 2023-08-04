@@ -19,8 +19,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 case 2: //3次小跳，仅当落到地面之后才能够进行跳跃
                     Jump(1f, 8f, () => SonState++);
                     break;
-                case 3:
-                    //重置AI
+                case 3: //重置AI
                     ResetStates();
                     break;
             }

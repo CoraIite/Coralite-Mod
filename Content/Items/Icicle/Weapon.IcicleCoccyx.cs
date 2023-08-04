@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -137,11 +138,9 @@ namespace Coralite.Content.Items.Icicle
     /// <summary>
     /// 普通的戳 ai[0]输入总时间
     /// </summary>
-    public class IcicleCoccyxSpurt_N : ModProjectile, IDrawNonPremultiplied
+    public class IcicleCoccyxSpurt_N : BaseHeldProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.IcicleItems + "IcicleCoccyx";
-
-        public Player Owner => Main.player[Projectile.owner];
 
         public ref float TimeMax => ref Projectile.ai[0];
         public ref float Distance2Owner => ref Projectile.ai[1];
@@ -198,7 +197,7 @@ namespace Coralite.Content.Items.Icicle
             Lighting.AddLight(Projectile.Center, new Vector3(0.4f, 0.75f, 0.75f));
             Projectile.Center = Owner.Center + (Projectile.rotation + RotOffset).ToRotationVector2() * Distance2Owner;
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemRotation = Projectile.rotation + (Owner.direction > 0 ? 0 : MathHelper.Pi);
+            Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -227,7 +226,7 @@ namespace Coralite.Content.Items.Icicle
             color2.A = (byte)(color2.A * 0.5f);
 
             float currentRot = Projectile.rotation + RotOffset;
-            float rot2 = currentRot + Owner.direction * 0.1f;
+            float rot2 = currentRot + OwnerDirection * 0.1f;
             Vector2 dir = currentRot.ToRotationVector2() * (Distance2Owner);
 
             for (int j = -1; j < 2; j += 2)
@@ -243,11 +242,9 @@ namespace Coralite.Content.Items.Icicle
     /// <summary>
     /// 将骨头分成节变成类似鞭子一样的挥动 ai[0]输入时间，ai[1]输入每帧的挥舞角度，为0就是直线突刺
     /// </summary>
-    public class IcicleCoccyx_Ex1 : ModProjectile
+    public class IcicleCoccyx_Ex1 : BaseHeldProj
     {
         public override string Texture => AssetDirectory.IcicleItems + "IcicleCoccyx";
-
-        public Player Owner => Main.player[Projectile.owner];
 
         public ref float TimeMax => ref Projectile.ai[0];
         public ref float SwingAngle => ref Projectile.ai[1];
@@ -344,7 +341,7 @@ namespace Coralite.Content.Items.Icicle
             Lighting.AddLight(Projectile.oldPos[CACHE_LENGTH - 1], new Vector3(0.4f, 0.75f, 0.75f));
             Projectile.Center = Owner.Center;
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemRotation = Projectile.rotation + (Owner.direction > 0 ? 0 : MathHelper.Pi);
+            Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
             Owner.itemTime = Owner.itemAnimation = 2;
         }
 
@@ -366,7 +363,7 @@ namespace Coralite.Content.Items.Icicle
             //绘制握把
             SpriteEffects effect = SpriteEffects.None;
             float rot = Projectile.oldRot[2] + 0.785f;
-            if (Owner.direction < 0)
+            if (OwnerDirection < 0)
             {
                 rot -= MathHelper.Pi / 2;
                 effect = SpriteEffects.FlipVertically;
@@ -424,11 +421,9 @@ namespace Coralite.Content.Items.Icicle
     /// <summary>
     /// 冲刺攻击 ai[0输入冲刺方向]
     /// </summary>
-    public class IcicleCoccyx_Ex3 : ModProjectile
+    public class IcicleCoccyx_Ex3 : BaseHeldProj
     {
         public override string Texture => AssetDirectory.IcicleItems + "IcicleCoccyx";
-
-        public Player Owner => Main.player[Projectile.owner];
 
         public ref float DashDir => ref Projectile.ai[0];
 
@@ -544,7 +539,7 @@ namespace Coralite.Content.Items.Icicle
             }
 
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemRotation = Projectile.rotation + (Owner.direction > 0 ? 0 : MathHelper.Pi);
+            Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
             Owner.itemTime = Owner.itemAnimation = 2;
         }
 

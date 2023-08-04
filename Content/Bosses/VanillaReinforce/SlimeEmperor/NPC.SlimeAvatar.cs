@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
     /// <summary>
-    /// 使用ai2控制能否分裂，ai2为3以上时无法分裂
+    /// 使用ai1传入BOSS，使用ai2控制能否分裂，ai2为3以上时无法分裂
     /// </summary>
     public class SlimeAvatar : ModNPC
     {
@@ -25,7 +25,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         private float LifePercentScale => Math.Clamp(NPC.life / (float)NPC.lifeMax, 0.5f, 1);
 
         internal ref float JumpState => ref NPC.ai[0];
-        internal ref float JumpTimer => ref NPC.ai[1];
+        internal  float JumpTimer;
         internal ref float State => ref NPC.ai[3];
 
         public float xVel;
@@ -43,18 +43,23 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.scale = 1.5f;
             NPC.lifeMax = 125;
             NPC.aiStyle = -1;
-            NPC.damage = 15;
+            NPC.damage = 40;
             NPC.aiStyle = -1;
             NPC.npcSlots = 0.1f;
             NPC.knockBackResist = 0.5f;
             NPC.noGravity = false;
             NPC.noTileCollide = false;
             NPC.HitSound = CoraliteSoundID.Fleshy_NPCHit1;
+            NPC.hide = true;
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = 75 + numPlayers * 75;
+            if (Main.getGoodWorld)
+            {
+                NPC.damage = 60;
+            }
         }
 
         public override bool? CanFallThroughPlatforms() => NPC.Center.Y < (Main.player[NPC.target].Center.Y - NPC.height);
@@ -69,6 +74,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             //跳一跳，之后分裂
             switch ((int)State)
             {
+                case -1:
+                    NPC boss = Main.npc[(int)NPC.ai[1]];
+                    if (!boss.active)
+                    {
+                        NPC.noGravity = false;
+                        State = 0;
+                        return;
+                    }
+
+                    NPC.Center = Vector2.Lerp(NPC.Center, boss.Center, 0.04f);
+                    break;
                 default:
                     Jump(yVel, xVel, onLanding: () =>
                     {
@@ -93,14 +109,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
                         if (Main.netMode != NetmodeID.MultiplayerClient) //分裂成2个
                         {
-                            int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Left.X, (int)NPC.Left.Y, ModContent.NPCType<SlimeAvatar>(), ai2: NPC.ai[2] + 1, Target: NPC.target);
+                            int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Left.X, (int)NPC.Left.Y, ModContent.NPCType<SlimeAvatar>(), ai1: NPC.ai[1], ai2: NPC.ai[2] + 1, Target: NPC.target);
                             Main.npc[index].lifeMax = Main.npc[index].life = NPC.lifeMax * 3 / 4;
                             Main.npc[index].width = NPC.width * 2 / 3;
                             Main.npc[index].height = NPC.height * 2 / 3;
                             Main.npc[index].scale = NPC.scale * 2 / 3;
                             Main.npc[index].netUpdate = true;
 
-                            index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Right.X, (int)NPC.Right.Y, ModContent.NPCType<SlimeAvatar>(), ai2: NPC.ai[2] + 1, Target: NPC.target);
+                            index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Right.X, (int)NPC.Right.Y, ModContent.NPCType<SlimeAvatar>(), ai1: NPC.ai[1], ai2: NPC.ai[2] + 1, Target: NPC.target);
                             Main.npc[index].lifeMax = Main.npc[index].life = NPC.lifeMax * 3 / 4;
                             Main.npc[index].width = NPC.width * 2 / 3;
                             Main.npc[index].height = NPC.height * 2 / 3;
@@ -261,6 +277,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             xVel = reader.ReadSingle();
             yVel = reader.ReadSingle();
+        }
+
+        public override void DrawBehind(int index)
+        {
+            Main.instance.DrawCacheNPCProjectiles.Add(index);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

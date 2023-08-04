@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Configs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -12,12 +13,17 @@ namespace Coralite.Content.CustomHooks
         //应该不会对别的东西有什么影响
         public override SafetyLevel Safety => base.Safety;
 
+        public static RenderTarget2D screen;
+
         public override void Load()
         {
             On_FilterManager.EndCapture += new On_FilterManager.hook_EndCapture(FilterManager_EndCapture);
         }
 
-        public static RenderTarget2D screen;
+        public override void Unload()
+        {
+            screen = null;
+        }
 
         private void FilterManager_EndCapture(On_FilterManager.orig_EndCapture orig, Terraria.Graphics.Effects.FilterManager self, RenderTarget2D finalTexture, RenderTarget2D screenTarget1, RenderTarget2D screenTarget2, Color clearColor)
         {
@@ -65,8 +71,14 @@ namespace Coralite.Content.CustomHooks
 
         private void UseWarp()
         {
-            if (HasWarp())
+            if (VisualEffectSystem.DrawWarp && HasWarp())
             {
+                if (screen.Width != Main.screenWidth || screen.Height != Main.screenHeight)
+                {
+                    Main.NewText("请重新加载模组以应用分辨率修改！");
+                    return;
+                }
+
                 GraphicsDevice graphicsDevice = Main.instance.GraphicsDevice;
                 //绘制屏幕
                 GetOrig(graphicsDevice);
@@ -79,7 +91,7 @@ namespace Coralite.Content.CustomHooks
                 graphicsDevice.Clear(Color.Transparent);
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
-                Effect effect = Terraria.Graphics.Effects.Filters.Scene["WarpTrail"].GetShader().Shader;
+                Effect effect = Filters.Scene["WarpTrail"].GetShader().Shader;
                 effect.Parameters["tex0"].SetValue(Main.screenTargetSwap);
                 effect.Parameters["i"].SetValue(0.02f);
                 effect.CurrentTechnique.Passes[0].Apply();

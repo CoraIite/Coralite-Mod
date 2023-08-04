@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
@@ -34,11 +35,6 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public ref Vector2 TargetDirection => ref Projectile.velocity;
         protected Vector2 Center;
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("异界裂隙--亚空裂斩");
-        }
 
         public override void SetDefaults()
         {
@@ -653,15 +649,14 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 4; i++)
-                Particle.NewParticle(Projectile.Center, Main.rand.NextVector2Unit() * 1.5f, CoraliteContent.ParticleType<HorizontalStar>(),
-                     new Color(138, 255, 254), Main.rand.NextFloat(0.1f, 0.3f));
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
+                for (int i = 0; i < 4; i++)
+                    Particle.NewParticle(Projectile.Center, Main.rand.NextVector2Unit() * 1.5f, CoraliteContent.ParticleType<HorizontalStar>(),
+                         new Color(138, 255, 254), Main.rand.NextFloat(0.1f, 0.3f));
 
             if (Projectile.ai[0] != 1)
                 SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
         }
-
-
     }
 }
 

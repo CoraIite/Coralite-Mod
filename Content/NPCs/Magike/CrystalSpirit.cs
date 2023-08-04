@@ -31,7 +31,7 @@ namespace Coralite.Content.NPCs.Magike
             NPC.DeathSound = CoraliteSoundID.GlassBroken_Shatter;
             NPC.knockBackResist = 0.8f;
             NPC.noGravity = true;
-            NPC.value = Item.buyPrice(0, 0, 20, 0);
+            NPC.value = Item.buyPrice(0, 0, 3, 0);
         }
 
         public override void AI()
@@ -55,16 +55,17 @@ namespace Coralite.Content.NPCs.Magike
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if ((!Main.dayTime && spawnInfo.Player.ZoneForest)
-                ||spawnInfo.Player.InModBiome<MagicCrystalCave>())
+            if ((!Main.dayTime && spawnInfo.Player.ZoneForest))
                 return 0.08f;
+            if (spawnInfo.Player.InModBiome<MagicCrystalCave>())
+                return 0.04f;
 
             return 0;
         }
 
         public override void HitEffect(NPC.HitInfo hit)
         {
-            if (NPC.life<=0)
+            if (NPC.life <= 0)
             {
                 for (int i = 0; i < 6; i++)
                     Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Teleporter, Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2), 100, Coralite.Instance.MagicCrystalPink, 1f);
@@ -75,7 +76,7 @@ namespace Coralite.Content.NPCs.Magike
                 {
                     Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.CrystalSerpent_Pink);
                     dust.noGravity = true;
-                    dust.velocity = new Microsoft.Xna.Framework.Vector2(hit.HitDirection, 0).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * hit.Knockback*Main.rand.NextFloat(0.9f,1.1f);
+                    dust.velocity = new Microsoft.Xna.Framework.Vector2(hit.HitDirection, 0).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * hit.Knockback * Main.rand.NextFloat(0.9f, 1.1f);
                 }
             }
         }

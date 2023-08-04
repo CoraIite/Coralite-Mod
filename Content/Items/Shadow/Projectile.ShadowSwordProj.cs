@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
@@ -117,7 +118,7 @@ namespace Coralite.Content.Items.Shadow
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (Main.netMode != NetmodeID.Server)
+            if (VisualEffectSystem.HitEffect_Dusts)
                 Dust.NewDustDirect(Projectile.Center, 32, 32, DustID.Granite, 0.2f, 0.2f, 0, default, 1.2f);
 
             return true;
@@ -125,7 +126,7 @@ namespace Coralite.Content.Items.Shadow
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (Main.netMode != NetmodeID.Server)
+            if (VisualEffectSystem.HitEffect_Dusts)
                 Dust.NewDustDirect(Projectile.Center, 32, 32, DustID.Granite, 0.2f, 0.2f, 0, default, 1.2f);
         }
 

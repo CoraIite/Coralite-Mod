@@ -27,11 +27,10 @@ namespace Coralite.Content.Items.Misc_Shoot
             MaxTime = Owner.itemAnimation;
 
             Owner.direction = dir = TargetRot.ToRotationVector2().X > 0 ? 1 : -1;
-            TargetRot += Owner.direction > 0 ? 0f : 3.141f;  //固定角度
+            TargetRot += Owner.direction > 0 ? 0f : MathHelper.Pi;  //固定角度
 
             HeldPositionX = heldPositionX;
             Projectile.netUpdate = true;
-
         }
 
         public override float Ease()

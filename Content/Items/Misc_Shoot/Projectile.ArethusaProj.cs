@@ -10,6 +10,7 @@ using Terraria;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Configs;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
@@ -93,8 +94,9 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ArethusaExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
-            for (int j = 0; j < 8; j++)
-                Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<ArethusaPetal>(), (j * 0.785f).ToRotationVector2() * Main.rand.NextFloat(0.5f, 1.5f));
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int j = 0; j < 8; j++)
+                    Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<ArethusaPetal>(), (j * 0.785f).ToRotationVector2() * Main.rand.NextFloat(0.5f, 1.5f));
 
             SoundEngine.PlaySound(CoraliteSoundID.FireBall_Item45, Projectile.Center);
         }
@@ -105,7 +107,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 return;
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix view = Main.GameViewMatrix.TransformationMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.World = world;

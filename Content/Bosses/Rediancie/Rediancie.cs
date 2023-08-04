@@ -19,6 +19,7 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.GameContent.Creative;
 
 namespace Coralite.Content.Bosses.Rediancie
 {
@@ -73,7 +74,6 @@ namespace Coralite.Content.Bosses.Rediancie
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("赤玉灵");
-
             //Main.npcFrameCount[Type] = 6;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;
@@ -101,24 +101,48 @@ namespace Coralite.Content.Bosses.Rediancie
             //BGM：赤色激流
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/RedTorrent");
-
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
-            NPC.lifeMax = (int)(1800 * bossAdjustment) + numPlayers * 450;
+            if (Helper.GetJourneyModeStrangth(out float journeyScale,out NPCStrengthHelper nPCStrengthHelper))
+            {
+                if (nPCStrengthHelper.IsExpertMode)
+                {
+                    NPC.lifeMax = (int)((1800 + numPlayers * 450) / journeyScale);
+                    NPC.damage = 30;
+                    NPC.defense = 6;
+                }
+
+                if (nPCStrengthHelper.IsMasterMode)
+                {
+                    NPC.lifeMax = (int)((2000 + numPlayers * 550) / journeyScale);
+                    NPC.damage = 45;
+                    NPC.defense = 6;
+                }
+
+                if (Main.getGoodWorld)
+                {
+                    NPC.defense = 4;//因为FTW种能够拥有非常多的弹药所以就降低一下基础防御了
+                }
+
+                return;
+            }
+
+            NPC.lifeMax = 1800  + numPlayers * 450;
             NPC.damage = 30;
             NPC.defense = 6;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = (int)(2000 * bossAdjustment) + numPlayers * 550;
+                NPC.lifeMax = 2000 + numPlayers * 550;
                 NPC.damage = 45;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = (int)(2300 * bossAdjustment) + numPlayers * 600;
+                NPC.lifeMax = 2300  + numPlayers * 600;
+                NPC.damage = 45;
                 NPC.defense = 4;//因为FTW种能够拥有非常多的弹药所以就降低一下基础防御了
             }
         }
@@ -393,18 +417,13 @@ namespace Coralite.Content.Bosses.Rediancie
                         {
                             UpdateFollower_Pulse(targetCenter, targetDir, factor, -1, 0.1f + 0.5f * Timer / 60);
                             for (int i = 0; i < 2; i++)
-                            {
-                                Dust dust = Dust.NewDustPerfect(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, -targetDir * 6f, 0, default, 1.1f);
-                                dust.noGravity = true;
-                            }
+                                Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, (d) => -targetDir * 6f, Scale: 1.1f);
                             break;
                         }
                         else if (Timer < 255)
                         {
                             UpdateFollower_Pulse(targetCenter, targetDir, factor, realTime % 65);
-
-                            Dust dust = Dust.NewDustPerfect(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, -targetDir * 6f, 0, default, 1.1f + 2f * (realTime % 65) / 65f);
-                            dust.noGravity = true;
+                            Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, (d) => -targetDir * 6f, Scale: 1.1f + 2f * (realTime % 65) / 65f);
                         }
                         else
                             UpdateFollower_Idle(0.08f);
@@ -678,11 +697,8 @@ namespace Coralite.Content.Bosses.Rediancie
 
                         if (Timer % 3 == 0)
                             for (int i = 0; i < 6; i++)
-                            {
-                                Dust dust = Dust.NewDustPerfect(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, Vector2.Zero, 0, default, 1.3f);
-                                dust.velocity = (NPC.Center - dust.position).SafeNormalize(Vector2.UnitY) * 3f;
-                                dust.noGravity = true;
-                            }
+                                Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby,
+                                    (dust) => (NPC.Center - dust.position).SafeNormalize(Vector2.UnitY) * 3f, Scale: 1.3f);
 
                         ChangeRotationNormally();
 
@@ -899,14 +915,13 @@ namespace Coralite.Content.Bosses.Rediancie
             NPC.netUpdate = true;
         }
 
-
         /// <summary>
         /// 获取一次攻击动作循环种AI的近战类与远程类的具体个数
         /// </summary>
         /// <param name="cyclingType"></param>
         /// <param name="meleeMoveCount"></param>
         /// <param name="ShootMoveCount"></param>
-        public void GetAICycling(CyclingType cyclingType, out int meleeMoveCount, out int ShootMoveCount)
+        public static void GetAICycling(CyclingType cyclingType, out int meleeMoveCount, out int ShootMoveCount)
         {
             switch (cyclingType)
             {

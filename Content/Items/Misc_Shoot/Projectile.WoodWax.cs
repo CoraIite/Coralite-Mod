@@ -6,6 +6,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Coralite.Core.Configs;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
@@ -60,11 +61,12 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), DustID.JungleGrass, Projectile.velocity * 0.2f, Scale: 1.2f);
-                dust.noGravity = true;
-            }
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 3; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), DustID.JungleGrass, Projectile.velocity * 0.2f, Scale: 1.2f);
+                    dust.noGravity = true;
+                }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

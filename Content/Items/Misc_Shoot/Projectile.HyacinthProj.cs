@@ -288,7 +288,6 @@ namespace Coralite.Content.Items.Misc_Shoot
 
             if (Projectile.alpha < 0)
                 Projectile.alpha = 0;
-
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -408,7 +407,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                     {
                         float x = 1.465f * (20 - Timer % 20) / 20;
                         float factor = x * MathF.Sin(x * x * x) / 1.186f;
-                        float recoilAngle = -Owner.direction * factor * 0.4f;
+                        float recoilAngle = - Owner.direction* factor * 0.4f;
                         Projectile.rotation = targetRot + recoilAngle;
                         Projectile.netUpdate = true;
                     }
@@ -561,10 +560,8 @@ namespace Coralite.Content.Items.Misc_Shoot
         public override void Kill(int timeLeft)
         {
             if (Main.myPlayer == Projectile.owner)
-            {
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + Main.rand.NextVector2CircularEdge(8, 8), Vector2.Zero,
                     ModContent.ProjectileType<HyacinthExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.ai[0]);
-            }
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
@@ -577,7 +574,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             Effect effect = Filters.Scene["SimpleTrail"].GetShader().Shader;
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix view = Main.GameViewMatrix.TransformationMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);

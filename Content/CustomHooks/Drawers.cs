@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
@@ -35,24 +36,27 @@ namespace Coralite.Content.CustomHooks
             SpriteBatch spriteBatch = Main.spriteBatch;
             Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
-            for (int k = 0; k < Main.maxProjectiles; k++) // Projectiles.
-                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawPrimitive)
-                    (Main.projectile[k].ModProjectile as IDrawPrimitive).DrawPrimitives();
+            if (VisualEffectSystem.DrawTrail)
+            {
+                for (int k = 0; k < Main.maxProjectiles; k++) // Projectiles.
+                    if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawPrimitive)
+                        (Main.projectile[k].ModProjectile as IDrawPrimitive).DrawPrimitives();
 
-            for (int k = 0; k < Main.maxNPCs; k++) // NPCs.
-                if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawPrimitive)
-                    (Main.npc[k].ModNPC as IDrawPrimitive).DrawPrimitives();
+                for (int k = 0; k < Main.maxNPCs; k++) // NPCs.
+                    if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawPrimitive)
+                        (Main.npc[k].ModNPC as IDrawPrimitive).DrawPrimitives();
 
-            for (int k = 0; k < Coralite.MaxParticleCount - 1; k++) // Particles.
-                if (ParticleSystem.Particles[k].active)
-                {
-                    ModParticle modParticle = ParticleLoader.GetParticle(ParticleSystem.Particles[k].type);
-                    if (modParticle is IDrawParticlePrimitive)
-                        (modParticle as IDrawParticlePrimitive).DrawPrimitives(ParticleSystem.Particles[k]);
-                }
+                for (int k = 0; k < Coralite.MaxParticleCount - 1; k++) // Particles.
+                    if (ParticleSystem.Particles[k].active)
+                    {
+                        ModParticle modParticle = ParticleLoader.GetParticle(ParticleSystem.Particles[k].type);
+                        if (modParticle is IDrawParticlePrimitive)
+                            (modParticle as IDrawParticlePrimitive).DrawPrimitives(ParticleSystem.Particles[k]);
+                    }
+            }
 
             //绘制Non
-            spriteBatch.Begin(default, BlendState.NonPremultiplied, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
                 if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawNonPremultiplied)
@@ -64,7 +68,7 @@ namespace Coralite.Content.CustomHooks
 
             spriteBatch.End();
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             //绘制自己的粒子
             ArmorShaderData armorShaderData = null;
@@ -82,7 +86,7 @@ namespace Coralite.Content.CustomHooks
                     spriteBatch.End();
                     armorShaderData = particle.shader;
                     if (armorShaderData == null)
-                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.TransformationMatrix);
                     else
                     {
                         spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);

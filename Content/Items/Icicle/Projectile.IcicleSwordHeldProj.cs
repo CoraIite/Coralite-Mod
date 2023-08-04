@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Microsoft.Xna.Framework;
 using System;
@@ -101,15 +102,16 @@ namespace Coralite.Content.Items.Icicle
             base.OnSlash();
         }
 
-        protected override float GetStartAngle() => Owner.direction > 0 ? 0f : 3.141f;
+        protected override float GetStartAngle() => Owner.direction > 0 ? 0f : MathHelper.Pi;
 
-        protected override void OnHitEvent(NPC target)
+        protected override void OnHitEvent(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            for (int i = 0; i < 6; i++)
-            {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.FrostStaff, RotateVec2.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f))*Main.rand.NextFloat(6f,8f));
-                dust.noGravity = true;
-            }
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 6; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.FrostStaff, RotateVec2.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(6f, 8f));
+                    dust.noGravity = true;
+                }
         }
     }
 }

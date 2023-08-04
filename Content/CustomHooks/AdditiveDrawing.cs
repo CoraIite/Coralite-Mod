@@ -21,7 +21,7 @@ namespace Coralite.Content.CustomHooks
         {
             orig(self);
             SpriteBatch spriteBatch = Main.spriteBatch;
-            spriteBatch.Begin(default, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
                 if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawAdditive)

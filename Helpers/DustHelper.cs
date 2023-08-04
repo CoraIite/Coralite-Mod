@@ -5,6 +5,8 @@ using Coralite.Core;
 using Coralite.Content.Particles;
 using Terraria.ID;
 using Terraria.Graphics.CameraModifiers;
+using rail;
+using System;
 
 namespace Coralite.Helpers
 {
@@ -64,5 +66,92 @@ namespace Coralite.Helpers
             Main.instance.CameraModifiers.Add(modifier);
         }
 
+        /// <summary>
+        /// 生成轨迹粒子，可以自由控制位置以及速度
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="type"></param>
+        /// <param name="velocity"></param>
+        /// <param name="Alpha"></param>
+        /// <param name="newColor"></param>
+        /// <param name="Scale"></param>
+        /// <param name="noGravity"></param>
+        public static void SpawnTrailDust( Vector2 center, int type, Func<Dust,Vector2> velocity, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
+        {
+            Dust dust = Dust.NewDustPerfect(center, type, Alpha: Alpha, newColor: newColor, Scale: Scale);
+            dust.noGravity = noGravity;
+            dust.velocity = velocity.Invoke(dust);
+        }
+
+        /// <summary>
+        /// 在弹幕身上生成粒子，默认为与弹幕相反的速度，如果需要调整速度请将<paramref name="velocityMult"/>设置为负数
+        /// </summary>
+        /// <param name="Projectile">弹幕自身</param>
+        /// <param name="type">弹幕种类</param>
+        /// <param name="velocityMult">速度系数</param>
+        /// <param name="Alpha"></param>
+        /// <param name="newColor"></param>
+        /// <param name="Scale"></param>
+        /// <param name="noGravity">粒子重力</param>
+        public static void SpawnTrailDust(this Projectile Projectile, int type, float velocityMult, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
+        {
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, type, Alpha: Alpha, newColor: newColor, Scale: Scale);
+            dust.noGravity = noGravity;
+            dust.velocity = -Projectile.velocity * velocityMult;
+        }
+
+
+        /// <summary>
+        /// 生成随机的粒子流，随机方向
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="jetCount">粒子流数量</param>
+        /// <param name="howManyPerJet">每个粒子流的粒子数</param>
+        /// <param name="speed"></param>
+        /// <param name="type"></param>
+        /// <param name="Alpha"></param>
+        /// <param name="newColor"></param>
+        /// <param name="Scale"></param>
+        /// <param name="noGravity"></param>
+        public static void SpawnRandomDustJet(Vector2 center, int jetCount, int howManyPerJet, Func<int, float> speed, int type, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
+        {
+            for (int i = 0; i < jetCount; i++)
+            {
+                Vector2 dir = NextVec2Dir();
+                for (int j = 0; j < howManyPerJet; j++)
+                {
+                    Dust dust = Dust.NewDustPerfect(center, type, dir.RotatedBy(Main.rand.NextFloat(-0.05f, 0.05f)) * speed.Invoke(j),
+                        Alpha, newColor, Scale: Scale);
+                    dust.noGravity = noGravity;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 生成粒子流，可控方向
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="direction">方向委托</param>
+        /// <param name="jetCount">粒子流数量</param>
+        /// <param name="howManyPerJet">每个粒子流的粒子数</param>
+        /// <param name="speed"></param>
+        /// <param name="type"></param>
+        /// <param name="Alpha"></param>
+        /// <param name="newColor"></param>
+        /// <param name="Scale"></param>
+        /// <param name="noGravity"></param>
+        public static void SpawnDirDustJet(Vector2 center, Func<Vector2> direction, int jetCount, int howManyPerJet, Func<int, float> speed, int type, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true, float extraRandRot = 0.05f)
+        {
+            for (int i = 0; i < jetCount; i++)
+            {
+                Vector2 dir = direction.Invoke();
+                for (int j = 0; j < howManyPerJet; j++)
+                {
+                    Dust dust = Dust.NewDustPerfect(center, type, dir.RotatedBy(Main.rand.NextFloat(-extraRandRot, extraRandRot)) * speed.Invoke(j),
+                        Alpha, newColor, Scale: Scale);
+                    dust.noGravity = noGravity;
+                }
+            }
+        }
     }
 }

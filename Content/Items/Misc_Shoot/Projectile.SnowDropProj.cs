@@ -11,6 +11,7 @@ using Terraria.GameContent;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
+using Coralite.Core.Configs;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
@@ -27,7 +28,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         public override void Initialize()
         {
             base.Initialize();
-            float rotation = TargetRot + (Owner.direction > 0 ? 0 : 3.141f);
+            float rotation = TargetRot + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 center = Projectile.Center + dir * 32;
             for (int i = 0; i < 16; i++)
@@ -94,11 +95,12 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Snow, Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(0.6f, 0.8f), Scale: Main.rand.NextFloat(1.4f, 1.6f));
-                dust.noGravity = true;
-            }
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 4; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Snow, Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(0.6f, 0.8f), Scale: Main.rand.NextFloat(1.4f, 1.6f));
+                    dust.noGravity = true;
+                }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -211,9 +213,9 @@ namespace Coralite.Content.Items.Misc_Shoot
                     float vel = Main.rand.NextFloat(2.5f, 3.5f);
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + new Vector2(Main.rand.Next(-16, 16), Main.rand.Next(0, 16)), Vector2.UnitY * vel, ModContent.ProjectileType<SnowdropBloom>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Projectile.owner);
                 }
-                for (int j = 0; j < 6; j++)
-                    Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<SnowdropPetal>(), Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1f, 1f)) * Main.rand.NextFloat(0.5f, 1.5f));
-
+                if (VisualEffectSystem.HitEffect_Dusts)
+                    for (int j = 0; j < 6; j++)
+                        Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<SnowdropPetal>(), Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1f, 1f)) * Main.rand.NextFloat(0.5f, 1.5f));
             }
             else
                 SpawnSnowDust();
@@ -227,11 +229,12 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public void SpawnSnowDust()
         {
-            for (int i = 0; i < 4; i++)
-            {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Snow, Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(0.15f, 0.25f), Scale: Main.rand.NextFloat(1.4f, 1.6f));
-                dust.noGravity = true;
-            }
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 4; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Snow, Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(0.15f, 0.25f), Scale: Main.rand.NextFloat(1.4f, 1.6f));
+                    dust.noGravity = true;
+                }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -375,7 +378,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 return;
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix view = Main.GameViewMatrix.TransformationMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.World = world;

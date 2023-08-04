@@ -15,8 +15,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     Jump(2f, 8f, onLanding: () => SonState++);
                     break;
                 case 1: //变扁
-                    Scale = Vector2.Lerp(Scale, new Vector2(1.2f, 0.9f), 0.2f);
-                    if (Scale.X > 1.15f)
+                    ScaleToTarget(1.2f, 0.9f, 0.2f, Scale.X > 1.15f, () =>
                     {
                         SonState++;
                         //射刺球弹幕
@@ -29,22 +28,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<SpikeGelBall>(),
                                 damage, 4f, NPC.target);
                         }
-                    }
+                    });
                     break;
                 case 2:
-                    Scale = Vector2.Lerp(Scale, new Vector2(0.8f, 1.25f), 0.2f);
-                    if (Scale.Y>1.2f)
-                    {
-                        SonState++;
-                    }
+                    ScaleToTarget(0.8f, 1.25f, 0.2f, Scale.Y > 1.2f, () => SonState++);
                     break;
                 case 3:
-                    Scale = Vector2.Lerp(Scale, Vector2.One, 0.2f);
-                    if (Math.Abs(Scale.X-1)<0.05f)
+                    ScaleToTarget(1f, 1f, 0.2f, Math.Abs(Scale.X - 1) < 0.05f, () =>
                     {
                         Scale = Vector2.One;
                         SonState++;
-                    }
+                    });
                     break;
                 default:
                     ResetStates();

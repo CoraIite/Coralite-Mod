@@ -33,18 +33,19 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
-            {
-                float rot = (Main.MouseWorld - player.Center).ToRotation();
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<CrystalLaser>(), 10, 0, player.whoAmI, rot);
+            //if (Main.myPlayer == player.whoAmI)
+            //{
+            //    float rot = (Main.MouseWorld - player.Center).ToRotation();
+            //    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<CrystalLaser>(), 10, 0, player.whoAmI, rot);
 
-            }
+            //}
             return false;
         }
 
         public override bool CanUseItem(Player player)
         {
-
+            Main.dayTime = true;
+            Main.time = 4000;
             return base.CanUseItem(player);
         }
 

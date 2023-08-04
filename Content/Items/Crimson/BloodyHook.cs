@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -26,12 +27,13 @@ namespace Coralite.Content.Items.Crimson
 
         public override void SetDefaults()
         {
-            Item.useAnimation = Item.useTime = 14;
+            Item.useAnimation = Item.useTime = 17;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.shoot = ProjectileType<BloodHookSlash>();
             Item.DamageType = DamageClass.Melee;
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Orange3, Item.sellPrice(0, 1, 0, 0));
-            Item.SetWeaponValues(27, 4);
+            Item.SetWeaponValues(26, 4);
+            Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;
         }
@@ -190,21 +192,16 @@ namespace Coralite.Content.Items.Crimson
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Vector2 direction = RotateVec2.RotatedBy(-1.57f * Math.Sign(totalAngle));
-
-            for (int j = 0; j < 2; j++)
+            if (VisualEffectSystem.HitEffect_Dusts)
             {
-                Vector2 dir = direction.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f));
-                for (int i = 0; i < 8; i++)
-                {
-                    Dust.NewDustPerfect(target.Center, DustID.Blood, dir.RotatedBy(Main.rand.NextFloat(-0.05f, 0.05f)) * (i * 1f), Scale: Main.rand.NextFloat(1f, 2f));
-                }
-            }
+                Vector2 direction = RotateVec2.RotatedBy(-1.57f * Math.Sign(totalAngle));
 
-            for (int i = 0; i < 6; i++)
-            {
-                Dust.NewDustPerfect(target.Center, DustID.Blood, direction.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(2f, 4f),
-                    Scale: Main.rand.NextFloat(1f, 2f));
+                Helper.SpawnDirDustJet(target.Center, () => direction.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)), 2, 8,
+                    (i) => i * 1f, DustID.Blood, Scale: Main.rand.NextFloat(1f, 2f), noGravity: false);
+
+                for (int i = 0; i < 6; i++)
+                    Dust.NewDustPerfect(target.Center, DustID.Blood, direction.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(2f, 4f),
+                        Scale: Main.rand.NextFloat(1f, 2f));
             }
         }
 
@@ -223,7 +220,7 @@ namespace Coralite.Content.Items.Crimson
             var origin = new Vector2(0, chainTex.Height / 2);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             Main.spriteBatch.Draw(chainTex, laserTarget, laserSource, lightColor, Projectile.rotation, origin, 0, 0);
 
@@ -233,7 +230,6 @@ namespace Coralite.Content.Items.Crimson
             Projectile.DrawShadowTrails(lightColor, 0.3f, 0.03f, 1, 8, 2, 2f);
 
             //绘制自己
-
             Main.spriteBatch.Draw(mainTex, endPos, null, lightColor, Projectile.rotation + 2f, mainTex.Size() / 2, Projectile.scale, 0, 0);
 
             Main.spriteBatch.End();
@@ -245,7 +241,7 @@ namespace Coralite.Content.Items.Crimson
         public override void PostDraw(Color lightColor) { }
     }
 
-    public class BloodHookChain : ModProjectile
+    public class BloodHookChain : BaseHeldProj
     {
         public override string Texture => AssetDirectory.CrimsonItems + "BloodyHookProj";
 
@@ -255,8 +251,6 @@ namespace Coralite.Content.Items.Crimson
         public ref float HookState => ref Projectile.ai[2];
 
         public ref float Timer => ref Projectile.localAI[0];
-
-        public Player Owner => Main.player[Projectile.owner];
 
         private Vector2 offset;
 
@@ -313,7 +307,7 @@ namespace Coralite.Content.Items.Crimson
                         if (Projectile.rotation % 4 < 0.2f)
                             SoundEngine.PlaySound(CoraliteSoundID.Swing2_Item7, Projectile.Center);
 
-                        Owner.itemRotation = Projectile.rotation + (Owner.direction > 0 ? 0 : MathHelper.Pi);
+                        Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
                         Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * 32;
                     }
                     else
@@ -431,33 +425,30 @@ namespace Coralite.Content.Items.Crimson
                 Timer = 0;
                 Projectile.netUpdate = true;
 
-                for (int i = 0; i < 10; i++)
-                {
-                    Dust.NewDustPerfect(target.Center, DustID.Blood, direction.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(2f, 4f),
-                        Scale: Main.rand.NextFloat(1f, 2f));
-                }
+                if (VisualEffectSystem.HitEffect_Dusts)
+                    for (int i = 0; i < 10; i++)
+                        Dust.NewDustPerfect(target.Center, DustID.Blood, direction.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(2f, 4f),
+                            Scale: Main.rand.NextFloat(1f, 2f));
             }
             else if ((int)HookState == (int)AIStates.drag)
             {
                 target.AddBuff(BuffType<BloodyHookDebuff>(), 120);
 
-                for (int j = 0; j < 2; j++)
+                if (VisualEffectSystem.HitEffect_Dusts)
                 {
-                    Vector2 dir = direction.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f));
-                    for (int i = 0; i < 12; i++)
-                    {
-                        Dust.NewDustPerfect(target.Center, DustID.Blood, dir.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f)) * (i * 1f), Scale: Main.rand.NextFloat(1f, 2f));
-                    }
+                    Helper.SpawnDirDustJet(target.Center, () => direction.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)), 2, 12,
+                        (i) => i * 1f, DustID.Blood, Scale: Main.rand.NextFloat(1f, 2f), noGravity: false, extraRandRot: 0.1f);
+
+                    for (int i = 0; i < 10; i++)
+                        Dust.NewDustPerfect(target.Center, DustID.Blood, direction.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(2f, 4f),
+                            Scale: Main.rand.NextFloat(1f, 2f));
                 }
 
-                for (int i = 0; i < 10; i++)
+                if (VisualEffectSystem.HitEffect_SpecialParticles)
                 {
-                    Dust.NewDustPerfect(target.Center, DustID.Blood, direction.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(2f, 4f),
-                        Scale: Main.rand.NextFloat(1f, 2f));
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustType<Slash>(), newColor: Color.Red, Scale: Main.rand.NextFloat(0.3f, 0.4f));
+                    dust.rotation = Projectile.rotation + 1.57f + Main.rand.NextFloat(-0.2f, 0.2f);
                 }
-
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustType<Slash>(), newColor: Color.Red, Scale: Main.rand.NextFloat(0.3f, 0.4f));
-                dust.rotation = Projectile.rotation + 1.57f + Main.rand.NextFloat(-0.2f, 0.2f);
             }
         }
 
@@ -476,14 +467,13 @@ namespace Coralite.Content.Items.Crimson
             var origin2 = new Vector2(0, chainTex.Height / 2);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             Main.spriteBatch.Draw(chainTex, laserTarget, laserSource, lightColor, Projectile.rotation, origin2, 0, 0);
 
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
 
             //绘制自己
-
             Main.spriteBatch.Draw(mainTex, endPos, null, lightColor, Projectile.rotation + 2f, mainTex.Size() / 2, Projectile.scale, 0, 0);
 
             Main.spriteBatch.End();

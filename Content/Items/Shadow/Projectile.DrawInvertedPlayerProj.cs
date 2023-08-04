@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.Shadow
             sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
 
             //Shadow.skinDyePacked = PlayerDrawHelper.PackShader(Shadow.hairDye, PlayerDrawHelper.ShaderConfiguration.HairShader);
-            Main.PlayerRenderer.DrawPlayer(Main.Camera, Shadow, Shadow.position, 3.141f, Shadow.fullRotationOrigin, shadow);
+            Main.PlayerRenderer.DrawPlayer(Main.Camera, Shadow, Shadow.position, MathHelper.Pi, Shadow.fullRotationOrigin, shadow);
 
             sb.End();
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);

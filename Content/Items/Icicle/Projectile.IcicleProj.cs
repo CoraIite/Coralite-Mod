@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.Audio;
 using Coralite.Helpers;
+using Coralite.Core.Configs;
 
 namespace Coralite.Content.Items.Icicle
 {
@@ -39,7 +40,6 @@ namespace Coralite.Content.Items.Icicle
             Projectile.velocity.Y += 0.02f;
             if (Projectile.velocity.Y > 8f)
                 Projectile.velocity.Y = 8f;
-
         }
 
         public override bool ShouldUpdatePosition()
@@ -59,17 +59,14 @@ namespace Coralite.Content.Items.Icicle
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 6; i++)
-            {
-                Dust.NewDustPerfect(Projectile.Center, DustID.Ice, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * Main.rand.NextFloat(0.2f, 0.5f));
-                Dust.NewDustPerfect(Projectile.Center, DustID.SnowBlock, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * Main.rand.NextFloat(0.1f, 0.3f));
-            }
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 6; i++)
+                {
+                    Dust.NewDustPerfect(Projectile.Center, DustID.Ice, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * Main.rand.NextFloat(0.2f, 0.5f));
+                    Dust.NewDustPerfect(Projectile.Center, DustID.SnowBlock, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * Main.rand.NextFloat(0.1f, 0.3f));
+                }
 
-            Helper.NotOnServer(() =>
-            {
-                SoundEngine.PlaySound(CoraliteSoundID.CrushedIce_Item27, Projectile.Center);
-            });
-
+            SoundEngine.PlaySound(CoraliteSoundID.CrushedIce_Item27, Projectile.Center);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

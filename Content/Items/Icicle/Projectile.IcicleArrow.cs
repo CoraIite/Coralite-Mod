@@ -1,4 +1,5 @@
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -41,8 +42,9 @@ namespace Coralite.Content.Items.Icicle
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 2; i++)
-                Dust.NewDustPerfect(Projectile.Center, DustID.Frost, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * Main.rand.NextFloat(0.1f, 0.3f));
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 2; i++)
+                    Dust.NewDustPerfect(Projectile.Center, DustID.Frost, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * Main.rand.NextFloat(0.1f, 0.3f));
 
             SoundEngine.PlaySound(CoraliteSoundID.CrushedIce_Item27, Projectile.Center);
         }

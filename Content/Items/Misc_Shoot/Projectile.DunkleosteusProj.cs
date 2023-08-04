@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                    TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (Owner.direction > 0 ? 0f : 3.141f);
+                    TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (Owner.gravDir * Owner.direction > 0 ? 0f : MathHelper.Pi);
                     if (TargetRot == 0f)
                         TargetRot = 0.0001f;
                 }
@@ -60,21 +60,21 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 default:
                 case 0:
-                    Projectile.rotation = TargetRot - Owner.direction * factor * 0.06f;
+                    Projectile.rotation = TargetRot - Owner.gravDir*Owner.direction * factor * 0.06f;
                     HeldPositionX = HELD_LENGTH + factor * -4;
                     break;
                 case 1:
-                    Projectile.rotation = TargetRot - Owner.direction * factor * 0.3f;
+                    Projectile.rotation = TargetRot - Owner.gravDir * Owner.direction * factor * 0.3f;
                     HeldPositionX = HELD_LENGTH + factor * -16;
 
-                    float rotation = Projectile.rotation + (Owner.direction > 0 ? 0 : 3.141f);
+                    float rotation = Projectile.rotation + (Owner.gravDir * Owner.direction > 0 ? 0 : MathHelper.Pi);
                     Vector2 center = Projectile.Center + rotation.ToRotationVector2() * 48 + Main.rand.NextVector2Circular(6, 6);
                     Dust dust = Dust.NewDustPerfect(center, DustID.Smoke, -Vector2.UnitY.RotatedByRandom(0.1f) * 2f, newColor: Color.Black, Scale: Main.rand.NextFloat(1.4f, 1.8f));
                     dust.noGravity = true;
                     break;
             }
 
-            Projectile.Center = Owner.Center + Owner.direction * Projectile.rotation.ToRotationVector2() * HeldPositionX;
+            Projectile.Center = Owner.Center + Owner.gravDir * Owner.direction * Projectile.rotation.ToRotationVector2() * HeldPositionX;
 
             Owner.heldProj = Projectile.whoAmI;
             Owner.itemRotation = Projectile.rotation + Owner.direction * 0.3f;
@@ -85,7 +85,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             Player Owner = Main.player[Projectile.owner];
             Vector2 center = Projectile.Center - Main.screenPosition;
-            bool ownerDir = Owner.direction > 0;
+            bool ownerDir = Owner.gravDir * Owner.direction > 0;
             SpriteEffects effects = ownerDir ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 0.9f, effects, 0f);

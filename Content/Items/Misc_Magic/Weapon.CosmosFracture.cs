@@ -19,13 +19,6 @@ namespace Coralite.Content.Items.Misc_Magic
 
         private bool rightClick;
 
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("异界裂隙");
-
-            // Tooltip.SetDefault("划破空间，来自异界的武器将撕裂你的敌人");
-        }
-
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;

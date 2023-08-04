@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.YujianHulu
 {
     public class ShadowYujian : BaseYujian
     {
-        public ShadowYujian() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 20, 0), 3, 1.5f) { }
+        public ShadowYujian() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 20, 0), 12, 1.5f) { }
 
         public override int ProjType => ModContent.ProjectileType<ShadowYujianProj>();
 
@@ -209,7 +209,7 @@ namespace Coralite.Content.Items.YujianHulu
             Effect effect = Filters.Scene["SimpleTrail"].GetShader().Shader;
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix view = Main.GameViewMatrix.TransformationMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);

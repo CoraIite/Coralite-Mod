@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent;
 using System.Linq;
+using Coralite.Helpers;
 
 namespace Coralite.Content.Bosses.Rediancie
 {
@@ -32,18 +33,13 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void AI()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation()+1.57f;
+            Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
 
             for (int i = 0; i < 2; i++)
-            {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16, 16), DustID.GemRuby, -Projectile.velocity * 0.4f, 0, default,1.4f);
-                dust.noGravity = true;
-            }
+                Projectile.SpawnTrailDust(DustID.GemRuby, 0.4f, Scale: 1.4f);
 
             if (Timer % 10 == 0 && Main.myPlayer == Projectile.owner)
-            {
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + Main.rand.NextVector2CircularEdge(32, 32), Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner, (int)Timer % 30);
-            }
 
             if (Timer % 2 == 0)
                 foreach (var player in Main.player.Where(p => p.active && Vector2.Distance(p.Center, Projectile.Center) < 100))

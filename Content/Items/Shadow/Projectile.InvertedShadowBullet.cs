@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Configs;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -41,27 +42,32 @@ namespace Coralite.Content.Items.Shadow
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            float direction = Projectile.velocity.ToRotation();
-            for (int i = 0; i < 8; i++)
+            if (VisualEffectSystem.HitEffect_Dusts)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(5, 5), DustID.Granite, (direction + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.Next(6, 8), 0, default, Main.rand.NextFloat(1.3f, 1.8f));
-                dust.noGravity = true;
-                dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(5, 5), DustID.Shadowflame, (direction + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.Next(5, 7), 0, default, Main.rand.NextFloat(1.2f, 1.6f));
-                dust.noGravity = true;
+                float direction = Projectile.velocity.ToRotation();
+                for (int i = 0; i < 8; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(5, 5), DustID.Granite, (direction + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.Next(6, 8), 0, default, Main.rand.NextFloat(1.3f, 1.8f));
+                    dust.noGravity = true;
+                    dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(5, 5), DustID.Shadowflame, (direction + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.Next(5, 7), 0, default, Main.rand.NextFloat(1.2f, 1.6f));
+                    dust.noGravity = true;
+                }
             }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            float direction = Projectile.velocity.ToRotation();
-            for (int i = 0; i < 8; i++)
+            if (VisualEffectSystem.HitEffect_Dusts)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(5, 5), DustID.Granite, (direction + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.Next(6, 8), 0, default, Main.rand.NextFloat(1.3f, 1.8f));
-                dust.noGravity = true;
-                dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(5, 5), DustID.Shadowflame, (direction + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.Next(5, 7), 0, default, Main.rand.NextFloat(1.2f, 1.6f));
-                dust.noGravity = true;
+                float direction = Projectile.velocity.ToRotation();
+                for (int i = 0; i < 8; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(5, 5), DustID.Granite, (direction + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.Next(6, 8), 0, default, Main.rand.NextFloat(1.3f, 1.8f));
+                    dust.noGravity = true;
+                    dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(5, 5), DustID.Shadowflame, (direction + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.Next(5, 7), 0, default, Main.rand.NextFloat(1.2f, 1.6f));
+                    dust.noGravity = true;
+                }
             }
-
             return base.OnTileCollide(oldVelocity);
         }
 

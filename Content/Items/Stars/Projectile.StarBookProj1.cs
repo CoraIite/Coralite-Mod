@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
@@ -27,11 +28,6 @@ namespace Coralite.Content.Items.Stars
 
         public bool canExplore = true;
 
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("星之书-星光球");
-        }
-
         public override void SetDefaults()
         {
             Projectile.width = 75;
@@ -57,6 +53,7 @@ namespace Coralite.Content.Items.Stars
                 Projectile.netUpdate = true;
             }
         }
+
         protected override void AIBefore()
         {
             if (!completeAndRelease)
@@ -279,22 +276,25 @@ namespace Coralite.Content.Items.Stars
                 Projectile.alpha -= 30;
                 Projectile.damage = (int)(Projectile.damage * 0.7f);
 
-                Color starYellow = new Color(255, 254, 191);
-                if (Main.netMode != NetmodeID.Server)
+                if (VisualEffectSystem.HitEffect_SpecialParticles)
+                {
+                    Color starYellow = new Color(255, 254, 191);
                     for (int i = 0; i < 2; i++)
                         Particle.NewParticle(target.Center + Main.rand.NextVector2Circular(target.width, target.height),
                             Main.rand.NextVector2CircularEdge(1, 1), CoraliteContent.ParticleType<HorizontalStar>(), starYellow, 0.3f);
-
+                }
             }
         }
 
         public override void Kill(int timeLeft)
         {
-            Color starYellow = new Color(255, 254, 191);
-            if (Main.netMode != NetmodeID.Server)
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
+            {
+                Color starYellow = new Color(255, 254, 191);
                 for (int i = 0; i < 6; i++)
                     Particle.NewParticle(Projectile.Center, Vector2.Normalize(Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f))) * Main.rand.Next(2, 5),
                        CoraliteContent.ParticleType<HorizontalStar>(), starYellow, 0.3f);
+            }
         }
 
         #endregion

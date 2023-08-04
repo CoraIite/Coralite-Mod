@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -28,10 +29,7 @@ namespace Coralite.Content.Bosses.Rediancie
         public override void AI()
         {
             for (int i = 0; i < 3; i++)
-            {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, -Projectile.velocity * 0.4f, 0, default, Projectile.scale);
-                dust.noGravity = true;
-            }
+                Projectile.SpawnTrailDust(DustID.GemRuby, 0.4f);
         }
 
         public override void Kill(int timeLeft)
