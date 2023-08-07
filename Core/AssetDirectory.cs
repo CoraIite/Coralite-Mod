@@ -14,6 +14,8 @@ namespace Coralite.Core
 
         public const string SlimeEmperor = Bosses + "SlimeEmperor/";
 
+        public const string GodOfWind = Bosses + "GodOfWind/";
+
         #endregion
 
         #region Buff部分！

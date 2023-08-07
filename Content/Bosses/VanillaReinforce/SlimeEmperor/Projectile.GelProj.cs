@@ -60,6 +60,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             var pos = Projectile.Center - Main.screenPosition;
             var frameBox = mainTex.Frame(1, 5, 0, Projectile.frame);
             Color color = lightColor * Projectile.localAI[0];
+            if (Main.zenithWorld)
+                lightColor = SlimeEmperor.BlackSlimeColor;
 
             //绘制自己
             Main.spriteBatch.Draw(mainTex, pos, frameBox, color, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);

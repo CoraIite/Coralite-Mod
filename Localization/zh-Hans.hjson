@@ -1216,7 +1216,22 @@ Mods: {
 			}
 
 			MagicCrystalHook: {
-				// DisplayName: Magic Crystal Hook
+				DisplayName: 魔力晶体钩
+				Tooltip: ""
+			}
+
+			MagikeSymbol: {
+				DisplayName: 魔能
+				Tooltip: 该合成表需要通过魔能重塑进行！
+			}
+
+			GelThrone: {
+				DisplayName: 史莱姆王座
+				Tooltip: ""
+			}
+
+			GOWTester: {
+				// DisplayName: G O W Tester
 				// Tooltip: ""
 			}
 		}
@@ -1330,6 +1345,7 @@ Mods: {
 			SlimeAvatar.DisplayName: 史莱姆分身
 			GelFlippy.DisplayName: 飞翼史莱姆
 			HealGelBall.DisplayName: 治愈凝胶球
+			// AosSi.DisplayName: Aos Si
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1464,7 +1480,9 @@ Mods: {
 			GelChaser.DisplayName: 小凝胶球
 			GelSpawner.DisplayName: 小凝胶球
 			// ShadowSwordHeldProj.DisplayName: Shadow Sword Held Proj
-			// MagicCrystalHookProjectile.DisplayName: Magic Crystal Hook Projectile
+			MagicCrystalHookProjectile.DisplayName: 魔力水晶钩
+			StickyGel.DisplayName: 黏黏凝胶
+			// GOWTestProj.DisplayName: G O W Test Proj
 		}
 
 		Configs: {
@@ -1555,6 +1573,7 @@ Mods: {
 			MagikeSystem: {
 				learnedMagikeAdvanced: 学习“卷轴：强化魔能提炼”后可合成
 				learnedMagikeBase: 学习“书页：魔能基础”后可合成
+				DecraftCondition: 该分解无法使用！
 			}
 		}
 

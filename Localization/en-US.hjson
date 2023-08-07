@@ -1219,6 +1219,21 @@ Mods: {
 				DisplayName: Magic Crystal Hook
 				Tooltip: ""
 			}
+
+			MagikeSymbol: {
+				DisplayName: Magike Symbol
+				Tooltip: ""
+			}
+
+			GelThrone: {
+				DisplayName: Gel Throne
+				Tooltip: ""
+			}
+
+			GOWTester: {
+				DisplayName: G O W Tester
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1330,6 +1345,7 @@ Mods: {
 			SlimeAvatar.DisplayName: Slime Avatar
 			GelFlippy.DisplayName: Gel Flippy
 			HealGelBall.DisplayName: Heal Gel Ball
+			AosSi.DisplayName: Aos Si
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1465,6 +1481,8 @@ Mods: {
 			GelSpawner.DisplayName: Gel Spawner
 			ShadowSwordHeldProj.DisplayName: Shadow Sword Held Proj
 			MagicCrystalHookProjectile.DisplayName: Magic Crystal Hook Projectile
+			StickyGel.DisplayName: Sticky Gel
+			GOWTestProj.DisplayName: G O W Test Proj
 		}
 
 		Configs: {
@@ -1547,6 +1565,7 @@ Mods: {
 			MagikeSystem: {
 				learnedMagikeAdvanced: After learning "Scroll: Enhanced Magike Refining"
 				learnedMagikeBase: After learning "Pages: Basic Magike".
+				DecraftCondition: Mods.Coralite.MagikeSystem.MagikeSystem.DecraftCondition
 			}
 		}
 

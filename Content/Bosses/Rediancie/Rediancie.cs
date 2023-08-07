@@ -1239,6 +1239,14 @@ namespace Coralite.Content.Bosses.Rediancie
 
         #region Draw
 
+        public override Color? GetAlpha(Color drawColor)
+        {
+            if (Main.zenithWorld)
+                return Main.DiscoColor;
+
+            return null;
+        }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             //额....这个判断有那么亿点点特殊，所以暂时不用linq了 不太好用
@@ -1259,18 +1267,22 @@ namespace Coralite.Content.Bosses.Rediancie
             //    }
             //}
 
+            Color color = drawColor;
+            if (Main.zenithWorld)
+                color = Main.DiscoColor;
+
             foreach (var follower in followers)
             {
                 if (follower.drawBehind)
-                    follower.Draw(spriteBatch, drawColor);
+                    follower.Draw(spriteBatch, color);
             }
 
-            DrawSelf(spriteBatch, screenPos, drawColor);
+            DrawSelf(spriteBatch, screenPos, color);
 
             foreach (var follower in followers)
             {
                 if (!follower.drawBehind)
-                    follower.Draw(spriteBatch, drawColor);
+                    follower.Draw(spriteBatch, color);
             }
 
             return false;

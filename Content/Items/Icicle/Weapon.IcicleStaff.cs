@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Icicle
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 22;
+            Item.damage = 25;
             Item.useTime = 14;
             Item.useAnimation = 14;
             Item.knockBack = 3f;

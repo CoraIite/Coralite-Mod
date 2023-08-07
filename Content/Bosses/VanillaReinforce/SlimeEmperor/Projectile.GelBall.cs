@@ -114,9 +114,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             float oldVelX = Math.Abs(oldVelocity.X);
             float oldVelY = Math.Abs(oldVelocity.Y);
             if (oldVelX > newVelX)
-                Projectile.velocity.X = -oldVelX * 0.9f;
+                Projectile.velocity.X = -oldVelX * 0.8f;
             if (oldVelY > newVelY)
-                Projectile.velocity.Y = -oldVelY * 0.9f;
+                Projectile.velocity.Y = -oldVelY * 0.8f;
 
             Projectile.rotation = Projectile.velocity.ToRotation();
             for (int i = 0; i < 8; i++)
@@ -147,6 +147,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
             var pos = Projectile.Center - Main.screenPosition;
+            if (Main.zenithWorld)
+                lightColor = SlimeEmperor.BlackSlimeColor;
+
             Color color = lightColor * Projectile.localAI[0];
             var frameBox = mainTex.Frame(1, 2, 0, 0);
             Vector2 scale = Scale;

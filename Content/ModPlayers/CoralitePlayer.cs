@@ -21,7 +21,7 @@ namespace Coralite.Content.ModPlayers
         public const int DashUp = 1;
         public const int DashRight = 2;
         public const int DashLeft = 3;
-
+        
         public int DashDir = -1;
 
 

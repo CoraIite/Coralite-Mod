@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,12 +30,45 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             NPC.width = NPC.height = 42;
             NPC.damage = 1;
-            NPC.lifeMax = 1;
+            NPC.lifeMax = 10;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 0.1f;
             NPC.noGravity = true;
             NPC.noTileCollide = false;
+        }
+
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
+            {
+                NPC.lifeMax = 1;
+                if (nPCStrengthHelper.IsMasterMode)
+                {
+                    NPC.lifeMax = (int)(50 / journeyScale);
+                    NPC.scale = 1.25f;
+                }
+
+                if (Main.getGoodWorld)
+                {
+                    NPC.lifeMax = (int)(75 / journeyScale);
+                    NPC.scale = 1.5f;
+                }
+
+                return;
+            }
+
+            if (Main.masterMode)
+            {
+                NPC.lifeMax = 50;
+                NPC.scale = 1.25f;
+            }
+
+            if (Main.getGoodWorld)
+            {
+                NPC.lifeMax = 75;
+                NPC.scale = 1.5f;
+            }
         }
 
         public override void AI()
@@ -59,18 +93,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     if (NPC.velocity.Y < 16)
                         NPC.velocity.Y += 0.25f;
 
-                    if (NPC.ai[2] > 1f)
+                    if (NPC.ai[2] > NPC.scale)
                     {
                         float targetRot = NPC.velocity.Length() * 0.04f;
                         NPC.rotation = NPC.rotation.AngleTowards(targetRot, 0.01f);
                         State = 1;
-                        NPC.ai[2] = 1f;
+                        NPC.ai[2] = NPC.scale;
                     }
                     break;
                 case 1:
                     NPC.velocity *= 0.99f;
                     NPC.ai[3]++;
-                    NPC.ai[2] = 1 + MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 0.1f;
+                    NPC.ai[2] = NPC.scale + MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 0.1f;
                     if (Vector2.Distance(NPC.Center, Target.Center) < NPC.width)
                     {
                         State = 2;
@@ -105,7 +139,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanBeHitByItem(Player player, Item item) => State == 1;
-        public override bool? CanBeHitByProjectile(Projectile projectile) => projectile.friendly&&State == 1;
+        public override bool? CanBeHitByProjectile(Projectile projectile) => projectile.friendly && State == 1;
 
         public override bool CheckDead()
         {
@@ -124,8 +158,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             Texture2D mainTex = TextureAssets.Npc[Type].Value;
             var frameBox = mainTex.Frame(1, 7, 0, NPC.frame.Y);
             var origin = frameBox.Size() / 2;
+            if (Main.zenithWorld)
+                drawColor = SlimeEmperor.BlackSlimeColor;
 
-            spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, drawColor * NPC.ai[2], NPC.rotation, origin, NPC.ai[2],0,0);
+            spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, drawColor * NPC.ai[2], NPC.rotation, origin, NPC.ai[2], 0, 0);
             return false;
         }
     }

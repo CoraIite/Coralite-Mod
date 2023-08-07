@@ -25,7 +25,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int sign = Math.Sign(NPC.Center.X - Target.Center.X);
-                                int directlyHowMany = Helpers.Helper.ScaleValueForDiffMode(1, 1, 2, 3);
+                                int directlyHowMany = Helpers.Helper.ScaleValueForDiffMode(1, 1, 3, 4);
                                 int damage = Helpers.Helper.ScaleValueForDiffMode(20, 15, 18, 20);
                                 SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
                                 for (int i = 0; i < directlyHowMany; i++)
@@ -38,7 +38,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                                 directlyHowMany = directlyHowMany > 1 ? directlyHowMany - 1 : 1;
                                 for (int i = 0; i < directlyHowMany; i++)
                                 {
-                                    Vector2 vel = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.5f,0.5f))*16;
+                                    Vector2 vel = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * 16;
                                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<GelBall>(),
                                         damage, 4f, NPC.target);
                                 }

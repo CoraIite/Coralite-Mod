@@ -74,6 +74,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         private const int WidthMax = 158;
         private const int HeightMax = 100;
 
+        public static Color BlackSlimeColor=Color.Black;
+
         #region tml hooks
 
         public override void SetStaticDefaults()
@@ -91,9 +93,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.width = 60;
             NPC.height = 85;
             NPC.scale = 1.5f;
-            NPC.damage = 25;
-            NPC.defense = 4;
-            NPC.lifeMax = 5100;
+            NPC.damage = 40;
+            NPC.defense = 8;
+            NPC.lifeMax = 6100;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 20f;
@@ -110,54 +112,54 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             //if (!Main.dedServ)
             //    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/？？？");
         }
-
+        
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((4600 + numPlayers * 960) / journeyScale);
-                    NPC.damage = 30;
-                    NPC.defense = 6;
+                    NPC.lifeMax = (int)((5600 + numPlayers * 1460) / journeyScale);
+                    NPC.damage = 75;
+                    NPC.defense = 10;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((5200 + numPlayers * 1230) / journeyScale);
+                    NPC.lifeMax = (int)((6200 + numPlayers * 3030) / journeyScale);
                     NPC.scale *= 1.25f;
-                    NPC.defense = 8;
-                    NPC.damage = 45;
+                    NPC.defense = 14;
+                    NPC.damage = 100;
                 }
 
                 if (Main.getGoodWorld)
                 {
                     NPC.damage = 120;
                     NPC.scale *= 1.25f;
-                    NPC.defense = 10;
+                    NPC.defense = 16;
                 }
 
                 return;
             }
 
-            NPC.lifeMax = 4600 + numPlayers * 960;
-            NPC.damage = 30;
-            NPC.defense = 6;
+            NPC.lifeMax = 5600 + numPlayers * 1460;
+            NPC.damage = 75;
+            NPC.defense = 10;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 5200 + numPlayers * 1230;
+                NPC.lifeMax = 6200 + numPlayers * 3030;
                 NPC.scale *= 1.25f;
-                NPC.defense = 8;
-                NPC.damage = 45;
+                NPC.defense = 14;
+                NPC.damage = 100;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 5600 + numPlayers * 1760;
+                NPC.lifeMax = 6800 + numPlayers * 4060;
                 NPC.damage = 140;
                 NPC.scale *= 1.25f;
-                NPC.defense = 10;
+                NPC.defense = 16;
             }
         }
 
@@ -165,7 +167,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             npcLoot.Add(ItemDropRule.BossBag(ItemType<EmperorSabre>()));
 
-            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<RediancieRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<GelThrone>()));
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
             //npcLoot.Add(ItemDropRule.BossBag(ItemType<RediancieBossBag>()));
             //npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
@@ -178,7 +180,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if ((projectile.penetrate < 0 || projectile.penetrate > 1) && modifiers.DamageType != DamageClass.Melee)
-                modifiers.SourceDamage *= 0.8f;
+                modifiers.SourceDamage *= 0.75f;
+
         }
 
         public override void Load()
@@ -238,6 +241,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public override void OnSpawn(IEntitySource source)
         {
             //CanUseHealGelBall = true;
+            PolymerizeTime = Helper.ScaleValueForDiffMode(240, 240, 150, 60);
             Scale = Vector2.One;
             crown = new CrownDatas();
             crown.Bottom = NPC.Top + new Vector2(0, -50);
@@ -258,10 +262,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
                 if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)//没有玩家存活时离开
                 {
-                    Jump(8f, 12f);
+                    NPC.noGravity = true;
+                    NPC.noTileCollide = true;
+                    NPC.velocity.Y -= 0.3f;
+                    CanDrawShadow = true;
                     NPC.EncourageDespawn(10);
                     return;
                 }
+                else
+                    ResetStates();
             }
 
             switch ((int)State)
@@ -306,7 +315,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     GelFlippy(); //√
                     break;
                 case (int)AIStates.StickyGel:
-                    ResetStates();
+                    StickyGel();
                     break;
                 case (int)AIStates.TransportSplit:
                     TransportSplit(); //√
@@ -337,7 +346,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                                     {
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
                                         {
-                                            int howMany = Helper.ScaleValueForDiffMode(1, 2, 2, 3);
+                                            int howMany = Helper.ScaleValueForDiffMode(1, 2, 4, 6);
                                             for (int i = 0; i < howMany; i++)
                                             {
                                                 Point pos = NPC.Center.ToPoint();
@@ -365,6 +374,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         //以及更新NPC的位置
         public override void PostAI()
         {
+            if (Main.zenithWorld)
+            {
+                BlackSlimeColor = Color.Lerp(new Color(25, 25, 25, 200), new Color(110, 60, 100, 50),
+                    (MathF.Sin(Main.GlobalTimeWrappedHourly) + 1) / 2);
+            }
+
             switch ((int)MovingMode)
             {
                 default:
@@ -493,7 +508,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             HealGelBall = 11
         }
 
-        private enum AIPhases
+        private enum NormalAIPhases
         {
             MiniJump = 0,
             Shoot1 = 1,
@@ -501,6 +516,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             BigJump = 3,
             Shoot2 = 4,
             Melee2 = 5,
+        }
+
+        private enum FTWAIPhases
+        {
+            Shoot1 = 0,
+            Melee1 = 1,
+            Jump =2,
+            Shoot2 =3,
+            Melee2 = 4,
         }
 
         public void ResetStates()
@@ -518,13 +542,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             //}
 
             if (Main.getGoodWorld)
-                NormallySetState();
+                FTWSetState();
             else
                 NormallySetState();
 
             //ResetProprieties:
 
-            //State = (int)AIStates.BodySlam;
+            //State = (int)AIStates.StickyGel;
 
             NPC.dontTakeDamage = false;
             NPC.noTileCollide = false;
@@ -541,11 +565,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             switch (MovePhase)
             {
                 default:
-                case (int)AIPhases.MiniJump:
+                case (int)NormalAIPhases.MiniJump:
                     State = (int)AIStates.MiniJump;
                     break;
 
-                case (int)AIPhases.Shoot1:
+                case (int)NormalAIPhases.Shoot1:
                     if (Main.masterMode)
                         State = Main.rand.Next(2) switch
                         {
@@ -556,15 +580,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         State = (int)AIStates.GelShoot;
                     break;
 
-                case (int)AIPhases.Melee1:
+                case (int)NormalAIPhases.Melee1:
                     State = (int)AIStates.CrownStrike;
                     break;
 
-                case (int)AIPhases.BigJump:
+                case (int)NormalAIPhases.BigJump:
                     State = (int)AIStates.BigJump;
                     break;
 
-                case (int)AIPhases.Shoot2:
+                case (int)NormalAIPhases.Shoot2:
                     if (Main.masterMode)
                         State = shoot2State switch
                         {
@@ -585,7 +609,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         shoot2State = 0;
                     break;
 
-                case (int)AIPhases.Melee2:
+                case (int)NormalAIPhases.Melee2:
                     if (Main.masterMode)
                         State = shoot2State switch
                         {
@@ -614,7 +638,76 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         private void FTWSetState()
         {
+            switch (MovePhase)
+            {
+                default:
+                case (int)FTWAIPhases.Shoot1:
+                    if (Main.masterMode)
+                        State = Main.rand.Next(2) switch
+                        {
+                            0 => (int)AIStates.GelShoot,
+                            _ => (int)AIStates.GelFlippy
+                        };
+                    else
+                        State = (int)AIStates.GelShoot;
+                    break;
 
+                case (int)FTWAIPhases.Melee1:
+                    State = Main.rand.Next(2) switch
+                    {
+                        0 => (int)AIStates.CrownStrike,
+                        _ => (int)AIStates.BodySlam
+                    };
+                    break;
+
+                case (int)FTWAIPhases.Jump:
+                    State = Main.rand.Next(2) switch
+                    {
+                        0 => (int)AIStates.MiniJump,
+                        _ => (int)AIStates.BigJump
+                    };
+                    break;
+
+                case (int)NormalAIPhases.Shoot2:
+                    if (Main.masterMode)
+                        State = shoot2State switch
+                        {
+                            0 => (int)AIStates.SpikeGelBall,
+                            1 => (int)AIStates.StickyGel,
+                            _ => (int)AIStates.PolymerizeShot
+                        };
+                    else
+                        State = shoot2State switch
+                        {
+                            0 => (int)AIStates.SpikeGelBall,
+                            1 => (int)AIStates.SpikeGelBall,
+                            _ => (int)AIStates.PolymerizeShot
+                        };
+
+                    shoot2State++;
+                    if (shoot2State > 2)
+                        shoot2State = 0;
+                    break;
+
+                case (int)NormalAIPhases.Melee2:
+                    if (Main.masterMode)
+                        State = shoot2State switch
+                        {
+                            0 => (int)AIStates.TransportSplit,
+                            _ => (int)AIStates.Split
+                        };
+                    else
+                        State = (int)AIStates.Split;
+
+                    melee2State++;
+                    if (melee2State > 1)
+                        melee2State = 0;
+                    break;
+            }
+
+            MovePhase++;
+            if (MovePhase > 4)
+                MovePhase = 0;
         }
 
         /// <summary>
@@ -642,6 +735,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.noGravity = false;
             NPC.defense = NPC.defDefense;
 
+            crown.Velocity_Y *= 0;
             crown.Rotation = Main.rand.NextFloat(MathHelper.Pi + MathHelper.Pi / 4, MathHelper.TwoPi - MathHelper.Pi / 4) + MathHelper.Pi / 2;
             crown.Bottom = NPC.Top;
         }
@@ -681,6 +775,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
             Vector2 crownOrigin;
             Vector2 crownPos;
+
+            if (Main.zenithWorld)
+                drawColor = BlackSlimeColor;
 
             switch ((int)MovingMode)
             {

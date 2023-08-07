@@ -57,7 +57,7 @@ namespace Coralite.Compat.BossCheckList
                     "LogBoss",
                     Coralite.Instance,
                     "冰龙宝宝",
-                    3.2f,
+                    3.1f,
                     () => DownedBossSystem.downedBabyIceDragon,
                     NPCType<Content.Bosses.BabyIceDragon.BabyIceDragon>(),
                     new Dictionary<string, object>()
@@ -84,7 +84,7 @@ namespace Coralite.Compat.BossCheckList
                     "LogBoss",
                     Coralite.Instance,
                     "史莱姆皇帝",
-                    3.1f,
+                    3.2f,
                     () => DownedBossSystem.downedSlimeEmperor,
                     NPCType<Content.Bosses.VanillaReinforce.SlimeEmperor.SlimeEmperor>(),
                     new Dictionary<string, object>()

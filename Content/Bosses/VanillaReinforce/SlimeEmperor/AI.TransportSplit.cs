@@ -108,7 +108,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int howMany = Helper.ScaleValueForDiffMode(1, 2, 2, 3);
+                                int howMany = Helper.ScaleValueForDiffMode(1, 2, 4, 6);
                                 for (int i = 0; i < howMany; i++)
                                 {
                                     Point pos = NPC.Center.ToPoint();

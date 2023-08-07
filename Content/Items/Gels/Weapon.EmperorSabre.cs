@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Icicle;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
@@ -42,7 +41,7 @@ namespace Coralite.Content.Items.Gels
             Item.DamageType = DamageClass.Melee;
             Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.rare = ItemRarityID.Expert;
-            Item.shoot = ProjectileType<IcicleSwordSplash>();
+            Item.shoot = ProjectileType<EmperorSabreSlash>();
 
             Item.noUseGraphic = true;
             Item.noMelee = true;

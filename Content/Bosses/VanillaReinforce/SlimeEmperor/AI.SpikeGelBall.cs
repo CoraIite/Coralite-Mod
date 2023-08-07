@@ -19,7 +19,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     {
                         SonState++;
                         //射刺球弹幕
-                        int howMany = Helpers.Helper.ScaleValueForDiffMode(2, 2, 3, 4);
+                        int howMany = Helpers.Helper.ScaleValueForDiffMode(2, 2, 3, 5);
                         int damage = Helpers.Helper.ScaleValueForDiffMode(20, 15, 18, 20);
 
                         for (int i = 0; i < howMany; i++)

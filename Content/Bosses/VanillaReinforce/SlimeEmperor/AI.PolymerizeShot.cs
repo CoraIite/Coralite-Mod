@@ -12,6 +12,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
     public partial class SlimeEmperor
     {
+        public int PolymerizeTime = 240;
+
         public void PolymerizeShot()
         {
             switch ((int)SonState)
@@ -43,9 +45,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                                 NPC.frame.Y = 0;
                         }
 
-                        if (Timer < 240)
+                        if (Timer < PolymerizeTime)
                         {
-                            float factor = Timer / 240f;
+                            float factor = Timer / (float)PolymerizeTime;
 
                             for (int i = 0; i < 4; i++)
                             {
@@ -70,7 +72,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
                         int damage = 20;
                         float scale = 1f;
-                        float howMany = 1f;
+                        float howMany = 3f;
                         float speed = 10f;
                         int type = ModContent.NPCType<SlimeAvatar>();
                         foreach (var npc in Main.npc.Where(n => n.active && n.type == type))
@@ -93,8 +95,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             speed = 28;
                         if (scale > 4f)
                             scale = 4f;
-                        if (howMany > 20)
-                            howMany = 20;
+                        if (howMany > 25)
+                            howMany = 25;
                         Vector2 direction = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
 
                         SoundEngine.PlaySound(CoraliteSoundID.QueneSlimeFalling_Item167, NPC.Center);

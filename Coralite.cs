@@ -10,15 +10,10 @@ using Terraria.ModLoader;
 
 namespace Coralite
 {
-    public class Coralite : Mod
+    public partial class Coralite : Mod
     {
         public const int YujianHuluContainsMax = 10;
         public const int MaxParticleCount = 801;
-        public readonly Color RedJadeRed;
-        public readonly Color IcicleCyan;
-        public readonly Color MagicCrystalPink;
-        public readonly Color CrystallineMagikePurple;
-        public readonly Color SplendorMagicoreLightBlue;
 
         private List<IOrderedLoadable> loadCache;
 
@@ -39,11 +34,7 @@ namespace Coralite
             SqrtSmoother = new SqrtSmoother();
             X2Smoother = new X2Smoother();
 
-            RedJadeRed = new Color(221, 50, 50);
-            IcicleCyan = new Color(43, 255, 198);
-            MagicCrystalPink = new Color(255, 190, 236);
-            CrystallineMagikePurple = new Color(140, 130, 252);
-            SplendorMagicoreLightBlue = new Color(190, 225, 235);
+            InitColor();
         }
 
         public override void Load()

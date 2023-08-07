@@ -103,7 +103,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int howMany = Helper.ScaleValueForDiffMode(1, 2, 2, 3);
+                                int howMany = Helper.ScaleValueForDiffMode(1, 2, 4, 6);
                                 for (int i = 0; i < howMany; i++)
                                 {
                                     Point pos = oldCenter.ToPoint();
@@ -134,12 +134,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             else
                                 NPC.velocity += dir * 0.75f;
 
-                            if (NPC.velocity.Length() > 10)
-                                NPC.velocity = Vector2.Normalize(NPC.velocity) * 10;
+                            if (NPC.velocity.Length() > 9)
+                                NPC.velocity = Vector2.Normalize(NPC.velocity) * 9;
                             break;
                         }
 
-                        if (Timer < 120)
+                        if (Timer < 115)
                         {
                             NPC.velocity *= 0.95f;
                             for (int i = 0; i < 4; i++)
@@ -221,6 +221,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 case 8:
                     ScaleToTarget(0.7f, 1.3f, 0.15f, Scale.X < 0.75f, () =>
                     {
+                        if (Main.masterMode)
+                        {
+                            int directlyHowMany = Helper.ScaleValueForDiffMode(1, 1, 3, 4);
+                            int damage = Helper.ScaleValueForDiffMode(20, 15, 18, 20);
+
+                            for (int i = 0; i < directlyHowMany; i++)
+                            {
+                                Vector2 vel = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * 16;
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<GelBall>(),
+                                    damage, 4f, NPC.target);
+                            }
+                        }
                         CrownJumpUp(10, 3);
                         SonState = 9;
                     });

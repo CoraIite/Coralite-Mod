@@ -292,6 +292,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             Vector2 origin = new Vector2(frameBox.Width / 2, frameBox.Height);
             Vector2 scale = Scale * NPC.scale;
 
+            if (Main.zenithWorld)
+                drawColor = SlimeEmperor.BlackSlimeColor;
+
             spriteBatch.Draw(mainTex, NPC.Bottom + new Vector2(0, 4) - screenPos, frameBox, drawColor, NPC.rotation, origin, scale, 0, 0f);
             return false;
         }

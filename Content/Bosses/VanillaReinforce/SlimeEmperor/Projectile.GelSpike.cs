@@ -52,6 +52,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             var origin = mainTex.Size() / 2;
+            if (Main.zenithWorld)
+                lightColor = SlimeEmperor.BlackSlimeColor;
 
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, origin, 0.8f, 0, 0);
             return false;

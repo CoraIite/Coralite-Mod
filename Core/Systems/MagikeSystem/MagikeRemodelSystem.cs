@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Coralite.Content.Raritys;
+using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -7,7 +9,7 @@ using Terraria.ModLoader.Core;
 
 namespace Coralite.Core.Systems.MagikeSystem
 {
-    public partial class MagikeSystem : ModSystem
+    public partial class MagikeSystem : ModSystem,ILocalizedModType
     {
         /// <summary> 魔能重塑的合成表 </summary>
         internal static Dictionary<int, List<RemodelRecipe>> remodelRecipes = new Dictionary<int, List<RemodelRecipe>>();
@@ -19,7 +21,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             Instance = this;
         }
 
-        public override void PostSetupRecipes()
+        public override void PostAddRecipes()
         {
             if (Main.dedServ)
                 return;
@@ -28,7 +30,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             remodelRecipes = new Dictionary<int, List<RemodelRecipe>>();
 
-            foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))
+            foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))  //添加魔能重塑合成表
             {
                 if (!t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikeRemodelable)))
                 {
@@ -41,6 +43,18 @@ namespace Coralite.Core.Systems.MagikeSystem
             {
                 recipes.Value.Sort((r1, r2) => r1.magikeCost.CompareTo(r2.magikeCost));
             }
+
+            foreach (var list in remodelRecipes)
+            {
+                foreach (var remodel in list.Value)
+                {
+                    Recipe recipe = Recipe.Create(remodel.itemToRemodel.type, remodel.itemToRemodel.stack);
+                    recipe.AddIngredient(remodel.selfType, remodel.selfRequiredNumber);
+                    recipe.AddIngredient<MagikeSymbol>(remodel.magikeCost);
+                    recipe.AddDecraftCondition(this.GetLocalization("DecraftCondition"), () => false);
+                    recipe.Register();
+                }
+            }
         }
 
         public override void Unload()
@@ -50,7 +64,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             if (remodelRecipes != null)
                 remodelRecipes.Clear();
-            remodelRecipes=null;
+            remodelRecipes = null;
         }
 
         /// <summary>
@@ -196,5 +210,34 @@ namespace Coralite.Core.Systems.MagikeSystem
     {
         bool CanRemodel(Item item);
         string Description { get; }
+    }
+
+    public class MagikeSymbol:ModItem
+    {
+        public override string Texture => AssetDirectory.MagikeItems+Name;
+
+        public override void SetDefaults()
+        {
+            Item.maxStack = 999999;
+            Item.rare = ModContent.RarityType<MagicCrystalRarity>();
+        }
+
+        public override bool OnPickup(Player player) => false;
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine line = new TooltipLine(Mod, "Coralite: MagikeNeed", "魔能需求量："+Item.stack);
+
+            if (Item.stack < 300)
+                line.OverrideColor = Coralite.Instance.MagicCrystalPink;
+            else if (Item.stack < 1000)
+                line.OverrideColor = Coralite.Instance.CrystallineMagikePurple;
+            else if (Item.stack < 2_0000)
+                line.OverrideColor = Coralite.Instance.SplendorMagicoreLightBlue;
+            else
+                line.OverrideColor = Color.Orange;
+
+            tooltips.Add(line);
+        }
     }
 }

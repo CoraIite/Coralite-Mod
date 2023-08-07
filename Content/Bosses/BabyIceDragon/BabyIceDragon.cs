@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -59,6 +61,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public int movePhase;
         public bool canDrawShadows;
+        private List<int> Moves;
 
         public const int FrameWidth = 420 / 3;
         public const int FrameHeight = 720 / 6;
@@ -113,12 +116,19 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 if (nPCStrengthHelper.IsMasterMode)
                 {
                     NPC.lifeMax = (int)((4320 + numPlayers * 1600) / journeyScale);
-                    NPC.damage = 40;
+                    NPC.damage = 60;
+                    NPC.defense = 13;
                 }
 
                 if (Main.getGoodWorld)
                 {
-                    NPC.damage = 60;
+                    NPC.damage = 80;
+                    NPC.defense = 15;
+                }
+
+                if (Main.zenithWorld)
+                {
+                    NPC.scale = 0.4f;
                 }
 
                 return;
@@ -131,13 +141,20 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (Main.masterMode)
             {
                 NPC.lifeMax = 4320 + numPlayers * 1600;
-                NPC.damage = 40;
+                NPC.damage = 60;
+                NPC.defense = 13;
             }
 
             if (Main.getGoodWorld)
             {
                 NPC.lifeMax = 5320 + numPlayers * 1600;
-                NPC.damage = 60;
+                NPC.damage = 80;
+                NPC.defense = 15;
+            }
+
+            if (Main.zenithWorld)
+            {
+                NPC.scale = 0.4f;
             }
         }
 
@@ -207,7 +224,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)
         {
-            npcHitbox = new Rectangle((int)(NPC.Center.X - 64 / 2), (int)(NPC.Center.Y - 40 / 2), 64, 40);
+            int width = (int)(64 * NPC.scale);
+            int height= (int)(40 * NPC.scale);
+            npcHitbox = new Rectangle((int)(NPC.Center.X - width / 2), (int)(NPC.Center.Y - height / 2), width, height);
             return true;
         }
 
@@ -218,6 +237,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override void OnSpawn(IEntitySource source)
         {
             NPC.oldPos = new Vector2[8];
+            Moves = new List<int>();
+            ResetMovePool(1);
             NPC.TargetClosest(false);
             NPC.frame.Y = 2;
             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -782,54 +803,42 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             else
                 phase = NPC.life < (NPC.lifeMax / 2) ? 2 : 1;
 
-            float oldState = State;
-            int count = 0;
-            while (count < 10)
+            if (ExchangeState && phase == 2)    //进入2阶段时固定进入吼叫动画
             {
-                count++;
-                if (ExchangeState && phase == 2)    //进入2阶段时固定进入吼叫动画
-                {
-                    State = (int)AIStates.roaringAnim;
-                    ExchangeState = false;
-                    Main.StartRain();
-                    Main.SyncRain();
-                    goto Check;
-                }
-
-                //有破绽的行动
-                if (CanVulnerableMove())
-                {
-                    NormalMoveCount = 0;
-                    State = Main.rand.Next(2) switch
-                    {
-                        0 => (int)AIStates.dive,
-                        _ => (int)AIStates.accumulate
-                    };
-                    goto Check;
-                }
-
-                //特殊行动，大师模式专属
-                if (CanSpecialMove(phase))
-                {
-                    NormalMoveCount += 1f;
-                    State = Main.rand.Next(2) switch
-                    {
-                        0 => (int)AIStates.iceTornado,
-                        _ => (int)AIStates.iciclesFall
-                    };
-                    goto Check;
-                }
-
-                //普通行动
-                NormalMove(phase);
-
-            Check:
-                if (State == oldState)
-                    continue;
-                else
-                    break;
+                State = (int)AIStates.roaringAnim;
+                ExchangeState = false;
+                Main.StartRain();
+                Main.SyncRain();
+                ResetEffects();
+                ResetMovePool(2);
+                goto ResetValues;
             }
 
+            //有破绽的行动
+            if (CanVulnerableMove())
+            {
+                NormalMoveCount = 0;
+                ResetMovePool(phase);
+                State = Main.rand.Next(2) switch
+                {
+                    0 => (int)AIStates.dive,
+                    _ => (int)AIStates.accumulate
+                };
+
+                goto ResetValues;
+            }
+
+            if (Moves.Count > 0)
+            {
+                State = Main.rand.NextFromList(Moves.ToArray());
+                Moves.Remove((int)State);
+            }
+            else
+                State = (int)AIStates.iceBreath;
+
+            NormalMoveCount += 1f;
+
+        ResetValues:
             NPC.dontTakeDamage = false;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
@@ -887,39 +896,50 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.netUpdate = true;
         }
 
-        public static bool CanSpecialMove(int phase)
+        public void ResetMovePool(int phase)
         {
-            if (phase != 2)
-                return false;
+            Moves.Clear();
 
-            return Main.masterMode && Main.rand.NextBool(3);
-        }
-
-        public void NormalMove(int phase)
-        {
-            //这个switch表达式或许让它的可读性变得更加差了......
-            State = phase switch
+            switch (phase)
             {
-                2 => Main.rand.Next(6) switch  //2阶段
-                {
-                    0 => (int)AIStates.iceBreath,
-                    1 => (int)AIStates.horizontalDash,
-                    2 => (int)AIStates.smashDown,
-                    3 => (int)AIStates.doubleDash,
-                    4 => (int)AIStates.iceCloud,
-                    _ => (int)AIStates.iceThornsTrap
-                },
-                _ => Main.rand.Next(3) switch  //一阶段及其他
-                {
-                    0 => (int)AIStates.iceBreath,
-                    1 => (int)AIStates.horizontalDash,
-                    _ => (int)AIStates.smashDown
-                },
-            };
-
-            NormalMoveCount += 1f;
-            NPC.noTileCollide = true;
-            NPC.noGravity = true;
+                default:
+                case 1:
+                    for (int i = 0; i < 4; i++)
+                        Moves.Add((int)AIStates.iceBreath);
+                    for (int i = 0; i < 2; i++)
+                        Moves.Add((int)AIStates.horizontalDash);
+                    for (int i = 0; i < 4; i++)
+                        Moves.Add((int)AIStates.smashDown);
+                    break;
+                case 2:
+                    if (Main.masterMode)
+                    {
+                        Moves.Add((int)AIStates.iceBreath);
+                        Moves.Add((int)AIStates.horizontalDash);
+                        Moves.Add((int)AIStates.smashDown);
+                        for (int i = 0; i < 2; i++)
+                            Moves.Add((int)AIStates.iceThornsTrap);
+                        for (int i = 0; i < 2; i++)
+                            Moves.Add((int)AIStates.doubleDash);
+                        Moves.Add((int)AIStates.iceCloud);
+                        Moves.Add((int)AIStates.iciclesFall);
+                        Moves.Add((int)AIStates.iceTornado);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 2; i++)
+                            Moves.Add((int)AIStates.iceBreath);
+                        Moves.Add((int)AIStates.horizontalDash);
+                        for (int i = 0; i < 2; i++)
+                            Moves.Add((int)AIStates.smashDown);
+                        for (int i = 0; i < 2; i++)
+                            Moves.Add((int)AIStates.iceThornsTrap);
+                        for (int i = 0; i < 2; i++)
+                            Moves.Add((int)AIStates.doubleDash);
+                        Moves.Add((int)AIStates.iceCloud);
+                    }
+                    break;
+            }
         }
 
         public bool CanVulnerableMove()
@@ -928,20 +948,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (Main.masterMode)
             {
                 if (NormalMoveCount > 6)
-                {
-                    NormalMoveCount = 0;
                     return true;
-                }
-
                 return false;
             }
 
             //其他模式每5次动作进行一次
             if (NormalMoveCount > 4)
-            {
-                NormalMoveCount = 0;
                 return true;
-            }
 
             return false;
         }

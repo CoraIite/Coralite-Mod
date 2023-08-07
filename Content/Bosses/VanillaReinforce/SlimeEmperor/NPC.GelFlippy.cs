@@ -120,6 +120,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
             if (NPC.spriteDirection < 0)
                 effect = SpriteEffects.None;
+            if (Main.zenithWorld)
+                drawColor = SlimeEmperor.BlackSlimeColor;
 
             spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, drawColor, NPC.rotation, origin, 1f, effect, 0f);
 
