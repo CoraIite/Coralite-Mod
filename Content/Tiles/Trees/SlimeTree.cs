@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -38,7 +39,12 @@ namespace Coralite.Content.Tiles.Trees
             if (Main.rand.NextBool(8))
                 return ModContent.ItemType<Items.Placeable.SlimeSapling>();
 
-            return ItemID.Gel;
+            int woodType = Main.rand.Next(2) switch
+            {
+                0 => ItemID.Gel,
+                _ => ModContent.ItemType<Items.Gels.GelFiber>()
+            };
+            return woodType;
         }
 
         public override Asset<Texture2D> GetTexture() => ModContent.Request<Texture2D>("Coralite/Assets/Tiles/Trees/SlimeTree");
@@ -64,6 +70,28 @@ namespace Coralite.Content.Tiles.Trees
         public override int TreeLeaf()
         {
             return GoreID.TreeLeaf_Hallow;
+        }
+
+        public override int CreateDust()
+        {
+            return DustID.t_Slime;
+        }
+
+        public override bool Shake(int x, int y, ref bool createLeaves)
+        {
+            if (Main.rand.NextBool(10))
+            {
+                NPC.NewNPC(new EntitySource_ShakeTree(x, y), x, y, NPCID.BlueSlime);
+                return false;
+            }
+
+            if (Main.rand.NextBool(5))
+            {
+                int howMany = Main.rand.Next(1, 4);
+                Item.NewItem(new EntitySource_ShakeTree(x, y), new Microsoft.Xna.Framework.Vector2(x, y).ToWorldCoordinates(), ItemID.Gel, howMany);
+            }
+
+            return false;
         }
     }
 }

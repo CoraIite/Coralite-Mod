@@ -326,10 +326,10 @@ namespace Coralite.Content.Items.Gels
 
                 if (VisualEffectSystem.HitEffect_SpecialParticles)
                     ParticleOrchestrator.SpawnParticlesDirect(ParticleOrchestraType.Keybrand, new ParticleOrchestraSettings()
-                {
-                    PositionInWorld = pos,
-                    MovementVector=RotateVec2*Main.rand.NextFloat(2f,4f),
-                });
+                    {
+                        PositionInWorld = pos,
+                        MovementVector = RotateVec2 * Main.rand.NextFloat(2f, 4f),
+                    });
                 //for (int i = 0; i < 3; i++)
                 //{
                 //    Vector2 dir = RotateVec2.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
@@ -345,46 +345,7 @@ namespace Coralite.Content.Items.Gels
 
         public void DrawWarp()
         {
-            if (Timer < minTime)
-                return;
-
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
-            GetCurrentTrailCount(out float count);
-
-            float w = 1f;
-            for (int i = 0; i < oldRotate.Length; i++)
-            {
-                if (oldRotate[i] == 100f)
-                    continue;
-
-                float factor = 1f - i / count;
-                Vector2 Center = GetCenter(i);
-                float r = oldRotate[i] % 6.18f;
-                float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) * 0.75f + oldDistanceToOwner[i]);
-
-                bars.Add(new CustomVertexInfo(Top, new Color(dir, w, 0f, 1f), new Vector3(factor, 0f, w)));
-                bars.Add(new CustomVertexInfo(Bottom, new Color(dir, w, 0f, 1f), new Vector3(factor, 1f, w)));
-            }
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone);
-
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0f, Main.screenWidth, Main.screenHeight, 0f, 0f, 1f);
-            Matrix model = Matrix.CreateTranslation(new Vector3(-Main.screenPosition.X, -Main.screenPosition.Y, 0f)) * Main.GameViewMatrix.TransformationMatrix;
-
-            Effect effect = Filters.Scene["KEx"].GetShader().Shader;
-
-            effect.Parameters["uTransform"].SetValue(model * projection);
-            Main.graphics.GraphicsDevice.Textures[0] = WarpTexture.Value;
-            Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
-            effect.CurrentTechnique.Passes[0].Apply();
-            if (bars.Count >= 3)
-                Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            WarpDrawer(0.75f);
         }
 
         protected override void DrawSlashTrail()
@@ -462,7 +423,7 @@ namespace Coralite.Content.Items.Gels
 
         protected override float ControlTrailBottomWidth(float factor)
         {
-            return 75 * Projectile.scale;
+            return 75* Projectile.scale;
         }
 
         protected override void Initializer()
@@ -605,46 +566,7 @@ namespace Coralite.Content.Items.Gels
 
         public void DrawWarp()
         {
-            if (Timer < minTime)
-                return;
-
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
-            GetCurrentTrailCount(out float count);
-
-            float w = 1f;
-            for (int i = 0; i < oldRotate.Length; i++)
-            {
-                if (oldRotate[i] == 100f)
-                    continue;
-
-                float factor = 1f - i / count;
-                Vector2 Center = GetCenter(i);
-                float r = oldRotate[i] % 6.18f;
-                float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) * 0.75f + oldDistanceToOwner[i]);
-
-                bars.Add(new CustomVertexInfo(Top, new Color(dir, w, 0f, 1f), new Vector3(factor, 0f, w)));
-                bars.Add(new CustomVertexInfo(Bottom, new Color(dir, w, 0f, 1f), new Vector3(factor, 1f, w)));
-            }
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone);
-
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0f, Main.screenWidth, Main.screenHeight, 0f, 0f, 1f);
-            Matrix model = Matrix.CreateTranslation(new Vector3(-Main.screenPosition.X, -Main.screenPosition.Y, 0f)) * Main.GameViewMatrix.TransformationMatrix;
-
-            Effect effect = Filters.Scene["KEx"].GetShader().Shader;
-
-            effect.Parameters["uTransform"].SetValue(model * projection);
-            Main.graphics.GraphicsDevice.Textures[0] = EmperorSabreSlash.WarpTexture.Value;
-            Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
-            effect.CurrentTechnique.Passes[0].Apply();
-            if (bars.Count >= 3)
-                Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            WarpDrawer(0.75f);
         }
 
         protected override void DrawSlashTrail()

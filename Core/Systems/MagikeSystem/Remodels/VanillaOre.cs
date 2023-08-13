@@ -117,11 +117,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.GoldBar, 15, ItemID.DemoniteBar);
             AddRemodelRecipe(ItemID.GoldBar, 15, ItemID.MeteoriteBar);
             AddRemodelRecipe(ItemID.GoldBar, 150, ItemID.AncientGoldHelmet,selfRequiredNumber:10);
+            AddRemodelRecipe(ItemID.GoldBar, 100, ItemID.GoldChest, selfRequiredNumber: 15);
             AddRemodelRecipe(ItemID.GoldBar, 400, ItemID.GoldenKey, selfRequiredNumber: 20, condition: DownedSkeletronCondition.Instance);
             AddRemodelRecipe(ItemID.PlatinumBar, 15, ItemID.CrimtaneBar);
             AddRemodelRecipe(ItemID.PlatinumBar, 15, ItemID.DemoniteBar);
             AddRemodelRecipe(ItemID.PlatinumBar, 15, ItemID.MeteoriteBar);
             AddRemodelRecipe(ItemID.PlatinumBar, 150, ItemID.AncientGoldHelmet, selfRequiredNumber: 10);
+            AddRemodelRecipe(ItemID.PlatinumBar, 100, ItemID.GoldChest, selfRequiredNumber: 15);
 
             //猩红矿和魔矿
             AddRemodelRecipe(ItemID.CrimtaneOre, 15, ItemID.TissueSample, selfRequiredNumber: 3, condition: DownedEvilBossCondition.Instance);

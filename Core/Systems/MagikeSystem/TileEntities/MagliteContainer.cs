@@ -78,10 +78,10 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// <summary>
         /// 给改魔能容器充能的方法，需要先获取到实例才行
         /// </summary>
-        /// <param name="howManyMagite">充多少</param>
-        public virtual bool Charge(int howManyMagite)
+        /// <param name="howManyMagike">充多少</param>
+        public virtual bool Charge(int howManyMagike)
         {
-            bool ChargeOrDischarge = howManyMagite >= 0;
+            bool ChargeOrDischarge = howManyMagike >= 0;
             if (magike >= magikeMax && ChargeOrDischarge)
                 return false;
 
@@ -93,7 +93,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             else
                 OnDisCharged?.Invoke();
 
-            magike += howManyMagite;
+            magike += howManyMagike;
             Limit();
             CheckActive();
 

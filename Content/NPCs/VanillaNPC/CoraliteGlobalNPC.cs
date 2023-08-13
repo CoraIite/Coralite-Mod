@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Coralite.Content.Items.YujianHulu;
 using Coralite.Content.Items.Misc;
+using Coralite.Content.Items.Materials;
 
 namespace Coralite.Content.NPCs.VanillaNPC
 {
@@ -51,6 +52,14 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 npcLoot.Add(ItemDropRule.Common(ItemType<SlimeSapling>(), 50));
         }
 
+        public override void ModifyShop(NPCShop shop)
+        {
+            //if (shop.NpcType == NPCID.TravellingMerchant)   //游商售卖旅行手记
+            //{
+            //    shop.Add<TravelJournaling>();
+            //}
+        }
+
         public override void ModifyActiveShop(NPC npc, string shopName, Item[] items)
         {
             switch (npc.type)
@@ -62,14 +71,26 @@ namespace Coralite.Content.NPCs.VanillaNPC
                             int i = 0;
                             for (; i < items.Length - 1; i++)
                             {
-                                if (items[i].IsAir)
+                                if (items[i] == null || items[i].IsAir)
                                     break;
                             }
 
-                            items[i].SetDefaults(ModContent.ItemType<AncientCore>());
+                            items[i] = new Item(ItemType<AncientCore>());
                         }
                         break;
                     }
+                case NPCID.TravellingMerchant:
+                    {
+                        int i = 0;
+                        for (; i < items.Length - 1; i++)
+                        {
+                            if (items[i] == null || items[i].IsAir)
+                                break;
+                        }
+                        
+                        items[i] = new Item(ItemType<TravelJournaling>());
+                    }
+                    break;
                 default: break;
             }
         }

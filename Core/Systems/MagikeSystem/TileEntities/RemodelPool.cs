@@ -63,21 +63,24 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 chooseRecipe is not null && chooseRecipe.CanRemodel(containsItem,magike, containsItem.type, containsItem.stack))
             {
                 Charge(-chooseRecipe.magikeCost);
-                containsItem.stack -= chooseRecipe.selfRequiredNumber;
-                if (containsItem.stack < 1)
-                    containsItem.TurnToAir();
 
                 Vector2 position = Position.ToWorldCoordinates(24, -8);
 
                 Item item = chooseRecipe.itemToRemodel.Clone();
-                if (item.TryGetGlobalItem(out MagikeItem magikeItem))
+                if (item.TryGetGlobalItem(out MagikeItem magikeItem))   //把不必要的东西删掉
                 {
                     magikeItem.magikeRemodelRequired = -1;
                     magikeItem.stackRemodelRequired = 0;
                     magikeItem.condition = null;
                 }
 
-                Item.NewItem(new EntitySource_TileEntity(this), position, item);
+                int index=  Item.NewItem(new EntitySource_TileEntity(this), position, item);    //生成掉落物
+                chooseRecipe.onRemodel?.Invoke(containsItem, Main.item[index]); //触发OnRemodel
+
+                containsItem.stack -= chooseRecipe.selfRequiredNumber;  //消耗原物品
+                if (containsItem.stack < 1)
+                    containsItem.TurnToAir();
+
                 SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, position);
                 MagikeHelper.SpawnDustOnGenerate(3, 2, Position+new Point16(0,-2), MainColor);
             }

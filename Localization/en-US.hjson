@@ -366,7 +366,7 @@ Mods: {
 
 			SlimeSapling: {
 				DisplayName: Slime Sapling
-				Tooltip: It looks like can't be used to make Knight Slime alloy
+				Tooltip: Can only be planted on gel block
 			}
 
 			MagicCraftStation: {
@@ -1153,52 +1153,56 @@ Mods: {
 
 			SoulRemodelPool: {
 				DisplayName: Soul Remodel Pool
-				Tooltip: ""
+				Tooltip: Right-click to open the UI, put in item and select a remodel recipe and activate it to remodel item
 			}
 
 			RainstormLens: {
 				DisplayName: Rainstorm Lens
-				Tooltip: ""
+				Tooltip: Produce magike while raining
 			}
 
 			SplendorMagicore: {
 				DisplayName: Splendor Magicore
-				Tooltip: ""
+				Tooltip: Contains strong magike
 			}
 
 			CorruptJavelin: {
 				DisplayName: Corrupt Javelin
-				Tooltip: ""
+				Tooltip:
+					'''
+					Summon the javelin to shoot at the target location
+					Right-click to recall all javelins and split them into small javelins and shoot
+					'''
 			}
 
 			BrilliantEnchantPool: {
 				DisplayName: Brilliant Enchant Pool
-				Tooltip: ""
+				Tooltip: Bring extra reinforcements to your gear
 			}
 
 			CrimtaneEnchantPool: {
 				DisplayName: Crimtane Enchant Pool
-				Tooltip: ""
+				Tooltip: Bring extra reinforcements to your gear
 			}
 
 			CrystalEnchantPool: {
 				DisplayName: Crystal Enchant Pool
-				Tooltip: ""
+				Tooltip: Bring extra reinforcements to your gear
 			}
 
 			SoulEnchantPool: {
 				DisplayName: Soul Enchant Pool
-				Tooltip: ""
+				Tooltip: Bring extra reinforcements to your gear
 			}
 
 			SoulOfDeveloper: {
 				DisplayName: Soul Of Developer
-				Tooltip: ""
+				Tooltip: Great for impersonating developers!
 			}
 
 			SplendorRemodelPool: {
 				DisplayName: Splendor Remodel Pool
-				Tooltip: ""
+				Tooltip: Right-click to open the UI, put in item and select a remodel recipe and activate it to remodel item
 			}
 
 			GelInvitation: {
@@ -1212,7 +1216,7 @@ Mods: {
 
 			EmperorSabre: {
 				DisplayName: Emperor Sabre
-				Tooltip: ""
+				Tooltip: The saber of the supreme leader
 			}
 
 			MagicCrystalHook: {
@@ -1221,17 +1225,56 @@ Mods: {
 			}
 
 			MagikeSymbol: {
-				DisplayName: Magike Symbol
-				Tooltip: ""
+				DisplayName: Magike
+				Tooltip: This recipe needs to be remodeled by magike!
 			}
 
 			GelThrone: {
 				DisplayName: Gel Throne
-				Tooltip: ""
+				Tooltip: Right-click to sit up
 			}
 
 			GOWTester: {
-				DisplayName: G O W Tester
+				DisplayName: God of Wind Tester
+				Tooltip: !!!Test Only!!!
+			}
+
+			FrostCrystal: {
+				DisplayName: Frost Crystal
+				Tooltip: Rich in ice magic
+			}
+
+			FrostySword: {
+				DisplayName: Frosty Sword
+				Tooltip:
+					'''
+					Left-click hits enemies and accumulates ice magic
+					Right-click to shoot a frost projectile, and when it has abundant ice magic, the frost projectile can burst into ice flowers
+					'''
+			}
+
+			TravelJournaling: {
+				DisplayName: Travel Journaling
+				Tooltip: It records what the traveling merchant has seen during his travels, and uses magike to remodel the above description
+			}
+
+			SlimeEmperorSoulBox: {
+				DisplayName: Royal Treasure
+				Tooltip: Right-click to open
+			}
+
+			ANewBirthOfIce: {
+				DisplayName: A New Birth of Ice
+				Tooltip: After defeating the evil boss in the world, a tiny life appears in the Ice Dragon's Nest
+			}
+
+			HiddenRed: {
+				DisplayName: Hidden Red
+				Tooltip: There may be rare red fruits in the gem tree that can attract a big red creature
+			}
+
+			GelFiber: {
+				DisplayName: Gel Fiber
 				Tooltip: ""
 			}
 		}
@@ -1346,6 +1389,15 @@ Mods: {
 			GelFlippy.DisplayName: Gel Flippy
 			HealGelBall.DisplayName: Heal Gel Ball
 			AosSi.DisplayName: Aos Si
+			AosSiBodyFront.DisplayName: Aos Si Body Front
+			AosSiBodyLast.DisplayName: Aos Si Body Last
+			AosSiBodyMiddle.DisplayName: Aos Si Body Middle
+			AosSiHands.DisplayName: Aos Si Hands
+			AosSiLegs.DisplayName: Aos Si Legs
+			AosSiTailFront.DisplayName: Aos Si Tail Front
+			AosSiTailLast.DisplayName: Aos Si Tail Last
+			AosSiTailMiddle.DisplayName: Aos Si Tail Middle
+			AosSiTailSecdonary.DisplayName: Aos Si Tail Secdonary
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1456,33 +1508,38 @@ Mods: {
 			IcicleCoccyx_Ex2.DisplayName: Icicle Coccyx
 			IcicleCoccyx_Ex3.DisplayName: Icicle Coccyx
 			ShadowCircle.DisplayName: Shadow Circle
-			ShadowCircle_ChasingMagicBall.DisplayName: Shadow Circle_ Chasing Magic Ball
-			ShadowCircle_CrystalMinion.DisplayName: Shadow Circle_ Crystal Minion
-			ShadowCircle_HighSpeedShoot.DisplayName: Shadow Circle_ High Speed Shoot
-			ShadowCircle_MeleeClaw.DisplayName: Shadow Circle_ Melee Claw
-			ShadowCircle_MeleeTrack.DisplayName: Shadow Circle_ Melee Track
+			ShadowCircle_ChasingMagicBall.DisplayName: Shadow Chasing Magic
+			ShadowCircle_CrystalMinion.DisplayName: Shadow Crystal Minion
+			ShadowCircle_HighSpeedShoot.DisplayName: Shadow Bullet
+			ShadowCircle_MeleeClaw.DisplayName: Shadow Claw
+			ShadowCircle_MeleeTrack.DisplayName: Shadow Claw
 			MagicBeam.DisplayName: Magic Beam
 			CrystalLaser.DisplayName: Crystal Laser
 			BloodHookChain.DisplayName: Blood Hook Chain
 			BloodHookSlash.DisplayName: Blood Hook Slash
 			IceyCloud.DisplayName: Icey Cloud
-			CorruptJavelinProj.DisplayName: Corrupt Javelin Proj
-			CorruptJavelinSpecial.DisplayName: Corrupt Javelin Special
+			CorruptJavelinProj.DisplayName: Corrupt Javelin
+			CorruptJavelinSpecial.DisplayName: Corrupt Javelin
 			SmallCorruptJavelin.DisplayName: Small Corrupt Javelin
 			GelBall.DisplayName: Gel Ball
 			SmallGelBall.DisplayName: Small Gel Ball
 			GelSpike.DisplayName: Gel Spike
 			SpikeGelBall.DisplayName: Spike Gel Ball
 			GelProj.DisplayName: Gel
-			EmperorSabreSlash.DisplayName: Emperor Sabre Slash
-			EmperorSabreSlash2.DisplayName: Emperor Sabre Slash
-			EmperorSabreSummon.DisplayName: Emperor Sabre Summon
+			EmperorSabreSlash.DisplayName: Emperor Sabre
+			EmperorSabreSlash2.DisplayName: Emperor Sabre
+			EmperorSabreSummon.DisplayName: Emperor Sabre
 			GelChaser.DisplayName: Gel Chaser
 			GelSpawner.DisplayName: Gel Spawner
-			ShadowSwordHeldProj.DisplayName: Shadow Sword Held Proj
-			MagicCrystalHookProjectile.DisplayName: Magic Crystal Hook Projectile
+			ShadowSwordHeldProj.DisplayName: Shadow Sword
+			MagicCrystalHookProjectile.DisplayName: Magic Crystal Hook
 			StickyGel.DisplayName: Sticky Gel
-			GOWTestProj.DisplayName: G O W Test Proj
+			GOWTestProj.DisplayName: GOW Test Proj
+			FrostySwordSlash.DisplayName: Frosty Sword
+			FrostySwordSlash2.DisplayName: Frosty Sword
+			FrostySwordRightSlash.DisplayName: Frosty Sword
+			FrostySwordProj.DisplayName: Frosty Projectile
+			FrostySwordBurst.DisplayName: Ice Follower Burst
 		}
 
 		Configs: {
@@ -1514,32 +1571,36 @@ Mods: {
 
 				HitEffect_Dusts: {
 					Label: Hit Effect: Dusts
-					Tooltip: ""
+					Tooltip: Dust effects that occur when a weapon hits, such as various vanilla dusts
 				}
 
 				HitEffect_ScreenShaking: {
 					Label: Hit Effect: Screen Shaking
-					Tooltip: ""
+					Tooltip: Screen vibration effect when the weapon hits
 				}
 
 				HitEffect_Lightning: {
 					Label: Hit Effect: Lightning
-					Tooltip: ""
+					Tooltip: Various highlight effects produced when a weapon hits, such as the slash effect
 				}
 
 				HitEffect_SpecialParticles: {
 					Label: Hit Effect: Special Particles
-					Tooltip: ""
+					Tooltip: Special particle effects that occur when a weapon hits, such as an aperture
 				}
 
 				DrawKniefLight: {
 					Label: Knief Light
-					Tooltip: ""
+					Tooltip:
+						'''
+						Whether the sword light of melee weapons will be drawn
+						Note: Turning off the sword light may make some weapons strange
+						'''
 				}
 
 				DrawWarp: {
 					Label: Warp
-					Tooltip: ""
+					Tooltip: Whether to draw various warp effects
 				}
 
 				Headers: {
@@ -1549,12 +1610,12 @@ Mods: {
 
 				HitEffect_HitFreeze: {
 					Label: Hit Effect: Hit Freeze
-					Tooltip: ""
+					Tooltip: The weapon briefly stalls the effect on hit
 				}
 
 				DrawTrail: {
 					Label: Draw Trail
-					Tooltip: Most projectiles and particles trail
+					Tooltip: Most projectile's and particle's trail
 				}
 			}
 		}
@@ -1579,18 +1640,18 @@ Mods: {
 		Compat: {
 			BossChecklist: {
 				Rediancie: {
-					SpawnInfo: 一块奇异的巨石，通过不稳定的红色能量来驱动自身。
-					Despawn: 赤玉灵回归了地底
+					SpawnInfo: A bizarre crystal that drives itself through erratic red energy.
+					Despawn: Rediancie returned to the underground
 				}
 
 				BabyIceDragon: {
-					SpawnInfo: 刚刚破壳而出的小冰龙，还不能完全掌握冰魔法的力量
-					Despawn: 冰龙宝宝逃走了
+					SpawnInfo: A baby ice dragon that had just broken out of its shell could not fully grasp the power of ice magic
+					Despawn: Baby Ice Dragon escaped
 				}
 
 				SlimeEmperor: {
-					SpawnInfo: 一位伟大的凝胶领袖，在史莱姆中有着极高的地位
-					Despawn: 史莱姆皇帝回归了它的王国
+					SpawnInfo: A great gel leader with a very high status among slimes
+					Despawn: Slime Emperor returns to its kingdom
 				}
 			}
 		}

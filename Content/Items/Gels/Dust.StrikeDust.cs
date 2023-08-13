@@ -1,17 +1,13 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Dusts;
+using Coralite.Core;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Gels
 {
-    public class EmperorSabreStrikeDust : ModDust
+    public class EmperorSabreStrikeDust : BaseStrikeDust
     {
-        public override string Texture => AssetDirectory.Blank;
-
-        public readonly Color Yellow = new Color(247,245,176);
-        public readonly Color Dark = new Color(83,46,85);
+        public EmperorSabreStrikeDust() : base(new Color(247, 245, 176), new Color(83, 46, 85),20) { }
 
         public override void OnSpawn(Dust dust)
         {
@@ -32,19 +28,6 @@ namespace Coralite.Content.Items.Gels
             dust.fadeIn++;
             if (dust.fadeIn > 20)
                 dust.active = false;
-
-            return false;
-        }
-
-        public override bool PreDraw(Dust dust)
-        {
-            Vector3 light = Main.rgbToHsl(Lighting.GetColor(dust.position.ToTileCoordinates()));
-            float factor = dust.fadeIn / 20f;
-            Helpers.ProjectilesHelper.DrawPrettyLine(light.Z, SpriteEffects.None, dust.position - Main.screenPosition, Yellow, Dark,
-                factor, 0, 0.1f, 0.5f, 1f, dust.rotation, dust.scale, new Vector2(2f, 1f));
-
-            Helpers.ProjectilesHelper.DrawPrettyLine(light.Z, SpriteEffects.None, dust.position - Main.screenPosition, Color.White, Color.White * 0.3f,
-                factor, 0, 0.1f, 0.5f, 1f, dust.rotation, dust.scale * 0.8f, new Vector2(2f, 1f));
 
             return false;
         }

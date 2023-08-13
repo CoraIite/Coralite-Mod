@@ -11,8 +11,7 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void SetStaticDefaults()
         {
-            this.DropLightPrefab(1, new int[] { 22 }, "赤玉吊灯", DustID.GemRuby, Coralite.Instance.RedJadeRed);
-            //ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<Items.RedJades.RedJadeDroplight>();
+            this.DropLightPrefab(1, new int[] { 22 },  DustID.GemRuby, Coralite.Instance.RedJadeRed);
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

@@ -373,7 +373,7 @@ Mods: {
 
 			SlimeSapling: {
 				DisplayName: 史莱姆树苗
-				Tooltip: 看样子不能用于制作骑士史莱姆合金
+				Tooltip: 只能种在凝胶块上
 			}
 
 			MagicCraftStation: {
@@ -1154,12 +1154,12 @@ Mods: {
 
 			RainstormLens: {
 				DisplayName: 骤雨透镜
-				Tooltip: ""
+				Tooltip: 下雨时生产魔能
 			}
 
 			SplendorMagicore: {
 				DisplayName: 辉界晶核
-				Tooltip: ""
+				Tooltip: 蕴含浓厚的魔能
 			}
 
 			CorruptJavelin: {
@@ -1227,11 +1227,50 @@ Mods: {
 
 			GelThrone: {
 				DisplayName: 史莱姆王座
-				Tooltip: ""
+				Tooltip: 右键坐上去
 			}
 
 			GOWTester: {
-				// DisplayName: G O W Tester
+				DisplayName: 极风神测试物品
+				Tooltip: 警告！该物品仅为测试时使用！
+			}
+
+			FrostCrystal: {
+				DisplayName: 霜冻冰晶
+				Tooltip: 蕴含丰富的冰之魔能
+			}
+
+			FrostySword: {
+				DisplayName: 霜冻剑
+				Tooltip:
+					'''
+					左键命中敌怪后积蓄冰之魔力
+					右键射出霜冻弹，拥有充沛的冰之魔力时霜冻弹能够爆发出冰花
+					'''
+			}
+
+			TravelJournaling: {
+				DisplayName: 旅行手记
+				Tooltip: 记载着旅商在旅行中的见闻，使用魔能重塑能将上面记载的内容复现出来
+			}
+
+			SlimeEmperorSoulBox: {
+				DisplayName: 皇家秘宝
+				Tooltip: 右键打开
+			}
+
+			ANewBirthOfIce: {
+				DisplayName: 冰雪的新生
+				Tooltip: 击败世界中的邪恶BOSS后，一个小小生命在冰龙巢中出现了
+			}
+
+			HiddenRed: {
+				DisplayName: 隐藏的赤色
+				Tooltip: 宝石树中或许会有稀有的红色果实，它能吸引一个赤色的大家伙
+			}
+
+			GelFiber: {
+				// DisplayName: Gel Fiber
 				// Tooltip: ""
 			}
 		}
@@ -1346,6 +1385,15 @@ Mods: {
 			GelFlippy.DisplayName: 飞翼史莱姆
 			HealGelBall.DisplayName: 治愈凝胶球
 			// AosSi.DisplayName: Aos Si
+			// AosSiBodyFront.DisplayName: Aos Si Body Front
+			// AosSiBodyLast.DisplayName: Aos Si Body Last
+			// AosSiBodyMiddle.DisplayName: Aos Si Body Middle
+			// AosSiHands.DisplayName: Aos Si Hands
+			// AosSiLegs.DisplayName: Aos Si Legs
+			// AosSiTailFront.DisplayName: Aos Si Tail Front
+			// AosSiTailLast.DisplayName: Aos Si Tail Last
+			// AosSiTailMiddle.DisplayName: Aos Si Tail Middle
+			// AosSiTailSecdonary.DisplayName: Aos Si Tail Secdonary
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1479,10 +1527,15 @@ Mods: {
 			EmperorSabreSummon.DisplayName: 帝王佩刀
 			GelChaser.DisplayName: 小凝胶球
 			GelSpawner.DisplayName: 小凝胶球
-			// ShadowSwordHeldProj.DisplayName: Shadow Sword Held Proj
+			// ShadowSwordHeldProj.DisplayName: Shadow Sword
 			MagicCrystalHookProjectile.DisplayName: 魔力水晶钩
 			StickyGel.DisplayName: 黏黏凝胶
-			// GOWTestProj.DisplayName: G O W Test Proj
+			// GOWTestProj.DisplayName: GOW Test Proj
+			FrostySwordSlash.DisplayName: 霜冻剑
+			FrostySwordSlash2.DisplayName: 霜冻剑
+			FrostySwordRightSlash.DisplayName: 霜冻剑
+			FrostySwordProj.DisplayName: 霜冻弹
+			FrostySwordBurst.DisplayName: 冰花绽放
 		}
 
 		Configs: {
@@ -1529,7 +1582,7 @@ Mods: {
 
 				HitEffect_SpecialParticles: {
 					Label: 命中时的其他粒子特效
-					Tooltip: 在武器命中时产生的特殊粒子效果，如光圈之类的
+					Tooltip: 在武器命中时产生的特殊粒子效果，如光圈等
 				}
 
 				DrawKniefLight: {

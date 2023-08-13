@@ -12,7 +12,7 @@ namespace Coralite.Core.Prefabs.Tiles
 {
     public static class FurniturePrefabs
     {
-        public static void DoorOpenPrefab(this ModTile tile, int closeDoorID, int dustType, string mapName, Color mapColor, bool LavaDeath = true)
+        public static void DoorOpenPrefab(this ModTile tile, int closeDoorID, int dustType, Color mapColor, bool LavaDeath = true)
         {
             Main.tileFrameImportant[tile.Type] = true;
             Main.tileSolid[tile.Type] = false;
@@ -73,7 +73,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.addTile(tile.Type);
         }
 
-        public static void DoorClosedPrefab(this ModTile tile, int openDoorID, int dustType, string mapName, Color mapColor, bool LavaDeath = true)
+        public static void DoorClosedPrefab(this ModTile tile, int openDoorID, int dustType, Color mapColor, bool LavaDeath = true)
         {
             Main.tileFrameImportant[tile.Type] = true;
             Main.tileBlockLight[tile.Type] = true;
@@ -114,7 +114,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.addTile(tile.Type);
         }
 
-        public static void BedPrefab(this ModTile tile, int dustType, string mapName, Color mapColor, bool LavaDeath = true)
+        public static void BedPrefab(this ModTile tile, int dustType, Color mapColor, bool LavaDeath = true)
         {
             Main.tileFrameImportant[tile.Type] = true;
             Main.tileLavaDeath[tile.Type] = LavaDeath;
@@ -139,7 +139,7 @@ namespace Coralite.Core.Prefabs.Tiles
             tile.AddMapEntry(mapColor, name);
         }
 
-        public static void WorkBenchPrefab(this ModTile tile, int dustType, string mapName, Color mapColor, bool LavaDeath = true)
+        public static void WorkBenchPrefab(this ModTile tile, int dustType, Color mapColor, bool LavaDeath = true)
         {
             Main.tileTable[tile.Type] = true;
             Main.tileSolidTop[tile.Type] = true;
@@ -163,7 +163,7 @@ namespace Coralite.Core.Prefabs.Tiles
 
         }
 
-        public static void TablePrefab(this ModTile tile, int dustType, string mapName, Color mapColor, bool LavaDeath = true)
+        public static void TablePrefab(this ModTile tile, int dustType, Color mapColor, bool LavaDeath = true)
         {
             Main.tileTable[tile.Type] = true;
             Main.tileSolidTop[tile.Type] = true;
@@ -222,7 +222,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.addTile(tile.Type);
         }
 
-        public static void DropLightPrefab(this ModTile tile, int height, int[] coordinateHeights, string mapName, int dustType, Color mapColor, bool LavaDeath = true)
+        public static void DropLightPrefab(this ModTile tile, int height, int[] coordinateHeights, int dustType, Color mapColor, bool LavaDeath = true)
         {
             Main.tileLighted[tile.Type] = true;
             Main.tileNoAttach[tile.Type] = true;
@@ -249,7 +249,7 @@ namespace Coralite.Core.Prefabs.Tiles
             tile.AddMapEntry(mapColor, name);
         }
 
-        public static void CandlePrefab(this ModTile tile, int itemDrop, string mapName, int dustType, Color mapColor, bool LavaDeath = true)
+        public static void CandlePrefab(this ModTile tile, int dustType, Color mapColor, bool LavaDeath = true)
         {
             Main.tileLighted[tile.Type] = true;
             Main.tileNoAttach[tile.Type] = true;
@@ -340,6 +340,26 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(tile.Type);
+        }
+
+        public static void PaintingPrefab(this ModTile tile, int width, int height, Color mapColor, int dustType)
+        {
+            Main.tileFrameImportant[tile.Type] = true;
+            Main.tileLavaDeath[tile.Type] = true;
+            TileID.Sets.FramesOnKillWall[tile.Type] = true;
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.Width = width;
+            TileObjectData.newTile.Height = height;
+            TileObjectData.newTile.CoordinateHeights = new int[height];
+            for (int i = 0; i < height; i++)
+                TileObjectData.newTile.CoordinateHeights[i] = 16;
+
+            TileObjectData.addTile(tile.Type);
+
+            tile.AddMapEntry(mapColor);
+            tile.DustType = dustType;
         }
     }
 }

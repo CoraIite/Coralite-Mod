@@ -1,12 +1,14 @@
 ﻿sampler uTextImage : register(s0);
 sampler uColorImage : register(s1);
+float3 uColor;
+float uOpacity;
+float uRotateSpeed;
 float uTime;
-float2 uResolution;
 
 float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
 {
     //Resolution for scaling/centering
-    float2 res = uResolution;
+    //float2 res = uResolution;
     //Centered pixel coordinates
     float2 coord = coords - 0.5 /* - res * 0.5*/;
     
@@ -22,11 +24,12 @@ float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
     //fwidth(a) > 1.0 ? (a = 0.0) : a;
     
     //Get new, polar-coordinates for texture
-    float2 uv = float2(z, a - z * 0.5 - uTime * 0.05);
+    float2 uv = float2(z, a - z * 0.5 - uTime * uRotateSpeed);
     //Sample texture
     float4 tex = tex2D(uTextImage, uv);
-    //Give it a blue color
-    return  pow(1. - tex * r, float4(5, 3.5, 4, 1));
+    //Give it a color
+    float4 final = pow(1. - tex * r, float4(uColor, 1));
+    return float4(final.rgb, final.a * uOpacity);
 }
 
 technique Technique1

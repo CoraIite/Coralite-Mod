@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Effects;
 
@@ -7,10 +8,15 @@ namespace Coralite.Content.Bosses.GodOfWind
 {
     public class GodOfWindSky : CustomSky
     {
+        /// <summary>
+        /// 中心点
+        /// </summary>
+        public static Vector2 CycloneCenter { get; private set; }
         private bool drawCyclone;
         private Vector2[] cyclone0;
         private float cycloneTimer;
 
+        public List<int> AosSiIndex;
 
         private float timer;
 

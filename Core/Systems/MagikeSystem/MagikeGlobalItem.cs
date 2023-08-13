@@ -14,6 +14,18 @@ namespace Coralite.Core.Systems.MagikeSystem
         public override bool AppliesToEntity(Item entity, bool lateInstantiation) => true;
         public override bool InstancePerEntity => true;
 
+        /// <summary>
+        /// 物品中存储的魔能最大值
+        /// </summary>
+        public int magikeMax;
+        /// <summary>
+        /// 物品中当前存储的魔能量
+        /// </summary>
+        public int magike;
+
+        /// <summary>
+        /// 物品自身的魔能含量，设置了这个就能让物品被普通透镜转化成魔能
+        /// </summary>
         public int magiteAmount = -1;
 
         public int magikeRemodelRequired = -1;
@@ -241,6 +253,34 @@ namespace Coralite.Core.Systems.MagikeSystem
                 Enchant.Level.Five => Color.Yellow,
                 _ => Color.Orange
             };
+        }
+
+        public void Limit()
+        {
+            magike = Math.Clamp(magike, 0, magikeMax);
+        }
+
+        public bool Charge(int howManyMagike)
+        {
+            bool ChargeOrDischarge = howManyMagike >= 0;
+            if (magike >= magikeMax && ChargeOrDischarge)
+                return false;
+
+            magike += howManyMagike;
+            Limit();
+
+            return true;
+        }
+
+        public bool Cosume(int howManyMagike)
+        {
+            howManyMagike = Math.Abs(howManyMagike);
+
+            if (magike<howManyMagike)
+                return false;
+
+            magike += howManyMagike;
+            return true;
         }
     }
 }

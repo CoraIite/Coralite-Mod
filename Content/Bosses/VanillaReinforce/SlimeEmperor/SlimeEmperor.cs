@@ -165,11 +165,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(ItemType<EmperorSabre>()));
+            //npcLoot.Add(ItemDropRule.BossBag(ItemType<EmperorSabre>()));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<GelThrone>()));
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
-            //npcLoot.Add(ItemDropRule.BossBag(ItemType<RediancieBossBag>()));
+            npcLoot.Add(ItemDropRule.BossBag(ItemType<SlimeEmperorSoulBox>()));
             //npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
 
             //LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());

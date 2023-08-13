@@ -13,7 +13,7 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void SetStaticDefaults()
         {
-            this.TablePrefab(DustID.GemRuby, "赤玉桌子", Coralite.Instance.RedJadeRed);
+            this.TablePrefab(DustID.GemRuby,  Coralite.Instance.RedJadeRed);
         }
 
         public override void NumDust(int x, int y, bool fail, ref int num)

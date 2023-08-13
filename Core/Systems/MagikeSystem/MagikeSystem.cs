@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -7,6 +8,13 @@ namespace Coralite.Core.Systems.MagikeSystem
 {
     public partial class MagikeSystem : ModSystem, ILocalizedModType
     {
+        public static MagikeSystem Instance { get; private set; }
+
+        public MagikeSystem()
+        {
+            Instance = this;
+        }
+
         /// <summary> 是否学习过 书页：魔能基础 </summary>
         public static bool learnedMagikeBase;
         /// <summary> 是否学习过卷轴：强化魔能提炼 </summary>
@@ -16,6 +24,13 @@ namespace Coralite.Core.Systems.MagikeSystem
         public LocalizedText LearnedMagikeBase => this.GetLocalization("learnedMagikeBase");
         public LocalizedText LearnedMagikeAdvanced => this.GetLocalization("learnedMagikeAdvanced");
 
+        public override void PostAddRecipes()
+        {
+            if (Main.dedServ)
+                return;
+
+            RegisterRemodel();
+        }
 
         //额...每增加一个变量就要在这边多写一段，说实话显得很蠢，以后有机会需要修改掉
         public override void SaveWorldData(TagCompound tag)

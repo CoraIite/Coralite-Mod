@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Configs;
+﻿using Coralite.Content.Items.Icicle;
+using Coralite.Core.Configs;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.Graphics.Effects;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Prefabs.Projectiles
@@ -438,6 +440,54 @@ namespace Coralite.Core.Prefabs.Projectiles
             for (int i = 0; i < oldRotate.Length; i++)
                 if (oldRotate[i] != 100f)
                     count += 1f;
+        }
+
+        #endregion
+
+        #region OtherHelperMethod
+
+        public void WarpDrawer(float trailBottomExtraMult)
+        {
+            if (Timer < minTime)
+                return;
+
+            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
+            GetCurrentTrailCount(out float count);
+
+            float w = 1f;
+            for (int i = 0; i < oldRotate.Length; i++)
+            {
+                if (oldRotate[i] == 100f)
+                    continue;
+
+                float factor = 1f - i / count;
+                Vector2 Center = GetCenter(i);
+                float r = oldRotate[i] % 6.18f;
+                float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
+                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
+                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor)* trailBottomExtraMult + oldDistanceToOwner[i]);
+
+                bars.Add(new CustomVertexInfo(Top, new Color(dir, w, 0f, 1f), new Vector3(factor, 0f, w)));
+                bars.Add(new CustomVertexInfo(Bottom, new Color(dir, w, 0f, 1f), new Vector3(factor, 1f, w)));
+            }
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone);
+
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0f, Main.screenWidth, Main.screenHeight, 0f, 0f, 1f);
+            Matrix model = Matrix.CreateTranslation(new Vector3(-Main.screenPosition.X, -Main.screenPosition.Y, 0f)) * Main.GameViewMatrix.TransformationMatrix;
+
+            Effect effect = Filters.Scene["KEx"].GetShader().Shader;
+
+            effect.Parameters["uTransform"].SetValue(model * projection);
+            Main.graphics.GraphicsDevice.Textures[0] = FrostySwordSlash.WarpTexture.Value;
+            Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
+            effect.CurrentTechnique.Passes[0].Apply();
+            if (bars.Count >= 3)
+                Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         }
 
         #endregion
