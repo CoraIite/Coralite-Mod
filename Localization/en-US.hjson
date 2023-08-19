@@ -1551,6 +1551,7 @@ Mods: {
 			HypnotizeFog.DisplayName: Hypnotize Fog
 			DarkLeaf.DisplayName: Dark Leaf
 			NightmareSparkle_Normal.DisplayName: Nightmare Sparkle_ Normal
+			NightmareBite.DisplayName: Nightmare Bite
 		}
 
 		Configs: {

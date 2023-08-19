@@ -40,7 +40,7 @@ namespace Coralite.Content.Bosses.GodOfWind
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             //return false;
-            Projectile.NewProjectile(source, player.Center, velocity, ModContent.ProjectileType<NightmareSparkle_Normal>(), 1, 1);
+            Projectile.NewProjectile(source, player.Center, velocity, ModContent.ProjectileType<NightmareBite>(), 1, 1, ai0: 0, ai1: 20, ai2: -1);
             return false;
         }
     }

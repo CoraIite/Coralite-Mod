@@ -155,6 +155,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 NCamera.useShake = false;
                             }
 
+                            Music = MusicID.OtherworldlyPlantera; //把音乐再打开
                         }
                     }
                     break;
@@ -227,7 +228,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public void OnExchangeToP2()
         {
-            Music = MusicID.OtherworldlyPlantera; //把音乐再打开
             NPC.dontTakeDamage = false;
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;

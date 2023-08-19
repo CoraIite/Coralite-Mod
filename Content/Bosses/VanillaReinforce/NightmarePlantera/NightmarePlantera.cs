@@ -21,7 +21,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         private ref float Phase => ref NPC.ai[0];
         private ref float State => ref NPC.ai[1];
-        private ref float ShootCount => ref NPC.ai[2];
+        private ref float SonState => ref NPC.ai[2];
 
         public int Timer;
         private bool spawnedHook;
@@ -34,6 +34,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         /// 自身BOSS的索引，用于方便爪子获取自身
         /// </summary>
         public static int NPBossIndex = -1;
+
+        public float alpha=1f;
 
         #region tml hooks
 
@@ -373,6 +375,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             return NPC.Center + NPC.rotation.ToRotationVector2() * 100;
         }
 
+        public void DoRotation(float maxChange)
+        {
+            NPC.rotation = NPC.rotation.AngleTowards((Target.Center - NPC.Center).ToRotation(), maxChange);
+        }
+
         #endregion
 
         #region NetWork
@@ -389,18 +396,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         #region Draw
 
-        public void DrawSelf(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        public void DrawSelf(SpriteBatch spriteBatch, Vector2 screenPos)
         {
             Texture2D mainTex = TextureAssets.Npc[Type].Value;
             Rectangle frameBox = mainTex.Frame(1, Main.npcFrameCount[NPC.type], NPC.frame.X, NPC.frame.Y);
             Vector2 origin = frameBox.Size() / 2;
 
-            spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, drawColor, NPC.rotation + MathHelper.PiOver2, origin, NPC.scale, 0, 0);
+            spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, Color.White * alpha, NPC.rotation + MathHelper.PiOver2, origin, NPC.scale, 0, 0);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            DrawSelf(spriteBatch, screenPos, drawColor);
+
+            DrawSelf(spriteBatch, screenPos);
             return false;
         }
 
