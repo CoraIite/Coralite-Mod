@@ -6512,7 +6512,7 @@
             <summary>
             The numerical ID of the armor shader in <see cref="F:Terraria.Graphics.Shaders.GameShaders.Armor"/> this item activates when worn in a dye slot.<br/>
             If greater than 0, then this item can be equipped into dye slots.<br/>
-            Defaults to -1.<br/>
+            Defaults to 0.<br/>
             </summary>
         </member>
         <member name="F:Terraria.Item.fishingPole">
@@ -6591,6 +6591,13 @@
             <summary>
             If true, then the given item is being sold in a shop.<br/>
             Shop items display their price. See <see cref="F:Terraria.Item.value"/>.<br/>
+            </summary>
+        </member>
+        <member name="F:Terraria.Item.hairDye">
+            <summary>
+            The numerical ID of the hair shader in <see cref="F:Terraria.Graphics.Shaders.GameShaders.Hair"/> this item will apply to the player when used.<br/>
+            If greater than -1, then this item is a hair dye.<br/>
+            Defaults to -1.<br/>
             </summary>
         </member>
         <member name="F:Terraria.Item.paint">
@@ -8286,6 +8293,13 @@
             Provides the golf ball projectile from an accessory slot.
             </summary>
         </member>
+        <member name="M:Terraria.ModLoader.AsyncProvider`1.#ctor(System.Collections.Generic.IAsyncEnumerable{`0})">
+            <remarks>
+              Remember to provide your enumerator with
+              `[EnumeratorCancellation] CancellationToken token = default`
+              as argument to allow cancellation notification.
+            </remarks>
+        </member>
         <member name="T:Terraria.ModLoader.AutoloadAttribute">
             <summary>
             Allows for types to be autoloaded and unloaded.
@@ -8401,6 +8415,59 @@
         <member name="M:Terraria.ModLoader.BuffLoader.GetBuff(System.Int32)">
             <summary>
             Gets the ModBuff instance with the given type. If no ModBuff with the given type exists, returns null.
+            </summary>
+        </member>
+        <member name="T:Terraria.ModLoader.BuilderToggle">
+            <summary>
+            Represents a builder toggle button shown in the top left corner of the screen while the inventory is shown. These toggles typically control wiring-related visiblility or other building-related quality of life features.<para/>
+            The <see cref="M:Terraria.ModLoader.BuilderToggle.Active"/> property determines if the BuilderToggle should be shown to the user and is usually reliant on player-specific values. The <see cref="P:Terraria.ModLoader.BuilderToggle.CurrentState"/> property represents the current state of the toggle. For vanilla toggles a value of 0 is off and a value of 1 is on, but modded toggles can have <see cref="P:Terraria.ModLoader.BuilderToggle.NumberOfStates"/> values.
+            </summary>
+        </member>
+        <member name="P:Terraria.ModLoader.BuilderToggle.VanillaHoverTexture">
+            <summary>
+            The path to the texture vanilla info displays use when hovering over an info display.
+            </summary>
+        </member>
+        <member name="P:Terraria.ModLoader.BuilderToggle.HoverTexture">
+            <summary>
+            The outline texture drawn when the icon is hovered. By default a circular outline texture is used. Override this method and return <c>Texture + "_Hover"</c> or any other texture path to specify a custom outline texture for use with icons that are not circular.
+            </summary>
+        </member>
+        <member name="P:Terraria.ModLoader.BuilderToggle.Type">
+            <summary>
+            This is the internal ID of this builder toggle.<para/>
+            Also serves as the index for <see cref="F:Terraria.Player.builderAccStatus"/>.
+            </summary>
+        </member>
+        <member name="M:Terraria.ModLoader.BuilderToggle.Active">
+            <summary>
+            This dictates whether or not this builder toggle should be active (displayed).<para/>
+            This is usually determined by player-specific values, typically set in <see cref="M:Terraria.ModLoader.ModItem.UpdateInventory(Terraria.Player)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.ModLoader.BuilderToggle.NumberOfStates">
+            <summary>
+            This is the number of different functionalities your builder toggle will have.<br/>
+            For a toggle that has an On and Off state, you'd need 2 states!<para/>
+            </summary>
+            <value>Default value is 2</value>
+        </member>
+        <member name="P:Terraria.ModLoader.BuilderToggle.CurrentState">
+            <summary>
+            This is the current state of this builder toggle. Every time the toggle is clicked, it will change.<para/>
+            The default state is 0. The state will be saved and loaded for the player to be consistent.
+            </summary>
+        </member>
+        <member name="M:Terraria.ModLoader.BuilderToggle.DisplayColorTexture">
+            <summary>
+            This is the overlay color that is drawn on top of the texture.
+            </summary>
+            <value>Default value is <see cref="P:Microsoft.Xna.Framework.Color.White"/></value>
+        </member>
+        <member name="M:Terraria.ModLoader.BuilderToggle.DisplayValue">
+            <summary>
+            This is the value that will show up when hovering on the toggle icon.
+            You can specify different values per each available <see cref="P:Terraria.ModLoader.BuilderToggle.CurrentState"/>
             </summary>
         </member>
         <member name="F:Terraria.ModLoader.BuildInfo.BuildDate">
@@ -11073,7 +11140,7 @@
         </member>
         <member name="M:Terraria.ModLoader.GlobalItem.ModifyTooltips(Terraria.Item,System.Collections.Generic.List{Terraria.ModLoader.TooltipLine})">
             <summary>
-            Allows you to modify all the tooltips that display for the given item. See here for information about TooltipLine.
+            Allows you to modify all the tooltips that display for the given item. See here for information about TooltipLine. To hide tooltips, please use <see cref="M:Terraria.ModLoader.TooltipLine.Hide"/> and defensive coding.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.GlobalItem.SaveData(Terraria.Item,Terraria.ModLoader.IO.TagCompound)">
@@ -12137,7 +12204,7 @@
         </member>
         <member name="M:Terraria.ModLoader.GlobalTile.CanDrop(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Allows prevention of item drops from the tile dropping at the given coordinates. Return false to stop the game from dropping the tile's default item. Returns true by default. Use <see cref="M:Terraria.ModLoader.GlobalTile.Drop(System.Int32,System.Int32,System.Int32)"/> to spawn additional items.
+            Allows prevention of item drops from the tile dropping at the given coordinates. Return false to stop the game from dropping the tile's item(s). Returns true by default. Use <see cref="M:Terraria.ModLoader.GlobalTile.Drop(System.Int32,System.Int32,System.Int32)"/> to spawn additional items.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.GlobalTile.Drop(System.Int32,System.Int32,System.Int32)">
@@ -12530,6 +12597,12 @@
             => $"{Mod.Name}/{Name}"
             </summary>
         </member>
+        <member name="T:Terraria.ModLoader.InfoDisplay">
+            <summary>
+            Represents an informational display toggle typically provided by <see href="https://terraria.wiki.gg/wiki/Informational_Accessories">informational accessories</see>.<para/>
+            The <see cref="M:Terraria.ModLoader.InfoDisplay.Active"/> property determines if the InfoDisplay could be shown to the user. The game tracks the players desired visibility of active InfoDisplay through the <see cref="F:Terraria.Player.hideInfo"/> array.
+            </summary>
+        </member>
         <member name="P:Terraria.ModLoader.InfoDisplay.InactiveInfoTextColor">
             <summary>
             The color when no valuable information is displayed.
@@ -12554,7 +12627,8 @@
         </member>
         <member name="P:Terraria.ModLoader.InfoDisplay.Type">
             <summary>
-            This is the internal ID of this InfoDisplay.
+            This is the internal ID of this InfoDisplay.<para/>
+            Also serves as the index for <see cref="F:Terraria.Player.hideInfo"/>.
             </summary>
         </member>
         <member name="P:Terraria.ModLoader.InfoDisplay.HoverTexture">
@@ -12569,7 +12643,8 @@
         </member>
         <member name="M:Terraria.ModLoader.InfoDisplay.Active">
             <summary>
-            This dictates whether or not this info display should be active.
+            This dictates whether or not this info display should be active.<para/>
+            This is usually determined by player-specific values, typically set in <see cref="M:Terraria.ModLoader.ModItem.UpdateInventory(Terraria.Player)"/>.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.InfoDisplay.DisplayValue(Microsoft.Xna.Framework.Color@,Microsoft.Xna.Framework.Color@)">
@@ -15191,7 +15266,7 @@
         </member>
         <member name="M:Terraria.ModLoader.ModItem.ModifyTooltips(System.Collections.Generic.List{Terraria.ModLoader.TooltipLine})">
             <summary>
-            Allows you to modify all the tooltips that display for this item. See here for information about TooltipLine.
+            Allows you to modify all the tooltips that display for this item. See here for information about TooltipLine. To hide tooltips, please use <see cref="M:Terraria.ModLoader.TooltipLine.Hide"/> and defensive coding.
             </summary>
             <param name="tooltips">The tooltips.</param>
         </member>
@@ -18283,7 +18358,8 @@
         <member name="M:Terraria.ModLoader.ModSystem.ModifyWorldGenTasks(System.Collections.Generic.List{Terraria.WorldBuilding.GenPass},System.Double@)">
             <summary>
             A more advanced option to PostWorldGen, this method allows you modify the list of Generation Passes before a new world begins to be generated. <para/>
-            For example, removing the "Planting Trees" pass will cause a world to generate without trees. Placing a new Generation Pass before the "Dungeon" pass will prevent the the mod's pass from cutting into the dungeon.
+            For example, disabling the "Planting Trees" pass will cause a world to generate without trees. Placing a new Generation Pass before the "Dungeon" pass will prevent the the mod's pass from cutting into the dungeon. <para/>
+            To disable or hide generation passes, please use <see cref="M:Terraria.WorldBuilding.GenPass.Disable"/> and defensive coding.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.ModSystem.PostWorldGen">
@@ -18298,7 +18374,8 @@
         </member>
         <member name="M:Terraria.ModLoader.ModSystem.ModifyHardmodeTasks(System.Collections.Generic.List{Terraria.WorldBuilding.GenPass})">
             <summary>
-            Similar to ModifyWorldGenTasks, but occurs in-game when Hardmode starts. Can be used to modify which tasks should be done and/or add custom tasks. By default the list will only contain 4 items, the vanilla hardmode tasks called "Hardmode Good", "Hardmode Evil", "Hardmode Walls", and "Hardmode Announcement"
+            Similar to <see cref="M:Terraria.ModLoader.ModSystem.ModifyWorldGenTasks(System.Collections.Generic.List{Terraria.WorldBuilding.GenPass},System.Double@)"/>, but occurs in-game when Hardmode starts. Can be used to modify which tasks should be done and/or add custom tasks. By default the list will only contain 4 items, the vanilla hardmode tasks called "Hardmode Good", "Hardmode Evil", "Hardmode Walls", and "Hardmode Announcement" <para/>
+            To disable or hide tasks, please use <see cref="M:Terraria.WorldBuilding.GenPass.Disable"/> and defensive coding.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.ModSystem.ModifySunLightColor(Microsoft.Xna.Framework.Color@,Microsoft.Xna.Framework.Color@)">
@@ -18441,7 +18518,7 @@
         </member>
         <member name="M:Terraria.ModLoader.ModTile.CanDrop(System.Int32,System.Int32)">
             <summary>
-            Allows prevention of item drops from the tile dropping at the given coordinates. Return false to stop the game from dropping the tile's default item. Returns true by default. See <see cref="M:Terraria.ModLoader.ModTile.GetItemDrops(System.Int32,System.Int32)"/> to customize the item drop.
+            Allows prevention of item drops from the tile dropping at the given coordinates. Return false to stop the game from dropping the tile's item(s). Returns true by default. See <see cref="M:Terraria.ModLoader.ModTile.GetItemDrops(System.Int32,System.Int32)"/> to customize the item drop.
             </summary>
             <param name="i">The x position in tile coordinates.</param>
             <param name="j">The y position in tile coordinates.</param>
@@ -19852,6 +19929,11 @@
             The name of the tooltip, used to help you identify its function.
             </summary>
         </member>
+        <member name="P:Terraria.ModLoader.TooltipLine.FullName">
+            <summary>
+            => $"{Mod}/{Name}"
+            </summary>
+        </member>
         <member name="F:Terraria.ModLoader.TooltipLine.Text">
             <summary>
             The actual text that this tooltip displays.
@@ -19933,9 +20015,37 @@
             <param name="name">The name of the tooltip</param>
             <param name="text">The content of the tooltip</param>
         </member>
-        <member name="M:Terraria.ModLoader.UI.ModBrowser.UIModBrowser.DownloadMods(System.Collections.Generic.IEnumerable{System.String})">
+        <member name="M:Terraria.ModLoader.UI.DownloadManager.UIWorkshopDownload.DownloadStarted(System.String)">
+            <remarks>This will be called from a thread!</remarks>
+        </member>
+        <member name="M:Terraria.ModLoader.UI.DownloadManager.UIWorkshopDownload.UpdateDownloadProgress(System.Single,System.Int64,System.Int64)">
+            <remarks>This will be called from a thread!</remarks>
+        </member>
+        <member name="T:Terraria.ModLoader.UI.Elements.UIAsyncList`2">
+            <remarks>
+              Remember to set GenElement is not provided in the constructor and TResource is not a TUIElement.
+              DO NOT USE Add/AddRange directly, always use the provider methods.
+            </remarks>
+        </member>
+        <member name="M:Terraria.ModLoader.UI.Elements.UIAsyncList`2.SetProvider(Terraria.ModLoader.AsyncProvider{`0})">
+            <remarks>
+              SetProvider will delegate all UI actions to next Update,
+              so it NOT SAFE to be called out of the main thread,
+              because having an assignment to ProviderChanged it CAN
+              cause problems in case the list is cleared before the provider
+              is swapped and the old provider is partially read giving unwanted
+              elements, same if you do the other way around (the provider can be
+              partially consumed before the clear)
+            </remarks>
+        </member>
+        <member name="M:Terraria.ModLoader.UI.ModBrowser.UIModBrowser.DownloadModsAndReturnToBrowser(System.Collections.Generic.List{Terraria.Social.Base.ModPubId_t})">
             <summary>
                 Enqueues a list of mods, if found on the browser (also used for ModPacks)
+            </summary>
+        </member>
+        <member name="M:Terraria.ModLoader.UI.ModBrowser.UIModBrowser.DownloadMods(System.Collections.Generic.IEnumerable{Terraria.ModLoader.UI.ModBrowser.ModDownloadItem},System.Int32,System.Action,System.Action{Terraria.ModLoader.UI.ModBrowser.ModDownloadItem})">
+            <summary>
+            Downloads all ModDownloadItems provided.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.UI.UICommon.TooltipMouseText(System.String)">
@@ -19983,6 +20093,20 @@
             <summary>
             How rare the NPC is for the Lifeform Analyzer. For example: 4 is for Tim and Mimics, 1 is for bound town NPCs.
             <br/> Defaults to 0.
+            </summary>
+        </member>
+        <member name="F:Terraria.NPC.playerInteraction">
+            <summary>
+            Tracks which <see cref="T:Terraria.Player"/>s have damaged this NPC. Damaging boss minions or other parts of a boss is usually counted as damaging the main body of the boss. Used to determine which players participated in a boss fight and should receive a boss bag.<br/><br/>
+            Indexed by each players <see cref="F:Terraria.Entity.whoAmI"/> (or <see cref="F:Terraria.Main.myPlayer"/> for code running locally).<br/><br/>
+            <see cref="F:Terraria.NPC.lastInteraction"/> tracks which player was the last player to damage this NPC. <see cref="M:Terraria.NPC.AnyInteractions"/> can be used to easily check if any player has damaged the NPC.
+            </summary>
+        </member>
+        <member name="F:Terraria.NPC.lastInteraction">
+            <summary>
+            The <see cref="F:Terraria.Entity.whoAmI"/> of the <see cref="T:Terraria.Player"/> that last damaged this NPC. Used to award Banner items to the player that killed the NPC, but can be used for many other effects.<br/><br/>
+            The default value is 255. If the value is 255, the NPC has not been damaged by any <see cref="T:Terraria.Player"/>.<br/><br/>
+            The <see cref="F:Terraria.NPC.playerInteraction"/> array tracks all players that have damaged this NPC.
             </summary>
         </member>
         <member name="F:Terraria.NPC.gfxOffY">
@@ -20395,6 +20519,18 @@
             <br/> A negative <see cref="T:Terraria.ID.InvasionID"/> for NPCs affiliated with a wave-based event, such as the Pumpkin Moon. Wave-based events are prefixed with "Cached" in <see cref="T:Terraria.ID.InvasionID"/>.
             </returns>
         </member>
+        <member name="M:Terraria.NPC.AnyInteractions">
+            <summary>
+            Returns true if any player has damaged this NPC. Individual player participation can be determined by checking <see cref="F:Terraria.NPC.playerInteraction"/> directly. Use <see cref="M:Terraria.NPC.GetWereThereAnyInteractions"/> if <see cref="F:Terraria.NPC.realLife"/> might be in use.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.NPC.GetWereThereAnyInteractions">
+            <summary>
+            Returns true if any player has damaged this NPC. Individual player participation can be determined by checking <see cref="F:Terraria.NPC.playerInteraction"/> directly.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Terraria.NPC.NewNPC(Terraria.DataStructures.IEntitySource,System.Int32,System.Int32,System.Int32,System.Int32,System.Single,System.Single,System.Single,System.Single,System.Int32)">
             <summary>
             Spawns an NPC into the game world with the given type. <br/>
@@ -20469,6 +20605,27 @@
             <param name="fromNet">true if this strike came from another client over the network. Just changes the combat text to be darker in color.</param>
             <param name="noPlayerInteraction">Prevents <see cref="M:Terraria.NPC.PlayerInteraction(System.Int32)"/> from being called in single player. In multiplayer, player interaction is handled by the server.</param>
             <returns>The actual health lost by the NPC. Normally this is <see cref="P:Terraria.NPC.HitInfo.Damage"/> but it is capped at the current health of the NPC, and represents the actual damage dealt in the case of <see cref="F:Terraria.NPC.HitInfo.InstantKill"/> </returns>
+        </member>
+        <member name="M:Terraria.NPC.CountNPCS(System.Int32)">
+            <summary>
+            Returns the number of active NPC in the world of the given NPC type (<see cref="F:Terraria.NPC.type"/>).
+            </summary>
+            <param name="Type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.NPC.AnyNPCs(System.Int32)">
+            <summary>
+            Returns true if there are any active NPC in the world of the given NPC type (<see cref="F:Terraria.NPC.type"/>).
+            </summary>
+            <param name="Type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.NPC.FindFirstNPC(System.Int32)">
+            <summary>
+            Returns the index within <see cref="F:Terraria.Main.npc"/> of the the first active NPC in the world of the given NPC type (<see cref="F:Terraria.NPC.type"/>).
+            </summary>
+            <param name="Type"></param>
+            <returns></returns>
         </member>
         <member name="M:Terraria.NPC.AddBuff(System.Int32,System.Int32,System.Boolean)">
             <summary>
@@ -22857,25 +23014,653 @@
             <param name="amount">The stack -> how many result items given when the recipe is crafted. (eg. 1 wood -> 4 wood platform)</param>
             <exception cref="T:Terraria.ModLoader.Exceptions.RecipeException">A Recipe can only be created inside recipe related methods</exception>
         </member>
-        <member name="M:Terraria.Social.Steam.SteamedWraps.Download(Steamworks.PublishedFileId_t,Terraria.ModLoader.UI.DownloadManager.UIWorkshopDownload,System.Boolean)">
+        <member name="M:Terraria.Social.Steam.SteamedWraps.Download(Steamworks.PublishedFileId_t,Terraria.ModLoader.UI.DownloadManager.IDownloadProgress,System.Boolean)">
             <summary>
             Updates and/or Downloads the Item specified by publishId
             </summary>
         </member>
-        <member name="M:Terraria.Social.Steam.WorkshopHelper.SetupDownload(System.Collections.Generic.List{Terraria.ModLoader.UI.ModBrowser.ModDownloadItem},System.Int32)">
+        <member name="M:Terraria.Social.Steam.WorkshopBrowserModule.QueryBrowser(Terraria.Social.Base.QueryParameters,System.Threading.CancellationToken)">
             <summary>
-            Downloads all UIModDownloadItems provided.
+            Assumes Intialize has been run prior to use.
             </summary>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:Terraria.Social.Steam.WorkshopHelper.GetWorkshopFolder(Steamworks.AppId_t)" -->
         <member name="M:Terraria.Social.Steam.WorkshopHelper.QueryHelper.AQueryInstance.ReleaseWorkshopQuery">
             <summary>
             Ought be called to release the existing query when we are done with it. Frees memory associated with the handle.
             </summary>
         </member>
-        <member name="M:Terraria.Social.Steam.WorkshopHelper.QueryHelper.AQueryInstance.FastQueryItem(System.UInt64,System.Boolean)">
+        <member name="M:Terraria.Social.Steam.WorkshopHelper.QueryHelper.AQueryInstance.QueryItemsSynchronously(System.Collections.Generic.List{System.String}@)">
             <summary>
-            For direct information gathering of a particular mod/workshop item
+            For direct information gathering of particular mod/workshop items. Synchronous.
+            Note that the List size is 1 to 1 with the provided array.
+            If the Mod is not found, the space is filled with a null.
             </summary>
+        </member>
+        <member name="M:Terraria.Social.Steam.WorkshopHelper.QueryHelper.AQueryInstance.TrySearchByInternalName(System.Collections.Generic.List{Terraria.ModLoader.UI.ModBrowser.ModDownloadItem}@)">
+            <summary>
+            Only Use if we don't have a PublishID source.
+            Outputs a List of ModDownloadItems of equal length to QueryParameters.SearchModSlugs
+            Uses null entries to fill gaps to ensure length consistency
+            </summary>
+        </member>
+        <member name="T:Terraria.Tile">
+            <summary>
+            A data structure used for accessing information about tiles, walls, wires, and liquids at a single position in the world.<para/>
+            Vanilla tile code and a mods tile code will be quite different, since tModLoader reworked how tiles function to improve performance. This means that copying vanilla code will leave you with many errors. Running the code through tModPorter will fix most of the issues, however.<para/>
+            For your sanity, all of the changes are well documented to make it easier to port vanilla code.
+            </summary>
+        </member>
+        <member name="M:Terraria.Tile.ClearEverything">
+            <summary>
+            Resets all of the data at this position.<br/>
+            To only remove the tile data, use <see cref="M:Terraria.Tile.ClearTile"/>.
+            </summary>
+        </member>
+        <member name="M:Terraria.Tile.ClearTile">
+            <summary>
+            Resets the tile data at this position.<br/>
+            Sets <see cref="P:Terraria.Tile.HasTile"/> and <see cref="P:Terraria.Tile.IsActuated"/> to <see langword="false"/> and sets the <see cref="P:Terraria.Tile.BlockType"/> to <see cref="F:Terraria.ID.BlockType.Solid"/>.
+            </summary>
+            <remarks>
+            Does not reset data related to walls, wires, or anything else. For that, use <see cref="M:Terraria.Tile.ClearEverything"/>.
+            </remarks>
+        </member>
+        <member name="M:Terraria.Tile.CopyFrom(Terraria.Tile)">
+            <summary>
+            Copies all data from the given position to this position.
+            </summary>
+            <param name="from">The position to copy the data from.</param>
+        </member>
+        <member name="M:Terraria.Tile.isTheSameAs(Terraria.Tile)">
+            <summary>
+            Legacy code, consider the data you want to compare directly.
+            </summary>
+            <param name="compTile"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.blockType">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.BlockType"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.ResetToType(System.UInt16)">
+            <summary>
+            Resets all of the data at this position except for the <see cref="P:Terraria.Tile.WallType"/>, and sets <see cref="P:Terraria.Tile.TileType"/> to <paramref name="type"/>. 
+            </summary>
+            <param name="type">The <see cref="T:Terraria.ID.TileID"/> to set this tile to.</param>
+        </member>
+        <member name="M:Terraria.Tile.topSlope">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.TopSlope"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.bottomSlope">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.BottomSlope"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.leftSlope">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.LeftSlope"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.rightSlope">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.RightSlope"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.Clear(Terraria.DataStructures.TileDataType)">
+            <summary>
+            Clears the specified data at this position based on the given <see cref="T:Terraria.DataStructures.TileDataType"/>.
+            </summary>
+            <param name="types">The <see cref="T:Terraria.DataStructures.TileDataType"/> to clear.</param>
+        </member>
+        <member name="M:Terraria.Tile.SmoothSlope(System.Int32,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            Slopes a tile based on the tiles adjacent to it.
+            </summary>
+            <param name="x">The X coordinate of the tile.</param>
+            <param name="y">The Y coordinate of the tile.</param>
+            <param name="applyToNeighbors">Whether the adjacent tiles should be automatically smoothed.</param>
+            <param name="sync">Whether the changes should automatically be synced to multiplayer.</param>
+        </member>
+        <member name="M:Terraria.Tile.CopyPaintAndCoating(Terraria.Tile)">
+            <summary>
+            Copies the paint and coating data from the specified tile to this tile.<br/>
+            Does not copy wall paint and coating data.
+            </summary>
+            <param name="other">The <see cref="T:Terraria.Tile"/> to copy the data from.</param>
+        </member>
+        <member name="M:Terraria.Tile.BlockColorAndCoating">
+            <summary>
+            Gets the paint and coating information from the tile at this position as a <see cref="T:Terraria.TileColorCache"/>.
+            </summary>
+            <returns>A <see cref="T:Terraria.TileColorCache"/> representing the paint and coatings on the tile at this position.</returns>
+        </member>
+        <member name="M:Terraria.Tile.WallColorAndCoating">
+            <summary>
+            Gets the paint and coating information from the wall at this position as a <see cref="T:Terraria.TileColorCache"/>.
+            </summary>
+            <returns>A <see cref="T:Terraria.TileColorCache"/> representing the paint and coatings on the wall at this position.</returns>
+        </member>
+        <member name="M:Terraria.Tile.UseBlockColors(Terraria.TileColorCache)">
+            <summary>
+            Sets the paint and coating of the tile at this position based on the given <see cref="T:Terraria.TileColorCache"/>.
+            </summary>
+            <param name="cache">The <see cref="T:Terraria.TileColorCache"/> to apply.</param>
+        </member>
+        <member name="M:Terraria.Tile.UseWallColors(Terraria.TileColorCache)">
+            <summary>
+            Sets the paint and coating of the wall at this position based on the given <see cref="T:Terraria.TileColorCache"/>.
+            </summary>
+            <param name="cache">The <see cref="T:Terraria.TileColorCache"/> to apply.</param>
+        </member>
+        <member name="M:Terraria.Tile.ClearBlockPaintAndCoating">
+            <summary>
+            Clears any paint or coating on the tile at this position.
+            </summary>
+        </member>
+        <member name="M:Terraria.Tile.ClearWallPaintAndCoating">
+            <summary>
+            Clears any paint or coating on the wall at this position.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.TileType">
+            <summary>
+            The <see cref="T:Terraria.ID.TileID"/> of the tile at this position.<br/>
+            This value is only valid if <see cref="P:Terraria.Tile.HasTile"/> is true.<br/>
+            Legacy/vanilla equivalent is <see cref="P:Terraria.Tile.type"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.WallType">
+            <summary>
+            The <see cref="T:Terraria.ID.WallID"/> of the wall at this position.<br/>
+            A value of 0 indicates no wall.<br/>
+            Legacy/vanilla equivalent is <see cref="P:Terraria.Tile.wall"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.HasTile">
+            <summary>
+            Whether there is a tile at this position. Check this whenever you are accessing data from a tile to avoid getting data from an empty tile.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.active"/> or <see cref="M:Terraria.Tile.active(System.Boolean)"/>.
+            </summary>
+            <remarks>
+            Actuated tiles are not solid, so use <see cref="P:Terraria.Tile.HasUnactuatedTile"/> instead of <see cref="P:Terraria.Tile.HasTile"/> for collision checks.<br/>
+            This only corresponds to whether a tile exists, however, a wall can exist without a tile. To check if a wall exists, use <c>tile.WallType != WallID.None</c>.
+            </remarks>
+        </member>
+        <member name="P:Terraria.Tile.IsActuated">
+            <summary>
+            Whether the tile at this position is actuated by an actuator.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.inActive"/> or <see cref="M:Terraria.Tile.inActive(System.Boolean)"/>.
+            </summary>
+            <remarks>
+            Actuated tiles are <strong>not</strong> solid.
+            </remarks>
+        </member>
+        <member name="P:Terraria.Tile.HasActuator">
+            <summary>
+            Whether there is an actuator at this position.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.actuator"/> or <see cref="M:Terraria.Tile.actuator(System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.HasUnactuatedTile">
+            <summary>
+            Whether there is a tile at this position that isn't actuated.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.nactive"/>.
+            </summary>
+            <remarks>
+            Actuated tiles are not solid, so use <see cref="P:Terraria.Tile.HasUnactuatedTile"/> instead of <see cref="P:Terraria.Tile.HasTile"/> for collision checks.<br/>
+            When checking if a tile exists, use <see cref="P:Terraria.Tile.HasTile"/> instead of <see cref="P:Terraria.Tile.HasUnactuatedTile"/>.
+            </remarks>
+        </member>
+        <member name="P:Terraria.Tile.Slope">
+            <summary>
+            The slope shape of the tile, which can be changed by hammering.<br/>
+            Used by <see cref="M:Terraria.WorldGen.SlopeTile(System.Int32,System.Int32,System.Int32,System.Boolean)"/> and <see cref="P:Terraria.Tile.BlockType"/>.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.slope"/> or <see cref="M:Terraria.Tile.slope(System.Byte)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.BlockType">
+            <summary>
+            The <see cref="P:Terraria.Tile.Slope"/> and <see cref="P:Terraria.Tile.IsHalfBlock"/> of this tile combined, which can be changed by hammering.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.blockType"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.IsHalfBlock">
+            <summary>
+            Whether a tile is a half block shape, which can be changed by hammering.<br/>
+            Used by <see cref="M:Terraria.WorldGen.PoundTile(System.Int32,System.Int32)"/> and <see cref="P:Terraria.Tile.BlockType"/>.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.halfBrick"/> or <see cref="M:Terraria.Tile.halfBrick(System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.TopSlope">
+            <summary>
+            Whether a tile's <see cref="P:Terraria.Tile.Slope"/> has a solid top side (<see cref="F:Terraria.ID.SlopeType.SlopeDownLeft"/> or <see cref="F:Terraria.ID.SlopeType.SlopeDownRight"/>).<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.topSlope"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.BottomSlope">
+            <summary>
+            Whether a tile's <see cref="P:Terraria.Tile.Slope"/> has a solid bottom side (<see cref="F:Terraria.ID.SlopeType.SlopeUpLeft"/> or <see cref="F:Terraria.ID.SlopeType.SlopeUpRight"/>).<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.bottomSlope"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.LeftSlope">
+            <summary>
+            Whether a tile's <see cref="P:Terraria.Tile.Slope"/> has a solid left side (<see cref="F:Terraria.ID.SlopeType.SlopeDownRight"/> or <see cref="F:Terraria.ID.SlopeType.SlopeUpRight"/>).<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.leftSlope"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.RightSlope">
+            <summary>
+            Whether a tile's <see cref="P:Terraria.Tile.Slope"/> has a solid right side (<see cref="F:Terraria.ID.SlopeType.SlopeDownLeft"/> or <see cref="F:Terraria.ID.SlopeType.SlopeUpLeft"/>).<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.rightSlope"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.TileFrameX">
+            <summary>
+            The X coordinate of the top left corner of the area in the spritesheet for the <see cref="P:Terraria.Tile.TileType"/> to be used to draw the tile at this position.<para/>
+            For a Framed tile, this value is set automatically according to the framing logic as the world loads or other tiles are placed or mined nearby. See <see href="https://github.com/tModLoader/tModLoader/wiki/Basic-Tile#framed-vs-frameimportant-tiles">Framed vs FrameImportant</see> for more info. For <see cref="F:Terraria.Main.tileFrameImportant"/> tiles, this value will not change due to tile framing and will be saved and synced in Multiplayer. In either case, <see cref="P:Terraria.Tile.TileFrameX"/> and <see cref="P:Terraria.Tile.TileFrameY"/> correspond to the coordinates of the top left corner of the area in the spritesheet corresponding to the <see cref="P:Terraria.Tile.TileType"/> that should be drawn at this position. Custom drawing logic can adjust these values.<para/>
+            Some tiles such as Christmas Tree and Weapon Rack use the higher bits of these fields to do tile-specific behaviors. Modders should not attempt to do similar approaches, but should use <see cref="T:Terraria.ModLoader.ModTileEntity"/>s.<para/>
+            Legacy/vanilla equivalent is <see cref="P:Terraria.Tile.frameX"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.TileFrameY">
+            <summary>
+            The Y coordinate of the top left corner of the area in the spritesheet for the <see cref="P:Terraria.Tile.TileType"/> to be used to draw the tile at this position.<para/>
+            For a Framed tile, this value is set automatically according to the framing logic as the world loads or other tiles are placed or mined nearby. See <see href="https://github.com/tModLoader/tModLoader/wiki/Basic-Tile#framed-vs-frameimportant-tiles">Framed vs FrameImportant</see> for more info. For <see cref="F:Terraria.Main.tileFrameImportant"/> tiles, this value will not change due to tile framing and will be saved and synced in Multiplayer. In either case, <see cref="P:Terraria.Tile.TileFrameX"/> and <see cref="P:Terraria.Tile.TileFrameY"/> correspond to the coordinates of the top left corner of the area in the spritesheet corresponding to the <see cref="P:Terraria.Tile.TileType"/> that should be drawn at this position. Custom drawing logic can adjust these values.<para/>
+            Some tiles such as Christmas Tree and Weapon Rack use the higher bits of these fields to do tile-specific behaviors. Modders should not attempt to do similar approaches, but should use <see cref="T:Terraria.ModLoader.ModTileEntity"/>s.<para/>
+            Legacy/vanilla equivalent is <see cref="P:Terraria.Tile.frameY"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.WallFrameX">
+            <summary>
+            The X coordinate of the top left corner of the area in the spritesheet for the <see cref="P:Terraria.Tile.WallType"/> to be used to draw the wall at this position.<para/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.wallFrameX"/> or <see cref="M:Terraria.Tile.wallFrameX(System.Int32)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.WallFrameY">
+            <summary>
+            The Y coordinate of the top left corner of the area in the spritesheet for the <see cref="P:Terraria.Tile.WallType"/> to be used to draw the wall at this position.<para/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.wallFrameY"/> or <see cref="M:Terraria.Tile.wallFrameY(System.Int32)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.TileFrameNumber">
+            <summary>
+            The random style number the tile at this position has, which is random number between 0 and 2 (inclusive).<br/>
+            This is used in non-<see cref="F:Terraria.Main.tileFrameImportant"/> tiles (aka "Terrain" tiles) to provide visual variation and is not synced in multiplayer nor will it be preserved when saving and loading the world.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.frameNumber"/> or <see cref="M:Terraria.Tile.frameNumber(System.Byte)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.WallFrameNumber">
+            <summary>
+            The random style number the wall at this position has, which is a random number between 0 and 2 (inclusive).<br/>
+            This is used to provide visual variation and is not synced in multiplayer nor will it be preserved when saving and loading the world.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.wallFrameNumber"/> or <see cref="M:Terraria.Tile.wallFrameNumber(System.Byte)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.TileColor">
+            <summary>
+            The <see cref="T:Terraria.ID.PaintID"/> the tile at this position is painted with. Is <see cref="F:Terraria.ID.PaintID.None"/> if not painted.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.color"/> or <see cref="M:Terraria.Tile.color(System.Byte)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.WallColor">
+            <summary>
+            The <see cref="T:Terraria.ID.PaintID"/> the wall at this position is painted with. Is <see cref="F:Terraria.ID.PaintID.None"/> if not painted.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.wallColor"/> or <see cref="M:Terraria.Tile.wallColor(System.Byte)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.LiquidAmount">
+            <summary>
+            The amount of liquid at this position.<br/>
+            Ranges from 0, no liquid, to 255, filled with liquid.<br/>
+            Legacy/vanilla equivalent is <see cref="P:Terraria.Tile.liquid"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.LiquidType">
+            <summary>
+            The <see cref="T:Terraria.ID.LiquidID"/> of the liquid at this position.<br/>
+            Make sure to check that <see cref="P:Terraria.Tile.LiquidAmount"/> is greater than 0.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.liquidType"/> or <see cref="M:Terraria.Tile.liquidType(System.Int32)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.SkipLiquid">
+            <summary>
+            Whether the liquid at this position should skip updating for 1 tick.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.skipLiquid"/> or <see cref="M:Terraria.Tile.skipLiquid(System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.CheckingLiquid">
+            <summary>
+            Whether there is liquid at this position.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.checkingLiquid"/> or <see cref="M:Terraria.Tile.checkingLiquid(System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.RedWire">
+            <summary>
+            Whether there is red wire at this position.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.wire"/> or <see cref="M:Terraria.Tile.wire(System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.GreenWire">
+            <summary>
+            Whether there is green wire at this position.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.wire3"/> or <see cref="M:Terraria.Tile.wire3(System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.BlueWire">
+            <summary>
+            Whether there is blue wire at this position.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.wire2"/> or <see cref="M:Terraria.Tile.wire2(System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.YellowWire">
+            <summary>
+            Whether there is yellow wire at this position.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.wire4"/> or <see cref="M:Terraria.Tile.wire4(System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.IsTileInvisible">
+            <summary>
+            Whether the tile at this position is invisible. Used by <see cref="F:Terraria.ID.ItemID.EchoCoating"/>.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.invisibleBlock"/> or <see cref="M:Terraria.Tile.invisibleBlock(System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.IsWallInvisible">
+            <summary>
+            Whether the wall at this position is invisible. Used by <see cref="F:Terraria.ID.ItemID.EchoCoating"/>.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.invisibleWall"/> or <see cref="M:Terraria.Tile.invisibleWall(System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.IsTileFullbright">
+            <summary>
+            Whether the tile at this position is fully illuminated. Used by <see cref="F:Terraria.ID.ItemID.GlowPaint"/>.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.fullbrightBlock"/> or <see cref="M:Terraria.Tile.fullbrightBlock(System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.IsWallFullbright">
+            <summary>
+            Whether the wall at this position is fully illuminated. Used by <see cref="F:Terraria.ID.ItemID.GlowPaint"/>.<br/>
+            Legacy/vanilla equivalent is <see cref="M:Terraria.Tile.fullbrightWall"/> or <see cref="M:Terraria.Tile.fullbrightWall(System.Boolean)"/>.
+            </summary>
+        </member>
+        <member name="M:Terraria.Tile.Get``1">
+            <summary>
+            Used to get a reference to the <see cref="T:Terraria.ITileData"/> at this position.
+            </summary>
+            <typeparam name="T">The <see cref="T:Terraria.ITileData"/> to get.</typeparam>
+            <returns>The <see cref="T:Terraria.ITileData"/> of type <typeparamref name="T"/> at this position.</returns>
+        </member>
+        <member name="P:Terraria.Tile.type">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.TileType"/> instead.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.wall">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.WallType"/> instead.
+            </summary>
+        </member>
+        <member name="M:Terraria.Tile.active">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.HasTile"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.active(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.active"/>
+        </member>
+        <member name="M:Terraria.Tile.inActive">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.IsActuated"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.inActive(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.inActive"/>
+        </member>
+        <member name="M:Terraria.Tile.actuator">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.HasActuator"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.actuator(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.actuator"/>
+        </member>
+        <member name="M:Terraria.Tile.nactive">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.HasUnactuatedTile"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.slope">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.Slope"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.slope(System.Byte)">
+            <inheritdoc cref="M:Terraria.Tile.slope"/>
+        </member>
+        <member name="M:Terraria.Tile.halfBrick">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.IsHalfBlock"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.halfBrick(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.halfBrick"/>
+        </member>
+        <member name="M:Terraria.Tile.HasSameSlope(Terraria.Tile)">
+            <summary>
+            Legacy code, use <c>tile1.Slope == tile2.Slope</c> instead.
+            </summary>
+            <param name="tile"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Terraria.Tile.frameX">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.TileFrameX"/> instead.
+            </summary>
+        </member>
+        <member name="P:Terraria.Tile.frameY">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.TileFrameY"/> instead.
+            </summary>
+        </member>
+        <member name="M:Terraria.Tile.wallFrameX">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.WallFrameX"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.wallFrameX(System.Int32)">
+            <inheritdoc cref="M:Terraria.Tile.wallFrameX"/>
+        </member>
+        <member name="M:Terraria.Tile.wallFrameY">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.WallFrameY"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.wallFrameY(System.Int32)">
+            <inheritdoc cref="M:Terraria.Tile.wallFrameY"/>
+        </member>
+        <member name="M:Terraria.Tile.frameNumber">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.TileFrameNumber"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.frameNumber(System.Byte)">
+            <inheritdoc cref="M:Terraria.Tile.frameNumber"/>
+        </member>
+        <member name="M:Terraria.Tile.wallFrameNumber">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.WallFrameNumber"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.wallFrameNumber(System.Byte)">
+            <inheritdoc cref="M:Terraria.Tile.wallFrameNumber"/>
+        </member>
+        <member name="M:Terraria.Tile.color">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.TileColor"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.color(System.Byte)">
+            <inheritdoc cref="M:Terraria.Tile.color"/>
+        </member>
+        <member name="M:Terraria.Tile.wallColor">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.WallColor"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.wallColor(System.Byte)">
+            <inheritdoc cref="M:Terraria.Tile.wallColor"/>
+        </member>
+        <member name="P:Terraria.Tile.liquid">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.LiquidAmount"/> instead.
+            </summary>
+        </member>
+        <member name="M:Terraria.Tile.liquidType">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.LiquidType"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.liquidType(System.Int32)">
+            <inheritdoc cref="M:Terraria.Tile.liquidType"/>
+        </member>
+        <member name="M:Terraria.Tile.lava">
+            <summary>
+            Legacy code, use <c>tile.LiquidType == LiquidID.Lava</c> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.lava(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.lava"/>
+        </member>
+        <member name="M:Terraria.Tile.honey">
+            <summary>
+            Legacy code, use <c>tile.LiquidType == LiquidID.Honey</c> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.honey(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.honey"/>
+        </member>
+        <member name="M:Terraria.Tile.shimmer">
+            <summary>
+            Legacy code, use <c>tile.LiquidType == LiquidID.Shimmer</c> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.shimmer(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.shimmer"/>
+        </member>
+        <member name="M:Terraria.Tile.skipLiquid">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.SkipLiquid"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.skipLiquid(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.skipLiquid"/>
+        </member>
+        <member name="M:Terraria.Tile.checkingLiquid">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.CheckingLiquid"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.checkingLiquid(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.checkingLiquid"/>
+        </member>
+        <member name="M:Terraria.Tile.wire">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.RedWire"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.wire(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.wire"/>
+        </member>
+        <member name="M:Terraria.Tile.wire2">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.BlueWire"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.wire2(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.wire2"/>
+        </member>
+        <member name="M:Terraria.Tile.wire3">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.GreenWire"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.wire3(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.wire3"/>
+        </member>
+        <member name="M:Terraria.Tile.wire4">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.YellowWire"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.wire4(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.wire4"/>
+        </member>
+        <member name="M:Terraria.Tile.invisibleBlock">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.IsTileInvisible"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.invisibleBlock(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.invisibleBlock"/>
+        </member>
+        <member name="M:Terraria.Tile.invisibleWall">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.IsWallInvisible"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.invisibleWall(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.invisibleWall"/>
+        </member>
+        <member name="M:Terraria.Tile.fullbrightBlock">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.IsTileFullbright"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.fullbrightBlock(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.fullbrightBlock"/>
+        </member>
+        <member name="M:Terraria.Tile.fullbrightWall">
+            <summary>
+            Legacy code, use <see cref="P:Terraria.Tile.IsWallFullbright"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.Tile.fullbrightWall(System.Boolean)">
+            <inheritdoc cref="M:Terraria.Tile.fullbrightWall"/>
         </member>
         <member name="M:Terraria.TileWallWireStateData.SetAllBitsClearFrame(System.Int32)">
             <summary>
@@ -22982,6 +23767,12 @@
         <member name="M:Terraria.Utils.ReceiveBitArray(System.Int32,System.IO.BinaryReader)">
             <summary>
             Receives the result of SendBitArray, and returns the corresponding BitArray
+            </summary>
+        </member>
+        <member name="F:Terraria.Wiring.running">
+            <summary>
+            True while wiring pulse code is running, which happens in <see cref="M:Terraria.Wiring.TripWire(System.Int32,System.Int32,System.Int32,System.Int32)"/>. Check this before calling <see cref="M:Terraria.Wiring.SkipWire(System.Int32,System.Int32)"/> in any code that is shared between wiring and other interactions to prevent buggy behavior.<br/><br/>
+            For example, the code in <see href="https://github.com/tModLoader/tModLoader/blob/stable/ExampleMod/Content/Tiles/ExampleCampfire.cs#L97">ExampleCampfire</see> needs to check <see cref="F:Terraria.Wiring.running"/> because the code is shared between wiring and right click interactions. 
             </summary>
         </member>
         <member name="M:Terraria.Wiring.SkipWire(System.Int32,System.Int32)">

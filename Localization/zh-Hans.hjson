@@ -1343,6 +1343,11 @@ Mods: {
 				DisplayName: 鲜血斩击
 				Description: 你在流血！
 			}
+
+			DreamErosion: {
+				// DisplayName: Dream Erosion
+				// Description: Mods.Coralite.Buffs.DreamErosion.Description
+			}
 		}
 
 		NPCs: {
@@ -1394,6 +1399,9 @@ Mods: {
 			// AosSiTailLast.DisplayName: Aos Si Tail Last
 			// AosSiTailMiddle.DisplayName: Aos Si Tail Middle
 			// AosSiTailSecdonary.DisplayName: Aos Si Tail Secdonary
+			NightmarePlantera.DisplayName: 梦魇之花
+			// NightmareHook.DisplayName: Nightmare Hook
+			// NightmareCatcher.DisplayName: Nightmare Catcher
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1536,6 +1544,9 @@ Mods: {
 			FrostySwordRightSlash.DisplayName: 霜冻剑
 			FrostySwordProj.DisplayName: 霜冻弹
 			FrostySwordBurst.DisplayName: 冰花绽放
+			// HypnotizeFog.DisplayName: Hypnotize Fog
+			// DarkLeaf.DisplayName: Dark Leaf
+			// NightmareSparkle_Normal.DisplayName: Nightmare Sparkle_ Normal
 		}
 
 		Configs: {

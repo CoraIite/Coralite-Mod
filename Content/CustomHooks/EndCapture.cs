@@ -41,17 +41,21 @@ namespace Coralite.Content.CustomHooks
             screen = new RenderTarget2D(gd, Main.screenWidth, Main.screenHeight);
         }
 
-        private bool HasWarp()
+        private static bool HasWarp()
         {
             bool flag = false;
             foreach (Projectile proj in Main.projectile)
                 if (proj.active && proj.ModProjectile is IDrawWarp)
                     flag = true;
 
+            foreach (NPC proj in Main.npc)
+                if (proj.active && proj.ModNPC is IDrawWarp)
+                    flag = true;
+
             return flag;
         }
 
-        private void GetOrig(GraphicsDevice graphicsDevice)
+        private static void GetOrig(GraphicsDevice graphicsDevice)
         {
             graphicsDevice.SetRenderTarget(screen);
             graphicsDevice.Clear(Color.Transparent);
@@ -60,16 +64,21 @@ namespace Coralite.Content.CustomHooks
             Main.spriteBatch.End();
         }
 
-        private void DrawWarp(SpriteBatch sb)
+        private static void DrawWarp(SpriteBatch sb)
         {
             sb.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             for (int k = 0; k < Main.maxProjectiles; k++) // Projectiles.
-                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawWarp)
-                    (Main.projectile[k].ModProjectile as IDrawWarp).DrawWarp();
+                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawWarp warpProj)
+                    warpProj.DrawWarp();
+
+            for (int k = 0; k < Main.maxNPCs; k++) // Projectiles.
+                if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawWarp warpNPC)
+                    warpNPC.DrawWarp();
+
             sb.End();
         }
 
-        private void UseWarp()
+        private static void UseWarp()
         {
             if (VisualEffectSystem.DrawWarp && HasWarp())
             {

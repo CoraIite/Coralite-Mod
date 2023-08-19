@@ -44,6 +44,9 @@ namespace Coralite.Content.NPCs.Magike
 
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
+
             FlowTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserTrail");
             GlowTex = ModContent.Request<Texture2D>(AssetDirectory.Dusts + "GlowBall");
             StarTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "Hexagram2");
@@ -53,6 +56,9 @@ namespace Coralite.Content.NPCs.Magike
 
         public override void Unload()
         {
+            if (Main.dedServ)
+                return;
+
             FlowTex = null;
             GlowTex = null;
             StarTex = null;
@@ -193,7 +199,7 @@ namespace Coralite.Content.NPCs.Magike
             var origin2 = new Vector2(0, flowTex.Height / 2);
 
             spriteBatch.End();
-            spriteBatch.Begin(default, default, default, default, default, effect, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.Begin(default, default, default, default, default, effect, Main.GameViewMatrix.TransformationMatrix);
 
             //绘制流动效果
             spriteBatch.Draw(laserTex, laserTarget, laserSource, color, LaserRotation, origin, 0, 0);
@@ -210,7 +216,7 @@ namespace Coralite.Content.NPCs.Magike
             //spriteBatch.Draw(texDark, startPos, null, Color.White * opacity, LaserRotation - 3.14f, new Vector2(texDark.Width / 2, 0), 50, 0, 0);
 
             spriteBatch.End();
-            spriteBatch.Begin(default, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.Begin(default, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
 
             //绘制主体光束
             Texture2D bodyTex = LaserBodyTex.Value;

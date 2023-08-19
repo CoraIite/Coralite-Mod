@@ -414,7 +414,7 @@ namespace Coralite.Content.Items.Gels
         {
             Projectile.localNPCHitCooldown = 36;
             Projectile.width = 60;
-            Projectile.height = 60;
+            Projectile.height = 80;
             distanceToOwner = 2;
             minTime = 0;
             onHitFreeze = 4;

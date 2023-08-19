@@ -99,7 +99,7 @@
             Creates an <see cref="T:MonoMod.Core.ICoreNativeDetour"/> according to the arguments specified in <paramref name="request"/>.
             </summary>
             <param name="request">The <see cref="T:MonoMod.Core.CreateNativeDetourRequest"/> containing detour creation options.</param>
-            <returns>The ceated <see cref="T:MonoMod.Core.ICoreNativeDetour"/>.</returns>
+            <returns>The created <see cref="T:MonoMod.Core.ICoreNativeDetour"/>.</returns>
         </member>
         <member name="T:MonoMod.Core.CreateDetourRequest">
             <summary>
@@ -243,6 +243,32 @@
              THIS INTERFACE IS STILL EVOLVING.
              </summary>
         </member>
+        <member name="T:MonoMod.Core.Interop.PCSTR">
+            <summary>
+            A pointer to a constant character string.
+            </summary>
+        </member>
+        <member name="F:MonoMod.Core.Interop.PCSTR.Value">
+            <summary>
+            A pointer to the first character in the string. The content should be considered readonly, as it was typed as constant in the SDK.
+            </summary>
+        </member>
+        <member name="P:MonoMod.Core.Interop.PCSTR.Length">
+            <summary>
+            Gets the number of characters up to the first null character (exclusive).
+            </summary>
+        </member>
+        <member name="M:MonoMod.Core.Interop.PCSTR.ToString">
+            <summary>
+            Returns a <see langword="string"/> with a copy of this character array, decoding as UTF-8.
+            </summary>
+            <returns>A <see langword="string"/>, or <see langword="null"/> if <see cref="F:MonoMod.Core.Interop.PCSTR.Value"/> is <see langword="null"/>.</returns>
+        </member>
+        <member name="M:MonoMod.Core.Interop.PCSTR.AsSpan">
+            <summary>
+            Returns a span of the characters in this string.
+            </summary>
+        </member>
         <member name="T:MonoMod.Core.Platforms.TypeClassification">
             <summary>
             The ABI classification of a type.
@@ -322,7 +348,7 @@
             <param name="ArgumentOrder">A sequence of <see cref="T:MonoMod.Core.Platforms.SpecialArgumentKind"/> indicating the ABI's argument order.</param>
             <param name="Classifier">A <see cref="T:MonoMod.Core.Platforms.Classifier"/> which classifies value types according to the ABI.</param>
             <param name="ReturnsReturnBuffer"><see langword="true"/> if functions are expected to return the return buffer pointer they are passed;
-            <see langword="false"/> othwerise.</param>
+            <see langword="false"/> otherwise.</param>
         </member>
         <member name="M:MonoMod.Core.Platforms.Abi.#ctor(System.ReadOnlyMemory{MonoMod.Core.Platforms.SpecialArgumentKind},MonoMod.Core.Platforms.Classifier,System.Boolean)">
             <summary>
@@ -331,7 +357,7 @@
             <param name="ArgumentOrder">A sequence of <see cref="T:MonoMod.Core.Platforms.SpecialArgumentKind"/> indicating the ABI's argument order.</param>
             <param name="Classifier">A <see cref="T:MonoMod.Core.Platforms.Classifier"/> which classifies value types according to the ABI.</param>
             <param name="ReturnsReturnBuffer"><see langword="true"/> if functions are expected to return the return buffer pointer they are passed;
-            <see langword="false"/> othwerise.</param>
+            <see langword="false"/> otherwise.</param>
         </member>
         <member name="P:MonoMod.Core.Platforms.Abi.ArgumentOrder">
             <summary>A sequence of <see cref="T:MonoMod.Core.Platforms.SpecialArgumentKind"/> indicating the ABI's argument order.</summary>
@@ -341,7 +367,7 @@
         </member>
         <member name="P:MonoMod.Core.Platforms.Abi.ReturnsReturnBuffer">
             <summary><see langword="true"/> if functions are expected to return the return buffer pointer they are passed;
-            <see langword="false"/> othwerise.</summary>
+            <see langword="false"/> otherwise.</summary>
         </member>
         <member name="M:MonoMod.Core.Platforms.Abi.Classify(System.Type,System.Boolean)">
             <summary>
@@ -462,7 +488,7 @@
         </member>
         <member name="T:MonoMod.Core.Platforms.IAltEntryFactory">
             <summary>
-            A factory for constructin native alternate entrypoints for functions.
+            A factory for construction native alternate entrypoints for functions.
             </summary>
         </member>
         <member name="M:MonoMod.Core.Platforms.IAltEntryFactory.CreateAlternateEntrypoint(System.IntPtr,System.Int32,System.IDisposable@)">
@@ -557,7 +583,7 @@
             <para>Usually, callers should use <see cref="M:MonoMod.Core.Platforms.SimpleNativeDetour.ChangeTarget(System.IntPtr)"/> instead.</para>
             </remarks>
             <param name="detour">The detour to retarget.</param>
-            <param name="target">The new narget of the detour.</param>
+            <param name="target">The new target of the detour.</param>
             <param name="maxSizeHint">The maximum amount of readable/writable memory at the detour site, or -1. This is to be used as a hint, and may be ignored.</param>
             <returns>The computed <see cref="T:MonoMod.Core.Platforms.NativeDetourInfo"/>.</returns>
             <seealso cref="M:MonoMod.Core.Platforms.IArchitecture.GetRetargetBytes(MonoMod.Core.Platforms.NativeDetourInfo,MonoMod.Core.Platforms.NativeDetourInfo,System.Span{System.Byte},System.IDisposable@,System.Boolean@,System.Boolean@)"/>
@@ -772,7 +798,7 @@
         </member>
         <member name="T:MonoMod.Core.Platforms.INativeExceptionHelper">
             <summary>
-            A native excepotion helper to enable interop with native code that throws exceptions.
+            A native exception helper to enable interop with native code that throws exceptions.
             </summary>
             <remarks>
             <para>This helper must only be used when native->managed->native transitions are present. If the only transition
@@ -782,12 +808,12 @@
             used at the native->managed transition. This will rethrow the exception on the current thread, if there is one.
             Similarly, use <see cref="M:MonoMod.Core.Platforms.INativeExceptionHelper.CreateManagedToNativeHelper(System.IntPtr,System.IDisposable@)"/> to generate a thunk to use at
             the managed->native transition. This thunk will catch exceptions which are thrown in the native code, and store
-            them in a thread local assoicated with the exception helper.</para>
+            them in a thread local associated with the exception helper.</para>
             </remarks>
         </member>
-        <member name="P:MonoMod.Core.Platforms.INativeExceptionHelper.NativeException">
+        <member name="P:MonoMod.Core.Platforms.INativeExceptionHelper.GetExceptionSlot">
             <summary>
-            Gets or sets the thread's current native exception.
+            Gets a delegate which can be used to get a pointer to the current thread's native exception slot.
             </summary>
             <remarks>
             Native exceptions which are caught this way <i>must</i> be preserved and restored just before returning to the 
@@ -811,6 +837,12 @@
             <param name="target">The function pointer for the native code to call.</param>
             <param name="handle">A handle to any memory allocations made for the thunk. This must be kept alive as long as the returned pointer is in use.</param>
             <returns>A pointer to the thunk for managed code to call instead of <paramref name="target"/>.</returns>
+        </member>
+        <member name="T:MonoMod.Core.Platforms.GetExceptionSlot">
+            <summary>
+            A delegate which gets a pointer to the current thread's native exception slot.
+            </summary>
+            <returns>A pointer to the current thread's native exception slot.</returns>
         </member>
         <member name="T:MonoMod.Core.Platforms.IRuntime">
             <summary>
@@ -923,7 +955,7 @@
             <param name="methodHandle">The <see cref="T:System.RuntimeMethodHandle"/> of the method which was compiled.</param>
             <param name="method">A <see cref="T:System.Reflection.MethodBase"/> representing the method, if one could be found.</param>
             <param name="codeStart">A pointer to the start of the method code. This only represents the final location which the code will exist at.</param>
-            <param name="codeRw">A pointer to the start of the read/write capable code. This contains the actual codedata.</param>
+            <param name="codeRw">A pointer to the start of the read/write capable code. This contains the actual code data.</param>
             <param name="codeSize">The size of the code.</param>
         </member>
         <member name="T:MonoMod.Core.Platforms.ISystem">
@@ -966,7 +998,7 @@
             <summary>
             Gets an approximate amount of memory after <paramref name="start"/> which is readable.
             </summary>
-            <param name="start">The start adress to check.</param>
+            <param name="start">The start address to check.</param>
             <param name="guess">The amount which is expected. This method may not return values larger than to the page following this guess.</param>
             <returns>A number of bytes after <paramref name="start"/> which it is safe to read.</returns>
         </member>
@@ -1774,7 +1806,7 @@
         </member>
         <member name="M:MonoMod.Core.Utils.AddressMeaning.#ctor(MonoMod.Core.Utils.AddressKind,System.Int32)">
             <summary>
-            Construcs an <see cref="T:MonoMod.Core.Utils.AddressMeaning"/> for the specified <see cref="T:MonoMod.Core.Utils.AddressKind"/> and relative offset.
+            Constructs an <see cref="T:MonoMod.Core.Utils.AddressMeaning"/> for the specified <see cref="T:MonoMod.Core.Utils.AddressKind"/> and relative offset.
             </summary>
             <param name="kind">The <see cref="T:MonoMod.Core.Utils.AddressKind"/>.</param>
             <param name="relativeOffset">The offset relative to the match start.</param>
@@ -1787,7 +1819,7 @@
             Processes an address according to this <see cref="T:MonoMod.Core.Utils.AddressMeaning"/> into an absolute address.
             </summary>
             <param name="basePtr">The base pointer of the match.</param>
-            <param name="offset">The offset from the base pointer that the match ocurred at.</param>
+            <param name="offset">The offset from the base pointer that the match occurred at.</param>
             <param name="address">The address which was extracted from the match.</param>
             <returns>The resolved target address.</returns>
         </member>
@@ -2116,196 +2148,6 @@
             Initializes this instance.
             </summary>
             <param name="value">The requested value.</param>
-        </member>
-        <member name="T:Windows.Win32.Foundation.PCSTR">
-            <summary>
-            A pointer to a constant character string.
-            </summary>
-        </member>
-        <member name="F:Windows.Win32.Foundation.PCSTR.Value">
-            <summary>
-            A pointer to the first character in the string. The content should be considered readonly, as it was typed as constant in the SDK.
-            </summary>
-        </member>
-        <member name="P:Windows.Win32.Foundation.PCSTR.Length">
-            <summary>
-            Gets the number of characters up to the first null character (exclusive).
-            </summary>
-        </member>
-        <member name="M:Windows.Win32.Foundation.PCSTR.ToString">
-            <summary>
-            Returns a <see langword="string"/> with a copy of this character array, decoding as UTF-8.
-            </summary>
-            <returns>A <see langword="string"/>, or <see langword="null"/> if <see cref="F:Windows.Win32.Foundation.PCSTR.Value"/> is <see langword="null"/>.</returns>
-        </member>
-        <member name="M:Windows.Win32.Foundation.PCSTR.AsSpan">
-            <summary>
-            Returns a span of the characters in this string.
-            </summary>
-        </member>
-        <member name="T:Windows.Win32.Interop">
-            <content>
-            Contains extern methods from "KERNEL32.dll".
-            </content>
-        </member>
-        <member name="M:Windows.Win32.Interop.GetSystemInfo(Windows.Win32.System.SystemInformation.SYSTEM_INFO@)">
-            <inheritdoc cref="M:Windows.Win32.Interop.GetSystemInfo(Windows.Win32.System.SystemInformation.SYSTEM_INFO*)"/>
-        </member>
-        <member name="M:Windows.Win32.Interop.GetSystemInfo(Windows.Win32.System.SystemInformation.SYSTEM_INFO*)">
-            <summary>Retrieves information about the current system.</summary>
-            <param name="lpSystemInfo">
-            <para>A pointer to a <a href="https://docs.microsoft.com/windows/desktop/api/sysinfoapi/ns-sysinfoapi-system_info">SYSTEM_INFO</a> structure that receives the information.</para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//sysinfoapi/nf-sysinfoapi-getsysteminfo#parameters">Read more on docs.microsoft.com</see>.</para>
-            </param>
-            <remarks>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//sysinfoapi/nf-sysinfoapi-getsysteminfo">Learn more about this API from docs.microsoft.com</see>.</para>
-            </remarks>
-        </member>
-        <member name="M:Windows.Win32.Interop.VirtualAlloc(System.Void*,System.UIntPtr,Windows.Win32.System.Memory.VIRTUAL_ALLOCATION_TYPE,Windows.Win32.System.Memory.PAGE_PROTECTION_FLAGS)">
-            <summary>Reserves, commits, or changes the state of a region of pages in the virtual address space of the calling process.</summary>
-            <param name="lpAddress">
-            <para>The starting address of the region to allocate. If the memory is being reserved, the specified address is rounded down to the nearest multiple of the allocation granularity. If the memory is already reserved and is being committed, the address is rounded down to the next page boundary. To determine the size of a page and the allocation granularity on the host computer, use the <a href="https://docs.microsoft.com/windows/desktop/api/sysinfoapi/nf-sysinfoapi-getsysteminfo">GetSystemInfo</a> function. If this parameter is <b>NULL</b>, the system determines where to allocate the region. If this address is within an enclave that you have not initialized by calling <a href="https://docs.microsoft.com/windows/desktop/api/enclaveapi/nf-enclaveapi-initializeenclave">InitializeEnclave</a>, <b>VirtualAlloc</b> allocates a page of zeros for the enclave at that address. The page must be previously uncommitted, and will not be measured with the EEXTEND instruction of the Intel Software Guard Extensions programming model. If the address in within an enclave that you initialized, then the allocation operation fails with the <b>ERROR_INVALID_ADDRESS</b> error.</para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//memoryapi/nf-memoryapi-virtualalloc#parameters">Read more on docs.microsoft.com</see>.</para>
-            </param>
-            <param name="dwSize">
-            <para>The size of the region, in bytes. If the <i>lpAddress</i> parameter is <b>NULL</b>, this value is rounded up to the next page boundary. Otherwise, the allocated pages include all pages containing one or more bytes in the range from <i>lpAddress</i> to <i>lpAddress</i>+<i>dwSize</i>. This means that a 2-byte range straddling a page boundary causes both pages to be included in the allocated region.</para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//memoryapi/nf-memoryapi-virtualalloc#parameters">Read more on docs.microsoft.com</see>.</para>
-            </param>
-            <param name="flAllocationType"></param>
-            <param name="flProtect">
-            <para>The memory protection for the region of pages to be allocated. If the pages are being committed, you can specify any one of the <a href="https://docs.microsoft.com/windows/desktop/Memory/memory-protection-constants">memory protection constants</a>.</para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//memoryapi/nf-memoryapi-virtualalloc#parameters">Read more on docs.microsoft.com</see>.</para>
-            </param>
-            <returns>
-            <para>If the function succeeds, the return value is the base address of the allocated region of pages. If the function fails, the return value is <b>NULL</b>. To get extended error information, call <a href="/windows/desktop/api/errhandlingapi/nf-errhandlingapi-getlasterror">GetLastError</a>.</para>
-            </returns>
-            <remarks>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//memoryapi/nf-memoryapi-virtualalloc">Learn more about this API from docs.microsoft.com</see>.</para>
-            </remarks>
-        </member>
-        <member name="M:Windows.Win32.Interop.VirtualProtect(System.Void*,System.UIntPtr,Windows.Win32.System.Memory.PAGE_PROTECTION_FLAGS,Windows.Win32.System.Memory.PAGE_PROTECTION_FLAGS@)">
-            <inheritdoc cref="M:Windows.Win32.Interop.VirtualProtect(System.Void*,System.UIntPtr,Windows.Win32.System.Memory.PAGE_PROTECTION_FLAGS,Windows.Win32.System.Memory.PAGE_PROTECTION_FLAGS*)"/>
-        </member>
-        <member name="M:Windows.Win32.Interop.VirtualProtect(System.Void*,System.UIntPtr,Windows.Win32.System.Memory.PAGE_PROTECTION_FLAGS,Windows.Win32.System.Memory.PAGE_PROTECTION_FLAGS*)">
-            <summary>Changes the protection on a region of committed pages in the virtual address space of the calling process.</summary>
-            <param name="lpAddress">
-            <para>The address of the starting page of the region of pages whose access protection attributes are to be changed. All pages in the specified region must be within the same reserved region allocated when calling the <a href="https://docs.microsoft.com/windows/desktop/api/memoryapi/nf-memoryapi-virtualalloc">VirtualAlloc</a> or <a href="https://docs.microsoft.com/windows/desktop/api/memoryapi/nf-memoryapi-virtualallocex">VirtualAllocEx</a> function using <b>MEM_RESERVE</b>. The pages cannot span adjacent reserved regions that were allocated by separate calls to <b>VirtualAlloc</b> or <b>VirtualAllocEx</b> using <b>MEM_RESERVE</b>.</para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//memoryapi/nf-memoryapi-virtualprotect#parameters">Read more on docs.microsoft.com</see>.</para>
-            </param>
-            <param name="dwSize">
-            <para>The size of the region whose access protection attributes are to be changed, in bytes. The region of affected pages includes all pages containing one or more bytes in the range from the <i>lpAddress</i> parameter to <c>(lpAddress+dwSize)</c>. This means that a 2-byte range straddling a page boundary causes the protection attributes of both pages to be changed.</para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//memoryapi/nf-memoryapi-virtualprotect#parameters">Read more on docs.microsoft.com</see>.</para>
-            </param>
-            <param name="flNewProtect">
-            <para>The memory protection option. This parameter can be one of the <a href="https://docs.microsoft.com/windows/desktop/Memory/memory-protection-constants">memory protection constants</a>. For mapped views, this value must be compatible with the access protection specified when the view was mapped (see <a href="https://docs.microsoft.com/windows/desktop/api/memoryapi/nf-memoryapi-mapviewoffile">MapViewOfFile</a>, <a href="https://docs.microsoft.com/windows/desktop/api/memoryapi/nf-memoryapi-mapviewoffileex">MapViewOfFileEx</a>, and <a href="https://docs.microsoft.com/windows/desktop/api/winbase/nf-winbase-mapviewoffileexnuma">MapViewOfFileExNuma</a>).</para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//memoryapi/nf-memoryapi-virtualprotect#parameters">Read more on docs.microsoft.com</see>.</para>
-            </param>
-            <param name="lpflOldProtect">
-            <para>A pointer to a variable that receives the previous access protection value of the first page in the specified region of pages. If this parameter is <b>NULL</b> or does not point to a valid variable, the function fails.</para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//memoryapi/nf-memoryapi-virtualprotect#parameters">Read more on docs.microsoft.com</see>.</para>
-            </param>
-            <returns>
-            <para>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. To get extended error information, call <a href="/windows/desktop/api/errhandlingapi/nf-errhandlingapi-getlasterror">GetLastError</a>.</para>
-            </returns>
-            <remarks>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//memoryapi/nf-memoryapi-virtualprotect">Learn more about this API from docs.microsoft.com</see>.</para>
-            </remarks>
-        </member>
-        <member name="M:Windows.Win32.Interop.VirtualFree(System.Void*,System.UIntPtr,Windows.Win32.System.Memory.VIRTUAL_FREE_TYPE)">
-            <summary>Releases, decommits, or releases and decommits a region of pages within the virtual address space of the calling process.</summary>
-            <param name="lpAddress">
-            <para>A pointer to the base address of the region of pages to be freed.</para>
-            <para>If the <i>dwFreeType</i> parameter is <b>MEM_RELEASE</b>, this parameter must be the base address returned by the <a href="https://docs.microsoft.com/windows/desktop/api/memoryapi/nf-memoryapi-virtualalloc">VirtualAlloc</a> function when the region of pages is reserved.</para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//memoryapi/nf-memoryapi-virtualfree#parameters">Read more on docs.microsoft.com</see>.</para>
-            </param>
-            <param name="dwSize">
-            <para>The size of the region of memory to be freed, in bytes.</para>
-            <para>If the <i>dwFreeType</i> parameter is <b>MEM_RELEASE</b>, this parameter must be 0 (zero). The function frees the entire region that is reserved in the initial allocation call to <a href="https://docs.microsoft.com/windows/desktop/api/memoryapi/nf-memoryapi-virtualalloc">VirtualAlloc</a>. If the <i>dwFreeType</i> parameter is <b>MEM_DECOMMIT</b>, the function decommits all memory pages that contain one or more bytes in the range from the <i>lpAddress</i> parameter to <c>(lpAddress+dwSize)</c>. This means, for example, that a 2-byte region of memory that straddles a page boundary causes both pages to be decommitted. If <i>lpAddress</i> is the base address returned by <a href="https://docs.microsoft.com/windows/desktop/api/memoryapi/nf-memoryapi-virtualalloc">VirtualAlloc</a> and <i>dwSize</i> is 0 (zero), the function decommits the entire region that is allocated by <b>VirtualAlloc</b>. After that, the entire region is in the reserved state.</para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//memoryapi/nf-memoryapi-virtualfree#parameters">Read more on docs.microsoft.com</see>.</para>
-            </param>
-            <param name="dwFreeType"></param>
-            <returns>
-            <para>If the function succeeds, the return value is nonzero. If the function fails, the return value is 0 (zero). To get extended error information, call <a href="/windows/desktop/api/errhandlingapi/nf-errhandlingapi-getlasterror">GetLastError</a>.</para>
-            </returns>
-            <remarks>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//memoryapi/nf-memoryapi-virtualfree">Learn more about this API from docs.microsoft.com</see>.</para>
-            </remarks>
-        </member>
-        <member name="M:Windows.Win32.Interop.CloseHandle(Windows.Win32.Foundation.HANDLE)">
-            <summary>Closes an open object handle.</summary>
-            <param name="hObject">A valid handle to an open object.</param>
-            <returns>
-            <para>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. To get extended error information, call <a href="/windows/desktop/api/errhandlingapi/nf-errhandlingapi-getlasterror">GetLastError</a>. If the application is running under a debugger,  the function will throw an exception if it receives either a  handle value that is not valid  or a pseudo-handle value. This can happen if you close a handle twice, or if you  call <b>CloseHandle</b> on a handle returned by the <a href="/windows/desktop/api/fileapi/nf-fileapi-findfirstfilea">FindFirstFile</a> function instead of calling the <a href="/windows/desktop/api/fileapi/nf-fileapi-findclose">FindClose</a> function.</para>
-            </returns>
-            <remarks>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//handleapi/nf-handleapi-closehandle">Learn more about this API from docs.microsoft.com</see>.</para>
-            </remarks>
-        </member>
-        <member name="M:Windows.Win32.Interop.GetCurrentProcess">
-            <summary>Retrieves a pseudo handle for the current process.</summary>
-            <returns>The return value is a pseudo handle to the current process.</returns>
-            <remarks>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//processthreadsapi/nf-processthreadsapi-getcurrentprocess">Learn more about this API from docs.microsoft.com</see>.</para>
-            </remarks>
-        </member>
-        <member name="M:Windows.Win32.Interop.FlushInstructionCache(Windows.Win32.Foundation.HANDLE,System.Void*,System.UIntPtr)">
-            <summary>Flushes the instruction cache for the specified process.</summary>
-            <param name="hProcess">A handle to a process whose instruction cache is to be flushed.</param>
-            <param name="lpBaseAddress">A pointer to the base of the region to be flushed. This parameter can be <b>NULL</b>.</param>
-            <param name="dwSize">The size of the region to be flushed if the <i>lpBaseAddress</i> parameter is not <b>NULL</b>, in bytes.</param>
-            <returns>
-            <para>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. To get extended error information, call <a href="/windows/desktop/api/errhandlingapi/nf-errhandlingapi-getlasterror">GetLastError</a>.</para>
-            </returns>
-            <remarks>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//processthreadsapi/nf-processthreadsapi-flushinstructioncache">Learn more about this API from docs.microsoft.com</see>.</para>
-            </remarks>
-        </member>
-        <member name="T:Windows.Win32.System.SystemInformation.SYSTEM_INFO">
-            <summary>Contains information about the current computer system. This includes the architecture and type of the processor, the number of processors in the system, the page size, and other such information.</summary>
-            <remarks>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//sysinfoapi/ns-sysinfoapi-system_info">Learn more about this API from docs.microsoft.com</see>.</para>
-            </remarks>
-        </member>
-        <member name="F:Windows.Win32.System.SystemInformation.SYSTEM_INFO.dwPageSize">
-            <summary>
-            <para>The page size and the granularity of page protection and commitment. This is the page size used by the <a href="https://docs.microsoft.com/windows/desktop/api/memoryapi/nf-memoryapi-virtualalloc">VirtualAlloc</a> function.</para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//sysinfoapi/ns-sysinfoapi-system_info#members">Read more on docs.microsoft.com</see>.</para>
-            </summary>
-        </member>
-        <member name="F:Windows.Win32.System.SystemInformation.SYSTEM_INFO.lpMinimumApplicationAddress">
-            <summary>A pointer to the lowest memory address accessible to applications and dynamic-link libraries (DLLs).</summary>
-        </member>
-        <member name="F:Windows.Win32.System.SystemInformation.SYSTEM_INFO.lpMaximumApplicationAddress">
-            <summary>A pointer to the highest memory address accessible to applications and DLLs.</summary>
-        </member>
-        <member name="F:Windows.Win32.System.SystemInformation.SYSTEM_INFO.dwActiveProcessorMask">
-            <summary>A mask representing the set of processors configured into the system. Bit 0 is processor 0; bit 31 is processor 31.</summary>
-        </member>
-        <member name="F:Windows.Win32.System.SystemInformation.SYSTEM_INFO.dwNumberOfProcessors">
-            <summary>
-            <para>The number of logical processors in the current group. To retrieve this value, use the <a href="https://docs.microsoft.com/windows/desktop/api/sysinfoapi/nf-sysinfoapi-getlogicalprocessorinformation">GetLogicalProcessorInformation</a> function. <div class="alert"><b>Note</b>  For information about the  physical processors shared by logical processors, call <a href="https://docs.microsoft.com/windows/desktop/api/sysinfoapi/nf-sysinfoapi-getlogicalprocessorinformationex">GetLogicalProcessorInformationEx</a> with the <i>RelationshipType</i> parameter set to RelationProcessorPackage (3).</div> <div> </div></para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//sysinfoapi/ns-sysinfoapi-system_info#members">Read more on docs.microsoft.com</see>.</para>
-            </summary>
-        </member>
-        <member name="F:Windows.Win32.System.SystemInformation.SYSTEM_INFO.dwProcessorType">
-            <summary>An obsolete member that is retained for compatibility. Use the <b>wProcessorArchitecture</b>, <b>wProcessorLevel</b>, and <b>wProcessorRevision</b> members to determine the type of processor.</summary>
-        </member>
-        <member name="F:Windows.Win32.System.SystemInformation.SYSTEM_INFO.dwAllocationGranularity">
-            <summary>The granularity for the starting address at which virtual memory can be allocated. For more information, see <a href="https://docs.microsoft.com/windows/desktop/api/memoryapi/nf-memoryapi-virtualalloc">VirtualAlloc</a>.</summary>
-        </member>
-        <member name="F:Windows.Win32.System.SystemInformation.SYSTEM_INFO.wProcessorLevel">
-            <summary>
-            <para>The architecture-dependent processor level. It should be used only for display purposes. To determine the feature set of a processor, use the <a href="https://docs.microsoft.com/windows/desktop/api/processthreadsapi/nf-processthreadsapi-isprocessorfeaturepresent">IsProcessorFeaturePresent</a> function. If <b>wProcessorArchitecture</b> is PROCESSOR_ARCHITECTURE_INTEL, <b>wProcessorLevel</b> is defined by the CPU vendor. If <b>wProcessorArchitecture</b> is PROCESSOR_ARCHITECTURE_IA64, <b>wProcessorLevel</b> is set to 1.</para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//sysinfoapi/ns-sysinfoapi-system_info#members">Read more on docs.microsoft.com</see>.</para>
-            </summary>
-        </member>
-        <member name="F:Windows.Win32.System.SystemInformation.SYSTEM_INFO.wProcessorRevision">
-            <summary>
-            <para>The architecture-dependent processor revision. The following table shows how the revision value is assembled for each type of processor architecture.</para>
-            <para></para>
-            <para>This doc was truncated.</para>
-            <para><see href="https://docs.microsoft.com/windows/win32/api//sysinfoapi/ns-sysinfoapi-system_info#members">Read more on docs.microsoft.com</see>.</para>
-            </summary>
         </member>
     </members>
 </doc>

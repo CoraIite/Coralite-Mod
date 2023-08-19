@@ -39,7 +39,9 @@ namespace Coralite.Content.ModPlayers
         public int DashTimer = 0;
 
         public bool redJadePendant;
-        
+
+        public byte nightmareCount;
+
         public override void ResetEffects()
         {
             redJadePendant = false;
@@ -55,6 +57,11 @@ namespace Coralite.Content.ModPlayers
             else
                 DashDir = -1;
 
+        }
+
+        public override void OnRespawn()
+        {
+            nightmareCount = 0;
         }
 
         #region 各种更新

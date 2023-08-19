@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.Icicle
         {
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
-            Projectile.height = 85;
+            Projectile.height = 100;
             trailTopWidth = 2;
             distanceToOwner = 8;
             minTime = 0;
@@ -150,7 +150,7 @@ namespace Coralite.Content.Items.Icicle
 
         protected override float ControlTrailBottomWidth(float factor)
         {
-            return 75 * Projectile.scale;
+            return 85 * Projectile.scale;
         }
 
         protected override void Initializer()
@@ -229,15 +229,15 @@ namespace Coralite.Content.Items.Icicle
                 default:
                 case 0:
                     alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 140) + 100;
-                    Projectile.scale = Helper.EllipticalEase(2.3f - 4.6f * Smoother.Smoother(timer, maxTime - minTime), 1f, 1.4f);
+                    Projectile.scale = Helper.EllipticalEase(2.3f - 4.6f * Smoother.Smoother(timer, maxTime - minTime), 0.8f, 1.2f);
                     break;
                 case 2:
                     alpha = (int)(Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 80) + 160;
-                    Projectile.scale = Helper.EllipticalEase(3f - 5.6f * Smoother.Smoother(timer, maxTime - minTime), 1.3f, 1.8f);
+                    Projectile.scale = Helper.EllipticalEase(3f - 5.6f * Smoother.Smoother(timer, maxTime - minTime), 1.1f, 1.6f);
                     break;
                 case 3:
                     alpha = (int)(Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 140) + 100;
-                    Projectile.scale = Helper.EllipticalEase(1.6f - 4.6f * Smoother.Smoother(timer, maxTime - minTime), 1.3f, 1.8f);
+                    Projectile.scale = Helper.EllipticalEase(1.6f - 4.6f * Smoother.Smoother(timer, maxTime - minTime), 1.1f, 1.6f);
                     break;
             }
             base.OnSlash();
@@ -431,18 +431,18 @@ namespace Coralite.Content.Items.Icicle
         public override void SetDefs()
         {
             Projectile.localNPCHitCooldown = 36;
-            Projectile.width = 60;
-            Projectile.height = 60;
+            Projectile.width = 40;
+            Projectile.height = 100;
             distanceToOwner = 8;
             minTime = 0;
             onHitFreeze = 4;
-            trailTopWidth = 20;
+            trailTopWidth = 0;
             useSlashTrail = true;
         }
 
         protected override float ControlTrailBottomWidth(float factor)
         {
-            return 75 * Projectile.scale;
+            return 95 * Projectile.scale;
         }
 
         protected override void Initializer()
@@ -495,12 +495,12 @@ namespace Coralite.Content.Items.Icicle
                 default:
                 case 1:
                     alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 200) + 50;
-                    Projectile.scale = Helper.EllipticalEase(-1.4f + 4.3f * Smoother.Smoother(timer, maxTime - minTime), 0.7f, 1.9f);
+                    Projectile.scale = Helper.EllipticalEase(-1.4f + 4.3f * Smoother.Smoother(timer, maxTime - minTime), 0.6f, 1.5f);
                     //Main.NewText(Projectile.scale);
                     break;
                 case 4:
                     alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 200) + 50;
-                    Projectile.scale = Helper.EllipticalEase(2.8f - 5.6f * Smoother.Smoother(timer, maxTime - minTime), 0.9f, 2.7f);
+                    Projectile.scale = Helper.EllipticalEase(2.8f - 5.6f * Smoother.Smoother(timer, maxTime - minTime), 0.8f, 2.5f);
                     break;
             }
 
@@ -602,7 +602,7 @@ namespace Coralite.Content.Items.Icicle
         {
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
-            Projectile.height = 85;
+            Projectile.height = 100;
             trailTopWidth = 2;
             distanceToOwner = 8;
             minTime = 0;
@@ -649,7 +649,7 @@ namespace Coralite.Content.Items.Icicle
 
         protected override float ControlTrailBottomWidth(float factor)
         {
-            return 75 * Projectile.scale;
+            return 95 * Projectile.scale;
         }
 
         protected override void BeforeSlash()
@@ -685,7 +685,7 @@ namespace Coralite.Content.Items.Icicle
             FrostySwordSlash.FrostDustsOnSlash(Top, RotateVec2, totalAngle);
 
             alpha = (int)(Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 80) + 160;
-            Projectile.scale = Helper.EllipticalEase(2.8f - 5.6f * Smoother.Smoother(timer, maxTime - minTime), 0.9f, 1.2f);
+            Projectile.scale = Helper.EllipticalEase(2.8f - 5.6f * Smoother.Smoother(timer, maxTime - minTime), 0.8f, 1f);
             base.OnSlash();
         }
 
