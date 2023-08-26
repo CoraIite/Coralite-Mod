@@ -55,6 +55,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             canDrawWarp = true;
                             warpScale = 0;
 
+                            NCamera.useShake = true;
+                            NCamera.shakeLevel = 3f;
+                            NCamera.ShakeDelay = 2;
+
                             SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
                             st.Pitch = -0.5f;
                             SoundEngine.PlaySound(st, NPC.Center);
@@ -80,7 +84,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         if (Timer % 3 == 0)
                         {
-                            dir = Helpers.Helper.NextVec2Dir();
+                            dir = Helper.NextVec2Dir();
                             dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(64f), ModContent.DustType<NightmareStar>(), dir * Main.rand.NextFloat(8f, 16f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 4f));
                             dust.rotation = dir.ToRotation()+MathHelper.PiOver2;
                         }
@@ -123,7 +127,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
 
 
-                        for (int i = 0; i < 2; i++)
+                        for (int i = 0; i < 3; i++)
                         {
                             Color color = Main.rand.Next(0, 2) switch
                             {
@@ -133,7 +137,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                             Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(64, 64), Helper.NextVec2Dir() * Main.rand.NextFloat(12, 28f),
                                 CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 2f));
-                        }                            
+                        }
 
                         if (Timer > 160)
                         {
@@ -232,10 +236,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
-            Timer = 0;
-            State = 0;
-            Phase = (int)AIPhases.Dream_P2;
-            NPC.netUpdate = true;
+            SetPhase2States();
         }
 
         public void DrawWarp()

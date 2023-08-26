@@ -86,11 +86,9 @@ namespace Coralite.Content.Bosses.Rediancie
             Texture2D maintex = TextureAssets.Projectile[Type].Value;
             Vector2 screenPosition = Main.screenPosition;
 
-            Utils.DrawBorderStringBig(sb, "赤玉灵", Main.LocalPlayer.Center - new Vector2(100, 325) - screenPosition, drawCharColor, 1.4f);
+            Utils.DrawBorderStringBig(sb, ModContent.GetInstance<Rediancie>().DisplayName.Value, Main.LocalPlayer.Center - new Vector2(0, 325) - screenPosition, drawCharColor, 1.3f,0.5f);
 
             sb.Draw(maintex, Main.LocalPlayer.Center - new Vector2(0, 225) - screenPosition, null, drawPicColor, 0f, new Vector2(maintex.Width / 2, maintex.Height / 2), 2f, SpriteEffects.None, 0f);
-
-            Utils.DrawBorderStringBig(sb, "Rediancie", Main.LocalPlayer.Center - new Vector2(75, 180) - screenPosition, drawCharColor, 0.8f);
 
             return false;
         }

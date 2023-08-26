@@ -35,6 +35,10 @@ namespace Coralite.Core.Configs
         [DefaultValue(true)]
         public bool DrawTrail;
 
+        [Header("NightmarePlantera")]
+        public bool UseNightmareSky;
+
+
         public override void OnChanged()
         {
             SetValues();
@@ -55,6 +59,7 @@ namespace Coralite.Core.Configs
             VisualEffectSystem.DrawKniefLight = DrawKniefLight;
             VisualEffectSystem.DrawWarp = DrawWarp;
             VisualEffectSystem.DrawTrail = DrawTrail;
+            VisualEffectSystem.UseNightmareSky = UseNightmareSky;
         }
     }
 
@@ -69,5 +74,7 @@ namespace Coralite.Core.Configs
         public static bool DrawKniefLight = true;
         public static bool DrawWarp = true;
         public static bool DrawTrail=true;
+
+        public static bool UseNightmareSky;
     }
 }

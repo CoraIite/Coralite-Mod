@@ -20,7 +20,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 使用ai2传入颜色
     /// -1：黑紫色
     /// -2：红色
-    /// 大于0：该颜色所对应的彩色
+    /// 0-1：该数值对应的hue颜色
     /// </summary>
     public class NightmareBite : ModProjectile
     {
@@ -69,7 +69,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (Init)
             {
                 if (ColorState == -1)
-                    DrawColor = new Color(100, 100, 130);
+                    DrawColor = new Color(204, 170, 242);
                 else if (ColorState == -2)
                     DrawColor = new Color(255, 20, 20, 130);
                 else

@@ -35,7 +35,7 @@ namespace Coralite.Helpers
                 return 0f;
             }
 
-            float num2 = Clamp(Dot(from, to) / num, -1f, 1f);
+            float num2 = Clamp(Dot(from, to) / num, -0.9999f, 0.9999f);
             return (float)Math.Acos(num2) * 57.29578f;
         }
 

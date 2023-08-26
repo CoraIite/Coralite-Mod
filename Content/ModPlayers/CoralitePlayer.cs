@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Botanical.Seeds;
+﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.UI;
 using Coralite.Core;
@@ -62,6 +63,22 @@ namespace Coralite.Content.ModPlayers
         public override void OnRespawn()
         {
             nightmareCount = 0;
+        }
+
+        public override bool CanUseItem(Item item)
+        {
+            if (item.type==ItemID.RodOfHarmony)
+            {
+                if (NightmarePlantera.NightmarePlanteraAlive(out _))
+                {
+                    Rectangle rectangle = new Rectangle((int)Player.Center.X, (int)Player.Center.Y, 2, 2);
+
+                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "协调的力量被临时封印了");
+                    return false;
+                }
+            }
+
+            return base.CanUseItem(item);
         }
 
         #region 各种更新

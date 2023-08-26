@@ -1,8 +1,10 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
@@ -13,7 +15,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    public sealed partial class NightmarePlantera : ModNPC
+    public sealed partial class NightmarePlantera : ModNPC,IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.NightmarePlantera + Name;
 
@@ -22,20 +24,28 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         private ref float Phase => ref NPC.ai[0];
         private ref float State => ref NPC.ai[1];
         private ref float SonState => ref NPC.ai[2];
+        private ref float MoveCount => ref NPC.ai[3];
+
+        public float ShootCount;
 
         public int Timer;
         private bool spawnedHook;
         private bool useMeleeDamage;
 
+        public RotateTentacle[] rotateTentacles;
+        public Color tentacleColor;
         public static Asset<Texture2D> tentacleTex;
         public static Asset<Texture2D> tentacleFlowTex; 
 
-        /// <summary>
-        /// 自身BOSS的索引，用于方便爪子获取自身
-        /// </summary>
+        /// <summary> 自身BOSS的索引，用于方便爪子获取自身/ </summary>
         public static int NPBossIndex = -1;
 
-        public float alpha=1f;
+        public float alpha = 1f;
+
+        public static Color[] phantomColors;
+        public static Color nightPurple = new Color(204, 170, 242, 230);
+
+        public static Color nightmareSparkleColor = new Color(111, 80, 180, 230);
 
         #region tml hooks
 
@@ -46,7 +56,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPCID.Sets.TrailingMode[Type] = 1;
             NPCID.Sets.TrailCacheLength[Type] = 12;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
-            
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
+
             NPCID.Sets.BossBestiaryPriority.Add(Type);
         }
 
@@ -158,6 +169,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             CircleWarpTex= ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "CircleWarp");
             BlackBack = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "BlackBack");
             NameLine= ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "NPNameLine");
+
+            phantomColors = new Color[7];
+            for (int i = 0; i < 7; i++)
+            {
+                phantomColors[i] = Main.hslToRgb(i * 1 / 7f, 45 / 100f, 30 / 100f,200);
+            }
         }
 
         public override void Unload()
@@ -315,7 +332,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             /// <summary> 噩梦之咬  </summary>
             nightmareBite,
-
+            /// <summary> 转圈圈放弹幕，之后瞬移到另一方向咬下 </summary>
+            rollingThenBite,
+            /// <summary> 射出一些球球，然后从中刺出尖刺 </summary>
+            spikeBalls,
+            /// <summary> 爪击 </summary>
+            hookSlash,
+            /// <summary> 在一边生成刺+，自身吐出弹幕</summary>
+            spikesAndSparkles,
+            /// <summary> 旋转并放出尖刺 </summary>
+            spikeHell,
         }
 
         public void ResetStates()
@@ -380,36 +406,86 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPC.rotation = NPC.rotation.AngleTowards((Target.Center - NPC.Center).ToRotation(), maxChange);
         }
 
+        public Color TentacleColor(float factor)
+        {
+            return Color.Lerp(tentacleColor, Color.Transparent, factor);
+        }
+
+        public static float TentacleWidth(float factor)
+        {
+            if (factor > 0.5f)
+                return Helper.Lerp(25, 0, (factor - 0.5f) / 0.5f);
+
+            return Helper.Lerp(0, 25, factor / 0.5f);
+        }
+
         #endregion
 
         #region NetWork
 
         public override void SendExtraAI(BinaryWriter writer)
         {
+            writer.Write(ShootCount);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
+            ShootCount = reader.ReadSingle();
         }
 
         #endregion
 
         #region Draw
 
-        public void DrawSelf(SpriteBatch spriteBatch, Vector2 screenPos)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D mainTex = TextureAssets.Npc[Type].Value;
             Rectangle frameBox = mainTex.Frame(1, Main.npcFrameCount[NPC.type], NPC.frame.X, NPC.frame.Y);
             Vector2 origin = frameBox.Size() / 2;
+            Vector2 pos = NPC.Center - screenPos;
+            float selfRot = NPC.rotation + MathHelper.PiOver2;
 
-            spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, Color.White * alpha, NPC.rotation + MathHelper.PiOver2, origin, NPC.scale, 0, 0);
+            if (rotateTentacles != null)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    rotateTentacles[j]?.DrawTentacle(i => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
+                }
+            }
+
+            //绘制自己
+            spriteBatch.Draw(mainTex, pos, frameBox, Color.White * alpha, selfRot, origin, NPC.scale, 0, 0);
+
+            if (alpha != 1)
+            {
+                //绘制7个幻影
+                float angle = alpha * MathHelper.Pi;
+                float distance = MathF.Sin(alpha * MathHelper.Pi) * 64;
+
+                for (int i = 0; i < 7; i++)
+                {
+                    Color c = phantomColors[i] * alpha;
+                    spriteBatch.Draw(mainTex, pos + (i * 1 / 7f * MathHelper.TwoPi + angle).ToRotationVector2() * distance, frameBox, c * alpha, selfRot, origin, NPC.scale, 0, 0);
+                }
+            }
+
+            return false;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
-
-            DrawSelf(spriteBatch, screenPos);
-            return false;
+            if (rotateTentacles != null)
+            {
+                Texture2D circleTex = ConfusionHole.CircleTex.Value;
+                Vector2 origin = circleTex.Size() / 2;
+                float rot = Main.GlobalTimeWrappedHourly * 0.5f;
+                for (int j = 0; j < 3; j++)
+                {
+                    Vector2 pos = rotateTentacles[j].pos - Main.screenPosition;
+                    spriteBatch.Draw(circleTex,pos , null, tentacleColor, rot, origin, 0.08f + Main.rand.NextFloat(0, 0.02f), 0, 0);
+                    spriteBatch.Draw(circleTex, pos, null, Color.Black, rot, origin, 0.05f , 0, 0);
+                }
+            }
         }
 
         #endregion

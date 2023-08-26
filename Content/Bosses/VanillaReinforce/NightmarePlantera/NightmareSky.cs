@@ -1,6 +1,8 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Configs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
@@ -10,14 +12,32 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     public class NightmareSky : CustomSky
     {
         public int Timeleft = 100; //弄一个计时器，让天空能自己消失
-        public Color color = new Color(80, 80, 110);
+        public Color color = new Color(204, 170, 242);
 
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
             if (minDepth < 9 && maxDepth > 9)//绘制在背景景物后面，防止遮挡，当然你想的话，也可以去掉这个条件
             {
                 Texture2D sky = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "NightmareSky").Value;
-                spriteBatch.Draw(sky, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color * (Timeleft / 100f));
+
+                Rectangle screen = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
+                if (VisualEffectSystem.UseNightmareSky)
+                {
+                    Effect e = Filters.Scene["GlowingMarblingBlack2"].GetShader().Shader;
+                    e.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 10);
+                    e.Parameters["viewRange"].SetValue(0.7f + MathF.Sin(Main.GlobalTimeWrappedHourly / 3) * 0.2f);
+                    e.Parameters["uC1"].SetValue((color*(Timeleft / 100f)).ToVector3());
+
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, default, default, default, e);
+
+                    spriteBatch.Draw(sky, screen, Color.White);
+
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+                }
+                else
+                    spriteBatch.Draw(sky, screen, color * (Timeleft / 100f));
                 //把一条带状的图片填满屏幕
             }
         }

@@ -82,7 +82,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Main.spriteBatch.Draw(mainTex, pos, frameBox, color, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
 
             color = glowColor;
-            color *= 0.75f;
+            //color *= 0.75f;
 
             //绘制影子拖尾
             //Projectile.DrawShadowTrails(color, 0.3f, 0.03f, 1, 6, 2, Projectile.scale, frameBox);

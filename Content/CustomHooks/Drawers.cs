@@ -14,12 +14,24 @@ namespace Coralite.Content.CustomHooks
         // 应该不会干涉任何东西
         public override SafetyLevel Safety => SafetyLevel.Safe;
 
+        public static BlendState Reverse;
+
         public override void Load()
         {
             if (Main.dedServ)
                 return;
 
-            Terraria.On_Main.DrawDust += Drawer;
+            On_Main.DrawDust += Drawer;
+
+            Reverse = new BlendState()
+            {
+                ColorBlendFunction = BlendFunction.ReverseSubtract,
+
+                ColorSourceBlend = Blend.One,
+                AlphaSourceBlend = Blend.One,
+                ColorDestinationBlend = Blend.InverseSourceAlpha,
+                AlphaDestinationBlend = Blend.InverseSourceAlpha
+            };
         }
 
         /// <summary>
@@ -67,6 +79,19 @@ namespace Coralite.Content.CustomHooks
                     (Main.npc[k].ModNPC as IDrawNonPremultiplied).DrawNonPremultiplied(Main.spriteBatch);
 
             spriteBatch.End();
+
+            ////绘制反色
+            //Main.spriteBatch.Begin(SpriteSortMode.Deferred, Reverse, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            //for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
+            //    if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawColorReverse)
+            //        (Main.projectile[k].ModProjectile as IDrawColorReverse).DrawColorReverse(Main.spriteBatch);
+
+            //for (int k = 0; k < Main.maxNPCs; k++) //NPCs
+            //    if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawColorReverse)
+            //        (Main.npc[k].ModNPC as IDrawColorReverse).DrawColorReverse(Main.spriteBatch);
+
+            //spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 

@@ -1270,8 +1270,8 @@ Mods: {
 			}
 
 			GelFiber: {
-				// DisplayName: Gel Fiber
-				// Tooltip: ""
+				DisplayName: 凝胶纤维
+				Tooltip: ""
 			}
 		}
 
@@ -1345,8 +1345,8 @@ Mods: {
 			}
 
 			DreamErosion: {
-				// DisplayName: Dream Erosion
-				// Description: Mods.Coralite.Buffs.DreamErosion.Description
+				DisplayName: 梦蚀
+				Description: 梦魇在侵蚀你的意志
 			}
 		}
 
@@ -1544,10 +1544,15 @@ Mods: {
 			FrostySwordRightSlash.DisplayName: 霜冻剑
 			FrostySwordProj.DisplayName: 霜冻弹
 			FrostySwordBurst.DisplayName: 冰花绽放
-			// HypnotizeFog.DisplayName: Hypnotize Fog
-			// DarkLeaf.DisplayName: Dark Leaf
-			// NightmareSparkle_Normal.DisplayName: Nightmare Sparkle_ Normal
-			// NightmareBite.DisplayName: Nightmare Bite
+			HypnotizeFog.DisplayName: 沉眠之雾
+			DarkLeaf.DisplayName: 黑暗飞叶
+			NightmareSparkle_Normal.DisplayName: 噩梦之光
+			NightmareBite.DisplayName: 噩梦之咬
+			NightmareSlit.DisplayName: 梦境裂隙
+			BlackHole.DisplayName: 梦境黑洞
+			NightmareSpike.DisplayName: 梦魇穿刺
+			HookSlash.DisplayName: 噩梦爪
+			// ConfusionHole.DisplayName: Confusion Hole
 		}
 
 		Configs: {
@@ -1614,6 +1619,7 @@ Mods: {
 				Headers: {
 					HitEffects: 命中效果
 					OtherVisualEffects: 其他视觉效果
+					NightmarePlantera: 梦魇之花视觉效果
 				}
 
 				HitEffect_HitFreeze: {
@@ -1628,6 +1634,11 @@ Mods: {
 						大部分弹幕，武器产生的拖尾效果
 						注：原版拖尾不包含在内（例：彩虹魔杖）
 						'''
+				}
+
+				UseNightmareSky: {
+					Label: 绘制特殊的天空
+					Tooltip: 是否开启梦魇之花的特殊流动效果天空
 				}
 			}
 		}

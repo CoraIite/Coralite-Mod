@@ -1,0 +1,144 @@
+﻿using Coralite.Core;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using System;
+using System.Linq;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.ModLoader;
+
+namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
+{
+    public class NightmareSlit : ModProjectile
+    {
+        public override string Texture => AssetDirectory.Blank;
+
+        public Vector2 originCenter;
+
+        public ref float State => ref Projectile.ai[0];
+        public ref float Timer => ref Projectile.localAI[0];
+
+        //private static NPC NightmareOwner => Main.npc[NightmarePlantera.NPBossIndex];
+
+        private NightmareTentacle tentacle;
+        public float tentacleWidth=30;
+        public Color tencleColor = new Color(204, 170, 242, 250);
+
+        public override void SetDefaults()
+        {
+            Projectile.width = Projectile.height = 1000;
+            Projectile.timeLeft = 2000;
+            Projectile.hostile = true;
+            Projectile.tileCollide = false;
+        }
+
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, originCenter);
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            originCenter = Projectile.Center;
+        }
+
+        public override void AI()
+        {
+            if (!NightmarePlantera.NightmarePlanteraAlive(out NPC np))
+                Projectile.Kill();
+
+            tentacle ??= new NightmareTentacle(30, factor => tencleColor, factor =>
+            {
+                if (factor > 0.5f)
+                    return Helper.Lerp(tentacleWidth, 0, (factor - 0.5f) / 0.5f);
+
+                return Helper.Lerp(0, tentacleWidth, factor / 0.5f);
+            }, NightmarePlantera.tentacleTex, NightmarePlantera.tentacleFlowTex);
+
+            Vector2 dir = Projectile.Center - originCenter;
+            tentacle.rotation = dir.ToRotation();
+            tentacle.pos = originCenter;
+            tentacle.UpdateTentacle(dir.Length() / 30, (i) => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
+
+            switch ((int)State)
+            {
+                default:
+                case 0://跟踪梦魇花中心
+                    {
+                        Projectile.Center = np.Center;
+                    }
+                    break;
+                case 1:
+                    break;
+                case 2://开始从上至下射出黑暗叶弹幕
+                    {
+                        do
+                        {
+                            if (Timer < 9 * 15)
+                            {
+                                if ((int)Timer % 9 == 0)
+                                {
+                                    float factor = Timer / (7 * 15);
+                                    float length = dir.Length() * factor;
+
+                                    for (int i = -1; i < 2; i += 2)
+                                    {
+                                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), originCenter + dir.SafeNormalize(Vector2.Zero) * length,
+                                            new Vector2(i, 0) * 14, ModContent.ProjectileType<DarkLeaf>(), Projectile.damage, 0);
+                                    }
+
+                                    if (Timer % 18 == 0)
+                                    {
+                                        Vector2 slitCenter = (originCenter + Projectile.Center) / 2;
+                                        float angle = factor * MathHelper.TwoPi;
+                                        for (int i = 0; i < 2; i++)
+                                        {
+                                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), slitCenter, (angle + i * MathHelper.Pi).ToRotationVector2() * 14,
+                                                 ModContent.ProjectileType<DarkLeaf>(), Projectile.damage, 0, ai0: 1);
+                                        }
+                                    }
+
+                                    SoundEngine.PlaySound(CoraliteSoundID.NoUse_BlowgunPlus_Item65, Projectile.Center);
+                                }
+                                break;
+                            }
+
+                            tencleColor *= 0.95f;
+                            if (tencleColor.A < 20)
+                                Projectile.Kill();
+                        } while (false);
+
+                        Timer++;
+                    }
+                    break;
+            }
+
+        }
+
+        public static void StopTracking()
+        {
+            foreach (var proj in Main.projectile.Where(p => p.active && p.hostile && p.type == ModContent.ProjectileType<NightmareSlit>() && p.ai[0] == 0))
+                proj.ai[0] = 1;
+        }
+
+        public static void Exposion()
+        {
+            foreach (var proj in Main.projectile.Where(p => p.active && p.hostile && p.type == ModContent.ProjectileType<NightmareSlit>() && p.ai[0] == 1))
+            {
+                proj.ai[0] = 2;
+                (proj.ModProjectile as NightmareSlit).tentacleWidth += 30;
+
+                SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
+                st.Pitch = -0.5f;
+                SoundEngine.PlaySound(st, proj.Center);
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            tentacle.DrawTentacle();
+            return false;
+        }
+    }
+}

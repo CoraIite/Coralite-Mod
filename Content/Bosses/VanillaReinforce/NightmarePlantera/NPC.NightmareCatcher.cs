@@ -161,12 +161,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         }
 
-        public Color TentacleColor(float factor)
+        public static Color TentacleColor(float factor)
         {
             return Color.Lerp(new Color(153, 88, 156, 230), Color.Transparent, factor);
         }
 
-        public float TentacleWidth(float factor)
+        public static float TentacleWidth(float factor)
         {
             if (factor > 0.6f)
                 return Helper.Lerp(25, 0, (factor - 0.6f) / 0.4f);

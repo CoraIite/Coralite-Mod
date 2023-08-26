@@ -1552,6 +1552,11 @@ Mods: {
 			DarkLeaf.DisplayName: Dark Leaf
 			NightmareSparkle_Normal.DisplayName: Nightmare Sparkle_ Normal
 			NightmareBite.DisplayName: Nightmare Bite
+			NightmareSlit.DisplayName: Nightmare Slit
+			BlackHole.DisplayName: Black Hole
+			NightmareSpike.DisplayName: Nightmare Spike
+			HookSlash.DisplayName: Hook Slash
+			ConfusionHole.DisplayName: Confusion Hole
 		}
 
 		Configs: {
@@ -1618,6 +1623,7 @@ Mods: {
 				Headers: {
 					HitEffects: Hit Effects
 					OtherVisualEffects: Other Visual Effects
+					NightmarePlantera: Nightmare Plantera Header
 				}
 
 				HitEffect_HitFreeze: {
@@ -1628,6 +1634,11 @@ Mods: {
 				DrawTrail: {
 					Label: Draw Trail
 					Tooltip: Most projectile's and particle's trail
+				}
+
+				UseNightmareSky: {
+					Label: Use Nightmare Sky
+					Tooltip: ""
 				}
 			}
 		}

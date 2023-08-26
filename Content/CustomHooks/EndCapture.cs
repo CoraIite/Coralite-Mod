@@ -82,12 +82,6 @@ namespace Coralite.Content.CustomHooks
         {
             if (VisualEffectSystem.DrawWarp && HasWarp())
             {
-                if (screen.Width != Main.screenWidth || screen.Height != Main.screenHeight)
-                {
-                    Main.NewText("请重新加载模组以应用分辨率修改！");
-                    return;
-                }
-
                 GraphicsDevice graphicsDevice = Main.instance.GraphicsDevice;
                 //绘制屏幕
                 GetOrig(graphicsDevice);

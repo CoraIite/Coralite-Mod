@@ -1,6 +1,7 @@
 ﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
+using Terraria;
 
 namespace Coralite.Core.Systems.IKSystem
 {
@@ -12,11 +13,13 @@ namespace Coralite.Core.Systems.IKSystem
         public Vector2 angleLimt = new Vector2(-180f, 180f);
         public Vector2 StartPos { get; private set; }
         public Vector2 EndPos { get; private set; }
-        public Vector2 Forward { get => Vector2.Normalize(EndPos - StartPos); }
+        public Vector2 Forward { get => (EndPos - StartPos).SafeNormalize(Vector2.UnitX); }
 
         public void Follow(Vector2 target, Vector2 end, bool limt)
         {
-            angle = (angle + Helper.SignedAngle(end - StartPos, target - StartPos)) % 360;
+            angle = (angle + Helper.SignedAngle(end - StartPos, target - StartPos)) % 360f;
+            if (float.IsNaN(angle))
+                angle = 0;
             if (limt && angleLimt.X != -180 || angleLimt.Y != 180)
             {
                 angle = Helper.Clamp(angle, angleLimt.X, angleLimt.Y);

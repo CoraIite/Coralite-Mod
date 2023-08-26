@@ -33,8 +33,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool PreDraw(Dust dust)
         {
-            Helpers.ProjectilesHelper.DrawPrettyStarSparkle(1f, 0, dust.position-Main.screenPosition, new Color(50, 50, 50, 100),
-                dust.color,dust.fadeIn/28,0,0.1f,0.5f,1f,dust.rotation,new Vector2(dust.scale/2,dust.scale),new Vector2(0.5f,0.5f));
+            Helpers.ProjectilesHelper.DrawPrettyStarSparkle(1f, 0, dust.position - Main.screenPosition, new Color(50, 50, 50, 100),
+                dust.color, dust.fadeIn / 28, 0, 0.1f, 0.5f, 1f, dust.rotation, new Vector2(dust.scale / 3, dust.scale), new Vector2(0.5f, 0.5f));
             return false;
         }
     }

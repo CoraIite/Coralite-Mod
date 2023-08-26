@@ -8,7 +8,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class BigFog:ModParticle
+    public class BigFog : ModParticle
     {
         public override void OnSpawn(Particle particle)
         {

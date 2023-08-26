@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace Coralite.Core.Systems.IKSystem
 {
@@ -6,13 +7,13 @@ namespace Coralite.Core.Systems.IKSystem
     {
         public Arrow[] arrows;//箭头集合
 
-        public Vector2 target;//目标位置
+        public Func<Vector2> target;//目标位置
 
         public bool useLimt;//是否应用角度限制
 
         public int iterations;//迭代次数
 
-        public IKSolverCCD(Arrow[] arrows, Vector2 target, bool useLimt = false, int iterations = 4)
+        public IKSolverCCD(Arrow[] arrows, Func<Vector2> target, bool useLimt = false, int iterations = 4)
         {
             this.arrows = arrows;
             this.target = target;
@@ -25,11 +26,13 @@ namespace Coralite.Core.Systems.IKSystem
         /// </summary>
         public void FollowTarget()
         {
+            Vector2 targetPos = target();
+
             for (int n = 0; n < iterations; n++)
             {
                 for (int i = arrows.Length - 1; i >= 0; i--)
                 {
-                    arrows[i].Follow(target, arrows[arrows.Length - 1].EndPos, useLimt);
+                    arrows[i].Follow(targetPos, arrows[^1].EndPos, useLimt);
                     UpdatePosition(i == 0 ? Vector2.UnitX : arrows[i - 1].Forward, i);
                 }
             }
@@ -48,6 +51,14 @@ namespace Coralite.Core.Systems.IKSystem
                 arrows[n].CalculateStartAndEnd(origin, right);
                 origin = arrows[n].EndPos;
                 right = arrows[n].Forward;
+            }
+        }
+
+        public void SetLength(Func<int, float> lengthFunc)
+        {
+            for (int i = 0; i < arrows.Length; i++)
+            {
+                arrows[i].len = lengthFunc(i);
             }
         }
     }

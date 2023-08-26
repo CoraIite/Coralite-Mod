@@ -56,8 +56,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
     float4 color = tex2D(samplerTex, input.TexCoords); //读取本体灰度图
     //乘以颜色
-    color = float4(input.Color.rgb * color.rgb,color.r);
-    float4 c2 = tex2D(extraTex, float2(uTime + input.TexCoords.x, input.TexCoords.y));
+    color = float4(input.Color.rgb * color.rgb, color.r);
+    float4 c2 = tex2D(extraTex, float2(uTime + input.TexCoords.x * 2, input.TexCoords.y));
     //减去特殊流动图
     //最终返回
     return (color - c2) * input.Color.a;
