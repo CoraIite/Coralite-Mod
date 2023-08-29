@@ -15,6 +15,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public Vector2 pos;
         public float rotation;
         private readonly int pointCount;
+        public float flowAlpha;
 
         private readonly Asset<Texture2D> _sampleTexture;
         private readonly Asset<Texture2D> _extraTexture;
@@ -40,7 +41,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         /// </summary>
         /// <param name="tentaclePerLength"></param>
         /// <param name="curve"></param>
-        public void UpdateTentacle(float tentaclePerLength, Func<int, float> curve)
+        public void UpdateTentacle(float tentaclePerLength, Func<int, float> curve,float flowAlpha=1)
         {
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 normal = dir.RotatedBy(MathHelper.PiOver2);
@@ -50,6 +51,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 points[i] = pos + dir * i * tentaclePerLength + normal * curve(i);
             }
+
+            this.flowAlpha=flowAlpha;
         }
 
         public void DrawTentacle()
@@ -87,6 +90,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 2);
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
+                effect.Parameters["flowAlpha"].SetValue(flowAlpha);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
@@ -108,6 +112,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public Vector2 pos;
         public Vector2 targetPos;
         public float rotation;
+        public float flowAlpha;
+
         private readonly int pointCount;
 
         private readonly Asset<Texture2D> _sampleTexture;
@@ -146,7 +152,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         /// 更新这个触手，触手位置和触手的旋转请在这之前设置好！
         /// </summary>
         /// <param name="tentaclePerLength"></param>
-        public void UpdateTentacle(float tentaclePerLength )
+        public void UpdateTentacle(float tentaclePerLength ,float flowAlpha=1)
         {
             Vector2 position = pos;
             float rot = rotation;
@@ -164,6 +170,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 position = points[i];
                 rot = rotates[i];
             }
+
+            this.flowAlpha = flowAlpha;
         }
 
         public void DrawTentacle(Func<int, float> curve)
@@ -201,6 +209,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 2);
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
+                effect.Parameters["flowAlpha"].SetValue(flowAlpha);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
@@ -213,9 +222,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             }
-
         }
-
     }
 
     /// <summary>

@@ -6,11 +6,13 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Graphics.CameraModifiers;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    public class NightmareSlit : ModProjectile
+    public class NightmareSlit : BaseNightmareProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -23,7 +25,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         private NightmareTentacle tentacle;
         public float tentacleWidth=30;
-        public Color tencleColor = new Color(204, 170, 242, 250);
+        public Color tencleColor = NightmarePlantera.lightPurple;
 
         public override void SetDefaults()
         {
@@ -79,7 +81,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             {
                                 if ((int)Timer % 9 == 0)
                                 {
-                                    float factor = Timer / (7 * 15);
+                                    float factor = Timer / (9 * 15);
                                     float length = dir.Length() * factor;
 
                                     for (int i = -1; i < 2; i += 2)
@@ -132,6 +134,25 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
                 st.Pitch = -0.5f;
                 SoundEngine.PlaySound(st, proj.Center);
+
+                Vector2 selfCenter = (proj.ModProjectile as NightmareSlit).originCenter;
+                Vector2 targetCenter = proj.Center;
+                var modifyer = new PunchCameraModifier((targetCenter + selfCenter) / 2, Vector2.One, 20, 8, 20, 1000);
+                Main.instance.CameraModifiers.Add(modifyer);
+
+                float maxLength=Vector2.Distance(selfCenter, targetCenter);
+                Vector2 dir = ( selfCenter- targetCenter).SafeNormalize(Vector2.UnitY);
+
+                for (int i = 0; i < maxLength; i+=8)
+                {
+                    Vector2 pos = targetCenter + dir * i;
+                    for (int j = -1; j < 2; j+=2)
+                    {
+                        Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(16, 16), DustID.SpookyWood,
+                            new Vector2(j, 0) * Main.rand.NextFloat(1, 8), Scale: Main.rand.NextFloat(1.5f, 2f));
+                        dust.noGravity = true;
+                    }
+                }
             }
         }
 

@@ -29,7 +29,7 @@ float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
     c = 1.0 - float4(i, i, i, 1.0) + c; //将神奇的扭曲图片和椭圆形范围相叠加
     
     float final = c.r > 1.0 ? 1.0 : c.r; //把上面那个东西限制一下，不然超过1一乘的话颜色就变白了
-    float4 texC = tex2D(uImage0, coords); //读取图片
+    float4 texC = tex2D(uImage0, float2(uTime + coords.x, coords.y)); //读取图片
     return float4(texC.rgb * uC1 * final, 1.0); //相乘并得到结果
 }
 

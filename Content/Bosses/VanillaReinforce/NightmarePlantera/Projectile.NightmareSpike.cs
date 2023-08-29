@@ -15,7 +15,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 使用ai2传入刺出的长度<br></br>
     /// 使用速度传入突刺角度
     /// </summary>
-    public class NightmareSpike : ModProjectile, IDrawNonPremultiplied
+    public class NightmareSpike : BaseNightmareProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -27,6 +27,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public ref Vector2 SpikeTop => ref Projectile.velocity;
 
+        public bool canHitPlayer = true;
+        public int ShootTime = 30;
         private bool Init = true;
         private float Timer;
         private float spikeWidth;
@@ -75,20 +77,29 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.velocity);
         }
 
+        public override bool CanHitPlayer(Player target)
+        {
+            return canHitPlayer;
+        }
+
         public override void AI()
         {
             if (Init)
             {
                 if (ColorState == -1)
-                    drawColor = new Color(152, 130, 217);
+                    drawColor = NightmarePlantera.lightPurple;
                 else if (ColorState == -2)
-                    drawColor = new Color(255, 20, 20, 130);
+                    drawColor = NightmarePlantera.nightmareRed;
                 else
                     drawColor = Main.hslToRgb(new Vector3(Math.Clamp(ColorState, 0, 1f), 1f, 0.8f));
 
+                Vector2 center = Projectile.Center;
+                Projectile.width = Projectile.height = (int)SpurtLength;
+                Projectile.Center = center;
+
                 Init = false;
                 Projectile.rotation = Projectile.velocity.ToRotation();
-                SpikeTop = Projectile.Center;
+                SpikeTop = center;
             }
 
             spike ??= new NightmareTentacle(30, factor =>
@@ -134,7 +145,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             spikeWidth += 4f;
                         }
 
-                        if (Timer > 30)
+                        if (Timer > ShootTime)
                         {
                             State++;
                             Timer = 0;

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Diagnostics;
 using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
+using Terraria.ModLoader;
 
 namespace Coralite.Helpers
 {
@@ -80,5 +82,32 @@ namespace Coralite.Helpers
              nPCStrengthHelper = new NPCStrengthHelper(Main.GameModeInfo, journeyScale, Main.getGoodWorld);
             return true;
         }
+
+        [DebuggerHidden]
+        public static int NewProjectileInAI(this NPC npc, Vector2 position, Vector2 velocity, int type, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+        {
+            return Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, type, damage, knockBack, owner, ai0, ai1, ai2);
+        }
+
+        [DebuggerHidden]
+        public static int NewProjectileInAI<T>(this NPC npc, Vector2 position, Vector2 velocity, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+            where T : ModProjectile
+        {
+            return Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockBack, owner, ai0, ai1, ai2);
+        }
+
+        [DebuggerHidden]
+        public static Projectile NewProjectileDirectInAI(this NPC npc, Vector2 position, Vector2 velocity, int type, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+        {
+            return Projectile.NewProjectileDirect(npc.GetSource_FromAI(), position, velocity, type, damage, knockBack, owner, ai0, ai1, ai2);
+        }
+
+        [DebuggerHidden]
+        public static Projectile NewProjectileDirectInAI<T>(this NPC npc, Vector2 position, Vector2 velocity,  int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+            where T : ModProjectile
+        {
+            return Projectile.NewProjectileDirect(npc.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockBack, owner, ai0, ai1, ai2);
+        }
+
     }
 }

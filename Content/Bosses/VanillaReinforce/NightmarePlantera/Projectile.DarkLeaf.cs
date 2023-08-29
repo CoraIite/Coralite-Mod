@@ -43,9 +43,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (init)   //根据ai设置不同的弹幕大小
             {
                 Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
-                if (Projectile.ai[0]==1)
+                if (Projectile.ai[0] == 1)
                 {
-                    glowColor = new Color(118,10,10);
+                    glowColor = NightmarePlantera.nightmareRed;
                     Vector2 center = Projectile.Center;
                     Projectile.scale = 1.2f;
                     Projectile.width = (int)(Projectile.width * Projectile.scale);
@@ -54,9 +54,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 }
                 else
                 {
-                    glowColor = new Color(144, 133, 155);
+                    glowColor = NightmarePlantera.lightPurple;
                 }
                 init = false;
+            }
+
+            if (Main.rand.NextBool(2))
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16, 16), DustID.VilePowder,
+                      Projectile.velocity * 0.4f, 240, glowColor, Main.rand.NextFloat(1f, 1.5f));
+                d.noGravity = true;
             }
         }
 
@@ -65,8 +72,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Dust d;
             for (int i = 0; i < 8; i++)
             {
-                d = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<NightmareDust>(), Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f, 2), Scale: Main.rand.NextFloat(1f, 2f));
+                d = Dust.NewDustPerfect(Projectile.Center, DustID.SpookyWood, Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f, 2), Scale: Main.rand.NextFloat(1f, 2f));
                 d.noGravity = true;
+                Dust.NewDustPerfect(Projectile.Center, DustID.VilePowder, Helper.NextVec2Dir() * Main.rand.NextFloat(1f, 3), Scale: Main.rand.NextFloat(1f, 2f));
             }
         }
 

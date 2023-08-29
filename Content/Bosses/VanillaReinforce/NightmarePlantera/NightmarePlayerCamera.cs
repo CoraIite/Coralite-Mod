@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    public class NightmarePlayerCamera:ModPlayer
+    public class NightmarePlayerCamera : ModPlayer
     {
         public float factor;
         public bool useScreenMove;
@@ -32,7 +32,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 {
                     ShakeTimer--;
                     ShakeVec2 *= 0.8f;
-                    if (ShakeTimer<=0)
+                    if (ShakeTimer <= 0)
                     {
                         ShakeTimer = ShakeDelay;
                         ShakeVec2 = Helpers.Helper.NextVec2Dir() * shakeLevel;
@@ -40,7 +40,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                     pos += ShakeVec2;
                 }
-                
+
                 Main.screenPosition = pos;
             }
         }

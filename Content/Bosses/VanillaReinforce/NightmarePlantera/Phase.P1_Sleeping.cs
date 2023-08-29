@@ -155,8 +155,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (Timer < 180)
             {
                 Timer++;
-                NPC.rotation = NPC.rotation.AngleTowards((Target.Center - NPC.Center).ToRotation(), 0.04f);
-
+                DoRotation(0.1f);
                 //血量少于一定值后加速
                 if (NPC.life < NPC.lifeMax * 15 / 16)
                     Timer++;
@@ -173,22 +172,26 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public void HypnotizeFog()
         {
+            DoRotation(0.1f);
+
             do
             {
                 if (Timer < 160)
                 {
-                    float targetRot = (Target.Center - NPC.Center).ToRotation();
-                    NPC.rotation = NPC.rotation.AngleTowards(targetRot, 0.04f);
                     Vector2 pos = GetPhase1MousePos();
                     float factor = Timer / 160f;
                     float width = 60 - factor * 50;
 
-                    for (int i = 0; i < 3; i++)
+                    Dust dust;
+                    for (int i = 0; i < 2; i++)
                     {
-                        Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2CircularEdge(width, width), ModContent.DustType<NightmareDust>(), Scale: Main.rand.NextFloat(1f, 1.4f));
+                        dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2CircularEdge(width, width), ModContent.DustType<NightmareDust>(), Scale: Main.rand.NextFloat(1f, 1.4f));
                         dust.velocity = (pos - dust.position).SafeNormalize(Vector2.Zero) * (3 - factor * 3) + NPC.velocity * factor;
                         dust.noGravity = true;
                     }
+                    
+                    Dust.NewDustPerfect(pos, DustID.VilePowder, Helper.NextVec2Dir() * Main.rand.NextFloat(1f, 3), Scale: Main.rand.NextFloat(1f, 2f));
+
                     break;
                 }
 
@@ -206,9 +209,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 }
 
                 if (Timer < 200)
-                {
-                    NPC.rotation = NPC.rotation.AngleTowards((Target.Center - NPC.Center).ToRotation(), 0.04f);
-                }
+                    break;
 
                 SetPhase1Idle();
             } while (false);
@@ -221,29 +222,27 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 if (Timer<30)
                 {
-                    float targetRot = (Target.Center - NPC.Center).ToRotation();
-                    NPC.rotation = NPC.rotation.AngleTowards(targetRot, 0.04f);
-
+                    DoRotation(0.1f);
                     break;
                 }
 
                 if (Timer == 30 && Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    int notFreeTime = 100;
-                    int MaxFreeTime = 180;
+                    int notFreeTime = 60;
+                    int MaxFreeTime = 240;
                     int extraTextacle = 0;
 
                     if (NPC.life < NPC.lifeMax * 15 / 16)
                     {
                         notFreeTime -= 20;
-                        MaxFreeTime += 40;
+                        MaxFreeTime += 80;
                         extraTextacle += 2;
                     }
 
                     if (NPC.life < NPC.lifeMax * 13 / 16)
                     {
                         notFreeTime -= 20;
-                        MaxFreeTime += 40;
+                        MaxFreeTime += 80;
                         extraTextacle += 2;
                     }
 
@@ -257,10 +256,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         Main.npc[index2].velocity = (NPC.rotation + angle).ToRotationVector2() * 8;
                     }
 
-                    SoundEngine.PlaySound(CoraliteSoundID.SpiritFlame_Item117, NPC.Center);
+                    SoundEngine.PlaySound(CoraliteSoundID.SpiderStaff_Item83, NPC.Center);
                     NPC.velocity = -NPC.rotation.ToRotationVector2() * 6;
-
-
                 }
 
                 if (Timer < 75)
@@ -283,9 +280,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (NPC.life < NPC.lifeMax * 13 / 16)
                 shootDelay -= 2;
 
-            float targetRot = (Target.Center - NPC.Center).ToRotation();
-            NPC.rotation = NPC.rotation.AngleTowards(targetRot, 0.04f);
-
+            DoRotation(0.1f);
             if (Timer % shootDelay == 0)
             {
                 Vector2 pos = GetPhase1MousePos();

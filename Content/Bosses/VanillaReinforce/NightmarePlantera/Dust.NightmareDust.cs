@@ -22,9 +22,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (!dust.noGravity)
             {
                 dust.velocity.Y += 0.25f;
-                if (dust.velocity.Y>16)
+                if (dust.velocity.Y > 16)
                     dust.velocity.Y = 16;
+
+                dust.velocity.X *= 0.99f;
             }
+            else
+                dust.velocity *= 0.99f;
 
             dust.rotation += 0.25f;
             dust.position += dust.velocity;

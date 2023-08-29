@@ -1402,6 +1402,7 @@ Mods: {
 			NightmarePlantera.DisplayName: 梦魇之花
 			// NightmareHook.DisplayName: Nightmare Hook
 			// NightmareCatcher.DisplayName: Nightmare Catcher
+			// FantasySparkle.DisplayName: Fantasy Sparkle
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1553,6 +1554,10 @@ Mods: {
 			NightmareSpike.DisplayName: 梦魇穿刺
 			HookSlash.DisplayName: 噩梦爪
 			// ConfusionHole.DisplayName: Confusion Hole
+			// GhostSlit.DisplayName: Ghost Slit
+			// GhostHand.DisplayName: Ghost Hand
+			// SuddenDeath.DisplayName: Sudden Death
+			// NightmareSparkle_Rolling.DisplayName: Nightmare Sparkle_ Rolling
 		}
 
 		Configs: {

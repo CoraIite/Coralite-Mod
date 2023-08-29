@@ -29,7 +29,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     e.Parameters["uC1"].SetValue((color*(Timeleft / 100f)).ToVector3());
 
                     spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, default, default, default, e);
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, e);
 
                     spriteBatch.Draw(sky, screen, Color.White);
 

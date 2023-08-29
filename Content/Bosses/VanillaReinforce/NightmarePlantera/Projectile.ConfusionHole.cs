@@ -7,7 +7,6 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
@@ -17,7 +16,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 使用ai1传入颜色，-1为紫色，-2为红色，0-1时为对应的hue颜色<br></br>
     /// 使用ai2传入刺出的长度
     /// </summary>
-    public class ConfusionHole : ModProjectile, IDrawNonPremultiplied
+    public class ConfusionHole : BaseNightmareProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.NightmarePlantera + Name;
 
@@ -40,14 +39,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public NightmareTentacle spike;
         public Color drawColor;
 
-        public static Asset<Texture2D> CircleTex;
+        public static Asset<Texture2D> SparkleTex;
 
         public override void Load()
         {
             if (Main.dedServ)
                 return;
 
-            CircleTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "HexagramAlpha");
+            SparkleTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "NightmareSparkle");
         }
 
         public override void Unload()
@@ -55,7 +54,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (Main.dedServ)
                 return;
 
-            CircleTex = null;
+            SparkleTex = null;
         }
 
         public override void SetDefaults()
@@ -79,15 +78,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (Init)
             {
                 if (ColorState == -1)
-                    drawColor = new Color(152, 130, 217);
+                    drawColor = NightmarePlantera.lightPurple;
                 else if (ColorState == -2)
                     drawColor = new Color(255, 20, 20, 130);
                 else
                     drawColor = Main.hslToRgb(new Vector3(Math.Clamp(ColorState, 0, 1f), 1f, 0.8f));
 
+                Vector2 center = Projectile.Center;
+                Projectile.width = Projectile.height = (int)SpurtLength;
+                Projectile.Center = center;
+
                 Init = false;
                 Projectile.rotation = Projectile.velocity.ToRotation();
-                SpikeTop = Projectile.Center;
+                SpikeTop = center;
             }
 
             spike ??= new NightmareTentacle(30, factor =>
@@ -184,11 +187,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
 
             Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D circleTex = CircleTex.Value;
+            Texture2D scparkle = SparkleTex.Value;
+            Texture2D blackholeTex = BlackHole.BlackHoleTex.Value;
 
             float rot = Projectile.rotation + MathHelper.PiOver2;
-            spriteBatch.Draw(mainTex, pos, null, Color.White, rot, mainTex.Size() / 2, new Vector2(1, SelfScale), 0, 0);
-            spriteBatch.Draw(circleTex, pos, null, drawColor, Main.GlobalTimeWrappedHourly * 0.5f, circleTex.Size() / 2, SelfScale / 14 + Main.rand.NextFloat(0, 0.02f), 0, 0);
+            Color c = Color.White;
+            c.A = 200;
+            spriteBatch.Draw(mainTex, pos, null, c, rot, mainTex.Size() / 2, new Vector2(1, SelfScale), 0, 0);
+            spriteBatch.Draw(blackholeTex, pos, null, c, rot + MathHelper.PiOver2, blackholeTex.Size() / 2, new Vector2(SelfScale, 1)*0.3f, 0, 0);
+            spriteBatch.Draw(scparkle, pos, null, c, Main.GlobalTimeWrappedHourly * 0.5f, scparkle.Size() / 2, SelfScale / 3 + Main.rand.NextFloat(0, 0.02f), 0, 0);
 
             //Effect e = Filters.Scene["HurricaneTwistReverse"].GetShader().Shader;
             //e.Parameters["uColor"].SetValue(drawColor.ToVector3());

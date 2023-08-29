@@ -1,11 +1,12 @@
-﻿using Coralite.Content.Particles;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.Graphics.CameraModifiers;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
@@ -15,6 +16,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     ///  0：正常，张开嘴之后咬下
     ///  1：会另外绘制一个幻影，张开嘴后咬下
     ///  2：会另外绘制一个幻影，只是吓唬玩家一下，不会有任何的伤害判定
+    ///  3：只会对owner造成伤害
     ///  在为1和2时不跟踪本体的中心<br></br>
     ///  使用ai1传入蓄力时间<br></br>
     /// 使用ai2传入颜色
@@ -22,7 +24,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// -2：红色
     /// 0-1：该数值对应的hue颜色
     /// </summary>
-    public class NightmareBite : ModProjectile
+    public class NightmareBite : BaseNightmareProj
     {
         public override string Texture => AssetDirectory.NightmarePlantera + Name;
 
@@ -43,6 +45,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         private bool Init = true;
         private bool canDamage;
 
+        public override void SetStaticDefaults()
+        {
+           
+        }
+
         public override void SetDefaults()
         {
             Projectile.width = 116;
@@ -50,6 +57,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.timeLeft = 1000;
             Projectile.tileCollide = false;
             Projectile.hostile = true;
+            CooldownSlot = ImmunityCooldownID.Bosses;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -64,16 +72,32 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             return false;
         }
 
+        public override bool? CanHitNPC(NPC target)
+        {
+            if ((int)State == 3)
+                return false;
+
+            return base.CanHitNPC(target);
+        }
+
+        public override bool CanHitPlayer(Player target)
+        {
+            if ((int)State == 3)
+                return target.whoAmI == Projectile.owner;
+
+            return base.CanHitPlayer(target);
+        }
+
         public override void AI()
         {
             if (Init)
             {
                 if (ColorState == -1)
-                    DrawColor = new Color(204, 170, 242);
+                    DrawColor = NightmarePlantera.lightPurple;
                 else if (ColorState == -2)
                     DrawColor = new Color(255, 20, 20, 130);
                 else
-                    DrawColor = Main.hslToRgb(new Vector3(Math.Clamp(ColorState,0,1f),1f,0.8f));
+                    DrawColor = Main.hslToRgb(new Vector3(Math.Clamp(ColorState, 0, 1f), 1f, 0.8f));
 
                 Init = false;
 
@@ -94,6 +118,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 default:
                 case 0: //普通的
+                case 3:
                     {
                         Projectile.Center = Owner.Center;
 
@@ -112,10 +137,32 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             canDamage = true;
                             mouseAngle = Helper.Lerp(mouseAngle, -0.08f, 0.6f);
                             alpha = Helper.Lerp(alpha, 0.8f, 0.6f);
-                            if (mouseAngle>0.1f)
+                            if (mouseAngle > 0.1f)
                             {
-                                distanceToOwner+=32;
+                                distanceToOwner += 32;
                             }
+
+                            if ((int)Timer == (int)ReadyTime + 4)
+                            {
+                                float length = Projectile.width + distanceToOwner;
+                                Vector2 dir = Projectile.rotation.ToRotationVector2();
+                                Vector2 velDir = dir.RotatedBy(MathHelper.PiOver2);
+                                for (int i = (int)distanceToOwner; i < length; i += 6)
+                                {
+                                    Vector2 pos = Projectile.Center + dir * i;
+                                    for (int j = -3; j < 4; j += 2)
+                                    {
+                                        Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(6, 6), DustID.VilePowder,
+                                            velDir * j * Main.rand.NextFloat(1, 6), 150, DrawColor, Main.rand.NextFloat(1, 2f));
+                                        dust.noGravity = true;
+                                    }
+                                }
+
+                                var modifyer = new PunchCameraModifier(Projectile.Center, (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2(),
+                                    20, 14, 12, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
+                            }
+
                             break;
                         }
 
@@ -134,11 +181,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
 
             Timer++;
-        }
-
-        public override void OnHitPlayer(Player target, Player.HurtInfo info)
-        {
-            NightmarePlantera.NightmareHit(target);
         }
 
         public override bool PreDraw(ref Color lightColor)

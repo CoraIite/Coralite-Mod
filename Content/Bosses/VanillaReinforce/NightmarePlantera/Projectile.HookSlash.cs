@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
@@ -45,17 +46,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return;
             }
 
-
             tentacle ??= new RotateTentacle(30, factor =>
                 {
-                    return Color.Lerp(NightmarePlantera.nightPurple, Color.Transparent, factor);
+                    return Color.Lerp(NightmarePlantera.lightPurple, Color.Transparent, factor);
                 }, factor =>
                 {
                     if (factor > 0.6f)
                         return Helper.Lerp(25, 0, (factor - 0.6f) / 0.4f);
 
                     return Helper.Lerp(0, 25, factor / 0.6f);
-                }, NightmarePlantera.tentacleTex, NightmarePlantera.tentacleFlowTex);
+                }, NightmarePlantera.tentacleTex, NightmarePlantera.waterFlowTex);
 
             tentacle.SetValue(Projectile.Center, NightmareOwner.Center, Projectile.rotation + MathHelper.Pi);
             tentacle.UpdateTentacle(Vector2.Distance(NightmareOwner.Center, Projectile.Center) * 1.5f / 30);
@@ -75,7 +75,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
 
                         float angle = Angle + 0.2f * MathF.Sin(Timer * 0.0314f);
-                        Vector2 center = Owner.Center + angle.ToRotationVector2() * 350;
+                        Vector2 center = Owner.Center + angle.ToRotationVector2() * 550;
                         Vector2 dir = center - Projectile.Center;
 
                         float velRot = Projectile.velocity.ToRotation();
@@ -87,17 +87,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         Projectile.velocity = velRot.AngleTowards(targetRot, 0.08f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.25f);
                         Projectile.rotation = Projectile.rotation.AngleTowards((Owner.Center - Projectile.Center).ToRotation(), 0.2f);
 
-                        if (Timer>ChannelTime)
+                        if (Timer > ChannelTime)
                         {
                             Timer = 0;
                             State++;
-                            Projectile.velocity += Projectile.rotation.ToRotationVector2() * 16;
+                            Projectile.frame = 2;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Projectile.velocity += (Projectile.rotation + Main.rand.NextFromList(-0.2f, 0.2f)).ToRotationVector2() * 20;
+                                Projectile.netUpdate = true;
+                            }
                         }
                     }
                     break;
                 case 1://咬下
                     {
-                        if (Timer>32)
+                        if (Timer > 32)
                         {
                             State++;
                             Timer = 0;
@@ -106,6 +111,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 2://爆开生成噩梦光弹幕
                     {
+                        if (Projectile.frame>0)
+                        {
+                            Projectile.frameCounter++;
+                            if (Projectile.frameCounter>4)
+                            {
+                                Projectile.frameCounter = 0;
+                                Projectile.frame--;
+                            }
+                        }
                         Projectile.velocity *= 0.9f;
                         Projectile.rotation = Projectile.rotation.AngleTowards((Owner.Center - Projectile.Center).ToRotation(), 0.05f);
 

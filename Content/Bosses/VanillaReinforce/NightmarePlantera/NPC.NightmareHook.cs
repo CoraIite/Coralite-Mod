@@ -3,7 +3,6 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Windows.Markup;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -97,11 +96,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             tentacle.rotation = NPC.rotation + MathHelper.Pi;
             tentacle.pos = NPC.Center;
-            tentacle.UpdateTentacle(tentacleLength, (i) => 6 * MathF.Sin(i / 3 * Main.GlobalTimeWrappedHourly));
+            tentacle.UpdateTentacle(tentacleLength, (i) => 6 * MathF.Sin(i / 4 * Main.GlobalTimeWrappedHourly),0.5f);
 
             ownerTentacle.rotation = NPC.rotation;
             ownerTentacle.pos = NightmareOwner.Center;
-            ownerTentacle.UpdateTentacle(tentacleLength, (i) => 6 * MathF.Cos(i / 3 * Main.GlobalTimeWrappedHourly));
+            ownerTentacle.UpdateTentacle(tentacleLength, (i) => 6 * MathF.Cos(i / 4 * Main.GlobalTimeWrappedHourly),0.5f);
 
 
             if (OwnerTarget.dead)
@@ -257,15 +256,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             speed += 0.25f;
                         }
 
-                        NPC.frameCounter++;
-                        if (NPC.frameCounter > 5)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y++;
-                            if (NPC.frame.Y > 3)
-                                NPC.frame.Y = 0;
-                        }
-
                         NPC.velocity = dir.SafeNormalize(Vector2.Zero) * speed;
 
                         if (dir.Length() < 32)
@@ -278,6 +268,51 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPC.rotation = (NPC.Center - NightmareOwner.Center).ToRotation();
         }
 
+        public override void FindFrame(int frameHeight)
+        {
+            switch ((int)State)
+            {
+                default:
+                case 0:
+                    {
+                        if (NPC.velocity.X == 0f && NPC.velocity.Y == 0f)
+                        {
+                            if (NPC.frame.Y > 0)
+                            {
+                                NPC.frameCounter += 1.0;
+                                if (NPC.frameCounter > 4.0)
+                                {
+                                    NPC.frameCounter = 0.0;
+                                    NPC.frame.Y -= 1;
+                                }
+                            }
+                        }
+                        else if (NPC.frame.Y < 2)
+                        {
+                            NPC.frameCounter += 1.0;
+                            if (NPC.frameCounter > 4.0)
+                            {
+                                NPC.frameCounter = 0.0;
+                                NPC.frame.Y += 1;
+                            }
+                        }
+                    }
+                    break;
+                case 1:
+                    {
+                        NPC.frameCounter++;
+                        if (NPC.frameCounter > 5)
+                        {
+                            NPC.frameCounter = 0;
+                            NPC.frame.Y++;
+                            if (NPC.frame.Y > 3)
+                                NPC.frame.Y = 0;
+                        }
+                    }
+                    break;
+            }
+        }
+
         public override bool PreKill()
         {
             return false;
@@ -285,15 +320,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public static Color TentacleColor(float factor)
         {
-            return Color.Lerp(new Color(204, 170, 242, 250), Color.Transparent, factor);
+            return Color.Lerp(NightmarePlantera.lightPurple, Color.Transparent, factor);
         }
 
         public static float TentacleWidth(float factor)
         {
-            if (factor > 0.6f)
-                return Helper.Lerp(40, 0, (factor - 0.6f) / 0.4f);
+            return MathF.Sin(factor * MathHelper.Pi) * 34;
+            //if (factor > 0.6f)
+            //    return Helper.Lerp(40, 0, (factor - 0.6f) / 0.4f);
 
-            return Helper.Lerp(0, 40, factor / 0.6f);
+            //return Helper.Lerp(0, 40, factor / 0.6f);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

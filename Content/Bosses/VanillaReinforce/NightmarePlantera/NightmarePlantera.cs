@@ -34,8 +34,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public RotateTentacle[] rotateTentacles;
         public Color tentacleColor;
+
+        /// <summary>
+        /// 击杀美梦光的数量
+        /// </summary>
+        public int fantasyKillCount;
+
         public static Asset<Texture2D> tentacleTex;
         public static Asset<Texture2D> tentacleFlowTex; 
+        public static Asset<Texture2D> waterFlowTex;
 
         /// <summary> 自身BOSS的索引，用于方便爪子获取自身/ </summary>
         public static int NPBossIndex = -1;
@@ -44,8 +51,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public static Color[] phantomColors;
         public static Color nightPurple = new Color(204, 170, 242, 230);
-
+        public static Color lightPurple = new Color(195, 116, 219, 230);
         public static Color nightmareSparkleColor = new Color(111, 80, 180, 230);
+        public static Color nightmareRed = new Color(250, 0, 100);
 
         #region tml hooks
 
@@ -169,6 +177,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             CircleWarpTex= ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "CircleWarp");
             BlackBack = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "BlackBack");
             NameLine= ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "NPNameLine");
+            waterFlowTex= ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "WaterFlow");
 
             phantomColors = new Color[7];
             for (int i = 0; i < 7; i++)
@@ -187,6 +196,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             CircleWarpTex = null;
             BlackBack = null;
             NameLine = null;
+            waterFlowTex = null;
         }
 
         public override void OnKill()
@@ -257,6 +267,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         NPC.EncourageDespawn(10);
                         NPC.dontTakeDamage = true;  //脱战无敌
                         NPC.velocity.Y += 0.25f;
+                        ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
+                        if (rotateTentacles != null)
+                        {
+                            NormallySetTentacle();
+                            NormallyUpdateTentacle();
+                        }
+
                         return;
                     }
                     else
@@ -286,6 +303,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     Rampage();
                     break;
                 case (int)AIPhases.SuddenDeath:
+                    ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
+                    NormallySetTentacle();
+                    SuddenDeath();
+                    NormallyUpdateTentacle();
                     break;
             }
         }
@@ -342,21 +363,47 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             spikesAndSparkles,
             /// <summary> 旋转并放出尖刺 </summary>
             spikeHell,
+            /// <summary> 瞬移冲刺，之后放出鬼手 </summary>
+            ghostDash,
+            /// <summary> 瞬移后射弹幕 </summary>
+            teleportSparkle,
+            /// <summary> 梦境之光 </summary>
+            dreamSparkle,
+            /// <summary> 噩梦之噬 </summary>
+            nightmareDevour,
+
         }
 
         public void ResetStates()
         {
+            if (NPC.life>NPC.lifeMax/8)
+            {
+                Phase = (int)AIPhases.Dream_P2;
+                SetPhase2States();
+                return;
+            }
 
+            //设置P3的状态
         }
-
 
         public void ChangeToSuddenDeath(Player player)
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
+            if ((int)Phase is (int)AIPhases.Sleeping_P1 or (int)AIPhases.Exchange_P1_P2)
+            {
+                return;
+            }
+
             NPC.target = player.whoAmI;
+            NPC.NewProjectileInAI<SuddenDeath>(Target.Center, Vector2.Zero, 0, 0, NPC.target);
             Phase = (int)AIPhases.SuddenDeath;
+            State = 0;
+            SonState = 0;
+            Timer = 0;
+            ShootCount = 0;
+
             NPC.netUpdate = true;
         }
 
@@ -383,17 +430,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return;
             
             if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
                 if (cp.nightmareCount < 10)
-                {
                     cp.nightmareCount++;
 
-                    //设置阶段并秒杀玩家
-                    if (cp.nightmareCount > 9)
-                            (np.ModNPC as NightmarePlantera).ChangeToSuddenDeath(player);
+                //设置阶段并秒杀玩家
+                if (cp.nightmareCount > 9)
+                    (np.ModNPC as NightmarePlantera).ChangeToSuddenDeath(player);
 
-                    if (player.whoAmI == Main.myPlayer)
-                        Filters.Scene.Activate("NightmareScreen", player.position);
-                }
+                if (player.whoAmI == Main.myPlayer)
+                    Filters.Scene.Activate("NightmareScreen", player.position);
+            }
         }
 
         public Vector2 GetPhase1MousePos()
@@ -476,14 +523,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             if (rotateTentacles != null)
             {
-                Texture2D circleTex = ConfusionHole.CircleTex.Value;
+                Texture2D circleTex = ConfusionHole.SparkleTex.Value;
                 Vector2 origin = circleTex.Size() / 2;
-                float rot = Main.GlobalTimeWrappedHourly * 0.5f;
+                //float rot = Main.GlobalTimeWrappedHourly * 0.5f;
+                Color c = Color.White;
+                c.A = 200;
                 for (int j = 0; j < 3; j++)
                 {
                     Vector2 pos = rotateTentacles[j].pos - Main.screenPosition;
-                    spriteBatch.Draw(circleTex,pos , null, tentacleColor, rot, origin, 0.08f + Main.rand.NextFloat(0, 0.02f), 0, 0);
-                    spriteBatch.Draw(circleTex, pos, null, Color.Black, rot, origin, 0.05f , 0, 0);
+                    spriteBatch.Draw(circleTex,pos , null, c, rotateTentacles[j].rotation, origin, 0.3f + Main.rand.NextFloat(0, 0.02f), 0, 0);
                 }
             }
         }

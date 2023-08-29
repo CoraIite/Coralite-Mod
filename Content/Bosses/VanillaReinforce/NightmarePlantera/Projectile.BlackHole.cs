@@ -5,7 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
@@ -14,9 +16,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 尖刺球专用弹幕，使用ai0传入时间插值
     /// 使用ai1控制在玩家周围绕圈的时间
     /// </summary>
-    public class BlackHole : ModProjectile,IDrawNonPremultiplied,IDrawWarp
+    public class BlackHole : BaseNightmareProj, IDrawNonPremultiplied, IDrawWarp
     {
-        public override string Texture => AssetDirectory.NightmarePlantera+ "BlackBall";
+        public override string Texture => AssetDirectory.NightmarePlantera + "BlackBall";
 
         private ref float TimeFactor => ref Projectile.ai[0];
         private ref float RollingTime => ref Projectile.ai[1];
@@ -28,6 +30,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public static Asset<Texture2D> WarpTex;
         public static Asset<Texture2D> CircleTex;
+        public static Asset<Texture2D> BlackHoleTex;
 
         private float scale;
 
@@ -37,7 +40,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return;
 
             WarpTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "HaloWarp");
-            CircleTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "Halo");
+            CircleTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "PurpleCircle");
+            BlackHoleTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "BlackHole");
         }
 
         public override void Unload()
@@ -47,6 +51,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             WarpTex = null;
             CircleTex = null;
+            BlackHoleTex = null;
         }
 
         public override void SetDefaults()
@@ -81,6 +86,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         Projectile.velocity = velRot.AngleTowards(targetRot, 0.08f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.65f);
                         Projectile.rotation += 0.1f;
 
+                        Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(64, 64), DustID.VilePowder,
+                              Projectile.velocity * 0.4f, 240, NightmarePlantera.nightPurple, Main.rand.NextFloat(1f, 1.5f));
+                        d.noGravity = true;
+
                         if (Timer > RollingTime)
                         {
                             State++;
@@ -89,13 +98,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 7; i++) //生成噩梦尖刺弹幕
                             {
                                 Vector2 dir = (Projectile.rotation + i * 1 / 7f * MathHelper.TwoPi).ToRotationVector2();
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + dir * 48, dir, ModContent.ProjectileType<NightmareSpike>(), Projectile.damage, 0, ai0: 40, ai1: -1, ai2: 600);
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + dir * 48, dir, ModContent.ProjectileType<NightmareSpike>(), Projectile.damage, 0, ai0: 40, ai1: -1, ai2: 750);
                             }
                         }
 
                     }
                     break;
                 case 1://向周围7个方向射出尖刺
+
+                    if (Timer==40)
+                    {
+                        SoundEngine.PlaySound(CoraliteSoundID.IceMist_Item120, Projectile.Center);
+                    }
                     if (Timer>100)
                     {
                         State++;
@@ -123,16 +137,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             spriteBatch.Draw(mainTex, pos, null, Color.White, 0, mainTex.Size() / 2, scale, 0, 0);
 
             Texture2D circleTex = CircleTex.Value;
-            Color c = new Color(152,130,217,200);
-            //c.A = (byte)(c.A * 0.4f);
-            spriteBatch.Draw(circleTex, pos, null, c, Projectile.rotation, mainTex.Size() / 2, scale, 0, 0);
-            spriteBatch.Draw(circleTex, pos, null, c, Main.GlobalTimeWrappedHourly, mainTex.Size() / 2, scale, 0, 0);
+            Texture2D blackholeTex = BlackHoleTex.Value;
+            spriteBatch.Draw(blackholeTex, pos, null, Color.White, 0, blackholeTex.Size() / 2, new Vector2(scale * MathF.Sin(Main.GlobalTimeWrappedHourly), scale*1.5f ), 0, 0);
+
+            spriteBatch.Draw(circleTex, pos, null, Color.White,Projectile.rotation+ Main.GlobalTimeWrappedHourly, circleTex.Size() / 2, scale * 0.6f, 0, 0);
         }
 
         public void DrawWarp()
         {
             Texture2D warpTex = WarpTex.Value;
-            Main.spriteBatch.Draw(warpTex, Projectile.Center - Main.screenPosition, null, Color.White*0.3f,
+            Main.spriteBatch.Draw(warpTex, Projectile.Center - Main.screenPosition, null, Color.White * 0.3f,
                 Main.GlobalTimeWrappedHourly * 5, warpTex.Size() / 2, scale + MathF.Sin(Main.GlobalTimeWrappedHourly * 3) * 0.1f, 0, 0);
         }
     }

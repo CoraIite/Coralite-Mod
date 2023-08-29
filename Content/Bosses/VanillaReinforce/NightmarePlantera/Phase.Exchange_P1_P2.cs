@@ -32,7 +32,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             switch ((int)State)
             {
-                default:
                 case 0: //蓄力，将视角拉向自身
                     {
                         NPC.velocity *= 0.9f;
@@ -206,6 +205,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
                     }
                     break;
+                default:
+                    OnExchangeToP2();
+                    break;
             }
 
             Timer++;
@@ -233,9 +235,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public void OnExchangeToP2()
         {
             NPC.dontTakeDamage = false;
+            if (Main.LocalPlayer.TryGetModPlayer(out NightmarePlayerCamera NCamera))
+            {
+                NCamera.useShake = false;
+                NCamera.useScreenMove = false;
+            }
+
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
+            Phase = (int)AIPhases.Dream_P2;
             SetPhase2States();
         }
 
