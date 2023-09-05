@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,6 +14,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Projectile.tileCollide = false;
             Projectile.hostile = true;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = -1;
             Projectile.width = Projectile.height = 48;
             ShineColor = NightmarePlantera.nightmareSparkleColor;
             mainSparkleScale = new Vector2(1.5f, 3f);
@@ -30,7 +33,41 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (Main.rand.NextBool(6))
             {
                 Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
-                Dust dust = Dust.NewDustPerfect(Projectile.Center , ModContent.DustType<NightmareStar>(),
+                Dust dust = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<NightmareStar>(),
+                    dir * Main.rand.NextFloat(1f, 4f), newColor: NightmarePlantera.lightPurple, Scale: Main.rand.NextFloat(1f, 3f));
+                dust.rotation = dir.ToRotation() + MathHelper.PiOver2;
+            }
+        }
+    }
+
+    public class NightmareSparkle_Red : BaseNightmareSparkle
+    {
+        public override void SetDefaults()
+        {
+            Projectile.timeLeft = 1200;
+
+            Projectile.tileCollide = false;
+            Projectile.hostile = true;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = -1;
+            Projectile.width = Projectile.height = 48;
+            ShineColor = NightmarePlantera.nightmareRed;
+            mainSparkleScale = new Vector2(1.5f, 3f);
+            circleSparkleScale = 0.5f;
+        }
+
+        public override void AI()
+        {
+            if (Projectile.velocity.Length() < 24)
+            {
+                Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.6f;
+                Projectile.rotation = Projectile.velocity.ToRotation();
+            }
+
+            if (Main.rand.NextBool(6))
+            {
+                Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
+                Dust dust = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<NightmareStar>(),
                     dir * Main.rand.NextFloat(1f, 4f), newColor: NightmarePlantera.lightPurple, Scale: Main.rand.NextFloat(1f, 3f));
                 dust.rotation = dir.ToRotation() + MathHelper.PiOver2;
             }
@@ -39,20 +76,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
     /// <summary>
     /// 使用ai0输入旋转时间，大于旋转时间后会射出<br></br>
-    /// 使用ai1控制是否会在结束旋转后生成美梦光弹幕
+    /// 使用ai1控制是否会在结束旋转后生成美梦光弹幕<br></br>
+    /// 使用ai2传入目标的长度
     /// </summary>
-    public class NightmareSparkle_Rolling:BaseNightmareSparkle
+    public class NightmareSparkle_Rolling : BaseNightmareSparkle
     {
         public Player Owner => Main.player[Projectile.owner];
 
         public ref float RollingTime => ref Projectile.ai[0];
         public ref float CanExchange => ref Projectile.ai[1];
+        public ref float TargetLenght => ref Projectile.ai[2];
 
         public ref float Angle => ref Projectile.localAI[0];
         public ref float State => ref Projectile.localAI[1];
         public ref float Timer => ref Projectile.localAI[2];
 
-        private bool init=true;
+        private bool init = true;
         private float length;
 
         public override void SetDefaults()
@@ -60,10 +99,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.timeLeft = 1200;
             Projectile.tileCollide = false;
             Projectile.hostile = true;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = -1;
             Projectile.width = Projectile.height = 32;
-            ShineColor = NightmarePlantera.nightPurple;
-            mainSparkleScale = new Vector2(1.5f, 3f);
-            circleSparkleScale = 0.5f;
+            //ShineColor = Color.Transparent;
+            //mainSparkleScale = new Vector2(1.5f, 3f);
+            //circleSparkleScale = 0.5f;
         }
 
         public override void AI()
@@ -85,22 +126,30 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 default:
                 case 0: //在玩家身边环绕
                     {
-                        Angle += 0.05f;
-                        Projectile.Center = Owner.Center + Angle.ToRotationVector2() * length;
+                        Angle += 0.03f;
+                        float factor = Timer / RollingTime;
+
+                        ShineColor = Color.Lerp(Color.Transparent, NightmarePlantera.nightPurple, factor);
+                        mainSparkleScale =Vector2.Lerp(Vector2.Zero, new Vector2(1.5f, 3f),factor) ;
+                        circleSparkleScale = MathHelper.Lerp(0,0.5f,factor) ;
+
+                        Projectile.Center = Owner.Center + Angle.ToRotationVector2() * MathHelper.Lerp(length,TargetLenght,factor);
                         Projectile.rotation = Angle;
-                        if ((int)CanExchange==1)
+
+                        if ((int)CanExchange == 1)
                         {
-                            Projectile.rotation += Main.rand.NextFloat(-0.03f, 0.03f);
+                            Projectile.rotation += Main.rand.NextFloat(-0.2f, 0.2f);
                         }
-                        if (Timer>RollingTime)
+
+                        if (Timer > RollingTime)
                         {
                             State++;
                             Timer = 0;
                             if ((int)CanExchange == 1)
                             {
-                                //TODO：生成美梦光NPC
-                                Projectile.Kill();
-                                return;
+                                State++;
+                                Projectile.velocity = -Angle.ToRotationVector2()*8;
+                                break;
                             }
 
                             Projectile.velocity = -Angle.ToRotationVector2();
@@ -114,13 +163,38 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         if (Projectile.velocity.Length() < 24)
                         {
-                            Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.3f;
+                            Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.1f;
                             Projectile.rotation = Projectile.velocity.ToRotation();
                         }
                     }
                     break;
+                case 2://抽搐一会
+                    {
+                        Projectile.velocity *= 0.95f;
+                        Projectile.rotation += Main.rand.NextFloat(0.1f, 0.2f);
+
+                        if (Timer > 120)
+                        {
+                            NightmarePlantera.TargetFantasySparkle = NPC.NewNPC(Projectile.GetSource_FromAI(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<FantasySparkle>());
+                            Projectile.Kill();
+                        }
+
+                        Timer++;
+                    }
+                    break;
+
             }
 
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
         }
     }
 }

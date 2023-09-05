@@ -35,6 +35,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.ignoreWater = true;
             Projectile.hostile = true;
             Projectile.width = Projectile.height = 32;
+            Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
         }
 

@@ -65,6 +65,20 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPCID.Sets.TrailCacheLength[Type] = 12;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
+            //NPCID.Sets.DebuffImmunitySets[Type] = new NPCDebuffImmunityData()
+            //{
+            //    SpecificallyImmuneTo = new int[]
+            //    {
+            //        BuffID.PotionSickness,
+            //        BuffID.OnFire,
+            //        BuffID.Bleeding,
+            //        BuffID.Ichor,
+            //        BuffID.Venom,
+            //        BuffID.OnFire3,
+            //        BuffID.BloodButcherer,
+            //        BuffID.Confused
+            //    }
+            //};
 
             NPCID.Sets.BossBestiaryPriority.Add(Type);
         }
@@ -250,7 +264,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
-            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 4800 || Main.dayTime) //世花也是4800
+            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || /*Target.Distance(NPC.Center) > 4800 ||*/ Main.dayTime) //世花也是4800
             {
                 NPC.TargetClosest();
 
@@ -369,8 +383,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             teleportSparkle,
             /// <summary> 梦境之光 </summary>
             dreamSparkle,
-            /// <summary> 噩梦之噬 </summary>
-            nightmareDevour,
+            /// <summary> 第二阶段的idle，只是在玩家身边绕圈圈 </summary>
+            P2_Idle,
+            /// <summary> 美梦猎杀，持续生成并尝试击杀美梦光 </summary>
+            fantasyHunting,
+            /// <summary> 黑洞，未能收集梦境之光的惩罚招式 </summary>
+            blackHole,
 
         }
 
@@ -413,7 +431,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public static bool NightmarePlanteraAlive(out NPC np)
         {
-            if (NPBossIndex >= 0 && NPBossIndex < 201)
+            if (NPBossIndex >= 0 && NPBossIndex < 201 && Main.npc[NPBossIndex].active && Main.npc[NPBossIndex].type == ModContent.NPCType<NightmarePlantera>())
             {
                 np = Main.npc[NPBossIndex];
                 return true;
@@ -496,12 +514,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    rotateTentacles[j]?.DrawTentacle(i => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
+                    rotateTentacles[j]?.DrawTentacle(i => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly),2);
                 }
             }
-
-            //绘制自己
-            spriteBatch.Draw(mainTex, pos, frameBox, Color.White * alpha, selfRot, origin, NPC.scale, 0, 0);
 
             if (alpha != 1)
             {
@@ -515,6 +530,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     spriteBatch.Draw(mainTex, pos + (i * 1 / 7f * MathHelper.TwoPi + angle).ToRotationVector2() * distance, frameBox, c * alpha, selfRot, origin, NPC.scale, 0, 0);
                 }
             }
+
+            //绘制自己
+            spriteBatch.Draw(mainTex, pos, frameBox, Color.White * alpha, selfRot, origin, NPC.scale, 0, 0);
 
             return false;
         }

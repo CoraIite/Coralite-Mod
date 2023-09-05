@@ -14,7 +14,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// <summary>
     /// 使用ai0输入蓄力时间<br></br>
     /// 使用ai1传入颜色，-1为紫色，-2为红色，0-1时为对应的hue颜色<br></br>
-    /// 使用ai2传入刺出的长度
+    /// 使用ai2传入刺出的长度<br></br>
+    /// 使用velocity传入目标方向
     /// </summary>
     public class ConfusionHole : BaseNightmareProj, IDrawNonPremultiplied
     {
@@ -61,6 +62,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             Projectile.hostile = true;
             Projectile.tileCollide = false;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = -1;
             Projectile.width = Projectile.height = 16;
         }
 
@@ -71,6 +74,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if ((int)State != 1)
                 return false;
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.velocity);
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (target.friendly)
+            {
+                modifiers.SourceDamage += 10;
+            }
         }
 
         public override void AI()

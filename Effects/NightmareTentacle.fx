@@ -8,6 +8,8 @@ texture sampleTexture;
 texture extraTexture;
 //减去的流动贴图是多少
 float flowAlpha;
+//循环多少次
+float warpAmount;
 
 sampler2D samplerTex = sampler_state
 {
@@ -59,7 +61,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 color = tex2D(samplerTex, input.TexCoords); //读取本体灰度图
     //乘以颜色
     float4 c = float4(input.Color.rgb * color.rgb + (color.w > 0.9 ? ((color.w - 0.9) * 2.8) : float3(0, 0, 0)), color.r);
-    float4 c2 = flowAlpha * tex2D(extraTex, float2(uTime + input.TexCoords.x * 2, input.TexCoords.y));
+    float4 c2 = flowAlpha * tex2D(extraTex, float2(uTime + input.TexCoords.x * warpAmount, input.TexCoords.y));
     //减去特殊流动图
     //最终返回
     return (c - c2) * input.Color.a;

@@ -83,6 +83,32 @@ namespace Coralite.Helpers
             return true;
         }
 
+        /// <summary>
+        /// 找到同类型并且相同target的NPC，输出一共多少个和自身位置<br></br>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="index"></param>
+        /// <param name="totalIndexesInGroup"></param>
+        [DebuggerHidden]
+        public static void GetMyNpcIndexWithModNPC<T>(NPC n, out int index, out int totalIndexesInGroup) where T : ModNPC
+        {
+            index = 0;
+            totalIndexesInGroup = 0;
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc.active && npc.target == n.target && npc.ModNPC is T)
+                {
+                    if (n.whoAmI > i)
+                        index++;
+
+                    totalIndexesInGroup++;
+                }
+            }
+        }
+
+
+
         [DebuggerHidden]
         public static int NewProjectileInAI(this NPC npc, Vector2 position, Vector2 velocity, int type, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
         {

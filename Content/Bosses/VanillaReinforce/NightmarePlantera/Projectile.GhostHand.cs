@@ -36,6 +36,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             Projectile.hostile = true;
             Projectile.tileCollide = false;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = -1;
             Projectile.width = Projectile.height = 48;
             Projectile.timeLeft = 300;
         }

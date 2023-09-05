@@ -13,7 +13,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void SetDefaults()
         {
+            Projectile.tileCollide = false;
             Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = -1;
             Projectile.timeLeft = 500;
             Projectile.width = Projectile.height = 64;
             CooldownSlot = ImmunityCooldownID.Bosses;

@@ -2,6 +2,7 @@
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -55,6 +56,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.width = 116;
             Projectile.height = 116 / 2;
             Projectile.timeLeft = 1000;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = -1;
             Projectile.tileCollide = false;
             Projectile.hostile = true;
             CooldownSlot = ImmunityCooldownID.Bosses;
@@ -88,6 +91,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             return base.CanHitPlayer(target);
         }
 
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (target.friendly)
+            {
+                modifiers.SourceDamage += 5;
+            }
+        }
+
         public override void AI()
         {
             if (Init)
@@ -95,14 +106,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 if (ColorState == -1)
                     DrawColor = NightmarePlantera.lightPurple;
                 else if (ColorState == -2)
-                    DrawColor = new Color(255, 20, 20, 130);
+                    DrawColor = NightmarePlantera.nightmareRed;
                 else
                     DrawColor = Main.hslToRgb(new Vector3(Math.Clamp(ColorState, 0, 1f), 1f, 0.8f));
 
                 Init = false;
 
                 Vector2 center = Projectile.Center;
-                Projectile.scale = 1.5f;
+                Projectile.scale = 1.8f;
                 Projectile.width = (int)(Projectile.width * Projectile.scale);
                 Projectile.height = (int)(Projectile.height * Projectile.scale);
                 Projectile.Center = center;

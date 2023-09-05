@@ -16,6 +16,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public float rotation;
         private readonly int pointCount;
         public float flowAlpha;
+        public float perLength;
 
         private readonly Asset<Texture2D> _sampleTexture;
         private readonly Asset<Texture2D> _extraTexture;
@@ -53,14 +54,23 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
 
             this.flowAlpha=flowAlpha;
+            perLength = tentaclePerLength;
         }
 
-        public void DrawTentacle()
+        public void DrawTentacle(float warpAmount=-1)
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
             List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 normal = dir.RotatedBy(MathHelper.PiOver2);
+
+            if (warpAmount == -1)
+            {
+                int width = _extraTexture.Width();
+                if (width == 0)
+                    width = 256;
+                warpAmount = perLength * pointCount / width;
+            }
 
             for (int i = 0; i < pointCount; i++)
             {
@@ -91,6 +101,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
                 effect.Parameters["flowAlpha"].SetValue(flowAlpha);
+                effect.Parameters["warpAmount"].SetValue(warpAmount);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
@@ -113,6 +124,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public Vector2 targetPos;
         public float rotation;
         public float flowAlpha;
+        public float perLength;
 
         private readonly int pointCount;
 
@@ -172,12 +184,21 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
 
             this.flowAlpha = flowAlpha;
+            perLength = tentaclePerLength;
         }
 
-        public void DrawTentacle(Func<int, float> curve)
+        public void DrawTentacle(Func<int, float> curve, float warpAmount = -1)
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
             List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+
+            if (warpAmount == -1)
+            {
+                int width = _extraTexture.Width();
+                if (width == 0)
+                    width = 256;
+                warpAmount = perLength * pointCount / width;
+            }
 
             for (int i = 0; i < pointCount; i++)
             {
@@ -210,6 +231,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
                 effect.Parameters["flowAlpha"].SetValue(flowAlpha);
+                effect.Parameters["warpAmount"].SetValue(warpAmount);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点

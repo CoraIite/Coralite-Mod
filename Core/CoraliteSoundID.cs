@@ -1465,7 +1465,10 @@ namespace Coralite.Core
         /// <summary>关门的声音</summary>
         public static SoundStyle DoorClosed => SoundID.DoorClosed;
 
-        /// <summary>听上去像玻璃破碎的声音，一些墙壁的声音，例如玻璃墙，落雪墙等</summary>
+        /// <summary>
+        /// 听上去像玻璃破碎的声音，一些墙壁的声音，例如玻璃墙，落雪墙等<br></br>
+        /// 玻璃瓶，猪猪存钱罐
+        /// </summary>
         public static SoundStyle GlassBroken_Shatter => SoundID.Shatter;
 
         /// <summary>大部分电路开关的音效</summary>

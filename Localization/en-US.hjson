@@ -1562,6 +1562,7 @@ Mods: {
 			GhostHand.DisplayName: Ghost Hand
 			SuddenDeath.DisplayName: Sudden Death
 			NightmareSparkle_Rolling.DisplayName: Nightmare Sparkle_ Rolling
+			NightmareSparkle_Red.DisplayName: Nightmare Sparkle_ Red
 		}
 
 		Configs: {

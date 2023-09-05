@@ -2,6 +2,7 @@
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -19,14 +20,34 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         private Player Target => Main.player[NPC.target];
         private static NPC NightmareOwner => Main.npc[NightmarePlantera.NPBossIndex];
-        private NightmareTentacle tentacle;
+        private RotateTentacle tentacle;
 
         public ref float State => ref NPC.ai[0];
         public ref float Hited => ref NPC.ai[1];
         public ref float Timer => ref NPC.localAI[0];
+        private ref float MouseAngle=>ref NPC.localAI[1];
 
         public ref float NotFreeTime => ref NPC.ai[2];
         public ref float MaxFreeTime => ref NPC.ai[3];
+
+        public static Asset<Texture2D> VineTex;
+
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+
+            VineTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "NightmareCatcherVine");
+        }
+
+        public override void Unload()
+        {
+            if (Main.dedServ)
+                return;
+
+            VineTex = null;
+        }
+
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 4;
@@ -73,29 +94,20 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 NPC.timeLeft = NPC.activeTime;
             }
 
-            tentacle ??= new NightmareTentacle(20, TentacleColor, TentacleWidth, NightmarePlantera.tentacleTex, NightmarePlantera.tentacleFlowTex);
+            tentacle ??= new RotateTentacle(20, TentacleColor, TentacleWidth, NightmarePlantera.tentacleTex, NightmareSpike.FlowTex);
 
             Vector2 dir = NightmareOwner.Center - NPC.Center;
             float distance = dir.Length();
             float tentacleLength = distance * 0.8f / 20f;
 
-            tentacle.rotation = dir.ToRotation();
-            tentacle.pos = NPC.Center;
-            tentacle.UpdateTentacle(tentacleLength, (i) => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
+            tentacle.SetValue(NPC.Center, np.Center, NPC.rotation + MathHelper.Pi);
+            tentacle.UpdateTentacle(tentacleLength);
 
             switch ((int)State)
             {
                 default:
                 case 0: //发射阶段
-
-                    NPC.frameCounter++;
-                    if (NPC.frameCounter>5)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y++;
-                        if (NPC.frame.Y>3)
-                            NPC.frame.Y = 0;
-                    }
+                    MouseAngle = Math.Abs(MathF.Sin(Timer*0.15f)) * 0.6f;
 
                     do
                     {
@@ -126,19 +138,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     Timer++;
                     break;
                 case 1: //收回阶段
+                    if (MouseAngle>0)
+                    {
+                        MouseAngle -= 0.1f;
+                        if (MouseAngle < 0)
+                            MouseAngle = 0;
+                    }
+
                     float speed = NPC.velocity.Length();
                     if (speed < 16)
                     {
                         speed += 0.25f;
-                    }
-
-                    NPC.frameCounter++;
-                    if (NPC.frameCounter > 5)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y++;
-                        if (NPC.frame.Y > 3)
-                            NPC.frame.Y = 0;
                     }
 
                     NPC.velocity = dir.SafeNormalize(Vector2.Zero) * speed;
@@ -148,6 +158,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         NPC.Kill();
                     break;
                 case 2: //拖拽玩家阶段
+                    if (MouseAngle > 0)
+                    {
+                        MouseAngle -= 0.1f;
+                        if (MouseAngle < 0)
+                            MouseAngle = 0;
+                    }
+
                     NPC.velocity = dir.SafeNormalize(Vector2.Zero) * 2f;
                     NPC.rotation = (NPC.Center - NightmareOwner.Center).ToRotation();
 
@@ -158,7 +175,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         NPC.Kill();
                     break;
             }
-
         }
 
         public static Color TentacleColor(float factor)
@@ -176,14 +192,29 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            tentacle.DrawTentacle();
+            tentacle.DrawTentacle( (i) => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
 
             Texture2D mainTex = TextureAssets.Npc[NPC.type].Value;
-            Rectangle frameBox = mainTex.Frame(1, 4, 0, NPC.frame.Y);
-            Vector2 selforigin = frameBox.Size() / 2;
+            Vector2 pos = NPC.Center - Main.screenPosition;
+            Rectangle frameBox = mainTex.Frame(1, 2, 0, 0);
+            Vector2 origin = frameBox.BottomLeft();
+            origin.X += 2;
+            origin.Y -= 4;
+            Color c = Color.White * 0.8f;
 
-            spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, Color.White * 0.8f, NPC.rotation, selforigin, NPC.scale, 0, 0);
+            float scale = NPC.scale * 1.1f;
+            float rot = NPC.rotation - MouseAngle;
+            Vector2 dir = rot.ToRotationVector2();
+            Main.spriteBatch.Draw(mainTex, pos + dir * 4, frameBox, c, rot, origin, scale, 0, 0);
 
+            rot = NPC.rotation + MouseAngle;
+            dir = rot.ToRotationVector2();
+            frameBox = mainTex.Frame(1, 2, 0, 1);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 4, frameBox, c, rot, new Vector2(2, 2), scale, 0, 0);
+
+            Texture2D vineTex = VineTex.Value;
+
+            Main.spriteBatch.Draw(vineTex, pos, null, c, NPC.rotation, new Vector2(vineTex.Width*0.75f,vineTex.Height/2), scale, 0, 0);
             return false;
         }
     }

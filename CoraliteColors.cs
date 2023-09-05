@@ -10,7 +10,7 @@ namespace Coralite
         public Color CrystallineMagikePurple { get; private set; }
         public Color SplendorMagicoreLightBlue { get; private set; }
 
-        public  void InitColor()
+        public void InitColor()
         {
             RedJadeRed = new Color(221, 50, 50);
             IcicleCyan = new Color(43, 255, 198);
