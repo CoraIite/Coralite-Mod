@@ -20,12 +20,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 为1时自身不动，当玩家靠近后同上<br></br>
     /// 为2时会逃离梦魇花，玩家靠近时同上<br></br>
     /// -2状态为聚合所有的自身并生成美梦神<br></br>
+    /// 使用ai1和ai2传入目标点
     /// </summary>
     public class FantasySparkle : ModNPC, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.NightmarePlantera + Name;
 
         public ref float State => ref NPC.ai[0];
+        public Vector2 TargetPos
+        {
+            get => new Vector2(NPC.ai[1], NPC.ai[2]);
+            set
+            {
+                NPC.ai[1] = value.X;
+                NPC.ai[2] = value.Y;
+            }
+        }
 
         private static NPC NightmareOwner => Main.npc[NightmarePlantera.NPBossIndex];
         public Player Target => Main.player[NPC.target];
@@ -84,7 +94,25 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 case -2://聚合并生成美梦神
                     {
+                        NPC.Center = Vector2.Lerp(NPC.Center, TargetPos, 0.04f);
+                        NPC.velocity *= 0;
+                        if (Vector2.Distance(NPC.Center,TargetPos)<48)
+                        {
+                            for (int i = 0; i < Main.maxNPCs; i++)
+                            {
+                                NPC n = Main.npc[i];
+                                if (n.active && n.type == ModContent.NPCType<FantasyGod>())
+                                {
+                                    n.ai[3] += 1 / 7f;
+                                    if (n.ai[3] > 1)
+                                        n.ai[3] = 1;
 
+                                    break;
+                                }
+                            }
+
+                            NPC.Kill();
+                        }
                     }
                     break;
                 case -1://在玩家头顶盘旋
@@ -119,7 +147,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         NPC.TargetClosest();
 
-                        if (Vector2.Distance(Target.Center,NPC.Center)>200)
+                        if (Vector2.Distance(Target.Center, NPC.Center) > 200)
                         {
                             float length = NPC.velocity.Length();
 
@@ -131,9 +159,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             Vector2 v = (NPC.Center - Target.Center).SafeNormalize(Vector2.One) * length / 4;
                             NPC.velocity.X += v.X;
                             NPC.velocity.Y -= v.Y;
-                            if (NPC.velocity.Length() > 6)
+                            if (NPC.velocity.Length() > 8)
                             {
-                                NPC.velocity = NPC.velocity.SafeNormalize(Vector2.One) * 6;
+                                NPC.velocity = NPC.velocity.SafeNormalize(Vector2.One) * 8;
                             }
                         }
 
@@ -157,6 +185,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
             }
 
+            NPC.rotation = NPC.velocity.X * 0.05f;
             if (Main.rand.NextBool(3))
                 for (int i = -1; i < 2; i += 2)
                 {

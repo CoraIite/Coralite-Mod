@@ -64,6 +64,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             NPC.noTileCollide = true;
             NPC.noGravity = true;
+            NPC.HitSound = CoraliteSoundID.Fleshy_NPCHit1;
+            NPC.DeathSound = CoraliteSoundID.Fleshy_NPCDeath1;
         }
 
         public override bool CanHitNPC(NPC target) => false;
@@ -179,7 +181,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public static Color TentacleColor(float factor)
         {
-            return Color.Lerp(new Color(153, 88, 156, 230), Color.Transparent, factor);
+            return Color.Lerp(NightmarePlantera.nightmareSparkleColor, Color.Transparent, factor);
         }
 
         public static float TentacleWidth(float factor)

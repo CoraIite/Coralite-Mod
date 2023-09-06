@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
+using Terraria.Utilities;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
@@ -15,7 +16,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         /// <summary>
         /// 使用前请检测是否存在该NPC
         /// </summary>
-        public static int TargetFantasySparkle;
+        public static int TargetFantasySparkle=-1;
+
+        /// <summary>
+        /// 美梦神的index<br></br>
+        /// 使用前请检测是否存在该NPC
+        /// </summary>
+        public static int FantasyGod=-1;
 
         public bool useDreamMove;
         public float DreamMoveCount;
@@ -62,6 +69,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     case (int)AIStates.fantasyHunting:
                         NormallySetTentacle();
                         DreamingFantasyHunting();
+                        NormallyUpdateTentacle();
+                        break;
+                    case (int)AIStates.P2_Idle:
+                        NormallySetTentacle();
+                        Dreaming_Idle();
                         NormallyUpdateTentacle();
                         break;
                 }
@@ -1205,30 +1217,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public void Dreaming_Idle()
         {
-            if (alpha > 0.5f)
-                alpha -= 0.02f;
-
-            NPC.dontTakeDamage = true;
-            float currentRot = ShootCount + Timer / 400f * MathHelper.TwoPi;
-
-            Vector2 center = Target.Center + currentRot.ToRotationVector2() * 500;
-            Vector2 dir = center - NPC.Center;
-
-            float velRot = NPC.velocity.ToRotation();
-            float targetRot = dir.ToRotation();
-
-            float speed = NPC.velocity.Length();
-            float aimSpeed = Math.Clamp(dir.Length() / 450f, 0, 1) * 34;
-
-            NPC.velocity = velRot.AngleTowards(targetRot, 0.08f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.85f);
+            NPC.velocity *= 0.8f;
             NPC.rotation = NPC.rotation.AngleLerp(NPC.velocity.ToRotation(), 0.3f);
 
-            if (Timer > ShootCount)
+            if (FantasyGodAlive(out NPC fg))
             {
-                SetPhase2DreamingStates();
-            }
+                NPC.rotation = NPC.rotation.AngleTowards((fg.Center-NPC.Center).ToRotation(), 0.3f);
 
-            Timer++;
+                if (Timer > 3600)
+                {
+                    SetPhase2DreamingStates();
+                }
+
+                Timer++;
+            }
+            else
+                SetPhase2States();
         }
 
         public void DreamingSpikeHell()
@@ -1381,24 +1385,25 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             NPC.velocity *= 0.78f;
                         }
 
-                        if (Timer%20==0&&Main.netMode!=NetmodeID.MultiplayerClient)
+                        if (Timer % 20 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int howmany = Main.rand.NextFromList(1, 3, 5);
                             float baseRot = (pos - NPC.Center).ToRotation() - howmany / 2 * 0.15f;
-                            //int damage=
-                            //for (int i = 0; i < howmany; i++)
-                            //{
-
-                            //}
+                            int damage = Helper.ScaleValueForDiffMode(50, 50, 50, 50);
+                            for (int i = 0; i < howmany; i++)
+                            {
+                                NPC.NewProjectileInAI<NightmareSparkle_Red>(NPC.Center, (baseRot + i * 0.15f).ToRotationVector2(), damage, 0);
+                            }
                         }
 
                         if (Timer>400)
                         {
-
+                            SetPhase2DreamingStates();
                         }
                     }
                     break;
             }
+            Timer++;
         }
 
         #endregion
@@ -1540,6 +1545,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             return false;
         }
 
+        public static bool FantasyGodAlive(out NPC fg)
+        {
+            if (FantasyGod >= 0 && FantasyGod < 201 && Main.npc[FantasyGod].active && Main.npc[FantasyGod].type == NPCType<FantasyGod>())
+            {
+                fg = Main.npc[FantasyGod];
+                return true;
+            }
+
+            TargetFantasySparkle = -1;
+            fg = null;
+            return false;
+        }
+
         #endregion
 
         #region States
@@ -1630,6 +1648,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             MoveCount = 0;
             NPC.netUpdate = true;
 
+            if (fantasyKillCount > 7)
+                KillFantasySparkle();
+
             switch ((int)DreamMoveCount)
             {
                 case 0://咬它
@@ -1638,7 +1659,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         State = (int)AIStates.nightmareBite;
                         ShootCount = 60;
-                        Vector2 center = Target.Center + new Vector2(Main.rand.NextFromList(-1, 1) * 400, -300);
+                        Vector2 center = Target.Center + new Vector2(Main.rand.NextFromList(-1, 1) * 500, -300);
                         TargetFantasySparkle = NPC.NewNPC(NPC.GetSource_FromAI(), (int)center.X, (int)center.Y, NPCType<FantasySparkle>());
                     }
                     break;
@@ -1647,14 +1668,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 case 5:
                     {
                         State = (int)AIStates.spikeHell;
-                        Vector2 center = Target.Center + new Vector2(Main.rand.NextFromList(-1, 1) * 400, -300);
+                        Vector2 center = Target.Center + new Vector2(Main.rand.NextFromList(-1, 1) * 500, -300);
                         TargetFantasySparkle = NPC.NewNPC(NPC.GetSource_FromAI(), (int)center.X, (int)center.Y, NPCType<FantasySparkle>());
                     }
                     break;
                 default:
                     {
+                        ShootCount = 60;
                         State = (int)AIStates.fantasyHunting;
-                        Vector2 center = Target.Center + new Vector2(Main.rand.NextFromList(-1, 1) * 400, -300);
+                        Vector2 center = Target.Center + new Vector2(Main.rand.NextFromList(-1, 1) * 500, -300);
                         TargetFantasySparkle = NPC.NewNPC(NPC.GetSource_FromAI(), (int)center.X, (int)center.Y, NPCType<FantasySparkle>());
                     }
                     break;
@@ -1678,6 +1700,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             if (howmany >= 7)
             {
+                Vector2 pos = Vector2.Zero;
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC n = Main.npc[i];
@@ -1685,10 +1708,35 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         continue;
 
                     n.ai[0] = -2;
+                    pos += n.Center;
                 }
 
-                ShootCount = 400;
+                pos /= howmany;
+
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC n = Main.npc[i];
+                    if (!n.active || !n.friendly || n.type != NPCType<FantasySparkle>())
+                        continue;
+
+                    n.ai[1] = pos.X;
+                    n.ai[2] = pos.Y;
+                }
+
+                FantasyGod = NPC.NewNPC(NPC.GetSource_FromAI(), (int)pos.X, (int)pos.Y, NPCType<FantasyGod>());
+
                 State = (int)AIStates.P2_Idle;
+                NPC.dontTakeDamage = false;
+                warpScale = 0;
+                canDrawWarp = false;
+                useMeleeDamage = false;
+                tentacleColor = lightPurple;
+                alpha = 1;
+                Timer = 0;
+                SonState = 0;
+                MoveCount = 0;
+                NPC.netUpdate = true;
+
                 return;
             }
 
@@ -1703,6 +1751,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public void KillFantasySparkle()
         {
+            if (FantasyGodAlive(out _))
+                return;
+
             fantasyKillCount++;
 
             if (fantasyKillCount > 7)
@@ -1714,9 +1765,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 tentacleColor = lightPurple;
                 alpha = 1;
                 Timer = 0;
+                fantasyKillCount = 0;
+                useDreamMove = false;
                 SonState = 0;
 
                 State = (int)AIStates.blackHole;
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC n = Main.npc[i];
+                    if (!n.active || !n.friendly || n.type != NPCType<FantasySparkle>())
+                        continue;
+
+                    n.Kill();
+                }
 
                 NPC.netUpdate = true;
             }

@@ -1403,6 +1403,7 @@ Mods: {
 			// NightmareHook.DisplayName: Nightmare Hook
 			// NightmareCatcher.DisplayName: Nightmare Catcher
 			// FantasySparkle.DisplayName: Fantasy Sparkle
+			// FantasyGod.DisplayName: Fantasy God
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1559,6 +1560,7 @@ Mods: {
 			// SuddenDeath.DisplayName: Sudden Death
 			// NightmareSparkle_Rolling.DisplayName: Nightmare Sparkle_ Rolling
 			// NightmareSparkle_Red.DisplayName: Nightmare Sparkle_ Red
+			// FantasyBall.DisplayName: Fantasy Ball
 		}
 
 		Configs: {

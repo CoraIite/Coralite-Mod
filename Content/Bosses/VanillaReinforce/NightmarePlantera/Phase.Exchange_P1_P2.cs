@@ -86,6 +86,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             dir = Helper.NextVec2Dir();
                             dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(64f), ModContent.DustType<NightmareStar>(), dir * Main.rand.NextFloat(8f, 16f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 4f));
                             dust.rotation = dir.ToRotation()+MathHelper.PiOver2;
+
+                            dir = Helper.NextVec2Dir();
+                            dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(64f), DustID.VilePowder, dir * Main.rand.NextFloat(8f, 16f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 1.3f));
                         }
 
                         if (Timer > 240)
@@ -134,8 +137,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 _ => new Color(122, 110, 134)
                             };
 
-                            Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(64, 64), Helper.NextVec2Dir() * Main.rand.NextFloat(12, 28f),
-                                CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 2f));
+                            Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(64, 64), Helper.NextVec2Dir() * Main.rand.NextFloat(6, 36f),
+                                CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 3f));
                         }
 
                         if (Timer > 160)
@@ -177,7 +180,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             }
                         }
 
-                        if (nameScale < 12)
+                        if (nameScale < 16)
                         {
                             nameScale +=2f;
                         }
@@ -267,12 +270,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Vector2 basePos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
 
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            Main.spriteBatch.Draw(BlackBack.Value, basePos, null, Color.White*nameAlpha, 0, BlackBack.Size() / 2, nameScale, 0, 0);
+            Main.spriteBatch.Draw(BlackBack.Value, basePos, null, Color.White * nameAlpha, 0, BlackBack.Size() / 2, nameScale, 0, 0);
             if (Timer > 8)
             {
-                Utils.DrawBorderStringBig(Main.spriteBatch, DisplayName.Value, basePos - new Vector2(0, 125), Color.Red * nameAlpha, 1f, 0.5f);
+                Utils.DrawBorderStringBig(Main.spriteBatch, DisplayName.Value, basePos - new Vector2(0, 145), Color.Red * nameAlpha, 1.3f, 0.5f);
 
-                Main.spriteBatch.Draw(NameLine.Value, basePos - new Vector2(0, 40), null, Color.Red * nameAlpha, 0f, NameLine.Size() / 2, 1.4f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(NameLine.Value, basePos - new Vector2(0, 40), null, Color.Red * nameAlpha, 0f, NameLine.Size() / 2, 1.6f, SpriteEffects.None, 0f);
             }
 
             Main.spriteBatch.End();

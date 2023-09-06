@@ -50,7 +50,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override void AI()
         {
             if (!NightmarePlantera.NightmarePlanteraAlive(out NPC np))
+            {
                 Projectile.Kill();
+                return;
+            }
 
             tentacle ??= new NightmareTentacle(30, factor => tencleColor, factor =>
             {
