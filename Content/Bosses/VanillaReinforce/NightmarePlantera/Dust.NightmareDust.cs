@@ -15,8 +15,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool Update(Dust dust)
         {
-            dust.scale *= 0.99f;
-            if (dust.scale<0.1f)
+            dust.scale *= 0.97f;
+            if (dust.scale < 0.1f)
                 dust.active = false;
 
             if (!dust.noGravity)

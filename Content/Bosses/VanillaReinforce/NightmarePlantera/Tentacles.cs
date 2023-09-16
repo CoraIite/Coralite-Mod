@@ -12,6 +12,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
     public class NightmareTentacle
     {
+        private readonly float startOffset;
+
         public Vector2 pos;
         public float rotation;
         private readonly int pointCount;
@@ -34,6 +36,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             this.widthFunc = widthFunc;
             _sampleTexture = sampleTexture;
             _extraTexture = extraTexture;
+
+            startOffset = Main.rand.NextFloat();
         }
 
 
@@ -97,7 +101,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 2);
+                effect.Parameters["uTime"].SetValue(startOffset+Main.GlobalTimeWrappedHourly / 2);
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
                 effect.Parameters["flowAlpha"].SetValue(flowAlpha);
@@ -112,7 +116,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 Main.graphics.GraphicsDevice.RasterizerState = originalState;
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default);
             }
 
         }
@@ -120,6 +124,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
     public class RotateTentacle
     {
+        private readonly float startOffset;
+
         public Vector2 pos;
         public Vector2 targetPos;
         public float rotation;
@@ -145,6 +151,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             this.widthFunc = widthFunc;
             _sampleTexture = sampleTexture;
             _extraTexture = extraTexture;
+
+            startOffset = Main.rand.NextFloat();
         }
 
         /// <summary>
@@ -227,7 +235,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 2);
+                effect.Parameters["uTime"].SetValue(startOffset+Main.GlobalTimeWrappedHourly / 2);
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
                 effect.Parameters["flowAlpha"].SetValue(flowAlpha);
@@ -242,7 +250,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 Main.graphics.GraphicsDevice.RasterizerState = originalState;
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default,default,default);
             }
         }
     }

@@ -72,8 +72,8 @@ namespace Coralite.Compat.BossCheckList
                 {
                     //ItemType<Content.Items.Icicle.IcicleCrystal>(),
                     //ItemType<Content.Items.Icicle.BabyIceDragonBossBag>(),
-                    //ItemType<Content.Items.Icicle.IcicleCoccyx>(),
-                    //ItemType<Content.Items.Icicle.BabyIceDragonTrophy>(),
+                    ItemType<Content.Items.Gels.EmperorSabre>(),
+                    ItemType<Content.Items.Gels.GelThrone>(),
                     //ItemType<Content.Items.Icicle.BabyIceDragonRelic>(),
                     //ItemType<Content.Items.Icicle.RedianciePet>(),
                 };
@@ -92,6 +92,34 @@ namespace Coralite.Compat.BossCheckList
                         ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.SlimeEmperor.Despawn", () => "史莱姆皇帝回归了它的王国"),
                         ["spawnItems"] = ItemType<GelInvitation>(),
                         ["collectibles"] = SlimeEmperorCollection
+                    });
+
+
+                //梦魇之花
+                List<int> NightmarePlanteraCollection = new List<int>()
+                {
+                    //ItemType<Content.Items.Icicle.IcicleCrystal>(),
+                    //ItemType<Content.Items.Icicle.BabyIceDragonBossBag>(),
+                    //ItemType<Content.Items.Gels.EmperorSabre>(),
+                    //ItemType<Content.Items.Gels.GelThrone>(),
+                    //ItemType<Content.Items.Icicle.BabyIceDragonRelic>(),
+                    //ItemType<Content.Items.Icicle.RedianciePet>(),
+                };
+
+                string NightmarePlanteraInfo = "噩梦占据了曾经被击败的世纪之花的躯体，变成了强大的梦魇之神";
+                bcl.Call(
+                    "LogBoss",
+                    Coralite.Instance,
+                    "史莱姆皇帝",
+                    3.2f,
+                    () => DownedBossSystem.downedSlimeEmperor,
+                    NPCType<Content.Bosses.VanillaReinforce.NightmarePlantera.NightmarePlantera>(),
+                    new Dictionary<string, object>()
+                    {
+                        ["spawnInfo"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.NightmarePlantera.SpawnInfo", () => NightmarePlanteraInfo),
+                        ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.NightmarePlantera.Despawn", () => "梦境消散了"),
+                        ["spawnItems"] = ItemType<NightmareHarp>(),
+                        ["collectibles"] = NightmarePlanteraInfo
                     });
 
             }

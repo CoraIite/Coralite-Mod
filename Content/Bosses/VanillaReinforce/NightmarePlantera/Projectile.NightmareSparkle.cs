@@ -68,7 +68,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
                 Dust dust = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<NightmareStar>(),
-                    dir * Main.rand.NextFloat(1f, 4f), newColor: NightmarePlantera.lightPurple, Scale: Main.rand.NextFloat(1f, 3f));
+                    dir * Main.rand.NextFloat(1f, 4f), newColor: NightmarePlantera.nightmareRed, Scale: Main.rand.NextFloat(1f, 3f));
                 dust.rotation = dir.ToRotation() + MathHelper.PiOver2;
             }
         }

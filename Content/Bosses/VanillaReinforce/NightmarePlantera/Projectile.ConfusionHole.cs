@@ -170,7 +170,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             Projectile.Kill();
                     }
                     break;
-
             }
 
             spike.pos = Projectile.Center;
@@ -198,7 +197,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
 
             Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D scparkle = SparkleTex.Value;
+            Texture2D sparkleTex = SparkleTex.Value;
             Texture2D blackholeTex = BlackHole.BlackHoleTex.Value;
 
             float rot = Projectile.rotation + MathHelper.PiOver2;
@@ -206,7 +205,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             c.A = 200;
             spriteBatch.Draw(mainTex, pos, null, c, rot, mainTex.Size() / 2, new Vector2(1, SelfScale), 0, 0);
             spriteBatch.Draw(blackholeTex, pos, null, c, rot + MathHelper.PiOver2, blackholeTex.Size() / 2, new Vector2(SelfScale, 1)*0.3f, 0, 0);
-            spriteBatch.Draw(scparkle, pos, null, c, Main.GlobalTimeWrappedHourly * 0.5f, scparkle.Size() / 2, SelfScale / 3 + Main.rand.NextFloat(0, 0.02f), 0, 0);
+
+            var sparkleFrame = sparkleTex.Frame(1, 2 , 0, Projectile.ai[1] == -1 ? 0 : 1);
+            var sparkleOrigin = sparkleFrame.Size() / 2;
+            spriteBatch.Draw(sparkleTex, pos, sparkleFrame, c, Main.GlobalTimeWrappedHourly * 0.5f, sparkleOrigin, SelfScale / 3 + Main.rand.NextFloat(0, 0.02f), 0, 0);
 
             //Effect e = Filters.Scene["HurricaneTwistReverse"].GetShader().Shader;
             //e.Parameters["uColor"].SetValue(drawColor.ToVector3());

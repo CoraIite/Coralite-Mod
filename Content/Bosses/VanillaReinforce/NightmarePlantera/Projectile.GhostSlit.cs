@@ -92,9 +92,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         do
                         {
-                            if (Timer < 20 * 2)
+                            if (Timer < 60 * 2)
                             {
-                                if ((int)Timer % 20 == 0)
+                                if ((int)Timer % 60 == 0)
                                 {
                                     float factor = Timer / (10 * 3);
                                     float length = dir.Length() * factor;

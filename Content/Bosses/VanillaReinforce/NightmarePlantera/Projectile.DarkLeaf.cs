@@ -2,7 +2,6 @@
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria.GameContent;
 using Terraria;
 using Terraria.ModLoader;
@@ -11,7 +10,7 @@ using Terraria.ID;
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
     /// <summary>
-    /// ai0 为1时为强化大小的红色
+    /// ai0 为1时为强化大小的红色<br></br>
     /// </summary>
     public class DarkLeaf : ModProjectile
     {
@@ -83,23 +82,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
             var pos = Projectile.Center - Main.screenPosition;
 
-            Color color = lightColor;
-            var frameBox = mainTex.Frame(1, 2, 0, 0);
-
-            //绘制自己
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, color, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
-
-            color = glowColor;
-            //color *= 0.75f;
-
-            //绘制影子拖尾
-            //Projectile.DrawShadowTrails(color, 0.3f, 0.03f, 1, 6, 2, Projectile.scale, frameBox);
+            Color color = glowColor;
+            var frameBox = mainTex.Frame(1, 2, 0, 1);
 
             //绘制发光
-            frameBox = mainTex.Frame(1, 2, 0, 1);
 
             Main.spriteBatch.Draw(mainTex, pos, frameBox, color, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
-            Projectile.DrawShadowTrails(color, 0.6f, 0.04f, 1, 6, 2, Projectile.scale, frameBox);
+            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+
+            for (int i = 1; i < 6; i += 2)
+                Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
+                    color * (0.6f - i * 0.04f), Projectile.oldRot[i], frameBox.Size() / 2, (Projectile.scale - i * 0.05f), 0, 0);
+
+            //绘制自己
+            frameBox = mainTex.Frame(1, 2, 0, 0);
+
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, glowColor, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
 
             return false;
         }

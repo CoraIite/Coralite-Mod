@@ -2,12 +2,12 @@
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using rail;
 using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
@@ -114,9 +114,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             velLength += 0.25f;
                         }
 
-                        NPC.velocity = dir * velLength;
+                        float distance = Vector2.Distance(np.Center, NPC.Center);
+                        bool far = distance > 600;
+                        bool close = distance < 400;
 
-                        if (Vector2.Distance(np.Center, NPC.Center) < 300&&lightScale>0.9f)
+                        if (far)
+                            NPC.velocity = dir * velLength;
+                        else if (close)
+                            NPC.velocity = -dir * velLength;
+
+                        if (distance <= 640 && distance >= 360 && LightScale > 0.8f)
                         {
                             NPC.velocity *= 0.5f;
                             State = 1;
@@ -147,16 +154,47 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             canDrawWarp = false;
                         }
 
-                        if (Timer>30)
+                        if (Timer > 30)
                         {
+                            if (Timer % 10 == 0)
+                            {
+                                Vector2 dir = Helper.NextVec2Dir();
+                                NPC.NewProjectileInAI<FantasyBall>(NPC.Center, dir * 20, 300, 0);
+                                var modifyer = new PunchCameraModifier(NPC.Center, dir, 8, 10, 10, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
+                            }
+                        }
 
+                        if (Timer > 168)
+                        {
+                            State++;
+                            Timer = 0;
+                            float angle = (NPC.Center - np.Center).ToRotation() - 2 * 0.3f;
+                            for (int i = 0; i < 4; i++)
+                            {
+                                NPC.NewProjectileInAI<FantasySpike>(NPC.Center, Vector2.Zero, 600, 0, ai1: angle + i * 0.3f, ai2: 90);
+                            }
                         }
                     }
                     break;
                 case 2:
                     {
-                        NPC.Kill();
-                        NightmarePlantera.FantasyGod = -1;
+                        if (Timer>180)
+                        {
+                            State = 3;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+                case 3:
+                    {
+                        LightScale -= 1 / 30f;
+
+                        if (Timer>30)
+                        {
+                            NPC.Kill();
+                            NightmarePlantera.FantasyGod = -1;
+                        }
                     }
                     break;
             }

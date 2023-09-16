@@ -57,7 +57,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override void SetDefaults()
         {
             NPC.width = NPC.height = 24;
-            NPC.lifeMax = 1000;
+            NPC.lifeMax = 2500;
+            NPC.defense = 40;
             NPC.damage = 40;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;

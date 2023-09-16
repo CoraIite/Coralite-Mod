@@ -1273,6 +1273,11 @@ Mods: {
 				DisplayName: 凝胶纤维
 				Tooltip: ""
 			}
+
+			NightmareHarp: {
+				DisplayName: 噩梦竖琴
+				Tooltip: 在夜晚召唤梦魇之花，不消耗
+			}
 		}
 
 		Tiles: {
@@ -1554,13 +1559,15 @@ Mods: {
 			BlackHole.DisplayName: 梦境黑洞
 			NightmareSpike.DisplayName: 梦魇穿刺
 			HookSlash.DisplayName: 噩梦爪
-			// ConfusionHole.DisplayName: Confusion Hole
-			// GhostSlit.DisplayName: Ghost Slit
-			// GhostHand.DisplayName: Ghost Hand
-			// SuddenDeath.DisplayName: Sudden Death
-			// NightmareSparkle_Rolling.DisplayName: Nightmare Sparkle_ Rolling
-			// NightmareSparkle_Red.DisplayName: Nightmare Sparkle_ Red
-			// FantasyBall.DisplayName: Fantasy Ball
+			ConfusionHole.DisplayName: 困惑尖刺
+			GhostSlit.DisplayName: 幽灵裂隙
+			GhostHand.DisplayName: 鬼手
+			SuddenDeath.DisplayName: 梦魇之花
+			NightmareSparkle_Rolling.DisplayName: 噩梦光
+			NightmareSparkle_Red.DisplayName: 梦魇光
+			FantasyBall.DisplayName: 幻想球
+			FantasySpike.DisplayName: 幻想尖刺
+			IllusionSpikeHell.DisplayName: 梦魇之花
 		}
 
 		Configs: {

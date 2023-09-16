@@ -9,12 +9,15 @@ namespace Coralite.Core.Systems.BossSystems
         public static bool downedRediancie;
         public static bool downedBabyIceDragon;
         public static bool downedSlimeEmperor;
+        public static bool downedNightmarePlantera;
+
 
         public override void PostWorldGen()
         {
             downedRediancie = false;
             downedBabyIceDragon = false;
-
+            downedSlimeEmperor = false;
+            downedNightmarePlantera = false;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -28,6 +31,10 @@ namespace Coralite.Core.Systems.BossSystems
 
             if (downedSlimeEmperor)
                 downed.Add("SlimeEmperor");
+
+            if (downedNightmarePlantera)
+                downed.Add("NightmarePlantera");
+
             tag.Add("downed", downed);
         }
 
@@ -37,11 +44,17 @@ namespace Coralite.Core.Systems.BossSystems
             downedRediancie = list.Contains("Rediancie");
             downedBabyIceDragon = list.Contains("BabyIceDragon");
             downedSlimeEmperor = list.Contains("SlimeEmperor");
+            downedNightmarePlantera = list.Contains("NightmarePlantera");
         }
 
         public static void DownSlimeEmperor()
         {
             downedSlimeEmperor = true;
+        }
+
+        public static void DownNightmarePlantera()
+        {
+            downedNightmarePlantera = true;
         }
     }
 }

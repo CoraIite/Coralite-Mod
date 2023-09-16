@@ -35,7 +35,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             useMeleeDamage = true;
                             SonState++;
-                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<NightmareBite>(), 999999, 4,NPC.target, ai0: 3, ai1: 60, ai2: -2);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<NightmareBite>(), 999999, 4, NPC.target, ai0: 3, ai1: 60, ai2: -2);
                         });
                     }
                     break;
@@ -69,13 +69,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 case 2: //咬完了之后的后摇阶段
                     {
                         NPC.velocity *= 0.9f;
-
-                        if (Timer == 7)
-                        {
-                            SoundStyle st = CoraliteSoundID.BottleExplosion_Item107;
-                            st.Pitch = 1f;
-                            SoundEngine.PlaySound(st, NPC.Center);
-                        }
 
                         if (Timer > 15)
                         {

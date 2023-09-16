@@ -77,6 +77,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             warpScale = 0;
                         }
 
+                        NPC.rotation += Main.rand.NextFloat(-0.2f, 0.3f);
                         Vector2 dir =Helper.NextVec2Dir();
                         Dust dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(64f), ModContent.DustType<NightmareDust>(), dir * Main.rand.NextFloat(2f, 4f), Scale: Main.rand.NextFloat(1f, 2f));
                         dust.noGravity = true;
@@ -141,7 +142,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 3f));
                         }
 
-                        if (Timer > 160)
+                        if (Timer > 130)
                         {
                             State++;
                             Timer = 0;
@@ -181,16 +182,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
 
                         if (nameScale < 16)
-                        {
                             nameScale +=2f;
-                        }
 
-                        if (Timer < 120)
-                        {
-                            break;
-                        }
-
-                        if (Timer == 120)
+                        if (Timer == 30)
                         {
                             SkyManager.Instance.Activate("NightmareSky");
 
@@ -198,6 +192,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 SkyManager.Instance.Activate("NightmareSky");
                             ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;//之后每帧赋予这个倒计时2，如果npc不在了，天空自动关闭
                         }
+
+                        if (Timer < 100)
+                            break;
 
                         nameAlpha -= 0.1f;
                         if (nameAlpha < 0.11f)
@@ -237,6 +234,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public void OnExchangeToP2()
         {
+            MoveCount = 0;
             NPC.dontTakeDamage = false;
             if (Main.LocalPlayer.TryGetModPlayer(out NightmarePlayerCamera NCamera))
             {

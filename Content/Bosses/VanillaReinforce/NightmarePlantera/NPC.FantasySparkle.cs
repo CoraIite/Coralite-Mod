@@ -52,8 +52,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPC.lifeMax = 500;
             NPC.width = NPC.height = 85;
 
-            mainSparkleScale = new Vector2(5f, 2f);
-            circleSparkleScale = 1.25f;
+            mainSparkleScale = new Vector2(4f, 1.5f);
+            circleSparkleScale = 1f;
 
             NPC.HitSound = CoraliteSoundID.MountSummon_Item25;
         }
@@ -182,6 +182,33 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     }
                     break;
                 case 2://逃离梦魇花
+                    {
+                        NPC.TargetClosest();
+
+                        if (Vector2.Distance(np.Center, NPC.Center) > 200)
+                        {
+                            float length = NPC.velocity.Length();
+
+                            if (length < 10)
+                            {
+                                length += 0.2f;
+                            }
+
+                            Vector2 v = (NPC.Center - np.Center).SafeNormalize(Vector2.One) * length / 4;
+                            NPC.velocity.X += v.X;
+                            NPC.velocity.Y -= v.Y;
+                            if (NPC.velocity.Length() > 8)
+                            {
+                                NPC.velocity = NPC.velocity.SafeNormalize(Vector2.One) * 8;
+                            }
+                        }
+
+                        if ((NPC.Center - Target.Center).Length() < 48)
+                        {
+                            State = -1;
+                            (np.ModNPC as NightmarePlantera).Exchange2DreamingStates();
+                        }
+                    }
                     break;
             }
 

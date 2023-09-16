@@ -65,16 +65,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Init = false;
             }
 
-            if (Projectile.timeLeft > 250)
+            if (Projectile.timeLeft > 240)
             {
                 Projectile.velocity *= 0.98f;
                 Projectile.rotation += Projectile.velocity.Length() / 20;
                 return;
             }
 
-            if (Projectile.timeLeft == 250)
+            if (Projectile.timeLeft == 240)
             {
-                Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 24;
+                Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 20;
                 Projectile.rotation = Projectile.velocity.ToRotation();
             }
 
@@ -82,6 +82,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Projectile.velocity = Projectile.velocity.RotatedBy(dir);
             Projectile.rotation = Projectile.velocity.ToRotation();
+
+            if (Main.rand.NextBool(4))
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(48, 48), DustID.VilePowder,
+                      Projectile.velocity * 0.4f, 240, drawColor, Main.rand.NextFloat(1f, 1.5f));
+                d.noGravity = true;
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
