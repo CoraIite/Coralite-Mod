@@ -10,6 +10,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
         {
             //木头
             AddRemodelRecipe(ItemID.Wood, 5, ItemID.Coal, selfRequiredNumber: 20);
+            AddRemodelRecipe(ItemID.AshWood, 5, ItemID.Coal, selfRequiredNumber: 20);
+            AddRemodelRecipe(ItemID.RichMahogany, 5, ItemID.Coal, selfRequiredNumber: 20);
+            AddRemodelRecipe(ItemID.Ebonwood, 5, ItemID.Coal, selfRequiredNumber: 20);
+            AddRemodelRecipe(ItemID.Shadewood, 5, ItemID.Coal, selfRequiredNumber: 20);
+            AddRemodelRecipe(ItemID.Pearlwood, 5, ItemID.Coal, selfRequiredNumber: 20);
+            AddRemodelRecipe(ItemID.BorealWood, 5, ItemID.Coal, selfRequiredNumber: 20);
+            AddRemodelRecipe(ItemID.PalmWood, 5, ItemID.Coal, selfRequiredNumber: 20);
 
             //煤
             AddRemodelRecipe(ItemID.Coal, 200, ItemID.Diamond, selfRequiredNumber: 20);
@@ -50,6 +57,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.StoneBlock, 100, ItemID.Emerald, selfRequiredNumber: 200);
             AddRemodelRecipe(ItemID.StoneBlock, 200, ItemID.Ruby, selfRequiredNumber: 300);
 
+            //石头变泥土，虽然微光转化也可以做到，但是使用魔能的话可以翻倍
+            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.DirtBlock, 2);
             AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.Granite, selfRequiredNumber: 2);
             AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.Marble, selfRequiredNumber: 2);
             AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.AshBlock, selfRequiredNumber: 2);
