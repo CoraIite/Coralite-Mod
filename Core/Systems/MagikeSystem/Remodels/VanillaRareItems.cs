@@ -8,6 +8,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
     {
         public void AddMagikeRemodelRecipe()
         {
+            //火焰花
+            AddRemodelRecipe(ItemID.Fireblossom, 25, ItemID.LivingFireBlock, 5);
+
             //凝胶
             AddRemodelRecipe(ItemID.Gel, 5, ItemID.PinkGel);
             AddRemodelRecipe(ItemID.Gel, 150, ItemID.SlimeStaff,selfRequiredNumber:999);

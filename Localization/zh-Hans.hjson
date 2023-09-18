@@ -1278,6 +1278,11 @@ Mods: {
 				DisplayName: 噩梦竖琴
 				Tooltip: 在夜晚召唤梦魇之花，不消耗
 			}
+
+			CrystalStoneMaker: {
+				// DisplayName: Crystal Stone Maker
+				// Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1690,6 +1695,11 @@ Mods: {
 				SlimeEmperor: {
 					SpawnInfo: 一位伟大的凝胶领袖，在史莱姆中有着极高的地位。
 					Despawn: 史莱姆皇帝回归了它的王国
+				}
+
+				NightmarePlantera: {
+					// SpawnInfo: 噩梦占据了曾经被击败的世纪之花的躯体，变成了强大的梦魇之神
+					// Despawn: 梦境消散了
 				}
 			}
 		}

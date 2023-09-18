@@ -50,6 +50,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.StoneBlock, 100, ItemID.Emerald, selfRequiredNumber: 200);
             AddRemodelRecipe(ItemID.StoneBlock, 200, ItemID.Ruby, selfRequiredNumber: 300);
 
+            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.Granite, selfRequiredNumber: 2);
+            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.Marble, selfRequiredNumber: 2);
+            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.AshBlock, selfRequiredNumber: 2);
+            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.MudBlock, selfRequiredNumber: 2);
+            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.SandBlock, selfRequiredNumber: 2);
+
             //铜和锡
             AddRemodelRecipe(ItemID.CopperOre, 1, ItemID.IronOre);
             AddRemodelRecipe(ItemID.CopperOre, 1, ItemID.LeadOre);
@@ -155,6 +161,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
 
             //狱岩
             AddRemodelRecipe(ItemID.Hellstone, 25, ItemID.HellstoneBar);
+            AddRemodelRecipe(ItemID.Hellstone, 25, ItemID.LivingFireBlock,3);
+
             AddRemodelRecipe(ItemID.Hellstone, 50, ItemID.CobaltOre, condition: HardModeCondition.Instance);
             AddRemodelRecipe(ItemID.Hellstone, 50, ItemID.PalladiumOre, condition: HardModeCondition.Instance);
 

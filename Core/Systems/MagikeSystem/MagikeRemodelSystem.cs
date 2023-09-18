@@ -14,16 +14,6 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <summary> 魔能重塑的合成表 </summary>
         internal static Dictionary<int, List<RemodelRecipe>> remodelRecipes = new Dictionary<int, List<RemodelRecipe>>();
 
-        public override void Unload()
-        {
-            if (Main.dedServ)
-                return;
-
-            if (remodelRecipes != null)
-                remodelRecipes.Clear();
-            remodelRecipes = null;
-        }
-
         private void RegisterRemodel()
         {
             Mod Mod = Coralite.Instance;
@@ -67,14 +57,15 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="itemToRemodel">重塑成的物品</param>
         /// <param name="condition"></param>
         /// <exception cref="Exception"></exception>
-        public static void AddRemodelRecipe(int selfType, int magikeCost, Item itemToRemodel, int selfRequiredNumber = 1, IMagikeRemodelCondition condition = null)
+        public static void AddRemodelRecipe(int selfType, int magikeCost, Item itemToRemodel, int selfRequiredNumber = 1, IMagikeCraftCondition condition = null)
         {
             if (itemToRemodel.TryGetGlobalItem(out MagikeItem magikeItem))
             {
-                magikeItem.magikeRemodelRequired = magikeCost;
-                magikeItem.stackRemodelRequired = selfRequiredNumber;
+                magikeItem.magike_CraftRequired = magikeCost;
+                magikeItem.stack_CraftRequired = selfRequiredNumber;
                 magikeItem.condition = condition;
             }
+
             RemodelRecipe recipe = new RemodelRecipe(selfType, selfRequiredNumber, magikeCost, itemToRemodel, condition);
 
             if (remodelRecipes == null)
@@ -97,7 +88,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="remodelType">重塑成的物品type</param>
         /// <param name="remodelStack">重塑成的物品数量，默认1</param>
         /// <exception cref="Exception"></exception>
-        public static void AddRemodelRecipe(int selfType, int magikeCost, int remodelType, int remodelStack = 1, int selfRequiredNumber = 1, IMagikeRemodelCondition condition = null)
+        public static void AddRemodelRecipe(int selfType, int magikeCost, int remodelType, int remodelStack = 1, int selfRequiredNumber = 1, IMagikeCraftCondition condition = null)
         {
             AddRemodelRecipe(selfType, magikeCost, new Item(remodelType, remodelStack), selfRequiredNumber, condition);
         }
@@ -112,7 +103,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="remodelType">重塑成的物品type</param>
         /// <param name="remodelStack">重塑成的物品数量，默认1</param>
         /// <exception cref="Exception"></exception>
-        public static void AddRemodelRecipe<TSelf>(int magikeCost, int remodelType, int remodelStack = 1, int selfRequiredNumber = 1, IMagikeRemodelCondition condition = null) where TSelf : ModItem
+        public static void AddRemodelRecipe<TSelf>(int magikeCost, int remodelType, int remodelStack = 1, int selfRequiredNumber = 1, IMagikeCraftCondition condition = null) where TSelf : ModItem
         {
             AddRemodelRecipe(ModContent.ItemType<TSelf>(), magikeCost, new Item(remodelType, remodelStack), selfRequiredNumber, condition);
         }
@@ -127,7 +118,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeCost">魔能消耗量</param>
         /// <param name="remodelStack">重塑成的物品数量，默认1</param>
         /// <exception cref="Exception"></exception>
-        public static void AddRemodelRecipe<TRemodel>(float justToNotRepeat, int selfType, int magikeCost, int remodelStack = 1, int selfRequiredNumber = 1, IMagikeRemodelCondition condition = null) where TRemodel : ModItem
+        public static void AddRemodelRecipe<TRemodel>(float justToNotRepeat, int selfType, int magikeCost, int remodelStack = 1, int selfRequiredNumber = 1, IMagikeCraftCondition condition = null) where TRemodel : ModItem
         {
             AddRemodelRecipe(selfType, magikeCost, new Item(ModContent.ItemType<TRemodel>(), remodelStack), selfRequiredNumber, condition);
         }
@@ -141,7 +132,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeCost">魔能消耗量</param>
         /// <param name="remodelStack">重塑成的物品数量，默认1</param>
         /// <exception cref="Exception"></exception>
-        public static void AddRemodelRecipe<TSelf, TRemodel>(int magikeCost, int remodelStack = 1, int selfRequiredNumber = 1, IMagikeRemodelCondition condition = null)
+        public static void AddRemodelRecipe<TSelf, TRemodel>(int magikeCost, int remodelStack = 1, int selfRequiredNumber = 1, IMagikeCraftCondition condition = null)
             where TSelf : ModItem
             where TRemodel : ModItem
         {
@@ -155,10 +146,10 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <exception cref="Exception"></exception>
         public static void AddRemodelRecipe(RemodelRecipe recipe)
         {
-            if (recipe.itemToRemodel!=null&& recipe.itemToRemodel.TryGetGlobalItem(out MagikeItem magikeItem))
+            if (recipe.itemToRemodel != null && recipe.itemToRemodel.TryGetGlobalItem(out MagikeItem magikeItem))
             {
-                magikeItem.magikeRemodelRequired = recipe.magikeCost;
-                magikeItem.stackRemodelRequired = recipe.selfRequiredNumber;
+                magikeItem.magike_CraftRequired = recipe.magikeCost;
+                magikeItem.stack_CraftRequired = recipe.selfRequiredNumber;
                 magikeItem.condition = recipe.condition;
             }
 
@@ -201,14 +192,14 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <summary> 重塑成的物品 </summary>
         public Item itemToRemodel;
         /// <summary> 重塑条件，为null的话就代表无条件 </summary>
-        public IMagikeRemodelCondition condition;
+        public IMagikeCraftCondition condition;
 
         /// <summary>
         /// 在重塑完成时调用，第一个参数为原本的物品，第二个参数为重塑成的物品
         /// </summary>
-        public Action<Item,Item> onRemodel;
+        public Action<Item, Item> onRemodel;
 
-        public RemodelRecipe(int selfType, int selfRequiredNumber, int magikeCost, Item itemToRemodel, IMagikeRemodelCondition condition = null)
+        public RemodelRecipe(int selfType, int selfRequiredNumber, int magikeCost, Item itemToRemodel, IMagikeCraftCondition condition = null)
         {
             this.selfType = selfType;
             this.selfRequiredNumber = selfRequiredNumber;
@@ -219,11 +210,11 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public bool CanRemodel(Item selfItem, int magike, int itemType, int stack)
         {
-            bool checkCondition = condition is null ? true : condition.CanRemodel(selfItem);
+            bool checkCondition = condition is null ? true : condition.CanCraft(selfItem);
             return magike >= magikeCost && itemType == selfType && stack >= selfRequiredNumber && checkCondition;
         }
 
-        public static RemodelRecipe CreateRemodelRecipe(int selfType = 0, int selfRequiredNumber = 1, int magikeCost = 1, Item itemToRemodel = null, IMagikeRemodelCondition condition = null)
+        public static RemodelRecipe CreateRemodelRecipe(int selfType = 0, int selfRequiredNumber = 1, int magikeCost = 1, Item itemToRemodel = null, IMagikeCraftCondition condition = null)
         {
             return new RemodelRecipe(selfType, selfRequiredNumber, magikeCost, itemToRemodel, condition);
         }
@@ -234,7 +225,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             return this;
         }
 
-        public RemodelRecipe SetSelfType<T>()where T : ModItem
+        public RemodelRecipe SetSelfType<T>() where T : ModItem
         {
             selfType = ModContent.ItemType<T>();
             return this;
@@ -258,7 +249,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             return this;
         }
 
-        public RemodelRecipe SetCondition(IMagikeRemodelCondition condition)
+        public RemodelRecipe SetCondition(IMagikeCraftCondition condition)
         {
             this.condition = condition;
             return this;
@@ -269,7 +260,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// </summary>
         /// <param name="onRemodel"></param>
         /// <returns></returns>
-        public RemodelRecipe SetOnRemodel(Action<Item,Item> onRemodel)
+        public RemodelRecipe SetOnRemodel(Action<Item, Item> onRemodel)
         {
             this.onRemodel = onRemodel;
             return this;
@@ -281,15 +272,15 @@ namespace Coralite.Core.Systems.MagikeSystem
         }
     }
 
-    public interface IMagikeRemodelCondition
+    public interface IMagikeCraftCondition
     {
-        bool CanRemodel(Item item);
+        bool CanCraft(Item item);
         string Description { get; }
     }
 
-    public class MagikeSymbol:ModItem
+    public class MagikeSymbol : ModItem
     {
-        public override string Texture => AssetDirectory.MagikeItems+Name;
+        public override string Texture => AssetDirectory.MagikeItems + Name;
 
         public override void SetDefaults()
         {
@@ -301,7 +292,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            TooltipLine line = new TooltipLine(Mod, "Coralite: MagikeNeed", "魔能需求量："+Item.stack);
+            TooltipLine line = new TooltipLine(Mod, "Coralite: MagikeNeed", "魔能需求量：" + Item.stack);
 
             if (Item.stack < 300)
                 line.OverrideColor = Coralite.Instance.MagicCrystalPink;

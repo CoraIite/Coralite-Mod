@@ -30,6 +30,21 @@ namespace Coralite.Core.Systems.MagikeSystem
                 return;
 
             RegisterRemodel();
+            RegisterPolymerize();
+        }
+
+        public override void Unload()
+        {
+            if (Main.dedServ)
+                return;
+
+            if (remodelRecipes != null)
+                remodelRecipes.Clear();
+            remodelRecipes = null;
+
+            if (polymerizeRecipes != null)
+                polymerizeRecipes.Clear();
+            polymerizeRecipes = null;
         }
 
         //额...每增加一个变量就要在这边多写一段，说实话显得很蠢，以后有机会需要修改掉

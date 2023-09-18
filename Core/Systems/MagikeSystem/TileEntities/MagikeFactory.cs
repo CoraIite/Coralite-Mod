@@ -21,7 +21,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public bool active;
 
         public int workTimer = -1;
-        public readonly int workTimeMax;
+        /// <summary> 最大工作时间，一般不需要手动修改它 </summary>
+        public int workTimeMax;
 
         public abstract ushort TileType { get; }
 
@@ -138,7 +139,6 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public virtual void Work()
         {
-            workTimer++;
             if (workTimer >= workTimeMax)
             {
                 workTimer = -1;
@@ -147,6 +147,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             }
             else
                 DuringWork();
+
+            workTimer++;
         }
 
         public virtual void DuringWork (){ }

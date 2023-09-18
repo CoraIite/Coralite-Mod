@@ -6,13 +6,15 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Materials
 {
-    public class MagliteDust : BaseMaterial,IMagikeRemodelable
+    public class MagicalDust : BaseMaterial, IMagikeRemodelable
     {
-        public MagliteDust() : base( 9999, Item.sellPrice(0, 0, 1, 50), ItemRarityID.Green, AssetDirectory.Materials) { }
+        public MagicalDust() : base(9999, Item.sellPrice(0, 0, 1, 50), ItemRarityID.Green, AssetDirectory.Materials) { }
 
         public void AddMagikeRemodelRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<MagliteDust>(150, ItemID.EnchantedSword, selfRequiredNumber: 40);
+            MagikeSystem.AddRemodelRecipe<MagicalDust>(150, ItemID.EnchantedSword, selfRequiredNumber: 40);
+            MagikeSystem.AddRemodelRecipe<MagicalDust>(0f, ItemID.FallenStar,25,5);
+            MagikeSystem.AddRemodelRecipe<MagicalDust>(0f, ItemID.ManaCrystal, 50, 25);
         }
     }
 }

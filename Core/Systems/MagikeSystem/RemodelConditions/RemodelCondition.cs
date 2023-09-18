@@ -3,7 +3,7 @@ using Terraria;
 
 namespace Coralite.Core.Systems.MagikeSystem.RemodelConditions
 {
-    public class RemodelCondition : IMagikeRemodelCondition
+    public class RemodelCondition : IMagikeCraftCondition
     {
         private Func<Item, bool> condition;
         private string description;
@@ -15,6 +15,6 @@ namespace Coralite.Core.Systems.MagikeSystem.RemodelConditions
         }
         public string Description => description;
 
-        public bool CanRemodel(Item item) => condition.Invoke(item);
+        public bool CanCraft(Item item) => condition.Invoke(item);
     }
 }

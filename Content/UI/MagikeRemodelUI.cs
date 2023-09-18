@@ -14,7 +14,7 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI
 {
-    public class MagikeRemodelUI: BetterUIState
+    public class MagikeRemodelUI : BetterUIState
     {
         public static Asset<Texture2D> okTex = ModContent.Request<Texture2D>(AssetDirectory.UI + "OKButton", AssetRequestMode.ImmediateLoad);
         public static Asset<Texture2D> notOKTex = ModContent.Request<Texture2D>(AssetDirectory.UI + "CloseButton", AssetRequestMode.ImmediateLoad);
@@ -28,13 +28,13 @@ namespace Coralite.Content.UI
         public static MagikeFactory_RemodelPool remodelPool = null;
         public static CloseButton closeButton = new CloseButton();
         public static SingleItemSlot selfSlot = new SingleItemSlot();
-        public static RemodelImage image = new RemodelImage();
+        public static CraftImage image = new CraftImage();
         public static UIList list = new UIList();
 
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
         public override bool Visible => visible;
-        
+
         public override void OnInitialize()
         {
             Elements.Clear();
@@ -134,8 +134,8 @@ namespace Coralite.Content.UI
             if (basePos != worldPos)
             {
                 basePos = worldPos;
-                Top.Set((int)basePos.Y-32, 0f);
-                Left.Set((int)basePos.X-32, 0f);
+                Top.Set((int)basePos.Y - 32, 0f);
+                Left.Set((int)basePos.X - 32, 0f);
                 base.Recalculate();
             }
         }
@@ -145,20 +145,20 @@ namespace Coralite.Content.UI
             Texture2D mainTex = arrowTex.Value;
             Vector2 center = GetDimensions().Position() + new Vector2(20, -16);
 
-            spriteBatch.Draw(mainTex,center, Color.White);
+            spriteBatch.Draw(mainTex, center, Color.White);
         }
     }
 
     /// <summary>
     /// 显示图片用的，没有任何交互按键
     /// </summary>
-    public class RemodelImage : UIElement
+    public class CraftImage : UIElement
     {
         public Item showItem;
 
-        public RemodelImage()
+        public CraftImage()
         {
-            Width.Set(52  * MagikeRemodelUI.scale, 0f);
+            Width.Set(52 * MagikeRemodelUI.scale, 0f);
             Height.Set(52 * MagikeRemodelUI.scale, 0f);
         }
 
@@ -245,7 +245,7 @@ namespace Coralite.Content.UI
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            if (recipe is null|| MagikeRemodelUI.remodelPool is null)
+            if (recipe is null || MagikeRemodelUI.remodelPool is null)
                 return;
 
             Color drawColor = Color.White;
@@ -296,7 +296,7 @@ namespace Coralite.Content.UI
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
 
                 if (showItem.stack > 1)
-                    Utils.DrawBorderString(spriteBatch, showItem.stack.ToString(), center + new Vector2(12-height/2, 16), Color.White, MagikeRemodelUI.scale, 1, 0.5f);
+                    Utils.DrawBorderString(spriteBatch, showItem.stack.ToString(), center + new Vector2(12 - height / 2, 16), Color.White, MagikeRemodelUI.scale, 1, 0.5f);
                 if (IsMouseHovering)
                 {
                     Main.HoverItem = showItem.Clone();
@@ -309,7 +309,7 @@ namespace Coralite.Content.UI
             Texture2D exTex;
             Item item = MagikeRemodelUI.remodelPool.GetItem();
             bool stackEnough = item is null ? false : item.stack >= recipe.selfRequiredNumber;
-            bool conditionCanRemodel = recipe.condition == null ? true : recipe.condition.CanRemodel(item);
+            bool conditionCanRemodel = recipe.condition == null ? true : recipe.condition.CanCraft(item);
             bool magikeEnough = MagikeRemodelUI.remodelPool.magike >= recipe.magikeCost;
 
             canRemodel = conditionCanRemodel && magikeEnough && stackEnough;

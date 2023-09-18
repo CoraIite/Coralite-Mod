@@ -28,9 +28,9 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// </summary>
         public int magiteAmount = -1;
 
-        public int magikeRemodelRequired = -1;
-        public int stackRemodelRequired;
-        public IMagikeRemodelCondition condition = null;
+        public int magike_CraftRequired = -1;
+        public int stack_CraftRequired;
+        public IMagikeCraftCondition condition = null;
 
         private Enchant enchant;
         public Enchant Enchant
@@ -222,15 +222,15 @@ namespace Coralite.Core.Systems.MagikeSystem
                 tooltips.Add(line);
             }
 
-            if (magikeRemodelRequired > 0)
+            if (magike_CraftRequired > 0)
             {
-                string stackAmount = $"物品需求量： {stackRemodelRequired}\n";
-                string magikeAmount = $"消耗魔能： {magikeRemodelRequired}";
+                string stackAmount = $"物品需求量： {stack_CraftRequired}\n";
+                string magikeAmount = $"消耗魔能： {magike_CraftRequired}";
                 string conditionNeed = condition == null ? "" : ("\n" + condition.Description);
                 TooltipLine line = new TooltipLine(Mod, "remodelConition", stackAmount+magikeAmount+conditionNeed);
-                if (magikeRemodelRequired < 300)
+                if (magike_CraftRequired < 300)
                     line.OverrideColor = Coralite.Instance.MagicCrystalPink;
-                else if (magikeRemodelRequired < 1000)
+                else if (magike_CraftRequired < 1000)
                     line.OverrideColor = Coralite.Instance.CrystallineMagikePurple;
                 else if (magiteAmount < 2_0000)
                     line.OverrideColor = Coralite.Instance.SplendorMagicoreLightBlue;

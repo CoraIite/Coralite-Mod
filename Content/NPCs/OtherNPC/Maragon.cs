@@ -76,7 +76,7 @@ namespace Coralite.Content.NPCs.OtherNPC
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagliteDust>(), 2, 3, 6));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicalDust>(), 2, 3, 6));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

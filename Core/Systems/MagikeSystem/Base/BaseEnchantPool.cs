@@ -14,7 +14,7 @@ using Terraria.GameContent;
 
 namespace Coralite.Core.Systems.MagikeSystem.Base
 {
-    public abstract class BaseEnchantPool:ModTile
+    public abstract class BaseEnchantPool : ModTile
     {
         public override string Texture => AssetDirectory.MagikeTiles + Name;
         public virtual string ExtraTextureName => AssetDirectory.MagikeTiles + Name + "_Top";

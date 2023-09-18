@@ -133,6 +133,15 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             return Position.ToWorldCoordinates(16);
         }
+
+        public virtual void ShowConnection()
+        {
+            
+        }
+
+        public abstract bool ConnectToRecevier(IMagikeContainer container);
+
+        public virtual void DisconnectAll()  {  }
     }
 
     /// <summary>
@@ -198,7 +207,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// <summary>
         /// 一个简单的帮助方法，展示目前和谁连接了
         /// </summary>
-        public void ShowConnection()
+        public override void ShowConnection()
         {
             for (int i = 0; i < receiverPoints.Length; i++) 
             {
@@ -229,7 +238,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// </remarks>
         /// <param name="container"></param>
         /// <returns></returns>
-        public bool ConnectToRecevier(IMagikeContainer container)
+        public override bool ConnectToRecevier(IMagikeContainer container)
         {
             if (CanConnect(container))
             {
@@ -257,7 +266,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// <summary>
         /// 取消所有连接
         /// </summary>
-        public void DisconnectAll()
+        public override void DisconnectAll()
         {
             for (int i = 0; i < receiverPoints.Length; i++)
                 receiverPoints[i] = Point16.NegativeOne;

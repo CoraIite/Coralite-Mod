@@ -9,14 +9,14 @@ using Terraria;
 
 namespace Coralite.Core.Systems.MagikeSystem.RemodelConditions
 {
-    public class EnchantCondition : IMagikeRemodelCondition
+    public class EnchantCondition : IMagikeCraftCondition
     {
         private static readonly Lazy<EnchantCondition> singleton = new Lazy<EnchantCondition>(() => new EnchantCondition());
         public static EnchantCondition Instance { get => singleton.Value; }
 
         public string Description => "拥有特殊注魔时可重塑";
 
-        public bool CanRemodel(Item item)
+        public bool CanCraft(Item item)
         {
             if (item.TryGetGlobalItem(out MagikeItem magikeItem))
                 if (magikeItem.Enchant.datas[2] is not null && magikeItem.Enchant.datas[2] is SpecialEnchant_RemodelableBonus)

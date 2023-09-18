@@ -1,9 +1,8 @@
-﻿
-using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
 
 namespace Coralite.Core
 {
-    public interface IMagikeSingleItemContainer:IMagikeContainer,ISingleItemContainer
+    public interface IMagikeSingleItemContainer : IMagikeContainer, ISingleItemContainer
     {
     }
 }

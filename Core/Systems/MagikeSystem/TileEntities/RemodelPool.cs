@@ -69,8 +69,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 Item item = chooseRecipe.itemToRemodel.Clone();
                 if (item.TryGetGlobalItem(out MagikeItem magikeItem))   //把不必要的东西删掉
                 {
-                    magikeItem.magikeRemodelRequired = -1;
-                    magikeItem.stackRemodelRequired = 0;
+                    magikeItem.magike_CraftRequired = -1;
+                    magikeItem.stack_CraftRequired = 0;
                     magikeItem.condition = null;
                 }
 

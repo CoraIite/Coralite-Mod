@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.Misc_Melee
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<MagliteDust>(8)
+                .AddIngredient<MagicalDust>(8)
                 .AddIngredient(ItemID.BottledWater, 2)
                 .AddRecipeGroup(RecipeGroupID.IronBar, 6)
                 .AddTile<MagicCraftStation>()

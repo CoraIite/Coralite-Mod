@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Magike
         public override string Texture => AssetDirectory.MagikeItems + Name;
 
         private int mode;
-        private MagikeSender_Line sender;
+        private IMagikeSender sender;
 
         public override void SetDefaults()
         {
@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.Magike
                     {
                         if (sender is null)  //第一次左键
                         {
-                            if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeSender_Line magS))    //找到了
+                            if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeSender magS))    //找到了
                             {
                                 sender = magS;
                                 CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "已选择发送器");
@@ -101,7 +101,7 @@ namespace Coralite.Content.Items.Magike
                     break;
                 case 1://查看模式
                     {
-                        if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeSender_Line magS))  //找到了，显示所有的连接
+                        if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeSender magS))  //找到了，显示所有的连接
                             magS.ShowConnection();
                         else
                             CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "未找到发送器");
@@ -109,7 +109,7 @@ namespace Coralite.Content.Items.Magike
                     break;
                 case 2://断连模式
                     {
-                        if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeSender_Line magS))  //找到了，断开所有的连接
+                        if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeSender magS))  //找到了，断开所有的连接
                         {
                             magS.DisconnectAll();
                             CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "连接已断开");
