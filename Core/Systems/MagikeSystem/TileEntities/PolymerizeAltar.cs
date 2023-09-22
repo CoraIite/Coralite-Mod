@@ -3,9 +3,12 @@ using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
@@ -160,7 +163,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public override bool StartWork()
         {
-            if (containsItem is not null && !containsItem.IsAir && containsItem.type == chooseRecipe.MainItem.type && containsItem.stack >= chooseRecipe.MainItem.stack && chooseRecipe is not null)
+            if (containsItem is not null && chooseRecipe is not null && !containsItem.IsAir && containsItem.type == chooseRecipe.MainItem.type && containsItem.stack >= chooseRecipe.MainItem.stack )
             {
                 foreach (var item in chooseRecipe.RequiredItems)
                 {
@@ -196,7 +199,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             if (workTimer % perWorkTime == 0)
             {
                 int index = workTimer / perWorkTime;
-                if (index < chooseRecipe.RequiredItems.Count - 1)
+                if (index < chooseRecipe.RequiredItems.Count)
                 {
                     Item item = chooseRecipe.RequiredItems[index];
                     int howManyNeed = item.stack;
@@ -233,7 +236,20 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 }
             }
 
+            Vector2 center = Position.ToWorldCoordinates(16, -16);
+            if (workTimer % 5 == 0)
+            {
+                Dust dust = Dust.NewDustPerfect(center + new Vector2(Main.rand.Next(-16, 16), 32), DustID.FireworksRGB, -Vector2.UnitY * Main.rand.NextFloat(0.8f, 3f), newColor: MainColor);
+                dust.noGravity = true;
 
+                //CrossLight.Spawn(center + new Vector2(Main.rand.Next(-16, 16), 32), -Vector2.UnitY * Main.rand.NextFloat(0.8f, 1.1f), 0, 30, new Vector2(0.5f, 1.5f), MainColor);
+            }
+
+            float factor = workTimer / (float)workTimeMax;
+            float width = 24 - factor * 22;
+
+            Dust dust2 = Dust.NewDustPerfect(center + Main.rand.NextVector2CircularEdge(width, width), DustID.LastPrism, Vector2.Zero, newColor: MainColor);
+            dust2.noGravity = true;
         }
 
         public override void WorkFinish()
@@ -319,6 +335,12 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                     tag.Add("Receiver_x" + i, receiverPoints[i].X);
                     tag.Add("Receiver_y" + i, receiverPoints[i].Y);
                 }
+
+            if (chooseRecipe!=null)
+            {
+                tag.Add("RecipeMainItem", chooseRecipe.MainItem);
+                tag.Add("RecipeResultItem", chooseRecipe.ResultItem);
+            }
         }
 
         public override void LoadData(TagCompound tag)
@@ -336,6 +358,10 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 else
                     receiverPoints[i] = Point16.NegativeOne;
             }
+
+            if (tag.TryGet("RecipeMainItem", out Item mainItem) && tag.TryGet("RecipeResultItem", out Item resultItem))
+                if (MagikeSystem.TryGetPolymerizeRecipes(mainItem.type, out List<PolymerizeRecipe> recipes))
+                    chooseRecipe = recipes.FirstOrDefault(p => p.ResultItem.type == resultItem.type && p.ResultItem.stack == resultItem.stack, null);
         }
     }
 }

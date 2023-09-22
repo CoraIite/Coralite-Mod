@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike
@@ -17,6 +18,8 @@ namespace Coralite.Content.Items.Magike
 
         private int mode;
         private IMagikeSender sender;
+
+        public LocalizedText ChooseSenderFailed => this.GetLocalization("ChooseSenderFailed", () => "未找到发送器！");
 
         public override void SetDefaults()
         {
@@ -45,20 +48,19 @@ namespace Coralite.Content.Items.Magike
                 {
                     default:
                     case 0: //连接模式
-                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "连接模式");
+                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ConnectMode", () => "连接模式").Value);
                         break;
                     case 1: //查看模式
-                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "查看模式");
+                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ViewMode", () => "查看模式").Value);
                         break;
                     case 2: //断连模式
-                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "断连模式");
+                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("DisconnectMode", () => "断连模式").Value);
                         break;
                 }
                 sender = null;
                 return true;
             }
 
-            //TODO: 需要做本地化的适配工作
             switch (mode)
             {
                 default:
@@ -69,10 +71,10 @@ namespace Coralite.Content.Items.Magike
                             if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeSender magS))    //找到了
                             {
                                 sender = magS;
-                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "已选择发送器");
+                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ChooseSender", () => "已选择发送器").Value);
                             }
                             else    //没找到
-                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "未找到发送器");
+                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, ChooseSenderFailed.Value);
                         }
                         else   //第二次左键
                         {
@@ -80,20 +82,20 @@ namespace Coralite.Content.Items.Magike
                             {
                                 if (sender.ConnectToRecevier(magC))  //能连接，建立连接
                                 {
-                                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "成功建立连接");
+                                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ConnectSuccessfully", () => "成功建立连接！").Value);
                                     sender.ShowConnection();
                                     sender = null;
                                 }
                                 else      //不能连接，清空选择
                                 {
-                                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "连接失败，请重新选择！");
+                                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ConnectFailed", () => "连接失败！").Value);
                                     sender = null;
                                 }
                             }
                             else  //没找到，清空选择
                             {
                                 sender = null;
-                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "选择已清空");
+                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ChooseCleared", () => "选择已清空").Value);
                             }
                         }
 
@@ -104,7 +106,7 @@ namespace Coralite.Content.Items.Magike
                         if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeSender magS))  //找到了，显示所有的连接
                             magS.ShowConnection();
                         else
-                            CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "未找到发送器");
+                            CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, ChooseSenderFailed.Value);
                     }
                     break;
                 case 2://断连模式
@@ -112,10 +114,10 @@ namespace Coralite.Content.Items.Magike
                         if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeSender magS))  //找到了，断开所有的连接
                         {
                             magS.DisconnectAll();
-                            CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "连接已断开");
+                            CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("DisconnectSuccessfully", () => "成功断开连接！").Value);
                         }
                         else
-                            CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "未找到发送器");
+                            CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, ChooseSenderFailed.Value);
                     }
                     break;
             }

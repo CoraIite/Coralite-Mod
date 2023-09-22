@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Coralite.Content.UI;
+using Coralite.Core.Loaders;
+using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
@@ -9,6 +12,15 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public Item containsItem = new Item();
 
         public PolymerizePedestal() : base(1) { }
+
+        public override void OnKill()
+        {
+            MagikeItemSlotPanel.visible = false;
+            UILoader.GetUIState<MagikeItemSlotPanel>().Recalculate();
+
+            if (!containsItem.IsAir)
+                Item.NewItem(new EntitySource_TileEntity(this), Position.ToWorldCoordinates(16, -8), containsItem);
+        }
 
         public virtual bool InsertItem(Item item)
         {

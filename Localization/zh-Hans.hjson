@@ -339,7 +339,7 @@ Mods: {
 
 			MagliteDust: {
 				DisplayName: 魔粉
-				Tooltip: 含有微弱的魔力
+				Tooltip: 蕴含微弱的魔力
 			}
 
 			SandliteDust: {
@@ -745,8 +745,13 @@ Mods: {
 			}
 
 			DebugStick: {
-				DisplayName: 魔能调试棒
-				Tooltip: 这是一个测试专用物品，鼠标点击魔能存储器将其魔能充满
+				DisplayName: 无限晶簇魔杖
+				Tooltip:
+					'''
+					右键切换模式
+					充能模式：点击魔能存储器将其魔能充满
+					清空模式：点击魔能存储器将其魔能清空
+					'''
 			}
 
 			MagConnectStaff: {
@@ -1035,11 +1040,11 @@ Mods: {
 				DisplayName: 书页：魔能基础
 				Tooltip:
 					'''
-					左键使用以学习魔能的基础
+						左键使用以学习魔能的基础知识
 					“魔能，一种神秘的能量，通常认为是高度浓缩的魔力。由于其浓度极高，所以无法像魔力药水那样为人提供魔力。”
 					“为了合理地掌控与运用魔能，人们发明了各式各样的透镜，广角镜，与水晶柱”
 					“通过透镜来生产魔能，广角镜来传递魔能，水晶柱来存储魔能”
-					“要想使用这些装置，一个魔能连接仪是必不可少的，它能够将具有发送功能的装置连接到接受装置上”
+					“要想使用这些装置，一个魔能连接仪是必不可少的，它能够将具有发送功能的装置连接到接收装置上”
 					"能够掌控魔能之后，人们制造出了各种消耗魔能的装置，通过消耗魔能来进行各种各样的工作"
 					'''
 			}
@@ -1280,8 +1285,84 @@ Mods: {
 			}
 
 			CrystalStoneMaker: {
-				// DisplayName: Crystal Stone Maker
-				// Tooltip: ""
+				DisplayName: 晶体造石机
+				Tooltip: 消耗魔能生产石块
+			}
+
+			CrystalAltar: {
+				DisplayName: 晶体聚合坛
+				Tooltip:
+					'''
+						连接数量：4
+
+					右键打开UI放入物品并选择聚合配方
+					使用魔能连接仪连接到台座上
+					在台座内放入聚合配方中的次要物品
+					激活后开始聚合
+					'''
+			}
+
+			CrystalPedestal: {
+				DisplayName: 晶体台座
+				Tooltip: 右键打开UI，可放入物品
+			}
+
+			EmpyrosDust: {
+				DisplayName: 火魔粉
+				Tooltip: 含有微弱的火魔力
+			}
+
+			GlistentBar: {
+				DisplayName: 晶莹锭
+				Tooltip: 散发出迷人的莹光
+			}
+
+			LeafStone: {
+				DisplayName: 叶石
+				Tooltip: 含有微弱的植生魔能
+			}
+
+			MagicalDust: {
+				DisplayName: 魔粉
+				Tooltip: 含有微弱的魔力
+			}
+
+			MagikePolySymbol: {
+				DisplayName: 魔能
+				Tooltip:
+					'''
+					该合成表需要通过魔能聚合进行！
+					除魔能外的第一个物品为主要物品，需要放置在聚合坛中
+					其余物品为次要物品，需要放置在台座中
+					'''
+			}
+
+			CrystalCrate: {
+				DisplayName: 魔力晶体匣
+				Tooltip: ""
+			}
+
+			FragmentsOfLight: {
+				DisplayName: 圣光残片
+				Tooltip: 拥有能够净化心灵的光之力
+			}
+
+			SlimeEruption: {
+				DisplayName: 凝胶喷发器
+				Tooltip:
+					'''
+					射出一堆凝胶
+					66%概率不消耗弹药
+					'''
+			}
+
+			GelWhip: {
+				DisplayName: 凝胶鞭
+				Tooltip:
+					'''
+					6 召唤标记伤害
+					让敌人变得黏糊糊的
+					'''
 			}
 		}
 
@@ -1316,6 +1397,7 @@ Mods: {
 			CoraliteBlinkroot.MapEntry: 闪耀根
 			AgropyronFrozen.MapEntry: 寒霜冰草
 			BasaltChestTile.MapEntry: 玄武岩箱
+			CrystalCrateTile.MapEntry: 魔力晶体匣
 		}
 
 		Buffs: {
@@ -1357,6 +1439,11 @@ Mods: {
 			DreamErosion: {
 				DisplayName: 梦蚀
 				Description: 梦魇在侵蚀你的意志
+			}
+
+			GelWhipDebuff: {
+				// DisplayName: Gel Whip Debuff
+				// Description: Mods.Coralite.Buffs.GelWhipDebuff.Description
 			}
 		}
 
@@ -1410,10 +1497,10 @@ Mods: {
 			// AosSiTailMiddle.DisplayName: Aos Si Tail Middle
 			// AosSiTailSecdonary.DisplayName: Aos Si Tail Secdonary
 			NightmarePlantera.DisplayName: 梦魇之花
-			// NightmareHook.DisplayName: Nightmare Hook
-			// NightmareCatcher.DisplayName: Nightmare Catcher
-			// FantasySparkle.DisplayName: Fantasy Sparkle
-			// FantasyGod.DisplayName: Fantasy God
+			NightmareHook.DisplayName: 梦魇之爪
+			NightmareCatcher.DisplayName: 梦魇捕食者
+			FantasySparkle.DisplayName: 美梦光
+			FantasyGod.DisplayName: 美梦之神
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -1573,6 +1660,9 @@ Mods: {
 			FantasyBall.DisplayName: 幻想球
 			FantasySpike.DisplayName: 幻想尖刺
 			IllusionSpikeHell.DisplayName: 梦魇之花
+			// SlimeEruptionBall.DisplayName: Slime Eruption Ball
+			// SlimeEruptionProj.DisplayName: Slime Eruption Proj
+			// GelWhipProj.DisplayName: Gel Whip Proj
 		}
 
 		Configs: {

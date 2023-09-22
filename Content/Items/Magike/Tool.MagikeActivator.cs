@@ -31,15 +31,15 @@ namespace Coralite.Content.Items.Magike
             Point16 pos = Main.MouseWorld.ToTileCoordinates16();
             Rectangle rectangle = new Rectangle((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
 
-            if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeFactory magF)) //TODO: 添加本地化
+            if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeFactory magF))
             {
                 if (magF.StartWork())
-                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "已激活");
+                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("Activated", () => "已激活！").Value);
                 else
-                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "无法激活！");
+                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("FailToActivate",() => "激活失败！").Value);
             }
             else    //没找到
-                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "未找到魔能工厂");
+                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("InstrumentNotFound", () => "未找到魔能仪器！").Value);
 
             return true;
         }

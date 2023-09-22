@@ -238,7 +238,7 @@ namespace Coralite.Content.UI
 
             if (recipe.CanRemodel(MagikeRemodelUI.remodelPool.GetItem(), MagikeRemodelUI.remodelPool.magike, MagikeRemodelUI.remodelPool.containsItem.type, MagikeRemodelUI.remodelPool.containsItem.stack))
             {
-                MagikeRemodelUI.image.showItem = recipe.itemToRemodel;
+                MagikeRemodelUI.image.showItem = recipe.resultItem;
                 MagikeRemodelUI.remodelPool.chooseRecipe = recipe;
             }
         }
@@ -263,7 +263,7 @@ namespace Coralite.Content.UI
             spriteBatch.Draw(backTex, position + new Vector2(height, height) / 2, null, drawColor, 0, backTex.Size() / 2, MagikeRemodelUI.scale, SpriteEffects.None, 0);
 
             #region 绘制物品
-            Item showItem = recipe.itemToRemodel;
+            Item showItem = recipe.resultItem;
             if (showItem is null)
                 return;
             if (!showItem.IsAir)

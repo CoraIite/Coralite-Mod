@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.Accessories
 
         public void AddMagikeRemodelRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<IronRing>(0f, ItemID.IronBar, 150, selfRequiredNumber: 100);
+            MagikeSystem.AddRemodelRecipe<IronRing>(0f, ItemID.IronBar, 150, selfStack: 100);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

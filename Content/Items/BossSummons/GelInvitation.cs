@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.BossSummons
         public void AddMagikeRemodelRecipe()
         {
             MagikeSystem.AddRemodelRecipe<SymbolOfRoyal, GelInvitation>(400);
-            MagikeSystem.AddRemodelRecipe<GelInvitation>(0f, ItemID.SlimeCrown, 400, selfRequiredNumber: 3);
+            MagikeSystem.AddRemodelRecipe<GelInvitation>(0f, ItemID.SlimeCrown, 400, selfStack: 3);
         }
     }
 }

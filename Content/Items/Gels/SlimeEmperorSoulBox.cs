@@ -4,6 +4,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -46,6 +47,14 @@ namespace Coralite.Content.Items.Gels
             itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<EmperorSabre>()));
             //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<RedJade>(), 1, 26, 30));
             itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<SlimeEmperor>()));
+            itemLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 45, 150));
+
+            IItemDropRule[] weaponTypes = new IItemDropRule[] {
+                ItemDropRule.Common(ModContent.ItemType<SlimeEruption>(), 1, 1, 1),
+                ItemDropRule.Common(ModContent.ItemType<GelWhip>(), 1, 1, 1),
+            };
+
+            itemLoot.Add(new OneFromRulesRule(1, weaponTypes));
         }
 
         public override void PostUpdate()

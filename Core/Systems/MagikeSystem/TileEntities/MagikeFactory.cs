@@ -144,6 +144,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 workTimer = -1;
                 OnWorkFinshed?.Invoke();
                 WorkFinish();
+                return;
             }
             else
                 DuringWork();

@@ -71,8 +71,9 @@ namespace Coralite.Compat.BossCheckList
                 List<int> SlimeEmperorCollection = new List<int>()
                 {
                     //ItemType<Content.Items.Icicle.IcicleCrystal>(),
-                    //ItemType<Content.Items.Icicle.BabyIceDragonBossBag>(),
+                    ItemType<Content.Items.Gels.SlimeEmperorSoulBox>(),
                     ItemType<Content.Items.Gels.EmperorSabre>(),
+                    ItemType<Content.Items.Gels.SlimeEruption>(),
                     ItemType<Content.Items.Gels.GelThrone>(),
                     //ItemType<Content.Items.Icicle.BabyIceDragonRelic>(),
                     //ItemType<Content.Items.Icicle.RedianciePet>(),

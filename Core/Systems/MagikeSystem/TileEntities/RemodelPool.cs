@@ -3,6 +3,8 @@ using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -66,7 +68,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
                 Vector2 position = Position.ToWorldCoordinates(24, -8);
 
-                Item item = chooseRecipe.itemToRemodel.Clone();
+                Item item = chooseRecipe.resultItem.Clone();
                 if (item.TryGetGlobalItem(out MagikeItem magikeItem))   //把不必要的东西删掉
                 {
                     magikeItem.magike_CraftRequired = -1;
@@ -125,8 +127,12 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             base.SaveData(tag);
             if (!containsItem.IsAir)
-            {
                 tag.Add("containsItem", containsItem);
+
+            if (chooseRecipe != null)
+            {
+                tag.Add("RecipeSelfItem", chooseRecipe.selfItem);
+                tag.Add("RecipeResultItem", chooseRecipe.resultItem);
             }
         }
 
@@ -134,9 +140,11 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             base.LoadData(tag);
             if (tag.TryGet("containsItem", out Item item))
-            {
                 containsItem = item;
-            }
+
+            if (tag.TryGet("RecipeSelfItem", out Item mainItem) && tag.TryGet("RecipeResultItem", out Item resultItem))
+                if ( MagikeSystem.TryGetRemodelRecipes(mainItem.type, out List<RemodelRecipe> recipes))
+                    chooseRecipe = recipes.FirstOrDefault(p => p.resultItem.type == resultItem.type && p.resultItem.stack == resultItem.stack, null);
         }
     }
 }

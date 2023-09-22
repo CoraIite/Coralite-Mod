@@ -1,4 +1,4 @@
-﻿using Coralite.Core.Systems.MagikeSystem.RemodelConditions;
+﻿using Coralite.Core.Systems.MagikeSystem.CraftConditions;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
@@ -9,7 +9,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
         public void AddMagikeRemodelRecipe()
         {
             //泥土
-            AddRemodelRecipe(ItemID.DirtBlock, 5, ItemID.Acorn, selfRequiredNumber: 8);
+            AddRemodelRecipe(ItemID.DirtBlock, 5, ItemID.Acorn, selfStack: 8);
 
             //橡实
             AddRemodelRecipe(ItemID.Acorn, 25, ItemID.Wood, 6);

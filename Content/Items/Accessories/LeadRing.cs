@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.Accessories
 
         public void AddMagikeRemodelRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<LeadRing>(0f, ItemID.LeadBar, 150, selfRequiredNumber: 100);
+            MagikeSystem.AddRemodelRecipe<LeadRing>(0f, ItemID.LeadBar, 150, selfStack: 100);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

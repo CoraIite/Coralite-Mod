@@ -34,8 +34,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
             SoundEngine.PlaySound(CoraliteSoundID.DigStone_Tink, new Vector2(i, j) * 16);
             int x = i - frameX / 18;
             int y = j - frameY / 18;
-            if (MagikeHelper.TryGetEntityWithTopLeft(x, y, out MagikeFactory_PolymerizeAltar generator))
-                generator.Kill(x, y);
+            if (MagikeHelper.TryGetEntityWithTopLeft(x, y, out MagikeFactory_PolymerizeAltar altar))
+                altar.Kill(x, y);
         }
 
         public override bool RightClick(int i, int j)

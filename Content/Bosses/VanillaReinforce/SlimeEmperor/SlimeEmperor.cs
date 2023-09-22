@@ -13,6 +13,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
@@ -165,16 +166,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.BossBag(ItemType<EmperorSabre>()));
-
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<GelThrone>()));
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
             npcLoot.Add(ItemDropRule.BossBag(ItemType<SlimeEmperorSoulBox>()));
             //npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
 
-            //LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
-            //notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<RedJade>(), 1, 20, 24));
-            //npcLoot.Add(notExpertRule);
+            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+
+            IItemDropRule[] weaponTypes = new IItemDropRule[] {
+                ItemDropRule.Common(ItemType<SlimeEruption>(), 1, 1, 1),
+                ItemDropRule.Common(ItemType<GelWhip>(), 1, 1, 1),
+            };
+
+            notExpertRule.OnSuccess(new OneFromRulesRule(1, weaponTypes));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.Gel, 1, 30, 100));
+
+            npcLoot.Add(notExpertRule);
         }
 
         public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)

@@ -1287,6 +1287,61 @@ Mods: {
 				DisplayName: Crystal Stone Maker
 				Tooltip: ""
 			}
+
+			CrystalAltar: {
+				DisplayName: Crystal Altar
+				Tooltip: ""
+			}
+
+			CrystalPedestal: {
+				DisplayName: Crystal Pedestal
+				Tooltip: ""
+			}
+
+			EmpyrosDust: {
+				DisplayName: Empyros Dust
+				Tooltip: ""
+			}
+
+			GlistentBar: {
+				DisplayName: Glistent Bar
+				Tooltip: ""
+			}
+
+			LeafStone: {
+				DisplayName: Leaf Stone
+				Tooltip: ""
+			}
+
+			MagicalDust: {
+				DisplayName: Magical Dust
+				Tooltip: ""
+			}
+
+			MagikePolySymbol: {
+				DisplayName: Magike Poly Symbol
+				Tooltip: ""
+			}
+
+			CrystalCrate: {
+				DisplayName: Crystal Crate
+				Tooltip: ""
+			}
+
+			FragmentsOfLight: {
+				DisplayName: Fragments Of Light
+				Tooltip: ""
+			}
+
+			SlimeEruption: {
+				DisplayName: Slime Eruption
+				Tooltip: ""
+			}
+
+			GelWhip: {
+				DisplayName: Gel Whip
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1320,6 +1375,7 @@ Mods: {
 			CoraliteBlinkroot.MapEntry: Blinkroot
 			AgropyronFrozen.MapEntry: Agropyron Frozen
 			BasaltChestTile.MapEntry: Basalt Chest Tile
+			CrystalCrateTile.MapEntry: Crystal Crate Tile
 		}
 
 		Buffs: {
@@ -1361,6 +1417,11 @@ Mods: {
 			DreamErosion: {
 				DisplayName: Dream Erosion
 				Description: Mods.Coralite.Buffs.DreamErosion.Description
+			}
+
+			GelWhipDebuff: {
+				DisplayName: Gel Whip Debuff
+				Description: Mods.Coralite.Buffs.GelWhipDebuff.Description
 			}
 		}
 
@@ -1577,6 +1638,9 @@ Mods: {
 			FantasyBall.DisplayName: Fantasy Ball
 			FantasySpike.DisplayName: Fantasy Spike
 			IllusionSpikeHell.DisplayName: Illusion Spike Hell
+			SlimeEruptionBall.DisplayName: Slime Eruption Ball
+			SlimeEruptionProj.DisplayName: Slime Eruption Proj
+			GelWhipProj.DisplayName: Gel Whip Proj
 		}
 
 		Configs: {

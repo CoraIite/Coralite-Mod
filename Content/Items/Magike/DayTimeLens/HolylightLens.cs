@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.Items.Materials;
+using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
@@ -26,14 +27,14 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
         {
             CreateRecipe()
                 .AddIngredient<CrystallineMagike>(2)
-                //.AddIngredient(ItemID.Sunflower, 5)TODO： 加入圣光碎片后添加合成表
+                .AddIngredient<FragmentsOfLight>(2)
                 .AddCondition(MagikeSystem.Instance.LearnedMagikeAdvanced, () => MagikeSystem.learnedMagikeAdvanced)
                 .AddTile(TileID.Anvils)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<CrystallineMagike>()
-                //.AddIngredient(ItemID.Sunflower, 5)TODO： 加入圣光碎片后添加合成表
+                .AddIngredient<FragmentsOfLight>(2)
                 .AddIngredient<SunlightLens>()
                 .AddCondition(MagikeSystem.Instance.LearnedMagikeAdvanced, () => MagikeSystem.learnedMagikeAdvanced)
                 .AddTile(TileID.Anvils)

@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core.Systems.MagikeSystem.RemodelConditions;
+using Coralite.Core.Systems.MagikeSystem.CraftConditions;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;

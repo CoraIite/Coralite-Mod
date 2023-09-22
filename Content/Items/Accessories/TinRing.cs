@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Accessories
 
         public void AddMagikeRemodelRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<TinRing>(0f, ItemID.TinBar, 150, selfRequiredNumber: 100);
+            MagikeSystem.AddRemodelRecipe<TinRing>(0f, ItemID.TinBar, 150, selfStack: 100);
         }
 
         public override void SetDefaults()

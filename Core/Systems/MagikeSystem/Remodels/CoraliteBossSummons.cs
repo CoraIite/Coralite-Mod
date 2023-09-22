@@ -10,10 +10,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
         public void AddMagikeRemodelRecipe()
         {
             //赤玉晶核
-            AddRemodelRecipe<RedJade, RedJadeCore>(150, selfRequiredNumber: 50);
+            AddRemodelRecipe<RedJade, RedJadeCore>(150, selfStack: 50);
 
             //冰龙心
-            AddRemodelRecipe<IcicleCrystal, IcicleHeart>(300, selfRequiredNumber: 10);
+            AddRemodelRecipe<IcicleCrystal, IcicleHeart>(300, selfStack: 10);
         }
     }
 }

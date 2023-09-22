@@ -142,12 +142,8 @@ namespace Coralite.Content.UI
 
             spriteBatch.Draw(mainTex, center, Color.White);
         }
-
     }
 
-    /// <summary>
-    /// 按钮，显示钩或×，代表能否合成，和当前魔能量无关
-    /// </summary>
     public class PolymerizeItemButton : UIElement
     {
         public bool canRemodel;
@@ -156,12 +152,18 @@ namespace Coralite.Content.UI
         public PolymerizeItemButton(PolymerizeRecipe recipe)
         {
             this.recipe = recipe;
-            Width.Set(52  * MagikePolymerizeUI.scale, 0f);
+            Width.Set((52 * recipe.RequiredItems.Count + 52) * MagikePolymerizeUI.scale, 0f);
             Height.Set(52 * MagikePolymerizeUI.scale, 0f);
+            //IgnoresMouseInteraction = true;
+
+            ItemShower slot1 = new ItemShower(recipe.ResultItem, 1);
+            slot1.Left.Set(0, 0f);
+            slot1.OnLeftClick += Slot_OnLeftClick;
+            Append(slot1);
 
             for (int i = 0; i < recipe.RequiredItems.Count; i++)
             {
-                ItemShower slot = new ItemShower(recipe.RequiredItems[i]);
+                ItemShower slot = new ItemShower(recipe.RequiredItems[i], 0);
                 slot.Left.Set((52 + i * 52) * MagikePolymerizeUI.scale, 0f);
                 slot.OnLeftClick += Slot_OnLeftClick;
                 Append(slot);
@@ -179,105 +181,109 @@ namespace Coralite.Content.UI
             MagikePolymerizeUI.altar.chooseRecipe = recipe;
         }
 
-        public override void LeftClick(UIMouseEvent evt)
-        {
-            if (recipe is null || MagikePolymerizeUI.altar is null)
-                return;
-            if (!MagikePolymerizeUI.altar.CanGetItem())
-                return;
+        //public override void LeftClick(UIMouseEvent evt)
+        //{
+        //    if (recipe is null || MagikePolymerizeUI.altar is null)
+        //        return;
+        //    if (!MagikePolymerizeUI.altar.CanGetItem())
+        //        return;
 
-            MagikePolymerizeUI.image.showItem = recipe.ResultItem;
-            MagikePolymerizeUI.altar.chooseRecipe = recipe;
-        }
+        //    MagikePolymerizeUI.image.showItem = recipe.ResultItem;
+        //    MagikePolymerizeUI.altar.chooseRecipe = recipe;
+        //}
 
-        protected override void DrawSelf(SpriteBatch spriteBatch)
-        {
-            if (recipe is null || MagikeRemodelUI.remodelPool is null)
-                return;
+        //protected override void DrawSelf(SpriteBatch spriteBatch)
+        //{
+        //    if (recipe is null || MagikePolymerizeUI.altar is null)
+        //        return;
 
-            Color drawColor = Color.White;
-            if (IsMouseHovering)
-                Main.LocalPlayer.mouseInterface = true;
-            else
-                drawColor *= 0.75f;
+        //    Color drawColor = Color.White;
+        //    if (IsMouseHovering)
+        //        Main.LocalPlayer.mouseInterface = true;
+        //    else
+        //        drawColor *= 0.75f;
 
-            Vector2 position = GetDimensions().Position();
-            Vector2 center = GetDimensions().Center();
-            float height = GetDimensions().Height;
+        //    Vector2 position = GetDimensions().Position();
+        //    Vector2 center = GetDimensions().Center();
+        //    float height = GetDimensions().Height;
 
-            //绘制背景框
-            Texture2D backTex = TextureAssets.InventoryBack.Value;
-            spriteBatch.Draw(backTex, position + new Vector2(height, height) / 2, null, drawColor, 0, backTex.Size() / 2, MagikeRemodelUI.scale, SpriteEffects.None, 0);
+        //    //绘制背景框
+        //    Texture2D backTex = TextureAssets.InventoryBack.Value;
+        //    spriteBatch.Draw(backTex, position + new Vector2(height, height) / 2, null, drawColor, 0, backTex.Size() / 2, MagikeRemodelUI.scale, SpriteEffects.None, 0);
 
-            #region 绘制物品
-            Item showItem = recipe.ResultItem;
-            if (showItem is null)
-                return;
-            if (!showItem.IsAir)
-            {
-                Main.instance.LoadItem(showItem.type);
-                Texture2D mainTex = TextureAssets.Item[showItem.type].Value;
-                Rectangle rectangle2;
+        //    #region 绘制物品
+        //    Item showItem = recipe.ResultItem;
+        //    if (showItem is null)
+        //        return;
+        //    if (!showItem.IsAir)
+        //    {
+        //        Main.instance.LoadItem(showItem.type);
+        //        Texture2D mainTex = TextureAssets.Item[showItem.type].Value;
+        //        Rectangle rectangle2;
 
-                if (Main.itemAnimations[showItem.type] != null)
-                    rectangle2 = Main.itemAnimations[showItem.type].GetFrame(mainTex, -1);
-                else
-                    rectangle2 = mainTex.Frame();
+        //        if (Main.itemAnimations[showItem.type] != null)
+        //            rectangle2 = Main.itemAnimations[showItem.type].GetFrame(mainTex, -1);
+        //        else
+        //            rectangle2 = mainTex.Frame();
 
-                float itemScale = 1f;
-                float pixelWidth = 40 * MagikeRemodelUI.scale;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
-                float pixelHeight = pixelWidth;
-                if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
-                {
-                    if (rectangle2.Width > mainTex.Height)
-                        itemScale = pixelWidth / rectangle2.Width;
-                    else
-                        itemScale = pixelHeight / rectangle2.Height;
-                }
+        //        float itemScale = 1f;
+        //        float pixelWidth = 40 * MagikeRemodelUI.scale;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+        //        float pixelHeight = pixelWidth;
+        //        if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
+        //        {
+        //            if (rectangle2.Width > mainTex.Height)
+        //                itemScale = pixelWidth / rectangle2.Width;
+        //            else
+        //                itemScale = pixelHeight / rectangle2.Height;
+        //        }
 
-                position.X += 26 * MagikeRemodelUI.scale - rectangle2.Width * itemScale / 2f;
-                position.Y += 26 * MagikeRemodelUI.scale - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
+        //        position.X += 26 * MagikeRemodelUI.scale - rectangle2.Width * itemScale / 2f;
+        //        position.Y += 26 * MagikeRemodelUI.scale - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
 
-                spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
-                if (showItem.color != default(Color))
-                    spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
+        //        spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
+        //        if (showItem.color != default(Color))
+        //            spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
 
-                if (showItem.stack > 1)
-                    Utils.DrawBorderString(spriteBatch, showItem.stack.ToString(), center + new Vector2(12 - height / 2, 16), Color.White, MagikeRemodelUI.scale, 1, 0.5f);
-                if (IsMouseHovering)
-                {
-                    Main.HoverItem = showItem.Clone();
-                    Main.hoverItemName = "Coralite: MagikeRemodelRecipe";
-                }
-            }
-            #endregion
+        //        if (showItem.stack > 1)
+        //            Utils.DrawBorderString(spriteBatch, showItem.stack.ToString(), center + new Vector2(12 - height / 2, 16), Color.White, MagikeRemodelUI.scale, 1, 0.5f);
+        //        if (IsMouseHovering)
+        //        {
+        //            Main.HoverItem = showItem.Clone();
+        //            Main.hoverItemName = "Coralite: MagikePolymerizeRecipe";
+        //        }
+        //    }
+        //    #endregion
 
-            //绘制显示条
-            Texture2D exTex;
-            Item item = MagikeRemodelUI.remodelPool.GetItem();
-            bool stackEnough = item is null ? false : item.stack >= recipe.selfRequiredNumber;
-            bool conditionCanRemodel = recipe.condition == null ? true : recipe.condition.CanCraft(item);
-            bool magikeEnough = MagikeRemodelUI.remodelPool.magike >= recipe.magikeCost;
+        //    //绘制显示条
+        //    //Texture2D exTex;
+        //    Item item = MagikePolymerizeUI.altar.GetItem();
+        //    bool stackEnough = item is null ? false : item.stack >= recipe.selfRequiredNumber;
+        //    bool conditionCanRemodel = recipe.condition == null ? true : recipe.condition.CanCraft(item);
+        //    bool magikeEnough = MagikePolymerizeUI.altar.magike >= recipe.magikeCost;
 
-            canRemodel = conditionCanRemodel && magikeEnough && stackEnough;
+        //    canRemodel = conditionCanRemodel && magikeEnough && stackEnough;
 
-            if (canRemodel)
-                exTex = MagikeRemodelUI.okTex.Value;
-            else
-                exTex = MagikeRemodelUI.notOKTex.Value;
+        //    //if (canRemodel)
+        //    //    exTex = MagikeRemodelUI.okTex.Value;
+        //    //else
+        //    //    exTex = MagikeRemodelUI.notOKTex.Value;
 
-            spriteBatch.Draw(exTex, center + new Vector2(height / 2, 0), null, Color.White, 0, exTex.Size() / 2, 1, SpriteEffects.None, 0);
+        //    //spriteBatch.Draw(exTex, center + new Vector2(height / 2, 0), null, Color.White, 0, exTex.Size() / 2, 1, SpriteEffects.None, 0);
 
-        }
+        //}
     }
 
     public class ItemShower : UIElement
     {
         public Item Item;
+        public int color;
 
-        public ItemShower(Item item)
+        public ItemShower(Item item,int color)
         {
             Item = item;
+            this.color = color;
+            Width.Set(52 * MagikeItemSlotPanel.scale, 0f);
+            Height.Set(52 * MagikeItemSlotPanel.scale, 0f);
         }
 
         public override void OnInitialize()
@@ -286,15 +292,19 @@ namespace Coralite.Content.UI
             Height.Set(52 * MagikeItemSlotPanel.scale, 0f);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             if (IsMouseHovering)
+            {
                 Main.LocalPlayer.mouseInterface = true;
+                Main.HoverItem = Item.Clone();
+                Main.hoverItemName = "Coralite: MagikePolymerizeRecipe";
+            }
 
             Vector2 position = GetDimensions().Position();
             Vector2 center = GetDimensions().Center();
 
-            Texture2D backTex = TextureAssets.InventoryBack.Value;
+            Texture2D backTex = color == 0 ? TextureAssets.InventoryBack.Value : TextureAssets.InventoryBack2.Value;
             spriteBatch.Draw(backTex, center, null, Color.White, 0, backTex.Size() / 2, MagikeItemSlotPanel.scale, SpriteEffects.None, 0);
 
             if (Item is not null && !Item.IsAir)
@@ -336,5 +346,4 @@ namespace Coralite.Content.UI
             }
         }
     }
-
 }

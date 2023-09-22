@@ -2,7 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core.Systems.MagikeSystem.RemodelConditions;
+using Coralite.Core.Systems.MagikeSystem.CraftConditions;
 using Coralite.Helpers;
 using System.Collections.Generic;
 using Terraria;

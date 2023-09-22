@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Accessories
 
         public void AddMagikeRemodelRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<CopperRing>(0f, ItemID.CopperBar, 150, selfRequiredNumber: 100);
+            MagikeSystem.AddRemodelRecipe<CopperRing>(0f, ItemID.CopperBar, 150, selfStack: 100);
         }
 
         public override void SetDefaults()

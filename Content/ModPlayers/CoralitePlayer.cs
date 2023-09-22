@@ -1,5 +1,7 @@
-﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+﻿using Coralite.Content.Biomes;
+using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Items.Botanical.Seeds;
+using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.UI;
 using Coralite.Core;
@@ -122,7 +124,7 @@ namespace Coralite.Content.ModPlayers
                     SoundEngine.PlaySound(CoraliteSoundID.MaxMana, Player.Center);
                     for (int i = 0; i < 5; i++)
                     {
-                        int index = Dust.NewDust(Player.position, Player.width, Player.height, 45, 0f, 0f, 255, default(Color), (float)Main.rand.Next(20, 26) * 0.1f);
+                        int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.ManaRegeneration, 0f, 0f, 255, default(Color), (float)Main.rand.Next(20, 26) * 0.1f);
                         Main.dust[index].noLight = true;
                         Main.dust[index].noGravity = true;
                         Main.dust[index].velocity *= 0.5f;
@@ -229,6 +231,30 @@ namespace Coralite.Content.ModPlayers
                 if (Main.rand.NextBool(15))
                     itemDrop = ItemType<NacliteSeedling>();
             }
+
+            if (attempt.crate)
+            {
+                if (inWater)
+                {
+                    if (Player.InModBiome<MagicCrystalCave>())
+                    {
+                        // 如果钓到了的是匣子，就替换为自己的匣子
+
+                        // 为了不替换掉最高级的匣子，所以做点限制
+                        // Their drop conditions are "veryrare" or "legendary"
+                        // (After that come biome crates ("rare"), then iron/mythril ("uncommon"), then wood/pearl (none of the previous))
+                        // Let's replace biome crates 50% of the time (player could be in multiple (modded) biomes, we should respect that)
+                        //增加50%的概率替换掉其他匣子，因为玩家有时候可能在多个重叠的环境中
+                        if (!attempt.veryrare && !attempt.legendary && attempt.rare && Main.rand.NextBool())
+                        {
+                            itemDrop = ItemType<CrystalCrate>();
+                            return; // This is important so your code after this that rolls items will not run
+                        }
+
+                    }
+                }
+            }
+
         }
 
         #endregion

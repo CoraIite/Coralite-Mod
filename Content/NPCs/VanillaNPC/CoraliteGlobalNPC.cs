@@ -1,14 +1,15 @@
 ﻿using Coralite.Content.Items.Botanical.Seeds;
+using Coralite.Content.Items.Gels;
+using Coralite.Content.Items.Materials;
+using Coralite.Content.Items.Misc;
 using Coralite.Content.Items.Placeable;
 using Coralite.Content.Items.Shadow;
+using Coralite.Content.Items.YujianHulu;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using Coralite.Content.Items.YujianHulu;
-using Coralite.Content.Items.Misc;
-using Coralite.Content.Items.Materials;
 
 namespace Coralite.Content.NPCs.VanillaNPC
 {
@@ -42,6 +43,9 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 case NPCID.BloodCrawler:
                 case NPCID.CrimsonGoldfish:
                     npcLoot.Add(ItemDropRule.Common(ItemType<AncientCrimtaneYujian>(), 100));
+                    break;
+                case NPCID.HallowBoss:
+                    npcLoot.Add(ItemDropRule.ByCondition(new DownedGolemCondition(), ItemType<FragmentsOfLight>(), 1, 3, 5));
                     break;
                 case NPCID.DukeFishron:
                     npcLoot.Add(ItemDropRule.ByCondition(new DownedGolemCondition(), ItemType<DukeFishronSkin>(), 1, 3, 5));
@@ -92,6 +96,18 @@ namespace Coralite.Content.NPCs.VanillaNPC
                     }
                     break;
                 default: break;
+            }
+        }
+
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
+        {
+            if (projectile.npcProj || projectile.trap || !projectile.IsMinionOrSentryRelated)
+                return;
+
+            var projTagMultiplier = ProjectileID.Sets.SummonTagDamageMultiplier[projectile.type];
+            if (npc.HasBuff<GelWhipDebuff>())
+            {
+                modifiers.FlatBonusDamage += GelWhipDebuff.TagDamage * projTagMultiplier;
             }
         }
     }

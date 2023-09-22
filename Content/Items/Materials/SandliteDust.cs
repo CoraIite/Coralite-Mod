@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikePolymerizeRecipe()
         {
-            PolymerizeRecipe.CreateRecipe<IceyDust>(15)
+            PolymerizeRecipe.CreateRecipe<SandliteDust>(15)
                 .SetMainItem<MagicalDust>()
                 .AddIngredient(ItemID.SandBlock, 6)
                 .Register();

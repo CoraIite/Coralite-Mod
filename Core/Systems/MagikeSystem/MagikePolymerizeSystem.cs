@@ -51,7 +51,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static void AddPolymerizeRecipes(PolymerizeRecipe recipe)
         {
-            if (recipe.ResultItem != null && recipe.MainItem.TryGetGlobalItem(out MagikeItem magikeItem))
+            if (recipe.ResultItem != null && recipe.ResultItem.TryGetGlobalItem(out MagikeItem magikeItem))
             {
                 magikeItem.magike_CraftRequired = recipe.magikeCost;
                 magikeItem.stack_CraftRequired = recipe.selfRequiredNumber;
@@ -69,7 +69,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static bool TryGetPolymerizeRecipes(int selfType, out List<PolymerizeRecipe> recipes)
         {
-            if (polymerizeRecipes.ContainsKey(selfType))
+            if (polymerizeRecipes != null && polymerizeRecipes.ContainsKey(selfType))
             {
                 recipes = polymerizeRecipes[selfType];
                 return true;
