@@ -19,6 +19,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public MagikeFactory_EnchantPool(int magikeMax, int workTimeMax) : base(magikeMax, workTimeMax) { }
 
         public abstract Color MainColor { get; }
+        public Item ContainsItem { get => containsItem; set => containsItem = value; }
 
         public override bool CanWork()
         {

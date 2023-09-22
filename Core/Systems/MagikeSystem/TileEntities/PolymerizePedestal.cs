@@ -10,6 +10,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     public abstract class PolymerizePedestal : MagikeContainer, IMagikeSingleItemContainer
     {
         public Item containsItem = new Item();
+        public Item ContainsItem { get => containsItem; set => containsItem = value; }
 
         public PolymerizePedestal() : base(1) { }
 

@@ -34,8 +34,34 @@ namespace Coralite.Helpers
                 dust.noGravity = true;
                 length -= 8;
             }
-
         }
+
+        public static void SpawnDustOnItemSend(int selfWidth, int selfHeight, Point16 Position, Color dustColor, int dustType = DustID.ViciousPowder)
+        {
+            Tile tile = Framing.GetTileSafely(Position);
+            TileObjectData data = TileObjectData.GetTileData(tile);
+            int xOffset = data == null ? 16 : data.Width * 8;
+            int yOffset = data == null ? 24 : data.Height * 8;
+
+            Vector2 selfPos = Position.ToWorldCoordinates(selfWidth * 8, selfHeight * 8);
+            Vector2 receiverPos = Position.ToWorldCoordinates(xOffset, yOffset);
+            Vector2 dir = selfPos.DirectionTo(receiverPos);
+            float length = Vector2.Distance(selfPos, receiverPos);
+
+            while (length > 0)
+            {
+                Dust dust = Dust.NewDustPerfect(selfPos + dir * length, dustType, dir * 0.2f, newColor: dustColor);
+                dust.noGravity = true;
+                length -= 8;
+            }
+
+            for (int i = 0; i < 16; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(receiverPos, dustType, (i * MathHelper.TwoPi / 16).ToRotationVector2() * Main.rand.NextFloat(2, 3), newColor: dustColor);
+                dust.noGravity = true;
+            }
+        }
+
 
         public static void SpawnDustOnGenerate(int selfWidth, int selfHeight, Point16 Position, Color dustColor, int dustType = DustID.LastPrism)
         {

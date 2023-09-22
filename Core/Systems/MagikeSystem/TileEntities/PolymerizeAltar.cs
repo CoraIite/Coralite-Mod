@@ -30,6 +30,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// </summary>
         public int HowManyPerSend => 1;
         public abstract Color MainColor { get; }
+        public Item ContainsItem { get => containsItem; set => containsItem = value; }
 
         /// <summary> 接收者的位置 </summary>
         public Point16[] receiverPoints;

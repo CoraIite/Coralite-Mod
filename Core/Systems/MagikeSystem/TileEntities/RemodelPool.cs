@@ -21,6 +21,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public RemodelRecipe chooseRecipe;
 
         public abstract Color MainColor { get; }
+        public Item ContainsItem { get => containsItem; set => containsItem = value; }
 
         public MagikeFactory_RemodelPool(int magikeMax, int workTimeMax) : base(magikeMax, workTimeMax) { }
 
