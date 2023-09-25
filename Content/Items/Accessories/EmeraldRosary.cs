@@ -39,7 +39,7 @@ namespace Coralite.Content.Items.Accessories
             CreateRecipe()
                 .AddIngredient(ItemID.Emerald, 3)
                 .AddIngredient(ItemID.Bone, 10)
-                .AddIngredient<MagicalDust>(10)
+                .AddIngredient<MagicalPowder>(10)
                 .AddIngredient(ItemID.Vine, 3)
                 .AddIngredient(ItemID.JungleSpores, 5)
                 .Register();

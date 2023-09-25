@@ -1,5 +1,8 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.Items.Materials;
+using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -12,18 +15,18 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.BasicLens
 {
-    public class DemoniteLens : BaseMagikePlaceableItem
+    public class DemoniteLens : BaseMagikePlaceableItem, IMagikePolymerizable
     {
         public DemoniteLens() : base(TileType<DemoniteLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
-        public override void AddRecipes()
+        public void AddMagikePolymerizeRecipe()
         {
-            CreateRecipe()
-                .AddIngredient<CrystalLens>()
+            PolymerizeRecipe.CreateRecipe<DemoniteLens>(75)
+                .SetMainItem<CrystalLens>()
+                .AddIngredient<GlistentBar>(4)
                 .AddIngredient(ItemID.DemoniteBar, 10)
-                .AddIngredient(ItemID.ShadowScale, 10)
-                .AddTile(TileID.Anvils)
+                .AddIngredient(ItemID.ShadowScale, 6)
                 .Register();
         }
     }

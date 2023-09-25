@@ -1,18 +1,16 @@
-﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Content.Raritys;
+using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Base;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ObjectData;
-using Terraria;
-using Coralite.Core.Prefabs.Items;
-using Coralite.Content.Raritys;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent;
 using static Terraria.ModLoader.ModContent;
-using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core.Systems.MagikeSystem.Base;
 
 namespace Coralite.Content.Items.Magike.RemodelPools
 {
@@ -94,22 +92,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
                     spriteBatch.Draw(texture, drawPos, frame, color, 0f, origin, 1f, effects, 0f);
                 }
 
-                if (pool.containsItem is not null && !pool.containsItem.IsAir)
-                {
-                    int type = pool.containsItem.type;
-                    Texture2D itemTex = TextureAssets.Item[type].Value;
-                    const float TwoPi = (float)Math.PI * 2f;
-                    float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
-                    Vector2 pos = drawPos + new Vector2(0f, offset * 4f - halfHeight * 2);
-                    Rectangle rectangle;
-
-                    if (Main.itemAnimations[type] != null)
-                        rectangle = Main.itemAnimations[type].GetFrame(itemTex, -1);
-                    else
-                        rectangle = itemTex.Frame();
-
-                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle), color * pool.itemAlpha, 0f, rectangle.Size() / 2, pool.itemScale, effects, 0f);
-                }
+                DrawItem(pool, drawPos, spriteBatch);
             }
         }
     }

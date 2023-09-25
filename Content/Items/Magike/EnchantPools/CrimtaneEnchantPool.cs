@@ -1,5 +1,9 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.Items.Magike.BasicLens;
+using Coralite.Content.Items.Materials;
+using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework;
@@ -11,18 +15,18 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.EnchantPools
 {
-    public class CrimtaneEnchantPool : BaseMagikePlaceableItem
+    public class CrimtaneEnchantPool : BaseMagikePlaceableItem, IMagikePolymerizable
     {
         public CrimtaneEnchantPool() : base(TileType<CrimtaneEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
-        public override void AddRecipes()
+        public void AddMagikePolymerizeRecipe()
         {
-            CreateRecipe()
-                .AddIngredient<CrystalEnchantPool>()
+            PolymerizeRecipe.CreateRecipe<CrimtaneEnchantPool>(150)
+                .SetMainItem<CrystalEnchantPool>()
+                .AddIngredient<GlistentBar>(8)
                 .AddIngredient(ItemID.CrimtaneBar, 10)
                 .AddIngredient(ItemID.TissueSample, 10)
-                .AddTile(TileID.Anvils)
                 .Register();
         }
     }

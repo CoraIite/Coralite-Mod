@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.MagikeSystem.Base
 {
-    public abstract class BaseAltarTile:ModTile
+    public abstract class BaseAltarTile : ModTile
     {
         public override string Texture => AssetDirectory.MagikeTiles + Name;
 
@@ -36,6 +36,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
             int y = j - frameY / 18;
             if (MagikeHelper.TryGetEntityWithTopLeft(x, y, out MagikeFactory_PolymerizeAltar altar))
                 altar.Kill(x, y);
+        }
+
+        public override void HitWire(int i, int j)
+        {
+            if (MagikeHelper.TryGetEntity(i, j, out MagikeFactory altar))
+                altar.StartWork();
         }
 
         public override bool RightClick(int i, int j)
@@ -79,30 +85,40 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
             // 根据项目的地点样式拾取图纸上的框架
             Vector2 worldPos = p.ToWorldCoordinates(halfWidth, halfHeight);
-            Color color = Lighting.GetColor(p.X, p.Y);
-
-            //这与我们之前注册的备用磁贴数据有关
-            bool direction = tile.TileFrameY / FrameHeight != 0;
-            SpriteEffects effects = direction ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-
             Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
+
             if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out MagikeFactory_PolymerizeAltar altar))
             {
                 if (altar.containsItem is not null && !altar.containsItem.IsAir)
                 {
                     int type = altar.containsItem.type;
-                    Texture2D itemTex = TextureAssets.Item[type].Value;
-                    const float TwoPi = (float)Math.PI * 2f;
-                    float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
+                    float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi / 5f);
                     Vector2 pos = drawPos + new Vector2(0f, offset * 4f - halfHeight * 2);
-                    Rectangle rectangle;
+
+                    Main.instance.LoadItem(type);
+                    Texture2D itemTex = TextureAssets.Item[type].Value;
+                    Rectangle rectangle2;
 
                     if (Main.itemAnimations[type] != null)
-                        rectangle = Main.itemAnimations[type].GetFrame(itemTex, -1);
+                        rectangle2 = Main.itemAnimations[type].GetFrame(itemTex, -1);
                     else
-                        rectangle = itemTex.Frame();
+                        rectangle2 = itemTex.Frame();
 
-                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle), color, 0f, rectangle.Size() / 2, 1f, effects, 0f);
+                    Vector2 origin = rectangle2.Size() / 2;
+                    float itemScale = 1f;
+                    const float pixelWidth = 16 + 8;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                    const float pixelHeight = 16 * 3;
+                    if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
+                    {
+                        if (rectangle2.Width > pixelWidth)
+                            itemScale = pixelWidth / rectangle2.Width;
+                        else
+                            itemScale = pixelHeight / rectangle2.Height;
+                    }
+
+                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), altar.containsItem.GetAlpha(Color.White), 0f, origin, itemScale, 0, 0f);
+                    if (altar.containsItem.color != default(Color))
+                        spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), altar.containsItem.GetColor(Color.White), 0f, origin, itemScale, 0, 0f);
                 }
             }
         }

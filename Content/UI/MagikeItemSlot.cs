@@ -1,6 +1,5 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
-using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -42,7 +41,6 @@ namespace Coralite.Content.UI
             slot.Left.Set(-26, 0f);
 
             Append(slot);
-
         }
 
         private void CloseButton_OnLeftClick(UIMouseEvent evt, UIElement listeningElement)
@@ -86,6 +84,12 @@ namespace Coralite.Content.UI
     public class SingleItemSlot : UIElement
     {
         public ISingleItemContainer container;
+
+        public SingleItemSlot()
+        {
+            Width.Set(52 * MagikeItemSlotPanel.scale, 0f);
+            Height.Set(52 * MagikeItemSlotPanel.scale, 0f);
+        }
 
         public override void OnInitialize()
         {

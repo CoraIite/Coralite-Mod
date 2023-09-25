@@ -75,7 +75,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         private const int WidthMax = 158;
         private const int HeightMax = 100;
 
-        public static Color BlackSlimeColor=Color.Black;
+        public static Color BlackSlimeColor = Color.Black;
 
         #region tml hooks
 
@@ -113,7 +113,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             //if (!Main.dedServ)
             //    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/？？？");
         }
-        
+
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
@@ -169,13 +169,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<GelThrone>()));
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
             npcLoot.Add(ItemDropRule.BossBag(ItemType<SlimeEmperorSoulBox>()));
-            //npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ItemType<RoyalGelCannon>(), 10));
 
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 
             IItemDropRule[] weaponTypes = new IItemDropRule[] {
                 ItemDropRule.Common(ItemType<SlimeEruption>(), 1, 1, 1),
                 ItemDropRule.Common(ItemType<GelWhip>(), 1, 1, 1),
+                ItemDropRule.Common(ItemType<RoyalClassics>(), 1, 1, 1),
             };
 
             notExpertRule.OnSuccess(new OneFromRulesRule(1, weaponTypes));
@@ -463,7 +464,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             crown.Rotation = Main.rand.NextFloat(-angle, angle);
         }
 
-        private void ScaleToTarget(float targetX,float targetY,float amount,bool whenToStop,Action OnStop)
+        private void ScaleToTarget(float targetX, float targetY, float amount, bool whenToStop, Action OnStop)
         {
             Scale = Vector2.Lerp(Scale, new Vector2(targetX, targetY), amount);
 
@@ -529,8 +530,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             Shoot1 = 0,
             Melee1 = 1,
-            Jump =2,
-            Shoot2 =3,
+            Jump = 2,
+            Shoot2 = 3,
             Melee2 = 4,
         }
 

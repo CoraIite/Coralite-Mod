@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.Items.Materials;
+using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
@@ -16,18 +17,18 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.MultPrisms
 {
-    public class DemoniteTriprism : BaseMagikePlaceableItem
+    public class DemoniteTriprism : BaseMagikePlaceableItem, IMagikePolymerizable
     {
         public DemoniteTriprism() : base(TileType<DemoniteTriprismTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 25)
         { }
 
-        public override void AddRecipes()
+        public void AddMagikePolymerizeRecipe()
         {
-            CreateRecipe()
-                .AddIngredient<Diprism>()
+            PolymerizeRecipe.CreateRecipe<DemoniteTriprism>(50)
+                .SetMainItem<Diprism>()
+                .AddIngredient<GlistentBar>(4)
                 .AddIngredient(ItemID.DemoniteBar, 10)
                 .AddIngredient(ItemID.ShadowScale, 10)
-                .AddTile(TileID.Anvils)
                 .Register();
         }
     }

@@ -332,17 +332,17 @@ Mods: {
 					'''
 			}
 
-			IceyDust: {
+			IceyPowder: {
 				DisplayName: 冰魔粉
 				Tooltip: 含有微弱的冰魔力
 			}
 
-			MagliteDust: {
-				DisplayName: 魔粉
-				Tooltip: 蕴含微弱的魔力
+			MaglitePowder: {
+				// DisplayName: Maglite Powder
+				// Tooltip: Contains a faint magic power
 			}
 
-			SandliteDust: {
+			SandlitePowder: {
 				DisplayName: 沙魔粉
 				Tooltip: 含有微弱的沙漠魔力
 			}
@@ -1307,7 +1307,7 @@ Mods: {
 				Tooltip: 右键打开UI，可放入物品
 			}
 
-			EmpyrosDust: {
+			EmpyrosPowder: {
 				DisplayName: 火魔粉
 				Tooltip: 含有微弱的火魔力
 			}
@@ -1322,7 +1322,7 @@ Mods: {
 				Tooltip: 含有微弱的植生魔能
 			}
 
-			MagicalDust: {
+			MagicalPowder: {
 				DisplayName: 魔粉
 				Tooltip: 含有微弱的魔力
 			}
@@ -1357,12 +1357,79 @@ Mods: {
 			}
 
 			GelWhip: {
-				DisplayName: 凝胶鞭
+				DisplayName: 皇家凝胶鞭
 				Tooltip:
 					'''
 					6 召唤标记伤害
 					让敌人变得黏糊糊的
 					'''
+			}
+
+			VoidCrystal: {
+				DisplayName: 虚空水晶
+				Tooltip:
+					'''
+					激活后将附近物品吸入自身
+					可作为物品发送器连接到其他物品容器
+					'''
+			}
+
+			VoidStaff: {
+				DisplayName: 虚空连接杖
+				Tooltip:
+					'''
+					提取模式：第一次左键选择物品提取器，再次左键选择物品容器
+					发送模式：第一次左键选择物品发送器，再次左键选择物品容器
+					'''
+			}
+
+			RoyalGelCannon: {
+				DisplayName: 皇家凝胶炮
+				Tooltip: 迅速发射凝胶球
+			}
+
+			RoyalClassics: {
+				DisplayName: 皇室宝典
+				Tooltip:
+					'''
+					“记载着史莱姆王国的发展”
+					射出一堆不同的凝胶球
+					'''
+			}
+
+			FreosanInABottle: {
+				DisplayName: 瓶中冻
+				Tooltip: 装着名为“冻”的魔能
+			}
+
+			TemperedBottle: {
+				DisplayName: 钢化瓶
+				Tooltip: ""
+			}
+
+			ConcileInABottle: {
+				DisplayName: 瓶中调和
+				Tooltip: 装着名为“调和”的魔能
+			}
+
+			MetallonInABottle: {
+				DisplayName: 瓶中刚
+				Tooltip: 装着名为“刚”的魔能
+			}
+
+			TalantosInABottle: {
+				DisplayName: 瓶中包容
+				Tooltip: 装着名为“包容”的魔能
+			}
+
+			HeatanInABottle: {
+				DisplayName: 瓶中灼
+				Tooltip: 装着名为“灼”的魔能
+			}
+
+			SteelBar: {
+				DisplayName: 钢锭
+				Tooltip: 来硬的！
 			}
 		}
 
@@ -1660,9 +1727,12 @@ Mods: {
 			FantasyBall.DisplayName: 幻想球
 			FantasySpike.DisplayName: 幻想尖刺
 			IllusionSpikeHell.DisplayName: 梦魇之花
-			// SlimeEruptionBall.DisplayName: Slime Eruption Ball
-			// SlimeEruptionProj.DisplayName: Slime Eruption Proj
-			// GelWhipProj.DisplayName: Gel Whip Proj
+			SlimeEruptionBall.DisplayName: 凝胶球
+			SlimeEruptionProj.DisplayName: 史莱姆弹
+			GelWhipProj.DisplayName: 皇家凝胶鞭
+			GelSpike_Friendly.DisplayName: 凝胶尖刺
+			SmallGelBall_Friendly.DisplayName: 小凝胶球
+			SpikeGelBall_Friendly.DisplayName: 尖刺凝胶球
 		}
 
 		Configs: {
@@ -1788,8 +1858,8 @@ Mods: {
 				}
 
 				NightmarePlantera: {
-					// SpawnInfo: 噩梦占据了曾经被击败的世纪之花的躯体，变成了强大的梦魇之神
-					// Despawn: 梦境消散了
+					SpawnInfo: 噩梦占据了曾经被击败的世纪之花的躯体，变成了强大的梦魇之神
+					Despawn: 梦境消散了
 				}
 			}
 		}

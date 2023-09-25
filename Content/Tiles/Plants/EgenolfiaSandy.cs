@@ -12,7 +12,7 @@ namespace Coralite.Content.Tiles.Plants
 {
     public class EgenolfiaSandy : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
-        public EgenolfiaSandy() : base(AssetDirectory.PlantTiles, 26, 3, ItemType<EgenolfiaBuds>(), ItemType<SandliteDust>()) { }
+        public EgenolfiaSandy() : base(AssetDirectory.PlantTiles, 26, 3, ItemType<EgenolfiaBuds>(), ItemType<SandlitePowder>()) { }
 
         public override void SetStaticDefaults()
         {

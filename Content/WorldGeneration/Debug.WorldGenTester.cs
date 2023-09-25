@@ -1,22 +1,9 @@
 ﻿using Coralite.Core;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria.WorldBuilding;
 using Microsoft.Xna.Framework;
-using Coralite.Content.Tiles.Magike;
-using Conditions = Terraria.WorldBuilding.Conditions;
-using Terraria.GameContent.Generation;
-using Coralite.Content.Items.Magike;
-using Terraria.ObjectData;
-using Coralite.Content.Particles;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using System.Threading.Tasks;
-using Coralite.Content.WorldGeneration.Generators;
+using Terraria;
 using Terraria.DataStructures;
-using Coralite.Content.NPCs.Magike;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.WorldGeneration
 {
@@ -44,8 +31,9 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            Main.dayTime = true;
-            Main.time = 4000;
+            //Main.dayTime = true;
+            //Main.time = 4000;
+            Main.windSpeedTarget = 0.8f;
             return base.CanUseItem(player);
         }
 

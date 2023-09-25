@@ -1,5 +1,9 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.Items.Magike.MultPrisms;
+using Coralite.Content.Items.Materials;
+using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -12,21 +16,20 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Refractors
 {
-    public class CrimtaneRefractor : BaseMagikePlaceableItem
+    public class CrimtaneRefractor : BaseMagikePlaceableItem,IMagikePolymerizable
     {
         public CrimtaneRefractor() : base(TileType<CrimtaneRefractorTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 25)
         { }
 
-        public override void AddRecipes()
+        public void AddMagikePolymerizeRecipe()
         {
-            CreateRecipe()
-                .AddIngredient<CrystalRefractor>()
+            PolymerizeRecipe.CreateRecipe<CrimtaneRefractor>(50)
+                .SetMainItem<CrystalRefractor>()
+                .AddIngredient<GlistentBar>(4)
                 .AddIngredient(ItemID.CrimtaneBar, 10)
                 .AddIngredient(ItemID.TissueSample, 10)
-                .AddTile(TileID.Anvils)
                 .Register();
         }
-
     }
 
     public class CrimtaneRefractorTile : BaseRefractorTile

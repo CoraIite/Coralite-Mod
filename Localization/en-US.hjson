@@ -325,17 +325,17 @@ Mods: {
 				Tooltip: ""
 			}
 
-			IceyDust: {
-				DisplayName: Icey Dust
-				Tooltip: Contains a weak ice magic
+			IceyPowder: {
+				DisplayName: Icey Powder
+				Tooltip: Contains a faint ice magic
 			}
 
-			MagliteDust: {
-				DisplayName: Maglite Dust
+			MaglitePowder: {
+				DisplayName: Maglite Powder
 				Tooltip: Contains a faint magic power
 			}
 
-			SandliteDust: {
+			SandlitePowder: {
 				DisplayName: Sand Magic Powder
 				Tooltip: Contains a faint desert magic
 			}
@@ -1298,9 +1298,9 @@ Mods: {
 				Tooltip: ""
 			}
 
-			EmpyrosDust: {
-				DisplayName: Empyros Dust
-				Tooltip: ""
+			EmpyrosPowder: {
+				DisplayName: Empyros Powder
+				Tooltip: Contains a faint fire power
 			}
 
 			GlistentBar: {
@@ -1313,9 +1313,9 @@ Mods: {
 				Tooltip: ""
 			}
 
-			MagicalDust: {
-				DisplayName: Magical Dust
-				Tooltip: ""
+			MagicalPowder: {
+				DisplayName: Magical Powder
+				Tooltip: Contains a faint magic power
 			}
 
 			MagikePolySymbol: {
@@ -1340,6 +1340,61 @@ Mods: {
 
 			GelWhip: {
 				DisplayName: Gel Whip
+				Tooltip: ""
+			}
+
+			VoidCrystal: {
+				DisplayName: Void Crystal
+				Tooltip: ""
+			}
+
+			VoidStaff: {
+				DisplayName: Void Staff
+				Tooltip: ""
+			}
+
+			RoyalGelCannon: {
+				DisplayName: Royal Gel Cannon
+				Tooltip: ""
+			}
+
+			RoyalClassics: {
+				DisplayName: Royal Classics
+				Tooltip: ""
+			}
+
+			FreosanInABottle: {
+				DisplayName: Freosan in a Bottle
+				Tooltip: ""
+			}
+
+			TemperedBottle: {
+				DisplayName: Tempered Bottle
+				Tooltip: ""
+			}
+
+			ConcileInABottle: {
+				DisplayName: Concile in a Bottle
+				Tooltip: ""
+			}
+
+			MetallonInABottle: {
+				DisplayName: Metallon in a Bottle
+				Tooltip: ""
+			}
+
+			TalantosInABottle: {
+				DisplayName: Talantos in a Bottle
+				Tooltip: ""
+			}
+
+			HeatanInABottle: {
+				DisplayName: Hætan in a Bottle
+				Tooltip: ""
+			}
+
+			SteelBar: {
+				DisplayName: Steel Bar
 				Tooltip: ""
 			}
 		}
@@ -1641,6 +1696,9 @@ Mods: {
 			SlimeEruptionBall.DisplayName: Slime Eruption Ball
 			SlimeEruptionProj.DisplayName: Slime Eruption Proj
 			GelWhipProj.DisplayName: Gel Whip Proj
+			GelSpike_Friendly.DisplayName: Gel Spike_ Friendly
+			SmallGelBall_Friendly.DisplayName: Small Gel Ball_ Friendly
+			SpikeGelBall_Friendly.DisplayName: Spike Gel Ball_ Friendly
 		}
 
 		Configs: {

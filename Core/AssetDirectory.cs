@@ -106,6 +106,8 @@ namespace Coralite.Core
 
         #region 物块部分！
 
+        public const string BigBlank = Tiles + "BigBlank";
+
         public const string Tiles = Assets + "Tiles/";
 
         public const string MushroomTiles = Tiles + "Mushroom/";

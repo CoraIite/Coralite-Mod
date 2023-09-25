@@ -1,4 +1,6 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.Items.Magike.EnchantPools;
+using Coralite.Content.Items.Materials;
+using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
@@ -16,18 +18,18 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.MultPrisms
 {
-    public class CrimtaneTriprism : BaseMagikePlaceableItem
+    public class CrimtaneTriprism : BaseMagikePlaceableItem,IMagikePolymerizable
     {
         public CrimtaneTriprism() : base(TileType<CrimtaneTriprismTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 25)
         { }
 
-        public override void AddRecipes()
+        public void AddMagikePolymerizeRecipe()
         {
-            CreateRecipe()
-                .AddIngredient<Diprism>()
+            PolymerizeRecipe.CreateRecipe<CrimtaneTriprism>(50)
+                .SetMainItem<Diprism>()
+                .AddIngredient<GlistentBar>(4)
                 .AddIngredient(ItemID.CrimtaneBar, 10)
                 .AddIngredient(ItemID.TissueSample, 10)
-                .AddTile(TileID.Anvils)
                 .Register();
         }
     }

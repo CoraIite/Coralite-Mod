@@ -9,21 +9,25 @@ using Coralite.Content.Raritys;
 using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
 using Coralite.Core.Systems.MagikeSystem.Base;
+using Coralite.Content.Items.Magike.BasicLens;
+using Coralite.Content.Items.Materials;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core;
 
 namespace Coralite.Content.Items.Magike.Columns
 {
-    public class DemoniteColumn : BaseMagikePlaceableItem
+    public class DemoniteColumn : BaseMagikePlaceableItem,IMagikePolymerizable
     {
         public DemoniteColumn() : base(TileType<DemoniteColumnTile>(), Item.sellPrice(0, 0, 25, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
-        public override void AddRecipes()
+        public void AddMagikePolymerizeRecipe()
         {
-            CreateRecipe()
-                .AddIngredient<CrystalColumn>()
+            PolymerizeRecipe.CreateRecipe<DemoniteColumn>(75)
+                .SetMainItem<CrystalColumn>()
+                .AddIngredient<GlistentBar>()
                 .AddIngredient(ItemID.DemoniteBar, 10)
-                .AddIngredient(ItemID.ShadowScale, 10)
-                .AddTile(TileID.Anvils)
+                .AddIngredient(ItemID.ShadowScale, 8)
                 .Register();
         }
     }

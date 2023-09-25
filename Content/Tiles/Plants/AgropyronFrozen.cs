@@ -110,7 +110,7 @@ namespace Coralite.Content.Tiles.Plants
                 }
             }
 
-            Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, ItemType<IceyDust>(), Main.rand.Next(3));
+            Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, ItemType<IceyPowder>(), Main.rand.Next(3));
             return false;
         }
     }

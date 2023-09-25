@@ -1,41 +1,41 @@
-﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Content.Items.Magike.MultPrisms;
+using Coralite.Content.Items.Materials;
+using Coralite.Content.Raritys;
+using Coralite.Core;
+using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Base;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ObjectData;
-using Terraria;
-using Coralite.Core;
-using Coralite.Core.Prefabs.Items;
-using Coralite.Content.Raritys;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent;
 using static Terraria.ModLoader.ModContent;
-using Coralite.Core.Systems.MagikeSystem.Base;
 
 namespace Coralite.Content.Items.Magike.RemodelPools
 {
-    public class EvilRemodelPool : BaseMagikePlaceableItem
+    public class EvilRemodelPool : BaseMagikePlaceableItem,IMagikePolymerizable
     {
         public EvilRemodelPool() : base(TileType<EvilRemodelPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
-        public override void AddRecipes()
+        public void AddMagikePolymerizeRecipe()
         {
-            CreateRecipe()
-                .AddIngredient<CrystalRemodelPool>()
+            PolymerizeRecipe.CreateRecipe<EvilRemodelPool>(150)
+                .SetMainItem<CrystalRemodelPool>()
+                .AddIngredient<GlistentBar>(12)
                 .AddIngredient(ItemID.DemoniteBar, 10)
                 .AddIngredient(ItemID.ShadowScale, 10)
-                .AddTile(TileID.Anvils)
                 .Register();
 
-            CreateRecipe()
-                .AddIngredient<CrystalRemodelPool>()
+            PolymerizeRecipe.CreateRecipe<EvilRemodelPool>(150)
+                .SetMainItem<CrystalRemodelPool>()
+                .AddIngredient<GlistentBar>(12)
                 .AddIngredient(ItemID.CrimtaneBar, 10)
                 .AddIngredient(ItemID.TissueSample, 10)
-                .AddTile(TileID.Anvils)
                 .Register();
         }
     }
@@ -103,22 +103,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
                     spriteBatch.Draw(texture, drawPos, frame, color, 0f, origin, 1f, effects, 0f);
                 }
 
-                if (pool.containsItem is not null && !pool.containsItem.IsAir)
-                {
-                    int type = pool.containsItem.type;
-                    Texture2D itemTex = TextureAssets.Item[type].Value;
-                    const float TwoPi = (float)Math.PI * 2f;
-                    float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
-                    Vector2 pos = drawPos + new Vector2(0f, offset * 4f - halfHeight * 2);
-                    Rectangle rectangle;
-
-                    if (Main.itemAnimations[type] != null)
-                        rectangle = Main.itemAnimations[type].GetFrame(itemTex, -1);
-                    else
-                        rectangle = itemTex.Frame();
-
-                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle), color * pool.itemAlpha, 0f, rectangle.Size() / 2, pool.itemScale, effects, 0f);
-                }
+                DrawItem(pool, drawPos, spriteBatch);
             }
         }
     }

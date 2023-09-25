@@ -164,7 +164,9 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public override bool StartWork()
         {
-            if (containsItem is not null && chooseRecipe is not null && !containsItem.IsAir && containsItem.type == chooseRecipe.MainItem.type && containsItem.stack >= chooseRecipe.MainItem.stack )
+            if (workTimer == -1 && containsItem is not null && chooseRecipe is not null && !containsItem.IsAir &&
+                containsItem.type == chooseRecipe.MainItem.type && containsItem.stack >= chooseRecipe.MainItem.stack && magike >= chooseRecipe.magikeCost
+                &&chooseRecipe.CanPolymerize(containsItem))
             {
                 foreach (var item in chooseRecipe.RequiredItems)
                 {
@@ -189,7 +191,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 }
 
                 workTimeMax = perWorkTime * chooseRecipe.RequiredItems.Count;
-                return base.StartWork();
+                workTimer = 0;
+                return true;
             }
 
             return false;
@@ -255,8 +258,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public override void WorkFinish()
         {
-            if (containsItem is not null && !containsItem.IsAir && containsItem.type == chooseRecipe.MainItem.type && 
-                containsItem.stack >= chooseRecipe.MainItem.stack && chooseRecipe is not null&&magike>=chooseRecipe.magikeCost)
+            if (containsItem is not null && !containsItem.IsAir && containsItem.type == chooseRecipe.MainItem.type &&
+                containsItem.stack >= chooseRecipe.MainItem.stack && chooseRecipe is not null && magike >= chooseRecipe.magikeCost)
             {
                 Charge(-chooseRecipe.magikeCost);
                 Vector2 position = Position.ToWorldCoordinates(16, -8);

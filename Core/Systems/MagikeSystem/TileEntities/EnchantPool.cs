@@ -1,4 +1,6 @@
-﻿using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
+﻿using Coralite.Content.UI;
+using Coralite.Core.Loaders;
+using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
@@ -20,6 +22,15 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public abstract Color MainColor { get; }
         public Item ContainsItem { get => containsItem; set => containsItem = value; }
+
+        public override void OnKill()
+        {
+            MagikeItemSlotPanel.visible = false;
+            UILoader.GetUIState<MagikeItemSlotPanel>().Recalculate();
+
+            if (!containsItem.IsAir)
+                Item.NewItem(new EntitySource_TileEntity(this), Position.ToWorldCoordinates(16, -8), containsItem);
+        }
 
         public override bool CanWork()
         {

@@ -1,5 +1,8 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.Items.Materials;
+using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -12,18 +15,18 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Refractors
 {
-    public class DemoniteRefractor : BaseMagikePlaceableItem
+    public class DemoniteRefractor : BaseMagikePlaceableItem,IMagikePolymerizable
     {
         public DemoniteRefractor() : base(TileType<DemoniteRefractorTile>(), Item.sellPrice(0, 0, 25, 0), RarityType<MagicCrystalRarity>(), 25)
         { }
 
-        public override void AddRecipes()
+        public void AddMagikePolymerizeRecipe()
         {
-            CreateRecipe()
-                .AddIngredient<CrystalRefractor>()
+            PolymerizeRecipe.CreateRecipe<DemoniteRefractor>(50)
+                .SetMainItem<CrystalRefractor>()
+                .AddIngredient<GlistentBar>(4)
                 .AddIngredient(ItemID.DemoniteBar, 10)
                 .AddIngredient(ItemID.ShadowScale, 10)
-                .AddTile(TileID.Anvils)
                 .Register();
         }
     }

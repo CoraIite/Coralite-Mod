@@ -2,15 +2,15 @@
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
+using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
-using Terraria;
-using Microsoft.Xna.Framework;
-using System;
 using Terraria.GameContent;
+using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.MagikeSystem.Base
 {
@@ -123,18 +123,33 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
                 if (pool.containsItem is not null && !pool.containsItem.IsAir)
                 {
                     int type = pool.containsItem.type;
-                    Texture2D itemTex = TextureAssets.Item[type].Value;
-                    const float TwoPi = (float)Math.PI * 2f;
-                    float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
+                    float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi / 5f);
                     Vector2 pos = drawPos + new Vector2(0f, offset * 4f - halfHeight * 2);
-                    Rectangle rectangle;
+
+                    Main.instance.LoadItem(type);
+                    Texture2D itemTex = TextureAssets.Item[type].Value;
+                    Rectangle rectangle2;
 
                     if (Main.itemAnimations[type] != null)
-                        rectangle = Main.itemAnimations[type].GetFrame(itemTex, -1);
+                        rectangle2 = Main.itemAnimations[type].GetFrame(itemTex, -1);
                     else
-                        rectangle = itemTex.Frame();
+                        rectangle2 = itemTex.Frame();
 
-                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle), color, 0f, rectangle.Size() / 2, 1f, effects, 0f);
+                    Vector2 origin2 = rectangle2.Size() / 2;
+                    float itemScale = 1f;
+                    const float pixelWidth = 16 * 2;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                    const float pixelHeight = 16 * 3;
+                    if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
+                    {
+                        if (rectangle2.Width > pixelWidth)
+                            itemScale = pixelWidth / rectangle2.Width;
+                        else
+                            itemScale = pixelHeight / rectangle2.Height;
+                    }
+
+                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pool.containsItem.GetAlpha(Color.White), 0f, origin2, itemScale, 0, 0f);
+                    if (pool.containsItem.color != default(Color))
+                        spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pool.containsItem.GetColor(Color.White), 0f, origin2, itemScale, 0, 0f);
                 }
             }
         }

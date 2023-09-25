@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Magike
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.useAnimation = Item.useTime = 15;
+            Item.useAnimation = Item.useTime = 10;
             Item.useTurn = true;
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0,0,10,0);

@@ -94,6 +94,14 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public Action<Item, Item> onPolymerize;
 
+        public bool CanPolymerize(Item item)
+        {
+            if (condition == null)
+                return true;
+
+            return condition.CanCraft(item);
+        }
+
         /// <summary>
         /// 在之后请一定要调用<see cref="SetMainItem"/>
         /// </summary>

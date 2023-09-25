@@ -1,4 +1,6 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Content.UI;
+using Coralite.Core.Loaders;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -12,12 +14,13 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     {
         private int currentCheckItem;
         public readonly int connectLenghMax;
+        public readonly int ItemSiphonLenghMax;
         public readonly int howManyToCheckPerFrame;
         public readonly int sendItemDelay;
 
         public Item containsItem = new Item();
 
-        public Point16 receiverPoint;
+        public Point16 receiverPoint=Point16.NegativeOne;
         public int connectChestIndex = -1;
         /// <summary>
         /// 扩展膜，用于执行特定工作
@@ -31,7 +34,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public abstract Color MainColor { get; }
         public Item ContainsItem { get => containsItem; set => containsItem = value; }
 
-        protected MagikeItemSiphon(int magikeMax, int howManyToCheckPerFrame, int extensionCount, int connectLenghMax, int sendItemCost, int workCost, int maxPerSend,int sendItemDelay) : base(magikeMax, (Main.maxItems / howManyToCheckPerFrame) + 3)
+        protected MagikeItemSiphon(int magikeMax, int howManyToCheckPerFrame, int extensionCount, int connectLenghMax, int sendItemCost, int workCost, int maxPerSend,int sendItemDelay, int itemSiphonLenghMax) : base(magikeMax, (Main.maxItems / howManyToCheckPerFrame) + 3)
         {
             this.howManyToCheckPerFrame = howManyToCheckPerFrame;
             extensions = new Item[extensionCount];
@@ -44,6 +47,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             this.workCost = workCost;
             this.maxPerSend = maxPerSend;
             this.sendItemDelay = sendItemDelay;
+            ItemSiphonLenghMax = itemSiphonLenghMax;
         }
 
         public override void Update()
@@ -52,25 +56,93 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             base.Update();
         }
 
+        public override void OnKill()
+        {
+            MagikeItemSiphonUI.visible = false;
+            UILoader.GetUIState<MagikeItemSiphonUI>().Recalculate();
+
+            if (!containsItem.IsAir)
+                Item.NewItem(new EntitySource_TileEntity(this), Position.ToWorldCoordinates(8, -8), containsItem);
+            foreach (var item in extensions)
+                if (!item.IsAir)
+                    Item.NewItem(new EntitySource_TileEntity(this), Position.ToWorldCoordinates(8, -8), item);
+        }
+
+
         #region 物品吸取工作相关
 
         public override void DuringWork()
         {
             if (currentCheckItem < Main.maxItems)
             {
+                Vector2 selfPosition=GetWorldPosition();
                 for (int i = 0; i < howManyToCheckPerFrame; i++)
                 {
                     //遍历物品，检测是否能够吸取，如果能那么就把物品放入自身中
+                    Item item = Main.item[currentCheckItem];
+                    if (item == null || item.IsAir)
+                    {
+                        currentCheckItem++;
+                        continue;
+                    }
+
+                    if (Vector2.Distance(selfPosition,item.position)>ItemSiphonLenghMax)
+                    {
+                        currentCheckItem++;
+                        continue;
+                    }
+
+                    foreach (var extension in extensions)   //遍历以下扩展膜，如果无法提取物品，那么就继续向下查找
+                        if (extension is IExtensionCoating coating)
+                            if (!coating.CanExtractItem(item))
+                            {
+                                currentCheckItem++;
+                                continue;
+                            }
+
+                    //经过一系列检测，最后判断自身是否有东西，如果type一样才能去放入自身
+                    if (containsItem == null || containsItem.IsAir)
+                    {
+                        containsItem = item.Clone();
+                        Chest.VisualizeChestTransfer(item.position, GetPosition.ToWorldCoordinates(8, 16), item, maxPerSend);
+                        item.TurnToAir();
+                    }
+                    else if (containsItem.type == item.type)
+                        if (containsItem.stack + item.stack > containsItem.maxStack)
+                        {
+                            int sub = containsItem.maxStack - containsItem.stack;
+                            containsItem.stack = containsItem.maxStack;
+                            Chest.VisualizeChestTransfer(item.position, GetPosition.ToWorldCoordinates(8, 16), item, maxPerSend);
+                            item.stack -= sub;
+                        }
+                        else
+                        {
+                            containsItem.stack += item.stack;
+                            Chest.VisualizeChestTransfer(item.position, GetPosition.ToWorldCoordinates(8, 16), item, maxPerSend);
+                            item.TurnToAir();
+                        }
 
                     currentCheckItem++;
                 }
             }
+
+            SpawnDustDuringWork();
         }
+
+        public virtual void SpawnDustDuringWork() { }
 
         public override void WorkFinish()
         {
             Charge(-workCost);
             currentCheckItem = 0;
+        }
+
+        public override bool StartWork()
+        {
+            if (magike>=workCost)
+                return base.StartWork();
+
+            return false;
         }
 
         #endregion
@@ -133,7 +205,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public void OnSendItem()
         {
-            if (containsItem == null || containsItem.IsAir || receiverPoint == Point16.NegativeOne)
+            if (containsItem == null || containsItem.IsAir || receiverPoint == Point16.NegativeOne || magike < sendItemCost)
                 return;
 
             if (connectChestIndex != -1)
@@ -181,49 +253,47 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             }
 
             if (ByPosition.ContainsKey(receiverPoint) && ByPosition[receiverPoint] is ISingleItemContainer container)
-                if (container.CanGetItem())
+            {
+                Item item = container.GetItem();
+
+                if (item == null || item.IsAir)
                 {
-                    Item item = container.GetItem();
-                    if (item == null || item.type != containsItem.type)
-                        return;
-                    if (item.IsAir)
+                    container.ContainsItem = containsItem.Clone();
+                    container.ContainsItem.stack = maxPerSend;
+                    containsItem.stack -= maxPerSend;
+                    if (containsItem.stack < 1)
+                        containsItem.TurnToAir();
+                }
+                else if (item.type == containsItem.type)
+                {
+                    int sub = item.maxStack - item.stack;
+                    if (sub < maxPerSend)
                     {
-                        container.ContainsItem = containsItem.Clone();
-                        container.ContainsItem.stack = maxPerSend;
+                        container.ContainsItem.stack = item.maxStack;
+                        containsItem.stack -= sub;
+                        if (containsItem.stack < 1)
+                            containsItem.TurnToAir();
+                    }
+                    else
+                    {
+                        container.ContainsItem.stack += maxPerSend;
                         containsItem.stack -= maxPerSend;
                         if (containsItem.stack < 1)
                             containsItem.TurnToAir();
                     }
-                    else if (item.type == containsItem.type)
-                    {
-                        int sub = item.maxStack - item.stack;
-                        if (sub < maxPerSend)
-                        {
-                            container.ContainsItem.stack = item.maxStack;
-                            containsItem.stack -= sub;
-                            if (containsItem.stack < 1)
-                                containsItem.TurnToAir();
-                        }
-                        else
-                        {
-                            container.ContainsItem.stack += maxPerSend;
-                            containsItem.stack -= sub;
-                            if (containsItem.stack < 1)
-                                containsItem.TurnToAir();
-                        }
-                    }
-
-                    Charge(-sendItemCost);
-                    SendVisualEffect(receiverPoint);
-
-                    Tile tile = Framing.GetTileSafely(Position);
-                    TileObjectData data = TileObjectData.GetTileData(tile);
-                    int xOffset = data == null ? 16 : data.Width * 8;
-                    int yOffset = data == null ? 24 : data.Height * 8;
-
-                    Vector2 targetPos = receiverPoint.ToWorldCoordinates(xOffset, yOffset);
-                    Chest.VisualizeChestTransfer(GetPosition.ToWorldCoordinates(8, 16), targetPos, item, maxPerSend);
                 }
+
+                Charge(-sendItemCost);
+                SendVisualEffect(receiverPoint);
+
+                Tile tile = Framing.GetTileSafely(Position);
+                TileObjectData data = TileObjectData.GetTileData(tile);
+                int xOffset = data == null ? 16 : data.Width * 8;
+                int yOffset = data == null ? 24 : data.Height * 8;
+
+                Vector2 targetPos = receiverPoint.ToWorldCoordinates(xOffset, yOffset);
+                Chest.VisualizeChestTransfer(GetPosition.ToWorldCoordinates(8, 16), targetPos, container.ContainsItem, maxPerSend);
+            }
         }
 
         public bool ConnectToReceiver(Point16 position)
@@ -247,6 +317,16 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public override void SaveData(TagCompound tag)
         {
             base.SaveData(tag);
+
+            if (receiverPoint != Point16.NegativeOne)
+            {
+                tag.Add("Receiver_x" , receiverPoint.X);
+                tag.Add("Receiver_y", receiverPoint.Y);
+            }
+
+            if (connectChestIndex!=-1)
+                tag.Add("chestIndex", connectChestIndex);
+
             if (!containsItem.IsAir)
                 tag.Add("containsItem", containsItem);
 
@@ -260,6 +340,13 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public override void LoadData(TagCompound tag)
         {
             base.LoadData(tag);
+
+            if (tag.TryGet("Receiver_x" , out short x) && tag.TryGet("Receiver_y" , out short y))
+                receiverPoint = new Point16(x, y);
+
+            if (tag.TryGet("chestIndex", out int index))
+                connectChestIndex = index;
+
             if (tag.TryGet("containsItem", out Item item))
                 containsItem = item;
 

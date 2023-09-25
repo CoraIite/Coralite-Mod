@@ -91,10 +91,14 @@ namespace Coralite.Content.UI
             scale = ModContent.GetInstance<MagikeUIConfig>().UIScale;
             if (remodelPool is not null)
             {
-                if (remodelPool.containsItem is not null && remodelPool.containsItem.IsAir)
+                if (remodelPool.containsItem is null || remodelPool.containsItem.IsAir || remodelPool.chooseRecipe == null)
                 {
                     image.showItem = null;
                     remodelPool.chooseRecipe = null;
+                }
+                else if (remodelPool.chooseRecipe != null)
+                {
+                    image.showItem = remodelPool.chooseRecipe.resultItem;
                 }
 
                 list.Clear();

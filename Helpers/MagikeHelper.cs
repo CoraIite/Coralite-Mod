@@ -36,7 +36,7 @@ namespace Coralite.Helpers
             }
         }
 
-        public static void SpawnDustOnItemSend(int selfWidth, int selfHeight, Point16 Position, Color dustColor, int dustType = DustID.ViciousPowder)
+        public static void SpawnDustOnItemSend(int selfWidth, int selfHeight, Point16 Position, Color dustColor, int dustType = DustID.VilePowder)
         {
             Tile tile = Framing.GetTileSafely(Position);
             TileObjectData data = TileObjectData.GetTileData(tile);
@@ -75,7 +75,6 @@ namespace Coralite.Helpers
 
         /// <summary>
         /// 根据当前物块的帧图获取到物块左上角，之后根据位置尝试获取指定类型的TileEntity
-        /// <para>！！！不考虑物块的动态帧图，有需要请额外写！！！</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="i"></param>
@@ -85,9 +84,17 @@ namespace Coralite.Helpers
         public static bool TryGetEntity<T>(int i, int j, out T entity) where T : class
         {
             Tile tile = Framing.GetTileSafely(i, j);
+            TileObjectData data = TileObjectData.GetTileData(tile);
+            int frameX = tile.TileFrameX;
+            int frameY = tile.TileFrameY;
+            if (data != null)
+            {
+                frameX %= data.Width * 18;
+                frameY %= data.Height * 18;
+            }
 
-            int x = tile.TileFrameX / 18;
-            int y = tile.TileFrameY / 18;
+            int x = frameX / 18;
+            int y = frameY / 18;
             Point16 position = new Point16(i - x, j - y);
 
             if (TileEntity.ByPosition.ContainsKey(position) && TileEntity.ByPosition[position] is T tEntity)

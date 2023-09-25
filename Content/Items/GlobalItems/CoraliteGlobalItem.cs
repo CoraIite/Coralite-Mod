@@ -20,6 +20,9 @@ namespace Coralite.Content.Items.GlobalItems
                     item.rare = ItemRarityID.Orange;
                     item.useTime = item.useAnimation = 8;
                     break;
+                case ItemID.Coal:
+                    item.maxStack = Item.CommonMaxStack;
+                    break;
             }
         }
     }

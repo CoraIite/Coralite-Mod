@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.Gels
         {
             Projectile.width = Projectile.height = 26;
             Projectile.aiStyle = -1;
-            Projectile.penetrate = 5;
+            Projectile.penetrate = 3;
             Projectile.timeLeft = 1200;
 
             Projectile.friendly = true;
@@ -225,8 +225,6 @@ namespace Coralite.Content.Items.Gels
         {
             Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
             var pos = Projectile.Center - Main.screenPosition;
-            if (Main.zenithWorld)
-                lightColor = SlimeEmperor.BlackSlimeColor;
 
             Color color = lightColor * Projectile.localAI[0];
             var frameBox = mainTex.Frame(1, 2, 0, 0);

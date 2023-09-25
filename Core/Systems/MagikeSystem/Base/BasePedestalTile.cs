@@ -74,30 +74,40 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
             // 根据项目的地点样式拾取图纸上的框架
             Vector2 worldPos = p.ToWorldCoordinates(halfWidth, halfHeight);
-            Color color = Lighting.GetColor(p.X, p.Y);
-
-            //这与我们之前注册的备用磁贴数据有关
-            bool direction = tile.TileFrameY / FrameHeight != 0;
-            SpriteEffects effects = direction ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-
             Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
+
             if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out PolymerizePedestal pedestal))
             {
                 if (pedestal.containsItem is not null && !pedestal.containsItem.IsAir)
                 {
                     int type = pedestal.containsItem.type;
+                    float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi / 5f);
+                    Vector2 pos = drawPos + new Vector2(0f, offset * 4f - halfHeight * 1.5f);
+
+                    Main.instance.LoadItem(type);
                     Texture2D itemTex = TextureAssets.Item[type].Value;
-                    const float TwoPi = (float)Math.PI * 2f;
-                    float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
-                    Vector2 pos = drawPos + new Vector2(0f, offset * 4f - halfHeight * 2);
-                    Rectangle rectangle;
+                    Rectangle rectangle2;
 
                     if (Main.itemAnimations[type] != null)
-                        rectangle = Main.itemAnimations[type].GetFrame(itemTex, -1);
+                        rectangle2 = Main.itemAnimations[type].GetFrame(itemTex, -1);
                     else
-                        rectangle = itemTex.Frame();
+                        rectangle2 = itemTex.Frame();
 
-                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle), color, 0f, rectangle.Size() / 2, 1f, effects, 0f);
+                    Vector2 origin = rectangle2.Size() / 2;
+                    float itemScale = 1f;
+                    const float pixelWidth = 16+8 ;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                    const float pixelHeight = 16 *2;
+                    if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
+                    {
+                        if (rectangle2.Width >pixelWidth)
+                            itemScale = pixelWidth / rectangle2.Width;
+                        else
+                            itemScale = pixelHeight / rectangle2.Height;
+                    }
+
+                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pedestal.containsItem.GetAlpha(Color.White), 0f, origin, itemScale, 0, 0f);
+                    if (pedestal.containsItem.color != default(Color))
+                        spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pedestal.containsItem.GetColor(Color.White), 0f,origin, itemScale, 0, 0f);
                 }
             }
         }

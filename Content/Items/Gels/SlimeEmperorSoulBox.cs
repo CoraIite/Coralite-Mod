@@ -4,7 +4,6 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -52,6 +51,7 @@ namespace Coralite.Content.Items.Gels
             IItemDropRule[] weaponTypes = new IItemDropRule[] {
                 ItemDropRule.Common(ModContent.ItemType<SlimeEruption>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<GelWhip>(), 1, 1, 1),
+                ItemDropRule.Common(ModContent.ItemType<RoyalClassics>(), 1, 1, 1),
             };
 
             itemLoot.Add(new OneFromRulesRule(1, weaponTypes));
