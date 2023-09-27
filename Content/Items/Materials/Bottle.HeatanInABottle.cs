@@ -68,5 +68,4 @@ namespace Coralite.Content.Items.Materials
             return false;
         }
     }
-
 }

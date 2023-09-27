@@ -9,14 +9,14 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Materials
 {
-    public class TalantosInABottle : BaseMaterial, IMagikePolymerizable
+    public class MutatusInABottle : BaseMaterial, IMagikePolymerizable
     {
-        public TalantosInABottle() : base(9999, Item.sellPrice(0, 0, 1, 50), ItemRarityID.Cyan, AssetDirectory.Materials) { }
+        public MutatusInABottle() : base(9999, Item.sellPrice(0, 0, 1, 50), ItemRarityID.Purple, AssetDirectory.Materials) { }
 
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.DefaultToPlaceableTile(ModContent.TileType<TalantosInABottleTile>());
+            Item.DefaultToPlaceableTile(ModContent.TileType<MutatusInABottleTile>());
         }
 
         public void AddMagikePolymerizeRecipe()
@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Materials
         }
     }
 
-    public class TalantosInABottleTile : ModTile
+    public class MutatusInABottleTile : ModTile
     {
         public override string Texture => AssetDirectory.Materials + Name;
 
@@ -42,13 +42,13 @@ namespace Coralite.Content.Items.Materials
             Main.tileFrameImportant[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            DustType = DustID.GreenMoss;
+            DustType = DustID.BubbleBurst_Purple;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
             TileObjectData.newTile.LavaDeath = true;
             TileObjectData.addTile(Type);
 
-            AddMapEntry(new Microsoft.Xna.Framework.Color(93,167,155));
+            AddMapEntry(new Microsoft.Xna.Framework.Color(125, 68, 117));
         }
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
@@ -64,4 +64,5 @@ namespace Coralite.Content.Items.Materials
             return false;
         }
     }
+
 }

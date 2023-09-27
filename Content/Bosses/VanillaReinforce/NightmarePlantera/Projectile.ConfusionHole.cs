@@ -180,7 +180,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool PreDraw(ref Color lightColor)
         {
-            spike?.DrawTentacle();
+            spike?.DrawTentacle(spike.perLength * 30 / 200);
             return false;
         }
 

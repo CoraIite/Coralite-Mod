@@ -51,7 +51,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override void AI()
         {
             if (!NightmarePlantera.NightmarePlanteraAlive(out NPC np))
+            {
                 Projectile.Kill();
+                return;
+            }
 
             if (Init)
             {
@@ -96,7 +99,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             {
                                 if ((int)Timer % 60 == 0)
                                 {
-                                    float factor = Timer / (10 * 3);
+                                    float factor = Timer / (60 * 2);
                                     float length = dir.Length() * factor;
 
                                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), originCenter + dir.SafeNormalize(Vector2.Zero) * length,

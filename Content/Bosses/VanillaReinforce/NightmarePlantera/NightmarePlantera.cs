@@ -13,6 +13,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -41,6 +42,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public RotateTentacle[] rotateTentacles;
         public Color tentacleColor;
 
+        public static FlowerParticle[] particles_front;
+        public static FlowerParticle[] particles_ffront;
+
         /// <summary>
         /// 击杀美梦光的数量
         /// </summary>
@@ -49,6 +53,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public static Asset<Texture2D> tentacleTex;
         public static Asset<Texture2D> tentacleFlowTex;
         public static Asset<Texture2D> waterFlowTex;
+        public static Asset<Texture2D> flowerParticleTex;
 
         /// <summary> 自身BOSS的索引，用于方便爪子获取自身/ </summary>
         public static int NPBossIndex = -1;
@@ -110,7 +115,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPC.noTileCollide = true;
             NPC.boss = true;
             //NPC.hide = true;
-            //NPC.BossBar = GetInstance<RediancieBossBar>();
+            if (Main.BigBossProgressBar.TryGetSpecialVanillaBossBar(NPCID.QueenSlimeBoss, out IBigProgressBar bossbar))
+                NPC.BossBar = bossbar;
 
             //BGM：来世-世纪之花
             if (!Main.dedServ)
@@ -198,6 +204,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             BlackBack = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "BlackBack");
             NameLine = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "NPNameLine");
             waterFlowTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "WaterFlow");
+            flowerParticleTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "FlowerParticle");
 
             phantomColors = new Color[7];
             for (int i = 0; i < 7; i++)
@@ -217,6 +224,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             BlackBack = null;
             NameLine = null;
             waterFlowTex = null;
+            flowerParticleTex = null;
         }
 
         public override bool PreKill()

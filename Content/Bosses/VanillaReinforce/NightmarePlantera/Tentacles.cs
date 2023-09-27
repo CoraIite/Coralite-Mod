@@ -250,7 +250,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 Main.graphics.GraphicsDevice.RasterizerState = originalState;
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default,default,default);
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default,null,Main.Transform);
             }
         }
     }

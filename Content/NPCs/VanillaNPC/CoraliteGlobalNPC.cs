@@ -50,6 +50,17 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 case NPCID.DukeFishron:
                     npcLoot.Add(ItemDropRule.ByCondition(new DownedGolemCondition(), ItemType<DukeFishronSkin>(), 1, 3, 5));
                     break;
+                case NPCID.EyeballFlyingFish:
+                case NPCID.ZombieMerman:
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<BloodyOrb>(), 4, 1, 3));
+                    break;
+                case NPCID.GoblinShark:
+                case NPCID.BloodEelHead:
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<BloodyOrb>(), 2, 1, 3));
+                    break;
+                case NPCID.BloodNautilus:
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<BloodyOrb>(), 1, 1, 3));
+                    break;
             }
 
             if (Main.slimeRainNPC[npc.type])

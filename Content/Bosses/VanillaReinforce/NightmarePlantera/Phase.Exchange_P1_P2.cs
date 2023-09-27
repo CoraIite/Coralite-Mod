@@ -41,13 +41,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             if (NCamera.factor < 1)
                             {
                                 NCamera.useScreenMove = true;
-                                NCamera.factor += 0.01f;
+                                NCamera.factor += 0.02f;
                                 if (NCamera.factor > 1)
                                     NCamera.factor = 1;
                             }
                         }
 
-                        if (Timer > 120)
+                        if (Timer > 80)
                         {
                             State++;
                             //产生第一次爆炸
@@ -92,7 +92,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(64f), DustID.VilePowder, dir * Main.rand.NextFloat(8f, 16f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 1.3f));
                         }
 
-                        if (Timer > 240)
+                        if (Timer > 140)
                         {
                             State++;
                             Timer = 0;
@@ -108,17 +108,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 NCamera.ShakeDelay = 3;
                                 NCamera.useShake = true;
                             }
-
                         }
                     }
                     break;
                 case 2: //第二次炸开后产生一大堆的雾
                     {
-                        if (Timer % 8 == 0)
+                        if (Timer % 4 == 0)
                         {
                             SoundStyle st = CoraliteSoundID.FireBallExplosion_Item74;
-                            st.Volume -= 0.2f;
-                            st.Pitch -= 0.2f;
+                            st.Volume -= 0.4f;
+                            st.Pitch -= 0.4f;
                             SoundEngine.PlaySound(st, NPC.Center);
                         }
 
@@ -128,7 +127,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             canDrawWarp = false;
                             warpScale = 0;
                         }
-
 
                         for (int i = 0; i < 3; i++)
                         {
@@ -142,7 +140,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 3f));
                         }
 
-                        if (Timer > 130)
+                        if (Timer > 120)
                         {
                             State++;
                             Timer = 0;
@@ -172,7 +170,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             if (NCamera.factor > 0)
                             {
-                                NCamera.factor -= 0.03f;
+                                NCamera.factor -= 0.02f;
                                 if (NCamera.factor < 0)
                                 {
                                     NCamera.factor = 0;
@@ -182,22 +180,25 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
 
                         if (nameScale < 16)
-                            nameScale +=2f;
+                            nameScale +=1f;
 
-                        if (Timer == 30)
+                        if (Timer > 30&&Timer<40)
                         {
                             SkyManager.Instance.Activate("NightmareSky");
 
                             if (!SkyManager.Instance["NightmareSky"].IsActive())//如果这个天空没激活
                                 SkyManager.Instance.Activate("NightmareSky");
-                            ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;//之后每帧赋予这个倒计时2，如果npc不在了，天空自动关闭
+                            ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
+                            ((NightmareSky)SkyManager.Instance["NightmareSky"]).color = lightPurple;
                         }
 
-                        if (Timer < 100)
+                        ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
+
+                        if (Timer < 120)
                             break;
 
-                        nameAlpha -= 0.1f;
-                        if (nameAlpha < 0.11f)
+                        nameAlpha -= 0.05f;
+                        if (nameAlpha < 0.06f)
                         {
                             nameScale = 0;
                             Main.OnPostDraw -= DrawName;

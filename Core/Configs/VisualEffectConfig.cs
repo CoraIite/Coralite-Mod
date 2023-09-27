@@ -36,6 +36,7 @@ namespace Coralite.Core.Configs
         public bool DrawTrail;
 
         [Header("NightmarePlantera")]
+        [DefaultValue(true)]
         public bool UseNightmareSky;
 
 

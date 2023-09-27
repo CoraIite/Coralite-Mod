@@ -9,24 +9,27 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Materials
 {
-    public class TalantosInABottle : BaseMaterial, IMagikePolymerizable
+    public class LeohtInABottle : BaseMaterial, IMagikePolymerizable
     {
-        public TalantosInABottle() : base(9999, Item.sellPrice(0, 0, 1, 50), ItemRarityID.Cyan, AssetDirectory.Materials) { }
+        public LeohtInABottle() : base(9999, Item.sellPrice(0, 0, 1, 50), ItemRarityID.Orange, AssetDirectory.Materials) { }
 
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.DefaultToPlaceableTile(ModContent.TileType<TalantosInABottleTile>());
+            Item.DefaultToPlaceableTile(ModContent.TileType<LeohtInABottleTile>());
         }
 
         public void AddMagikePolymerizeRecipe()
         {
-            //PolymerizeRecipe.CreateRecipe<FreosanInABottle>(300)
-            //    .SetMainItem<>
+            //PolymerizeRecipe.CreateRecipe<HeatanInABottle>(60)
+            //    .SetMainItem(ItemID.Bottle)
+            //    .AddIngredient(ItemID.LivingFireBlock, 20)
+            //    .AddIngredient<EmpyrosPowder>(7)
+            //    .Register();
         }
     }
 
-    public class TalantosInABottleTile : ModTile
+    public class LeohtInABottleTile : ModTile
     {
         public override string Texture => AssetDirectory.Materials + Name;
 
@@ -42,13 +45,13 @@ namespace Coralite.Content.Items.Materials
             Main.tileFrameImportant[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            DustType = DustID.GreenMoss;
+            DustType = DustID.OrangeTorch;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
             TileObjectData.newTile.LavaDeath = true;
             TileObjectData.addTile(Type);
 
-            AddMapEntry(new Microsoft.Xna.Framework.Color(93,167,155));
+            AddMapEntry(new Microsoft.Xna.Framework.Color(208, 86, 29));
         }
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
@@ -64,4 +67,5 @@ namespace Coralite.Content.Items.Materials
             return false;
         }
     }
+
 }

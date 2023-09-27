@@ -1397,6 +1397,26 @@ Mods: {
 				DisplayName: Steel Bar
 				Tooltip: ""
 			}
+
+			DeorcInABottle: {
+				DisplayName: Deorc In A Bottle
+				Tooltip: ""
+			}
+
+			LeohtInABottle: {
+				DisplayName: Leoht In A Bottle
+				Tooltip: ""
+			}
+
+			BloodyOrb: {
+				DisplayName: Bloody Orb
+				Tooltip: ""
+			}
+
+			MutatusInABottle: {
+				DisplayName: Mutatus In A Bottle
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {

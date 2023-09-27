@@ -579,7 +579,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             {
                                 SonState = Main.rand.Next(1, 3);
                                 NPC.rotation = (Target.Center - NPC.Center).ToRotation();
-                                ShootCount = Main.rand.Next(5, 8);
+                                ShootCount = Main.rand.Next(3, 6);
                             });
                     }
                     break;

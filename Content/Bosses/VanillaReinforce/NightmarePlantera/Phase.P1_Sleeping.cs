@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
+    [AutoloadBossHead]
     public sealed partial class NightmarePlantera
     {
         public void Sleeping_Phase1()
