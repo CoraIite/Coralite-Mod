@@ -28,8 +28,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 if (VisualEffectSystem.UseNightmareSky)
                 {
                     Effect e = Filters.Scene["GlowingMarblingBlack2"].GetShader().Shader;
-                    e.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 10);
-                    e.Parameters["viewRange"].SetValue(0.7f + MathF.Sin(Main.GlobalTimeWrappedHourly / 3) * 0.2f);
+                    e.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 8);
+                    e.Parameters["viewRange"].SetValue(0.7f + MathF.Sin(Main.GlobalTimeWrappedHourly / 2) * 0.2f);
                     e.Parameters["uC1"].SetValue((color * (Timeleft / 100f)).ToVector3());
 
                     spriteBatch.End();
@@ -47,13 +47,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (VisualEffectSystem.UseNightmareSky && flowers != null)
             {
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default);
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, default, default);
 
-                Color c = color;
-                c.A = (byte)(c.A * Timeleft / 100f);
+                float extraAlpha = Timeleft / 100f;
                 foreach (var f in flowers)
                     if (f.active && f.Depth < maxDepth && f.Depth >= minDepth)
-                        f.DrawSelf(spriteBatch, c);
+                        f.DrawSelf(spriteBatch, extraAlpha);
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             }
@@ -79,38 +78,45 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 particleTimer++;
                 if (particleTimer > 10)
                 {
-                    if (Main.rand.NextBool(3))
+                    for (int i = 0; i < flowers.Length; i++)
                     {
-                        for (int i = 0; i < flowers.Length; i++)
+                        FlowerParticle flower = flowers[i];
+                        if (flower.active)
+                            continue;
+
+                        flower.active = true;
+                        flower.Position = Main.screenPosition + Main.rand.NextVector2FromRectangle(new Rectangle(0, 0, Main.screenWidth, Main.screenHeight));
+                        flower.frameX = Main.rand.Next(4);
+                        flower.Depth = Main.rand.NextFloat() * 10f;
+
+                        flower.frameY = 0;
+                        if (flower.Depth > 3f)
                         {
-                            FlowerParticle flower = flowers[i];
-                            if (flower.active)
-                                continue;
-
-                            flower.active = true;
-                            flower.Position = Main.screenPosition + Main.rand.NextVector2FromRectangle(new Rectangle(0, 0, Main.screenWidth, Main.screenHeight));
-                            flower.frameX = Main.rand.Next(4);
-                            flower.Depth = Main.rand.NextFloat() * 10f;
-
-                            flower.frameY = 1;
-                            if (flower.Depth > 5f)
+                            flower.frameY += 1;
+                            if (flower.Depth > 6.5f)
                                 flower.frameY += 1;
-                            flower.Scale = Main.rand.NextFloat(0.5f, 1f) * (1f + flower.Depth * 0.75f);
-                            if (flower.Depth < 1.5f)
-                            {
-                                flower.frameX = 4;
-                            }
-                            flower.Rotation = Main.rand.NextFloat(-MathHelper.TwoPi, MathHelper.TwoPi);
-                            flower.timeleft = 0;
-                            flower.alpha = 0;
-                            break;
                         }
+
+                        flower.Scale = Main.rand.NextFloat(0.5f, 1f) * (1f + flower.Depth*0.75f);
+
+                        flower.Rotation = Main.rand.NextFloat(-MathHelper.TwoPi, MathHelper.TwoPi);
+                        flower.timeleft = 0;
+                        flower.alpha = 0;
+
+                        flower.color = color;
+                        if (Main.rand.NextBool(3))
+                        {
+                            Color c = NightmarePlantera.phantomColors[Main.rand.Next(7)];
+                            c.A = 230;
+                            flower.color = c;
+                        }
+                        break;
                     }
 
                     particleTimer = 0;
                 }
 
-                float speed = 0.01f + Main.LocalPlayer.velocity.Length() / 400;
+                float speed = 0.007f + Main.LocalPlayer.velocity.Length() / 450;
                 for (int i = 0; i < flowers.Length; i++)
                 {
                     FlowerParticle flower = flowers[i];
@@ -158,6 +164,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public int frameY;
 
         public int timeleft;
+        public Color color;
 
         public void Update()
         {
@@ -165,7 +172,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 if (timeleft < 60)
                 {
-                    alpha += (1 / 60f) * Depth / 30f;
+                    alpha += (1 / 60f) * Depth / 20f;
                     break;
                 }
 
@@ -178,7 +185,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 if (alpha > 0)
                 {
-                    alpha -= (1 / 60f) * Depth / 30f;
+                    alpha -= (1 / 60f) * Depth / 20f;
                     if (alpha < 0)
                         alpha = 0;
                 }
@@ -192,7 +199,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             } while (false);
 
-            if (!Helpers.Helper.OnScreen(Position - Main.screenPosition, new Vector2(112, 112) * Scale))
+            if (!OnScreen(Position - Main.screenPosition, new Vector2(112, 112) * Scale))
             {
                 active = false;
                 alpha = 0;
@@ -202,17 +209,25 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             timeleft++;
         }
 
-        public void DrawSelf(SpriteBatch spriteBatch, Color color)
+        public static bool OnScreen(Vector2 pos, Vector2 size)
+        {
+            Rectangle rect = new Rectangle((int)pos.X + 300, (int)pos.Y + 300, (int)size.X, (int)size.Y);
+            return rect.Intersects(new Rectangle(0, 0, Main.screenWidth + 600, Main.screenHeight + 600));
+        }
+
+        public void DrawSelf(SpriteBatch spriteBatch,float extraAlpha)
         {
             Texture2D tex = NightmarePlantera.flowerParticleTex.Value;
             Rectangle frameBox = tex.Frame(5, 3, frameX, frameY);
             Vector2 origin = frameBox.Size() / 2;
             Vector2 pos = Position - Main.screenPosition;
 
-            color.A = (byte)(color.A * alpha);
-            spriteBatch.Draw(tex, pos, frameBox, color, Rotation, origin, Scale, 0, 0);
-            color.A = (byte)(color.A * 0.5f);
-            spriteBatch.Draw(tex, pos, frameBox, color, Rotation, origin, Scale, 0, 0);
+            float a = extraAlpha * alpha;
+            Color c = color;
+            c.A = (byte)(c.A * a);
+            spriteBatch.Draw(tex, pos, frameBox, c, Rotation, origin, Scale, 0, 0);
+            //color.A = (byte)(color.A * 0.5f);
+            //spriteBatch.Draw(tex, pos, frameBox, color, Rotation, origin, Scale, 0, 0);
         }
     }
 }
