@@ -542,7 +542,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                             for (int i = 0; i < 7; i++)
                             {
-                                NPC.NewProjectileInAI<DarkLeaf>(NPC.Center, (ShootCount * 0.14f + i * MathHelper.TwoPi / 7).ToRotationVector2() * 18, damage, 0, ai0: color);
+                                NPC.NewProjectileInAI<DarkLeaf>(NPC.Center, (ShootCount * 0.14f + i * MathHelper.TwoPi / 7).ToRotationVector2() * 10, damage, 0, ai0: color);
                             }
 
                             if (Timer < 60)

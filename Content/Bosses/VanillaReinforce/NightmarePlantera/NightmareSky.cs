@@ -91,12 +91,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             flower.Position = Main.screenPosition + Main.rand.NextVector2FromRectangle(new Rectangle(0, 0, Main.screenWidth, Main.screenHeight));
                             flower.frameX = Main.rand.Next(4);
                             flower.Depth = Main.rand.NextFloat() * 10f;
-                            flower.frameY = 0;
-                            if (flower.Depth > 3.3f)
-                                flower.frameY += 1;
-                            if (flower.Depth > 6.6f)
+
+                            flower.frameY = 1;
+                            if (flower.Depth > 5f)
                                 flower.frameY += 1;
                             flower.Scale = Main.rand.NextFloat(0.5f, 1f) * (1f + flower.Depth * 0.75f);
+                            if (flower.Depth < 1.5f)
+                            {
+                                flower.frameX = 4;
+                            }
                             flower.Rotation = Main.rand.NextFloat(-MathHelper.TwoPi, MathHelper.TwoPi);
                             flower.timeleft = 0;
                             flower.alpha = 0;
@@ -168,10 +171,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 if (timeleft < 440)
                 {
+                    Position += new Vector2(0, -0.5f);
+
                     break;
                 }
 
-                if (alpha>0)
+                if (alpha > 0)
                 {
                     alpha -= (1 / 60f) * Depth / 30f;
                     if (alpha < 0)

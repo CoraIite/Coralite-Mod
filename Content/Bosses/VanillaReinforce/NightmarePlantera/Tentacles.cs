@@ -253,6 +253,61 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default,null,Main.Transform);
             }
         }
+
+        public void DrawTentacle_NoEndBegin(Func<int, float> curve, float warpAmount = -1)
+        {
+            RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
+            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+
+            if (warpAmount == -1)
+            {
+                int width = _extraTexture.Width();
+                if (width == 0)
+                    width = 256;
+                warpAmount = perLength * pointCount / width;
+            }
+
+            for (int i = 0; i < pointCount; i++)
+            {
+                float factor = 1f - i / (float)pointCount;
+                float width = widthFunc.Invoke(factor);
+                Vector2 normal = (rotates[i] + MathHelper.PiOver2).ToRotationVector2();
+                Vector2 Center = points[i] + normal * curve(i);
+
+                Vector2 Top = Center + normal * width;
+                Vector2 Bottom = Center - normal * width;
+
+                var color = colorFunc.Invoke(1 - factor);
+                bars.Add(new(Top.Vec3(), color, new Vector2(factor, 0)));
+                bars.Add(new(Bottom.Vec3(), color, new Vector2(factor, 1)));
+            }
+
+            if (bars.Count > 2)
+            {
+                Effect effect = Filters.Scene["NightmareTentacle"].GetShader().Shader;
+
+                Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+                Matrix view = Main.GameViewMatrix.TransformationMatrix;
+                Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+                effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+                effect.Parameters["uTime"].SetValue(startOffset + Main.GlobalTimeWrappedHourly / 2);
+                effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
+                effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
+                effect.Parameters["flowAlpha"].SetValue(flowAlpha);
+                effect.Parameters["warpAmount"].SetValue(warpAmount);
+
+                Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
+                foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+                {
+                    pass.Apply();
+                    Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                }
+
+                Main.graphics.GraphicsDevice.RasterizerState = originalState;
+            }
+
+        }
     }
 
     /// <summary>

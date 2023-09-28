@@ -113,7 +113,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 2: //第二次炸开后产生一大堆的雾
                     {
-                        if (Timer % 4 == 0)
+                        if (Timer % 8 == 0)
                         {
                             SoundStyle st = CoraliteSoundID.FireBallExplosion_Item74;
                             st.Volume -= 0.4f;
