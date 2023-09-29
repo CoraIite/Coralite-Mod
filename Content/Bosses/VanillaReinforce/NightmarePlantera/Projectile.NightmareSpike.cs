@@ -15,7 +15,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 使用ai2传入刺出的长度<br></br>
     /// 使用速度传入突刺角度
     /// </summary>
-    public class NightmareSpike : BaseNightmareProj, IDrawNonPremultiplied
+    public class NightmareSpike : BaseNightmareProj, IDrawNonPremultiplied,INightmareTentacle
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -171,11 +171,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Timer++;
         }
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            spike?.DrawTentacle();
-            return false;
-        }
+        public override bool PreDraw(ref Color lightColor) => false;
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
@@ -187,6 +183,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 Main.spriteBatch.Draw(warningTex, destination, null, new Color(190, 0, 101, (byte)(warningLineAlpha * 255)), Projectile.rotation, new Vector2(0, warningTex.Height / 2), 0, 0);
             }
+        }
+
+        public void DrawTectacle()
+        {
+            spike?.DrawTentacle_NoEndBegin();
         }
     }
 }

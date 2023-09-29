@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    public class NightmareSlit : BaseNightmareProj
+    public class NightmareSlit : BaseNightmareProj,INightmareTentacle
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -158,10 +158,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(ref Color lightColor) => false;
+
+        public void DrawTectacle()
         {
-            tentacle.DrawTentacle();
-            return false;
+            tentacle.DrawTentacle_NoEndBegin();
         }
     }
 }

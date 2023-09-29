@@ -15,7 +15,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 使用ai1传入追踪的角度<br></br>
     /// 使用ai2传入蓄力时间
     /// </summary>
-    public class HookSlash : ModProjectile
+    public class HookSlash : ModProjectile,INightmareTentacle
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "NightmareHook";
 
@@ -171,8 +171,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool PreDraw(ref Color lightColor)
         {
-            tentacle?.DrawTentacle(i => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
-
             Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
             Rectangle frameBox = mainTex.Frame(1, 4, 0, Projectile.frame);
             Vector2 selforigin = frameBox.Size() / 2;
@@ -180,6 +178,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
            Main. spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, Color.White * 0.8f, Projectile.rotation+MathHelper.PiOver2, selforigin, Projectile.scale, 0, 0);
 
             return false;
+        }
+
+        public void DrawTectacle()
+        {
+            tentacle?.DrawTentacle_NoEndBegin(i => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
         }
     }
 }

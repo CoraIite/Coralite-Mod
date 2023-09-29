@@ -14,9 +14,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 使用ai1传入追踪的角度<br></br>
     /// 使用ai2传入蓄力时间
     /// </summary>
-    public class FantasySpike:ModProjectile
+    public class FantasySpike : ModProjectile
     {
-        public override string Texture =>AssetDirectory.Blank;
+        public override string Texture => AssetDirectory.Blank;
         private FantasyTentacle tentacle;
 
         private Player Owner => Main.player[Projectile.owner];
@@ -41,7 +41,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if ((int)State==1&&NightmarePlantera.FantasyGodAlive(out NPC fg))
+            if ((int)State == 1 && NightmarePlantera.FantasyGodAlive(out NPC fg))
                 return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, fg.Center);
             return false;
         }
@@ -53,7 +53,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
-            if (!NightmarePlantera.NightmarePlanteraAlive(out NPC np)||!NightmarePlantera.FantasyGodAlive(out NPC fg))
+            if (!NightmarePlantera.NightmarePlanteraAlive(out NPC np) || !NightmarePlantera.FantasyGodAlive(out NPC fg))
             {
                 Projectile.Kill();
                 return;
@@ -106,7 +106,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         float rot = dir.ToRotation();
                         Projectile.rotation = Projectile.rotation.AngleLerp(rot, 0.4f);
                         Projectile.Center = Vector2.Lerp(Projectile.Center, fg.Center + dir.SafeNormalize(Vector2.Zero) * length, 0.4f);
-                       
+
                         if (Timer > 32)
                         {
                             State++;
@@ -117,7 +117,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 case 2://收回
                     {
                         Projectile.Center = Vector2.Lerp(Projectile.Center, fg.Center, 0.1f);
-                        if (Timer>20)
+                        if (Timer > 20)
                         {
                             Projectile.Kill();
                         }

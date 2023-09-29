@@ -10,16 +10,25 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public bool useScreenMove;
         public bool useShake;
         public float shakeLevel;
-        public int ShakeDelay;
-        private int ShakeTimer;
+        public int shakeDelay;
+        private int shakeTimer;
         public Vector2 ShakeVec2;
+
+        public void Reset()
+        {
+            useScreenMove = false;
+            useShake = false;
+            factor = 0;
+            shakeLevel = 0;
+            shakeDelay = 0;
+            shakeTimer = 0;
+            ShakeVec2 = Vector2.Zero;
+        }
 
         public override void ResetEffects()
         {
             if (!NightmarePlantera.NightmarePlanteraAlive(out _))
-            {
-                useScreenMove = false;
-            }
+                Reset();
         }
 
         public override void ModifyScreenPosition()
@@ -30,11 +39,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 if (useShake)
                 {
-                    ShakeTimer--;
+                    shakeTimer--;
                     ShakeVec2 *= 0.8f;
-                    if (ShakeTimer <= 0)
+                    if (shakeTimer <= 0)
                     {
-                        ShakeTimer = ShakeDelay;
+                        shakeTimer = shakeDelay;
                         ShakeVec2 = Helpers.Helper.NextVec2Dir() * shakeLevel;
                     }
 

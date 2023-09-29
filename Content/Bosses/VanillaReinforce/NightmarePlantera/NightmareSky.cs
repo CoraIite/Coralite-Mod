@@ -97,19 +97,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 flower.frameY += 1;
                         }
 
-                        flower.Scale = Main.rand.NextFloat(0.5f, 1f) * (1f + flower.Depth*0.75f);
+                        flower.Scale = Main.rand.NextFloat(0.5f, 1f) * (1f + flower.Depth * 0.75f);
 
                         flower.Rotation = Main.rand.NextFloat(-MathHelper.TwoPi, MathHelper.TwoPi);
                         flower.timeleft = 0;
                         flower.alpha = 0;
 
-                        flower.color = color;
+                        Vector3 c1 = Main.rgbToHsl(color);
+                        c1.Z *= flower.Depth / 10f;
+                        flower.color = Main.hslToRgb(c1);
                         if (Main.rand.NextBool(3))
                         {
                             Color c = NightmarePlantera.phantomColors[Main.rand.Next(7)];
                             c.A = 230;
                             flower.color = c;
                         }
+
                         break;
                     }
 

@@ -1719,6 +1719,8 @@ Mods: {
 			GelSpike_Friendly.DisplayName: Gel Spike_ Friendly
 			SmallGelBall_Friendly.DisplayName: Small Gel Ball_ Friendly
 			SpikeGelBall_Friendly.DisplayName: Spike Gel Ball_ Friendly
+			NightmareBurst.DisplayName: Nightmare Burst
+			NightmareEnergy.DisplayName: Nightmare Energy
 		}
 
 		Configs: {

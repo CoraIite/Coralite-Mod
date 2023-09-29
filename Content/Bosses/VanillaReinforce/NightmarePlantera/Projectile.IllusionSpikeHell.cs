@@ -12,7 +12,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// <summary>
     /// 使用ai0传入旋转量，ai1传入旋转方向
     /// </summary>
-    public class IllusionSpikeHell : ModProjectile, IDrawNonPremultiplied
+    public class IllusionSpikeHell : ModProjectile, IDrawNonPremultiplied,INightmareTentacle
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -131,9 +131,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             float selfRot = Projectile.rotation + MathHelper.PiOver2;
 
             Main.spriteBatch.Draw(mainTex, pos, frameBox, Color.White * 0.75f*alpha, selfRot, origin, 1, 0, 0);
-            if (rotateTentacles != null)
-                for (int j = 0; j < 3; j++)
-                    rotateTentacles[j]?.DrawTentacle(i => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly), 2);
 
             return false;
         }
@@ -154,6 +151,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     spriteBatch.Draw(sparkleTex, pos, frameBox, c, rotateTentacles[j].rotation, origin, 0.3f + Main.rand.NextFloat(0, 0.02f), 0, 0);
                 }
             }
+        }
+
+        public void DrawTectacle()
+        {
+            if (rotateTentacles != null)
+                for (int j = 0; j < 3; j++)
+                    rotateTentacles[j]?.DrawTentacle_NoEndBegin(i => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly), 2);
         }
     }
 }

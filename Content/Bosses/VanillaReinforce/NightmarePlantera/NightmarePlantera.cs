@@ -319,9 +319,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPC.TargetClosest(false);
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                //State = (int)AIStates.BodySlam;
+                Phase = (int)AIPhases.OnSpawnAnmi_P0;
                 NPC.netUpdate = true;
             }
+
+            if (Main.LocalPlayer.TryGetModPlayer(out NightmarePlayerCamera NCamera))
+                NCamera.Reset();
+
+            NPC.Center = Target.Center + new Vector2(Target.direction * 300, -200);
+            alpha = 0;
+            NPC.dontTakeDamage = true;
+
+            Helper.PlayPitched("Music/Heart", 1f, 0f, NPC.Center);
+            Music = 0;
         }
 
         public override void AI()
@@ -364,6 +374,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 default:
                     ResetStates();
                     break;
+                case (int)AIPhases.OnSpawnAnmi_P0:
+                    OnSpawnAnmi();
+                    break;
                 case (int)AIPhases.Sleeping_P1:
                     Sleeping_Phase1();
                     break;
@@ -396,6 +409,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public enum AIPhases
         {
+            /// <summary>
+            /// 生成动画
+            /// </summary>
+            OnSpawnAnmi_P0,
             /// <summary> 一阶段：入梦 </summary>
             Sleeping_P1,
             /// <summary> 一阶段和二阶段的切换 </summary>
@@ -617,17 +634,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Vector2 pos = NPC.Center - screenPos;
             float selfRot = NPC.rotation + MathHelper.PiOver2;
 
-            if (rotateTentacles != null)
-            {
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
+            if (rotateTentacles != null)
                 for (int j = 0; j < 3; j++)
                     rotateTentacles[j]?.DrawTentacle_NoEndBegin(i => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly), 2);
 
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default, null, Main.Transform);
-            }
+            for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
+                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is INightmareTentacle)
+                    (Main.projectile[k].ModProjectile as INightmareTentacle).DrawTectacle();
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default, null, Main.Transform);
 
             if (alpha != 1)
             {

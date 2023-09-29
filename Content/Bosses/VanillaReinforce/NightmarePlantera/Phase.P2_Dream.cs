@@ -1621,16 +1621,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     ShootCount = 300;
                     break;
             }
-            //State = MoveCount switch    //测试专用，最后记得注释掉
-            //{
-            //    0 => (int)AIStates.nightmareBite,
-            //    1 => (int)AIStates.rollingThenBite,
-            //    2 => (int)AIStates.spikeBalls,
-            //    3 => (int)AIStates.spikesAndSparkles,
-            //    4 => (int)AIStates.spikeHell,
-            //    5 => (int)AIStates.ghostDash,
-            //    _ => (int)AIStates.hookSlash,
-            //};
 
             //State = (int)AIStates.dreamSparkle;
 

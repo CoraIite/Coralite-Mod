@@ -1753,6 +1753,8 @@ Mods: {
 			GelSpike_Friendly.DisplayName: 凝胶尖刺
 			SmallGelBall_Friendly.DisplayName: 小凝胶球
 			SpikeGelBall_Friendly.DisplayName: 尖刺凝胶球
+			// NightmareBurst.DisplayName: Nightmare Burst
+			// NightmareEnergy.DisplayName: Nightmare Energy
 		}
 
 		Configs: {

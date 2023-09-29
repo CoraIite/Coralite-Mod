@@ -367,9 +367,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
             
             Timer = 0;
+            alpha = 1;
             useMeleeDamage = true;
+            Phase = (int)AIPhases.Sleeping_P1;
             State = (int)AIStates.P1_Idle;
             NPC.netUpdate = true;
+            NPC.dontTakeDamage = false;
+            warpScale = 0;
+            canDrawWarp = false;
+            useDreamMove = false;
+            tentacleColor = lightPurple;
+            DreamMoveCount = 0;
+            fantasyKillCount = 0;
+            tentacleStarFrame = 0;
         }
 
         #endregion

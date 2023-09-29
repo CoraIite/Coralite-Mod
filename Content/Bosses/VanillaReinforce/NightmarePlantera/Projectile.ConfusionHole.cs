@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 
@@ -17,7 +16,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 使用ai2传入刺出的长度<br></br>
     /// 使用velocity传入目标方向
     /// </summary>
-    public class ConfusionHole : BaseNightmareProj, IDrawNonPremultiplied
+    public class ConfusionHole : BaseNightmareProj, IDrawNonPremultiplied,INightmareTentacle
     {
         public override string Texture => AssetDirectory.NightmarePlantera + Name;
 
@@ -123,7 +122,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         float factor = MathHelper.Clamp(Timer / (ChannelTime * 0.5f), 0, 1);
                         warningLineAlpha = Helper.Lerp(1, 0, factor);
-                        if (SelfScale<0.95f)
+                        if (SelfScale < 0.95f)
                         {
                             SelfScale = Helper.Lerp(0, 1, Timer / (ChannelTime * 0.25f));
                         }
@@ -140,7 +139,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             Timer = 0;
                             warningLineAlpha = 0;
 
-                            SoundEngine.PlaySound(CoraliteSoundID.IceMist_Item120, Projectile.Center);
+                            Helper.PlayPitched("Misc/Spike", 0.4f, 0.4f, Projectile.Center);
+                            //SoundEngine.PlaySound(CoraliteSoundID.IceMist_Item120, Projectile.Center);
                         }
                     }
                     break;
@@ -163,7 +163,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 2://逐渐收回并减淡消失
                     {
-                        SpikeTop = Vector2.Lerp(SpikeTop, Projectile.Center, 0.1f);
+                        SpikeTop = Vector2.Lerp(SpikeTop, Projectile.Center, 0.14f);
                         drawColor *= 0.9f;
                         SelfScale *= 0.9f;
                         if (drawColor.A < 10)
@@ -178,11 +178,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Timer++;
         }
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            spike?.DrawTentacle(spike.perLength * 30 / 200);
-            return false;
-        }
+        public override bool PreDraw(ref Color lightColor) => false;
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
@@ -227,5 +223,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         }
 
+        public void DrawTectacle()
+        {
+            spike?.DrawTentacle_NoEndBegin(spike.perLength * 30 / 200);
+        }
     }
 }

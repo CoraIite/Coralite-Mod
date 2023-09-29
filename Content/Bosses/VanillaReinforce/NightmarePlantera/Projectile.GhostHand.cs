@@ -114,7 +114,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Main.spriteBatch.Draw(mainTex, pos, null, Color.Black, Projectile.rotation, origin, 1f, filp, 0);
 
-
             return false;
         }
     }

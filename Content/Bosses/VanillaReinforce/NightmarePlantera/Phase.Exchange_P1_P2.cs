@@ -56,7 +56,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                             NCamera.useShake = true;
                             NCamera.shakeLevel = 3f;
-                            NCamera.ShakeDelay = 2;
+                            NCamera.shakeDelay = 2;
 
                             SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
                             st.Pitch = -0.5f;
@@ -105,7 +105,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             if (Main.LocalPlayer.TryGetModPlayer(out NightmarePlayerCamera NCamera))
                             {
                                 NCamera.shakeLevel = 8f;
-                                NCamera.ShakeDelay = 3;
+                                NCamera.shakeDelay = 3;
                                 NCamera.useShake = true;
                             }
                         }
@@ -140,7 +140,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 3f));
                         }
 
-                        if (Timer > 120)
+                        if (Timer > 100)
                         {
                             State++;
                             Timer = 0;
@@ -182,7 +182,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         if (nameScale < 16)
                             nameScale +=1f;
 
-                        if (Timer > 30&&Timer<40)
+                        if (Timer ==30)
                         {
                             SkyManager.Instance.Activate("NightmareSky");
 
@@ -264,7 +264,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             nameDrawTimer++;
             if (nameDrawTimer > 300)
+            {
+                Main.OnPostDraw -= DrawName;
                 nameAlpha = 0;
+            }
 
             Vector2 basePos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
 
