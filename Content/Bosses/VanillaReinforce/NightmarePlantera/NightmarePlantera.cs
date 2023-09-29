@@ -75,6 +75,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPCID.Sets.TrailingMode[Type] = 1;
             NPCID.Sets.TrailCacheLength[Type] = 12;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
+            NPCID.Sets.MustAlwaysDraw[Type] = true;
             //NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
             //NPCID.Sets.DebuffImmunitySets[Type] = new NPCDebuffImmunityData()

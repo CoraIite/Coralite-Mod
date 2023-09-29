@@ -47,7 +47,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (VisualEffectSystem.UseNightmareSky && flowers != null)
             {
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, default, default);
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default);
 
                 float extraAlpha = Timeleft / 100f;
                 foreach (var f in flowers)
@@ -106,7 +106,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         Vector3 c1 = Main.rgbToHsl(color);
                         c1.Z *= flower.Depth / 10f;
                         flower.color = Main.hslToRgb(c1);
-                        if (Main.rand.NextBool(3))
+                        if (Main.rand.NextBool(4))
                         {
                             Color c = NightmarePlantera.phantomColors[Main.rand.Next(7)];
                             c.A = 230;
@@ -229,8 +229,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Color c = color;
             c.A = (byte)(c.A * a);
             spriteBatch.Draw(tex, pos, frameBox, c, Rotation, origin, Scale, 0, 0);
-            //color.A = (byte)(color.A * 0.5f);
-            //spriteBatch.Draw(tex, pos, frameBox, color, Rotation, origin, Scale, 0, 0);
+            c.A = (byte)(c.A * 0.25f);
+            spriteBatch.Draw(tex, pos, frameBox, c, Rotation, origin, Scale, 0, 0);
         }
     }
 }

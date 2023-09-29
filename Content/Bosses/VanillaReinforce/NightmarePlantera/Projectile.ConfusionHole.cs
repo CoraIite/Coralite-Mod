@@ -139,7 +139,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             Timer = 0;
                             warningLineAlpha = 0;
 
-                            Helper.PlayPitched("Misc/Spike", 0.4f, 0.4f, Projectile.Center);
+                            Helper.PlayPitched("Misc/Spike", 0.5f, 0.4f, Projectile.Center);
                             //SoundEngine.PlaySound(CoraliteSoundID.IceMist_Item120, Projectile.Center);
                         }
                     }

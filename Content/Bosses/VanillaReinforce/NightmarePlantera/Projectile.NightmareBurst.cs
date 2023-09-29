@@ -20,7 +20,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         private Trail trail;
         private float tentacleWidth=40;
 
-        public Color burstColor = NightmarePlantera.nightPurple;
+        public Color burstColor = NightmarePlantera.nightPurple*0.7f;
 
         public override void SetDefaults()
         {
@@ -46,7 +46,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             if (Timer < 20)
             {
-                Projectile.velocity = (BaseRot + Main.rand.NextFloat(-0.5f, 0.5f)).ToRotationVector2() * Projectile.velocity.Length();
+                Projectile.velocity = (BaseRot + Main.rand.NextFloat(-0.3f, 0.3f)).ToRotationVector2() * Projectile.velocity.Length();
 
                 for (int i = 0; i < 19; i++)
                     Projectile.oldPos[i] = Projectile.oldPos[i + 1];
