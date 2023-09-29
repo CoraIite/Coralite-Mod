@@ -390,7 +390,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 case (int)AIPhases.Nightemare_P3:
                     Nightmare_Phase3();
                     break;
-                case (int)AIPhases.WapeUp_P4:
+                case (int)AIPhases.WakeUp_P4:
                     break;
                 case (int)AIPhases.Rampage:
                     Rampage();
@@ -423,7 +423,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             ///<summary> 三阶段：梦魇 </summary>
             Nightemare_P3,
             /// <summary> 尾杀：惊醒 </summary>
-            WapeUp_P4,
+            WakeUp_P4,
             /// <summary> 狂暴 </summary>
             Rampage,
             /// <summary> 秒杀玩家的动作 </summary>
@@ -445,12 +445,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             /// <summary> 噩梦之咬  </summary>
             nightmareBite,
+            /// <summary> 噩梦冲刺 </summary>
+            nightmareDash,
             /// <summary> 转圈圈放弹幕，之后瞬移到另一方向咬下 </summary>
             rollingThenBite,
+            /// <summary> 在玩家下方转圈圈并放弹幕，之后瞬移到玩家面朝方向上方向斜上方咬下 </summary>
+            belowSparkleThenBite,
             /// <summary> 射出一些球球，然后从中刺出尖刺 </summary>
             spikeBalls,
             /// <summary> 爪击 </summary>
             hookSlash,
+
+            smallHook,
             /// <summary> 在一边生成刺+，自身吐出弹幕</summary>
             spikesAndSparkles,
             /// <summary> 旋转并放出尖刺 </summary>

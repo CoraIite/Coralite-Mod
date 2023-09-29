@@ -92,7 +92,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     for (int i = -1; i < 2; i += 2)
                                     {
                                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), originCenter + dir.SafeNormalize(Vector2.Zero) * length,
-                                            new Vector2(i, 0) * 15, ModContent.ProjectileType<DarkLeaf>(), Projectile.damage, 0);
+                                            dir.RotatedBy(i*MathHelper.PiOver2) * 15, ModContent.ProjectileType<DarkLeaf>(), Projectile.damage, 0);
                                     }
 
                                     Vector2 slitCenter = (originCenter + Projectile.Center) / 2;
