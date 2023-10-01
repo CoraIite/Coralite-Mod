@@ -160,7 +160,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool PreDraw(ref Color lightColor) => false;
 
-        public void DrawTectacle()
+        public void DrawTentacle()
         {
             tentacle.DrawTentacle_NoEndBegin();
         }

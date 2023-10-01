@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    public class NightmareBurst:ModProjectile, IDrawPrimitive
+    public class NightmareBurst : ModProjectile, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -18,9 +18,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public ref float Timer => ref Projectile.ai[2];
 
         private Trail trail;
-        private float tentacleWidth=40;
+        private float tentacleWidth = 40;
 
-        public Color burstColor = NightmarePlantera.nightPurple*0.7f;
+        public Color burstColor = NightmarePlantera.nightmareSparkleColor;
 
         public override void SetDefaults()
         {
@@ -28,7 +28,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
-            Projectile.width = Projectile.height = 16;
+            Projectile.width = Projectile.height = 400;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
@@ -58,7 +58,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 tentacleWidth *= 0.96f;
                 burstColor *= 0.95f;
-                if (burstColor.A<10)
+                if (burstColor.A < 10)
                 {
                     Projectile.Kill();
                     return;
@@ -98,7 +98,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 2);
             effect.Parameters["sampleTexture"].SetValue(NightmarePlantera.tentacleTex.Value);
             effect.Parameters["extraTexture"].SetValue(NightmarePlantera.waterFlowTex.Value);
-            effect.Parameters["flowAlpha"].SetValue(0.5f);
+            effect.Parameters["flowAlpha"].SetValue(0.85f);
             effect.Parameters["warpAmount"].SetValue(3);
 
             trail?.Render(effect);

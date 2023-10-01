@@ -286,13 +286,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 Vector2 pos = GetPhase1MousePos();
                 Vector2 dir = NPC.rotation.ToRotationVector2();
-                int damage = Helper.ScaleValueForDiffMode(50, 35, 40, 45);
+                int damage = Helper.ScaleValueForDiffMode(45, 40, 30, 25);
 
                 if (Timer % (shootDelay * 4) == 0)    //每隔3次固定射出4发弹幕
                 {
                     for (int i = -1; i < 2; i++)
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, dir.RotatedBy(i * 0.35f) * 13f,
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, dir.RotatedBy(i * 0.45f) * 13f,
                             ModContent.ProjectileType<DarkLeaf>(), damage, 4, NPC.target, 1);
                     }
                 }
@@ -300,7 +300,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 {
                     Vector2 vel = dir * 13;
                     if (Main.rand.NextBool(3))
-                        vel.RotatedBy(Main.rand.NextFromList(-0.35f, 0.35f));
+                        vel=vel.RotatedBy(Main.rand.NextFromList(-0.35f, 0.35f));
 
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, vel,
                         ModContent.ProjectileType<DarkLeaf>(), damage, 4, NPC.target);

@@ -11,7 +11,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 {
     public class MagikeGlobalProjectile : GlobalProjectile
     {
-        public override void Kill(Projectile projectile, int timeLeft)
+        public override void OnKill(Projectile projectile, int timeLeft)
         {
             if (CoraliteSets.ProjectileExplosible[projectile.type])    //爆炸类弹幕炸到赤玉透镜时
             {

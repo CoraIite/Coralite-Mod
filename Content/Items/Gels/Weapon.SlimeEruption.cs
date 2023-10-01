@@ -214,7 +214,7 @@ namespace Coralite.Content.Items.Gels
             return Projectile.ai[0] > 3;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 10; i++)
                 Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(Projectile.width, Projectile.height), DustID.t_Slime,

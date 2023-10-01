@@ -162,7 +162,7 @@ namespace Coralite.Content.NPCs.Magike
 
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (SoundEngine.TryGetActiveSound(soundSlot, out var sound))
             {

@@ -427,7 +427,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         #endregion
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             yujianAIs = null;
             specialAI = null;

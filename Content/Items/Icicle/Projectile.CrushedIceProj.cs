@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.Icicle
                 Projectile.velocity.Y = 8f;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (VisualEffectSystem.HitEffect_Dusts)
                 for (int i = 0; i < 4; i++)

@@ -76,7 +76,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPCID.Sets.TrailCacheLength[Type] = 12;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.MustAlwaysDraw[Type] = true;
-            //NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
             //NPCID.Sets.DebuffImmunitySets[Type] = new NPCDebuffImmunityData()
             //{
@@ -455,7 +455,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             spikeBalls,
             /// <summary> 爪击 </summary>
             hookSlash,
-
+            /// <summary> 召唤一些小爪子 </summary>
             smallHook,
             /// <summary> 在一边生成刺+，自身吐出弹幕</summary>
             spikesAndSparkles,
@@ -494,9 +494,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public void ResetStates()
         {
-            if (NPC.life> NPC.lifeMax * 3 / 4)
+            if (!haveBeenPhase2 && NPC.life > NPC.lifeMax * 3 / 4)
             {
-                Phase = (int)AIPhases.Dream_P2;
+                Phase = (int)AIPhases.Sleeping_P1;
                 SetPhase1Idle();
                 return;
             }
@@ -650,7 +650,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
                 if (Main.projectile[k].active && Main.projectile[k].ModProjectile is INightmareTentacle)
-                    (Main.projectile[k].ModProjectile as INightmareTentacle).DrawTectacle();
+                    (Main.projectile[k].ModProjectile as INightmareTentacle).DrawTentacle();
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default, null, Main.Transform);

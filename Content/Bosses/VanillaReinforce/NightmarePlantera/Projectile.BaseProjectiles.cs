@@ -26,7 +26,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Vector2 pos = Projectile.Center - Main.screenPosition;
             float rot = Projectile.rotation + MathHelper.PiOver2;
             //中心的闪光
-            Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, ShineColor , ShineColor ,
+            Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, NightmarePlantera.lightPurple , NightmarePlantera.lightPurple,
                 0.5f, 0f, 0.5f, 0.5f, 1f, rot, mainSparkleScale, Vector2.One * 2);
 
             //周围一圈小星星

@@ -794,7 +794,7 @@ namespace Coralite.Content.Items.Icicle
         //        Projectile.oldPos[i] = Projectile.Center;
         //}
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             float rot = Main.rand.NextFloat(MathHelper.TwoPi);
 

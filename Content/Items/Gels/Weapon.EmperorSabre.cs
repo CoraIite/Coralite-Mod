@@ -730,7 +730,7 @@ namespace Coralite.Content.Items.Gels
                 Alpha: 150, newColor: new Color(78, 136, 255, 80), Scale: Main.rand.NextFloat(1f, 1.4f));
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SpawnGelChaser();
         }
@@ -855,7 +855,7 @@ namespace Coralite.Content.Items.Gels
 
         public override bool? CanHitNPC(NPC target) => State > 1 && !target.friendly;
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             //生成粒子
             if (VisualEffectSystem.HitEffect_Dusts)

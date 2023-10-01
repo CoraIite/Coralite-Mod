@@ -32,7 +32,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 Projectile.SpawnTrailDust(DustID.GemRuby, 0.4f);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Main.myPlayer == Projectile.owner)
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner);

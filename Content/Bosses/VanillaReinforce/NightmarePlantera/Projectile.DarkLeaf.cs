@@ -66,7 +66,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Dust d;
             for (int i = 0; i < 8; i++)

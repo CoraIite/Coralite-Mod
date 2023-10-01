@@ -35,6 +35,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
+            if (!NightmarePlantera.NightmarePlanteraAlive(out _))
+            {
+                Projectile.Kill();
+                return;
+            }
             Player owner = Main.player[Projectile.owner];
             if (owner.dead)
             {

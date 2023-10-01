@@ -557,7 +557,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             trail.Positions = Projectile.oldPos;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Main.myPlayer == Projectile.owner)
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + Main.rand.NextVector2CircularEdge(8, 8), Vector2.Zero,

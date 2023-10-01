@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             trail.Positions = Projectile.oldPos;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ArethusaExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner);

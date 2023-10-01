@@ -55,8 +55,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             SoundStyle st = CoraliteSoundID.EmpressOfLight_Summoned_Item161;
             st.Pitch = 0.5f;
             SoundEngine.PlaySound(st, NPC.Center);
-
-
         }
 
         public override void AI()
@@ -159,7 +157,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             if (Timer % 10 == 0)
                             {
                                 Vector2 dir = Helper.NextVec2Dir();
-                                NPC.NewProjectileInAI<FantasyBall>(NPC.Center, dir * 20, 300, 0);
+                                NPC.NewProjectileInAI<FantasyBall>(NPC.Center, dir * 20, 1200, 0);
                                 var modifyer = new PunchCameraModifier(NPC.Center, dir, 8, 10, 10, 1000);
                                 Main.instance.CameraModifiers.Add(modifyer);
                             }
@@ -172,7 +170,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             float angle = (NPC.Center - np.Center).ToRotation() - 2 * 0.3f;
                             for (int i = 0; i < 4; i++)
                             {
-                                NPC.NewProjectileInAI<FantasySpike>(NPC.Center, Vector2.Zero, 600, 0, ai1: angle + i * 0.3f, ai2: 90);
+                                NPC.NewProjectileInAI<FantasySpike>(NPC.Center, Vector2.Zero, 3000, 0, ai1: angle + i * 0.3f, ai2: 90);
                             }
                         }
                     }

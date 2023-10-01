@@ -2,12 +2,14 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    public class HypnotizeFog : ModProjectile
+    public class HypnotizeFog : ModProjectile,IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -21,10 +23,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.timeLeft = 800;
         }
 
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.frame = Main.rand.Next(0, 4);
+        }
+
         public override void AI()
         {
-            Projectile.velocity *= 0.98f;
+            if (Projectile.ai[0]<0.72f)
+                Projectile.ai[0] += 0.05f;
 
+            Projectile.velocity *= 0.98f;
+            Projectile.rotation += Main.rand.NextFloat(-0.08f, 0.12f);
             Color color = Main.rand.Next(0, 2) switch
             {
                 0 => new Color(110, 68, 200),
@@ -37,8 +47,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             if (Main.rand.NextBool(5))
             {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<NightmarePetal>(), newColor: NightmarePlantera.nightPurple);
-                dust.velocity = (dust.position - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2, 5);
+                Dust dust = Dust.NewDustPerfect(Projectile.Center+Main.rand.NextVector2Circular(12,12), ModContent.DustType<NightmarePetal>(), newColor: NightmarePlantera.nightPurple);
+                dust.velocity = (dust.position - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 4);
                 dust.noGravity = true;
             }
         }
@@ -55,5 +65,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
+
+        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
+            Texture2D tex = NightmarePlantera.flowerParticleTex.Value;
+            Rectangle frameBox = tex.Frame(5, 3, Projectile.frame, 1);
+            Vector2 origin = frameBox.Size() / 2;
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+
+            float a = Projectile.ai[0];
+            Color c = NightmarePlantera.nightPurple;
+            c.A = (byte)(c.A * a);
+            spriteBatch.Draw(tex, pos, frameBox, c, Projectile.rotation, origin, 1.5f, 0, 0);
+        }
     }
 }

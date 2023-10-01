@@ -129,7 +129,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             return Projectile.ai[0] > 3;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 10; i++)
             {
@@ -234,7 +234,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 Projectile.velocity.Y = 16;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 10; i++)
             {

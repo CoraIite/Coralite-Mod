@@ -144,7 +144,7 @@ namespace Coralite.Content.Items.Gels
         }
 
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             //生成粒子
             for (int i = 0; i < 10; i++)
@@ -226,7 +226,7 @@ namespace Coralite.Content.Items.Gels
             dust.velocity = -Projectile.velocity * Main.rand.NextFloat(0.1f, 0.3f);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 6; i++)
             {
@@ -405,7 +405,7 @@ namespace Coralite.Content.Items.Gels
             return collisionCount > 3;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 10; i++)
             {

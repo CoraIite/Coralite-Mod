@@ -90,7 +90,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             return false;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (float i = 0f; i < 1f; i += 0.25f)
             {

@@ -75,8 +75,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (canDamage)
             {
                 float length = Projectile.width + distanceToOwner;
-                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + (Projectile.rotation + mouseAngle).ToRotationVector2() * length)
-                    || Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + (Projectile.rotation - mouseAngle).ToRotationVector2() * length);
+                float a = 0f;
+                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + (Projectile.rotation + mouseAngle).ToRotationVector2() * length, 40, ref a)
+                    || Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + (Projectile.rotation - mouseAngle).ToRotationVector2() * length, 40, ref a);
             }
 
             return false;
@@ -189,7 +190,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 }
 
                                 var modifyer = new PunchCameraModifier(Projectile.Center, (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2(),
-                                    20, 14, 12, 1000);
+                                    30, 14, 12, 1000);
                                 Main.instance.CameraModifiers.Add(modifyer);
 
                                 SoundStyle st = CoraliteSoundID.BottleExplosion_Item107;
@@ -204,6 +205,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         if (Timer < ReadyTime + 40)
                         {
                             canDamage = false;
+                            Projectile.rotation = Owner.rotation;
                             mouseAngle = Helper.Lerp(mouseAngle, 0f, 0.05f);
 
                             alpha = Helper.Lerp(alpha, 0f, 0.1f);

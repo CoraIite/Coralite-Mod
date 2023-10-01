@@ -8,7 +8,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
     public class SpikeGelBall : GelBall
     {
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             //生成粒子
             for (int i = 0; i < 10; i++)

@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (VisualEffectSystem.HitEffect_Dusts)
                 for (int i = 0; i < 3; i++)

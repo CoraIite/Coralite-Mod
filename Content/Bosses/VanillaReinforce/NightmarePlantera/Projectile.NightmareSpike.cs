@@ -185,7 +185,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
         }
 
-        public void DrawTectacle()
+        public void DrawTentacle()
         {
             spike?.DrawTentacle_NoEndBegin();
         }

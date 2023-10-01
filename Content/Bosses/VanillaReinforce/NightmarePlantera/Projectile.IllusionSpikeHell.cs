@@ -153,7 +153,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
         }
 
-        public void DrawTectacle()
+        public void DrawTentacle()
         {
             if (rotateTentacles != null)
                 for (int j = 0; j < 3; j++)

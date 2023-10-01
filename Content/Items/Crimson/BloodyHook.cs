@@ -386,7 +386,7 @@ namespace Coralite.Content.Items.Crimson
             return false;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Main.netMode != NetmodeID.Server && (int)HookState < 3 && (int)HookState > -1)
             {

@@ -180,7 +180,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             return false;
         }
 
-        public void DrawTectacle()
+        public void DrawTentacle()
         {
             tentacle?.DrawTentacle_NoEndBegin(i => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
         }

@@ -47,8 +47,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             if (Init)
             {
-                int c = Math.Clamp((int)ColorState, 0, 6);
-                drawColor = NightmarePlantera.phantomColors[c];
+                if (ColorState<0)
+                    drawColor = NightmarePlantera.nightmareSparkleColor;
+                else
+                {
+                    int c = Math.Clamp((int)ColorState, 0, 6);
+                    drawColor = NightmarePlantera.phantomColors[c];
+                }
                 secondPos = Projectile.Center;
                 Init = false;
                 Projectile.rotation = Projectile.velocity.ToRotation();
@@ -85,6 +90,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         if (dir.Length() < 30)
                         {
+                            Projectile.velocity *= 0;
                             State++;
                             Projectile.Center = np.Center;
                         }
@@ -108,9 +114,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool PreDraw(ref Color lightColor) => false;
 
-        public void DrawTectacle()
+        public void DrawTentacle()
         {
-            tentacle?.DrawTentacle_NoEndBegin(i => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
+            tentacle?.DrawTentacle_NoEndBegin(i => 2 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
         }
     }
 }

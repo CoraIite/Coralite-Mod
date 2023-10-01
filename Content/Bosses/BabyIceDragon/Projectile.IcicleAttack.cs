@@ -30,7 +30,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             Projectile.velocity.Y = 14f;
       }
 
-      public override void Kill(int timeLeft)
+      public override void OnKill(int timeLeft)
       {
          for (int i = 0; i < 4; i++)
          {

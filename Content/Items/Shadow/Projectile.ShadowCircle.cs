@@ -686,7 +686,7 @@ namespace Coralite.Content.Items.Shadow
             ProjectileID.Sets.TrailCacheLength[Type] = 10;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (VisualEffectSystem.HitEffect_Dusts)
                 for (int i = 0; i < 8; i++)

@@ -38,7 +38,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             dust.velocity = -Projectile.velocity * Main.rand.NextFloat(0.1f, 0.3f);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 6; i++)
             {

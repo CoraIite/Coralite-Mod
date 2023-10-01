@@ -57,7 +57,7 @@ namespace Coralite.Content.Items.Icicle
             return Projectile.ai[0] < 0.5f;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (VisualEffectSystem.HitEffect_Dusts)
                 for (int i = 0; i < 6; i++)

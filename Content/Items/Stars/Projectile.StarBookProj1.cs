@@ -286,7 +286,7 @@ namespace Coralite.Content.Items.Stars
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (VisualEffectSystem.HitEffect_SpecialParticles)
             {

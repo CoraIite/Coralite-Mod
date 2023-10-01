@@ -647,7 +647,7 @@ namespace Coralite.Content.Items.Misc_Magic
 
         #endregion
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (VisualEffectSystem.HitEffect_SpecialParticles)
                 for (int i = 0; i < 4; i++)

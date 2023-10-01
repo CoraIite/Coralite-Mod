@@ -89,10 +89,20 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     float factor = Timer / (9 * 15);
                                     float length = dir.Length() * factor;
 
+                                    Vector2 targetDirection = dir.SafeNormalize(Vector2.Zero);
                                     for (int i = -1; i < 2; i += 2)
                                     {
-                                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), originCenter + dir.SafeNormalize(Vector2.Zero) * length,
-                                            dir.RotatedBy(i*MathHelper.PiOver2) * 15, ModContent.ProjectileType<DarkLeaf>(), Projectile.damage, 0);
+                                        Vector2 position = originCenter + targetDirection * length;
+                                        Vector2 velDir = targetDirection.RotatedBy(i * MathHelper.PiOver2);
+                                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), position,
+                                           velDir * 15, ModContent.ProjectileType<DarkLeaf>(), Projectile.damage, 0);
+
+                                        for (int j = 0; j < 5; j++)
+                                        {
+                                            Dust dust = Dust.NewDustPerfect(position, ModContent.DustType<NightmarePetal>(),
+                                                    velDir.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(2, 10), newColor: NightmarePlantera.nightPurple);
+                                            dust.noGravity = true;
+                                        }
                                     }
 
                                     Vector2 slitCenter = (originCenter + Projectile.Center) / 2;
@@ -109,6 +119,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             }
 
                             tencleColor *= 0.95f;
+                            tentacleWidth *= 0.95f;
                             if (tencleColor.A < 20)
                                 Projectile.Kill();
                         } while (false);
@@ -160,7 +171,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool PreDraw(ref Color lightColor) => false;
 
-        public void DrawTectacle()
+        public void DrawTentacle()
         {
             tentacle.DrawTentacle_NoEndBegin();
         }

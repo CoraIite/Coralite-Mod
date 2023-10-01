@@ -289,7 +289,7 @@ namespace Coralite.Content.Items.Corruption
             Projectile.velocity = -Projectile.rotation.ToRotationVector2() * 0.4f;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Vector2 dir = -Projectile.rotation.ToRotationVector2();
             for (int i = 0; i < 6; i++)
@@ -524,7 +524,7 @@ namespace Coralite.Content.Items.Corruption
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Vector2 dir = -Projectile.rotation.ToRotationVector2();
             for (int i = 0; i < 4; i++)

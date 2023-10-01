@@ -259,7 +259,7 @@ namespace Coralite.Content.Items.Gels
 
         public override void SetStaticDefaults()
         {
-            BuffID.Sets.IsAnNPCWhipDebuff[Type] = true;
+            BuffID.Sets.IsATagBuff[Type] = true;
         }
     }
 }
