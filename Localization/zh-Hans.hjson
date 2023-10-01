@@ -1755,6 +1755,8 @@ Mods: {
 			SpikeGelBall_Friendly.DisplayName: 尖刺凝胶球
 			// NightmareBurst.DisplayName: Nightmare Burst
 			// NightmareEnergy.DisplayName: Nightmare Energy
+			// NightmareBat.DisplayName: Nightmare Bat
+			// NightmareCrow.DisplayName: Nightmare Crow
 		}
 
 		Configs: {

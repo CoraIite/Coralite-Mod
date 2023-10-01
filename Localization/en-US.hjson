@@ -1721,6 +1721,8 @@ Mods: {
 			SpikeGelBall_Friendly.DisplayName: Spike Gel Ball_ Friendly
 			NightmareBurst.DisplayName: Nightmare Burst
 			NightmareEnergy.DisplayName: Nightmare Energy
+			NightmareBat.DisplayName: Nightmare Bat
+			NightmareCrow.DisplayName: Nightmare Crow
 		}
 
 		Configs: {

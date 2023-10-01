@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.Misc_Shoot;
+using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
@@ -191,7 +192,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (projectile.type == ProjectileID.FinalFractal)
             {
                 modifiers.SourceDamage *= 0.6f;
+                return;
             }
+
+            if (projectile.type == ModContent.ProjectileType<HyacinthBullet>() || projectile.type == ModContent.ProjectileType<HyacinthBullet2>())
+            {
+                modifiers.SourceDamage *= 0.7f;
+                return;
+            }
+
+            modifiers.ModifyHitInfo += Modifiers_ModifyHitInfo;
+        }
+
+        private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
+        {
+            if (info.Damage > 5000)
+                info.Damage = 100;
         }
 
         public override void Load()
@@ -279,7 +295,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
-            if (projectile.type==ModContent.ProjectileType<FantasyBall>()|| projectile.type == ModContent.ProjectileType<FantasySpike>())
+            if (projectile.type == ModContent.ProjectileType<FantasyBall>() || projectile.type == ModContent.ProjectileType<FantasySpike>())
             {
                 NPC.rotation += Main.rand.NextFloat(-0.2f, 0.2f);
             }
@@ -453,6 +469,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             belowSparkleThenBite,
             /// <summary> 射出一些球球，然后从中刺出尖刺 </summary>
             spikeBalls,
+            /// <summary> 放出蝙蝠限制玩家走位，同时射出蝙蝠和绕圈的乌鸦 </summary>
+            batsAndCrows,
             /// <summary> 爪击 </summary>
             hookSlash,
             /// <summary> 召唤一些小爪子 </summary>

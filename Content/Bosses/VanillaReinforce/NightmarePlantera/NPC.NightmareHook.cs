@@ -29,29 +29,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public ref float Timer => ref NPC.localAI[0];
         public ref float State => ref NPC.ai[3];
-        //public static Asset<Texture2D> FlowTex;
-        //public static Asset<Texture2D> GlowTex;
-        //public static Asset<Texture2D> BodyTex;
-
-        //public override void Load()
-        //{
-        //    if (Main.dedServ)
-        //        return;
-
-        //    FlowTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserTrail");
-        //    GlowTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserCore");
-        //    BodyTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserBody");
-        //}
-
-        //public override void Unload()
-        //{
-        //    if (Main.dedServ)
-        //        return;
-
-        //    FlowTex = null;
-        //    GlowTex = null;
-        //    BodyTex = null;
-        //}
 
         public override void SetStaticDefaults()
         {

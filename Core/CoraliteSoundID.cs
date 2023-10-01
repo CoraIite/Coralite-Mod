@@ -552,7 +552,7 @@ namespace Coralite.Core
         /// <summary>也是类似肉体的受击音效，例如小白龙，冰霜女皇等</summary>
         public static SoundStyle Fleshy2_NPCHit7 => SoundID.NPCHit7;
 
-        /// <summary> 血肉之墙 a.k.a 肉山的受击音效 </summary>
+        /// <summary> 血肉之墙 / 肉山的受击音效 </summary>
         public static SoundStyle WallOfFlesh_NPCHit8 => SoundID.NPCHit8;
 
         /// <summary> 类似血肉的受击音效，克苏鲁之脑，飞眼怪（Creeper?），肉山及肉山召唤的蠕虫的受击音效</summary>
@@ -789,7 +789,7 @@ namespace Coralite.Core
         /// <summary> 幻灵/幽灵的死亡音效（砸恶魔祭坛出一堆的那个）</summary>
         public static SoundStyle Wraith_NPCDeath52 => SoundID.NPCDeath52;
 
-        /// <summary> 蝾螈 a.k.a 鸭鸭怪的死亡音效</summary>
+        /// <summary> 蝾螈 / 鸭鸭怪的死亡音效</summary>
         public static SoundStyle Salamander_NPCDeath53 => SoundID.NPCDeath53;
 
         /// <summary> 暗影焰幻鬼的死亡音效（哥布林巫师/召唤师召唤出来的） </summary>
@@ -802,7 +802,7 @@ namespace Coralite.Core
         public static SoundStyle WindyBalloon_NPCDeath63 => SoundID.NPCDeath63;
 
         /// <summary> 1.4.4蜂后的死亡音效 </summary>
-        //public static SoundStyle QueenBee_NPCDeath66 => SoundID.NPCDeath66;
+        public static SoundStyle QueenBee_NPCDeath66 => SoundID.NPCDeath66;
 
         #endregion
         #region NPC其他音效

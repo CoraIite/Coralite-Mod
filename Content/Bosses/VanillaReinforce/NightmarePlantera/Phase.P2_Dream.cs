@@ -8,7 +8,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
@@ -36,7 +35,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
 
             //设置三条拖尾
-
             rotateTentacles ??= new RotateTentacle[3]
             {
                 new RotateTentacle(20, TentacleColor, TentacleWidth, tentacleTex, waterFlowTex)
@@ -112,6 +110,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         SpikeBall();
                         NormallyUpdateTentacle();
                         break;
+                    case (int)AIStates.batsAndCrows:
+                        BatsAndCrows();
+                        NormallyUpdateTentacle();
+                        break;
                     case (int)AIStates.hookSlash:
                         NormallySetTentacle();
                         HookSlash();
@@ -119,7 +121,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         break;
                     case (int)AIStates.smallHook:
                         NormallySetTentacle();
-                        HookSlash();
+                        SmallHook();
                         NormallyUpdateTentacle();
                         break;
                     case (int)AIStates.spikesAndSparkles:
@@ -338,25 +340,33 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             NPC.velocity = (pos - NPC.Center).SafeNormalize(Vector2.One) * 48;
                             NPC.rotation = NPC.velocity.ToRotation();
                             Timer = 0;
-                            State++;
+                            SonState++;
                             useMeleeDamage = false;
                         }
                     }
                     break;
                 case 3: //咬完了之后的后摇阶段
                     {
-                        NPC.velocity *= 0.9f;
-                        DoRotation(0.04f);
+                        if (Timer>12)
+                        {
+                            NPC.velocity *= 0.9f;
+                            DoRotation(0.04f);
+                        }
 
                         Vector2 dir = -NPC.velocity.SafeNormalize(Vector2.Zero);
                         for (int i = 0; i < 5; i++)
                         {
-                            Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<NightmarePetal>(), newColor: nightPurple);
-                            dust.velocity = dir.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * Main.rand.NextFloat(1, 8);
+                            Color c = Main.rand.Next(0, 2) switch
+                            {
+                                0 => nightPurple,
+                                _=>lightPurple,
+                            };
+                            Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<NightmarePetal>(), newColor: c);
+                            dust.velocity = dir.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * Main.rand.NextFloat(0.5f, 8);
                             dust.noGravity = true;
                         }
 
-                        if (Timer > 10)
+                        if (Timer > 20)
                         {
                             SetPhase2States();
                         }
@@ -381,7 +391,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             {
                                 SonState++;
                                 NPC.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
-                            });
+                            }, fadeTime: 30);
 
                         NormallySetTentacle();
                     }
@@ -572,7 +582,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         if (Timer < RollingTime)//追踪玩家底部的位置，并左右摇晃
                         {
-                            Vector2 center2 = Target.Center + new Vector2(420 * MathF.Sin(24 * Timer / (float)RollingTime), 460);
+                            Vector2 center2 = Target.Center + new Vector2(620 * MathF.Sin(24 * Timer / (float)RollingTime), 460);
                             Vector2 dir3 = center2 - center;
 
                             float velRot = NPC.velocity.ToRotation();
@@ -593,7 +603,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         else
                             NPC.velocity *= 0.95f;
 
-                        int delay = 45 - (int)(rotFactor * 20);
+                        int delay = 35 - (int)(rotFactor * 20);
                         if (Timer % delay == 0)
                         {
                             int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
@@ -786,6 +796,231 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
 
                         if (Timer > 250)
+                            SetPhase2States();
+                    }
+                    break;
+            }
+
+            Timer++;
+        }
+
+        public void BatsAndCrows()
+        {
+            switch ((int)SonState)
+            {
+                default:
+                    SetPhase2States();
+                    break;
+                case 0://瞬移到玩家面前
+                    {
+                        NormallySetTentacle();
+                        Phase2Fade(() =>
+                        {
+                            Vector2 pos = Target.Center;
+
+                            if (Math.Abs(Target.velocity.X) < 0.1f && Math.Abs(Target.velocity.Y) < 0.1f)
+                                return pos + new Vector2(Target.direction, 0) * Main.rand.NextFloat(600, 800);
+                            else
+                                return pos + Target.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(600, 800);
+                        }, () =>
+                        {
+                            SonState++;
+                        }, PostTeleport: () =>
+                        {
+                            Vector2 pos = Target.Center;
+                            NPC.rotation = (pos - NPC.Center).ToRotation();
+                            ShootCount = (NPC.Center - pos).ToRotation();
+                        });
+                    }
+                    break;
+                case 1://在玩家身边绕圈，并向左右方向射出蝙蝠，同时瞄准玩家射出蝙蝠，偶尔射出绕自身旋转的乌鸦弹幕
+                    {
+                        NormallySetTentacle();
+                        CircleMovement(650, 56, 0.7f, 550, 0.34f, ShootCount);
+                        DoRotation(0.3f);
+
+                        if (Timer % 10 == 0)
+                        {
+                            float targetRot = (Target.Center - NPC.Center).ToRotation();
+                            int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
+                            for (int i = -1; i < 2; i+=2)
+                            {
+                                NPC.NewProjectileInAI<NightmareBat>(GetPhase1MousePos(), (targetRot + i * 0.6f + Main.rand.NextFloat(-0.04f, 0.04f)).ToRotationVector2()*18
+                                    , damage, 1, -1, -1, 0);
+                            }
+
+                            SoundStyle st = CoraliteSoundID.Fairy_NPCHit5;
+
+                            st.Pitch += 0.2f;
+                            SoundEngine.PlaySound(st, NPC.Center);
+                        }
+
+                        if (Timer > 20 && Timer % 28 == 0)//生成瞄准玩家射出的蝙蝠弹幕
+                        {
+                            float targetRot = (Target.Center - NPC.Center).ToRotation()+Main.rand.NextFloat(-0.55f, 0.55f);
+                            int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
+                            NPC.NewProjectileInAI<NightmareBat>(GetPhase1MousePos(), targetRot.ToRotationVector2() * 12
+                                , damage, 1, -1, -1, 0);
+                        }
+
+                        if (Timer > 40 && Timer % 32 == 0)//生成绕圈圈的渡鸦弹幕
+                        {
+                            float rot = Main.rand.NextFloat(MathHelper.TwoPi);
+                            int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
+                            for (int i = 0; i < 3; i++)
+                            {
+                                NPC.NewProjectileInAI<NightmareCrow>(GetPhase1MousePos(), (rot + i * MathHelper.TwoPi / 3).ToRotationVector2() * 12
+                                    , damage, 1, -1, -2, 0, Main.rand.NextFromList(-1, 1)*0.01f);
+                            }
+
+                            SoundStyle st = CoraliteSoundID.BloodThron_Item113;
+                            st.Pitch += 0.2f;
+                            SoundEngine.PlaySound(st, NPC.Center);
+                        }
+
+                        const int RollingTime = 360;
+                        const int fadeTime = 45;
+
+                        if (Timer > RollingTime - fadeTime)
+                        {
+                            if (Timer == RollingTime - fadeTime)
+                                SoundEngine.PlaySound(CoraliteSoundID.ShieldDestroyed_NPCDeath58, NPC.Center);
+
+                            if (alpha > 0)
+                            {
+                                alpha -= 1 / (float)fadeTime;
+                                if (alpha < 0)
+                                    alpha = 0;
+                            }
+
+                            float factor = Timer / (float)fadeTime;
+                            canDrawWarp = true;
+                            warpScale = MathF.Sin(factor * MathHelper.Pi) * 2f;
+
+                            if (Timer == RollingTime - fadeTime * 3 / 4)
+                            {
+                                for (int i = 0; i < 16; i++)
+                                {
+                                    Vector2 dir2 = Helper.NextVec2Dir();
+                                    Dust dust = Dust.NewDustPerfect(NPC.Center + dir2 * Main.rand.Next(0, 64), DustType<NightmareStar>(),
+                                        dir2 * Main.rand.NextFloat(2f, 6f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 4f));
+                                    dust.rotation = dir2.ToRotation() + MathHelper.PiOver2;
+                                }
+
+                                SoundStyle st = CoraliteSoundID.NoUse_SuperMagicShoot_Item68;
+                                st.Pitch = -1;
+                                SoundEngine.PlaySound(st, NPC.Center);
+                            }
+                        }
+
+                        if (Timer > RollingTime)
+                        {
+                            SonState++;
+                            NPC.velocity = new Vector2(0, 48);
+                            alpha = 1;
+                            Timer = 0;
+                            canDrawWarp = false;
+
+                            int direction = Math.Sign(Target.Center.X - NPC.Center.X);
+                            NPC.Center = Target.Center + new Vector2(direction * Main.rand.Next(400, 600), Main.rand.Next(-200, 200));
+                            NPC.rotation = MathHelper.PiOver2;
+
+                            for (int i = 0; i < 3; i++)
+                            {
+                                RotateTentacle tentacle = rotateTentacles[i];
+                                tentacle.pos = tentacle.targetPos = NPC.Center;
+                                tentacle.rotation = NPC.rotation;
+                            }
+
+                            ShootCount = (NPC.Center - Target.Center).ToRotation();
+
+                            //生成一圈蝙蝠
+                            int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
+                            for (int i = 0; i < 7; i++)
+                            {
+                                NPC.NewProjectileInAI<NightmareBat>(GetPhase1MousePos(), (NPC.rotation + i * MathHelper.TwoPi / 7).ToRotationVector2() * 13
+                                    , damage, 1, -1, -2, 0, 1);
+                            }
+
+                            SoundStyle st = CoraliteSoundID.BloodThron_Item113;
+                            st.Pitch += 0.2f;
+                            SoundEngine.PlaySound(st, NPC.Center);
+                        }
+                    }
+                    break;
+                case 2://瞬移到玩家另外一边并射出旋转的蝙蝠弹幕
+                    {
+                        Vector2 center = NPC.Center;
+                        const float RollingTime = 120f;
+                        float factor2 = Timer / RollingTime;
+
+                        float rotFactor = Math.Clamp(1 - Timer / RollingTime, 0, 1);
+                        NPC.rotation += rotFactor * 0.35f;
+
+                        CircleMovement(480, 40, 0.4f, 720, 0.14f, ShootCount);
+
+                        Color color = Main.rand.Next(0, 2) switch
+                        {
+                            0 => new Color(110, 68, 200),
+                            _ => new Color(122, 110, 134)
+                        };
+
+                        Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir() * Main.rand.NextFloat(2, 10f),
+                            CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1f));
+
+                        for (int i = 0; i < 3; i++)
+                        {
+                            RotateTentacle tentacle = rotateTentacles[i];
+                            float targetRot = factor2 * MathHelper.TwoPi * 3 + i * MathHelper.TwoPi / 3;
+                            Vector2 selfPos = Vector2.Lerp(tentacle.pos,
+                                center + 170 * targetRot.ToRotationVector2(), 0.2f);
+                            tentacle.SetValue(selfPos, NPC.Center, targetRot);
+                            tentacle.UpdateTentacle(Vector2.Distance(tentacle.pos, tentacle.targetPos) / 20, 0.7f);
+                        }
+
+                        if (Timer % 30 == 0)
+                        {
+                            //生成一圈蝙蝠
+                            int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
+                            for (int i = 0; i < 7; i++)
+                            {
+                                NPC.NewProjectileInAI<NightmareBat>(GetPhase1MousePos(), (NPC.rotation + i * MathHelper.TwoPi / 7).ToRotationVector2() * 10
+                                    , damage, 1, -1, -2, 0, (Timer % 60 == 0 ? 1 : -1)*0.008f);
+                            }
+
+                            SoundStyle st = CoraliteSoundID.BloodThron_Item113;
+                            st.Pitch += 0.2f;
+                            SoundEngine.PlaySound(st, NPC.Center);
+                        }
+
+                        if (Timer > 20 && Timer % 55 == 0)
+                        {
+                            //生成一圈渡鸦
+                            int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
+                            for (int i = 0; i < 7; i++)
+                            {
+                                NPC.NewProjectileInAI<NightmareCrow>(GetPhase1MousePos(), (NPC.rotation + i * MathHelper.TwoPi / 7).ToRotationVector2() * 13
+                                    , damage, 1, -1, -1, 0, -1 * 0.015f);
+                            }
+
+                            SoundStyle st = CoraliteSoundID.BloodThron_Item113;
+                            st.Pitch += 0.2f;
+                            SoundEngine.PlaySound(st, NPC.Center);
+                        }
+
+                        if (Timer > RollingTime)
+                        {
+                            SonState++;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+                case 3:
+                    {
+                        DoRotation(0.3f);
+                        CircleMovement(100, 30);
+
+                        if (Timer > 45)
                             SetPhase2States();
                     }
                     break;
@@ -1267,6 +1502,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             SonState++;
                             Timer = 0;
 
+                            SoundEngine.PlaySound(CoraliteSoundID.DeathCalling_Item103, NPC.Center);
                             if (Main.projectile[(int)ShootCount].active && Main.projectile[(int)ShootCount].type == ProjectileType<GhostSlit>())
                             {
                                 (Main.projectile[(int)ShootCount].ModProjectile as GhostSlit).StopTracking();
@@ -1289,14 +1525,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         NPC.velocity *= 0.93f;
                         DoRotation(0.3f);
 
-                        if (Timer == 40)
+                        if (Timer == 30)
                         {
                             GhostSlit.Exposion();
                         }
 
                         CircleMovement(540, 16, 0.25f, 360);
 
-                        if (Timer > 120)
+                        if (Timer > 110)
                         {
                             SetPhase2States();
                         }
@@ -1313,7 +1549,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 default:
                 case 0://瞬移到玩家面前
-                case 2:
                 case 4:
                 case 6:
                     {
@@ -1326,7 +1561,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }, () =>
                         {
                             SonState++;
-                        }, PostTeleport: () =>
+                        }, 30,PostTeleport: () =>
                         {
                             NPC.rotation = (Target.Center - NPC.Center).ToRotation();
                             NPC.velocity = (NPC.rotation + MathHelper.Pi).ToRotationVector2();
@@ -1335,7 +1570,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     }
                     break;
                 case 1://射几个弹幕
-                case 3:
                 case 5:
                     {
                         DoRotation(0.3f);
@@ -1351,14 +1585,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         NPC.velocity = velRot.AngleTowards(targetRot, 0.08f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.25f);
 
-                        if (Timer > 20 && Timer % 15 == 0)
+                        if (Timer > 15 && Timer % 15 == 0)
                         {
-                            float howmany = (3 + (Timer - 35) / 15) / 2f;
-                            for (int i = -(int)howmany; i < howmany; i++)
+                            float howmany = 3f * ((Timer - 25) / 15f) / 2f;
+                            for (float i = -(int)howmany; i < howmany; i++)
                             {
                                 int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
-
-                                NPC.NewProjectileInAI<NightmareSparkle_Normal>(NPC.Center, (NPC.rotation + i * 0.2f).ToRotationVector2(), damage, 0);
+                                NPC.NewProjectileInAI<NightmareSparkle_Normal>(NPC.Center, (NPC.rotation + i * 0.25f).ToRotationVector2(), damage, 0);
                             }
 
                             SoundStyle st = CoraliteSoundID.CrystalSerpent_Item109;
@@ -1373,9 +1606,61 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
                     }
                     break;
-                case 7:
+                case 2://瞬移
                     {
-                        Vector2 center = Target.Center + ShootCount.ToRotationVector2() * 150;
+                        Phase2Fade(() =>
+                        {
+                            if (Math.Abs(Target.velocity.X) < 0.1f && Math.Abs(Target.velocity.Y) < 0.1f)
+                                return Target.Center + new Vector2(Target.direction, 0) * Main.rand.NextFloat(400, 600);
+                            else
+                                return Target.Center + Target.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(400, 600);
+                        }, () =>
+                        {
+                            SonState++;
+                        }, 30, PostTeleport: () =>
+                        {
+                            NPC.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+                            ShootCount = (NPC.Center - Target.Center).ToRotation();
+                            NPC.velocity = (ShootCount + MathHelper.PiOver2).ToRotationVector2();
+                        });
+                    }
+                    break;
+                case 3://自身转圈圈并射出尖刺
+                    {
+                        NPC.rotation += 0.55f;
+
+                        const int RollingTime = 240;
+                        float currentRot = ShootCount + Timer / (float)RollingTime * 2 * MathHelper.TwoPi;
+
+                        Vector2 center = Target.Center + currentRot.ToRotationVector2() * 700;
+                        Vector2 dir = center - NPC.Center;
+
+                        float velRot = NPC.velocity.ToRotation();
+                        float targetRot = dir.ToRotation();
+
+                        float speed = NPC.velocity.Length();
+                        float aimSpeed = Math.Clamp(dir.Length() / 300f, 0, 1) * 56;
+
+                        NPC.velocity = velRot.AngleTowards(targetRot, 0.35f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.85f);
+
+                        if (Timer % 6 == 0)
+                        {
+                            int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
+                            Vector2 dir2 = (Target.Center - NPC.Center).SafeNormalize(Vector2.One);
+                            NPC.NewProjectileInAI<ConfusionHole>(NPC.Center, dir2.RotatedBy(MathF.Cos((Timer/6) * (MathHelper.TwoPi/12)) * 1.6f), damage, 0, NPC.target, 30, -2, 1300);
+                        }
+
+                        if (Timer > RollingTime)
+                        {
+                            SonState++;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+                case 7://后摇
+                    {
+                        float factor = Timer / 25f;
+                        Vector2 center = Target.Center + (ShootCount + factor * MathHelper.PiOver4).ToRotationVector2() * Helper.Lerp(150, 450, factor);
                         Vector2 dir = center - NPC.Center;
 
                         float velRot = NPC.velocity.ToRotation();
@@ -1384,12 +1669,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         float speed = NPC.velocity.Length();
                         float aimSpeed = Math.Clamp(dir.Length() / 400f, 0, 1) * 30;
 
-                        NPC.velocity = velRot.AngleTowards(targetRot, 0.08f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.25f);
+                        NPC.velocity = velRot.AngleTowards(targetRot, 0.3f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.25f);
                         DoRotation(0.3f);
-                        if (Timer > 40)
-                        {
+                        if (Timer > 25)
                             SetPhase2States();
-                        }
                     }
                     break;
             }
@@ -1972,9 +2255,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
         }
 
-        public void CircleMovement(float distance, float speedMax, float accelFactor = 0.25f, float rollingFactor = 360f)
+        public void CircleMovement(float distance, float speedMax, float accelFactor = 0.25f, float rollingFactor = 360f,float angleFactor=0.08f,float baseRot=0f)
         {
-            Vector2 center = Target.Center + (Timer / rollingFactor * MathHelper.TwoPi).ToRotationVector2() * distance;
+            Vector2 center = Target.Center + (baseRot+Timer / rollingFactor * MathHelper.TwoPi).ToRotationVector2() * distance;
             Vector2 dir = center - NPC.Center;
 
             float velRot = NPC.velocity.ToRotation();
@@ -1983,7 +2266,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             float speed = NPC.velocity.Length();
             float aimSpeed = Math.Clamp(dir.Length() / 800f, 0, 1) * speedMax;
 
-            NPC.velocity = velRot.AngleTowards(targetRot, 0.08f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, accelFactor);
+            NPC.velocity = velRot.AngleTowards(targetRot, angleFactor).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, accelFactor);
         }
 
         /// <summary>
@@ -2076,19 +2359,24 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     _ => (int)AIStates.belowSparkleThenBite,
                 },
                 1 => RandomBite(),
-                2 => Main.rand.Next(0, 2) switch
+                2 => Main.rand.Next(0, 3) switch
                 {
                     0 => (int)AIStates.teleportSparkle,
+                    1 => (int)AIStates.batsAndCrows,
                     _ => (int)AIStates.ghostDash,
                 },
                 3 => RandomBite(),
-                4 => (int)AIStates.spikeBalls,
-                5 => (int)AIStates.spikesAndSparkles,
-                6 => RandomBite(),
-                7 => (int)AIStates.hookSlash,
-                8 => RandomBite(),
-                9 => (int)AIStates.spikeHell,
-                10 => (int)AIStates.dreamSparkle,
+                4 => Main.rand.Next(0, 3) switch
+                {
+                    0 => (int)AIStates.spikeBalls,
+                    1 => (int)AIStates.batsAndCrows,
+                    _ => (int)AIStates.spikesAndSparkles,
+                },
+                5 => RandomBite(),
+                6 => (int)AIStates.hookSlash,
+                7 => RandomBite(),
+                8 => (int)AIStates.spikeHell,
+                9 => (int)AIStates.dreamSparkle,
                 _ => (int)AIStates.P2_Idle,
             };
 
@@ -2101,10 +2389,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
             }
 
-            State = (int)AIStates.nightmareDash;
+            //State = (int)AIStates.nightmareDash;
 
             MoveCount++;
-            if (MoveCount > 11)
+            if (MoveCount > 10)
                 MoveCount = 0;
         }
 
