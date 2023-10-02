@@ -1050,6 +1050,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 NCamera.useScreenMove = false;
             }
 
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc!=null&&npc.active&&npc.type==NPCType<FantasySparkle>())
+                    npc.Kill();
+            }
+
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 

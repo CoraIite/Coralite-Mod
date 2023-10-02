@@ -474,7 +474,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             /// <summary> 爪击 </summary>
             hookSlash,
             /// <summary> 召唤一些小爪子 </summary>
-            smallHook,
+            vineSpurt,
             /// <summary> 在一边生成刺+，自身吐出弹幕</summary>
             spikesAndSparkles,
             /// <summary> 旋转并放出尖刺 </summary>
