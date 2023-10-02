@@ -86,6 +86,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
+            if (!NightmarePlantera.NightmarePlanteraAlive(out NPC np))
+            {
+                Projectile.Kill();
+                return;
+            }
+
             if (Init)
             {
                 if (ColorState == -1)

@@ -15,7 +15,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 使用ai1传入追踪的角度<br></br>
     /// 使用ai2传入蓄力时间
     /// </summary>
-    public class HookSlash : ModProjectile,INightmareTentacle
+    public class HookSlash : ModProjectile, INightmareTentacle
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "NightmareHook";
 
@@ -128,10 +128,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 2://爆开生成噩梦光弹幕
                     {
-                        if (Projectile.frame>0)
+                        if (Projectile.frame > 0)
                         {
                             Projectile.frameCounter++;
-                            if (Projectile.frameCounter>4)
+                            if (Projectile.frameCounter > 4)
                             {
                                 Projectile.frameCounter = 0;
                                 Projectile.frame--;
@@ -175,7 +175,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Rectangle frameBox = mainTex.Frame(1, 4, 0, Projectile.frame);
             Vector2 selforigin = frameBox.Size() / 2;
 
-           Main. spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, Color.White * 0.8f, Projectile.rotation+MathHelper.PiOver2, selforigin, Projectile.scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, Color.White * 0.8f, Projectile.rotation + MathHelper.PiOver2, selforigin, Projectile.scale, 0, 0);
 
             return false;
         }

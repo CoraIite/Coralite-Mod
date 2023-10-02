@@ -138,6 +138,16 @@ namespace Coralite.Helpers
                     drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, scale == -1 ? projectile.scale : scale, 0, 0);
         }
 
+        public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scaleStep, float extraRot = 0, float scale = -1)
+        {
+            Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
+            Vector2 toCenter = new Vector2(projectile.width / 2, projectile.height / 2);
+
+            for (int i = start; i < howMany; i += step)
+                Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, null,
+                    drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, (scale == -1 ? projectile.scale : scale) * (1 - i * scaleStep), 0, 0);
+        }
+
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, Vector2 scale, float extraRot = 0)
         {
             Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
@@ -148,14 +158,14 @@ namespace Coralite.Helpers
                     drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, scale, 0, 0);
         }
 
-        public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, Vector2 scale,float scaleStep, float extraRot = 0)
+        public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, Vector2 scale, float scaleStep, float extraRot = 0)
         {
             Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
             Vector2 toCenter = new Vector2(projectile.width / 2, projectile.height / 2);
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, scale*(1-i*scaleStep), 0, 0);
+                    drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, scale * (1 - i * scaleStep), 0, 0);
         }
 
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scale, Rectangle frameBox, float extraRot = 0)

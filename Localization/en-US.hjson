@@ -1723,6 +1723,7 @@ Mods: {
 			NightmareEnergy.DisplayName: Nightmare Energy
 			NightmareBat.DisplayName: Nightmare Bat
 			NightmareCrow.DisplayName: Nightmare Crow
+			VineSpike.DisplayName: Vine Spike
 		}
 
 		Configs: {

@@ -227,7 +227,7 @@ namespace Coralite.Content.Items.Crimson
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
 
             //绘制影子拖尾
-            Projectile.DrawShadowTrails(lightColor, 0.3f, 0.03f, 1, 8, 2, 2f);
+            Projectile.DrawShadowTrails(lightColor, 0.3f, 0.03f, 1, 8, 2, 2f, -1);
 
             //绘制自己
             Main.spriteBatch.Draw(mainTex, endPos, null, lightColor, Projectile.rotation + 2f, mainTex.Size() / 2, Projectile.scale, 0, 0);

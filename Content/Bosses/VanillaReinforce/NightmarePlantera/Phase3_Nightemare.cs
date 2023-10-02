@@ -88,6 +88,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     NormallyUpdateTentacle();
                     break;
                 case (int)AIStates.vineSpurt:
+                    NormallySetTentacle();
+                    VineSpurt();
+                    NormallyUpdateTentacle();
                     break;
 
             }
@@ -694,10 +697,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             int damage = Helper.ScaleValueForDiffMode(30, 20, 15, 15);
                             int howmany = Main.rand.Next(1, 4);
-                            float baseRot = NPC.rotation - (howmany - 1) * 0.25f;
+                            float baseRot = NPC.rotation - (howmany - 1) * 0.35f;
                             for (int i = 0; i < howmany; i++)
                             {
-                                NPC.NewProjectileInAI<NightmareSparkle_Red>(NPC.Center, (baseRot + i * 0.5f).ToRotationVector2(), damage, 0);
+                                NPC.NewProjectileInAI<NightmareSparkle_Red>(NPC.Center, (baseRot + i * 0.7f).ToRotationVector2(), damage, 0);
                             }
                         }
 
@@ -978,7 +981,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             SonState++;
                             int damage = Helper.ScaleValueForDiffMode(30, 20, 15, 15);
                             NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 60, ai2: -2);
-                        }, 20, PostTeleport: () =>
+                        }, 10, PostTeleport: () =>
                         {
                             Vector2 pos = Target.Center;
 
@@ -1038,8 +1041,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         if (Timer > 6)
                         {
                             Vector2 pos = Target.Center + new Vector2(Target.direction * 80, 0) + Target.velocity * 14;
-                            if (FantasySparkleAlive(out NPC fs))
-                                pos = fs.Center;
 
                             NPC.velocity = (pos - NPC.Center).SafeNormalize(Vector2.One) * 48;
                             NPC.rotation = NPC.velocity.ToRotation();
@@ -1050,6 +1051,24 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     }
                     break;
                 case 3: //咬完了之后的后摇阶段
+                    {
+                        Vector2 dir = -NPC.velocity.SafeNormalize(Vector2.Zero);
+                        for (int i = 0; i < 5; i++)
+                        {
+                            Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustType<NightmarePetal>(), newColor: nightmareRed);
+                            dust.velocity = dir.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * Main.rand.NextFloat(0.5f, 8);
+                            dust.noGravity = true;
+                        }
+
+                        if (Timer > 15)
+                        {
+                            NPC.velocity *= 0;
+                            Timer = 0;
+                            SonState++;
+                        }
+                    }
+                    break;
+
                 case 7:
                     {
                         if (Timer > 12)
@@ -1090,6 +1109,107 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
 
                         if (Timer > 17)
+                            SetPhase3States();
+                    }
+                    break;
+            }
+
+            Timer++;
+        }
+
+        public void VineSpurt()
+        {
+            switch ((int)SonState)
+            {
+                default:
+                    SetPhase3States();
+                    break;
+                case 0://瞬移到玩家面前
+                    {
+                        Phase3Fade(() =>
+                        {
+                            Vector2 pos = Target.Center;
+
+                            return pos + new Vector2(Target.direction, 0).RotatedBy(Main.rand.NextFromList(-0.75f, 0.57f)) * Main.rand.NextFloat(350, 450);
+                        }, () =>
+                        {
+                            SonState++;
+                            int damage = Helper.ScaleValueForDiffMode(30, 20, 15, 15);
+                        }, PostTeleport: () =>
+                        {
+                            Vector2 pos = Target.Center;
+
+                            NPC.rotation = (pos - NPC.Center).ToRotation();
+                            ShootCount = (NPC.Center - pos).ToRotation();
+                            EXai1 = Main.rand.Next(4, 7) * 25 + 40;
+                            int side = -1;
+                            float rot = (NPC.Center - Target.Center).ToRotation() + side * 0.9f;
+                            int damage = Helper.ScaleValueForDiffMode(30, 20, 15, 15);
+                            NPC.NewProjectileInAI<VineSpike>(NPC.Center, rot.ToRotationVector2(), damage, 8, NPC.target, -1, rot, 25);
+                        });
+                    }
+                    break;
+                case 1://每隔一段时间射出一个荆棘刺
+                    {
+                        DoRotation(0.3f);
+
+                        float angle = ShootCount + MathHelper.PiOver4 / 4 * MathF.Sin(Timer * 0.0314f);
+                        Vector2 center = Target.Center + angle.ToRotationVector2() * 400;
+                        Vector2 dir = center - NPC.Center;
+
+                        float velRot = NPC.velocity.ToRotation();
+                        float targetRot = dir.ToRotation();
+
+                        float speed = NPC.velocity.Length();
+                        float aimSpeed = Math.Clamp(dir.Length() / 300f, 0, 1) * 56;
+
+                        NPC.velocity = velRot.AngleTowards(targetRot, 0.3f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.45f);
+
+                        if (Timer % 25 == 0)
+                        {
+                            int side = Timer % 50 == 0 ? -1 : 1;
+                            float rot = (NPC.Center - Target.Center).ToRotation() + side * 0.9f;
+                            int damage = Helper.ScaleValueForDiffMode(30, 20, 15, 15);
+                            NPC.NewProjectileInAI<VineSpike>(NPC.Center, rot.ToRotationVector2(), damage, 8, NPC.target, -1, rot, 25);
+                        }
+
+                        if (Timer > EXai1)
+                        {
+                            SonState++;
+                            Timer = 0;
+                            Vector2 pos = Target.Center;
+
+                            NPC.rotation = (pos - NPC.Center).ToRotation();
+                            ShootCount = (NPC.Center - pos).ToRotation();
+
+                            int damage = Helper.ScaleValueForDiffMode(30, 20, 15, 15);
+
+                            float rot = (NPC.Center - Target.Center).ToRotation() -  1.2f;
+                            for (int i = 0; i < 4; i++)
+                            {
+                                NPC.NewProjectileInAI<VineSpike>(NPC.Center, rot.ToRotationVector2(), damage, 8, NPC.target, -1, rot, 35);
+                                rot += 2.4f / 4;
+                            }
+                        }
+                    }   
+                    break;
+                case 2:
+                    {
+                        DoRotation(0.3f);
+
+                        float angle = ShootCount + MathHelper.PiOver4 / 4 * MathF.Sin(Timer * 0.0314f);
+                        Vector2 center = Target.Center + angle.ToRotationVector2() * 550;
+                        Vector2 dir = center - NPC.Center;
+
+                        float velRot = NPC.velocity.ToRotation();
+                        float targetRot = dir.ToRotation();
+
+                        float speed = NPC.velocity.Length();
+                        float aimSpeed = Math.Clamp(dir.Length() / 300f, 0, 1) * 56;
+
+                        NPC.velocity = velRot.AngleTowards(targetRot, 0.3f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.45f);
+
+                        if (Timer > 75)
                             SetPhase3States();
                     }
                     break;
@@ -1192,7 +1312,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 1 => (int)AIStates.tripleSpikeHell,
                 2 => P3_RandomBite(),
                 3 => (int)AIStates.illusionBite,
-                4 => (int)AIStates.superHookSlash,
+                4 => Main.rand.Next(0, 2) switch
+                {
+                    0 => (int)AIStates.superHookSlash,
+                    _ => (int)AIStates.vineSpurt,
+                },
                 5 => P3_RandomBite(),
                 6 => (int)AIStates.P3_SpikesAndSparkles,
                 7 => P3_RandomBite(),
@@ -1201,7 +1325,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 _ => (int)AIStates.flowerDance,
             };
 
-            //    State = (int)AIStates.tripleSpikeHell;
+            //State = (int)AIStates.vineSpurt;
+
             switch ((int)State)
             {
                 default:
@@ -1241,7 +1366,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC npc = Main.npc[i];
-                if (npc!=null&&npc.active&&npc.type==NPCType<FantasySparkle>())
+                if (npc != null && npc.active && npc.type == NPCType<FantasySparkle>())
                     npc.Kill();
             }
 
