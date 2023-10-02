@@ -49,7 +49,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPC.noTileCollide = true;
             NPC.friendly = true;
             NPC.knockBackResist = 0.5f;
-            NPC.lifeMax = 500;
+            NPC.lifeMax = 200;
             NPC.width = NPC.height = 85;
 
             mainSparkleScale = new Vector2(4f, 1.5f);
@@ -143,7 +143,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     }
                     break;
                 default:
-                case 0://缓慢逃离玩家
+                case 0://缓慢靠近玩家
                     {
                         NPC.TargetClosest();
 
@@ -151,13 +151,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             float length = NPC.velocity.Length();
 
-                            if (length < 10)
+                            if (length < 8)
                             {
                                 length += 0.2f;
                             }
 
                             Vector2 v = (NPC.Center - Target.Center).SafeNormalize(Vector2.One) * length / 4;
-                            NPC.velocity.X += v.X;
+                            NPC.velocity.X -= v.X;
                             NPC.velocity.Y -= v.Y;
                             if (NPC.velocity.Length() > 8)
                             {

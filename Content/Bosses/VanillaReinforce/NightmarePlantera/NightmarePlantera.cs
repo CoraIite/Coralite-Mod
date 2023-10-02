@@ -473,8 +473,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             batsAndCrows,
             /// <summary> 爪击 </summary>
             hookSlash,
-            /// <summary> 召唤一些小爪子 </summary>
-            vineSpurt,
             /// <summary> 在一边生成刺+，自身吐出弹幕</summary>
             spikesAndSparkles,
             /// <summary> 旋转并放出尖刺 </summary>
@@ -503,11 +501,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             flowerDance,
             /// <summary> 一堆爪击 </summary>
             superHookSlash,
+            /// <summary> 召唤荆棘刺然后刺出 </summary>
+            vineSpurt,
+            P3_batsAndCrows,
+            /// <summary> 射出追踪的荆棘，并在沿途释放种子球 </summary>
+            vinesAndSeeds,
             /// <summary> 三阶段的刺+弹幕 </summary>
             P3_SpikesAndSparkles,
             /// <summary> 瞬移转圈圈 </summary>
             P3_teleportSparkles,
             P3_nightmareBite,
+            P3_nightmareDash,
         }
 
         public void ResetStates()

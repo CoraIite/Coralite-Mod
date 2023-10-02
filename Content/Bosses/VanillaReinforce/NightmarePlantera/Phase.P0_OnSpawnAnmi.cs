@@ -156,7 +156,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 NCamera.ShakeVec2 = Helper.NextVec2Dir();
                             }
 
-                            Music = MusicID.OtherworldlyPlantera;
+                            Music = MusicID.Plantera;
                         }
                     }
                     break;

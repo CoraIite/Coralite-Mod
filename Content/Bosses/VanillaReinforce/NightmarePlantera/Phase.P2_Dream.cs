@@ -120,11 +120,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         HookSlash();
                         NormallyUpdateTentacle();
                         break;
-                    case (int)AIStates.vineSpurt:
-                        NormallySetTentacle();
-                        VineSpurt();
-                        NormallyUpdateTentacle();
-                        break;
                     case (int)AIStates.spikesAndSparkles:
                         NormallySetTentacle();
                         SpikesAndSparkles();
@@ -1140,117 +1135,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Timer++;
         }
 
-        public void VineSpurt()
-        {
-            switch ((int)SonState)
-            {
-                default:
-                    SetPhase2States();
-                    break;
-                case 0://瞬移到玩家面前
-                    {
-                        Phase2Fade(() => Target.Center + (SonState - 1) * MathHelper.Pi.ToRotationVector2() * Main.rand.NextFloat(500, 600),
-                            () =>
-                            {
-                                SonState = Main.rand.Next(1, 3);
-                                NPC.rotation = (Target.Center - NPC.Center).ToRotation();
-                                ShootCount = Main.rand.Next(4, 7);
-                            });
-                    }
-                    break;
-                case 1://放出小触手并持续追踪玩家
-                case 2:
-                    {
-                        HookSlashMovement();
-                        if (Timer < ShootCount * 30 && Timer % 30 == 0)
-                        {
-                            int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
-                            float angle2 = (NPC.Center - Target.Center).ToRotation() + (Timer % 60 == 0 ? MathHelper.PiOver4 : -MathHelper.PiOver4) + Main.rand.NextFloat(-0.25f, 0.25f);
-                            NPC.NewProjectileInAI<HookSlash>(NPC.Center + (NPC.Center - Target.Center).SafeNormalize(Vector2.One) * 64, Vector2.Zero, damage,
-                                0, NPC.target, ai1: angle2, ai2: 160);
-                        }
-
-                        if (Timer < ShootCount * 30 + 60)
-                            break;
-
-                        SonState = 3;
-                        Timer = 0;
-                        SoundStyle st = CoraliteSoundID.EmpressOfLight_Dash_Item160;
-                        st.Pitch = -0.7f;
-                        SoundEngine.PlaySound(st, NPC.Center);
-                        canDrawWarp = true;
-                    }
-                    break;
-                case 3://自己冲向玩家
-                    {
-                        if (Timer < 20)
-                        {
-                            Vector2 dir = (NPC.Center - Target.Center).SafeNormalize(Vector2.Zero);
-                            if (NPC.velocity.Length() < 12)
-                                NPC.velocity += dir * 0.15f;
-
-                            DoRotation(0.3f);
-                            alpha -= 0.5f / 20f;
-                            warpScale += 1.5f / 20f;
-                            break;
-                        }
-
-                        if (Timer < 40)
-                        {
-                            Vector2 dir = (NPC.Center - Target.Center).SafeNormalize(Vector2.Zero);
-                            if (NPC.velocity.Length() < 12)
-                                NPC.velocity += dir * 0.15f;
-
-                            DoRotation(0.3f);
-                            alpha += 0.5f / 20f;
-                            warpScale -= 1.5f / 20f;
-                        }
-
-                        if (Timer == 40)
-                        {
-                            alpha = 1;
-                            warpScale = 0;
-                            canDrawWarp = false;
-                            useMeleeDamage = true;
-                            NPC.velocity += NPC.rotation.ToRotationVector2() * 20;
-                            if (NPC.velocity.Length() > 50)
-                            {
-                                NPC.velocity = NPC.velocity.SafeNormalize(Vector2.Zero) * 50;
-                            }
-                        }
-
-                        if (Timer > 80 || Vector2.Distance(NPC.Center, Target.Center) > 1400)
-                        {
-                            SonState++;
-                            Timer = 0;
-                        }
-                    }
-                    break;
-                case 4://后摇
-                    {
-                        NPC.velocity *= 0.96f;
-                        DoRotation(0.3f);
-
-                        if (Timer == 14)
-                        {
-                            int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
-                            for (int i = 0; i < 7; i++)
-                            {
-                                Vector2 dir = (NPC.rotation + i * 1 / 7f * MathHelper.TwoPi).ToRotationVector2();
-
-                                NPC.NewProjectileInAI<NightmareSparkle_Normal>(NPC.Center, dir, damage, 0);
-                            }
-                        }
-
-                        if (Timer > 90)
-                            SetPhase2States();
-                    }
-                    break;
-            }
-
-            Timer++;
-        }
-
         public void SpikesAndSparkles()
         {
             switch ((int)SonState)
@@ -1647,7 +1531,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
                             Vector2 dir2 = (Target.Center - NPC.Center).SafeNormalize(Vector2.One);
-                            NPC.NewProjectileInAI<ConfusionHole>(NPC.Center, dir2.RotatedBy(MathF.Cos((Timer/6) * (MathHelper.TwoPi/12)) * 1.6f), damage, 0, NPC.target, 30, -2, 1300);
+                            NPC.NewProjectileInAI<ConfusionHole>(NPC.Center, dir2.RotatedBy(MathF.Cos((Timer/6) * (MathHelper.TwoPi/12)) * 1.6f), damage, 0, NPC.target, 30, -1, 1300);
                         }
 
                         if (Timer > RollingTime)
@@ -2153,7 +2037,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             }
                         }
 
-                        if (Timer > 400)
+                        if (Timer > 120)
                         {
                             SetPhase2DreamingStates();
                         }
