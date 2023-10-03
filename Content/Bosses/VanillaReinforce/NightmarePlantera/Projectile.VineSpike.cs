@@ -31,7 +31,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public ref float ChannelTime => ref Projectile.ai[2];
 
         public ref float Timer => ref Projectile.localAI[0];
-
+        
         public float alpha;
         private bool init = true;
         private Color tentacleColor;
@@ -120,7 +120,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             if (alpha > 1)
                                 alpha = 1;
                         }
-
+                        
                         float factor = Timer / ChannelTime;
                         Vector2 center = Owner.Center + new Vector2(Owner.direction * 40 * factor, 0) + Owner.velocity * 20 * factor;
                         Vector2 dir = center - Projectile.Center + Angle.ToRotationVector2() * Helper.Lerp(200, 650, factor);
@@ -219,7 +219,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 c * (0.5f - i * 0.5f / 8), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale * (1 + i * 0.05f), effect, 0);
 
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, selforigin, Projectile.scale, effect, 0);
-
+            
             return false;
         }
 

@@ -294,7 +294,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         else
                             NPC.velocity *= 0.8f;
 
-                        if (Timer > 75)
+                        if (Timer > 72)
                         {
                             useMeleeDamage = false;
                             SonState++;
@@ -304,7 +304,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 5://后摇
                     {
-                        NPC.velocity *= 0.9f;
+                        NPC.velocity *= 0.88f;
 
                         if (Timer > 5)
                             DoRotation(0.04f);
@@ -381,7 +381,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         else
                             NPC.velocity *= 0.8f;
 
-                        if (Timer > 75)
+                        if (Timer > 72)
                         {
                             useMeleeDamage = false;
                             SonState++;
@@ -391,7 +391,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 2: //咬完了之后的后摇阶段
                     {
-                        NPC.velocity *= 0.9f;
+                        NPC.velocity *= 0.88f;
 
                         if (Timer > 10)
                             DoRotation(0.04f);
@@ -543,7 +543,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
                     }
                     break;
-
                 case 7:
                     {
                         if (Timer > 12)
@@ -569,7 +568,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 8:
                     {
-                        if (Timer > 12)
+                        if (Timer > 10)
                         {
                             NPC.velocity *= 0.9f;
                             DoRotation(0.04f);
@@ -583,7 +582,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             dust.noGravity = true;
                         }
 
-                        if (Timer > 17)
+                        if (Timer > 14)
                             SetPhase3States();
                     }
                     break;
@@ -956,8 +955,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             alpha = 1;
                             canDrawWarp = false;
 
-                            int direction = Math.Sign(Target.Center.X - NPC.Center.X);
-                            NPC.Center = Target.Center + dir * 450 + dir.RotatedBy(-MathHelper.PiOver2) * 300;
+                            NPC.Center = Target.Center + dir2 * 450 + dir2.RotatedBy(-MathHelper.PiOver2) * 700;
                             NPC.rotation = NPC.velocity.ToRotation();
 
                             for (int i = 0; i < 3; i++)
@@ -1513,7 +1511,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             State = (int)MoveCount switch
             {
                 0 => (int)AIStates.illusionBite,
-                1 => (int)AIStates.tripleSpikeHell,
+                1 => (int)AIStates.P3_teleportSparkles,
                 2 => P3_RandomBite(),
                 3 => P3_RandomBite2(),
                 4 => Main.rand.Next(0, 2) switch
@@ -1525,11 +1523,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 6 => (int)AIStates.P3_SpikesAndSparkles,
                 7 => P3_RandomBite(),
                 8 => P3_RandomBite2(),
-                9 => (int)AIStates.P3_teleportSparkles,
+                9 => (int)AIStates.tripleSpikeHell,
                 _ => (int)AIStates.flowerDance,
             };
 
-            //State = (int)AIStates.P3_fakeBite;
+            //State = (int)AIStates.flowerDance;
 
             switch ((int)State)
             {
