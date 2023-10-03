@@ -294,7 +294,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         else
                             NPC.velocity *= 0.8f;
 
-                        if (Timer > 72)
+                        if (Timer > 71)
                         {
                             useMeleeDamage = false;
                             SonState++;
@@ -638,6 +638,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 4, ai1: 50, ai2: -2);
                         }
 
+                        if (Timer < 60 && Timer % 3 == 0)
+                            for (int i = -1; i < 2; i += 2)
+                            {
+                                Color c = Main.rand.Next(0, 1) switch
+                                {
+                                    0 => tentacleColor,
+                                    _ => tentacleColor * 2f,
+                                };
+                                Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32),  (NPC.rotation + i * 2.6f).ToRotationVector2() * Main.rand.NextFloat(3f, 8f),
+                                    CoraliteContent.ParticleType<SpeedLine>(), c, Main.rand.NextFloat(0.3f, 0.5f));
+                            }
+
                         NPC.rotation = NPC.rotation.AngleTowards((pos - NPC.Center).ToRotation(), 0.3f);
                         if (Vector2.Distance(NPC.Center, pos) > 220)
                         {
@@ -664,7 +676,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             float baseAngle = ShootCount;
                             for (int i = 0; i < 3; i++)
                             {
-                                int time = 25 + 30 * i;
+                                int time = 35 + 35 * i;
                                 float angle = 0.9f - i * 0.15f;
                                 NPC.NewProjectileInAI<VineSpike>(NPC.Center, (ShootCount + 2f).ToRotationVector2(), damage, 8, NPC.target, -1, baseAngle + angle, time);
                                 NPC.NewProjectileInAI<VineSpike>(NPC.Center, (ShootCount - 2f).ToRotationVector2(), damage, 8, NPC.target, -1, baseAngle - angle, time);
@@ -688,7 +700,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         float aimSpeed = Math.Clamp(dir.Length() / 400f, 0, 1) * 56;
                         NPC.velocity = velRot.AngleTowards(targetRot, 0.5f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.15f);
 
-                        if (Timer > 95)
+                        if (Timer > 105)
                             SetPhase3States();
                     }
                     break;
@@ -1028,7 +1040,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             {
                                 SonState = Main.rand.Next(1, 3);
                                 NPC.rotation = (Target.Center - NPC.Center).ToRotation();
-                                ShootCount = Main.rand.Next(3, 6);
+                                ShootCount = Main.rand.Next(2, 5);
                             });
                     }
                     break;
@@ -1040,7 +1052,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 2; i++)
                             {
                                 int damage = Helper.ScaleValueForDiffMode(30, 20, 15, 15);
-                                float angle2 = (NPC.Center - Target.Center).ToRotation() + (Timer % 30 == 0 ? MathHelper.PiOver4 / 2 : -MathHelper.PiOver4 / 2) + Main.rand.NextFloat(-0.15f, 0.15f);
+                                float angle2 = (NPC.Center - Target.Center).ToRotation() + (Timer % 30 == 0 ? MathHelper.PiOver4 / 2 : -MathHelper.PiOver4 / 2) + i * 0.25f;
                                 NPC.NewProjectileInAI<HookSlash>(NPC.Center + (NPC.Center - Target.Center).SafeNormalize(Vector2.One) * 64, Vector2.Zero, damage,
                                     0, NPC.target, ai0: -1, ai1: angle2, ai2: 120);
                             }
@@ -1364,7 +1376,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             float rot = (NPC.Center - Target.Center).ToRotation() - 1f /*+ Target.direction * 0.4f*/;
                             for (int i = 0; i < 4; i++)
                             {
-                                NPC.NewProjectileInAI<VineSpike>(NPC.Center, rot.ToRotationVector2(), damage, 8, NPC.target, -1, rot, 50);
+                                NPC.NewProjectileInAI<VineSpike>(NPC.Center, rot.ToRotationVector2(), damage, 8, NPC.target, -1, rot, 70);
                                 rot += 2f / 4;
                             }
                         }
@@ -1386,7 +1398,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         NPC.velocity = velRot.AngleTowards(targetRot, 0.3f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.45f);
 
-                        if (Timer > 90)
+                        if (Timer > 110)
                             SetPhase3States();
                     }
                     break;

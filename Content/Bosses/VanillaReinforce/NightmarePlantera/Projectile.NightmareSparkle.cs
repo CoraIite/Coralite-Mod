@@ -16,10 +16,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
-            Projectile.width = Projectile.height = 48;
+            Projectile.width = Projectile.height = 32;
             ShineColor = NightmarePlantera.nightmareSparkleColor;
-            mainSparkleScale = new Vector2(1.5f, 3f);
-            circleSparkleScale = 0.5f;
+            mainSparkleScale = new Vector2(1f, 2f);
+            circleSparkleScale = 0.4f;
         }
 
         public override void AI()
@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
                 Dust dust = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<NightmareStar>(),
-                    dir * Main.rand.NextFloat(1f, 4f), newColor: NightmarePlantera.lightPurple, Scale: Main.rand.NextFloat(1f, 3f));
+                    dir * Main.rand.NextFloat(1f, 4f), newColor: NightmarePlantera.lightPurple, Scale: Main.rand.NextFloat(1f, 2f));
                 dust.rotation = dir.ToRotation() + MathHelper.PiOver2;
             }
         }
@@ -50,10 +50,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
-            Projectile.width = Projectile.height = 48;
+            Projectile.width = Projectile.height = 32;
             ShineColor = NightmarePlantera.nightmareRed;
-            mainSparkleScale = new Vector2(1.5f, 3f);
-            circleSparkleScale = 0.5f;
+            mainSparkleScale = new Vector2(1f, 2f);
+            circleSparkleScale = 0.4f;
         }
 
         public override void AI()
@@ -68,7 +68,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
                 Dust dust = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<NightmareStar>(),
-                    dir * Main.rand.NextFloat(1f, 4f), newColor: NightmarePlantera.nightmareRed, Scale: Main.rand.NextFloat(1f, 3f));
+                    dir * Main.rand.NextFloat(1f, 4f), newColor: NightmarePlantera.nightmareRed, Scale: Main.rand.NextFloat(1f, 2f));
                 dust.rotation = dir.ToRotation() + MathHelper.PiOver2;
             }
         }
@@ -130,8 +130,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         float factor = Timer / RollingTime;
 
                         ShineColor = Color.Lerp(Color.Transparent, NightmarePlantera.nightPurple, factor);
-                        mainSparkleScale =Vector2.Lerp(Vector2.Zero, new Vector2(1.5f, 3f),factor) ;
-                        circleSparkleScale = MathHelper.Lerp(0,0.5f,factor) ;
+                        mainSparkleScale =Vector2.Lerp(Vector2.Zero, new Vector2(1f, 2f),factor) ;
+                        circleSparkleScale = MathHelper.Lerp(0,0.4f,factor) ;
 
                         Projectile.Center = Owner.Center + Angle.ToRotationVector2() * MathHelper.Lerp(length,TargetLenght,factor);
                         Projectile.rotation = Angle;

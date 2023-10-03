@@ -32,8 +32,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             //周围一圈小星星
             for (int i = 0; i < 7; i++)
             {
-                Vector2 dir = (Main.GlobalTimeWrappedHourly*2 + i * MathHelper.TwoPi / 7).ToRotationVector2();
-                Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos + dir * (24 + factor * 2), Color.White * 0.7f, ShineColor,
+                Vector2 dir = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7).ToRotationVector2();
+                Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos + dir * (20 + factor * 2), Color.White * 0.7f, ShineColor,
                     0.5f + factor * 0.1f, 0f, 0.5f, 0.5f, 1f, rot, new Vector2(circleSparkleScale, circleSparkleScale), new Vector2(0.5f, 0.5f));
             }
 
@@ -43,7 +43,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             //绘制一层小的更加亮的来让星星中心变亮点
             Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White * 0.7f, Color.White * 0.4f,
-                0.5f + factor * 0.1f, 0f, 0.5f, 0.5f, 1f, rot, mainSparkleScale * 0.5f, Vector2.One*2);
+                0.5f + factor * 0.1f, 0f, 0.5f, 0.5f, 1f, rot, mainSparkleScale * 0.5f, Vector2.One * 2);
 
             return false;
         }

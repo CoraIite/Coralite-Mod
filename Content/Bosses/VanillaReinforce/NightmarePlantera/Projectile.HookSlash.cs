@@ -146,9 +146,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             if (ColorState == 0)
                             {
                                 damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
-                                for (int i = 0; i < 7; i++)
+                                for (int i = 0; i < 4; i++)
                                 {
-                                    Vector2 dir = (Projectile.rotation + i * 1 / 7f * MathHelper.TwoPi).ToRotationVector2();
+                                    Vector2 dir = (Projectile.rotation + i * 1 / 4f * MathHelper.TwoPi).ToRotationVector2();
 
                                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, dir, ModContent.ProjectileType<NightmareSparkle_Normal>(),
                                         Projectile.damage, 0);

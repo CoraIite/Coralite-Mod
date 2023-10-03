@@ -194,7 +194,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         Vector2 dir = np.Center - Projectile.Center;
                         Vector2 dir2 = dir.SafeNormalize(Vector2.Zero);
                         Projectile.velocity = dir2 * velLength;
-                        Projectile.rotation = dir2.ToRotation() + MathHelper.Pi + 0.35f * MathF.Sin(Timer * 0.1f);
+                        Projectile.rotation = dir2.ToRotation() + MathHelper.Pi + 0.35f * MathF.Sin(Timer * 0.2f);
 
                         if (dir.Length() < 50 || Timer > 180)
                             Projectile.Kill();
