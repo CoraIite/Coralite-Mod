@@ -177,7 +177,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 2:
                     {
-                        if (Timer>180)
+                        if (Timer>150)
                         {
                             State = 3;
                             Timer = 0;

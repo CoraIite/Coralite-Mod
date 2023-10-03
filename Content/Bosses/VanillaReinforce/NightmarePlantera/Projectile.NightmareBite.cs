@@ -17,6 +17,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     ///  1：会另外绘制一个幻影，张开嘴后咬下<br></br>
     ///  2：会另外绘制一个幻影，只是吓唬玩家一下，不会有任何的伤害判定<br></br>
     ///  3：只会对owner造成伤害<br></br>
+    ///  4：张嘴后消失
     ///  在为1和2时不跟踪本体的中心<para></para>
     ///  使用ai1传入蓄力时间<para></para>
     /// 使用ai2传入颜色<br></br>
@@ -320,6 +321,24 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
 
                         Projectile.Kill();
+                    }
+                    break;
+                case 4:
+                    {
+                        Projectile.Center = Owner.Center;
+
+                        if (Timer < ReadyTime)
+                        {
+                            float factor = Timer / ReadyTime;
+
+                            Projectile.rotation = Owner.rotation;
+                            mouseAngle = Helper.Lerp(0, 1.4f, factor);
+                            alpha = Helper.Lerp(0.75f, 0.1f, factor);
+                            break;
+                        }
+
+                        Projectile.Kill();
+
                     }
                     break;
             }

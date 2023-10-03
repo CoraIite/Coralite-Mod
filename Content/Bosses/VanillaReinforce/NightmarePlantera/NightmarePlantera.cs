@@ -195,7 +195,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return;
             }
 
-            if (projectile.type == ModContent.ProjectileType<HyacinthBullet>() || projectile.type == ModContent.ProjectileType<HyacinthBullet2>())
+            if (projectile.type == ModContent.ProjectileType<HyacinthBullet>() || projectile.type == ModContent.ProjectileType<HyacinthBullet2>()
+                || projectile.type == ModContent.ProjectileType<HyacinthExplosion>())
             {
                 modifiers.SourceDamage *= 0.7f;
                 return;
@@ -278,6 +279,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             return null;
         }
+
         public override bool CanBeHitByNPC(NPC attacker)
         {
             if (canOnlyBeHitByFantasyGod)
@@ -285,6 +287,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             return true;
         }
+
         public override bool? CanBeHitByItem(Player player, Item item)
         {
             if (canOnlyBeHitByFantasyGod)
@@ -463,6 +466,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             nightmareBite,
             /// <summary> 噩梦冲刺 </summary>
             nightmareDash,
+            /// <summary> 假装咬但张开嘴后消失并射出2个荆棘刺 </summary>
+            fakeBite,
             /// <summary> 转圈圈放弹幕，之后瞬移到另一方向咬下 </summary>
             rollingThenBite,
             /// <summary> 在玩家下方转圈圈并放弹幕，之后瞬移到玩家面朝方向上方向斜上方咬下 </summary>
@@ -503,6 +508,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             superHookSlash,
             /// <summary> 召唤荆棘刺然后刺出 </summary>
             vineSpurt,
+            /// <summary> 三阶段的蝙蝠渡鸦 </summary>
             P3_batsAndCrows,
             /// <summary> 射出追踪的荆棘，并在沿途释放种子球 </summary>
             vinesAndSeeds,
@@ -512,6 +518,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             P3_teleportSparkles,
             P3_nightmareBite,
             P3_nightmareDash,
+            P3_fakeBite,
         }
 
         public void ResetStates()
@@ -579,11 +586,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                if (cp.nightmareCount < 10)
-                    cp.nightmareCount++;
+                if (cp.nightmareCount < 14)
+                    cp.nightmareCount += (byte)Helper.ScaleValueForDiffMode(1, 1, 2, 14);
 
                 //设置阶段并秒杀玩家
-                if (cp.nightmareCount > 9)
+                if (cp.nightmareCount > 13)
                     (np.ModNPC as NightmarePlantera).ChangeToSuddenDeath(player);
 
                 if (player.whoAmI == Main.myPlayer)

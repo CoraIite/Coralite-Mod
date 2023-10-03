@@ -1,10 +1,13 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
@@ -120,29 +123,52 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         float factor = Timer / ChannelTime;
                         Vector2 center = Owner.Center + new Vector2(Owner.direction * 40 * factor, 0) + Owner.velocity * 20 * factor;
-                        Vector2 dir = center - Projectile.Center + Angle.ToRotationVector2() * Helper.Lerp(300, 650, factor);
+                        Vector2 dir = center - Projectile.Center + Angle.ToRotationVector2() * Helper.Lerp(200, 650, factor);
 
                         float velRot = Projectile.velocity.ToRotation();
                         float targetRot = dir.ToRotation();
 
                         float speed = Projectile.velocity.Length();
-                        float aimSpeed = Math.Clamp(dir.Length() / 400f, 0, 1) * 45;
+                        float aimSpeed = Math.Clamp(dir.Length() / 300f, 0, 1) * 45;
 
-                        Projectile.velocity = velRot.AngleTowards(targetRot, 0.65f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.35f);
+                        Projectile.velocity = velRot.AngleTowards(targetRot, 0.65f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.55f);
                         Projectile.rotation = Projectile.rotation.AngleTowards((center - Projectile.Center).ToRotation(), 0.35f);
 
                         if (Timer > ChannelTime)
                         {
                             Timer = 0;
                             State++;
-                            Projectile.velocity = rotateVec2 * 54;
+                            Projectile.velocity = rotateVec2 * 64;
                             Helper.PlayPitched("Misc/Spike", 0.8f, -0.4f, Projectile.Center);
+                            var modifyer = new PunchCameraModifier(Projectile.Center, rotateVec2, 10, 6, 12, 1000);
+                            Main.instance.CameraModifiers.Add(modifyer);
                         }
                     }
                     break;
                 case 1://快速戳出
                     {
-                        if (Timer > 20)
+                        //for (int i = 0; i < 2; i++)
+                        //{
+                            Color c = Main.rand.Next(0, 1) switch
+                            {
+                                0 => tentacleColor,
+                                _ => tentacleColor * 2f,
+                            };
+                                Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(32, 32), Projectile.velocity * Main.rand.NextFloat(0.05f, 0.2f),
+                                    CoraliteContent.ParticleType<SpeedLine>(), c, Main.rand.NextFloat(0.3f, 0.5f));
+                        //}
+                        if (Main.rand.NextBool())
+                        {
+                            Color c2 = Main.rand.Next(0, 1) switch
+                            {
+                                0 => tentacleColor,
+                                _ => tentacleColor * 2f,
+                            };
+                            Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity * Main.rand.NextFloat(0.05f, 0.3f),
+                                CoraliteContent.ParticleType<SpeedLine>(), c2, Main.rand.NextFloat(0.3f, 0.5f));
+                        }
+
+                        if (Timer > 17)
                         {
                             State++;
                             Timer = 0;
@@ -155,7 +181,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         if (alpha > 0)
                         {
-                            alpha -= 0.02f;
+                            alpha -= 0.015f;
                             if (alpha < 0)
                             {
                                 alpha = 0;
@@ -190,7 +216,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int i = 0; i < 8; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter, null,
-                c * (0.7f - i * 0.7f / 8), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale * (1 - i * 0.02f), effect, 0);
+                c * (0.5f - i * 0.5f / 8), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale * (1 + i * 0.05f), effect, 0);
 
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, selforigin, Projectile.scale, effect, 0);
 

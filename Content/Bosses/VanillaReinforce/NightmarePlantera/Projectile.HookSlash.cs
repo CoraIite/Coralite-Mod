@@ -142,7 +142,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         if (Timer > 25)
                         {
+                            int damage = 0;
                             if (ColorState == 0)
+                            {
+                                damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
                                 for (int i = 0; i < 7; i++)
                                 {
                                     Vector2 dir = (Projectile.rotation + i * 1 / 7f * MathHelper.TwoPi).ToRotationVector2();
@@ -150,7 +153,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, dir, ModContent.ProjectileType<NightmareSparkle_Normal>(),
                                         Projectile.damage, 0);
                                 }
+                            }
                             else
+                            {
+                                damage = Helper.ScaleValueForDiffMode(30, 15, 10, 10);
                                 for (int i = 0; i < 5; i++)
                                 {
                                     Vector2 dir = (Projectile.rotation + i * 1 / 5f * MathHelper.TwoPi).ToRotationVector2();
@@ -158,6 +164,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, dir, ModContent.ProjectileType<NightmareSparkle_Red>(),
                                         Projectile.damage, 0);
                                 }
+                            }
 
 
                             Projectile.Kill();

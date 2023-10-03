@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    public class NightmareSlit : BaseNightmareProj,INightmareTentacle
+    public class NightmareSlit : BaseNightmareProj, INightmareTentacle
     {
         public override string Texture => AssetDirectory.Blank;
 

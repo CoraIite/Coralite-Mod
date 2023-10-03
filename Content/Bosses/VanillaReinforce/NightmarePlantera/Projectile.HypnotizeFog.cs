@@ -1,10 +1,13 @@
-﻿using Coralite.Content.Particles;
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
@@ -55,9 +58,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            NightmarePlantera.NightmareHit(target);
+            target.AddBuff(ModContent.BuffType<DreamErosion>(), 18000);
             if (!NightmarePlantera.NightmarePlanteraAlive(out NPC np))
                 return;
+
+            if (target.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                if (cp.nightmareCount < 14)
+                    cp.nightmareCount ++;
+
+                //设置阶段并秒杀玩家
+                if (cp.nightmareCount > 13)
+                    (np.ModNPC as NightmarePlantera).ChangeToSuddenDeath(target);
+
+                if (target.whoAmI == Main.myPlayer)
+                    Filters.Scene.Activate("NightmareScreen", target.position);
+            }
 
             if (np.ai[0] == (int)NightmarePlantera.AIPhases.Sleeping_P1)
                 (np.ModNPC as NightmarePlantera).SetPhase1Exchange();

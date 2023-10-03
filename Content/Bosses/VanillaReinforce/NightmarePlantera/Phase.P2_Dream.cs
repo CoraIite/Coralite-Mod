@@ -98,6 +98,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         NightmareDash();
                         NormallyUpdateTentacle();
                         break;
+                    case (int)AIStates.fakeBite:
+                        NormallySetTentacle();
+                        FakeBite();
+                        NormallyUpdateTentacle();
+                        break;
                     case (int)AIStates.rollingThenBite:
                         RollingThenBite();
                         NormallyUpdateTentacle();
@@ -371,6 +376,103 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Timer++;
         }
 
+        public void FakeBite()
+        {
+            switch ((int)SonState)
+            {
+                default:
+                    SetPhase2States();
+                    break;
+                case 0: //逐渐消失
+                    {
+                        Phase2Fade(() =>
+                        {
+                            Vector2 pos = Target.Center;
+                            if (FantasySparkleAlive(out NPC fs))
+                                pos = fs.Center;
+
+                            if (Math.Abs(Target.velocity.X) < 0.1f && Math.Abs(Target.velocity.Y) < 0.1f)
+                                return pos + new Vector2(Target.direction, 0) * Main.rand.NextFloat(450, 600);
+                            else
+                                return pos + Target.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(450, 600);
+                        }, () =>
+                        {
+                            SonState++;
+                            int damage = Helper.ScaleValueForDiffMode(20, 10, 10, 10);
+                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 4, ai1: 45, ai2: -1);
+                        }, PostTeleport: () =>
+                        {
+                            Vector2 pos = Target.Center;
+                            if (FantasySparkleAlive(out NPC fs))
+                                pos = fs.Center;
+
+                            NPC.rotation = (pos - NPC.Center).ToRotation();
+                        });
+                    }
+                    break;
+                case 1://假装靠近
+                    {
+                        Vector2 pos = Target.Center;
+                        if (FantasySparkleAlive(out NPC fs))
+                            pos = fs.Center;
+
+                        if (Timer == 10)
+                            SoundEngine.PlaySound(CoraliteSoundID.DeathCalling_Item103, NPC.Center);
+
+                        NPC.rotation = NPC.rotation.AngleTowards((pos - NPC.Center).ToRotation(), 0.3f);
+                        if (Vector2.Distance(NPC.Center, pos) > 220)
+                        {
+                            float speed = NPC.velocity.Length();
+                            speed += 0.65f;
+                            if (speed > 26)
+                                speed = 26;
+
+                            float velRot = NPC.velocity.ToRotation();
+                            NPC.velocity = velRot.AngleTowards(NPC.rotation, 0.3f).ToRotationVector2() * speed;
+                        }
+                        else
+                        {
+                            NPC.velocity *= 0.8f;
+                        }
+
+                        if (Timer > 45)
+                        {
+                            SonState++;
+                            Timer = 0;
+                            ShootCount = (NPC.Center - Target.Center).ToRotation();
+
+                            int damage = Helper.ScaleValueForDiffMode(30, 20, 15, 15);
+                            NPC.NewProjectileInAI<VineSpike>(NPC.Center, (ShootCount + 2f).ToRotationVector2(), damage, 8, NPC.target, 0, ShootCount + 0.9f, 25);
+                            NPC.NewProjectileInAI<VineSpike>(NPC.Center, (ShootCount - 2f).ToRotationVector2(), damage, 8, NPC.target, 0, ShootCount - 0.9f, 55);
+                        }
+                    }
+                    break;
+                case 2: //射出2个荆棘刺，之后依次射出
+                    {
+                        DoRotation(0.3f);
+
+                        float angle = ShootCount + MathHelper.PiOver4 / 4 * MathF.Sin(Timer * 0.0314f);
+                        Vector2 center = Target.Center + angle.ToRotationVector2() * 450;
+                        Vector2 dir = center - NPC.Center;
+
+                        float velRot = NPC.velocity.ToRotation();
+                        float targetRot = dir.ToRotation();
+
+                        float speed = NPC.velocity.Length();
+                        float aimSpeed = Math.Clamp(dir.Length() / 400f, 0, 1) * 56;
+                        NPC.velocity = velRot.AngleTowards(targetRot, 0.5f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.15f);
+
+                        if (Timer > 65)
+                        {
+                            SetPhase2States();
+                        }
+                    }
+                    break;
+            }
+
+            Timer++;
+        }
+
         public void RollingThenBite()
         {
             switch ((int)SonState)
@@ -489,7 +591,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             //生成裂缝的拖尾弹幕
                             int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
                             NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 10, ai2: -1);
-                            NPC.NewProjectileInAI<NightmareSlit>(NPC.Center, Vector2.Zero, damage, 4);
+                            NPC.NewProjectileInAI<NightmareSlit>(NPC.Center, Vector2.Zero, Helper.ScaleValueForDiffMode(45, 30, 25, 20), 4);
                         }
                     }
                     break;
@@ -678,7 +780,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             //生成裂缝的拖尾弹幕
                             int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
                             NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 10, ai2: -1);
-                            NPC.NewProjectileInAI<NightmareSlit>(NPC.Center, Vector2.Zero, damage, 4);
+                            NPC.NewProjectileInAI<NightmareSlit>(NPC.Center, Vector2.Zero, Helper.ScaleValueForDiffMode(45, 30, 25, 20), 4);
                         }
                     }
                     break;
@@ -864,7 +966,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 3; i++)
                             {
                                 NPC.NewProjectileInAI<NightmareCrow>(GetPhase1MousePos(), (rot + i * MathHelper.TwoPi / 3).ToRotationVector2() * 14
-                                    , damage, 1, -1, -2, 0, Main.rand.NextFromList(-1, 1)*0.01f);
+                                    , damage, 1, -1, -2, 0, Main.rand.NextFromList(-1, 1)*0.02f);
                             }
 
                             SoundStyle st = CoraliteSoundID.BloodThron_Item113;
@@ -933,7 +1035,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 7; i++)
                             {
                                 NPC.NewProjectileInAI<NightmareBat>(GetPhase1MousePos(), (NPC.rotation + i * MathHelper.TwoPi / 7).ToRotationVector2() * 14
-                                    , damage, 1, -1, -2, 0, 1);
+                                    , damage, 1, -1, -2, 1, 0.03f);
                             }
 
                             SoundStyle st = CoraliteSoundID.BloodThron_Item113;
@@ -979,7 +1081,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 7; i++)
                             {
                                 NPC.NewProjectileInAI<NightmareBat>(GetPhase1MousePos(), (NPC.rotation + i * MathHelper.TwoPi / 7).ToRotationVector2() * 13
-                                    , damage, 1, -1, -2, 0, (Timer % 60 == 0 ? 1 : -1)*0.008f);
+                                    , damage, 1, -1, -2, 0, (Timer % 60 == 0 ? 1 : -1) * 0.014f);
                             }
 
                             SoundStyle st = CoraliteSoundID.BloodThron_Item113;
@@ -994,7 +1096,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 7; i++)
                             {
                                 NPC.NewProjectileInAI<NightmareCrow>(GetPhase1MousePos(), (NPC.rotation + i * MathHelper.TwoPi / 7).ToRotationVector2() * 15
-                                    , damage, 1, -1, -1, 0, -1 * 0.015f);
+                                    , damage, 1, -1, -1, 0, -1 * 0.02f);
                             }
 
                             SoundStyle st = CoraliteSoundID.BloodThron_Item113;
@@ -1048,7 +1150,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         HookSlashMovement();
                         if (Timer < ShootCount * 30 && Timer % 30 == 0)
                         {
-                            int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
+                            int damage = Helper.ScaleValueForDiffMode(40, 30, 25, 25);
                             float angle2 = (NPC.Center - Target.Center).ToRotation() + (Timer % 60 == 0 ? MathHelper.PiOver4 : -MathHelper.PiOver4) + Main.rand.NextFloat(-0.25f, 0.25f);
                             NPC.NewProjectileInAI<HookSlash>(NPC.Center + (NPC.Center - Target.Center).SafeNormalize(Vector2.One) * 64, Vector2.Zero, damage,
                                 0, NPC.target, ai1: angle2, ai2: 160);
@@ -2274,7 +2376,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
             }
 
-            //State = (int)AIStates.nightmareDash;
+           // State = (int)AIStates.fakeBite;
 
             MoveCount++;
             if (MoveCount > 11)
@@ -2283,11 +2385,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public static int RandomBite()
         {
-            return Main.rand.Next(0, 2) switch
+            return Main.rand.Next(0, 3) switch
             {
                 0 => (int)AIStates.nightmareBite,
+                1 => (int)AIStates.fakeBite,
                 _ => (int)AIStates.nightmareDash,
-            };
+            } ;
         }
 
         public static int SpecialMove2(int oldState)

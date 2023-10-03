@@ -58,9 +58,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
-            if (Projectile.velocity.Length() < 20)
+            if (Projectile.velocity.Length() < 19)
             {
-                Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.5f;
+                Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.4f;
                 Projectile.rotation = Projectile.velocity.ToRotation();
             }
 
