@@ -2,6 +2,7 @@
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
@@ -14,7 +15,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -117,8 +117,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPC.noTileCollide = true;
             NPC.boss = true;
             //NPC.hide = true;
-            if (Main.BigBossProgressBar.TryGetSpecialVanillaBossBar(NPCID.QueenSlimeBoss, out IBigProgressBar bossbar))
-                NPC.BossBar = bossbar;
+
+            if (VisualEffectSystem.UseNightmareBossBar)
+                NPC.BossBar = ModContent.GetInstance<NPBossBar>();
+            else if (Main.BigBossProgressBar.TryGetSpecialVanillaBossBar(NPCID.KingSlime, out var bar))
+                NPC.BossBar = bar;
 
             //BGM：来世-世纪之花
             if (!Main.dedServ)
@@ -352,6 +355,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Helper.PlayPitched("Music/Heart", 1f, 0f, NPC.Center);
             Music = 0;
+
+            ((NightmareSky)SkyManager.Instance["NightmareSky"]).color=nightPurple;
         }
 
         public override void AI()

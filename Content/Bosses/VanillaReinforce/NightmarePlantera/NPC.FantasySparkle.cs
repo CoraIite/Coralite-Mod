@@ -231,34 +231,34 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 3:
                     {
-                        if (timer == 5)
+                        if (timer == 10)
                         {
                             Rectangle rectangle = new Rectangle((int)NPC.Center.X, (int)NPC.Center.Y, 2, 2);
                             CombatText.NewText(rectangle, Color.LightGoldenrodYellow, "别害怕！！");
                         }
 
-                        if (timer == 50)
+                        if (timer == 60)
                         {
                             Rectangle rectangle = new Rectangle((int)NPC.Center.X, (int)NPC.Center.Y, 2, 2);
                             CombatText.NewText(rectangle, Color.LightGoldenrodYellow, "我会帮你！");
                         }
 
-                        if (timer < 50)
+                        if (timer < 100)
                         {
                             Target.Center = NPC.Center;
                             Target.velocity *= 0f;
                             Target.immuneTime = 75;
                             Target.AddImmuneTime(ImmunityCooldownID.Bosses, 75);
                         }
-                        else if (timer == 50)
+                        else if (timer == 100)
                         {
                             Target.velocity += (Target.Center - np.Center).SafeNormalize(Vector2.Zero) * 14f;
                         }
-                        else if (timer < 70)
+                        else if (timer < 120)
                         {
                             Target.velocity += (Target.Center - np.Center).SafeNormalize(Vector2.Zero) * 0.65f;
                         }
-                        else if (timer > 80)
+                        else if (timer > 1300)
                         {
                             NPC.Kill();
                         }

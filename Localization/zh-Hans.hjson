@@ -1281,7 +1281,11 @@ Mods: {
 
 			NightmareHarp: {
 				DisplayName: 噩梦竖琴
-				Tooltip: 在夜晚召唤梦魇之花，不消耗
+				Tooltip: 
+				'''
+				在夜晚召唤梦魇之花，不消耗
+					可以在视觉效果配置中开启或关闭特殊的天空和特殊血条
+				'''
 			}
 
 			CrystalStoneMaker: {

@@ -518,7 +518,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             useMeleeDamage = true;
                             SonState++;
                             int damage = Helper.ScaleValueForDiffMode(20, 10, 10, 10);
-                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 75, ai2: -1);
+                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 125, ai2: -1);
                             NPC.NewNPC(NPC.GetSource_FromAI(), (int)Target.Center.X, (int)Target.Center.Y, NPCType<FantasySparkle>(), NPC.whoAmI, 3, Target: NPC.target);
                         }, PostTeleport: () =>
                         {
@@ -552,7 +552,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             NPC.velocity *= 0.8f;
                         }
 
-                        if (Timer > 66)
+                        if (Timer > 116)
                         {
                             useMeleeDamage = false;
                             SonState++;
@@ -2613,7 +2613,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 }
 
                 pos /= howmany;
-
+                
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC n = Main.npc[i];

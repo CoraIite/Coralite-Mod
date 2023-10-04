@@ -39,6 +39,7 @@ namespace Coralite.Core.Configs
         [DefaultValue(true)]
         public bool UseNightmareSky;
 
+        public bool UseNightmareBossBar;
 
         public override void OnChanged()
         {
@@ -61,6 +62,7 @@ namespace Coralite.Core.Configs
             VisualEffectSystem.DrawWarp = DrawWarp;
             VisualEffectSystem.DrawTrail = DrawTrail;
             VisualEffectSystem.UseNightmareSky = UseNightmareSky;
+            VisualEffectSystem.UseNightmareBossBar = UseNightmareBossBar;
         }
     }
 
@@ -77,5 +79,7 @@ namespace Coralite.Core.Configs
         public static bool DrawTrail=true;
 
         public static bool UseNightmareSky;
+        public static bool UseNightmareBossBar;
+
     }
 }
