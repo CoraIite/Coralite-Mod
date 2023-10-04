@@ -11,7 +11,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
@@ -21,6 +20,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 为1时自身不动，当玩家靠近后同上<br></br>
     /// 为2时会逃离梦魇花，玩家靠近时同上<br></br>
     /// -2状态为聚合所有的自身并生成美梦神<br></br>
+    /// 3状态为帮助，会先固定玩家位置，之后将玩家投射出以躲避噩梦之咬<br></br>
     /// 使用ai1和ai2传入目标点
     /// </summary>
     public class FantasySparkle : ModNPC, IDrawNonPremultiplied
@@ -51,13 +51,22 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPC.noTileCollide = true;
             NPC.friendly = true;
             NPC.knockBackResist = 0.5f;
-            NPC.lifeMax = 200;
+            NPC.lifeMax = 230;
             NPC.width = NPC.height = 85;
 
             mainSparkleScale = new Vector2(4f, 1.5f);
             circleSparkleScale = 1f;
 
             NPC.HitSound = CoraliteSoundID.MountSummon_Item25;
+        }
+
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
+        {
+            if (projectile.ModProjectile is BaseNightmareProj)
+            {
+                modifiers.SourceDamage += 5f;
+                modifiers.SetCrit();
+            }
         }
 
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
@@ -218,6 +227,43 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             State = -1;
                             (np.ModNPC as NightmarePlantera).Exchange2DreamingStates();
                         }
+                    }
+                    break;
+                case 3:
+                    {
+                        if (timer == 5)
+                        {
+                            Rectangle rectangle = new Rectangle((int)NPC.Center.X, (int)NPC.Center.Y, 2, 2);
+                            CombatText.NewText(rectangle, Color.LightGoldenrodYellow, "别害怕！！");
+                        }
+
+                        if (timer == 50)
+                        {
+                            Rectangle rectangle = new Rectangle((int)NPC.Center.X, (int)NPC.Center.Y, 2, 2);
+                            CombatText.NewText(rectangle, Color.LightGoldenrodYellow, "我会帮你！");
+                        }
+
+                        if (timer < 50)
+                        {
+                            Target.Center = NPC.Center;
+                            Target.velocity *= 0f;
+                            Target.immuneTime = 75;
+                            Target.AddImmuneTime(ImmunityCooldownID.Bosses, 75);
+                        }
+                        else if (timer == 50)
+                        {
+                            Target.velocity += (Target.Center - np.Center).SafeNormalize(Vector2.Zero) * 14f;
+                        }
+                        else if (timer < 70)
+                        {
+                            Target.velocity += (Target.Center - np.Center).SafeNormalize(Vector2.Zero) * 0.65f;
+                        }
+                        else if (timer > 80)
+                        {
+                            NPC.Kill();
+                        }
+
+                        timer++;
                     }
                     break;
             }

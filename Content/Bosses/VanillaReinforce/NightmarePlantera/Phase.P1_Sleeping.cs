@@ -200,7 +200,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 {
                     Vector2 pos = GetPhase1MousePos();
                     Vector2 dir = NPC.rotation.ToRotationVector2();
-                    int damage = Helper.ScaleValueForDiffMode(50, 35, 40, 45);
+                    int damage = Helper.ScaleValueForDiffMode(40, 35, 30, 25);
                     for (int i = -1; i < 2; i ++)
                         Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, dir.RotatedBy(i * 0.35f) * Main.rand.NextFloat(6f, 14f), ModContent.ProjectileType<HypnotizeFog>(),
                             damage, 4, Target.whoAmI);
@@ -286,7 +286,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 Vector2 pos = GetPhase1MousePos();
                 Vector2 dir = NPC.rotation.ToRotationVector2();
-                int damage = Helper.ScaleValueForDiffMode(45, 40, 30, 25);
+                int damage = Helper.ScaleValueForDiffMode(40, 35, 30, 25);
 
                 if (Timer % (shootDelay * 4) == 0)    //每隔3次固定射出4发弹幕
                 {

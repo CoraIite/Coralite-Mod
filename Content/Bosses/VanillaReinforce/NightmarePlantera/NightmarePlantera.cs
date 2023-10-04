@@ -468,6 +468,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             nightmareDash,
             /// <summary> 假装咬但张开嘴后消失并射出2个荆棘刺 </summary>
             fakeBite,
+            /// <summary>
+            /// 噩梦之咬，但是出现美梦光帮助你
+            /// </summary>
+            fantasyHelp,
             /// <summary> 转圈圈放弹幕，之后瞬移到另一方向咬下 </summary>
             rollingThenBite,
             /// <summary> 在玩家下方转圈圈并放弹幕，之后瞬移到玩家面朝方向上方向斜上方咬下 </summary>
