@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Particles;
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
@@ -2386,7 +2387,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
             }
 
-            //State = (int)AIStates.fakeBite;
+            State = (int)AIStates.dreamSparkle;
 
             MoveCount++;
             if (MoveCount > 11)
@@ -2520,6 +2521,24 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 }
 
                 FantasyGod = NPC.NewNPC(NPC.GetSource_FromAI(), (int)pos.X, (int)pos.Y, NPCType<FantasyGod>());
+
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                {
+                    CoralitePlayer cp = Main.LocalPlayer.GetModPlayer<CoralitePlayer>();
+                    cp.nightmareCount = 0;
+                    Main.LocalPlayer.ClearBuff(BuffType<DreamErosion>());
+                }
+                else
+                    for (int i = 0; i < Main.maxPlayers; i++)
+                    {
+                        Player p = Main.player[i];
+                        if (p.active && p.HasBuff<DreamErosion>())
+                        {
+                            CoralitePlayer cp = p.GetModPlayer<CoralitePlayer>();
+                            cp.nightmareCount = 0;
+                            p.ClearBuff(BuffType<DreamErosion>());
+                        }
+                    }
 
                 State = (int)AIStates.P2_Idle;
                 NPC.dontTakeDamage = false;

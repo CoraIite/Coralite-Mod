@@ -13133,7 +13133,7 @@
         </member>
         <member name="T:Terraria.ModLoader.IO.TagCompound">
             <summary>
-            Tag compounds contained named values, serialisable as per the NBT spec: <see href="https://minecraft.fandom.com/wiki/NBT_format">NBT spec wiki page</see> <br/>
+            Tag compounds contained named values, serialisable as per the NBT spec: <see href="https://minecraft.wiki/w/NBT_format">NBT spec wiki page</see> <br/>
             All primitive data types are supported as well as byte[], int[] and Lists of other supported data types <br/>
             Lists of Lists are internally stored as IList&lt;IList&gt; <br/>
             Modification of lists stored in a TagCompound will only work if there were no type conversions involved and is not advised <br/>
@@ -22254,6 +22254,12 @@
         <member name="M:Terraria.Player.HasItemInInventoryOrOpenVoidBag(System.Int32)">
             <summary>
             Similar to <see cref="M:Terraria.Player.HasItem(System.Int32)"/>, but also checks the Void Bag.
+            </summary>
+        </member>
+        <member name="F:Terraria.Player.selectItemOnNextUse">
+            <summary>
+            Causes <see cref="M:Terraria.Player.SmartSelectLookup"/> to run the next time an item animation is finished, even if <see cref="F:Terraria.Player.controlUseItem"/> is held. <br/>
+            Used internally by tML to when a hotbar key is pressed while using an item.
             </summary>
         </member>
         <member name="P:Terraria.Player.ConsumedLifeCrystals">

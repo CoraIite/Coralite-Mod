@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 20;
-            Projectile.width = Projectile.height = 32;
+            Projectile.width = Projectile.height = 1000;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
         }
@@ -76,7 +76,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 case 0: //跟踪梦魇花
                     {
                         float angle = Angle + 0.2f * MathF.Sin(Timer * 0.0314f);
-                        Vector2 center = np.Center + angle.ToRotationVector2() * 550;
+                        Vector2 center = np.Center + angle.ToRotationVector2() * 650;
                         Vector2 dir = center - Projectile.Center;
 
                         float velRot = Projectile.velocity.ToRotation();
@@ -102,7 +102,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 case 1://刺出
                     {
                         Vector2 dir = np.Center - fg.Center;
-                        float length = dir.Length() + 400;
+                        float length = dir.Length() + 800;
                         float rot = dir.ToRotation();
                         Projectile.rotation = Projectile.rotation.AngleLerp(rot, 0.4f);
                         Projectile.Center = Vector2.Lerp(Projectile.Center, fg.Center + dir.SafeNormalize(Vector2.Zero) * length, 0.4f);
@@ -116,7 +116,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 2://收回
                     {
-                        Projectile.Center = Vector2.Lerp(Projectile.Center, fg.Center, 0.1f);
+                        Projectile.Center = Vector2.Lerp(Projectile.Center, fg.Center, 0.15f);
                         if (Timer > 20)
                         {
                             Projectile.Kill();

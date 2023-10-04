@@ -196,4 +196,138 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             spike?.DrawTentacle_NoEndBegin();
         }
     }
+
+    /// <summary>
+    /// 就只是视觉效果，用于固定梦魇花
+    /// 使用ai0输入刺出时间<br></br>
+    /// 使用ai1传入刺出的长度<br></br>
+    /// 使用速度传入突刺角度
+    /// </summary>
+    public class FantasySpike_Visual : ModProjectile, INightmareTentacle
+    {
+        public override string Texture => AssetDirectory.Blank;
+
+        private ref float ShootTime => ref Projectile.ai[0];
+        private ref float SpurtLength => ref Projectile.ai[1];
+        private ref float State => ref Projectile.localAI[1];
+        public ref float Length => ref Projectile.localAI[0];
+
+        public ref Vector2 SpikeTop => ref Projectile.velocity;
+
+        public bool canHitPlayer = true;
+        private bool Init = true;
+        private float Timer;
+        private float spikeWidth;
+
+        public NightmareTentacle spike;
+        public Color drawColor=FantasyGod.shineColor;
+
+        public override bool ShouldUpdatePosition() => false;
+
+        public override void SetDefaults()
+        {
+            Projectile.tileCollide = false;
+            Projectile.hostile = true;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = -1;
+            Projectile.width = Projectile.height = 64;
+            Projectile.timeLeft = 3000;
+        }
+
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
+        public override bool CanHitPlayer(Player target) => false;
+
+        public override void AI()
+        {
+            if (!NightmarePlantera.NightmarePlanteraAlive(out NPC np))
+            {
+                Projectile.Kill();
+                return;
+            }
+
+            if (Init)
+            {
+                Vector2 center = Projectile.Center;
+                Projectile.width = Projectile.height = (int)SpurtLength;
+                Projectile.Center = center;
+
+                Init = false;
+                Projectile.rotation = Projectile.velocity.ToRotation();
+                SpikeTop = center;
+            }
+
+            spike ??= new NightmareTentacle(30, factor =>
+            {
+                if (factor < 0.3f)
+                {
+                    return Color.Lerp(Color.Transparent , drawColor, factor / 0.3f);
+                }
+
+                return Color.Lerp(drawColor, Color.White, (factor - 0.3f) / 0.7f);
+
+            }, factor =>
+            {
+                return Helper.Lerp(0, spikeWidth, factor);
+            }, NightmarePlantera.tentacleTex, NightmareSpike.FlowTex);
+
+
+            switch ((int)State)
+            {
+                default:
+                case 0: //伸出一个小头
+                    {
+                        if (Timer < 3)
+                        {
+                            SpikeTop += Projectile.rotation.ToRotationVector2() * 25;
+                            spikeWidth += 3f;
+                        }
+
+                        if (Timer > 20)
+                        {
+                            State++;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+                case 1://快速戳出
+                    {
+                        if (Timer < 5)
+                        {
+                            float currentLength = Vector2.Distance(SpikeTop, Projectile.Center);
+                            currentLength = Helper.Lerp(currentLength, SpurtLength, 0.7f);
+                            SpikeTop = Projectile.Center + Projectile.rotation.ToRotationVector2() * currentLength;
+                            spikeWidth += 4f;
+                        }
+
+                        if (Timer > ShootTime)
+                        {
+                            State++;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+                case 2://逐渐收回并减淡消失
+                    {
+                        SpikeTop = Vector2.Lerp(SpikeTop, Projectile.Center, 0.1f);
+                        drawColor *= 0.9f;
+                        if (drawColor.A < 10)
+                            Projectile.Kill();
+                    }
+                    break;
+
+            }
+
+            spike.pos = Projectile.Center;
+            spike.rotation = Projectile.rotation;
+            spike.UpdateTentacle((SpikeTop - Projectile.Center).Length() / 30, i => MathF.Sin((i + Timer) * 0.314f) * 2);
+            Timer++;
+        }
+
+        public override bool PreDraw(ref Color lightColor) => false;
+
+        public void DrawTentacle()
+        {
+            spike?.DrawTentacle_NoEndBegin();
+        }
+    }
 }

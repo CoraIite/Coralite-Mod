@@ -1724,6 +1724,7 @@ Mods: {
 			NightmareBat.DisplayName: Nightmare Bat
 			NightmareCrow.DisplayName: Nightmare Crow
 			VineSpike.DisplayName: Vine Spike
+			FantasySpike_Visual.DisplayName: Fantasy Spike_ Visual
 		}
 
 		Configs: {

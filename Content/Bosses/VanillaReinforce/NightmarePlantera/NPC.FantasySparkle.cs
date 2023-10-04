@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI.Chat;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
@@ -42,6 +43,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public Vector2 mainSparkleScale;
         public float circleSparkleScale;
+        public int timer;
 
         public override void SetDefaults()
         {
@@ -96,7 +98,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         NPC.Center = Vector2.Lerp(NPC.Center, TargetPos, 0.04f);
                         NPC.velocity *= 0;
-                        if (Vector2.Distance(NPC.Center,TargetPos)<48)
+                        if (Vector2.Distance(NPC.Center, TargetPos) < 48)
                         {
                             for (int i = 0; i < Main.maxNPCs; i++)
                             {
@@ -146,6 +148,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 case 0://缓慢靠近玩家
                     {
                         NPC.TargetClosest();
+
+                        timer++;
+                        if (timer>45)
+                        {
+                            Rectangle rectangle = new Rectangle((int)NPC.Center.X, (int)NPC.Center.Y, 2, 2);
+                            CombatText.NewText(rectangle, Color.LightGoldenrodYellow, "帮帮我！");
+                            timer = 0;
+                        }
 
                         if (Vector2.Distance(Target.Center, NPC.Center) > 200)
                         {

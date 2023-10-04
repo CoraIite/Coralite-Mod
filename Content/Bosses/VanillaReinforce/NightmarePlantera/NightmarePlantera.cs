@@ -198,7 +198,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (projectile.type == ModContent.ProjectileType<HyacinthBullet>() || projectile.type == ModContent.ProjectileType<HyacinthBullet2>()
                 || projectile.type == ModContent.ProjectileType<HyacinthExplosion>())
             {
-                modifiers.SourceDamage *= 0.7f;
+                modifiers.SourceDamage *= 0.6f;
                 return;
             }
 

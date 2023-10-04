@@ -700,7 +700,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         float aimSpeed = Math.Clamp(dir.Length() / 400f, 0, 1) * 56;
                         NPC.velocity = velRot.AngleTowards(targetRot, 0.5f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.15f);
 
-                        if (Timer > 105)
+                        if (Timer > 125)
                             SetPhase3States();
                     }
                     break;
@@ -865,6 +865,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             SoundEngine.PlaySound(st, NPC.Center);
                             var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY, 15, 8, 20, 1000);
                             Main.instance.CameraModifiers.Add(modifyer);
+
+                            EXai1 = Main.rand.NextFloat(MathHelper.TwoPi);
                         });
                     }
                     break;
@@ -903,7 +905,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         Dust dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(64f), DustType<NightmareDust>(), dir * Main.rand.NextFloat(2f, 4f), Scale: Main.rand.NextFloat(1f, 2f));
                         dust.noGravity = true;
 
-                        if (Timer %4 == 0)
+                        if (Timer % 4 == 0)
                         {
                             dir = Helper.NextVec2Dir();
                             dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(64f), DustType<NightmareStar>(), dir * Main.rand.NextFloat(4f, 8f), newColor: nightmareRed, Scale: Main.rand.NextFloat(1f, 4f));
@@ -948,7 +950,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                             for (int i = 0; i < 7; i++)
                             {
-                                NPC.NewProjectileInAI<DarkLeaf>(NPC.Center, (ShootCount * 0.14f + i * MathHelper.TwoPi / 7).ToRotationVector2() * 12, damage, 0, ai0: color);
+                                NPC.NewProjectileInAI<DarkLeaf>(NPC.Center, (EXai1+ShootCount * 0.14f + i * MathHelper.TwoPi / 7).ToRotationVector2() * 12, damage, 0, ai0: color);
                             }
 
                             if (Timer < 60)
@@ -1040,7 +1042,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             {
                                 SonState = Main.rand.Next(1, 3);
                                 NPC.rotation = (Target.Center - NPC.Center).ToRotation();
-                                ShootCount = Main.rand.Next(2, 5);
+                                ShootCount = Main.rand.Next(3, 5);
                             });
                     }
                     break;
@@ -1512,6 +1514,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             fantasyKillCount = 0;
             tentacleStarFrame = 1;
             alpha = 1;
+            EXai1 = 0;
 
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;

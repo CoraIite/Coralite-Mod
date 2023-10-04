@@ -1,4 +1,6 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,9 +26,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public ref float State => ref NPC.ai[0];
         public ref float Timer => ref NPC.ai[1];
+        public ref float Angle=>ref NPC.ai[2];
         public ref float LightScale => ref NPC.ai[3];
-
-        //public ref float TentacleFactor => ref NPC.localAI[3];
 
         public static Color shineColor = new Color(252, 233, 194);
 
@@ -128,26 +129,50 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             Timer = 0;
                             canDrawWarp = true;
                             warpScale = 4f;
+                            Angle = (NPC.Center - np.Center).ToRotation();
+
+                            for (int i = 0; i < 4; i++)
+                            {
+                                Vector2 center = np.Center + Main.rand.NextVector2CircularEdge(1000, 1000);
+                                Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), center, (np.Center - center).SafeNormalize(Vector2.Zero),
+                                    ModContent.ProjectileType<FantasySpike_Visual>(), 1, 0, NPC.target, 300, 1100);
+                            }
                         }
                     }
                     break;
                 case 1://蓄力并射出一堆光球弹幕
                     {
-                        NPC.velocity *= 0.9f;
+                        Vector2 center = np.Center + (Angle + Timer / 460 * MathHelper.TwoPi).ToRotationVector2() * 450;
+                        Vector2 dir2 = center - NPC.Center;
 
-                        if (Timer==2)
+                        float velRot = NPC.velocity.ToRotation();
+                        float targetRot = dir2.ToRotation();
+
+                        float speed = NPC.velocity.Length();
+                        float aimSpeed = Math.Clamp(dir2.Length() / 400f, 0, 1) * 45;
+
+                        NPC.velocity = velRot.AngleTowards(targetRot, 0.45f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.45f);
+
+                        for (int i = 0; i < 4; i++)
+                        {
+                            Vector2 v = Helper.NextVec2Dir();
+                            Particle.NewParticle(NPC.Center + v * Main.rand.Next(80, 100), v * Main.rand.NextFloat(6, 24f),
+                                CoraliteContent.ParticleType<BigFog>(), shineColor, Scale: Main.rand.NextFloat(0.5f, 1.25f));
+                        }
+
+                        if (Timer == 2)
                         {
                             SoundStyle st = CoraliteSoundID.EmpressOfLight_Summoned_Item161;
                             st.Pitch = 0.5f;
                             SoundEngine.PlaySound(st, NPC.Center);
                         }
 
-                        if (Timer<30)
+                        if (Timer < 30)
                         {
                             warpScale -= 4f / 30;
                         }
 
-                        if (Timer==30)
+                        if (Timer == 30)
                         {
                             canDrawWarp = false;
                         }
@@ -165,6 +190,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         if (Timer > 168)
                         {
+                            NPC.velocity *= 0.5f;
                             State++;
                             Timer = 0;
                             float angle = (NPC.Center - np.Center).ToRotation() - 2 * 0.3f;
@@ -177,7 +203,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 2:
                     {
-                        if (Timer>150)
+                        NPC.velocity *= 0.9f;
+                        if (Timer > 140)
                         {
                             State = 3;
                             Timer = 0;
@@ -186,9 +213,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 3:
                     {
-                        LightScale -= 1 / 30f;
+                        LightScale -= 1 / 20f;
 
-                        if (Timer>30)
+                        if (Timer > 20)
                         {
                             NPC.Kill();
                             NightmarePlantera.FantasyGod = -1;

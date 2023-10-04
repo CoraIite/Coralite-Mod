@@ -35,7 +35,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
-            Projectile.width = Projectile.height = 48;
+            Projectile.width = Projectile.height = 32;
             Projectile.timeLeft = 300;
         }
 
@@ -101,15 +101,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int i = 0; i < 6; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                Color.Black * (0.5f - i * 0.08f), Projectile.oldRot[i], origin, 1.1f - i * 0.08f, filp, 0);
+                Color.Black * (0.5f - i * 0.08f), Projectile.oldRot[i], origin, 0.9f - i * 0.08f, filp, 0);
 
             for (int i = 0; i < 3; i++)
             {
                 Main.spriteBatch.Draw(mainTex, pos + (Main.GlobalTimeWrappedHourly / 5 + i * MathHelper.TwoPi / 3).ToRotationVector2() * 6
-                    , null, c, Projectile.rotation, origin, 1f, filp, 0);
+                    , null, c, Projectile.rotation, origin, 0.75f, filp, 0);
             }
 
-            Main.spriteBatch.Draw(mainTex, pos, null, Color.Black, Projectile.rotation, origin, 1f, filp, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, Color.Black, Projectile.rotation, origin, 0.75f, filp, 0);
 
             return false;
         }

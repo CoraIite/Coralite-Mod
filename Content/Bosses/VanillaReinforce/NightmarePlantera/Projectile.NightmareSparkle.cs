@@ -27,14 +27,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (Projectile.velocity.Length() < 24)
             {
                 Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.3f;
-                Projectile.rotation = Projectile.velocity.ToRotation();
             }
+
+            float dir2 = ((Projectile.timeLeft % 30) > 15 ? -1 : 1) * 0.02f;
+            Projectile.velocity = Projectile.velocity.RotatedBy(dir2);
+
+            Projectile.rotation = Projectile.velocity.ToRotation();
 
             if (Main.rand.NextBool(6))
             {
                 Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
                 Dust dust = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<NightmareStar>(),
-                    dir * Main.rand.NextFloat(1f, 4f), newColor: NightmarePlantera.lightPurple, Scale: Main.rand.NextFloat(1f, 2f));
+                    dir * Main.rand.NextFloat(1f, 4f), newColor: NightmarePlantera.lightPurple, Scale: Main.rand.NextFloat(1f, 1.75f));
                 dust.rotation = dir.ToRotation() + MathHelper.PiOver2;
             }
         }
@@ -61,14 +65,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (Projectile.velocity.Length() < 19)
             {
                 Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.4f;
-                Projectile.rotation = Projectile.velocity.ToRotation();
             }
+
+            float dir2 = ((Projectile.timeLeft % 30) > 15 ? -1 : 1) * 0.03f;
+            Projectile.velocity = Projectile.velocity.RotatedBy(dir2);
+
+            Projectile.rotation = Projectile.velocity.ToRotation();
 
             if (Main.rand.NextBool(6))
             {
                 Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
                 Dust dust = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<NightmareStar>(),
-                    dir * Main.rand.NextFloat(1f, 4f), newColor: NightmarePlantera.nightmareRed, Scale: Main.rand.NextFloat(1f, 2f));
+                    dir * Main.rand.NextFloat(1f, 4f), newColor: NightmarePlantera.nightmareRed, Scale: Main.rand.NextFloat(1f, 1.75f));
                 dust.rotation = dir.ToRotation() + MathHelper.PiOver2;
             }
         }
@@ -130,10 +138,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         float factor = Timer / RollingTime;
 
                         ShineColor = Color.Lerp(Color.Transparent, NightmarePlantera.nightPurple, factor);
-                        mainSparkleScale =Vector2.Lerp(Vector2.Zero, new Vector2(1f, 2f),factor) ;
-                        circleSparkleScale = MathHelper.Lerp(0,0.4f,factor) ;
+                        mainSparkleScale = Vector2.Lerp(Vector2.Zero, new Vector2(1f, 2f), factor);
+                        circleSparkleScale = MathHelper.Lerp(0, 0.4f, factor);
 
-                        Projectile.Center = Owner.Center + Angle.ToRotationVector2() * MathHelper.Lerp(length,TargetLenght,factor);
+                        Projectile.Center = Owner.Center + Angle.ToRotationVector2() * MathHelper.Lerp(length, TargetLenght, factor);
                         Projectile.rotation = Angle;
 
                         if ((int)CanExchange == 1)
@@ -161,7 +169,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 1: //普通的射出
                     {
-                        if (Projectile.velocity.Length() < 24)
+                        if (Projectile.velocity.Length() < 20)
                         {
                             Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.1f;
                             Projectile.rotation = Projectile.velocity.ToRotation();
