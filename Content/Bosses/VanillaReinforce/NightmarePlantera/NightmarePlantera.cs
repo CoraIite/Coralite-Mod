@@ -595,12 +595,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                if (cp.nightmareCount < 14)
-                    cp.nightmareCount += (byte)Helper.ScaleValueForDiffMode(1, 1, 2, 14);
+                if (cp.nightmareCount < 28)
+                    cp.nightmareCount += (byte)Helper.ScaleValueForDiffMode(1, 1, 2, 3);
 
                 //设置阶段并秒杀玩家
-                if (cp.nightmareCount > 13)
+                if (cp.nightmareCount > 28)
+                {
+                    cp.nightmareCount = 28;
                     (np.ModNPC as NightmarePlantera).ChangeToSuddenDeath(player);
+                }
 
                 if (player.whoAmI == Main.myPlayer)
                     Filters.Scene.Activate("NightmareScreen", player.position);
