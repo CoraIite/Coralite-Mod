@@ -45,7 +45,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return;
             }
 
-            if (Projectile.timeLeft<1770)
+            if (Projectile.timeLeft<1765)
             {
                 #region 同叶绿弹的追踪
                 float velLength = Projectile.velocity.Length();
@@ -68,8 +68,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 num199 *= dis2Target;
                 int chase = 8;
 
-                Projectile.velocity.X = (Projectile.velocity.X * (chase - 2) + num198) / chase;
-                Projectile.velocity.Y = (Projectile.velocity.Y * (chase - 2) + num199) / chase;
+                Projectile.velocity.X = (Projectile.velocity.X * (chase - 1) + num198) / chase;
+                Projectile.velocity.Y = (Projectile.velocity.Y * (chase - 1) + num199) / chase;
 
                 #endregion
             }
