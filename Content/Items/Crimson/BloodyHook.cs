@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -19,11 +20,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Crimson
 {
-    public class BloodyHook : ModItem
+    public class BloodyHook : BaseSilkKniefItem
     {
         public override string Texture => AssetDirectory.CrimsonItems + Name;
-
-        public int combo;
 
         public override void SetDefaults()
         {
@@ -37,8 +36,6 @@ namespace Coralite.Content.Items.Crimson
             Item.noUseGraphic = true;
             Item.noMelee = true;
         }
-
-        public override bool AltFunctionUse(Player player) => true;
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -241,18 +238,15 @@ namespace Coralite.Content.Items.Crimson
         public override void PostDraw(Color lightColor) { }
     }
 
-    public class BloodHookChain : BaseHeldProj
+    public class BloodHookChain : BaseSilkKniefSpecialProj
     {
         public override string Texture => AssetDirectory.CrimsonItems + "BloodyHookProj";
 
         public static Asset<Texture2D> ChainTex;
 
-        public ref float Target => ref Projectile.ai[1];
-        public ref float HookState => ref Projectile.ai[2];
-
-        public ref float Timer => ref Projectile.localAI[0];
-
-        private Vector2 offset;
+        public BloodHookChain() : base(16*30, 32, 20, 16)
+        {
+        }
 
         public override void SetDefaults()
         {
@@ -266,14 +260,6 @@ namespace Coralite.Content.Items.Crimson
             Projectile.aiStyle = -1;
         }
 
-        private enum AIStates
-        {
-            back = -1,
-            rolling = 0,
-            shoot = 1,
-            onHit = 2,
-            drag = 3
-        }
 
         public override void Load()
         {
@@ -286,104 +272,32 @@ namespace Coralite.Content.Items.Crimson
             ChainTex = null;
         }
 
-        public override void AI()
+        public override void Drag()
         {
-            switch ((int)HookState)
+            if ((int)Timer == 0)
             {
-                default:
-                case (int)AIStates.back:    //返回玩家手中的状态
-                    if (Vector2.Distance(Owner.Center, Projectile.Center) < 48)
-                        Projectile.Kill();
-
-                    Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.One) * 32;
-                    Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation();
-                    break;
-                case (int)AIStates.rolling: //拿在手里转转转的状态
-                    if (Main.mouseRight)
-                    {
-                        Owner.heldProj = Projectile.whoAmI;
-                        Owner.itemAnimation = Owner.itemTime = 2;
-                        Projectile.rotation += 0.5f;
-                        if (Projectile.rotation % 4 < 0.2f)
-                            SoundEngine.PlaySound(CoraliteSoundID.Swing2_Item7, Projectile.Center);
-
-                        Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
-                        Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * 32;
-                    }
-                    else
-                    {
-                        SoundEngine.PlaySound(CoraliteSoundID.WhipSwing_Item152, Projectile.Center);
-                        Vector2 dir = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero);
-                        Projectile.Center = Owner.Center + dir * 64;
-                        Projectile.velocity = dir * 20;
-                        Projectile.rotation = dir.ToRotation();
-                        HookState = (int)AIStates.shoot;
-                        Projectile.tileCollide = true;
-                        Projectile.netUpdate = true;
-                    }
-                    break;
-                case (int)AIStates.shoot://发射中的状态
-                    if (Timer > 16)
-                    {
-                        Timer = 0;
-                        HookState = (int)AIStates.back;
-                        Projectile.tileCollide = false;
-                        Projectile.netUpdate = true;
-                    }
-
-                    Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation();
-                    Timer++;
-                    break;
-                case (int)AIStates.onHit://钩在敌人身上的状态
-                    if (Target < 0 || Target > Main.maxNPCs)
-                        Projectile.Kill();
-
-                    NPC npc = Main.npc[(int)Target];
-                    if (!npc.active || npc.dontTakeDamage || npc.Distance(Owner.Center) > 16 * 30 || !Collision.CanHitLine(Owner.Center, 1, 1, npc.Center, 1, 1))
-                        Projectile.Kill();
-
-                    Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation();
-                    Projectile.Center = npc.Center + offset;
-                    Timer = 0;
-                    break;
-                case (int)AIStates.drag://将玩家拖拽过去的状态
-
-                    if ((int)Timer == 0)
-                    {
-                        Owner.immuneTime = 30;
-                        Owner.immune = true;
-                    }
-
-                    if ((int)Timer < 6)
-                    {
-                        Owner.velocity *= 0;
-                        Owner.Center = Vector2.Lerp(Owner.Center, Projectile.Center, 0.35f);
-                    }
-                    else
-                    {
-                        //将玩家回弹
-                        SoundEngine.PlaySound(CoraliteSoundID.Bloody_NPCHit9, Projectile.Center);
-                        Helpers.Helper.PlayPitched("Misc/BloodySlash2", 0.4f, -0.2f, Projectile.Center);
-                        Vector2 dir = (Projectile.Center - Owner.Center).SafeNormalize(Vector2.Zero);
-                        var modifier = new PunchCameraModifier(Owner.position, dir, 14, 8f, 6, 1000f);
-                        Main.instance.CameraModifiers.Add(modifier);
-                        Owner.velocity = new Vector2(Math.Sign(Owner.Center.X - Projectile.Center.X) * 4, -3);
-                        Projectile.Kill();
-                    }
-
-                    Timer++;
-                    break;
+                Owner.immuneTime = 30;
+                Owner.immune = true;
             }
-        }
 
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-            if ((int)HookState == (int)AIStates.shoot)
+            if ((int)Timer < 6)
             {
-                HookState = (int)AIStates.back;
-                Projectile.tileCollide = false;
+                Owner.velocity *= 0;
+                Owner.Center = Vector2.Lerp(Owner.Center, Projectile.Center, 0.35f);
             }
-            return false;
+            else
+            {
+                //将玩家回弹
+                SoundEngine.PlaySound(CoraliteSoundID.Bloody_NPCHit9, Projectile.Center);
+                Helper.PlayPitched("Misc/BloodySlash2", 0.4f, -0.2f, Projectile.Center);
+                Vector2 dir = (Projectile.Center - Owner.Center).SafeNormalize(Vector2.Zero);
+                var modifier = new PunchCameraModifier(Owner.position, dir, 14, 8f, 6, 1000f);
+                Main.instance.CameraModifiers.Add(modifier);
+                Owner.velocity = new Vector2(Math.Sign(Owner.Center.X - Projectile.Center.X) * 4, -3);
+                Projectile.Kill();
+            }
+
+            Timer++;
         }
 
         public override void OnKill(int timeLeft)
@@ -402,53 +316,35 @@ namespace Coralite.Content.Items.Crimson
             }
         }
 
-        public override bool? CanHitNPC(NPC target)
-        {
-            if ((int)HookState == (int)AIStates.drag && (int)Timer == 6)
-                return true;
-            if ((int)HookState < 2 && Collision.CanHitLine(Owner.Center, 1, 1, target.Center, 1, 1))
-                return null;
-
-            return false;
-        }
-
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        public override void OnHitNPC_Shoot(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Vector2 direction = (Owner.Center - target.Center).SafeNormalize(Vector2.One);
 
-            if ((int)HookState == (int)AIStates.shoot)
-            {
-                Projectile.velocity *= 0;
-                Target = target.whoAmI;
-                offset = Projectile.Center - target.Center;
-                HookState = (int)AIStates.onHit;
-                Timer = 0;
-                Projectile.netUpdate = true;
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 10; i++)
+                    Dust.NewDustPerfect(target.Center, DustID.Blood, direction.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(2f, 4f),
+                        Scale: Main.rand.NextFloat(1f, 2f));
+        }
 
-                if (VisualEffectSystem.HitEffect_Dusts)
-                    for (int i = 0; i < 10; i++)
-                        Dust.NewDustPerfect(target.Center, DustID.Blood, direction.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(2f, 4f),
-                            Scale: Main.rand.NextFloat(1f, 2f));
+        public override void OnHitNPC_Draging(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            target.AddBuff(BuffType<BloodyHookDebuff>(), 120);
+            Vector2 direction = (Owner.Center - target.Center).SafeNormalize(Vector2.One);
+
+            if (VisualEffectSystem.HitEffect_Dusts)
+            {
+                Helper.SpawnDirDustJet(target.Center, () => direction.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)), 2, 12,
+                    (i) => i * 1f, DustID.Blood, Scale: Main.rand.NextFloat(1f, 2f), noGravity: false, extraRandRot: 0.1f);
+
+                for (int i = 0; i < 10; i++)
+                    Dust.NewDustPerfect(target.Center, DustID.Blood, direction.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(2f, 4f),
+                        Scale: Main.rand.NextFloat(1f, 2f));
             }
-            else if ((int)HookState == (int)AIStates.drag)
+
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
             {
-                target.AddBuff(BuffType<BloodyHookDebuff>(), 120);
-
-                if (VisualEffectSystem.HitEffect_Dusts)
-                {
-                    Helper.SpawnDirDustJet(target.Center, () => direction.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)), 2, 12,
-                        (i) => i * 1f, DustID.Blood, Scale: Main.rand.NextFloat(1f, 2f), noGravity: false, extraRandRot: 0.1f);
-
-                    for (int i = 0; i < 10; i++)
-                        Dust.NewDustPerfect(target.Center, DustID.Blood, direction.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(2f, 4f),
-                            Scale: Main.rand.NextFloat(1f, 2f));
-                }
-
-                if (VisualEffectSystem.HitEffect_SpecialParticles)
-                {
-                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustType<Slash>(), newColor: Color.Red, Scale: Main.rand.NextFloat(0.3f, 0.4f));
-                    dust.rotation = Projectile.rotation + 1.57f + Main.rand.NextFloat(-0.2f, 0.2f);
-                }
+                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustType<Slash>(), newColor: Color.Red, Scale: Main.rand.NextFloat(0.3f, 0.4f));
+                dust.rotation = Projectile.rotation + 1.57f + Main.rand.NextFloat(-0.2f, 0.2f);
             }
         }
 

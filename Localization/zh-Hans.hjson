@@ -1281,11 +1281,11 @@ Mods: {
 
 			NightmareHarp: {
 				DisplayName: 噩梦竖琴
-				Tooltip: 
-				'''
-				在夜晚召唤梦魇之花，不消耗
-					可以在视觉效果配置中开启或关闭特殊的天空和特殊血条
-				'''
+				Tooltip:
+					'''
+					在夜晚召唤梦魇之花，不消耗
+						可以在视觉效果配置中开启或关闭特殊的天空和特殊血条
+					'''
 			}
 
 			CrystalStoneMaker: {
@@ -1849,6 +1849,11 @@ Mods: {
 				UseNightmareSky: {
 					Label: 绘制特殊的天空
 					Tooltip: 是否开启梦魇之花的特殊流动效果天空
+				}
+
+				UseNightmareBossBar: {
+					// Label: Use Nightmare Boss Bar
+					// Tooltip: ""
 				}
 			}
 		}

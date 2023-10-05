@@ -1808,6 +1808,11 @@ Mods: {
 					Label: Use Nightmare Sky
 					Tooltip: ""
 				}
+
+				UseNightmareBossBar: {
+					Label: Use Nightmare Boss Bar
+					Tooltip: ""
+				}
 			}
 		}
 
