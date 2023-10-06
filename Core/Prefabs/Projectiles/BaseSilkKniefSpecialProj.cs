@@ -1,20 +1,13 @@
-﻿using Coralite.Content.Dusts;
-using Coralite.Content.Items.Crimson;
-using Coralite.Core.Configs;
-using Coralite.Helpers;
-using Microsoft.Xna.Framework;
-using System;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Graphics.CameraModifiers;
-using Terraria.ID;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
     /// <summary>
     /// ai1用于判断当前勾到的敌人
     /// </summary>
-    public abstract class BaseSilkKniefSpecialProj:BaseHeldProj
+    public abstract class BaseSilkKnifeSpecialProj:BaseHeldProj
     {
         public ref float Target => ref Projectile.ai[1];
         public ref float HookState => ref Projectile.ai[2];
@@ -32,7 +25,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <summary> 射出多久后开始回到手中 </summary>
         protected readonly float shootTime;
 
-        public BaseSilkKniefSpecialProj(int onHookedLength,int rollingLength,float shootSpeed,float shootTime)
+        public BaseSilkKnifeSpecialProj(int onHookedLength,int rollingLength,float shootSpeed,float shootTime)
         {
             this.onHookedLength = onHookedLength;
             this.rollingLength = rollingLength;
@@ -40,7 +33,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             this.shootTime = shootTime;
         }
 
-        protected enum AIStates
+        public enum AIStates
         {
             back = -1,
             rolling = 0,
@@ -67,7 +60,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                     OnHookedToNPC();
                     break;
                 case (int)AIStates.drag://将玩家拖拽过去的状态
-                    Drag();
+                    Dragging();
                     break;
             }
         }
@@ -153,7 +146,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// </para>
         /// 
         /// </summary>
-        public abstract void Drag();
+        public abstract void Dragging();
 
 
         public override bool OnTileCollide(Vector2 oldVelocity)

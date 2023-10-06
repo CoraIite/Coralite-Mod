@@ -1661,6 +1661,14 @@
             <param name="type">The item type to check.</param>
             <returns>The number of sacrifices remaining , or null if the item can never be unlocked.</returns>
         </member>
+        <member name="M:Terraria.GameContent.Drawing.TileDrawing.IsVisible(Terraria.Tile)">
+            <summary>
+            Returns true if the tile is visible.
+            <para/>Tiles painted with Echo Coating as well as the Echo Platform, Echo Block, and Ghostly Stinkbug Blocker tiles will all be invisible unless the player has Echo Sight (Nearby active Echo Chamber tile or wearing Spectre Goggles)
+            </summary>
+            <param name="tile"></param>
+            <returns></returns>
+        </member>
         <member name="M:Terraria.GameContent.Drawing.TileDrawing.EmitLivingTreeLeaf(System.Int32,System.Int32,System.Int32)">
             <summary>
             Emits a single living tree leaf or other gore instance directly below the target tile.<br/>
@@ -4524,6 +4532,9 @@
             </summary>
             <param name="seriouslyWhyCantStructsHaveParameterlessConstructors">Unused.</param>
         </member>
+        <member name="M:Terraria.ID.NPCID.Sets.NPCBestiaryDrawModifiers.#ctor">
+            <inheritdoc cref="M:Terraria.ID.NPCID.Sets.NPCBestiaryDrawModifiers.#ctor(System.Int32)"/>
+        </member>
         <member name="F:Terraria.ID.NPCID.Sets.SpecialSpawningRules">
             <summary>
             Determines the special spawning rules for an NPC to use when respawning using the coin loss system (<see cref="T:Terraria.GameContent.CoinLossRevengeSystem"/>).
@@ -6605,12 +6616,18 @@
         </member>
         <member name="F:Terraria.ID.TileID.Sets.WallsMergeWith">
             <summary>
-            Tiles that are interpreted as a wall by nearby walls during framing, causing them to frame as if merging with this adjacent tile. Prevents wall from drawing within bounds for transparant tiles.
+            Tiles that are interpreted as a wall by nearby walls during framing, causing them to frame as if merging with this adjacent tile. Prevents wall from drawing within bounds for transparent tiles.
             </summary>
         </member>
         <member name="F:Terraria.ID.TileID.Sets.BlockMergesWithMergeAllBlockOverride">
             <summary>
             The value a tile forces to be set for <see cref="F:Terraria.ID.TileID.Sets.BlockMergesWithMergeAllBlock"/> regardless of default conditions (see its documentation). null by default.
+            </summary>
+        </member>
+        <member name="F:Terraria.ID.TileID.Sets.CanPlaceNextToNonSolidTile">
+            <summary>
+            Allows tiles to be placed next to any tile or wall. (Tiles normally need a <see cref="F:Terraria.Main.tileSolid"/> tile, <see cref="F:Terraria.ID.TileID.Rope"/> tile, <see cref="F:Terraria.ID.TileID.Sets.IsBeam"/> tile, or a wall adjacent to the target position to be placeable.)
+            <br>Used by: Cobweb, Coin Piles, Living Fire Blocks, Smoke Blocks, Bubble Blocks</br>
             </summary>
         </member>
         <member name="F:Terraria.ID.TileID.Sets.CorruptBiome">
@@ -7998,6 +8015,37 @@
         <member name="M:Terraria.Lang.GetProjectileName(System.Int32)">
             <summary> Gets the display name of the provided projectile type (<see cref="F:Terraria.Projectile.type"/>) as a <see cref="T:Terraria.Localization.LocalizedText"/>. </summary>
         </member>
+        <member name="M:Terraria.Lighting.AddLight(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector3)">
+            <summary>
+            Adds light to the world at the specified coordinates.<para/>
+            This overload takes in world coordinates and a Vector3 containing float values typically ranging from 0 to 1. Values greater than 1 will cause the light to propagate farther. A <see cref="T:Microsoft.Xna.Framework.Vector3"/> is used for this method instead of <see cref="T:Microsoft.Xna.Framework.Color"/> to allow these overflow values.
+            </summary>
+            <param name="position"></param>
+            <param name="rgb"></param>
+        </member>
+        <member name="M:Terraria.Lighting.AddLight(Microsoft.Xna.Framework.Vector2,System.Single,System.Single,System.Single)">
+            <summary>
+            <summary>
+            Adds light to the world at the specified coordinates.<para/>
+            This overload takes in world coordinates and float values typically ranging from 0 to 1. Values greater than 1 will cause the light to propagate farther.
+            </summary>
+            </summary>
+            <param name="position"></param>
+            <param name="r"></param>
+            <param name="g"></param>
+            <param name="b"></param>
+        </member>
+        <member name="M:Terraria.Lighting.AddLight(System.Int32,System.Int32,System.Single,System.Single,System.Single)">
+            <summary>
+            Adds light to the world at the specified coordinates.<para/>
+            This overload takes in tile coordinates and float values typically ranging from 0 to 1. Values greater than 1 will cause the light to propagate farther.
+            </summary>
+            <param name="i"></param>
+            <param name="j"></param>
+            <param name="r"></param>
+            <param name="g"></param>
+            <param name="b"></param>
+        </member>
         <member name="T:Terraria.Localization.Language">
             <summary>
             Contains methods to access or retrieve localization values. The <see href="https://github.com/tModLoader/tModLoader/wiki/Localization">Localization Guide</see> teaches more about localization.
@@ -8994,7 +9042,7 @@
         </member>
         <member name="T:Terraria.ModLoader.Config.ItemDefinition">
             <summary>
-            ItemDefinition represents an Item identity. A typical use for this class is usage in ModConfig, perhapse to facilitate an Item tweaking mod.
+            ItemDefinition represents an Item identity. A typical use for this class is usage in ModConfig, perhaps to facilitate an Item tweaking mod.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.Config.ItemDefinition.#ctor(System.Int32)">
@@ -9009,11 +9057,14 @@
         <member name="M:Terraria.ModLoader.Config.PrefixDefinition.#ctor(System.Int32)">
             <summary><b>Note: </b>As ModConfig loads before other content, make sure to only use <see cref="M:Terraria.ModLoader.Config.PrefixDefinition.#ctor(System.String,System.String)"/> for modded content in ModConfig classes. </summary>
         </member>
+        <member name="M:Terraria.ModLoader.Config.BuffDefinition.#ctor(System.Int32)">
+            <summary><b>Note: </b>As ModConfig loads before other content, make sure to only use <see cref="M:Terraria.ModLoader.Config.BuffDefinition.#ctor(System.String,System.String)"/> for modded content in ModConfig classes. </summary>
+        </member>
         <member name="T:Terraria.ModLoader.Config.ToFromStringConverter`1">
             <summary>
             This TypeConverter facilitates converting to and from the string Type. This is necessary for Objects that are to be used as Dictionary keys, since the JSON for keys needs to be a string. Classes annotated with this TypeConverter need to implement a static FromString method that returns T.
             </summary>
-            <typeparam name="T">The Type that implementes the static FromString method that returns Type T.</typeparam>
+            <typeparam name="T">The Type that implements the static FromString method that returns Type T.</typeparam>
         </member>
         <member name="T:Terraria.ModLoader.Config.ModConfig">
             <summary>
@@ -9035,6 +9086,9 @@
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.Config.ModConfig.AcceptClientChanges(Terraria.ModLoader.Config.ModConfig,System.Int32,System.String@)">
+            <inheritdoc cref="M:Terraria.ModLoader.Config.ModConfig.AcceptClientChanges(Terraria.ModLoader.Config.ModConfig,System.Int32,Terraria.Localization.NetworkText@)"/>
+        </member>
+        <member name="M:Terraria.ModLoader.Config.ModConfig.AcceptClientChanges(Terraria.ModLoader.Config.ModConfig,System.Int32,Terraria.Localization.NetworkText@)">
             <summary>
             Called on the Server for ServerSide configs to determine if the changes asked for by the Client will be accepted. Useful for enforcing permissions. Called after a check for NeedsReload.
             </summary>
@@ -13762,9 +13816,18 @@
         </member>
         <member name="M:Terraria.ModLoader.Mod.GetLocalizationKey(System.String)">
             <summary>
-            Creates a localization key following the pattern of "Mods.{ModName}.{suffix}". Use this with <see cref="M:Terraria.Localization.Language.GetOrRegister(System.String,System.Func{System.String})"/> to retrieve a <see cref="T:Terraria.Localization.LocalizedText"/> for custom localization keys. Custom localization keys need to be registered during the mod loading process to appear automtaically in the localization files.
+            Creates a localization key following the pattern of "Mods.{ModName}.{suffix}". Use this with <see cref="M:Terraria.Localization.Language.GetOrRegister(System.String,System.Func{System.String})"/> to retrieve a <see cref="T:Terraria.Localization.LocalizedText"/> for custom localization keys. Alternatively <see cref="M:Terraria.ModLoader.Mod.GetLocalization(System.String,System.Func{System.String})"/> can be used directly instead. Custom localization keys need to be registered during the mod loading process to appear automtaically in the localization files.
             </summary>
             <param name="suffix"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Terraria.ModLoader.Mod.GetLocalization(System.String,System.Func{System.String})">
+            <summary>
+            Returns a <see cref="T:Terraria.Localization.LocalizedText"/> for this Mod with the provided <paramref name="suffix"/>. The suffix will be used to generate a key by providing it to <see cref="M:Terraria.ModLoader.Mod.GetLocalizationKey(System.String)"/>.
+            <br/>If no existing localization exists for the key, it will be defined so it can be exported to a matching mod localization file.
+            </summary>
+            <param name="suffix"></param>
+            <param name="makeDefaultValue">A factory method for creating the default value, used to update localization files with missing entries</param>
             <returns></returns>
         </member>
         <member name="M:Terraria.ModLoader.Mod.AddNPCHeadTexture(System.Int32,System.String)">
@@ -14168,7 +14231,8 @@
         </member>
         <member name="M:Terraria.ModLoader.ModBlockType.PostDraw(System.Int32,System.Int32,Microsoft.Xna.Framework.Graphics.SpriteBatch)">
             <summary>
-            Allows you to draw things in front of the tile/wall at the given coordinates. This can also be used to do things such as creating dust.
+            Allows you to draw things in front of the tile/wall at the given coordinates. This can also be used to do things such as creating dust.<para/>
+            Note that this method will be called for tiles even when the tile is <see cref="P:Terraria.Tile.IsTileInvisible"/> due to Echo Coating. Use the <see cref="M:Terraria.GameContent.Drawing.TileDrawing.IsVisible(Terraria.Tile)"/> method to skip effects that shouldn't show when the tile is invisible. This method won't be called for invisible walls.
             </summary>
             <param name="i">The x position in tile coordinates.</param>
             <param name="j">The y position in tile coordinates.</param>
@@ -19198,7 +19262,7 @@
             <summary>
             Allows you to customize the position in which this tile is drawn. Width refers to the width of one frame of the tile, offsetY refers to how many pixels below its actual position the tile should be drawn, height refers to the height of one frame of the tile.
             <para> By default the values will be set to the values you give this tile's TileObjectData. If this tile has no TileObjectData then they will default to 16, 0, and 16, respectively.</para>
-            <para> tileFrameX and tileFrameY allow you to change which frames are drawn, keeping tile.frameX/Y intact for other purposes.</para>
+            <para> tileFrameX and tileFrameY allow you to change which frames are drawn, keeping tile.TileFrameX/Y intact for other purposes.</para>
             </summary>
             <param name="i">The x position in tile coordinates.</param>
             <param name="j">The y position in tile coordinates.</param>
@@ -20634,6 +20698,12 @@
             <summary>
             Downloads all ModDownloadItems provided.
             </summary>
+        </member>
+        <member name="T:Terraria.ModLoader.UI.UIButton`1">
+            <summary>
+            A text panel that supports hover and click sounds, hover colors, and alternate colors.
+            </summary>
+            <typeparam name="T"></typeparam>
         </member>
         <member name="M:Terraria.ModLoader.UI.UICommon.TooltipMouseText(System.String)">
             <summary>
@@ -23018,7 +23088,8 @@
         </member>
         <member name="F:Terraria.Projectile.scale">
             <summary>
-            Scales the projectile drawing, but not the hitbox, making this not suitable for affecting hitbox. Avoid large values.
+            Scales how large the projectile will be drawn. Will also affect the hitbox (<see cref="F:Terraria.Entity.width"/>, <see cref="F:Terraria.Entity.height"/>) if assigned in SetDefaults. If changed elsewhere it will not affect the hitbox, so that will have to be adjusted manually via code in that situation if needed. <para/>
+            Due to legacy code, scale does not affect the draw origin correctly, resulting in the projectile not rotating around the hitbox center correctly nor being drawn correctly centered on the hitbox. For small changes (0.8f to 1.2f) the effect is unnoticeable, but it is advised to avoid large values unless the projectile is manually drawn with the correct approach via <see cref="M:Terraria.ModLoader.ModProjectile.PreDraw(Microsoft.Xna.Framework.Color@)"/>.<para/>
             <br/> Defaults to 1f.
             </summary>
         </member>

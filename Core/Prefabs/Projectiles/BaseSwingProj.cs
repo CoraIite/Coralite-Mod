@@ -381,7 +381,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
         }
 
-        protected void DrawShadowTrail(Texture2D mainTex, Vector2 origin, Color lightColor,float extraRot)
+        protected virtual void DrawShadowTrail(Texture2D mainTex, Vector2 origin, Color lightColor,float extraRot)
         {
             if ((int)Timer > minTime)
             {

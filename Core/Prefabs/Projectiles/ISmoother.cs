@@ -1,4 +1,5 @@
 ﻿using Coralite.Helpers;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace Coralite.Core.Prefabs.Projectiles
@@ -71,6 +72,20 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             float factor = (float)timer / maxTime;
             return MathF.Sqrt(factor);
+        }
+    }
+
+    /// <summary>
+    /// 从0到1再回到0
+    /// </summary>
+    public class SinSmoother : ISmoother
+    {
+        public void ReCalculate(int maxTime) { }
+
+        public float Smoother(int timer, int maxTime)
+        {
+            float factor = (float)timer / maxTime;
+            return MathF.Sin(factor * MathHelper.Pi);
         }
     }
 }

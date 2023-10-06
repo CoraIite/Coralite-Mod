@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.Gels
                     startAngle = 1.6f;
                     totalAngle = 4.8f;
                     minTime = 12;
-                    maxTime = (int)(Owner.itemTimeMax * 0.7f)+ 24;
+                    maxTime = (int)(Owner.itemTimeMax * 0.7f) + 24;
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     Projectile.scale = 0.9f;
                     delay = 24;

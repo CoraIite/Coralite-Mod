@@ -14,6 +14,9 @@
     <None Remove="Content\Items\AstronomyItems\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Effects\AlphaGradientTrail.fx" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
@@ -25,7 +28,6 @@
     <Folder Include="Content\Items\Magike\Accessorys\" />
     <Folder Include="Content\Items\Pets\" />
     <Folder Include="Content\Items\Misc_Summon\" />
-    <Folder Include="Content\Items\Nightmare\" />
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />
     <Folder Include="Core\Systems\AstronomySystem\" />
     <Folder Include="Core\Systems\MagikeSystem\Polymerizes\" />

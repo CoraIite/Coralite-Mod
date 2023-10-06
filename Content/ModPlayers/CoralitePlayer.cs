@@ -6,6 +6,7 @@ using Coralite.Content.Items.RedJades;
 using Coralite.Content.UI;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
+using Steamworks;
 using System;
 using System.Linq;
 using Terraria;
@@ -44,6 +45,8 @@ namespace Coralite.Content.ModPlayers
         public bool redJadePendant;
 
         public byte nightmareCount;
+        /// <summary> 使用梦魇之花的噩梦能量 </summary>
+        public int nightmareEnergy;
 
         public override void ResetEffects()
         {
@@ -65,11 +68,12 @@ namespace Coralite.Content.ModPlayers
         public override void OnRespawn()
         {
             nightmareCount = 0;
+            nightmareEnergy = 0;
         }
 
         public override bool CanUseItem(Item item)
         {
-            if (item.type==ItemID.RodOfHarmony)
+            if (item.type == ItemID.RodOfHarmony)
             {
                 if (NightmarePlantera.NightmarePlanteraAlive(out _))
                 {

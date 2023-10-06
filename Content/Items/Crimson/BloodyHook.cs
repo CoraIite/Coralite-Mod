@@ -20,7 +20,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Crimson
 {
-    public class BloodyHook : BaseSilkKniefItem
+    public class BloodyHook : BaseSilkKnifeItem
     {
         public override string Texture => AssetDirectory.CrimsonItems + Name;
 
@@ -46,12 +46,12 @@ namespace Coralite.Content.Items.Crimson
             {
                 foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == ProjectileType<BloodHookChain>()))
                 {
-                    if ((int)proj.ai[2] == 2f)
+                    if ((int)proj.ai[2] == (int)BaseSilkKnifeSpecialProj.AIStates.onHit)
                     {
                         for (int i = 0; i < proj.localNPCImmunity.Length; i++)
                             proj.localNPCImmunity[i] = 0;
 
-                        proj.ai[2] = 3f;
+                        proj.ai[2] = (int)BaseSilkKnifeSpecialProj.AIStates.drag;
                         proj.netUpdate = true;
                     }
                     return false;
@@ -238,7 +238,7 @@ namespace Coralite.Content.Items.Crimson
         public override void PostDraw(Color lightColor) { }
     }
 
-    public class BloodHookChain : BaseSilkKniefSpecialProj
+    public class BloodHookChain : BaseSilkKnifeSpecialProj
     {
         public override string Texture => AssetDirectory.CrimsonItems + "BloodyHookProj";
 
@@ -272,7 +272,7 @@ namespace Coralite.Content.Items.Crimson
             ChainTex = null;
         }
 
-        public override void Drag()
+        public override void Dragging()
         {
             if ((int)Timer == 0)
             {

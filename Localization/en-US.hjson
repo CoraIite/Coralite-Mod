@@ -1417,6 +1417,11 @@ Mods: {
 				DisplayName: Mutatus In A Bottle
 				Tooltip: ""
 			}
+
+			LostSevensideHook: {
+				DisplayName: Lost Sevenside Hook
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1725,6 +1730,10 @@ Mods: {
 			NightmareCrow.DisplayName: Nightmare Crow
 			VineSpike.DisplayName: Vine Spike
 			FantasySpike_Visual.DisplayName: Fantasy Spike_ Visual
+			LostSevensideSlash.DisplayName: Lost Sevenside Slash
+			PlayerNightmareEnergy.DisplayName: Player Nightmare Energy
+			LostSevensideChain.DisplayName: Lost Sevenside Chain
+			LostSevensideSpurt.DisplayName: Lost Sevenside Spurt
 		}
 
 		Configs: {
