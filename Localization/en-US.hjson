@@ -1420,7 +1420,12 @@ Mods: {
 
 			LostSevensideHook: {
 				DisplayName: Lost Sevenside Hook
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/f73535:红取风霜实，青看雨露柯。]
+						Right-click to throw out the hook, and after hitting enemy, right-click again to drag the player towards the hook position and gain 2 nightmare energy
+						When possessing nightmare energy, the left-click shoots thorny thorns
+					'''
 			}
 		}
 
@@ -1734,6 +1739,7 @@ Mods: {
 			PlayerNightmareEnergy.DisplayName: Player Nightmare Energy
 			LostSevensideChain.DisplayName: Lost Sevenside Chain
 			LostSevensideSpurt.DisplayName: Lost Sevenside Spurt
+			LostVine.DisplayName: Lost Vine
 		}
 
 		Configs: {

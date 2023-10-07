@@ -1437,28 +1437,33 @@ Mods: {
 			}
 
 			DeorcInABottle: {
-				// DisplayName: Deorc In A Bottle
-				// Tooltip: ""
+				DisplayName: 瓶中阴
+				Tooltip: 装着名为“阴”的魔能
 			}
 
 			LeohtInABottle: {
-				// DisplayName: Leoht In A Bottle
-				// Tooltip: ""
+				DisplayName: 瓶中光
+				Tooltip: 装着名为“光”的魔能
 			}
 
 			BloodyOrb: {
-				// DisplayName: Bloody Orb
-				// Tooltip: ""
+				DisplayName: 血红宝珠
+				Tooltip: 凝聚了血月的精华
 			}
 
 			MutatusInABottle: {
-				// DisplayName: Mutatus In A Bottle
-				// Tooltip: ""
+				DisplayName: 瓶中异变
+				Tooltip: 装着名为“异变”的魔能
 			}
 
 			LostSevensideHook: {
-				// DisplayName: Lost Sevenside Hook
-				// Tooltip: ""
+				DisplayName: 迷失七棱钩
+				Tooltip:
+					'''
+					[c/f73535:红取风霜实，青看雨露柯。]
+						右键甩出钩子，命中后再次右键将玩家向钩子位置拖拽并获得2层梦魇能量
+						拥有梦魇能量时左键射出荆棘刺
+					'''
 			}
 		}
 
@@ -1538,8 +1543,8 @@ Mods: {
 			}
 
 			GelWhipDebuff: {
-				// DisplayName: Gel Whip Debuff
-				// Description: Mods.Coralite.Buffs.GelWhipDebuff.Description
+				DisplayName: 皇家凝胶鞭
+				Description: 黏糊糊的！
 			}
 		}
 
@@ -1762,16 +1767,17 @@ Mods: {
 			GelSpike_Friendly.DisplayName: 凝胶尖刺
 			SmallGelBall_Friendly.DisplayName: 小凝胶球
 			SpikeGelBall_Friendly.DisplayName: 尖刺凝胶球
-			// NightmareBurst.DisplayName: Nightmare Burst
-			// NightmareEnergy.DisplayName: Nightmare Energy
-			// NightmareBat.DisplayName: Nightmare Bat
-			// NightmareCrow.DisplayName: Nightmare Crow
-			// VineSpike.DisplayName: Vine Spike
-			// FantasySpike_Visual.DisplayName: Fantasy Spike_ Visual
-			// LostSevensideSlash.DisplayName: Lost Sevenside Slash
-			// PlayerNightmareEnergy.DisplayName: Player Nightmare Energy
-			// LostSevensideChain.DisplayName: Lost Sevenside Chain
-			// LostSevensideSpurt.DisplayName: Lost Sevenside Spurt
+			NightmareBurst.DisplayName: 梦魇爆发
+			NightmareEnergy.DisplayName: 噩梦能量
+			NightmareBat.DisplayName: 噩梦蝙蝠
+			NightmareCrow.DisplayName: 噩梦渡鸦
+			VineSpike.DisplayName: 荆棘刺
+			FantasySpike_Visual.DisplayName: 美梦刺
+			LostSevensideSlash.DisplayName: 迷失七棱钩
+			PlayerNightmareEnergy.DisplayName: 噩梦能量
+			LostSevensideChain.DisplayName: 迷失七棱钩
+			LostSevensideSpurt.DisplayName: 迷失突刺
+			LostVine.DisplayName: 迷失荆棘刺
 		}
 
 		Configs: {
@@ -1861,8 +1867,8 @@ Mods: {
 				}
 
 				UseNightmareBossBar: {
-					// Label: Use Nightmare Boss Bar
-					// Tooltip: ""
+					Label: 绘制特殊的血条
+					Tooltip: 是否开启梦魇之花特殊的流动效果血条
 				}
 			}
 		}

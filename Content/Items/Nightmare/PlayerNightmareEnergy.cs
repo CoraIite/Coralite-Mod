@@ -1,6 +1,8 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
+using System;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -26,6 +28,12 @@ namespace Coralite.Content.Items.Nightmare
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
         public override void AI()
         {
+            if (Owner.dead || !Owner.active)
+            {
+                Projectile.Kill();
+                return;
+            }
+
             Projectile.Center = Owner.Center;
 
             if (Owner.HeldItem.ModItem is INightmareWeapon)
@@ -34,6 +42,7 @@ namespace Coralite.Content.Items.Nightmare
             }
 
             Timer++;
+            Projectile.rotation += 0.05f;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -42,9 +51,14 @@ namespace Coralite.Content.Items.Nightmare
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                 howMany = cp.nightmareEnergy;
 
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
+            float rot = Timer * 0.02f;
             for (int i = 0; i < howMany; i++)
             {
-
+                Vector2 dir = (Projectile.rotation + i * MathHelper.TwoPi / howMany).ToRotationVector2();
+                Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos + dir * (36 + factor * 2), Color.White * 0.7f, NightmarePlantera.nightmareRed,
+                    0.5f + factor * 0.1f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation + rot, new Vector2(1.2f, 1.2f), Vector2.One);
             }
             return false;
         }

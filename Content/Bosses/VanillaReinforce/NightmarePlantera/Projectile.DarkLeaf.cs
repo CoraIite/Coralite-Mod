@@ -6,6 +6,7 @@ using Terraria.GameContent;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using ReLogic.Content;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
@@ -16,18 +17,35 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     {
         public override string Texture => AssetDirectory.NightmarePlantera + Name;
 
+        public static Asset<Texture2D> HighlightTex;
+
         private bool init = true;
         private Color glowColor;
 
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+            HighlightTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "DarkLeaf_Hightlight");
+        }
+
+        public override void Unload()
+        {
+            if (Main.dedServ)
+                return;
+            HighlightTex = null;
+        }
+
         public override void SetStaticDefaults()
         {
+            Main.projFrames[Type] = 7;
             ProjectileID.Sets.TrailingMode[Type] = 2;
             ProjectileID.Sets.TrailCacheLength[Type] = 6;
         }
 
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 26;
+            Projectile.width = Projectile.height = 16;
             Projectile.aiStyle = -1;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 1200;
@@ -41,7 +59,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             if (init)   //根据ai设置不同的弹幕大小
             {
-                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+                Projectile.rotation = Projectile.velocity.ToRotation();
                 if (Projectile.ai[0] == 1)
                 {
                     glowColor = NightmarePlantera.nightmareRed;
@@ -56,6 +74,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     glowColor = NightmarePlantera.lightPurple;
                 }
                 init = false;
+            }
+
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter > 4)
+            {
+                Projectile.frameCounter = 0;
+                Projectile.frame++;
+                if (Projectile.frame > 6)
+                    Projectile.frame = 0;
             }
 
             if (Main.rand.NextBool(2))
@@ -80,24 +107,24 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D highlightTex = HighlightTex.Value;
             var pos = Projectile.Center - Main.screenPosition;
 
             Color color = glowColor;
-            var frameBox = mainTex.Frame(1, 2, 0, 1);
+            var mainFrameBox = mainTex.Frame(1, 7, 0, Projectile.frame);
+            var highlightFrameBox = highlightTex.Frame(1, 7, 0, Projectile.frame);
+            Vector2 hightlightOrigin = highlightFrameBox.Size() / 2;
 
             //绘制发光
-
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, color, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
+            Main.spriteBatch.Draw(highlightTex, pos, highlightFrameBox, color, Projectile.rotation, hightlightOrigin, Projectile.scale, 0, 0);
             Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
 
-            for (int i = 1; i < 6; i += 2)
-                Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
-                    color * (0.6f - i * 0.04f), Projectile.oldRot[i], frameBox.Size() / 2, (Projectile.scale - i * 0.05f), 0, 0);
+            for (int i = 1; i < 6; i ++)
+                Main.spriteBatch.Draw(highlightTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, highlightFrameBox,
+                    color * (0.4f - i * 0.4f/6), Projectile.oldRot[i], hightlightOrigin, (Projectile.scale - i * 0.05f), 0, 0);
 
             //绘制自己
-            frameBox = mainTex.Frame(1, 2, 0, 0);
-
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, glowColor, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, mainFrameBox, Color.Gray, Projectile.rotation, mainFrameBox.Size() / 2, Projectile.scale, 0, 0);
 
             return false;
         }

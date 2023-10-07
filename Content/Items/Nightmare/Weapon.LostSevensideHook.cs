@@ -1,10 +1,12 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Items.Icicle;
 using Coralite.Content.ModPlayers;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.CodeAnalysis;
@@ -26,7 +28,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Nightmare
 {
-    public class LostSevensideHook : BaseSilkKnifeItem
+    public class LostSevensideHook : BaseSilkKnifeItem,INightmareWeapon
     {
         public override string Texture => AssetDirectory.NightmareItems + Name;
 
@@ -36,8 +38,9 @@ namespace Coralite.Content.Items.Nightmare
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.shoot = ProjectileType<LostSevensideSlash>();
             Item.DamageType = DamageClass.Melee;
-            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Orange3, Item.sellPrice(2, 0, 0, 0));
-            Item.SetWeaponValues(276, 4);
+            Item.rare = RarityType<NightmareRarity>();
+            Item.value = Item.sellPrice(2, 0, 0, 0);
+            Item.SetWeaponValues(286, 4, 8);
             Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;
@@ -65,18 +68,19 @@ namespace Coralite.Content.Items.Nightmare
                     }
 
                     //生成弹幕
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<LostSevensideChain>(), (int)(damage * 0.8f), knockback, player.whoAmI);
+                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<LostSevensideChain>(), (int)(damage * 1.4f), knockback, player.whoAmI);
                     return false;
                 }
 
                 if (player.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 0)//射出特殊弹幕
                 {
-
+                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<LostVine>(), (int)(damage * 3.5f), knockback,
+                        player.whoAmI, -1, (0.2f + cp.nightmareEnergy * 0.1f) * (cp.nightmareEnergy % 2 == 0 ? -1 : 1), player.itemTimeMax * 1.5f);
                     cp.nightmareEnergy--;
                 }
                 else //生成弹幕
                 {
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, combo);
+                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage * 2, knockback, player.whoAmI, combo);
                     combo++;
                     if (combo > 3)
                         combo = 0;
@@ -168,14 +172,16 @@ namespace Coralite.Content.Items.Nightmare
                     maxTime = Owner.itemTimeMax * 2;
                     startAngle = 2f;
                     totalAngle = 4.9f;
-                    distanceToOwner = 40;
+                    distanceToOwner = Helper.EllipticalEase(2f - 4.9f * Smoother.Smoother(0, maxTime - minTime), 40, 80);
+                    Projectile.scale = Helper.EllipticalEase(2f - 4.9f * Smoother.Smoother(0, maxTime - minTime), 0.9f, 1.1f);
                     Smoother = Coralite.Instance.SqrtSmoother;
                     break;
                 case 1:
                     maxTime = Owner.itemTimeMax * 2;
                     startAngle = -2f;
                     totalAngle = -4.9f;
-                    distanceToOwner = 40;
+                    distanceToOwner = Helper.EllipticalEase(2f - 4.9f * Smoother.Smoother(0, maxTime - minTime), 40, 80);
+                    Projectile.scale = Helper.EllipticalEase(2f - 4.9f * Smoother.Smoother(0, maxTime - minTime), 0.9f, 1.1f);
                     Smoother = Coralite.Instance.SqrtSmoother;
                     break;
                 case 2:
@@ -184,20 +190,21 @@ namespace Coralite.Content.Items.Nightmare
                     totalAngle = 4.9f;
                     distanceToOwner = 80;
                     Smoother = Coralite.Instance.SqrtSmoother;
+                    Projectile.scale = Helper.EllipticalEase(2f - 4.9f * Smoother.Smoother(0, maxTime - minTime), 0.9f, 1.1f);
                     Projectile.scale = 0.9f;
                     break;
                 case 3:
                     maxTime = Owner.itemTimeMax * 3;
                     startAngle = -3f;
                     totalAngle = -12;
-                    distanceToOwner = 80;
+                    distanceToOwner = Helper.EllipticalEase(3f - 12f * Smoother.Smoother(0, maxTime - minTime), 80, 110);
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     break;
                 case 4:
                     maxTime = Owner.itemTimeMax * 3;
                     startAngle = 3f;
                     totalAngle = 12;
-                    distanceToOwner = 90;
+                    distanceToOwner = Helper.EllipticalEase(3f - 12f * Smoother.Smoother(0, maxTime - minTime), 90, 120);
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     break;
             }
@@ -339,7 +346,8 @@ namespace Coralite.Content.Items.Nightmare
 
         public void DrawWarp()
         {
-            WarpDrawer(0.75f);
+            if (oldRotate != null)
+                WarpDrawer(0.75f);
         }
 
         protected override void DrawSlashTrail()
@@ -398,13 +406,11 @@ namespace Coralite.Content.Items.Nightmare
     {
         public override string Texture => AssetDirectory.NightmareItems + "LostSevensideHookProj";
 
-        public LostSevensideChain() : base(32*16, 48, 24, 16)
-        {
-        }
+        public LostSevensideChain() : base(42 * 16, 48, 32, 18) { backSpeed = 48; }
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[Type] = 8;
+            ProjectileID.Sets.TrailCacheLength[Type] = 7;
             ProjectileID.Sets.TrailingMode[Type] = 4;
         }
 
@@ -412,7 +418,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             Projectile.usesLocalNPCImmunity = false;
             Projectile.localNPCHitCooldown = 20;
-            Projectile.width = Projectile.height = 48;
+            Projectile.width = Projectile.height = 32;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.penetrate = -1;
             Projectile.friendly = true;
@@ -425,9 +431,9 @@ namespace Coralite.Content.Items.Nightmare
             if ((int)Timer == 0)
             {
                 Owner.itemTime = 2;
-                Owner.immuneTime = 30;
+                Owner.immuneTime = 45;
                 Owner.immune = true;
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Projectile.Center - Owner.Center).SafeNormalize(Vector2.Zero), ProjectileType<LostSevensideSpurt>(), Projectile.damage * 3, 2, Owner.whoAmI, 0, ai2: 34);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Projectile.Center - Owner.Center).SafeNormalize(Vector2.Zero), ProjectileType<LostSevensideSpurt>(), Projectile.damage * 4, 2, Owner.whoAmI, 0, ai2: 34);
             }
 
             if ((int)Timer < 8)
@@ -449,7 +455,7 @@ namespace Coralite.Content.Items.Nightmare
                 Vector2 dir = (Projectile.Center - Owner.Center).SafeNormalize(Vector2.Zero);
                 var modifier = new PunchCameraModifier(Owner.position, dir, 14, 8f, 6, 1000f);
                 Main.instance.CameraModifiers.Add(modifier);
-                Owner.velocity = new Vector2(Math.Sign(Owner.Center.X - Projectile.Center.X) * 4, -3);
+                Owner.velocity = new Vector2(Math.Sign(Owner.Center.X - Projectile.Center.X) * 8, -3);
                 //生成新的挥舞弹幕
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<LostSevensideSlash>(), Projectile.damage*3, 2, Owner.whoAmI, 4);
                 if (Owner.TryGetModPlayer(out CoralitePlayer cp))
@@ -492,9 +498,9 @@ namespace Coralite.Content.Items.Nightmare
             {
                 Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
 
-                for (int i = 1; i < 8; i += 1)
+                for (int i = 1; i < 7; i += 1)
                     Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    lightColor * (0.5f - i * 0.5f / 8), Projectile.oldRot[i] + 1.57f, origin, Projectile.scale, 0, 0);
+                    lightColor * (0.4f - i * 0.4f / 7), Projectile.oldRot[i] + 1.57f, origin, Projectile.scale, 0, 0);
             }
 
             Main.spriteBatch.End();
@@ -697,8 +703,227 @@ namespace Coralite.Content.Items.Nightmare
         }
     }
 
-    public class LostVine
+    /// <summary>
+    /// 使用ai0传入颜色，0紫色，-1红色<br></br>
+    /// 使用ai1传入额外的追踪的角度<br></br>
+    /// 使用ai2传入蓄力时间
+    /// </summary>
+    public class LostVine:ModProjectile,IDrawAdditive
     {
+        public override string Texture => AssetDirectory.NightmarePlantera + "VineSpike";
 
+        private RotateTentacle tentacle;
+
+        private Player Owner => Main.player[Projectile.owner];
+
+        public float State;
+        public ref float ColorState => ref Projectile.ai[0];
+        public ref float Angle => ref Projectile.ai[1];
+        public ref float ChannelTime => ref Projectile.ai[2];
+
+        public ref float Timer => ref Projectile.localAI[0];
+
+        public float alpha;
+        private bool init = true;
+        private Color tentacleColor=new Color (80,86,102);
+        private Vector2 rotateVec2;
+        public SpriteEffects effect;
+
+        public static Color pink = new Color(233, 184, 230);
+
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailingMode[Type] = 2;
+            ProjectileID.Sets.TrailCacheLength[Type] = 7;
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.friendly = true;
+            Projectile.width = 142;
+            Projectile.height = 56;
+            Projectile.scale = 0.8f;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = -1;
+        }
+
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            if (State == 1)
+            {
+                float a = 0;
+                Vector2 dir = rotateVec2 * Projectile.width / 2;
+                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(),
+                    Projectile.Center - dir, Projectile.Center + dir, 20, ref a);
+            }
+
+            return false;
+        }
+
+        public override void AI()
+        {
+            if (init)
+            {
+                //if (ColorState == 0)
+                //    tentacleColor = NightmarePlantera.lightPurple;
+                //else if (ColorState == -1)
+                //    tentacleColor = NightmarePlantera.nightmareRed;
+                //else
+                //    tentacleColor = Main.hslToRgb(new Vector3(Math.Clamp(ColorState, 0, 1f), 1f, 0.8f));
+
+                Projectile.rotation = Projectile.velocity.ToRotation();
+                effect = Main.rand.Next(0, 2) switch
+                {
+                    0 => SpriteEffects.None,
+                    _ => SpriteEffects.FlipVertically
+                };
+                init = false;
+            }
+
+            tentacle ??= new RotateTentacle(30, factor =>
+            {
+                return Color.Lerp(tentacleColor * alpha, Color.Transparent, factor);
+            }, factor =>
+            {
+                if (factor > 0.6f)
+                    return Helper.Lerp(25, 0, (factor - 0.6f) / 0.4f);
+
+                return Helper.Lerp(0, 25, factor / 0.6f);
+            }, NightmarePlantera.tentacleTex, NightmarePlantera.waterFlowTex);
+
+            tentacle.SetValue(Projectile.Center, Owner.Center, Projectile.rotation + MathHelper.Pi);
+            tentacle.UpdateTentacle(Vector2.Distance(Owner.Center, Projectile.Center) / 30, 0.5f);
+
+            switch ((int)State)
+            {
+                default:
+                case 0: //伸出后向后蓄力并瞄准玩家
+                    {
+                        Owner.itemTime = Owner.itemAnimation = 2;
+                        if (alpha < 1)
+                        {
+                            alpha += 1 / ChannelTime;
+                            if (alpha > 1)
+                                alpha = 1;
+                        }
+
+                        float factor = Timer / ChannelTime;
+                        Vector2 center = Main.MouseWorld ;
+                        Vector2 dir = center - Projectile.Center + (Angle+(Owner.Center-center).ToRotation()).ToRotationVector2() * Helper.Lerp(200, 650, factor);
+
+                        float velRot = Projectile.velocity.ToRotation();
+                        float targetRot = dir.ToRotation();
+
+                        float speed = Projectile.velocity.Length();
+                        float aimSpeed = Math.Clamp(dir.Length() / 300f, 0, 1) * 45;
+
+                        Projectile.velocity = velRot.AngleTowards(targetRot, 0.65f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.55f);
+                        Projectile.rotation = Projectile.rotation.AngleTowards((center - Projectile.Center).ToRotation(), 0.35f);
+
+                        if (Timer > ChannelTime)
+                        {
+                            Timer = 0;
+                            State++;
+                            Projectile.velocity = rotateVec2 * 64;
+                            Helper.PlayPitched("Misc/Spike", 0.8f, -0.4f, Projectile.Center);
+                            var modifyer = new PunchCameraModifier(Projectile.Center, rotateVec2, 10, 6, 12, 1000);
+                            Main.instance.CameraModifiers.Add(modifyer);
+                        }
+                    }
+                    break;
+                case 1://快速戳出
+                    {
+                        //for (int i = 0; i < 2; i++)
+                        //{
+                        Color c = Main.rand.Next(0, 1) switch
+                        {
+                            0 => tentacleColor,
+                            _ => tentacleColor * 2f,
+                        };
+                        Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(24, 24), Projectile.velocity * Main.rand.NextFloat(0.05f, 0.2f),
+                            CoraliteContent.ParticleType<SpeedLine>(), c, Main.rand.NextFloat(0.3f, 0.5f));
+                        //}
+                        if (Main.rand.NextBool())
+                        {
+                            Color c2 = Main.rand.Next(0, 1) switch
+                            {
+                                0 => tentacleColor,
+                                _ => tentacleColor * 2f,
+                            };
+                            Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity * Main.rand.NextFloat(0.05f, 0.3f),
+                                CoraliteContent.ParticleType<SpeedLine>(), c2, Main.rand.NextFloat(0.3f, 0.5f));
+                        }
+
+                        if (Timer > 15)
+                        {
+                            State++;
+                            Timer = 0;
+                            Projectile.velocity *= 0;
+                            alpha -= 0.2f;
+                        }
+                    }
+                    break;
+                case 2://收回并小幅度摇摆
+                    {
+                        if (alpha > 0)
+                        {
+                            alpha -= 0.015f;
+                            if (alpha < 0)
+                            {
+                                alpha = 0;
+                                Projectile.Kill();
+                            }
+                        }
+                        float velLength = Projectile.velocity.Length();
+                        if (velLength < 44)
+                            velLength += 0.75f;
+                        Vector2 dir = Owner.Center - Projectile.Center;
+                        Vector2 dir2 = dir.SafeNormalize(Vector2.Zero);
+                        Projectile.velocity = dir2 * velLength;
+                        Projectile.rotation = dir2.ToRotation() + MathHelper.Pi + 0.35f * MathF.Sin(Timer * 0.2f);
+
+                        if (dir.Length() < 50 || Timer > 180)
+                            Projectile.Kill();
+                    }
+                    break;
+            }
+
+            rotateVec2 = Projectile.rotation.ToRotationVector2();
+            Timer++;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 selforigin = mainTex.Size() / 2;
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2) - Main.screenPosition;
+            Color c = NightmarePlantera.nightmareRed * alpha;
+
+            tentacle?.DrawTentacle(i => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
+
+            for (int i = 0; i < 7; i++)
+                Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter, null,
+                c * (0.4f - i * 0.4f / 7), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale * (1 + i * 0.05f), effect, 0);
+
+            Main.spriteBatch.Draw(mainTex, pos, null, pink * alpha, Projectile.rotation, selforigin, Projectile.scale, effect, 0);
+
+            return false;
+        }
+
+        public void DrawAdditive(SpriteBatch spriteBatch)
+        {
+            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 selforigin = mainTex.Size() / 2;
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+
+            Color c = pink;
+            c.A = (byte)(c.A * alpha);
+            spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, selforigin, Projectile.scale, effect, 0);
+            c.A = (byte)(c.A * 0.4f);
+            spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, selforigin, Projectile.scale * 1.35f, effect, 0);
+        }
     }
 }

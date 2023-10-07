@@ -25,6 +25,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <summary> 射出多久后开始回到手中 </summary>
         protected readonly float shootTime;
 
+        protected float backSpeed=32;
+
         public BaseSilkKnifeSpecialProj(int onHookedLength,int rollingLength,float shootSpeed,float shootTime)
         {
             this.onHookedLength = onHookedLength;
@@ -70,10 +72,10 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// </summary>
         public virtual void BackToOwner()
         {
-            if (Vector2.Distance(Owner.Center, Projectile.Center) < 48)
+            if (Vector2.Distance(Owner.Center, Projectile.Center) < (backSpeed+24))
                 Projectile.Kill();
 
-            Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.One) * 32;
+            Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.One) * backSpeed;
             Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation();
         }
 

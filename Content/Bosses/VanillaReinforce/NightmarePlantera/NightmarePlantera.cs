@@ -1,4 +1,6 @@
-﻿using Coralite.Content.Items.Misc_Shoot;
+﻿using Coralite.Content.Items.Gels;
+using Coralite.Content.Items.Misc_Shoot;
+using Coralite.Content.Items.Nightmare;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -15,6 +17,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -182,10 +185,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
             //npcLoot.Add(ItemDropRule.BossBag(ItemType<RediancieBossBag>()));
             //npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
+            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 
-            //LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
-            //notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<RedJade>(), 1, 20, 24));
-            //npcLoot.Add(notExpertRule);
+            IItemDropRule[] weaponTypes = new IItemDropRule[] {
+                ItemDropRule.Common(ModContent.ItemType<LostSevensideHook>(), 1, 1, 1),
+                //ItemDropRule.Common(ModContent.ItemType<GelWhip>(), 1, 1, 1),
+                //ItemDropRule.Common(ModContent.ItemType<RoyalClassics>(), 1, 1, 1),
+            };
+            notExpertRule.OnSuccess(new OneFromRulesRule(1, weaponTypes));
+
+            npcLoot.Add(notExpertRule);
         }
 
         public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
@@ -210,7 +219,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
         {
-            if (info.Damage > 5000)
+            if (info.Damage > 4000)
                 info.Damage = 100;
         }
 
