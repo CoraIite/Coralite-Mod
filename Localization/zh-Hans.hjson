@@ -1465,6 +1465,11 @@ Mods: {
 						拥有梦魇能量时左键射出荆棘刺
 					'''
 			}
+
+			DreamShears: {
+				DisplayName: 碎梦剪
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1778,6 +1783,8 @@ Mods: {
 			LostSevensideChain.DisplayName: 迷失七棱钩
 			LostSevensideSpurt.DisplayName: 迷失突刺
 			LostVine.DisplayName: 迷失荆棘刺
+			// DreamShearsSlash.DisplayName: Dream Shears Slash
+			// DreamShearsSpurt.DisplayName: Dream Shears Spurt
 		}
 
 		Configs: {

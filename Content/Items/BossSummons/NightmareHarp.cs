@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.Items.Nightmare;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Terraria;
@@ -30,7 +31,7 @@ namespace Coralite.Content.Items.BossSummons
             Item.useAnimation = 30;
             Item.useTime = 30;
             Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.rare = ItemRarityID.LightRed;
+            Item.rare = ModContent.RarityType<NightmareRarity>();
         }
 
         public override bool CanUseItem(Player player)

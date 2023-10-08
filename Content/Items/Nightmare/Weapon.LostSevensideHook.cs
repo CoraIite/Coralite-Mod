@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.DamageType = DamageClass.Melee;
             Item.rare = RarityType<NightmareRarity>();
             Item.value = Item.sellPrice(2, 0, 0, 0);
-            Item.SetWeaponValues(286, 4, 8);
+            Item.SetWeaponValues(276, 4, 8);
             Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;
@@ -229,7 +229,7 @@ namespace Coralite.Content.Items.Nightmare
                     if (timer < 24)
                         distanceToOwner = Helper.EllipticalEase(2f - 4.9f * Smoother.Smoother(timer, maxTime - minTime), 40, 80);
                     else
-                        distanceToOwner -= 1.4f;
+                        distanceToOwner -= 0.6f;
 
                     break;
                 case 2:

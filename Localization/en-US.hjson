@@ -1427,6 +1427,11 @@ Mods: {
 						When possessing nightmare energy, the left-click shoots thorny thorns
 					'''
 			}
+
+			DreamShears: {
+				DisplayName: Dream Shears
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1740,6 +1745,8 @@ Mods: {
 			LostSevensideChain.DisplayName: Lost Sevenside Chain
 			LostSevensideSpurt.DisplayName: Lost Sevenside Spurt
 			LostVine.DisplayName: Lost Vine
+			DreamShearsSlash.DisplayName: Dream Shears Slash
+			DreamShearsSpurt.DisplayName: Dream Shears Spurt
 		}
 
 		Configs: {

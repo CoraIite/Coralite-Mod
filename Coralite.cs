@@ -17,10 +17,12 @@ namespace Coralite
         private List<IOrderedLoadable> loadCache;
 
         public NoSmoother NoSmootherInstance;
-        public HeavySmoother  HeavySmootherInstance;
+        public HeavySmoother HeavySmootherInstance;
         public SqrtSmoother SqrtSmoother;
         public X2Smoother X2Smoother;
-public SinSmoother SinSmoother;
+        public SinSmoother SinSmoother;
+        public BezierEaseSmoother BezierEaseSmoother;
+
         //单例模式！
         public static Coralite Instance { get; private set; }
 
@@ -33,6 +35,7 @@ public SinSmoother SinSmoother;
             SqrtSmoother = new SqrtSmoother();
             X2Smoother = new X2Smoother();
             SinSmoother = new SinSmoother();
+            BezierEaseSmoother = new BezierEaseSmoother();
             InitColor();
         }
 
