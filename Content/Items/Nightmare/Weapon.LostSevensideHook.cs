@@ -114,7 +114,6 @@ namespace Coralite.Content.Items.Nightmare
             trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "NormalSlashTrail3");
             WarpTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "WarpTex");
             GradientTexture = Request<Texture2D>(AssetDirectory.NightmareItems + "LostSevensideGradient");
-
         }
 
         public override void Unload()

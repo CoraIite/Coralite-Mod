@@ -85,7 +85,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             continue;
 
                         flower.active = true;
-                        flower.Position = Main.screenPosition + Main.rand.NextVector2FromRectangle(new Rectangle(0, 0, Main.screenWidth, Main.screenHeight));
+                        flower.onScreenPosition = Main.rand.NextVector2FromRectangle(new Rectangle(0, 0, Main.screenWidth, Main.screenHeight));
                         flower.frameX = Main.rand.Next(4);
                         flower.Depth = Main.rand.NextFloat() * 10f;
 
@@ -125,8 +125,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     FlowerParticle flower = flowers[i];
                     if (flower.active)
                     {
+                        Vector2 velocity = Main.LocalPlayer.oldPosition + new Vector2(Main.LocalPlayer.width, Main.LocalPlayer.height) / 2 - Main.LocalPlayer.Center;
+                        flower.onScreenPosition += velocity / (flower.Depth*0.75f) ;
                         flower.Update();
-                        flower.Rotation += Math.Sign(flower.Rotation) * speed;
+                        flower.Rotation += Math.Sign(flower.Rotation) * speed*(15-flower.Depth)/15;
                     }
                 }
             }
@@ -157,7 +159,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
     public class FlowerParticle
     {
-        public Vector2 Position;
+        public Vector2 onScreenPosition;
         public bool active;
         public float Rotation;
         public float Scale;
@@ -181,7 +183,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 if (timeleft < 440)
                 {
-                    Position += new Vector2(0, -0.5f);
+                    onScreenPosition += new Vector2(0, -0.5f);
 
                     break;
                 }
@@ -202,7 +204,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             } while (false);
 
-            if (!OnScreen(Position - Main.screenPosition, new Vector2(112, 112) * Scale))
+            if (!OnScreen(onScreenPosition, new Vector2(112, 112) * Scale))
             {
                 active = false;
                 alpha = 0;
@@ -223,7 +225,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Texture2D tex = NightmarePlantera.flowerParticleTex.Value;
             Rectangle frameBox = tex.Frame(5, 3, frameX, frameY);
             Vector2 origin = frameBox.Size() / 2;
-            Vector2 pos = Position - Main.screenPosition;
+            Vector2 pos = onScreenPosition;
 
             float a = extraAlpha * alpha;
             Color c = color;

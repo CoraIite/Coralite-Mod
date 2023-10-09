@@ -77,15 +77,16 @@ namespace Coralite.Content.Items.Nightmare
                         Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage * 2, knockback, player.whoAmI, combo);
                         break;
                     case 2:
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsRolling>(), damage, knockback, player.whoAmI);
                         break;
                     case 3:
                         break;
                 }
 
-                if (player.TryGetModPlayer(out CoralitePlayer cp2)&&cp2.nightmareEnergy<7)//获得能量
+                if (player.TryGetModPlayer(out CoralitePlayer cp2) && cp2.nightmareEnergy < 7)//获得能量
                     cp2.nightmareEnergy++;
                 combo++;
-                if (combo > 1)
+                if (combo > 2)
                     combo = 0;
             }
 
@@ -93,7 +94,7 @@ namespace Coralite.Content.Items.Nightmare
         }
     }
 
-    public class DreamShearsSlash: BaseSwingProj, IDrawWarp
+    public class DreamShearsSlash : BaseSwingProj, IDrawWarp
     {
         public override string Texture => AssetDirectory.NightmareItems + "DreamShears";
 
@@ -155,16 +156,16 @@ namespace Coralite.Content.Items.Nightmare
                 case 0: //下挥，较为椭圆
                     startAngle = 2.4f;
                     totalAngle = 4.6f;
-                    maxTime = Owner.itemTimeMax* 2;
+                    maxTime = Owner.itemTimeMax * 2;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
-                    Projectile.scale = Helper.EllipticalEase(2.3f - 4.6f * Smoother.Smoother(0, maxTime - minTime), 1f, 1.6f);
+                    Projectile.scale = Helper.EllipticalEase(2.4f - 3.8f * Smoother.Smoother(0, maxTime - minTime), 1.3f, 1.9f);
                     break;
                 case 1://下挥，圆
                     startAngle = -2.4f;
                     totalAngle = -3.8f;
                     maxTime = Owner.itemTimeMax * 2;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
-                    Projectile.scale = Helper.EllipticalEase(2.3f - 4.6f * Smoother.Smoother(0, maxTime - minTime), 1f, 1.6f);
+                    Projectile.scale = Helper.EllipticalEase(2.4f - 3.8f * Smoother.Smoother(0, maxTime - minTime), 1.3f, 1.9f);
                     break;
             }
 
@@ -180,7 +181,7 @@ namespace Coralite.Content.Items.Nightmare
         protected override void OnSlash()
         {
             Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
-            Dust dust = Dust.NewDustPerfect((Top+Projectile.Center)/2 + Main.rand.NextVector2Circular(50, 50), DustID.RedMoss,
+            Dust dust = Dust.NewDustPerfect((Top + Projectile.Center) / 2 + Main.rand.NextVector2Circular(50, 50), DustID.RedMoss,
                    dir * Main.rand.NextFloat(0.5f, 2f));
             dust.noGravity = true;
 
@@ -191,10 +192,10 @@ namespace Coralite.Content.Items.Nightmare
             {
                 default:
                 case 0:
-                    Projectile.scale = Helper.EllipticalEase(2.4f - 4.6f * Smoother.Smoother(timer, maxTime - minTime), 1f, 1.6f);
+                    Projectile.scale = Helper.EllipticalEase(2.4f - 4.6f * Smoother.Smoother(timer, maxTime - minTime), 1.3f, 1.9f);
                     break;
                 case 1:
-                    Projectile.scale = Helper.EllipticalEase(2.4f - 3.8f * Smoother.Smoother(timer, maxTime - minTime), 1f, 1.6f);
+                    Projectile.scale = Helper.EllipticalEase(2.4f - 3.8f * Smoother.Smoother(timer, maxTime - minTime), 1.3f, 1.9f);
                     break;
             }
             base.OnSlash();
@@ -214,80 +215,48 @@ namespace Coralite.Content.Items.Nightmare
             if (onHitTimer == 0)
             {
                 onHitTimer = 1;
-                Owner.immuneTime += 10;
+                Owner.immuneTime += 8;
 
                 if (Main.netMode == NetmodeID.Server)
                     return;
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Vector2 center = target.Center +  (Projectile.rotation  + (Timer % 2 == 0 ? 1.57f : -1.57f) + Main.rand.NextFloat(-0.25f, 0.25f)).ToRotationVector2() * 140;
+                    Vector2 center = target.Center + (Projectile.rotation + (Timer % 2 == 0 ? 1.57f : -1.57f) + Main.rand.NextFloat(-0.25f, 0.25f)).ToRotationVector2() * 140;
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, (target.Center - center).SafeNormalize(Vector2.Zero) * 28, ProjectileType<DreamShearsSpurt>(), Projectile.damage, 2, Owner.whoAmI, 1, 0, 16);
                 }
 
-                float strength = 3;
-                float baseScale = 1;
-
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
-                    PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, RotateVec2, strength, 6, 6, 1000);
+                    PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, RotateVec2, 3, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
 
                 Dust dust;
                 float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, Projectile.width * Projectile.scale - Projectile.localAI[1]);
                 Vector2 pos = Bottom + RotateVec2 * offset;
-                if (VisualEffectSystem.HitEffect_Lightning)
-                {
-                    //dust = Dust.NewDustPerfect(pos, DustType<EmperorSabreStrikeDust>(),
-                    //    Scale: Main.rand.NextFloat(baseScale, baseScale * 1.3f));
-                    //dust.rotation = _Rotation + MathHelper.PiOver2 + Main.rand.NextFloat(-0.2f, 0.2f);
-
-                    //dust = Dust.NewDustPerfect(pos, DustType<EmperorSabreStrikeDust>(),
-                    //         Scale: Main.rand.NextFloat(baseScale * 0.2f, baseScale * 0.3f));
-                    //float leftOrRight = Main.rand.NextFromList(-0.3f, 0.3f);
-                    //dust.rotation = _Rotation + MathHelper.PiOver2 + leftOrRight + Main.rand.NextFloat(-0.2f, 0.2f);
-                }
 
                 if (VisualEffectSystem.HitEffect_Dusts)
                 {
-                    //for (int j = 0; j < 8; j++)
-                    //{
-                    //    Vector2 dir = -RotateVec2.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
-                    //    dust = Dust.NewDustPerfect(pos, DustID.t_Slime, dir * Main.rand.NextFloat(1f, 5f), 150, new Color(78, 136, 255, 80), Scale: Main.rand.NextFloat(1f, 2f));
-                    //    dust.noGravity = true;
-                    //}
-
-                    //for (int i = 0; i < 12; i++)
-                    //{
-                    //    Vector2 dir = RotateVec2.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f));
-                    //    dust = Dust.NewDustPerfect(pos, DustID.ShimmerSpark, dir * Main.rand.NextFloat(2f, 6f), Scale: Main.rand.NextFloat(1.5f, 2f));
-                    //    dust.noGravity = true;
-                    //}
+                    for (int j = 0; j < 8; j++)
+                    {
+                        Vector2 dir = RotateVec2.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
+                        dust = Dust.NewDustPerfect(pos, DustID.RedTorch, dir * Main.rand.NextFloat(1f, 6f), Scale: Main.rand.NextFloat(1f, 1.4f));
+                        dust.noGravity = true;
+                    }
                 }
-
-                //if (VisualEffectSystem.HitEffect_SpecialParticles)
-                //    ParticleOrchestrator.SpawnParticlesDirect(ParticleOrchestraType.Keybrand, new ParticleOrchestraSettings()
-                //    {
-                //        PositionInWorld = pos,
-                //        MovementVector = RotateVec2 * Main.rand.NextFloat(2f, 4f),
-                //    });
-                //for (int i = 0; i < 3; i++)
-                //{
-                //    Vector2 dir = RotateVec2.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
-                //    Vector2 position = pos + Main.rand.NextVector2Circular(8, 8);
-                //    for (int j = 0; j < 8; j++)
-                //    {
-                //        dust = Dust.NewDustPerfect(position, DustID.YellowTorch, dir.RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)) * (j * 1.5f), 70, Scale: 3f - j * 0.3f);
-                //        dust.noGravity = true;
-                //    }
-                //}
             }
         }
 
         public void DrawWarp()
         {
             WarpDrawer(0.75f);
+        }
+
+        protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
+        {
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(),
+                                                lightColor, Projectile.rotation + extraRot, origin, Projectile.scale - 0.3f, CheckEffect(), 0f);
         }
 
         protected override void DrawSlashTrail()
@@ -339,6 +308,239 @@ namespace Coralite.Content.Items.Nightmare
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             }
+        }
+    }
+
+    public class DreamShearsRolling : BaseHeldProj, IDrawNonPremultiplied, IDrawWarp
+    {
+        public override string Texture => AssetDirectory.NightmareItems + "DreamShearsProj";
+
+        /// <summary> 剪刀张开的角度 </summary>
+        public ref float Angle => ref Projectile.ai[0];
+        public ref float State => ref Projectile.ai[1];
+
+        public ref float Alpha => ref Projectile.localAI[0];
+        public ref float SelfRot => ref Projectile.localAI[1];
+        public ref float DistanceToOwner => ref Projectile.localAI[2];
+
+        public int rolllingTime;
+        public int Timer;
+        public float startAngle;
+        public float totalAngle;
+
+        public bool init = true;
+
+        public static Asset<Texture2D> SlashTex;
+        public static Asset<Texture2D> rollingCircleTex;
+        public static Asset<Texture2D> WarpTex;
+
+        public static Color darkRed = new Color(61, 0, 51);
+        public static Color lightRed = new Color(190, 0, 101);
+
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+
+            SlashTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "CircleKniefLight2");
+            rollingCircleTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "RollingCircle");
+            WarpTex = Request<Texture2D>(AssetDirectory.NightmareItems + "CircleWarp");
+        }
+
+        public override void Unload()
+        {
+            base.Unload();
+        }
+
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[Type] = 8;
+            ProjectileID.Sets.TrailingMode[Type] = 4;
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.scale = 1;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.friendly = true;
+
+            Projectile.width = Projectile.height = 90;
+            Projectile.scale = 1.7f;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.localNPCHitCooldown = 16;
+            Projectile.extraUpdates = 1;
+            Projectile.netUpdate = true;
+            Projectile.netImportant = true;
+            Projectile.usesLocalNPCImmunity = true;
+        }
+
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            if (State == 0)
+                return base.Colliding(projHitbox, targetHitbox);
+            return false;
+        }
+
+        public override void AI()
+        {
+            Owner.heldProj = Projectile.whoAmI;//让弹幕图层在在玩家手中
+            Owner.itemTime = Owner.itemAnimation = 2;//这个东西不为0的时候就无法使用其他物品
+
+            if (init)
+            {
+                rolllingTime = (int)(Owner.itemTimeMax * 3.5f);
+                Projectile.rotation = startAngle = (Main.MouseWorld - Owner.Center).ToRotation() + (Owner.direction > 0 ? -1 : 1) * 2f;
+                totalAngle = (Owner.direction > 0 ? 1 : -1) * (9.7f);
+                SelfRot = startAngle + totalAngle;
+                Angle = 1f;
+                init = false;
+            }
+
+            switch (State)
+            {
+                default:
+                    Projectile.Kill();
+                    break;
+                case 0: //在玩家身边旋转一圈
+                    Projectile.rotation = startAngle + Coralite.Instance.BezierEaseSmoother.Smoother(Timer, rolllingTime) * totalAngle;
+                    if (Timer < 35)
+                    {
+                        DistanceToOwner = Helper.Lerp(0, 130, Timer / 35f);
+                    }
+                    SelfRot += Math.Sign(totalAngle) * (MathHelper.TwoPi * 2) / rolllingTime;
+
+                    if (Timer < rolllingTime / 2)
+                    {
+                        Alpha = Helper.Lerp(0, 1, (float)Timer / (rolllingTime / 2));
+                        if (Alpha > 1)
+                            Alpha = 1;
+                    }
+
+                    if (Timer > rolllingTime - 8)
+                    {
+                        if (Alpha > 0)
+                        {
+                            Alpha -= 0.05f;
+                            if (Alpha < 0)
+                                Alpha = 0;
+                        }
+                    }
+
+                    if (Timer > rolllingTime)
+                    {
+                        Timer = 0;
+                        State++;
+                    }
+
+                    break;
+                case 1:
+                    SelfRot = SelfRot.AngleTowards(Projectile.rotation, 0.2f);
+
+                    if (Angle > 0)
+                    {
+                        Angle -= 0.04f;
+                        if (Angle < 0)
+                            Angle = 0;
+                    }
+
+                    if (Alpha > 0)
+                    {
+                        Alpha -= 0.05f;
+                        if (Alpha < 0)
+                            Alpha = 0;
+                    }
+
+                    if (Timer > 12)
+                    {
+                        State++;
+                    }
+                    break;
+                case 2:
+                    SelfRot = SelfRot.AngleTowards(Projectile.rotation, 0.2f);
+                    DistanceToOwner -= 6;
+
+                    if (Angle > 0)
+                    {
+                        Angle -= 0.04f;
+                        if (Angle < 0)
+                            Angle = 0;
+                    }
+
+                    if (Alpha > 0)
+                    {
+                        Alpha -= 0.1f;
+                        if (Alpha < 0)
+                            Alpha = 0;
+                    }
+                    if (DistanceToOwner < 25)
+                        Projectile.Kill();
+                    break;
+            }
+
+            Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * DistanceToOwner;
+            Timer++;
+        }
+
+        public override bool PreDraw(ref Color lightColor) => false;
+
+        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
+            //绘制旋转的残影
+            Texture2D circleTex = rollingCircleTex.Value;
+            Vector2 origin = circleTex.Size() / 2;
+            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            float scale = 180f / circleTex.Width;
+
+            for (int i = 0; i < 8; i += 1)
+            {
+                Color c = Color.Lerp(lightRed, darkRed, i / 8f);
+                c.A = (byte)(c.A * (0.6f - i * 0.6f / 8) * Alpha);
+                spriteBatch.Draw(circleTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
+                    c, Projectile.oldRot[i] + i * 0.2f, origin, scale, 0, 0);
+            }
+
+            Vector2 center = Projectile.Center - Main.screenPosition;
+
+            //绘制刀光
+            Texture2D slashTex = SlashTex.Value;
+            Vector2 origin3 = slashTex.Size() / 2;
+
+            Color c2 = lightRed;
+            c2.A = (byte)(c2.A * Alpha);
+            spriteBatch.Draw(slashTex, center, null,
+                c2, SelfRot + 0.4f, origin3, scale, 0, 0);
+
+            c2 = NightmarePlantera.nightmareRed;
+            c2.A = (byte)(c2.A * Alpha);
+            spriteBatch.Draw(slashTex, center, null,
+                c2, SelfRot, origin3, scale, 0, 0);
+
+
+            //绘制本体
+            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle framebox = mainTex.Frame(1, 2, 0, 1);
+            Vector2 origin2 = framebox.Size() / 2;
+
+            spriteBatch.Draw(mainTex, center, framebox,
+                Color.White, SelfRot + Angle + 0.785f, origin2, Projectile.scale, 0, 0);
+
+            framebox = mainTex.Frame(1, 2, 0, 0);
+            spriteBatch.Draw(mainTex, center, framebox,
+                Color.White, SelfRot - Angle + 0.785f, origin2, Projectile.scale, 0, 0);
+
+
+        }
+
+        public void DrawWarp()
+        {
+            Texture2D warpTex = WarpTex.Value;
+            Vector2 center = Projectile.Center - Main.screenPosition;
+            Vector2 origin = warpTex.Size() / 2;
+            float scale = 180f / warpTex.Width;
+
+            Main.spriteBatch.Draw(warpTex, center, null,
+                Color.White * Alpha, SelfRot + 0.2f, origin, scale, 0, 0);
         }
     }
 

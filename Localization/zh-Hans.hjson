@@ -1785,6 +1785,7 @@ Mods: {
 			LostVine.DisplayName: 迷失荆棘刺
 			// DreamShearsSlash.DisplayName: Dream Shears Slash
 			// DreamShearsSpurt.DisplayName: Dream Shears Spurt
+			// DreamShearsRolling.DisplayName: Dream Shears Rolling
 		}
 
 		Configs: {
