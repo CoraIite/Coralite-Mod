@@ -231,6 +231,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 3:
                     {
+                        if (timer==2)
+                        {
+                            Target.AddImmuneTime(ImmunityCooldownID.Bosses, 275);
+                            Target.AddImmuneTime(ImmunityCooldownID.General, 275);
+                        }
                         if (timer == 10)
                         {
                             Rectangle rectangle = new Rectangle((int)NPC.Center.X, (int)NPC.Center.Y, 2, 2);
@@ -247,8 +252,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             Target.Center = NPC.Center;
                             Target.velocity *= 0f;
+                            Target.immune = true;
                             Target.immuneTime = 75;
-                            Target.AddImmuneTime(ImmunityCooldownID.Bosses, 75);
+
+                            if (Target.TryGetModPlayer(out NightmarePlayerCamera player))
+                                player.FanfasyImmuneTime = 75;
                         }
                         else if (timer == 100)
                         {

@@ -255,6 +255,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
 
             Timer++;
+            Target.hurtCooldowns[1] = Target.hurtCooldowns[1];
         }
 
         public void NightmareDash()
@@ -2480,7 +2481,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
             }
 
-            //State = (int)AIStates.fantasyHelp;
+            //State = (int)AIStates.nightmareBite;
 
             MoveCount++;
             if (MoveCount > 11)

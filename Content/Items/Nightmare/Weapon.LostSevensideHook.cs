@@ -469,6 +469,26 @@ namespace Coralite.Content.Items.Nightmare
             Timer++;
         }
 
+        public override void OnKill(int timeLeft)
+        {
+            if (Main.netMode != NetmodeID.Server && (int)HookState < 3 && (int)HookState > -1)
+            {
+                //生成血液粒子和钩子gore
+                SoundEngine.PlaySound(CoraliteSoundID.ShadowflameApparition_NPCDeath55, Projectile.Center);
+                Vector2 direction = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.One);
+                float length = (Owner.Center - Projectile.Center).Length();
+                for (int i = 0; i < length; i += 12)
+                {
+                    Color c = Main.rand.Next(0, 2) switch
+                    {
+                        0 => new Color(255, 209, 252),
+                        _ => new Color(218, 205, 232),
+                    };
+                    Dust.NewDustPerfect(Projectile.Center + direction * i + Main.rand.NextVector2Circular(4, 4),DustType<NightmarePetal>(), Vector2.UnitX.RotatedByRandom(3.14)*Main.rand.NextFloat(0,2f), newColor: c, Scale: Main.rand.NextFloat(1f, 1.3f));
+                }
+            }
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             //绘制链条
@@ -724,7 +744,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public float alpha;
         private bool init = true;
-        private Color tentacleColor=new Color (80,86,102);
+        private Color tentacleColor = new Color(80, 86, 102);
         private Vector2 rotateVec2;
         public SpriteEffects effect;
 

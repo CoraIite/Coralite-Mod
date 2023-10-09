@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
@@ -14,6 +15,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         private int shakeTimer;
         public Vector2 ShakeVec2;
 
+        public int FanfasyImmuneTime;
+
         public void Reset()
         {
             useScreenMove = false;
@@ -23,7 +26,23 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             shakeDelay = 0;
             shakeTimer = 0;
             ShakeVec2 = Vector2.Zero;
+
+            FanfasyImmuneTime = 0;
         }
+
+        public override void PostUpdate()
+        {
+            if (FanfasyImmuneTime > 0)
+                FanfasyImmuneTime--;
+        }
+
+        public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
+        {
+            FanfasyImmuneTime = 0;
+        }
+
+        public override bool CanBeHitByProjectile(Projectile proj) => FanfasyImmuneTime <= 0;
+        public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot) => FanfasyImmuneTime <= 0;
 
         public override void ResetEffects()
         {

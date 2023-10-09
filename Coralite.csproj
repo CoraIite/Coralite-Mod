@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Effects\AlphaGradientTrail.fx" />
+    <None Remove="Effects\AlphaNoHLGradientTrail.fx" />
     <None Remove="Effects\NoHLGradientTrail.fx" />
   </ItemGroup>
   <ItemGroup>

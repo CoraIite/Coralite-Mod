@@ -224,8 +224,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
         {
-            if (info.Damage > 4000)
-                info.Damage = 100;
+            if (info.Damage > 10000)
+                info.Damage = 10000;
         }
 
         public override void Load()

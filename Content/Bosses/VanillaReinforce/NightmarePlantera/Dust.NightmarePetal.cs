@@ -25,7 +25,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             dust.rotation += 0.2f;
             dust.velocity *= 0.99f;
             if (!dust.noGravity)
-                dust.velocity.Y += 0.02f;
+                dust.velocity.Y += 0.04f;
             if (dust.fadeIn > 45)
                 dust.color *= 0.84f;
             if (dust.fadeIn % 8 == 0)

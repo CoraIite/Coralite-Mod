@@ -1748,6 +1748,8 @@ Mods: {
 			DreamShearsSlash.DisplayName: Dream Shears Slash
 			DreamShearsSpurt.DisplayName: Dream Shears Spurt
 			DreamShearsRolling.DisplayName: Dream Shears Rolling
+			DreamShearsCut.DisplayName: Dream Shears Cut
+			NightmareBite_Firendly.DisplayName: Nightmare Bite_ Firendly
 		}
 
 		Configs: {

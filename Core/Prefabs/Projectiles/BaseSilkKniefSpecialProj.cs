@@ -131,10 +131,14 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void OnHookedToNPC()
         {
             if (Target < 0 || Target > Main.maxNPCs)
+            {
                 Projectile.Kill();
+            } 
             NPC npc = Main.npc[(int)Target];
             if (!npc.active || npc.dontTakeDamage || npc.Distance(Owner.Center) > onHookedLength || !Collision.CanHitLine(Owner.Center, 1, 1, npc.Center, 1, 1))
+            {
                 Projectile.Kill();
+            }    
 
             Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation();
             Projectile.Center = npc.Center + offset;
