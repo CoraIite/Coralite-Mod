@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.DamageType = DamageClass.Melee;
             Item.rare = RarityType<NightmareRarity>();
             Item.value = Item.sellPrice(2, 0, 0, 0);
-            Item.SetWeaponValues(276, 4, 8);
+            Item.SetWeaponValues(256, 4, 8);
             Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;
@@ -74,13 +74,13 @@ namespace Coralite.Content.Items.Nightmare
 
                 if (player.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 0)//射出特殊弹幕
                 {
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<LostVine>(), (int)(damage * 3.5f), knockback,
+                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<LostVine>(), (int)(damage * 3f), knockback,
                         player.whoAmI, -1, (0.2f + cp.nightmareEnergy * 0.1f) * (cp.nightmareEnergy % 2 == 0 ? -1 : 1), player.itemTimeMax * 1.5f);
                     cp.nightmareEnergy--;
                 }
                 else //生成弹幕
                 {
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage * 2, knockback, player.whoAmI, combo);
+                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, (int)(damage * 1.5f), knockback, player.whoAmI, combo);
                     combo++;
                     if (combo > 3)
                         combo = 0;
@@ -90,6 +90,8 @@ namespace Coralite.Content.Items.Nightmare
 
             return false;
         }
+
+        public override bool MeleePrefix() => true;
     }
 
     public class LostSevensideSlash : BaseSwingProj, IDrawWarp

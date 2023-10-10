@@ -33,6 +33,11 @@ namespace Coralite.Content.Items.Nightmare
 
         public int combo;
 
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type]=true;
+        }
+
         public override void SetDefaults()
         {
             Item.useAnimation = Item.useTime = 23;
@@ -41,7 +46,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.DamageType = DamageClass.Melee;
             Item.rare = RarityType<NightmareRarity>();
             Item.value = Item.sellPrice(2, 0, 0, 0);
-            Item.SetWeaponValues(235, 4, 4);
+            Item.SetWeaponValues(275, 4, 4);
             Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;
@@ -60,12 +65,12 @@ namespace Coralite.Content.Items.Nightmare
                     //生成弹幕
                     if (player.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy >= 7)//射出特殊弹幕
                     {
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 14f), knockback,
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 28f), knockback,
                             player.whoAmI, 1);
                         cp.nightmareEnergy = 0;
                     }
                     else
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 1.4f), knockback, player.whoAmI,0);
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 2.5f), knockback, player.whoAmI,0);
                     return false;
                 }
 
@@ -75,15 +80,15 @@ namespace Coralite.Content.Items.Nightmare
                     default:
                     case 0:
                     case 1://挥
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, combo);
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, (int)(damage * 1.75f), knockback, player.whoAmI, combo);
                         break;
                     case 2://转圈圈
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsRolling>(), (int)(damage * 1.2f), knockback, player.whoAmI);
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsRolling>(), (int)(damage * 2.5f), knockback, player.whoAmI);
                         if (player.TryGetModPlayer(out CoralitePlayer cp2) && cp2.nightmareEnergy < 7)//获得能量
                             cp2.nightmareEnergy++;
                         break;
                     case 3://剪
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 1.4f), knockback, player.whoAmI, 0);
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 3f), knockback, player.whoAmI, 0);
 
                         if (player.TryGetModPlayer(out CoralitePlayer cp3) && cp3.nightmareEnergy < 7)//获得能量
                             cp3.nightmareEnergy++;
@@ -97,6 +102,8 @@ namespace Coralite.Content.Items.Nightmare
 
             return false;
         }
+
+        public override bool MeleePrefix() => true;
     }
 
     public class DreamShearsSlash : BaseSwingProj, IDrawWarp
@@ -165,7 +172,7 @@ namespace Coralite.Content.Items.Nightmare
                     totalAngle = 4.6f;
                     maxTime = Owner.itemTimeMax * 2;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
-                    Projectile.scale = Helper.EllipticalEase(2.4f - 3.8f * Smoother.Smoother(0, maxTime - minTime), 1.3f, 1.9f);
+                    Projectile.scale = Helper.EllipticalEase(2.4f - 3.8f * Smoother.Smoother(0, maxTime - minTime), 1.5f, 2.1f);
                     st.Pitch = 0.8f;
 
                     break;
@@ -174,7 +181,7 @@ namespace Coralite.Content.Items.Nightmare
                     totalAngle = -3.8f;
                     maxTime = Owner.itemTimeMax * 2;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
-                    Projectile.scale = Helper.EllipticalEase(2.4f - 3.8f * Smoother.Smoother(0, maxTime - minTime), 1.3f, 1.9f);
+                    Projectile.scale = Helper.EllipticalEase(2.4f - 3.8f * Smoother.Smoother(0, maxTime - minTime), 1.5f, 2.1f);
                     st.Pitch = 0.6f;
 
                     break;
@@ -204,10 +211,10 @@ namespace Coralite.Content.Items.Nightmare
             {
                 default:
                 case 0:
-                    Projectile.scale = Helper.EllipticalEase(2.4f - 4.6f * Smoother.Smoother(timer, maxTime - minTime), 1.3f, 1.9f);
+                    Projectile.scale = Helper.EllipticalEase(2.4f - 4.6f * Smoother.Smoother(timer, maxTime - minTime), 1.5f, 2.1f);
                     break;
                 case 1:
-                    Projectile.scale = Helper.EllipticalEase(2.4f - 3.8f * Smoother.Smoother(timer, maxTime - minTime), 1.3f, 1.9f);
+                    Projectile.scale = Helper.EllipticalEase(2.4f - 3.8f * Smoother.Smoother(timer, maxTime - minTime), 1.5f, 2.1f);
                     break;
             }
             base.OnSlash();
@@ -271,7 +278,7 @@ namespace Coralite.Content.Items.Nightmare
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(),
-                                                lightColor, Projectile.rotation + extraRot, origin, Projectile.scale - 0.3f, CheckEffect(), 0f);
+                                                lightColor, Projectile.rotation + extraRot, origin, Projectile.scale - 0.5f, CheckEffect(), 0f);
         }
 
         protected override void DrawSlashTrail()
@@ -385,7 +392,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.tileCollide = false;
             Projectile.friendly = true;
 
-            Projectile.width = Projectile.height = 90;
+            Projectile.width = Projectile.height = 100;
             Projectile.scale = 1.7f;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 16;
@@ -441,7 +448,7 @@ namespace Coralite.Content.Items.Nightmare
                     Projectile.rotation = startAngle + Coralite.Instance.BezierEaseSmoother.Smoother(Timer, rolllingTime) * totalAngle;
                     if (Timer < 35)
                     {
-                        DistanceToOwner = Helper.Lerp(0, 130, Timer / 35f);
+                        DistanceToOwner = Helper.Lerp(0, 150, Timer / 35f);
                     }
                     SelfRot += Math.Sign(totalAngle) * (MathHelper.TwoPi * 2) / rolllingTime;
 
@@ -561,7 +568,7 @@ namespace Coralite.Content.Items.Nightmare
             Texture2D circleTex = rollingCircleTex.Value;
             Vector2 origin = circleTex.Size() / 2;
             Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
-            float scale = 180f / circleTex.Width;
+            float scale = 200f / circleTex.Width;
 
             for (int i = 0; i < 8; i += 1)
             {
@@ -606,7 +613,7 @@ namespace Coralite.Content.Items.Nightmare
             Texture2D warpTex = WarpTex.Value;
             Vector2 center = Projectile.Center - Main.screenPosition;
             Vector2 origin = warpTex.Size() / 2;
-            float scale = 180f / warpTex.Width;
+            float scale = 200f / warpTex.Width;
 
             Main.spriteBatch.Draw(warpTex, center, null,
                 Color.White * Alpha, SelfRot + 0.2f, origin, scale, 0, 0);
@@ -953,10 +960,10 @@ namespace Coralite.Content.Items.Nightmare
                     }
                     if (Timer < 6)
                         DistanceToOwner += 18f;
-                    else if (Timer > 14)
+                    else if (Timer > 12)
                     {
-                        DistanceToOwner -= 8f;
-                        if (Timer > 22)
+                        DistanceToOwner -= 8.25f;
+                        if (Timer > 19)
                             Projectile.Kill();
                     }
                     break;

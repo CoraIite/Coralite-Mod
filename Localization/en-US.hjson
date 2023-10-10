@@ -1432,6 +1432,11 @@ Mods: {
 				DisplayName: Dream Shears
 				Tooltip: ""
 			}
+
+			EuphorbiaMilii: {
+				DisplayName: Euphorbia Milii
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {

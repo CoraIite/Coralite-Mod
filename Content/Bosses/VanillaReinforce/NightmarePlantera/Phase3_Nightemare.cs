@@ -763,7 +763,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             {
                                 int damage = Helper.ScaleValueForDiffMode(30, 20, 15, 15);
                                 Vector2 dir2 = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
-                                NPC.NewProjectileInAI<ConfusionHole>(NPC.Center - dir2 * 200, dir2, damage, 0, NPC.target, 25, -2, 1100);
+                                NPC.NewProjectileInAI<ConfusionHole>(NPC.Center - dir2 * 200, dir2, damage, 0, NPC.target, 35, -2, 1100);
                             }
                             break;
                         }

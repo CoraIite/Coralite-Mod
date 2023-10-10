@@ -613,7 +613,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     cp.nightmareCount += (byte)Helper.ScaleValueForDiffMode(1, 1, 2, 3);
 
                 //设置阶段并秒杀玩家
-                if (cp.nightmareCount > 28)
+                if (cp.nightmareCount >= 28)
                 {
                     cp.nightmareCount = 28;
                     (np.ModNPC as NightmarePlantera).ChangeToSuddenDeath(player);
