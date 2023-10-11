@@ -26,6 +26,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected bool canDrawSelf = true;
         protected bool useShadowTrail = false;
         protected bool useSlashTrail = false;
+        protected bool useTurnOnStart = true;
         protected byte onHitTimer = 0;
         protected byte onHitFreeze = 5;
 
@@ -119,7 +120,8 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             if ((int)Timer <= minTime)//弹幕生成到开始挥舞之前
             {
-                Owner.direction = Main.MouseWorld.X < Owner.Center.X ? -1 : 1;
+                if (useTurnOnStart)
+                    Owner.direction = Main.MouseWorld.X < Owner.Center.X ? -1 : 1;
                 BeforeSlash();
             }
             else if ((int)Timer <= maxTime)//挥舞过程中
@@ -151,7 +153,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Top = Projectile.Center + RotateVec2 * (Projectile.scale * Projectile.height / 2 + trailTopWidth);
             Bottom = Projectile.Center - RotateVec2 * (Projectile.scale * Projectile.height / 2);//弹幕的底端和顶端计算，用于检测碰撞以及绘制
-            Owner.itemRotation = _Rotation+ (Owner.direction > 0 ? 0 : MathHelper.Pi);
+            Owner.itemRotation = _Rotation + (Owner.direction > 0 ? 0 : MathHelper.Pi);
 
             if (useShadowTrail || useSlashTrail)
                 UpdateCaches();

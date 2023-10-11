@@ -22,6 +22,11 @@ namespace Coralite
         public X2Smoother X2Smoother;
         public SinSmoother SinSmoother;
         public BezierEaseSmoother BezierEaseSmoother;
+        /// <summary>
+        /// 从0快速接近1，之后快速返回0<br></br>
+        /// 在0.5的时候到达1
+        /// </summary>
+        public ReverseX2Smoother ReverseX2Smoother;
 
         //单例模式！
         public static Coralite Instance { get; private set; }
@@ -36,6 +41,7 @@ namespace Coralite
             X2Smoother = new X2Smoother();
             SinSmoother = new SinSmoother();
             BezierEaseSmoother = new BezierEaseSmoother();
+            ReverseX2Smoother = new ReverseX2Smoother();
             InitColor();
         }
 

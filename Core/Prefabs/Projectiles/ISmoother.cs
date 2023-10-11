@@ -88,4 +88,23 @@ namespace Coralite.Core.Prefabs.Projectiles
             return MathF.Sin(factor * MathHelper.Pi);
         }
     }
+
+    /// <summary>
+    /// 从0快速接近1，之后快速返回0<br></br>
+    /// 在0.5的时候到达1
+    /// </summary>
+    public class ReverseX2Smoother : ISmoother
+    {
+        public void ReCalculate(int maxTime) { }
+
+        public float Smoother(int timer, int maxTime)
+        {
+            float factor = (float)timer / maxTime;
+            if (factor<0.5f)
+            return 4*factor * factor;
+
+            factor--;
+            return 4 * factor * factor;
+        }
+    }
 }
