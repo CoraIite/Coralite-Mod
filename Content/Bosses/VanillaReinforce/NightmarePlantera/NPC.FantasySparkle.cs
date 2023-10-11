@@ -252,11 +252,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             Target.Center = NPC.Center;
                             Target.velocity *= 0f;
-                            Target.immune = true;
-                            Target.immuneTime = 75;
 
                             if (Target.TryGetModPlayer(out NightmarePlayerCamera player))
-                                player.FanfasyImmuneTime = 75;
+                                player.FanfasyImmuneTime = 125;
                         }
                         else if (timer == 100)
                         {

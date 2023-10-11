@@ -1204,7 +1204,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 7; i++)
                             {
                                 NPC.NewProjectileInAI<NightmareBat>(GetPhase1MousePos(), (NPC.rotation + i * MathHelper.TwoPi / 7).ToRotationVector2() * 10
-                                    , damage, 1, -1, -2, 0, (Timer % 60 == 0 ? 1 : -1) * 0.01f);
+                                    , damage, 1, -1, -2, 0, (Timer % 60 == 0 ? 1 : -1) * 0.015f);
                             }
 
                             SoundStyle st = CoraliteSoundID.BloodThron_Item113;
@@ -1219,7 +1219,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 7; i++)
                             {
                                 NPC.NewProjectileInAI<NightmareCrow>(GetPhase1MousePos(), (NPC.rotation + i * MathHelper.TwoPi / 7).ToRotationVector2() * 12
-                                    , damage, 1, -1, -1, 0, -1 * 0.015f);
+                                    , damage, 1, -1, -1, 0, -1 * 0.0175f);
                             }
 
                             SoundStyle st = CoraliteSoundID.BloodThron_Item113;
@@ -2550,7 +2550,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
             }
 
-            //State = (int)AIStates.fakeBite;
+            //State = (int)AIStates.fantasyHelp;
 
             MoveCount++;
             if (MoveCount > 11)

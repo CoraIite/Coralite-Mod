@@ -142,7 +142,7 @@ namespace Coralite.Content.Items.Nightmare
 
         protected override float ControlTrailBottomWidth(float factor)
         {
-            return 55 * Projectile.scale;
+            return 50 * Projectile.scale;
         }
 
         protected override void Initializer()
@@ -365,7 +365,7 @@ namespace Coralite.Content.Items.Nightmare
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
-                Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
+                Effect effect = Filters.Scene["SimpleGradientTrail"].GetShader().Shader;
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
