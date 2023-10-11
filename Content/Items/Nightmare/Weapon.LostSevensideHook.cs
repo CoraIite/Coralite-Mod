@@ -921,15 +921,30 @@ namespace Coralite.Content.Items.Nightmare
             Vector2 selforigin = mainTex.Size() / 2;
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2) - Main.screenPosition;
-            Color c = NightmarePlantera.nightmareRed * alpha;
 
-            tentacle?.DrawTentacle(i => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
+            tentacle?.DrawTentacle(i => 4 * MathF.Sin(i /2* Main.GlobalTimeWrappedHourly));
+
+            Color c = tentacleColor * alpha;
+
+            Texture2D leavesTex = VineSpike.LeavesTex.Value;
+            selforigin = leavesTex.Size() / 2;
+            for (int i = 2; i < 26; i += 2)
+            {
+                Vector2 pos2 = tentacle.points[i] - Main.screenPosition;
+                float rotation = tentacle.rotates[i];
+                float scale = tentacle.widthFunc(i / 26f) * 2.5f / leavesTex.Height;
+                Main.spriteBatch.Draw(leavesTex, pos2, null, c * (0.75f - i * 0.75f / 26), rotation, selforigin, scale, effect, 0);
+            }
+
+            c = NightmarePlantera.nightmareRed * alpha;
 
             for (int i = 0; i < 7; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter, null,
                 c * (0.4f - i * 0.4f / 7), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale * (1 + i * 0.05f), effect, 0);
 
-            Main.spriteBatch.Draw(mainTex, pos, null, pink * alpha, Projectile.rotation, selforigin, Projectile.scale, effect, 0);
+            c = pink * alpha;
+
+            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, selforigin, Projectile.scale, effect, 0);
 
             return false;
         }

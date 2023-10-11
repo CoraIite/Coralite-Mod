@@ -219,7 +219,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return;
             }
 
-            modifiers.ModifyHitInfo += Modifiers_ModifyHitInfo;
+            //modifiers.ModifyHitInfo += Modifiers_ModifyHitInfo;
         }
 
         private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)

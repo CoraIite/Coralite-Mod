@@ -4,11 +4,13 @@ using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
@@ -37,6 +39,23 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         private Color tentacleColor;
         private Vector2 rotateVec2;
         public SpriteEffects effect;
+        public static Asset<Texture2D> LeavesTex;
+
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+
+            LeavesTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "VineSpikeLeaves");
+        }
+
+        public override void Unload()
+        {
+            if (Main.dedServ)
+                return;
+
+            LeavesTex = null;
+        }
 
         public override void SetStaticDefaults()
         {
@@ -214,12 +233,23 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2) - Main.screenPosition;
             Color c = tentacleColor * alpha;
 
+            Texture2D leavesTex = LeavesTex.Value;
+            selforigin = leavesTex.Size() / 2;
+            for (int i = 2; i < 26; i += 2)
+            {
+                Vector2 pos2 = tentacle.points[i] - Main.screenPosition;
+                float rotation = tentacle.rotates[i];
+                float scale = tentacle.widthFunc(i / 26f) * 2.5f / leavesTex.Height;
+
+                Main.spriteBatch.Draw(leavesTex, pos2, null, c * (0.75f - i * 0.7f / 26), rotation, selforigin, scale, effect, 0);
+            }
+
             for (int i = 0; i < 8; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter, null,
                 c * (0.5f - i * 0.5f / 8), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale * (1 + i * 0.05f), effect, 0);
 
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, selforigin, Projectile.scale, effect, 0);
-            
+
             return false;
         }
 

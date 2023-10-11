@@ -2550,7 +2550,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
             }
 
-            //State = (int)AIStates.spikeHell;
+            //State = (int)AIStates.fakeBite;
 
             MoveCount++;
             if (MoveCount > 11)

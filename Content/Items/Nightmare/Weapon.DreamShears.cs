@@ -1078,7 +1078,7 @@ namespace Coralite.Content.Items.Nightmare
                     alpha = Helper.Lerp(alpha, 0.8f, 0.6f);
                     if (mouseAngle > 0.1f)
                     {
-                        distanceToOwner += 32;
+                        distanceToOwner += 58;
                     }
 
                     if ((int)Timer == (int)ReadyTime + 4)

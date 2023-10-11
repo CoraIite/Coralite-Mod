@@ -247,8 +247,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public Func<float, Color> colorFunc;
         public Func<float, float> widthFunc;
 
-        private Vector2[] points;
-        private float[] rotates;
+        public Vector2[] points;
+        public float[] rotates;
+
         public RotateTentacle(int pointCount, Func<float, Color> colorFunc, Func<float, float> widthFunc, Asset<Texture2D> sampleTexture, Asset<Texture2D> extraTexture)
         {
             this.pointCount = pointCount;
