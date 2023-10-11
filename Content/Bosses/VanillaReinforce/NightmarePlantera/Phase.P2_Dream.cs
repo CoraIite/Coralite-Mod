@@ -1439,7 +1439,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 3:  //后摇
                     {
-                        NormallySetTentacle();
                         CircleMovement(650, 56, 0.7f, 550, 0.34f, ShootCount);
                         DoRotation(0.3f);
                         if (Timer > 30)

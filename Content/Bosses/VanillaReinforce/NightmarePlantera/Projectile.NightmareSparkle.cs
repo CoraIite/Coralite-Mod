@@ -62,9 +62,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
-            if (Projectile.velocity.Length() < 19)
+            if (Projectile.velocity.Length() < 17)
             {
-                Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.4f;
+                Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.35f;
             }
 
             float dir2 = ((Projectile.timeLeft % 30) > 15 ? -1 : 1) * 0.03f;
