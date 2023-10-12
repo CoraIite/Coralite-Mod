@@ -7,9 +7,11 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -36,7 +38,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.DamageType = DamageClass.Melee;
             Item.rare = RarityType<NightmareRarity>();
             Item.value = Item.sellPrice(2, 0, 0, 0);
-            Item.SetWeaponValues(175, 4, 4);
+            Item.SetWeaponValues(185, 4, 4);
             Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;
@@ -44,6 +46,7 @@ namespace Coralite.Content.Items.Nightmare
         }
 
         public override bool AltFunctionUse(Player player) => true;
+        public override bool MeleePrefix() => true;
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -72,12 +75,13 @@ namespace Coralite.Content.Items.Nightmare
                     case 0:
                     case 1://刺
                         Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, combo);
+                        Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.One) * 22, ProjectileType<EuphorbiaSpike>(), (int)(damage*1.5f), knockback, player.whoAmI);
                         break;
                     case 2://下挥*2
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, (int)(damage * 1.2f), knockback, player.whoAmI,combo);
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, (int)(damage * 1.1f), knockback, player.whoAmI,combo);
                         break;
                     case 3://下挥+上挥*2
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 1.4f), knockback, player.whoAmI, 0);
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, (int)(damage * 1.2f), knockback, player.whoAmI, combo);
                         break;
                     case 4://转圈刺
                         Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 1.4f), knockback, player.whoAmI, 0);
@@ -85,13 +89,12 @@ namespace Coralite.Content.Items.Nightmare
                 }
 
                 combo++;
-                if (combo > 2)
+                if (combo > 3)
                     combo = 0;
             }
 
             return false;
         }
-
     }
 
     public class EuphorbiaMiliiProj : BaseSwingProj,IDrawWarp
@@ -103,20 +106,21 @@ namespace Coralite.Content.Items.Nightmare
         public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public EuphorbiaMiliiProj() : base(0.785f, trailLength: 26) { }
+        public EuphorbiaMiliiProj() : base(0.785f, trailLength: 36) { }
 
         public int alpha;
         public int delay;
         public int innerCombo;
         public float nextStartAngle;
         public float firstStartAngle;
+        public float finalRotation;
 
         public override void Load()
         {
             if (Main.dedServ)
                 return;
 
-            trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "NormalSlashTrail2a");
+            trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "NormalSlashTrail2");
             GradientTexture = Request<Texture2D>(AssetDirectory.NightmareItems + "EuphorbiaMiliiGradient");
         }
 
@@ -160,6 +164,7 @@ namespace Coralite.Content.Items.Nightmare
                     Smoother = Coralite.Instance.ReverseX2Smoother;
                     distanceToOwner = -Projectile.height / 2;
                     useSlashTrail = false;
+                    Helper.PlayPitched("Misc/HeavySwing2", 0.4f, 0.4f, Projectile.Center);
                     break;
                 case 1://刺2
                     startAngle = Main.rand.NextFloat(-0.1f, 0.1f);
@@ -169,30 +174,67 @@ namespace Coralite.Content.Items.Nightmare
                     distanceToOwner = -Projectile.height / 2;
 
                     useSlashTrail = false;
+                    Helper.PlayPitched("Misc/HeavySwing2", 0.4f, 0.4f, Projectile.Center);
+
                     break;
                 case 2 when innerCombo == 0://下挥1 小幅度转圈
-                    startAngle = 1.9f;
-                    totalAngle = 4f;
-                    maxTime = Owner.itemTimeMax * 3;
-                    Smoother = Coralite.Instance.BezierEaseSmoother;
-                    distanceToOwner = -Projectile.height / 2;
-                    nextStartAngle = GetStartAngle() - OwnerDirection * 2.4f;
-                    delay = 20;
-                    useTurnOnStart = false;
+                        startAngle = 1.9f;
+                        totalAngle = 4f;
+                        maxTime = Owner.itemTimeMax * 3;
+                        Smoother = Coralite.Instance.BezierEaseSmoother;
+                        distanceToOwner = -Projectile.height / 2;
+                        nextStartAngle =  GetStartAngle() -OwnerDirection * 2.4f;
+                        delay = 20;
+                        useTurnOnStart = false;
+                        Helper.PlayPitched("Misc/HeavySwing2", 0.4f, 0.2f, Projectile.Center);
+
                     break;
                 case 2 when innerCombo == 1://下挥2 转圈并稍微伸出
-                    startAngle = 2.4f;
-                    totalAngle = 4.9f;
-                    maxTime = Owner.itemTimeMax * 4;
-                    Smoother = Coralite.Instance.HeavySmootherInstance;
-                    distanceToOwner = -Projectile.height / 2;
-                    delay = 0;
+                    {
+                        startAngle = 2.4f;
+                        totalAngle = 4.9f;
+                        maxTime = Owner.itemTimeMax * 4;
+                        Smoother = Coralite.Instance.HeavySmootherInstance;
+                        distanceToOwner = -Projectile.height / 2;
+                        delay = 0;
+                        Helper.PlayPitched("Misc/FlowSwing2", 0.3f, 0.8f, Projectile.Center);
+                    }
                     break;
                 case 3 when innerCombo == 0://下挥 伸出，更类似于挥砍，不会挥到身体后方
+                    {
+                        startAngle = 3f;
+                        totalAngle = 4.4f;
+                        maxTime = Owner.itemTimeMax * 3;
+                        Smoother = Coralite.Instance.BezierEaseSmoother;
+                        distanceToOwner = 10 - Projectile.height / 2;
+                        nextStartAngle = GetStartAngle() - OwnerDirection * -2.2f;
+
+                        delay = 0;
+                        useTurnOnStart = false;
+                        Helper.PlayPitched("Misc/FlowSwing2", 0.4f, 0.2f, Projectile.Center);
+                    }
                     break;
                 case 3 when innerCombo == 1://上挥，转圈
+                    {
+                        startAngle = -1.4f;
+                        totalAngle = -4.4f;
+                        maxTime = Owner.itemTimeMax * 4;
+                        Smoother = Coralite.Instance.BezierEaseSmoother;
+                        //distanceToOwner = -Projectile.height / 2;
+                        delay = 18;
+                        Helper.PlayPitched("Misc/HeavySwing2", 0.4f, 0.4f, Projectile.Center);
+                    }
                     break;
                 case 3 when innerCombo == 2://上挑
+                    {
+                        startAngle = -2.2f;
+                        totalAngle = -4.4f;
+                        maxTime = Owner.itemTimeMax * 3;
+                        Smoother = Coralite.Instance.HeavySmootherInstance;
+                        //distanceToOwner = -Projectile.height / 2;
+                        delay = 12;
+                        Helper.PlayPitched("Misc/HeavySwing2", 0.4f, 0.6f, Projectile.Center);
+                    }
                     break;
                 case 4 when innerCombo == 0://在手里转圈圈
                     break;
@@ -201,6 +243,7 @@ namespace Coralite.Content.Items.Nightmare
             }
 
             base.Initializer();
+            finalRotation = startAngle + totalAngle;
         }
 
         protected override float GetStartAngle()
@@ -228,32 +271,97 @@ namespace Coralite.Content.Items.Nightmare
             //dust.noGravity = true;
 
             int timer = (int)Timer - minTime;
-            alpha = (int)(Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime) * 200) + 50;
+            alpha = (int)(Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime) * 175) + 75;
 
             switch ((int)Combo)
             {
                 default:
                 case 0:
-                    distanceToOwner = -Projectile.height / 2 + Smoother.Smoother(timer, maxTime - minTime) * 180;
-                    break;
                 case 1:
                     distanceToOwner = -Projectile.height / 2 + Smoother.Smoother(timer, maxTime - minTime) * 180;
                     break;
                 case 2 when innerCombo == 0://下挥1 小幅度转圈
                     distanceToOwner = -Projectile.height / 2 + Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 40;
                     Projectile.scale = 1 + Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime) * 0.3f;
+                    if (timer==Owner.itemTimeMax)
+                    {
+                        float start = nextStartAngle + OwnerDirection * 2.4f;
+
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, start.ToRotationVector2() * 22, ProjectileType<EuphorbiaSpike>(), (int)(Projectile.damage*1.5f), Projectile.knockBack, Projectile.owner);
+
+                        for (int i = -1; i < 3; i++)
+                        {
+                            if (i == 0)
+                                continue;
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (start + i * 0.6f).ToRotationVector2() * 16, ProjectileType<EuphorbiaSmallSpike>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Projectile.owner);
+                        }
+                    }
                     break;
                 case 2 when innerCombo == 1://下挥2 转圈并稍微伸出
                     distanceToOwner = -Projectile.height / 2 + Smoother.Smoother(timer, maxTime - minTime) * 60;
                     //Projectile.scale = 1 + Smoother.Smoother(timer, maxTime - minTime) * 0.3f;
                     Projectile.scale = Helper.EllipticalEase(2.4f - 4.9f * Smoother.Smoother(timer, maxTime - minTime), 1f, 1.4f);
+                    if (timer == Owner.itemTimeMax/3)
+                    {
+                        float start = nextStartAngle + OwnerDirection * 2.4f;
+
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, start.ToRotationVector2() * 22, ProjectileType<EuphorbiaSpike>(), (int)(Projectile.damage * 1.5f), Projectile.knockBack, Projectile.owner);
+
+                        for (int i = -1; i < 3; i++)
+                        {
+                            if (i == 0)
+                                continue;
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (start + i * 0.6f).ToRotationVector2() * (17 + i), ProjectileType<EuphorbiaSmallSpike>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Projectile.owner);
+                        }
+                    }
 
                     break;
                 case 3 when innerCombo == 0://下挥 伸出，更类似于挥砍，不会挥到身体后方
+                    distanceToOwner = 10-Projectile.height / 2 + Smoother.Smoother(timer, maxTime - minTime) * 5;
+                    if (timer == Owner.itemTimeMax)
+                    {
+                        float start = nextStartAngle + OwnerDirection * -2.2f;
+
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, start.ToRotationVector2() * 22, ProjectileType<EuphorbiaSpike>(), (int)(Projectile.damage * 1.75f), Projectile.knockBack, Projectile.owner);
+
+                        for (int i = -2; i < 3; i++)
+                        {
+                            if (i == 0)
+                                continue;
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (start + i * 0.5f).ToRotationVector2() * (17 + i), ProjectileType<EuphorbiaSmallSpike>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Projectile.owner);
+                        }
+                    }
+
                     break;
                 case 3 when innerCombo == 1://上挥，转圈
+                    distanceToOwner = 15 - Projectile.height / 2 + Smoother.Smoother(timer, maxTime - minTime) * 10;
+                    Projectile.scale = Helper.EllipticalEase(1.4f - 4.4f * Smoother.Smoother(timer, maxTime - minTime), 1.2f, 1.4f);
+                    if (timer == Owner.itemTimeMax)
+                    {
+                        float start = nextStartAngle + OwnerDirection * -2.2f;
+
+                        for (int i = -3; i < 3; i++)
+                        {
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (start + i * 0.7f).ToRotationVector2() * (17 + i * 0.5f), ProjectileType<EuphorbiaSmallSpike>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Projectile.owner);
+                        }
+                    }
                     break;
                 case 3 when innerCombo == 2://上挑
+                    distanceToOwner = 25 - Projectile.height / 2 + Smoother.Smoother(timer, maxTime - minTime) * 40;
+                    Projectile.scale = Helper.EllipticalEase(2.2f - 4.4f * Smoother.Smoother(timer, maxTime - minTime), 1.2f, 1.4f);
+                    if (timer == Owner.itemTimeMax / 3)
+                    {
+                        float start = nextStartAngle + OwnerDirection * -2.2f;
+
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, start.ToRotationVector2() * 22, ProjectileType<EuphorbiaSpike>(), (int)(Projectile.damage * 2f), Projectile.knockBack, Projectile.owner);
+
+                        for (int i = -2; i < 2; i++)
+                        {
+                            if (i == 0)
+                                continue;
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (start + i * 0.8f).ToRotationVector2() * (17 + i), ProjectileType<EuphorbiaSmallSpike>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                        }
+                    }
                     break;
                 case 4 when innerCombo == 0://在手里转圈圈
                     break;
@@ -276,8 +384,8 @@ namespace Coralite.Content.Items.Nightmare
 
                     break;
                 case 2 when innerCombo == 0://下挥1 小幅度转圈
-                    _Rotation = _Rotation.AngleTowards(nextStartAngle, 0.15f);
-                    distanceToOwner = Helper.Lerp( distanceToOwner,-Projectile.height / 2,0.15f);
+                    _Rotation = finalRotation.AngleLerp(nextStartAngle, (Timer - maxTime) / delay);
+                    distanceToOwner = Helper.Lerp(distanceToOwner, -Projectile.height / 2, 0.15f);
 
                     if (Timer > maxTime + delay)
                     {
@@ -285,6 +393,32 @@ namespace Coralite.Content.Items.Nightmare
                         Timer = 0;
                         Initializer();
                     }
+                    break;
+                case 3 when innerCombo == 0:
+                    innerCombo++;
+                    Timer = 0;
+                    Initializer();
+
+                    break;
+
+                case 3 when innerCombo == 1:
+                    _Rotation = finalRotation.AngleLerp(nextStartAngle, (Timer - maxTime) / delay);
+                    //distanceToOwner = Helper.Lerp(distanceToOwner, -Projectile.height / 2, 0.15f);
+
+                    if (Timer > maxTime + delay)
+                    {
+                        innerCombo++;
+                        Timer = 0;
+                        Initializer();
+                    }
+
+                    break;
+                case 3 when innerCombo == 2:
+                    distanceToOwner = Helper.Lerp(distanceToOwner, -Projectile.height / 2, 0.05f);
+
+                    if (Timer > maxTime + delay)
+                        Projectile.Kill();
+
                     break;
             }
 
@@ -365,7 +499,7 @@ namespace Coralite.Content.Items.Nightmare
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
-                Effect effect = Filters.Scene["SimpleGradientTrail"].GetShader().Shader;
+                Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
@@ -385,6 +519,302 @@ namespace Coralite.Content.Items.Nightmare
                 Main.graphics.GraphicsDevice.RasterizerState = originalState;
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            }
+        }
+    }
+
+    public class EuphorbiaSpike:ModProjectile
+    {
+        public override string Texture => AssetDirectory.NightmareItems + Name;
+
+        public ref float State => ref Projectile.ai[0];
+        public ref float Target => ref Projectile.ai[1];
+
+        private Vector2 offset;
+        private float alpha;
+        private bool init = true;
+
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailingMode[Type] = 2;
+            ProjectileID.Sets.TrailCacheLength[Type] = 8;
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.friendly = true;
+            Projectile.width = 22;
+            Projectile.height = 22;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = -1;
+            Projectile.localNPCHitCooldown = 12;
+
+            Projectile.netImportant = true;
+            Projectile.usesLocalNPCImmunity = true;
+        }
+
+        public override void AI()
+        {
+            if (init)
+            {
+                alpha += 0.05f;
+                if (alpha > 1)
+                {
+                    alpha = 1f;
+                    init = false;
+                }
+            }
+
+            switch (State)
+            {
+                default:
+                    OnShoot();
+                    break;
+                case 1:
+                    {
+                        if (Target < 0 || Target > Main.maxNPCs)
+                            Projectile.Kill();
+
+                        NPC npc = Main.npc[(int)Target];
+                        if (!npc.active || npc.dontTakeDamage)
+                            Projectile.Kill();
+
+                        Projectile.Center = npc.Center + offset;
+
+                        if (Main.rand.NextBool(30))
+                        {
+                            Dust dust3 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16, 16),
+                                    DustID.Corruption, -Projectile.rotation.ToRotationVector2() * Main.rand.NextFloat(2f, 4f), Scale: Main.rand.NextFloat(1f, 1.5f));
+                            dust3.noGravity = true;
+                        }
+
+                        if (Projectile.timeLeft < 30)
+                        {
+                            alpha -= 1 / 32f;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        public virtual void OnShoot()
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation();
+
+            if (Main.rand.NextBool())
+            {
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
+                    DustID.VilePowder, Vector2.Zero, newColor: NightmarePlantera.nightPurple, Scale: Main.rand.NextFloat(1f, 1.5f));
+                dust.noGravity = true;
+            }
+        }
+
+        public override bool? CanHitNPC(NPC target)
+        {
+            if ((int)State == 0)
+                return null;
+
+            return false;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            target.AddBuff(BuffType<EuphorbiaPoison>(), 90, true);
+
+            if ((int)State == 0)
+            {
+                Projectile.tileCollide = false;
+                Projectile.timeLeft = 120;
+                Projectile.velocity *= 0;
+                Target = target.whoAmI;
+                offset = Projectile.Center - target.Center;
+                State = 1;
+                Projectile.netUpdate = true;
+                alpha = 1;
+                init = false;
+
+            }
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            if (State == 0 && VisualEffectSystem.HitEffect_Dusts)
+            {
+                Vector2 direction = -Projectile.rotation.ToRotationVector2();
+
+                Helper.SpawnDirDustJet(Projectile.Center, () => direction.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)), 2, 6, (i) => Main.rand.NextFloat(0.5f, 10f),
+                    DustID.VilePowder, Scale: Main.rand.NextFloat(1f, 1.5f), noGravity: true, extraRandRot: 0.15f);
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            var origin = new Vector2(3 * mainTex.Width / 4, mainTex.Height / 4);
+            float Rot = Projectile.rotation + 0.785f;
+
+            if ((int)State == 0)//残影绘制
+                Projectile.DrawShadowTrails(lightColor * alpha, 0.5f, 0.5f / 8f, 1, 8, 1, 0.785f, -1f);
+            Main.spriteBatch.Draw(mainTex, pos, null, lightColor * alpha, Rot, origin, Projectile.scale, 0, 0);
+            return false;
+        }
+    }
+
+    public class EuphorbiaSmallSpike: EuphorbiaSpike
+    {
+        public int npcIndex;
+
+        public override void SetDefaults()
+        {
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.friendly = true;
+            Projectile.width = 18;
+            Projectile.height = 18;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = -1;
+            Projectile.localNPCHitCooldown = 12;
+
+            Projectile.netImportant = true;
+            Projectile.usesLocalNPCImmunity = true;
+        }
+
+        public override void OnShoot()
+        {
+            base.OnShoot();
+
+            #region 同叶绿弹的追踪，但是范围更大
+            float velLength = Projectile.velocity.Length();
+            float localAI0 = Projectile.localAI[0];
+            if (localAI0 == 0f)
+            {
+                Projectile.localAI[0] = velLength;
+                localAI0 = velLength;
+            }
+
+            float num186 = Projectile.position.X;
+            float num187 = Projectile.position.Y;
+            float chasingLength = 900f;
+            bool flag5 = false;
+            int targetIndex = 0;
+            if (npcIndex == 0)
+            {
+                for (int i = 0; i < 200; i++)
+                {
+                    if (Main.npc[i].CanBeChasedBy(Projectile))
+                    {
+                        float targetX = Main.npc[i].Center.X;
+                        float targetY = Main.npc[i].Center.Y;
+                        float num193 = Math.Abs(Projectile.Center.X - targetX) + Math.Abs(Projectile.Center.Y - targetY);
+                        if (num193 < chasingLength)
+                        {
+                            chasingLength = num193;
+                            num186 = targetX;
+                            num187 = targetY;
+                            flag5 = true;
+                            targetIndex = i;
+                        }
+                    }
+                }
+
+                if (flag5)
+                    npcIndex = targetIndex + 1;
+
+                flag5 = false;
+            }
+
+            if (npcIndex > 0f)
+            {
+                int targetIndex2 = npcIndex - 1;
+                if (Main.npc[targetIndex2].active && Main.npc[targetIndex2].CanBeChasedBy(this, ignoreDontTakeDamage: true) && !Main.npc[targetIndex2].dontTakeDamage)
+                {
+                    float num195 = Main.npc[targetIndex2].Center.X;
+                    float num196 = Main.npc[targetIndex2].Center.Y;
+                    if (Math.Abs(Projectile.Center.X - num195) + Math.Abs(Projectile.Center.Y - num196) < 1000f)
+                    {
+                        flag5 = true;
+                        num186 = Main.npc[targetIndex2].Center.X;
+                        num187 = Main.npc[targetIndex2].Center.Y;
+                    }
+                }
+                else
+                    npcIndex = 0;
+
+                Projectile.netUpdate = true;
+            }
+
+            if (flag5)
+            {
+                float num197 = localAI0;
+                Vector2 center = Projectile.Center;
+                float num198 = num186 - center.X;
+                float num199 = num187 - center.Y;
+                float dis2Target = MathF.Sqrt(num198 * num198 + num199 * num199);
+                dis2Target = num197 / dis2Target;
+                num198 *= dis2Target;
+                num199 *= dis2Target;
+                int chase = 18;
+
+                Projectile.velocity.X = (Projectile.velocity.X * (chase - 1) + num198) / chase;
+                Projectile.velocity.Y = (Projectile.velocity.Y * (chase - 1) + num199) / chase;
+            }
+
+            #endregion
+
+        }
+    }
+
+    public class EuphorbiaPoison:ModBuff
+    {
+        public override string Texture => AssetDirectory.Buffs+ "Buff";
+
+        public override void SetStaticDefaults()
+        {
+            Main.debuff[Type] = true;
+        }
+
+        public override void Update(NPC npc, ref int buffIndex)
+        {
+            if (npc.TryGetGlobalNPC(out EuphorbiaGlobalNPC gnpc))
+            {
+                gnpc.EuphorbiaPoison = true;
+            }
+
+            Dust dust6 = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.VilePowder, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 1.5f);
+            dust6.noGravity = true;
+            dust6.velocity *= 2.8f;
+            dust6.velocity.Y -= 0.5f;
+            if (Main.rand.NextBool(4))
+            {
+                dust6.scale *= 0.5f;
+            }
+        }
+    }
+
+    public class EuphorbiaGlobalNPC:GlobalNPC
+    {
+        public override bool InstancePerEntity => true;
+
+        public bool EuphorbiaPoison;
+
+        public override void ResetEffects(NPC npc)
+        {
+            EuphorbiaPoison = false;
+        }
+
+        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        {
+            if (EuphorbiaPoison)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= 4 * 100;
+                if (damage <  100 / 2)
+                    damage =  100 / 2;
             }
         }
     }

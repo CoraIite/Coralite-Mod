@@ -1437,6 +1437,11 @@ Mods: {
 				DisplayName: Euphorbia Milii
 				Tooltip: ""
 			}
+
+			GriefSeed: {
+				DisplayName: Grief Seed
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1517,6 +1522,11 @@ Mods: {
 			GelWhipDebuff: {
 				DisplayName: Gel Whip Debuff
 				Description: Mods.Coralite.Buffs.GelWhipDebuff.Description
+			}
+
+			EuphorbiaPoison: {
+				DisplayName: Euphorbia Poison
+				Description: Mods.Coralite.Buffs.EuphorbiaPoison.Description
 			}
 		}
 
@@ -1756,6 +1766,8 @@ Mods: {
 			DreamShearsCut.DisplayName: Dream Shears Cut
 			NightmareBite_Firendly.DisplayName: Nightmare Bite_ Firendly
 			EuphorbiaMiliiProj.DisplayName: Euphorbia Milii Proj
+			EuphorbiaSmallSpike.DisplayName: Euphorbia Small Spike
+			EuphorbiaSpike.DisplayName: Euphorbia Spike
 		}
 
 		Configs: {

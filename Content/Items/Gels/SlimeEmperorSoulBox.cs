@@ -118,6 +118,5 @@ namespace Coralite.Content.Items.Gels
 
             return true;
         }
-
     }
 }

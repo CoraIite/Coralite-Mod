@@ -1480,6 +1480,11 @@ Mods: {
 				DisplayName: 刺梅
 				Tooltip: "[c/dacde8:美丽又危险]"
 			}
+
+			GriefSeed: {
+				DisplayName: 悲叹之种
+				Tooltip: 右键点击可打开
+			}
 		}
 
 		Tiles: {
@@ -1560,6 +1565,11 @@ Mods: {
 			GelWhipDebuff: {
 				DisplayName: 皇家凝胶鞭
 				Description: 黏糊糊的！
+			}
+
+			EuphorbiaPoison: {
+				// DisplayName: Euphorbia Poison
+				// Description: Mods.Coralite.Buffs.EuphorbiaPoison.Description
 			}
 		}
 
@@ -1799,6 +1809,8 @@ Mods: {
 			// DreamShearsCut.DisplayName: Dream Shears Cut
 			// NightmareBite_Firendly.DisplayName: Nightmare Bite_ Firendly
 			// EuphorbiaMiliiProj.DisplayName: Euphorbia Milii Proj
+			// EuphorbiaSmallSpike.DisplayName: Euphorbia Small Spike
+			// EuphorbiaSpike.DisplayName: Euphorbia Spike
 		}
 
 		Configs: {

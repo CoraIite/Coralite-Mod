@@ -1551,7 +1551,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 _ => (int)AIStates.flowerDance,
             };
 
-            State = (int)AIStates.P3_SpikesAndSparkles;
+            //State = (int)AIStates.P3_SpikesAndSparkles;
 
             switch ((int)State)
             {

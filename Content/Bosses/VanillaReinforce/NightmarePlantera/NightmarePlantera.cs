@@ -113,7 +113,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 20f;
-            NPC.value = Item.buyPrice(0, 15);
+            NPC.value = Item.buyPrice(0, 50);
             NPC.HitSound = CoraliteSoundID.Fleshy_NPCHit1;
 
             NPC.noGravity = true;
@@ -183,15 +183,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<GelThrone>()));
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
-            //npcLoot.Add(ItemDropRule.BossBag(ItemType<RediancieBossBag>()));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<GriefSeed>()));
             //npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 
             IItemDropRule[] weaponTypes = new IItemDropRule[] {
                 ItemDropRule.Common(ModContent.ItemType<LostSevensideHook>(), 1, 1, 1),
-                //ItemDropRule.Common(ModContent.ItemType<GelWhip>(), 1, 1, 1),
-                //ItemDropRule.Common(ModContent.ItemType<RoyalClassics>(), 1, 1, 1),
+                ItemDropRule.Common(ModContent.ItemType<DreamShears>(), 1, 1, 1),
+                ItemDropRule.Common(ModContent.ItemType<EuphorbiaMilii>(), 1, 1, 1),
             };
+
             notExpertRule.OnSuccess(new OneFromRulesRule(1, weaponTypes));
 
             npcLoot.Add(notExpertRule);

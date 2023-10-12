@@ -224,7 +224,7 @@ namespace Coralite.Content.UI
             if (Item is not null && !Item.IsAir)
             {
                 Main.instance.LoadItem(Item.type);
-                Texture2D mainTex =TextureAssets.Item[Item.type].Value; ;
+                Texture2D mainTex =TextureAssets.Item[Item.type].Value;
                 Rectangle rectangle2;
 
                 if (Main.itemAnimations[Item.type] != null)
