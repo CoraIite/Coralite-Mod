@@ -1485,6 +1485,11 @@ Mods: {
 				DisplayName: 悲叹之种
 				Tooltip: 右键点击可打开
 			}
+
+			Dreamcatcher: {
+				// DisplayName: Dreamcatcher
+				// Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1815,6 +1820,7 @@ Mods: {
 			// EuphorbiaSpurt.DisplayName: Euphorbia Spurt
 			// EuphorbiaMiliiRightClick.DisplayName: Euphorbia Milii Right Click
 			// EuphorbiaSpecialSpike.DisplayName: Euphorbia Special Spike
+			// NightmareRaven.DisplayName: Nightmare Raven
 		}
 
 		Configs: {

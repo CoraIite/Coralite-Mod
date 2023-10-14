@@ -1442,6 +1442,11 @@ Mods: {
 				DisplayName: Grief Seed
 				Tooltip: ""
 			}
+
+			Dreamcatcher: {
+				DisplayName: Dreamcatcher
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1772,6 +1777,7 @@ Mods: {
 			EuphorbiaSpurt.DisplayName: Euphorbia Spurt
 			EuphorbiaMiliiRightClick.DisplayName: Euphorbia Milii Right Click
 			EuphorbiaSpecialSpike.DisplayName: Euphorbia Special Spike
+			NightmareRaven.DisplayName: Nightmare Raven
 		}
 
 		Configs: {
