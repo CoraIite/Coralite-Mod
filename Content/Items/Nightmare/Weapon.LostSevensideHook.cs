@@ -85,7 +85,6 @@ namespace Coralite.Content.Items.Nightmare
                     if (combo > 3)
                         combo = 0;
                 }
-
             }
 
             return false;

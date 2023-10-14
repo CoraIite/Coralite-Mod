@@ -47,10 +47,12 @@ namespace Coralite.Content.ModPlayers
         public byte nightmareCount;
         /// <summary> 使用梦魇之花的噩梦能量 </summary>
         public int nightmareEnergy;
+        public int nightmareEnergyMax;
 
         public override void ResetEffects()
         {
             redJadePendant = false;
+            nightmareEnergyMax = 7;
 
             if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15)
                 DashDir = DashDown;
@@ -62,6 +64,7 @@ namespace Coralite.Content.ModPlayers
                 DashDir = DashLeft;
             else
                 DashDir = -1;
+
 
         }
 
@@ -156,6 +159,8 @@ namespace Coralite.Content.ModPlayers
             else
                 nianli = 0f;
 
+            if (nightmareEnergy>nightmareEnergyMax)
+                nightmareEnergy = nightmareEnergyMax;
         }
 
         public override void PostUpdateMiscEffects()
@@ -262,6 +267,16 @@ namespace Coralite.Content.ModPlayers
         }
 
         #endregion
+
+        public void GetNightmareEnergy(int howMany)
+        {
+            if (nightmareEnergy < nightmareEnergyMax)
+            {
+                nightmareEnergy += howMany;
+                if (nightmareEnergy > nightmareEnergyMax)
+                    nightmareEnergy = nightmareEnergyMax;
+            }
+        }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
         {

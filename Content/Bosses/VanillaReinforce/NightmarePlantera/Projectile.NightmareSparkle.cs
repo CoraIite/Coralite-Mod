@@ -26,7 +26,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             if (Projectile.velocity.Length() < 24)
             {
-                Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.3f;
+                Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.2f;
             }
 
             float dir2 = ((Projectile.timeLeft % 30) > 15 ? -1 : 1) * 0.02f;

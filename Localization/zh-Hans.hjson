@@ -1811,6 +1811,10 @@ Mods: {
 			// EuphorbiaMiliiProj.DisplayName: Euphorbia Milii Proj
 			// EuphorbiaSmallSpike.DisplayName: Euphorbia Small Spike
 			// EuphorbiaSpike.DisplayName: Euphorbia Spike
+			// EuphorbiaSilt.DisplayName: Euphorbia Silt
+			// EuphorbiaSpurt.DisplayName: Euphorbia Spurt
+			// EuphorbiaMiliiRightClick.DisplayName: Euphorbia Milii Right Click
+			// EuphorbiaSpecialSpike.DisplayName: Euphorbia Special Spike
 		}
 
 		Configs: {
