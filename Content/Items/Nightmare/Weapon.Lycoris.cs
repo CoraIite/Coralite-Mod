@@ -434,8 +434,9 @@ namespace Coralite.Content.Items.Nightmare
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D extraTex = TextureAssets.Extra[98].Value;
-            Texture2D mainTex = TextureAssets.Projectile[931].Value;
+            Main.instance.LoadProjectile(931);
 
+            Texture2D mainTex = TextureAssets.Projectile[931].Value;
             Vector2 center = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
 
             Color baseColor = NightmarePlantera.nightmareRed;
@@ -473,7 +474,6 @@ namespace Coralite.Content.Items.Nightmare
             //主帖图
             Main.EntitySpriteDraw(extraTex, center, null, baseColor, Projectile.rotation, extraOrigin, Projectile.scale * 0.9f, 0);
             Main.EntitySpriteDraw(mainTex, center, null, Color.White, Projectile.rotation, mainTex.Size() / 2, Projectile.scale * 0.9f, 0);
-
 
             return false;
         }
