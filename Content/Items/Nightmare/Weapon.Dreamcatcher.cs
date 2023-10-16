@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
-using Coralite.Content.Items.Mushroom;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using System;
@@ -19,7 +18,7 @@ namespace Coralite.Content.Items.Nightmare
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 160;
+            Item.damage = 145;
             Item.useTime = 15;
             Item.useAnimation = 15;
             Item.reuseDelay = 15;
@@ -32,7 +31,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.value = Item.sellPrice(0, 0, 1, 0);
             Item.rare = RarityType<NightmareRarity>();
             Item.shoot = ProjectileType<NightmareRaven>();
-            Item.shootSpeed = 0.1f;
+            Item.UseSound = CoraliteSoundID.TerraprismaSummon_Item82;
 
             Item.useTurn = false;
             Item.noMelee = true;
@@ -40,7 +39,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.autoReuse = false;
         }
 
-        public override void HoldItem(Player player)
+        public override void HoldItem(Player player)//临时工
         {
             Lighting.AddLight(player.Center + player.velocity + new Vector2(player.direction * 24, 16), TorchID.Red);
             

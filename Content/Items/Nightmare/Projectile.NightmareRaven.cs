@@ -201,7 +201,7 @@ namespace Coralite.Content.Items.Nightmare
                 if (Main.rand.NextBool(3))
                 {
                     Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), DustType<GlowBall>(),
-                        -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)) * Main.rand.NextFloat(0.1f, 0.25f), 0, drawColor, Main.rand.NextFloat(0.15f, 0.35f));
+                        -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)) * Main.rand.NextFloat(0.1f, 0.25f), 0, drawColor, Main.rand.NextFloat(0.2f, 0.45f));
                 }
 
                 vector = Main.player[Projectile.owner].Center;

@@ -1862,6 +1862,7 @@ Mods: {
 			// NightmareRaven.DisplayName: Nightmare Raven
 			// LycorisBullet.DisplayName: Lycoris Bullet
 			// LycorisHeldProj.DisplayName: Lycoris Held Proj
+			// LycorisSmallBullet.DisplayName: Lycoris Small Bullet
 		}
 
 		Configs: {
