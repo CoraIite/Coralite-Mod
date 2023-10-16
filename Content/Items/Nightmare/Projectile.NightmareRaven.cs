@@ -1,0 +1,403 @@
+﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.Buffs;
+using Coralite.Content.Dusts;
+using Coralite.Core;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Reflection;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
+
+namespace Coralite.Content.Items.Nightmare
+{
+    public class NightmareRaven : ModProjectile
+    {
+        public override string Texture => AssetDirectory.NightmarePlantera + "NightmareCrow";
+
+        private Player Owner => Main.player[Projectile.owner];
+
+        public ref float PowerfulAttackCount=>ref Projectile.ai[2];
+
+        public int Timer;
+        public Color drawColor;
+
+        public override void SetStaticDefaults()
+        {
+            Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.MinionSacrificable[Type] = true;
+            ProjectileID.Sets.CultistIsResistantTo[Type] = true;
+
+            ProjectileID.Sets.TrailingMode[Type] = 2;
+            ProjectileID.Sets.TrailCacheLength[Type] = 7;
+            Main.projFrames[Projectile.type] = 4;
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.width = 24;
+            Projectile.height = 24;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 300;
+            Projectile.minionSlots = 1;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = -1;
+            Projectile.localNPCHitCooldown = 20;
+
+            Projectile.friendly = true;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.netImportant = true;
+            Projectile.minion = true;
+            Projectile.usesLocalNPCImmunity = true;
+
+            Projectile.DamageType = DamageClass.Summon;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            drawColor = NightmarePlantera.lightPurple;
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (PowerfulAttackCount>0)
+            {
+                modifiers.SourceDamage += 0.5f;
+            }
+        }
+
+        public override bool MinionContactDamage() => Projectile.ai[0] > 0f;
+
+        public override void AI()
+        {
+            Player player = Main.player[Projectile.owner];
+            #region 血蝙蝠部分
+            if (!CheckActive(Owner))
+                return;
+
+            Projectile.timeLeft = 2;
+            Owner.AddBuff(BuffType<NightmareRavenBuff>(), 2);
+
+            if (++Projectile.frameCounter >= 6)
+            {
+                Projectile.frameCounter = 0;
+                if (++Projectile.frame >= Main.projFrames[Projectile.type] - 1)
+                    Projectile.frame = 0;
+            }
+
+            int num2 = player.direction;
+            if (Projectile.velocity.X != 0f)
+                num2 = Math.Sign(Projectile.velocity.X);
+
+            Projectile.spriteDirection = num2;
+            #endregion
+
+            AI_156_Think(Projectile);
+
+        }
+
+        /// <summary>
+        /// 让弹幕think think它该干什么，主体AI
+        /// ai0作为计时器和状态控制变量
+        /// ai1存储目标NPC的索引
+        /// localAI 分别存储弹幕中心的位置
+        /// </summary>
+        /// <param name="Projectile"></param>
+        public void AI_156_Think(Projectile Projectile)
+        {
+            int halfTime = 55;
+            int halfTime_less1 = halfTime - 1;
+
+            halfTime = 61;
+
+            Player player = Main.player[Projectile.owner];
+            #region 距离玩家太远直接进入尝试开始攻击的状态（该状态下会急速回到idle点位上）
+            if (player.active && Vector2.Distance(player.Center, Projectile.Center) > 2000f)
+            {
+                Projectile.ai[0] = 0f;
+                Projectile.ai[1] = 0f;
+                Projectile.netUpdate = true;
+            }
+            #endregion
+            #region 回到玩家身边，回到玩家身边后将ai0设为0，进入尝试攻击阶段
+            if (Projectile.ai[0] == -1f)
+            {
+
+                AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index, out var totalIndexesInGroup);
+
+                Vector2 idleSpot = CircleMovement(48 + totalIndexesInGroup * 4, 28,accelFactor:0.4f, angleFactor: 0.2f, baseRot: index * MathHelper.TwoPi / totalIndexesInGroup);
+                if (Projectile.Distance(idleSpot) < 2f)
+                {
+                    Projectile.ai[0] = 0f;
+                    Projectile.netUpdate = true;
+                }
+
+                Timer++;
+                return;
+            }
+            #endregion
+            #region  尝试开始攻击
+            if (Projectile.ai[0] == 0f)
+            {
+                AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out var totalIndexesInGroup2);
+                 CircleMovement(48 + totalIndexesInGroup2 * 4, 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index2 * MathHelper.TwoPi / totalIndexesInGroup2);
+                if (Main.rand.NextBool(20))
+                {
+                    int num6 = AI_156_TryAttackingNPCs(Projectile);
+                    if (num6 != -1)
+                    {
+                        AI_156_StartAttack(Projectile);
+                        Projectile.ai[0] = halfTime;
+                        Projectile.ai[1] = num6;
+                        Projectile.netUpdate = true;
+                        return;
+                    }
+                }
+
+                Timer++;
+                return;
+            }
+            #endregion
+
+            int num8 = (int)Projectile.ai[1];
+            if (!Main.npc.IndexInRange(num8))
+            {
+                Projectile.ai[0] = 0f;
+                Projectile.netUpdate = true;
+                return;
+            }
+
+            NPC nPC = Main.npc[num8];
+            if (!nPC.CanBeChasedBy(this))
+            {
+                Projectile.ai[0] = 0f;
+                Projectile.netUpdate = true;
+                return;
+            }
+
+            Projectile.ai[0] -= 1f;
+            if (Projectile.ai[0] >= halfTime_less1)
+            {
+                Projectile.velocity *= 0.8f;
+                if (Projectile.ai[0] == halfTime_less1)
+                {
+                    Projectile.localAI[0] = Projectile.Center.X;
+                    Projectile.localAI[1] = Projectile.Center.Y;
+                }
+
+                return;
+            }
+
+            float lerpValue = Utils.GetLerpValue(halfTime_less1, 0f, Projectile.ai[0], clamped: true);
+            Vector2 vector = new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
+            if (lerpValue >= 0.5f)
+            {
+                if (Main.rand.NextBool(3))
+                {
+                    Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), DustType<GlowBall>(),
+                        -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)) * Main.rand.NextFloat(0.1f, 0.25f), 0, drawColor, Main.rand.NextFloat(0.15f, 0.35f));
+                }
+
+                vector = Main.player[Projectile.owner].Center;
+            }
+
+            Vector2 center = nPC.Center;
+            float num9 = (center - vector).ToRotation();
+            float num10 = (center.X > vector.X) ? (-(float)Math.PI) : ((float)Math.PI);
+            float num11 = num10 + (0f - num10) * lerpValue * 2f;
+            Vector2 spinningPoint = num11.ToRotationVector2();
+            spinningPoint.Y *= (float)Math.Sin(Projectile.identity * 2.3f) * 0.5f;
+            spinningPoint = spinningPoint.RotatedBy(num9);
+            float num12 = (center - vector).Length() / 2f;
+            Vector2 center2 = Vector2.Lerp(vector, center, 0.5f) + spinningPoint * num12;
+            Projectile.Center = center2;
+            Vector2 vector2 = MathHelper.WrapAngle(num9 + num11 + 0f).ToRotationVector2() * 10f;
+            Projectile.velocity = vector2;
+            Projectile.position -= Projectile.velocity;
+            if (Projectile.ai[0] == 0f)
+            {
+                int num13 = AI_156_TryAttackingNPCs(Projectile);
+                if (num13 != -1)
+                {
+                    Projectile.ai[0] = halfTime;
+                    Projectile.ai[1] = num13;
+                    AI_156_StartAttack(Projectile);
+                    Projectile.netUpdate = true;
+                    return;
+                }
+
+                Projectile.ai[1] = 0f;
+                Projectile.netUpdate = true;
+            }
+        }
+
+        /// <summary>
+        /// 说是开始攻击，然鹅实际上是清空自身所有的本地NPC无敌帧
+        /// </summary>
+        /// <param name="Projectile"></param>
+        public void AI_156_StartAttack(Projectile Projectile)
+        {
+            Timer = 0;
+            if (PowerfulAttackCount>0)
+                PowerfulAttackCount--;
+            drawColor = PowerfulAttackCount > 0 ? NightmarePlantera.nightmareRed : NightmarePlantera.lightPurple;
+
+
+
+            for (int i = 0; i < Projectile.localNPCImmunity.Length; i++)
+            {
+                Projectile.localNPCImmunity[i] = 0;
+            }
+        }
+
+        /// <summary>
+        /// 获取目标NPC的索引
+        /// </summary>
+        /// <param name="Projectile"></param>
+        /// <param name="blackListedTargets"></param>
+        /// <param name="skipBodyCheck"></param>
+        /// <returns></returns>
+        public int AI_156_TryAttackingNPCs(Projectile Projectile, bool skipBodyCheck = false)
+        {
+            Vector2 ownerCenter = Main.player[Projectile.owner].Center;
+            int result = -1;
+            float num = -1f;
+            //如果有锁定的NPC那么就用锁定的，没有或不符合条件在从所有NPC里寻找
+            NPC ownerMinionAttackTargetNPC = Projectile.OwnerMinionAttackTargetNPC;
+            if (ownerMinionAttackTargetNPC != null && ownerMinionAttackTargetNPC.CanBeChasedBy(this))
+            {
+                bool flag = true;
+                if (!ownerMinionAttackTargetNPC.boss)
+                    flag = false;
+
+                if (ownerMinionAttackTargetNPC.Distance(ownerCenter) > 1000f)
+                    flag = false;
+
+                if (!skipBodyCheck && !Projectile.CanHitWithOwnBody(ownerMinionAttackTargetNPC))
+                    flag = false;
+
+                if (flag)
+                    return ownerMinionAttackTargetNPC.whoAmI;
+            }
+
+            for (int i = 0; i < 200; i++)
+            {
+                NPC nPC = Main.npc[i];
+                if (nPC.CanBeChasedBy(Projectile) )
+                {
+                    float npcDistance2Owner = nPC.Distance(ownerCenter);
+                    if (npcDistance2Owner <= 1000f && (npcDistance2Owner <= num || num == -1f) && (skipBodyCheck || Projectile.CanHitWithOwnBody(nPC)))
+                    {
+                        num = npcDistance2Owner;
+                        result = i;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 计算出在玩家身边的位置
+        /// </summary>
+        /// <param name="Projectile"></param>
+        /// <param name="stackedIndex"></param>
+        /// <param name="totalIndexes"></param>
+        /// <param name="idleSpot"></param>
+        /// <param name="idleRotation"></param>
+        public void AI_156_GetIdlePosition(Projectile Projectile, int stackedIndex, int totalIndexes, out Vector2 idleSpot, out float idleRotation)
+        {
+            Player player = Main.player[Projectile.owner];
+
+            float num2 = (totalIndexes - 1f) / 2f;
+            idleSpot = player.Center + -Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 40f;
+            idleRotation = 0f;
+        }
+
+        private bool CheckActive(Player owner)
+        {
+            if (owner.dead || !owner.active)
+            {
+                owner.ClearBuff(BuffType<NightmareRavenBuff>());
+                return false;
+            }
+
+            if (owner.HasBuff(BuffType<NightmareRavenBuff>()))
+                Projectile.timeLeft = 2;
+
+            return true;
+        }
+
+        public Vector2 CircleMovement(float distance, float speedMax, float accelFactor = 0.25f, float rollingFactor = 260f, float angleFactor = 0.08f, float baseRot = 0f)
+        {
+            Vector2 center = Owner.Center + (baseRot + Timer / rollingFactor * MathHelper.TwoPi).ToRotationVector2() * distance;
+            Vector2 dir = center - Projectile.Center;
+
+            float velRot = Projectile.velocity.ToRotation();
+            float targetRot = dir.ToRotation();
+
+            float speed = Projectile.velocity.Length();
+            float aimSpeed = Math.Clamp(dir.Length() / 200f, 0, 1) * speedMax;
+
+            Projectile.velocity = velRot.AngleTowards(targetRot, angleFactor).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, accelFactor);
+            return center;
+        }
+
+
+        /// <summary>
+        /// 获取自身是第几个召唤物弹幕
+        /// 非常好的东西，建议稍微改改变成静态帮助方法
+        /// </summary>
+        /// <param name="Projectile"></param>
+        /// <param name="index"></param>
+        /// <param name="totalIndexesInGroup"></param>
+        public void AI_GetMyGroupIndexAndFillBlackList(Projectile Projectile, out int index, out int totalIndexesInGroup)
+        {
+            index = 0;
+            totalIndexesInGroup = 0;
+            for (int i = 0; i < 1000; i++)
+            {
+                Projectile projectile = Main.projectile[i];
+                if (projectile.active && projectile.owner == Projectile.owner && projectile.type == Projectile.type && (projectile.type != 759 || projectile.frame == Main.projFrames[projectile.type] - 1))
+                {
+                    if (Projectile.whoAmI > i)
+                        index++;
+
+                    totalIndexesInGroup++;
+                }
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            Rectangle frameBox = mainTex.Frame(1, 4, 0, Projectile.frame);
+            Vector2 origin = frameBox.Size() / 2;
+            SpriteEffects effect = Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            //绘制残影
+            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+
+            for (int i = 0; i < 7; i += 1)
+                Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
+                    drawColor * (0.5f - i * 0.5f/7), Projectile.oldRot[i], frameBox.Size() / 2, 0.7f, effect, 0);
+
+            //向上下左右四个方向绘制一遍
+            for (int i = 0; i < 4; i++)
+            {
+                Main.spriteBatch.Draw(mainTex, pos + (i * MathHelper.PiOver2).ToRotationVector2() * 4, frameBox, drawColor, Projectile.rotation, origin, 0.7f,
+                   effect, 0);
+            }
+
+            //绘制自己
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, Color.White, Projectile.rotation, origin, 0.7f, effect, 0);
+            return false;
+        }
+    }
+}

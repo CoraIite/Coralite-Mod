@@ -1447,6 +1447,26 @@ Mods: {
 				DisplayName: Dreamcatcher
 				Tooltip: ""
 			}
+
+			BarrenThornsStaff: {
+				DisplayName: Barren Thorns Staff
+				Tooltip: ""
+			}
+
+			DevilsClaw: {
+				DisplayName: Devils Claw
+				Tooltip: ""
+			}
+
+			Eden: {
+				DisplayName: Eden
+				Tooltip: ""
+			}
+
+			Lycoris: {
+				DisplayName: Lycoris
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1532,6 +1552,11 @@ Mods: {
 			EuphorbiaPoison: {
 				DisplayName: Euphorbia Poison
 				Description: Mods.Coralite.Buffs.EuphorbiaPoison.Description
+			}
+
+			NightmareRavenBuff: {
+				DisplayName: Nightmare Raven Buff
+				Description: Mods.Coralite.Buffs.NightmareRavenBuff.Description
 			}
 		}
 
@@ -1778,6 +1803,8 @@ Mods: {
 			EuphorbiaMiliiRightClick.DisplayName: Euphorbia Milii Right Click
 			EuphorbiaSpecialSpike.DisplayName: Euphorbia Special Spike
 			NightmareRaven.DisplayName: Nightmare Raven
+			LycorisBullet.DisplayName: Lycoris Bullet
+			LycorisHeldProj.DisplayName: Lycoris Held Proj
 		}
 
 		Configs: {

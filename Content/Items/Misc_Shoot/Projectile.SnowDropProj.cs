@@ -54,6 +54,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             Projectile.extraUpdates = 1;
             Projectile.friendly = true;
             Projectile.netImportant = true;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override void OnSpawn(IEntitySource source)

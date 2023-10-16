@@ -11,6 +11,8 @@ namespace Coralite.Compat.BossCheckList
     {
         public static void CallBossCheckList()
         {
+#pragma warning disable CS8974 // 将方法组转换为非委托类型
+
             if (ModLoader.TryGetMod("BossCheckList",out Mod bcl))
             {
                 //赤玉灵
@@ -37,6 +39,7 @@ namespace Coralite.Compat.BossCheckList
                         ["spawnInfo"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.Rediancie.SpawnInfo", () => RediancieInfo),
                         ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.Rediancie.Despawn", () => "赤玉灵回归了地底"),
                         ["spawnItems"] = ItemType<RedBerry>(),
+                        ["customPortrait"] = RedianciePortrait.DrawPortrait,
                         ["collectibles"] = RediancieCollection
                     });
 
@@ -102,10 +105,22 @@ namespace Coralite.Compat.BossCheckList
                 List<int> NightmarePlanteraCollection = new List<int>()
                 {
                     //ItemType<Content.Items.Icicle.IcicleCrystal>(),
-                    //ItemType<Content.Items.Icicle.BabyIceDragonBossBag>(),
+                    ItemType<Content.Items.Nightmare.GriefSeed>(),
                     //ItemType<Content.Items.Gels.EmperorSabre>(),
                     //ItemType<Content.Items.Gels.GelThrone>(),
-                    //ItemType<Content.Items.Icicle.BabyIceDragonRelic>(),
+                    ItemType<Content.Items.Nightmare.LostSevensideHook>(),
+                    ItemType<Content.Items.Nightmare.DreamShears>(),
+                    ItemType<Content.Items.Nightmare.EuphorbiaMilii>(),
+                    ItemType<Content.Items.Nightmare.Lycoris>(),
+
+
+                    ItemType<Content.Items.Nightmare.DevilsClaw>(),
+                    ItemType<Content.Items.Nightmare.BarrenThornsStaff>(),
+
+                    ItemType<Content.Items.Nightmare.Dreamcatcher>(),
+                    ItemType<Content.Items.Nightmare.Eden>(),
+
+                    //ItemType<Content.Items.Gels.RoyalGelCannon>(),
                     //ItemType<Content.Items.Icicle.RedianciePet>(),
                 };
 
@@ -113,18 +128,19 @@ namespace Coralite.Compat.BossCheckList
                 bcl.Call(
                     "LogBoss",
                     Coralite.Instance,
-                    "史莱姆皇帝",
-                    3.2f,
-                    () => DownedBossSystem.downedSlimeEmperor,
+                    "梦魇之花",
+                    18.1f,//18是月总
+                    () => DownedBossSystem.downedNightmarePlantera,
                     NPCType<Content.Bosses.VanillaReinforce.NightmarePlantera.NightmarePlantera>(),
                     new Dictionary<string, object>()
                     {
                         ["spawnInfo"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.NightmarePlantera.SpawnInfo", () => NightmarePlanteraInfo),
                         ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.NightmarePlantera.Despawn", () => "梦境消散了"),
                         ["spawnItems"] = ItemType<NightmareHarp>(),
-                        ["collectibles"] = NightmarePlanteraInfo
+                        ["collectibles"] = NightmarePlanteraCollection
                     });
 
+#pragma warning restore CS8974 // 将方法组转换为非委托类型
             }
         }
     }

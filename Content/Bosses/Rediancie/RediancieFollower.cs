@@ -36,5 +36,15 @@ namespace Coralite.Content.Bosses.Rediancie
             };
             spriteBatch.Draw(mainTex, center-Main.screenPosition, null, drawColor, rotation, mainTex.Size() / 2, scale, SpriteEffects.None, 0);
         }
+
+        public void DrawInBCL(SpriteBatch spriteBatch, Color drawColor)
+        {
+            Texture2D mainTex = textureType switch
+            {
+                0 => tex1.Value,
+                _ => tex2.Value
+            };
+            spriteBatch.Draw(mainTex, center, null, drawColor, rotation, mainTex.Size() / 2, scale, SpriteEffects.None, 0);
+        }
     }
 }

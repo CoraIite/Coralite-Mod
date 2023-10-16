@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 {
     public class Dunkleosteus :ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Shoot + Name;
+        public override string Texture => AssetDirectory.Misc_Shoot + "Old_Dunkleosteus";
 
         public int shootStyle;
 

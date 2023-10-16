@@ -1611,7 +1611,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             EuphorbiaPoison = false;
         }
-
+        
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
             if (EuphorbiaPoison)

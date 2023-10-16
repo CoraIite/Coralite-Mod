@@ -50,6 +50,13 @@ namespace Coralite.Content.Items.Nightmare
                 ItemDropRule.Common(ModContent.ItemType<LostSevensideHook>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<DreamShears>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<EuphorbiaMilii>(), 1, 1, 1),
+
+                ItemDropRule.Common(ModContent.ItemType<Lycoris>(), 1, 1, 1),
+
+                ItemDropRule.Common(ModContent.ItemType<BarrenThornsStaff>(), 1, 1, 1),
+
+                ItemDropRule.Common(ModContent.ItemType<Dreamcatcher>(), 1, 1, 1),
+                ItemDropRule.Common(ModContent.ItemType<Eden>(), 1, 1, 1),
             };
 
             itemLoot.Add(new FewFromRulesRule(3,1, weaponTypes));

@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Gels;
-using Coralite.Content.Items.Misc_Shoot;
+﻿using Coralite.Content.Items.Misc_Shoot;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
@@ -191,9 +190,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 ItemDropRule.Common(ModContent.ItemType<LostSevensideHook>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<DreamShears>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<EuphorbiaMilii>(), 1, 1, 1),
+
+                ItemDropRule.Common(ModContent.ItemType<Lycoris>(), 1, 1, 1),
+
+                ItemDropRule.Common(ModContent.ItemType<Dreamcatcher>(), 1, 1, 1),
             };
 
-            notExpertRule.OnSuccess(new OneFromRulesRule(1, weaponTypes));
+            notExpertRule.OnSuccess(new FewFromRulesRule(2, 1, weaponTypes));
 
             npcLoot.Add(notExpertRule);
         }

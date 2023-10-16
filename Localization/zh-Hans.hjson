@@ -1478,17 +1478,51 @@ Mods: {
 
 			EuphorbiaMilii: {
 				DisplayName: 刺梅
-				Tooltip: "[c/dacde8:美丽又危险]"
+				Tooltip:
+					'''
+					[c/dacde8:美丽又危险]
+						使用左键攻击最后一击或右键满蓄力后释放的突刺命中敌人后获得2个[c/fa0064:梦魇光能]
+						右键可蓄力，如果可以则消耗7个[c/fa0064:梦魇光能]瞬移到鼠标位置
+					'''
 			}
 
 			GriefSeed: {
 				DisplayName: 悲叹之种
-				Tooltip: 右键点击可打开
+				Tooltip:
+					'''
+					[c/f73535:绝望是你的终点]
+					右键点击可打开
+					'''
 			}
 
 			Dreamcatcher: {
-				// DisplayName: Dreamcatcher
-				// Tooltip: ""
+				DisplayName: 捕梦网
+				Tooltip:
+					'''
+					[c/8d004b:现在你或许可以做个好梦了...]
+						召唤梦魇渡鸦，占用1个召唤栏位
+						使用鞭子武器“伊甸”右键以消耗[c/fa0064:梦魇光能]强化梦魇渡鸦
+					'''
+			}
+
+			BarrenThornsStaff: {
+				DisplayName: 荒芜荆棘杖
+				Tooltip: "[c/4f46a4:荆棘的花园]"
+			}
+
+			DevilsClaw: {
+				DisplayName: 喙檐
+				Tooltip: "[c/ccaaf2:恶魔之爪]"
+			}
+
+			Eden: {
+				DisplayName: 伊甸
+				Tooltip: "[c/9d9d9d:此为禁忌]"
+			}
+
+			Lycoris: {
+				DisplayName: 彼岸花
+				Tooltip: "[c/be0065:另一边的花朵]"
 			}
 		}
 
@@ -1573,8 +1607,13 @@ Mods: {
 			}
 
 			EuphorbiaPoison: {
-				// DisplayName: Euphorbia Poison
-				// Description: Mods.Coralite.Buffs.EuphorbiaPoison.Description
+				DisplayName: 纯白毒液
+				Description: 被刺梅扎伤了！
+			}
+
+			NightmareRavenBuff: {
+				DisplayName: 梦魇渡鸦
+				Description: 噩梦中出现的这些小家伙们将为你而战！
 			}
 		}
 
@@ -1821,6 +1860,8 @@ Mods: {
 			// EuphorbiaMiliiRightClick.DisplayName: Euphorbia Milii Right Click
 			// EuphorbiaSpecialSpike.DisplayName: Euphorbia Special Spike
 			// NightmareRaven.DisplayName: Nightmare Raven
+			// LycorisBullet.DisplayName: Lycoris Bullet
+			// LycorisHeldProj.DisplayName: Lycoris Held Proj
 		}
 
 		Configs: {
