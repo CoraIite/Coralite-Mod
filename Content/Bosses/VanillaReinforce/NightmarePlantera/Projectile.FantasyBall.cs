@@ -15,7 +15,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    internal class FantasyBall : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied
+    public class FantasyBall : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.NightmarePlantera + Name;
 

@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Misc_Shoot;
-using Coralite.Content.Items.Nightmare;
+﻿using Coralite.Content.Items.Nightmare;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -216,12 +215,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return;
             }
 
-            if (projectile.type == ModContent.ProjectileType<HyacinthBullet>() || projectile.type == ModContent.ProjectileType<HyacinthBullet2>()
-                || projectile.type == ModContent.ProjectileType<HyacinthExplosion>())
-            {
-                modifiers.SourceDamage *= 0.6f;
-                return;
-            }
+            //if (projectile.type == ModContent.ProjectileType<HyacinthBullet>() || projectile.type == ModContent.ProjectileType<HyacinthBullet2>()
+            //    || projectile.type == ModContent.ProjectileType<HyacinthExplosion>())
+            //{
+            //    modifiers.SourceDamage *= 0.6f;
+            //    return;
+            //}
 
             //modifiers.ModifyHitInfo += Modifiers_ModifyHitInfo;
         }
@@ -695,7 +694,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D mainTex = TextureAssets.Npc[Type].Value;
-            Rectangle frameBox = mainTex.Frame(1, Main.npcFrameCount[NPC.type], NPC.frame.X, NPC.frame.Y);
+            Rectangle frameBox = mainTex.Frame(4, Main.npcFrameCount[NPC.type], NPC.frame.X, NPC.frame.Y);
             Vector2 origin = frameBox.Size() / 2;
             Vector2 pos = NPC.Center - screenPos;
             float selfRot = NPC.rotation + MathHelper.PiOver2;

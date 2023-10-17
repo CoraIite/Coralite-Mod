@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using FullSerializer.Internal;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     targetPos = NPC.Center
                 },
             };
+            UpdateFrame_P2();
 
             if (useDreamMove)
                 switch ((int)State)
@@ -164,6 +166,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         NormallyUpdateTentacle();
                         break;
                 }
+        }
+
+        public void UpdateFrame_P2()
+        {
+            if (++NPC.frameCounter>7)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.X++;
+                if (NPC.frame.X > 3)
+                    NPC.frame.X = 0;
+            }
         }
 
         #region Phase2AI

@@ -354,7 +354,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if ((State == 1 || State == 2) && NightmarePlantera.NightmarePlanteraAlive(out NPC np))
             {
                 Texture2D shadowTex = TextureAssets.Npc[np.type].Value;
-                Rectangle frame = shadowTex.Frame(1, Main.npcFrameCount[np.type], np.frame.X, np.frame.Y);
+                Rectangle frame = shadowTex.Frame(4, Main.npcFrameCount[np.type], np.frame.X, np.frame.Y);
                 Vector2 origin2 = frame.Size() / 2;
 
                 Main.spriteBatch.Draw(shadowTex, pos, frame, NightmarePlantera.phantomColors[phantomColor] * Utils.Remap(alpha, 0, 0.5f, 0, 1), Projectile.rotation + MathHelper.PiOver2, origin2, np.scale, 0, 0);

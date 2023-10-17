@@ -364,8 +364,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             //                 spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.GameViewMatrix.ZoomMatrix);
             #endregion
 
-            tentacle?.DrawTentacle();
-            ownerTentacle?.DrawTentacle();
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
+
+            tentacle?.DrawTentacle_NoEndBegin();
+            ownerTentacle?.DrawTentacle_NoEndBegin();
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default, null, Main.Transform);
 
             Texture2D mainTex = TextureAssets.Npc[NPC.type].Value;
             Rectangle frameBox = mainTex.Frame(1, 4, 0, NPC.frame.Y);

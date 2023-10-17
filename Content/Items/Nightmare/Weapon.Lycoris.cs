@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.Nightmare
                 if (player.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy == cp.nightmareEnergyMax)
                 {
                     cp.nightmareEnergy = 0;
-                    Helper.PlayPitched("Misc/Zaphkiel", 0.9f, 0f, position);
+                    Helper.PlayPitched("Misc/Zaphkiel", 1f, 0f, position);
 
                     Projectile.NewProjectile(source, position, velocity, projType, damage * 7, knockback, player.whoAmI, 1);
                     Projectile.NewProjectile(source, player.Center, Vector2.Zero, heldProjType, 1, 1, player.whoAmI);
@@ -106,7 +106,7 @@ namespace Coralite.Content.Items.Nightmare
     /// </summary>
     public class LycorisBullet : ModProjectile
     {
-        public override string Texture => AssetDirectory.NightmareItems+Name;
+        public override string Texture => AssetDirectory.NightmareItems + Name;
 
         public ref float State => ref Projectile.ai[0];
         public ref float Init => ref Projectile.localAI[0];
@@ -164,7 +164,7 @@ namespace Coralite.Content.Items.Nightmare
                 float baseRot = Main.rand.NextFloat(6.282f);
                 for (int i = 0; i < howMany; i++)
                 {
-                    Dust dust = Dust.NewDustPerfect(center, DustType<NightmareStar>(), baseRot.ToRotationVector2().RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) *Main.rand.NextFloat(0.5f,1f),
+                    Dust dust = Dust.NewDustPerfect(center, DustType<NightmareStar>(), baseRot.ToRotationVector2().RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * Main.rand.NextFloat(0.5f, 1f),
                         200, Color.DarkRed, Scale: Main.rand.NextFloat(0.8f, 1.2f));
                     dust.noGravity = true;
                     dust.rotation = dust.velocity.ToRotation() + MathHelper.PiOver2;
@@ -224,7 +224,7 @@ namespace Coralite.Content.Items.Nightmare
 
                         FlowLine.Spawn(Projectile.Center, dir.RotatedByRandom(0.2f) * Main.rand.NextFloat(10, 18), 2, 10, Main.rand.NextFloat(0.3f, 0.4f), NightmarePlantera.nightmareRed);
                         FlowLine.Spawn(Projectile.Center, dir.RotatedByRandom(-0.2f) * Main.rand.NextFloat(10, 18), 2, 10, Main.rand.NextFloat(0.3f, 0.4f), NightmarePlantera.nightmareRed);
-                        
+
                         FlowLine.Spawn(Projectile.Center, dir.RotatedByRandom(0.2f) * Main.rand.NextFloat(6, 10), 2, 10, Main.rand.NextFloat(0.1f, 0.2f), Color.DarkRed);
                         FlowLine.Spawn(Projectile.Center, dir.RotatedByRandom(-0.2f) * Main.rand.NextFloat(6, 10), 2, 10, Main.rand.NextFloat(0.1f, 0.2f), Color.DarkRed);
 
@@ -247,9 +247,9 @@ namespace Coralite.Content.Items.Nightmare
                         if (j > 1)
                             c = Color.DarkRed;
                         Dust dust = Dust.NewDustPerfect(center, DustType<NightmareStar>(), dir.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f)) * j * vel,
-                            200, c, Scale: Main.rand.NextFloat(0.8f,1.4f));
+                            200, c, Scale: Main.rand.NextFloat(0.8f, 1.4f));
                         dust.noGravity = true;
-                        dust.rotation = dust.velocity.ToRotation()+MathHelper.PiOver2;
+                        dust.rotation = dust.velocity.ToRotation() + MathHelper.PiOver2;
                     }
 
                     baseRot += MathHelper.TwoPi / howMany;
@@ -383,7 +383,7 @@ namespace Coralite.Content.Items.Nightmare
 
             for (int i = 0; i < Projectile.oldPos.Length; i++)
             {
-                Vector2 vector6 = Projectile. oldPos[i];
+                Vector2 vector6 = Projectile.oldPos[i];
                 if (vector6 == Vector2.Zero)
                     break;
 
@@ -399,7 +399,7 @@ namespace Coralite.Content.Items.Nightmare
                 target2 = vector6;
                 for (float j = 0f; j < num27; j++)
                 {
-                    int index = Dust.NewDust(vector6, Projectile. width, Projectile.height, DustID.RainbowMk2, 0f, 0f, 0, color);
+                    int index = Dust.NewDust(vector6, Projectile.width, Projectile.height, DustID.RainbowMk2, 0f, 0f, 0, color);
                     Dust dust2 = Main.dust[index];
                     dust2.velocity *= Main.rand.NextFloat() * 0.8f;
                     Main.dust[index].noGravity = true;
@@ -422,13 +422,28 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.damage = (int)(Projectile.damage * 0.8f);
+            Projectile.damage = (int)(Projectile.damage * 0.7f);
             int num45 = Projectile.FindTargetWithLineOfSight();
             if (num45 != -1)
             {
                 Projectile.ai[0] = num45;
                 Projectile.netUpdate = true;
             }
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            //简易撞墙反弹
+            float newVelX = Math.Abs(Projectile.velocity.X);
+            float newVelY = Math.Abs(Projectile.velocity.Y);
+            float oldVelX = Math.Abs(oldVelocity.X);
+            float oldVelY = Math.Abs(oldVelocity.Y);
+            if (oldVelX > newVelX)
+                Projectile.velocity.X = -oldVelX;
+            if (oldVelY > newVelY)
+                Projectile.velocity.Y = -oldVelY;
+
+            return false;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -458,16 +473,17 @@ namespace Coralite.Content.Items.Nightmare
 
             Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
 
-            for (int i = 1; i < 12; i ++)
+            //残影
+            for (int i = 1; i < 12; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    baseColor * (0.5f - i * 0.5f/12), Projectile.oldRot[i] + MathHelper.PiOver2, mainTex.Size() / 2, Projectile.scale, 0, 0);
+                    baseColor * (0.5f - i * 0.5f / 12), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale, 0, 0);
 
             //一闪一闪的光
             Main.EntitySpriteDraw(extraTex, position4, null, OtherColor, (float)Math.PI / 2f, origin7, vector31, 0);
             Main.EntitySpriteDraw(extraTex, position4, null, OtherColor, 0f, origin7, vector32, 0);
             Main.EntitySpriteDraw(extraTex, position4, null, color37, (float)Math.PI / 2f, origin7, vector31 * 0.6f, 0);
             Main.EntitySpriteDraw(extraTex, position4, null, color37, 0f, origin7, vector32 * 0.6f, 0);
-            
+
             //额外星星
             ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, center, Color.White, baseColor, 0.5f, 0, 0.5f, 0.5f, 1, Projectile.rotation, new Vector2(0.5f, 1f), Vector2.One);
 

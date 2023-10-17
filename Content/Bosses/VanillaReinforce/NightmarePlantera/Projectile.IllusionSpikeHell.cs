@@ -125,7 +125,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return false;
 
             Texture2D mainTex = TextureAssets.Npc[np.type].Value;
-            Rectangle frameBox = mainTex.Frame(1, Main.npcFrameCount[np.type], np.frame.X, np.frame.Y);
+            Rectangle frameBox = mainTex.Frame(4, Main.npcFrameCount[np.type], np.frame.X, np.frame.Y);
             Vector2 origin = frameBox.Size() / 2;
             Vector2 pos = Projectile.Center - Main.screenPosition;
             float selfRot = Projectile.rotation + MathHelper.PiOver2;

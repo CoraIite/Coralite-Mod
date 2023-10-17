@@ -1467,6 +1467,11 @@ Mods: {
 				DisplayName: Lycoris
 				Tooltip: ""
 			}
+
+			Lullaby: {
+				DisplayName: Lullaby
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1806,6 +1811,8 @@ Mods: {
 			LycorisBullet.DisplayName: Lycoris Bullet
 			LycorisHeldProj.DisplayName: Lycoris Held Proj
 			LycorisSmallBullet.DisplayName: Lycoris Small Bullet
+			LullabySlash.DisplayName: Lullaby Slash
+			LullabyBall.DisplayName: Lullaby Ball
 		}
 
 		Configs: {

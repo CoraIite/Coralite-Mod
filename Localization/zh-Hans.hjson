@@ -1522,7 +1522,17 @@ Mods: {
 
 			Lycoris: {
 				DisplayName: 彼岸花
-				Tooltip: "[c/be0065:另一边的花朵]"
+				Tooltip:
+					'''
+					[c/be0065:另一边的花朵]
+						射出彼岸花弹，命中目标后获得1个[c/fa0064:梦魇光能]，未命中则产生彼岸花瓣
+						当[c/fa0064:梦魇光能]数量到达上限时射出强化彼岸花弹
+					'''
+			}
+
+			Lullaby: {
+				DisplayName: 入梦曲
+				Tooltip: ""
 			}
 		}
 
@@ -1863,6 +1873,8 @@ Mods: {
 			// LycorisBullet.DisplayName: Lycoris Bullet
 			// LycorisHeldProj.DisplayName: Lycoris Held Proj
 			// LycorisSmallBullet.DisplayName: Lycoris Small Bullet
+			// LullabySlash.DisplayName: Lullaby Slash
+			// LullabyBall.DisplayName: Lullaby Ball
 		}
 
 		Configs: {

@@ -26,7 +26,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public ref float State => ref NPC.ai[0];
         public ref float Timer => ref NPC.ai[1];
-        public ref float Angle=>ref NPC.ai[2];
+        public ref float Angle => ref NPC.ai[2];
         public ref float LightScale => ref NPC.ai[3];
 
         public static Color shineColor = new Color(252, 233, 194);

@@ -38,6 +38,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     targetPos = NPC.Center
                 },
             };
+            UpdateFrame_P3();
 
             switch ((int)State)
             {
@@ -97,6 +98,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     VineSpurt();
                     NormallyUpdateTentacle();
                     break;
+            }
+        }
+
+        public void UpdateFrame_P3()
+        {
+            if (++NPC.frameCounter > 7)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.X++;
+                if (NPC.frame.X > 3)
+                    NPC.frame.X = 0;
             }
         }
 

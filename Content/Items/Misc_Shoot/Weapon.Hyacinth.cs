@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Coralite.Content.Items.Nightmare;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -18,7 +19,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void SetDefaults()
         {
-            Item.damage = 190;
+            Item.damage = 208;
             Item.useTime = 14;
             Item.useAnimation = 14;
             Item.knockBack = 3;
@@ -28,7 +29,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             Item.DamageType = DamageClass.Ranged;
             Item.value = Item.sellPrice(0, 50, 0, 0);
             Item.rare = ItemRarityID.Red;
-            Item.shoot = 10;
+            Item.shoot = ProjectileID.PurificationPowder;
             Item.useAmmo = AmmoID.Bullet;
 
             Item.useTurn = false;
@@ -42,7 +43,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             if (Main.myPlayer == player.whoAmI)
             {
                 List<int> textureList = new List<int>();
-                for (int i = 1; i < 23; i++)
+                for (int i = 1; i < 24; i++)
                     textureList.Add(-i);
 
                 for (int i = 0; i < 3; i++)     //生成环绕的幻影枪弹幕
@@ -80,6 +81,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             .AddIngredient(ItemID.VortexBeater)
             .AddIngredient(ItemID.SDMG)
             .AddIngredient<StarsBreath>()
+            .AddIngredient<Lycoris>()
             .AddTile(TileID.MythrilAnvil)
             .Register();
         }

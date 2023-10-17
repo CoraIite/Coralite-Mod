@@ -14,6 +14,8 @@ using Terraria.GameContent;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.Trails;
 using Terraria.Graphics.Effects;
+using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.Items.Nightmare;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
@@ -227,6 +229,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                     return new Color(252, 145, 28);
                 case 22:    //手枪
                     return new Color(127, 127, 127);
+                case 23:    //迷迭香
+                    return NightmarePlantera.nightmareRed;
             }
 
             return Color.White;
@@ -496,6 +500,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                     return ItemID.PhoenixBlaster;
                 case 22:
                     return ItemID.Handgun;
+                case 23:
+                    return ModContent.ItemType<Lycoris>();
             }
 
             return (int)Projectile.ai[0];
