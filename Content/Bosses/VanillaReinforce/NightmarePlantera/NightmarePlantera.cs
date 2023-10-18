@@ -225,11 +225,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             //modifiers.ModifyHitInfo += Modifiers_ModifyHitInfo;
         }
 
-        private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
-        {
-            if (info.Damage > 10000)
-                info.Damage = 10000;
-        }
+        //private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
+        //{
+        //    if (info.Damage > 10000)
+        //        info.Damage = 10000;
+        //}
 
         public override void Load()
         {

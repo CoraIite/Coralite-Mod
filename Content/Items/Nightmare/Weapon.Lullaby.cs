@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
@@ -27,14 +28,14 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void SetDefaults()
         {
-            Item.useAnimation = Item.useTime = 23;
-            Item.reuseDelay = 10;
+            Item.useAnimation = Item.useTime = 26;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.shoot = ProjectileType<LullabySlash>();
             Item.DamageType = DamageClass.Magic;
             Item.rare = RarityType<FantasyRarity>();
             Item.value = Item.sellPrice(2, 0, 0, 0);
-            Item.SetWeaponValues(220, 4, 4);
+            Item.SetWeaponValues(144, 4, 4);
+            Item.mana = 36;
             Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;
@@ -49,10 +50,21 @@ namespace Coralite.Content.Items.Nightmare
             if (Main.myPlayer == player.whoAmI)
             {
                 // 生成弹幕
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, combo);
+                damage = (int)(damage * 1f);
+                switch (combo)
+                {
+                    default:
+                    case 0:
+                    case 1:
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, combo);
+                        break;
+                    case 2:
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<LullabySlash2>(), damage, knockback, player.whoAmI);
+                        break;
+                }
 
                 combo++;
-                if (combo > 1)
+                if (combo > 2)
                     combo = 0;
             }
 
@@ -275,9 +287,151 @@ namespace Coralite.Content.Items.Nightmare
         }
     }
 
-    public class LullabySlash2
+    public class LullabySlash2:BaseSwingProj,IDrawWarp
     {
+        public override string Texture => AssetDirectory.NightmareItems + "Lullaby";
 
+        public LullabySlash2() : base(MathF.Atan(46f / 52f), trailLength: 34) { }
+
+        public int alpha;
+        public int delay = 48;
+
+        public override void SetDefs()
+        {
+            Projectile.localNPCHitCooldown = 48;
+            Projectile.width = 40;
+            Projectile.height = 90;
+            trailTopWidth = 2;
+            distanceToOwner = 8;
+            minTime = 0;
+            onHitFreeze = 12;
+            useSlashTrail = true;
+        }
+
+        protected override float ControlTrailBottomWidth(float factor)
+        {
+            return 75 * Projectile.scale;
+        }
+
+        protected override void Initializer()
+        {
+            if (Main.myPlayer == Projectile.owner)
+                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+
+            Projectile.extraUpdates = 3;
+            alpha = 0;
+
+            startAngle = -1.57f;
+            totalAngle = 6.282f;
+            maxTime = Owner.itemTimeMax * 4;
+            Smoother = Coralite.Instance.BezierEaseSmoother;
+
+            base.Initializer();
+        }
+
+        protected override float GetStartAngle() => Owner.direction > 0 ? 3.141f : 0f;
+
+        protected override void AIBefore()
+        {
+            Lighting.AddLight(Projectile.Center, NightmarePlantera.nightPurple.ToVector3());
+            base.AIBefore();
+        }
+
+        protected override void OnSlash()
+        {
+            //Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
+            //Dust dust = Dust.NewDustPerfect((Top + Projectile.Center) / 2 + Main.rand.NextVector2Circular(50, 50), DustID.RedMoss,
+            //       dir * Main.rand.NextFloat(0.5f, 2f), Scale: Main.rand.NextFloat(1f, 1.5f));
+            //dust.noGravity = true;
+
+            int timer = (int)Timer - minTime;
+            alpha = (int)(Coralite.Instance.BezierEaseSmoother.Smoother(timer, maxTime - minTime) * 200) + 50;
+
+            base.OnSlash();
+        }
+
+        protected override void AfterSlash()
+        {
+            if (alpha > 20)
+                alpha -= 5;
+
+            if (Timer < maxTime + 24)
+            {
+                distanceToOwner -= 0.2f;
+            }
+            else
+            {
+                distanceToOwner = Helper.Lerp(distanceToOwner, 32, 0.2f);
+                if (Timer == maxTime + 34)
+                {
+                    SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, Owner.Center);
+                    for (int i = 0; i < 7; i++)
+                    {
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center,
+                            (i * MathHelper.TwoPi / 7).ToRotationVector2() * 8, ProjectileType<LullabyBall>(), (int)(Projectile.damage*0.85f), Projectile.knockBack, Projectile.owner, ai2: i);
+                    }
+                }
+            }
+
+            Slasher();
+            if (Timer > maxTime + delay)
+                Projectile.Kill();
+        }
+
+        public void DrawWarp()
+        {
+            WarpDrawer(0.75f);
+        }
+
+        protected override void DrawSlashTrail()
+        {
+            RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
+            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            GetCurrentTrailCount(out float count);
+
+            for (int i = 0; i < oldRotate.Length; i++)
+            {
+                if (oldRotate[i] == 100f)
+                    continue;
+
+                float factor = 1f - i / count;
+                Vector2 Center = GetCenter(i);
+                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
+                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
+
+                var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
+                var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);
+                bars.Add(new(Top.Vec3(), topColor, new Vector2(factor, 0)));
+                bars.Add(new(Bottom.Vec3(), bottomColor, new Vector2(factor, 1)));
+            }
+
+            if (bars.Count > 2)
+            {
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
+
+                Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
+
+                Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+                Matrix view = Main.GameViewMatrix.TransformationMatrix;
+                Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+                effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+                effect.Parameters["sampleTexture"].SetValue(LullabySlash.trailTexture.Value);
+                effect.Parameters["gradientTexture"].SetValue(LullabySlash.GradientTexture.Value);
+
+                Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
+                foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+                {
+                    pass.Apply();
+                    Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                }
+
+                Main.graphics.GraphicsDevice.RasterizerState = originalState;
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            }
+        }
     }
 
     /// <summary>
@@ -291,16 +445,18 @@ namespace Coralite.Content.Items.Nightmare
         public Color DrawColor;
         public bool init = true;
 
-
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 40;
+            Projectile.width = Projectile.height = 32;
             Projectile.aiStyle = -1;
             Projectile.timeLeft = 900;
             Projectile.extraUpdates = 1;
             Projectile.penetrate = 3;
             Projectile.friendly = true;
             Projectile.tileCollide = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 45;
+            Projectile.DamageType = DamageClass.Magic;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -393,23 +549,24 @@ namespace Coralite.Content.Items.Nightmare
                 Projectile.oldPos[15] = Projectile.Center + Projectile.velocity;
             }
 
-            if (Main.rand.NextBool(4))
-                for (int i = -1; i < 2; i += 2)
-                {
-                    int type = Main.rand.NextFromList(DustID.PlatinumCoin, DustID.GoldCoin);
-                    Vector2 dir = new Vector2(i, 0);
-                    Dust.NewDustPerfect(Projectile.Center, type, dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(0.5f, 2), Scale: Main.rand.NextFloat(1, 1.5f));
-                }
+            if (Main.rand.NextBool(6))
+            {
+                int i = Main.rand.NextFromList(-1, 1);
+                int type = Main.rand.NextFromList(DustID.PlatinumCoin, DustID.GoldCoin);
+                Vector2 dir = new Vector2(i, 0);
+                Dust.NewDustPerfect(Projectile.Center, type, dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(0.5f, 2), Scale: Main.rand.NextFloat(1, 1.5f));
+
+            }
 
             trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new NoTip(), factor => Helper.Lerp(0, 8, factor )
             , factor =>
             {
                 if (factor.X < 0.7f)
                 {
-                    return Color.Lerp(new Color(0, 0, 0, 0), Color.White, factor.X / 0.7f);
+                    return Color.Lerp(new Color(0, 0, 0, 0), DrawColor, factor.X / 0.7f);
                 }
 
-                return Color.Lerp(Color.White, DrawColor, (factor.X - 0.7f) / 0.3f);
+                return Color.Lerp(DrawColor, FantasyGod.shineColor, (factor.X - 0.7f) / 0.3f);
             });
 
             trail.Positions = Projectile.oldPos;
@@ -420,36 +577,39 @@ namespace Coralite.Content.Items.Nightmare
             Color color = DrawColor;
             SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
 
-            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            if (VisualEffectSystem.HitEffect_Dusts)
             {
-                Vector2 vector6 = Projectile.oldPos[i];
-                if (vector6 == Vector2.Zero)
-                    break;
-
-                Vector2 pos = Projectile.oldPos[i];
-                float num28 = MathHelper.Lerp(0.3f, 1f, Utils.GetLerpValue(Projectile.oldPos.Length, 0f, i, clamped: true));
-                int howMany = Main.rand.Next(1, 3);
-                for (float j = 0f; j < howMany; j++)
+                for (int i = 0; i < Projectile.oldPos.Length; i++)
                 {
-                    Dust dust = Dust.NewDustPerfect(pos+Main.rand.NextVector2Circular(32,32),  DustID.RainbowMk2,null, 0, color);
-                    dust.velocity *= Main.rand.NextFloat();
-                    dust.noGravity = true;
-                    dust.scale = 0.9f + Main.rand.NextFloat() * 1.2f;
-                    dust.fadeIn = Main.rand.NextFloat() * 1.2f * num28;
-                    dust.scale *= num28;
-                }
-            }
+                    Vector2 vector6 = Projectile.oldPos[i];
+                    if (vector6 == Vector2.Zero)
+                        break;
 
-            for (int i = 0; i < 8; i++)
-            {
-                Vector2 v = Helper.NextVec2Dir();
-                Dust.NewDustPerfect(Projectile.Center, DustType<NightmareStar>(), v * Main.rand.NextFloat(0.5f, 3), newColor: DrawColor, Scale: Main.rand.NextFloat(1.2f, 1.8f));
+                    Vector2 pos = Projectile.oldPos[i];
+                    float num28 = MathHelper.Lerp(0.3f, 1f, Utils.GetLerpValue(Projectile.oldPos.Length, 0f, i, clamped: true));
+                    int howMany = Main.rand.Next(0, 3);
+                    for (float j = 0f; j < howMany; j++)
+                    {
+                        Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(32, 32), DustID.RainbowMk2, null, 0, color);
+                        dust.velocity *= Main.rand.NextFloat();
+                        dust.noGravity = true;
+                        dust.scale = 0.9f + Main.rand.NextFloat() * 1.2f;
+                        dust.fadeIn = Main.rand.NextFloat() * 1.2f * num28;
+                        dust.scale *= num28;
+                    }
+                }
+
+                for (int i = 0; i < 6; i++)
+                {
+                    Vector2 v = Helper.NextVec2Dir();
+                    Dust.NewDustPerfect(Projectile.Center, DustType<NightmareStar>(), v * Main.rand.NextFloat(0.5f, 3), newColor: DrawColor, Scale: Main.rand.NextFloat(1.2f, 1.8f));
+                }
             }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.damage = (int)(Projectile.damage * 0.7f);
+            Projectile.damage = (int)(Projectile.damage * 0.6f);
             int num45 = Projectile.FindTargetWithLineOfSight();
             if (num45 != -1)
             {
@@ -461,17 +621,17 @@ namespace Coralite.Content.Items.Nightmare
         public override bool PreDraw(ref Color lightColor)
         {
             Vector2 pos = Projectile.Center - Main.screenPosition;
-            Vector2 scale = new Vector2(0.75f);
-            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, DrawColor ,
+            Vector2 scale = new Vector2(0.5f);
+            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, FantasyGod.shineColor ,
                 0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, new Vector2(1.5f, 2.5f), Vector2.One);
 
-            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, DrawColor,
+            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, FantasyGod.shineColor,
                 0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, new Vector2(1f, 2.25f), Vector2.One * 2);
 
             float exRot = Main.GlobalTimeWrappedHourly*2;
             for (int i = 0; i < 4; i++)
             {
-                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos + (exRot + i * MathHelper.PiOver2).ToRotationVector2() * 22, Color.White, DrawColor * 0.6f,
+                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos + (exRot + i * MathHelper.PiOver2).ToRotationVector2() * 18, Color.White, DrawColor * 0.8f,
                     0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, scale, Vector2.One);
             }
             return false;
@@ -502,7 +662,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
 
-            spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, FantasyGod.shineColor, 0, mainTex.Size() / 2, 0.2f, 0, 0);
+            spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, DrawColor, 0, mainTex.Size() / 2, 0.15f, 0, 0);
         }
 
     }
