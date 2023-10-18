@@ -1472,6 +1472,11 @@ Mods: {
 				DisplayName: Lullaby
 				Tooltip: ""
 			}
+
+			PurpleToeStaff: {
+				DisplayName: Purple Toe Staff
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1562,6 +1567,11 @@ Mods: {
 			NightmareRavenBuff: {
 				DisplayName: Nightmare Raven Buff
 				Description: Mods.Coralite.Buffs.NightmareRavenBuff.Description
+			}
+
+			EdenDebuff: {
+				DisplayName: Eden Debuff
+				Description: Mods.Coralite.Buffs.EdenDebuff.Description
 			}
 		}
 
@@ -1814,6 +1824,8 @@ Mods: {
 			LullabySlash.DisplayName: Lullaby Slash
 			LullabyBall.DisplayName: Lullaby Ball
 			LullabySlash2.DisplayName: Lullaby Slash2
+			EdenWhip.DisplayName: Eden Whip
+			EdenWhip2.DisplayName: Eden Whip2
 		}
 
 		Configs: {

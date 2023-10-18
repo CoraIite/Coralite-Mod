@@ -1534,6 +1534,11 @@ Mods: {
 				DisplayName: 入梦曲
 				Tooltip: ""
 			}
+
+			PurpleToeStaff: {
+				// DisplayName: Purple Toe Staff
+				// Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1624,6 +1629,11 @@ Mods: {
 			NightmareRavenBuff: {
 				DisplayName: 梦魇渡鸦
 				Description: 噩梦中出现的这些小家伙们将为你而战！
+			}
+
+			EdenDebuff: {
+				// DisplayName: Eden Debuff
+				// Description: Mods.Coralite.Buffs.EdenDebuff.Description
 			}
 		}
 
@@ -1876,6 +1886,8 @@ Mods: {
 			// LullabySlash.DisplayName: Lullaby Slash
 			// LullabyBall.DisplayName: Lullaby Ball
 			// LullabySlash2.DisplayName: Lullaby Slash2
+			// EdenWhip.DisplayName: Eden Whip
+			// EdenWhip2.DisplayName: Eden Whip2
 		}
 
 		Configs: {

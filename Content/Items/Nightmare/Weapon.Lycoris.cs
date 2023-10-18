@@ -65,7 +65,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 Helper.PlayPitched("Misc/Gun", 0.3f, 0f, position);
 
-                Projectile.NewProjectile(source, position, velocity, projType, (int)(damage * 2.35f), knockback, player.whoAmI);
+                Projectile.NewProjectile(source, position, velocity, projType, (int)(damage * 2.25f), knockback, player.whoAmI);
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero, heldProjType, 1, 1, player.whoAmI);
             }
 
@@ -209,7 +209,7 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     float rot = Main.rand.NextFloat(6.282f);
                     int howMany = 5;
-                    int damage = (int)(Projectile.damage * 0.1f);
+                    int damage = (int)(Projectile.damage * 0.08f);
                     if (State == 1)
                     {
                         howMany = 7;

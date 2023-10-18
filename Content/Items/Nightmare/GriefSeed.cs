@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Nightmare
 {
-    public class GriefSeed:ModItem
+    public class GriefSeed : ModItem
     {
         public override string Texture => AssetDirectory.NightmareItems + Name;
 
@@ -59,12 +59,12 @@ namespace Coralite.Content.Items.Nightmare
                 ItemDropRule.Common(ModContent.ItemType<Lullaby>(), 1, 1, 1),
 
 
+                ItemDropRule.Common(ModContent.ItemType<PurpleToeStaff>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<Dreamcatcher>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<Eden>(), 1, 1, 1),
-
             };
 
-            itemLoot.Add(new FewFromRulesRule(3,1, weaponTypes));
+            itemLoot.Add(new FewFromRulesRule(3, 1, weaponTypes));
         }
 
         public override void PostUpdate()
@@ -112,7 +112,7 @@ namespace Coralite.Content.Items.Nightmare
 
             time = time * 0.5f + 0.5f;
 
-            Vector2 mainSparkleScale = new Vector2(2f,5f);
+            Vector2 mainSparkleScale = new Vector2(2f, 5f);
             //中心的闪光
             ProjectilesHelper.DrawPrettyStarSparkle(1, 0, effectDrawPos, NightmarePlantera.nightmareRed, NightmarePlantera.nightmareRed,
                 0.5f + time * 0.1f, 0f, 0.5f, 0.5f, 1f, 0, mainSparkleScale, Vector2.One);
@@ -138,7 +138,7 @@ namespace Coralite.Content.Items.Nightmare
             //ProjectilesHelper.DrawPrettyStarSparkle(1, 0, drawPos, new Color(38, 104, 185) * 0.7f, new Color(50, 152, 225),
             //    0.4f + time * 0.2f, 0, 0.5f, 0.5f, 1, 0, Vector2.One * 3, Vector2.One * 1.5f);
 
-            float rot = -0.3f + MathF.Sin(timer*3f)*0.2f;
+            float rot = -0.3f + MathF.Sin(timer * 3f) * 0.2f;
             for (float i = 0f; i < 1f; i += 0.25f)
             {
                 float radians = (i + timer) * MathHelper.TwoPi;

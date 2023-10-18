@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.DamageType = DamageClass.Magic;
             Item.rare = RarityType<FantasyRarity>();
             Item.value = Item.sellPrice(2, 0, 0, 0);
-            Item.SetWeaponValues(144, 4, 4);
+            Item.SetWeaponValues(138, 4, 4);
             Item.mana = 36;
             Item.autoReuse = true;
             Item.noUseGraphic = true;
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.Nightmare
             if (Main.myPlayer == player.whoAmI)
             {
                 // 生成弹幕
-                damage = (int)(damage * 1f);
+                //damage = (int)(damage * 1f);
                 switch (combo)
                 {
                     default:
@@ -368,7 +368,7 @@ namespace Coralite.Content.Items.Nightmare
                     for (int i = 0; i < 7; i++)
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center,
-                            (i * MathHelper.TwoPi / 7).ToRotationVector2() * 8, ProjectileType<LullabyBall>(), (int)(Projectile.damage*0.85f), Projectile.knockBack, Projectile.owner, ai2: i);
+                            (i * MathHelper.TwoPi / 7).ToRotationVector2() * 8, ProjectileType<LullabyBall>(), (int)(Projectile.damage*0.75f), Projectile.knockBack, Projectile.owner, ai2: i);
                     }
                 }
             }

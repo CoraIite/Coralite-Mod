@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Nightmare
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 145;
+            Item.damage = 140;
             Item.useTime = 15;
             Item.useAnimation = 15;
             Item.reuseDelay = 15;
@@ -39,19 +39,20 @@ namespace Coralite.Content.Items.Nightmare
             Item.autoReuse = false;
         }
 
-        public override void HoldItem(Player player)//临时工
+        public override void HoldItem(Player player)
         {
             Lighting.AddLight(player.Center + player.velocity + new Vector2(player.direction * 24, 16), TorchID.Red);
-            
-            if (player.whoAmI == Main.myPlayer && Main.mouseRight)
-            {
-                foreach (var proj in Main.projectile.Where(p => p.active && p.friendly && p.type == Item.shoot && p.owner == player.whoAmI))
-                {
-                    proj.ai[2] = 6;
-                    NightmareRaven pro = (NightmareRaven)proj.ModProjectile;
-                    pro.drawColor = NightmarePlantera.nightmareRed;
-                }
-            }
+
+            //临时工
+            //if (player.whoAmI == Main.myPlayer && Main.mouseRight)
+            //{
+            //    foreach (var proj in Main.projectile.Where(p => p.active && p.friendly && p.type == Item.shoot && p.owner == player.whoAmI))
+            //    {
+            //        proj.ai[2] = 6;
+            //        NightmareRaven pro = (NightmareRaven)proj.ModProjectile;
+            //        pro.drawColor = NightmarePlantera.nightmareRed;
+            //    }
+            //}
         }
 
         public override void HoldStyle(Player player, Rectangle heldItemFrame)
@@ -75,9 +76,10 @@ namespace Coralite.Content.Items.Nightmare
             var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
             projectile.originalDamage = Item.damage;
 
-            for (int i = 0; i < 1000; i++)
-                if (Main.projectile[i].active && Main.projectile[i].type == ProjectileType<NightmareRaven>() && Main.projectile[i].owner == Main.myPlayer)
-                    (Main.projectile[i].ModProjectile as NightmareRaven).Timer = 0;
+            foreach (var proj in Main.projectile.Where(p => p.active && p.friendly && p.type == Item.shoot && p.owner == player.whoAmI))
+            {
+                proj.localAI[2] = 0;
+            }
             return false;
         }
     }

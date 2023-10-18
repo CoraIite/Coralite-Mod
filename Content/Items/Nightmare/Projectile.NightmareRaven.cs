@@ -1,12 +1,12 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
-using Coralite.Content.Buffs;
 using Coralite.Content.Dusts;
 using Coralite.Core;
 using Coralite.Helpers;
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Reflection;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -16,7 +16,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Nightmare
 {
-    public class NightmareRaven : ModProjectile
+    public class NightmareRaven : ModProjectile, INightmareMinion
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "NightmareCrow";
 
@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public ref float PowerfulAttackCount=>ref Projectile.ai[2];
 
-        public int Timer;
+        public ref float Timer => ref Projectile.localAI[2];
         public Color drawColor;
 
         public override void SetStaticDefaults()
@@ -62,13 +62,14 @@ namespace Coralite.Content.Items.Nightmare
         public override void OnSpawn(IEntitySource source)
         {
             drawColor = NightmarePlantera.lightPurple;
+            Timer = 0;
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (PowerfulAttackCount>0)
+            if (PowerfulAttackCount > 0)
             {
-                modifiers.SourceDamage += 0.5f;
+                modifiers.SourceDamage += 0.25f;
             }
         }
 
@@ -99,7 +100,6 @@ namespace Coralite.Content.Items.Nightmare
             #endregion
 
             AI_156_Think(Projectile);
-
         }
 
         /// <summary>
@@ -116,6 +116,11 @@ namespace Coralite.Content.Items.Nightmare
 
             halfTime = 61;
 
+            if (PowerfulAttackCount > 0)
+            {
+                halfTime = 51;
+                halfTime_less1 = 44;
+            }
             Player player = Main.player[Projectile.owner];
             #region 距离玩家太远直接进入尝试开始攻击的状态（该状态下会急速回到idle点位上）
             if (player.active && Vector2.Distance(player.Center, Projectile.Center) > 2000f)
@@ -128,7 +133,6 @@ namespace Coralite.Content.Items.Nightmare
             #region 回到玩家身边，回到玩家身边后将ai0设为0，进入尝试攻击阶段
             if (Projectile.ai[0] == -1f)
             {
-
                 AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index, out var totalIndexesInGroup);
 
                 Vector2 idleSpot = CircleMovement(48 + totalIndexesInGroup * 4, 28,accelFactor:0.4f, angleFactor: 0.2f, baseRot: index * MathHelper.TwoPi / totalIndexesInGroup);
@@ -136,6 +140,10 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     Projectile.ai[0] = 0f;
                     Projectile.netUpdate = true;
+                    foreach (var proj in Main.projectile.Where(p => p.active && p.friendly && p.type == ProjectileType<NightmareRaven>() && p.owner == Projectile.owner))
+                    {
+                        proj.localAI[2] = 0;
+                    }
                 }
 
                 Timer++;
@@ -247,8 +255,6 @@ namespace Coralite.Content.Items.Nightmare
             if (PowerfulAttackCount>0)
                 PowerfulAttackCount--;
             drawColor = PowerfulAttackCount > 0 ? NightmarePlantera.nightmareRed : NightmarePlantera.lightPurple;
-
-
 
             for (int i = 0; i < Projectile.localNPCImmunity.Length; i++)
             {
@@ -372,6 +378,13 @@ namespace Coralite.Content.Items.Nightmare
                     totalIndexesInGroup++;
                 }
             }
+        }
+
+        public void GetPower(int howMany)
+        {
+            PowerfulAttackCount += howMany;
+            if (PowerfulAttackCount>0)
+                drawColor = NightmarePlantera.nightmareRed;
         }
 
         public override bool PreDraw(ref Color lightColor)

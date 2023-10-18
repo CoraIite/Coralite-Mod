@@ -1,10 +1,17 @@
-﻿using Coralite.Content.Items.Botanical.Seeds;
+﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Content.Items.Gels;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Misc;
+using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Placeable;
 using Coralite.Content.Items.Shadow;
 using Coralite.Content.Items.YujianHulu;
+using Coralite.Content.ModPlayers;
+using Coralite.Core.Configs;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -117,8 +124,20 @@ namespace Coralite.Content.NPCs.VanillaNPC
 
             var projTagMultiplier = ProjectileID.Sets.SummonTagDamageMultiplier[projectile.type];
             if (npc.HasBuff<GelWhipDebuff>())
-            {
                 modifiers.FlatBonusDamage += GelWhipDebuff.TagDamage * projTagMultiplier;
+
+            if (npc.HasBuff<EdenDebuff>() && !ProjectileID.Sets.IsAWhip[projectile.type])
+            {
+                npc.DelBuff(npc.FindBuffIndex(BuffType<EdenDebuff>()));
+                modifiers.FlatBonusDamage += EdenDebuff.TagDamage * projTagMultiplier;
+
+                if (VisualEffectSystem.HitEffect_Dusts)
+                {
+                    Vector2 direction = (npc.Center-projectile.Center).SafeNormalize(-Vector2.UnitY);
+
+                    Helper.SpawnDirDustJet(projectile.Center+npc.Center/2, () => direction.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)), 2, 3,
+                        (i) => i * 0.7f * Main.rand.NextFloat(0.7f, 1.1f), DustType<NightmarePetal>(), newColor: NightmarePlantera.nightmareRed, Scale: Main.rand.NextFloat(0.6f, 0.8f), noGravity: false, extraRandRot: 0.2f);
+                }
             }
         }
     }

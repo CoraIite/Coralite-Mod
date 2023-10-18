@@ -19,7 +19,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleCoccyx : ModItem,IDashable
+    public class IcicleCoccyx : ModItem, IDashable
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
 
@@ -53,13 +53,13 @@ namespace Coralite.Content.Items.Icicle
             if (Main.myPlayer != player.whoAmI)
                 return false;
 
-            if (player.altFunctionUse == 2 )
+            if (player.altFunctionUse == 2)
             {
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, (int)(damage * 0.75f), knockback, player.whoAmI, player.itemTimeMax);
 
-                if ( canDash)
+                if (canDash)
                 {
-                    Projectile.NewProjectile(source, player.Center, player.Center.DirectionTo(Main.MouseWorld) * 12f, ProjectileType<IcicleCoccyx_Ex2>(), damage*2, knockback, player.whoAmI);
+                    Projectile.NewProjectile(source, player.Center, player.Center.DirectionTo(Main.MouseWorld) * 12f, ProjectileType<IcicleCoccyx_Ex2>(), damage * 2, knockback, player.whoAmI);
                     canDash = false;
                 }
 
@@ -454,7 +454,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (Projectile.ai[1]==0)
+            if (Projectile.ai[1] == 0)
             {
                 Owner.immuneTime += 20;
                 Owner.immune = true;
@@ -488,7 +488,7 @@ namespace Coralite.Content.Items.Icicle
                 {
                     for (int j = -1; j < 2; j++)
                     {
-                        Vector2 position = targetCenter +j * 16 * dashDir.RotatedBy(1.57f);
+                        Vector2 position = targetCenter + j * 16 * dashDir.RotatedBy(1.57f);
                         Tile tile = Framing.GetTileSafely(position);
                         if (tile.HasSolidTile())
                         {
@@ -502,7 +502,7 @@ namespace Coralite.Content.Items.Icicle
             checkEnd:
                 for (int j = -1; j < 2; j++)    //避免在最后判定之后穿墙
                 {
-                    Vector2 position = targetCenter+dashDir*16 + j * 16 * dashDir.RotatedBy(1.57f);
+                    Vector2 position = targetCenter + dashDir * 16 + j * 16 * dashDir.RotatedBy(1.57f);
                     Tile tile = Framing.GetTileSafely(position);
                     if (tile.HasSolidTile())
                         targetCenter -= dashDir * 32;
@@ -515,11 +515,11 @@ namespace Coralite.Content.Items.Icicle
                 float dashLength = Vector2.Distance(Owner.Center, targetCenter);
                 int lineCount = (int)(dashLength / 16);
 
-                if ( dashLength> 64)     //冲刺一定距离才会有速度线产生
+                if (dashLength > 64)     //冲刺一定距离才会有速度线产生
                 {
-                    for (int i = 0; i < lineCount-2; i++)
+                    for (int i = 0; i < lineCount - 2; i++)
                     {
-                        Particle.NewParticle(Vector2.Lerp( targetCenter,Owner.Center, (float)i/lineCount)+Main.rand.NextVector2Circular(32,32), -dashDir * Main.rand.NextFloat(6f,13f), 
+                        Particle.NewParticle(Vector2.Lerp(targetCenter, Owner.Center, (float)i / lineCount) + Main.rand.NextVector2Circular(32, 32), -dashDir * Main.rand.NextFloat(6f, 13f),
                             CoraliteContent.ParticleType<SpeedLine>(), Coralite.Instance.IcicleCyan, Main.rand.NextFloat(0.1f, 0.4f));
                     }
                     Helper.PlayPitched("Icicle/Spurt", 0.8f, 0f, Owner.Center);
@@ -533,7 +533,7 @@ namespace Coralite.Content.Items.Icicle
                 }
 
                 Owner.Center = targetCenter;
-                Owner.velocity =dashDir*Owner.maxRunSpeed*3;
+                Owner.velocity = dashDir * Owner.maxRunSpeed * 3;
                 Projectile.rotation = dashDir.ToRotation();
                 onStart = false;
             }
@@ -548,7 +548,7 @@ namespace Coralite.Content.Items.Icicle
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             Vector2 origin = mainTex.Size() / 2f;
 
-            float rot = Projectile.rotation  + (float)Math.PI / 4f;
+            float rot = Projectile.rotation + (float)Math.PI / 4f;
             SpriteEffects spriteEffects = SpriteEffects.None;
             if (Projectile.rotation < -(float)Math.PI / 2f || Projectile.rotation > (float)Math.PI / 2f)
             {
@@ -556,7 +556,7 @@ namespace Coralite.Content.Items.Icicle
                 spriteEffects |= SpriteEffects.FlipHorizontally;
             }
 
-            Main.spriteBatch.Draw(mainTex, Owner.Center+Projectile.rotation.ToRotationVector2()*28 - Main.screenPosition, null, lightColor, rot, origin, 1f, spriteEffects, 0f);
+            Main.spriteBatch.Draw(mainTex, Owner.Center + Projectile.rotation.ToRotationVector2() * 28 - Main.screenPosition, null, lightColor, rot, origin, 1f, spriteEffects, 0f);
 
             return false;
         }
