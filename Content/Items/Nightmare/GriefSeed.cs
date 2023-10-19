@@ -52,12 +52,12 @@ namespace Coralite.Content.Items.Nightmare
                 ItemDropRule.Common(ModContent.ItemType<EuphorbiaMilii>(), 1, 1, 1),
 
                 ItemDropRule.Common(ModContent.ItemType<Lycoris>(), 1, 1, 1),
+                //
+                //
 
-
-
+                ItemDropRule.Common(ModContent.ItemType<DevilsClaw>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<BarrenThornsStaff>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<Lullaby>(), 1, 1, 1),
-
 
                 ItemDropRule.Common(ModContent.ItemType<PurpleToeStaff>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<Dreamcatcher>(), 1, 1, 1),

@@ -2,7 +2,6 @@
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -16,7 +15,8 @@ namespace Coralite.Core.Systems.ParticleSystem
         public ParticleGroup(int maxParticle)
         {
             _particles = new Particle[maxParticle];
-            Array.Fill(_particles, new Particle());
+            for (int i = 0; i < maxParticle; i++)
+                _particles[i] = new Particle();
         }
 
         public Particle NewParticle(Vector2 center, Vector2 velocity, int type, Color newColor = default, float Scale = 1f)
@@ -84,7 +84,7 @@ namespace Coralite.Core.Systems.ParticleSystem
                 }
 
                 //一些防止粒子持续时间过长的措施，额...还是建议在update里手动设置active比较好
-                if (particle.shouldKilledOutScreen && !Helpers.Helper.OnScreen(particle.center - Main.screenPosition))
+                if (particle.shouldKilledOutScreen && !Helper.OnScreen(particle.center - Main.screenPosition))
                     particle.active = false;
 
                 if (particle.scale < 0.01f)

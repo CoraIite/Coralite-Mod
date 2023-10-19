@@ -2,7 +2,6 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
-using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -12,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    public class HypnotizeFog : ModProjectile,IDrawNonPremultiplied
+    public class HypnotizeFog : ModProjectile, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -33,7 +32,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
-            if (Projectile.ai[0]<0.72f)
+            if (Projectile.ai[0] < 0.72f)
                 Projectile.ai[0] += 0.05f;
 
             Projectile.velocity *= 0.98f;
@@ -50,7 +49,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             if (Main.rand.NextBool(5))
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center+Main.rand.NextVector2Circular(12,12), ModContent.DustType<NightmarePetal>(), newColor: NightmarePlantera.nightPurple);
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(12, 12), ModContent.DustType<NightmarePetal>(), newColor: NightmarePlantera.nightPurple);
                 dust.velocity = (dust.position - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 4);
                 dust.noGravity = true;
             }
@@ -65,7 +64,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (target.TryGetModPlayer(out CoralitePlayer cp))
             {
                 if (cp.nightmareCount < 14)
-                    cp.nightmareCount ++;
+                    cp.nightmareCount++;
 
                 //设置阶段并秒杀玩家
                 if (cp.nightmareCount > 13)

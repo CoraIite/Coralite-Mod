@@ -2562,7 +2562,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
             }
 
-            State = (int)AIStates.dreamSparkle;
+            //State = (int)AIStates.dreamSparkle;
 
             MoveCount++;
             if (MoveCount > 11)
