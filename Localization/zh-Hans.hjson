@@ -1507,12 +1507,12 @@ Mods: {
 
 			BarrenThornsStaff: {
 				DisplayName: 荒芜荆棘杖
-				Tooltip: 
-				'''
-				[c/4f46a4:荆棘的花园]
-					射出花雾，不断攻击附近敌人，攻击2次后加强下一次攻击。初次强化后攻击会获得1个[c/fa0064:梦魇光能]
-					右键消耗7个[c/fa0064:梦魇光能]射出荒芜花雾
-				'''
+				Tooltip:
+					'''
+					[c/4f46a4:荆棘的花园]
+						射出花雾，不断攻击附近敌人，攻击2次后加强下一次攻击。初次强化后攻击会获得1个[c/fa0064:梦魇光能]
+						右键消耗7个[c/fa0064:梦魇光能]射出荒芜花雾
+					'''
 			}
 
 			DevilsClaw: {
@@ -1904,6 +1904,8 @@ Mods: {
 			// EdenWhip.DisplayName: Eden Whip
 			// EdenWhip2.DisplayName: Eden Whip2
 			// DevilsClawLeaf.DisplayName: Devils Claw Leaf
+			// BarrenFog.DisplayName: Barren Fog
+			// BarrenThorn.DisplayName: Barren Thorn
 		}
 
 		Configs: {

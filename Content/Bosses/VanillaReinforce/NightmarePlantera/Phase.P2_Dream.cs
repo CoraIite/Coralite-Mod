@@ -2143,11 +2143,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public void Dreaming_Idle()
         {
             NPC.velocity *= 0.8f;
-            NPC.rotation = NPC.rotation.AngleLerp(NPC.velocity.ToRotation(), 0.3f);
+            //NPC.rotation = NPC.rotation.AngleLerp(NPC.velocity.ToRotation(), 0.3f);
 
             if (FantasyGodAlive(out NPC fg))
             {
-                NPC.rotation = NPC.rotation.AngleTowards((fg.Center - NPC.Center).ToRotation(), 0.3f);
+                //NPC.rotation = NPC.rotation.AngleTowards((fg.Center - NPC.Center).ToRotation(), 0.3f);
 
                 if (Timer > 3600)
                 {
@@ -2562,7 +2562,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
             }
 
-            //State = (int)AIStates.spikesAndSparkles;
+            State = (int)AIStates.dreamSparkle;
 
             MoveCount++;
             if (MoveCount > 11)

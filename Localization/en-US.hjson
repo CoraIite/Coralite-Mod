@@ -1827,6 +1827,8 @@ Mods: {
 			EdenWhip.DisplayName: Eden Whip
 			EdenWhip2.DisplayName: Eden Whip2
 			DevilsClawLeaf.DisplayName: Devils Claw Leaf
+			BarrenFog.DisplayName: Barren Fog
+			BarrenThorn.DisplayName: Barren Thorn
 		}
 
 		Configs: {

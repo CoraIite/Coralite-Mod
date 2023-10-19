@@ -43,6 +43,8 @@ namespace Coralite.Content.Items.Nightmare
 
     public class BarrenFog : ModProjectile, IDrawAdditive
     {
+        public override string Texture => AssetDirectory.Blank;
+
         private ParticleGroup group;
 
         public ref float Delay => ref Projectile.localAI[0];
@@ -113,7 +115,7 @@ namespace Coralite.Content.Items.Nightmare
 
     public class BarrenThorn : ModProjectile
     {
-        public override string Texture => base.Texture;
+        public override string Texture => AssetDirectory.Blank;
 
         public override void SetDefaults()
         {

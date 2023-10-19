@@ -222,14 +222,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             //    return;
             //}
 
-            //modifiers.ModifyHitInfo += Modifiers_ModifyHitInfo;
+            modifiers.ModifyHitInfo += Modifiers_ModifyHitInfo;
         }
 
-        //private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
-        //{
-        //    if (info.Damage > 10000)
-        //        info.Damage = 10000;
-        //}
+        private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
+        {
+            if (Phase == (int)AIPhases.Dream_P2 && NPC.life < NPC.lifeMax / 5)
+            {
+                info.Damage = 1;
+            }
+        }
 
         public override void Load()
         {

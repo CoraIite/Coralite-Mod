@@ -91,11 +91,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         if (Timer > ChannelTime)
                         {
                             Vector2 dir2 = Helper.NextVec2Dir();
-                            var modifyer = new PunchCameraModifier(Projectile.Center, dir2, 15, 10, 10, 1000);
+                            var modifyer = new PunchCameraModifier(Projectile.Center, dir2, 26, 7, 10, 1000);
                             Main.instance.CameraModifiers.Add(modifyer);
 
                             Timer = 0;
                             State++;
+
+                            Helper.PlayPitched("Misc/Spike", 1f, 0.6f, np.Center);
                         }
                     }
                     break;
@@ -106,6 +108,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         float rot = dir.ToRotation();
                         Projectile.rotation = Projectile.rotation.AngleLerp(rot, 0.4f);
                         Projectile.Center = Vector2.Lerp(Projectile.Center, fg.Center + dir.SafeNormalize(Vector2.Zero) * length, 0.4f);
+
 
                         if (Timer > 32)
                         {

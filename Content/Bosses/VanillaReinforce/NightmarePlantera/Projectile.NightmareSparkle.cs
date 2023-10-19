@@ -29,7 +29,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.2f;
             }
 
-            float dir2 = ((Projectile.timeLeft % 30) > 15 ? -1 : 1) * 0.02f;
+            float dir2 = ((Projectile.timeLeft % 30) > 15 ? -1 : 1) * 0.025f;
             Projectile.velocity = Projectile.velocity.RotatedBy(dir2);
 
             Projectile.rotation = Projectile.velocity.ToRotation();

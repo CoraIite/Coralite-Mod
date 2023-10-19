@@ -10,6 +10,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
@@ -103,8 +104,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             switch ((int)State)
             {
                 default:
-                case 0://刚生成，移动到噩梦花身边
+                case 0://刚生成，移动到噩梦花身边 蓄力并射出一堆光球弹幕
                     {
+                        np.rotation = np.rotation.AngleTowards((NPC.Center - np.Center).ToRotation(), 0.3f);
+
                         Vector2 dir = (np.Center - NPC.Center).SafeNormalize(Vector2.One);
 
                         float velLength = NPC.velocity.Length();
@@ -133,6 +136,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                             for (int i = 0; i < 4; i++)
                             {
+                                SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                                 Vector2 center = np.Center + Main.rand.NextVector2CircularEdge(1000, 1000);
                                 Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), center, (np.Center - center).SafeNormalize(Vector2.Zero),
                                     ModContent.ProjectileType<FantasySpike_Visual>(), 1, 0, NPC.target, 300, 1100);
@@ -140,8 +144,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
                     }
                     break;
-                case 1://蓄力并射出一堆光球弹幕
+                case 1:
                     {
+                        np.rotation = np.rotation.AngleTowards((NPC.Center - np.Center).ToRotation(), 0.3f);
+
                         Vector2 center = np.Center + (Angle + Timer / 460 * MathHelper.TwoPi).ToRotationVector2() * 450;
                         Vector2 dir2 = center - NPC.Center;
 
@@ -160,12 +166,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 CoraliteContent.ParticleType<BigFog>(), shineColor, Scale: Main.rand.NextFloat(0.5f, 1.25f));
                         }
 
-                        if (Timer == 2)
-                        {
-                            SoundStyle st = CoraliteSoundID.EmpressOfLight_Summoned_Item161;
-                            st.Pitch = 0.5f;
-                            SoundEngine.PlaySound(st, NPC.Center);
-                        }
+                        //if (Timer == 2)
+                        //{
+                        //    SoundStyle st = CoraliteSoundID.EmpressOfLight_Summoned_Item161;
+                        //    st.Pitch = 0.5f;
+                        //    SoundEngine.PlaySound(st, NPC.Center);
+                        //}
 
                         if (Timer < 30)
                         {
@@ -181,6 +187,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             if (Timer % 10 == 0)
                             {
+                                SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                                 Vector2 dir = Helper.NextVec2Dir();
                                 NPC.NewProjectileInAI<FantasyBall>(NPC.Center, dir * 20, 1200, 0);
                                 var modifyer = new PunchCameraModifier(NPC.Center, dir, 8, 10, 10, 1000);
@@ -196,15 +203,58 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             float angle = (NPC.Center - np.Center).ToRotation() - 2 * 0.3f;
                             for (int i = 0; i < 4; i++)
                             {
-                                NPC.NewProjectileInAI<FantasySpike>(NPC.Center, Vector2.Zero, 3000, 0, ai1: angle + i * 0.3f, ai2: 90);
+                                NPC.NewProjectileInAI<FantasySpike>(NPC.Center, Vector2.Zero, 3000, 0, ai1: angle + i * 0.3f, ai2: 60 + i * 15);
                             }
                         }
                     }
                     break;
                 case 2:
                     {
+                        if (Timer == 50)
+                        {
+                            SoundStyle st = CoraliteSoundID.EmpressOfLight_Summoned_Item161;
+                            st.Pitch = 0.5f;
+                            SoundEngine.PlaySound(st, NPC.Center);
+                        }
+                        else if (Timer > 65)
+                        {
+                            np.rotation += Main.rand.NextFloat(-0.1f, 0.25f);
+                            if (Timer % 5 == 0)
+                            {
+                                Vector2 dir2 = Helper.NextVec2Dir();
+
+                                var modifyer = new PunchCameraModifier(np.Center, dir2, 26, 12, 5, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
+                            }
+
+                            for (int i = 0; i < 2; i++)
+                            {
+                                int type = Main.rand.NextFromList(DustID.PlatinumCoin, DustID.GoldCoin);
+                                Vector2 dir1 = Helper.NextVec2Dir();
+                                Dust.NewDustPerfect(np.Center, type, dir1 * Main.rand.NextFloat(1, 20), Scale: Main.rand.NextFloat(1, 1.5f));
+                            }
+
+                            //if (Timer % 2 == 0)
+                            //{
+                            for (int i = 0; i < 4; i++)
+                            {
+                                Vector2 dir2 = Helper.NextVec2Dir();
+
+                                Dust d = Dust.NewDustPerfect(np.Center, ModContent.DustType<NightmareStar>(),
+                                    dir2 * Main.rand.NextFloat(1, 20), newColor: shineColor, Scale: Main.rand.NextFloat(1, 3f));
+                                d.rotation = d.velocity.ToRotation() + MathHelper.PiOver2;
+                                //}
+                            }
+
+                            //for (int i = 0; i < 2; i++)
+                            //{
+                                Vector2 v = Helper.NextVec2Dir();
+                                Particle.NewParticle(np.Center , v * Main.rand.NextFloat(6, 12f),
+                                    CoraliteContent.ParticleType<BigFog>(), shineColor, Scale: Main.rand.NextFloat(0.5f, 0.75f));
+                            //}
+                        }
                         NPC.velocity *= 0.9f;
-                        if (Timer > 140)
+                        if (Timer > 160)
                         {
                             State = 3;
                             Timer = 0;
@@ -213,6 +263,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 3:
                     {
+                        np.rotation += Main.rand.NextFloat(-0.1f, 0.25f);
+
                         LightScale -= 1 / 20f;
 
                         if (Timer > 20)

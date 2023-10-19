@@ -150,6 +150,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             var modifyer = new PunchCameraModifier(NPC.Center, Helper.NextVec2Dir(), 20, 12, 10, 1000);
                             Main.instance.CameraModifiers.Add(modifyer);
+
+                            int heal = (int)(NPC.lifeMax * 0.016f);
+                            NPC.life += heal;
+                            if (NPC.life > NPC.lifeMax)
+                                NPC.life = NPC.lifeMax;
+                            NPC.HealEffect(heal);
                         }
 
                         warpScale += 0.3f;
@@ -1604,7 +1610,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             MoveCount = 0;
             NPC.dontTakeDamage = false;
-            NPC.defense = NPC.defDefense + 45;
+            NPC.defense = NPC.defDefense + 25;
             if (Main.LocalPlayer.TryGetModPlayer(out NightmarePlayerCamera NCamera))
             {
                 NCamera.useShake = false;
