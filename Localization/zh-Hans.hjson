@@ -1501,7 +1501,7 @@ Mods: {
 					'''
 					[c/8d004b:现在你或许可以做个好梦了...]
 						召唤梦魇渡鸦，占用1个召唤栏位
-						使用鞭子武器“伊甸”右键以消耗[c/fa0064:梦魇光能]强化梦魇渡鸦
+						使用鞭子武器“伊甸”强化后会增强梦魇渡鸦的攻击性
 					'''
 			}
 
@@ -1512,12 +1512,22 @@ Mods: {
 
 			DevilsClaw: {
 				DisplayName: 喙檐
-				Tooltip: "[c/ccaaf2:恶魔之爪]"
+				Tooltip: 
+				'''
+				[c/ccaaf2:恶魔之爪]
+					射出黑暗飞叶，每7次攻击射出一个红色飞叶，命中后获得1个[c/fa0064:梦魇光能]
+					右键消耗2个[c/fa0064:梦魇光能]射出一团红色飞叶
+				'''
 			}
 
 			Eden: {
 				DisplayName: 伊甸
-				Tooltip: "[c/9d9d9d:此为禁忌]"
+				Tooltip: 
+				'''
+				[c/9d9d9d:禁忌之果]
+					左键甩出蛇鞭，每4次攻击命中后获得1个[c/fa0064:梦魇光能]
+					右键咬出，消耗所有[c/fa0064:梦魇光能]强化噩梦召唤物
+				'''
 			}
 
 			Lycoris: {
@@ -1536,8 +1546,8 @@ Mods: {
 			}
 
 			PurpleToeStaff: {
-				// DisplayName: Purple Toe Staff
-				// Tooltip: ""
+				DisplayName: 噩梦捕食者杖
+				Tooltip: ""
 			}
 		}
 
@@ -1888,6 +1898,7 @@ Mods: {
 			// LullabySlash2.DisplayName: Lullaby Slash2
 			// EdenWhip.DisplayName: Eden Whip
 			// EdenWhip2.DisplayName: Eden Whip2
+			// DevilsClawLeaf.DisplayName: Devils Claw Leaf
 		}
 
 		Configs: {

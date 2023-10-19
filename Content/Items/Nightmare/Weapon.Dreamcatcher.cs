@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Nightmare
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 140;
+            Item.damage = 120;
             Item.useTime = 15;
             Item.useAnimation = 15;
             Item.reuseDelay = 15;

@@ -126,16 +126,15 @@ namespace Coralite.Content.NPCs.VanillaNPC
             if (npc.HasBuff<GelWhipDebuff>())
                 modifiers.FlatBonusDamage += GelWhipDebuff.TagDamage * projTagMultiplier;
 
-            if (npc.HasBuff<EdenDebuff>() && !ProjectileID.Sets.IsAWhip[projectile.type])
+            if (npc.HasBuff<EdenDebuff>())
             {
-                npc.DelBuff(npc.FindBuffIndex(BuffType<EdenDebuff>()));
                 modifiers.FlatBonusDamage += EdenDebuff.TagDamage * projTagMultiplier;
 
                 if (VisualEffectSystem.HitEffect_Dusts)
                 {
-                    Vector2 direction = (npc.Center-projectile.Center).SafeNormalize(-Vector2.UnitY);
+                    Vector2 direction = (npc.Center - projectile.Center).SafeNormalize(-Vector2.UnitY);
 
-                    Helper.SpawnDirDustJet(projectile.Center+npc.Center/2, () => direction.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)), 2, 3,
+                    Helper.SpawnDirDustJet(projectile.Center + npc.Center / 2, () => direction.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)), 2, 2,
                         (i) => i * 0.7f * Main.rand.NextFloat(0.7f, 1.1f), DustType<NightmarePetal>(), newColor: NightmarePlantera.nightmareRed, Scale: Main.rand.NextFloat(0.6f, 0.8f), noGravity: false, extraRandRot: 0.2f);
                 }
             }
