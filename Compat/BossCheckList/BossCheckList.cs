@@ -67,6 +67,7 @@ namespace Coralite.Compat.BossCheckList
                         ["spawnInfo"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.BabyIceDragon.SpawnInfo", () => BabyIceDragonInfo),
                         ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.BabyIceDragon.Despawn", () => "冰龙宝宝逃走了"),
                         ["spawnItems"] = ItemType<IcicleHeart>(),
+                        ["customPortrait"] = BabyIceDragonPortrait.DrawPortrait,
                         ["collectibles"] = BabyIceDragonCollection
                     });
 

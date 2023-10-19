@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Compat.BossCheckList
 {
-    public class RedianciePortrait
+    public static class RedianciePortrait
     {
         private static readonly RediancieFollower[] followers = new RediancieFollower[12]
         {

@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Nightmare
         public override void SetDefaults()
         {
             Item.useAnimation = Item.useTime = 27;
-            Item.useStyle = ItemUseStyleID.Rapier;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.shoot = ProjectileType<EdenWhip>();
             Item.DamageType = DamageClass.Summon;
             Item.rare = RarityType<NightmareRarity>();
@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, ai1: combo);
 
-                if (++combo > 4)
+                if (++combo > 3)
                     combo = 0;
             }
             return false;
@@ -265,12 +265,12 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 14;
             Projectile.width = 34;
-            Projectile.height = 68;
+            Projectile.height = 34;
             Projectile.timeLeft = 50;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
-            Projectile.DamageType = DamageClass.Melee;
+            Projectile.DamageType = DamageClass.Summon;
         }
 
         public override bool ShouldUpdatePosition() => false;
@@ -293,7 +293,7 @@ namespace Coralite.Content.Items.Nightmare
                     Projectile.netUpdate = true;
                 }
                 TimeMax = 30;
-                FinalRotationOffset = -0.14f;
+                FinalRotationOffset = -0.17f;
                 Projectile.timeLeft = (int)TimeMax;
                 Projectile.oldPos = new Vector2[CACHE_LENGTH];
                 Projectile.oldRot = new float[CACHE_LENGTH];
@@ -340,7 +340,7 @@ namespace Coralite.Content.Items.Nightmare
             }
             else
             {
-                PerPartLength -= 20 / (TimeMax / 2);
+                PerPartLength -= 24 / (TimeMax / 2);
             }
 
             for (int i = CACHE_LENGTH - 1; i > 0; i--)

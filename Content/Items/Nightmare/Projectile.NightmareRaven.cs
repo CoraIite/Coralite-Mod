@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Dusts;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.CodeAnalysis;
@@ -383,10 +384,24 @@ namespace Coralite.Content.Items.Nightmare
         public void GetPower(int howMany)
         {
             PowerfulAttackCount += howMany;
-            if (PowerfulAttackCount>0)
-                drawColor = NightmarePlantera.nightmareRed;
-        }
+            if (PowerfulAttackCount > Owner.GetModPlayer<CoralitePlayer>().nightmareEnergyMax)
+                PowerfulAttackCount = Owner.GetModPlayer<CoralitePlayer>().nightmareEnergyMax;
 
+            if (PowerfulAttackCount > 0)
+                drawColor = NightmarePlantera.nightmareRed;
+
+            if (howMany>0)
+            {
+                float angle = Main.rand.NextFloat(6.282f);
+                for (int i = 0; i < 12; i++)
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.RainbowMk2, angle.ToRotationVector2() * Main.rand.NextFloat(1f, 4f), newColor: NightmarePlantera.nightmareRed, Scale: Main.rand.NextFloat(1f, 1.5f));
+                    d.noGravity = true;
+                    angle += MathHelper.TwoPi / 12;
+                }
+            }
+        }
+       
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
