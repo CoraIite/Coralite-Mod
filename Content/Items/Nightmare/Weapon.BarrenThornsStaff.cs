@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.ModPlayers;
-using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
@@ -21,18 +20,24 @@ namespace Coralite.Content.Items.Nightmare
     {
         public override string Texture => AssetDirectory.NightmareItems + Name;
 
+        public override void SetStaticDefaults()
+        {
+
+        }
+
         public override void SetDefaults()
         {
-            Item.useAnimation = Item.useTime = 25;
-            Item.reuseDelay = 30;
+            Item.useAnimation = Item.useTime = 55;
+            //Item.reuseDelay = 30;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.shoot = ProjectileType<BarrenFog>();
             Item.DamageType = DamageClass.Magic;
             Item.rare = RarityType<NightmareRarity>();
             Item.value = Item.sellPrice(2, 0, 0, 0);
-            Item.SetWeaponValues(225, 4, 4);
+            Item.SetWeaponValues(204, 4, 4);
+            Item.mana = 35;
             Item.autoReuse = true;
-            Item.noUseGraphic = true;
+            Item.noUseGraphic = false;
             Item.noMelee = true;
             Item.useTurn = false;
             Item.staff[Type] = true;
@@ -52,9 +57,9 @@ namespace Coralite.Content.Items.Nightmare
                 if (player.altFunctionUse == 2)
                 {
                     CoralitePlayer cp = player.GetModPlayer<CoralitePlayer>();
-                    if (cp.nightmareEnergy >= 5)
+                    if (cp.nightmareEnergy >= 7)
                     {
-                        cp.nightmareEnergy -= 5;
+                        cp.nightmareEnergy -= 7;
                         Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 1);
                         return false;
                     }
@@ -84,6 +89,7 @@ namespace Coralite.Content.Items.Nightmare
         public ref float AttackCount => ref Projectile.localAI[1];
 
         private int maxDelay = 22;
+        private int maxAttackCount = 0;
         private bool Hited = true;
         private bool init = true;
 
@@ -120,16 +126,19 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     c = NightmarePlantera.nightmareRed;
                     maxDelay = 14;
+                    maxAttackCount = 6;
                 }
                 else
                 {
                     c = NightmarePlantera.nightPurple;
                     maxDelay = 22;
+                    maxAttackCount = 11;
                 }
                 init = false;
             }
 
-            group ??= new ParticleGroup(90);
+            if (Main.netMode != NetmodeID.Server)
+                group ??= new ParticleGroup();
 
             Color color;
             if (Powerful == 1)
@@ -139,12 +148,12 @@ namespace Coralite.Content.Items.Nightmare
             else
                 color = Main.rand.Next(0, 2) switch
                 {
-                    0 => new Color(110, 68, 200),
-                    _ => new Color(122, 110, 134)
+                    0 => new Color(110, 68, 200,255),
+                    _ => new Color(122, 110, 134,255)
                 };
 
-            group.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
-                Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f, 3), CoraliteContent.ParticleType<Fog>(), color, Main.rand.NextFloat(1f, 2f));
+            group?.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
+                Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f, 3), CoraliteContent.ParticleType<BarrenFogParticle>(), color, Main.rand.NextFloat(1f, 2f));
 
             group?.UpdateParticles();
 
@@ -179,10 +188,10 @@ namespace Coralite.Content.Items.Nightmare
                 Vector2 center = Projectile.Center;
                 float velX = x2 - center.X;
                 float velY = y2 - center.Y;
-                float num342 = (float)Math.Sqrt(velX * velX + velY * velY);
-                num342 = num339 / num342;
-                velX *= num342;
-                velY *= num342;
+                float distance = (float)Math.Sqrt(velX * velX + velY * velY);
+                distance = num339 / distance;
+                velX *= distance;
+                velY *= distance;
                 int num344 = 180;
                 Utils.ChaseResults chaseResults = Utils.GetChaseResults(Projectile.Center, num339 * num344, nPC.Center, nPC.velocity);
                 if (chaseResults.InterceptionHappens && chaseResults.InterceptionTime <= 180f)
@@ -200,20 +209,25 @@ namespace Coralite.Content.Items.Nightmare
                     damage = (int)(damage * 1.25f);
                     colorState = 1;
                 }
-                else if (AttackCount >= 3 && Hited)
+                else if (AttackCount > 0 && AttackCount % 3 == 0)
                 {
-                    Hited = false;
+                    if (Hited)
+                    {
+                        Hited = false;
+                        Main.player[Projectile.owner].GetModPlayer<CoralitePlayer>().GetNightmareEnergy(1);
+                    }
+
                     damage = (int)(damage * 1.25f);
                     colorState = 1;
-                    Main.player[Projectile.owner].GetModPlayer<CoralitePlayer>().GetNightmareEnergy(1);
                 }
 
+                Main.player[Projectile.owner].CheckMana(8,true);
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y,
                     velX, velY, ProjectileType<BarrenThorn>(), damage, Projectile.knockBack, Projectile.owner, colorState);
 
                 AttackCount++;
 
-                if (AttackCount>6)
+                if (AttackCount > maxAttackCount)
                     Projectile.Kill();
                 Delay = maxDelay;
             }
@@ -236,6 +250,8 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void OnKill(int timeLeft)
         {
+            group = null;
+
             float rot = Main.rand.NextFloat(6.282f);
             SoundEngine.PlaySound(CoraliteSoundID.Flame_Item20, Projectile.Center);
             for (int i = 0; i < 12; i++)
@@ -302,7 +318,7 @@ namespace Coralite.Content.Items.Nightmare
             {
                 if (ColorState == 1)
                 {
-                    drawColor = Color.Purple;
+                    drawColor = Color.Aqua;
                     baseColor = Color.DarkBlue;
                 }
                 else
@@ -312,7 +328,7 @@ namespace Coralite.Content.Items.Nightmare
                 }
 
                 Projectile.soundDelay = -1;
-                SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, Projectile.Center);
+                SoundEngine.PlaySound(CoraliteSoundID.LaserShoot2_Item75, Projectile.Center);
                 for (int num345 = 0; num345 < 8; num345++)
                 {
                     Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.VilePowder);
@@ -328,11 +344,28 @@ namespace Coralite.Content.Items.Nightmare
             if (Projectile.frameCounter++ >= 1)
             {
                 Projectile.frameCounter = 0;
+                byte hue = (byte)(Main.rgbToHsl(c).X * 255f);
+
                 ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
                 {
                     PositionInWorld = Projectile.Center,
                     MovementVector = Projectile.velocity,
-                    UniqueInfoPiece = (byte)(Main.rgbToHsl(c).X * 256f)
+                    UniqueInfoPiece = hue
+                });
+
+            }
+            else
+            {
+                float dir = (Projectile.timeLeft % 6) > 3 ? -1f : 1f;
+                //float rot = Main.rand.NextFloat(0.1f, 0.25f);
+                Vector2 vel = Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(0.3f * dir)/* * Main.rand.NextFloat(1f, 5.5f)*/;
+                byte hue = (byte)(Main.rgbToHsl(c).X * 255f);
+
+                ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
+                {
+                    PositionInWorld = Projectile.Center,
+                    MovementVector = vel,
+                    UniqueInfoPiece = hue
                 });
             }
 
@@ -349,7 +382,29 @@ namespace Coralite.Content.Items.Nightmare
                 dust12.alpha = 100;
                 dust12.noLight = true;
             }
+        }
+    }
 
+    public class BarrenFogParticle : ModParticle
+    {
+        public override string Texture => AssetDirectory.Particles+"Fog";
+
+        public override void OnSpawn(Particle particle)
+        {
+            particle.rotation = Main.rand.NextFloat(6.282f);
+            particle.frame = new Rectangle(0, Main.rand.Next(4) * 64, 64, 64);
+        }
+
+        public override void Update(Particle particle)
+        {
+            particle.velocity *= 0.96f;
+            particle.rotation += 0.01f;
+            particle.scale *= 0.997f;
+            particle.color.A = (byte)(particle.color.A * 0.92f);
+
+            particle.fadeIn++;
+            if (particle.fadeIn > 40 || particle.color.A < 10)
+                particle.active = false;
         }
     }
 }

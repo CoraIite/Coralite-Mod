@@ -2,6 +2,7 @@
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -10,13 +11,11 @@ namespace Coralite.Core.Systems.ParticleSystem
 {
     public class ParticleGroup
     {
-        private Particle[] _particles;
+        private List<Particle> _particles;
 
-        public ParticleGroup(int maxParticle)
+        public ParticleGroup()
         {
-            _particles = new Particle[maxParticle];
-            for (int i = 0; i < maxParticle; i++)
-                _particles[i] = new Particle();
+            _particles = new List<Particle>();
         }
 
         public Particle NewParticle(Vector2 center, Vector2 velocity, int type, Color newColor = default, float Scale = 1f)
@@ -24,37 +23,26 @@ namespace Coralite.Core.Systems.ParticleSystem
             if (Main.netMode == NetmodeID.Server)
                 return null;
 
+            Particle particle = new Particle();
+            particle.fadeIn = 0f;
+            particle.active = true;
+            particle.type = type;
+            particle.color = newColor;
+            particle.center = center;
+            particle.velocity = velocity;
+            particle.shader = null;
+            particle.rotation = 0f;
+            particle.scale = Scale;
+
+            ParticleLoader.SetupParticle(particle);
+
+            _particles.Add(particle);
             int result = -1;
-            for (int i = 0; i < _particles.Length; i++)
-            {
-                Particle particle = _particles[i];
-                if (particle.active)
-                    continue;
-
-                result = i;
-                //设置各种初始值
-                particle.fadeIn = 0f;
-                particle.active = true;
-                particle.type = type;
-                particle.color = newColor;
-                particle.center = center;
-                particle.velocity = velocity;
-                particle.shader = null;
-                particle.frame.X = 0;
-                particle.frame.Y = 0;
-                particle.frame.Width = 8;
-                particle.frame.Height = 8;
-                particle.rotation = 0f;
-                particle.scale = Scale;
-
-                ParticleLoader.SetupParticle(particle);
-                break;
-            }
 
             if (result == -1)
                 return null;
 
-            return _particles[result];
+            return particle;
         }
 
         public void UpdateParticles()
@@ -62,7 +50,7 @@ namespace Coralite.Core.Systems.ParticleSystem
             if (Main.netMode == NetmodeID.Server)//不在服务器上运行
                 return;
 
-            for (int i = 0; i < _particles.Length; i++)
+            for (int i = 0; i < _particles.Count; i++)
             {
                 Particle particle = _particles[i];
                 if (!particle.active)
@@ -93,12 +81,14 @@ namespace Coralite.Core.Systems.ParticleSystem
                 if (particle.fadeIn > 1000)
                     particle.active = false;
             }
+
+            _particles.RemoveAll(p => p is null || !p.active);
         }
 
         public void DrawParticles(SpriteBatch spriteBatch)
         {
             ArmorShaderData armorShaderData = null;
-            for (int i = 0; i < _particles.Length; i++)
+            for (int i = 0; i < _particles.Count; i++)
             {
                 Particle particle = _particles[i];
                 if (!particle.active)
@@ -120,7 +110,7 @@ namespace Coralite.Core.Systems.ParticleSystem
                     }
                 }
 
-                ParticleLoader.GetParticle(ParticleSystem.Particles[i].type).Draw(spriteBatch, particle);
+                ParticleLoader.GetParticle(particle.type).Draw(spriteBatch, particle);
             }
         }
     }

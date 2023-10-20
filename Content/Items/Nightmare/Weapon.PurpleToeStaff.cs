@@ -17,8 +17,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.useTime = 15;
             Item.useAnimation = 15;
             Item.reuseDelay = 15;
-            Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.holdStyle = ItemHoldStyleID.HoldLamp;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.DamageType = DamageClass.Summon;
             Item.mana = 15;
             Item.knockBack = 3;
