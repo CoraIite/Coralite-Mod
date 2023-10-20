@@ -221,7 +221,7 @@ namespace Coralite.Content.Items.Nightmare
                     colorState = 1;
                 }
 
-                Main.player[Projectile.owner].CheckMana(8,true);
+                Main.player[Projectile.owner].CheckMana(7,true);
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y,
                     velX, velY, ProjectileType<BarrenThorn>(), damage, Projectile.knockBack, Projectile.owner, colorState);
 

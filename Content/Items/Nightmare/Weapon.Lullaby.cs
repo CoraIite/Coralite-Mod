@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.DamageType = DamageClass.Magic;
             Item.rare = RarityType<FantasyRarity>();
             Item.value = Item.sellPrice(2, 0, 0, 0);
-            Item.SetWeaponValues(138, 4, 4);
+            Item.SetWeaponValues(152, 4, 4);
             Item.mana = 36;
             Item.autoReuse = true;
             Item.noUseGraphic = true;

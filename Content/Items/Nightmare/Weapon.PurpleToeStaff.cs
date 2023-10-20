@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using System.ComponentModel.DataAnnotations;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,5 +34,15 @@ namespace Coralite.Content.Items.Nightmare
             Item.autoReuse = false;
         }
 
+    }
+
+    public class PurpleToeProj : ModProjectile, INightmareMinion
+    {
+        public override string Texture => AssetDirectory.NightmareItems + "PurpleToe";
+
+        public void GetPower(int howMany)
+        {
+
+        }
     }
 }

@@ -1829,6 +1829,7 @@ Mods: {
 			DevilsClawLeaf.DisplayName: Devils Claw Leaf
 			BarrenFog.DisplayName: Barren Fog
 			BarrenThorn.DisplayName: Barren Thorn
+			PurpleToeProj.DisplayName: Purple Toe Proj
 		}
 
 		Configs: {
