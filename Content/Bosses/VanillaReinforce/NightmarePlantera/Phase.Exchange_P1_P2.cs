@@ -160,6 +160,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 NCamera.useShake = false;
                             }
 
+                            //Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/NightmarePlantera");
+
                             Music = MusicID.OtherworldlyPlantera; //把音乐再打开
                         }
                     }

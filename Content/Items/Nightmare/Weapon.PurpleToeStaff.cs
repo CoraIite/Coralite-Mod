@@ -226,11 +226,12 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     Vector2 dir = (target.Center - Owner.Center).SafeNormalize(Vector2.Zero);
                     Vector2 idlePos = Owner.Center + dir * 64;
-                    Projectile.Center = Projectile.Center.MoveTowards(idlePos, 30);
+                    Projectile.Center = Projectile.Center.MoveTowards(idlePos, 36);
 
                     Projectile.rotation = Projectile.rotation.AngleTowards(dir.ToRotation(), (float)Math.PI / 5f);
 
-                    if (Vector2.Distance(idlePos, Projectile.Center) < 30)
+                    Timer--;
+                    if (Vector2.Distance(idlePos, Projectile.Center) < 30 || Timer < -40)
                         StartAttack();
                     return;
                 }
@@ -269,7 +270,7 @@ namespace Coralite.Content.Items.Nightmare
                 if (lerpValue4 > 0f)
                     Projectile.Center = Vector2.Lerp(target.Center, value, lerpValue4);
 
-                if (Timer == resetTimer)
+                if (Timer <= resetTimer)
                 {
                     StartAttack(onAttack:true);
                 }
@@ -286,7 +287,8 @@ namespace Coralite.Content.Items.Nightmare
                 AttackTimer = Timer = Powerful > 0 ? PowerfulAttackTime : NormalAttackTime;
                 if (Powerful > 0)
                 {
-                    Powerful--;
+                    if (!onAttack)
+                        Powerful--;
                     tentacleColor = NightmarePlantera.nightmareRed;
                 }
                 else

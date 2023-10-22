@@ -127,7 +127,8 @@ namespace Coralite.Content.NPCs.VanillaNPC
             if (npc.HasBuff<EdenDebuff>())
             {
                 modifiers.FlatBonusDamage += EdenDebuff.TagDamage * projTagMultiplier;
-                modifiers.CritDamage += 0.1f;
+                if (Main.rand.NextBool(14,100))
+                    modifiers.SetCrit();
 
                 if (VisualEffectSystem.HitEffect_Dusts)
                 {
