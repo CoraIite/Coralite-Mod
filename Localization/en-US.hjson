@@ -1573,6 +1573,11 @@ Mods: {
 				DisplayName: Eden Debuff
 				Description: Mods.Coralite.Buffs.EdenDebuff.Description
 			}
+
+			PurpleToeBuff: {
+				DisplayName: Purple Toe Buff
+				Description: Mods.Coralite.Buffs.PurpleToeBuff.Description
+			}
 		}
 
 		NPCs: {
@@ -1830,6 +1835,7 @@ Mods: {
 			BarrenFog.DisplayName: Barren Fog
 			BarrenThorn.DisplayName: Barren Thorn
 			PurpleToeProj.DisplayName: Purple Toe Proj
+			RavenFeather.DisplayName: Raven Feather
 		}
 
 		Configs: {

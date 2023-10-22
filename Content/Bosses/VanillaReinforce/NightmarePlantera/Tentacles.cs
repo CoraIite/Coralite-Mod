@@ -292,8 +292,32 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 float angle = rot.AngleLerp(targetAngle, i/(float)pointCount);
                 Vector2 dir = angle.ToRotationVector2();
-                points[i] = position + dir * tentaclePerLength ;
+                points[i] = position + dir * tentaclePerLength;
                 rotates[i] = angle;
+
+                position = points[i];
+                rot = rotates[i];
+            }
+
+            this.flowAlpha = flowAlpha;
+            perLength = tentaclePerLength;
+        }
+
+        public void UpdateTentacleSmoothly(float tentaclePerLength, float flowAlpha = 1)
+        {
+            Vector2 position = pos;
+            float rot = rotation;
+            //由原点加上旋转方向
+
+            for (int i = 0; i < pointCount; i++)
+            {
+                float targetAngle = (targetPos - position).ToRotation();
+
+                float angle = rot.AngleLerp(targetAngle, i / (float)pointCount);
+                float factor = 0.45f + (1 - (float)i / pointCount) * 0.45f;
+                Vector2 dir = angle.ToRotationVector2();
+                points[i] = Vector2.Lerp(points[i], position + dir * tentaclePerLength, factor);
+                rotates[i] = Helper.Lerp(rotates[i], angle, factor);
 
                 position = points[i];
                 rot = rotates[i];

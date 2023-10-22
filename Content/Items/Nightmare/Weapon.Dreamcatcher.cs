@@ -1,8 +1,6 @@
-﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Microsoft.Xna.Framework;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -18,7 +16,7 @@ namespace Coralite.Content.Items.Nightmare
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 120;
+            Item.damage = 126;
             Item.useTime = 15;
             Item.useAnimation = 15;
             Item.reuseDelay = 15;
@@ -28,7 +26,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.mana = 15;
             Item.knockBack = 3;
 
-            Item.value = Item.sellPrice(0, 0, 1, 0);
+            Item.value = Item.sellPrice(2, 0, 0, 0);
             Item.rare = RarityType<NightmareRarity>();
             Item.shoot = ProjectileType<NightmareRaven>();
             Item.UseSound = CoraliteSoundID.TerraprismaSummon_Item82;
@@ -76,10 +74,6 @@ namespace Coralite.Content.Items.Nightmare
             var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
             projectile.originalDamage = Item.damage;
 
-            foreach (var proj in Main.projectile.Where(p => p.active && p.friendly && p.type == Item.shoot && p.owner == player.whoAmI))
-            {
-                proj.localAI[2] = 0;
-            }
             return false;
         }
     }

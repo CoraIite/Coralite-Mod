@@ -3,12 +3,11 @@ using Coralite.Content.Dusts;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -23,10 +22,14 @@ namespace Coralite.Content.Items.Nightmare
 
         private Player Owner => Main.player[Projectile.owner];
 
+        public ref float Timer => ref Projectile.ai[0];
+        public ref float Target => ref Projectile.ai[1];
         public ref float PowerfulAttackCount=>ref Projectile.ai[2];
 
-        public ref float Timer => ref Projectile.localAI[2];
         public Color drawColor;
+
+        public int AttackState;
+        private Vector2 exVec2;
 
         public override void SetStaticDefaults()
         {
@@ -63,7 +66,6 @@ namespace Coralite.Content.Items.Nightmare
         public override void OnSpawn(IEntitySource source)
         {
             drawColor = NightmarePlantera.lightPurple;
-            Timer = 0;
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
@@ -74,12 +76,11 @@ namespace Coralite.Content.Items.Nightmare
             }
         }
 
-        public override bool MinionContactDamage() => Projectile.ai[0] > 0f;
+        public override bool MinionContactDamage() => Timer > 0f && AttackState == 0;
 
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            #region 血蝙蝠部分
             if (!CheckActive(Owner))
                 return;
 
@@ -98,7 +99,6 @@ namespace Coralite.Content.Items.Nightmare
                 num2 = Math.Sign(Projectile.velocity.X);
 
             Projectile.spriteDirection = num2;
-            #endregion
 
             AI_156_Think(Projectile);
         }
@@ -112,42 +112,38 @@ namespace Coralite.Content.Items.Nightmare
         /// <param name="Projectile"></param>
         public void AI_156_Think(Projectile Projectile)
         {
-            int halfTime = 55;
-            int halfTime_less1 = halfTime - 1;
+            int attackTime = 55;
+            int attackTime_less1 = attackTime - 1;
 
-            halfTime = 61;
+            attackTime = 61;
 
             if (PowerfulAttackCount > 0)
             {
-                halfTime = 51;
-                halfTime_less1 = 44;
+                attackTime = 51;
+                attackTime_less1 = 44;
             }
+
             Player player = Main.player[Projectile.owner];
             #region 距离玩家太远直接进入尝试开始攻击的状态（该状态下会急速回到idle点位上）
             if (player.active && Vector2.Distance(player.Center, Projectile.Center) > 2000f)
             {
-                Projectile.ai[0] = 0f;
-                Projectile.ai[1] = 0f;
+                Timer = 0f;
+                Target = 0f;
                 Projectile.netUpdate = true;
             }
             #endregion
             #region 回到玩家身边，回到玩家身边后将ai0设为0，进入尝试攻击阶段
-            if (Projectile.ai[0] == -1f)
+            if (Timer == -1f)
             {
                 AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index, out var totalIndexesInGroup);
 
-                Vector2 idleSpot = CircleMovement(48 + totalIndexesInGroup * 4, 28,accelFactor:0.4f, angleFactor: 0.2f, baseRot: index * MathHelper.TwoPi / totalIndexesInGroup);
+                Vector2 idleSpot = CircleMovement(48 + totalIndexesInGroup * 4, 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index * MathHelper.TwoPi / totalIndexesInGroup);
                 if (Projectile.Distance(idleSpot) < 2f)
                 {
-                    Projectile.ai[0] = 0f;
+                    Timer = 0f;
                     Projectile.netUpdate = true;
-                    foreach (var proj in Main.projectile.Where(p => p.active && p.friendly && p.type == ProjectileType<NightmareRaven>() && p.owner == Projectile.owner))
-                    {
-                        proj.localAI[2] = 0;
-                    }
                 }
 
-                Timer++;
                 return;
             }
             #endregion
@@ -162,39 +158,40 @@ namespace Coralite.Content.Items.Nightmare
                     if (num6 != -1)
                     {
                         AI_156_StartAttack(Projectile);
-                        Projectile.ai[0] = halfTime;
-                        Projectile.ai[1] = num6;
+                        Timer = attackTime;
+                        Target = num6;
                         Projectile.netUpdate = true;
+                        AttackState = Main.rand.Next(0, 2);
+                        exVec2=Helper.NextVec2Dir()*Main.rand.Next(250,300);
                         return;
                     }
                 }
 
-                Timer++;
                 return;
             }
             #endregion
 
-            int num8 = (int)Projectile.ai[1];
-            if (!Main.npc.IndexInRange(num8))
+            int targetIndex = (int)Target;
+            if (!Main.npc.IndexInRange(targetIndex))
             {
-                Projectile.ai[0] = 0f;
+                Timer = 0f;
                 Projectile.netUpdate = true;
                 return;
             }
 
-            NPC nPC = Main.npc[num8];
+            NPC nPC = Main.npc[targetIndex];
             if (!nPC.CanBeChasedBy(this))
             {
-                Projectile.ai[0] = 0f;
+                Timer = 0f;
                 Projectile.netUpdate = true;
                 return;
             }
 
-            Projectile.ai[0] -= 1f;
-            if (Projectile.ai[0] >= halfTime_less1)
+            Timer -= 1f;
+            if (Timer >= attackTime_less1)
             {
                 Projectile.velocity *= 0.8f;
-                if (Projectile.ai[0] == halfTime_less1)
+                if (Timer == attackTime_less1)
                 {
                     Projectile.localAI[0] = Projectile.Center.X;
                     Projectile.localAI[1] = Projectile.Center.Y;
@@ -203,8 +200,92 @@ namespace Coralite.Content.Items.Nightmare
                 return;
             }
 
-            float lerpValue = Utils.GetLerpValue(halfTime_less1, 0f, Projectile.ai[0], clamped: true);
+            float lerpValue = Utils.GetLerpValue(attackTime_less1, 0f, Timer, clamped: true);
             Vector2 vector = new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
+
+            if (lerpValue >= 0.5f)
+                vector = Main.player[Projectile.owner].Center;
+
+            switch (AttackState)
+            {
+                default:
+                case 0://就只是飞过去碰撞伤害
+                    {
+                        Vector2 center = nPC.Center;
+                        float num9 = (center - vector).ToRotation();
+                        float num10 = (center.X > vector.X) ? (-(float)Math.PI) : ((float)Math.PI);
+                        float num11 = num10 + (0f - num10) * lerpValue * 2f;
+                        Vector2 spinningPoint = num11.ToRotationVector2();
+                        spinningPoint.Y *= (float)Math.Sin(Projectile.identity * 2.3f) * 0.5f;
+                        spinningPoint = spinningPoint.RotatedBy(num9);
+                        float num12 = (center - vector).Length() / 2f;
+                        Vector2 center2 = Vector2.Lerp(vector, center, 0.5f) + spinningPoint * num12;
+                        Projectile.Center = center2;
+                        Vector2 vector2 = MathHelper.WrapAngle(num9 + num11 + 0f).ToRotationVector2() * 10f;
+                        Projectile.velocity = vector2;
+                        Projectile.position -= Projectile.velocity;
+                        if (Timer == 0f)
+                        {
+                            int num13 = AI_156_TryAttackingNPCs(Projectile);
+                            if (num13 != -1)
+                            {
+                                Timer = attackTime;
+                                Target = num13;
+                                AI_156_StartAttack(Projectile);
+                                Projectile.netUpdate = true;
+                                AttackState = Main.rand.Next(0, 2);
+                                exVec2 = Helper.NextVec2Dir() * Main.rand.Next(250, 300);
+                                return;
+                            }
+
+                            Target = 0f;
+                            Projectile.netUpdate = true;
+                        }
+                    }
+
+                    break;
+                case 1://飞到附近射弹幕
+                    {
+                        Vector2 center = nPC.Center + exVec2;
+                        float num9 = (center - vector).ToRotation();
+                        float num10 = (center.X > vector.X) ? (-(float)Math.PI) : ((float)Math.PI);
+                        float num11 = num10 + (0f - num10) * lerpValue * 2f;
+                        Vector2 spinningPoint = num11.ToRotationVector2();
+                        spinningPoint.Y *= (float)Math.Sin(Projectile.identity * 2.3f) * 0.5f;
+                        spinningPoint = spinningPoint.RotatedBy(num9);
+                        float num12 = (center - vector).Length() / 2f;
+                        Vector2 center2 = Vector2.Lerp(vector, center, 0.5f) + spinningPoint * num12;
+                        Projectile.Center = center2;
+                        Vector2 vector2 = MathHelper.WrapAngle(num9 + num11 + 0f).ToRotationVector2() * 10f;
+                        Projectile.velocity = vector2;
+                        Projectile.position -= Projectile.velocity;
+
+                        if (Timer >= attackTime_less1 / 2 && Timer % (attackTime_less1 / 6) == 0)
+                        {
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, (nPC.Center - Projectile.Center).SafeNormalize(Vector2.Zero),
+                                ProjectileType<RavenFeather>(), (int)(Projectile.damage * 0.7f), 2, Projectile.owner, ai1: PowerfulAttackCount > 0 ? 1 : 0);
+                        }
+
+                        if (Timer == 0f)
+                        {
+                            int num13 = AI_156_TryAttackingNPCs(Projectile);
+                            if (num13 != -1)
+                            {
+                                Timer = attackTime;
+                                Target = num13;
+                                AI_156_StartAttack(Projectile);
+                                Projectile.netUpdate = true;
+                                AttackState = 0;
+                                return;
+                            }
+
+                            Target = 0f;
+                            Projectile.netUpdate = true;
+                        }
+                    }
+                    break;
+            }
+
             if (lerpValue >= 0.5f)
             {
                 if (Main.rand.NextBool(3))
@@ -213,37 +294,8 @@ namespace Coralite.Content.Items.Nightmare
                         -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)) * Main.rand.NextFloat(0.1f, 0.25f), 0, drawColor, Main.rand.NextFloat(0.2f, 0.45f));
                 }
 
-                vector = Main.player[Projectile.owner].Center;
             }
 
-            Vector2 center = nPC.Center;
-            float num9 = (center - vector).ToRotation();
-            float num10 = (center.X > vector.X) ? (-(float)Math.PI) : ((float)Math.PI);
-            float num11 = num10 + (0f - num10) * lerpValue * 2f;
-            Vector2 spinningPoint = num11.ToRotationVector2();
-            spinningPoint.Y *= (float)Math.Sin(Projectile.identity * 2.3f) * 0.5f;
-            spinningPoint = spinningPoint.RotatedBy(num9);
-            float num12 = (center - vector).Length() / 2f;
-            Vector2 center2 = Vector2.Lerp(vector, center, 0.5f) + spinningPoint * num12;
-            Projectile.Center = center2;
-            Vector2 vector2 = MathHelper.WrapAngle(num9 + num11 + 0f).ToRotationVector2() * 10f;
-            Projectile.velocity = vector2;
-            Projectile.position -= Projectile.velocity;
-            if (Projectile.ai[0] == 0f)
-            {
-                int num13 = AI_156_TryAttackingNPCs(Projectile);
-                if (num13 != -1)
-                {
-                    Projectile.ai[0] = halfTime;
-                    Projectile.ai[1] = num13;
-                    AI_156_StartAttack(Projectile);
-                    Projectile.netUpdate = true;
-                    return;
-                }
-
-                Projectile.ai[1] = 0f;
-                Projectile.netUpdate = true;
-            }
         }
 
         /// <summary>
@@ -252,7 +304,6 @@ namespace Coralite.Content.Items.Nightmare
         /// <param name="Projectile"></param>
         public void AI_156_StartAttack(Projectile Projectile)
         {
-            Timer = 0;
             if (PowerfulAttackCount>0)
                 PowerfulAttackCount--;
             drawColor = PowerfulAttackCount > 0 ? NightmarePlantera.nightmareRed : NightmarePlantera.lightPurple;
@@ -341,9 +392,9 @@ namespace Coralite.Content.Items.Nightmare
             return true;
         }
 
-        public Vector2 CircleMovement(float distance, float speedMax, float accelFactor = 0.25f, float rollingFactor = 260f, float angleFactor = 0.08f, float baseRot = 0f)
+        public Vector2 CircleMovement(float distance, float speedMax, float accelFactor = 0.25f, float rollingFactor = 5f, float angleFactor = 0.08f, float baseRot = 0f)
         {
-            Vector2 center = Owner.Center + (baseRot + Timer / rollingFactor * MathHelper.TwoPi).ToRotationVector2() * distance;
+            Vector2 center = Owner.Center + (baseRot + Main.GlobalTimeWrappedHourly / rollingFactor * MathHelper.TwoPi).ToRotationVector2() * distance;
             Vector2 dir = center - Projectile.Center;
 
             float velRot = Projectile.velocity.ToRotation();
@@ -414,7 +465,7 @@ namespace Coralite.Content.Items.Nightmare
 
             for (int i = 0; i < 7; i += 1)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
-                    drawColor * (0.5f - i * 0.5f/7), Projectile.oldRot[i], frameBox.Size() / 2, 0.7f, effect, 0);
+                    drawColor * (0.5f - i * 0.5f / 7), Projectile.oldRot[i], frameBox.Size() / 2, 0.7f, effect, 0);
 
             //向上下左右四个方向绘制一遍
             for (int i = 0; i < 4; i++)
@@ -425,6 +476,106 @@ namespace Coralite.Content.Items.Nightmare
 
             //绘制自己
             Main.spriteBatch.Draw(mainTex, pos, frameBox, Color.White, Projectile.rotation, origin, 0.7f, effect, 0);
+            return false;
+        }
+    }
+
+    public class RavenFeather : ModProjectile
+    {
+        public override string Texture => AssetDirectory.NightmareItems+Name;
+
+        public bool init = true;
+        private Color drawColor;
+
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailingMode[Type] = 2;
+            ProjectileID.Sets.TrailCacheLength[Type] = 6;
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.width = Projectile.height = 32;
+            Projectile.aiStyle = -1;
+            Projectile.penetrate = 1;
+            Projectile.timeLeft = 1200;
+
+            Projectile.friendly = true;
+            Projectile.tileCollide = true;
+            Projectile.netImportant = true;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.rotation = Main.rand.NextFloat(6.282f);
+        }
+
+        public override void AI()
+        {
+            if (init)
+            {
+                if (Projectile.ai[1] == 1)
+                {
+                    drawColor = NightmarePlantera.nightmareRed;
+                }
+                else
+                    drawColor = NightmarePlantera.nightPurple;
+            }
+
+            Projectile.rotation += Projectile.ai[0];
+            if (Projectile.ai[0] < 0.3f)
+            {
+                Projectile.ai[0] += 0.03f;
+            }
+
+            if (Projectile.velocity.Length() < 24)
+            {
+                Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.2f;
+            }
+
+            float dir2 = ((Projectile.timeLeft % 30) > 15 ? -1 : 1) * 0.025f;
+            Projectile.velocity = Projectile.velocity.RotatedBy(dir2);
+
+            if (Main.rand.NextBool(6))
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 32), DustID.VilePowder,
+                      Projectile.velocity * 0.4f, 240, drawColor, Main.rand.NextFloat(1f, 1.5f));
+                d.noGravity = true;
+            }
+
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 32), DustID.VilePowder, Helper.NextVec2Dir() * Main.rand.NextFloat(1f, 3), Scale: Main.rand.NextFloat(1f, 2f));
+                d.noGravity = true;
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            //Rectangle frameBox = mainTex.Frame(1, 4, 0, Projectile.frame);
+            Vector2 origin = mainTex.Size() / 2;
+            //绘制残影
+            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+
+            for (int i = 0; i < 6; i ++)
+                Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
+                    drawColor * (0.5f - i * 0.5f / 7), Projectile.oldRot[i], origin, 0.5f, 0, 0);
+
+            //向上下左右四个方向绘制一遍
+            for (int i = 0; i < 4; i++)
+            {
+                Main.spriteBatch.Draw(mainTex, pos + (i * MathHelper.PiOver2).ToRotationVector2() * 2, null, drawColor, Projectile.rotation, origin, 0.5f,
+                   0, 0);
+            }
+
+            //绘制自己
+            Main.spriteBatch.Draw(mainTex, pos, null, Color.Gray, Projectile.rotation, origin, 0.5f, 0, 0);
             return false;
         }
     }

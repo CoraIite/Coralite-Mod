@@ -1548,12 +1548,21 @@ Mods: {
 
 			Lullaby: {
 				DisplayName: 入梦曲
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/fefcc2:睡吧...]
+						射出追踪美梦光弹
+					'''
 			}
 
 			PurpleToeStaff: {
-				DisplayName: 噩梦捕食者杖
-				Tooltip: ""
+				DisplayName: 噩梦捕食杖
+				Tooltip:
+					'''
+					[c/4f46a4:饥饿的捕食者们将吞噬你的梦境]
+						召唤噩梦捕食者，占用1.5个召唤栏位
+						使用鞭子武器“伊甸”强化后会增强噩梦捕食者的攻击性
+					'''
 			}
 		}
 
@@ -1650,6 +1659,11 @@ Mods: {
 			EdenDebuff: {
 				// DisplayName: Eden Debuff
 				// Description: Mods.Coralite.Buffs.EdenDebuff.Description
+			}
+
+			PurpleToeBuff: {
+				// DisplayName: Purple Toe Buff
+				// Description: Mods.Coralite.Buffs.PurpleToeBuff.Description
 			}
 		}
 
@@ -1908,6 +1922,7 @@ Mods: {
 			// BarrenFog.DisplayName: Barren Fog
 			// BarrenThorn.DisplayName: Barren Thorn
 			// PurpleToeProj.DisplayName: Purple Toe Proj
+			// RavenFeather.DisplayName: Raven Feather
 		}
 
 		Configs: {

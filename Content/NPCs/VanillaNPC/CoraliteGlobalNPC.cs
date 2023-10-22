@@ -7,11 +7,9 @@ using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Placeable;
 using Coralite.Content.Items.Shadow;
 using Coralite.Content.Items.YujianHulu;
-using Coralite.Content.ModPlayers;
 using Coralite.Core.Configs;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -129,6 +127,7 @@ namespace Coralite.Content.NPCs.VanillaNPC
             if (npc.HasBuff<EdenDebuff>())
             {
                 modifiers.FlatBonusDamage += EdenDebuff.TagDamage * projTagMultiplier;
+                modifiers.CritDamage += 0.1f;
 
                 if (VisualEffectSystem.HitEffect_Dusts)
                 {
