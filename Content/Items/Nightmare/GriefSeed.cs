@@ -9,10 +9,11 @@ using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Content.Items.Nightmare
 {
-    public class GriefSeed : ModItem
+    public class GriefSeed : ModItem,IMagikeRemodelable
     {
         public override string Texture => AssetDirectory.NightmareItems + Name;
 
@@ -52,8 +53,8 @@ namespace Coralite.Content.Items.Nightmare
                 ItemDropRule.Common(ModContent.ItemType<EuphorbiaMilii>(), 1, 1, 1),
 
                 ItemDropRule.Common(ModContent.ItemType<Lycoris>(), 1, 1, 1),
-                //
-                //
+                ItemDropRule.Common(ModContent.ItemType<BoneRing>(), 1, 1, 1),
+                ItemDropRule.Common(ModContent.ItemType<QueensWreath>(), 1, 1, 1),
 
                 ItemDropRule.Common(ModContent.ItemType<DevilsClaw>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<BarrenThornsStaff>(), 1, 1, 1),
@@ -149,5 +150,20 @@ namespace Coralite.Content.Items.Nightmare
             return false;
         }
 
+        public void AddMagikeRemodelRecipe()
+        {
+            AddRemodelRecipe<GriefSeed, LostSevensideHook>(1_3500);
+            AddRemodelRecipe<GriefSeed, DreamShears>(1_3500);
+            AddRemodelRecipe<GriefSeed, EuphorbiaMilii>(1_3500);
+            AddRemodelRecipe<GriefSeed, Lycoris>(1_3500);
+            AddRemodelRecipe<GriefSeed, BoneRing>(1_3500);
+            AddRemodelRecipe<GriefSeed, QueensWreath>(1_3500);
+            AddRemodelRecipe<GriefSeed, DevilsClaw>(1_3500);
+            AddRemodelRecipe<GriefSeed, BarrenThornsStaff>(1_3500);
+            AddRemodelRecipe<GriefSeed, Lullaby>(1_3500);
+            AddRemodelRecipe<GriefSeed, PurpleToeStaff>(1_3500);
+            AddRemodelRecipe<GriefSeed, Dreamcatcher>(1_3500);
+            AddRemodelRecipe<GriefSeed, Eden>(1_3500);
+        }
     }
 }

@@ -1434,7 +1434,7 @@ Mods: {
 			}
 
 			EuphorbiaMilii: {
-				DisplayName: Euphorbia Milii
+				DisplayName: Crown of Thorns
 				Tooltip: ""
 			}
 
@@ -1475,6 +1475,16 @@ Mods: {
 
 			PurpleToeStaff: {
 				DisplayName: Purple Toe Staff
+				Tooltip: ""
+			}
+
+			BoneRing: {
+				DisplayName: Bone Ring
+				Tooltip: ""
+			}
+
+			QueensWreath: {
+				DisplayName: Queens Wreath
 				Tooltip: ""
 			}
 		}

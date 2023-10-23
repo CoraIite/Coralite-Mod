@@ -1566,6 +1566,19 @@ Mods: {
 						使用鞭子武器“伊甸”强化后会增强噩梦捕食者的攻击性
 					'''
 			}
+
+			BoneRing: {
+				DisplayName: 骨戒
+				Tooltip: ""
+			}
+
+			QueensWreath: {
+				DisplayName: 珊瑚藤
+				Tooltip: 
+				'''
+				[c/ffd1fc:爱的锁链]
+				'''
+			}
 		}
 
 		Tiles: {

@@ -191,8 +191,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 ItemDropRule.Common(ModContent.ItemType<EuphorbiaMilii>(), 1, 1, 1),
 
                 ItemDropRule.Common(ModContent.ItemType<Lycoris>(), 1, 1, 1),
+                ItemDropRule.Common(ModContent.ItemType<BoneRing>(), 1, 1, 1),
+                ItemDropRule.Common(ModContent.ItemType<QueensWreath>(), 1, 1, 1),
 
+                ItemDropRule.Common(ModContent.ItemType<DevilsClaw>(), 1, 1, 1),
+                ItemDropRule.Common(ModContent.ItemType<BarrenThornsStaff>(), 1, 1, 1),
+                ItemDropRule.Common(ModContent.ItemType<Lullaby>(), 1, 1, 1),
+
+                ItemDropRule.Common(ModContent.ItemType<PurpleToeStaff>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<Dreamcatcher>(), 1, 1, 1),
+                ItemDropRule.Common(ModContent.ItemType<Eden>(), 1, 1, 1),
             };
 
             notExpertRule.OnSuccess(new FewFromRulesRule(2, 1, weaponTypes));

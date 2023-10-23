@@ -6,12 +6,14 @@ using Coralite.Content.Items.RedJades;
 using Coralite.Content.UI;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Steamworks;
 using System;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -48,10 +50,12 @@ namespace Coralite.Content.ModPlayers
         /// <summary> 使用梦魇之花的噩梦能量 </summary>
         public int nightmareEnergy;
         public int nightmareEnergyMax;
+        public bool equippedBoneRing;
 
         public override void ResetEffects()
         {
             redJadePendant = false;
+            equippedBoneRing = false;
             nightmareEnergyMax = 7;
 
             if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15)
@@ -64,7 +68,6 @@ namespace Coralite.Content.ModPlayers
                 DashDir = DashLeft;
             else
                 DashDir = -1;
-
 
         }
 
@@ -267,6 +270,12 @@ namespace Coralite.Content.ModPlayers
         }
 
         #endregion
+
+        public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
+        {
+            if (equippedBoneRing)
+                drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod,"BoneRing",EquipType.HandsOn);
+        }
 
         public void GetNightmareEnergy(int howMany)
         {
