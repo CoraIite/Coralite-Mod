@@ -490,15 +490,16 @@ namespace Coralite.Content.Items.Nightmare
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.TrailingMode[Type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Type] = 6;
+            ProjectileID.Sets.TrailCacheLength[Type] = 10;
         }
 
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 32;
+            Projectile.width = Projectile.height = 16;
             Projectile.aiStyle = -1;
             Projectile.penetrate = 1;
-            Projectile.timeLeft = 1200;
+            Projectile.timeLeft = 2400;
+            Projectile.extraUpdates = 1;
 
             Projectile.friendly = true;
             Projectile.tileCollide = true;
@@ -507,7 +508,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.rotation = Main.rand.NextFloat(6.282f);
+            //Projectile.rotation = Main.rand.NextFloat(6.282f);
         }
 
         public override void AI()
@@ -522,21 +523,22 @@ namespace Coralite.Content.Items.Nightmare
                     drawColor = NightmarePlantera.nightPurple;
             }
 
-            Projectile.rotation += Projectile.ai[0];
-            if (Projectile.ai[0] < 0.3f)
+            //Projectile.rotation += Projectile.ai[0];
+            //if (Projectile.ai[0] < 0.3f)
+            //{
+            //    Projectile.ai[0] += 0.03f;
+            //}
+
+            if (Projectile.velocity.Length() < 14)
             {
-                Projectile.ai[0] += 0.03f;
+                Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.125f;
             }
 
-            if (Projectile.velocity.Length() < 24)
-            {
-                Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.2f;
-            }
-
-            float dir2 = ((Projectile.timeLeft % 30) > 15 ? -1 : 1) * 0.025f;
+            float dir2 = ((Projectile.timeLeft % 30) > 15 ? -1 : 1) * 0.0125f;
             Projectile.velocity = Projectile.velocity.RotatedBy(dir2);
+            Projectile.rotation = Projectile.velocity.ToRotation();
 
-            if (Main.rand.NextBool(6))
+            if (Main.rand.NextBool(8))
             {
                 Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 32), DustID.VilePowder,
                       Projectile.velocity * 0.4f, 240, drawColor, Main.rand.NextFloat(1f, 1.5f));
@@ -563,19 +565,19 @@ namespace Coralite.Content.Items.Nightmare
             //绘制残影
             Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
 
-            for (int i = 0; i < 6; i ++)
+            for (int i = 0; i < 10; i ++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    drawColor * (0.5f - i * 0.5f / 7), Projectile.oldRot[i], origin, 0.5f, 0, 0);
+                    drawColor * (0.5f - i * 0.5f / 10), Projectile.oldRot[i], origin, 1, 0, 0);
 
             //向上下左右四个方向绘制一遍
             for (int i = 0; i < 4; i++)
             {
-                Main.spriteBatch.Draw(mainTex, pos + (i * MathHelper.PiOver2).ToRotationVector2() * 2, null, drawColor, Projectile.rotation, origin, 0.5f,
+                Main.spriteBatch.Draw(mainTex, pos + (i * MathHelper.PiOver2).ToRotationVector2() * 2, null, drawColor, Projectile.rotation, origin, 1,
                    0, 0);
             }
 
             //绘制自己
-            Main.spriteBatch.Draw(mainTex, pos, null, Color.Gray, Projectile.rotation, origin, 0.5f, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, Color.Gray, Projectile.rotation, origin, 1, 0, 0);
             return false;
         }
     }
