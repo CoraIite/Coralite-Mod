@@ -1846,6 +1846,8 @@ Mods: {
 			BarrenThorn.DisplayName: Barren Thorn
 			PurpleToeProj.DisplayName: Purple Toe Proj
 			RavenFeather.DisplayName: Raven Feather
+			QueensWreathArrow.DisplayName: Queens Wreath Arrow
+			QueensWreathHeldProj.DisplayName: Queens Wreath Held Proj
 		}
 
 		Configs: {

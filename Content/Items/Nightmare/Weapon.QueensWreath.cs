@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Icicle;
+﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.Items.Icicle;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -6,6 +7,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -25,22 +27,21 @@ namespace Coralite.Content.Items.Nightmare
         public override void SetDefaults()
         {
             Item.useAnimation = Item.useTime = 18;
-            Item.reuseDelay = 20;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.shoot = ProjectileID.PurificationPowder;
             Item.useAmmo = AmmoID.Arrow;
             Item.DamageType = DamageClass.Ranged;
             Item.rare = RarityType<NightmareRarity>();
             Item.value = Item.sellPrice(2, 0, 0, 0);
-            Item.SetWeaponValues(320, 4, 4);
+            Item.SetWeaponValues(220, 4, 4);
             Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;
             Item.useTurn = false;
-            Item.shootSpeed = 18;
+            Item.shootSpeed = 20;
         }
 
-        public override bool AltFunctionUse(Player player) => true;
+        public override bool AltFunctionUse(Player player) => false;
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -48,14 +49,22 @@ namespace Coralite.Content.Items.Nightmare
             {
                 PlayerNightmareEnergy.Spawn(player, source);
 
-                if (Combo>=3)//射出能获得梦魇光能的箭矢
+                if (Combo > 3)//射出能获得梦魇光能的箭矢
                 {
                     Combo = 0;
+                    Projectile.NewProjectile(source, position, velocity.SafeNormalize(Vector2.Zero) * 8.5f, ProjectileType<QueensWreathArrow>(), damage, knockback, player.whoAmI, ai1: 1);
 
+                    Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<QueensWreathHeldProj>(), 1, 0, player.whoAmI, 1);
+                    SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, position);
                 }
                 else//就只是普通地射箭
+                {
                     for (int i = 0; i < 3; i++)
                         Projectile.NewProjectile(source, position, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)), type, (int)(damage * 0.9f), knockback, player.whoAmI);
+
+                    Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<QueensWreathHeldProj>(), 1, 0, player.whoAmI, 0);
+                    SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, position);
+                }
 
                 Combo++;
             }
@@ -64,11 +73,30 @@ namespace Coralite.Content.Items.Nightmare
 
         public bool Dash(Player Player, int DashDir)
         {
+            Vector2 newVelocity = Player.velocity;
+            IEntitySource source = Player.GetSource_ItemUse(Player.HeldItem);
+            Vector2 position = Player.Center;
+
             switch (DashDir)
             {
-                default:
+                default: return false;
                 case CoralitePlayer.DashLeft://向左右方向冲刺，直接冲
                 case CoralitePlayer.DashRight:
+                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    {
+                        Projectile proj = Main.projectile[i];
+                        if (proj.active && proj.owner == Player.whoAmI && proj.type==ProjectileType<QueensWreathHeldProj>())
+                        {
+                            proj.Kill();
+                            break;
+                        }
+                    }
+
+                    Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<QueensWreathHeldProj>(), 1, 0, Player.whoAmI, 2);
+
+                    float dashDirection = DashDir == CoralitePlayer.DashRight ? 1 : -1;
+                    newVelocity.X = dashDirection * 14;
+
                     break;
                 case CoralitePlayer.DashUp://向上冲，需要消耗一个梦魇光能
                     break;
@@ -76,13 +104,18 @@ namespace Coralite.Content.Items.Nightmare
                     break;
             }
 
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 60;
+            Player.GetModPlayer<CoralitePlayer>().DashTimer = 20;
+            Player.immuneTime = 20;
+            Player.immune = true;
+            Player.velocity = newVelocity;
+
             return true;
         }
-
     }
 
     /// <summary>
-    /// ai0控制状态，0普通发射，1普通射能获得梦魇光能的，2强化射，3吊射
+    /// ai0控制状态，0普通发射，1普通射能获得梦魇光能的，2强化射，3吊射<br></br>
     /// ai2控制是否右键过
     /// </summary>
     public class QueensWreathHeldProj : BaseHeldProj
@@ -101,9 +134,12 @@ namespace Coralite.Content.Items.Nightmare
 
         public int ShootTime;
         public int DelayTime;
+        public bool dashHited;
+        public bool shooted;
 
         public override void SetDefaults()
         {
+            Projectile.width = Projectile.height = 48;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
@@ -116,10 +152,11 @@ namespace Coralite.Content.Items.Nightmare
         public override void AI()
         {
             Owner.heldProj = Projectile.whoAmI;
+
             if (Init)
             {
                 ShootTime = Owner.itemTimeMax;
-                DelayTime = NotRightClicked ? 20 : 0;
+                DelayTime = NotRightClicked ? 12 : 0;
                 switch (State)
                 {
                     default:
@@ -128,7 +165,32 @@ namespace Coralite.Content.Items.Nightmare
                         break;
                 }
 
-                Owner.itemTime = ShootTime + DelayTime;
+                Owner.itemTime =  ShootTime + DelayTime;
+                if (NotRightClicked)
+                {
+                    switch (State)
+                    {
+                        default:
+                        case 0:
+                        case 1:
+                        case 5:
+                        case 6:
+                        case 7:
+                            Projectile.timeLeft = ShootTime + DelayTime;
+                            break;
+                        case 2:
+                        case 3:
+                        case 4:
+                            Projectile.timeLeft = 120;
+                            break;
+                    }
+                }
+                else
+                {
+                    Projectile.timeLeft = ShootTime;
+                }
+                Projectile.rotation = (Main.MouseWorld - Owner.Center).ToRotation();
+
                 Init = false;
             }
 
@@ -136,54 +198,196 @@ namespace Coralite.Content.Items.Nightmare
             {
                 default: Projectile.Kill(); break;
                 case 0: //普普通通的射箭
-                    Projectile.Center = Owner.Center + Projectile.ai[0].ToRotationVector2() * 8;
-
-                    //如果满足条件且没有右键过 那么就再次射击
-                    if (Timer >= ShootTime && NotRightClicked 
-                        && Main.mouseRight && Main.mouseRightRelease
-                        &&Owner.TryGetModPlayer(out CoralitePlayer cp)&&cp.nightmareEnergy>0)
                     {
-                        cp.nightmareEnergy -= 1;
+                        Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * 8;
+                        Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : 3.141f);
 
-                        Projectile.Kill();
+                        //如果满足条件且没有右键过 那么就再次射击
+                        if (NotRightClicked && Main.mouseRight && Main.mouseRightRelease
+                            && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 0)
+                        {
+                            if (Owner.PickAmmo(Owner.HeldItem, out int type, out float speed, out int damage, out float knockBack, out _))
+                            {
+                                cp.nightmareEnergy -= 1;
+
+                                IEntitySource source = Projectile.GetSource_FromAI();
+                                Vector2 position = Owner.Center;
+
+                                Vector2 velocity = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * speed;
+
+                                for (int i = 0; i < 3; i++)
+                                    Projectile.NewProjectile(source, position, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)), type, (int)(damage * 0.9f), knockBack, Projectile.owner);
+
+                                Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<QueensWreathHeldProj>(), 1, 0, Projectile.owner, 0, ai2: 1);
+                                SoundEngine.PlaySound(CoraliteSoundID.Bow2_Item102, Owner.Center);
+                                //生成粒子
+
+                            }
+
+                            Projectile.Kill();
+                        }
                     }
+
                     break;
                 case 1: //射出能够获得梦魇光能的
+                    {
+                        Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * 8;
+                        Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : 3.141f);
+
+                        //如果满足条件且没有右键过 那么就再次射击
+                        if (NotRightClicked && Main.mouseRight && Main.mouseRightRelease
+                            && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 0)
+                        {
+                            if (Owner.PickAmmo(Owner.HeldItem, out int type, out float speed, out int damage, out float knockBack, out _))
+                            {
+                                cp.nightmareEnergy -= 1;
+
+                                IEntitySource source = Projectile.GetSource_FromAI();
+                                Vector2 position = Owner.Center;
+
+                                Vector2 velocity = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * speed;
+
+                                Projectile.NewProjectile(source, position, velocity.SafeNormalize(Vector2.Zero) * 8.5f, ProjectileType<QueensWreathArrow>(), damage, knockBack, Projectile.owner, ai1: 1);
+
+                                Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<QueensWreathHeldProj>(), 1, 0, Projectile.owner, 0, ai2: 1);
+                                SoundEngine.PlaySound(CoraliteSoundID.Bow2_Item102, Owner.Center);
+                                //生成粒子
+
+                            }
+
+                            Projectile.Kill();
+                        }
+                    }
+
+                    break;
+                case 2://横向冲刺
                     do
                     {
-                        Lighting.AddLight(Owner.Center, Coralite.Instance.IcicleCyan.ToVector3() * Alpha);
-
-                        if (Timer < 21)
+                        Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : 3.141f);
+                        if (Timer < 20)
                         {
-                            Rotation += 0.3141f; //1/10 Pi
+                            Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
-                            Owner.itemTime = Owner.itemAnimation = 2;
+                            if (Timer < 14)
+                            {
+                                Projectile.rotation = Projectile.rotation.AngleLerp(-1.57f - Owner.direction * 0.3f, 0.09f);
+                                Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * Helpers.Helper.Lerp(4, 24, Timer / 14f);
+                            }
+                            else
+                            {
+                                Projectile.rotation = Projectile.rotation.AngleLerp((Main.MouseWorld - Owner.Center).ToRotation(), 0.15f);
+                                Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * Helpers.Helper.Lerp(24, 16, (Timer - 14) / 6f);
+                            }
+
+                            if (!dashHited)//检测和npc或弹幕的碰撞
+                            {
+                                Rectangle rect = Projectile.getRect();
+                                for (int i = 0; i < Main.maxProjectiles; i++)
+                                {
+                                    Projectile proj = Main.projectile[i];
+                                    if (proj.whoAmI == Projectile.whoAmI)
+                                        continue;
+                                    
+                                    if (proj.Colliding(proj.getRect(), rect))
+                                    {
+                                        dashHited = true;
+                                        break;
+                                    }
+                                }
+
+                                for (int i = 0; i < Main.maxNPCs; i++)
+                                {
+                                    NPC npc = Main.npc[i];
+
+                                    if (Projectile.Colliding(rect,npc.getRect()))
+                                    {
+                                        dashHited = true;
+                                        break;
+                                    }
+                                }
+
+                            }
+
+                            //特效部分
                             break;
                         }
 
-                        if (Owner.controlUseItem)
-                        {
-                            if (Main.myPlayer == Projectile.owner)
-                            {
-                                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                                Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.25f);
-                                Projectile.netUpdate = true;
+                        Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * 16;
 
-                                if (Main.rand.NextBool(20))
-                                {
-                                    Vector2 dir = Rotation.ToRotationVector2();
-                                    Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.Instance.IcicleCyan, Main.rand.NextFloat(0.1f, 0.15f));
-                                }
-                            }
-                            Projectile.timeLeft = 2;
-                            Owner.itemTime = Owner.itemAnimation = 2;
-                        }
-                        else
+                        Projectile.rotation = Projectile.rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.25f);
+
+                        if (!shooted)
                         {
-                            if (Main.myPlayer == Projectile.owner)
+                            if (Owner.controlUseItem)
                             {
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 9.5f, ModContent.ProjectileType<IcicleStarArrow>(), (int)(Projectile.damage * 1.5f), Projectile.knockBack, Projectile.owner);
-                                SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
+                                if (Main.myPlayer == Projectile.owner)
+                                {
+                                    Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+                                    Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.25f);
+                                    Projectile.netUpdate = true;
+
+                                    if (Main.rand.NextBool(20))
+                                    {
+                                        Vector2 dir = Rotation.ToRotationVector2();
+                                        Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.Instance.IcicleCyan, Main.rand.NextFloat(0.1f, 0.15f));
+                                    }
+                                }
+
+                                Projectile.timeLeft = 2;
+                                Owner.itemTime = Owner.itemAnimation = 2;
+                            }
+                            else
+                            {
+                                if (Main.myPlayer == Projectile.owner
+                                    && Owner.PickAmmo(Owner.HeldItem, out int type, out float speed, out int damage, out float knockBack, out _))
+                                {
+                                    IEntitySource source = Projectile.GetSource_FromAI();
+                                    Vector2 position = Owner.Center;
+
+                                    Vector2 velocity = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero);
+
+                                    if (dashHited)//冲刺途中有碰撞到东西
+                                    {
+                                        if (Owner.HeldItem.ModItem is QueensWreath qw)
+                                            qw.Combo = 4;
+
+                                        for (int i = 0; i < 3; i++)
+                                            Projectile.NewProjectile(source, position, velocity.RotatedBy(Main.rand.NextFloat(-0.04f,0.04f))*Main.rand.NextFloat(7f,9f) , ProjectileType<QueensWreathArrow>(), (int)(damage*0.85f), knockBack, Projectile.owner);
+                                    }
+                                    else//啥也没碰到那就普通射一箭
+                                        Projectile.NewProjectile(source, position, velocity * 8.5f, ProjectileType<QueensWreathArrow>(), damage, knockBack, Projectile.owner);
+
+                                    SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
+                                }
+
+                                if (Projectile.timeLeft > 20)
+                                    Projectile.timeLeft = 20;
+                                shooted = true;
+                            }
+
+                            break;
+                        }
+
+                        //射完后检测右键
+                        if (NotRightClicked && Main.mouseRight && Main.mouseRightRelease
+                            && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 0)
+                        {
+                            if (Owner.PickAmmo(Owner.HeldItem, out int type, out float speed, out int damage, out float knockBack, out _))
+                            {
+                                cp.nightmareEnergy -= 1;
+
+                                IEntitySource source = Projectile.GetSource_FromAI();
+                                Vector2 position = Owner.Center;
+
+                                Vector2 velocity = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * speed;
+
+                                Projectile.NewProjectile(source, position, velocity.SafeNormalize(Vector2.Zero) * 8.5f, ProjectileType<QueensWreathArrow>(), damage, knockBack, Projectile.owner, ai1: 1);
+
+                                Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<QueensWreathHeldProj>(), 1, 0, Projectile.owner, 0, ai2: 1);
+                                SoundEngine.PlaySound(CoraliteSoundID.Bow2_Item102, Owner.Center);
+
+                                //生成粒子
+
                             }
 
                             Projectile.Kill();
@@ -191,17 +395,14 @@ namespace Coralite.Content.Items.Nightmare
 
                     } while (false);
 
-                    Projectile.rotation = Rotation;
-                    Projectile.Center = Owner.Center + Rotation.ToRotationVector2() * 8;
                     break;
-                case 2://横向冲刺
                 case 3://向上冲刺
                 case 4://向下冲刺
+                    case 5://横向冲刺的连射 一个动作分2个状态 究极鲨比
                     break;
             }
 
             Timer += 1f;
-            Owner.itemRotation = Rotation + (OwnerDirection > 0 ? 0 : 3.141f);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -210,18 +411,6 @@ namespace Coralite.Content.Items.Nightmare
             Vector2 center = Projectile.Center - Main.screenPosition;
 
             Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1.1f, OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
-
-            if (Alpha > 0.001f)
-            {
-                Texture2D starTex = Request<Texture2D>(AssetDirectory.IcicleItems + "IcicleStarArrow").Value;
-                float factor = Timer % 80 / 80;
-                float num3 = Utils.Remap(factor, 0f, 0.6f, 0f, 1f) * Utils.Remap(factor, 0.6f, 1f, 1f, 0f);
-                Vector2 dir = Rotation.ToRotationVector2();
-                Main.spriteBatch.Draw(starTex, center + dir * 6, null, Color.White * Alpha, Projectile.rotation + 1.57f, starTex.Size() / 2, 1.4f, SpriteEffects.None, 0f);
-
-                Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + dir * 18, new Color(255, 255, 255, 0) * num3 * 0.5f, Coralite.Instance.IcicleCyan,
-                    factor, 0f, 0.5f, 0.5f, 1f, 0f, new Vector2(1.3f, 1.3f), Vector2.One);
-            }
 
             return false;
         }
@@ -239,10 +428,105 @@ namespace Coralite.Content.Items.Nightmare
         public ref float State => ref Projectile.ai[0];
         public bool CanGetNightmareEnergy => Projectile.ai[1] == 1;
 
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailingMode[Type] = 2;
+            ProjectileID.Sets.TrailCacheLength[Type] = 14;
+            Main.projFrames[Projectile.type] = 6;
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.width = 24;
+            Projectile.height = 24;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 1200;
+            Projectile.aiStyle = -1;
+            Projectile.extraUpdates = 3;
+            Projectile.localNPCHitCooldown = 20;
+
+            Projectile.friendly = true;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = true;
+            Projectile.netImportant = true;
+            Projectile.usesLocalNPCImmunity = true;
+
+            Projectile.DamageType = DamageClass.Ranged;
+        }
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (CanGetNightmareEnergy && Main.player[Projectile.owner].TryGetModPlayer(out CoralitePlayer cp))
                 cp.GetNightmareEnergy(1);
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.frame = Main.rand.Next(6);
+        }
+
+        public override void AI()
+        {
+            if (++Projectile.frameCounter>16)//帧图
+            {
+                Projectile.frameCounter = 0;
+                Projectile.frame++;
+                if (++Projectile.frame > Main.projFrames[Projectile.type] - 1)
+                    Projectile.frame = 0;
+            }
+
+            Projectile.rotation = Projectile.velocity.ToRotation();
+
+            if (CanGetNightmareEnergy)
+            {
+                if (Projectile.timeLeft % 8 > 3)//生成一条粒子
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.ViciousPowder, Vector2.Zero, newColor: NightmarePlantera.lightPurple, Scale: 1.2f);
+                    d.noGravity = true;
+
+                }
+                else//生成2条粒子
+                {
+                    Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
+                    for (int i = -1; i < 2; i += 2)
+                    {
+                        Dust d = Dust.NewDustPerfect(Projectile.Center + dir * i * 6, DustID.ViciousPowder, Vector2.Zero, newColor: NightmarePlantera.lightPurple, Scale: 1.2f);
+                        d.noGravity = true;
+
+                    }
+                }
+            }
+            else
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.ViciousPowder, Vector2.Zero, newColor: NightmarePlantera.lightPurple, Scale: 1.2f);
+                d.noGravity = true;
+
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            Rectangle frameBox = mainTex.Frame(1, 6, 0, Projectile.frame);
+            Vector2 origin = frameBox.Size() / 2;
+            //绘制残影
+            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+
+            for (int i = 0; i < 14; i += 1)
+                Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
+                    Color.Pink * (0.75f - i * 0.75f / 14), Projectile.oldRot[i], frameBox.Size() / 2, 0.8f, 0, 0);
+
+            //向上下左右四个方向绘制一遍
+            for (int i = 0; i < 4; i++)
+            {
+                Main.spriteBatch.Draw(mainTex, pos + (i * MathHelper.PiOver2).ToRotationVector2() * 2, frameBox, Color.Pink, Projectile.rotation, origin,1,
+                   0, 0);
+            }
+
+            //绘制自己
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, Color.White*0.75f, Projectile.rotation, origin, 1, 0, 0);
+            return false;
         }
     }
 }
