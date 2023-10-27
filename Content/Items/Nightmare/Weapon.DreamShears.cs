@@ -67,7 +67,7 @@ namespace Coralite.Content.Items.Nightmare
                     {
                         Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 28f), knockback,
                             player.whoAmI, 1);
-                        cp.nightmareEnergy = 0;
+                        cp.nightmareEnergy -=7;
                     }
                     else
                         Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 2.5f), knockback, player.whoAmI,0);
@@ -84,14 +84,14 @@ namespace Coralite.Content.Items.Nightmare
                         break;
                     case 2://转圈圈
                         Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsRolling>(), (int)(damage * 2.5f), knockback, player.whoAmI);
-                        if (player.TryGetModPlayer(out CoralitePlayer cp2) && cp2.nightmareEnergy < 7)//获得能量
-                            cp2.nightmareEnergy++;
+                        if (player.TryGetModPlayer(out CoralitePlayer cp2))//获得能量
+                            cp2.GetNightmareEnergy(1);
                         break;
                     case 3://剪
                         Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 3f), knockback, player.whoAmI, 0);
 
-                        if (player.TryGetModPlayer(out CoralitePlayer cp3) && cp3.nightmareEnergy < 7)//获得能量
-                            cp3.nightmareEnergy++;
+                        if (player.TryGetModPlayer(out CoralitePlayer cp3))//获得能量
+                            cp3.GetNightmareEnergy(1);
                         break;
                 }
 
@@ -236,8 +236,8 @@ namespace Coralite.Content.Items.Nightmare
                 onHitTimer = 1;
                 Owner.immuneTime += 8;
 
-                if (Owner.TryGetModPlayer(out CoralitePlayer cp2) && cp2.nightmareEnergy < 7)//获得能量
-                    cp2.nightmareEnergy++;
+                if (Owner.TryGetModPlayer(out CoralitePlayer cp2))//获得能量
+                    cp2.GetNightmareEnergy(1);
 
                 if (Main.netMode == NetmodeID.Server)
                     return;

@@ -1487,6 +1487,11 @@ Mods: {
 				DisplayName: Queens Wreath
 				Tooltip: ""
 			}
+
+			NightmareHeart: {
+				DisplayName: Nightmare Heart
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {

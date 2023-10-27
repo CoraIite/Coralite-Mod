@@ -51,11 +51,15 @@ namespace Coralite.Content.ModPlayers
         public int nightmareEnergy;
         public int nightmareEnergyMax;
         public bool equippedBoneRing;
+        /// <summary> 抵抗梦蚀 </summary>
+        public bool resistDreamErosion;
 
         public override void ResetEffects()
         {
             redJadePendant = false;
             equippedBoneRing = false;
+            resistDreamErosion = false;
+
             nightmareEnergyMax = 7;
 
             if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15)

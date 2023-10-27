@@ -1576,6 +1576,17 @@ Mods: {
 				DisplayName: 珊瑚藤
 				Tooltip: "[c/ffd1fc:爱的锁链]"
 			}
+
+			NightmareHeart: {
+				DisplayName: 梦魇花药袋
+				Tooltip:
+					'''
+					"[c/be0065:永不停息地跳动着]"
+					[c/fa0064:梦魇光能]上限增加到10个，每个[c/fa0064:梦魇光能]会提供1.5%伤害加成
+					抵抗梦蚀Debuff
+					小幅度增加防御力，生命回复，移动速度，近战攻速，伤害减免，暴击率
+					'''
+			}
 		}
 
 		Tiles: {

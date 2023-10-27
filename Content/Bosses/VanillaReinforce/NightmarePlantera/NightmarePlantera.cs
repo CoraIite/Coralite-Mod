@@ -623,8 +623,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 if (cp.nightmareCount < 28)
-                    cp.nightmareCount += (byte)Helper.ScaleValueForDiffMode(1, 1, 2, 3);
+                {
+                    byte howMany = (byte)Helper.ScaleValueForDiffMode(1, 1, 2, 3);
+                    if (cp.resistDreamErosion)
+                    {
+                        howMany -= 1;
+                        if (howMany < 1)
+                            howMany = 1;
+                    }
+                    cp.nightmareCount += howMany;
 
+                }
                 //设置阶段并秒杀玩家
                 if (cp.nightmareCount >= 28)
                 {

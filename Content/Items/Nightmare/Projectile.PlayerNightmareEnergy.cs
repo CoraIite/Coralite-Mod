@@ -76,17 +76,27 @@ namespace Coralite.Content.Items.Nightmare
         public override bool PreDraw(ref Color lightColor)
         {
             int howMany = 0;
+            bool nightmareHeart = false;
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
+            {
                 howMany = cp.nightmareEnergy;
+                nightmareHeart = cp.resistDreamErosion;
+            }
 
             Vector2 pos = Projectile.Center - Main.screenPosition;
             float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
             float rot = Timer * 0.02f;
+
             for (int i = 0; i < howMany; i++)
             {
                 Vector2 dir = (Projectile.rotation + i * MathHelper.TwoPi / howMany).ToRotationVector2();
-                Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos + dir * (40 + factor * 2), Color.White * 0.7f, NightmarePlantera.nightmareRed,
-                    0.5f + factor * 0.1f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation + rot, new Vector2(0.9f, 0.9f), Vector2.One*1.2f);
+                Vector2 position = pos + dir * (40 + factor * 2);
+                float factor2 = 0.5f + factor * 0.1f;
+                Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, position, Color.White * 0.7f, NightmarePlantera.nightmareRed,
+                   factor2, 0f, 0.5f, 0.5f, 1f, Projectile.rotation + rot, new Vector2(0.9f, 0.9f), Vector2.One * 1.2f);
+                if (nightmareHeart)
+                    Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, position, Color.White * 0.7f, NightmarePlantera.nightPurple,
+                       factor2, 0f, 0.5f, 0.5f, 1f, Projectile.rotation + rot+MathHelper.PiOver4, new Vector2(0.4f, 0.4f), Vector2.One);
             }
             return false;
         }

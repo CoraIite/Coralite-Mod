@@ -459,11 +459,7 @@ namespace Coralite.Content.Items.Nightmare
                 //生成新的挥舞弹幕
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<LostSevensideSlash>(), Projectile.damage*3, 2, Owner.whoAmI, 4);
                 if (Owner.TryGetModPlayer(out CoralitePlayer cp))
-                {
-                    cp.nightmareEnergy += 2;
-                    if (cp.nightmareEnergy>7)
-                        cp.nightmareEnergy = 7;
-                }
+                    cp.GetNightmareEnergy(2);
                 Projectile.Kill();
             }
 
