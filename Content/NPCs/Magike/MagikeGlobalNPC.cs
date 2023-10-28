@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.NPCs.Magike
 {
-    public class MagikeGlobalNPC:GlobalNPC
+    public class MagikeGlobalNPC : GlobalNPC
     {
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {

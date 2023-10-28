@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.Nightmare
 
         private RotateTentacle tentacle;
         private Color tentacleColor;
-        private Vector2 exVec2=new Vector2(0,-300);
+        private Vector2 exVec2 = new Vector2(0, -300);
 
         private const int NormalAttackTime = 50;
         private const int PowerfulAttackTime = 35;
@@ -258,7 +258,7 @@ namespace Coralite.Content.Items.Nightmare
                 float lerpValue2 = Utils.GetLerpValue(AttackTimer, resetTimer, Timer, clamped: true);
 
                 Vector2 originCenter = new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
-                originCenter += Utils.GetLerpValue(0f, 0.4f, lerpValue2, clamped: true)*exVec2;
+                originCenter += Utils.GetLerpValue(0f, 0.4f, lerpValue2, clamped: true) * exVec2;
                 Vector2 v = target.Center - originCenter;
                 Vector2 vector6 = v.SafeNormalize(Vector2.Zero) * MathHelper.Clamp(v.Length(), 60f, 150f);
                 Vector2 value = target.Center + vector6;
@@ -272,12 +272,12 @@ namespace Coralite.Content.Items.Nightmare
 
                 if (Timer <= resetTimer)
                 {
-                    StartAttack(onAttack:true);
+                    StartAttack(onAttack: true);
                 }
             }
         }
 
-        public void StartAttack( bool RandomRot = true, bool onAttack = false)
+        public void StartAttack(bool RandomRot = true, bool onAttack = false)
         {
             int startAttackRange = 800;
             int attackTarget = -1;
@@ -305,7 +305,7 @@ namespace Coralite.Content.Items.Nightmare
                     Timer = -2;
                 }
             }
-            else if(RandomRot)
+            else if (RandomRot)
             {
                 Timer = -1f;
                 Projectile.netUpdate = true;
@@ -368,7 +368,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public void UpdateFrameNormally(int interval)
         {
-            if (++Projectile.frameCounter>interval)
+            if (++Projectile.frameCounter > interval)
             {
                 Projectile.frameCounter = 0;
                 if (++Projectile.frame > Main.projFrames[Type] - 1)
@@ -385,7 +385,7 @@ namespace Coralite.Content.Items.Nightmare
             Rectangle frameBox = mainTex.Frame(1, 4, 0, Projectile.frame);
             Vector2 selforigin = frameBox.Size() / 2;
 
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, Projectile.rotation+MathHelper.PiOver2,
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, Projectile.rotation + MathHelper.PiOver2,
                 selforigin, Projectile.scale, 0, 0);
 
             return false;

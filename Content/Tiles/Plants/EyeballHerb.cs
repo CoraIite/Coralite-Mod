@@ -11,7 +11,7 @@ namespace Coralite.Content.Tiles.Plants
 {
     public class EyeballHerb : BaseBottomSolidSeedPlantTile<NormalPlantTileEntity>
     {
-        public EyeballHerb() : base(AssetDirectory.PlantTiles, 24, 4, ModContent.ItemType<EyeballSeed>(), ItemID.Lens,ItemID.BlackLens) { }
+        public EyeballHerb() : base(AssetDirectory.PlantTiles, 24, 4, ModContent.ItemType<EyeballSeed>(), ItemID.Lens, ItemID.BlackLens) { }
 
         public override void SetStaticDefaults()
         {

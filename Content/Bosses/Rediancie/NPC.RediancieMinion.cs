@@ -109,7 +109,7 @@ namespace Coralite.Content.Bosses.Rediancie
             Vector2 origin = mainTex.Size() / 2;
 
             if (Timer < 101)
-                spriteBatch.Draw(mainTex, drawPos, null, new Color(248, 40, 24,(int)alpha), NPC.rotation, origin, NPC.scale + 0.5f*(alpha / 255), SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, drawPos, null, new Color(248, 40, 24, (int)alpha), NPC.rotation, origin, NPC.scale + 0.5f * (alpha / 255), SpriteEffects.None, 0f);
             else
             {
                 Texture2D extraTex = ModContent.Request<Texture2D>(AssetDirectory.RedJadeProjectiles + "RedBinkRush").Value;

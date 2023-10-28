@@ -1,17 +1,16 @@
-﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Content.UI;
+using Coralite.Core.Loaders;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
+using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Coralite.Content.UI;
-using Coralite.Core.Loaders;
-using Coralite.Content.CustomHooks;
-using System;
 using Terraria.GameContent;
+using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.MagikeSystem.Base
 {
@@ -85,7 +84,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
                 Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
         }
 
-        public static void DrawItem(MagikeFactory_RemodelPool pool,Vector2 drawPos,SpriteBatch spriteBatch)
+        public static void DrawItem(MagikeFactory_RemodelPool pool, Vector2 drawPos, SpriteBatch spriteBatch)
         {
             if (pool.containsItem is not null && !pool.containsItem.IsAir)
             {
@@ -104,20 +103,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
                 Vector2 origin = rectangle2.Size() / 2;
                 float itemScale = 1f;
-                const float pixelWidth = 16 *2;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                const float pixelWidth = 16 * 2;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
                 const float pixelHeight = 16 * 3;
                 if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
                 {
-                    if (rectangle2.Width >pixelWidth)
+                    if (rectangle2.Width > pixelWidth)
                         itemScale = pixelWidth / rectangle2.Width;
                     else
                         itemScale = pixelHeight / rectangle2.Height;
                 }
 
                 itemScale *= pool.itemScale;
-                spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pool.containsItem.GetAlpha(Color.White)* pool.itemAlpha, 0f, origin, itemScale, 0, 0f);
+                spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pool.containsItem.GetAlpha(Color.White) * pool.itemAlpha, 0f, origin, itemScale, 0, 0f);
                 if (pool.containsItem.color != default(Color))
-                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pool.containsItem.GetColor(Color.White)* pool.itemAlpha, 0f, origin, itemScale, 0, 0f);
+                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pool.containsItem.GetColor(Color.White) * pool.itemAlpha, 0f, origin, itemScale, 0, 0f);
             }
 
         }

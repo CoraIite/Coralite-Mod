@@ -1,17 +1,17 @@
-using System;
-using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Content.Particles;
+using Coralite.Core;
+using Coralite.Core.Configs;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Coralite.Core.Configs;
 
 namespace Coralite.Content.Items.Icicle
 {
@@ -68,7 +68,7 @@ namespace Coralite.Content.Items.Icicle
             Lighting.AddLight(Projectile.Center, Coralite.Instance.IcicleCyan.ToVector3());
             if (Projectile.timeLeft % 3 == 0)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center+Main.rand.NextVector2Circular(16,16), DustID.FrostStaff, -Projectile.velocity * 0.2f);
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16, 16), DustID.FrostStaff, -Projectile.velocity * 0.2f);
                 dust.noGravity = true;
             }
         }

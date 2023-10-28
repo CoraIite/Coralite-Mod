@@ -24,7 +24,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         //private static NPC NightmareOwner => Main.npc[NightmarePlantera.NPBossIndex];
 
         private NightmareTentacle tentacle;
-        public float tentacleWidth=30;
+        public float tentacleWidth = 30;
         public Color tencleColor = NightmarePlantera.lightPurple;
 
         public override void SetDefaults()
@@ -153,13 +153,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 var modifyer = new PunchCameraModifier((targetCenter + selfCenter) / 2, Vector2.One, 20, 8, 20, 1000);
                 Main.instance.CameraModifiers.Add(modifyer);
 
-                float maxLength=Vector2.Distance(selfCenter, targetCenter);
-                Vector2 dir = ( selfCenter- targetCenter).SafeNormalize(Vector2.UnitY);
+                float maxLength = Vector2.Distance(selfCenter, targetCenter);
+                Vector2 dir = (selfCenter - targetCenter).SafeNormalize(Vector2.UnitY);
 
-                for (int i = 0; i < maxLength; i+=8)
+                for (int i = 0; i < maxLength; i += 8)
                 {
                     Vector2 pos = targetCenter + dir * i;
-                    for (int j = -1; j < 2; j+=2)
+                    for (int j = -1; j < 2; j += 2)
                     {
                         Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(16, 16), DustID.SpookyWood,
                             new Vector2(j, 0) * Main.rand.NextFloat(1, 8), Scale: Main.rand.NextFloat(1.5f, 2f));

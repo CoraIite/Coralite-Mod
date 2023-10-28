@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 {
@@ -13,9 +12,9 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
         public override void Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer==player.whoAmI&&player.ItemAnimationJustStarted)
+            if (Main.myPlayer == player.whoAmI && player.ItemAnimationJustStarted)
             {
-            Projectile p=    Projectile.NewProjectileDirect(source, position, (Main.MouseWorld-player.Center).SafeNormalize(velocity)*12, (int)bonus0, (int)(damage * bonus1), knockback, player.whoAmI);
+                Projectile p = Projectile.NewProjectileDirect(source, position, (Main.MouseWorld - player.Center).SafeNormalize(velocity) * 12, (int)bonus0, (int)(damage * bonus1), knockback, player.whoAmI);
                 p.friendly = true;
                 p.hostile = false;
             }

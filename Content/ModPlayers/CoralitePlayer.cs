@@ -6,14 +6,11 @@ using Coralite.Content.Items.RedJades;
 using Coralite.Content.UI;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Steamworks;
 using System;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,7 +24,7 @@ namespace Coralite.Content.ModPlayers
         public const int DashUp = 1;
         public const int DashRight = 2;
         public const int DashLeft = 3;
-        
+
         public int DashDir = -1;
 
 
@@ -166,7 +163,7 @@ namespace Coralite.Content.ModPlayers
             else
                 nianli = 0f;
 
-            if (nightmareEnergy>nightmareEnergyMax)
+            if (nightmareEnergy > nightmareEnergyMax)
                 nightmareEnergy = nightmareEnergyMax;
         }
 
@@ -278,7 +275,7 @@ namespace Coralite.Content.ModPlayers
         public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
         {
             if (equippedBoneRing)
-                drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod,"BoneRing",EquipType.HandsOn);
+                drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "BoneRing", EquipType.HandsOn);
         }
 
         public void GetNightmareEnergy(int howMany)

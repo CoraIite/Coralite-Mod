@@ -1,6 +1,6 @@
-using System.Linq;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.Icicle
                     {
                         IcicleThorn pro = (IcicleThorn)proj.ModProjectile;
                         pro.rightClick = true;
-                        if (pro.State == 1||pro.State==0)
+                        if (pro.State == 1 || pro.State == 0)
                             pro.ResetStates();
                     }
                     return false;

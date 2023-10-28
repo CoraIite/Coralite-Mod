@@ -151,7 +151,7 @@ namespace Coralite.Helpers
         }
 
         #region 各种插值函数
-        
+
         /// <summary>
         /// 两端平滑的贝塞尔曲线
         /// </summary>

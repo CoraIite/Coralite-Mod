@@ -35,36 +35,36 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     });
                     break;
                 case 2:
-                        OnChangeToCrownMode();
-                        ScaleToTarget(0.7f, 0.5f, 0.1f, Scale.Y < 0.55f || Timer > 20, () =>
-                        {
-                            SonState = 3;
-                            Timer = 0;
-                        });
+                    OnChangeToCrownMode();
+                    ScaleToTarget(0.7f, 0.5f, 0.1f, Scale.Y < 0.55f || Timer > 20, () =>
+                    {
+                        SonState = 3;
+                        Timer = 0;
+                    });
                     break;
                 case 3:
-                        OnChangeToCrownMode();
-                        ScaleToTarget(0.4f, 0.6f, 0.1f, Scale.X < 0.45f || Timer > 20, () =>
-                        {
-                            SoundEngine.PlaySound(CoraliteSoundID.QueenSlime_Item154, NPC.Center);
-                            SonState = 4;
-                            Timer = 0;
-                            CrownMode();
-                            NPC.TargetClosest();
+                    OnChangeToCrownMode();
+                    ScaleToTarget(0.4f, 0.6f, 0.1f, Scale.X < 0.45f || Timer > 20, () =>
+                    {
+                        SoundEngine.PlaySound(CoraliteSoundID.QueenSlime_Item154, NPC.Center);
+                        SonState = 4;
+                        Timer = 0;
+                        CrownMode();
+                        NPC.TargetClosest();
 
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int howMany = Helper.ScaleValueForDiffMode(1, 2, 4, 6);
+                            for (int i = 0; i < howMany; i++)
                             {
-                                int howMany = Helper.ScaleValueForDiffMode(1, 2, 4, 6);
-                                for (int i = 0; i < howMany; i++)
-                                {
-                                    Point pos = NPC.Center.ToPoint();
-                                    pos.X += Main.rand.Next(-NPC.width, NPC.width);
-                                    pos.Y += Main.rand.Next(-32, 32);
-                                    NPC npc = NPC.NewNPCDirect(NPC.GetSource_FromAI(), pos.X, pos.Y, ModContent.NPCType<ElasticGelBall>());
-                                    npc.velocity = Helper.NextVec2Dir() * Main.rand.NextFloat(2, 5);
-                                }
+                                Point pos = NPC.Center.ToPoint();
+                                pos.X += Main.rand.Next(-NPC.width, NPC.width);
+                                pos.Y += Main.rand.Next(-32, 32);
+                                NPC npc = NPC.NewNPCDirect(NPC.GetSource_FromAI(), pos.X, pos.Y, ModContent.NPCType<ElasticGelBall>());
+                                npc.velocity = Helper.NextVec2Dir() * Main.rand.NextFloat(2, 5);
                             }
-                        });
+                        }
+                    });
                     break;
                 case 4: //变成王冠之后简单追踪玩家的阶段
                     {

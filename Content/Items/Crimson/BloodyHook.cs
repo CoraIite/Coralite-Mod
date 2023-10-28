@@ -117,7 +117,7 @@ namespace Coralite.Content.Items.Crimson
             {
                 default:
                 case 0:
-                    maxTime = Owner.itemTimeMax*2;
+                    maxTime = Owner.itemTimeMax * 2;
                     startAngle = 2f;
                     totalAngle = 4.6f;
                     distanceToOwner = 10;
@@ -244,7 +244,7 @@ namespace Coralite.Content.Items.Crimson
 
         public static Asset<Texture2D> ChainTex;
 
-        public BloodHookChain() : base(16*30, 32, 20, 16)
+        public BloodHookChain() : base(16 * 30, 32, 20, 16)
         {
         }
 

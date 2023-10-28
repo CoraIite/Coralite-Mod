@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void SetStaticDefaults()
         {
-            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type]=true;
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
         }
 
         public override void SetDefaults()
@@ -67,10 +67,10 @@ namespace Coralite.Content.Items.Nightmare
                     {
                         Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 28f), knockback,
                             player.whoAmI, 1);
-                        cp.nightmareEnergy -=7;
+                        cp.nightmareEnergy -= 7;
                     }
                     else
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 2.5f), knockback, player.whoAmI,0);
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DreamShearsCut>(), (int)(damage * 2.5f), knockback, player.whoAmI, 0);
                     return false;
                 }
 
@@ -201,7 +201,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
             Dust dust = Dust.NewDustPerfect((Top + Projectile.Center) / 2 + Main.rand.NextVector2Circular(50, 50), DustID.RedMoss,
-                   dir * Main.rand.NextFloat(0.5f, 2f),Scale:Main.rand.NextFloat(1f,1.5f));
+                   dir * Main.rand.NextFloat(0.5f, 2f), Scale: Main.rand.NextFloat(1f, 1.5f));
             dust.noGravity = true;
 
             int timer = (int)Timer - minTime;
@@ -547,14 +547,14 @@ namespace Coralite.Content.Items.Nightmare
             }
 
             Dust dust;
-            Vector2 pos = Vector2.Lerp(Projectile.Center,target.Center,0.7f);
+            Vector2 pos = Vector2.Lerp(Projectile.Center, target.Center, 0.7f);
 
             if (VisualEffectSystem.HitEffect_Dusts)
             {
                 for (int j = 0; j < 8; j++)
                 {
                     Vector2 dir = rotDir.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
-                    dust = Dust.NewDustPerfect(pos, DustID.RedTorch, dir * Main.rand.NextFloat(4f, 12f), Scale: Main.rand.NextFloat(1f,2f));
+                    dust = Dust.NewDustPerfect(pos, DustID.RedTorch, dir * Main.rand.NextFloat(4f, 12f), Scale: Main.rand.NextFloat(1f, 2f));
                     dust.noGravity = true;
                 }
             }
@@ -674,7 +674,7 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     float a = 0;
                     return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(),
-                        Projectile.Center, Projectile.Center+Projectile.velocity * Length * 2, 32, ref a);
+                        Projectile.Center, Projectile.Center + Projectile.velocity * Length * 2, 32, ref a);
                 }
                 return base.Colliding(projHitbox, targetHitbox);
             }
@@ -983,11 +983,11 @@ namespace Coralite.Content.Items.Nightmare
 
             float rot = Projectile.rotation + 0.785f;
             Main.spriteBatch.Draw(mainTex, center, framebox,
-                lightColor, rot + Angle , origin2, Projectile.scale, 0, 0);
+                lightColor, rot + Angle, origin2, Projectile.scale, 0, 0);
 
             framebox = mainTex.Frame(1, 2, 0, 0);
             Main.spriteBatch.Draw(mainTex, center, framebox,
-                lightColor, rot - Angle , origin2, Projectile.scale, 0, 0);
+                lightColor, rot - Angle, origin2, Projectile.scale, 0, 0);
 
             return false;
         }

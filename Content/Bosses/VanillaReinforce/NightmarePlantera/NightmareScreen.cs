@@ -62,7 +62,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     {
         public EffectPass effectPass;
 
-        public NightmareScreenShader(string passName):base(passName)
+        public NightmareScreenShader(string passName) : base(passName)
         {
 
         }
@@ -77,7 +77,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
             Shader.Parameters["viewRange"].SetValue(NightmareScreen.size);
 
-            if ( Shader != null)
+            if (Shader != null)
             {
                 effectPass = Shader.CurrentTechnique.Passes["Marbling"];
             }

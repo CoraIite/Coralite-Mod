@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Dusts
 {
-    public class GlowBall:ModDust
+    public class GlowBall : ModDust
     {
-        public override string Texture => AssetDirectory.Dusts+Name;
+        public override string Texture => AssetDirectory.Dusts + Name;
 
         public override void OnSpawn(Dust dust)
         {

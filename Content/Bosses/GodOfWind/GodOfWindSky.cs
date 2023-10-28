@@ -22,17 +22,17 @@ namespace Coralite.Content.Bosses.GodOfWind
 
         public override void Activate(Vector2 position, params object[] args)
         {
-            
+
         }
 
         public override void Deactivate(params object[] args)
         {
-            
+
         }
 
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
-            
+
         }
 
         public override bool IsActive() => timer > 0;

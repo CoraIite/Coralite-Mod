@@ -1,15 +1,15 @@
-﻿using Terraria.ID;
-using Terraria;
-using Terraria.IO;
-using Terraria.WorldBuilding;
+﻿using Coralite.Content.WorldGeneration.Generators;
+using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Terraria.ModLoader;
-using Coralite.Core;
-using Coralite.Content.WorldGeneration.Generators;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Terraria;
+using Terraria.ID;
+using Terraria.IO;
+using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
@@ -74,7 +74,7 @@ namespace Coralite.Content.WorldGeneration
             WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.LargePiles, 3, 8);
 
             //添加斜坡
-            WorldGenHelper.SmoothSlope(genOrigin_x,genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.IceBlock, 5);
+            WorldGenHelper.SmoothSlope(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.IceBlock, 5);
             WorldGenHelper.SmoothSlope(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.SnowBlock, 5);
         }
 

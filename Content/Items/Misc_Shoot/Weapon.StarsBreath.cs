@@ -14,8 +14,8 @@ namespace Coralite.Content.Items.Misc_Shoot
     {
         public override string Texture => AssetDirectory.Misc_Shoot + Name;
 
-/*         public int shootStyle;
-        public int shootCount; */
+        /*         public int shootStyle;
+                public int shootCount; */
 
         public override void SetDefaults()
         {
@@ -107,7 +107,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 }
                 SoundEngine.PlaySound(CoraliteSoundID.Gun2_Item40, player.Center);
 
-                Projectile.NewProjectile(source, player.Center, velocity, ProjectileType<StarsBreathBullet>(), damage , knockback, player.whoAmI, Main.rand.Next(3));
+                Projectile.NewProjectile(source, player.Center, velocity, ProjectileType<StarsBreathBullet>(), damage, knockback, player.whoAmI, Main.rand.Next(3));
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<StarsBreathHeldProj>(), damage, knockback, player.whoAmI);
             }
             return false;

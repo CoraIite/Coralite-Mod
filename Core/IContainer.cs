@@ -42,7 +42,7 @@ namespace Coralite.Core
         /// <returns></returns>
         bool ConnectToReceiver(Point16 position);
         void SendVisualEffect(Point16 position);
-        
+
         void ShowConnection_ItemSender();
         void DisconnectAll_ItemSender();
     }

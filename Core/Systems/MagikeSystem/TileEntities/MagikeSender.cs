@@ -136,12 +136,12 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public virtual void ShowConnection()
         {
-            
+
         }
 
         public abstract bool ConnectToRecevier(IMagikeContainer container);
 
-        public virtual void DisconnectAll()  {  }
+        public virtual void DisconnectAll() { }
     }
 
     /// <summary>
@@ -209,7 +209,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// </summary>
         public override void ShowConnection()
         {
-            for (int i = 0; i < receiverPoints.Length; i++) 
+            for (int i = 0; i < receiverPoints.Length; i++)
             {
                 if (receiverPoints[i] != Point16.NegativeOne)
                 {

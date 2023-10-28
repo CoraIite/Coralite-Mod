@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Dusts;
-using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
 
@@ -7,7 +6,7 @@ namespace Coralite.Content.Items.Gels
 {
     public class EmperorSabreStrikeDust : BaseStrikeDust
     {
-        public EmperorSabreStrikeDust() : base(new Color(247, 245, 176), new Color(83, 46, 85),20) { }
+        public EmperorSabreStrikeDust() : base(new Color(247, 245, 176), new Color(83, 46, 85), 20) { }
 
         public override void OnSpawn(Dust dust)
         {

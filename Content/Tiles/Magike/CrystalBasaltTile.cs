@@ -1,13 +1,13 @@
-﻿using Coralite.Core;
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
+﻿using Coralite.Content.Items.Magike;
+using Coralite.Core;
 using System.Collections.Generic;
-using Coralite.Content.Items.Magike;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.Magike
 {
-    public class CrystalBasaltTile:ModTile
+    public class CrystalBasaltTile : ModTile
     {
         public override string Texture => AssetDirectory.MagikeTiles + Name;
 
@@ -41,7 +41,7 @@ namespace Coralite.Content.Tiles.Magike
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {
-            TileFraming.CustomMergeFrame(i, j, Type,ModContent.TileType<BasaltTile>(), true, true, false);
+            TileFraming.CustomMergeFrame(i, j, Type, ModContent.TileType<BasaltTile>(), true, true, false);
             return false;
         }
 

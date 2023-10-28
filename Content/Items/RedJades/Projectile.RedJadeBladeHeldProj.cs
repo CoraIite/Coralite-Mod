@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.RedJades
         {
             if (Main.myPlayer == Projectile.owner && Timer == maxTime / 2 && Combo == 3)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center+(Main.MouseWorld-Owner.Center).SafeNormalize(Vector2.Zero)*64, Vector2.Zero, 
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center + (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 64, Vector2.Zero,
                     ModContent.ProjectileType<RedJadeBigBoom>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
             }
         }

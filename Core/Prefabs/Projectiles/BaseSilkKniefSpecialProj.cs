@@ -7,7 +7,7 @@ namespace Coralite.Core.Prefabs.Projectiles
     /// <summary>
     /// ai1用于判断当前勾到的敌人
     /// </summary>
-    public abstract class BaseSilkKnifeSpecialProj:BaseHeldProj
+    public abstract class BaseSilkKnifeSpecialProj : BaseHeldProj
     {
         public ref float Target => ref Projectile.ai[1];
         public ref float HookState => ref Projectile.ai[2];
@@ -25,9 +25,9 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <summary> 射出多久后开始回到手中 </summary>
         protected readonly float shootTime;
 
-        protected float backSpeed=32;
+        protected float backSpeed = 32;
 
-        public BaseSilkKnifeSpecialProj(int onHookedLength,int rollingLength,float shootSpeed,float shootTime)
+        public BaseSilkKnifeSpecialProj(int onHookedLength, int rollingLength, float shootSpeed, float shootTime)
         {
             this.onHookedLength = onHookedLength;
             this.rollingLength = rollingLength;
@@ -72,7 +72,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// </summary>
         public virtual void BackToOwner()
         {
-            if (Vector2.Distance(Owner.Center, Projectile.Center) < (backSpeed+24))
+            if (Vector2.Distance(Owner.Center, Projectile.Center) < (backSpeed + 24))
                 Projectile.Kill();
 
             Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.One) * backSpeed;
@@ -133,12 +133,12 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (Target < 0 || Target > Main.maxNPCs)
             {
                 Projectile.Kill();
-            } 
+            }
             NPC npc = Main.npc[(int)Target];
             if (!npc.active || npc.dontTakeDamage || npc.Distance(Owner.Center) > onHookedLength || !Collision.CanHitLine(Owner.Center, 1, 1, npc.Center, 1, 1))
             {
                 Projectile.Kill();
-            }    
+            }
 
             Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation();
             Projectile.Center = npc.Center + offset;
@@ -186,7 +186,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                 Timer = 0;
                 Projectile.netUpdate = true;
 
-                OnHitNPC_Shoot(target,hit,damageDone);
+                OnHitNPC_Shoot(target, hit, damageDone);
             }
             else if ((int)HookState == (int)AIStates.drag)
                 OnHitNPC_Draging(target, hit, damageDone);

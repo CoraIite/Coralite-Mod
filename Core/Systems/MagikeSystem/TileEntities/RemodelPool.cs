@@ -28,7 +28,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public override bool StartWork()
         {
             if (containsItem is not null && !containsItem.IsAir &&
-                chooseRecipe is not null && chooseRecipe.CanRemodel(containsItem,magike, containsItem.type, containsItem.stack))
+                chooseRecipe is not null && chooseRecipe.CanRemodel(containsItem, magike, containsItem.type, containsItem.stack))
                 return base.StartWork();
 
             return false;
@@ -63,7 +63,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             itemScale = 1;
             itemAlpha = 1;
             if (containsItem is not null && !containsItem.IsAir &&
-                chooseRecipe is not null && chooseRecipe.CanRemodel(containsItem,magike, containsItem.type, containsItem.stack))
+                chooseRecipe is not null && chooseRecipe.CanRemodel(containsItem, magike, containsItem.type, containsItem.stack))
             {
                 Charge(-chooseRecipe.magikeCost);
 
@@ -77,7 +77,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                     magikeItem.condition = null;
                 }
 
-                int index=  Item.NewItem(new EntitySource_TileEntity(this), position, item);    //生成掉落物
+                int index = Item.NewItem(new EntitySource_TileEntity(this), position, item);    //生成掉落物
                 chooseRecipe.onRemodel?.Invoke(containsItem, Main.item[index]); //触发OnRemodel
 
                 containsItem.stack -= chooseRecipe.selfRequiredNumber;  //消耗原物品
@@ -85,7 +85,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                     containsItem.TurnToAir();
 
                 SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, position);
-                MagikeHelper.SpawnDustOnGenerate(3, 2, Position+new Point16(0,-2), MainColor);
+                MagikeHelper.SpawnDustOnGenerate(3, 2, Position + new Point16(0, -2), MainColor);
             }
         }
 
@@ -144,7 +144,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 containsItem = item;
 
             if (tag.TryGet("RecipeSelfItem", out Item mainItem) && tag.TryGet("RecipeResultItem", out Item resultItem))
-                if ( MagikeSystem.TryGetRemodelRecipes(mainItem.type, out List<RemodelRecipe> recipes))
+                if (MagikeSystem.TryGetRemodelRecipes(mainItem.type, out List<RemodelRecipe> recipes))
                     chooseRecipe = recipes.FirstOrDefault(p => p.resultItem.type == resultItem.type && p.resultItem.stack == resultItem.stack, null);
         }
     }

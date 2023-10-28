@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             float iconScale = drawParams.IconScale;
             bool showText = drawParams.ShowText;
             float life = drawParams.Life;
-            float lifeMax =  drawParams.LifeMax;
+            float lifeMax = drawParams.LifeMax;
 
             Point barSize = new Point(406, 20); //条条尺寸
             Point topLeftOffset = new Point(66, 20); //框框左上角的位置

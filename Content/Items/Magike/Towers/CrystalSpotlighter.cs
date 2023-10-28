@@ -1,25 +1,25 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Magike.OtherPlaceables;
+using Coralite.Content.Raritys;
+using Coralite.Core;
+using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ObjectData;
-using Terraria;
-using Coralite.Core.Prefabs.Items;
-using Coralite.Core.Systems.MagikeSystem.Base;
-using Terraria.Audio;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using static Terraria.ModLoader.ModContent;
-using Coralite.Content.Raritys;
-using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Content.Items.Magike.OtherPlaceables;
 
 namespace Coralite.Content.Items.Magike.Towers
 {
     public class CrystalSpotlighter : BaseMagikePlaceableItem
     {
-        public CrystalSpotlighter() : base(TileType<CrystalSpotlighterTile>(), Item.sellPrice(0, 0, 10, 0),RarityType<MagicCrystalRarity>(), 50)
+        public CrystalSpotlighter() : base(TileType<CrystalSpotlighterTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
         public override void AddRecipes()

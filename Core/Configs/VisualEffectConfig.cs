@@ -9,7 +9,7 @@ namespace Coralite.Core.Configs
 
         [Header("HitEffects")]
         [SeparatePage]
-        [DefaultValue(true)] 
+        [DefaultValue(true)]
         public bool HitEffect_Dusts;
 
         [DefaultValue(true)]
@@ -68,7 +68,7 @@ namespace Coralite.Core.Configs
 
     public class VisualEffectSystem
     {
-        public static bool HitEffect_Dusts=true;
+        public static bool HitEffect_Dusts = true;
         public static bool HitEffect_ScreenShaking = true;
         public static bool HitEffect_Lightning = true;
         public static bool HitEffect_SpecialParticles = true;
@@ -76,7 +76,7 @@ namespace Coralite.Core.Configs
         public static bool HitEffect_HitFreeze = true;
         public static bool DrawKniefLight = true;
         public static bool DrawWarp = true;
-        public static bool DrawTrail=true;
+        public static bool DrawTrail = true;
 
         public static bool UseNightmareSky;
         public static bool UseNightmareBossBar;

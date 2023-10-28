@@ -10,7 +10,7 @@ namespace Coralite.Content.Items.RedJades
 {
     public class RedJadeHulu : BaseHulu
     {
-        public RedJadeHulu() : base(2, ItemRarityID.Blue, Item.sellPrice(0, 0, 20, 0), 9, 1.5f,AssetDirectory.RedJadeItems) { }
+        public RedJadeHulu() : base(2, ItemRarityID.Blue, Item.sellPrice(0, 0, 20, 0), 9, 1.5f, AssetDirectory.RedJadeItems) { }
 
         public override IHuluEffect SetHuluEffect()
         {

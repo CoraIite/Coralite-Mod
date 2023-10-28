@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Buffs.Debuffs
 {
-    public class SnowDebuff:ModBuff
+    public class SnowDebuff : ModBuff
     {
         public override string Texture => AssetDirectory.Debuffs + Name;
 

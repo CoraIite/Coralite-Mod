@@ -62,7 +62,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             Vector2 screenPosition = Main.screenPosition;
 
-            Utils.DrawBorderStringBig(sb, ModContent.GetInstance<BabyIceDragon>().DisplayName.Value, Main.LocalPlayer.Center - new Vector2(0, 315) - screenPosition, drawCharColor, 1f,0.5f);
+            Utils.DrawBorderStringBig(sb, ModContent.GetInstance<BabyIceDragon>().DisplayName.Value, Main.LocalPlayer.Center - new Vector2(0, 315) - screenPosition, drawCharColor, 1f, 0.5f);
 
             sb.Draw(mainTex, Main.LocalPlayer.Center - new Vector2(0, 225) - screenPosition, mainTex.Frame(), drawPicColor, 0f, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 2f, SpriteEffects.None, 0f);
 

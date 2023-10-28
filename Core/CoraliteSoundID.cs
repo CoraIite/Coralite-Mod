@@ -181,7 +181,7 @@ namespace Coralite.Core
         public static SoundStyle Drink_Item3 => SoundID.Item3;
 
         /// <summary> 生命水晶等的Ding~ </summary>
-        public static  SoundStyle Ding_Item4 => SoundID.Item4;
+        public static SoundStyle Ding_Item4 => SoundID.Item4;
 
         /// <summary> 弓射箭的声音，大概是Jiu~ </summary>
         public static SoundStyle Bow_Item5 => SoundID.Item5;
@@ -190,10 +190,10 @@ namespace Coralite.Core
         public static SoundStyle Teleport_Item6 => SoundID.Item6;
 
         /// <summary> 各种回旋镖，圣骑士锤，吹叶机（世花掉的那个魔法武器）的声音</summary>
-        public static  SoundStyle Swing2_Item7 => SoundID.Item7;
+        public static SoundStyle Swing2_Item7 => SoundID.Item7;
 
         /// <summary>前期各种矿物法杖法杖，一些NPC的声音，类似weng~ </summary>
-        public static  SoundStyle MagicStaff_Item8 => SoundID.Item8;
+        public static SoundStyle MagicStaff_Item8 => SoundID.Item8;
 
         /// <summary>魔晶风暴，裂天剑等的声音，类似Xiu~</summary>
         public static SoundStyle MagicShoot_Item9 => SoundID.Item9;
@@ -226,7 +226,7 @@ namespace Coralite.Core
         public static SoundStyle WaterBolt_Item21 => SoundID.Item21;
 
         /// <summary> 电锯，钻头之类的使用声音，类似拉动引擎 </summary>
-        public static  SoundStyle Drill_Item22 => SoundID.Item22;
+        public static SoundStyle Drill_Item22 => SoundID.Item22;
 
         /// <summary>电锯，钻头之类的的使用声音</summary>
         public static SoundStyle Drill2_Item23 => SoundID.Item23;
@@ -457,7 +457,7 @@ namespace Coralite.Core
         public static SoundStyle SolarEruption_Item116 => SoundID.Item116;
 
         /// <summary>神灯烈焰，星云奥秘的声音</summary>
-        public static SoundStyle SpiritFlame_Item117=> SoundID.Item117;
+        public static SoundStyle SpiritFlame_Item117 => SoundID.Item117;
 
         /// <summary> 还是水晶蛇弹幕的声音（一把武器3个音效可还行） </summary>
         public static SoundStyle LiteBoom_Item118 => SoundID.Item118;
@@ -604,7 +604,7 @@ namespace Coralite.Core
         public static SoundStyle GiantTortoise_NPCHit24 => SoundID.NPCHit24;
 
         /// <summary>3种颜色的水母的受击音效 </summary>
-        public static SoundStyle  Jellyfish_NPCHit25 => SoundID.NPCHit25;
+        public static SoundStyle Jellyfish_NPCHit25 => SoundID.NPCHit25;
 
         /// <summary> 丛林蜥蜴的受击音效</summary>
         public static SoundStyle Lihzahrd_NPCHit26 => SoundID.NPCHit26;

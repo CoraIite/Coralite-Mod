@@ -14,7 +14,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 
         public int SpurtsLength { get; init; }
 
-        public Yujian_Spurts(int startTime, float spurtsSpeed,int spurtsLength, float turnSpeed, float roughlyVelocity)
+        public Yujian_Spurts(int startTime, float spurtsSpeed, int spurtsLength, float turnSpeed, float roughlyVelocity)
         {
             StartTime = startTime;
             this.SpurtsLength = spurtsLength;
@@ -78,7 +78,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             return canSpurts;
         }
 
-        public override void DrawAdditive(SpriteBatch spriteBatch,BaseYujianProj yujianProj)
+        public override void DrawAdditive(SpriteBatch spriteBatch, BaseYujianProj yujianProj)
         {
             if (!canSpurts)
                 return;
@@ -95,10 +95,10 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             {
                 Color shadowColor = Color.Lerp(yujianProj.color1, yujianProj.color2, (float)i / yujianProj.trailCacheLength);
                 int a = 20 + i * 6;
-                if (a >255)
+                if (a > 255)
                     a = 255;
                 shadowColor.A = (byte)a;
-                spriteBatch.Draw(mainTex, Projectile.oldPos[i]-Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - i * 0.015f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - i * 0.015f, SpriteEffects.None, 0f);
             }
         }
     }

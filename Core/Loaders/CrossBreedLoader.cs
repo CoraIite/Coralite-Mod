@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using Coralite.Core.Systems.BotanicalSystem;
+﻿using Coralite.Core.Systems.BotanicalSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
-using  Terraria.ModLoader.Core;
+using Terraria.ModLoader.Core;
 
 namespace Coralite.Core.Loaders
 {
@@ -24,7 +23,7 @@ namespace Coralite.Core.Loaders
 
             foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))
             {
-                if (!t.IsAbstract&&t.GetInterfaces().Contains(typeof(ICrossBreedable)))
+                if (!t.IsAbstract && t.GetInterfaces().Contains(typeof(ICrossBreedable)))
                 {
                     ICrossBreedable items = Activator.CreateInstance(t) as ICrossBreedable;
                     items.AddCrossBreedRecipe();

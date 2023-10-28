@@ -4,9 +4,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class CrushedIceDust:ModDust
+    public class CrushedIceDust : ModDust
     {
-        public override string Texture => AssetDirectory.IcicleProjectiles+ "Old_CrushedIceProj";
+        public override string Texture => AssetDirectory.IcicleProjectiles + "Old_CrushedIceProj";
 
         public override void OnSpawn(Dust dust)
         {

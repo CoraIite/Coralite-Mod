@@ -47,13 +47,13 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                 return;
             }
 
-            TryGetClosed2Target(yujianProj,out float distance,out float targetAngle);
+            TryGetClosed2Target(yujianProj, out float distance, out float targetAngle);
 
             if (distance < SlashWidth * 2 && distance > SlashWidth * 1.8f)
             {
                 canSlash = true;
                 canDamage = true;
-                StartSlash(Projectile,targetAngle);
+                StartSlash(Projectile, targetAngle);
                 yujianProj.InitTrailCaches();
                 trail?.SetVertical(StartAngle < 0);      //开始角度为正时设为false
                 SoundEngine.PlaySound(SoundID.Item1, Projectile.Center);
@@ -87,7 +87,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             int time = StartTime - (int)yujianProj.Timer;
             if (!canSlash || time > SlashTime || time < yujianProj.trailCacheLength || smoother.Smoother(time, SlashTime) > 0.99f)
                 return;
-            
+
             Effect effect = Filters.Scene["SimpleTrail"].GetShader().Shader;
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());

@@ -1,8 +1,6 @@
-using Coralite.Content.Items.Icicle;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -10,7 +8,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.Icicle
 {
-    public class BabyIceDragonTrophyTile:ModTile
+    public class BabyIceDragonTrophyTile : ModTile
     {
         public override string Texture => AssetDirectory.IcicleTiles + Name;
 

@@ -1,11 +1,11 @@
-﻿using System;
-using Coralite.Content.Particles;
+﻿using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;

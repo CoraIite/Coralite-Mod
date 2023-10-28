@@ -1,12 +1,12 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
-using Terraria;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using Terraria.UI;
-using Terraria.ModLoader;
 using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace Coralite.Content.UI
 {
@@ -47,7 +47,7 @@ namespace Coralite.Content.UI
         }
     }
 
-    public class ChargingBar:UIElement
+    public class ChargingBar : UIElement
     {
         public override void Draw(SpriteBatch spriteBatch)
         {

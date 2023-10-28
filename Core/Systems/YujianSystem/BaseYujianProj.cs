@@ -294,7 +294,7 @@ namespace Coralite.Core.Systems.YujianSystem
             idleRotation = (float)Math.PI + Owner.direction * 0.3f;
             float num2 = (totalIndexes - 1f) / 2f;
             idleSpot = Owner.Center - Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 33f - new Vector2(Owner.direction * 16, 8);
-            idleSpot+=Main.GlobalTimeWrappedHourly.ToRotationVector2()*8;
+            idleSpot += Main.GlobalTimeWrappedHourly.ToRotationVector2() * 8;
         }
 
         public virtual void AIEffect() { }

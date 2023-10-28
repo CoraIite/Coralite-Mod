@@ -30,7 +30,7 @@ namespace Coralite.Core.Systems.YujianSystem
         public override bool CanRightClick() => true;
         public override bool AltFunctionUse(Player player) => true;
 
-        public BaseHulu(int slotCount,int rare, int value, int damage, float knockback, string texturePath = AssetDirectory.YujianHulu, bool pathHasName = false)
+        public BaseHulu(int slotCount, int rare, int value, int damage, float knockback, string texturePath = AssetDirectory.YujianHulu, bool pathHasName = false)
         {
             TexturePath = texturePath;
             PathHasName = pathHasName;
@@ -124,7 +124,7 @@ namespace Coralite.Core.Systems.YujianSystem
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile proj = Main.projectile[i];
-                    if (proj.active && proj.friendly && proj.owner == player.whoAmI && 
+                    if (proj.active && proj.friendly && proj.owner == player.whoAmI &&
                             (proj.ModProjectile is BaseYujianProj || proj.minion))
                         proj.Kill();
                 }

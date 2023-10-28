@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Items.BossSummons;
 using Coralite.Content.Items.Botanical.Seeds;
-using Coralite.Content.Tiles.Plants;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;

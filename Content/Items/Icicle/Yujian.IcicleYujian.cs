@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Icicle
 {
     public class IcicleYujian : BaseYujian
     {
-        public IcicleYujian() : base(ItemRarityID.Orange, Item.sellPrice(0, 0, 50, 0), 14, 1.3f,AssetDirectory.IcicleItems) { }
+        public IcicleYujian() : base(ItemRarityID.Orange, Item.sellPrice(0, 0, 50, 0), 14, 1.3f, AssetDirectory.IcicleItems) { }
 
         public override int ProjType => ModContent.ProjectileType<IcicleYujianProj>();
 
@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.Icicle
             width: 30, height: 60,
             new Color(40, 98, 213), Coralite.Instance.IcicleCyan,
             trailCacheLength: 20,
-            texturePath:AssetDirectory.IcicleItems
+            texturePath: AssetDirectory.IcicleItems
             )
         { }
     }

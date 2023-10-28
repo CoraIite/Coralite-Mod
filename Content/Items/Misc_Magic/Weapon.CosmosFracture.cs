@@ -12,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Magic
 {
-    public class CosmosFracture : ModItem,IMagikeRemodelable
+    public class CosmosFracture : ModItem, IMagikeRemodelable
     {
         public override string Texture => AssetDirectory.Misc_Magic + Name;
         public override bool AltFunctionUse(Player Player) => true;

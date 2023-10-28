@@ -1,13 +1,13 @@
 ﻿using Coralite.Content.Raritys;
-using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core;
-using Coralite.Helpers;
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
 using Coralite.Core.Systems.MagikeSystem;
-using Terraria.DataStructures;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike
 {
@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.Magike
                 if (magF.StartWork())
                     CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("Activated", () => "已激活！").Value);
                 else
-                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("FailToActivate",() => "激活失败！").Value);
+                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("FailToActivate", () => "激活失败！").Value);
             }
             else    //没找到
                 CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("InstrumentNotFound", () => "未找到魔能仪器！").Value);

@@ -1,5 +1,4 @@
 ﻿using Terraria;
-using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 {

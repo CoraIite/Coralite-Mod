@@ -1,12 +1,12 @@
-﻿using Coralite.Core;
-using Terraria.DataStructures;
-using Terraria.ID;
+﻿using Coralite.Content.Items.Magike;
+using Coralite.Core;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.Enums;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.Enums;
-using Coralite.Content.Items.Magike;
-using System.Collections.Generic;
 
 namespace Coralite.Content.Tiles.Magike
 {
@@ -152,7 +152,7 @@ namespace Coralite.Content.Tiles.Magike
 
     }
 
-    public class BigCrystalStalactiteTop:ModTile
+    public class BigCrystalStalactiteTop : ModTile
     {
         public override string Texture => AssetDirectory.MagikeTiles + Name;
 

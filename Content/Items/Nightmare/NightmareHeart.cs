@@ -9,7 +9,7 @@ namespace Coralite.Content.Items.Nightmare
 {
     public class NightmareHeart : ModItem
     {
-        public override string Texture => AssetDirectory.NightmareItems+Name;
+        public override string Texture => AssetDirectory.NightmareItems + Name;
 
         public override void SetStaticDefaults()
         {

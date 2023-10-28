@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.Shadow
         public override void AddRecipes()
         {
             CreateRecipe()
-            .AddIngredient<ShadowCrystal>( 12)
+            .AddIngredient<ShadowCrystal>(12)
             .AddTile(TileID.Anvils)
             .Register();
         }
@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.Shadow
                     startAngle = 1.8f;
                     totalAngle = 4.8f;
                     minTime = 80;
-                    maxTime = (int)(Owner.itemTimeMax * 0.7f) + 24+80;
+                    maxTime = (int)(Owner.itemTimeMax * 0.7f) + 24 + 80;
                     Smoother = Coralite.Instance.SqrtSmoother;
                     Projectile.scale = 0.9f;
                     break;
@@ -144,12 +144,12 @@ namespace Coralite.Content.Items.Shadow
 
         protected override void BeforeSlash()
         {
-            if (Timer<40)
+            if (Timer < 40)
             {
                 startAngle -= Math.Sign(totalAngle) * 0.05f;
             }
 
-            _Rotation =  startAngle= GetStartAngle() - Owner.direction * 2.8f;
+            _Rotation = startAngle = GetStartAngle() - Owner.direction * 2.8f;
             Slasher();
             if (Timer == minTime)
             {
@@ -166,7 +166,7 @@ namespace Coralite.Content.Items.Shadow
                 default:
                 case 0:
                     alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 140) + 100;
-                    Projectile.scale = Helper.EllipticalEase(2.8f -4.8f * Smoother.Smoother(timer, maxTime - minTime), 0.8f, 1.2f);
+                    Projectile.scale = Helper.EllipticalEase(2.8f - 4.8f * Smoother.Smoother(timer, maxTime - minTime), 0.8f, 1.2f);
                     break;
             }
 

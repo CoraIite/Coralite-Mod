@@ -1,9 +1,9 @@
-﻿using Terraria;
+﻿using Coralite.Core;
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework;
-using Coralite.Core;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Shoot

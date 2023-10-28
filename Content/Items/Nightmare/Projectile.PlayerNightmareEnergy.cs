@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Nightmare
 {
-    public class PlayerNightmareEnergy : ModProjectile,IDrawAdditive
+    public class PlayerNightmareEnergy : ModProjectile, IDrawAdditive
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -96,7 +96,7 @@ namespace Coralite.Content.Items.Nightmare
                    factor2, 0f, 0.5f, 0.5f, 1f, Projectile.rotation + rot, new Vector2(0.9f, 0.9f), Vector2.One * 1.2f);
                 if (nightmareHeart)
                     Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, position, Color.White * 0.7f, NightmarePlantera.nightPurple,
-                       factor2, 0f, 0.5f, 0.5f, 1f, Projectile.rotation + rot+MathHelper.PiOver4, new Vector2(0.4f, 0.4f), Vector2.One);
+                       factor2, 0f, 0.5f, 0.5f, 1f, Projectile.rotation + rot + MathHelper.PiOver4, new Vector2(0.4f, 0.4f), Vector2.One);
             }
             return false;
         }

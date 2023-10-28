@@ -48,7 +48,7 @@ namespace Coralite.Content.Items.Materials
             TileObjectData.newTile.LavaDeath = true;
             TileObjectData.addTile(Type);
 
-            AddMapEntry(new Microsoft.Xna.Framework.Color(93,167,155));
+            AddMapEntry(new Microsoft.Xna.Framework.Color(93, 167, 155));
         }
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)

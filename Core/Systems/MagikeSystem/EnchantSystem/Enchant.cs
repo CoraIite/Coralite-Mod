@@ -1,7 +1,7 @@
-﻿using Terraria.ModLoader;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
-using Microsoft.Xna.Framework;
+using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 {
@@ -103,7 +103,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public SpecialEnchant(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, 2)
         {
             this.bonus0 = bonus0;
-            this.bonus1 = bonus1; 
+            this.bonus1 = bonus1;
             this.bonus2 = bonus2;
         }
 

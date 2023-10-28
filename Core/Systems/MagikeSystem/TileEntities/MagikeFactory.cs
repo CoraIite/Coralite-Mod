@@ -152,7 +152,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             workTimer++;
         }
 
-        public virtual void DuringWork (){ }
+        public virtual void DuringWork() { }
 
         /// <summary>
         /// 工作完成，在此执行对应的物品消耗，魔能消耗等工作

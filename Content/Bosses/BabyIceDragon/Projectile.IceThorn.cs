@@ -1,10 +1,8 @@
-﻿using Coralite.Core;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -41,7 +39,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             Timer += 1f;
 
-            if (Projectile.localAI[0]==0)
+            if (Projectile.localAI[0] == 0)
             {
                 Projectile.localAI[0] = 1;
                 Projectile.rotation = Projectile.velocity.ToRotation();

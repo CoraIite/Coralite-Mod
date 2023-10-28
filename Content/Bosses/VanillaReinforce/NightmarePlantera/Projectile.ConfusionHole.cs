@@ -16,7 +16,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 使用ai2传入刺出的长度<br></br>
     /// 使用velocity传入目标方向
     /// </summary>
-    public class ConfusionHole : BaseNightmareProj, IDrawNonPremultiplied,INightmareTentacle
+    public class ConfusionHole : BaseNightmareProj, IDrawNonPremultiplied, INightmareTentacle
     {
         public override string Texture => AssetDirectory.NightmarePlantera + Name;
 
@@ -200,9 +200,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Color c = Color.White;
             c.A = 200;
             spriteBatch.Draw(mainTex, pos, null, c, rot, mainTex.Size() / 2, new Vector2(1, SelfScale), 0, 0);
-            spriteBatch.Draw(blackholeTex, pos, null, c, rot + MathHelper.PiOver2, blackholeTex.Size() / 2, new Vector2(SelfScale, 1)*0.3f, 0, 0);
+            spriteBatch.Draw(blackholeTex, pos, null, c, rot + MathHelper.PiOver2, blackholeTex.Size() / 2, new Vector2(SelfScale, 1) * 0.3f, 0, 0);
 
-            var sparkleFrame = sparkleTex.Frame(1, 2 , 0, Projectile.ai[1] == -1 ? 0 : 1);
+            var sparkleFrame = sparkleTex.Frame(1, 2, 0, Projectile.ai[1] == -1 ? 0 : 1);
             var sparkleOrigin = sparkleFrame.Size() / 2;
             spriteBatch.Draw(sparkleTex, pos, sparkleFrame, c, Main.GlobalTimeWrappedHourly * 0.5f, sparkleOrigin, SelfScale / 3 + Main.rand.NextFloat(0, 0.02f), 0, 0);
 

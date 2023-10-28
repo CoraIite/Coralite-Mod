@@ -13,7 +13,7 @@ using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Content.Items.Nightmare
 {
-    public class GriefSeed : ModItem,IMagikeRemodelable
+    public class GriefSeed : ModItem, IMagikeRemodelable
     {
         public override string Texture => AssetDirectory.NightmareItems + Name;
 

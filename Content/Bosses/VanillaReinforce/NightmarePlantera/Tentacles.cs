@@ -46,7 +46,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         /// </summary>
         /// <param name="tentaclePerLength"></param>
         /// <param name="curve"></param>
-        public void UpdateTentacle(float tentaclePerLength, Func<int, float> curve,float flowAlpha=1)
+        public void UpdateTentacle(float tentaclePerLength, Func<int, float> curve, float flowAlpha = 1)
         {
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 normal = dir.RotatedBy(MathHelper.PiOver2);
@@ -57,11 +57,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 points[i] = pos + dir * i * tentaclePerLength + normal * curve(i);
             }
 
-            this.flowAlpha=flowAlpha;
+            this.flowAlpha = flowAlpha;
             perLength = tentaclePerLength;
         }
 
-        public void DrawTentacle(float warpAmount=-1)
+        public void DrawTentacle(float warpAmount = -1)
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
             List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
@@ -101,7 +101,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["uTime"].SetValue(startOffset+Main.GlobalTimeWrappedHourly / 2);
+                effect.Parameters["uTime"].SetValue(startOffset + Main.GlobalTimeWrappedHourly / 2);
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
                 effect.Parameters["flowAlpha"].SetValue(flowAlpha);
@@ -210,7 +210,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Matrix view = Main.GameViewMatrix.ZoomMatrix;
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-                effect.Parameters["transformMatrix"].SetValue( view * projection);
+                effect.Parameters["transformMatrix"].SetValue(view * projection);
                 effect.Parameters["uTime"].SetValue(startOffset + Main.GlobalTimeWrappedHourly / 2);
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
@@ -269,18 +269,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         /// <param name="pos"></param>
         /// <param name="targetPos"></param>
         /// <param name="rotation"></param>
-        public void SetValue(Vector2 pos,Vector2 targetPos,float rotation)
+        public void SetValue(Vector2 pos, Vector2 targetPos, float rotation)
         {
             this.pos = pos;
             this.targetPos = targetPos;
-            this.rotation = this.rotation.AngleTowards(rotation % MathHelper.TwoPi, 0.1f) ;
+            this.rotation = this.rotation.AngleTowards(rotation % MathHelper.TwoPi, 0.1f);
         }
 
         /// <summary>
         /// 更新这个触手，触手位置和触手的旋转请在这之前设置好！
         /// </summary>
         /// <param name="tentaclePerLength"></param>
-        public void UpdateTentacle(float tentaclePerLength ,float flowAlpha=1)
+        public void UpdateTentacle(float tentaclePerLength, float flowAlpha = 1)
         {
             Vector2 position = pos;
             float rot = rotation;
@@ -290,7 +290,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 float targetAngle = (targetPos - position).ToRotation();
 
-                float angle = rot.AngleLerp(targetAngle, i/(float)pointCount);
+                float angle = rot.AngleLerp(targetAngle, i / (float)pointCount);
                 Vector2 dir = angle.ToRotationVector2();
                 points[i] = position + dir * tentaclePerLength;
                 rotates[i] = angle;
@@ -344,7 +344,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 float factor = 1f - i / (float)pointCount;
                 float width = widthFunc.Invoke(factor);
-                Vector2 normal = (rotates[i]+MathHelper.PiOver2).ToRotationVector2();
+                Vector2 normal = (rotates[i] + MathHelper.PiOver2).ToRotationVector2();
                 Vector2 Center = points[i] + normal * curve(i);
 
                 Vector2 Top = Center + normal * width;
@@ -367,7 +367,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["uTime"].SetValue(startOffset+Main.GlobalTimeWrappedHourly / 2);
+                effect.Parameters["uTime"].SetValue(startOffset + Main.GlobalTimeWrappedHourly / 2);
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
                 effect.Parameters["flowAlpha"].SetValue(flowAlpha);
@@ -382,7 +382,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 Main.graphics.GraphicsDevice.RasterizerState = originalState;
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default,null,Main.Transform);
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default, null, Main.Transform);
             }
         }
 
@@ -601,7 +601,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 //arrows[i].angleLimt = new Vector2(-80, 80);
             }
 
-            calculator = new IKSolverCCD(arrows, target,  false);
+            calculator = new IKSolverCCD(arrows, target, false);
             calculator.SetLength(i => perLength);
 
             centerFunc = self;
@@ -616,12 +616,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         /// </summary>
         public void UpdateTentacle()
         {
-            calculator.arrows[0].CalculateStartAndEnd(centerFunc(),Vector2.UnitX);
-            calculator.UpdatePosition( Vector2.UnitX);
+            calculator.arrows[0].CalculateStartAndEnd(centerFunc(), Vector2.UnitX);
+            calculator.UpdatePosition(Vector2.UnitX);
             calculator.FollowTarget();
         }
 
-        public void DrawTentacle( Func<int, float> curve)
+        public void DrawTentacle(Func<int, float> curve)
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
             List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();

@@ -65,7 +65,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 0 => RediancieFollower.tex1.Value,
                 _ => RediancieFollower.tex2.Value
             };
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(), lightColor, Projectile.rotation+1.57f, mainTex.Size()/2, Projectile.scale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(), lightColor, Projectile.rotation + 1.57f, mainTex.Size() / 2, Projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
     }

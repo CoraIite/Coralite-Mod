@@ -54,7 +54,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             Projectile.rotation = Projectile.rotation.AngleLerp(targetAngle + 1.57f + StartAngle, factor);
         }
 
-        public virtual void UpdateVelocityWhenTracking(Projectile Projectile,float distance,Vector2 targetDirection)
+        public virtual void UpdateVelocityWhenTracking(Projectile Projectile, float distance, Vector2 targetDirection)
         {
             if (distance > SlashWidth * 2)
                 Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;

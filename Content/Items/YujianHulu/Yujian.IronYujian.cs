@@ -1,17 +1,16 @@
-﻿using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.YujianSystem.YujianAIs;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.YujianSystem;
+using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.YujianHulu
 {
     public class IronYujian : BaseYujian
     {
-        public IronYujian() : base(ItemRarityID.White,Item.sellPrice(0, 0, 10, 0), 8, 1.3f) { }
+        public IronYujian() : base(ItemRarityID.White, Item.sellPrice(0, 0, 10, 0), 8, 1.3f) { }
 
         public override int ProjType => ModContent.ProjectileType<IronYujianProj>();
 
@@ -23,7 +22,7 @@ namespace Coralite.Content.Items.YujianHulu
                 .Register();
         }
     }
-    
+
     public class IronYujianProj : BaseYujianProj
     {
         public override string SlashTexture => AssetDirectory.OtherProjectiles + "LiteSlash";

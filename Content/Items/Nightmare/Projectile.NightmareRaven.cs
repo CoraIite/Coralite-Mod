@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public ref float Timer => ref Projectile.ai[0];
         public ref float Target => ref Projectile.ai[1];
-        public ref float PowerfulAttackCount=>ref Projectile.ai[2];
+        public ref float PowerfulAttackCount => ref Projectile.ai[2];
 
         public Color drawColor;
 
@@ -150,7 +150,7 @@ namespace Coralite.Content.Items.Nightmare
             if (Projectile.ai[0] == 0f)
             {
                 AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out var totalIndexesInGroup2);
-                 CircleMovement(48 + totalIndexesInGroup2 * 4, 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index2 * MathHelper.TwoPi / totalIndexesInGroup2);
+                CircleMovement(48 + totalIndexesInGroup2 * 4, 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index2 * MathHelper.TwoPi / totalIndexesInGroup2);
                 if (Main.rand.NextBool(20))
                 {
                     int num6 = AI_156_TryAttackingNPCs(Projectile);
@@ -161,7 +161,7 @@ namespace Coralite.Content.Items.Nightmare
                         Target = num6;
                         Projectile.netUpdate = true;
                         AttackState = Main.rand.Next(0, 2);
-                        exVec2=Helper.NextVec2Dir()*Main.rand.Next(250,300);
+                        exVec2 = Helper.NextVec2Dir() * Main.rand.Next(250, 300);
                         return;
                     }
                 }
@@ -303,7 +303,7 @@ namespace Coralite.Content.Items.Nightmare
         /// <param name="Projectile"></param>
         public void AI_156_StartAttack(Projectile Projectile)
         {
-            if (PowerfulAttackCount>0)
+            if (PowerfulAttackCount > 0)
                 PowerfulAttackCount--;
             drawColor = PowerfulAttackCount > 0 ? NightmarePlantera.nightmareRed : NightmarePlantera.lightPurple;
 
@@ -346,7 +346,7 @@ namespace Coralite.Content.Items.Nightmare
             for (int i = 0; i < 200; i++)
             {
                 NPC nPC = Main.npc[i];
-                if (nPC.CanBeChasedBy(Projectile) )
+                if (nPC.CanBeChasedBy(Projectile))
                 {
                     float npcDistance2Owner = nPC.Distance(ownerCenter);
                     if (npcDistance2Owner <= 1000f && (npcDistance2Owner <= num || num == -1f) && (skipBodyCheck || Projectile.CanHitWithOwnBody(nPC)))
@@ -440,7 +440,7 @@ namespace Coralite.Content.Items.Nightmare
             if (PowerfulAttackCount > 0)
                 drawColor = NightmarePlantera.nightmareRed;
 
-            if (howMany>0)
+            if (howMany > 0)
             {
                 float angle = Main.rand.NextFloat(6.282f);
                 for (int i = 0; i < 12; i++)
@@ -451,7 +451,7 @@ namespace Coralite.Content.Items.Nightmare
                 }
             }
         }
-       
+
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
@@ -481,7 +481,7 @@ namespace Coralite.Content.Items.Nightmare
 
     public class RavenFeather : ModProjectile
     {
-        public override string Texture => AssetDirectory.NightmareItems+Name;
+        public override string Texture => AssetDirectory.NightmareItems + Name;
 
         public bool init = true;
         private Color drawColor;
@@ -564,7 +564,7 @@ namespace Coralite.Content.Items.Nightmare
             //绘制残影
             Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
 
-            for (int i = 0; i < 10; i ++)
+            for (int i = 0; i < 10; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
                     drawColor * (0.5f - i * 0.5f / 10), Projectile.oldRot[i], origin, 1, 0, 0);
 

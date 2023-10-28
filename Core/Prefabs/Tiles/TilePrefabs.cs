@@ -127,7 +127,7 @@ namespace Coralite.Core.Prefabs.Tiles
             tile.AddMapEntry(mapColor, name);
         }
 
-        public static void SaplingPrefab(this ModTile tile, int[] AnchorValidTiles,int dustType,Color mapColor)
+        public static void SaplingPrefab(this ModTile tile, int[] AnchorValidTiles, int dustType, Color mapColor)
         {
             Main.tileFrameImportant[tile.Type] = true;
             Main.tileNoAttach[tile.Type] = true;

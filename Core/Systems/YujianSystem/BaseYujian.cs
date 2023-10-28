@@ -25,7 +25,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public BaseYujian(int rare, int value, int damage, float knockback, string texturePath = AssetDirectory.YujianHulu, bool pathHasName = false)
         {
-            Rare= rare;
+            Rare = rare;
             Value = value;
             Damage = damage;
             Knockback = knockback;

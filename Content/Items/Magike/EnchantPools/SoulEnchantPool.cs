@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.Magike.EnchantPools
         {
             CreateRecipe()
                 .AddIngredient<BrilliantEnchantPool>()
-                .AddIngredient(ItemID.Ectoplasm,10)
+                .AddIngredient(ItemID.Ectoplasm, 10)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

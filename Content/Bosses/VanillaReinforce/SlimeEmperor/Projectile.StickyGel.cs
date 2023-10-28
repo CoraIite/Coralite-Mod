@@ -3,7 +3,6 @@ using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using ReLogic.Content;
 using System;
 using Terraria;
@@ -15,7 +14,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
-    public class StickyGel : ModProjectile,IDrawPrimitive,IDrawNonPremultiplied
+    public class StickyGel : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.SlimeEmperor + Name;
 
@@ -122,7 +121,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         if (Main.zenithWorld)
                         {
                             WorldGen.paintCoatTile(i, j, Main.rand.NextFromList(PaintCoatingID.Glow, PaintCoatingID.Echo));
-                            WorldGen.paintTile(i, j,(byte)Main.rand.Next(255));
+                            WorldGen.paintTile(i, j, (byte)Main.rand.Next(255));
                         }
                         if (Main.tile[i, j].HasTile && Main.netMode == NetmodeID.Server)
                             NetMessage.SendTileSquare(-1, i, j);
@@ -153,7 +152,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
             var pos = Projectile.Center - Main.screenPosition;
-            Color color= Color.White;
+            Color color = Color.White;
             color.A = 150;
             if (Main.zenithWorld)
                 color = SlimeEmperor.BlackSlimeColor;

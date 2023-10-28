@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
-using Coralite.Content.Items.Icicle;
+﻿using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
@@ -11,6 +7,9 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -134,7 +133,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 return;
             }
 
-            NPC.lifeMax = 3520  + numPlayers * 1200;
+            NPC.lifeMax = 3520 + numPlayers * 1200;
             NPC.damage = 35;
             NPC.defense = 10;
 
@@ -225,7 +224,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)
         {
             int width = (int)(64 * NPC.scale);
-            int height= (int)(40 * NPC.scale);
+            int height = (int)(40 * NPC.scale);
             npcHitbox = new Rectangle((int)(NPC.Center.X - width / 2), (int)(NPC.Center.Y - height / 2), width, height);
             return true;
         }

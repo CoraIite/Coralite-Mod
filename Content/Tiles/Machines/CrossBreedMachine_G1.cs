@@ -1,9 +1,7 @@
-﻿using Coralite.Content.Items.Machines;
-using Coralite.Content.UI;
+﻿using Coralite.Content.UI;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;

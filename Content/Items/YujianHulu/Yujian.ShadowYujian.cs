@@ -1,20 +1,20 @@
-﻿using Coralite.Core;
-using Coralite.Core.Systems.YujianSystem;
-using Coralite.Core.Systems.YujianSystem.YujianAIs;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.Graphics.Effects;
+﻿using Coralite.Content.Items.Shadow;
 using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
+using Coralite.Core.Systems.YujianSystem;
+using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Terraria.DataStructures;
+using Terraria;
 using Terraria.Audio;
-using Coralite.Content.Items.Shadow;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics.Effects;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.YujianHulu
 {
@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.YujianHulu
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<ShadowCrystal>( 10)
+                .AddIngredient<ShadowCrystal>(10)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.YujianHulu
             smoother = Coralite.Instance.HeavySmootherInstance;
         }
 
-        public  void Init()
+        public void Init()
         {
             StartTime = 85;
 
@@ -331,7 +331,7 @@ namespace Coralite.Content.Items.YujianHulu
         {
             for (int i = 0; i < 8; i++)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Shadowflame, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f))*Main.rand.NextFloat(0.5f,0.6f));
+                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Shadowflame, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(0.5f, 0.6f));
                 dust.noGravity = true;
             }
         }
@@ -340,7 +340,7 @@ namespace Coralite.Content.Items.YujianHulu
         {
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
 
-            Main.spriteBatch.Draw(mainTex, Projectile.Center-Main.screenPosition, null, Color.Black * 0.5f, Projectile.rotation - 1 / 57f, mainTex.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, Color.Black * 0.5f, Projectile.rotation - 1 / 57f, mainTex.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
             return false;
         }
     }

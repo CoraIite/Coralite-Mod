@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
@@ -104,7 +103,7 @@ namespace Coralite.Content.Items.Gels
             player.cursorItemIconEnabled = true;
             player.cursorItemIconID = ModContent.ItemType<RoyalGelCannon>();
 
-            if (Main.tile[i, j].TileFrameX / (18 * 3) >0)
+            if (Main.tile[i, j].TileFrameX / (18 * 3) > 0)
             {
                 player.cursorItemIconReversed = true;
             }

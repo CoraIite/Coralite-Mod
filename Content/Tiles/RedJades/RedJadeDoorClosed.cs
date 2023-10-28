@@ -2,7 +2,6 @@
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,7 +12,7 @@ namespace Coralite.Content.Tiles.RedJades
     {
         public override void SetStaticDefaults()
         {
-            this.DoorClosedPrefab(ModContent.TileType<RedJadeDoorOpen>(), DustID.GemRuby,  Coralite.Instance.RedJadeRed);
+            this.DoorClosedPrefab(ModContent.TileType<RedJadeDoorOpen>(), DustID.GemRuby, Coralite.Instance.RedJadeRed);
         }
 
         public override string Texture => AssetDirectory.RedJadeTiles + Name;

@@ -1,9 +1,8 @@
 ﻿using Coralite.Core;
-using Terraria.DataStructures;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.ID;
 
 namespace Coralite.Content.Tiles.Magike
 {

@@ -99,7 +99,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// <summary> 内部存储的物品，仅当物品魔能含量不小于0是才能消耗物品并获得魔能  </summary>
         public Item itemToCosume = new Item();
 
-        public MagikeGenerator_FromMagItem(int magikeMax, int connectLenghMax,int generateDelay, int howManyCanConnect = 1) : base(magikeMax, connectLenghMax,generateDelay, howManyCanConnect)  {  }
+        public MagikeGenerator_FromMagItem(int magikeMax, int connectLenghMax, int generateDelay, int howManyCanConnect = 1) : base(magikeMax, connectLenghMax, generateDelay, howManyCanConnect) { }
 
         public override void OnGenerate(int howMany)
         {
@@ -110,7 +110,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             GenerateAndChargeSelf(howMany);
         }
 
-        public override bool CanGenerate()=> !itemToCosume.IsAir;
+        public override bool CanGenerate() => !itemToCosume.IsAir;
 
         public override int HowManyToGenerate => itemToCosume.GetMagikeItem().magiteAmount;
         public Item ContainsItem { get => itemToCosume; set => itemToCosume = value; }
@@ -166,7 +166,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public override void LoadData(TagCompound tag)
         {
             base.LoadData(tag);
-            if (tag.TryGet("itemToCosume",out Item item))
+            if (tag.TryGet("itemToCosume", out Item item))
             {
                 itemToCosume = item;
             }

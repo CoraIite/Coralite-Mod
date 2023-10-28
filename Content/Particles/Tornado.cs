@@ -7,7 +7,7 @@ namespace Coralite.Content.Particles
 {
     public class Tornado : ModParticle
     {
-        public override string Texture => AssetDirectory.Particles+ "Tornado2";
+        public override string Texture => AssetDirectory.Particles + "Tornado2";
         //public override bool ShouldUpdateCenter(Particle particle) => false;
 
         public override void OnSpawn(Particle particle)
@@ -38,11 +38,11 @@ namespace Coralite.Content.Particles
         }
 
 
-        public static Particle Spawn(Vector2 center, Vector2 velocity, Color color, float fadeIn,float rotation, float scale = 1f)
+        public static Particle Spawn(Vector2 center, Vector2 velocity, Color color, float fadeIn, float rotation, float scale = 1f)
         {
             Particle particle = Particle.NewParticleDirect(center, velocity, CoraliteContent.ParticleType<Tornado>(), color, scale);
             particle.fadeIn = fadeIn;
-            particle.rotation=rotation+1.57f;
+            particle.rotation = rotation + 1.57f;
             particle.datas = new object[1]
             {
                 particle.fadeIn-10f,

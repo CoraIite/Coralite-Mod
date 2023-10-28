@@ -156,7 +156,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             if ((int)CanExchange == 1)
                             {
                                 State++;
-                                Projectile.velocity = -Angle.ToRotationVector2()*8;
+                                Projectile.velocity = -Angle.ToRotationVector2() * 8;
                                 break;
                             }
 

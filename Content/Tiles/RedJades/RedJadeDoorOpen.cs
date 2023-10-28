@@ -2,7 +2,6 @@
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;

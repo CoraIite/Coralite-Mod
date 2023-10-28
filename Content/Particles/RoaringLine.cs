@@ -13,7 +13,7 @@ namespace Coralite.Content.Particles
         public override void OnSpawn(Particle particle)
         {
             particle.frame = new Microsoft.Xna.Framework.Rectangle(0, 0, 128, 128);
-            particle.rotation=Main.rand.NextFloat(6.282f);
+            particle.rotation = Main.rand.NextFloat(6.282f);
         }
 
         public override void Update(Particle particle)

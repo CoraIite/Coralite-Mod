@@ -1,11 +1,10 @@
-﻿using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using System;
-using Terraria.ObjectData;
-using Microsoft.Xna.Framework;
+﻿using Coralite.Core;
 using Coralite.Helpers;
-using Coralite.Core;
+using Microsoft.Xna.Framework;
+using System;
+using Terraria;
+using Terraria.ID;
+using Terraria.ObjectData;
 
 namespace Coralite.Content.WorldGeneration
 {
@@ -56,7 +55,7 @@ namespace Coralite.Content.WorldGeneration
             SmoothSlope(origin.X, origin.Y, startX, startY, endX, endY, tileType, random);
         }
 
-        public static void SmoothSlope(int origin_x,int origin_y, int startX, int startY, int endX, int endY, ushort tileType, int random)
+        public static void SmoothSlope(int origin_x, int origin_y, int startX, int startY, int endX, int endY, ushort tileType, int random)
         {
             for (int i = startX; i < endX; i++)
             {
@@ -82,7 +81,7 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="tileType">物块种类</param>
         /// <param name="random">决定是否生成的随机数，越大越难生成</param>
         /// <param name="bottomTileType">底部物块种类，如有需要的话</param>
-        public static void PlaceOnGroundDecorations(int origin_x,int origin_y, int startX, int startY, int endX, int endY, ushort tileType, int random = 10,int style=0, int bottomTileType = -1)
+        public static void PlaceOnGroundDecorations(int origin_x, int origin_y, int startX, int startY, int endX, int endY, ushort tileType, int random = 10, int style = 0, int bottomTileType = -1)
         {
             TileObjectData data = TileObjectData.GetTileData(tileType, style);
             int width = data == null ? 1 : data.Width;
@@ -126,7 +125,7 @@ namespace Coralite.Content.WorldGeneration
                         ObjectPlace(current_x, current_y, tileType, currentStyle);
                     }
 
-                    over1: continue;             //<--因为不知道有没有什么办法直接跳出2层for，索性写了个goto
+                over1: continue;             //<--因为不知道有没有什么办法直接跳出2层for，索性写了个goto
                 }
         }
 
@@ -195,7 +194,7 @@ namespace Coralite.Content.WorldGeneration
                     for (int m = 0; m < height; m++)
                     {
                         tile = Framing.GetTileSafely(current_x - 1, current_y + m);
-                        if (!tile.HasTile || tile.Slope is SlopeType.SlopeUpLeft or SlopeType.SlopeDownLeft||tile.IsHalfBlock)
+                        if (!tile.HasTile || tile.Slope is SlopeType.SlopeUpLeft or SlopeType.SlopeDownLeft || tile.IsHalfBlock)
                             goto over1;
 
                         if (topTileType != -1)
@@ -356,7 +355,7 @@ namespace Coralite.Content.WorldGeneration
                             }
                     }
                     else if (!silent)
-                        WorldGen.KillTile(x, y, false, true, true); 
+                        WorldGen.KillTile(x, y, false, true, true);
                     WorldGen.destroyObject = false;
                     if (active)
                     {
@@ -402,7 +401,7 @@ namespace Coralite.Content.WorldGeneration
             }
 
         }
-    
+
         public static void Texture2WallGenerate(int x, int y, int wall)
         {
             try
@@ -414,7 +413,7 @@ namespace Coralite.Content.WorldGeneration
                 if (wall != -1)
                 {
                     if (wall == -2)
-                        wall = 0; 
+                        wall = 0;
                     Main.tile[x, y].WallType = 0;
                     WorldGen.PlaceWall(x, y, wall, true);
                 }

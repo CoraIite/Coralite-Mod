@@ -1,11 +1,10 @@
 using Coralite.Core;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using System;
 using Coralite.Core.Prefabs.Projectiles;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.GameContent;
 
 namespace Coralite.Content.Items.Icicle
 {

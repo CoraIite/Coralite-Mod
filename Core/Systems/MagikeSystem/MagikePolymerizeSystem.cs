@@ -17,7 +17,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             Mod Mod = Coralite.Instance;
 
-            polymerizeRecipes=new Dictionary<int, List<PolymerizeRecipe>>();
+            polymerizeRecipes = new Dictionary<int, List<PolymerizeRecipe>>();
 
             foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))  //添加魔能重塑合成表
             {
@@ -125,7 +125,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeCost"></param>
         /// <param name="resultItemStack"></param>
         /// <returns></returns>
-        public static PolymerizeRecipe CreateRecipe<T>( int magikeCost, int resultItemStack = 1)where T :ModItem
+        public static PolymerizeRecipe CreateRecipe<T>(int magikeCost, int resultItemStack = 1) where T : ModItem
         {
             return new PolymerizeRecipe()
             {
@@ -143,7 +143,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             return this;
         }
 
-        public PolymerizeRecipe SetMainItem<T>( int stack = 1) where T : ModItem
+        public PolymerizeRecipe SetMainItem<T>(int stack = 1) where T : ModItem
         {
             MainItem = new Item(ModContent.ItemType<T>(), stack);
             selfType = ModContent.ItemType<T>();
@@ -158,7 +158,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             return this;
         }
 
-        public PolymerizeRecipe AddIngredient<T>( int stack = 1) where T : ModItem
+        public PolymerizeRecipe AddIngredient<T>(int stack = 1) where T : ModItem
         {
             RequiredItems ??= new List<Item>();
             RequiredItems.Add(new Item(ModContent.ItemType<T>(), stack));

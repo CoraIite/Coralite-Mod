@@ -87,7 +87,7 @@ namespace Coralite.Content.Items.Gels
             else if (whoAmI_Y == 1)
                 info.AnchorTilePosition.Y += 2;
             else if (whoAmI_Y == 2)
-                info.AnchorTilePosition.Y+=1;
+                info.AnchorTilePosition.Y += 1;
         }
 
         public override bool RightClick(int i, int j)

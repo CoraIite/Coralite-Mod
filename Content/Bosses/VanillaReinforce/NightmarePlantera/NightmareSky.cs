@@ -126,9 +126,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     if (flower.active)
                     {
                         Vector2 velocity = Main.LocalPlayer.oldPosition + new Vector2(Main.LocalPlayer.width, Main.LocalPlayer.height) / 2 - Main.LocalPlayer.Center;
-                        flower.onScreenPosition += velocity / (flower.Depth*0.75f) ;
+                        flower.onScreenPosition += velocity / (flower.Depth * 0.75f);
                         flower.Update();
-                        flower.Rotation += Math.Sign(flower.Rotation) * speed*(15-flower.Depth)/15;
+                        flower.Rotation += Math.Sign(flower.Rotation) * speed * (15 - flower.Depth) / 15;
                     }
                 }
             }
@@ -220,7 +220,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             return rect.Intersects(new Rectangle(0, 0, Main.screenWidth + 600, Main.screenHeight + 600));
         }
 
-        public void DrawSelf(SpriteBatch spriteBatch,float extraAlpha)
+        public void DrawSelf(SpriteBatch spriteBatch, float extraAlpha)
         {
             Texture2D tex = NightmarePlantera.flowerParticleTex.Value;
             Rectangle frameBox = tex.Frame(5, 3, frameX, frameY);

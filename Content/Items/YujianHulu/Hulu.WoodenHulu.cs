@@ -5,12 +5,12 @@ namespace Coralite.Content.Items.Yujian
 {
     public class WoodenHulu : BaseHulu
     {
-        public WoodenHulu() : base(1, ItemRarityID.White, 0,5,1f) { }
+        public WoodenHulu() : base(1, ItemRarityID.White, 0, 5, 1f) { }
 
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.Wood,20)
+                .AddRecipeGroup(RecipeGroupID.Wood, 20)
                 .Register();
         }
     }

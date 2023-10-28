@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Projectiles.Projectiles_Magic
 {
-    public class PlatycodonBullet2: ModProjectile, IDrawPrimitive, IDrawNonPremultiplied
+    public class PlatycodonBullet2 : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied
     {
         BasicEffect effect;
         private Trail trail;

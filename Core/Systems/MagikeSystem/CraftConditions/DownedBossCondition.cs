@@ -54,7 +54,7 @@ namespace Coralite.Core.Systems.MagikeSystem.CraftConditions
         public bool CanCraft(Item item) => NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3;
     }
 
-    public class DownedFrostLegionCondition: IMagikeCraftCondition
+    public class DownedFrostLegionCondition : IMagikeCraftCondition
     {
         private static readonly Lazy<DownedFrostLegionCondition> singleton = new Lazy<DownedFrostLegionCondition>(() => new DownedFrostLegionCondition());
         public static DownedFrostLegionCondition Instance { get => singleton.Value; }
@@ -74,7 +74,7 @@ namespace Coralite.Core.Systems.MagikeSystem.CraftConditions
         public bool CanCraft(Item item) => NPC.downedPlantBoss;
     }
 
-    public class DownedMartianMadnessCondition: IMagikeCraftCondition
+    public class DownedMartianMadnessCondition : IMagikeCraftCondition
     {
         private static readonly Lazy<DownedMartianMadnessCondition> singleton = new Lazy<DownedMartianMadnessCondition>(() => new DownedMartianMadnessCondition());
         public static DownedMartianMadnessCondition Instance { get => singleton.Value; }

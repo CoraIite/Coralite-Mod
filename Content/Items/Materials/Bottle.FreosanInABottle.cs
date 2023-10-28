@@ -56,9 +56,10 @@ namespace Coralite.Content.Items.Materials
             TileHelper.DrawMultWine(i, j, 1, 2);
         }
 
-        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
             Tile selfTile = Main.tile[i, j];
-            if (Main.LightingEveryFrame&&selfTile.TileFrameX % FrameWidth == 0 && selfTile.TileFrameY % FrameHeight == 0)
+            if (Main.LightingEveryFrame && selfTile.TileFrameX % FrameWidth == 0 && selfTile.TileFrameY % FrameHeight == 0)
                 ModContent.GetInstance<CoraliteTileDrawing>().AddSpecialPoint(i, j, CoraliteTileDrawing.TileCounterType.MultiTileVine);
             return false;
         }

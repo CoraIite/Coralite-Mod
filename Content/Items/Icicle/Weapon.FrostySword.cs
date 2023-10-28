@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 if (player.altFunctionUse == ItemAlternativeFunctionID.ActivatedAndUsed)
                 {
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<FrostySwordRightSlash>(),(int) (damage*0.75f), knockback, player.whoAmI, leftHitCount);
+                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<FrostySwordRightSlash>(), (int)(damage * 0.75f), knockback, player.whoAmI, leftHitCount);
                     useCount = 0;
                     if (leftHitCount >= LeftHitMax)
                         leftHitCount = 0;
@@ -177,7 +177,7 @@ namespace Coralite.Content.Items.Icicle
                     totalAngle = 5.6f;
                     minTime = 66;
                     onHitFreeze = 20;
-                    maxTime = (int)(Owner.itemTimeMax ) + 70;
+                    maxTime = (int)(Owner.itemTimeMax) + 70;
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     delay = 28;
                     Projectile.scale = 0.8f;
@@ -315,7 +315,7 @@ namespace Coralite.Content.Items.Icicle
                 DrawFrostTrail(bars, originalState);
         }
 
-        public static void FrostDustsOnSlash(Vector2 Top, Vector2 RotateVec2,float totalAngle)
+        public static void FrostDustsOnSlash(Vector2 Top, Vector2 RotateVec2, float totalAngle)
         {
             Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
             Dust dust = Dust.NewDustPerfect(Top - 24 * RotateVec2 + Main.rand.NextVector2Circular(30, 30), DustID.ApprenticeStorm,
@@ -337,7 +337,7 @@ namespace Coralite.Content.Items.Icicle
 
         }
 
-        public static void FrostDustsOnHit(Projectile Projectile, Vector2 Top,Vector2 Bottom, Vector2 RotateVec2, float totalAngle,float _Rotation, float strength,float baseScale)
+        public static void FrostDustsOnHit(Projectile Projectile, Vector2 Top, Vector2 Bottom, Vector2 RotateVec2, float totalAngle, float _Rotation, float strength, float baseScale)
         {
             if (VisualEffectSystem.HitEffect_ScreenShaking)
             {
@@ -548,7 +548,7 @@ namespace Coralite.Content.Items.Icicle
                     if (fs.leftHitCount < FrostySword.LeftHitMax && target.type != NPCID.TargetDummy)
                     {
                         fs.leftHitCount++;
-                        IceStarLight.Spawn(Top+ RotateVec2 * 70, RotateVec2.RotatedBy(Main.rand.NextFromList(1, -1) * MathHelper.PiOver2) * Main.rand.Next(10, 14), Main.rand.NextFloat(0.6f, 1f), () => Owner.Center, 14);
+                        IceStarLight.Spawn(Top + RotateVec2 * 70, RotateVec2.RotatedBy(Main.rand.NextFromList(1, -1) * MathHelper.PiOver2) * Main.rand.Next(10, 14), Main.rand.NextFloat(0.6f, 1f), () => Owner.Center, 14);
                         if (fs.leftHitCount >= FrostySword.LeftHitMax)
                             SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Owner.Center);
                     }
@@ -894,7 +894,7 @@ namespace Coralite.Content.Items.Icicle
         public ref float Timer => ref Projectile.ai[1];
 
         public ref float Alpha => ref Projectile.localAI[0];
-        private bool onSpawn=true;
+        private bool onSpawn = true;
 
         public override void SetDefaults()
         {
@@ -953,8 +953,8 @@ namespace Coralite.Content.Items.Icicle
                 _ => new Color(0, 28, 59)
             };
 
-          Dust d=  Dust.NewDustPerfect(Projectile.Center +Main.rand.NextVector2Circular(8,8), DustType<FrostStar>(),
-                Projectile.velocity * Main.rand.NextFloat(0.4f, 0.6f), newColor: c, Scale: Main.rand.NextFloat(1, 2));
+            Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), DustType<FrostStar>(),
+                  Projectile.velocity * Main.rand.NextFloat(0.4f, 0.6f), newColor: c, Scale: Main.rand.NextFloat(1, 2));
             d.rotation = Projectile.rotation + Main.rand.Next(-3, 4) * MathHelper.Pi / 4;
             if (Timer > 10)
             {
@@ -995,7 +995,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override bool PreDraw(ref Color lightColor)
         {
-            ProjectilesHelper.DrawPrettyLine(1, SpriteEffects.None, Projectile.Center-Main.screenPosition,
+            ProjectilesHelper.DrawPrettyLine(1, SpriteEffects.None, Projectile.Center - Main.screenPosition,
                 new Color(0, 28, 59, 0), Color.White * 0.8f, Alpha, 0, 0.5f, 0.5f, 0, Projectile.rotation, 3, Vector2.One);
             return false;
         }
@@ -1022,7 +1022,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override bool PreDraw(Dust dust)
         {
-            ProjectilesHelper.DrawPrettyStarSparkle(1f, 0, dust.position-Main.screenPosition, new Color(40, 40, 40, 40), dust.color,
+            ProjectilesHelper.DrawPrettyStarSparkle(1f, 0, dust.position - Main.screenPosition, new Color(40, 40, 40, 40), dust.color,
                 dust.fadeIn / 24, 0, 0.5f, 0.5f, 1, dust.rotation, new Vector2(dust.scale, dust.scale), Vector2.One);
             return false;
         }

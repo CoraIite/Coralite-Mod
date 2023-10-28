@@ -1,6 +1,6 @@
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.ModLoader;
 namespace Coralite.Content.Items.GlobalItems
 {
     public class CoraliteGlobalItem : GlobalItem

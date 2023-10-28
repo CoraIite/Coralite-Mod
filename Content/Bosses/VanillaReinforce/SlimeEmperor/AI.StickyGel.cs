@@ -14,14 +14,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 case 0: //确保自己在地上
                     Jump(2f, 8f, onLanding: () => SonState++);
                     break;
-                    case 1:
+                case 1:
                     ScaleToTarget(1.2f, 0.9f, 0.05f, Scale.X > 1.15f, () =>
                     {
                         SonState++;
                     });
                     break;
                 case 2:
-                    ScaleToTarget(0.8f, 1.25f, 0.2f, Scale.Y > 1.2f, () => {
+                    ScaleToTarget(0.8f, 1.25f, 0.2f, Scale.Y > 1.2f, () =>
+                    {
                         SonState++;
                         //射刺球弹幕
                         int howMany = Helpers.Helper.ScaleValueForDiffMode(2, 2, 2, 4);

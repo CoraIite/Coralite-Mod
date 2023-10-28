@@ -1,16 +1,14 @@
-﻿using Coralite.Content.Particles;
-using Coralite.Core.Systems.ParticleSystem;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Terraria.Audio;
 
 namespace Coralite.Content.Items.YujianHulu
 {
@@ -95,7 +93,7 @@ namespace Coralite.Content.Items.YujianHulu
                 Vector2 targetVector = targetCenter - Projectile.Center;
                 Vector2 targetDirection = targetVector.SafeNormalize(Vector2.Zero);
 
-                Projectile.rotation  +=0.15f;
+                Projectile.rotation += 0.15f;
                 float length = targetVector.Length();
 
                 if (length > distanceToKeep + 20)
@@ -124,8 +122,8 @@ namespace Coralite.Content.Items.YujianHulu
                 //只是生成一些粒子
                 for (int i = 0; i < 8; i++)
                 {
-                    Vector2 vel = -targetDir.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f))*Main.rand.NextFloat(1f, 2f);
-                    Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32,32), DustID.Granite, vel );
+                    Vector2 vel = -targetDir.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(1f, 2f);
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 32), DustID.Granite, vel);
                     dust.noGravity = true;
                 }
 
@@ -158,7 +156,7 @@ namespace Coralite.Content.Items.YujianHulu
 
                 if (yujianProj.Timer % 3 == 0 && Main.myPlayer == Projectile.owner)
                 {
-                    Vector2 vel2=Projectile.velocity.SafeNormalize(Vector2.One).RotatedBy(1.57f+Main.rand.NextFloat(-0.6f,0.6f))*Main.rand.Next(60,110);
+                    Vector2 vel2 = Projectile.velocity.SafeNormalize(Vector2.One).RotatedBy(1.57f + Main.rand.NextFloat(-0.6f, 0.6f)) * Main.rand.Next(60, 110);
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, vel2, ModContent.ProjectileType<DemoniteStrike>(),
                         Projectile.damage, 0f, Projectile.owner, Main.rand.Next(24, 32));
                 }
@@ -250,7 +248,7 @@ namespace Coralite.Content.Items.YujianHulu
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if (Projectile.timeLeft<12)
+            if (Projectile.timeLeft < 12)
                 return false;
 
             float a = 0;
@@ -302,7 +300,7 @@ namespace Coralite.Content.Items.YujianHulu
         {
             if (Projectile.localAI[0] == 0)
             {
-                Projectile.timeLeft =  12;
+                Projectile.timeLeft = 12;
                 Projectile.localAI[0] = Projectile.velocity.Length() * 2;
                 Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             }
@@ -317,7 +315,7 @@ namespace Coralite.Content.Items.YujianHulu
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             float a = 0;
-            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center-Projectile.velocity, Projectile.Center+Projectile.velocity, Projectile.ai[0], ref a);
+            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center - Projectile.velocity, Projectile.Center + Projectile.velocity, Projectile.ai[0], ref a);
         }
 
         public override bool ShouldUpdatePosition() => false;

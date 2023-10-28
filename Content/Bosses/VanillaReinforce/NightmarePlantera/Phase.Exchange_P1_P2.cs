@@ -78,7 +78,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
 
                         NPC.rotation += Main.rand.NextFloat(-0.2f, 0.3f);
-                        Vector2 dir =Helper.NextVec2Dir();
+                        Vector2 dir = Helper.NextVec2Dir();
                         Dust dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(64f), ModContent.DustType<NightmareDust>(), dir * Main.rand.NextFloat(2f, 4f), Scale: Main.rand.NextFloat(1f, 2f));
                         dust.noGravity = true;
 
@@ -86,7 +86,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             dir = Helper.NextVec2Dir();
                             dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(64f), ModContent.DustType<NightmareStar>(), dir * Main.rand.NextFloat(8f, 16f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 4f));
-                            dust.rotation = dir.ToRotation()+MathHelper.PiOver2;
+                            dust.rotation = dir.ToRotation() + MathHelper.PiOver2;
 
                             dir = Helper.NextVec2Dir();
                             dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(64f), DustID.VilePowder, dir * Main.rand.NextFloat(8f, 16f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 1.3f));
@@ -182,9 +182,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
 
                         if (nameScale < 16)
-                            nameScale +=1f;
+                            nameScale += 1f;
 
-                        if (Timer ==30)
+                        if (Timer == 30)
                         {
                             SkyManager.Instance.Activate("NightmareSky");
 
@@ -258,7 +258,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 Texture2D mainTex = CircleWarpTex.Value;
 
-                Main.spriteBatch.Draw(mainTex, NPC.Center-Main.screenPosition, null, Color.White, 0, mainTex.Size() / 2, warpScale, 0, 0);
+                Main.spriteBatch.Draw(mainTex, NPC.Center - Main.screenPosition, null, Color.White, 0, mainTex.Size() / 2, warpScale, 0, 0);
             }
         }
 

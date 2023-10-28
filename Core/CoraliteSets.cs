@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Core
 {
-    public class CoraliteSets:ModSystem
+    public class CoraliteSets : ModSystem
     {
         public static bool[] ProjectileExplosible;
 

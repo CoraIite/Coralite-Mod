@@ -1,6 +1,6 @@
-using System.Linq;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

@@ -26,7 +26,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Vector2 pos = Projectile.Center - Main.screenPosition;
             float rot = Projectile.rotation + MathHelper.PiOver2;
             //中心的闪光
-            Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, NightmarePlantera.lightPurple , NightmarePlantera.lightPurple,
+            Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, NightmarePlantera.lightPurple, NightmarePlantera.lightPurple,
                 0.5f, 0f, 0.5f, 0.5f, 1f, rot, mainSparkleScale, Vector2.One * 2);
 
             //周围一圈小星星
@@ -49,7 +49,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         }
     }
 
-    public abstract class BaseNightmareProj: ModProjectile
+    public abstract class BaseNightmareProj : ModProjectile
     {
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {

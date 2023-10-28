@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -50,7 +49,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Initialize();
 
             Projectile.frameCounter++;
-            if (Projectile.frameCounter>8)
+            if (Projectile.frameCounter > 8)
             {
                 Projectile.frameCounter = 0;
                 Projectile.frame++;
@@ -61,7 +60,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             switch ((int)State)
             {
                 default:
-                    case 0:
+                case 0:
                     {
                         float dir = ((Projectile.timeLeft % 30) > 15 ? -1 : 1) * 0.02f;
                         Projectile.velocity = Projectile.velocity.RotatedBy(dir);
@@ -114,7 +113,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 pos = Projectile.Center - Main.screenPosition;
-            Rectangle frameBox = mainTex.Frame(1, 5,0, Projectile.frame);
+            Rectangle frameBox = mainTex.Frame(1, 5, 0, Projectile.frame);
             Vector2 origin = frameBox.Size() / 2;
             SpriteEffects effect = Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             //绘制残影
@@ -137,7 +136,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         }
     }
 
-    public class NightmareCrow:NightmareBat
+    public class NightmareCrow : NightmareBat
     {
         public override void AI()
         {
@@ -152,7 +151,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     Projectile.frame = 0;
             }
 
-            Projectile.velocity = Projectile.velocity.RotatedBy(RotateDir );
+            Projectile.velocity = Projectile.velocity.RotatedBy(RotateDir);
             Projectile.direction = Math.Sign(Projectile.velocity.X);
 
             //Projectile.rotation = Projectile.velocity.ToRotation() + (Projectile.direction > 0 ? 0 : 3.141f);
@@ -160,7 +159,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (Main.rand.NextBool(3))
             {
                 Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), ModContent.DustType<GlowBall>(),
-                    -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.15f,0.15f))*Main.rand.NextFloat(0.1f,0.25f), 0, drawColor, Main.rand.NextFloat(0.25f,0.45f));
+                    -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)) * Main.rand.NextFloat(0.1f, 0.25f), 0, drawColor, Main.rand.NextFloat(0.25f, 0.45f));
             }
         }
     }

@@ -57,7 +57,7 @@ namespace Coralite.Content.Items.Magike.EnchantPools
 
     public class CrystalEnchantPoolEntity : MagikeFactory_EnchantPool
     {
-        public CrystalEnchantPoolEntity() : base(150,10 * 60) { }
+        public CrystalEnchantPoolEntity() : base(150, 10 * 60) { }
 
         public override ushort TileType => (ushort)TileType<CrystalEnchantPoolTile>();
 

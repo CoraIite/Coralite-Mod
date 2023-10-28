@@ -10,7 +10,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
         public override void ModifyManaCost(Item item, Player player, ref float reduce, ref float mult)
         {
-            reduce -= bonus0/100f;
+            reduce -= bonus0 / 100f;
         }
 
         public override string Description => $"魔力消耗 -{(int)bonus0}%";

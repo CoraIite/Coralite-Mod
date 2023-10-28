@@ -14,7 +14,7 @@ namespace Coralite.Content.Items.Shadow
 
         public override void SetStaticDefaults()
         {
-            
+
         }
 
         public override void SetDefaults()
@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Shadow
             Item.useTime = 5;
             Item.useAnimation = 5;
             Item.knockBack = 0f;
-            
+
             Item.value = Item.sellPrice(0, 3, 0, 0);
             Item.rare = ItemRarityID.Orange;
             Item.DamageType = DamageClass.Melee;

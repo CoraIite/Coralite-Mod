@@ -1,5 +1,4 @@
-﻿using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

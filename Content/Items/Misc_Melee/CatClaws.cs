@@ -119,12 +119,12 @@ namespace Coralite.Content.Items.Misc_Melee
                     default:
                     case 0:
                         Projectile.NewProjectile(source, position, velocity, type, (int)(damage * 1.5f), knockback, player.whoAmI, 4);
-                        
+
                         break;
                     case 1:
                         if (!Main.projectile.Any(n => n.active && n.type == ProjectileType<CatClawsProj_shield>() && n.owner == player.whoAmI))
                             Projectile.NewProjectile(source, position, velocity, ProjectileType<CatClawsProj_shield>(), (int)(damage * 1.3f), 3, player.whoAmI, 0, 2);
-                        
+
                         break;
                     case 2:
                         Projectile.NewProjectile(source, position, velocity, type, damage * 2, 3, player.whoAmI, 5);
@@ -151,12 +151,12 @@ namespace Coralite.Content.Items.Misc_Melee
                 case 0:
                 case 1:
                     Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, comboNormal);
-                    
+
                     break;
                 case 2:
                     if (!Main.projectile.Any(n => n.active && n.type == ProjectileType<CatClawsProj_shield>() && n.owner == player.whoAmI))
                         Projectile.NewProjectile(source, position, velocity, ProjectileType<CatClawsProj_shield>(), damage, 3, player.whoAmI, 0, 0);
-                    
+
                     break;
                 case 3:
                     Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, comboNormal);

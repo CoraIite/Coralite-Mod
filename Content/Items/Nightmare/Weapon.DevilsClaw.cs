@@ -84,7 +84,7 @@ namespace Coralite.Content.Items.Nightmare
     /// 使用ai0传入颜色，为1时是强化大小<br></br>
     /// 使用ai1传入状态，为1时能够在命中后获得梦魇光能
     /// </summary>
-    public class DevilsClawLeaf:ModProjectile
+    public class DevilsClawLeaf : ModProjectile
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "DarkLeaf";
 

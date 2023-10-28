@@ -2,7 +2,7 @@
 
 namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 {
-    public class SpecialEnchant_ArmorMoveSpeedBonus:SpecialEnchant
+    public class SpecialEnchant_ArmorMoveSpeedBonus : SpecialEnchant
     {
         public SpecialEnchant_ArmorMoveSpeedBonus(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, bonus0, bonus1, bonus2)
         {

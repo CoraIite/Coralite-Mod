@@ -21,7 +21,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 
         protected override void Attack(BaseYujianProj yujianProj)
         {
-            float factor = (StartTime-yujianProj.Timer) / StartTime;
+            float factor = (StartTime - yujianProj.Timer) / StartTime;
             Projectile Projectile = yujianProj.Projectile;
 
             Vector2 targetCenter = yujianProj.GetTargetCenter(IsAimingMouse);

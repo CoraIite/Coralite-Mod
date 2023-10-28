@@ -6,9 +6,9 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.Mushroom
 {
-    public class MushroomPlatform:ModTile
+    public class MushroomPlatform : ModTile
     {
-        public override string Texture => AssetDirectory.MushroomTiles+Name;
+        public override string Texture => AssetDirectory.MushroomTiles + Name;
         public override void SetStaticDefaults()
         {
             Main.tileLighted[Type] = true;

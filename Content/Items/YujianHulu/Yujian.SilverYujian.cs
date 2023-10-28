@@ -1,17 +1,16 @@
-﻿using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.YujianSystem.YujianAIs;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.YujianSystem;
+using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.YujianHulu
 {
     public class SilverYujian : BaseYujian
     {
-        public SilverYujian() : base(ItemRarityID.White,Item.sellPrice(0, 0, 15, 0), 9, 1.3f) { }
+        public SilverYujian() : base(ItemRarityID.White, Item.sellPrice(0, 0, 15, 0), 9, 1.3f) { }
 
         public override int ProjType => ModContent.ProjectileType<SilverYujianProj>();
 

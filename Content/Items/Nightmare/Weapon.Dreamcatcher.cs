@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.Nightmare
         }
     }
 
-    public class NightmareRavenBuff:ModBuff
+    public class NightmareRavenBuff : ModBuff
     {
         public override string Texture => AssetDirectory.NightmareItems + Name;
 

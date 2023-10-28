@@ -7,10 +7,10 @@ namespace Coralite.lib
 {
     public class NPCAI_15_KingSlime
     {
-         public NPC NPC { get; set; }
+        public NPC NPC { get; set; }
         public Player Target => Main.player[NPC.target];
 
-        public void AI( )
+        public void AI()
         {
             float num236 = 1f;
             float num237 = 1f;

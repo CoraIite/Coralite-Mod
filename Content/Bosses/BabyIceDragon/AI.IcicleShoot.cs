@@ -1,15 +1,15 @@
-﻿using Coralite.Content.Particles;
-using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Content.Items.Icicle;
+using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using System;
-using Terraria.Audio;
 using Microsoft.Xna.Framework;
-using Coralite.Content.Items.Icicle;
+using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Graphics.CameraModifiers;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
@@ -65,7 +65,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     break;
                 case 1:     //瞄准玩家射出冰锥
                     {
-                        NormallyFlyingFrame(1, false) ;
+                        NormallyFlyingFrame(1, false);
                         NPC.velocity *= 0.97f;
                         if (Timer < 20)
                         {
@@ -87,7 +87,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                             if ((int)Timer % 12 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.4f,0.4f)) * 12, ModContent.ProjectileType<IcicleProj_Hostile>(), 18, 8f);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * 12, ModContent.ProjectileType<IcicleProj_Hostile>(), 18, 8f);
                                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                             }
                             break;

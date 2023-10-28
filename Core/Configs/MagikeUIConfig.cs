@@ -5,7 +5,7 @@ using Terraria.ModLoader.Config;
 namespace Coralite.Core.Configs
 {
     //[BackgroundColor(51, 179, 189)]
-    public class MagikeUIConfig:ModConfig
+    public class MagikeUIConfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 

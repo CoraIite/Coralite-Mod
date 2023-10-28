@@ -1,16 +1,16 @@
-﻿using Coralite.Core.Systems.Trails;
-using Coralite.Core;
+﻿using Coralite.Core;
+using Coralite.Core.Configs;
+using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.Trails;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
-using Coralite.Helpers;
-using Microsoft.Xna.Framework;
-using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Configs;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {

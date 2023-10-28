@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public class IceBurstParticle:ModParticle
+    public class IceBurstParticle : ModParticle
     {
-        public override string Texture => AssetDirectory.BabyIceDragon+ "IceBurst";
+        public override string Texture => AssetDirectory.BabyIceDragon + "IceBurst";
 
         public override void OnSpawn(Particle particle)
         {

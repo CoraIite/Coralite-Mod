@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Magike.EnchantPools;
-using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.Items.Materials;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
@@ -18,7 +17,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.MultPrisms
 {
-    public class CrimtaneTriprism : BaseMagikePlaceableItem,IMagikePolymerizable
+    public class CrimtaneTriprism : BaseMagikePlaceableItem, IMagikePolymerizable
     {
         public CrimtaneTriprism() : base(TileType<CrimtaneTriprismTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 25)
         { }

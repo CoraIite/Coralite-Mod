@@ -6,7 +6,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Materials
 {
-    public class GlistentBar: BaseMaterial, IMagikePolymerizable
+    public class GlistentBar : BaseMaterial, IMagikePolymerizable
     {
         public GlistentBar() : base(9999, Item.sellPrice(0, 0, 5, 50), ItemRarityID.Orange, AssetDirectory.Materials) { }
 

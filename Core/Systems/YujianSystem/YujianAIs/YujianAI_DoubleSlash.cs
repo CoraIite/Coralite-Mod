@@ -1,13 +1,13 @@
 ﻿using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.Trails;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics.Effects;
-using Terraria.ModLoader;
-using Terraria;
-using Microsoft.Xna.Framework;
-using Terraria.Audio;
-using Terraria.ID;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.Audio;
+using Terraria.Graphics.Effects;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 {

@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
@@ -27,7 +26,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public bool initialized;
 
-        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : (TexturePath + (PathHasName ? string.Empty : Name)).Replace("HeldProj","");
+        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : (TexturePath + (PathHasName ? string.Empty : Name)).Replace("HeldProj", "");
 
         public override void SetDefaults()
         {
@@ -40,7 +39,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public override bool? CanDamage() => false;
         public override bool ShouldUpdatePosition() => false;
 
-        protected BaseGunHeldProj(float recoilAngle,float heldPositionX,float recoilLength, string texturePath, bool pathHasName = false)
+        protected BaseGunHeldProj(float recoilAngle, float heldPositionX, float recoilLength, string texturePath, bool pathHasName = false)
         {
             this.recoilAngle = recoilAngle;
             this.heldPositionX = heldPositionX;
@@ -92,7 +91,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Projectile.rotation = TargetRot - OwnerDirection * factor * recoilAngle;
             HeldPositionX = heldPositionX + factor * recoilLength;
-            Projectile.Center = Owner.Center + OwnerDirection * Projectile.rotation.ToRotationVector2() *HeldPositionX;
+            Projectile.Center = Owner.Center + OwnerDirection * Projectile.rotation.ToRotationVector2() * HeldPositionX;
         }
 
         public virtual void ModifyAI(float factor) { }
@@ -100,7 +99,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void AfterAI(float factor)
         {
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemRotation = Projectile.rotation + (Owner.gravDir > 0 ? 0f : MathHelper.Pi)+ OwnerDirection * 0.3f;
+            Owner.itemRotation = Projectile.rotation + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + OwnerDirection * 0.3f;
         }
 
         public override bool PreDraw(ref Color lightColor)

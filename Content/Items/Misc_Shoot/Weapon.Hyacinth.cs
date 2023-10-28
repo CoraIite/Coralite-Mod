@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 {
     public class Hyacinth : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Shoot+Name;
+        public override string Texture => AssetDirectory.Misc_Shoot + Name;
 
         public float shootAngle;
 

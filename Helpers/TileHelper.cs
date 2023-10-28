@@ -2,10 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent.Drawing;
-using Terraria.ID;
 using Terraria.ObjectData;
 
 namespace Coralite.Helpers
@@ -37,7 +34,7 @@ namespace Coralite.Helpers
             return new Vector2(x, y);
         }
 
-        public static void DrawMultWine(int i,int j, int sizeX,int sizeY,float? windRotOffset = 1f)
+        public static void DrawMultWine(int i, int j, int sizeX, int sizeY, float? windRotOffset = 1f)
         {
             float windCycle = Main.instance.TilesRenderer.GetWindCycle(i, j, CoraliteTileDrawing.sunflowerWindCounter);
             Vector2 screenPosition = Main.Camera.UnscaledPosition;

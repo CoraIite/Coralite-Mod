@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.YujianHulu
 {
-    public class AncientDemoniteYujian: BaseYujian
+    public class AncientDemoniteYujian : BaseYujian
     {
         public AncientDemoniteYujian() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 20, 0), 9, 1f) { }
 
@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.YujianHulu
                  Coralite.Instance.HeavySmootherInstance),
                 new YujianAI_BetterSpurt(75,20,35,180,0.95f),
         },
-        null, 
+        null,
         new YujianAI_DemoniteSpurt(50, 12, 25, 180, 0.92f),
         PowerfulAttackCost: 150,
         attackLength: 400,

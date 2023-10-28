@@ -1,11 +1,11 @@
 ﻿using Coralite.Content.Items.Icicle;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using System;
-using Terraria.Audio;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 

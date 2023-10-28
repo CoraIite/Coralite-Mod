@@ -81,7 +81,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 new FantasyTentacle(25,TentacleColor,TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex)
             };
 
-           float sin  = MathF.Sin(Main.GlobalTimeWrappedHourly);
+            float sin = MathF.Sin(Main.GlobalTimeWrappedHourly);
             float length = LightScale * 400;
             float perLength = length / 25;
             float lightScale = LightScale * 0.75f;
@@ -248,9 +248,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                             //for (int i = 0; i < 2; i++)
                             //{
-                                Vector2 v = Helper.NextVec2Dir();
-                                Particle.NewParticle(np.Center , v * Main.rand.NextFloat(6, 12f),
-                                    CoraliteContent.ParticleType<BigFog>(), shineColor, Scale: Main.rand.NextFloat(0.5f, 0.75f));
+                            Vector2 v = Helper.NextVec2Dir();
+                            Particle.NewParticle(np.Center, v * Main.rand.NextFloat(6, 12f),
+                                CoraliteContent.ParticleType<BigFog>(), shineColor, Scale: Main.rand.NextFloat(0.5f, 0.75f));
                             //}
                         }
                         NPC.velocity *= 0.9f;

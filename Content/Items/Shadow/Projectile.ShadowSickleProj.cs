@@ -1,10 +1,10 @@
-using System;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Shadow
             OnChannelComplete(45, 45);
             Scale = 0.2f + 0.8f * factor;
             Projectile.damage = (int)(Projectile.damage * (1f + factor * 3f));
-            PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, _Rotation.ToRotationVector2(), Scale*6f, 8f, 10, 1000f, "ShadowSickle");
+            PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, _Rotation.ToRotationVector2(), Scale * 6f, 8f, 10, 1000f, "ShadowSickle");
             Main.instance.CameraModifiers.Add(modifier);
 
             Projectile.netUpdate = true;
@@ -127,7 +127,7 @@ namespace Coralite.Content.Items.Shadow
             {
                 _Rotation = _Rotation % 6.282f;
                 SoundEngine.PlaySound(CoraliteSoundID.Slash_Item71, Projectile.Center);
-                PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, rotateDir, Scale*6f, 8f, 10, 1000f, "ShadowSickle");
+                PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, rotateDir, Scale * 6f, 8f, 10, 1000f, "ShadowSickle");
                 Main.instance.CameraModifiers.Add(modifier);
             }
 

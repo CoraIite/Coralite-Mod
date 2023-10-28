@@ -14,7 +14,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// <summary>
     /// 使用ai1传入颜色，-1为紫色，-2为红色，0-1为对应的颜色
     /// </summary>
-    public class GhostSlit : BaseNightmareProj,INightmareTentacle
+    public class GhostSlit : BaseNightmareProj, INightmareTentacle
     {
         public override string Texture => AssetDirectory.Blank;
 

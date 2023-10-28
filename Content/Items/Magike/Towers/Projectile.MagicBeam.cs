@@ -1,18 +1,14 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.Graphics;
-using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace Coralite.Content.Items.Magike.Towers
 {
@@ -25,10 +21,10 @@ namespace Coralite.Content.Items.Magike.Towers
 
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height =8;
+            Projectile.width = Projectile.height = 8;
             Projectile.timeLeft = 120;
             Projectile.aiStyle = -1;
-            Projectile.extraUpdates =1;
+            Projectile.extraUpdates = 1;
             Projectile.localNPCHitCooldown = 10;
             Projectile.friendly = true;
             Projectile.netImportant = true;
@@ -86,7 +82,7 @@ namespace Coralite.Content.Items.Magike.Towers
         {
             for (int i = 0; i < 16; i++)
             {
-               Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Teleporter, Main.rand.NextFloat(-3,3), Main.rand.NextFloat(-3, 3), 100, Coralite.Instance.MagicCrystalPink, 1f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Teleporter, Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3), 100, Coralite.Instance.MagicCrystalPink, 1f);
                 //dust.noGravity = true;
             }
         }
@@ -123,7 +119,7 @@ namespace Coralite.Content.Items.Magike.Towers
 
         private Color StripColors(float progressOnStrip)
         {
-            Color result = Color.Lerp(Color.White, new Color(162,42,131), Utils.GetLerpValue(-0.2f, 0.5f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
+            Color result = Color.Lerp(Color.White, new Color(162, 42, 131), Utils.GetLerpValue(-0.2f, 0.5f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
             result.A = 64;
             return result;
         }

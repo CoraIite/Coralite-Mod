@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Gels
         {
             Main.tileSolid[Type] = true;
             //Main.tileBlockLight[Type] = true;
-           
+
             DustType = DustID.t_Slime;
 
             AddMapEntry(new Microsoft.Xna.Framework.Color(0, 138, 122));

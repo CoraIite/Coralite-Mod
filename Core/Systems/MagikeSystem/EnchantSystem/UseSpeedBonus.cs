@@ -1,5 +1,4 @@
 ﻿using Terraria;
-using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 {
@@ -11,7 +10,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
         public override float UseSpeedMultiplier(Item item, Player player)
         {
-            return 1f + bonus0/100f;
+            return 1f + bonus0 / 100f;
         }
 
         public override string Description => $"攻速 +{(int)bonus0}%";

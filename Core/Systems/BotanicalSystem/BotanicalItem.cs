@@ -1,7 +1,5 @@
 ﻿using Coralite.Content.Items.Botanical;
-using Coralite.Content.Tiles.Plants;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -48,7 +46,7 @@ namespace Coralite.Core.Systems.BotanicalSystem
         public override bool CanStack(Item item1, Item item2)
         {
             if (!item1.TryGetGlobalItem(out BotanicalItem botanicalItem1) || !item2.TryGetGlobalItem(out BotanicalItem botanicalItem2))
-                return base.CanStack(item1,item2);
+                return base.CanStack(item1, item2);
 
             if (!botanicalItem1.botanicalItem)
                 return base.CanStack(item1, item2);

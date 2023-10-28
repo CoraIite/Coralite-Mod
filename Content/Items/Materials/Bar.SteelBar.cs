@@ -12,7 +12,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Materials
 {
-    public class SteelBar:BaseMaterial,IMagikePolymerizable
+    public class SteelBar : BaseMaterial, IMagikePolymerizable
     {
         public SteelBar() : base(9999, Item.sellPrice(0, 0, 10), ItemRarityID.LightRed, AssetDirectory.Materials) { }
 
@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Materials
             base.SetDefaults();
             Item.DefaultToPlaceableTile(ModContent.TileType<SteelBarTile>());
         }
-        
+
         public void AddMagikePolymerizeRecipe()
         {
             PolymerizeRecipe.CreateRecipe<SteelBar>(300)
@@ -41,9 +41,9 @@ namespace Coralite.Content.Items.Materials
         }
     }
 
-    public class SteelBarTile:ModTile
+    public class SteelBarTile : ModTile
     {
-        public override string Texture => AssetDirectory.Materials+Name;
+        public override string Texture => AssetDirectory.Materials + Name;
 
         public override void SetStaticDefaults()
         {

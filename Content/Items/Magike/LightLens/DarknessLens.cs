@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Magike.LightLens
             }
 
             // 绘制主帖图
-            spriteBatch.Draw(texture, drawPos, frame, Color.White*0.8f, 0f, origin, 1f, effects, 0f);
+            spriteBatch.Draw(texture, drawPos, frame, Color.White * 0.8f, 0f, origin, 1f, effects, 0f);
         }
     }
 
@@ -141,7 +141,7 @@ namespace Coralite.Content.Items.Magike.LightLens
 
         public override void SendVisualEffect(IMagikeContainer container)
         {
-            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Color.Black,DustID.Granite);
+            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Color.Black, DustID.Granite);
         }
 
         public override void OnReceiveVisualEffect()

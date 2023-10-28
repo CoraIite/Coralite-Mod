@@ -1,17 +1,17 @@
-﻿using System;
-using Coralite.Content.Buffs.Debuffs;
+﻿using Coralite.Content.Buffs.Debuffs;
 using Coralite.Core;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
-using Coralite.Core.Configs;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {

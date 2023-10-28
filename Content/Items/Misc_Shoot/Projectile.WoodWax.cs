@@ -1,12 +1,12 @@
-﻿using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core;
-using Terraria;
+﻿using Coralite.Core;
+using Coralite.Core.Configs;
+using Coralite.Core.Prefabs.Projectiles;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Coralite.Core.Configs;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {

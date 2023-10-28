@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Icicle;
-using Coralite.Content.Items.Nightmare;
+﻿using Coralite.Content.Items.Nightmare;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -20,7 +19,6 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
@@ -388,7 +386,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Helper.PlayPitched("Music/Heart", 1f, 0f, NPC.Center);
             Music = 0;
 
-            ((NightmareSky)SkyManager.Instance["NightmareSky"]).color=nightPurple;
+            ((NightmareSky)SkyManager.Instance["NightmareSky"]).color = nightPurple;
         }
 
         public override void AI()

@@ -149,7 +149,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             }
         }
 
-        public static int GetMagikeCost(IMagikeContainer container,Item item)
+        public static int GetMagikeCost(IMagikeContainer container, Item item)
         {
             return item.rare switch
             {
@@ -169,7 +169,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             };
         }
 
-        public static void LevelCheck(Enchant enchant,int currentSlot,out int checkedSlot)
+        public static void LevelCheck(Enchant enchant, int currentSlot, out int checkedSlot)
         {
             EnchantData currentData = enchant.datas[currentSlot];
             if (currentData is null)

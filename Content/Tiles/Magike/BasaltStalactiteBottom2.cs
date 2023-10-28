@@ -1,12 +1,12 @@
 ﻿using Coralite.Core;
-using Terraria.ID;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.Magike
 {
-    public class BasaltStalactiteBottom2:ModTile
+    public class BasaltStalactiteBottom2 : ModTile
     {
         public override string Texture => AssetDirectory.MagikeTiles + Name;
 

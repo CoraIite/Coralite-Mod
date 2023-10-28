@@ -48,10 +48,10 @@ namespace Coralite.Content.NPCs.Shadow
 
         public override void PostAI()
         {
-            NPC.frameCounter+=1;
+            NPC.frameCounter += 1;
             if (NPC.frameCounter > 10)
             {
-                NPC. frameCounter = 0;
+                NPC.frameCounter = 0;
                 NPC.frame.Y++;
 
                 if (NPC.frame.Y > 2)

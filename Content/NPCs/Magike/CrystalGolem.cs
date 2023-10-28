@@ -1,18 +1,18 @@
-﻿using Coralite.Content.Items.Magike.OtherPlaceables;
+﻿using Coralite.Content.Biomes;
 using Coralite.Content.Items.Magike;
+using Coralite.Content.Items.Magike.OtherPlaceables;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent;
-using ReLogic.Content;
-using Terraria.Graphics.CameraModifiers;
-using Coralite.Content.Biomes;
 
 namespace Coralite.Content.NPCs.Magike
 {
@@ -92,7 +92,7 @@ namespace Coralite.Content.NPCs.Magike
                 case 0: //普通向玩家移动
                     if (Math.Abs(NPC.velocity.Y) < 0.2f)
                     {
-                        if (FreezeTime>0)
+                        if (FreezeTime > 0)
                         {
                             NPC.velocity *= 0;
                             FreezeTime--;
@@ -131,7 +131,7 @@ namespace Coralite.Content.NPCs.Magike
                     if (MoveTime < 0)
                     {
                         //检测是否能攻击
-                        if (NPC.Distance(Target.Center)<80*16&&Collision.CanHitLine(GetHeadPos(),1,1,Target.Center,1,1))
+                        if (NPC.Distance(Target.Center) < 80 * 16 && Collision.CanHitLine(GetHeadPos(), 1, 1, Target.Center, 1, 1))
                         {
                             State = 1;
                             NPC.velocity *= 0;
@@ -148,9 +148,9 @@ namespace Coralite.Content.NPCs.Magike
                     break;
                 case 1://射激光的蓄力阶段
                     NPC.frame.Y = 0;
-                    TargetLineLength+=2;
+                    TargetLineLength += 2;
 
-                    Vector2 center=GetHeadPos();
+                    Vector2 center = GetHeadPos();
                     float factor = MoveTime / 180;
                     float width = 2 + factor * 44;
 
@@ -246,7 +246,7 @@ namespace Coralite.Content.NPCs.Magike
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D mainTex = TextureAssets.Npc[Type].Value;
-            Vector2 pos = NPC.Center-screenPos;
+            Vector2 pos = NPC.Center - screenPos;
             var origin = NPC.frame.Size() / 2;
 
             SpriteEffects effect = NPC.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;

@@ -76,14 +76,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             scale += 0.05f;
                         }
 
-                        Vector2 targetCenter = Owner.Center + 
-                            ((TimeFactor + Timer) / 360 * MathHelper.TwoPi).ToRotationVector2() * (450+100*MathF.Sin(TimeFactor / 100));
+                        Vector2 targetCenter = Owner.Center +
+                            ((TimeFactor + Timer) / 360 * MathHelper.TwoPi).ToRotationVector2() * (450 + 100 * MathF.Sin(TimeFactor / 100));
 
                         float velRot = Projectile.velocity.ToRotation();
                         float targetRot = (targetCenter - Projectile.Center).ToRotation();
 
                         float speed = Projectile.velocity.Length();
-                        float aimSpeed = Math.Clamp( Vector2.Distance(Projectile.Center, targetCenter) / 800f, 0, 1) * (10+Timer / (RollingTime / 3) * 12);
+                        float aimSpeed = Math.Clamp(Vector2.Distance(Projectile.Center, targetCenter) / 800f, 0, 1) * (10 + Timer / (RollingTime / 3) * 12);
 
                         Projectile.velocity = velRot.AngleTowards(targetRot, 0.08f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.65f);
                         Projectile.rotation += 0.1f;
@@ -108,11 +108,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 1://向周围7个方向射出尖刺
 
-                    if (Timer==40)
+                    if (Timer == 40)
                     {
                         SoundEngine.PlaySound(CoraliteSoundID.IceMist_Item120, Projectile.Center);
                     }
-                    if (Timer>100)
+                    if (Timer > 100)
                     {
                         State++;
                     }
@@ -140,9 +140,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Texture2D circleTex = CircleTex.Value;
             Texture2D blackholeTex = BlackHoleTex.Value;
-            spriteBatch.Draw(blackholeTex, pos, null, Color.White, 0, blackholeTex.Size() / 2, new Vector2(scale * MathF.Sin(Main.GlobalTimeWrappedHourly), scale*1.5f ), 0, 0);
+            spriteBatch.Draw(blackholeTex, pos, null, Color.White, 0, blackholeTex.Size() / 2, new Vector2(scale * MathF.Sin(Main.GlobalTimeWrappedHourly), scale * 1.5f), 0, 0);
 
-            spriteBatch.Draw(circleTex, pos, null, Color.White,Projectile.rotation+ Main.GlobalTimeWrappedHourly, circleTex.Size() / 2, scale * 0.6f, 0, 0);
+            spriteBatch.Draw(circleTex, pos, null, Color.White, Projectile.rotation + Main.GlobalTimeWrappedHourly, circleTex.Size() / 2, scale * 0.6f, 0, 0);
         }
 
         public void DrawWarp()

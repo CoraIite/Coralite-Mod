@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Magike.WeatherLens
             CreateRecipe()
                 .AddIngredient<MagicCrystal>(2)
                 .AddIngredient(ItemID.TissueSample, 8)
-                .AddIngredient(ItemID.RainCloud,8)
+                .AddIngredient(ItemID.RainCloud, 8)
                 .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
@@ -104,7 +104,7 @@ namespace Coralite.Content.Items.Magike.WeatherLens
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.DeepSkyBlue,DustID.Water);
+            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.DeepSkyBlue, DustID.Water);
         }
     }
 }

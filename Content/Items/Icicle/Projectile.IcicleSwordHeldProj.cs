@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.Icicle
                     Smoother = Coralite.Instance.HeavySmootherInstance;
                     break;
                 case 1:
-                    startAngle =1.4f;
+                    startAngle = 1.4f;
                     totalAngle = 3.8f;
                     maxTime = Owner.itemTimeMax * 2;
                     Smoother = Coralite.Instance.HeavySmootherInstance;
@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.Icicle
                 case 2:
                     startAngle = -1.6f;
                     totalAngle = -4.2f;
-                    maxTime = (int)(Owner.itemTimeMax*1.5f);
+                    maxTime = (int)(Owner.itemTimeMax * 1.5f);
 
                     Smoother = Coralite.Instance.SqrtSmoother;
                     break;
@@ -85,7 +85,7 @@ namespace Coralite.Content.Items.Icicle
 
                     break;
                 case 1:
-                    if (Timer <  maxTime / 8f)
+                    if (Timer < maxTime / 8f)
                         Projectile.scale += 0.10f;
                     else
                         Projectile.scale -= 0.015f;

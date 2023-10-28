@@ -15,7 +15,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     Jump(2, 8, onLanding: () => SonState++);
                     break;
                 case 1: //弹弹
-                    ScaleToTarget(1.2f, 0.9f, 0.2f, Scale.X > 1.15f, () => SonState ++);
+                    ScaleToTarget(1.2f, 0.9f, 0.2f, Scale.X > 1.15f, () => SonState++);
                     break;
                 case 2:
                     ScaleToTarget(0.8f, 1.25f, 0.2f, Scale.Y > 1.2f, () =>

@@ -17,7 +17,7 @@ namespace Coralite.Content.UI
 {
     public class MagikeItemSlotPanel : BetterUIState
     {
-        public static float scale=1f;
+        public static float scale = 1f;
         public static bool visible = false;
         public static IMagikeSingleItemContainer tileEntity = null;
         public static SingleItemSlot slot = new SingleItemSlot();
@@ -37,7 +37,7 @@ namespace Coralite.Content.UI
             closeButton.OnLeftClick += CloseButton_OnLeftClick;
             Append(closeButton);
 
-            slot.Top.Set(-26,0f);
+            slot.Top.Set(-26, 0f);
             slot.Left.Set(-26, 0f);
 
             Append(slot);
@@ -105,7 +105,7 @@ namespace Coralite.Content.UI
             bool canInsert = true;
 
             if (!Main.mouseItem.IsAir)
-                canInsert= container.CanInsertItem(Main.mouseItem);
+                canInsert = container.CanInsertItem(Main.mouseItem);
             if (Item is null)
                 return;
 
@@ -168,7 +168,7 @@ namespace Coralite.Content.UI
             if (!container.CanGetItem())
                 return;
 
-            if (!Main.mouseItem.IsAir && !Item.IsAir ) //都有物品，且种类相同,一个个取出
+            if (!Main.mouseItem.IsAir && !Item.IsAir) //都有物品，且种类相同,一个个取出
             {
                 Item heldItem = Main.mouseItem;
                 if (heldItem.type != Item.type)
@@ -219,12 +219,12 @@ namespace Coralite.Content.UI
 
             Texture2D backTex = TextureAssets.InventoryBack.Value;
             spriteBatch.Draw(backTex, center, null, Color.White, 0, backTex.Size() / 2, MagikeItemSlotPanel.scale, SpriteEffects.None, 0);
-            
+
             Item Item = container.GetItem();
             if (Item is not null && !Item.IsAir)
             {
                 Main.instance.LoadItem(Item.type);
-                Texture2D mainTex =TextureAssets.Item[Item.type].Value;
+                Texture2D mainTex = TextureAssets.Item[Item.type].Value;
                 Rectangle rectangle2;
 
                 if (Main.itemAnimations[Item.type] != null)

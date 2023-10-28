@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Accessories
 {
-    public class EmeraldRosary:ModItem
+    public class EmeraldRosary : ModItem
     {
-        public override string Texture => AssetDirectory.Accessories+Name;
+        public override string Texture => AssetDirectory.Accessories + Name;
 
         public override void SetStaticDefaults()
         {
@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Accessories
         {
             Item.width = Item.height = 40;
             Item.maxStack = 1;
-            Item.value = Item.sellPrice(0, 0,30,0);
+            Item.value = Item.sellPrice(0, 0, 30, 0);
             Item.accessory = true;
             Item.rare = ItemRarityID.Blue;
         }

@@ -109,7 +109,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     {
                         State = 2;
                         Vector2 dir = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
-                        Target.velocity.X = dir.X*12;
+                        Target.velocity.X = dir.X * 12;
                         Target.velocity.Y = dir.Y * 16;
                         Target.AddBuff(BuffID.Slimed, 120);
                         SoundEngine.PlaySound(CoraliteSoundID.QueenSlime_Item154, NPC.Center);

@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.Gels
                 if (useCount > 6)
                 {
                     useCount = 0;
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<EmperorSabreSummon>(), (int)(damage*1.35f), knockback, player.whoAmI);
+                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<EmperorSabreSummon>(), (int)(damage * 1.35f), knockback, player.whoAmI);
 
                     return false;
                 }
@@ -71,7 +71,7 @@ namespace Coralite.Content.Items.Gels
                         break;
                     case 5:
                     case 6: //和上面一样，只是增加了伤害
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<EmperorSabreSlash>(), (int)(damage*1.35f), knockback, player.whoAmI, useCount);
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<EmperorSabreSlash>(), (int)(damage * 1.35f), knockback, player.whoAmI, useCount);
                         break;
                     case 2:
                     case 4:
@@ -171,7 +171,7 @@ namespace Coralite.Content.Items.Gels
                     startAngle = 2.2f;
                     totalAngle = 3.4f;
                     minTime = 0;
-                    maxTime = (int)(Owner.itemTimeMax * 0.7f)+ 12;
+                    maxTime = (int)(Owner.itemTimeMax * 0.7f) + 12;
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     delay = 44;
                     break;
@@ -297,8 +297,8 @@ namespace Coralite.Content.Items.Gels
                 Vector2 pos = Bottom + RotateVec2 * offset;
                 if (VisualEffectSystem.HitEffect_Lightning)
                 {
-                     dust = Dust.NewDustPerfect(pos, DustType<EmperorSabreStrikeDust>(),
-                         Scale: Main.rand.NextFloat(baseScale, baseScale * 1.3f));
+                    dust = Dust.NewDustPerfect(pos, DustType<EmperorSabreStrikeDust>(),
+                        Scale: Main.rand.NextFloat(baseScale, baseScale * 1.3f));
                     dust.rotation = _Rotation + MathHelper.PiOver2 + Main.rand.NextFloat(-0.2f, 0.2f);
 
                     dust = Dust.NewDustPerfect(pos, DustType<EmperorSabreStrikeDust>(),
@@ -423,7 +423,7 @@ namespace Coralite.Content.Items.Gels
 
         protected override float ControlTrailBottomWidth(float factor)
         {
-            return 75* Projectile.scale;
+            return 75 * Projectile.scale;
         }
 
         protected override void Initializer()
@@ -441,14 +441,14 @@ namespace Coralite.Content.Items.Gels
                     totalAngle = 4.5f;
                     minTime = 12;
                     Projectile.scale = 0.8f;
-                    maxTime = (int)(Owner.itemTimeMax * 0.7f)+ 24;
+                    maxTime = (int)(Owner.itemTimeMax * 0.7f) + 24;
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     break;
                 case 4:
                     startAngle = -2.8f;
                     totalAngle = -5.6f;
                     minTime = 0;
-                    maxTime = Owner.itemTimeMax+ 24;
+                    maxTime = Owner.itemTimeMax + 24;
                     Smoother = Coralite.Instance.SqrtSmoother;
                     Projectile.scale = 0.9f;
                     break;
@@ -494,7 +494,7 @@ namespace Coralite.Content.Items.Gels
 
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
-           float originWidth = totalAngle > 0 ? 0 : mainTex.Width;
+            float originWidth = totalAngle > 0 ? 0 : mainTex.Width;
             Main.spriteBatch.Draw(mainTex, Bottom - Main.screenPosition, mainTex.Frame(),
                                                 lightColor, Projectile.rotation + extraRot, new Vector2(originWidth, origin.Y), new Vector2(Projectile.scale, 1), CheckEffect(), 0f);
         }
@@ -726,7 +726,7 @@ namespace Coralite.Content.Items.Gels
 
         public override void AI()
         {
-            Projectile.SpawnTrailDust(DustID.t_Slime, Main.rand.NextFloat(0.1f, 0.3f), 
+            Projectile.SpawnTrailDust(DustID.t_Slime, Main.rand.NextFloat(0.1f, 0.3f),
                 Alpha: 150, newColor: new Color(78, 136, 255, 80), Scale: Main.rand.NextFloat(1f, 1.4f));
         }
 
@@ -875,7 +875,7 @@ namespace Coralite.Content.Items.Gels
 
             float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
             color = new Color(50, 152 + (int)(100 * factor), 225);
-            color *=  0.75f;
+            color *= 0.75f;
 
             //绘制影子拖尾
             Projectile.DrawShadowTrails(color, 0.3f, 0.03f, 1, 8, 2, Scale, frameBox);

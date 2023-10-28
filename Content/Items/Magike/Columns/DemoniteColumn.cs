@@ -1,22 +1,21 @@
-﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Content.Items.Materials;
+using Coralite.Content.Raritys;
+using Coralite.Core;
+using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Base;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ObjectData;
-using Terraria;
-using Coralite.Core.Prefabs.Items;
-using Coralite.Content.Raritys;
-using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
-using Coralite.Core.Systems.MagikeSystem.Base;
-using Coralite.Content.Items.Magike.BasicLens;
-using Coralite.Content.Items.Materials;
-using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core;
 
 namespace Coralite.Content.Items.Magike.Columns
 {
-    public class DemoniteColumn : BaseMagikePlaceableItem,IMagikePolymerizable
+    public class DemoniteColumn : BaseMagikePlaceableItem, IMagikePolymerizable
     {
         public DemoniteColumn() : base(TileType<DemoniteColumnTile>(), Item.sellPrice(0, 0, 25, 0), RarityType<MagicCrystalRarity>(), 50)
         { }

@@ -1,18 +1,18 @@
 ﻿using Coralite.Core;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.GameContent;
-using System.Linq;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.Rediancie
 {
-    public class RedPulse:ModProjectile
+    public class RedPulse : ModProjectile
     {
-        public override string Texture => AssetDirectory.Rediancie+ "RedBink_BossMinion";
+        public override string Texture => AssetDirectory.Rediancie + "RedBink_BossMinion";
 
         public ref float Timer => ref Projectile.ai[0];
 

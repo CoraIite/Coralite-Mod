@@ -1,8 +1,8 @@
-using System;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 default:
                 case 0:
-                    Projectile.rotation = TargetRot - Owner.gravDir*Owner.direction * factor * 0.06f;
+                    Projectile.rotation = TargetRot - Owner.gravDir * Owner.direction * factor * 0.06f;
                     HeldPositionX = HELD_LENGTH + factor * -4;
                     break;
                 case 1:

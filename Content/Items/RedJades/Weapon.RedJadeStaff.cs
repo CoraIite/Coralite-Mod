@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.RedJades
                 return false;
             if (shootCount >= useBigBoom) //射出大爆炸弹幕
             {
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI,1);
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, 1);
 
                 shootCount = 0;
                 useBigBoom = Main.rand.Next(6, 9);

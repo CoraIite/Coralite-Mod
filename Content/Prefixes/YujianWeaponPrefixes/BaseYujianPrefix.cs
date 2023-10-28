@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Prefixes.YujianWeaponPrefixes
 {
-    public abstract class BaseYujianPrefix:ModPrefix
+    public abstract class BaseYujianPrefix : ModPrefix
     {
         internal float damageMult = 1f;
         internal float knockbackMult = 1f;
@@ -12,7 +12,7 @@ namespace Coralite.Content.Prefixes.YujianWeaponPrefixes
 
         public override PrefixCategory Category => PrefixCategory.Custom;
 
-        public BaseYujianPrefix(float damageMult = 1f, float knockbackMult=1f, int critBonus = 0)
+        public BaseYujianPrefix(float damageMult = 1f, float knockbackMult = 1f, int critBonus = 0)
         {
             this.damageMult = damageMult;
             this.knockbackMult = knockbackMult;
@@ -31,7 +31,7 @@ namespace Coralite.Content.Prefixes.YujianWeaponPrefixes
 
         public override bool CanRoll(Item item)
         {
-            return item.CountsAsClass<YujianDamage>() && item.maxStack==1||item.AllowReforgeForStackableItem/* tModPorter Note: Removed. Use `maxStack == 1 || Item.AllowReforgeForStackableItem` or `Item.Prefix(-3)` to check whether an item is reforgeable */ &&
+            return item.CountsAsClass<YujianDamage>() && item.maxStack == 1 || item.AllowReforgeForStackableItem/* tModPorter Note: Removed. Use `maxStack == 1 || Item.AllowReforgeForStackableItem` or `Item.Prefix(-3)` to check whether an item is reforgeable */ &&
                 GetType() != typeof(BaseYujianPrefix);
         }
 

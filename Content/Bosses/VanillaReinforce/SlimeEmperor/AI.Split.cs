@@ -1,10 +1,10 @@
-﻿using Terraria.ID;
-using Terraria;
+﻿using Coralite.Core;
 using Microsoft.Xna.Framework;
 using System;
-using Terraria.ModLoader;
+using Terraria;
 using Terraria.Audio;
-using Coralite.Core;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
@@ -18,7 +18,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     Jump(2f, 8f, onLanding: () => SonState++);
                     break;
                 case 1: //弹弹
-                    ScaleToTarget(1.25f, 0.8f, 0.1f, Scale.X > 1.2f, () => SonState ++);
+                    ScaleToTarget(1.25f, 0.8f, 0.1f, Scale.X > 1.2f, () => SonState++);
                     SpawnSplitGelDust();
                     break;
                 case 2:
@@ -36,7 +36,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     });
                     break;
                 case 3:
-                    ScaleToTarget(1f, 1f, 0.1f, Math.Abs(Scale.Y - 1) < 0.05f, () => SonState ++);
+                    ScaleToTarget(1f, 1f, 0.1f, Math.Abs(Scale.Y - 1) < 0.05f, () => SonState++);
                     break;
                 case 4:
                     Jump(2f, 8f, onLanding: () => SonState++);

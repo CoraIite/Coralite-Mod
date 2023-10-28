@@ -73,11 +73,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             tentacle.rotation = NPC.rotation + MathHelper.Pi;
             tentacle.pos = NPC.Center;
-            tentacle.UpdateTentacle(tentacleLength, (i) => 6 * MathF.Sin(i / 4 * Main.GlobalTimeWrappedHourly),0.5f);
+            tentacle.UpdateTentacle(tentacleLength, (i) => 6 * MathF.Sin(i / 4 * Main.GlobalTimeWrappedHourly), 0.5f);
 
             ownerTentacle.rotation = NPC.rotation;
             ownerTentacle.pos = NightmareOwner.Center;
-            ownerTentacle.UpdateTentacle(tentacleLength, (i) => 6 * MathF.Cos(i / 4 * Main.GlobalTimeWrappedHourly),0.5f);
+            ownerTentacle.UpdateTentacle(tentacleLength, (i) => 6 * MathF.Cos(i / 4 * Main.GlobalTimeWrappedHourly), 0.5f);
 
 
             if (OwnerTarget.dead)

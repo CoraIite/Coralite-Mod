@@ -6,10 +6,10 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class FrostCrystal : BaseMaterial,IMagikeRemodelable
+    public class FrostCrystal : BaseMaterial, IMagikeRemodelable
     {
-        public FrostCrystal() : base(Item.CommonMaxStack, Item.sellPrice(0,0,10,0), ItemRarityID.Green, AssetDirectory.IcicleItems)
-        {  }
+        public FrostCrystal() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 10, 0), ItemRarityID.Green, AssetDirectory.IcicleItems)
+        { }
 
         public void AddMagikeRemodelRecipe()
         {

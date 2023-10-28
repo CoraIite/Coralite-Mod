@@ -97,7 +97,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
 
             AddRemodelRecipe(ItemID.IronBar, 6, ItemID.SilverBar);
             AddRemodelRecipe(ItemID.IronBar, 6, ItemID.TungstenBar);
-            AddRemodelRecipe(ItemID.IronBar, 150, ItemID.AncientIronHelmet,selfStack:10);
+            AddRemodelRecipe(ItemID.IronBar, 150, ItemID.AncientIronHelmet, selfStack: 10);
             AddRemodelRecipe(ItemID.LeadBar, 6, ItemID.SilverBar);
             AddRemodelRecipe(ItemID.LeadBar, 6, ItemID.TungstenBar);
             AddRemodelRecipe(ItemID.LeadBar, 150, ItemID.AncientIronHelmet, selfStack: 10);
@@ -134,7 +134,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.GoldBar, 15, ItemID.CrimtaneBar);
             AddRemodelRecipe(ItemID.GoldBar, 15, ItemID.DemoniteBar);
             AddRemodelRecipe(ItemID.GoldBar, 15, ItemID.MeteoriteBar);
-            AddRemodelRecipe(ItemID.GoldBar, 150, ItemID.AncientGoldHelmet,selfStack:10);
+            AddRemodelRecipe(ItemID.GoldBar, 150, ItemID.AncientGoldHelmet, selfStack: 10);
             AddRemodelRecipe(ItemID.GoldBar, 100, ItemID.GoldChest, selfStack: 15);
             AddRemodelRecipe(ItemID.GoldBar, 400, ItemID.GoldenKey, selfStack: 20, condition: DownedSkeletronCondition.Instance);
             AddRemodelRecipe(ItemID.PlatinumBar, 15, ItemID.CrimtaneBar);
@@ -173,7 +173,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
 
             //狱岩
             AddRemodelRecipe(ItemID.Hellstone, 25, ItemID.HellstoneBar);
-            AddRemodelRecipe(ItemID.Hellstone, 25, ItemID.LivingFireBlock,3);
+            AddRemodelRecipe(ItemID.Hellstone, 25, ItemID.LivingFireBlock, 3);
 
             AddRemodelRecipe(ItemID.Hellstone, 50, ItemID.CobaltOre, condition: HardModeCondition.Instance);
             AddRemodelRecipe(ItemID.Hellstone, 50, ItemID.PalladiumOre, condition: HardModeCondition.Instance);
@@ -219,7 +219,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.AdamantiteOre, 120, ItemID.TitaniumBar);
             AddRemodelRecipe(ItemID.AdamantiteOre, 120, ItemID.AdamantiteBar);
 
-            AddRemodelRecipe(ItemID.TitaniumBar, 180, ItemID.HallowedBar,condition:DownedAnyMachineBossCondition.Instance);
+            AddRemodelRecipe(ItemID.TitaniumBar, 180, ItemID.HallowedBar, condition: DownedAnyMachineBossCondition.Instance);
             AddRemodelRecipe(ItemID.AdamantiteBar, 180, ItemID.HallowedBar, condition: DownedAnyMachineBossCondition.Instance);
 
             //神圣锭

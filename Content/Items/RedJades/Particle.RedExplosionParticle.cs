@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.RedJades
 {
     public class RedExplosionParticle : ModParticle
     {
-        public override string Texture => AssetDirectory.OtherProjectiles+ "LightFog";
+        public override string Texture => AssetDirectory.OtherProjectiles + "LightFog";
 
         public override bool ShouldUpdateCenter(Particle particle) => false;
 
@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.RedJades
                 particle.active = false;
         }
 
-        public static void Spawn(Vector2 center,float maxScale,Color newColor=default)
+        public static void Spawn(Vector2 center, float maxScale, Color newColor = default)
         {
             Particle particle = Particle.NewParticleDirect(center, Vector2.Zero, CoraliteContent.ParticleType<RedExplosionParticle>(), newColor, 0);
             particle.oldRot = new float[1]
@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.RedJades
         }
     }
 
-    public class RedGlowParticle:ModParticle
+    public class RedGlowParticle : ModParticle
     {
         public override string Texture => AssetDirectory.Rediancie + "RedShield_Flow";
 

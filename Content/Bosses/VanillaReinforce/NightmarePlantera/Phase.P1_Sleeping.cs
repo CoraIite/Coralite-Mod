@@ -48,7 +48,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             float targetY = 0f;
             int hookWhoAmI = 0;
             for (int i = 0; i < 200; i++)
-                if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<NightmareHook>()) 
+                if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<NightmareHook>())
                 {
                     targetX += Main.npc[i].Center.X;
                     targetY += Main.npc[i].Center.Y;
@@ -57,7 +57,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         break;
                 }
 
-            if (hookWhoAmI<3)   //少于3个钩子那么就生成一个
+            if (hookWhoAmI < 3)   //少于3个钩子那么就生成一个
                 NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<NightmareHook>(), NPC.whoAmI);
 
             targetX /= hookWhoAmI;
@@ -190,7 +190,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         dust.velocity = (pos - dust.position).SafeNormalize(Vector2.Zero) * (3 - factor * 3) + NPC.velocity * factor;
                         dust.noGravity = true;
                     }
-                    
+
                     Dust.NewDustPerfect(pos, DustID.VilePowder, Helper.NextVec2Dir() * Main.rand.NextFloat(1f, 3), Scale: Main.rand.NextFloat(1f, 2f));
 
                     break;
@@ -201,7 +201,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     Vector2 pos = GetPhase1MousePos();
                     Vector2 dir = NPC.rotation.ToRotationVector2();
                     int damage = Helper.ScaleValueForDiffMode(40, 35, 30, 25);
-                    for (int i = -1; i < 2; i ++)
+                    for (int i = -1; i < 2; i++)
                         Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, dir.RotatedBy(i * 0.35f) * Main.rand.NextFloat(6f, 14f), ModContent.ProjectileType<HypnotizeFog>(),
                             damage, 4, Target.whoAmI);
 
@@ -221,7 +221,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             do
             {
-                if (Timer<30)
+                if (Timer < 30)
                 {
                     DoRotation(0.1f);
                     break;
@@ -276,10 +276,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             int shootDelay = Helper.ScaleValueForDiffMode(12, 11, 10, 8);
             if (NPC.life < NPC.lifeMax * 15 / 16)
-                shootDelay --;
+                shootDelay--;
 
             if (NPC.life < NPC.lifeMax * 13 / 16)
-                shootDelay --;
+                shootDelay--;
 
             DoRotation(0.1f);
             if (Timer % shootDelay == 0)
@@ -300,14 +300,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 {
                     Vector2 vel = dir * 13;
                     if (Main.rand.NextBool(3))
-                        vel=vel.RotatedBy(Main.rand.NextFromList(-0.35f, 0.35f));
+                        vel = vel.RotatedBy(Main.rand.NextFromList(-0.35f, 0.35f));
 
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, vel,
                         ModContent.ProjectileType<DarkLeaf>(), damage, 4, NPC.target);
                 }
 
                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_BlowgunPlus_Item65, NPC.Center);
-                NPC.velocity = -dir *2f;
+                NPC.velocity = -dir * 2f;
             }
 
             int timeMax = 14 * 4;
@@ -369,7 +369,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 SetPhase1Exchange();
                 return;
             }
-            
+
             Timer = 0;
             alpha = 1;
             useMeleeDamage = true;

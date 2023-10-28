@@ -28,7 +28,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Nightmare
 {
-    public class LostSevensideHook : BaseSilkKnifeItem,INightmareWeapon
+    public class LostSevensideHook : BaseSilkKnifeItem, INightmareWeapon
     {
         public override string Texture => AssetDirectory.NightmareItems + Name;
 
@@ -128,7 +128,7 @@ namespace Coralite.Content.Items.Nightmare
             GradientTexture = null;
         }
 
-        public LostSevensideSlash() : base(1.57f,36) { }
+        public LostSevensideSlash() : base(1.57f, 36) { }
 
         public override void SetStaticDefaults()
         {
@@ -214,7 +214,7 @@ namespace Coralite.Content.Items.Nightmare
         protected override void OnSlash()
         {
             Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
-            Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(Projectile.width, Projectile.height)/2, DustID.VilePowder,
+            Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(Projectile.width, Projectile.height) / 2, DustID.VilePowder,
                    dir * Main.rand.NextFloat(0.5f, 2f));
             dust.noGravity = true;
             int timer = (int)Timer - minTime;
@@ -274,19 +274,19 @@ namespace Coralite.Content.Items.Nightmare
                     PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, RotateVec2, 2, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
-                
+
                 if (VisualEffectSystem.HitEffect_Dusts)
                 {
                     Vector2 direction = RotateVec2.RotatedBy(-1.57f * Math.Sign(totalAngle));
 
                     Helper.SpawnDirDustJet(target.Center, () => RotateVec2.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)), 2, 5,
-                        (i) => i * 0.7f * Main.rand.NextFloat(0.7f, 1.1f), DustType<NightmarePetal>(), newColor: NightmarePlantera.nightPurple, Scale: Main.rand.NextFloat(0.6f, 0.8f), noGravity: false,extraRandRot:0.2f);
+                        (i) => i * 0.7f * Main.rand.NextFloat(0.7f, 1.1f), DustType<NightmarePetal>(), newColor: NightmarePlantera.nightPurple, Scale: Main.rand.NextFloat(0.6f, 0.8f), noGravity: false, extraRandRot: 0.2f);
 
                     for (int i = 0; i < 6; i++)
                     {
-                       Dust d= Dust.NewDustPerfect(target.Center, DustID.VilePowder, direction.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(6f, 12f),
-                           newColor:NightmarePlantera.nightPurple, Scale: Main.rand.NextFloat(1f, 2f));
-                           d.noGravity=true;
+                        Dust d = Dust.NewDustPerfect(target.Center, DustID.VilePowder, direction.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(6f, 12f),
+                            newColor: NightmarePlantera.nightPurple, Scale: Main.rand.NextFloat(1f, 2f));
+                        d.noGravity = true;
                     }
                 }
             }
@@ -331,7 +331,7 @@ namespace Coralite.Content.Items.Nightmare
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(),
-                                                lightColor, Projectile.rotation + extraRot, origin, Projectile.scale+0.2f, CheckEffect(), 0f);
+                                                lightColor, Projectile.rotation + extraRot, origin, Projectile.scale + 0.2f, CheckEffect(), 0f);
         }
 
         protected override void DrawShadowTrail(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
@@ -341,7 +341,7 @@ namespace Coralite.Content.Items.Nightmare
             SpriteEffects effect = CheckEffect();
             for (int i = 1; i < 8; i += 1)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                lightColor * (0.5f - i * 0.5f/8), Projectile.oldRot[i] + extraRot, origin, Projectile.scale, effect, 0);
+                lightColor * (0.5f - i * 0.5f / 8), Projectile.oldRot[i] + extraRot, origin, Projectile.scale, effect, 0);
         }
 
         public void DrawWarp()
@@ -399,7 +399,7 @@ namespace Coralite.Content.Items.Nightmare
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             }
-        }   
+        }
     }
 
     public class LostSevensideChain : BaseSilkKnifeSpecialProj
@@ -457,7 +457,7 @@ namespace Coralite.Content.Items.Nightmare
                 Main.instance.CameraModifiers.Add(modifier);
                 Owner.velocity = new Vector2(Math.Sign(Owner.Center.X - Projectile.Center.X) * 8, -3);
                 //生成新的挥舞弹幕
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<LostSevensideSlash>(), Projectile.damage*3, 2, Owner.whoAmI, 4);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<LostSevensideSlash>(), Projectile.damage * 3, 2, Owner.whoAmI, 4);
                 if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                     cp.GetNightmareEnergy(2);
                 Projectile.Kill();
@@ -481,7 +481,7 @@ namespace Coralite.Content.Items.Nightmare
                         0 => new Color(255, 209, 252),
                         _ => new Color(218, 205, 232),
                     };
-                    Dust.NewDustPerfect(Projectile.Center + direction * i + Main.rand.NextVector2Circular(4, 4),DustType<NightmarePetal>(), Vector2.UnitX.RotatedByRandom(3.14)*Main.rand.NextFloat(0,2f), newColor: c, Scale: Main.rand.NextFloat(1f, 1.3f));
+                    Dust.NewDustPerfect(Projectile.Center + direction * i + Main.rand.NextVector2Circular(4, 4), DustType<NightmarePetal>(), Vector2.UnitX.RotatedByRandom(3.14) * Main.rand.NextFloat(0, 2f), newColor: c, Scale: Main.rand.NextFloat(1f, 1.3f));
                 }
             }
         }
@@ -508,7 +508,7 @@ namespace Coralite.Content.Items.Nightmare
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             Vector2 origin = mainTex.Size() / 2;
             //绘制自己
-            Main.spriteBatch.Draw(mainTex, endPos, null, lightColor, Projectile.rotation + 1.57f, origin, Projectile.scale+0.2f, 0, 0);
+            Main.spriteBatch.Draw(mainTex, endPos, null, lightColor, Projectile.rotation + 1.57f, origin, Projectile.scale + 0.2f, 0, 0);
 
             if (HookState == (int)AIStates.rolling)
             {
@@ -724,7 +724,7 @@ namespace Coralite.Content.Items.Nightmare
     /// 使用ai1传入额外的追踪的角度<br></br>
     /// 使用ai2传入蓄力时间
     /// </summary>
-    public class LostVine:ModProjectile,IDrawAdditive
+    public class LostVine : ModProjectile, IDrawAdditive
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "VineSpike";
 
@@ -826,8 +826,8 @@ namespace Coralite.Content.Items.Nightmare
                         }
 
                         float factor = Timer / ChannelTime;
-                        Vector2 center = Main.MouseWorld ;
-                        Vector2 dir = center - Projectile.Center + (Angle+(Owner.Center-center).ToRotation()).ToRotationVector2() * Helper.Lerp(200, 650, factor);
+                        Vector2 center = Main.MouseWorld;
+                        Vector2 dir = center - Projectile.Center + (Angle + (Owner.Center - center).ToRotation()).ToRotationVector2() * Helper.Lerp(200, 650, factor);
 
                         float velRot = Projectile.velocity.ToRotation();
                         float targetRot = dir.ToRotation();
@@ -917,7 +917,7 @@ namespace Coralite.Content.Items.Nightmare
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2) - Main.screenPosition;
 
-            tentacle?.DrawTentacle(i => 4 * MathF.Sin(i /2* Main.GlobalTimeWrappedHourly));
+            tentacle?.DrawTentacle(i => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
 
             Color c = tentacleColor * alpha;
 

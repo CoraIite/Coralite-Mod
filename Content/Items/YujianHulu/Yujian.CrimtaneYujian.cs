@@ -17,13 +17,13 @@ namespace Coralite.Content.Items.YujianHulu
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.CrimtaneBar,12)
+                .AddIngredient(ItemID.CrimtaneBar, 12)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
     }
 
-    public class CrimtaneYujianProj: BaseYujianProj
+    public class CrimtaneYujianProj : BaseYujianProj
     {
         public CrimtaneYujianProj() : base(
         new YujianAI[]

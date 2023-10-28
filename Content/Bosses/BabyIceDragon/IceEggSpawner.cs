@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public  class IceEggSpawner:ModSystem
+    public class IceEggSpawner : ModSystem
     {
         public const int delayStart = 86400;
         public const int respawnDelay = 43200;
@@ -77,17 +77,17 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public static bool CheckFloor(Vector2 Center)
         {
             Point point = Center.ToTileCoordinates();
-            for (int i = -3; i <= 3; i ++)
+            for (int i = -3; i <= 3; i++)
                 for (int j = -5; j < 12; j++)
                 {
                     int x = point.X + i;
                     int y = point.Y + j;
-                    if ((WorldGen.SolidTile(x, y) || TileID.Sets.Platforms[Framing.GetTileSafely(x, y).TileType]) && 
+                    if ((WorldGen.SolidTile(x, y) || TileID.Sets.Platforms[Framing.GetTileSafely(x, y).TileType]) &&
                         (!Collision.SolidTiles(x - 1, x + 1, y - 3, y - 1)))
                     {
                         return true;
                     }
-            }
+                }
 
             return false;
         }

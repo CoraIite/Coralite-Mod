@@ -114,7 +114,7 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
 
                     Texture2D bottomGem = bottomGemTex.Value;
                     Rectangle bottomFrame = bottomGem.Frame(1, 18, 0, yframe);
-                    spriteBatch.Draw(bottomGem, drawPos + new Vector2(0, 18), bottomFrame, color, 0f, bottomFrame.Size()/2, 1f, effects, 0f);
+                    spriteBatch.Draw(bottomGem, drawPos + new Vector2(0, 18), bottomFrame, color, 0f, bottomFrame.Size() / 2, 1f, effects, 0f);
 
                     const float TwoPi = (float)Math.PI * 2f;
                     float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);

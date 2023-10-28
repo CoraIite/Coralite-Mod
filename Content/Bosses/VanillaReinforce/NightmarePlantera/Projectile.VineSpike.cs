@@ -19,7 +19,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 使用ai1传入追踪的角度<br></br>
     /// 使用ai2传入蓄力时间
     /// </summary>
-    public class VineSpike : BaseNightmareProj, INightmareTentacle,IDrawAdditive
+    public class VineSpike : BaseNightmareProj, INightmareTentacle, IDrawAdditive
     {
         public override string Texture => AssetDirectory.NightmarePlantera + Name;
 
@@ -33,7 +33,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public ref float ChannelTime => ref Projectile.ai[2];
 
         public ref float Timer => ref Projectile.localAI[0];
-        
+
         public float alpha;
         private bool init = true;
         private Color tentacleColor;
@@ -139,7 +139,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             if (alpha > 1)
                                 alpha = 1;
                         }
-                        
+
                         float factor = Timer / ChannelTime;
                         Vector2 center = Owner.Center + new Vector2(Owner.direction * 40 * factor, 0) + Owner.velocity * 20 * factor;
                         Vector2 dir = center - Projectile.Center + Angle.ToRotationVector2() * Helper.Lerp(200, 650, factor);
@@ -168,13 +168,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         //for (int i = 0; i < 2; i++)
                         //{
-                            Color c = Main.rand.Next(0, 1) switch
-                            {
-                                0 => tentacleColor,
-                                _ => tentacleColor * 2f,
-                            };
-                                Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(32, 32), Projectile.velocity * Main.rand.NextFloat(0.05f, 0.2f),
-                                    CoraliteContent.ParticleType<SpeedLine>(), c, Main.rand.NextFloat(0.3f, 0.5f));
+                        Color c = Main.rand.Next(0, 1) switch
+                        {
+                            0 => tentacleColor,
+                            _ => tentacleColor * 2f,
+                        };
+                        Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(32, 32), Projectile.velocity * Main.rand.NextFloat(0.05f, 0.2f),
+                            CoraliteContent.ParticleType<SpeedLine>(), c, Main.rand.NextFloat(0.3f, 0.5f));
                         //}
                         if (Main.rand.NextBool())
                         {
@@ -268,7 +268,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             c.A = (byte)(c.A * alpha);
             spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, selforigin, Projectile.scale, effect, 0);
             c.A = (byte)(c.A * 0.4f);
-            spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, selforigin, Projectile.scale*1.35f, effect, 0);
+            spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, selforigin, Projectile.scale * 1.35f, effect, 0);
         }
     }
 }

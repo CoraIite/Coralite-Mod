@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 }
 
                 int timeLeft2 = Main.rand.Next(24, 28);
-                int index2 = Projectile.NewProjectile(source, player.Center, dir .RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 14, bulletType, snowDamage, knockback, player.whoAmI, timeLeft2 - 2);
+                int index2 = Projectile.NewProjectile(source, player.Center, dir.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 14, bulletType, snowDamage, knockback, player.whoAmI, timeLeft2 - 2);
                 Main.projectile[index2].timeLeft = timeLeft2;
 
                 Projectile.NewProjectile(source, player.Center, dir * 12, ProjectileType<SnowdropBud>(), damage, knockback, player.whoAmI);
@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             CreateRecipe()
             .AddIngredient(ItemID.FrostCore)
-            .AddIngredient(ItemID.ChlorophyteBar,12)
+            .AddIngredient(ItemID.ChlorophyteBar, 12)
             .AddIngredient(ItemID.SoulofLight, 5)
             .AddTile(TileID.MythrilAnvil)
             .Register();

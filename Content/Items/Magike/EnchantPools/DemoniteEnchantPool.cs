@@ -14,7 +14,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.EnchantPools
 {
-    public class DemoniteEnchantPool : BaseMagikePlaceableItem,IMagikePolymerizable
+    public class DemoniteEnchantPool : BaseMagikePlaceableItem, IMagikePolymerizable
     {
         public DemoniteEnchantPool() : base(TileType<DemoniteEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
         { }

@@ -25,7 +25,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public ref float State => ref NPC.ai[0];
         public ref float Hited => ref NPC.ai[1];
         public ref float Timer => ref NPC.localAI[0];
-        private ref float MouseAngle=>ref NPC.localAI[1];
+        private ref float MouseAngle => ref NPC.localAI[1];
 
         public ref float NotFreeTime => ref NPC.ai[2];
         public ref float MaxFreeTime => ref NPC.ai[3];
@@ -110,7 +110,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 default:
                 case 0: //发射阶段
-                    MouseAngle = Math.Abs(MathF.Sin(Timer*0.15f)) * 0.6f;
+                    MouseAngle = Math.Abs(MathF.Sin(Timer * 0.15f)) * 0.6f;
 
                     do
                     {
@@ -124,7 +124,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             {
                                 NPC.TargetClosest();
                                 NPC.velocity = NPC.velocity.RotatedBy(Main.rand.NextFloat(-1f, 1f));
-                                NPC.velocity += (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.4f,0.4f)) * 3f;
+                                NPC.velocity += (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * 3f;
                             }
                             break;
                         }
@@ -141,7 +141,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     Timer++;
                     break;
                 case 1: //收回阶段
-                    if (MouseAngle>0)
+                    if (MouseAngle > 0)
                     {
                         MouseAngle -= 0.1f;
                         if (MouseAngle < 0)
@@ -195,7 +195,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            tentacle.DrawTentacle( (i) => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
+            tentacle.DrawTentacle((i) => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
 
             Texture2D mainTex = TextureAssets.Npc[NPC.type].Value;
             Vector2 pos = NPC.Center - Main.screenPosition;
@@ -217,7 +217,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Texture2D vineTex = VineTex.Value;
 
-            Main.spriteBatch.Draw(vineTex, pos, null, c, NPC.rotation, new Vector2(vineTex.Width*0.75f,vineTex.Height/2), scale, 0, 0);
+            Main.spriteBatch.Draw(vineTex, pos, null, c, NPC.rotation, new Vector2(vineTex.Width * 0.75f, vineTex.Height / 2), scale, 0, 0);
             return false;
         }
     }

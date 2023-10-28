@@ -124,7 +124,7 @@ namespace Coralite.Content.Items.Icicle
             for (int i = -1; i < 2; i++)
             {
                 float scale = 2 - Math.Abs(i);
-                Vector2 drawPos = center + ( rotation+ i * 0.6f + Utils.Remap(factor, 0f, 2f, 0f, (float)Math.PI / 2f) * OwnerDirection).ToRotationVector2() * (mainTex.Width() * 0.5f - 4f) * Projectile.scale;
+                Vector2 drawPos = center + (rotation + i * 0.6f + Utils.Remap(factor, 0f, 2f, 0f, (float)Math.PI / 2f) * OwnerDirection).ToRotationVector2() * (mainTex.Width() * 0.5f - 4f) * Projectile.scale;
                 ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, drawPos, new Color(255, 255, 255, 0) * num3 * 0.5f, Coralite.Instance.IcicleCyan, factor, 0f, 0.5f, 0.5f, 1f, (float)Math.PI / 4f, new Vector2(scale, scale), Vector2.One);
             }
 

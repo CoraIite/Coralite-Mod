@@ -25,7 +25,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override bool? CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target)
         {
-            if (Projectile.timeLeft<5)
+            if (Projectile.timeLeft < 5)
             {
                 return target.whoAmI == Projectile.owner;
             }
@@ -48,7 +48,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
 
             owner.Center = Projectile.Center;
-            if (Projectile.timeLeft<5&&!owner.dead)
+            if (Projectile.timeLeft < 5 && !owner.dead)
             {
                 owner.KillMe(PlayerDeathReason.ByProjectile(Projectile.owner, Projectile.whoAmI), 999999, 0);
             }

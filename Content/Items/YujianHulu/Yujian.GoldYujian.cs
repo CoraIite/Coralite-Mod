@@ -1,15 +1,15 @@
-﻿using Coralite.Core.Systems.YujianSystem.YujianAIs;
+﻿using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Systems.YujianSystem;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Terraria.DataStructures;
 using Coralite.Core.Systems.ParticleSystem;
-using Coralite.Content.Particles;
+using Coralite.Core.Systems.YujianSystem;
+using Coralite.Core.Systems.YujianSystem.YujianAIs;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.YujianHulu
 {
@@ -129,7 +129,7 @@ namespace Coralite.Content.Items.YujianHulu
 
                 if (Main.myPlayer == Projectile.owner)
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity * (Projectile.extraUpdates + 1), ModContent.ProjectileType<GlodenSpurtProj>(),
-                        Projectile.damage*2, Projectile.knockBack, Projectile.owner, spurtTime / (Projectile.extraUpdates + 1),32);
+                        Projectile.damage * 2, Projectile.knockBack, Projectile.owner, spurtTime / (Projectile.extraUpdates + 1), 32);
             }
 
             if (yujianProj.Timer > SecondPhaseTime)     //突刺阶段
@@ -206,14 +206,14 @@ namespace Coralite.Content.Items.YujianHulu
             }
 
             if (Projectile.timeLeft < 6)
-                Alpha -= 1/6f;
+                Alpha -= 1 / 6f;
             else if (Projectile.timeLeft < 12)
-                    Alpha += 1 / 6f;
+                Alpha += 1 / 6f;
             else
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    Particle particle = Particle.NewParticleDirect(Projectile.Center + Main.rand.NextVector2CircularEdge(16, 16) + i*Projectile.velocity, Vector2.Zero, CoraliteContent.ParticleType<HorizontalStar>(), Color.Gold, Main.rand.NextFloat(0.1f, 0.15f));
+                    Particle particle = Particle.NewParticleDirect(Projectile.Center + Main.rand.NextVector2CircularEdge(16, 16) + i * Projectile.velocity, Vector2.Zero, CoraliteContent.ParticleType<HorizontalStar>(), Color.Gold, Main.rand.NextFloat(0.1f, 0.15f));
                     particle.rotation = 1.57f;
                 }
             }
@@ -242,7 +242,7 @@ namespace Coralite.Content.Items.YujianHulu
             Texture2D mainTex = TextureAssets.Extra[98].Value;
             Vector2 scale = new Vector2(Width / mainTex.Width, (Projectile.Center - center).Length() / mainTex.Height);
 
-            Main.spriteBatch.Draw(mainTex, center -Projectile.velocity- Main.screenPosition, null, Color.Gold * Alpha, Projectile.rotation+3.141f, new Vector2(mainTex.Width / 2, 0), scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(mainTex, center - Projectile.velocity - Main.screenPosition, null, Color.Gold * Alpha, Projectile.rotation + 3.141f, new Vector2(mainTex.Width / 2, 0), scale, SpriteEffects.None, 0);
 
             return false;
         }

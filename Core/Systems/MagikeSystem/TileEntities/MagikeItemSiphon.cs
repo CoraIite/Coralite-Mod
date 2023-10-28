@@ -20,7 +20,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public Item containsItem = new Item();
 
-        public Point16 receiverPoint=Point16.NegativeOne;
+        public Point16 receiverPoint = Point16.NegativeOne;
         public int connectChestIndex = -1;
         /// <summary>
         /// 扩展膜，用于执行特定工作
@@ -34,7 +34,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public abstract Color MainColor { get; }
         public Item ContainsItem { get => containsItem; set => containsItem = value; }
 
-        protected MagikeItemSiphon(int magikeMax, int howManyToCheckPerFrame, int extensionCount, int connectLenghMax, int sendItemCost, int workCost, int maxPerSend,int sendItemDelay, int itemSiphonLenghMax) : base(magikeMax, (Main.maxItems / howManyToCheckPerFrame) + 3)
+        protected MagikeItemSiphon(int magikeMax, int howManyToCheckPerFrame, int extensionCount, int connectLenghMax, int sendItemCost, int workCost, int maxPerSend, int sendItemDelay, int itemSiphonLenghMax) : base(magikeMax, (Main.maxItems / howManyToCheckPerFrame) + 3)
         {
             this.howManyToCheckPerFrame = howManyToCheckPerFrame;
             extensions = new Item[extensionCount];
@@ -75,7 +75,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             if (currentCheckItem < Main.maxItems)
             {
-                Vector2 selfPosition=GetWorldPosition();
+                Vector2 selfPosition = GetWorldPosition();
                 for (int i = 0; i < howManyToCheckPerFrame; i++)
                 {
                     //遍历物品，检测是否能够吸取，如果能那么就把物品放入自身中
@@ -86,7 +86,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                         continue;
                     }
 
-                    if (Vector2.Distance(selfPosition,item.position)>ItemSiphonLenghMax)
+                    if (Vector2.Distance(selfPosition, item.position) > ItemSiphonLenghMax)
                     {
                         currentCheckItem++;
                         continue;
@@ -139,7 +139,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public override bool StartWork()
         {
-            if (magike>=workCost)
+            if (magike >= workCost)
                 return base.StartWork();
 
             return false;
@@ -320,11 +320,11 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
             if (receiverPoint != Point16.NegativeOne)
             {
-                tag.Add("Receiver_x" , receiverPoint.X);
+                tag.Add("Receiver_x", receiverPoint.X);
                 tag.Add("Receiver_y", receiverPoint.Y);
             }
 
-            if (connectChestIndex!=-1)
+            if (connectChestIndex != -1)
                 tag.Add("chestIndex", connectChestIndex);
 
             if (!containsItem.IsAir)
@@ -333,7 +333,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             for (int i = 0; i < extensions.Length; i++)
             {
                 if (!extensions[i].IsAir)
-                    tag.Add("extensions"+i, extensions[i]);
+                    tag.Add("extensions" + i, extensions[i]);
             }
         }
 
@@ -341,7 +341,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             base.LoadData(tag);
 
-            if (tag.TryGet("Receiver_x" , out short x) && tag.TryGet("Receiver_y" , out short y))
+            if (tag.TryGet("Receiver_x", out short x) && tag.TryGet("Receiver_y", out short y))
                 receiverPoint = new Point16(x, y);
 
             if (tag.TryGet("chestIndex", out int index))

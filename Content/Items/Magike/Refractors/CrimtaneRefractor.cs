@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Magike.MultPrisms;
-using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.Items.Materials;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
@@ -16,7 +15,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Refractors
 {
-    public class CrimtaneRefractor : BaseMagikePlaceableItem,IMagikePolymerizable
+    public class CrimtaneRefractor : BaseMagikePlaceableItem, IMagikePolymerizable
     {
         public CrimtaneRefractor() : base(TileType<CrimtaneRefractorTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 25)
         { }

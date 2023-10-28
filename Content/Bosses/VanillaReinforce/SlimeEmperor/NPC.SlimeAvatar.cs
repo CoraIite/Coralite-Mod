@@ -18,14 +18,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
     /// </summary>
     public class SlimeAvatar : ModNPC
     {
-        public override string Texture => AssetDirectory.SlimeEmperor +Name;
+        public override string Texture => AssetDirectory.SlimeEmperor + Name;
 
         private Vector2 Scale;
 
         private float LifePercentScale => Math.Clamp(NPC.life / (float)NPC.lifeMax, 0.5f, 1);
 
         internal ref float JumpState => ref NPC.ai[0];
-        internal  float JumpTimer;
+        internal float JumpTimer;
         internal ref float State => ref NPC.ai[3];
 
         public float xVel;

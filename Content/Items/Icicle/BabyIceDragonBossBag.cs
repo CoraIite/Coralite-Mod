@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class BabyIceDragonBossBag: ModItem
+    public class BabyIceDragonBossBag : ModItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
 

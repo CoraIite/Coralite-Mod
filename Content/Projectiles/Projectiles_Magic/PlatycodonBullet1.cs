@@ -50,7 +50,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         public override void OnSpawn(IEntitySource source)
         {
-            Alpha= 1;
+            Alpha = 1;
             Projectile.oldPos = new Vector2[12];
             for (int i = 0; i < 12; i++)
                 Projectile.oldPos[i] = Projectile.Center;
@@ -86,9 +86,9 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                         trail ??= new Trail(Main.instance.GraphicsDevice, 12, new NoTip(), factor => Helper.Lerp(1, 4, factor), factor =>
                         {
                             if (factor.X > 0.8f)
-                                return Color.Lerp(new Color(51, 45, 137, 30)*Alpha, Color.White* Alpha, (factor.X - 0.8f) / 0.2f);
+                                return Color.Lerp(new Color(51, 45, 137, 30) * Alpha, Color.White * Alpha, (factor.X - 0.8f) / 0.2f);
 
-                            return Color.Lerp(new Color(0, 0, 0, 0), new Color(51, 45, 137, 30)* Alpha, factor.X / 0.8f);
+                            return Color.Lerp(new Color(0, 0, 0, 0), new Color(51, 45, 137, 30) * Alpha, factor.X / 0.8f);
                         });
                     }
                     break;
@@ -99,9 +99,9 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
                         trail ??= new Trail(Main.instance.GraphicsDevice, 12, new NoTip(), factor => Helper.Lerp(1, 4, factor), factor =>
                         {
                             if (factor.X > 0.8f)
-                                return Color.Lerp(new Color(134, 45, 137, 30)* Alpha, Color.White* Alpha, (factor.X - 0.8f) / 0.2f);
+                                return Color.Lerp(new Color(134, 45, 137, 30) * Alpha, Color.White * Alpha, (factor.X - 0.8f) / 0.2f);
 
-                            return Color.Lerp(new Color(0, 0, 0, 0), new Color(134, 45, 137, 30)* Alpha, factor.X / 0.8f);
+                            return Color.Lerp(new Color(0, 0, 0, 0), new Color(134, 45, 137, 30) * Alpha, factor.X / 0.8f);
                         });
                     }
                     break;
@@ -126,7 +126,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             FadeOut();
         }
 
-        public void FadeOut(){
+        public void FadeOut()
+        {
             canDamage = false;
             Projectile.Center += Projectile.velocity;
             Projectile.velocity *= 0;
@@ -154,7 +155,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         {
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
 
-            spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(1, 2, 0, (int)Projectile.ai[0]), Color.White*Alpha, Projectile.rotation, new Vector2(15, 9), Projectile.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(1, 2, 0, (int)Projectile.ai[0]), Color.White * Alpha, Projectile.rotation, new Vector2(15, 9), Projectile.scale, SpriteEffects.None, 0f);
         }
     }
 }

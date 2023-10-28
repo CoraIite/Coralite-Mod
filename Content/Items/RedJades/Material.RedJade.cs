@@ -9,7 +9,7 @@ namespace Coralite.Content.Items.RedJades
 {
     public class RedJade : BaseMaterial
     {
-        public RedJade() : base( 9999, Item.sellPrice(0, 0, 2, 50), ItemRarityID.Blue, AssetDirectory.RedJadeItems) { }
+        public RedJade() : base(9999, Item.sellPrice(0, 0, 2, 50), ItemRarityID.Blue, AssetDirectory.RedJadeItems) { }
 
         public override void SetDefaults()
         {

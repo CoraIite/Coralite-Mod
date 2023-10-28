@@ -1,11 +1,11 @@
 ﻿using Coralite.Core;
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.Audio;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
 using Coralite.Core.Configs;
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Icicle
 {
@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Icicle
         {
             for (int i = 0; i < 8; i++)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Frost, -Vector2.UnitY.RotatedBy(i * 0.785f)*1.5f);
+                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Frost, -Vector2.UnitY.RotatedBy(i * 0.785f) * 1.5f);
                 dust.noGravity = true;
             }
         }

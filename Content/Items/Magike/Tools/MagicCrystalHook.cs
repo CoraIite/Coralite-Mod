@@ -32,17 +32,17 @@ namespace Coralite.Content.Items.Magike.Tools
 
     public class MagicCrystalHookProjectile : ModProjectile
     {
-        public override string Texture =>AssetDirectory.MagikeTools+Name;
+        public override string Texture => AssetDirectory.MagikeTools + Name;
 
         private static Asset<Texture2D> chainTexture;
 
         public override void Load()
-        { 
-            chainTexture = ModContent.Request<Texture2D>(AssetDirectory.MagikeTools+ "MagicCrystalHookChain");
+        {
+            chainTexture = ModContent.Request<Texture2D>(AssetDirectory.MagikeTools + "MagicCrystalHookChain");
         }
 
         public override void Unload()
-        { 
+        {
             chainTexture = null;
         }
 
@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.Magike.Tools
 
         public override void SetDefaults()
         {
-            Projectile.CloneDefaults(ProjectileID.GemHookAmethyst); 
+            Projectile.CloneDefaults(ProjectileID.GemHookAmethyst);
         }
 
         public override bool? CanUseGrapple(Player player)
@@ -105,7 +105,7 @@ namespace Coralite.Content.Items.Magike.Tools
         // default is 11, Lunar is 24
         public override void GrappleRetreatSpeed(Player player, ref float speed)
         {
-            speed = 12f; 
+            speed = 12f;
         }
 
         public override void GrapplePullSpeed(Player player, ref float speed)

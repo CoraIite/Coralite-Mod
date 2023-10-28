@@ -72,8 +72,8 @@ namespace Coralite.Content.Items.Shadow
             if (Main.myPlayer == Projectile.owner && (int)State == (int)AIState.idle && Owner.ItemAnimationJustStarted)//只有不在攻击的时候才能加能量
             {
                 bool chargeNotComplete = Energy < 1000;
-               //Energy += 1500; //测试时专用
-                Energy += Owner.itemTimeMax*1.5f;    //使用物品时根据使用时间获得能量
+                //Energy += 1500; //测试时专用
+                Energy += Owner.itemTimeMax * 1.5f;    //使用物品时根据使用时间获得能量
                 if (chargeNotComplete && Energy >= 1000)
                 {
                     for (float i = 0; i < MathHelper.TwoPi; i += MathHelper.Pi / 8)
@@ -110,7 +110,7 @@ namespace Coralite.Content.Items.Shadow
                                 targetCenter = target.Center;
 
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, (targetCenter - Projectile.Center).SafeNormalize(Vector2.One) * 16,
-                                ModContent.ProjectileType<InvertedShadowBullet>(), Projectile.damage/2, 0, Projectile.owner);
+                                ModContent.ProjectileType<InvertedShadowBullet>(), Projectile.damage / 2, 0, Projectile.owner);
                         }
 
                         SoundEngine.PlaySound(CoraliteSoundID.Gun3_Item41, Projectile.Center);
@@ -184,7 +184,7 @@ namespace Coralite.Content.Items.Shadow
                     {
                         if (Main.myPlayer == Projectile.owner)
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero,
-                                ModContent.ProjectileType<ShadowCircle_CrystalMinion>(), (int)(Projectile.damage*0.6f), 0, Projectile.owner);
+                                ModContent.ProjectileType<ShadowCircle_CrystalMinion>(), (int)(Projectile.damage * 0.6f), 0, Projectile.owner);
 
                         SoundEngine.PlaySound(CoraliteSoundID.ClingerStaff_Item100, Projectile.Center);
                     });
@@ -214,7 +214,7 @@ namespace Coralite.Content.Items.Shadow
             }
         }
 
-        public void NormalUpdate(int energyCost,Action how2Shoot)
+        public void NormalUpdate(int energyCost, Action how2Shoot)
         {
             if (Energy > energyCost)
                 do
@@ -299,9 +299,9 @@ namespace Coralite.Content.Items.Shadow
             Vector2 center = Projectile.Center - Main.screenPosition;
             Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 6);
 
-            Main.spriteBatch.Draw(mainTex, center, frameBox, lightColor, 0,origin , 1.3f, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(mainTex, center, frameBox, lightColor, 0, origin, 1.3f, SpriteEffects.None, 0);
             if ((int)State != (int)AIState.idle)
-                Main.spriteBatch.Draw(mainTex, center, frameBox, Color.White * visualAlpha, 0, origin, visualScale*1.3f, SpriteEffects.None, 0);
+                Main.spriteBatch.Draw(mainTex, center, frameBox, Color.White * visualAlpha, 0, origin, visualScale * 1.3f, SpriteEffects.None, 0);
             return false;
         }
     }
@@ -723,7 +723,7 @@ namespace Coralite.Content.Items.Shadow
             if (Projectile.ai[0] == -1f)
             {
                 ProjectilesHelper.GetMyProjIndexWithModProj<ShadowCircle_CrystalMinion>(Projectile, out var index, out var totalIndexesInGroup);
-                GetIdlePosition(index, totalIndexesInGroup, player,out var idleSpot, out var idleRotation);
+                GetIdlePosition(index, totalIndexesInGroup, player, out var idleSpot, out var idleRotation);
                 Projectile.velocity = Vector2.Zero;
                 Projectile.Center = Projectile.Center.MoveTowards(idleSpot, 32f);
                 Projectile.rotation = Projectile.rotation.AngleLerp(idleRotation, 0.2f);
@@ -739,8 +739,8 @@ namespace Coralite.Content.Items.Shadow
             #region  尝试开始攻击
             if (Projectile.ai[0] == 0f)
             {
-                DieTimer+=1;
-                if (DieTimer>600)
+                DieTimer += 1;
+                if (DieTimer > 600)
                 {
                     Projectile.Kill();
                     return;
@@ -866,11 +866,11 @@ namespace Coralite.Content.Items.Shadow
             #endregion
         }
 
-        public void GetIdlePosition(int stackedIndex, int totalIndexes,Player Owner, out Vector2 idleSpot, out float idleRotation)
+        public void GetIdlePosition(int stackedIndex, int totalIndexes, Player Owner, out Vector2 idleSpot, out float idleRotation)
         {
             idleRotation = 0;
             float num2 = (totalIndexes - 1f) / 2f;
-            idleSpot = Owner.Center - Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 33f +new Vector2(16,0);
+            idleSpot = Owner.Center - Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 33f + new Vector2(16, 0);
             idleSpot += Main.GlobalTimeWrappedHourly.ToRotationVector2() * 8;
         }
 
@@ -940,8 +940,8 @@ namespace Coralite.Content.Items.Shadow
             Rectangle frameBox = mainTex.Frame(1, 7, 0, Projectile.frame);
             Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 14);
 
-            if (Projectile.ai[0]>0)
-                for (int i = 1; i < 6; i ++)
+            if (Projectile.ai[0] > 0)
+                for (int i = 1; i < 6; i++)
                 {
                     Color color = Color.Purple * (0.34f - i * 0.02f);
                     Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, frameBox, color, Projectile.oldRot[i], origin, 1.2f, SpriteEffects.None, 0);

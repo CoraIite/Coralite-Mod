@@ -1,8 +1,8 @@
-using System;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;

@@ -33,7 +33,7 @@ namespace Coralite.Content.Particles
                 particle.color *= 0.88f;
             else
             {
-                GetDatas(particle, out int spawnTime,out float rotate);
+                GetDatas(particle, out int spawnTime, out float rotate);
                 if (particle.fadeIn >= spawnTime * 3f / 4f || particle.fadeIn < spawnTime / 4f)
                     particle.velocity = particle.velocity.RotatedBy(rotate);
                 else
@@ -71,7 +71,7 @@ namespace Coralite.Content.Particles
         }
 
 
-        public static Particle Spawn(Vector2 center, Vector2 velocity,float trailWidth, int spawnTime,float rotate, Color color = (default))
+        public static Particle Spawn(Vector2 center, Vector2 velocity, float trailWidth, int spawnTime, float rotate, Color color = (default))
         {
             Particle particle = Particle.NewParticleDirect(center, velocity, CoraliteContent.ParticleType<FlowLine>(), color, 1f);
             particle.fadeIn = spawnTime;

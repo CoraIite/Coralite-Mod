@@ -1,11 +1,11 @@
-﻿using Coralite.Core.Prefabs.Tiles;
+﻿using Coralite.Core;
+using Coralite.Core.Prefabs.Tiles;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.ObjectInteractions;
-using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Coralite.Core;
 
 namespace Coralite.Content.Tiles.Magike
 {

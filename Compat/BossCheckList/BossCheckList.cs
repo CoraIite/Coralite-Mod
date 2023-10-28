@@ -13,7 +13,7 @@ namespace Coralite.Compat.BossCheckList
         {
 #pragma warning disable CS8974 // 将方法组转换为非委托类型
 
-            if (ModLoader.TryGetMod("BossCheckList",out Mod bcl))
+            if (ModLoader.TryGetMod("BossCheckList", out Mod bcl))
             {
                 //赤玉灵
                 List<int> RediancieCollection = new List<int>()

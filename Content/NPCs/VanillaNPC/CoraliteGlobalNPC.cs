@@ -107,7 +107,7 @@ namespace Coralite.Content.NPCs.VanillaNPC
                             if (items[i] == null || items[i].IsAir)
                                 break;
                         }
-                        
+
                         items[i] = new Item(ItemType<TravelJournaling>());
                     }
                     break;
@@ -127,7 +127,7 @@ namespace Coralite.Content.NPCs.VanillaNPC
             if (npc.HasBuff<EdenDebuff>())
             {
                 modifiers.FlatBonusDamage += EdenDebuff.TagDamage * projTagMultiplier;
-                if (Main.rand.NextBool(14,100))
+                if (Main.rand.NextBool(14, 100))
                     modifiers.SetCrit();
 
                 if (VisualEffectSystem.HitEffect_Dusts)

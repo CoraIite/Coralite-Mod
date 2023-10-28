@@ -251,9 +251,9 @@ namespace Coralite.Content.Items.Gels
         }
     }
 
-    public class GelWhipDebuff:ModBuff
+    public class GelWhipDebuff : ModBuff
     {
-        public override string Texture => AssetDirectory.Buffs+ "Buff";
+        public override string Texture => AssetDirectory.Buffs + "Buff";
 
         public static readonly int TagDamage = 6;
 

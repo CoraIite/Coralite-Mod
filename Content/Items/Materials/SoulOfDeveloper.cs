@@ -7,7 +7,7 @@ using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Content.Items.Materials
 {
-    public class SoulOfDeveloper : BaseMaterial,IMagikeRemodelable
+    public class SoulOfDeveloper : BaseMaterial, IMagikeRemodelable
     {
         public override void SetStaticDefaults()
         {
@@ -83,7 +83,7 @@ namespace Coralite.Content.Items.Materials
             AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.LokisShirt);
             AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.LokisPants);
             AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.LokisWings);
-            AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.LokisDye,3);
+            AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.LokisDye, 3);
 
             AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.RedsHelmet);
             AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.RedsBreastplate);
@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Materials
             AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.SkiphsShirt);
             AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.SkiphsPants);
             AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.SkiphsWings);
-            AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.DevDye,3);
+            AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.DevDye, 3);
 
             AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.WillsHelmet);
             AddRemodelRecipe<SoulOfDeveloper>(1500, ItemID.WillsBreastplate);

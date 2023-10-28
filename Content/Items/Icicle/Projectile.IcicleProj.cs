@@ -1,11 +1,10 @@
 ﻿using Coralite.Core;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.Audio;
-using Coralite.Helpers;
 using Coralite.Core.Configs;
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Icicle
 {

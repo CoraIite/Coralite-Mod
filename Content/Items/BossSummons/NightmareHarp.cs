@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class NightmareHarp:ModItem,IMagikeRemodelable
+    public class NightmareHarp : ModItem, IMagikeRemodelable
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 

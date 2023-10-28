@@ -50,14 +50,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 7; i++)
                             {
                                 NPC.NewProjectileInAI<NightmareEnergy>(NPC.Center + angle.ToRotationVector2() * 750, (angle + MathHelper.PiOver2).ToRotationVector2() * 5, 1, 1, -1, i);
-                                angle +=  MathHelper.TwoPi / 7;
+                                angle += MathHelper.TwoPi / 7;
                             }
                         }
 
                         if (Timer > 2 && Timer % 8 == 0)
                         {
                             float angle = Main.rand.NextFloat(MathHelper.TwoPi);
-                            NPC.NewProjectileInAI<NightmareEnergy>(NPC.Center + angle.ToRotationVector2() * Main.rand.Next(400, 600), (angle +2.5f).ToRotationVector2() * 5, 1, 1, -1, -1);
+                            NPC.NewProjectileInAI<NightmareEnergy>(NPC.Center + angle.ToRotationVector2() * Main.rand.Next(400, 600), (angle + 2.5f).ToRotationVector2() * 5, 1, 1, -1, -1);
                         }
 
                         if (Timer > 60)
@@ -76,7 +76,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         if (Main.rand.NextBool())
                         {
                             Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(300, 300), ModContent.DustType<NightmareStar>(),
-                                new Vector2(0,Main.rand.NextFromList(-1, 1) * 4), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 4f));
+                                new Vector2(0, Main.rand.NextFromList(-1, 1) * 4), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 4f));
                         }
 
                         if (Timer < 60)
@@ -120,15 +120,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(128f), DustID.VilePowder, dir * Main.rand.NextFloat(8f, 16f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 1.3f));
                         }
 
-                        if (Timer<140)
+                        if (Timer < 140)
                             break;
 
-                        if (Timer<200)
+                        if (Timer < 200)
                         {
                             warpScale -= 1 / 60f;
                         }
 
-                        if (Timer>200)
+                        if (Timer > 200)
                         {
                             State++;
                             Timer = 0;
@@ -146,7 +146,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 12; i++)
                             {
                                 float tor = Main.rand.NextFloat(6.282f);
-                                NPC.NewProjectileDirectInAI<NightmareBurst>(NPC.Center, tor.ToRotationVector2() * Main.rand.Next(10,20), 1, 1, -1, tor);
+                                NPC.NewProjectileDirectInAI<NightmareBurst>(NPC.Center, tor.ToRotationVector2() * Main.rand.Next(10, 20), 1, 1, -1, tor);
                             }
 
                             if (Main.LocalPlayer.TryGetModPlayer(out NightmarePlayerCamera NCamera))
@@ -164,7 +164,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         if (Main.LocalPlayer.TryGetModPlayer(out NightmarePlayerCamera NCamera))
                         {
-                            if (NCamera.factor >0)
+                            if (NCamera.factor > 0)
                             {
                                 NCamera.useScreenMove = true;
                                 NCamera.factor -= 1 / 20f;

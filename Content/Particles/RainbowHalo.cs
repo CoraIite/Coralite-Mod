@@ -4,7 +4,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class RainbowHalo:ModParticle
+    public class RainbowHalo : ModParticle
     {
         public override bool ShouldUpdateCenter(Particle particle) => false;
 

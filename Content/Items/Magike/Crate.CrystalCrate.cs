@@ -9,7 +9,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Magike
 {
-    public class CrystalCrate:ModItem
+    public class CrystalCrate : ModItem
     {
         public override string Texture => AssetDirectory.MagikeItems + Name;
 
@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Magike
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<CrystalCrateTile>());
-            Item.width = 12; 
+            Item.width = 12;
             Item.height = 12;
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(0, 2);
@@ -105,7 +105,7 @@ namespace Coralite.Content.Items.Magike
 
     public class CrystalCrateTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles+Name;
+        public override string Texture => AssetDirectory.MagikeTiles + Name;
 
         public override void SetStaticDefaults()
         {

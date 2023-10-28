@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.Gels
 
     public class SpikeGelBall_Friendly : ModProjectile
     {
-        public override string Texture => AssetDirectory.SlimeEmperor+ "SpikeGelBall";
+        public override string Texture => AssetDirectory.SlimeEmperor + "SpikeGelBall";
 
         protected Vector2 Scale
         {
@@ -153,13 +153,13 @@ namespace Coralite.Content.Items.Gels
                      Helper.NextVec2Dir() * Main.rand.NextFloat(1f, 2.5f), 150, new Color(78, 136, 255, 80), Main.rand.NextFloat(1.2f, 1.6f));
             }
 
-            if (Main.myPlayer==Projectile.owner)
+            if (Main.myPlayer == Projectile.owner)
             {
                 //生成一些尖刺弹幕
                 for (int i = 0; i < 3; i++)
                 {
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + Main.rand.NextVector2Circular(Projectile.width, Projectile.height),
-                        -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1f, 1f)) * Main.rand.NextFloat(10, 14), ProjectileType<GelSpike_Friendly>(), (int)(Projectile.damage*0.6f), 0, Projectile.owner);
+                        -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1f, 1f)) * Main.rand.NextFloat(10, 14), ProjectileType<GelSpike_Friendly>(), (int)(Projectile.damage * 0.6f), 0, Projectile.owner);
                 }
             }
         }

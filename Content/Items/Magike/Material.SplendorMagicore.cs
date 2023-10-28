@@ -1,9 +1,9 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core;
-using Terraria.ModLoader;
-using Terraria;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Helpers;
+using Terraria;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike
 {

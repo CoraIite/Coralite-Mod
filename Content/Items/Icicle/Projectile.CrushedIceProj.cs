@@ -10,7 +10,7 @@ namespace Coralite.Content.Items.Icicle
 {
     public class CrushedIceProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.IcicleProjectiles+Name;
+        public override string Texture => AssetDirectory.IcicleProjectiles + Name;
 
         public override void SetDefaults()
         {

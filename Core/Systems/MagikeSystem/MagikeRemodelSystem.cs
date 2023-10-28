@@ -204,7 +204,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             this.selfType = selfType;
             this.selfRequiredNumber = selfRequiredNumber;
-            selfItem=new Item(selfType, selfRequiredNumber);
+            selfItem = new Item(selfType, selfRequiredNumber);
             this.magikeCost = magikeCost;
             this.resultItem = resultItem;
             this.condition = condition;

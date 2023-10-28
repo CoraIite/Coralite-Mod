@@ -7,7 +7,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
     public class StickyGelTile : ModTile
     {
-        public override string Texture => AssetDirectory.SlimeEmperor+Name;
+        public override string Texture => AssetDirectory.SlimeEmperor + Name;
 
         public override void SetStaticDefaults()
         {
@@ -24,7 +24,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             num = 0;
         }
-        
+
         public override bool CanDrop(int i, int j) => false;
         public override bool Slope(int i, int j) => false;
 

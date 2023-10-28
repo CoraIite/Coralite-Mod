@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.Magike
             Item.useAnimation = Item.useTime = 10;
             Item.useTurn = true;
             Item.maxStack = 1;
-            Item.value = Item.sellPrice(0,0,10,0);
+            Item.value = Item.sellPrice(0, 0, 10, 0);
             Item.rare = ModContent.RarityType<MagicCrystalRarity>();
             Item.GetMagikeItem().magiteAmount = 50;
         }

@@ -1,12 +1,12 @@
-﻿using Coralite.Content.Particles;
-using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Content.Items.Icicle;
+using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using System;
-using Terraria.Audio;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
-using Coralite.Content.Items.Icicle;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -94,7 +94,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 //角度小于一定值的时候才会冲刺，否则吐息
                                 if (angle < -5 * MathHelper.Pi / 6 || angle > 5 * MathHelper.Pi / 6 || (angle > -MathHelper.Pi / 6 && angle < MathHelper.Pi / 6))
                                     movePhase = 3;
-                                else 
+                                else
                                     movePhase = 2;
                                 Timer = 0;
                             }

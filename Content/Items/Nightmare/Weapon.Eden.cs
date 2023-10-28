@@ -101,7 +101,7 @@ namespace Coralite.Content.Items.Nightmare
         }
 
         private ref float State => ref Projectile.ai[1];
-        private bool hited=true;
+        private bool hited = true;
 
         public override void AI()
         {

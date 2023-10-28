@@ -102,7 +102,7 @@ namespace Coralite.Content.WorldGeneration
             int width = (int)(WorldGen.genRand.Next(radiusMin, radiusMax) * xScale);
             int height = (int)(WorldGen.genRand.Next(radiusMin, radiusMax) * yScale);
             // 检查结构图中我们希望放置的预定区域是否有任何现有冲突。
-            if (!GenVars.structures.CanPlace(new Rectangle(origin.X - width, origin.Y - height, width*2, height*2)))
+            if (!GenVars.structures.CanPlace(new Rectangle(origin.X - width, origin.Y - height, width * 2, height * 2)))
                 return false;
 
             //原版提供的形状，可以使用一些生成器生成出形状来并用这个变量记录
@@ -361,7 +361,7 @@ namespace Coralite.Content.WorldGeneration
             int brokenLensType = ModContent.TileType<BrokenLens>();
             TileObjectData data = TileObjectData.GetTileData(brokenLensType, 0);
 
-            WorldGen.PlaceObject(lightPoint1.X, lightPoint1.Y, brokenLensType, true,WorldGen.genRand.Next(data.RandomStyleRange));
+            WorldGen.PlaceObject(lightPoint1.X, lightPoint1.Y, brokenLensType, true, WorldGen.genRand.Next(data.RandomStyleRange));
             WorldGen.PlaceObject(lightPoint2.X, lightPoint2.Y, brokenLensType, true, WorldGen.genRand.Next(data.RandomStyleRange));
 
             //放置箱子
@@ -482,11 +482,11 @@ namespace Coralite.Content.WorldGeneration
             WorldGenHelper.PlaceOnGroundDecorations(topLeft.X, topLeft.Y, 0, 0, (int)(width * 2.2f), (int)(height * 3f), (ushort)ModContent.TileType<BasaltStalactiteBottom>(), 4, 0, basalt);
             #endregion
 
-            GenVars.structures.AddProtectedStructure(new Rectangle(origin.X-width, origin.Y-height, width*2, height*2), 10);
+            GenVars.structures.AddProtectedStructure(new Rectangle(origin.X - width, origin.Y - height, width * 2, height * 2), 10);
             return true;
         }
 
-        public Task GenShrine(Texture2D clearTex, Texture2D shrineTex,Texture2D wallTex, 
+        public Task GenShrine(Texture2D clearTex, Texture2D shrineTex, Texture2D wallTex,
             Dictionary<Color, int> clearDic, Dictionary<Color, int> shrineDic, Dictionary<Color, int> wallDic,
             int genOrigin_x, int genOrigin_y)
         {
@@ -508,7 +508,7 @@ namespace Coralite.Content.WorldGeneration
                     shrineGenerator.Generate(genOrigin_x, genOrigin_y, true);
 
                     //生成墙壁
-                    Texture2WallGenerator wallGenerator= TextureGeneratorDatas.GetTex2WallGenerator(wallTex, wallDic);
+                    Texture2WallGenerator wallGenerator = TextureGeneratorDatas.GetTex2WallGenerator(wallTex, wallDic);
                     wallGenerator.Generate(genOrigin_x, genOrigin_y, true);
 
                     genned = true;

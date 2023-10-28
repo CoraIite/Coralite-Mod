@@ -18,7 +18,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return;
             }
             NPC.velocity.Y -= 0.25f;
-            if (NPC.velocity.Y<-32)
+            if (NPC.velocity.Y < -32)
             {
                 NPC.velocity.Y = -32;
             }

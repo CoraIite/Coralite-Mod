@@ -3,7 +3,6 @@ using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
@@ -12,7 +11,7 @@ namespace Coralite.Content.Bosses.Rediancie
 {
     public class RedShield : ModParticle
     {
-        public override string Texture => AssetDirectory.Rediancie+"RedShield";
+        public override string Texture => AssetDirectory.Rediancie + "RedShield";
         public static Asset<Texture2D> flowTex;
 
         public override void Load()
@@ -48,7 +47,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 }
             }
 
-            if (GetDatas(particle,out NPC rediancie))
+            if (GetDatas(particle, out NPC rediancie))
             {
                 particle.center = rediancie.Center;
             }
@@ -75,17 +74,17 @@ namespace Coralite.Content.Bosses.Rediancie
             float extraRot2 = particle.rotation + particle.fadeIn * 0.05f;
             Vector2 flowOrigin = flowTex.Size() / 2;
 
-            spriteBatch.Draw(flowTex.Value,center, null, particle.color, extraRot1, flowOrigin, particle.scale - 0.1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(flowTex.Value, center, null, new Color(255,255,255,particle.color.A*3/4), extraRot1+extraRot2, flowOrigin, particle.scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(flowTex.Value, center, null, particle.color, extraRot1, flowOrigin, particle.scale - 0.1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(flowTex.Value, center, null, new Color(255, 255, 255, particle.color.A * 3 / 4), extraRot1 + extraRot2, flowOrigin, particle.scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
             spriteBatch.Draw(flowTex.Value, center, null, particle.color, extraRot2 + 3.141f, flowOrigin, particle.scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
         }
 
 
 
-        public static void Spawn(NPC rediancie,int maxTime)
+        public static void Spawn(NPC rediancie, int maxTime)
         {
             Particle particle = Particle.NewParticleDirect(rediancie.Center, Vector2.Zero, CoraliteContent.ParticleType<RedShield>());
-            particle.datas=new object[1]
+            particle.datas = new object[1]
             {
                 rediancie
             };
@@ -95,15 +94,15 @@ namespace Coralite.Content.Bosses.Rediancie
         public static void Kill()
         {
             int type = CoraliteContent.ParticleType<RedShield>();
-            foreach (var particle in ParticleSystem.Particles.Where(p=>p.active&&p.type==type))
+            foreach (var particle in ParticleSystem.Particles.Where(p => p.active && p.type == type))
             {
                 particle.fadeIn = -1;
             }
         }
 
-        private bool GetDatas(Particle particle,out NPC rediancie)
+        private bool GetDatas(Particle particle, out NPC rediancie)
         {
-            if (particle.datas == null || particle.datas[0]is not NPC)
+            if (particle.datas == null || particle.datas[0] is not NPC)
             {
                 rediancie = null;
                 return false;

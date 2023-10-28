@@ -1,16 +1,16 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.YujianHulu;
+using Coralite.Content.Particles;
+using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
-using Terraria;
 using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using Coralite.Core.Systems.ParticleSystem;
-using Coralite.Content.Particles;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Coralite.Content.Items.YujianHulu;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.RedJades
 {

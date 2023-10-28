@@ -45,7 +45,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return;
             }
 
-            if (Projectile.timeLeft<1765)
+            if (Projectile.timeLeft < 1765)
             {
                 #region 同叶绿弹的追踪
                 float velLength = Projectile.velocity.Length();
@@ -100,7 +100,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 if (factor.X < 0.7f)
                 {
-                    return Color.Lerp( new Color(0, 0, 0, 0), Color.White, factor.X / 0.7f);
+                    return Color.Lerp(new Color(0, 0, 0, 0), Color.White, factor.X / 0.7f);
                 }
 
                 return Color.Lerp(Color.White, FantasyGod.shineColor, (factor.X - 0.7f) / 0.3f);
@@ -125,12 +125,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Vector2 scale = new Vector2(0.75f);
             ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, FantasyGod.shineColor * 0.6f,
-                0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation,scale, Vector2.One*2);
+                0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, scale, Vector2.One * 2);
 
             for (int i = 0; i < 4; i++)
             {
-                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos + (Projectile.rotation+i * MathHelper.PiOver2).ToRotationVector2() * 16, Color.White, FantasyGod.shineColor * 0.6f,
-                    0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation , scale, Vector2.One * 2);
+                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos + (Projectile.rotation + i * MathHelper.PiOver2).ToRotationVector2() * 16, Color.White, FantasyGod.shineColor * 0.6f,
+                    0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, scale, Vector2.One * 2);
             }
             return false;
         }

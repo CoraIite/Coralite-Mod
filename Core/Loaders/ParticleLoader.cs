@@ -17,7 +17,7 @@ namespace Coralite.Core.Loaders
         /// <param name="type"></param>
         /// <returns></returns>
         public static ModParticle GetParticle(int type)
-                 =>  type < ParticleCount ? modParticles[type] : null;
+                 => type < ParticleCount ? modParticles[type] : null;
 
         /// <summary>
         /// 设置ID
@@ -43,7 +43,7 @@ namespace Coralite.Core.Loaders
             {
                 item.Unload();
             }
-            
+
             modParticles.Clear();
             modParticles = null;
             ParticleCount = 0;

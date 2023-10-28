@@ -4,9 +4,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    public class NightmareDust:ModDust
+    public class NightmareDust : ModDust
     {
-        public override string Texture => AssetDirectory.NightmarePlantera+Name;
+        public override string Texture => AssetDirectory.NightmarePlantera + Name;
 
         public override void OnSpawn(Dust dust)
         {
@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             dust.position += dust.velocity;
 
             dust.fadeIn++;
-            if (dust.fadeIn>80)
+            if (dust.fadeIn > 80)
                 dust.active = false;
 
             return false;

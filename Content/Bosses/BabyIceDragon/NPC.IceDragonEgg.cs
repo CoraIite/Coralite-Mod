@@ -1,11 +1,11 @@
-﻿using System;
-using Coralite.Content.Items.Icicle;
+﻿using Coralite.Content.Items.Icicle;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public class IceDragonEgg : ModNPC,IDrawNonPremultiplied
+    public class IceDragonEgg : ModNPC, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.BabyIceDragon + Name;
 
@@ -45,7 +45,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             BurstTex = ModContent.Request<Texture2D>(AssetDirectory.BabyIceDragon + "IceDragonEggBurst");
 
             for (int i = 0; i < 4; i++)
-                    GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.BabyIceDragon + "IceDragonEgg_Gore" + i);
+                GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.BabyIceDragon + "IceDragonEgg_Gore" + i);
 
         }
 
@@ -64,7 +64,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 Lighting.AddLight(NPC.Center, new Vector3(1f, 1f, 1f));
                 do
                 {
-                    if (Timer<100)
+                    if (Timer < 100)
                     {
                         if ((int)Timer % 45 == 0)
                         {
@@ -157,12 +157,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
-            if (State==1)
+            if (State == 1)
             {
                 Texture2D glowTex = BurstTex.Value;
                 var frame = glowTex.Frame(1, 3, 0, NPC.frame.Y);
 
-                spriteBatch.Draw(glowTex, NPC.Center - Main.screenPosition, frame, Color.White, NPC.rotation, frame.Size()/2, 1, SpriteEffects.None, 0f);
+                spriteBatch.Draw(glowTex, NPC.Center - Main.screenPosition, frame, Color.White, NPC.rotation, frame.Size() / 2, 1, SpriteEffects.None, 0f);
             }
         }
     }

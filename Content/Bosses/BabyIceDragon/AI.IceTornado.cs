@@ -1,13 +1,13 @@
 using Coralite.Content.Particles;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
@@ -55,14 +55,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     {
                         NormallyFlyingFrame(changeRot: false);
 
-                        if (Timer<2)
+                        if (Timer < 2)
                         {
-                            NPC.velocity = Vector2.UnitY*6;      //2Pi / 20
+                            NPC.velocity = Vector2.UnitY * 6;      //2Pi / 20
                         }
                         if (Timer < 30)
                         {
                             SetDirection();
-                            NPC.velocity = NPC.velocity.RotatedBy(MathHelper.TwoPi / 30);  
+                            NPC.velocity = NPC.velocity.RotatedBy(MathHelper.TwoPi / 30);
                             NPC.rotation = NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f);
                             break;
                         }
@@ -70,7 +70,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         if (Timer < 60)
                         {
                             SetDirection();
-                            NPC.velocity = -(Target.Center - NPC.Center).SafeNormalize(Vector2.Zero)*2;
+                            NPC.velocity = -(Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 2;
                             NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
                             break;
                         }
@@ -88,13 +88,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     {
                         if (Timer < 200)
                         {
-                            NormallyFlyingFrame(1,false);
+                            NormallyFlyingFrame(1, false);
                             float distance = Vector2.Distance(Target.Center, NPC.Center);
 
                             if (distance < 160)
-                                NPC.velocity += Vector2.Normalize(Target.Center - NPC.Center)*1.35f;
+                                NPC.velocity += Vector2.Normalize(Target.Center - NPC.Center) * 1.35f;
                             else
-                                NPC.velocity += Vector2.Normalize(Target.Center - NPC.Center)*0.75f;
+                                NPC.velocity += Vector2.Normalize(Target.Center - NPC.Center) * 0.75f;
 
                             if (NPC.velocity.Length() > 12)
                                 NPC.velocity = Vector2.Normalize(NPC.velocity) * 12;
@@ -114,7 +114,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             //生成龙卷风粒子
                             if ((int)Timer % 2 == 0)
                             {
-                                Dust dust= Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), DustID.FrostStaff, -NPC.velocity * 0.3f,Scale:Main.rand.NextFloat(1.8f,2f));
+                                Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), DustID.FrostStaff, -NPC.velocity * 0.3f, Scale: Main.rand.NextFloat(1.8f, 2f));
                                 dust.noGravity = true;
                             }
 

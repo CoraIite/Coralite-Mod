@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Dusts
 {
-    public class WhiteDust:ModDust
+    public class WhiteDust : ModDust
     {
         public override string Texture => AssetDirectory.Dusts + Name;
 

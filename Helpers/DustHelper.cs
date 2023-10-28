@@ -1,12 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
-using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Content.Particles;
-using Terraria.ID;
-using Terraria.Graphics.CameraModifiers;
-using rail;
+using Coralite.Core.Systems.ParticleSystem;
+using Microsoft.Xna.Framework;
 using System;
+using Terraria;
+using Terraria.Graphics.CameraModifiers;
+using Terraria.ID;
 
 namespace Coralite.Helpers
 {
@@ -28,17 +27,17 @@ namespace Coralite.Helpers
             {
                 Particle.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(10, 14), type, red, Main.rand.NextFloat(0.1f, 0.15f));
                 Particle.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(10, 14), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
-                Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, NextVec2Dir() * Main.rand.NextFloat(4, 8),Scale: Main.rand.NextFloat(1.6f, 1.8f));
+                Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, NextVec2Dir() * Main.rand.NextFloat(4, 8), Scale: Main.rand.NextFloat(1.6f, 1.8f));
                 dust.noGravity = true;
             }
 
             Content.Items.RedJades.RedExplosionParticle.Spawn(center, 0.4f, Coralite.Instance.RedJadeRed);
-            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.35f, Coralite.Instance.RedJadeRed,0.2f);
+            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.35f, Coralite.Instance.RedJadeRed, 0.2f);
             Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.35f, Coralite.Instance.RedJadeRed, 0.2f);
 
         }
 
-        public static void RedJadeBigBoom(Vector2 center,bool canMakeSound=true)
+        public static void RedJadeBigBoom(Vector2 center, bool canMakeSound = true)
         {
             if (canMakeSound)
                 PlayPitched("RedJade/RedJadeBoom", 0.8f, -1f, center);
@@ -54,7 +53,7 @@ namespace Coralite.Helpers
             {
                 Particle.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(18, 26), type, red, Main.rand.NextFloat(0.1f, 0.15f));
                 Particle.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(18, 26), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
-                Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, NextVec2Dir() * Main.rand.NextFloat(6, 10),Scale:Main.rand.NextFloat(2f,2.4f));
+                Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, NextVec2Dir() * Main.rand.NextFloat(6, 10), Scale: Main.rand.NextFloat(2f, 2.4f));
                 dust.noGravity = true;
             }
 
@@ -76,7 +75,7 @@ namespace Coralite.Helpers
         /// <param name="newColor"></param>
         /// <param name="Scale"></param>
         /// <param name="noGravity"></param>
-        public static void SpawnTrailDust( Vector2 center, int type, Func<Dust,Vector2> velocity, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
+        public static void SpawnTrailDust(Vector2 center, int type, Func<Dust, Vector2> velocity, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
         {
             Dust dust = Dust.NewDustPerfect(center, type, Alpha: Alpha, newColor: newColor, Scale: Scale);
             dust.noGravity = noGravity;

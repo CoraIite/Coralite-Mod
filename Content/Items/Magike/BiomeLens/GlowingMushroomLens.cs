@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
         {
             CreateRecipe()
                 .AddIngredient<MagicCrystal>(5)
-                .AddIngredient(ItemID.GlowingMushroom,20)
+                .AddIngredient(ItemID.GlowingMushroom, 20)
                 .AddIngredient(ItemID.Bone, 5)
                 .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)

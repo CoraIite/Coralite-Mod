@@ -139,7 +139,7 @@ namespace Coralite.Content.UI
         {
             if (MagikeItemSiphonUI.siphon == null)
                 return;
-           Item Item = MagikeItemSiphonUI.siphon.extensions[extensionIndex];
+            Item Item = MagikeItemSiphonUI.siphon.extensions[extensionIndex];
 
             if (Item is null)
                 return;
@@ -169,7 +169,7 @@ namespace Coralite.Content.UI
 
             if (!Main.mouseItem.IsAir && Item.IsAir) //鼠标有物品并且UI内为空，放入
             {
-                MagikeItemSiphonUI.siphon.extensions[extensionIndex]=Main.mouseItem.Clone();
+                MagikeItemSiphonUI.siphon.extensions[extensionIndex] = Main.mouseItem.Clone();
                 Main.mouseItem.TurnToAir();
                 SoundEngine.PlaySound(SoundID.Grab);
                 goto baseClick;
@@ -178,7 +178,7 @@ namespace Coralite.Content.UI
             if (!Main.mouseItem.IsAir && !Item.IsAir) //都有物品，进行交换
             {
                 var temp = Item;
-                MagikeItemSiphonUI.siphon.extensions[extensionIndex]= Main.mouseItem.Clone();
+                MagikeItemSiphonUI.siphon.extensions[extensionIndex] = Main.mouseItem.Clone();
                 Main.mouseItem = temp;
                 SoundEngine.PlaySound(SoundID.Grab);
                 goto baseClick;

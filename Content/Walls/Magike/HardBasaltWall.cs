@@ -7,7 +7,7 @@ namespace Coralite.Content.Walls.Magike
 {
     public class HardBasaltWall : ModWall
     {
-        public override string Texture => AssetDirectory.MagikeWalls+Name;
+        public override string Texture => AssetDirectory.MagikeWalls + Name;
         public override void SetStaticDefaults()
         {
             Main.wallLargeFrames[Type] = 2;

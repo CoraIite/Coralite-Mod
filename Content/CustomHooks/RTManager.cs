@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class RTManager:HookGroup
+    public class RTManager : HookGroup
     {
         // 应该是安全的
         public override SafetyLevel Safety => SafetyLevel.Safe;

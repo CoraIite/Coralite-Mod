@@ -45,7 +45,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             {
                 Vector2 position = Position.ToWorldCoordinates(16, -8);
 
-                Item.NewItem(new EntitySource_TileEntity(this), position, ItemID.StoneBlock,stack);
+                Item.NewItem(new EntitySource_TileEntity(this), position, ItemID.StoneBlock, stack);
                 SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, position);
                 MagikeHelper.SpawnDustOnGenerate(3, 2, Position + new Point16(0, -2), MainColor);
             }

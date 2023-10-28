@@ -1,6 +1,6 @@
 ﻿using Coralite.Content.Biomes;
-using Coralite.Content.Items.Magike.OtherPlaceables;
 using Coralite.Content.Items.Magike;
+using Coralite.Content.Items.Magike.OtherPlaceables;
 using Coralite.Core;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.NPCs.Magike
 {
-    public class CrystalEye:ModNPC
+    public class CrystalEye : ModNPC
     {
-        public override string Texture => AssetDirectory.MagikeNPCs+Name;
+        public override string Texture => AssetDirectory.MagikeNPCs + Name;
 
         public override void SetStaticDefaults()
         {
@@ -37,7 +37,7 @@ namespace Coralite.Content.NPCs.Magike
         public override void FindFrame(int frameHeight)
         {
             NPC.frameCounter++;
-            if (NPC.frameCounter>5)
+            if (NPC.frameCounter > 5)
             {
                 NPC.frameCounter = 0;
                 NPC.frame.Y += frameHeight;

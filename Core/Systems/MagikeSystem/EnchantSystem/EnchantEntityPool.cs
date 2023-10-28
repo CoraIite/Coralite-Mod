@@ -41,9 +41,9 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         /// <param name="level"></param>
         public void FindAndRemoveAll<T>(int whichSlot, Enchant.Level level) where T : EnchantData
         {
-            IEnumerable<T> values= from d in _datas
-                                   where d.whichSlot == whichSlot && d.level == level && d is T
-                                   select d as T;
+            IEnumerable<T> values = from d in _datas
+                                    where d.whichSlot == whichSlot && d.level == level && d is T
+                                    select d as T;
 
             T[] arr = values.ToArray();
 

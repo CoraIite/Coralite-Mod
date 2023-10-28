@@ -1,10 +1,9 @@
-using System.IO.Enumeration;
+using Coralite.Content.Items.YujianHulu;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
-using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
-using Coralite.Content.Items.YujianHulu;
 
 namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 {
@@ -26,7 +25,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
         /// <param name="readyTime">准备时间</param>
         /// <param name="spurtTime">突刺时间</param>
         /// <param name="restTime">休息时间</param>
-        public YujianAI_BetterSpurt(int readyTime, int spurtTime, int restTime,int distanceToKeep,float slowdownFactor)
+        public YujianAI_BetterSpurt(int readyTime, int spurtTime, int restTime, int distanceToKeep, float slowdownFactor)
         {
             StartTime = readyTime + spurtTime + readyTime;
             firstPhaseTime = spurtTime + restTime;
@@ -77,7 +76,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity * (Projectile.extraUpdates + 1), ModContent.ProjectileType<SpurtProj>(),
-                        Projectile.damage, Projectile.knockBack, Projectile.owner, spurtTime/ (Projectile.extraUpdates + 1));
+                        Projectile.damage, Projectile.knockBack, Projectile.owner, spurtTime / (Projectile.extraUpdates + 1));
                 }
             }
 
@@ -87,7 +86,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                 return;
             }
 
-            if (yujianProj.Timer==SecondPhaseTime)
+            if (yujianProj.Timer == SecondPhaseTime)
             {
                 Projectile.tileCollide = yujianProj.TileCollide;
             }
@@ -98,7 +97,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 
         public override void DrawAdditive(SpriteBatch spriteBatch, BaseYujianProj yujianProj)
         {
-            if ( yujianProj.Timer > firstPhaseTime)
+            if (yujianProj.Timer > firstPhaseTime)
                 return;
 
             Projectile Projectile = yujianProj.Projectile;

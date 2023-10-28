@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
 
             //凝胶
             AddRemodelRecipe(ItemID.Gel, 5, ItemID.PinkGel);
-            AddRemodelRecipe(ItemID.Gel, 150, ItemID.SlimeStaff,selfStack:999);
+            AddRemodelRecipe(ItemID.Gel, 150, ItemID.SlimeStaff, selfStack: 999);
 
             //土块
             AddRemodelRecipe(ItemID.DirtBlock, 450, ItemID.DirtiestBlock, selfStack: 9999);
@@ -28,7 +28,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.Amber, 300, ItemID.AmberMosquito, selfStack: 99);
 
             //黑曜石
-            AddRemodelRecipe(ItemID.Obsidian, 400, ItemID.ShadowKey, selfStack: 99,condition:DownedSkeletronCondition.Instance);
+            AddRemodelRecipe(ItemID.Obsidian, 400, ItemID.ShadowKey, selfStack: 99, condition: DownedSkeletronCondition.Instance);
 
             //青蛙
             AddRemodelRecipe(ItemID.Frog, 400, ItemID.FrogLeg, selfStack: 10);

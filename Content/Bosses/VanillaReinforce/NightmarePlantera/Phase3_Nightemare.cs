@@ -222,7 +222,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 case 1:
                 case 2:
                     {
-                        float currentRot =EXai1+ Timer / 400f * MathHelper.TwoPi;
+                        float currentRot = EXai1 + Timer / 400f * MathHelper.TwoPi;
 
                         Vector2 center = Target.Center + currentRot.ToRotationVector2() * 500;
                         Vector2 dir = center - NPC.Center;
@@ -660,7 +660,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     0 => tentacleColor,
                                     _ => tentacleColor * 2f,
                                 };
-                                Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32),  (NPC.rotation + i * 2.6f).ToRotationVector2() * Main.rand.NextFloat(3f, 8f),
+                                Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), (NPC.rotation + i * 2.6f).ToRotationVector2() * Main.rand.NextFloat(3f, 8f),
                                     CoraliteContent.ParticleType<SpeedLine>(), c, Main.rand.NextFloat(0.3f, 0.5f));
                             }
 
@@ -1274,7 +1274,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             warpScale = 0;
                             NPC.rotation = (Target.Center - NPC.Center).ToRotation();
 
-                            Vector2 dir = (NPC.Center-Target.Center ).SafeNormalize(Vector2.Zero);
+                            Vector2 dir = (NPC.Center - Target.Center).SafeNormalize(Vector2.Zero);
                             NPC.Center = Target.Center + dir * Main.rand.Next(550, 650);
                             for (int i = 0; i < 16; i++)
                             {
@@ -1321,7 +1321,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         DoRotation(0.3f);
                         CircleMovement(340, 16, 0.25f, 180);
 
-                        if (Timer >  45)
+                        if (Timer > 45)
                         {
                             NPC.velocity *= 0;
                             SetPhase3States();
@@ -1409,7 +1409,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 rot += 2f / 4;
                             }
                         }
-                    }   
+                    }
                     break;
                 case 2:
                     {

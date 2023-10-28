@@ -2,11 +2,11 @@
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using ReLogic.Content;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
@@ -119,9 +119,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Main.spriteBatch.Draw(highlightTex, pos, highlightFrameBox, color, Projectile.rotation, hightlightOrigin, Projectile.scale, 0, 0);
             Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
 
-            for (int i = 1; i < 6; i ++)
+            for (int i = 1; i < 6; i++)
                 Main.spriteBatch.Draw(highlightTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, highlightFrameBox,
-                    color * (0.4f - i * 0.4f/6), Projectile.oldRot[i], hightlightOrigin, (Projectile.scale - i * 0.05f), 0, 0);
+                    color * (0.4f - i * 0.4f / 6), Projectile.oldRot[i], hightlightOrigin, (Projectile.scale - i * 0.05f), 0, 0);
 
             //绘制自己
             Main.spriteBatch.Draw(mainTex, pos, mainFrameBox, Color.Gray, Projectile.rotation, mainFrameBox.Size() / 2, Projectile.scale, 0, 0);

@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.YujianHulu
 {
-    public class AncientCrimtaneYujian:BaseYujian
+    public class AncientCrimtaneYujian : BaseYujian
     {
         public AncientCrimtaneYujian() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 20, 0), 9, 1f) { }
 

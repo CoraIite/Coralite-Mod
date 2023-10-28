@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.Nightmare
                 else//就只是普通地射箭
                 {
                     for (int i = 0; i < 3; i++)
-                        Projectile.NewProjectile(source, position, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)), type,damage, knockback, player.whoAmI);
+                        Projectile.NewProjectile(source, position, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)), type, damage, knockback, player.whoAmI);
 
                     Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<QueensWreathHeldProj>(), 1, 0, player.whoAmI, 0);
                     SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, position);
@@ -107,7 +107,7 @@ namespace Coralite.Content.Items.Nightmare
 
                     for (int i = 0; i < 5; i++)
                     {
-                        Particle.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + i * newVelocity, -newVelocity*0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
+                        Particle.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + i * newVelocity, -newVelocity * 0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
                             Main.rand.NextFloat(0.2f, 0.6f));
                     }
 
@@ -117,7 +117,7 @@ namespace Coralite.Content.Items.Nightmare
                 case CoralitePlayer.DashUp://向上冲，需要消耗1个梦魇光能
                     if (Player.TryGetModPlayer(out CoralitePlayer cp2) && cp2.nightmareEnergy > 0)
                     {
-                        cp2.nightmareEnergy --;
+                        cp2.nightmareEnergy--;
                         //遍历一下，如果有npc在下方一定范围内那么就朝着那个npc的位置冲刺
                         float dashDir = -1.57f;//默认向正上方冲
 
@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.Nightmare
                 case CoralitePlayer.DashDown://向下冲，需要消耗2个梦魇光能
                     if (Player.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 1)
                     {
-                        cp.nightmareEnergy-=2;
+                        cp.nightmareEnergy -= 2;
                         //遍历一下，如果有npc在下方一定范围内那么就朝着那个npc的位置冲刺
                         float dashDir = 1.57f;//默认向正下方冲
                         for (int i = 0; i < Main.maxNPCs; i++)
@@ -422,7 +422,7 @@ namespace Coralite.Content.Items.Nightmare
                                                 qw.Combo = 4;
 
                                             for (int i = 0; i < 3; i++)
-                                                Projectile.NewProjectile(source, position, velocity.RotatedBy(Main.rand.NextFloat(-0.06f, 0.06f)) * Main.rand.NextFloat(7f, 9f), ProjectileType<QueensWreathArrow>(), (int)(damage*1.5f), knockBack, Projectile.owner);
+                                                Projectile.NewProjectile(source, position, velocity.RotatedBy(Main.rand.NextFloat(-0.06f, 0.06f)) * Main.rand.NextFloat(7f, 9f), ProjectileType<QueensWreathArrow>(), (int)(damage * 1.5f), knockBack, Projectile.owner);
                                         }
                                         else//啥也没碰到那就普通射一箭
                                             Projectile.NewProjectile(source, position, velocity * 8.5f, ProjectileType<QueensWreathArrow>(), damage, knockBack, Projectile.owner);
@@ -572,7 +572,7 @@ namespace Coralite.Content.Items.Nightmare
                                 for (int i = 0; i < 3; i++)
                                     Projectile.NewProjectile(source, pos + Main.rand.NextVector2Circular(32, 32),
                                         velocity.RotatedBy(Main.rand.NextFloat(-0.08f, 0.08f)) * Main.rand.NextFloat(7f, 9f),
-                                        ProjectileType<QueensWreathArrow>(), (int)(damage*1.5f), knockBack, Projectile.owner, 1);
+                                        ProjectileType<QueensWreathArrow>(), (int)(damage * 1.5f), knockBack, Projectile.owner, 1);
 
                                 Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<QueensWreathHeldProj>(), 1, 0, Projectile.owner, 0, ai2: 1);
                                 SoundEngine.PlaySound(CoraliteSoundID.Bow2_Item102, Owner.Center);
@@ -645,7 +645,7 @@ namespace Coralite.Content.Items.Nightmare
 
                                         if (dashHited)//冲刺途中有碰撞到东西
                                         {
-                                            Projectile.NewProjectile(source, position, velocity, ProjectileType<QueensWreathArrow>(), damage*2, knockBack, Projectile.owner, ai1: 1);
+                                            Projectile.NewProjectile(source, position, velocity, ProjectileType<QueensWreathArrow>(), damage * 2, knockBack, Projectile.owner, ai1: 1);
                                         }
                                         else//啥也没碰到那就普通射一箭
                                             Projectile.NewProjectile(source, position, velocity, ProjectileType<QueensWreathArrow>(), damage, knockBack, Projectile.owner);
@@ -700,7 +700,7 @@ namespace Coralite.Content.Items.Nightmare
                                             Vector2 dir = velocity;
                                             if (Main.npc.IndexInRange(dashHitNPCIndex))
                                                 dir = (Main.npc[dashHitNPCIndex].Center - Owner.Center).SafeNormalize(velocity);
-                              
+
                                             for (int i = 0; i < 3; i++)
                                                 Projectile.NewProjectile(source, position, dir.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 18, type, damage, knockBack, Projectile.owner);
 
@@ -716,7 +716,7 @@ namespace Coralite.Content.Items.Nightmare
                                             if (Main.npc.IndexInRange(dashHitNPCIndex))
                                                 dir = (Main.npc[dashHitNPCIndex].Center - Owner.Center).SafeNormalize(velocity);
 
-                                            Projectile.NewProjectile(source, position, dir*9.5f, ProjectileType<QueensWreathArrow>(), damage, knockBack, Projectile.owner);
+                                            Projectile.NewProjectile(source, position, dir * 9.5f, ProjectileType<QueensWreathArrow>(), damage, knockBack, Projectile.owner);
                                             SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
                                             //生成粒子
                                             for (int i = 0; i < 6; i++)
@@ -733,7 +733,7 @@ namespace Coralite.Content.Items.Nightmare
                                             if (Main.npc.IndexInRange(dashHitNPCIndex))
                                                 dir = (Main.npc[dashHitNPCIndex].Center - Owner.Center).SafeNormalize(velocity);
 
-                                            Projectile.NewProjectile(source, position, dir * 9.5f, ProjectileType<QueensWreathArrow>(), damage*3, knockBack, Projectile.owner, ai1: 1);
+                                            Projectile.NewProjectile(source, position, dir * 9.5f, ProjectileType<QueensWreathArrow>(), damage * 3, knockBack, Projectile.owner, ai1: 1);
                                             SoundEngine.PlaySound(CoraliteSoundID.Bow2_Item102, Owner.Center);
                                             //生成粒子
                                             for (int i = 0; i < 6; i++)
@@ -840,7 +840,7 @@ namespace Coralite.Content.Items.Nightmare
             }
         }
 
-        public void ShootArrow(Action<IEntitySource, Vector2, Vector2,int,float,int> shoot = null)
+        public void ShootArrow(Action<IEntitySource, Vector2, Vector2, int, float, int> shoot = null)
         {
             if (Owner.PickAmmo(Owner.HeldItem, out int type, out float _, out int damage, out float knockBack, out _))
             {
@@ -862,7 +862,7 @@ namespace Coralite.Content.Items.Nightmare
                 for (int i = 0; i < 3; i++)
                     Projectile.NewProjectile(source, pos + Main.rand.NextVector2Circular(32, 32),
                         velocity.RotatedBy(Main.rand.NextFloat(-0.08f, 0.08f)) * Main.rand.NextFloat(7f, 9f),
-                        ProjectileType<QueensWreathArrow>(), (int)(damage*1.5f), knockBack, Projectile.owner, 1);
+                        ProjectileType<QueensWreathArrow>(), (int)(damage * 1.5f), knockBack, Projectile.owner, 1);
 
                 SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
             });
@@ -935,7 +935,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void AI()
         {
-            if (Projectile.localAI[0]==0)
+            if (Projectile.localAI[0] == 0)
             {
                 if (State == 1)
                     for (int i = 0; i < 6; i++)
@@ -1014,17 +1014,17 @@ namespace Coralite.Content.Items.Nightmare
 
             for (int i = 2; i < 14; i += 1)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
-                    Color.Pink * (0.75f - i * 0.75f / 14), Projectile.oldRot[i], frameBox.Size() / 2, 1f-i*0.4f/14, 0, 0);
+                    Color.Pink * (0.75f - i * 0.75f / 14), Projectile.oldRot[i], frameBox.Size() / 2, 1f - i * 0.4f / 14, 0, 0);
 
             //向上下左右四个方向绘制一遍
             for (int i = 0; i < 4; i++)
             {
-                Main.spriteBatch.Draw(mainTex, pos + (i * MathHelper.PiOver2).ToRotationVector2() * 2, frameBox, Color.Pink, Projectile.rotation, origin,1,
+                Main.spriteBatch.Draw(mainTex, pos + (i * MathHelper.PiOver2).ToRotationVector2() * 2, frameBox, Color.Pink, Projectile.rotation, origin, 1,
                    0, 0);
             }
 
             //绘制自己
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, Color.White*0.75f, Projectile.rotation, origin, 1, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, Color.White * 0.75f, Projectile.rotation, origin, 1, 0, 0);
             return false;
         }
     }

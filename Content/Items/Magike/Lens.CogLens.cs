@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.Magike
                 {
                     const float TwoPi = (float)Math.PI * 2f;
                     float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
-                    rotation = Main.GlobalTimeWrappedHourly*2;
+                    rotation = Main.GlobalTimeWrappedHourly * 2;
                     drawPos += new Vector2(0f, offset * 4f);
                     //int yframe = (int)(5 * Main.GlobalTimeWrappedHourly % 10);
                 }

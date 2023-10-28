@@ -278,7 +278,7 @@ namespace Coralite.Content.UI
         public Item Item;
         public int color;
 
-        public ItemShower(Item item,int color)
+        public ItemShower(Item item, int color)
         {
             Item = item;
             this.color = color;

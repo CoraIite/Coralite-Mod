@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike
 {
-    public class Page_MagikeBase: ModItem
+    public class Page_MagikeBase : ModItem
     {
         public override string Texture => AssetDirectory.MagikeItems + Name;
 

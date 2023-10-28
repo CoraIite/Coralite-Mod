@@ -1,26 +1,26 @@
-﻿using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core;
+﻿using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.Trails;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System.IO;
 using System;
-using Terraria.GameContent;
-using Coralite.Core.Systems.Trails;
+using System.IO;
+using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.Graphics.Effects;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.YujianHulu
 {
     public class PlatinumYujian : BaseYujian
     {
-        public PlatinumYujian() : base(ItemRarityID.White,Item.sellPrice(0, 0, 20, 0), 11, 1.5f) { }
+        public PlatinumYujian() : base(ItemRarityID.White, Item.sellPrice(0, 0, 20, 0), 11, 1.5f) { }
 
         public override int ProjType => ModContent.ProjectileType<PlatinumYujianProj>();
 
@@ -96,12 +96,12 @@ namespace Coralite.Content.Items.YujianHulu
                 if (time < SlashTime)
                 {
                     Slash(Projectile, time);
-                   int index= Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Platinum);
+                    int index = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Platinum);
                     Main.dust[index].noGravity = true;
                     if (time == SlashTime / 7 && Main.myPlayer == Projectile.owner)
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, targetRotation.ToRotationVector2() * 10,
-                            ModContent.ProjectileType<PlatinumSplash>(), (int)(Projectile.damage*1.5f), Projectile.knockBack, Projectile.owner, 1, 30);
+                            ModContent.ProjectileType<PlatinumSplash>(), (int)(Projectile.damage * 1.5f), Projectile.knockBack, Projectile.owner, 1, 30);
                     }
                     return;
                 }
@@ -178,7 +178,7 @@ namespace Coralite.Content.Items.YujianHulu
     }
 
 
-    public class PlatinumSplash:ModProjectile
+    public class PlatinumSplash : ModProjectile
     {
         public override string Texture => AssetDirectory.YujianHulu + Name;
 
@@ -278,7 +278,7 @@ namespace Coralite.Content.Items.YujianHulu
             float factor = Timer / MaxTime;
             float num3 = Utils.Remap(factor, 0f, 0.6f, 0f, 1f) * Utils.Remap(factor, 0.6f, 1f, 1f, 0f);
 
-            Main.spriteBatch.Draw(mainTex.Value, center, null, Color.White*0.8f * Alpha, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, effects, 0f);
+            Main.spriteBatch.Draw(mainTex.Value, center, null, Color.White * 0.8f * Alpha, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, effects, 0f);
 
             float rotation = Projectile.rotation - OwnerDirection * 0.4f;
             for (int i = -1; i < 2; i++)

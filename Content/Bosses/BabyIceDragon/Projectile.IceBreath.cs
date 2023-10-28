@@ -1,10 +1,10 @@
-using Terraria.ModLoader;
-using Coralite.Core;
-using Microsoft.Xna.Framework;
-using Coralite.Core.Systems.ParticleSystem;
-using Terraria;
 using Coralite.Content.Particles;
+using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
+using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
@@ -40,7 +40,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     CoraliteContent.ParticleType<SnowFlower>(), Color.White, Main.rand.NextFloat(0.3f, 0.4f));
             }
 
-            Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f) )* 0.2f - Vector2.UnitY * 2,
+            Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * 0.2f - Vector2.UnitY * 2,
                    CoraliteContent.ParticleType<Fog>(), Color.AliceBlue, Main.rand.NextFloat(0.8f, 0.9f));
         }
 

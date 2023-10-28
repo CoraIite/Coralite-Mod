@@ -13,13 +13,13 @@ using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.MagikeSystem.Base
 {
-    public abstract class BasePedestalTile:ModTile
+    public abstract class BasePedestalTile : ModTile
     {
         public override string Texture => AssetDirectory.MagikeTiles + Name;
 
         public const int FrameWidth = 18;
         public const int FrameHeight = 18 * 2;
-        public const int halfWidth = 16  / 2;
+        public const int halfWidth = 16 / 2;
         public const int halfHeight = 16 * 2 / 2;
         public readonly int HorizontalFrames = 1;
         public readonly int VerticalFrames = 1;
@@ -95,11 +95,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
                     Vector2 origin = rectangle2.Size() / 2;
                     float itemScale = 1f;
-                    const float pixelWidth = 16+8 ;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
-                    const float pixelHeight = 16 *2;
+                    const float pixelWidth = 16 + 8;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                    const float pixelHeight = 16 * 2;
                     if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
                     {
-                        if (rectangle2.Width >pixelWidth)
+                        if (rectangle2.Width > pixelWidth)
                             itemScale = pixelWidth / rectangle2.Width;
                         else
                             itemScale = pixelHeight / rectangle2.Height;
@@ -107,7 +107,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
                     spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pedestal.containsItem.GetAlpha(Color.White), 0f, origin, itemScale, 0, 0f);
                     if (pedestal.containsItem.color != default(Color))
-                        spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pedestal.containsItem.GetColor(Color.White), 0f,origin, itemScale, 0, 0f);
+                        spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pedestal.containsItem.GetColor(Color.White), 0f, origin, itemScale, 0, 0f);
                 }
             }
         }

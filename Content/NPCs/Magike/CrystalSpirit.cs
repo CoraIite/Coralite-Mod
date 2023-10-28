@@ -1,11 +1,11 @@
-﻿using Coralite.Core;
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.GameContent.ItemDropRules;
+﻿using Coralite.Content.Biomes;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.Magike.OtherPlaceables;
-using Coralite.Content.Biomes;
+using Coralite.Core;
+using Terraria;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.NPCs.Magike
 {

@@ -7,7 +7,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Items.Shadow
 {
     [AutoloadEquip(EquipType.Head)]
-    public class ShadowHead : ModItem,IControllableArmorBonus
+    public class ShadowHead : ModItem, IControllableArmorBonus
     {
         public override string Texture => AssetDirectory.ShadowItems + Name;
 
@@ -32,11 +32,11 @@ namespace Coralite.Content.Items.Shadow
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "影铠法环守护着你"+
-                "\n使用物品时根据使用时间为法环充能"+
+            player.setBonus = "影铠法环守护着你" +
+                "\n使用物品时根据使用时间为法环充能" +
                 "\n能量不足时按下套装奖励键，无事发生" +
-                "\n能量较少时按下套装奖励键进行较弱的攻击"+
-                "\n能量充足时按下套装奖励键根据当前使用武器类型发射不同弹幕攻击"+
+                "\n能量较少时按下套装奖励键进行较弱的攻击" +
+                "\n能量充足时按下套装奖励键根据当前使用武器类型发射不同弹幕攻击" +
                 "\n套装奖励键可在模组配置中更改";
             if (Main.myPlayer == player.whoAmI && player.ownedProjectileCounts[ProjectileType<ShadowCircle>()] < 1)
             {
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.Shadow
         {
             foreach (var proj in Main.projectile)
             {
-                if (proj.active&&proj.owner==player.whoAmI&&proj.type== ProjectileType<ShadowCircle>())
+                if (proj.active && proj.owner == player.whoAmI && proj.type == ProjectileType<ShadowCircle>())
                 {
                     //设置特殊行动
                     (proj.ModProjectile as ShadowCircle).StartAttack();

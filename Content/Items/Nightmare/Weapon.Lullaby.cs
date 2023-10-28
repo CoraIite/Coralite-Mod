@@ -182,7 +182,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.scale = MathHelper.Lerp(0.8f, 1f, Timer / minTime);
 
             if (Timer < 30)
-                startAngle += Math.Sign(startAngle)*0.05f;
+                startAngle += Math.Sign(startAngle) * 0.05f;
             _Rotation = GetStartAngle() - OwnerDirection * startAngle;
             Slasher();
             if ((int)Timer == minTime)
@@ -249,7 +249,7 @@ namespace Coralite.Content.Items.Nightmare
                 float factor = 1f - i / count;
                 Vector2 Center = GetCenter(i);
                 Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor)+ oldDistanceToOwner[i]);
+                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
 
                 var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);
@@ -287,7 +287,7 @@ namespace Coralite.Content.Items.Nightmare
         }
     }
 
-    public class LullabySlash2:BaseSwingProj,IDrawWarp
+    public class LullabySlash2 : BaseSwingProj, IDrawWarp
     {
         public override string Texture => AssetDirectory.NightmareItems + "Lullaby";
 
@@ -368,7 +368,7 @@ namespace Coralite.Content.Items.Nightmare
                     for (int i = 0; i < 7; i++)
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center,
-                            (i * MathHelper.TwoPi / 7).ToRotationVector2() * 8, ProjectileType<LullabyBall>(), (int)(Projectile.damage*0.75f), Projectile.knockBack, Projectile.owner, ai2: i);
+                            (i * MathHelper.TwoPi / 7).ToRotationVector2() * 8, ProjectileType<LullabyBall>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Projectile.owner, ai2: i);
                     }
                 }
             }
@@ -536,7 +536,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.rotation += 0.25f;
             Projectile.rotation = Projectile.velocity.ToRotation() + (float)Math.PI / 2f;
 
-            if (Projectile.timeLeft>894)
+            if (Projectile.timeLeft > 894)
             {
                 for (int i = 0; i < 16; i++)
                     Projectile.oldPos[i] = Vector2.Lerp(Projectile.oldPos[15], Projectile.Center + Projectile.velocity, i / 16f);
@@ -558,7 +558,7 @@ namespace Coralite.Content.Items.Nightmare
 
             }
 
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new NoTip(), factor => Helper.Lerp(0, 8, factor )
+            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new NoTip(), factor => Helper.Lerp(0, 8, factor)
             , factor =>
             {
                 if (factor.X < 0.7f)
@@ -622,13 +622,13 @@ namespace Coralite.Content.Items.Nightmare
         {
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Vector2 scale = new Vector2(0.5f);
-            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, FantasyGod.shineColor ,
+            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, FantasyGod.shineColor,
                 0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, new Vector2(1.5f, 2.5f), Vector2.One);
 
             ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, FantasyGod.shineColor,
                 0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, new Vector2(1f, 2.25f), Vector2.One * 2);
 
-            float exRot = Main.GlobalTimeWrappedHourly*2;
+            float exRot = Main.GlobalTimeWrappedHourly * 2;
             for (int i = 0; i < 4; i++)
             {
                 ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos + (exRot + i * MathHelper.PiOver2).ToRotationVector2() * 18, Color.White, DrawColor * 0.8f,

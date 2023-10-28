@@ -1,8 +1,8 @@
-﻿using Coralite.Core.Prefabs.Items;
-using Coralite.Core;
+﻿using Coralite.Core;
+using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
 using Terraria;
 using Terraria.ID;
-using Coralite.Core.Systems.MagikeSystem;
 
 namespace Coralite.Content.Items.Materials
 {

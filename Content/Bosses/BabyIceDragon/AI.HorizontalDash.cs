@@ -1,10 +1,10 @@
 ﻿using Coralite.Content.Particles;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using Microsoft.Xna.Framework;
 using Terraria.Audio;
 
 namespace Coralite.Content.Bosses.BabyIceDragon

@@ -1,17 +1,17 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.RedJades;
+using Coralite.Core;
+using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ObjectData;
-using Terraria;
-using Coralite.Core.Prefabs.Items;
-using Coralite.Core.Systems.MagikeSystem.Base;
-using Terraria.Audio;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using static Terraria.ModLoader.ModContent;
-using Coralite.Content.Items.RedJades;
 
 namespace Coralite.Content.Items.Magike.Towers
 {
@@ -108,7 +108,7 @@ namespace Coralite.Content.Items.Magike.Towers
             {
                 if (entity.Active)   //如果处于活动状态那么就会上来，否则就落在底座上
                 {
-                    float factor = 3f*(entity.workTimer / (float)entity.workTimeMax);
+                    float factor = 3f * (entity.workTimer / (float)entity.workTimeMax);
                     drawPos += Main.rand.NextVector2Circular(factor, factor);
                 }
                 else

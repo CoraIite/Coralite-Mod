@@ -210,7 +210,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            Timer=reader.ReadSingle();
+            Timer = reader.ReadSingle();
         }
 
         #region 关于挥舞
@@ -284,7 +284,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (onHitTimer == 0)
                 onHitTimer = 1;
 
-            OnHitEvent(target,hit,damageDone);
+            OnHitEvent(target, hit, damageDone);
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             //Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         }
 
-        protected virtual void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor,float extraRot)
+        protected virtual void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(),
                                                 lightColor, Projectile.rotation + extraRot, origin, Projectile.scale, CheckEffect(), 0f);
@@ -383,7 +383,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
         }
 
-        protected virtual void DrawShadowTrail(Texture2D mainTex, Vector2 origin, Color lightColor,float extraRot)
+        protected virtual void DrawShadowTrail(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
             if ((int)Timer > minTime)
             {
@@ -391,7 +391,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                 {
                     if (oldRotate[i] != 100f)
                         Main.spriteBatch.Draw(mainTex, Owner.Center + oldRotate[i].ToRotationVector2() * oldDistanceToOwner[i] - Main.screenPosition, mainTex.Frame(),
-                                                            lightColor * (0.1f + i * 0.01f), oldRotate[i] +extraRot, origin, Projectile.scale * (1f - i * 0.1f), CheckEffect(), 0);
+                                                            lightColor * (0.1f + i * 0.01f), oldRotate[i] + extraRot, origin, Projectile.scale * (1f - i * 0.1f), CheckEffect(), 0);
                 }
             }
         }
@@ -467,7 +467,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                 float r = oldRotate[i] % 6.18f;
                 float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
                 Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor)* trailBottomExtraMult + oldDistanceToOwner[i]);
+                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) * trailBottomExtraMult + oldDistanceToOwner[i]);
 
                 bars.Add(new CustomVertexInfo(Top, new Color(dir, w, 0f, 1f), new Vector3(factor, 0f, w)));
                 bars.Add(new CustomVertexInfo(Bottom, new Color(dir, w, 0f, 1f), new Vector3(factor, 1f, w)));

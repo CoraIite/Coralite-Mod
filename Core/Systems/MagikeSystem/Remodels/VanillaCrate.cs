@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.MagikeSystem.CraftConditions;
-using Terraria.ID;
+﻿using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Core.Systems.MagikeSystem.Remodels
@@ -17,7 +16,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.WoodenCrate, 150, ItemID.ClimbingClaws);
             AddRemodelRecipe(ItemID.WoodenCrate, 50, ItemID.CordageGuide);
             AddRemodelRecipe(ItemID.WoodenCrate, 150, ItemID.Radar);
-            AddRemodelRecipe(ItemID.WoodenCrate, 50, ItemID.ApprenticeBait,3);
+            AddRemodelRecipe(ItemID.WoodenCrate, 50, ItemID.ApprenticeBait, 3);
             AddRemodelRecipe(ItemID.WoodenCrate, 100, ItemID.JourneymanBait, 3);
 
         }

@@ -15,7 +15,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 使用ai2传入刺出的长度<br></br>
     /// 使用速度传入突刺角度
     /// </summary>
-    public class NightmareSpike : BaseNightmareProj, IDrawNonPremultiplied,INightmareTentacle
+    public class NightmareSpike : BaseNightmareProj, IDrawNonPremultiplied, INightmareTentacle
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -220,7 +220,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         private float spikeWidth;
 
         public NightmareTentacle spike;
-        public Color drawColor=FantasyGod.shineColor;
+        public Color drawColor = FantasyGod.shineColor;
 
         public override bool ShouldUpdatePosition() => false;
 
@@ -260,7 +260,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 if (factor < 0.3f)
                 {
-                    return Color.Lerp(Color.Transparent , drawColor, factor / 0.3f);
+                    return Color.Lerp(Color.Transparent, drawColor, factor / 0.3f);
                 }
 
                 return Color.Lerp(drawColor, Color.White, (factor - 0.3f) / 0.7f);

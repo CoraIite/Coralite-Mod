@@ -102,10 +102,10 @@ namespace Coralite.Content.Items.Gels
 
             time = time * 0.5f + 0.5f;
 
-            ProjectilesHelper.DrawPrettyStarSparkle(1, 0, drawPos, new Color(38, 104, 185) * 0.7f, new Color(158, 222, 255) ,
+            ProjectilesHelper.DrawPrettyStarSparkle(1, 0, drawPos, new Color(38, 104, 185) * 0.7f, new Color(158, 222, 255),
                 time, 0, 0.3f, 0.7f, 1, timer * MathHelper.TwoPi, (timer * MathHelper.TwoPi).ToRotationVector2() * 4, Vector2.One);
             ProjectilesHelper.DrawPrettyStarSparkle(1, 0, drawPos, new Color(38, 104, 185) * 0.7f, new Color(158, 222, 255),
-                0.4f + time * 0.2f, 0, 0.3f, 0.7f, 1, -timer * MathHelper.Pi, new Vector2(2,2), Vector2.One*2);
+                0.4f + time * 0.2f, 0, 0.3f, 0.7f, 1, -timer * MathHelper.Pi, new Vector2(2, 2), Vector2.One * 2);
 
             ProjectilesHelper.DrawPrettyStarSparkle(1, 0, drawPos, new Color(38, 104, 185) * 0.7f, new Color(50, 152, 225),
                 0.4f + time * 0.2f, 0, 0.5f, 0.5f, 1, 0, Vector2.One * 3, Vector2.One * 1.5f);

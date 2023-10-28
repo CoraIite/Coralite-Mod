@@ -1,6 +1,4 @@
-﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
-using Coralite.Content.CustomHooks;
-using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -41,9 +39,9 @@ namespace Coralite.Content.Bosses.GodOfWind
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             //return false;
-    //        Vector2 dir = new Vector2(0, 1);
-    //        Projectile.NewProjectile(source, player.Center,
-    //-dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<ConfusionHole>(), damage, 0, player.whoAmI, Main.rand.Next(60, 80), 01, Main.rand.Next(600, 900));
+            //        Vector2 dir = new Vector2(0, 1);
+            //        Projectile.NewProjectile(source, player.Center,
+            //-dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<ConfusionHole>(), damage, 0, player.whoAmI, Main.rand.Next(60, 80), 01, Main.rand.Next(600, 900));
 
             //Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<GOWTestProj>(), 1, 1, ai0: 0, ai1: 20, ai2: -1);
             return false;
@@ -68,7 +66,7 @@ namespace Coralite.Content.Bosses.GodOfWind
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture2 = TextureAssets.Projectile[Projectile.type].Value;
-            
+
             Texture2D texture = ModContent.Request<Texture2D>(AssetDirectory.GodOfWind + "CycloneSample").Value;
             Effect shader = Filters.Scene["GlowingMarblingBlack"].GetShader().Shader;
 
@@ -81,7 +79,7 @@ namespace Coralite.Content.Bosses.GodOfWind
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap,
                             Main.spriteBatch.GraphicsDevice.DepthStencilState, RasterizerState.CullNone, shader, Main.GameViewMatrix.TransformationMatrix);
 
-            float scale =( Main.screenWidth) / texture.Width;
+            float scale = (Main.screenWidth) / texture.Width;
             Vector2 vector2 = new Vector2(1, texture.Width / (float)texture.Height);
             Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, 0, texture.Size() / 2, scale, 0, 0);
 

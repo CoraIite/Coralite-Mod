@@ -1,12 +1,12 @@
 ﻿using Coralite.Core;
-using Terraria;
 using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Projectiles.Projectiles_Shoot
 {
-    public class BarrageMicProj:ModProjectile
+    public class BarrageMicProj : ModProjectile
     {
         private string barrageMessage;
 

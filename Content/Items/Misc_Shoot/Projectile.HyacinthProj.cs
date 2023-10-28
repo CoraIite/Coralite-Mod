@@ -1,21 +1,21 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.Dusts;
+using Coralite.Content.Items.Nightmare;
 using Coralite.Core;
-using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
-using System.IO;
-using System;
-using Terraria.ModLoader;
-using Terraria;
-using Microsoft.Xna.Framework;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.GameContent;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.Trails;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.IO;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Effects;
-using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
-using Coralite.Content.Items.Nightmare;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
@@ -411,7 +411,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                     {
                         float x = 1.465f * (20 - Timer % 20) / 20;
                         float factor = x * MathF.Sin(x * x * x) / 1.186f;
-                        float recoilAngle = - Owner.direction* factor * 0.4f;
+                        float recoilAngle = -Owner.direction * factor * 0.4f;
                         Projectile.rotation = targetRot + recoilAngle;
                         Projectile.netUpdate = true;
                     }

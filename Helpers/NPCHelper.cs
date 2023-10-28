@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Diagnostics;
-using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
@@ -65,7 +64,7 @@ namespace Coralite.Helpers
             return index;
         }
 
-        public static bool GetJourneyModeStrangth(out  float journeyScale,out NPCStrengthHelper nPCStrengthHelper)
+        public static bool GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper)
         {
             if (!Main.GameModeInfo.IsJourneyMode) //从源码里抄过来的，只能说旅途模式写的什么B玩意
             {
@@ -79,7 +78,7 @@ namespace Coralite.Helpers
             if (power != null && power.GetIsUnlocked())
                 journeyScale = power.StrengthMultiplierToGiveNPCs;
 
-             nPCStrengthHelper = new NPCStrengthHelper(Main.GameModeInfo, journeyScale, Main.getGoodWorld);
+            nPCStrengthHelper = new NPCStrengthHelper(Main.GameModeInfo, journeyScale, Main.getGoodWorld);
             return true;
         }
 
@@ -129,7 +128,7 @@ namespace Coralite.Helpers
         }
 
         [DebuggerHidden]
-        public static Projectile NewProjectileDirectInAI<T>(this NPC npc, Vector2 position, Vector2 velocity,  int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+        public static Projectile NewProjectileDirectInAI<T>(this NPC npc, Vector2 position, Vector2 velocity, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
             where T : ModProjectile
         {
             return Projectile.NewProjectileDirect(npc.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockBack, owner, ai0, ai1, ai2);

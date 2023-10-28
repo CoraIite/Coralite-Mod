@@ -1,9 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using Terraria.ID;
-
-namespace Coralite.Content.WorldGeneration.Generators
+﻿namespace Coralite.Content.WorldGeneration.Generators
 {
     public class Texture2TileGenerator : TextureGenerator
     {

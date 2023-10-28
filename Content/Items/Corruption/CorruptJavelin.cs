@@ -85,7 +85,7 @@ namespace Coralite.Content.Items.Corruption
                 first?.Kill();
             }
 
-            lastShoot:
+        lastShoot:
             var projectile = Projectile.NewProjectileDirect(source, player.Center + new Vector2(player.direction * Main.rand.Next(24, 32), -64 + Main.rand.Next(8, 8)),
                 Vector2.Zero, type, damage, knockback, Main.myPlayer);
             projectile.originalDamage = Item.damage;
@@ -322,7 +322,7 @@ namespace Coralite.Content.Items.Corruption
                 color.A = 0;
                 for (int i = 1; i < 8; i += 2)
                 {
-                    Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null, color * (0.8f - i * 0.07f), Rot, mainTex.Size() / 2,  1 - i * 0.03f, effect, 0);
+                    Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null, color * (0.8f - i * 0.07f), Rot, mainTex.Size() / 2, 1 - i * 0.03f, effect, 0);
                 }
             }
             else if ((int)State == 0)
@@ -366,7 +366,7 @@ namespace Coralite.Content.Items.Corruption
 
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.rotation = (Main.MouseWorld - Owner.Center).ToRotation()+MathHelper.Pi;
+            Projectile.rotation = (Main.MouseWorld - Owner.Center).ToRotation() + MathHelper.Pi;
             shadowRot = Main.rand.NextFloat(MathHelper.TwoPi);
             distanceToOwner = 10;
             shadowDistance = 25;
@@ -410,7 +410,7 @@ namespace Coralite.Content.Items.Corruption
 
                     //生成小投矛弹幕
                     if (Main.myPlayer == Projectile.owner)
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.One).RotatedBy(Main.rand.NextFloat(-0.06f,0.06f)) * 12,
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.One).RotatedBy(Main.rand.NextFloat(-0.06f, 0.06f)) * 12,
                             ProjectileType<SmallCorruptJavelin>(), (int)(Projectile.damage * 0.85f), Projectile.knockBack * 0.5f, Projectile.owner);
                     SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Projectile.Center);
                     ShootCount++;

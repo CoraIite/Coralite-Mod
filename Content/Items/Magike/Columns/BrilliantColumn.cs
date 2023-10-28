@@ -1,14 +1,14 @@
-﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Content.Raritys;
+using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Base;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ObjectData;
-using Terraria;
-using Coralite.Core.Prefabs.Items;
-using Coralite.Content.Raritys;
-using Coralite.Core.Systems.MagikeSystem;
 using static Terraria.ModLoader.ModContent;
-using Coralite.Core.Systems.MagikeSystem.Base;
 
 namespace Coralite.Content.Items.Magike.Columns
 {

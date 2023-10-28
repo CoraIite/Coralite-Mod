@@ -1,13 +1,13 @@
-using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Content.Particles;
+using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using Terraria.Audio;
-using Coralite.Core.Prefabs.Projectiles;
 
 namespace Coralite.Content.Items.Icicle
 {
@@ -141,7 +141,7 @@ namespace Coralite.Content.Items.Icicle
                 Vector2 dir = Rotation.ToRotationVector2();
                 Main.spriteBatch.Draw(starTex, center + dir * 6, null, Color.White * Alpha, Projectile.rotation + 1.57f, starTex.Size() / 2, 1.4f, SpriteEffects.None, 0f);
 
-                Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center+dir*18, new Color(255, 255, 255, 0)  *num3* 0.5f, Coralite.Instance.IcicleCyan, 
+                Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + dir * 18, new Color(255, 255, 255, 0) * num3 * 0.5f, Coralite.Instance.IcicleCyan,
                     factor, 0f, 0.5f, 0.5f, 1f, 0f, new Vector2(1.3f, 1.3f), Vector2.One);
             }
 

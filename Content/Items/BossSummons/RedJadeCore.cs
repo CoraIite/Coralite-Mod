@@ -1,9 +1,9 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
 using Coralite.Core;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
-using Terraria;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public override bool CanUseItem(Player player)
         {
-            return  !NPC.AnyNPCs(ModContent.NPCType<Rediancie>());
+            return !NPC.AnyNPCs(ModContent.NPCType<Rediancie>());
         }
 
         public override bool? UseItem(Player player)

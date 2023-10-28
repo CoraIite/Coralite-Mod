@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             .AddIngredient<WoodWax>()
             .AddIngredient(ItemID.Musket)
             .AddIngredient(ItemID.PhoenixBlaster)
-            .AddIngredient(ItemID.Moonglow,5)
+            .AddIngredient(ItemID.Moonglow, 5)
             .AddTile(TileID.Anvils)
             .Register();
 

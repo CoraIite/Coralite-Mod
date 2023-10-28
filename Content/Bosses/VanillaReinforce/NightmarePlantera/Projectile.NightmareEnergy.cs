@@ -47,7 +47,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             if (Init)
             {
-                if (ColorState<0)
+                if (ColorState < 0)
                     drawColor = NightmarePlantera.nightmareSparkleColor;
                 else
                 {

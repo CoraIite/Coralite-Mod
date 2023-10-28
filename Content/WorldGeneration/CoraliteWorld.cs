@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Terraria.GameContent.Generation;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -16,7 +15,7 @@ namespace Coralite.Content.WorldGeneration
             int DesertIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
             int FinalCleanup = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
 
-            if (ShiniesIndex!=-1)
+            if (ShiniesIndex != -1)
             {
                 tasks.Insert(ShiniesIndex - 1, new PassLegacy("Coralite Magic Crystal Cave", GenMagicCrystalCave));
                 tasks.Insert(IceBiomeIndex + 1, new PassLegacy("Coralite Ice Dragon Nest", GenIceDragonNest));

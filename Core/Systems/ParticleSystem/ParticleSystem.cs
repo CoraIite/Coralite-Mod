@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.ParticleSystem
 {
-    public class ParticleSystem: ModSystem
+    public class ParticleSystem : ModSystem
     {
         public static Particle[] Particles = new Particle[Coralite.MaxParticleCount];
 

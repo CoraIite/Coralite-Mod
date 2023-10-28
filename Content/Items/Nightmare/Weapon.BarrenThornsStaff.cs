@@ -148,8 +148,8 @@ namespace Coralite.Content.Items.Nightmare
             else
                 color = Main.rand.Next(0, 2) switch
                 {
-                    0 => new Color(110, 68, 200,255),
-                    _ => new Color(122, 110, 134,255)
+                    0 => new Color(110, 68, 200, 255),
+                    _ => new Color(122, 110, 134, 255)
                 };
 
             group?.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
@@ -221,7 +221,7 @@ namespace Coralite.Content.Items.Nightmare
                     colorState = 1;
                 }
 
-                Main.player[Projectile.owner].CheckMana(7,true);
+                Main.player[Projectile.owner].CheckMana(7, true);
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y,
                     velX, velY, ProjectileType<BarrenThorn>(), damage, Projectile.knockBack, Projectile.owner, colorState);
 
@@ -257,7 +257,7 @@ namespace Coralite.Content.Items.Nightmare
             for (int i = 0; i < 12; i++)
             {
                 Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(12, 12), DustType<NightmarePetal>(),
-                    rot.ToRotationVector2() * Main.rand.NextFloat(0.5f, 2f),newColor:c,Scale:Main.rand.NextFloat(1f,1.2f));
+                    rot.ToRotationVector2() * Main.rand.NextFloat(0.5f, 2f), newColor: c, Scale: Main.rand.NextFloat(1f, 1.2f));
 
                 rot += MathHelper.TwoPi / 12;
             }
@@ -387,7 +387,7 @@ namespace Coralite.Content.Items.Nightmare
 
     public class BarrenFogParticle : ModParticle
     {
-        public override string Texture => AssetDirectory.Particles+"Fog";
+        public override string Texture => AssetDirectory.Particles + "Fog";
 
         public override void OnSpawn(Particle particle)
         {

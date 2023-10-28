@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Coralite.Content.Items.RedJades;
+﻿using Coralite.Content.Items.RedJades;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
@@ -8,6 +7,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
@@ -19,7 +19,6 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using Terraria.GameContent.Creative;
 
 namespace Coralite.Content.Bosses.Rediancie
 {
@@ -105,7 +104,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
-            if (Helper.GetJourneyModeStrangth(out float journeyScale,out NPCStrengthHelper nPCStrengthHelper))
+            if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
@@ -129,7 +128,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 return;
             }
 
-            NPC.lifeMax = 1800  + numPlayers * 450;
+            NPC.lifeMax = 1800 + numPlayers * 450;
             NPC.damage = 30;
             NPC.defense = 6;
 
@@ -141,7 +140,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 2300  + numPlayers * 600;
+                NPC.lifeMax = 2300 + numPlayers * 600;
                 NPC.damage = 45;
                 NPC.defense = 4;//因为FTW种能够拥有非常多的弹药所以就降低一下基础防御了
             }
@@ -1288,7 +1287,7 @@ namespace Coralite.Content.Bosses.Rediancie
             return false;
         }
 
-        private void DrawSelf(SpriteBatch spriteBatch,Vector2 screenPos,Color drawColor)
+        private void DrawSelf(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             //绘制自己
             Texture2D mainTex = TextureAssets.Npc[Type].Value;

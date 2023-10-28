@@ -261,7 +261,7 @@ namespace Coralite.Content.Items.RedJades
                 {
                     Texture2D rushTex = Request<Texture2D>(AssetDirectory.RedJadeProjectiles + "RedBinkRush").Value;
                     int color = Projectile.alpha;
-                    Main.spriteBatch.Draw(rushTex, drawPos ,null, new Color(color, color, color, color), Projectile.rotation, rushTex.Size()/2, 0.8f, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(rushTex, drawPos, null, new Color(color, color, color, color), Projectile.rotation, rushTex.Size() / 2, 0.8f, SpriteEffects.None, 0f);
                 }
             }
 

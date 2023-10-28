@@ -84,7 +84,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             break;
 
                         case -2://回弹
-                            Scale = Vector2.Lerp(Scale, new Vector2( 0.85f, 1.2f), 0.15f);
+                            Scale = Vector2.Lerp(Scale, new Vector2(0.85f, 1.2f), 0.15f);
                             if (Scale.X < 0.9f)
                             {
                                 CrownJumpUp(0.05f, 4f);

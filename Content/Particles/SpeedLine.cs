@@ -11,9 +11,9 @@ namespace Coralite.Content.Particles
         public override void OnSpawn(Particle particle)
         {
             particle.frame = new Rectangle(0, 0, 64, 128);
-            particle.rotation =particle.velocity.ToRotation()+1.57f;
+            particle.rotation = particle.velocity.ToRotation() + 1.57f;
             particle.shader = new Terraria.Graphics.Shaders.ArmorShaderData(new Ref<Effect>(Coralite.Instance.Assets.Request<Effect>("Effects/StarsDust", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "StarsDustPass");
-            particle.shader.UseSecondaryColor(Color.White*0.75f);
+            particle.shader.UseSecondaryColor(Color.White * 0.75f);
             particle.oldCenter = new Vector2[1]
             {
                 new Vector2(particle.scale,particle.scale*Main.rand.NextFloat(1,2))
@@ -32,7 +32,7 @@ namespace Coralite.Content.Particles
             {
                 float factor = 1 - (particle.fadeIn - 6) / 6;
                 particle.velocity *= 0.96f;
-                particle.shader.UseSecondaryColor(Color.White*0.75f * factor);
+                particle.shader.UseSecondaryColor(Color.White * 0.75f * factor);
             }
 
             if (particle.fadeIn > 14)

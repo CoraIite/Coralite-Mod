@@ -1,7 +1,7 @@
 ﻿
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
-    public interface IMagikeGenerator:IMagikeContainer
+    public interface IMagikeGenerator : IMagikeContainer
     {
         void GenerateAndChargeSelf(int howMany);
         void Generate();

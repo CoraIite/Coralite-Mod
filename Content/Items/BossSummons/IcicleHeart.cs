@@ -1,10 +1,10 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Bosses.BabyIceDragon;
+using Coralite.Core;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
-using Terraria;
 using Terraria.ModLoader;
-using Coralite.Content.Bosses.BabyIceDragon;
 
 namespace Coralite.Content.Items.BossSummons
 {

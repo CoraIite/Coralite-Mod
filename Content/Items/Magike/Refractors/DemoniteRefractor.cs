@@ -15,7 +15,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Refractors
 {
-    public class DemoniteRefractor : BaseMagikePlaceableItem,IMagikePolymerizable
+    public class DemoniteRefractor : BaseMagikePlaceableItem, IMagikePolymerizable
     {
         public DemoniteRefractor() : base(TileType<DemoniteRefractorTile>(), Item.sellPrice(0, 0, 25, 0), RarityType<MagicCrystalRarity>(), 25)
         { }

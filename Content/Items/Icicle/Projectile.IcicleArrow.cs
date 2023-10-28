@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleArrow:ModProjectile
+    public class IcicleArrow : ModProjectile
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
 

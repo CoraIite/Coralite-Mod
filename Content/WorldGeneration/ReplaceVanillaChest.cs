@@ -13,7 +13,7 @@ namespace Coralite.Content.WorldGeneration
         {
             progress.Message = "正在将额外的战利品塞入箱子";
 
-            bool spawnedBrithOfIce=false;//是否生成过冰雪的新生，用于放置运气太差导致的一个都没生成的情况
+            bool spawnedBrithOfIce = false;//是否生成过冰雪的新生，用于放置运气太差导致的一个都没生成的情况
 
             foreach (var chest in Main.chest)
             {

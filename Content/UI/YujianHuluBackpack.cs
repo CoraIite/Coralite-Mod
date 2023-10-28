@@ -46,9 +46,9 @@ namespace Coralite.Content.UI
 
             for (int i = 0; i < Coralite.YujianHuluContainsMax; i++)
             {
-                huluBackpackSlots[i].Top.Set(basePos.Y +12, 0f);
+                huluBackpackSlots[i].Top.Set(basePos.Y + 12, 0f);
                 //(- 318 / 2) + 10 = -149 就是最左边一个的位置
-                huluBackpackSlots[i].Left.Set(basePos.X +10 + 30 * i, 0f);
+                huluBackpackSlots[i].Left.Set(basePos.X + 10 + 30 * i, 0f);
                 Append(huluBackpackSlots[i]);
             }
 
@@ -175,7 +175,7 @@ namespace Coralite.Content.UI
                 if (YujianHuluBackpack.huluItem.Yujians[slotIndex].IsAir)
                 {
                     mainTex = ModContent.Request<Texture2D>(AssetDirectory.UI + "HuluEmpty").Value;
-                    spriteBatch.Draw(mainTex, center,mainTex.Frame(), Color.White,0f,new Vector2(mainTex.Width/2,mainTex.Height/2),1f,SpriteEffects.None,0f);
+                    spriteBatch.Draw(mainTex, center, mainTex.Frame(), Color.White, 0f, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 1f, SpriteEffects.None, 0f);
                 }
                 else
                 {

@@ -122,7 +122,7 @@ namespace Coralite.lib
             targetPos = new Vector2(NPC.Center.X, NPC.Center.Y);
             num781 = targetX - targetPos.X;
             num782 = targetY - targetPos.Y;
-            posToTargetLength = (float)Math.Sqrt(num781 * num781 + num782 * num782);       
+            posToTargetLength = (float)Math.Sqrt(num781 * num781 + num782 * num782);
             if (posToTargetLength < num779)
             {
                 num781 = NPC.velocity.X;
@@ -283,7 +283,7 @@ namespace Coralite.lib
                         hoaMany += 6;
 
                     for (int i = 0; i < hoaMany; i++)
-                       NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCID.PlanterasTentacle, NPC.whoAmI);
+                        NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCID.PlanterasTentacle, NPC.whoAmI);
 
                     if (Main.expertMode)    //专家模式中的二阶段在爪子上生成小触手
                         for (int i = 0; i < 200; i++)
@@ -302,7 +302,7 @@ namespace Coralite.lib
                             num802++;
 
                     if (num802 < 8 && Main.rand.Next((num802 + 1) * 10) <= 1)
-                       NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, 264, NPC.whoAmI);
+                        NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, 264, NPC.whoAmI);
                 }
             }
 

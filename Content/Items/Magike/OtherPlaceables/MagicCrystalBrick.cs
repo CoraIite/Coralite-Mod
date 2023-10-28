@@ -1,14 +1,14 @@
-﻿using Coralite.Content.Tiles.Magike;
+﻿using Coralite.Content.Raritys;
+using Coralite.Content.Tiles.Magike;
 using Coralite.Core;
-using Terraria.ModLoader;
-using Terraria;
-using Coralite.Content.Raritys;
-using Terraria.ID;
 using Coralite.Helpers;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike.OtherPlaceables
 {
-    public class MagicCrystalBrick:ModItem
+    public class MagicCrystalBrick : ModItem
     {
         public override string Texture => AssetDirectory.MagikeItems + Name;
 

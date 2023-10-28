@@ -46,7 +46,7 @@ namespace Coralite.Content.WorldGeneration.Generators
         /// <returns></returns>
         public static Texture2WallGenerator GetTex2WallGenerator(Texture2D wallTex, Dictionary<Color, int> colorToWall)
         {
-            Color[] wallData =  new Color[wallTex.Width * wallTex.Height];
+            Color[] wallData = new Color[wallTex.Width * wallTex.Height];
             wallTex.GetData(0, wallTex.Bounds, wallData, 0, wallTex.Width * wallTex.Height);
 
             int x = 0;
@@ -55,7 +55,7 @@ namespace Coralite.Content.WorldGeneration.Generators
             for (int m = 0; m < wallData.Length; m++)
             {
                 Color wallColor = wallTex == null ? Color.Black : wallData[m];
-                int wallID =  colorToWall.ContainsKey(wallColor) ? colorToWall[wallColor] : -1;
+                int wallID = colorToWall.ContainsKey(wallColor) ? colorToWall[wallColor] : -1;
                 gen.wallGen[x, y] = new WallInfo(wallID);
                 x++;
                 if (x >= wallTex.Width)

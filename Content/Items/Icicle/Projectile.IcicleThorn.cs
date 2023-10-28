@@ -1,18 +1,18 @@
-﻿using Coralite.Content.Buffs;
+﻿using Coralite.Content.Bosses.BabyIceDragon;
+using Coralite.Content.Buffs;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
-using Coralite.Content.Bosses.BabyIceDragon;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Coralite.Content.Particles;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleThorn:ModProjectile
+    public class IcicleThorn : ModProjectile
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
 
@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 if (rightClick)
                 {
-                    if (ShootCount>2)
+                    if (ShootCount > 2)
                         State = (int)AIStates.explosion;
                     else
                         State = (int)AIStates.specialAttack;
@@ -167,7 +167,7 @@ namespace Coralite.Content.Items.Icicle
                     {
                         //生成冰块弹幕
                         Vector2 dir = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.One);
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, dir * 14, ProjectileType<IcicleSpurt>(),Projectile.damage, Projectile.knockBack, Projectile.owner, 1, 30);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, dir * 14, ProjectileType<IcicleSpurt>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 1, 30);
                     }
 
                     if (Timer < 60)
@@ -200,7 +200,7 @@ namespace Coralite.Content.Items.Icicle
                             Dust.NewDustPerfect(Projectile.Center, DustType<CrushedIceDust>(), -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(2f, 5f),
                                 Scale: Main.rand.NextFloat(1f, 1.4f));
                         }
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileType<IcicleThornExplosion>(), Projectile.damage*2, Projectile.knockBack, Projectile.owner);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileType<IcicleThornExplosion>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
                         Projectile.Kill();
                     }
 

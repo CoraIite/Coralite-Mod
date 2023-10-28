@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.UI;
 using Coralite.Core.Loaders;
 using System.ComponentModel;
-using Terraria;
 using Terraria.ModLoader.Config;
 
 namespace Coralite.Core.Configs
@@ -14,7 +13,7 @@ namespace Coralite.Core.Configs
 
         //额，这两个变量用于控制念力值UI的显示位置，默认大概在物品栏的右边
 
-        [Range(0,1920)]
+        [Range(0, 1920)]
         [DefaultValue(620)]
         [Increment(1)]
         [Slider]

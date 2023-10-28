@@ -1,11 +1,11 @@
 ﻿using Coralite.Core;
-using Terraria.ID;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.Magike
 {
-    public class MagicCrystalBrickTile:ModTile
+    public class MagicCrystalBrickTile : ModTile
     {
         public override string Texture => AssetDirectory.MagikeTiles + Name;
 

@@ -80,14 +80,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 Dust dust = Dust.NewDustPerfect(NPC.Center, DustID.PlatinumCoin, (i * MathHelper.TwoPi / 14).ToRotationVector2() * Main.rand.NextFloat(10f, 11f), Scale: Main.rand.NextFloat(1f, 1.5f));
                 dust.noGravity = true;
-                 dust = Dust.NewDustPerfect(NPC.Center, DustID.GoldCoin, (i * MathHelper.TwoPi / 14).ToRotationVector2() * Main.rand.NextFloat(9f, 10f), Scale: Main.rand.NextFloat(1f, 1.5f));
+                dust = Dust.NewDustPerfect(NPC.Center, DustID.GoldCoin, (i * MathHelper.TwoPi / 14).ToRotationVector2() * Main.rand.NextFloat(9f, 10f), Scale: Main.rand.NextFloat(1f, 1.5f));
                 dust.noGravity = true;
             }
 
             float rot = Main.rand.NextFloat(MathHelper.TwoPi);
             for (int i = 0; i < 7; i++)
             {
-                Particle.NewParticle(NPC.Center, (rot + i * MathHelper.TwoPi / 7).ToRotationVector2() * 5, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.phantomColors[i],0.3f);
+                Particle.NewParticle(NPC.Center, (rot + i * MathHelper.TwoPi / 7).ToRotationVector2() * 5, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.phantomColors[i], 0.3f);
             }
 
             SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, NPC.Center);
@@ -159,7 +159,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         NPC.TargetClosest();
 
                         timer++;
-                        if (timer>45)
+                        if (timer > 45)
                         {
                             Rectangle rectangle = new Rectangle((int)NPC.Center.X, (int)NPC.Center.Y, 2, 2);
                             CombatText.NewText(rectangle, Color.LightGoldenrodYellow, "帮帮我！");
@@ -231,7 +231,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 3:
                     {
-                        if (timer==2)
+                        if (timer == 2)
                         {
                             Target.AddImmuneTime(ImmunityCooldownID.Bosses, 275);
                             Target.AddImmuneTime(ImmunityCooldownID.General, 275);
@@ -306,14 +306,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             for (int i = -1; i < 2; i += 2)
             {
                 ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + new Vector2(i * 16, 0), Color.White, shineColor * 0.6f,
-                    0.5f, 0f, 0.5f, 0.5f, 1f, rot, mainSparkleScale*0.4f, Vector2.One);
+                    0.5f, 0f, 0.5f, 0.5f, 1f, rot, mainSparkleScale * 0.4f, Vector2.One);
             }
 
             //周围一圈小星星
             for (int i = 0; i < 7; i++)
             {
                 Vector2 dir = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7).ToRotationVector2();
-                ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + dir * (36 + factor * 4),  Color.White, NightmarePlantera.phantomColors[i],
+                ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + dir * (36 + factor * 4), Color.White, NightmarePlantera.phantomColors[i],
                     0.5f + factor * 0.1f, 0f, 0.5f, 0.5f, 1f, rot, new Vector2(circleSparkleScale, circleSparkleScale), Vector2.One);
             }
 
@@ -330,7 +330,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = TextureAssets.Npc[NPC.type].Value;
-            spriteBatch.Draw(mainTex, NPC.Center - Main.screenPosition, null, Color.White, 0, mainTex.Size() / 2, (1+0.1f*MathF.Sin(Main.GlobalTimeWrappedHourly))*mainSparkleScale.Y/4, 0, 0);
+            spriteBatch.Draw(mainTex, NPC.Center - Main.screenPosition, null, Color.White, 0, mainTex.Size() / 2, (1 + 0.1f * MathF.Sin(Main.GlobalTimeWrappedHourly)) * mainSparkleScale.Y / 4, 0, 0);
         }
     }
 }

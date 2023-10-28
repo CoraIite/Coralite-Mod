@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.Materials
 {
     public class SandlitePowder : BaseMaterial, IMagikePolymerizable
     {
-        public SandlitePowder() : base( 9999, Item.sellPrice(0, 0, 2, 50), ItemRarityID.Green, AssetDirectory.Materials) { }
+        public SandlitePowder() : base(9999, Item.sellPrice(0, 0, 2, 50), ItemRarityID.Green, AssetDirectory.Materials) { }
 
         public void AddMagikePolymerizeRecipe()
         {

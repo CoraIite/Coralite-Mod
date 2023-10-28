@@ -14,7 +14,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.ItemTransmit
 {
-    public class VoidCrystal : BaseMagikePlaceableItem,IMagikePolymerizable
+    public class VoidCrystal : BaseMagikePlaceableItem, IMagikePolymerizable
     {
         public VoidCrystal() : base(TileType<VoidCrystalTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
@@ -53,11 +53,11 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {
             frameCounter++;
-            if (frameCounter>6)
+            if (frameCounter > 6)
             {
                 frameCounter = 0;
                 frame++;
-                if (frame>7)
+                if (frame > 7)
                     frame = 0;
             }
         }

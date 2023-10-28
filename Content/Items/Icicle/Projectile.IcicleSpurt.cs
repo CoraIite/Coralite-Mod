@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -7,7 +8,6 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Coralite.Content.Particles;
 
 namespace Coralite.Content.Items.Icicle
 {
@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Icicle
                 if (Alpha == 0f)
                 {
                     Projectile.timeLeft = (int)MaxTime;
-                    Projectile.rotation = Projectile.velocity.ToRotation()+1.57f;
+                    Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
                 }
 
                 Alpha += 0.15f;
@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.Icicle
 
             if (canDamage)
             {
-                Vector2 targetDir = (Projectile.rotation-1.57f).ToRotationVector2();
+                Vector2 targetDir = (Projectile.rotation - 1.57f).ToRotationVector2();
                 for (int i = 0; i < 2; i++)
                 {
                     if (Framing.GetTileSafely(Projectile.Center + targetDir * i * 16).HasSolidTile())
@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.Icicle
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             SpriteEffects effects = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.spriteBatch.Draw(mainTex, Projectile.Center-Main.screenPosition, null, lightColor*Alpha, Projectile.rotation, mainTex.Size() / 2, 1.2f, effects, 0f);
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor * Alpha, Projectile.rotation, mainTex.Size() / 2, 1.2f, effects, 0f);
             return false;
         }
     }

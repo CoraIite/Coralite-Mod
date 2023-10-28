@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Botanical.Plants;
-using Coralite.Content.Items.Botanical.Seeds;
+﻿using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
 using Coralite.Helpers;

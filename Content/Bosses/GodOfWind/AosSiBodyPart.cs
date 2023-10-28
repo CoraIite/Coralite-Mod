@@ -7,7 +7,7 @@ namespace Coralite.Content.Bosses.GodOfWind
 {
     public abstract class AosSiBodyPart : ModNPC
     {
-        public override string Texture => AssetDirectory.GodOfWind+Name;
+        public override string Texture => AssetDirectory.GodOfWind + Name;
 
         /// <summary>
         /// 前一个NPC的索引

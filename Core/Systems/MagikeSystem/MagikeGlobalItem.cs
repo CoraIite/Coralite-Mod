@@ -149,7 +149,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                     if (enchant.datas[i] != null)
                     {
                         string main = "Enchant" + i.ToString();
-                        tag.Add(main+"_name", enchant.datas[i].GetType().FullName);
+                        tag.Add(main + "_name", enchant.datas[i].GetType().FullName);
                         tag.Add(main + "_level", (int)enchant.datas[i].level);
                         tag.Add(main + "_bonus0", enchant.datas[i].bonus0);
                         tag.Add(main + "_bonus1", enchant.datas[i].bonus1);
@@ -164,7 +164,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             for (int i = 0; i < 3; i++)
             {
                 string main = "Enchant" + i.ToString();
-                if (tag.ContainsKey(main+"_name"))
+                if (tag.ContainsKey(main + "_name"))
                 {
                     try
                     {
@@ -185,12 +185,12 @@ namespace Coralite.Core.Systems.MagikeSystem
                         continue;
                     }
                 }
-            }       
+            }
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (enchant!=null)
+            if (enchant != null)
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -206,7 +206,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (MagikeSystem.remodelRecipes.ContainsKey(item.type))
                 tooltips.Add(new TooltipLine(Mod, "canRemodel", "可重塑"));
 
-            if (magiteAmount>0)
+            if (magiteAmount > 0)
             {
                 string magikeAmount = $"魔能含量: {magiteAmount}";
                 TooltipLine line = new TooltipLine(Mod, "magiteAmount", magikeAmount);
@@ -227,7 +227,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                 string stackAmount = $"物品需求量： {stack_CraftRequired}\n";
                 string magikeAmount = $"消耗魔能： {magike_CraftRequired}";
                 string conditionNeed = condition == null ? "" : ("\n" + condition.Description);
-                TooltipLine line = new TooltipLine(Mod, "remodelConition", stackAmount+magikeAmount+conditionNeed);
+                TooltipLine line = new TooltipLine(Mod, "remodelConition", stackAmount + magikeAmount + conditionNeed);
                 if (magike_CraftRequired < 300)
                     line.OverrideColor = Coralite.Instance.MagicCrystalPink;
                 else if (magike_CraftRequired < 1000)
@@ -276,7 +276,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             howManyMagike = Math.Abs(howManyMagike);
 
-            if (magike<howManyMagike)
+            if (magike < howManyMagike)
                 return false;
 
             magike += howManyMagike;

@@ -13,7 +13,6 @@ using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor

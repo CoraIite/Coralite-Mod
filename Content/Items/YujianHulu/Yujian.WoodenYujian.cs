@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Microsoft.Xna.Framework;
@@ -45,7 +44,7 @@ namespace Coralite.Content.Items.YujianHulu
             PowerfulAttackCost: 150,
             attackLength: 300,
             width: 30, height: 58,
-            new Color(16, 7, 17), new Color(107, 82, 75), 
+            new Color(16, 7, 17), new Color(107, 82, 75),
             trailCacheLength: 12
             )
         { }

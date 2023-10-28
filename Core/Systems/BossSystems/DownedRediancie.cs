@@ -1,11 +1,10 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Coralite.Content.Tiles.RedJades;
+using Coralite.Content.WorldGeneration;
 using Terraria;
-using Terraria.ModLoader;
+using Terraria.Chat;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.Chat;
-using Coralite.Content.WorldGeneration;
-using Coralite.Content.Tiles.RedJades;
+using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.BossSystems
 {

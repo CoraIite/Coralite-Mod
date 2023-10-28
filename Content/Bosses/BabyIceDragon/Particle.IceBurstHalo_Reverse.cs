@@ -1,4 +1,3 @@
-using System;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;

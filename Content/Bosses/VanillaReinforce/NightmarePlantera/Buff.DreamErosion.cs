@@ -10,7 +10,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
     public class DreamErosion : ModBuff
     {
-        public override string Texture => AssetDirectory.NightmarePlantera+Name;
+        public override string Texture => AssetDirectory.NightmarePlantera + Name;
 
         public override void SetStaticDefaults()
         {

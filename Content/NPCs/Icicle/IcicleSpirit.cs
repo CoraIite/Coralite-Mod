@@ -1,17 +1,17 @@
-﻿using Coralite.Core;
-using Terraria;
+﻿using Coralite.Content.Bosses.BabyIceDragon;
+using Coralite.Content.Items.Icicle;
+using Coralite.Core;
+using Coralite.Core.Systems.BossSystems;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.ModLoader;
-using Coralite.Core.Systems.BossSystems;
-using Terraria.GameContent;
-using Coralite.Helpers;
-using Terraria.ID;
 using System;
+using Terraria;
 using Terraria.Audio;
-using Coralite.Content.Bosses.BabyIceDragon;
+using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
-using Coralite.Content.Items.Icicle;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.NPCs.Icicle
 {
@@ -164,7 +164,7 @@ namespace Coralite.Content.NPCs.Icicle
         {
             Texture2D mainTex = TextureAssets.Npc[Type].Value;
 
-            Vector2 origin = NPC.frame.Size()/2;
+            Vector2 origin = NPC.frame.Size() / 2;
             SpriteEffects effects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             spriteBatch.Draw(mainTex, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, origin, NPC.scale, effects, 0f);

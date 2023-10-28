@@ -392,7 +392,7 @@ namespace Coralite.Content.Items.Nightmare
                     Helper.PlayPitched("Misc/FlowSwing2", 0.4f, 0.2f, Projectile.Center);
                     ColorState = 1;
 
-                    if (Main.netMode!=NetmodeID.MultiplayerClient)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         float angle = Main.rand.NextFloat(6.282f);
                         for (int i = 0; i < 5; i++)
@@ -819,7 +819,7 @@ namespace Coralite.Content.Items.Nightmare
             Smoother = Coralite.Instance.NoSmootherInstance;
             Projectile.scale = 0.8f;
             distanceToOwner = 20 - Projectile.height / 2;
-            MaxChannelTime = 55+Owner.itemTimeMax*3;
+            MaxChannelTime = 55 + Owner.itemTimeMax * 3;
 
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
@@ -1425,7 +1425,7 @@ namespace Coralite.Content.Items.Nightmare
         private float spikeWidth;
 
         public NightmareTentacle spike;
-        public Color drawColor= NightmarePlantera.nightmareRed;
+        public Color drawColor = NightmarePlantera.nightmareRed;
 
         public static Asset<Texture2D> SparkleTex;
 
@@ -1611,7 +1611,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             EuphorbiaPoison = false;
         }
-        
+
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
             if (EuphorbiaPoison)

@@ -81,8 +81,8 @@ namespace Coralite.Content.NPCs.Magike
         {
             SoundStyle style = CoraliteSoundID.PhantasmalDeathray_Zombie104;
             style.Volume = 0.2f;
-            style.Pitch =1f;
-           soundSlot= SoundEngine.PlaySound(style);
+            style.Pitch = 1f;
+            soundSlot = SoundEngine.PlaySound(style);
         }
 
         public override void AI()
@@ -152,7 +152,7 @@ namespace Coralite.Content.NPCs.Magike
                 }
             }
 
-            if (Projectile.timeLeft<15)
+            if (Projectile.timeLeft < 15)
             {
                 if (SoundEngine.TryGetActiveSound(soundSlot, out var sound))
                 {
@@ -190,7 +190,7 @@ namespace Coralite.Content.NPCs.Magike
             Vector2 endPos = endPoint - Main.screenPosition;
 
             var laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, (int)(height * 2f));
-            var flowTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, (int)(height*0.9f));
+            var flowTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, (int)(height * 0.9f));
 
             var laserSource = new Rectangle((int)(Projectile.timeLeft / 30f * laserTex.Width), 0, laserTex.Width, laserTex.Height);
             var flowSource = new Rectangle((int)(Projectile.timeLeft / 45f * flowTex.Width), 0, flowTex.Width, flowTex.Height);

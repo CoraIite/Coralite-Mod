@@ -15,7 +15,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
     public abstract class MagikeFactory_PolymerizeAltar : MagikeFactory, IMagikeSender, ISingleItemContainer
     {
-        public MagikeFactory_PolymerizeAltar(int magikeMax,int perWorkTime, int connectLenghMax, int howManyCanConnect = 1) : base(magikeMax, 100)
+        public MagikeFactory_PolymerizeAltar(int magikeMax, int perWorkTime, int connectLenghMax, int howManyCanConnect = 1) : base(magikeMax, 100)
         {
             this.connectLenghMax = connectLenghMax;
             receiverPoints = new Point16[howManyCanConnect];
@@ -166,7 +166,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             if (workTimer == -1 && containsItem is not null && chooseRecipe is not null && !containsItem.IsAir &&
                 containsItem.type == chooseRecipe.MainItem.type && containsItem.stack >= chooseRecipe.MainItem.stack && magike >= chooseRecipe.magikeCost
-                &&chooseRecipe.CanPolymerize(containsItem))
+                && chooseRecipe.CanPolymerize(containsItem))
             {
                 foreach (var item in chooseRecipe.RequiredItems)
                 {
@@ -235,7 +235,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                         }
                     }
 
-                    if (howManyNeed>0)//如果没能完全消耗那么就说明物品不够，停止聚合
+                    if (howManyNeed > 0)//如果没能完全消耗那么就说明物品不够，停止聚合
                         workTimer = -1;
                 }
             }
@@ -340,7 +340,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                     tag.Add("Receiver_y" + i, receiverPoints[i].Y);
                 }
 
-            if (chooseRecipe!=null)
+            if (chooseRecipe != null)
             {
                 tag.Add("RecipeMainItem", chooseRecipe.MainItem);
                 tag.Add("RecipeResultItem", chooseRecipe.ResultItem);

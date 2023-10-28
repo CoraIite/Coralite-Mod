@@ -27,7 +27,7 @@ namespace Coralite.Compat.BossCheckList
             new RediancieFollower(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
         };//这也太蠢了... 
 
-        public static void UpdateFollower_Idle(Vector2 center,float centerLerpSpeed = 0.6f)
+        public static void UpdateFollower_Idle(Vector2 center, float centerLerpSpeed = 0.6f)
         {
             float velLength = 24;
             float baseRot = Main.GlobalTimeWrappedHourly / 2 + velLength * 0.15f;
@@ -36,11 +36,11 @@ namespace Coralite.Compat.BossCheckList
             float CircleRot = 1.57f - Math.Clamp(-125f / 200, -1f, 1f) * 0.4f;
             for (int i = 0; i < followers.Length; i++)
             {
-                FollowersAI_Idle(followers[i], center,i, baseRot, length, CircleRot, centerLerpSpeed);
+                FollowersAI_Idle(followers[i], center, i, baseRot, length, CircleRot, centerLerpSpeed);
             }
         }
 
-        public static void FollowersAI_Idle(RediancieFollower follower,Vector2 center, int whoamI, float baseRot, float length, float CircleRot, float centerLerpSpeed)
+        public static void FollowersAI_Idle(RediancieFollower follower, Vector2 center, int whoamI, float baseRot, float length, float CircleRot, float centerLerpSpeed)
         {
             float rot = baseRot + (whoamI / (float)followers.Length) * MathHelper.TwoPi;
 
@@ -72,7 +72,7 @@ namespace Coralite.Compat.BossCheckList
                     follower.DrawInBCL(spriteBatch, color);
             }
 
-            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.Rediancie+"Rediancie").Value;
+            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.Rediancie + "Rediancie").Value;
 
             Vector2 origin = mainTex.Size() / 2;
 

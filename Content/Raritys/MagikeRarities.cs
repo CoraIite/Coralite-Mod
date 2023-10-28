@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Raritys
 {
-    public class MagicCrystalRarity: ModRarity
+    public class MagicCrystalRarity : ModRarity
     {
         public override Color RarityColor => Coralite.Instance.MagicCrystalPink;
     }

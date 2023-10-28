@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.Icicle
             if (Main.myPlayer == Projectile.owner)
             {
                 //大概是手持法杖的角度
-                Projectile.rotation = Rotate = OwnerDirection*  0.3f -Owner.gravDir* 1.57f + 0.785f;
+                Projectile.rotation = Rotate = OwnerDirection * 0.3f - Owner.gravDir * 1.57f + 0.785f;
             }
         }
 
@@ -82,7 +82,7 @@ namespace Coralite.Content.Items.Icicle
                 //旋转中心点，旋转角度，看上去像挥舞过去一样
                 Projectile.rotation = Projectile.rotation.AngleLerp(Rotate, 0.3f);
                 Length += 0.8f;
-                Projectile.Center = Owner.Center + (Projectile.rotation-0.785f).ToRotationVector2() * Length;
+                Projectile.Center = Owner.Center + (Projectile.rotation - 0.785f).ToRotationVector2() * Length;
 
                 float factor = 1 - ((Timer - SWING_TIME) / 15);
                 visualEffectScale = factor * 0.5f;
@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Icicle
 
             Owner.heldProj = Projectile.whoAmI;
             Owner.itemTime = Owner.itemAnimation = 3;
-            Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? -0.6f :2.2f);
+            Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? -0.6f : 2.2f);
             Projectile.timeLeft = 2;
 
             visualEffectRotate += 0.4f;
