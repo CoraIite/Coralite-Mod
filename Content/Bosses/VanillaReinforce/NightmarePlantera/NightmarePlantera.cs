@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Nightmare;
+﻿using Coralite.Content.Items.Icicle;
+using Coralite.Content.Items.Nightmare;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -19,6 +20,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
@@ -177,12 +179,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.BossBag(ItemType<EmperorSabre>()));
-
             //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<GelThrone>()));
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<GriefSeed>()));
             //npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<NightmareHeart>()));
+
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 
             IItemDropRule[] weaponTypes = new IItemDropRule[] {
@@ -223,6 +225,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return;
             }
 
+            if (projectile.hostile)
+                modifiers.SetMaxDamage(1);
+
             //if (projectile.type == ModContent.ProjectileType<HyacinthBullet>() || projectile.type == ModContent.ProjectileType<HyacinthBullet2>()
             //    || projectile.type == ModContent.ProjectileType<HyacinthExplosion>())
             //{
@@ -235,7 +240,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
         {
-            if (Phase == (int)AIPhases.Dream_P2 && NPC.life < NPC.lifeMax / 5)
+            if ((Phase == (int)AIPhases.Dream_P2 && NPC.life < NPC.lifeMax / 5))
             {
                 info.Damage = 1;
             }

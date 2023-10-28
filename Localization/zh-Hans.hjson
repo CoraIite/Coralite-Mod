@@ -1574,14 +1574,24 @@ Mods: {
 
 			QueensWreath: {
 				DisplayName: 珊瑚藤
-				Tooltip: "[c/ffd1fc:爱的锁链]"
+				Tooltip:
+					'''
+					[c/ffd1fc:爱的锁链]
+					每3次射击射出一个锁链花瓣箭，命中后获得1个[c/fa0064:梦魇光能]
+					射箭后摇中右键消耗1个[c/fa0064:梦魇光能]进行二次射击
+
+					双击A或D进行横向冲刺，冲刺途中如果与弹幕或敌怪碰撞则能够射出3个花瓣箭，之后下一次普通射击直接射出锁链花瓣箭
+					未发生碰撞则射出1个花瓣箭
+					双击S消耗2个[c/fa0064:梦魇光能]瞄准下方的敌人向下冲刺，冲刺途中与弹幕或敌怪发生碰撞则向上弹起之后射出一些箭矢
+					双击W消耗1个[c/fa0064:梦魇光能]向上冲刺，之射出3个从天上坠落的花瓣箭
+					'''
 			}
 
 			NightmareHeart: {
 				DisplayName: 梦魇花药袋
 				Tooltip:
 					'''
-					"[c/be0065:永不停息地跳动着]"
+					[c/be0065:永不停息地跳动着]
 					[c/fa0064:梦魇光能]上限增加到10个，每个[c/fa0064:梦魇光能]会提供1.5%伤害加成
 					抵抗梦蚀Debuff
 					小幅度增加防御力，生命回复，移动速度，近战攻速，伤害减免，暴击率
@@ -1948,6 +1958,9 @@ Mods: {
 			// RavenFeather.DisplayName: Raven Feather
 			// QueensWreathArrow.DisplayName: Queens Wreath Arrow
 			// QueensWreathHeldProj.DisplayName: Queens Wreath Held Proj
+			// BoneClaw.DisplayName: Bone Claw
+			// BoneHand.DisplayName: Bone Hand
+			// BoneSilt.DisplayName: Bone Silt
 		}
 
 		Configs: {

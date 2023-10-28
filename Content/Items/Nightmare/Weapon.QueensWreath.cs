@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.DamageType = DamageClass.Ranged;
             Item.rare = RarityType<NightmareRarity>();
             Item.value = Item.sellPrice(2, 0, 0, 0);
-            Item.SetWeaponValues(260, 4, 4);
+            Item.SetWeaponValues(269, 4, 4);
             Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;
@@ -259,13 +259,6 @@ namespace Coralite.Content.Items.Nightmare
             {
                 shootTime = Owner.itemTimeMax;
                 delayTime = NotRightClicked ? 8 : 0;
-                switch (State)
-                {
-                    default:
-                    case 0:
-
-                        break;
-                }
 
                 Owner.itemTime = shootTime + delayTime;
                 if (NotRightClicked)
@@ -415,7 +408,7 @@ namespace Coralite.Content.Items.Nightmare
                                     if (Main.rand.NextBool(20))
                                     {
                                         Vector2 dir = Rotation.ToRotationVector2();
-                                        Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.Instance.IcicleCyan, Main.rand.NextFloat(0.1f, 0.15f));
+                                        Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
                                     }
                                 }
 
@@ -542,7 +535,7 @@ namespace Coralite.Content.Items.Nightmare
                                     if (Main.rand.NextBool(20))
                                     {
                                         Vector2 dir = Rotation.ToRotationVector2();
-                                        Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.Instance.IcicleCyan, Main.rand.NextFloat(0.1f, 0.15f));
+                                        Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
                                     }
                                 }
 
@@ -768,7 +761,7 @@ namespace Coralite.Content.Items.Nightmare
                                     if (Main.rand.NextBool(20))
                                     {
                                         Vector2 dir = Rotation.ToRotationVector2();
-                                        Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.Instance.IcicleCyan, Main.rand.NextFloat(0.1f, 0.15f));
+                                        Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
                                     }
                                 }
 

@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            //itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<EmperorSabre>()));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<NightmareHeart>()));
             itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<NightmarePlantera>()));
             //itemLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 45, 150));
 

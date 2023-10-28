@@ -1853,6 +1853,9 @@ Mods: {
 			RavenFeather.DisplayName: Raven Feather
 			QueensWreathArrow.DisplayName: Queens Wreath Arrow
 			QueensWreathHeldProj.DisplayName: Queens Wreath Held Proj
+			BoneClaw.DisplayName: Bone Claw
+			BoneHand.DisplayName: Bone Hand
+			BoneSilt.DisplayName: Bone Silt
 		}
 
 		Configs: {
