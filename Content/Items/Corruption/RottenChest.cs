@@ -1,27 +1,102 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Prefabs.Tiles;
+using Coralite.Core.Prefabs.Items;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 
-namespace Coralite.Content.Tiles.Magike
+namespace Coralite.Content.Items.Corruption
 {
-    public class BasaltChestTile : ModTile
+    public class RottenChest : BaseChestItem
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
+        public RottenChest() : base(Item.sellPrice(0, 0, 0, 10), ItemRarityID.Blue, ModContent.TileType<RottenChestTile>(), AssetDirectory.CorruptionItems)
+        { }
+    }
+
+    public class RottenChestTile : ModTile
+    {
+        public override string Texture => AssetDirectory.CorruptionItems + Name;
 
         public override void SetStaticDefaults()
         {
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
-            this.ChestPrefab(DustID.CorruptionThorns, new Microsoft.Xna.Framework.Color(31, 31, 50), MapChestName);
+            Main.tileSpelunker[Type] = true;
+            Main.tileContainer[Type] = true;
+            Main.tileShine2[Type] = true;
+            Main.tileShine[Type] = 1200;
+            Main.tileFrameImportant[Type] = true;
+            Main.tileNoAttach[Type] = true;
+            Main.tileOreFinderPriority[Type] = 500;
+            TileID.Sets.HasOutlines[Type] = true;
+            TileID.Sets.BasicChest[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.AvoidedByNPCs[Type] = true;
+            TileID.Sets.InteractibleByNPCs[Type] = true;
+            TileID.Sets.IsAContainer[Type] = true;
+            TileID.Sets.FriendlyFairyCanLureTo[Type] = true;
+
+            DustType = DustID.Corruption;
+            AdjTiles = new int[] { TileID.Containers };
+
+            // Other tiles with just one map entry use CreateMapEntryName() to use the default translationkey, "MapEntry"
+            // Since ExampleChest needs multiple, we register our own MapEntry keys
+            AddMapEntry(new Color(200, 200, 200), this.GetLocalization("MapEntry0"), MapChestName);
+            AddMapEntry(new Color(0, 141, 63), this.GetLocalization("MapEntry1"), MapChestName);
+
+            // Style 1 is ExampleChest when locked. We want that tile style to drop the ExampleChest item as well. Use the Chest Lock item to lock this chest.
+            // No item places ExampleChest in the locked style, so the automatically determined item drop is unknown, this is why RegisterItemDrop is necessary in this situation. 
+            RegisterItemDrop(ModContent.ItemType<RottenChest>(), 1);
+            // Sometimes mods remove content, such as tile styles, or tiles accidentally get corrupted. We can, if desired, register a fallback item for any tile style that doesn't have an automatically determined item drop. This is done by omitting the tileStyles parameter.
+            RegisterItemDrop(ModContent.ItemType<RottenChest>());
+
+            // Placement
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+            TileObjectData.newTile.Origin = new Point16(0, 1);
+            TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
+            TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
+            TileObjectData.newTile.AnchorInvalidTiles = new int[] {
+                TileID.MagicalIceBlock,
+                TileID.Boulder,
+                TileID.BouncyBoulder,
+                TileID.LifeCrystalBoulder,
+                TileID.RollingCactus
+            };
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+            TileObjectData.addTile(Type);
         }
 
         public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
 
-        public override bool IsLockedChest(int i, int j) => false;
+        public override bool IsLockedChest(int i, int j)
+        {
+            return Main.tile[i, j].TileFrameX / 36 == 1;
+        }
+
+        public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)
+        {
+            return true;
+        }
+
+        public override bool LockChest(int i, int j, ref short frameXAdjustment, ref bool manual)
+        {
+            int style = TileObjectData.GetTileStyle(Main.tile[i, j]);
+            // We need to return true only if the tile style is the unlocked variant of a chest that supports locking. 
+            if (style == 0)
+            {
+                // We can check other conditions as well, such as how biome chests can't be locked until Plantera is defeated
+                return true;
+            }
+            return false;
+        }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
@@ -68,6 +143,17 @@ namespace Coralite.Content.Tiles.Magike
 
             if (tile.TileFrameY != 0)
                 top--;
+
+            if (Main.tile[left, top].TileFrameX > 18)
+            {
+                if (player.ConsumeItem(1))
+                {
+                    Chest.Unlock(i, j);
+                    return true;
+                }
+
+                return false;
+            }
 
             if (player.sign >= 0)
             {
@@ -148,8 +234,8 @@ namespace Coralite.Content.Tiles.Magike
                 player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
             else
             {
-                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "玄武岩箱";
-                if (player.cursorItemIconText == "玄武岩箱")
+                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "尸骨箱";
+                if (player.cursorItemIconText == "尸骨箱")
                 {
                     player.cursorItemIconID = ModContent.ItemType<Items.RedJades.RedJadeChest>();
 

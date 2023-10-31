@@ -4,9 +4,11 @@ using Coralite.Content.UI;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.YujianSystem.HuluEffects;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -74,7 +76,7 @@ namespace Coralite.Core.Systems.YujianSystem
             Item.noMelee = true;
             Item.channel = true;
 
-            Item.shoot = 1;         //只是为了能够去调用shoot方法而已
+            Item.shoot = ProjectileID.WoodenArrowFriendly;         //只是为了能够去调用shoot方法而已
         }
 
         public override void SaveData(TagCompound tag)
@@ -99,6 +101,12 @@ namespace Coralite.Core.Systems.YujianSystem
             {
                 CanChannel[i] = tag.GetBool("CanChannel" + i.ToString());
             }
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine line = new TooltipLine(Mod, "HuluDescription", Language.GetOrRegister($"Mods.Coralite.Systems.YujianSystem.HuluDescription", () => "右键单击打开UI面板，将御剑放进栏位后可召唤出御剑").Value);
+            tooltips.Add(line);
         }
 
         #endregion

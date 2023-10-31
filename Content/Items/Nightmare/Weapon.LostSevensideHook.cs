@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 if (player.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 0)//射出特殊弹幕
                 {
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<LostVine>(), (int)(damage * 3f), knockback,
+                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<LostVine>(), (int)(damage * 4.5f), knockback,
                         player.whoAmI, -1, (0.2f + cp.nightmareEnergy * 0.1f) * (cp.nightmareEnergy % 2 == 0 ? -1 : 1), player.itemTimeMax * 1.5f);
                     cp.nightmareEnergy--;
                 }

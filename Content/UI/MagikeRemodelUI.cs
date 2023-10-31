@@ -61,7 +61,7 @@ namespace Coralite.Content.UI
             list.Height.Set(200, 0f);
 
             Append(list);
-
+            
             UIScrollbar scrollbar = new UIScrollbar();
             scrollbar.SetView(100f, 1000f);
             scrollbar.Top.Pixels = 2_0000;

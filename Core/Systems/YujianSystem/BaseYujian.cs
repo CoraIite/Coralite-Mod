@@ -1,8 +1,10 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Core.Systems.YujianSystem.HuluEffects;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.YujianSystem
@@ -64,6 +66,12 @@ namespace Coralite.Core.Systems.YujianSystem
                 (Main.projectile[index].ModProjectile as BaseYujianProj).canChannel = canChannel;
             }
 
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine line = new TooltipLine(Mod, "YujianDescription", Language.GetOrRegister($"Mods.Coralite.Systems.YujianSystem.YujianDescription", () => "需要放置在葫芦中以使用").Value);
+            tooltips.Add(line);
         }
     }
 }

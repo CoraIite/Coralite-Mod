@@ -978,8 +978,8 @@ namespace Coralite.Content.Items.Nightmare
     {
         public override string Texture => AssetDirectory.NightmareItems + Name;
 
-        public ref float State => ref Projectile.ai[0];
-        public ref float Target => ref Projectile.ai[1];
+        public ref float State => ref Projectile.ai[1];
+        public ref float Target => ref Projectile.ai[0];
 
         private Vector2 offset;
         private float alpha;
@@ -1144,83 +1144,58 @@ namespace Coralite.Content.Items.Nightmare
             //    dust.noGravity = true;
             //}
 
-            #region 同叶绿弹的追踪，但是范围更大
-            float velLength = Projectile.velocity.Length();
-            float localAI0 = Projectile.localAI[0];
-            if (localAI0 == 0f)
+            if (Main.rand.NextBool())
             {
-                Projectile.localAI[0] = velLength;
-                localAI0 = velLength;
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
+                    DustID.VilePowder, Vector2.Zero, newColor: NightmarePlantera.nightPurple, Scale: Main.rand.NextFloat(1f, 1.5f));
+                dust.noGravity = true;
             }
 
-            float num186 = Projectile.position.X;
-            float num187 = Projectile.position.Y;
-            float chasingLength = 900f;
-            bool flag5 = false;
-            int targetIndex = 0;
-            if (npcIndex == 0)
+            bool flag2 = false;
+            float num4 = 30f;
+
+            if (Projectile.timeLeft > 20)
+                flag2 = true;
+
+            int num7 = (int)Projectile.ai[0];
+            if (Main.npc.IndexInRange(num7) && !Main.npc[num7].CanBeChasedBy(this))
             {
-                for (int i = 0; i < 200; i++)
-                {
-                    if (Main.npc[i].CanBeChasedBy(Projectile))
-                    {
-                        float targetX = Main.npc[i].Center.X;
-                        float targetY = Main.npc[i].Center.Y;
-                        float num193 = Math.Abs(Projectile.Center.X - targetX) + Math.Abs(Projectile.Center.Y - targetY);
-                        if (num193 < chasingLength)
-                        {
-                            chasingLength = num193;
-                            num186 = targetX;
-                            num187 = targetY;
-                            flag5 = true;
-                            targetIndex = i;
-                        }
-                    }
-                }
-
-                if (flag5)
-                    npcIndex = targetIndex + 1;
-
-                flag5 = false;
-            }
-
-            if (npcIndex > 0f)
-            {
-                int targetIndex2 = npcIndex - 1;
-                if (Main.npc[targetIndex2].active && Main.npc[targetIndex2].CanBeChasedBy(this, ignoreDontTakeDamage: true) && !Main.npc[targetIndex2].dontTakeDamage)
-                {
-                    float num195 = Main.npc[targetIndex2].Center.X;
-                    float num196 = Main.npc[targetIndex2].Center.Y;
-                    if (Math.Abs(Projectile.Center.X - num195) + Math.Abs(Projectile.Center.Y - num196) < 1000f)
-                    {
-                        flag5 = true;
-                        num186 = Main.npc[targetIndex2].Center.X;
-                        num187 = Main.npc[targetIndex2].Center.Y;
-                    }
-                }
-                else
-                    npcIndex = 0;
-
+                num7 = -1;
+                Projectile.ai[0] = -1f;
                 Projectile.netUpdate = true;
             }
 
-            if (flag5)
+            if (num7 == -1)
             {
-                float num197 = localAI0;
-                Vector2 center = Projectile.Center;
-                float num198 = num186 - center.X;
-                float num199 = num187 - center.Y;
-                float dis2Target = MathF.Sqrt(num198 * num198 + num199 * num199);
-                dis2Target = num197 / dis2Target;
-                num198 *= dis2Target;
-                num199 *= dis2Target;
-                int chase = 24;
-
-                Projectile.velocity.X = (Projectile.velocity.X * (chase - 1) + num198) / chase;
-                Projectile.velocity.Y = (Projectile.velocity.Y * (chase - 1) + num199) / chase;
+                int num8 = Projectile.FindTargetWithLineOfSight();
+                if (num8 != -1)
+                {
+                    Projectile.ai[0] = num8;
+                    Projectile.netUpdate = true;
+                }
             }
 
-            #endregion
+            if (flag2)
+            {
+                int num9 = (int)Projectile.ai[0];
+                Vector2 value3 = Projectile.velocity;
+
+                if (Main.npc.IndexInRange(num9))
+                {
+                    if (Projectile.timeLeft < 10)
+                        Projectile.timeLeft = 10;
+
+                    NPC nPC = Main.npc[num9];
+                    value3 = Projectile.DirectionTo(nPC.Center) * num4;
+                }
+                else
+                {
+                    Projectile.timeLeft--;
+                }
+
+                Projectile.velocity = Vector2.SmoothStep(Projectile.velocity, value3, 0.15f);
+                //Projectile.velocity *= MathHelper.Lerp(0.85f, 1f, Utils.GetLerpValue(0f, 90f, Projectile.timeLeft, clamped: true));
+            }
         }
     }
 

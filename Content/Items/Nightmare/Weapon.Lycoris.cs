@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.DamageType = DamageClass.Ranged;
             Item.rare = RarityType<NightmareRarity>();
             Item.value = Item.sellPrice(2, 0, 0, 0);
-            Item.SetWeaponValues(320, 4, 4);
+            Item.SetWeaponValues(300, 4, 4);
             Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;
@@ -57,7 +57,7 @@ namespace Coralite.Content.Items.Nightmare
                     cp.nightmareEnergy = 0;
                     Helper.PlayPitched("Misc/Zaphkiel", 1f, 0f, position);
 
-                    Projectile.NewProjectile(source, position, velocity, projType, damage * 7, knockback, player.whoAmI, 1);
+                    Projectile.NewProjectile(source, position, velocity, projType, damage * 10, knockback, player.whoAmI, 1);
                     Projectile.NewProjectile(source, player.Center, Vector2.Zero, heldProjType, 1, 1, player.whoAmI);
 
                     return false;
@@ -65,7 +65,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 Helper.PlayPitched("Misc/Gun", 0.3f, 0f, position);
 
-                Projectile.NewProjectile(source, position, velocity, projType, (int)(damage * 2.25f), knockback, player.whoAmI);
+                Projectile.NewProjectile(source, position, velocity, projType, (int)(damage * 2.55f), knockback, player.whoAmI);
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero, heldProjType, 1, 1, player.whoAmI);
             }
 
@@ -209,11 +209,14 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     float rot = Main.rand.NextFloat(6.282f);
                     int howMany = 5;
-                    int damage = (int)(Projectile.damage * 0.08f);
+                    int damage = (int)(Projectile.damage * 0.1f);
                     if (State == 1)
                     {
                         howMany = 7;
-                        damage = (int)(Projectile.damage * 0.2f);
+                        if (Owner.TryGetModPlayer(out CoralitePlayer cp)&&cp.nightmareEnergyMax>7)
+                            howMany = 10;
+
+                        damage = (int)(Projectile.damage * 0.28f);
                     }
 
                     for (int i = 0; i < howMany; i++)
@@ -481,15 +484,21 @@ namespace Coralite.Content.Items.Nightmare
             //一闪一闪的光
             Main.EntitySpriteDraw(extraTex, position4, null, OtherColor, (float)Math.PI / 2f, origin7, vector31, 0);
             Main.EntitySpriteDraw(extraTex, position4, null, OtherColor, 0f, origin7, vector32, 0);
-            Main.EntitySpriteDraw(extraTex, position4, null, color37, (float)Math.PI / 2f, origin7, vector31 * 0.6f, 0);
-            Main.EntitySpriteDraw(extraTex, position4, null, color37, 0f, origin7, vector32 * 0.6f, 0);
+            //Main.EntitySpriteDraw(extraTex, position4, null, color37, (float)Math.PI / 2f, origin7, vector31 * 0.6f, 0);
+            //Main.EntitySpriteDraw(extraTex, position4, null, color37, 0f, origin7, vector32 * 0.6f, 0);
 
             //额外星星
-            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, center, Color.White, baseColor, 0.5f, 0, 0.5f, 0.5f, 1, Projectile.rotation, new Vector2(0.5f, 1f), Vector2.One);
+            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, center, NightmarePlantera.nightPurple, NightmarePlantera.lightPurple, 0.5f, 0, 0.5f, 0.5f, 1, Projectile.rotation, new Vector2(0.6f, 1.2f), Vector2.One);
 
             //主帖图
             Main.EntitySpriteDraw(extraTex, center, null, baseColor, Projectile.rotation, extraOrigin, Projectile.scale * 0.9f, 0);
             Main.EntitySpriteDraw(mainTex, center, null, Color.White, Projectile.rotation, mainTex.Size() / 2, Projectile.scale * 0.9f, 0);
+
+            Color c= NightmarePlantera.lightPurple;
+            Vector2 exOffset = (Projectile.rotation + MathHelper.Pi).ToRotationVector2() * 4;
+            Main.EntitySpriteDraw(mainTex, center + exOffset, null, c, Projectile.rotation - 0.4f, mainTex.Size() / 2, Projectile.scale * 0.8f, 0);
+            //exOffset = (Projectile.rotation + MathHelper.PiOver2 * 3 / 2).ToRotationVector2() * 6;
+            Main.EntitySpriteDraw(mainTex, center - exOffset, null, c, Projectile.rotation + 0.4f, mainTex.Size() / 2, Projectile.scale * 0.7f, 0);
 
             return false;
         }

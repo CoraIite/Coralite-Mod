@@ -179,7 +179,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<GelThrone>()));
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
-            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<GriefSeed>()));
+            //npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<GriefSeed>()));
             //npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
             npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<NightmareHeart>()));
 

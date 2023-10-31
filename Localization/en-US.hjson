@@ -264,7 +264,7 @@ Mods: {
 
 			BabyIceDragonBossBag: {
 				DisplayName: Baby Ice Dragon Boss Bag
-				Tooltip: ""
+				Tooltip: Right click to open
 			}
 
 			BabyIceDragonRelic: {
@@ -376,7 +376,7 @@ Mods: {
 
 			RediancieBossBag: {
 				DisplayName: Rediancie Boss Bag
-				Tooltip: ""
+				Tooltip: Right click to open
 			}
 
 			RedianciePet: {
@@ -731,55 +731,60 @@ Mods: {
 				Tooltip:
 					'''
 					Left click to gain charge after a certain number of swings
-					Double-click the W/D button to sprint after charging is complete
+					Double-click the A/D button to sprint after charging is complete
 					Right click to release the ice crystal tornado after charging is completed
 					'''
 			}
 
 			CrystalLens: {
 				DisplayName: Crystal Lens
-				Tooltip: ""
+				Tooltip: Right-click to open the UI, put in the item containing magike, and convert the item into magike
 			}
 
 			DebugStick: {
-				DisplayName: Debug Stick
-				Tooltip: Fill a magike container
+				DisplayName: Infinity Cluster Wand
+				Tooltip:
+					'''
+					Right-click to switch modes
+					Charge Mode: Clck the magike container to fill it
+					Clear Mode: Tap the magike container to empty it
+					'''
 			}
 
 			MagConnectStaff: {
 				DisplayName: Mag Connect Staff
 				Tooltip:
 					'''
-					Connect mode: 
-					The first left click selects the receiver and the second left click selects the sender
-					Then establish a connection between them. Sender has distance limitation
-					View mode:
-					Left click a magike sender to show connection.
-					Interrupt mode: 
-					Left click a magike sender to interrupt connections.
-					Right click to change mode.
+					Right-click to switch modes
+					Connect mode: The first left click selects the receiver and the second left click selects the sender
+					  Then establish a connection between them. Sender has distance limitation
+					View mode: Left click a magike sender to show connection.
+					Interrupt mode: Left click a magike sender to interrupt connections.
+
+					The sender has a distance limit,
+					Right-click to clear the selection
 					'''
 			}
 
 			MagicCrystal: {
 				DisplayName: Magic Crystal
-				Tooltip: ""
+				Tooltip: Contains a faint amount of magike
 				MoreDescription: “Go underground and look for the crystal caves that contain the knowledge of how to use magike”
 			}
 
 			CrimtaneLens: {
 				DisplayName: Crimtane Lens
-				Tooltip: ""
+				Tooltip: Right-click to open the UI, put in the item containing magike, and convert the item into magike
 			}
 
 			DemoniteLens: {
 				DisplayName: Demonite Lens
-				Tooltip: ""
+				Tooltip: Right-click to open the UI, put in the item containing magike, and convert the item into magike
 			}
 
 			BrilliantLens: {
 				DisplayName: Brilliant Lens
-				Tooltip: ""
+				Tooltip: Right-click to open the UI, put in the item containing magike, and convert the item into magike
 			}
 
 			CrystallineMagike: {
@@ -789,42 +794,42 @@ Mods: {
 
 			CrystalRefractor: {
 				DisplayName: Crystal Refractor
-				Tooltip: ""
+				Tooltip: It has a strong sending ability and is able to send magike over long distances
 			}
 
 			BrilliantRefractor: {
 				DisplayName: Brilliant Refractor
-				Tooltip: ""
+				Tooltip: It has a strong sending ability and is able to send magike over long distances
 			}
 
 			CrimtaneRefractor: {
 				DisplayName: Crimtane Refractor
-				Tooltip: ""
+				Tooltip: It has a strong sending ability and is able to send magike over long distances
 			}
 
 			DemoniteRefractor: {
 				DisplayName: Demonite Refractor
-				Tooltip: ""
+				Tooltip: It has a strong sending ability and is able to send magike over long distances
 			}
 
 			BrilliantColumn: {
 				DisplayName: Brilliant Column
-				Tooltip: ""
+				Tooltip: It can hold a lot of magike
 			}
 
 			CrimtaneColumn: {
 				DisplayName: Crimtane Column
-				Tooltip: ""
+				Tooltip: It can hold a lot of magike
 			}
 
 			CrystalColumn: {
 				DisplayName: Crystal Column
-				Tooltip: ""
+				Tooltip: It can hold a lot of magike
 			}
 
 			DemoniteColumn: {
 				DisplayName: Demonite Column
-				Tooltip: ""
+				Tooltip: It can hold a lot of magike
 			}
 
 			Diprism: {
@@ -839,17 +844,17 @@ Mods: {
 
 			CondensedCrystalBall: {
 				DisplayName: Condensed Crystal Ball
-				Tooltip: ""
+				Tooltip: Charge the magike container in the mouse position
 			}
 
 			MagikeActivator: {
 				DisplayName: Magike Activator
-				Tooltip: ""
+				Tooltip: Activate the magike machine in the mouse position
 			}
 
 			SunlightLens: {
 				DisplayName: Sunlight Lens
-				Tooltip: "Produce magike in the daytime. "
+				Tooltip: Produce magike in the daytime
 			}
 
 			CrystalRemodelPool: {
@@ -864,22 +869,22 @@ Mods: {
 
 			MoonlightLens: {
 				DisplayName: Moonlight Lens
-				Tooltip: "Produce magike at night "
+				Tooltip: Produce magike at night
 			}
 
 			FeatheredLens: {
 				DisplayName: Feathered Lens
-				Tooltip: ""
+				Tooltip: Right-click to open the UI, put in the item containing magike, and convert the item into magike
 			}
 
 			HolylightLens: {
 				DisplayName: Holylight Lens
-				Tooltip: "Produce magike in the daytime. "
+				Tooltip: Produce magike in the daytime
 			}
 
 			BloodMoonLens: {
 				DisplayName: Blood Moon Lens
-				Tooltip: "Produce magike at night. "
+				Tooltip: Produce magike at night
 			}
 
 			IcicleHeart: {
@@ -907,17 +912,17 @@ Mods: {
 
 			RedJadeLens: {
 				DisplayName: Red Jade Lens
-				Tooltip: ""
+				Tooltip: Produce magike when subjected to explosions
 			}
 
 			RedJadeColumn: {
 				DisplayName: Red Jade Column
-				Tooltip: Produce magike when subjected to explosions
+				Tooltip: Cannot be destroyed by explosions
 			}
 
 			RedJadeRefractor: {
 				DisplayName: Red Jade Refractor
-				Tooltip: ""
+				Tooltip: Cannot be destroyed by explosions
 			}
 
 			RedJadeCluster: {
@@ -1135,7 +1140,6 @@ Mods: {
 				DisplayName: Iron Ring
 				Tooltip:
 					'''
-					“Are you sure to make jewelry with this metal? ”
 					damageReduce 8%
 					moveSpeed -10%
 					'''
@@ -1145,7 +1149,7 @@ Mods: {
 				DisplayName: Lead Ring
 				Tooltip:
 					'''
-					“Are you sure to make jewelry with this metal? ”
+					“Are you sure to make accessory with this metal? ”
 					damageReduce 7%
 					moveSpeed -10%
 					'''
@@ -1209,8 +1213,8 @@ Mods: {
 				DisplayName: Gel Invitation
 				Tooltip:
 					'''
-						A invitation touch sticky, a great monarch is waiting for you to attend its sticky banquet...
-						Summon Slime Emperor without cosuming. 
+					A invitation touch sticky, a great monarch is waiting for you to attend its sticky banquet...
+					Summon Slime Emperor without cosuming. 
 					'''
 			}
 
@@ -1260,7 +1264,7 @@ Mods: {
 
 			SlimeEmperorSoulBox: {
 				DisplayName: Royal Treasure
-				Tooltip: Right-click to open
+				Tooltip: Right click to open
 			}
 
 			ANewBirthOfIce: {
@@ -1280,22 +1284,34 @@ Mods: {
 
 			NightmareHarp: {
 				DisplayName: Nightmare Harp
-				Tooltip: ""
+				Tooltip:
+					'''
+					Summon Nightmare Plantera at night, not consumed
+						Special skies and special health bars can be toggled on or off in the visual effects configuration
+					'''
 			}
 
 			CrystalStoneMaker: {
 				DisplayName: Crystal Stone Maker
-				Tooltip: ""
+				Tooltip: Consumes magike to produce stone blocks
 			}
 
 			CrystalAltar: {
 				DisplayName: Crystal Altar
-				Tooltip: ""
+				Tooltip:
+					'''
+						Number of connections: 4
+
+					Right click to open the UI, place the item, and select the polymerization recipe
+					Use the magike connect staff to connect to the pedestal
+					Place the secondary items in polymerization recipe into the pedestal
+					Polymerize begins after activation
+					'''
 			}
 
 			CrystalPedestal: {
 				DisplayName: Crystal Pedestal
-				Tooltip: ""
+				Tooltip: Right click to open the UI and place items
 			}
 
 			EmpyrosPowder: {
@@ -1305,12 +1321,12 @@ Mods: {
 
 			GlistentBar: {
 				DisplayName: Glistent Bar
-				Tooltip: ""
+				Tooltip: It emits a mesmerizing glow
 			}
 
 			LeafStone: {
 				DisplayName: Leaf Stone
-				Tooltip: ""
+				Tooltip: Contains a faint amount of phytogenetic power
 			}
 
 			MagicalPowder: {
@@ -1319,48 +1335,73 @@ Mods: {
 			}
 
 			MagikePolySymbol: {
-				DisplayName: Magike Poly Symbol
-				Tooltip: ""
+				DisplayName: Magike
+				Tooltip:
+					'''
+					This crafting table needs to be done through magike polymerize!
+					The first item other than magike is the primary item, which needs to be placed in the polymerization Altar
+					The rest of the items are secondary items and need to be placed in the pedestal
+					'''
 			}
 
 			CrystalCrate: {
 				DisplayName: Crystal Crate
-				Tooltip: ""
+				Tooltip: Right click to Open
 			}
 
 			FragmentsOfLight: {
 				DisplayName: Fragments Of Light
-				Tooltip: ""
+				Tooltip: Possess the power of light that purifies the mind
 			}
 
 			SlimeEruption: {
 				DisplayName: Slime Eruption
-				Tooltip: ""
+				Tooltip:
+					'''
+					Shoot out a bunch of gel
+					66% chance of not consuming ammo
+					'''
 			}
 
 			GelWhip: {
 				DisplayName: Gel Whip
-				Tooltip: ""
+				Tooltip:
+					'''
+					6 Summoning Tag Damage
+					Makes enemies slimy
+					'''
 			}
 
 			VoidCrystal: {
 				DisplayName: Void Crystal
-				Tooltip: ""
+				Tooltip:
+					'''
+					When activated, sucks nearby items into itself
+					Can be connected to other item containers as an item sender
+					'''
 			}
 
 			VoidStaff: {
 				DisplayName: Void Staff
-				Tooltip: ""
+				Tooltip:
+					'''
+					Extraction mode: Left click the first time to select the item extractor, and then left click again to select the item container
+					Sending mode: Left click the first time to select the item sender, then left click again to select the item container
+					'''
 			}
 
 			RoyalGelCannon: {
 				DisplayName: Royal Gel Cannon
-				Tooltip: ""
+				Tooltip: Quickly shoot the gel ball
 			}
 
 			RoyalClassics: {
 				DisplayName: Royal Classics
-				Tooltip: ""
+				Tooltip:
+					'''
+					"Chronicles the development of the Slime Kingdom"
+					Shoot a bunch of different gel balls
+					'''
 			}
 
 			FreosanInABottle: {
@@ -1423,73 +1464,150 @@ Mods: {
 				Tooltip:
 					'''
 					[c/f73535:红取风霜实，青看雨露柯。]
-						Right-click to throw out the hook, and after hitting enemy, right-click again to drag the player towards the hook position and gain 2 nightmare energy
-						When possessing nightmare energy, the left-click shoots thorny thorns
+						Right click to throw out the hook, and after hitting enemy, right click again to drag the player towards the hook position and gain 2 [c/fa0064:Nightmare Sparkle]
+						While possessing [c/fa0064:Nightmare Sparkle], left-click to cost 1 [c/fa0064:Nightmare Sparkle] to shoot thorns
 					'''
 			}
 
 			DreamShears: {
 				DisplayName: Dream Shears
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/be0065: The Crimson Blade Will Shred Your Dreams to Pieces]
+						Gain 1 [c/fa0064: Nightmare Light] when left-clicking, and 1 [c/fa0064: Nightmare Sparkle] only when swinging an attack hits.
+						Right-click to consume 7 [c/fa0064: Nightmare Sparkle] to release Nightmare Bites
+					'''
 			}
 
 			EuphorbiaMilii: {
 				DisplayName: Crown of Thorns
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/dacde8: Beautiful and dangerous]
+						Left-click to attack the final blow or right-click to fully charge a thrust that hits an enemy for 2 [c/fa0064: Nightmare Sparkle]
+						Right-click to charge, and if you can, consume 7 [c/fa0064:Nightmare Sparkle] to teleport to the mouse position
+					'''
 			}
 
 			GriefSeed: {
 				DisplayName: Grief Seed
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/f73535: Despair is your end]
+					Right click to open
+					'''
 			}
 
 			Dreamcatcher: {
 				DisplayName: Dreamcatcher
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/8d004b: Now you might be able to have a good dream...]
+						Summons the Nightmare Raven, which occupies 1 summon slot
+						Enhanced with the whip weapon "Eden" increases the Nightmare Raven's aggressiveness
+					'''
 			}
 
 			BarrenThornsStaff: {
 				DisplayName: Barren Thorns Staff
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/4f46a4: Garden of Thorns]
+						Shoots a mist of flowers and constantly attacks nearby enemies, attacking 3 times and then strengthening the next attack. Gain 1 attack after initial enhancement [c/fa0064: Nightmare Sparkle]
+						Flower mist consumes 7 mana when attacking
+						Right-click to consume 7 [c/fa0064:Nightmare Sparkle] to shoot a barren flower mist
+					'''
 			}
 
 			DevilsClaw: {
 				DisplayName: Devils Claw
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/ccaaf2: Devil's Claw]
+						Shoots dark leaves, shoots a red leaf every 7 attacks, earning 1 [c/fa0064: Nightmare Sparkle] on hit 
+						Right-click to consume 2 [c/fa0064: Nightmare Sparkle] to shoot a cloud of red flying leaves
+					'''
 			}
 
 			Eden: {
 				DisplayName: Eden
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/9d9d9d: Forbidden Fruit]
+					26 summon tag damage
+					14% summon tag critical strike chance
+						Left click to throw the snake whip, gaining 1 for every 4 attack hits [c/fa0064: Nightmare Sparkle]
+						Right-click to bite out, consuming all [c/fa0064: Nightmare Sparkle] enhanced Nightmare summons
+					'''
 			}
 
 			Lycoris: {
 				DisplayName: Lycoris
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/be0065: Flowers on the other side]
+						Shoots the Lycoris Bullet, get 1 [c/fa0064: Nightmare Sparkle] upon hitting the target, and generates Lycoris Petals if it misses
+						When the amount of [c/fa0064: Nightmare Sparkle] reaches its limit, it fires an enhanced Lycoris Bullet
+					'''
 			}
 
 			Lullaby: {
 				DisplayName: Lullaby
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/fefcc2: Let's sleep...]
+						Shoots a tracking dream light bullet
+					'''
 			}
 
 			PurpleToeStaff: {
 				DisplayName: Purple Toe Staff
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/4f46a4: Hungry Predators Will Devour Your Dreams]
+						Summons the Nightmare Predator, which occupies 1.5 summon slots
+						Enhanced with the whip weapon "Eden" increases the Nightmare Predator's aggressiveness
+					'''
 			}
 
 			BoneRing: {
 				DisplayName: Bone Ring
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/be0065: Those caught by it can never wake up]
+						Shoots Nightmare Claw, which grab enemies and continuously unleash Claw Strikes, gaining 1 for every 5 Claw Strikes[c/fa0064:Nightmare Sparkle]
+						Right-click to consume 5 [c/fa0064: Nightmare Sparkle] to tear open a rift in front of you, shooting a bunch of small Nightmare Claws from it
+					'''
 			}
 
 			QueensWreath: {
 				DisplayName: Queens Wreath
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/ffd1fc: Chains of Love]
+					Shoots a Chain Petal Arrow every 3 shots, gaining 1 on hit [c/fa0064: Nightmare Sparkle]
+					While shooting an arrow, right-clicking consumes 1 [c/fa0064: Nightmare Sparkle] to reshoot
+
+					Double tap A or D to make a lateral dash, which will shoot 3 Petal Arrows if you collide with a projectile or enemy during the dash, and then shoot Chain Petal Arrows directly on the next normal shot
+					If there is no collision, shoot 1 petal arrow
+					Double tap S to consume 2 [c/fa0064: Nightmare Sparkle] to aim at the enemy below to dash downward, and if you collide with a barrage or enemy during the dash, you will bounce upwards and shoot some arrows
+					Double tap W to cost 1 [c/fa0064:Nightmare Sparkle] to sprint upwards and shoot 3 petal arrows falling from the sky
+					'''
 			}
 
 			NightmareHeart: {
 				DisplayName: Nightmare Heart
+				Tooltip:
+					'''
+					[c/be0065: Never Stopping]
+					[c/fa0064:Nightmare Sparkle] is capped to 10, and each [c/fa0064:Nightmare Sparkle] provides a 1.5% damage bonus
+					Resists the Dream Erosion Debuff
+					Slightly increases defense, life regen, move speed, melee attack speed, damage reduction, and crit chance
+					'''
+			}
+
+			RottenChest: {
+				DisplayName: Rotten Chest
 				Tooltip: ""
 			}
 		}
@@ -1526,6 +1644,11 @@ Mods: {
 			AgropyronFrozen.MapEntry: Agropyron Frozen
 			BasaltChestTile.MapEntry: Basalt Chest Tile
 			CrystalCrateTile.MapEntry: Crystal Crate Tile
+
+			RottenChestTile: {
+				MapEntry0: Mods.Coralite.Tiles.RottenChestTile.MapEntry0
+				MapEntry1: Mods.Coralite.Tiles.RottenChestTile.MapEntry1
+			}
 		}
 
 		Buffs: {
@@ -1580,18 +1703,18 @@ Mods: {
 			}
 
 			NightmareRavenBuff: {
-				DisplayName: Nightmare Raven Buff
-				Description: Mods.Coralite.Buffs.NightmareRavenBuff.Description
+				DisplayName: Nightmare Raven
+				Description: These little ones from the nightmare will fight for you!
 			}
 
 			EdenDebuff: {
-				DisplayName: Eden Debuff
-				Description: Mods.Coralite.Buffs.EdenDebuff.Description
+				DisplayName: Eden
+				Description: Eden
 			}
 
 			PurpleToeBuff: {
-				DisplayName: Purple Toe Buff
-				Description: Mods.Coralite.Buffs.PurpleToeBuff.Description
+				DisplayName: Purple Toe
+				Description: They love your dreams!
 			}
 		}
 
@@ -1856,6 +1979,7 @@ Mods: {
 			BoneClaw.DisplayName: Bone Claw
 			BoneHand.DisplayName: Bone Hand
 			BoneSilt.DisplayName: Bone Silt
+			BoneHands.DisplayName: Bone Hands
 		}
 
 		Configs: {
@@ -1982,9 +2106,16 @@ Mods: {
 				}
 
 				NightmarePlantera: {
-					SpawnInfo: 噩梦占据了曾经被击败的世纪之花的躯体，变成了强大的梦魇之神
-					Despawn: 梦境消散了
+					SpawnInfo: Nightmares took over the body of the once defeated Plantera and transformed into a powerful nightmare god
+					Despawn: The dream dissipated
 				}
+			}
+		}
+
+		Systems: {
+			YujianSystem: {
+				YujianDescription: It needs to be placed in a hulu for use
+				HuluDescription: Right click to open the UI panel, and place Yujian in a slot to summon Yujian
 			}
 		}
 	}

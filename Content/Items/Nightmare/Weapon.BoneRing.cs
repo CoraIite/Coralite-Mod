@@ -6,13 +6,12 @@ using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,10 +26,9 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void SetDefaults()
         {
-            Item.useAnimation = Item.useTime = 45;
-            Item.reuseDelay = 20;
-            Item.useStyle = ItemUseStyleID.Rapier;
-            Item.shoot = ProjectileID.PurificationPowder;
+            Item.useAnimation = Item.useTime = 14;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.shoot = ProjectileType<BoneHand>();
             Item.DamageType = DamageClass.Ranged;
             Item.rare = RarityType<NightmareRarity>();
             Item.value = Item.sellPrice(2, 0, 0, 0);
@@ -39,6 +37,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.noUseGraphic = true;
             Item.noMelee = true;
             Item.useTurn = false;
+            Item.channel = true;
             Item.shootSpeed = 24;
         }
 
@@ -46,12 +45,15 @@ namespace Coralite.Content.Items.Nightmare
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
                 cp.equippedBoneRing = true;
-
-            player.handon = 25;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            if (Main.myPlayer==player.whoAmI)
+            {
+                PlayerNightmareEnergy.Spawn(player, source);
+                Projectile.NewProjectile(source, position, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 24, type, damage, knockback, player.whoAmI);
+            }
             return false;
         }
     }
@@ -70,27 +72,39 @@ namespace Coralite.Content.Items.Nightmare
 
         public Player Owner => Main.player[Projectile.owner];
 
+        private Vector2 offset;
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 24;
+            Projectile.penetrate = -1;
+            Projectile.aiStyle = -1;
             Projectile.friendly = true;
         }
 
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.scale = 0.75f;
+            Projectile.scale = 0.55f;
         }
 
         public override bool? CanDamage()
         {
-            if (State == 1)
-                return true;
+            if (State == 0)
+                return null;
             return false;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             NPCIndex = target.whoAmI;
+            State = 1;
+            Projectile.velocity= Vector2.Zero;
+            offset = Projectile.Center - target.Center;
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return false;
         }
 
         public override void AI()
@@ -105,6 +119,10 @@ namespace Coralite.Content.Items.Nightmare
                         if (!Owner.channel)
                             State = 2;
 
+                        Owner.itemTime = Owner.itemAnimation = 4;
+                        Owner.itemRotation = (Projectile.Center - Owner.Center).ToRotation();
+                        Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+
                         NPCIndex = -1;
                         Vector2 center = Main.MouseWorld + (Main.GlobalTimeWrappedHourly / 6 * MathHelper.TwoPi).ToRotationVector2() * 32;
                         Vector2 dir = center - Projectile.Center;
@@ -113,7 +131,7 @@ namespace Coralite.Content.Items.Nightmare
                         float targetRot = dir.ToRotation();
 
                         float speed = Projectile.velocity.Length();
-                        float aimSpeed = Math.Clamp(dir.Length() / 80f, 0, 1) * 24;
+                        float aimSpeed = Math.Clamp(dir.Length() / 80f, 0, 1) * 30;
 
                         Projectile.velocity = velRot.AngleTowards(targetRot, 0.5f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.15f);
                         Projectile.rotation = Projectile.velocity.ToRotation();
@@ -131,26 +149,84 @@ namespace Coralite.Content.Items.Nightmare
                         if (!Main.npc.IndexInRange((int)NPCIndex) || !Owner.channel)
                             State = 2;
 
+                        Owner.itemTime = Owner.itemAnimation = 4;
+                        Owner.itemRotation = (Projectile.Center - Owner.Center).ToRotation();
+                        Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         NPC npc = Main.npc[(int)NPCIndex];
 
-                        if (!npc.active || npc.active || !npc.CanBeChasedBy())
+                        if (!npc.active || npc.friendly || !npc.CanBeChasedBy())
                             State = 2;
 
-                        if (Timer > 20)
-                        {
+                        Projectile.scale = Helper.Lerp(Projectile.scale, 0.55f, 0.1f);
+                        Projectile.rotation = (npc.Center - Projectile.Center).ToRotation();
+                        Projectile.Center= npc.Center+offset;
 
+                        if (Main.mouseRight && Main.mouseRightRelease
+                            && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy >= 5)
+                        {
+                            cp.nightmareEnergy -= 5;
+
+                            IEntitySource source = Projectile.GetSource_FromAI();
+                            Vector2 dir = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero);
+                            Vector2 position = Owner.Center + dir * 80 + dir.RotatedBy(MathHelper.PiOver2) * 10 * 15;
+                            Vector2 velocity = dir.RotatedBy(-MathHelper.PiOver2) * 10;
+
+                            Projectile.NewProjectile(source, position, velocity, ProjectileType<BoneSilt>(), Owner.GetWeaponDamage(Owner.HeldItem), 0, Projectile.owner);
+
+                            State = 3;
+                        }
+
+                        if (Timer > Owner.itemTimeMax)
+                        {
+                            Timer = 0;
+                            //生成弹幕
+                            int dir = Main.rand.NextFromList(-1, 1);
+                            Vector2 position = Projectile.Center + (Projectile.rotation + dir * 2.2f).ToRotationVector2() * Main.rand.Next(60, 80);
+                            Vector2 velocity = (Projectile.rotation - dir * Main.rand.NextFloat(0.2f,0.45f)).ToRotationVector2() * Main.rand.Next(16,20);
+
+                            int state = Main.rand.Next(2);
+
+                            if (state==1)
+                            {
+                                position = Projectile.Center + (Projectile.rotation + dir * 1.8f).ToRotationVector2() * Main.rand.Next(70, 90);
+                            }
+
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), position, velocity, ProjectileType<BoneClaw>(), Projectile.damage, 0, Projectile.owner,
+                              state , ShootCount, -dir);
+
+                            Projectile.scale = 0.25f;
+                            ShootCount++;
+                            if (ShootCount > 4)
+                                ShootCount = 0;
                         }
                         Timer++;
                     }
                     break;
                 case 2://返回玩家
                     {
-                        Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.One) * 24;
-                        if (Projectile.Distance(Owner.Center) < 48)
+                        Projectile.tileCollide = false;
+                        Owner.itemTime = Owner.itemAnimation = 2;
+                        Owner.itemRotation = (Projectile.Center - Owner.Center).ToRotation();
+                        Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+
+                        Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.One) * 20;
+                        if (Projectile.Distance(Owner.Center) < 48 || Timer > 120)
                             Projectile.Kill();
+
+                        Timer++;
                     }
                     break;
                 case 3://撕开裂隙
+                    {
+                        Owner.itemTime = Owner.itemAnimation = 4;
+                        Owner.itemRotation = (Projectile.Center - Owner.Center).ToRotation();
+
+                        Projectile.rotation += 0.2f;
+                        if (Timer > 20)
+                            Projectile.Kill();
+
+                        Timer++;
+                    }
                     break;
             }
         }
@@ -164,7 +240,7 @@ namespace Coralite.Content.Items.Nightmare
 
             Color c = NightmarePlantera.nightmareRed * 0.5f;
 
-            Vector2 scale = new Vector2(0.75f, Projectile.scale);
+            Vector2 scale = new Vector2(0.55f, Projectile.scale);
 
             for (int i = 0; i < 3; i++)
             {
@@ -183,24 +259,168 @@ namespace Coralite.Content.Items.Nightmare
     /// 使用ai1传入颜色，为1时可变成红色并可以获得梦魇光能<br></br>
     /// 使用ai2传入攻击方向
     /// </summary>
-    public class BoneClaw : ModProjectile
+    public class BoneClaw : ModProjectile,IDrawPrimitive
     {
-        public override string Texture => AssetDirectory.Blank;
+        public override string Texture => AssetDirectory.OtherProjectiles+"ClawsTrail2";
+
         public ref float State => ref Projectile.ai[0];
         public ref float ColorState => ref Projectile.ai[1];
         public ref float RotDir => ref Projectile.ai[2];
 
+        public ref float TrailWidth => ref Projectile.localAI[0];
+        public ref float Alpha => ref Projectile.localAI[1];
+        public ref float Timer => ref Projectile.localAI[2];
+
         private Trail trail;
+
+        public static Asset<Texture2D> redGradient;
+        public static Asset<Texture2D> purpleGradient;
+
+        private float HowManyRot;
+        private bool hited = true;
+
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+
+            redGradient = Request<Texture2D>(AssetDirectory.NightmareItems + "BoneClawGradient1");
+            purpleGradient = Request<Texture2D>(AssetDirectory.NightmareItems + "BoneClawGradient2");
+        }
+
+        public override void Unload()
+        {
+            if (Main.dedServ)
+                return;
+
+            redGradient = null;
+            purpleGradient = null;
+        }
 
         public override void SetDefaults()
         {
-            base.SetDefaults();
+            Projectile.width = Projectile.height = 32;
+            Projectile.timeLeft = 200;
+            Projectile.aiStyle = -1;
+            Projectile.penetrate = -1;
+            Projectile.localNPCHitCooldown = 40;
+            Projectile.extraUpdates = 1;
+            Projectile.tileCollide = false;
+            Projectile.friendly = true;
+            Projectile.netImportant = true;
+            Projectile.usesLocalNPCImmunity = true;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.oldPos = new Vector2[16];
+            for (int i = 0; i < 16; i++)
+                Projectile.oldPos[i] = Projectile.Center;
+
+            TrailWidth = Main.rand.Next(26, 32);
+            HowManyRot = Main.rand.NextFloat(2f / 18, 3f / 18);
         }
 
         public override void AI()
         {
             trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new NoTip(), WidthFunction, ColorFunction);
 
+            switch (State)
+            {
+                default:
+                case 0://直线
+                    {
+                        if (Timer < 12)
+                        {
+                            Projectile.oldPos[15] = Projectile.Center + Projectile.velocity;
+
+                            for (int i = 0; i < 15; i++)
+                                Projectile.oldPos[i] = Vector2.Lerp(Projectile.oldPos[0], Projectile.oldPos[15], i / 15f);
+
+                            Alpha += 1 / 12f;
+                            break;
+                        }
+
+                        if (Timer == 18)
+                            Projectile.velocity = Vector2.Zero;
+
+                        if (Timer > 18)
+                        {
+                            Projectile.oldPos[15] = Projectile.Center + Projectile.velocity;
+
+                            for (int i = 0; i < 15; i++)
+                                Projectile.oldPos[i] = Vector2.Lerp(Projectile.oldPos[0], Projectile.oldPos[15], i / 15f);
+
+                            Alpha -= 0.1f;
+                            if (Timer > 34 || Alpha < 0)
+                            {
+                                Projectile.Kill();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < 15; i++)
+                                Projectile.oldPos[i] = Projectile.oldPos[i + 1];
+
+                            Projectile.oldPos[15] = Projectile.Center + Projectile.velocity;
+                        }
+                    }
+                    break;
+                case 1://转圈
+                    {
+                        if (Timer < 18)
+                        {
+                            for (int i = 0; i < 15; i++)
+                                Projectile.oldPos[i] = Projectile.oldPos[i + 1];
+
+                            Projectile.oldPos[15] = Projectile.Center + Projectile.velocity;
+
+                            float rot;
+                            if (Timer<9)
+                            {
+                                rot = Helper.Lerp(HowManyRot / 3, HowManyRot*2, Timer / 9);
+                            }
+                            else
+                            {
+                                rot = Helper.Lerp(HowManyRot*2, HowManyRot/3, (Timer-9) / 9);
+                            }
+                            Projectile.velocity = Projectile.velocity.RotatedBy(RotDir * rot);
+                            if (Alpha < 1)
+                                Alpha += 0.1f;
+                            break;
+                        }
+
+                        if (Timer == 18)
+                            Projectile.velocity = Vector2.Zero;
+
+                        if (Timer > 18)
+                        {
+                            Alpha -= 0.05f;
+                            if (Timer > 44 || Alpha < 0)
+                            {
+                                Projectile.Kill();
+                                return;
+                            }
+                        }
+                    }
+                    break;
+            }
+
+            trail.Positions = Projectile.oldPos;
+            Timer++;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (hited)
+            {
+                if (ColorState == 1 && Main.player[Projectile.owner].TryGetModPlayer(out CoralitePlayer cp))
+                    cp.GetNightmareEnergy(1);
+                hited = false;
+            }
+
+            Projectile.damage = (int)(Projectile.damage * 0.9f);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -210,9 +430,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public float WidthFunction(float factor)
         {
-            if (factor < 0.3f)
-                return Helper.Lerp(0, TrailWidth, factor / 0.3f);
-            return Helper.Lerp(TrailWidth, 0, (factor - 0.3f) / 0.7f);
+            return Helper.Lerp(TrailWidth/3, TrailWidth, factor);  
         }
 
         public Color ColorFunction(Vector2 factor)
@@ -231,14 +449,15 @@ namespace Coralite.Content.Items.Nightmare
             Matrix view = Main.GameViewMatrix.TransformationMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
+            Texture2D colotTex = ColorState == 1 ? redGradient.Value : purpleGradient.Value;
+
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(TextureAssets.Projectile[Projectile.type].Value);
-            effect.Parameters["gradientTexture"].SetValue(LostSevensideSlash.GradientTexture.Value);
+            effect.Parameters["gradientTexture"].SetValue(colotTex);
             effect.Parameters["alpha"].SetValue(Alpha);
 
             trail.Render(effect);
         }
-
     }
 
     /// <summary>
@@ -248,8 +467,8 @@ namespace Coralite.Content.Items.Nightmare
     {
         public override string Texture => AssetDirectory.Blank;
 
-        public ref float State => ref Projectile.ai[0];
-        public ref float Target => ref Projectile.ai[1];
+        public ref float State => ref Projectile.ai[1];
+        public ref float Target => ref Projectile.ai[2];
 
         private Vector2 offset;
         private float alpha;
@@ -272,6 +491,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
             Projectile.localNPCHitCooldown = 12;
+            Projectile.timeLeft = 1200;
 
             Projectile.netImportant = true;
             Projectile.usesLocalNPCImmunity = true;
@@ -281,12 +501,8 @@ namespace Coralite.Content.Items.Nightmare
         {
             if (init)
             {
-                alpha += 0.05f;
-                if (alpha > 1)
-                {
-                    alpha = 1f;
-                    init = false;
-                }
+                alpha = 1f;
+                init = false;
             }
 
             switch (State)
@@ -312,10 +528,9 @@ namespace Coralite.Content.Items.Nightmare
                             dust3.noGravity = true;
                         }
 
-                        if (Projectile.timeLeft < 30)
-                        {
-                            alpha -= 1 / 32f;
-                        }
+                        alpha -= 1 / 45f;
+                        if (alpha < 0)
+                            Projectile.Kill();
                     }
                     break;
             }
@@ -346,7 +561,6 @@ namespace Coralite.Content.Items.Nightmare
             }
         }
 
-
         public void OnShoot()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -354,87 +568,54 @@ namespace Coralite.Content.Items.Nightmare
             if (Main.rand.NextBool())
             {
                 Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
-                    DustID.PlatinumCoin, Vector2.Zero, newColor: NightmarePlantera.nightPurple, Scale: Main.rand.NextFloat(1f, 1.5f));
+                    DustID.VilePowder, Vector2.Zero, newColor: NightmarePlantera.nightPurple, Scale: Main.rand.NextFloat(1f, 1.5f));
                 dust.noGravity = true;
             }
 
-            #region 同叶绿弹的追踪，但是范围更大
-            float velLength = Projectile.velocity.Length();
-            float localAI0 = Projectile.localAI[0];
-            if (localAI0 == 0f)
+            bool flag2 = false;
+            float num4 = 30f;
+
+            if (Projectile.timeLeft > 20)
+                flag2 = true;
+
+            int num7 = (int)Projectile.ai[0];
+            if (Main.npc.IndexInRange(num7) && !Main.npc[num7].CanBeChasedBy(this))
             {
-                Projectile.localAI[0] = velLength;
-                localAI0 = velLength;
-            }
-
-            float num186 = Projectile.position.X;
-            float num187 = Projectile.position.Y;
-            float chasingLength = 900f;
-            bool flag5 = false;
-            int targetIndex = 0;
-            if (npcIndex == 0)
-            {
-                for (int i = 0; i < 200; i++)
-                {
-                    if (Main.npc[i].CanBeChasedBy(Projectile))
-                    {
-                        float targetX = Main.npc[i].Center.X;
-                        float targetY = Main.npc[i].Center.Y;
-                        float num193 = Math.Abs(Projectile.Center.X - targetX) + Math.Abs(Projectile.Center.Y - targetY);
-                        if (num193 < chasingLength)
-                        {
-                            chasingLength = num193;
-                            num186 = targetX;
-                            num187 = targetY;
-                            flag5 = true;
-                            targetIndex = i;
-                        }
-                    }
-                }
-
-                if (flag5)
-                    npcIndex = targetIndex + 1;
-
-                flag5 = false;
-            }
-
-            if (npcIndex > 0f)
-            {
-                int targetIndex2 = npcIndex - 1;
-                if (Main.npc[targetIndex2].active && Main.npc[targetIndex2].CanBeChasedBy(this, ignoreDontTakeDamage: true) && !Main.npc[targetIndex2].dontTakeDamage)
-                {
-                    float num195 = Main.npc[targetIndex2].Center.X;
-                    float num196 = Main.npc[targetIndex2].Center.Y;
-                    if (Math.Abs(Projectile.Center.X - num195) + Math.Abs(Projectile.Center.Y - num196) < 1000f)
-                    {
-                        flag5 = true;
-                        num186 = Main.npc[targetIndex2].Center.X;
-                        num187 = Main.npc[targetIndex2].Center.Y;
-                    }
-                }
-                else
-                    npcIndex = 0;
-
+                num7 = -1;
+                Projectile.ai[0] = -1f;
                 Projectile.netUpdate = true;
             }
 
-            if (flag5)
+            if (num7 == -1)
             {
-                float num197 = localAI0;
-                Vector2 center = Projectile.Center;
-                float num198 = num186 - center.X;
-                float num199 = num187 - center.Y;
-                float dis2Target = MathF.Sqrt(num198 * num198 + num199 * num199);
-                dis2Target = num197 / dis2Target;
-                num198 *= dis2Target;
-                num199 *= dis2Target;
-                int chase = 24;
-
-                Projectile.velocity.X = (Projectile.velocity.X * (chase - 1) + num198) / chase;
-                Projectile.velocity.Y = (Projectile.velocity.Y * (chase - 1) + num199) / chase;
+                int num8 = Projectile.FindTargetWithLineOfSight();
+                if (num8 != -1)
+                {
+                    Projectile.ai[0] = num8;
+                    Projectile.netUpdate = true;
+                }
             }
 
-            #endregion
+            if (flag2)
+            {
+                int num9 = (int)Projectile.ai[0];
+                Vector2 value3 = Projectile.velocity;
+
+                if (Main.npc.IndexInRange(num9))
+                {
+                    if (Projectile.timeLeft < 10)
+                        Projectile.timeLeft = 10;
+
+                    NPC nPC = Main.npc[num9];
+                    value3 = Projectile.DirectionTo(nPC.Center) * num4;
+                }
+                else
+                {
+                    Projectile.timeLeft--;
+                }
+
+                Projectile.velocity = Vector2.SmoothStep(Projectile.velocity, value3, 0.15f);
+            }
         }
 
         public override void OnKill(int timeLeft)
@@ -455,20 +636,26 @@ namespace Coralite.Content.Items.Nightmare
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Vector2 origin = mainTex.Size() / 2;
 
-            Color c = NightmarePlantera.nightmareRed * 0.5f;
+            Color c = NightmarePlantera.nightmareRed * 0.5f*alpha;
 
-            Vector2 scale = new Vector2(0.75f, Projectile.scale);
+            float scale = 0.45f;
 
             if ((int)State == 0)//残影绘制
-                Projectile.DrawShadowTrails(lightColor * alpha, 0.5f, 0.5f / 8f, 1, 8, 1, 0.785f, -1f);
+            {
+                Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+
+                for (int i = 1; i < 0; i ++)
+                    Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
+                    c * (0.5f - i * 0.5f/8), Projectile.oldRot[i], origin, scale, 0, 0);
+            }
 
             for (int i = 0; i < 3; i++)
             {
-                Main.spriteBatch.Draw(mainTex, pos + (Main.GlobalTimeWrappedHourly / 5 + i * MathHelper.TwoPi / 3).ToRotationVector2() * 6
+                Main.spriteBatch.Draw(mainTex, pos + (Main.GlobalTimeWrappedHourly / 5 + i * MathHelper.TwoPi / 3).ToRotationVector2() * 4
                     , null, c, Projectile.rotation, origin, scale, 0, 0);
             }
 
-            Main.spriteBatch.Draw(mainTex, pos, null, Color.DarkGray, Projectile.rotation, origin, scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, Color.DarkGray*alpha, Projectile.rotation, origin, scale, 0, 0);
             return false;
         }
     }
@@ -484,30 +671,33 @@ namespace Coralite.Content.Items.Nightmare
 
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.localAI[0];
+        public ref float ExHandAlpha => ref Projectile.localAI[1];
 
         private NightmareTentacle tentacle;
-        public float tentacleWidth = 30;
-        public Color tencleColor = NightmarePlantera.lightPurple;
+        public float tentacleWidth;
+        public Color tencleColor = NightmarePlantera.nightmareRed;
 
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 1000;
+            Projectile.width = Projectile.height = 200;
             Projectile.timeLeft = 2000;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
-            Projectile.hostile = true;
+            Projectile.friendly = true;
             Projectile.tileCollide = false;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, originCenter);
+            return false;
         }
 
         public override void OnSpawn(IEntitySource source)
         {
             originCenter = Projectile.Center;
         }
+
+        public override bool ShouldUpdatePosition() => false;
 
         public override void AI()
         {
@@ -522,54 +712,61 @@ namespace Coralite.Content.Items.Nightmare
             Vector2 dir = Projectile.Center - originCenter;
             tentacle.rotation = dir.ToRotation();
             tentacle.pos = originCenter;
-            tentacle.UpdateTentacle(dir.Length() / 30, (i) => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
+            tentacle.UpdateTentacle(dir.Length() / 30, (i) => 2 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
 
             switch ((int)State)
             {
                 default:
                 case 0://撕裂开一个小口子
                     {
+                        Projectile.Center = originCenter + Projectile.velocity * 30;
+                        Projectile.rotation = Projectile.velocity.ToRotation();
+                        if (Timer < 5)
+                        {
+                            ExHandAlpha += 1 / 5f;
+                            break;
+                        }
+                        if (Timer == 5)
+                        {
+                            tentacleWidth = 8;
+                        }
 
+                        if (Timer == 35)
+                        {
+                            SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
+                            st.Pitch = -0.5f;
+                            SoundEngine.PlaySound(st, Projectile.Center);
+
+                            tentacleWidth = 20;
+                            State++;
+                            Timer = 0;
+                        }
                     }
                     break;
-                case 1:
-                    break;
-                case 2://爆开并不断射出小鬼手
+                case 1://爆开并不断射出小鬼手
                     {
+                        if (ExHandAlpha > 0)
+                        {
+                            ExHandAlpha -= 0.02f;
+                            if (ExHandAlpha < 0)
+                                ExHandAlpha = 0;
+                        }
+
                         do
                         {
-                            if (Timer < 9 * 12)
+                            if (Timer < 9 * 8)
                             {
                                 if ((int)Timer % 9 == 0)
                                 {
                                     float factor = Timer / (9 * 12);
                                     float length = dir.Length() * factor;
 
-                                    Vector2 targetDirection = dir.SafeNormalize(Vector2.Zero);
-                                    for (int i = -1; i < 2; i += 2)
-                                    {
-                                        Vector2 position = originCenter + targetDirection * length;
-                                        Vector2 velDir = targetDirection.RotatedBy(i * MathHelper.PiOver2);
-                                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), position,
-                                           velDir * 15, ModContent.ProjectileType<DarkLeaf>(), Projectile.damage, 0);
-
-                                        for (int j = 0; j < 5; j++)
-                                        {
-                                            Dust dust = Dust.NewDustPerfect(position, ModContent.DustType<NightmarePetal>(),
-                                                    velDir.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(2, 10), newColor: NightmarePlantera.nightPurple);
-                                            dust.noGravity = true;
-                                        }
-                                    }
-
                                     Vector2 slitCenter = (originCenter + Projectile.Center) / 2;
                                     float angle = factor * MathHelper.TwoPi;
-                                    for (int i = 0; i < 2; i++)
-                                    {
-                                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), slitCenter, (angle + i * MathHelper.Pi).ToRotationVector2() * 12,
-                                             ModContent.ProjectileType<DarkLeaf>(), Projectile.damage, 0, ai0: 1);
-                                    }
+                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), slitCenter, Helper.NextVec2Dir() * 22,
+                                         ProjectileType<BoneHands>(), Projectile.damage, 0);
 
-                                    SoundEngine.PlaySound(CoraliteSoundID.NoUse_BlowgunPlus_Item65, Projectile.Center);
+                                    SoundEngine.PlaySound(CoraliteSoundID.DeathCalling_Item103, Projectile.Center);
                                 }
                                 break;
                             }
@@ -580,47 +777,49 @@ namespace Coralite.Content.Items.Nightmare
                                 Projectile.Kill();
                         } while (false);
 
-                        Timer++;
                     }
                     break;
             }
 
-        }
-
-        public static void Exposion()
-        {
-            foreach (var proj in Main.projectile.Where(p => p.active && p.hostile && p.type == ProjectileType<NightmareSlit>() && p.ai[0] == 1))
-            {
-                proj.ai[0] = 2;
-                (proj.ModProjectile as NightmareSlit).tentacleWidth += 30;
-
-                SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
-                st.Pitch = -0.5f;
-                SoundEngine.PlaySound(st, proj.Center);
-
-                Vector2 selfCenter = (proj.ModProjectile as NightmareSlit).originCenter;
-                Vector2 targetCenter = proj.Center;
-                var modifyer = new PunchCameraModifier((targetCenter + selfCenter) / 2, Vector2.One, 20, 8, 20, 1000);
-                Main.instance.CameraModifiers.Add(modifyer);
-
-                float maxLength = Vector2.Distance(selfCenter, targetCenter);
-                Vector2 dir = (selfCenter - targetCenter).SafeNormalize(Vector2.UnitY);
-
-                for (int i = 0; i < maxLength; i += 8)
-                {
-                    Vector2 pos = targetCenter + dir * i;
-                    for (int j = -1; j < 2; j += 2)
-                    {
-                        Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(16, 16), DustID.SpookyWood,
-                            new Vector2(j, 0) * Main.rand.NextFloat(1, 8), Scale: Main.rand.NextFloat(1.5f, 2f));
-                        dust.noGravity = true;
-                    }
-                }
-            }
+            Timer++;
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Main.instance.LoadProjectile(ProjectileID.InsanityShadowFriendly);
+            Texture2D mainTex = TextureAssets.Projectile[ProjectileID.InsanityShadowFriendly].Value;
+            Vector2 origin = mainTex.Size() / 2;
+
+            Color c = NightmarePlantera.nightmareRed * 0.5f*ExHandAlpha;
+
+            if (ExHandAlpha > 0)
+            {
+                float rot = Projectile.rotation - MathHelper.PiOver2;
+                Vector2 dir = Projectile.rotation.ToRotationVector2();
+                float length = (originCenter - Projectile.Center).Length();
+                Vector2 scale = new Vector2(0.35f, 0.55f);
+                Vector2 handPosLeft = originCenter + dir * length * 7 / 20f - rot.ToRotationVector2() * tentacleWidth - Main.screenPosition;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    Main.spriteBatch.Draw(mainTex, handPosLeft + (Main.GlobalTimeWrappedHourly / 5 + i * MathHelper.TwoPi / 3).ToRotationVector2() * 6
+                        , null, c, rot, origin, scale, 0, 0);
+                }
+
+                Main.spriteBatch.Draw(mainTex, handPosLeft, null, Color.Black * ExHandAlpha, rot, origin, scale, 0, 0);
+
+                rot += MathHelper.Pi;
+                Vector2 handPosRight = originCenter + dir * length * 13 / 20f - rot.ToRotationVector2() * tentacleWidth - Main.screenPosition;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    Main.spriteBatch.Draw(mainTex, handPosRight + (Main.GlobalTimeWrappedHourly / 5 + i * MathHelper.TwoPi / 3).ToRotationVector2() * 6
+                        , null, c, rot, origin, scale, 0, 0);
+                }
+
+                Main.spriteBatch.Draw(mainTex, handPosRight, null, Color.Black * ExHandAlpha, rot, origin, scale, 0, 0);
+            }
+
             tentacle?.DrawTentacle();
 
             return false;

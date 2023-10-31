@@ -264,7 +264,7 @@ Mods: {
 
 			BabyIceDragonBossBag: {
 				DisplayName: 宝藏袋（冰龙宝宝）
-				Tooltip: ""
+				Tooltip: 右键单击以打开
 			}
 
 			BabyIceDragonRelic: {
@@ -383,7 +383,7 @@ Mods: {
 
 			RediancieBossBag: {
 				DisplayName: 宝藏袋（赤玉灵）
-				Tooltip: ""
+				Tooltip: 右键单击以打开
 			}
 
 			RedianciePet: {
@@ -734,14 +734,14 @@ Mods: {
 				Tooltip:
 					'''
 					左键挥动一定次数后获得充能
-					充能完成后双击W/D键冲刺
+					充能完成后双击A/D键冲刺
 					充能完成后右键释放冰晶龙卷风
 					'''
 			}
 
 			CrystalLens: {
 				DisplayName: 水晶透镜
-				Tooltip: ""
+				Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
 			}
 
 			DebugStick: {
@@ -758,7 +758,11 @@ Mods: {
 				DisplayName: 魔能连接仪
 				Tooltip:
 					'''
-					第一次左键选择接收器，第二次左键选择发送器，之后在二者之间建立连接
+					右键切换模式
+					连接模式：第一次左键选择接收器，第二次左键选择发送器，之后在二者之间建立连接
+					查看模式：查看鼠标位置的发送器所连接的接收器
+					断连模式：断开鼠标位置的发送器与所有接收器的连接
+
 					发送器有距离限制，
 					右键清空所选内容
 					'''
@@ -772,17 +776,17 @@ Mods: {
 
 			CrimtaneLens: {
 				DisplayName: 猩红透镜
-				Tooltip: ""
+				Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
 			}
 
 			DemoniteLens: {
 				DisplayName: 魔化透镜
-				Tooltip: ""
+				Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
 			}
 
 			BrilliantLens: {
 				DisplayName: 璀璨透镜
-				Tooltip: ""
+				Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
 			}
 
 			CrystallineMagike: {
@@ -792,42 +796,42 @@ Mods: {
 
 			CrystalRefractor: {
 				DisplayName: 水晶广角镜
-				Tooltip: ""
+				Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
 			}
 
 			BrilliantRefractor: {
 				DisplayName: 璀璨广角镜
-				Tooltip: ""
+				Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
 			}
 
 			CrimtaneRefractor: {
 				DisplayName: 猩红广角镜
-				Tooltip: ""
+				Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
 			}
 
 			DemoniteRefractor: {
 				DisplayName: 魔化广角镜
-				Tooltip: ""
+				Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
 			}
 
 			BrilliantColumn: {
 				DisplayName: 璀璨水晶柱
-				Tooltip: ""
+				Tooltip: 能够容纳很多魔能
 			}
 
 			CrimtaneColumn: {
 				DisplayName: 猩红水晶柱
-				Tooltip: ""
+				Tooltip: 能够容纳很多魔能
 			}
 
 			CrystalColumn: {
 				DisplayName: 水晶柱
-				Tooltip: ""
+				Tooltip: 能够容纳很多魔能
 			}
 
 			DemoniteColumn: {
 				DisplayName: 魔化水晶柱
-				Tooltip: ""
+				Tooltip: 能够容纳很多魔能
 			}
 
 			Diprism: {
@@ -872,7 +876,7 @@ Mods: {
 
 			FeatheredLens: {
 				DisplayName: 羽蛇透镜
-				Tooltip: ""
+				Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
 			}
 
 			HolylightLens: {
@@ -1040,7 +1044,7 @@ Mods: {
 				DisplayName: 书页：魔能基础
 				Tooltip:
 					'''
-						左键使用以学习魔能的基础知识
+					左键使用以学习魔能的基础知识
 					“魔能，一种神秘的能量，通常认为是高度浓缩的魔力。由于其浓度极高，所以无法像魔力药水那样为人提供魔力。”
 					“为了合理地掌控与运用魔能，人们发明了各式各样的透镜，广角镜，与水晶柱”
 					“通过透镜来生产魔能，广角镜来传递魔能，水晶柱来存储魔能”
@@ -1154,7 +1158,7 @@ Mods: {
 
 			SoulRemodelPool: {
 				DisplayName: 灵魂重塑池
-				Tooltip: ""
+				Tooltip: 右键打开UI，放入物品并选择指定合成表后激活以进行物品重塑
 			}
 
 			RainstormLens: {
@@ -1203,7 +1207,7 @@ Mods: {
 
 			SplendorRemodelPool: {
 				DisplayName: 光辉重塑池
-				Tooltip: ""
+				Tooltip: 右键打开UI，放入物品并选择指定合成表后激活以进行物品重塑
 			}
 
 			GelInvitation: {
@@ -1261,7 +1265,7 @@ Mods: {
 
 			SlimeEmperorSoulBox: {
 				DisplayName: 皇家秘宝
-				Tooltip: 右键打开
+				Tooltip: 右键点击以打开
 			}
 
 			ANewBirthOfIce: {
@@ -1343,7 +1347,7 @@ Mods: {
 
 			CrystalCrate: {
 				DisplayName: 魔力晶体匣
-				Tooltip: ""
+				Tooltip: 右键单击以打开
 			}
 
 			FragmentsOfLight: {
@@ -1569,7 +1573,12 @@ Mods: {
 
 			BoneRing: {
 				DisplayName: 骨戒
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/be0065:被它抓住的人永远无法醒来]
+						射出梦魇爪，可以抓住敌人并持续发动爪击，每5次爪击获得1个[c/fa0064:梦魇光能]
+						右键消耗5个[c/fa0064:梦魇光能]在身前撕开裂隙，从中射出一堆小梦魇爪
+					'''
 			}
 
 			QueensWreath: {
@@ -1578,7 +1587,7 @@ Mods: {
 					'''
 					[c/ffd1fc:爱的锁链]
 					每3次射击射出一个锁链花瓣箭，命中后获得1个[c/fa0064:梦魇光能]
-					射箭后摇中右键消耗1个[c/fa0064:梦魇光能]进行二次射击
+					射箭时右键消耗1个[c/fa0064:梦魇光能]进行二次射击
 
 					双击A或D进行横向冲刺，冲刺途中如果与弹幕或敌怪碰撞则能够射出3个花瓣箭，之后下一次普通射击直接射出锁链花瓣箭
 					未发生碰撞则射出1个花瓣箭
@@ -1596,6 +1605,11 @@ Mods: {
 					抵抗梦蚀Debuff
 					小幅度增加防御力，生命回复，移动速度，近战攻速，伤害减免，暴击率
 					'''
+			}
+
+			RottenChest: {
+				// DisplayName: Rotten Chest
+				// Tooltip: ""
 			}
 		}
 
@@ -1631,6 +1645,11 @@ Mods: {
 			AgropyronFrozen.MapEntry: 寒霜冰草
 			BasaltChestTile.MapEntry: 玄武岩箱
 			CrystalCrateTile.MapEntry: 魔力晶体匣
+
+			RottenChestTile: {
+				// MapEntry0: Mods.Coralite.Tiles.RottenChestTile.MapEntry0
+				// MapEntry1: Mods.Coralite.Tiles.RottenChestTile.MapEntry1
+			}
 		}
 
 		Buffs: {
@@ -1690,13 +1709,13 @@ Mods: {
 			}
 
 			EdenDebuff: {
-				// DisplayName: Eden Debuff
-				// Description: Mods.Coralite.Buffs.EdenDebuff.Description
+				DisplayName: 伊甸
+				Description: 伊甸
 			}
 
 			PurpleToeBuff: {
-				// DisplayName: Purple Toe Buff
-				// Description: Mods.Coralite.Buffs.PurpleToeBuff.Description
+				DisplayName: 噩梦捕食者
+				Description: 它们很喜欢你做的梦！
 			}
 		}
 
@@ -1961,6 +1980,7 @@ Mods: {
 			// BoneClaw.DisplayName: Bone Claw
 			// BoneHand.DisplayName: Bone Hand
 			// BoneSilt.DisplayName: Bone Silt
+			// BoneHands.DisplayName: Bone Hands
 		}
 
 		Configs: {
@@ -2094,6 +2114,13 @@ Mods: {
 					SpawnInfo: 噩梦占据了曾经被击败的世纪之花的躯体，变成了强大的梦魇之神
 					Despawn: 梦境消散了
 				}
+			}
+		}
+
+		Systems: {
+			YujianSystem: {
+				YujianDescription: 需要放置在葫芦中以使用
+				HuluDescription: 右键单击打开UI面板，将御剑放进栏位后可召唤出御剑
 			}
 		}
 	}
