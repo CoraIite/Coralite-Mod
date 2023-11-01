@@ -40,7 +40,9 @@ namespace Coralite.Content.WorldGeneration
                     int[] indexs = GetRandomArray(itemCount, 0, heartCount);
                     for (int j = 0; j < indexs.Length; j++)
                     {
-                        Point position = heartPos[indexs[j]];
+                        Point position = heartPos[indexs[j]]+new Point(WorldGen.genRand.Next(-25,25), WorldGen.genRand.Next(-45, -25));
+                        if (!WorldGen.InWorld(position.X, position.Y))
+                            continue;
                     }
                 }
             }
