@@ -11,16 +11,31 @@ namespace Coralite.Content.WorldGeneration
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
             int ShiniesIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
-            int IceBiomeIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Generate Ice Biome"));
             int DesertIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
-            int FinalCleanup = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+            int IceBiomeIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Generate Ice Biome"));
 
             if (ShiniesIndex != -1)
             {
                 tasks.Insert(ShiniesIndex - 1, new PassLegacy("Coralite Magic Crystal Cave", GenMagicCrystalCave));
-                tasks.Insert(IceBiomeIndex + 1, new PassLegacy("Coralite Ice Dragon Nest", GenIceDragonNest));
-                tasks.Insert(FinalCleanup + 1, new PassLegacy("Coralite Replase Vanilla Chest", ReplaceVanillaChest));
+            }
 
+            int EvilBiome = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
+            if (EvilBiome != -1)
+            {
+                tasks.Insert(EvilBiome + 1, new PassLegacy("Coralite Evil Chest", GenEvilChest));
+            }
+
+            int Dungeon = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
+            int Lakes = tasks.FindIndex(genpass => genpass.Name.Equals("Lakes"));
+            if (IceBiomeIndex != -1)
+            {
+                tasks.Insert(Lakes + 1, new PassLegacy("Coralite Ice Dragon Nest", GenIceDragonNest));
+            }
+
+            int FinalCleanup = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+            if (FinalCleanup != -1)
+            {
+                tasks.Insert(FinalCleanup + 1, new PassLegacy("Coralite Replase Vanilla Chest", ReplaceVanillaChest));
             }
         }
 

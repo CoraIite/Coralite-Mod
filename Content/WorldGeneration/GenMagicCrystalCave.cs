@@ -130,116 +130,137 @@ namespace Coralite.Content.WorldGeneration
                     new Actions.SetFrames(true).Output(outerData)));    //存储圆环形状
             #endregion
 
-            #region 生成浮岛
-            //生成中心水晶小浮岛
-            int howMany = WorldGen.genRand.Next(6, 12);
-
-            for (int i = 0; i < howMany; i++)
+            try
             {
-                //随机取点，加了点限制让这个点不会在圆环外
-                Point selfPoint = origin + Main.rand.NextVector2Circular(width * 0.75f, height * 0.75f).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
-                WorldUtils.Gen(
-                    selfPoint,
-                    //史莱姆形状，同时压缩Y方向的大小，让它变得扁平
-                    new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.05f, width * 0.08f), 1f, WorldGen.genRand.NextFloat(0.25f, 0.5f)),
-                    Actions.Chain(
-                        new Modifiers.Flip(false, true),    //竖直翻转一下
-                        new Modifiers.Blotches(2, 0.4),     //添加边缘抖动
-                        new Actions.SetTile(crystalBasalt),     //放置物块
-                        new Actions.SetFrames(true)));      //设置物块帧
+                #region 生成浮岛
+                //生成中心水晶小浮岛
+                int howMany = WorldGen.genRand.Next(6, 12);
+
+                for (int i = 0; i < howMany; i++)
+                {
+                    //随机取点，加了点限制让这个点不会在圆环外
+                    Point selfPoint = origin + Main.rand.NextVector2Circular(width * 0.75f, height * 0.75f).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
+                    if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
+                        continue;
+
+                    WorldUtils.Gen(
+                        selfPoint,
+                        //史莱姆形状，同时压缩Y方向的大小，让它变得扁平
+                        new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.05f, width * 0.08f), 1f, WorldGen.genRand.NextFloat(0.25f, 0.5f)),
+                        Actions.Chain(
+                            new Modifiers.Flip(false, true),    //竖直翻转一下
+                            new Modifiers.Blotches(2, 0.4),     //添加边缘抖动
+                            new Actions.SetTile(crystalBasalt),     //放置物块
+                            new Actions.SetFrames(true)));      //设置物块帧
+                }
+
+                howMany = WorldGen.genRand.Next(3, 6);
+
+                for (int i = 0; i < howMany; i++)
+                {
+                    Point selfPoint = origin + Main.rand.NextVector2Circular(width * 0.75f, height * 0.75f).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
+                    if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
+                        continue;
+
+                    WorldUtils.Gen(
+                        selfPoint,
+                        new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.05f, width * 0.08f), 1f, WorldGen.genRand.NextFloat(0.25f, 0.5f)),
+                        Actions.Chain(
+                            new Modifiers.Flip(false, true),
+                            new Modifiers.Blotches(2, 0.4),
+                            new Actions.SetTile(crystalBlock),
+                            new Actions.SetFrames(true)));
+                }
+
+                //生成中心大浮岛
+                for (int i = 0; i < 3; i++)
+                {
+                    Point selfPoint = origin + Main.rand.NextVector2Circular(width * 0.9f, height * 0.9f).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
+                    WorldUtils.Gen(
+                        selfPoint,
+                        new Shapes.Slime((int)(width * 0.4f), WorldGen.genRand.NextFloat(1.2f, 1.5f), WorldGen.genRand.NextFloat(0.1f, 0.3f)),
+                        Actions.Chain(
+                            new Modifiers.Blotches(2, 0.4),
+                            new Actions.SetTile(basalt),
+                            new Actions.SetFrames(true)));
+                }
+
+                howMany = WorldGen.genRand.Next(8, 12);
+
+                for (int i = 0; i < howMany; i++)
+                {
+                    Point selfPoint = origin + Main.rand.NextVector2Circular(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
+                    WorldUtils.Gen(
+                        selfPoint,
+                        new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.05f, width * 0.15f), WorldGen.genRand.NextFloat(1f, 1.5f), WorldGen.genRand.NextFloat(0.3f, 0.6f)),
+                        Actions.Chain(
+                            new Modifiers.Blotches(2, 0.4),
+                            new Actions.SetTile(basalt),
+                            new Actions.SetFrames(true)));
+                }
+                #endregion
+
+                howMany = WorldGen.genRand.Next(12, 24);
+
+                //生成小起伏
+                for (int i = 0; i < howMany; i++)
+                {
+                    //在圆环上取点，之后在圆环上随机添加一些小凸起
+                    Point selfPoint = origin + Main.rand.NextVector2CircularEdge(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
+                    if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
+                        continue;
+
+                    WorldUtils.Gen(
+                        selfPoint,
+                        new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.1f, width * 0.2f)),
+                        Actions.Chain(
+                            new Actions.SetTile(basalt),
+                            new Actions.SetFrames(true)));
+                }
+
+                howMany = WorldGen.genRand.Next(12, 24);
+
+                #region 生成水晶锥
+                //生成玄武岩水晶锥
+                for (int i = 0; i < howMany; i++)
+                {
+                    //在圆环上取点，并获取该点指向中心的单位向量
+                    Point selfPoint = origin + Main.rand.NextVector2CircularEdge(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-3, 3), WorldGen.genRand.Next(-3, 3));
+                    if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
+                        continue;
+                    Vector2 dir = (origin.ToVector2() - selfPoint.ToVector2()).SafeNormalize(Vector2.Zero).RotatedBy(WorldGen.genRand.NextFloat(-0.4f, 0.4f));
+                    WorldUtils.Gen(
+                        selfPoint,
+                        //锥形，第一个参数是初始宽度，第二个参数是方向*距离
+                        new Shapes.Tail(WorldGen.genRand.NextFloat(width * 0.08f, width * 0.1f), dir.ToVector2D() * WorldGen.genRand.NextFloat(width * 0.05f, width * 0.3f)),
+                        Actions.Chain(
+                            new Actions.SetTile(crystalBasalt),
+                            new Actions.SetFrames(true)));
+                }
+
+                howMany = WorldGen.genRand.Next(12, 24);
+
+                //生成水晶锥
+                for (int i = 0; i < howMany; i++)
+                {
+                    Point selfPoint = origin + Main.rand.NextVector2CircularEdge(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-3, 3), WorldGen.genRand.Next(-3, 3));
+                    if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
+                        continue;
+
+                    Vector2 dir = (origin.ToVector2() - selfPoint.ToVector2()).SafeNormalize(Vector2.Zero).RotatedBy(WorldGen.genRand.NextFloat(-0.4f, 0.4f));
+                    WorldUtils.Gen(
+                        selfPoint,
+                        new Shapes.Tail(WorldGen.genRand.NextFloat(width * 0.1f, width * 0.2f), dir.ToVector2D() * WorldGen.genRand.NextFloat(width * 0.05f, width * 0.55f)),
+                        Actions.Chain(
+                            new Actions.SetTile(crystalBlock),
+                            new Actions.SetFrames(true)));
+                }
+                #endregion
             }
-
-            howMany = WorldGen.genRand.Next(3, 6);
-
-            for (int i = 0; i < howMany; i++)
+            catch (System.Exception)
             {
-                Point selfPoint = origin + Main.rand.NextVector2Circular(width * 0.75f, height * 0.75f).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
-                WorldUtils.Gen(
-                    selfPoint,
-                    new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.05f, width * 0.08f), 1f, WorldGen.genRand.NextFloat(0.25f, 0.5f)),
-                    Actions.Chain(
-                        new Modifiers.Flip(false, true),
-                        new Modifiers.Blotches(2, 0.4),
-                        new Actions.SetTile(crystalBlock),
-                        new Actions.SetFrames(true)));
+
             }
-
-            //生成中心大浮岛
-            for (int i = 0; i < 3; i++)
-            {
-                Point selfPoint = origin + Main.rand.NextVector2Circular(width * 0.9f, height * 0.9f).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
-                WorldUtils.Gen(
-                    selfPoint,
-                    new Shapes.Slime((int)(width * 0.4f), WorldGen.genRand.NextFloat(1.2f, 1.5f), WorldGen.genRand.NextFloat(0.1f, 0.3f)),
-                    Actions.Chain(
-                        new Modifiers.Blotches(2, 0.4),
-                        new Actions.SetTile(basalt),
-                        new Actions.SetFrames(true)));
-            }
-
-            howMany = WorldGen.genRand.Next(8, 12);
-
-            for (int i = 0; i < howMany; i++)
-            {
-                Point selfPoint = origin + Main.rand.NextVector2Circular(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
-                WorldUtils.Gen(
-                    selfPoint,
-                    new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.05f, width * 0.15f), WorldGen.genRand.NextFloat(1f, 1.5f), WorldGen.genRand.NextFloat(0.3f, 0.6f)),
-                    Actions.Chain(
-                        new Modifiers.Blotches(2, 0.4),
-                        new Actions.SetTile(basalt),
-                        new Actions.SetFrames(true)));
-            }
-            #endregion
-
-            howMany = WorldGen.genRand.Next(12, 24);
-
-            //生成小起伏
-            for (int i = 0; i < howMany; i++)
-            {
-                //在圆环上取点，之后在圆环上随机添加一些小凸起
-                Point selfPoint = origin + Main.rand.NextVector2CircularEdge(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
-                WorldUtils.Gen(
-                    selfPoint,
-                    new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.1f, width * 0.2f)),
-                    Actions.Chain(
-                        new Actions.SetTile(basalt),
-                        new Actions.SetFrames(true)));
-            }
-
-            howMany = WorldGen.genRand.Next(12, 24);
-
-            #region 生成水晶锥
-            //生成玄武岩水晶锥
-            for (int i = 0; i < howMany; i++)
-            {
-                //在圆环上取点，并获取该点指向中心的单位向量
-                Point selfPoint = origin + Main.rand.NextVector2CircularEdge(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-3, 3), WorldGen.genRand.Next(-3, 3));
-                Vector2 dir = (origin.ToVector2() - selfPoint.ToVector2()).SafeNormalize(Vector2.Zero).RotatedBy(WorldGen.genRand.NextFloat(-0.4f, 0.4f));
-                WorldUtils.Gen(
-                    selfPoint,
-                    //锥形，第一个参数是初始宽度，第二个参数是方向*距离
-                    new Shapes.Tail(WorldGen.genRand.NextFloat(width * 0.08f, width * 0.1f), dir.ToVector2D() * WorldGen.genRand.NextFloat(width * 0.05f, width * 0.3f)),
-                    Actions.Chain(
-                        new Actions.SetTile(crystalBasalt),
-                        new Actions.SetFrames(true)));
-            }
-
-            howMany = WorldGen.genRand.Next(12, 24);
-
-            //生成水晶锥
-            for (int i = 0; i < howMany; i++)
-            {
-                Point selfPoint = origin + Main.rand.NextVector2CircularEdge(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-3, 3), WorldGen.genRand.Next(-3, 3));
-                Vector2 dir = (origin.ToVector2() - selfPoint.ToVector2()).SafeNormalize(Vector2.Zero).RotatedBy(WorldGen.genRand.NextFloat(-0.4f, 0.4f));
-                WorldUtils.Gen(
-                    selfPoint,
-                    new Shapes.Tail(WorldGen.genRand.NextFloat(width * 0.1f, width * 0.2f), dir.ToVector2D() * WorldGen.genRand.NextFloat(width * 0.05f, width * 0.55f)),
-                    Actions.Chain(
-                        new Actions.SetTile(crystalBlock),
-                        new Actions.SetFrames(true)));
-            }
-            #endregion
 
             Point topLeft = origin - new Point(width, height);
             #region 废弃内容

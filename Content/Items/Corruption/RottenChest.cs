@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Humanizer;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -26,6 +27,8 @@ namespace Coralite.Content.Items.Corruption
         public override void SetStaticDefaults()
         {
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            TileID.Sets.CanBeClearedDuringGeneration[TileID.EbonstoneBrick] = false;
+
             Main.tileSpelunker[Type] = true;
             Main.tileContainer[Type] = true;
             Main.tileShine2[Type] = true;
@@ -58,7 +61,7 @@ namespace Coralite.Content.Items.Corruption
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);
-            TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
+            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
             TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
             TileObjectData.newTile.AnchorInvalidTiles = new int[] {
@@ -84,6 +87,14 @@ namespace Coralite.Content.Items.Corruption
         public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)
         {
             return true;
+            //Player player = Main.LocalPlayer;
+            //if (player.ConsumeItem(1))
+            //{
+            //    Chest.Unlock(i, j);
+            //    return true;
+            //}
+
+            //return false;
         }
 
         public override bool LockChest(int i, int j, ref short frameXAdjustment, ref bool manual)
@@ -148,7 +159,7 @@ namespace Coralite.Content.Items.Corruption
             {
                 if (player.ConsumeItem(1))
                 {
-                    Chest.Unlock(i, j);
+                    Chest.Unlock(left, top);
                     return true;
                 }
 
@@ -237,7 +248,10 @@ namespace Coralite.Content.Items.Corruption
                 player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "尸骨箱";
                 if (player.cursorItemIconText == "尸骨箱")
                 {
-                    player.cursorItemIconID = ModContent.ItemType<Items.RedJades.RedJadeChest>();
+                    if (tile.TileFrameX / 36 != 0)
+                        player.cursorItemIconID = 1;//ModContent.ItemType<RottenChest>();
+                    else
+                        player.cursorItemIconID = ModContent.ItemType<RottenChest>();
 
                     player.cursorItemIconText = "";
                 }

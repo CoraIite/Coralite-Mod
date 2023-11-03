@@ -55,6 +55,7 @@ namespace Coralite.Content.Biomes
             textureSlots[2] = BackgroundTextureLoader.GetBackgroundSlot(AssetDirectory.Backgrounds + "MagicCrystalCaveBackground2");
             textureSlots[3] = BackgroundTextureLoader.GetBackgroundSlot(AssetDirectory.Backgrounds + "MagicCrystalCaveBackground3");
             textureSlots[4] = BackgroundTextureLoader.GetBackgroundSlot(AssetDirectory.Backgrounds + "MagicCrystalCaveBackground2");
+            textureSlots[5] = BackgroundTextureLoader.GetBackgroundSlot(AssetDirectory.Backgrounds + "MagicCrystalCaveBackground3");
         }
     }
 
