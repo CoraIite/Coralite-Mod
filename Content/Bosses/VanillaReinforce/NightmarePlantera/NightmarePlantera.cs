@@ -177,7 +177,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<GelThrone>()));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<NightmareBed>()));
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
             //npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<GriefSeed>()));
             //npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));

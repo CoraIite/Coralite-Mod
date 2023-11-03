@@ -105,23 +105,26 @@ namespace Coralite.Compat.BossCheckList
                 //梦魇之花
                 List<int> NightmarePlanteraCollection = new List<int>()
                 {
-                    //ItemType<Content.Items.Icicle.IcicleCrystal>(),
                     ItemType<Content.Items.Nightmare.GriefSeed>(),
-                    //ItemType<Content.Items.Gels.EmperorSabre>(),
-                    //ItemType<Content.Items.Gels.GelThrone>(),
+                    ItemType<Content.Items.Nightmare.NightmareBed>(),
+                    ItemType<Content.Items.Nightmare.NightmareHeart>(),
+
                     ItemType<Content.Items.Nightmare.LostSevensideHook>(),
                     ItemType<Content.Items.Nightmare.DreamShears>(),
                     ItemType<Content.Items.Nightmare.EuphorbiaMilii>(),
-                    ItemType<Content.Items.Nightmare.Lycoris>(),
 
+                    ItemType<Content.Items.Nightmare.Lycoris>(),
+                    ItemType<Content.Items.Nightmare.BoneRing>(),
+                    ItemType<Content.Items.Nightmare.QueensWreath>(),
 
                     ItemType<Content.Items.Nightmare.DevilsClaw>(),
+                    ItemType<Content.Items.Nightmare.Lullaby>(),
                     ItemType<Content.Items.Nightmare.BarrenThornsStaff>(),
 
+                    ItemType<Content.Items.Nightmare.PurpleToeStaff>(),
                     ItemType<Content.Items.Nightmare.Dreamcatcher>(),
                     ItemType<Content.Items.Nightmare.Eden>(),
 
-                    //ItemType<Content.Items.Gels.RoyalGelCannon>(),
                     //ItemType<Content.Items.Icicle.RedianciePet>(),
                 };
 

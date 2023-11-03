@@ -1610,6 +1610,11 @@ Mods: {
 				DisplayName: Rotten Chest
 				Tooltip: ""
 			}
+
+			NightmareBed: {
+				DisplayName: Nightmare Bed
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1649,6 +1654,8 @@ Mods: {
 				MapEntry0: Mods.Coralite.Tiles.RottenChestTile.MapEntry0
 				MapEntry1: Mods.Coralite.Tiles.RottenChestTile.MapEntry1
 			}
+
+			NightmareBedTile.MapEntry: Nightmare Bed Tile
 		}
 
 		Buffs: {

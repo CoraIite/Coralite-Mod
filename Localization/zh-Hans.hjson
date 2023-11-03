@@ -1608,8 +1608,13 @@ Mods: {
 			}
 
 			RottenChest: {
-				// DisplayName: Rotten Chest
-				// Tooltip: ""
+				DisplayName: 尸骨箱
+				Tooltip: ""
+			}
+
+			NightmareBed: {
+				DisplayName: 梦魇温床
+				Tooltip: ""
 			}
 		}
 
@@ -1650,6 +1655,8 @@ Mods: {
 				// MapEntry0: Mods.Coralite.Tiles.RottenChestTile.MapEntry0
 				// MapEntry1: Mods.Coralite.Tiles.RottenChestTile.MapEntry1
 			}
+
+			NightmareBedTile.MapEntry: 梦魇温床
 		}
 
 		Buffs: {
