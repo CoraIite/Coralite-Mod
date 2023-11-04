@@ -1,6 +1,5 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
-using Humanizer;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -23,6 +22,8 @@ namespace Coralite.Content.Items.Corruption
     public class RottenChestTile : ModTile
     {
         public override string Texture => AssetDirectory.CorruptionItems + Name;
+
+        public LocalizedText TryUnlock => this.GetLocalization("TryUnlock");
 
         public override void SetStaticDefaults()
         {
@@ -49,8 +50,8 @@ namespace Coralite.Content.Items.Corruption
 
             // Other tiles with just one map entry use CreateMapEntryName() to use the default translationkey, "MapEntry"
             // Since ExampleChest needs multiple, we register our own MapEntry keys
-            AddMapEntry(new Color(200, 200, 200), this.GetLocalization("MapEntry0"), MapChestName);
-            AddMapEntry(new Color(0, 141, 63), this.GetLocalization("MapEntry1"), MapChestName);
+            AddMapEntry(Color.MediumPurple, this.GetLocalization("MapEntry0"), MapChestName);
+            AddMapEntry(Color.MediumPurple, this.GetLocalization("MapEntry1"), MapChestName);
 
             // Style 1 is ExampleChest when locked. We want that tile style to drop the ExampleChest item as well. Use the Chest Lock item to lock this chest.
             // No item places ExampleChest in the locked style, so the automatically determined item drop is unknown, this is why RegisterItemDrop is necessary in this situation. 
@@ -61,7 +62,7 @@ namespace Coralite.Content.Items.Corruption
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);
-            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
+            TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
             TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
             TileObjectData.newTile.AnchorInvalidTiles = new int[] {
@@ -157,12 +158,13 @@ namespace Coralite.Content.Items.Corruption
 
             if (Main.tile[left, top].TileFrameX > 18)
             {
-                if (player.ConsumeItem(1))
+                if (player.ConsumeItem(ModContent.ItemType<RottenKey>()))
                 {
                     Chest.Unlock(left, top);
                     return true;
                 }
 
+                Main.NewText(TryUnlock.Value, Color.MediumPurple);
                 return false;
             }
 
@@ -249,7 +251,7 @@ namespace Coralite.Content.Items.Corruption
                 if (player.cursorItemIconText == "尸骨箱")
                 {
                     if (tile.TileFrameX / 36 != 0)
-                        player.cursorItemIconID = 1;//ModContent.ItemType<RottenChest>();
+                        player.cursorItemIconID = ModContent.ItemType<RottenKey>();
                     else
                         player.cursorItemIconID = ModContent.ItemType<RottenChest>();
 

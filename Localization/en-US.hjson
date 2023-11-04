@@ -1615,6 +1615,11 @@ Mods: {
 				DisplayName: Nightmare Bed
 				Tooltip: ""
 			}
+
+			RottenKey: {
+				DisplayName: Rotten Key
+				Tooltip: This key is used to unlock the Corruption's Rotten Chest
+			}
 		}
 
 		Tiles: {
@@ -1651,8 +1656,9 @@ Mods: {
 			CrystalCrateTile.MapEntry: Crystal Crate Tile
 
 			RottenChestTile: {
-				MapEntry0: Mods.Coralite.Tiles.RottenChestTile.MapEntry0
-				MapEntry1: Mods.Coralite.Tiles.RottenChestTile.MapEntry1
+				MapEntry0: Rotten Chest
+				MapEntry1: Locked Rotten Chest
+				TryUnlock: Requires a key to be unlocked using the materials of powerful corrupt creatures
 			}
 
 			NightmareBedTile.MapEntry: Nightmare Bed Tile

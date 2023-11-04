@@ -17,34 +17,38 @@ namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
-        private static Point[] CorruptionLeft = new Point[4]
+        private static Point[] CorruptionLeft = new Point[5]
         {
             new Point(4,10),
             new Point(4,6),
             new Point(7, 9),
             new Point(3, 9),
+            new Point(5, 8),
         };
-        private static Point[] CorruptionRight = new Point[4]
+        private static Point[] CorruptionRight = new Point[5]
         {
             new Point(13,9),
             new Point(14, 9),
             new Point(11,9),
             new Point(15,9),
+            new Point(13,9),
         };
 
-        private static Point[] CorruptionTorch1 = new Point[4]
+        private static Point[] CorruptionTorch1 = new Point[5]
         {
             new Point(5,8),
             new Point(16, 5),
-            new Point(7, 6),
-            new Point(7, 8),
+            new Point(7, 5),
+            new Point(7, 7),
+            new Point(7, 5),
         };
-        private static Point[] CorruptionTorch2 = new Point[4]
+        private static Point[] CorruptionTorch2 = new Point[5]
         {
             Point.Zero,
             Point.Zero,
-            new Point(13, 7),
-            new Point(12, 8),
+            new Point(13, 6),
+            new Point(12, 7),
+            Point.Zero,
         };
 
         public void GenEvilChest(GenerationProgress progress, GameConfiguration configuration)
@@ -63,7 +67,7 @@ namespace Coralite.Content.WorldGeneration
                 //FieldInfo heartPosInfo = type.GetField("heartPos", BindingFlags.Static | BindingFlags.NonPublic);
                 //Point[] heartPos = (Point[])(heartPosInfo.GetValue(null));
 
-                int itemCount = 3;
+                int itemCount = 4;
                 int gened = 0;
 
                 if (Main.maxTilesX > 8000)
@@ -138,7 +142,7 @@ namespace Coralite.Content.WorldGeneration
                         if (tileDictionary[TileID.Ebonstone] + tileDictionary[TileID.Ebonsand] + tileDictionary[TileID.CorruptGrass] < 750)
                             continue; //如果不是，则返回false，这将导致调用方法尝试一个不同的origin。
 
-                        int whichOne = WorldGen.genRand.Next(4);
+                        int whichOne = WorldGen.genRand.Next(5);
                         Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CorruptionChestShrine" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
                         Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CorruptionChestClear" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
                         Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CorruptionChestWall" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;

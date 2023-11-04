@@ -1616,6 +1616,11 @@ Mods: {
 				DisplayName: 梦魇温床
 				Tooltip: ""
 			}
+
+			RottenKey: {
+				DisplayName: 尸骨钥匙
+				Tooltip: 用来解锁腐化之地的尸骨箱
+			}
 		}
 
 		Tiles: {
@@ -1652,8 +1657,9 @@ Mods: {
 			CrystalCrateTile.MapEntry: 魔力晶体匣
 
 			RottenChestTile: {
-				// MapEntry0: Mods.Coralite.Tiles.RottenChestTile.MapEntry0
-				// MapEntry1: Mods.Coralite.Tiles.RottenChestTile.MapEntry1
+				MapEntry0: 尸骨箱
+				MapEntry1: 上锁尸骨箱
+				TryUnlock: 需要使用强大的腐化生物的素材制成钥匙以解锁
 			}
 
 			NightmareBedTile.MapEntry: 梦魇温床
