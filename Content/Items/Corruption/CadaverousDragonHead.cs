@@ -12,6 +12,7 @@ namespace Coralite.Content.Items.Corruption
 
         public override void SetDefaults()
         {
+
         }
 
         public override bool CanUseItem(Player player)
