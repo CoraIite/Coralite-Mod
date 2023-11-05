@@ -1620,6 +1620,21 @@ Mods: {
 				DisplayName: Rotten Key
 				Tooltip: This key is used to unlock the Corruption's Rotten Chest
 			}
+
+			CadaverousDragonHead: {
+				DisplayName: Cadaverous Dragon Head
+				Tooltip: ""
+			}
+
+			VertebraeKey: {
+				DisplayName: Vertebrae Key
+				Tooltip: This key is used to unlock the Crimson's Vertebrae Chest
+			}
+
+			VertebraeChest: {
+				DisplayName: Vertebrae Chest
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1662,6 +1677,12 @@ Mods: {
 			}
 
 			NightmareBedTile.MapEntry: Nightmare Bed Tile
+
+			VertebraeChestTile: {
+				MapEntry0: Vertebrae Chest
+				MapEntry1: Locked Vertebrae Chest
+				TryUnlock: Requires a key to be unlocked using the materials of powerful crimson creatures
+			}
 		}
 
 		Buffs: {
@@ -1993,6 +2014,8 @@ Mods: {
 			BoneHand.DisplayName: Bone Hand
 			BoneSilt.DisplayName: Bone Silt
 			BoneHands.DisplayName: Bone Hands
+			CadaverousDragonBreath.DisplayName: Cadaverous Dragon Breath
+			CadaverousDragonHeadProj.DisplayName: Cadaverous Dragon Head Proj
 		}
 
 		Configs: {

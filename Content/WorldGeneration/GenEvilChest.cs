@@ -1,11 +1,11 @@
 ﻿using Coralite.Content.Items.Corruption;
+using Coralite.Content.Items.Crimson;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
@@ -51,6 +51,40 @@ namespace Coralite.Content.WorldGeneration
             Point.Zero,
         };
 
+        private static Point[] CrimsonLeft = new Point[5]
+{
+            new Point(6,9),
+            new Point(4,6),
+            new Point(7, 9),
+            new Point(3, 9),
+            new Point(5, 8),
+};
+        private static Point[] CrimsonRight = new Point[5]
+        {
+            new Point(12,9),
+            new Point(14, 9),
+            new Point(11,9),
+            new Point(15,9),
+            new Point(13,9),
+        };
+
+        private static Point[] CrimsonTorch1 = new Point[5]
+        {
+            new Point(8,6),
+            new Point(16, 5),
+            new Point(7, 5),
+            new Point(7, 7),
+            new Point(7, 5),
+        };
+        private static Point[] CrimsonTorch2 = new Point[5]
+        {
+            new Point(11, 6),
+            Point.Zero,
+            new Point(13, 6),
+            new Point(12, 7),
+            Point.Zero,
+        };
+
         public void GenEvilChest(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "正在生成邪恶箱";
@@ -89,9 +123,111 @@ namespace Coralite.Content.WorldGeneration
                     [Color.Black] = -1
                 };
 
+                int[] arr = new int[100];
+                for (int i = 0; i < 100; i++)
+                    arr[i] = i;
+
+                //随机打乱
+                for (int i = 0; i < 100; i++)
+                {
+                    int index = WorldGen.genRand.Next(100);
+                    (arr[index], arr[i]) = (arr[i], arr[index]);
+                }
+
                 if (WorldGen.crimson)
                 {
+                    Dictionary<Color, int> mainDic = new Dictionary<Color, int>()
+                    {
+                        [new Color(184, 106, 97)] = TileID.CrimstoneBrick,
+                        [new Color(236, 74, 79)] = TileID.CrimtaneBrick,
+                        [new Color(155, 144, 179)] = TileID.Ebonwood,
+                        [Color.Black] = -1
+                    };
+                    Dictionary<Color, int> wallDic = new Dictionary<Color, int>()
+                    {
+                        [new Color(144, 82, 90)] = WallID.CrimstoneBrick,
+                        [new Color(64, 38, 27)] = WallID.CrimtaneBrick,
+                        [new Color(102, 32, 32)] = WallID.CrimsonUnsafe2,
+                        [new Color(159, 150, 114)] = WallID.CrimsonUnsafe3,
+                        [new Color(212, 109, 24)] = WallID.CrimsonUnsafe4,
+                        [Color.Black] = -1
+                    };
 
+                    for (int i = 0; i < 100; i++)
+                    {
+                        //每隔一段选取一个点并检测是否有邪恶地形
+                        Point position = new Point(100, (int)GenVars.worldSurface)
+                            + new Point(WorldGen.genRand.Next(-25, 25), WorldGen.genRand.Next(-60, 60))
+                            + new Point(arr[i] * (Main.maxTilesX - 200) / 100, 125);
+
+                        Dictionary<ushort, int> tileDictionary = new Dictionary<ushort, int>();
+                        WorldUtils.Gen(
+                            new Point(position.X - 25, position.Y - 25),
+                            new Shapes.Rectangle(50, 50),
+                            new Actions.TileScanner(TileID.Crimstone, TileID.Crimsand, TileID.CrimsonGrass).Output(tileDictionary));
+
+                        if (tileDictionary[TileID.Crimstone] + tileDictionary[TileID.Crimsand] + tileDictionary[TileID.CrimsonGrass] < 750)
+                            continue; //如果不是，则返回false，这将导致调用方法尝试一个不同的origin。
+
+                        int whichOne = 0;//WorldGen.genRand.Next(5);
+                        Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrimsonChestShrine" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
+                        Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrimsonChestClear" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
+                        Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrimsonChestWall" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
+
+                        position += new Point(-10, -7);
+                        if (!WorldGen.InWorld(position.X, position.Y))
+                            continue;
+
+                        Task.Run(async () =>
+                        {
+                            await GenShrine(clearTex, shrineTex, wallTex, clearDic, mainDic, wallDic, position.X, position.Y);
+                        }).Wait();
+
+                        //放置板条箱
+                        Point createLeftPos = position + CrimsonLeft[whichOne];
+                        Point createRightPos = position + CrimsonRight[whichOne];
+
+                        WorldGen.PlaceObject(createLeftPos.X, createLeftPos.Y, TileID.FishingCrate, true, 4);
+                        WorldGen.PlaceObject(createRightPos.X, createRightPos.Y, TileID.FishingCrate, true, 4);
+
+                        //放火把
+                        Point torchPos = position + CrimsonTorch1[whichOne];
+                        WorldGen.PlaceObject(torchPos.X, torchPos.Y, TileID.Torches, true, 19);
+
+                        if (CrimsonTorch2[whichOne] != Point.Zero)
+                        {
+                            torchPos = position + CrimsonTorch2[whichOne];
+                            WorldGen.PlaceObject(torchPos.X, torchPos.Y, TileID.Torches, true, 19);
+                        }
+
+                        //放置箱子
+                        Point chestPos = position + new Point(10, 7);
+
+                        int itemType;
+                        if (gened == 0)
+                            itemType = ModContent.ItemType<BloodyHook>();
+                        else if (gened == 1)
+                            itemType = ModContent.ItemType<BloodyHook>();
+                        else
+                            itemType = WorldGen.genRand.NextFromList(
+                                ModContent.ItemType<BloodyHook>(),
+                                ModContent.ItemType<BloodyHook>());
+
+                        if (WorldGen.AddBuriedChest(chestPos.X, chestPos.Y, itemType,
+                             notNearOtherChests: false, 0, trySlope: false, (ushort)ModContent.TileType<VertebraeChestTile>()))
+                        {
+                            int index = Chest.FindChest(chestPos.X - 1, chestPos.Y);
+                            if (index != -1)
+                            {
+                                bool a = Chest.Lock(Main.chest[index].x, Main.chest[index].y);
+                            }
+                        }
+
+                        progress.Set(i / (float)itemCount);
+                        gened++;
+                        if (gened >= itemCount)
+                            break;
+                    }
                 }
                 else
                 {
@@ -112,17 +248,6 @@ namespace Coralite.Content.WorldGeneration
                         [Color.Black] = -1
                     };
 
-                    int[] arr = new int[100];
-                    for (int i = 0; i < 100; i++)
-                        arr[i] = i;
-
-                    //随机打乱
-                    for (int i = 0; i < 100; i++)
-                    {
-                        int index = WorldGen.genRand.Next(100);
-                        (arr[index], arr[i]) = (arr[i], arr[index]);
-                    }
-
                     for (int i = 0; i < 100; i++)
                     {
                         //每隔一段选取一个点并检测是否有邪恶地形
@@ -135,9 +260,6 @@ namespace Coralite.Content.WorldGeneration
                             new Point(position.X - 25, position.Y - 25),
                             new Shapes.Rectangle(50, 50),
                             new Actions.TileScanner(TileID.Ebonstone, TileID.Ebonsand, TileID.CorruptGrass).Output(tileDictionary));
-                        //int ebonstone = tileDictionary.ContainsKey(TileID.Ebonstone) ? tileDictionary[TileID.Ebonstone] : 0;
-                        //int ebonsand = tileDictionary.ContainsKey(TileID.Ebonsand) ? tileDictionary[TileID.Ebonsand] : 0;
-                        //int corruptGrass = tileDictionary.ContainsKey(TileID.CorruptGrass) ? tileDictionary[TileID.CorruptGrass] : 0;
 
                         if (tileDictionary[TileID.Ebonstone] + tileDictionary[TileID.Ebonsand] + tileDictionary[TileID.CorruptGrass] < 750)
                             continue; //如果不是，则返回false，这将导致调用方法尝试一个不同的origin。
@@ -147,7 +269,6 @@ namespace Coralite.Content.WorldGeneration
                         Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CorruptionChestClear" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
                         Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CorruptionChestWall" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
 
-                        //Point position = heartPos[indexs[j]] + );
                         position += new Point(-10, -7);
                         if (!WorldGen.InWorld(position.X, position.Y))
                             continue;
@@ -177,7 +298,17 @@ namespace Coralite.Content.WorldGeneration
                         //放置箱子
                         Point chestPos = position + new Point(10, 7);
 
-                        if (WorldGen.AddBuriedChest(chestPos.X, chestPos.Y, ModContent.ItemType<CorruptJavelin>(),
+                        int itemType;
+                        if (gened == 0)
+                            itemType = ModContent.ItemType<CorruptJavelin>();
+                        else if (gened == 1)
+                            itemType = ModContent.ItemType<CadaverousDragonHead>();
+                        else
+                            itemType = WorldGen.genRand.NextFromList(
+                                ModContent.ItemType<CorruptJavelin>(),
+                                ModContent.ItemType<CadaverousDragonHead>());
+
+                        if (WorldGen.AddBuriedChest(chestPos.X, chestPos.Y,itemType ,
                              notNearOtherChests: false, 0, trySlope: false, (ushort)ModContent.TileType<RottenChestTile>()))
                         {
                           int index=  Chest.FindChest(chestPos.X-1, chestPos.Y);

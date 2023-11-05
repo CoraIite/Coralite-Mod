@@ -1,6 +1,11 @@
 ﻿using Coralite.Core;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,39 +13,189 @@ namespace Coralite.Content.Items.Corruption
 {
     public class CadaverousDragonHead : ModItem
     {
-        public override string Texture => AssetDirectory.CorruptionItems+Name;
+        public override string Texture => AssetDirectory.CorruptionItems + Name;
+
+        public override void SetStaticDefaults()
+        {
+            //ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+        }
 
         public override void SetDefaults()
         {
-
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useAnimation = 28;
+            Item.useTime = 7;
+            Item.width = 50;
+            Item.height = 18;
+            Item.shoot = ModContent.ProjectileType<CadaverousDragonHeadProj>();
+            Item.UseSound = CoraliteSoundID.Flamethrower_Item34;
+            Item.damage = 23;
+            Item.knockBack = 0.3f;
+            Item.shootSpeed = 6.5f;
+            Item.mana = 9;
+            Item.noMelee = true;
+            Item.autoReuse = true;
+            Item.noUseGraphic = true;
+            Item.value = Item.sellPrice(0, 0, 50, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.DamageType = DamageClass.Magic;
         }
 
-        public override bool CanUseItem(Player player)
-        {
-            return true;
-        }
+        public override bool AltFunctionUse(Player player) => true;
 
-        public override void HoldItem(Player player)
+        public override bool MagicPrefix() => true;
+
+        //public override void ModifyManaCost(Player player, ref float reduce, ref float mult)
+        //{
+        //    if (player.altFunctionUse == 2 && !player.ItemAnimationJustStarted)
+        //    {
+        //        reduce -= 1f;
+        //    }
+        //}
+
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<CadaverousDragonHeadProj>()]<1)
+            if (Main.myPlayer == player.whoAmI)
             {
+                //if (player.altFunctionUse == 2)
+                //{
+                //    if (player.ItemAnimationJustStarted)//只有第一帧才会射火球
+                //    {
+                //        Projectile head1 = SpawnHead(player, source);
+                //        //射火球
 
+                //    }
+
+                //    return false;
+                //}
+
+                //射火焰
+                Projectile head2 = SpawnHead(player, source);
+                Projectile.NewProjectile(source, head2.Center, (Main.MouseWorld - head2.Center).SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<CadaverousDragonBreath>(), (int)(damage * 0.95f), knockback, player.whoAmI);
+                head2.ai[0] = player.itemTimeMax;
+                player.CheckMana(player.GetManaCost(player.HeldItem) / 2, pay: true);
             }
+            return false;
+        }
+
+        public static Projectile SpawnHead(Player player, IEntitySource source)
+        {
+            Projectile p = Main.projectile.FirstOrDefault(p => p.active && p.owner == player.whoAmI && p.type == ModContent.ProjectileType<CadaverousDragonHeadProj>());
+            p ??= Projectile.NewProjectileDirect(source, player.Center, Vector2.Zero, ModContent.ProjectileType<CadaverousDragonHeadProj>(), 1, 0, player.whoAmI);
+
+            return p;
         }
     }
 
-    public class CadaverousDragonHeadProj:ModProjectile
+    public class CadaverousDragonHeadProj : ModProjectile
     {
         public override string Texture => AssetDirectory.CorruptionItems + Name;
+
+        public ref float ShootTimer => ref Projectile.ai[0];
+        public Vector2 TargetPos
+        {
+            get
+            {
+                return new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
+            }
+            set
+            {
+                Projectile.localAI[0] = value.X;
+                Projectile.localAI[1] = value.Y;
+            }
+        }
+
+        public Player Owner => Main.player[Projectile.owner];
+
+        public float mouseAngle;
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            TargetPos = Projectile.Center;
+        }
+
+        public override void AI()
+        {
+            //常态在玩家头顶
+
+            if (Owner.HeldItem.type == ModContent.ItemType<CadaverousDragonHead>())
+                Projectile.timeLeft = 2;
+            else
+                Projectile.Kill();
+
+            Point p = Projectile.Center.ToTileCoordinates();
+            Tile tile = Framing.GetTileSafely(p);
+
+
+            if (tile.HasTile && (Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType]))
+                TargetPos = TargetPos.MoveTowards(Owner.Center, 16);
+            else
+                TargetPos = Vector2.Lerp(TargetPos, Owner.Center + new Vector2(0, -64), 0.1f);
+            Vector2 pos = TargetPos;
+
+            //ai0大于0时张嘴射
+            if (ShootTimer > 0)
+            {
+                Projectile.rotation = (Main.MouseWorld - Projectile.Center).ToRotation() + (Projectile.spriteDirection > 0 ? 0 : 3.141f);
+                Projectile.direction = Projectile.spriteDirection = Main.MouseWorld.X > Projectile.Center.X ? 1 : -1;
+                mouseAngle = mouseAngle.AngleLerp(0.6f, 0.1f);
+                pos += (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero) * Math.Clamp((Main.MouseWorld - pos).Length(), 0, 32);
+                ShootTimer--;
+            }
+            else
+            {
+                Projectile.rotation = Owner.velocity.X / 10;
+                Projectile.direction = Projectile.spriteDirection = Owner.direction;
+                mouseAngle = mouseAngle.AngleLerp(0, 0.05f);
+
+            }
+
+            Projectile.Center = Vector2.Lerp(Projectile.Center, pos, 0.25f);
+
+            Vector2 neckPos = Projectile.Center - (Projectile.rotation + (Projectile.spriteDirection > 0 ? 0 : 3.141f) - Projectile.spriteDirection * 0.6f).ToRotationVector2() * 10;
+            //在尾部生成粒子
+            Dust d = Dust.NewDustPerfect(neckPos + Main.rand.NextVector2Circular(6, 6), DustID.Shadowflame, Helpers.Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f, 1f));
+            d.noGravity = true;
+
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+
+            //绘制上下鄂
+            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle frameBox = mainTex.Frame(1, 2, 0, 1);
+            Vector2 origin = new Vector2(frameBox.Width * 0.3f, frameBox.Height / 2);
+            Color c = lightColor;
+
+            SpriteEffects effects = SpriteEffects.None;
+            float exRot = 0;
+            if (Projectile.spriteDirection < 0)
+            {
+                effects = SpriteEffects.FlipHorizontally;
+                //exRot = MathHelper.Pi ;
+                origin = new Vector2(frameBox.Width * 0.7f, frameBox.Height / 2);
+            }
+
+            float rot = Projectile.rotation + Projectile.spriteDirection * mouseAngle + exRot;
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, c, rot, origin, Projectile.scale, effects, 0);
+
+            rot = Projectile.rotation - Projectile.spriteDirection * mouseAngle + exRot;
+            frameBox = mainTex.Frame(1, 2, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, c, rot, origin, Projectile.scale, effects, 0);
+
+            return false;
+        }
     }
 
-    public class CadaverousDragonBreath:ModProjectile
+    public class CadaverousDragonBreath : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
         public override void SetDefaults()
         {
-           Projectile. ArmorPenetration = 15; // Added by TML
+            Projectile.ArmorPenetration = 15; // Added by TML
 
             Projectile.width = 6;
             Projectile.height = 6;
@@ -65,62 +220,61 @@ namespace Coralite.Content.Items.Corruption
         public override void AI()
         {
             Projectile.localAI[0] += 1f;
-            int num = 60;
-            int num2 = 12;
-            int num3 = num + num2;
-            if (Projectile.localAI[0] >= (float)num3)
+            int shootTime = 40;
+            int fadeTime = 12;
+            int totalTime = shootTime + fadeTime;
+            if (Projectile.localAI[0] >= totalTime)
                 Projectile.Kill();
 
-            if (Projectile.localAI[0] >= (float)num)
+            if (Projectile.localAI[0] >= shootTime)
                 Projectile.velocity *= 0.95f;
 
-            bool flag = Projectile.ai[0] == 1f;
-            int num4 = 50;
-            int num5 = num4;
-            if (flag)
-            {
-                num4 = 0;
-                num5 = num;
-            }
+            Lighting.AddLight(Projectile.Center, Color.MediumPurple.ToVector3());
 
-            if (Projectile.localAI[0] < num5 && Main.rand.NextFloat() < 0.25f)
+            if (Projectile.localAI[0] < shootTime && Main.rand.NextFloat() < 0.25f)
             {
-                short num6 = (flag ? DustID.ShadowbeamStaff : DustID.Shadowflame);
-                Dust dust = Dust.NewDustDirect(Projectile.Center + Main.rand.NextVector2Circular(60f, 60f) * Utils.Remap(Projectile.localAI[0], 0f, 72f, 0.5f, 1f), 4, 4, num6, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100);
+                short type = Main.rand.NextBool() ? DustID.ShadowbeamStaff : DustID.Shadowflame;
+                Dust dust = Dust.NewDustDirect(Projectile.Center + Main.rand.NextVector2Circular(60f, 60f) * Utils.Remap(Projectile.localAI[0], 0f, 72f, 0.5f, 1f), 4, 4, type, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100);
                 if (Main.rand.NextBool(4))
                 {
                     dust.noGravity = true;
-                    dust.scale *= 3f;
+                    dust.scale *= 1.2f;
                     dust.velocity.X *= 2f;
                     dust.velocity.Y *= 2f;
                 }
-                else
-                {
-                    dust.scale *= 1.5f;
-                }
+                //else
+                //dust.scale *= 1f;
 
-                dust.scale *= 1.5f;
+                //dust.scale *= 1.5f;
                 dust.velocity *= 1.2f;
-                dust.velocity += Projectile.velocity * 1f * Utils.Remap(Projectile.localAI[0], 0f, num * 0.75f, 1f, 0.1f) * Utils.Remap(Projectile.localAI[0], 0f, num * 0.1f, 0.1f, 1f);
+                dust.velocity += Projectile.velocity * 1f * Utils.Remap(Projectile.localAI[0], 0f, shootTime * 0.75f, 1f, 0.1f) * Utils.Remap(Projectile.localAI[0], 0f, shootTime * 0.1f, 0.1f, 1f);
                 dust.customData = 1;
             }
 
-            if (num4 > 0 && Projectile.localAI[0] >= num4 && Main.rand.NextFloat() < 0.5f)
+            if (Projectile.localAI[0] >= shootTime && Main.rand.NextBool())
             {
                 Vector2 center = Main.player[Projectile.owner].Center;
                 Vector2 vector = (Projectile.Center - center).SafeNormalize(Vector2.Zero).RotatedByRandom(0.19634954631328583) * 7f;
-                short num7 = 31;
+                short num7 = DustID.Smoke;
                 Dust dust2 = Dust.NewDustDirect(Projectile.Center + Main.rand.NextVector2Circular(50f, 50f) - vector * 2f, 4, 4, num7, 0f, 0f, 150, new Color(80, 80, 80));
                 dust2.noGravity = true;
                 dust2.velocity = vector;
                 dust2.scale *= 1.1f + Main.rand.NextFloat() * 0.2f;
                 dust2.customData = -0.3f - 0.15f * Main.rand.NextFloat();
             }
+
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter > 7)
+            {
+                Projectile.frameCounter = 0;
+                if (Projectile.frame < 7)
+                    Projectile.frame++;
+            }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.damage = (int)(Projectile.damage * 0.85);
+            Projectile.damage = (int)(Projectile.damage * 0.65);
         }
 
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
@@ -137,10 +291,85 @@ namespace Coralite.Content.Items.Corruption
             return Collision.CanHit(Projectile.Center, 0, 0, targetHitbox.Center.ToVector2(), 0, 0);
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+
+            Main.instance.LoadProjectile(ProjectileID.Flames);
+            Texture2D mainTex = TextureAssets.Projectile[ProjectileID.Flames].Value;
+            //Rectangle frameBox = mainTex.Frame(1, 7, 0, Projectile.frame);
+            //Main.spriteBatch.Draw(mainTex, pos, frameBox, Color.MediumPurple, Projectile.rotation, frameBox.Size()/2, Projectile.scale, 0, 0);
+
+            float shootTime = 50f;
+            float fadeTime = 12f;
+            float totalTime = shootTime + fadeTime;
+            Color transparent = Color.Transparent;
+            Color color = new Color(100, 90, 255, 200);
+            Color color2 = new Color(130, 80, 200, 70);
+            Color color3 = Color.Lerp(new Color(100, 90, 255, 100), color2, 0.25f);
+            Color color4 = new Color(80, 80, 80, 100);
+            float num3 = 0.35f;
+            float num4 = 0.7f;
+            float num5 = 0.85f;
+            float num6 = (Projectile.localAI[0] > shootTime - 10f) ? 0.175f : 0.2f;
+
+            int verticalFrames = 7;
+            float num9 = Utils.Remap(Projectile.localAI[0], shootTime, totalTime, 1f, 0f);
+            float num10 = Math.Min(Projectile.localAI[0], 20f);
+            float num11 = Utils.Remap(Projectile.localAI[0], 0f, totalTime, 0f, 1f);
+            float num12 = Utils.Remap(num11, 0.2f, 0.5f, 0.25f, 1f);
+            Rectangle frameBox = mainTex.Frame(1, verticalFrames, 0, 3);
+            if (!(num11 < 1f))
+                return false;
+
+            for (int i = 0; i < 2; i++)
+            {
+                for (float j = 1f; j >= 0f; j -= num6)
+                {
+                    transparent = (num11 < 0.1f) ?
+                        Color.Lerp(Color.Transparent, color, Utils.GetLerpValue(0f, 0.1f, num11, clamped: true)) :
+                        ((num11 < 0.2f) ?
+                            Color.Lerp(color, color2, Utils.GetLerpValue(0.1f, 0.2f, num11, clamped: true)) :
+                            ((num11 < num3) ?
+                                color2 :
+                                ((num11 < num4) ?
+                                    Color.Lerp(color2, color3, Utils.GetLerpValue(num3, num4, num11, clamped: true)) :
+                                    ((num11 < num5) ?
+                                        Color.Lerp(color3, color4, Utils.GetLerpValue(num4, num5, num11, clamped: true)) :
+                                        ((!(num11 < 1f)) ? Color.Transparent : Color.Lerp(color4, Color.Transparent, Utils.GetLerpValue(num5, 1f, num11, clamped: true)))))));
+                    float num14 = (1f - j) * Utils.Remap(num11, 0f, 0.2f, 0f, 1f);
+                    Vector2 vector = Projectile.Center - Main.screenPosition + Projectile.velocity * (0f - num10) * j;
+                    Color color5 = transparent * num14;
+                    Color color6 = color5;
+                    color6.G /= 2;
+                    color6.B /= 2;
+                    color6.A = (byte)Math.Min(color5.A + 80f * num14, 255f);
+                    Utils.Remap(Projectile.localAI[0], 20f, totalTime, 0f, 1f);
+
+                    float factor = 1f / num6 * (j + 1f);
+                    float num16 = Projectile.rotation + j * MathHelper.PiOver2 + Main.GlobalTimeWrappedHourly * factor * 2f;
+                    float num17 = Projectile.rotation - j * MathHelper.PiOver2 - Main.GlobalTimeWrappedHourly * factor * 2f;
+                    switch (i)
+                    {
+                        case 0:
+                            Main.EntitySpriteDraw(mainTex, vector + Projectile.velocity * (0f - num10) * num6 * 0.5f, frameBox, color6 * num9 * 0.25f, num16 + (float)Math.PI / 4f, frameBox.Size() / 2f, num12, SpriteEffects.None);
+                            Main.EntitySpriteDraw(mainTex, vector, frameBox, color6 * num9, num17, frameBox.Size() / 2f, num12, SpriteEffects.None);
+                            break;
+                        case 1:
+                            Main.EntitySpriteDraw(mainTex, vector + Projectile.velocity * (0f - num10) * num6 * 0.2f, frameBox, color5 * num9 * 0.25f, num16 + (float)Math.PI / 2f, frameBox.Size() / 2f, num12 * 0.75f, SpriteEffects.None);
+                            Main.EntitySpriteDraw(mainTex, vector, frameBox, color5 * num9, num17 + (float)Math.PI / 2f, frameBox.Size() / 2f, num12 * 0.75f, SpriteEffects.None);
+                            break;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 
-    public class CadaverousDragonFireBall
-    {
+    //被砍掉的右键功能
+    //public class CadaverousDragonFireBall
+    //{
 
-    }
+    //}
 }

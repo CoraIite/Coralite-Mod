@@ -7,7 +7,7 @@ namespace Coralite.Content.Items.Crimson
 {
     public class VertebraeKey : ModItem
     {
-        public override string Texture => AssetDirectory.CorruptionItems + Name;
+        public override string Texture => AssetDirectory.CrimsonItems + Name;
 
         public override void SetDefaults()
         {

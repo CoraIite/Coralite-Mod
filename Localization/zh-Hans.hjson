@@ -1621,6 +1621,21 @@ Mods: {
 				DisplayName: 尸骨钥匙
 				Tooltip: 用来解锁腐化之地的尸骨箱
 			}
+
+			CadaverousDragonHead: {
+				DisplayName: 尸化龙头骨
+				Tooltip: 朝敌人喷射瘴气
+			}
+
+			VertebraeKey: {
+				DisplayName: 脊柱钥匙
+				Tooltip: 用来解锁猩红之地的脊柱箱
+			}
+
+			VertebraeChest: {
+				DisplayName: 脊柱箱
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1663,6 +1678,12 @@ Mods: {
 			}
 
 			NightmareBedTile.MapEntry: 梦魇温床
+
+			VertebraeChestTile: {
+				MapEntry0: 脊柱箱
+				MapEntry1: 上锁脊柱箱
+				TryUnlock: 需要使用强大的猩红生物的素材制成钥匙以解锁
+			}
 		}
 
 		Buffs: {
@@ -1994,6 +2015,8 @@ Mods: {
 			// BoneHand.DisplayName: Bone Hand
 			// BoneSilt.DisplayName: Bone Silt
 			// BoneHands.DisplayName: Bone Hands
+			// CadaverousDragonBreath.DisplayName: Cadaverous Dragon Breath
+			// CadaverousDragonHeadProj.DisplayName: Cadaverous Dragon Head Proj
 		}
 
 		Configs: {

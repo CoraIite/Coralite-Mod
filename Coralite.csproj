@@ -14,13 +14,9 @@
     <None Remove="Content\Items\AstronomyItems\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Content\Bosses\Turmoil\Turmoil_AI_Description.md" />
     <None Remove="Effects\AlphaGradientTrail.fx" />
     <None Remove="Effects\AlphaNoHLGradientTrail.fx" />
     <None Remove="Effects\NoHLGradientTrail.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Content\Bosses\Turmoil\Turmoil_AI_Description.md" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
