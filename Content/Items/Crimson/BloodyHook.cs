@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Crimson
             Item.shoot = ProjectileType<BloodHookSlash>();
             Item.DamageType = DamageClass.Melee;
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Orange3, Item.sellPrice(0, 1, 0, 0));
-            Item.SetWeaponValues(26, 4);
+            Item.SetWeaponValues(28, 4);
             Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;

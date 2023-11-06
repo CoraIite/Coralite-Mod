@@ -23,16 +23,16 @@ namespace Coralite.Content.Items.Corruption
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.useAnimation = 28;
-            Item.useTime = 7;
+            Item.useAnimation = 24;
+            Item.useTime = 6;
             Item.width = 50;
             Item.height = 18;
             Item.shoot = ModContent.ProjectileType<CadaverousDragonHeadProj>();
             Item.UseSound = CoraliteSoundID.Flamethrower_Item34;
-            Item.damage = 23;
+            Item.damage = 20;
             Item.knockBack = 0.3f;
             Item.shootSpeed = 6.5f;
-            Item.mana = 9;
+            Item.mana = 8;
             Item.noMelee = true;
             Item.autoReuse = true;
             Item.noUseGraphic = true;
@@ -71,7 +71,7 @@ namespace Coralite.Content.Items.Corruption
 
                 //射火焰
                 Projectile head2 = SpawnHead(player, source);
-                Projectile.NewProjectile(source, head2.Center, (Main.MouseWorld - head2.Center).SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<CadaverousDragonBreath>(), (int)(damage * 0.95f), knockback, player.whoAmI);
+                Projectile.NewProjectile(source, head2.Center, (Main.MouseWorld - head2.Center).SafeNormalize(Vector2.Zero) * 6, ModContent.ProjectileType<CadaverousDragonBreath>(), (int)(damage * 0.95f), knockback, player.whoAmI);
                 head2.ai[0] = player.itemTimeMax;
                 player.CheckMana(player.GetManaCost(player.HeldItem) / 2, pay: true);
             }
@@ -123,14 +123,29 @@ namespace Coralite.Content.Items.Corruption
             else
                 Projectile.Kill();
 
-            Point p = Projectile.Center.ToTileCoordinates();
-            Tile tile = Framing.GetTileSafely(p);
+            //Point p = Projectile.Center.ToTileCoordinates();
+            Vector2 idlePos = Owner.Center+new Vector2(Owner.direction*32,0);
+            //Tile tile = Framing.GetTileSafely(p);
+            //idlePos = Owner.Center;
+            for (int i = 0; i < 4; i++)//检测头顶4个方块并尝试找到没有物块阻挡的那个
+            {
+                Tile idleTile = Framing.GetTileSafely(idlePos.ToTileCoordinates());
+                if (idleTile.HasTile && Main.tileSolid[idleTile.TileType] && !Main.tileSolidTop[idleTile.TileType])
+                {
+                    idlePos -= new Vector2(0, -16);
+                    break;
+                }
+                else
+                    idlePos += new Vector2(-Owner.direction*8, -16);
+            }
 
+            TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.1f);
 
-            if (tile.HasTile && (Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType]))
-                TargetPos = TargetPos.MoveTowards(Owner.Center, 16);
-            else
-                TargetPos = Vector2.Lerp(TargetPos, Owner.Center + new Vector2(0, -64), 0.1f);
+            //if (tile.HasTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType])
+            //{
+            //}
+            //else
+            //    TargetPos = TargetPos.MoveTowards(idlePos, 16);
             Vector2 pos = TargetPos;
 
             //ai0大于0时张嘴射
@@ -144,7 +159,7 @@ namespace Coralite.Content.Items.Corruption
             }
             else
             {
-                Projectile.rotation = Owner.velocity.X / 10;
+                Projectile.rotation = Owner.velocity.X / 15;
                 Projectile.direction = Projectile.spriteDirection = Owner.direction;
                 mouseAngle = mouseAngle.AngleLerp(0, 0.05f);
 

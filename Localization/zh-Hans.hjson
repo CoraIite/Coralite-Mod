@@ -1636,6 +1636,15 @@ Mods: {
 				DisplayName: 脊柱箱
 				Tooltip: ""
 			}
+
+			BloodAmulet: {
+				DisplayName: 鲜血护符
+				Tooltip:
+					'''
+					击杀敌人获得嗜血BUFF，可叠加5层
+					每一层嗜血 +2% 伤害，+2% 移动速度
+					'''
+			}
 		}
 
 		Tiles: {
@@ -1750,6 +1759,12 @@ Mods: {
 			PurpleToeBuff: {
 				DisplayName: 噩梦捕食者
 				Description: 它们很喜欢你做的梦！
+			}
+
+			Bloodthirsty: {
+				DisplayName: 嗜血
+				Description: 你渴望鲜血！
+				Current: 当前层数：
 			}
 		}
 

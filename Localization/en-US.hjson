@@ -1635,6 +1635,15 @@ Mods: {
 				DisplayName: Vertebrae Chest
 				Tooltip: ""
 			}
+
+			BloodAmulet: {
+				DisplayName: Blood Amulet
+				Tooltip:
+					'''
+					Kill enemies to gain the Bloodthirsty buff, which can be stacked up to 5 layers
+					Each layer of Bloodthirsty +2% damage and +2% move speed
+					'''
+			}
 		}
 
 		Tiles: {
@@ -1749,6 +1758,12 @@ Mods: {
 			PurpleToeBuff: {
 				DisplayName: Purple Toe
 				Description: They love your dreams!
+			}
+
+			Bloodthirsty: {
+				DisplayName: Bloodthirsty
+				Description: You crave blood!
+				Current: Number of layers:
 			}
 		}
 
