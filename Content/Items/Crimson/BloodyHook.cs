@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.Corruption;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Items;
@@ -23,6 +24,11 @@ namespace Coralite.Content.Items.Crimson
     public class BloodyHook : BaseSilkKnifeItem
     {
         public override string Texture => AssetDirectory.CrimsonItems + Name;
+
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ShimmerTransformToItem[Type]=ItemType<CorruptJavelin>();
+        }
 
         public override void SetDefaults()
         {

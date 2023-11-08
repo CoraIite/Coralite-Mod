@@ -208,11 +208,14 @@ namespace Coralite.Content.WorldGeneration
                         if (gened == 0)
                             itemType = ModContent.ItemType<BloodyHook>();
                         else if (gened == 1)
-                            itemType = ModContent.ItemType<BloodyHook>();
+                            itemType = ModContent.ItemType<VertebraeBlade>();
+                        else if (gened == 2)
+                            itemType = ModContent.ItemType<BloodAmulet>();
                         else
                             itemType = WorldGen.genRand.NextFromList(
                                 ModContent.ItemType<BloodyHook>(),
-                                ModContent.ItemType<BloodyHook>());
+                                ModContent.ItemType<VertebraeBlade>(),
+                                ModContent.ItemType<BloodAmulet>());
 
                         if (WorldGen.AddBuriedChest(chestPos.X, chestPos.Y, itemType,
                              notNearOtherChests: false, 0, trySlope: false, (ushort)ModContent.TileType<VertebraeChestTile>()))

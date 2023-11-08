@@ -1645,6 +1645,14 @@ Mods: {
 					每一层嗜血 +2% 伤害，+2% 移动速度
 					'''
 			}
+
+			VertebraeBlade: {
+				DisplayName: 椎骨刃
+				Tooltip: 
+				'''
+				射出椎骨碎片，数量足够多是聚合成椎骨刃砸向敌人
+				'''
+			}
 		}
 
 		Tiles: {
@@ -2032,6 +2040,8 @@ Mods: {
 			// BoneHands.DisplayName: Bone Hands
 			// CadaverousDragonBreath.DisplayName: Cadaverous Dragon Breath
 			// CadaverousDragonHeadProj.DisplayName: Cadaverous Dragon Head Proj
+			// VertebraeBladeProj.DisplayName: Vertebrae Blade Proj
+			// VertebraeSpike.DisplayName: Vertebrae Spike
 		}
 
 		Configs: {

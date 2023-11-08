@@ -1644,6 +1644,11 @@ Mods: {
 					Each layer of Bloodthirsty +2% damage and +2% move speed
 					'''
 			}
+
+			VertebraeBlade: {
+				DisplayName: Vertebrae Blade
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2031,6 +2036,8 @@ Mods: {
 			BoneHands.DisplayName: Bone Hands
 			CadaverousDragonBreath.DisplayName: Cadaverous Dragon Breath
 			CadaverousDragonHeadProj.DisplayName: Cadaverous Dragon Head Proj
+			VertebraeBladeProj.DisplayName: Vertebrae Blade Proj
+			VertebraeSpike.DisplayName: Vertebrae Spike
 		}
 
 		Configs: {

@@ -67,22 +67,6 @@ namespace Coralite.Content.Items.Crimson
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (!Player.HeldItem.noMelee)
-                OnKillNPC(target, damageDone);
-        }
-
-        public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            OnKillNPC(target, damageDone);
-        }
-
-        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            OnKillNPC(target, damageDone);
-        }
-
-        public void OnKillNPC(NPC target, int damageDone)
-        {
             if (!equippedBloodAmulet || target.life - damageDone > 0)
                 return;
 

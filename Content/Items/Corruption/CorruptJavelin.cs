@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Crimson;
+using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Microsoft.Xna.Framework;
@@ -22,6 +23,7 @@ namespace Coralite.Content.Items.Corruption
         public override void SetStaticDefaults()
         {
             ItemID.Sets.StaffMinionSlotsRequired[Type] = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<BloodyHook>();
         }
 
         public override void SetDefaults()

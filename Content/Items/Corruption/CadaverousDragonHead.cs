@@ -29,10 +29,10 @@ namespace Coralite.Content.Items.Corruption
             Item.height = 18;
             Item.shoot = ModContent.ProjectileType<CadaverousDragonHeadProj>();
             Item.UseSound = CoraliteSoundID.Flamethrower_Item34;
-            Item.damage = 20;
+            Item.damage = 16;
             Item.knockBack = 0.3f;
             Item.shootSpeed = 6.5f;
-            Item.mana = 8;
+            Item.mana = 9;
             Item.noMelee = true;
             Item.autoReuse = true;
             Item.noUseGraphic = true;
@@ -154,7 +154,7 @@ namespace Coralite.Content.Items.Corruption
                 Projectile.rotation = (Main.MouseWorld - Projectile.Center).ToRotation() + (Projectile.spriteDirection > 0 ? 0 : 3.141f);
                 Projectile.direction = Projectile.spriteDirection = Main.MouseWorld.X > Projectile.Center.X ? 1 : -1;
                 mouseAngle = mouseAngle.AngleLerp(0.6f, 0.1f);
-                pos += (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero) * Math.Clamp((Main.MouseWorld - pos).Length(), 0, 32);
+                pos += (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero) * Math.Clamp((Main.MouseWorld - pos).Length() / 700, 0, 1) * 96;
                 ShootTimer--;
             }
             else
@@ -162,7 +162,6 @@ namespace Coralite.Content.Items.Corruption
                 Projectile.rotation = Owner.velocity.X / 15;
                 Projectile.direction = Projectile.spriteDirection = Owner.direction;
                 mouseAngle = mouseAngle.AngleLerp(0, 0.05f);
-
             }
 
             Projectile.Center = Vector2.Lerp(Projectile.Center, pos, 0.25f);
