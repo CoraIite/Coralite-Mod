@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Crimson;
+using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -18,6 +19,7 @@ namespace Coralite.Content.Items.Corruption
         public override void SetStaticDefaults()
         {
             //ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<VertebraeBlade>();
         }
 
         public override void SetDefaults()
@@ -37,7 +39,7 @@ namespace Coralite.Content.Items.Corruption
             Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.value = Item.sellPrice(0, 0, 50, 0);
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.Orange;
             Item.DamageType = DamageClass.Magic;
         }
 

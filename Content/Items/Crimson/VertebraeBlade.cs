@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Corruption;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,6 +21,11 @@ namespace Coralite.Content.Items.Crimson
 
         public int combo;
 
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<CadaverousDragonHead>();
+        }
+
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.Swing;
@@ -32,7 +38,7 @@ namespace Coralite.Content.Items.Crimson
             Item.damage = 28;
             Item.knockBack = 0.3f;
             Item.shootSpeed = 16f;
-            Item.mana = 12;
+            Item.mana = 10;
             Item.noMelee = true;
             Item.autoReuse = true;
             Item.noUseGraphic = true;

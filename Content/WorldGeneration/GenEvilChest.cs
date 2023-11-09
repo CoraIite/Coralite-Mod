@@ -51,38 +51,42 @@ namespace Coralite.Content.WorldGeneration
             Point.Zero,
         };
 
-        private static Point[] CrimsonLeft = new Point[5]
+        private static Point[] CrimsonLeft = new Point[6]
         {
             new Point(6,9),
             new Point(4,6),
             new Point(4, 6),
             new Point(3, 9),
             new Point(3, 3),
+            new Point(2, 11),
         };
-        private static Point[] CrimsonRight = new Point[5]
+        private static Point[] CrimsonRight = new Point[6]
         {
             new Point(12,9),
             new Point(14, 6),
             new Point(9,3),
             new Point(15,9),
             new Point(17,6),
+            new Point(15,12),
         };
 
-        private static Point[] CrimsonTorch1 = new Point[5]
+        private static Point[] CrimsonTorch1 = new Point[6]
         {
             new Point(8,6),
             new Point(7, 4),
             new Point(15, 7),
             new Point(8, 5),
             new Point(4, 7),
+            new Point(7, 7),
         };
-        private static Point[] CrimsonTorch2 = new Point[5]
+        private static Point[] CrimsonTorch2 = new Point[6]
         {
             new Point(11, 6),
             new Point(12, 4),
             Point.Zero,
             new Point(11, 5),
             Point.Zero,
+            new Point(12, 7),
         };
 
         public void GenEvilChest(GenerationProgress progress, GameConfiguration configuration)
@@ -141,6 +145,7 @@ namespace Coralite.Content.WorldGeneration
                         [new Color(184, 106, 97)] = TileID.CrimstoneBrick,
                         [new Color(236, 74, 79)] = TileID.CrimtaneBrick,
                         [new Color(95, 96, 110)] = TileID.Shadewood,
+                        [new Color(219, 15, 6)] = TileID.FleshBlock,
                         [Color.Black] = -1
                     };
                     Dictionary<Color, int> wallDic = new Dictionary<Color, int>()
@@ -151,6 +156,8 @@ namespace Coralite.Content.WorldGeneration
                         [new Color(159, 150, 114)] = WallID.CrimsonUnsafe3,
                         [new Color(212, 109, 24)] = WallID.CrimsonUnsafe4,
                         [new Color(144, 146, 167)] = WallID.Shadewood,
+                        [new Color(255, 0, 255)] = WallID.ArcaneRunes,
+
                         [Color.Black] = -1
                     };
 
@@ -170,7 +177,7 @@ namespace Coralite.Content.WorldGeneration
                         if (tileDictionary[TileID.Crimstone] + tileDictionary[TileID.Crimsand] + tileDictionary[TileID.CrimsonGrass] < 750)
                             continue; //如果不是，则返回false，这将导致调用方法尝试一个不同的origin。
 
-                        int whichOne = WorldGen.genRand.Next(5);
+                        int whichOne = WorldGen.genRand.Next(6);
                         Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrimsonChestShrine" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
                         Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrimsonChestClear" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
                         Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrimsonChestWall" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
@@ -307,10 +314,13 @@ namespace Coralite.Content.WorldGeneration
                             itemType = ModContent.ItemType<CorruptJavelin>();
                         else if (gened == 1)
                             itemType = ModContent.ItemType<CadaverousDragonHead>();
+                        else if (gened == 2)
+                            itemType = ModContent.ItemType<RottenAmulet>();
                         else
                             itemType = WorldGen.genRand.NextFromList(
                                 ModContent.ItemType<CorruptJavelin>(),
-                                ModContent.ItemType<CadaverousDragonHead>());
+                                ModContent.ItemType<CadaverousDragonHead>(),
+                                ModContent.ItemType<RottenAmulet>());
 
                         if (WorldGen.AddBuriedChest(chestPos.X, chestPos.Y,itemType ,
                              notNearOtherChests: false, 0, trySlope: false, (ushort)ModContent.TileType<RottenChestTile>()))

@@ -1623,7 +1623,7 @@ Mods: {
 
 			CadaverousDragonHead: {
 				DisplayName: Cadaverous Dragon Head
-				Tooltip: ""
+				Tooltip: Shoots miasma at enemies
 			}
 
 			VertebraeKey: {
@@ -1647,7 +1647,18 @@ Mods: {
 
 			VertebraeBlade: {
 				DisplayName: Vertebrae Blade
-				Tooltip: ""
+				Tooltip: Shoots vertebrae spikes, converging into Vertebrae blade and smashing to enemies when the number of them are enough
+			}
+
+			RottenAmulet: {
+				DisplayName: Rotten Amulet
+				Tooltip:
+					'''
+					After taking a hit, you will receive a limb rebirth buff, which can stack
+					The number of stacks can increase life regen according to the number of stacks
+					When the number of stacks reaches 6, consume all stacks to heal 25 HP
+					This effect has a 5 second CD
+					'''
 			}
 		}
 
@@ -1768,6 +1779,12 @@ Mods: {
 			Bloodthirsty: {
 				DisplayName: Bloodthirsty
 				Description: You crave blood!
+				Current: Number of layers:
+			}
+
+			LimbRebirth: {
+				DisplayName: Limb Rebirth
+				Description: I need Healing！
 				Current: Number of layers:
 			}
 		}

@@ -1648,10 +1648,17 @@ Mods: {
 
 			VertebraeBlade: {
 				DisplayName: 椎骨刃
-				Tooltip: 
-				'''
-				射出椎骨碎片，数量足够多是聚合成椎骨刃砸向敌人
-				'''
+				Tooltip: 射出椎骨碎片，数量足够多时聚合成椎骨刃砸向敌人
+			}
+
+			RottenAmulet: {
+				DisplayName: 尸骨护符
+				Tooltip:
+					'''
+					受击后获得肢体再生debuff，可叠加层数，根据层数增加生命回复
+					层数到达6后消耗所有层数回复25血量
+					该效果有5秒CD
+					'''
 			}
 		}
 
@@ -1772,6 +1779,12 @@ Mods: {
 			Bloodthirsty: {
 				DisplayName: 嗜血
 				Description: 你渴望鲜血！
+				Current: 当前层数：
+			}
+
+			LimbRebirth: {
+				DisplayName: 肢体再生
+				Description: 我需要治疗！
 				Current: 当前层数：
 			}
 		}

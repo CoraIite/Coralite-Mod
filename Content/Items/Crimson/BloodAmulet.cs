@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Corruption;
+using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -10,6 +11,11 @@ namespace Coralite.Content.Items.Crimson
     public class BloodAmulet : ModItem
     {
         public override string Texture => AssetDirectory.CrimsonItems + Name;
+
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<RottenAmulet>();
+        }
 
         public override void SetDefaults()
         {
@@ -67,7 +73,7 @@ namespace Coralite.Content.Items.Crimson
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (!equippedBloodAmulet || target.life - damageDone > 0)
+            if (!equippedBloodAmulet || target.life - damageDone > 0 || target.lifeMax <= 5 || target.SpawnedFromStatue)
                 return;
 
             Player.AddBuff(ModContent.BuffType<Bloodthirsty>(), 60 * 9);
