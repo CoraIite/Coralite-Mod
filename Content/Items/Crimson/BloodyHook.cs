@@ -266,7 +266,6 @@ namespace Coralite.Content.Items.Crimson
             Projectile.aiStyle = -1;
         }
 
-
         public override void Load()
         {
             ChainTex = Request<Texture2D>(AssetDirectory.CrimsonItems + "BloodyChain");
@@ -290,6 +289,10 @@ namespace Coralite.Content.Items.Crimson
             {
                 Owner.velocity *= 0;
                 Owner.Center = Vector2.Lerp(Owner.Center, Projectile.Center, 0.35f);
+                if (Timer==5)
+                {
+                    canDamage = true;
+                }
             }
             else
             {

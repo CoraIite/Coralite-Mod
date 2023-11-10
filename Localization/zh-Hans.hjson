@@ -1660,6 +1660,25 @@ Mods: {
 					该效果有5秒CD
 					'''
 			}
+
+			IcicleSilkKnief: {
+				DisplayName: 冰晶匕首
+				Tooltip:
+					'''
+					长按右键甩动匕首，释放后向前投掷出
+					命中敌人后插在敌人身上，此时左键攻击命中该敌人将为匕首叠加印记
+					印记大于3后右键收回匕首并造成爆炸
+					'''
+			}
+
+			IronSilkKnief: {
+				DisplayName: 铁丝钩
+				Tooltip:
+					'''
+					长按右键甩动钩子，释放后向前投掷出
+					命中敌人后钩在敌人身上，此时再次右键将敌人向自身拖拽
+					'''
+			}
 		}
 
 		Tiles: {
@@ -1843,6 +1862,7 @@ Mods: {
 			NightmareCatcher.DisplayName: 梦魇捕食者
 			FantasySparkle.DisplayName: 美梦光
 			FantasyGod.DisplayName: 美梦之神
+			// Turmoil.DisplayName: Turmoil
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -2055,6 +2075,10 @@ Mods: {
 			// CadaverousDragonHeadProj.DisplayName: Cadaverous Dragon Head Proj
 			// VertebraeBladeProj.DisplayName: Vertebrae Blade Proj
 			// VertebraeSpike.DisplayName: Vertebrae Spike
+			// IronSilkKniefChain.DisplayName: Iron Silk Knief Chain
+			// IronSilkKniefSlash.DisplayName: Iron Silk Knief Slash
+			// IcicleKnief.DisplayName: Icicle Knief
+			// IcicleKniefChain.DisplayName: Icicle Knief Chain
 		}
 
 		Configs: {

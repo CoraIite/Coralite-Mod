@@ -25,6 +25,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <summary> 射出多久后开始回到手中 </summary>
         protected readonly float shootTime;
 
+        public bool canDamage;
+
         protected float backSpeed = 32;
 
         public BaseSilkKnifeSpecialProj(int onHookedLength, int rollingLength, float shootSpeed, float shootTime)
@@ -167,8 +169,10 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if ((int)HookState == (int)AIStates.drag && (int)Timer == 6)
+            if ((int)HookState == (int)AIStates.drag && canDamage)
+            {
                 return true;
+            }
             if ((int)HookState < 2 && Collision.CanHitLine(Owner.Center, 1, 1, target.Center, 1, 1))
                 return null;
 

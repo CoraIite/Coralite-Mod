@@ -1660,6 +1660,16 @@ Mods: {
 					This effect has a 5 second CD
 					'''
 			}
+
+			IcicleSilkKnief: {
+				DisplayName: Icicle Silk Knief
+				Tooltip: ""
+			}
+
+			IronSilkKnief: {
+				DisplayName: Iron Silk Knief
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1843,6 +1853,7 @@ Mods: {
 			NightmareCatcher.DisplayName: Nightmare Catcher
 			FantasySparkle.DisplayName: Fantasy Sparkle
 			FantasyGod.DisplayName: Fantasy God
+			Turmoil.DisplayName: Turmoil
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -2055,6 +2066,10 @@ Mods: {
 			CadaverousDragonHeadProj.DisplayName: Cadaverous Dragon Head Proj
 			VertebraeBladeProj.DisplayName: Vertebrae Blade Proj
 			VertebraeSpike.DisplayName: Vertebrae Spike
+			IronSilkKniefChain.DisplayName: Iron Silk Knief Chain
+			IronSilkKniefSlash.DisplayName: Iron Silk Knief Slash
+			IcicleKnief.DisplayName: Icicle Knief
+			IcicleKniefChain.DisplayName: Icicle Knief Chain
 		}
 
 		Configs: {

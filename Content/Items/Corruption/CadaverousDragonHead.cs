@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Corruption
             Item.height = 18;
             Item.shoot = ModContent.ProjectileType<CadaverousDragonHeadProj>();
             Item.UseSound = CoraliteSoundID.Flamethrower_Item34;
-            Item.damage = 16;
+            Item.damage = 14;
             Item.knockBack = 0.3f;
             Item.shootSpeed = 6.5f;
             Item.mana = 9;

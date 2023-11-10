@@ -17,6 +17,7 @@ namespace Coralite.Core
 
         public const string GodOfWind = Bosses + "GodOfWind/";
 
+        public const string Turmoil = Bosses + "Turmoil/";
         #endregion
 
         #region Buff部分！

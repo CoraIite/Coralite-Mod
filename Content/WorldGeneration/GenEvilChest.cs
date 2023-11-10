@@ -17,38 +17,42 @@ namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
-        private static Point[] CorruptionLeft = new Point[5]
+        private static Point[] CorruptionLeft = new Point[6]
         {
             new Point(4,10),
             new Point(4,6),
             new Point(7, 9),
             new Point(3, 9),
             new Point(5, 8),
+            new Point(6, 11),
         };
-        private static Point[] CorruptionRight = new Point[5]
+        private static Point[] CorruptionRight = new Point[6]
         {
             new Point(13,9),
             new Point(14, 9),
             new Point(11,9),
             new Point(15,9),
             new Point(13,9),
+            new Point(12,11),
         };
 
-        private static Point[] CorruptionTorch1 = new Point[5]
+        private static Point[] CorruptionTorch1 = new Point[6]
         {
             new Point(5,8),
             new Point(16, 5),
             new Point(7, 5),
             new Point(7, 7),
             new Point(7, 5),
+            new Point(6, 8),
         };
-        private static Point[] CorruptionTorch2 = new Point[5]
+        private static Point[] CorruptionTorch2 = new Point[6]
         {
             Point.Zero,
             Point.Zero,
             new Point(13, 6),
             new Point(12, 7),
             Point.Zero,
+            new Point(13, 8),
         };
 
         private static Point[] CrimsonLeft = new Point[6]
@@ -249,6 +253,9 @@ namespace Coralite.Content.WorldGeneration
                         [new Color(71, 49, 57)] = TileID.LesionBlock,
                         [new Color(100, 61, 184)] = TileID.EbonstoneBrick,
                         [new Color(155, 144, 179)] = TileID.Ebonwood,
+                        [new Color(150, 0, 106)] = TileID.Ebonstone,
+                        [new Color(160, 29, 203)] = TileID.DemoniteBrick,
+
                         [Color.Black] = -1
                     };
                     Dictionary<Color, int> wallDic = new Dictionary<Color, int>()
@@ -256,6 +263,9 @@ namespace Coralite.Content.WorldGeneration
                         [new Color(160, 116, 255)] = WallID.EbonstoneBrick,
                         [new Color(128, 85, 100)] = WallID.Corruption3Echo,
                         [new Color(211, 189, 224)] = WallID.Ebonwood,
+                        [new Color(149, 0, 255)] = WallID.CorruptionUnsafe4,
+                        [new Color(255, 0, 255)] = WallID.ArcaneRunes,
+
                         [Color.Black] = -1
                     };
 
@@ -275,7 +285,7 @@ namespace Coralite.Content.WorldGeneration
                         if (tileDictionary[TileID.Ebonstone] + tileDictionary[TileID.Ebonsand] + tileDictionary[TileID.CorruptGrass] < 750)
                             continue; //如果不是，则返回false，这将导致调用方法尝试一个不同的origin。
 
-                        int whichOne = WorldGen.genRand.Next(5);
+                        int whichOne = WorldGen.genRand.Next(6);
                         Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CorruptionChestShrine" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
                         Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CorruptionChestClear" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
                         Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CorruptionChestWall" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
@@ -308,6 +318,8 @@ namespace Coralite.Content.WorldGeneration
 
                         //放置箱子
                         Point chestPos = position + new Point(10, 7);
+                        if (whichOne == 5)//鲨比特判
+                            chestPos = position + new Point(10, 8);
 
                         int itemType;
                         if (gened == 0)
@@ -325,10 +337,10 @@ namespace Coralite.Content.WorldGeneration
                         if (WorldGen.AddBuriedChest(chestPos.X, chestPos.Y,itemType ,
                              notNearOtherChests: false, 0, trySlope: false, (ushort)ModContent.TileType<RottenChestTile>()))
                         {
-                          int index=  Chest.FindChest(chestPos.X-1, chestPos.Y);
-                            if (index!=-1)
+                            int index = Chest.FindChest(chestPos.X - 1, chestPos.Y);
+                            if (index != -1)
                             {
-                               bool a= Chest.Lock(Main.chest[index].x, Main.chest[index].y);
+                                bool a = Chest.Lock(Main.chest[index].x, Main.chest[index].y);
                             }
                         }
 

@@ -450,6 +450,7 @@ namespace Coralite.Content.Items.Nightmare
             else
             {
                 //将玩家继续射出
+                canDamage = true;
                 SoundEngine.PlaySound(CoraliteSoundID.Bloody_NPCHit9, Projectile.Center);
                 Helper.PlayPitched("Misc/BloodySlash2", 0.4f, -0.2f, Projectile.Center);
                 Vector2 dir = (Projectile.Center - Owner.Center).SafeNormalize(Vector2.Zero);

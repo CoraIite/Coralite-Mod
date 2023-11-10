@@ -294,6 +294,8 @@ namespace Coralite.Content.ModPlayers
             {
                 for (int i = 0; i < 3; i++)
                 {
+                    if (Player.armor[i].ModItem is null)
+                        continue;
                     if (Player.armor[i].ModItem.IsArmorSet(Player.armor[0], Player.armor[1], Player.armor[2])
                         && Player.armor[i].ModItem is IControllableArmorBonus conrtolableArmor)
                     {
