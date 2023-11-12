@@ -64,6 +64,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.timeLeft = 3000;
         }
 
+        public override bool? CanDamage() => false;
+
         public override void AI()
         {
             switch ((int)State)
@@ -100,7 +102,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 7; i++) //生成噩梦尖刺弹幕
                             {
                                 Vector2 dir = (Projectile.rotation + i * 1 / 7f * MathHelper.TwoPi).ToRotationVector2();
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + dir * 48, dir, ModContent.ProjectileType<NightmareSpike>(), Projectile.damage, 0, ai0: 40, ai1: -1, ai2: 750);
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + dir * 48, dir, ModContent.ProjectileType<NightmareSpike>(), Projectile.damage, 0, ai0: 40, ai1: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1, ai2: 750);
                             }
                         }
 

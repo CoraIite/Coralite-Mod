@@ -204,7 +204,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             useMeleeDamage = true;
                             SonState++;
                             int damage = Helper.ScaleValueForDiffMode(20, 10, 10, 10);
-                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 75, ai2: -1);
+                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 75, ai2: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1);
                             //SoundStyle st = CoraliteSoundID.EmpressOfLight_Dash_Item160;
                             //st.Volume -= 0.2f;
                             //st.Pitch = -1;
@@ -294,7 +294,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             useMeleeDamage = true;
                             SonState++;
                             int damage = Helper.ScaleValueForDiffMode(20, 10, 10, 10);
-                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 90, ai2: -1);
+                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 90, ai2: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1);
                         }, 30, PostTeleport: () =>
                         {
                             Vector2 pos = Target.Center;
@@ -420,7 +420,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             SonState++;
                             int damage = Helper.ScaleValueForDiffMode(20, 10, 10, 10);
-                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 4, ai1: 65, ai2: -1);
+                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 4, ai1: 65, ai2: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1);
                         }, PostTeleport: () =>
                         {
                             Vector2 pos = Target.Center;
@@ -476,8 +476,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             ShootCount = (NPC.Center - Target.Center).ToRotation();
 
                             int damage = Helper.ScaleValueForDiffMode(30, 20, 15, 15);
-                            NPC.NewProjectileInAI<VineSpike>(NPC.Center, (ShootCount + 2f).ToRotationVector2(), damage, 8, NPC.target, 0, ShootCount + 0.9f, 35);
-                            NPC.NewProjectileInAI<VineSpike>(NPC.Center, (ShootCount - 2f).ToRotationVector2(), damage, 8, NPC.target, 0, ShootCount - 0.9f, 65);
+                            NPC.NewProjectileInAI<VineSpike>(NPC.Center, (ShootCount + 2f).ToRotationVector2(), damage, 8, NPC.target, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : 0, ShootCount + 0.9f, 35);
+                            NPC.NewProjectileInAI<VineSpike>(NPC.Center, (ShootCount - 2f).ToRotationVector2(), damage, 8, NPC.target, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : 0, ShootCount - 0.9f, 65);
                         }
                     }
                     break;
@@ -531,7 +531,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             useMeleeDamage = true;
                             SonState++;
                             int damage = Helper.ScaleValueForDiffMode(20, 10, 10, 10);
-                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 125, ai2: -1);
+                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 125, ai2: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1);
                             NPC.NewNPC(NPC.GetSource_FromAI(), (int)Target.Center.X, (int)Target.Center.Y, NPCType<FantasySparkle>(), NPC.whoAmI, 3, Target: NPC.target);
                         }, PostTeleport: () =>
                         {
@@ -710,7 +710,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                             //生成裂缝的拖尾弹幕
                             int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
-                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 10, ai2: -1);
+                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 10, ai2: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1);
                             NPC.NewProjectileInAI<NightmareSlit>(NPC.Center, Vector2.Zero, Helper.ScaleValueForDiffMode(45, 30, 25, 20), 4);
                         }
                     }
@@ -899,7 +899,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                             //生成裂缝的拖尾弹幕
                             int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
-                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 10, ai2: -1);
+                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 10, ai2: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1);
                             NPC.NewProjectileInAI<NightmareSlit>(NPC.Center, Vector2.Zero, Helper.ScaleValueForDiffMode(45, 30, 25, 20), 4);
                         }
                     }
@@ -1077,7 +1077,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = -1; i < 2; i += 2)
                             {
                                 NPC.NewProjectileInAI<NightmareBat>(GetPhase1MousePos(), (targetRot + i * 0.6f + Main.rand.NextFloat(-0.04f, 0.04f)).ToRotationVector2() * 18
-                                    , damage, 1, -1, -1, 0);
+                                    , damage, 1, -1, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1, 0);
                             }
 
                             SoundStyle st = CoraliteSoundID.Fairy_NPCHit5;
@@ -1091,7 +1091,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             float targetRot = (Target.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.55f, 0.55f);
                             int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
                             NPC.NewProjectileInAI<NightmareBat>(GetPhase1MousePos(), targetRot.ToRotationVector2() * 10
-                                , damage, 1, -1, -1, 0);
+                                , damage, 1, -1, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1, 0);
                         }
 
                         if (Timer > 40 && Timer % 28 == 0)//生成绕圈圈的渡鸦弹幕
@@ -1101,7 +1101,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 3; i++)
                             {
                                 NPC.NewProjectileInAI<NightmareCrow>(GetPhase1MousePos(), (rot + i * MathHelper.TwoPi / 3).ToRotationVector2() * 11
-                                    , damage, 1, -1, -2, 0, Main.rand.NextFromList(-1, 1) * 0.017f);
+                                    , damage, 1, -1, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -2, 0, Main.rand.NextFromList(-1, 1) * 0.017f);
                             }
 
                             SoundStyle st = CoraliteSoundID.BloodThron_Item113;
@@ -1170,7 +1170,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 7; i++)
                             {
                                 NPC.NewProjectileInAI<NightmareBat>(GetPhase1MousePos(), (NPC.rotation + i * MathHelper.TwoPi / 7).ToRotationVector2() * 10
-                                    , damage, 1, -1, -2, 1, 0.015f);
+                                    , damage, 1, -1, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -2, 1, 0.015f);
                             }
 
                             SoundStyle st = CoraliteSoundID.BloodThron_Item113;
@@ -1216,7 +1216,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 7; i++)
                             {
                                 NPC.NewProjectileInAI<NightmareBat>(GetPhase1MousePos(), (NPC.rotation + i * MathHelper.TwoPi / 7).ToRotationVector2() * 10
-                                    , damage, 1, -1, -2, 0, (Timer % 60 == 0 ? 1 : -1) * 0.015f);
+                                    , damage, 1, -1, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -2, 0, (Timer % 60 == 0 ? 1 : -1) * 0.015f);
                             }
 
                             SoundStyle st = CoraliteSoundID.BloodThron_Item113;
@@ -1231,7 +1231,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 7; i++)
                             {
                                 NPC.NewProjectileInAI<NightmareCrow>(GetPhase1MousePos(), (NPC.rotation + i * MathHelper.TwoPi / 7).ToRotationVector2() * 12
-                                    , damage, 1, -1, -1, 0, -1 * 0.0175f);
+                                    , damage, 1, -1, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1, 0, -1 * 0.0175f);
                             }
 
                             SoundStyle st = CoraliteSoundID.BloodThron_Item113;
@@ -1288,7 +1288,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             int damage = Helper.ScaleValueForDiffMode(40, 30, 25, 25);
                             float angle2 = (NPC.Center - Target.Center).ToRotation() + (Timer % 60 == 0 ? MathHelper.PiOver4 : -MathHelper.PiOver4) + Main.rand.NextFloat(-0.25f, 0.25f);
                             NPC.NewProjectileInAI<HookSlash>(NPC.Center + (NPC.Center - Target.Center).SafeNormalize(Vector2.One) * 64, Vector2.Zero, damage,
-                                0, NPC.target, ai1: angle2, ai2: 160);
+                                0, NPC.target,ai0: Main.zenithWorld ? Main.rand.NextFloat(0, 1) :0, ai1: angle2, ai2: 160);
                         }
 
                         if (Timer < ShootCount * 30 + 60)
@@ -1396,7 +1396,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     Vector2 dir = (rot + i * 0.4f).ToRotationVector2();
 
                                     NPC.NewProjectileInAI<ConfusionHole>(Target.Center + dir * Main.rand.NextFloat(500, 800) + Target.velocity * 15,
-                                        -dir, damage, 0, NPC.target, 120, -1, Main.rand.Next(800, 1200));
+                                        -dir, damage, 0, NPC.target, 120, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1, Main.rand.Next(800, 1200));
                                 }
                             });
                     }
@@ -1426,11 +1426,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                             Vector2 center2 = Target.Center + dir2.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(500, 800) + furture;
                             NPC.NewProjectileInAI<ConfusionHole>(center2, (Target.Center + furture - center2).SafeNormalize(Vector2.Zero),
-                                damage, 0, NPC.target, Main.rand.Next(60, 80), -1, Main.rand.Next(600, 900));
+                                damage, 0, NPC.target, Main.rand.Next(60, 80), Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1, Main.rand.Next(600, 900));
 
                             center2 = Target.Center + ((Timer % 24 == 0 ? 0 : MathHelper.Pi) + Main.rand.NextFloat(MathHelper.PiOver2 - 0.3f, MathHelper.PiOver2 + 0.3f)).ToRotationVector2() * Main.rand.Next(500, 700) + furture;
                             NPC.NewProjectileInAI<ConfusionHole>(center2, (Target.Center + furture - center2).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)),
-                                damage, 0, NPC.target, 75, -1, Main.rand.Next(800, 1200));
+                                damage, 0, NPC.target, 75, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1, Main.rand.Next(800, 1200));
                         }
 
                         if (Timer % 28 == 0)
@@ -1505,7 +1505,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 5; i++)
                             {
                                 Vector2 center = Target.Center + startAngle.ToRotationVector2() * 450;
-                                NPC.NewProjectileInAI<ConfusionHole>(center, (Target.Center - center).SafeNormalize(Vector2.One), damage, 0, ai0: 60, ai1: -1, ai2: 440);
+                                NPC.NewProjectileInAI<ConfusionHole>(center, (Target.Center - center).SafeNormalize(Vector2.One), damage, 0, ai0: 60, ai1: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1, ai2: 440);
                                 startAngle += MathHelper.TwoPi / 5;
                             }
                         }
@@ -1556,7 +1556,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             {
                                 int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
 
-                                NPC.NewProjectileInAI<ConfusionHole>(NPC.Center, (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero), damage, 0, NPC.target, 45, -1, 1300);
+                                NPC.NewProjectileInAI<ConfusionHole>(NPC.Center, (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero), damage, 0, NPC.target, 45, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1, 1300);
                             }
                             break;
                         }
@@ -1652,7 +1652,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             }, PostTeleport: () =>
                             {
                                 int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
-                                ShootCount = NPC.NewProjectileInAI<GhostSlit>(NPC.Center, Vector2.Zero, damage, 0, NPC.target, ai1: -1);
+                                ShootCount = NPC.NewProjectileInAI<GhostSlit>(NPC.Center, Vector2.Zero, damage, 0, NPC.target, ai1: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1);
                             });
                     }
                     break;
@@ -1689,7 +1689,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 NPC.rotation = targetRot;
 
                                 int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
-                                ShootCount = NPC.NewProjectileInAI<GhostSlit>(NPC.Center, Vector2.Zero, damage, 0, NPC.target, ai1: -1);
+                                ShootCount = NPC.NewProjectileInAI<GhostSlit>(NPC.Center, Vector2.Zero, damage, 0, NPC.target, ai1: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1);
                             }
                         }
                     }
@@ -1821,7 +1821,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             int damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
                             Vector2 dir2 = (Target.Center - NPC.Center).SafeNormalize(Vector2.One);
-                            NPC.NewProjectileInAI<ConfusionHole>(NPC.Center, dir2.RotatedBy(MathF.Cos((Timer / 6) * (MathHelper.TwoPi / 12)) * 1.6f), damage, 0, NPC.target, 30, -1, 1300);
+                            NPC.NewProjectileInAI<ConfusionHole>(NPC.Center, dir2.RotatedBy(MathF.Cos((Timer / 6) * (MathHelper.TwoPi / 12)) * 1.6f), damage, 0, NPC.target, 30, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1, 1300);
                         }
 
                         if (Timer > RollingTime)
@@ -1964,7 +1964,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < 4; i++)
                             {
                                 NPC.NewProjectileDirectInAI<ConfusionHole>(Target.Center + (angle + i * MathHelper.PiOver2).ToRotationVector2() * 600,
-                                    (angle + i * MathHelper.PiOver2 + MathHelper.Pi + Timer / 28 * 0.1f).ToRotationVector2(), damage, 0, NPC.target, 45, -1, 700);
+                                    (angle + i * MathHelper.PiOver2 + MathHelper.Pi + Timer / 28 * 0.1f).ToRotationVector2(), damage, 0, NPC.target, 45, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1, 700);
                             }
                         }
 
@@ -2067,7 +2067,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             useMeleeDamage = true;
                             SonState++;
                             int damage = Helper.ScaleValueForDiffMode(80, 70, 60, 60);
-                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 60, ai2: -2);
+                            NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 60, ai2: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -2);
                             //SoundStyle st = CoraliteSoundID.EmpressOfLight_Dash_Item160;
                             //st.Volume -= 0.2f;
                             //st.Pitch = -1;
@@ -2222,7 +2222,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             if (Timer % 20 == 0)
                             {
                                 int damage = Helper.ScaleValueForDiffMode(20, 10, 15, 15);
-                                NPC.NewProjectileInAI<ConfusionHole>(NPC.Center, (pos - NPC.Center).SafeNormalize(Vector2.Zero), damage, 0, NPC.target, 30, -2, 1300);
+                                NPC.NewProjectileInAI<ConfusionHole>(NPC.Center, (pos - NPC.Center).SafeNormalize(Vector2.Zero), damage, 0, NPC.target, 30, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -2, 1300);
                             }
                         }
 
@@ -2240,7 +2240,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         if (Timer % 7 == 0)
                         {
                             int damage = Helper.ScaleValueForDiffMode(50, 60, 60, 60);
-                            NPC.NewProjectileInAI<ConfusionHole>(NPC.Center, (Timer * MathHelper.TwoPi / 49).ToRotationVector2(), damage, 0, NPC.target, 30, -2, 1300);
+                            NPC.NewProjectileInAI<ConfusionHole>(NPC.Center, (Timer * MathHelper.TwoPi / 49).ToRotationVector2(), damage, 0, NPC.target, 30, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -2, 1300);
                         }
 
                         if (Timer > 50)

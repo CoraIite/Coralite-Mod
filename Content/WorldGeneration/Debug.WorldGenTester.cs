@@ -33,7 +33,10 @@ namespace Coralite.Content.WorldGeneration
         {
             //Main.dayTime = true;
             //Main.time = 4000;
-            Main.windSpeedTarget = 0.8f;
+            //Main.windSpeedTarget = 0.8f;
+            TileEntity.Clear();
+
+            Main.tile.ClearEverything();
             return base.CanUseItem(player);
         }
 

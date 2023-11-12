@@ -41,7 +41,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
             Projectile.width = Projectile.height = 18;
-            Projectile.timeLeft = 200;
+            Projectile.timeLeft = 140;
         }
 
         public override void AI()

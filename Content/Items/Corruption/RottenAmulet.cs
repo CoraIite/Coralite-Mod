@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.Corruption
 
         public void OnHit(Player.HurtInfo hurtInfo)
         {
-            if (limbRebirthCD != 0 || hurtInfo.Damage < 20)//休想骗伤！！！！！！！！！！！！！！！！！！！！！！！！！！！
+            if (!equippedRottenAmulet || limbRebirthCD != 0 || hurtInfo.Damage < 20)//休想骗伤！！！！！！！！！！！！！！！！！！！！！！！！！！！
                 return;
             Player.AddBuff(ModContent.BuffType<LimbRebirth>(), 60 * 15);
             limbRebirthCount++;
@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Corruption
         {
             if (limbRebirthCount > 6)
                 limbRebirthCount = 6;
-            if (limbRebirthCD>0)
+            if (limbRebirthCD > 0)
                 limbRebirthCD--;
 
             equippedRottenAmulet = false;

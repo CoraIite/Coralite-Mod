@@ -99,7 +99,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         float targetRot = dir.ToRotation();
 
                         float speed = Projectile.velocity.Length();
-                        float aimSpeed = Math.Clamp(dir.Length() / 800f, 0, 1) * 24;
+                        float aimSpeed = Math.Clamp(dir.Length() / 1200f, 0, 1) * 16;
 
                         Projectile.velocity = velRot.AngleTowards(targetRot, 0.08f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.25f);
                         Projectile.rotation = Projectile.rotation.AngleTowards((Owner.Center - Projectile.Center).ToRotation(), 0.2f);
@@ -111,7 +111,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             Projectile.frame = 2;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.velocity += (Projectile.rotation + Main.rand.NextFromList(-0.2f, 0.2f)).ToRotationVector2() * 18;
+                                Projectile.velocity += (Projectile.rotation + Main.rand.NextFromList(-0.2f, 0.2f)).ToRotationVector2() * 14;
                                 Projectile.netUpdate = true;
                             }
                         }
@@ -119,7 +119,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 1://咬下
                     {
-                        if (Timer > 40)
+                        if (Timer > 60)
                         {
                             State++;
                             Timer = 0;

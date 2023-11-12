@@ -103,7 +103,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     float length = dir.Length() * factor;
 
                                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), originCenter + dir.SafeNormalize(Vector2.Zero) * length,
-                                        new Vector2(Timer % 20 == 0 ? -1 : 1, 0) * 14, ModContent.ProjectileType<GhostHand>(), Projectile.damage, 0, Projectile.owner, Projectile.ai[1]);
+                                        new Vector2(Timer % 20 == 0 ? -1 : 1, 0) * 14, ModContent.ProjectileType<GhostHand>(), Projectile.damage, 0, Projectile.owner, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : Projectile.ai[1]);
                                     SoundEngine.PlaySound(CoraliteSoundID.NoUse_BlowgunPlus_Item65, Projectile.Center);
                                 }
 

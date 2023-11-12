@@ -83,7 +83,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 {
                     Vector2 dir2 = (Target.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - dir2 * 150, dir2,
-                        ModContent.ProjectileType<ConfusionHole>(), Projectile.damage, 0, Projectile.owner, 35, -2, 555);
+                        ModContent.ProjectileType<ConfusionHole>(), Projectile.damage, 0, Projectile.owner, 35, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -2, 555);
                 }
             }
             else

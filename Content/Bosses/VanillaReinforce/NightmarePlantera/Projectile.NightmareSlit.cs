@@ -82,11 +82,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         do
                         {
-                            if (Timer < 9 * 12)
+                            if (Timer < 9 * 10)
                             {
                                 if ((int)Timer % 9 == 0)
                                 {
-                                    float factor = Timer / (9 * 12);
+                                    float factor = Timer / (9 * 10);
                                     float length = dir.Length() * factor;
 
                                     Vector2 targetDirection = dir.SafeNormalize(Vector2.Zero);
@@ -95,7 +95,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                         Vector2 position = originCenter + targetDirection * length;
                                         Vector2 velDir = targetDirection.RotatedBy(i * MathHelper.PiOver2);
                                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), position,
-                                           velDir * 15, ModContent.ProjectileType<DarkLeaf>(), Projectile.damage, 0);
+                                           velDir * 13, ModContent.ProjectileType<DarkLeaf>(), Projectile.damage, 0);
 
                                         for (int j = 0; j < 5; j++)
                                         {

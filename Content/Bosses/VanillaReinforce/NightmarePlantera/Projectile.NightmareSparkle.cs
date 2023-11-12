@@ -10,7 +10,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     {
         public override void SetDefaults()
         {
-            Projectile.timeLeft = 1200;
+            Projectile.timeLeft = 400;
 
             Projectile.tileCollide = false;
             Projectile.hostile = true;
@@ -24,7 +24,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
-            if (Projectile.velocity.Length() < 24)
+            if (Projectile.velocity.Length() < 16)
             {
                 Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.2f;
             }
@@ -48,7 +48,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     {
         public override void SetDefaults()
         {
-            Projectile.timeLeft = 1200;
+            Projectile.timeLeft = 600;
 
             Projectile.tileCollide = false;
             Projectile.hostile = true;
