@@ -1679,6 +1679,14 @@ Mods: {
 					命中敌人后钩在敌人身上，此时再次右键将敌人向自身拖拽
 					'''
 			}
+
+			ShadowMirror: {
+				DisplayName: 影魔镜
+				Tooltip: 
+				'''
+				照出你的影子，你的影子会向你3秒之前的位置移动
+				'''
+			}
 		}
 
 		Tiles: {
@@ -2079,6 +2087,7 @@ Mods: {
 			// IronSilkKniefSlash.DisplayName: Iron Silk Knief Slash
 			// IcicleKnief.DisplayName: Icicle Knief
 			// IcicleKniefChain.DisplayName: Icicle Knief Chain
+			// ShadowMirrorProj.DisplayName: Shadow Mirror Proj
 		}
 
 		Configs: {

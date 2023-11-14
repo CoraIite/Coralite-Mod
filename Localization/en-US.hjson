@@ -1670,6 +1670,11 @@ Mods: {
 				DisplayName: Iron Silk Knief
 				Tooltip: ""
 			}
+
+			ShadowMirror: {
+				DisplayName: Shadow Mirror
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2070,6 +2075,7 @@ Mods: {
 			IronSilkKniefSlash.DisplayName: Iron Silk Knief Slash
 			IcicleKnief.DisplayName: Icicle Knief
 			IcicleKniefChain.DisplayName: Icicle Knief Chain
+			ShadowMirrorProj.DisplayName: Shadow Mirror Proj
 		}
 
 		Configs: {

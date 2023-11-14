@@ -26,6 +26,12 @@ namespace Coralite.Content.WorldGeneration
             }
 
             int Dungeon = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
+            if (ShadowCastle)
+            {
+                tasks.RemoveAt(Dungeon);
+                tasks.Insert(Dungeon, new PassLegacy("Coralite Shadow Castle", GenShadowCastle));
+            }
+
             int Lakes = tasks.FindIndex(genpass => genpass.Name.Equals("Lakes"));
             if (IceBiomeIndex != -1)
             {
