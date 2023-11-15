@@ -1675,6 +1675,16 @@ Mods: {
 				DisplayName: Shadow Mirror
 				Tooltip: ""
 			}
+
+			SlimeSceptre: {
+				DisplayName: Slime Sceptre
+				Tooltip: ""
+			}
+
+			MagikeMonoclastic: {
+				DisplayName: Magike Monoclastic
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1859,6 +1869,28 @@ Mods: {
 			FantasySparkle.DisplayName: Fantasy Sparkle
 			FantasyGod.DisplayName: Fantasy God
 			Turmoil.DisplayName: Turmoil
+
+			CrystalRobot: {
+				DisplayName: Crystal Robot
+
+				TownNPCMood: {
+					Content: 我很满足。
+					NoHome: 我讨厌没有家。
+					FarFromHome: 我离家太远了。
+					LoveSpace: 我非常喜欢有这么大的空间。
+					DislikeCrowded: 我不喜欢这么拥挤。
+					HateCrowded: 我讨厌这么拥挤。
+					LoveBiome: 我非常喜欢{BiomeName}。
+					LikeBiome: 我喜欢{BiomeName}。
+					DislikeBiome: 我不喜欢{BiomeName}。
+					LoveNPC: 我非常喜欢{NPCName}。
+					LikeNPC: 我喜欢{NPCName}。
+					DislikeNPC: 我不喜欢{NPCName}。
+					HateNPC: 我讨厌{NPCName}。
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+			}
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -2076,6 +2108,7 @@ Mods: {
 			IcicleKnief.DisplayName: Icicle Knief
 			IcicleKniefChain.DisplayName: Icicle Knief Chain
 			ShadowMirrorProj.DisplayName: Shadow Mirror Proj
+			SlimeSceptreBall.DisplayName: Slime Sceptre Ball
 		}
 
 		Configs: {

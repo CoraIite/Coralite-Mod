@@ -1682,10 +1682,22 @@ Mods: {
 
 			ShadowMirror: {
 				DisplayName: 影魔镜
-				Tooltip: 
-				'''
-				照出你的影子，你的影子会向你3秒之前的位置移动
-				'''
+				Tooltip: 照出你的影子，你的影子会向你3秒之前的位置移动
+			}
+
+			SlimeSceptre: {
+				DisplayName: 凝胶手杖
+				Tooltip:
+					'''
+					使用时射出弹力凝胶球
+					装备后 +4% 伤害，+8% 移动速度
+					手持或装备时双击任意方向键召唤弹力凝胶球将自身弹出
+					'''
+			}
+
+			MagikeMonoclastic: {
+				// DisplayName: Magike Monoclastic
+				// Tooltip: ""
 			}
 		}
 
@@ -1870,7 +1882,29 @@ Mods: {
 			NightmareCatcher.DisplayName: 梦魇捕食者
 			FantasySparkle.DisplayName: 美梦光
 			FantasyGod.DisplayName: 美梦之神
-			// Turmoil.DisplayName: Turmoil
+			Turmoil.DisplayName: 动乱祸源
+
+			CrystalRobot: {
+				DisplayName: 水晶生命体
+
+				TownNPCMood: {
+					Content: 我很满足。
+					NoHome: 野外，危险，我需要一个家。
+					FarFromHome: 离家，太远。
+					LoveSpace: 空间，很大。
+					DislikeCrowded: 检测到过多生命体。
+					HateCrowded: 周围生命体超过上限！
+					LoveBiome: 喜欢{BiomeName}，冰凉，安心。
+					LikeBiome: 喜欢{BiomeName}，判定为宜居地。
+					DislikeBiome: 讨厌{BiomeName}，判定为不宜居。
+					LoveNPC: 这是{NPCName}，很喜欢。
+					LikeNPC: 这是{NPCName}，喜欢。
+					DislikeNPC: 这是{NPCName}，不喜欢。
+					HateNPC: 这是{NPCName}，讨厌。
+					LikeNPC_Princess: 这是{NPCName}，尊敬的公主。
+					Princess_LovesNPC: 哇，{NPCName}，一个无机生命体！这个世界果然充满奇妙的事情。
+				}
+			}
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -2088,6 +2122,7 @@ Mods: {
 			// IcicleKnief.DisplayName: Icicle Knief
 			// IcicleKniefChain.DisplayName: Icicle Knief Chain
 			// ShadowMirrorProj.DisplayName: Shadow Mirror Proj
+			// SlimeSceptreBall.DisplayName: Slime Sceptre Ball
 		}
 
 		Configs: {
@@ -2228,6 +2263,20 @@ Mods: {
 			YujianSystem: {
 				YujianDescription: 需要放置在葫芦中以使用
 				HuluDescription: 右键单击打开UI面板，将御剑放进栏位后可召唤出御剑
+			}
+		}
+
+		Dialogue: {
+			CrystalRobot: {
+				StandardDialogue1: a
+				StandardDialogue2: 右键单击打开UI面板，将御剑放进栏位后可召唤出御剑
+				StandardDialogue3: a
+				CommonDialogue: 魔力晶体
+				RareDialogue1: a
+				RareDialogue2: a
+				RareDialogue3: a
+				PartyGirlDialogue: a
+				TalkALot: a
 			}
 		}
 	}

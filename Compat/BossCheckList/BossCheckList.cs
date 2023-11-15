@@ -80,6 +80,7 @@ namespace Coralite.Compat.BossCheckList
                     ItemType<Content.Items.Gels.SlimeEruption>(),
                     ItemType<Content.Items.Gels.GelWhip>(),
                     ItemType<Content.Items.Gels.RoyalClassics>(),
+                    ItemType<Content.Items.Gels.SlimeSceptre>(),
                     ItemType<Content.Items.Gels.GelThrone>(),
                     ItemType<Content.Items.Gels.RoyalGelCannon>(),
                     //ItemType<Content.Items.Icicle.RedianciePet>(),

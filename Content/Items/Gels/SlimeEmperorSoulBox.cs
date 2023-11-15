@@ -52,6 +52,7 @@ namespace Coralite.Content.Items.Gels
                 ItemDropRule.Common(ModContent.ItemType<SlimeEruption>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<GelWhip>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<RoyalClassics>(), 1, 1, 1),
+                ItemDropRule.Common(ModContent.ItemType<SlimeSceptre>(), 1, 1, 1),
             };
 
             itemLoot.Add(new OneFromRulesRule(1, weaponTypes));

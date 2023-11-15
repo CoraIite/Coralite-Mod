@@ -139,6 +139,7 @@ namespace Coralite.Core
         public const string MagikeNPCs = NPCs + "Magike/";
         public const string OtherNPC = NPCs + "OtherNPC/";
 
+        public const string TownNPC = NPCs + "Town/";
         #endregion
 
         #region Gore部分！

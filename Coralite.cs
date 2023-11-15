@@ -65,6 +65,10 @@ namespace Coralite
                 loadCache[k].Load();
                 //SetLoadingText("Loading " + loadCache[k].GetType().Name);     //使用反射来显示加载的内容，但我暂时不需要（
             }
+
+            /////////////////////////////////其他乱七八糟的加载内容////////////////////////////////////////////
+
+            LoadCurrency();
         }
 
         public override void Unload()

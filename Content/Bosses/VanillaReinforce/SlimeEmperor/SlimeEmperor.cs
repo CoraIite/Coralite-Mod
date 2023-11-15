@@ -176,6 +176,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 ItemDropRule.Common(ItemType<SlimeEruption>(), 1, 1, 1),
                 ItemDropRule.Common(ItemType<GelWhip>(), 1, 1, 1),
                 ItemDropRule.Common(ItemType<RoyalClassics>(), 1, 1, 1),
+                ItemDropRule.Common(ItemType<SlimeSceptre>(), 1, 1, 1),
             };
 
             notExpertRule.OnSuccess(new OneFromRulesRule(1, weaponTypes));
