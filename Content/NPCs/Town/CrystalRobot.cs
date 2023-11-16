@@ -200,23 +200,23 @@ namespace Coralite.Content.NPCs.Town
         {
             WeightedRandom<string> chat = new WeightedRandom<string>();
 
-            int partyGirl = NPC.FindFirstNPC(NPCID.PartyGirl);
-            if (partyGirl >= 0 && Main.rand.NextBool(4))
-            {
-                chat.Add(Language.GetTextValue("Mods.Coralite.Dialogue.CrystalRobot.PartyGirlDialogue", Main.npc[partyGirl].GivenName));
-            }
+            //int partyGirl = NPC.FindFirstNPC(NPCID.PartyGirl);
+            //if (partyGirl >= 0 && Main.rand.NextBool(4))
+            //{
+            //    chat.Add(Language.GetTextValue($"Mods.Coralite.Dialogue.CrystalRobot.PartyGirlDialogue", Main.npc[partyGirl].GivenName));
+            //}
 
-            chat.Add(Language.GetOrRegister("Mods.Coralite.Dialogue.CrystalRobot.StandardDialogue1").Value);
-            chat.Add(Language.GetTextValue("Mods.Coralite.Dialogue.CrystalRobot.StandardDialogue2"));
-            chat.Add(Language.GetTextValue("Mods.Coralite.Dialogue.CrystalRobot.StandardDialogue3"));
-            chat.Add(Language.GetTextValue("Mods.Coralite.Dialogue.CrystalRobot.CommonDialogue"), 5.0);
-            chat.Add(Language.GetTextValue("Mods.Coralite.Dialogue.CrystalRobot.RareDialogue1"), 0.1);
-            chat.Add(Language.GetTextValue("Mods.Coralite.Dialogue.CrystalRobot.RareDialogue2"), 0.1);
-            chat.Add(Language.GetTextValue("Mods.Coralite.Dialogue.CrystalRobot.RareDialogue3"), 0.1);
+            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.StandardDialogue1", () => "当今，神明隐去，万物复兴。").Value);
+            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.StandardDialogue2", () => "需要补充魔能以维持机体运转。").Value);
+            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.StandardDialogue3", () => "魔力晶体，美味。").Value);
+            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.CommonDialogue", () => "魔力晶体，需要大量，会用实用物资与你交换。").Value, 3.0);
+            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.RareDialogue1", () => "妖精，强大且充满智慧，创造了我。").Value, 0.1);
+            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.RareDialogue2", () => "珊瑚，过于强大，集全族之力也无法与之抗衡。").Value, 0.1);
+            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.RareDialogue3", () => "应龙，伟大，但记忆体中只有文字记载。").Value, 0.1);
 
             NumberOfTimesTalkedTo++;
             if (NumberOfTimesTalkedTo >= 10)
-                chat.Add(Language.GetTextValue("Mods.Coralite.Dialogue.CrystalRobot.TalkALot"));
+                chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.TalkALot", () => "魔能辞典，你需要，尽快购买。").Value);
 
             return chat;
         }

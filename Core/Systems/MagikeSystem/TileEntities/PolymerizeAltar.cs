@@ -13,7 +13,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
-    public abstract class MagikeFactory_PolymerizeAltar : MagikeFactory, IMagikeSender, ISingleItemContainer
+    public abstract class MagikeFactory_PolymerizeAltar : MagikeFactory, IMagikeSender_Line, ISingleItemContainer
     {
         public MagikeFactory_PolymerizeAltar(int magikeMax, int perWorkTime, int connectLenghMax, int howManyCanConnect = 1) : base(magikeMax, 100)
         {
@@ -31,6 +31,9 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public int HowManyPerSend => 1;
         public abstract Color MainColor { get; }
         public Item ContainsItem { get => containsItem; set => containsItem = value; }
+
+        Point16[] IMagikeSender_Line.receiverPoints => receiverPoints;
+        int IMagikeSender_Line.connectLenghMax => connectLenghMax;
 
         /// <summary> 接收者的位置 </summary>
         public Point16[] receiverPoints;

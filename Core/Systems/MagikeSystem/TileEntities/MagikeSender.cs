@@ -147,12 +147,15 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     /// <summary>
     /// 线性魔能发送器，能够存储魔能，同时可以发送魔能，使用howManyCanConnect来决定能连接多少魔能容器
     /// </summary>
-    public abstract class MagikeSender_Line : MagikeSender
+    public abstract class MagikeSender_Line : MagikeSender,IMagikeSender_Line
     {
         /// <summary> 接收者的位置 </summary>
         public Point16[] receiverPoints;
         /// <summary> 距离多少才能连接 </summary>
         public readonly int connectLenghMax;
+
+        Point16[] IMagikeSender_Line.receiverPoints => receiverPoints;
+        int IMagikeSender_Line.connectLenghMax => connectLenghMax;
 
         public event Action<IMagikeContainer> OnConnected;
 

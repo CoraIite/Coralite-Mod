@@ -1,0 +1,104 @@
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System.Net;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ModLoader;
+using Terraria.ObjectData;
+
+namespace Coralite.Content.CustomHooks
+{
+    public class DrawMagikeDevice:HookGroup
+    {
+        // 应该不会干涉任何东西
+        public override SafetyLevel Safety => SafetyLevel.Safe;
+
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+
+            On_Main.DrawDust += DrawMagikeDevices;
+        }
+
+        private void DrawMagikeDevices(On_Main.orig_DrawDust orig, Main self)
+        {
+            orig.Invoke(self);
+
+            if (Main.gameMenu)
+                return;
+
+            if (Main.LocalPlayer.TryGetModPlayer(out MagikePlayer mp) && mp.equippedMagikeMonoclastic)
+            {
+                Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
+                Texture2D laserTex = ModContent.Request<Texture2D>(AssetDirectory.OtherItems+ "MagikeArrow").Value;
+                Color drawColor = Coralite.Instance.MagicCrystalPink * 0.6f;
+                var origin = new Vector2(0, laserTex.Height / 2);
+
+                foreach (var entity in TileEntity.ByPosition)
+                {
+                    if (entity.Value is IMagikeSender_Line sender)
+                    {
+                        Tile tile = Framing.GetTileSafely(entity.Key);
+                        TileObjectData data = TileObjectData.GetTileData(tile);
+                        int x = data == null ? 8 : data.Width * 16 / 2;
+                        int y = data == null ? 8 : data.Height * 16 / 2;
+
+                        Vector2 selfPos = entity.Value.Position.ToWorldCoordinates(x, y);
+                        Vector2 startPos = selfPos - Main.screenPosition;
+
+                        if (Helper.OnScreen(startPos))
+                        {
+                            for (int i = 0; i < sender.receiverPoints.Length; i++)
+                            {
+                                if (sender.receiverPoints[i] == Point16.NegativeOne)
+                                    continue;
+                                Tile tile2 = Framing.GetTileSafely(sender.receiverPoints[i]);
+                                TileObjectData data2 = TileObjectData.GetTileData(tile2);
+                                int x2 = data2 == null ? 8 : data2.Width * 16 / 2;
+                                int y2 = data2 == null ? 8 : data2.Height * 16 / 2;
+                                Vector2 aimPos = sender.receiverPoints[i].ToWorldCoordinates(x2, y2);
+
+                                int width = (int)(selfPos - aimPos).Length();   //这个就是激光长度
+
+                                var laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, laserTex.Height);
+                                var laserSource = new Rectangle((int)(-Main.GlobalTimeWrappedHourly * laserTex.Width), 0, width, laserTex.Height);
+
+                                Main.spriteBatch.Draw(laserTex, laserTarget, laserSource,drawColor , (aimPos-selfPos).ToRotation(), origin, 0, 0);
+                            }
+                            continue;
+                        }
+
+                        for (int i = 0; i < sender.receiverPoints.Length; i++)
+                        {
+                            if (sender.receiverPoints[i] == Point16.NegativeOne)
+                                continue;
+
+                            Tile tile2 = Framing.GetTileSafely(sender.receiverPoints[i]);
+                            TileObjectData data2 = TileObjectData.GetTileData(tile2);
+                            int x2 = data2 == null ? 8 : data.Width * 16 / 2;
+                            int y2 = data2 == null ? 8 : data.Height * 16 / 2;
+                            Vector2 aimPos = sender.receiverPoints[i].ToWorldCoordinates(x2, y2);
+
+                            if (!Helper.OnScreen(aimPos-Main.screenPosition))
+                                continue;
+
+                            int width = (int)(selfPos - aimPos).Length();   //这个就是激光长度
+
+                            var laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, 10);
+                            var laserSource = new Rectangle((int)(Main.GlobalTimeWrappedHourly * laserTex.Width), 0, laserTex.Width, laserTex.Height);
+
+                            Main.spriteBatch.Draw(laserTex, laserTarget, laserSource, drawColor, (aimPos - selfPos).ToRotation(), origin, 0, 0);
+                        }
+                    }
+                }
+
+                Main.spriteBatch.End();
+            }
+        }
+    }
+}

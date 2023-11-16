@@ -1696,8 +1696,8 @@ Mods: {
 			}
 
 			MagikeMonoclastic: {
-				// DisplayName: Magike Monoclastic
-				// Tooltip: ""
+				DisplayName: 魔能单片镜
+				Tooltip: 佩戴并打开饰品可见性时可以直观地观察到魔能的流动
 			}
 		}
 
@@ -2263,20 +2263,6 @@ Mods: {
 			YujianSystem: {
 				YujianDescription: 需要放置在葫芦中以使用
 				HuluDescription: 右键单击打开UI面板，将御剑放进栏位后可召唤出御剑
-			}
-		}
-
-		Dialogue: {
-			CrystalRobot: {
-				StandardDialogue1: a
-				StandardDialogue2: 右键单击打开UI面板，将御剑放进栏位后可召唤出御剑
-				StandardDialogue3: a
-				CommonDialogue: 魔力晶体
-				RareDialogue1: a
-				RareDialogue2: a
-				RareDialogue3: a
-				PartyGirlDialogue: a
-				TalkALot: a
 			}
 		}
 	}
