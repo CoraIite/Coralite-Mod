@@ -152,7 +152,14 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public virtual bool CanConnect(IMagikeContainer container)
         {
-            return Vector2.Distance(container.GetPosition.ToVector2() * 16, Position.ToVector2() * 16) < connectLenghMax;
+            return Vector2.Distance(container.GetPosition.ToVector2() * 16, Position.ToVector2() * 16) < connectLenghMax
+                && container.GetPosition != Position;
+        }
+
+        public virtual bool CanConnect(Point16 targetPos)
+        {
+            return Vector2.Distance(targetPos.ToVector2() * 16, Position.ToVector2() * 16) < connectLenghMax
+                && targetPos != Position;
         }
 
         public void DisconnectAll()

@@ -99,6 +99,14 @@ namespace Coralite.Content.Items.Icicle
 
         public override bool AllowPrefix(int pre) => true;
         public override bool MeleePrefix() => true;
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<FrostCrystal>(3)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+        }
     }
 
     public class FrostySwordSlash : BaseSwingProj, IDrawWarp

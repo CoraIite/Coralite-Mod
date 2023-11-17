@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Items.Magike.Tools;
 using Coralite.Content.Items.Magike.Towers;
-using Coralite.Content.Tiles.Magike;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Microsoft.Xna.Framework;
@@ -21,6 +20,7 @@ using Terraria.Utilities;
 
 namespace Coralite.Content.NPCs.Town
 {
+    [AutoloadHead]
     public class CrystalRobot:ModNPC
     {
         public override string Texture => AssetDirectory.TownNPC+Name;
@@ -163,23 +163,23 @@ namespace Coralite.Content.NPCs.Town
             return MagikeSystem.learnedMagikeBase;
         }
 
-        public override bool CheckConditions(int left, int right, int top, int bottom)
-        {
-            int score = 0;
-            for (int x = left; x <= right; x++)
-            {
-                for (int y = top; y <= bottom; y++)
-                {
-                    int type = Main.tile[x, y].TileType;
-                    if (type == ModContent.TileType<BasaltTile>() || type == ModContent.TileType<HardBasaltTile>() || type == ModContent.TileType<MagicCrystalBrickTile>())
-                    {
-                        score++;
-                    }
-                }
-            }
+        //public override bool CheckConditions(int left, int right, int top, int bottom)
+        //{
+        //    int score = 0;
+        //    for (int x = left; x <= right; x++)
+        //    {
+        //        for (int y = top; y <= bottom; y++)
+        //        {
+        //            int type = Main.tile[x, y].TileType;
+        //            if (type == ModContent.TileType<BasaltTile>() || type == ModContent.TileType<HardBasaltTile>() || type == ModContent.TileType<MagicCrystalBrickTile>())
+        //            {
+        //                score++;
+        //            }
+        //        }
+        //    }
 
-            return score >= ((right - left) * (bottom - top)) / 2;
-        }
+        //    return score >= ((right - left) * (bottom - top)) / 2;
+        //}
 
         public override ITownNPCProfile TownNPCProfile()
         {

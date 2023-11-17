@@ -1685,6 +1685,11 @@ Mods: {
 				DisplayName: Magike Monoclastic
 				Tooltip: ""
 			}
+
+			Reel_MagikeAdvance: {
+				DisplayName: Reel_ Magike Advance
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2109,6 +2114,7 @@ Mods: {
 			IcicleKniefChain.DisplayName: Icicle Knief Chain
 			ShadowMirrorProj.DisplayName: Shadow Mirror Proj
 			SlimeSceptreBall.DisplayName: Slime Sceptre Ball
+			MagConnectProj.DisplayName: Mag Connect Proj
 		}
 
 		Configs: {

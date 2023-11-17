@@ -147,7 +147,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     /// <summary>
     /// 线性魔能发送器，能够存储魔能，同时可以发送魔能，使用howManyCanConnect来决定能连接多少魔能容器
     /// </summary>
-    public abstract class MagikeSender_Line : MagikeSender,IMagikeSender_Line
+    public abstract class MagikeSender_Line : MagikeSender, IMagikeSender_Line
     {
         /// <summary> 接收者的位置 </summary>
         public Point16[] receiverPoints;
@@ -229,7 +229,14 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// <returns></returns>
         public virtual bool CanConnect(IMagikeContainer container)
         {
-            return Vector2.Distance(container.GetPosition.ToVector2() * 16, Position.ToVector2() * 16) < connectLenghMax;
+            return Vector2.Distance(container.GetPosition.ToVector2() * 16, Position.ToVector2() * 16) < connectLenghMax
+                && container.GetPosition != Position;
+        }
+
+        public virtual bool CanConnect(Point16 targetPos)
+        {
+            return Vector2.Distance(targetPos.ToVector2() * 16, Position.ToVector2() * 16) < connectLenghMax
+                && targetPos != Position;
         }
 
         /// <summary>

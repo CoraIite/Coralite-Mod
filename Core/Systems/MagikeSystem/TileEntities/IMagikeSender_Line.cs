@@ -13,6 +13,10 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public Point16[] receiverPoints { get; }
         public int connectLenghMax { get; }
 
+        public bool CanConnect(IMagikeContainer container);
+        public bool CanConnect(Point16 targetPoint);
+
+
 #pragma warning restore IDE1006 // 命名样式
     }
 }

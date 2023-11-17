@@ -758,13 +758,9 @@ Mods: {
 				DisplayName: 魔能连接仪
 				Tooltip:
 					'''
-					右键切换模式
-					连接模式：第一次左键选择接收器，第二次左键选择发送器，之后在二者之间建立连接
-					查看模式：查看鼠标位置的发送器所连接的接收器
-					断连模式：断开鼠标位置的发送器与所有接收器的连接
-
-					发送器有距离限制，
-					右键清空所选内容
+					左键点击选中魔能发送器，之后打开UI，可查看连接情况
+					左键点击按钮后可开始连接
+					右键点击按钮清空当前的连接
 					'''
 			}
 
@@ -1699,6 +1695,11 @@ Mods: {
 				DisplayName: 魔能单片镜
 				Tooltip: 佩戴并打开饰品可见性时可以直观地观察到魔能的流动
 			}
+
+			Reel_MagikeAdvance: {
+				DisplayName: 卷轴：强化魔能提炼
+				Tooltip: 现在你懂得如何再次强化你的魔能器械了
+			}
 		}
 
 		Tiles: {
@@ -2123,6 +2124,7 @@ Mods: {
 			// IcicleKniefChain.DisplayName: Icicle Knief Chain
 			// ShadowMirrorProj.DisplayName: Shadow Mirror Proj
 			// SlimeSceptreBall.DisplayName: Slime Sceptre Ball
+			// MagConnectProj.DisplayName: Mag Connect Proj
 		}
 
 		Configs: {
