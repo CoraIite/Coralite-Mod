@@ -508,8 +508,8 @@ namespace Coralite.Content.WorldGeneration
         }
 
         public Task GenShrine(Texture2D clearTex, Texture2D shrineTex, Texture2D wallTex,
-            Dictionary<Color, int> clearDic, Dictionary<Color, int> shrineDic, Dictionary<Color, int> wallDic,
-            int genOrigin_x, int genOrigin_y)
+             Dictionary<Color, int> clearDic, Dictionary<Color, int> shrineDic, Dictionary<Color, int> wallDic,
+             int genOrigin_x, int genOrigin_y)
         {
             bool genned = false;
             bool placed = false;

@@ -41,8 +41,7 @@ namespace Coralite.Core.Loaders
 
         public void Unload()
         {
-            if (UIStates != null)
-                UIStates.ForEach(n => n.Unload());
+            UIStates?.ForEach(n => n.Unload());
             UserInterfaces = null;
             UIStates = null;
         }

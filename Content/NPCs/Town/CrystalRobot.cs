@@ -1,7 +1,9 @@
 ﻿using Coralite.Content.Biomes;
+using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.Magike.Tools;
 using Coralite.Content.Items.Magike.Towers;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -239,10 +241,16 @@ namespace Coralite.Content.NPCs.Town
         public override void AddShops()
         {
             var npcShop = new NPCShop(Type, ShopName);
+            int magicCrystalCurrencyID = CurrencyLoader.GetCurrencyID<MagicCrystalCurrency>();
             npcShop.Add(new Item(ModContent.ItemType<MagikeMonoclastic>())
             {
                 shopCustomPrice = 10,
-                shopSpecialCurrency = Coralite.MagicCrystalCurrencyID
+                shopSpecialCurrency = magicCrystalCurrencyID
+            });
+            npcShop.Add(new Item(ModContent.ItemType<MagConnectStaff>())
+            {
+                shopCustomPrice = 10,
+                shopSpecialCurrency = magicCrystalCurrencyID
             });
             npcShop.Register();
         }
@@ -322,7 +330,7 @@ namespace Coralite.Content.NPCs.Town
 
     public class MagicCrystalCurrency : CustomCurrencySingleCoin
     {
-        public MagicCrystalCurrency(int coinItemID, long currencyCap) : base(coinItemID, currencyCap)
+        public MagicCrystalCurrency() : base(ModContent.ItemType<MagicCrystal>(), 9999)
         {
             CurrencyTextKey = "Mods.Coralite.Items.MagicCrystal.DisplayName";
             CurrencyTextColor = Coralite.Instance.MagicCrystalPink;
