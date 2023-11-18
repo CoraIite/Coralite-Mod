@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -12,14 +13,27 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.BiomeLens
 {
-    public class OceanLens : BaseMagikePlaceableItem
+    public class OceanLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
         public OceanLens() : base(TileType<OceanLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
+        public override int MagikeMax => 350;
+        public string SendDelay => "10";
+        public int HowManyPerSend => 20;
+        public int ConnectLengthMax => 5;
+        public int HowManyToGenerate => 18;
+        public string GenerateDelay => "10";
+
         public override void AddRecipes()
         {
-            //TODO: 添加虹水母/巨蟹后添加合成表
+            //TODO: 添加虹水母/巨蟹后修改合成表
+            CreateRecipe()
+                .AddIngredient<CrystallineMagike>(5)
+                .AddIngredient(ItemID.Coral, 10)
+                .AddCondition(MagikeSystem.Instance.LearnedMagikeAdvanced, () => MagikeSystem.learnedMagikeAdvanced)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
 
         public override bool CanUseItem(Player player)

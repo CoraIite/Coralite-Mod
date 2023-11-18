@@ -14,10 +14,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.ItemTransmit
 {
-    public class VoidCrystal : BaseMagikePlaceableItem, IMagikePolymerizable
+    public class VoidCrystal : BaseMagikePlaceableItem, IMagikePolymerizable,IMagikeFactoryItem
     {
         public VoidCrystal() : base(TileType<VoidCrystalTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 250;
+        public string WorkTimeMax => "5";
+        public string WorkCost => "5（发送物品）/ 10（吸取物品）";
 
         public void AddMagikePolymerizeRecipe()
         {

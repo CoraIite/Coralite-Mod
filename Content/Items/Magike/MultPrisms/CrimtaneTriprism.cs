@@ -17,17 +17,22 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.MultPrisms
 {
-    public class CrimtaneTriprism : BaseMagikePlaceableItem, IMagikePolymerizable
+    public class CrimtaneTriprism : BaseMagikePlaceableItem, IMagikePolymerizable,IMagikeSenderItem
     {
         public CrimtaneTriprism() : base(TileType<CrimtaneTriprismTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 25)
         { }
+
+        public override int MagikeMax => 50;
+        public string SendDelay => "4.5";
+        public int HowManyPerSend => 15;
+        public int ConnectLengthMax => 10;
+        public int HowManyCanConnect => 3;
 
         public void AddMagikePolymerizeRecipe()
         {
             PolymerizeRecipe.CreateRecipe<CrimtaneTriprism>(50)
                 .SetMainItem<Diprism>()
                 .AddIngredient<GlistentBar>(4)
-                .AddIngredient(ItemID.CrimtaneBar, 10)
                 .AddIngredient(ItemID.TissueSample, 10)
                 .Register();
         }

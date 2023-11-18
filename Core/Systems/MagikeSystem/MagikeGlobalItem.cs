@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
+﻿using Coralite.Content.Items.Materials;
+using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -190,6 +191,32 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
+            if (item.ModItem is IMagikeSenderItem senderItem)
+            {
+                string sendDelay = string.Concat("每 ", senderItem.SendDelay, " 秒发送一次魔能\n");
+                string perSend = $"每次发送魔能量： {senderItem.HowManyPerSend}\n";
+                string connectLengthMax = $"连接距离： {senderItem.ConnectLengthMax} 格\n";
+                string howManyCanConnect = $"连接数量： {senderItem.HowManyCanConnect}";
+                TooltipLine line = new TooltipLine(Mod, "magikeSend", string.Concat(sendDelay, perSend, connectLengthMax, howManyCanConnect));
+                tooltips.Add(line);
+            }
+
+            if (item.ModItem is IMagikeGeneratorItem generatorItem)
+            {
+                string GenerateDelay = string.Concat("每 ", generatorItem.GenerateDelay, " 秒生产一次魔能\n");
+                string howManyToGenerate = generatorItem.HowManyToGenerate < 0 ? "" : $"每次生产魔能量：{generatorItem.HowManyToGenerate}";
+                TooltipLine line = new TooltipLine(Mod, "magikeGenerate", GenerateDelay+howManyToGenerate);
+                tooltips.Add(line);
+            }
+
+            if (item.ModItem is IMagikeFactoryItem factoryItem)
+            {
+                string workTimeMax = string.Concat("工作时间：", factoryItem.WorkTimeMax, " 秒\n");
+                string workCost = string.Concat("每次工作消耗 ", factoryItem.WorkCost, " 魔能");
+                TooltipLine line = new TooltipLine(Mod, "magikeFactory", workTimeMax+ workCost);
+                tooltips.Add(line);
+            }
+
             if (enchant != null)
             {
                 for (int i = 0; i < 3; i++)
@@ -239,6 +266,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
                 tooltips.Add(line);
             }
+
         }
 
         private static Color GetColor(Enchant.Level level)

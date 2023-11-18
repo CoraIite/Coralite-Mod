@@ -14,10 +14,18 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Altars
 {
-    public class CrystalAltar : BaseMagikePlaceableItem
+    public class CrystalAltar : BaseMagikePlaceableItem, IMagikeSenderItem, IMagikeFactoryItem
     {
         public CrystalAltar() : base(TileType<CrystalAltarTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 150;
+        public string SendDelay => "20";
+        public int HowManyPerSend => 1;
+        public int ConnectLengthMax => 7;
+        public int HowManyCanConnect => 4;
+        public string WorkTimeMax => "4 × 次要物品数量";
+        public string WorkCost => "?";
 
         public override void AddRecipes()
         {

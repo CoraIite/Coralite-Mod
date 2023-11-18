@@ -14,10 +14,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.WeatherLens
 {
-    public class RainstormLens : BaseMagikePlaceableItem
+    public class RainstormLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
         public RainstormLens() : base(TileType<RainstormLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<CrystallineMagikeRarity>(), 300)
         { }
+
+        public override int MagikeMax => 300;
+        public int HowManyToGenerate => 17;
+        public string GenerateDelay => "10";
+        public string SendDelay => "10";
+        public int HowManyPerSend => 17;
+        public int ConnectLengthMax => 5;
 
         public override void AddRecipes()
         {

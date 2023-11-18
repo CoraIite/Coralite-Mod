@@ -58,6 +58,14 @@ namespace Coralite.Content.Items.Shadow
                 }
             }
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<ShadowCrystal>(8)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
     }
 
     [AutoloadEquip(EquipType.Body)]
@@ -78,6 +86,14 @@ namespace Coralite.Content.Items.Shadow
             player.GetDamage(DamageClass.Generic) += 0.10f;
             player.GetCritChance(DamageClass.Generic) += 0.06f;
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<ShadowCrystal>(10)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
     }
 
     [AutoloadEquip(EquipType.Legs)]
@@ -97,6 +113,14 @@ namespace Coralite.Content.Items.Shadow
         {
             player.GetAttackSpeed(DamageClass.Generic) += 0.08f;
             player.GetKnockback(DamageClass.Generic) += 0.06f;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<ShadowCrystal>(8)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

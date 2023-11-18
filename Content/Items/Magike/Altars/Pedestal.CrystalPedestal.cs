@@ -18,6 +18,8 @@ namespace Coralite.Content.Items.Magike.Altars
         public CrystalPedestal() : base(TileType<CrystalPedestalTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
 
+        public override int MagikeMax => 1;
+
         public override void AddRecipes()
         {
             CreateRecipe()

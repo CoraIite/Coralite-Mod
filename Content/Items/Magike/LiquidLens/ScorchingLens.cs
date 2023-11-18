@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -12,10 +13,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.LiquidLens
 {
-    public class ScorchingLens : BaseMagikePlaceableItem
+    public class ScorchingLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
         public ScorchingLens() : base(TileType<ScorchingLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<CrystallineMagikeRarity>(), 300)
         { }
+
+        public override int MagikeMax => 1200;
+        public string SendDelay => "6";
+        public int HowManyPerSend => 24;
+        public int ConnectLengthMax => 5;
+        public int HowManyToGenerate => 48;
+        public string GenerateDelay => "12";
 
         public override void AddRecipes()
         {

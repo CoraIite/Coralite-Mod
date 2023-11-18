@@ -17,10 +17,16 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.MultPrisms
 {
-    public class RedJadeDiprism : BaseMagikePlaceableItem
+    public class RedJadeDiprism : BaseMagikePlaceableItem,IMagikeSenderItem
     {
         public RedJadeDiprism() : base(TileType<RedJadeDiprismTile>(), Item.sellPrice(0, 0, 5, 0), RarityType<MagicCrystalRarity>(), 25)
         { }
+
+        public override int MagikeMax => 25;
+        public string SendDelay => "0.5";
+        public int HowManyPerSend => 1;
+        public int ConnectLengthMax => 10;
+        public int HowManyCanConnect => 2;
 
         public override void AddRecipes()
         {

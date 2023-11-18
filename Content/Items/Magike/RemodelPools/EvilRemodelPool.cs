@@ -16,24 +16,26 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.RemodelPools
 {
-    public class EvilRemodelPool : BaseMagikePlaceableItem, IMagikePolymerizable
+    public class EvilRemodelPool : BaseMagikePlaceableItem, IMagikePolymerizable,IMagikeFactoryItem
     {
         public EvilRemodelPool() : base(TileType<EvilRemodelPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 450;
+        public string WorkTimeMax => "4";
+        public string WorkCost => "?";
 
         public void AddMagikePolymerizeRecipe()
         {
             PolymerizeRecipe.CreateRecipe<EvilRemodelPool>(150)
                 .SetMainItem<CrystalRemodelPool>()
                 .AddIngredient<GlistentBar>(12)
-                .AddIngredient(ItemID.DemoniteBar, 10)
                 .AddIngredient(ItemID.ShadowScale, 10)
                 .Register();
 
             PolymerizeRecipe.CreateRecipe<EvilRemodelPool>(150)
                 .SetMainItem<CrystalRemodelPool>()
                 .AddIngredient<GlistentBar>(12)
-                .AddIngredient(ItemID.CrimtaneBar, 10)
                 .AddIngredient(ItemID.TissueSample, 10)
                 .Register();
         }

@@ -14,17 +14,20 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.EnchantPools
 {
-    public class DemoniteEnchantPool : BaseMagikePlaceableItem, IMagikePolymerizable
+    public class DemoniteEnchantPool : BaseMagikePlaceableItem, IMagikePolymerizable,IMagikeFactoryItem
     {
         public DemoniteEnchantPool() : base(TileType<DemoniteEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 450;
+        public string WorkTimeMax => "8";
+        public string WorkCost => "?";
 
         public void AddMagikePolymerizeRecipe()
         {
             PolymerizeRecipe.CreateRecipe<DemoniteEnchantPool>(150)
                 .SetMainItem<CrystalEnchantPool>()
                 .AddIngredient<GlistentBar>(8)
-                .AddIngredient(ItemID.DemoniteBar, 10)
                 .AddIngredient(ItemID.ShadowScale, 10)
                 .Register();
         }

@@ -211,7 +211,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             if (item.defense > 0)
                 return EnchantEntityPools.armorPool;
 
-            return EnchantEntityPools.weaponPool;
+            return EnchantEntityPools.weaponPool_Generic;
         }
 
         public static Enchant.Level GetLevel(Enchant.Level currentLevel)

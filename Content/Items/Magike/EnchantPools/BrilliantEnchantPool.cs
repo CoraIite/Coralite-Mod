@@ -12,10 +12,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.EnchantPools
 {
-    public class BrilliantEnchantPool : BaseMagikePlaceableItem
+    public class BrilliantEnchantPool : BaseMagikePlaceableItem,IMagikeFactoryItem
     {
         public BrilliantEnchantPool() : base(TileType<BrilliantEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<CrystallineMagikeRarity>(), 300)
         { }
+
+        public override int MagikeMax => 1000;
+        public string WorkTimeMax => "6";
+        public string WorkCost => "?";
 
         public override void AddRecipes()
         {

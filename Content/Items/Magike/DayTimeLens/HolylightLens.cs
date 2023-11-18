@@ -18,10 +18,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.DayTimeLens
 {
-    public class HolylightLens : BaseMagikePlaceableItem
+    public class HolylightLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
         public HolylightLens() : base(TileType<HolylightLensTile>(), Item.sellPrice(0, 2, 0, 0), RarityType<CrystallineMagikeRarity>(), 300)
         { }
+
+        public override int MagikeMax => 1200;
+        public string SendDelay => "6";
+        public int HowManyPerSend => 30;
+        public int ConnectLengthMax => 5;
+        public int HowManyToGenerate => 60;
+        public string GenerateDelay => "12";
 
         public override void AddRecipes()
         {

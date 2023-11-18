@@ -15,10 +15,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike
 {
-    public class CogLens : BaseMagikePlaceableItem
+    public class CogLens : BaseMagikePlaceableItem,IMagikeGeneratorItem,IMagikeSenderItem
     {
         public CogLens() : base(TileType<CogLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<CrystallineMagikeRarity>(), 300)
         { }
+
+        public override int MagikeMax => 300;
+        public int HowManyToGenerate => 3;
+        public string GenerateDelay => "2";
+        public string SendDelay => "2";
+        public int HowManyPerSend => 3;
+        public int ConnectLengthMax => 5;
 
         public override void AddRecipes()
         {

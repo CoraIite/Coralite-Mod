@@ -13,10 +13,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.BasicLens
 {
-    public class CrystalLens : BaseMagikePlaceableItem
+    public class CrystalLens : BaseMagikePlaceableItem, IMagikeSenderItem, IMagikeGeneratorItem
     {
         public CrystalLens() : base(TileType<CrystalLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 50;
+        public string SendDelay => "10";
+        public int HowManyPerSend => 5;
+        public int ConnectLengthMax => 5;
+        public int HowManyToGenerate => -1;
+        public string GenerateDelay => "10";
 
         public override void AddRecipes()
         {
@@ -58,9 +65,9 @@ namespace Coralite.Content.Items.Magike.BasicLens
 
     public class CrystalLensEntity : MagikeGenerator_FromMagItem
     {
-        public const int sendDelay = 600;
+        public const int sendDelay = 60*10;
         public int sendTimer;
-        public CrystalLensEntity() : base(50, 5 * 16, 600) { }
+        public CrystalLensEntity() : base(50, 5 * 16, 60*10) { }
 
         public override ushort TileType => (ushort)TileType<CrystalLensTile>();
 

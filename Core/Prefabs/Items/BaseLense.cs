@@ -1,9 +1,10 @@
 ﻿using Coralite.Helpers;
+using System.Collections.Generic;
 using Terraria.ModLoader;
 
 namespace Coralite.Core.Prefabs.Items
 {
-    public class BaseMagikePlaceableItem : ModItem
+    public abstract class BaseMagikePlaceableItem : ModItem
     {
         private readonly int tileIDToPlace;
         private readonly int Value;
@@ -11,6 +12,9 @@ namespace Coralite.Core.Prefabs.Items
         private readonly int magikeAmount;
         private readonly string TexturePath;
         private readonly bool PathHasName;
+
+        /// <summary> 魔能上限 </summary>
+        public abstract int MagikeMax { get; }
 
         public BaseMagikePlaceableItem(int tileIDToPlace, int value, int rare, int magikeAmount = -1, string texturePath = AssetDirectory.MagikeItems, bool pathHasName = false)
         {
@@ -30,6 +34,13 @@ namespace Coralite.Core.Prefabs.Items
             Item.value = Value;
             Item.rare = Rare;
             Item.GetMagikeItem().magiteAmount = magikeAmount;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            string magikeMax = $"魔能上限：{MagikeMax}";
+            TooltipLine line = new TooltipLine(Mod, "magikeMax", magikeMax);
+            tooltips.Add(line);
         }
     }
 }

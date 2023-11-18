@@ -16,10 +16,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.DayTimeLens
 {
-    public class BloodMoonLens : BaseMagikePlaceableItem
+    public class BloodMoonLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
         public BloodMoonLens() : base(TileType<BloodMoonLensTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<CrystallineMagikeRarity>(), 300)
         { }
+
+        public override int MagikeMax => 700;
+        public string SendDelay => "5";
+        public int HowManyPerSend => 12;
+        public int ConnectLengthMax => 5;
+        public int HowManyToGenerate => Main.bloodMoon ? 35 : 26;
+        public string GenerateDelay => "15";
 
         public override void AddRecipes()
         {

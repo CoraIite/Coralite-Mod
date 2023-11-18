@@ -19,7 +19,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                     {
                         if (MagikeHelper.TryGetEntity(position.X + i, position.Y + j, out RedJadeLensEntity redJadeGen))
                         {
-                            redJadeGen.Charge(1);
+                            redJadeGen.Charge(redJadeGen.HowManyToGenerate);
                             goto redJadeGenCharged;
                         }
                     }

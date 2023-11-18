@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -14,10 +15,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.RemodelPools
 {
-    public class SplendorRemodelPool : BaseMagikePlaceableItem
+    public class SplendorRemodelPool : BaseMagikePlaceableItem,IMagikeFactoryItem
     {
         public SplendorRemodelPool() : base(TileType<SplendorRemodelPoolTile>(), Item.sellPrice(0, 3, 0, 0), RarityType<SplendorMagicoreRarity>(), 600)
         { }
+
+        public override int MagikeMax => 1_5000;
+        public string WorkTimeMax => "1";
+        public string WorkCost => "?";
 
         public override void AddRecipes()
         {

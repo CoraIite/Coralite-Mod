@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.RedJades;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -15,10 +16,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Towers
 {
-    public class RedJadeCluster : BaseMagikePlaceableItem
+    public class RedJadeCluster : BaseMagikePlaceableItem, IMagikeFactoryItem
     {
         public RedJadeCluster() : base(TileType<RedJadeClusterTile>(), Item.sellPrice(0, 0, 10, 0), ItemRarityID.Blue, 0)
         { }
+
+        public override int MagikeMax => 100;
+        public string WorkTimeMax => "2";
+        public string WorkCost => "50";
 
         public override void AddRecipes()
         {

@@ -832,7 +832,7 @@ Mods: {
 
 			Diprism: {
 				DisplayName: 二相镜
-				Tooltip: 连接数量: 2
+				Tooltip: ""
 			}
 
 			BrilliantRemodelPool: {
@@ -958,22 +958,22 @@ Mods: {
 
 			BrilliantQuadprism: {
 				DisplayName: 璀璨四棱镜
-				Tooltip: 连接数量：4
+				Tooltip: ""
 			}
 
 			CrimtaneTriprism: {
 				DisplayName: 猩红三棱镜
-				Tooltip: 连接数量：3
+				Tooltip: ""
 			}
 
 			DemoniteTriprism: {
 				DisplayName: 魔化三棱镜
-				Tooltip: 连接数量：3
+				Tooltip: ""
 			}
 
 			RedJadeDiprism: {
 				DisplayName: 赤玉二相镜
-				Tooltip: 连接数量：2
+				Tooltip: ""
 			}
 
 			Basalt: {
@@ -1297,8 +1297,6 @@ Mods: {
 				DisplayName: 晶体聚合坛
 				Tooltip:
 					'''
-						连接数量：4
-
 					右键打开UI放入物品并选择聚合配方
 					使用魔能连接仪连接到台座上
 					在台座内放入聚合配方中的次要物品

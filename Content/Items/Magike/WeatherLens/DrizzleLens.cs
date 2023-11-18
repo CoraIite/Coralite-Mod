@@ -5,6 +5,7 @@ using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -13,10 +14,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.WeatherLens
 {
-    public class DrizzleLens : BaseMagikePlaceableItem
+    public class DrizzleLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
         public DrizzleLens() : base(TileType<DrizzleLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 50;
+        public int HowManyToGenerate => 2;
+        public string GenerateDelay => "10";
+        public string SendDelay => "10";
+        public int HowManyPerSend => 2;
+        public int ConnectLengthMax => 5;
 
         public override void AddRecipes()
         {

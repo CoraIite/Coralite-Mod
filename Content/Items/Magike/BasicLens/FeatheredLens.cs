@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -12,10 +13,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.BasicLens
 {
-    public class FeatheredLens : BaseMagikePlaceableItem
+    public class FeatheredLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
         public FeatheredLens() : base(TileType<FeatheredLensTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<CrystallineMagikeRarity>(), 600)
         { }
+
+        public override int MagikeMax => 900;
+        public string SendDelay => "6";
+        public int HowManyPerSend => 180;
+        public int ConnectLengthMax => 5;
+        public int HowManyToGenerate => -1;
+        public string GenerateDelay => "6";
 
         public override void AddRecipes()
         {

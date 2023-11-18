@@ -16,10 +16,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Factorys
 {
-    public class CrystalStoneMaker : BaseMagikePlaceableItem
+    public class CrystalStoneMaker : BaseMagikePlaceableItem,IMagikeFactoryItem
     {
         public CrystalStoneMaker() : base(TileType<CrystalStoneMakerTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 100;
+        public string WorkTimeMax => "10";
+        public string WorkCost => "15";
 
         public override void AddRecipes()
         {

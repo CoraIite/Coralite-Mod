@@ -13,10 +13,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.LiquidLens
 {
-    public class WaterflowLens : BaseMagikePlaceableItem
+    public class WaterflowLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
         public WaterflowLens() : base(TileType<WaterflowLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 40;
+        public string SendDelay => "10";
+        public int HowManyPerSend => 2;
+        public int ConnectLengthMax => 5;
+        public int HowManyToGenerate => 1;
+        public string GenerateDelay => "11";
 
         public override void AddRecipes()
         {

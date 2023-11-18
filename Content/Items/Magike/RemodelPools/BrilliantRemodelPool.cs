@@ -14,10 +14,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.RemodelPools
 {
-    public class BrilliantRemodelPool : BaseMagikePlaceableItem
+    public class BrilliantRemodelPool : BaseMagikePlaceableItem, IMagikeFactoryItem
     {
         public BrilliantRemodelPool() : base(TileType<BrilliantRemodelPoolTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<CrystallineMagikeRarity>(), 600)
         { }
+
+        public override int MagikeMax => 4500;
+        public string WorkTimeMax => "3";
+        public string WorkCost => "?";
 
         public override void AddRecipes()
         {

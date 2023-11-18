@@ -12,10 +12,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Refractors
 {
-    public class RedJadeRefractor : BaseMagikePlaceableItem
+    public class RedJadeRefractor : BaseMagikePlaceableItem,IMagikeSenderItem
     {
         public RedJadeRefractor() : base(TileType<RedJadeRefractorTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 25)
         { }
+
+        public override int MagikeMax => 60;
+        public int ConnectLengthMax => 25;
+        public string SendDelay => "1";
+        public int HowManyPerSend => 1;
 
         public override void AddRecipes()
         {

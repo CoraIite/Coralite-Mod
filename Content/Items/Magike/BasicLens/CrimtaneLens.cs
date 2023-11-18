@@ -15,17 +15,23 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.BasicLens
 {
-    public class CrimtaneLens : BaseMagikePlaceableItem, IMagikePolymerizable
+    public class CrimtaneLens : BaseMagikePlaceableItem, IMagikePolymerizable, IMagikeGeneratorItem, IMagikeSenderItem
     {
         public CrimtaneLens() : base(TileType<CrimtaneLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 150;
+        public string SendDelay => "9.5";
+        public int HowManyPerSend => 15;
+        public int ConnectLengthMax => 5;
+        public int HowManyToGenerate => -1;
+        public string GenerateDelay => "9.5";
 
         public void AddMagikePolymerizeRecipe()
         {
             PolymerizeRecipe.CreateRecipe<CrimtaneLens>(75)
                 .SetMainItem<CrystalLens>()
                 .AddIngredient<GlistentBar>(4)
-                .AddIngredient(ItemID.CrimtaneBar, 10)
                 .AddIngredient(ItemID.TissueSample, 6)
                 .Register();
         }
@@ -60,9 +66,9 @@ namespace Coralite.Content.Items.Magike.BasicLens
 
     public class CrimtaneLensEntity : MagikeGenerator_FromMagItem
     {
-        public const int sendDelay = 570;   //血腥相比腐化的要稍微弱那么一点点
+        public const int sendDelay = 60 * 9 + 30;   //血腥相比腐化的要稍微弱那么一点点
         public int sendTimer;
-        public CrimtaneLensEntity() : base(150, 5 * 16, 570) { }
+        public CrimtaneLensEntity() : base(150, 5 * 16, 60 * 9 + 30) { }
 
         public override ushort TileType => (ushort)TileType<CrimtaneLensTile>();
 

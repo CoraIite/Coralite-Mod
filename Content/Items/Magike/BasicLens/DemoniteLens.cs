@@ -15,17 +15,23 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.BasicLens
 {
-    public class DemoniteLens : BaseMagikePlaceableItem, IMagikePolymerizable
+    public class DemoniteLens : BaseMagikePlaceableItem, IMagikePolymerizable, IMagikeSenderItem, IMagikeGeneratorItem
     {
         public DemoniteLens() : base(TileType<DemoniteLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 150;
+        public string SendDelay => "9";
+        public int HowManyPerSend => 15;
+        public int ConnectLengthMax => 5;
+        public int HowManyToGenerate => -1;
+        public string GenerateDelay => "9";
 
         public void AddMagikePolymerizeRecipe()
         {
             PolymerizeRecipe.CreateRecipe<DemoniteLens>(75)
                 .SetMainItem<CrystalLens>()
                 .AddIngredient<GlistentBar>(4)
-                .AddIngredient(ItemID.DemoniteBar, 10)
                 .AddIngredient(ItemID.ShadowScale, 6)
                 .Register();
         }
@@ -60,9 +66,9 @@ namespace Coralite.Content.Items.Magike.BasicLens
 
     public class DemoniteLensEntity : MagikeGenerator_FromMagItem
     {
-        public const int sendDelay = 540;
+        public const int sendDelay = 60*9;
         public int sendTimer;
-        public DemoniteLensEntity() : base(150, 5 * 16, 540) { }
+        public DemoniteLensEntity() : base(150, 5 * 16, 60*9) { }
 
         public override ushort TileType => (ushort)TileType<DemoniteLensTile>();
 

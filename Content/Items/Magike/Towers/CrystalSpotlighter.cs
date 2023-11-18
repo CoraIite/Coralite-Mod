@@ -17,10 +17,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Towers
 {
-    public class CrystalSpotlighter : BaseMagikePlaceableItem
+    public class CrystalSpotlighter : BaseMagikePlaceableItem,IMagikeFactoryItem
     {
         public CrystalSpotlighter() : base(TileType<CrystalSpotlighterTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 50;
+        public string WorkTimeMax => "2";
+        public string WorkCost => "25";
 
         public override void AddRecipes()
         {

@@ -13,10 +13,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.BiomeLens
 {
-    public class ForestLens : BaseMagikePlaceableItem
+    public class ForestLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
         public ForestLens() : base(TileType<ForestLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 20;
+        public string SendDelay => "10";
+        public int HowManyPerSend => 2;
+        public int ConnectLengthMax => 5;
+        public int HowManyToGenerate => 1;
+        public string GenerateDelay => "12";
 
         public override void AddRecipes()
         {

@@ -15,17 +15,21 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Columns
 {
-    public class CrimtaneColumn : BaseMagikePlaceableItem, IMagikePolymerizable
+    public class CrimtaneColumn : BaseMagikePlaceableItem, IMagikePolymerizable,IMagikeSenderItem
     {
         public CrimtaneColumn() : base(TileType<CrimtaneColumnTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 750;
+        public string SendDelay => "4.75";
+        public int HowManyPerSend => 30;
+        public int ConnectLengthMax => 5;
 
         public void AddMagikePolymerizeRecipe()
         {
             PolymerizeRecipe.CreateRecipe<CrimtaneColumn>(75)
                 .SetMainItem<CrystalColumn>()
                 .AddIngredient<GlistentBar>(4)
-                .AddIngredient(ItemID.CrimtaneBar, 10)
                 .AddIngredient(ItemID.TissueSample, 8)
                 .Register();
         }

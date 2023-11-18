@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework;
@@ -11,10 +12,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.EnchantPools
 {
-    public class SoulEnchantPool : BaseMagikePlaceableItem
+    public class SoulEnchantPool : BaseMagikePlaceableItem,IMagikeFactoryItem
     {
         public SoulEnchantPool() : base(TileType<SoulEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<CrystallineMagikeRarity>(), 300)
         { }
+
+        public override int MagikeMax => 1000;
+        public string WorkTimeMax => "4";
+        public string WorkCost => "?";
 
         public override void AddRecipes()
         {

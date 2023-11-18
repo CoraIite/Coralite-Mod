@@ -14,10 +14,28 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.WeatherLens
 {
-    public class BreezeLens : BaseMagikePlaceableItem
+    public class BreezeLens : BaseMagikePlaceableItem,IMagikeGeneratorItem,IMagikeSenderItem
     {
         public BreezeLens() : base(TileType<BreezeLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 50;
+        public int HowManyToGenerate
+        {
+            get
+            {
+                float windSpeed = Math.Abs(Main.WindForVisuals);
+                if (windSpeed > 0.6f)
+                    return 5;
+
+                return (int)(windSpeed / 0.6f) * 5;
+            }
+        }
+
+        public string GenerateDelay => "10";
+        public string SendDelay => "10";
+        public int HowManyPerSend => 5;
+        public int ConnectLengthMax => 5;
 
         public override void AddRecipes()
         {

@@ -16,10 +16,16 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.MultPrisms
 {
-    public class BrilliantQuadprism : BaseMagikePlaceableItem
+    public class BrilliantQuadprism : BaseMagikePlaceableItem,IMagikeSenderItem
     {
         public BrilliantQuadprism() : base(TileType<BrilliantQuadprismTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<CrystallineMagikeRarity>(), 600)
         { }
+
+        public override int MagikeMax => 600;
+        public string SendDelay => "3.5";
+        public int HowManyPerSend => 60;
+        public int ConnectLengthMax => 15;
+        public int HowManyCanConnect => 4;
 
         public override void AddRecipes()
         {

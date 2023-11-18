@@ -8,15 +8,20 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
     {
         public static EnchantEntityPool accessoryPool;
         public static EnchantEntityPool armorPool;
-        public static EnchantEntityPool weaponPool;
+
+        public static EnchantEntityPool weaponPool_Generic;
+        public static EnchantEntityPool weaponPool_Melee;
+        public static EnchantEntityPool weaponPool_Magic;
+        public static EnchantEntityPool weaponPool_Ranged;
+        public static EnchantEntityPool weaponPool_Summon;
 
         public static EnchantEntityPool remodelableWeaponPool;
 
         public override void Load()
         {
-            weaponPool = new EnchantEntityPool();
+            weaponPool_Generic = new EnchantEntityPool();
             #region addWeaponPool
-            weaponPool
+            weaponPool_Generic
                 //普通攻击加成
                 .AddBonus(new BasicEnchant_WeaponAttackBonus(Enchant.Level.One, 1f, 0, 0))
                 .AddBonus(new BasicEnchant_WeaponAttackBonus(Enchant.Level.Two, 2f, 0, 0))
@@ -31,7 +36,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
                 .AddBonus(new OtherEnchant_WeaponAttackBonus(Enchant.Level.Three, 2f, 0, 0))
                 .AddBonus(new OtherEnchant_WeaponAttackBonus(Enchant.Level.Four, 2f, 0, 0))
                 .AddBonus(new OtherEnchant_WeaponAttackBonus(Enchant.Level.Five, 3f, 0, 0))
-                .AddBonus(new OtherEnchant_WeaponAttackBonus(Enchant.Level.Max, 3f, 0, 0))
+                .AddBonus(new OtherEnchant_WeaponAttackBonus(Enchant.Level.Max, 4f, 0, 0))
                 //其他暴击加成
                 .AddBonus(new OtherEnchant_WeaponCritBonus(Enchant.Level.Five, 4f, 0, 0))
                 .AddBonus(new OtherEnchant_WeaponCritBonus(Enchant.Level.Max, 8f, 0, 0))
@@ -42,33 +47,26 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
                 //其他攻速加成
                 .AddBonus(new OtherEnchant_UseSpeedBonus(Enchant.Level.Four, 3f, 0, 0))
                 .AddBonus(new OtherEnchant_UseSpeedBonus(Enchant.Level.Five, 6f, 0, 0))
-                .AddBonus(new OtherEnchant_UseSpeedBonus(Enchant.Level.Max, 10f, 0, 0))
+                .AddBonus(new OtherEnchant_UseSpeedBonus(Enchant.Level.Max, 8f, 0, 0))
                 //其他魔法消耗减少加成
                 .AddBonus(new OtherEnchant_ManaCostBonus(Enchant.Level.Four, 3f, 0, 0))
                 .AddBonus(new OtherEnchant_ManaCostBonus(Enchant.Level.Five, 6f, 0, 0))
-                .AddBonus(new OtherEnchant_ManaCostBonus(Enchant.Level.Max, 10f, 0, 0))
+                .AddBonus(new OtherEnchant_ManaCostBonus(Enchant.Level.Max, 8f, 0, 0))
                 //其他武器大小
                 .AddBonus(new OtherEnchant_ItemScaleBonus(Enchant.Level.Four, 5f, 0, 0))
-                .AddBonus(new OtherEnchant_ItemScaleBonus(Enchant.Level.Five, 10f, 0, 0))
-                .AddBonus(new OtherEnchant_ItemScaleBonus(Enchant.Level.Max, 15f, 0, 0))
+                .AddBonus(new OtherEnchant_ItemScaleBonus(Enchant.Level.Five, 8f, 0, 0))
+                .AddBonus(new OtherEnchant_ItemScaleBonus(Enchant.Level.Max, 10f, 0, 0))
 
                 //特殊攻击加成
                 .AddBonus(new SpecialEnchant_WeaponAttackBonus(Enchant.Level.One, 1f, 0, 0))
                 .AddBonus(new SpecialEnchant_WeaponAttackBonus(Enchant.Level.Two, 1f, 0, 0))
                 .AddBonus(new SpecialEnchant_WeaponAttackBonus(Enchant.Level.Three, 1f, 0, 0))
-                //射出额外射弹
-                .AddBonus(new SpecialEnchant_ShootExtraBonus(Enchant.Level.Four, ProjectileID.WandOfSparkingSpark, 0.2f, 0))
-                .AddBonus(new SpecialEnchant_ShootExtraBonus(Enchant.Level.Four, ProjectileID.Bullet, 0.2f, 0))
-                .AddBonus(new SpecialEnchant_ShootExtraBonus(Enchant.Level.Five, ProjectileID.Fireball, 0.3f, 0))
-                .AddBonus(new SpecialEnchant_ShootExtraBonus(Enchant.Level.Five, ProjectileID.ThunderSpearShot, 0.3f, 0))
-                .AddBonus(new SpecialEnchant_ShootExtraBonus(Enchant.Level.Five, ProjectileID.ThunderStaffShot, 0.3f, 0))
+                .AddBonus(new SpecialEnchant_WeaponAttackBonus(Enchant.Level.Four, 2f, 0, 0))
+                .AddBonus(new SpecialEnchant_WeaponAttackBonus(Enchant.Level.Five, 2f, 0, 0));
 
-                .AddBonus(new SpecialEnchant_ShootExtraBonus(Enchant.Level.Max, ProjectileID.ThunderSpearShot, 0.4f, 0))
-                .AddBonus(new SpecialEnchant_ShootExtraBonus(Enchant.Level.Max, ProjectileID.ThunderStaffShot, 0.4f, 0))
-                .AddBonus(new SpecialEnchant_ShootExtraBonus(Enchant.Level.Max, ProjectileID.WandOfFrostingFrost, 0.3f, 0));
             #endregion
 
-            remodelableWeaponPool = weaponPool.Clone();
+            remodelableWeaponPool = weaponPool_Generic.Clone();
             remodelableWeaponPool.FindAndRemoveAll<SpecialEnchant_ShootExtraBonus>(2, Enchant.Level.Max);
             remodelableWeaponPool.AddBonus(new SpecialEnchant_RemodelableBonus(Enchant.Level.Max, 0, 0, 0));
 
@@ -145,7 +143,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
         public override void Unload()
         {
-            weaponPool = null;
+            weaponPool_Generic = null;
             armorPool = null;
             accessoryPool = null;
 

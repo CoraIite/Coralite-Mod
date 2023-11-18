@@ -14,10 +14,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Columns
 {
-    public class CrystalColumn : BaseMagikePlaceableItem
+    public class CrystalColumn : BaseMagikePlaceableItem,IMagikeSenderItem
     {
         public CrystalColumn() : base(TileType<CrystalColumnTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 500;
+        public string SendDelay => "5";
+        public int HowManyPerSend => 10;
+        public int ConnectLengthMax => 5;
 
         public override void AddRecipes()
         {

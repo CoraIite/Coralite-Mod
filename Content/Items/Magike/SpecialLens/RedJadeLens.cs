@@ -12,10 +12,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.SpecialLens
 {
-    public class RedJadeLens : BaseMagikePlaceableItem
+    public class RedJadeLens : BaseMagikePlaceableItem,IMagikeSenderItem,IMagikeGeneratorItem
     {
         public RedJadeLens() : base(TileType<RedJadeLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
         { }
+
+        public override int MagikeMax => 20;
+        public string SendDelay => "10";
+        public int HowManyPerSend => 1;
+        public int ConnectLengthMax => 5;
+        public int HowManyToGenerate => 1;
+        public string GenerateDelay => "?";
 
         public override void AddRecipes()
         {
@@ -67,7 +74,7 @@ namespace Coralite.Content.Items.Magike.SpecialLens
 
         public override int HowManyPerSend => 1;
 
-        public override int HowManyToGenerate => 0;
+        public override int HowManyToGenerate => 1;
 
         public override bool CanSend()
         {

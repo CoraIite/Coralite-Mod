@@ -15,17 +15,21 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Refractors
 {
-    public class CrimtaneRefractor : BaseMagikePlaceableItem, IMagikePolymerizable
+    public class CrimtaneRefractor : BaseMagikePlaceableItem, IMagikePolymerizable,IMagikeSenderItem
     {
         public CrimtaneRefractor() : base(TileType<CrimtaneRefractorTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 25)
         { }
+
+        public override int MagikeMax => 50;
+        public int ConnectLengthMax => 25;
+        public string SendDelay => "4.5";
+        public int HowManyPerSend => 15;
 
         public void AddMagikePolymerizeRecipe()
         {
             PolymerizeRecipe.CreateRecipe<CrimtaneRefractor>(50)
                 .SetMainItem<CrystalRefractor>()
                 .AddIngredient<GlistentBar>(4)
-                .AddIngredient(ItemID.CrimtaneBar, 10)
                 .AddIngredient(ItemID.TissueSample, 10)
                 .Register();
         }
