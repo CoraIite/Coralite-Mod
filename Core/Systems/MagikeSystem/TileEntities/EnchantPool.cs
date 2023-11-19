@@ -23,6 +23,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public abstract Color MainColor { get; }
         public Item ContainsItem { get => containsItem; set => containsItem = value; }
 
+        public Enchant.ID? targetedEnchantSlot;
+
         public override void OnKill()
         {
             MagikeItemSlotPanel.visible = false;
@@ -35,7 +37,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public override bool CanWork()
         {
             if (containsItem is not null && !containsItem.IsAir &&
-                (containsItem.damage > 0 || containsItem.accessory || containsItem.defense > 0) &&
+                (containsItem.damage > 0 || 
+                ((containsItem.accessory || containsItem.defense > 0) && containsItem.TryGetGlobalItem(out MagikeItem mi) && mi.accessoryOrArmorCanEnchant)) &&
                 magike >= GetMagikeCost(this, containsItem))
             {
                 return base.CanWork();
@@ -72,13 +75,18 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                     return;
 
                 int whichslot = Main.rand.NextFromList(0, 0, 0, 0, 0, 1, 1, 1, 2, 2);//50%概率为0，30概率为1，20%概率为2
-
                 Enchant enchant = containsItem.GetGlobalItem<MagikeItem>().Enchant;
                 if (enchant.datas == null)
                     return;
 
                 //检测当前的注魔是否为最高等级，如果为最高等级就判断一下其他的等级
                 LevelCheck(enchant, whichslot, out int checkedSlot);
+                checkedSlot = MaxLevelCheck(checkedSlot, enchant);
+
+                //定向注魔
+                if (targetedEnchantSlot != null)
+                    checkedSlot = (int)targetedEnchantSlot.Value;
+
                 //获取注魔词条池
                 EnchantEntityPool pool = GetEnchantPool(containsItem);
                 //获取子注魔词条池
@@ -151,22 +159,33 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public static int GetMagikeCost(IMagikeContainer container, Item item)
         {
-            return item.rare switch
-            {
-                ItemRarityID.White => 50,
-                ItemRarityID.Blue => 100,
-                ItemRarityID.Green => 150,
-                ItemRarityID.Orange => 200,
-                ItemRarityID.LightRed => 300,
-                ItemRarityID.Pink => 400,
-                ItemRarityID.LightPurple => 600,
-                ItemRarityID.Lime => 800,
-                ItemRarityID.Yellow => 1000,
-                ItemRarityID.Cyan => 1200,
-                ItemRarityID.Red => 1600,
-                ItemRarityID.Purple => 2000,
-                _ => container.MagikeMax
-            };
+            if (item.value < 1_00_00)
+                return 75;
+            else if (item.value < 5_00_00)
+                return 150;
+            else if (item.value < 10_00_00)
+                return 300;
+            else if (item.value < 15_00_00)
+                return 450;
+            else if (item.value < 20_00_00)
+                return 750;
+            else return 1000;
+            //return item.rare switch
+            //{
+            //    ItemRarityID.White => 50,
+            //    ItemRarityID.Blue => 100,
+            //    ItemRarityID.Green => 150,
+            //    ItemRarityID.Orange => 200,
+            //    ItemRarityID.LightRed => 300,
+            //    ItemRarityID.Pink => 400,
+            //    ItemRarityID.LightPurple => 600,
+            //    ItemRarityID.Lime => 800,
+            //    ItemRarityID.Yellow => 1000,
+            //    ItemRarityID.Cyan => 1200,
+            //    ItemRarityID.Red => 1600,
+            //    ItemRarityID.Purple => 2000,
+            //    _ => container.MagikeMax
+            //};
         }
 
         public static void LevelCheck(Enchant enchant, int currentSlot, out int checkedSlot)
@@ -180,21 +199,60 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
             if (currentData.level == Enchant.Level.Max)
             {
-                IEnumerable<EnchantData> otherData = from d in enchant.datas
-                                                     where d.whichSlot != currentData.whichSlot
-                                                     select d;
+                List<int> otherDataIndex =new List<int>();
 
-                foreach (var data in otherData)
+                for (int i = 0; i < enchant.datas.Length; i++)
                 {
-                    if (data.level != Enchant.Level.Max)
+                    if (enchant.datas[i] == null)
                     {
-                        checkedSlot = data.whichSlot;
+                        otherDataIndex.Add(i);
+                        continue;
+                    }
+
+                    if (enchant.datas[i].whichSlot != currentData.whichSlot)
+                        otherDataIndex.Add(i);
+                }
+
+                //from d in enchant.datas
+                //where d.whichSlot != currentData.whichSlot
+                //select d.whichSlot;
+
+                foreach (var index in otherDataIndex)
+                {
+                    if (enchant.datas[index] == null)
+                    {
+                        checkedSlot = index;
+                        return;
+                    }
+
+                    if (enchant.datas[index].level != Enchant.Level.Max)
+                    {
+                        checkedSlot = index;
                         return;
                     }
                 }
             }
 
             checkedSlot = currentSlot;
+        }
+
+        /// <summary>
+        /// 如果自身为0并且三个词条都是满级那就在另外两个里面随机
+        /// </summary>
+        /// <param name="currentSlot"></param>
+        /// <param name="enchant"></param>
+        /// <returns></returns>
+        public static int MaxLevelCheck(int currentSlot, Enchant enchant)
+        {
+            if (currentSlot == 0 &&
+                enchant.datas[0] != null && enchant.datas[0].level == Enchant.Level.Max &&
+                enchant.datas[1] != null && enchant.datas[1].level == Enchant.Level.Max &&
+                enchant.datas[2] != null && enchant.datas[2].level == Enchant.Level.Max)
+            {
+                return Main.rand.NextFromList(1, 1, 1, 2, 2);
+            }
+
+            return currentSlot;
         }
 
         public static EnchantEntityPool GetEnchantPool(Item item)

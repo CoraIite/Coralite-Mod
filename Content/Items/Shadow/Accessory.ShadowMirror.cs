@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -24,9 +25,9 @@ namespace Coralite.Content.Items.Shadow
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (player.TryGetModPlayer(out ShadowMirrorPlayer smp))
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                smp.equippedShadowMirror = true;
+                cp.equippedShadowMirror = true;
 
                 if (player.ownedProjectileCounts[ModContent.ProjectileType<ShadowMirrorProj>()] < 1)
                 {
@@ -49,16 +50,6 @@ namespace Coralite.Content.Items.Shadow
                 .AddIngredient(ItemID.IceMirror)
                 .AddTile(TileID.Anvils)
                 .Register();
-        }
-    }
-
-    public class ShadowMirrorPlayer : ModPlayer
-    {
-        public bool equippedShadowMirror;
-
-        public override void ResetEffects()
-        {
-            equippedShadowMirror = false;
         }
     }
 
@@ -102,7 +93,7 @@ namespace Coralite.Content.Items.Shadow
         public override void AI()
         {
             Player owner = Main.player[Projectile.owner];
-            if (owner.TryGetModPlayer(out ShadowMirrorPlayer smp) && smp.equippedShadowMirror)
+            if (owner.TryGetModPlayer(out CoralitePlayer cp) && cp.equippedShadowMirror)
                 Projectile.timeLeft = 2;
             else
             {
@@ -161,14 +152,14 @@ namespace Coralite.Content.Items.Shadow
         {
             particle.rotation += 0.15f;
             particle.scale *= 0.97f;
-            particle.color *= 0.95f;
+            particle.color *= 0.92f;
 
             particle.fadeIn++;
             if (particle.fadeIn > 5)
             {
                 particle.velocity *= 0.97f;
             }
-            if (particle.fadeIn > 50 || particle.color.A < 10)
+            if (particle.fadeIn > 40 || particle.color.A < 10)
             {
                 particle.active = false;
             }

@@ -29,6 +29,8 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// </summary>
         public int magiteAmount = -1;
 
+        public bool accessoryOrArmorCanEnchant;
+
         public int magike_CraftRequired = -1;
         public int stack_CraftRequired;
         public IMagikeCraftCondition condition = null;

@@ -1698,6 +1698,11 @@ Mods: {
 				DisplayName: 卷轴：强化魔能提炼
 				Tooltip: 现在你懂得如何再次强化你的魔能器械了
 			}
+
+			PhantomMirror: {
+				DisplayName: 镜中魅影
+				Tooltip: 照出你的魅影们，它们将沿着你的运动轨迹行动
+			}
 		}
 
 		Tiles: {
@@ -1824,6 +1829,11 @@ Mods: {
 				DisplayName: 肢体再生
 				Description: 我需要治疗！
 				Current: 当前层数：
+			}
+
+			MetallionBuff: {
+				DisplayName: 刚之魔能
+				Description: 伤害减免 +8%
 			}
 		}
 
@@ -2123,6 +2133,8 @@ Mods: {
 			// ShadowMirrorProj.DisplayName: Shadow Mirror Proj
 			// SlimeSceptreBall.DisplayName: Slime Sceptre Ball
 			// MagConnectProj.DisplayName: Mag Connect Proj
+			// LeafShield.DisplayName: Leaf Shield
+			// PhantomMirrorProj.DisplayName: Phantom Mirror Proj
 		}
 
 		Configs: {

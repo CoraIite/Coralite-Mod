@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Magike.EnchantPools
         public SoulEnchantPool() : base(TileType<SoulEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<CrystallineMagikeRarity>(), 300)
         { }
 
-        public override int MagikeMax => 1000;
+        public override int MagikeMax => 2500;
         public string WorkTimeMax => "4";
         public string WorkCost => "?";
 
@@ -42,6 +42,7 @@ namespace Coralite.Content.Items.Magike.EnchantPools
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
             TileObjectData.newTile.Height = 2;
+            TileObjectData.newTile.Width = 2;
             TileObjectData.newTile.CoordinateHeights = new int[2] {
                 16,
                 16
@@ -59,7 +60,7 @@ namespace Coralite.Content.Items.Magike.EnchantPools
 
     public class SoulEnchantPoolEntity : MagikeFactory_EnchantPool
     {
-        public SoulEnchantPoolEntity() : base(1000, 4 * 60) { }
+        public SoulEnchantPoolEntity() : base(2500, 4 * 60) { }
 
         public override ushort TileType => (ushort)TileType<SoulEnchantPoolTile>();
 

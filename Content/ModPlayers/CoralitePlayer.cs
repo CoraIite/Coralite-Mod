@@ -41,7 +41,12 @@ namespace Coralite.Content.ModPlayers
         public int DashDelay = 0;
         public int DashTimer = 0;
 
-        public bool redJadePendant;
+        /// <summary> 装备赤玉吊坠 </summary>
+        public bool equippedRedJadePendant;
+        /// <summary> 装备影魔镜 </summary>
+        public bool equippedShadowMirror;
+        /// <summary> 装备影魔镜 </summary>
+        public bool equippedPhantomMirror;
 
         public byte nightmareCount;
         /// <summary> 使用梦魇之花的噩梦能量 </summary>
@@ -53,7 +58,9 @@ namespace Coralite.Content.ModPlayers
 
         public override void ResetEffects()
         {
-            redJadePendant = false;
+            equippedRedJadePendant = false;
+            equippedShadowMirror = false;
+            equippedPhantomMirror = false;
             equippedBoneRing = false;
             resistDreamErosion = false;
 
@@ -190,7 +197,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void PostUpdate()
         {
-            redJadePendant = false;
+            equippedRedJadePendant = false;
             if (rightClickReuseDelay > 0)
                 rightClickReuseDelay--;
 
@@ -206,7 +213,7 @@ namespace Coralite.Content.ModPlayers
             }
 
             rightClickReuseDelay = 0;
-            redJadePendant = false;
+            equippedRedJadePendant = false;
         }
 
         #endregion
@@ -215,7 +222,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
         {
-            if (redJadePendant && Main.myPlayer == Player.whoAmI && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
+            if (equippedRedJadePendant && Main.myPlayer == Player.whoAmI && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
             {
                 Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<RedJadePendant>())),
                     Player.Center + (proj.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<RedJadeBoom>(), 80, 8f, Player.whoAmI);
@@ -224,7 +231,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
         {
-            if (redJadePendant && Main.myPlayer == Player.whoAmI && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
+            if (equippedRedJadePendant && Main.myPlayer == Player.whoAmI && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
             {
                 Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<RedJadePendant>())),
                     Player.Center + (npc.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<RedJadeBoom>(), 80, 8f, Player.whoAmI);

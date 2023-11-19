@@ -24,6 +24,13 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
             Five,
             Max
         }
+
+        public enum ID : int
+        {
+            Basic = 0,
+            Other = 1,
+            Special = 2
+        }
     }
 
     public abstract class EnchantData
@@ -66,7 +73,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
     public abstract class BasicEnchant : EnchantData
     {
-        public BasicEnchant(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, 0)
+        public BasicEnchant(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, (int)Enchant.ID.Basic)
         {
             this.bonus0 = bonus0;
             this.bonus1 = bonus1;
@@ -86,7 +93,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
     public abstract class OtherEnchant : EnchantData
     {
-        public OtherEnchant(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, 1)
+        public OtherEnchant(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, (int)Enchant.ID.Other)
         {
             this.bonus0 = bonus0;
             this.bonus1 = bonus1;
@@ -100,7 +107,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
     public abstract class SpecialEnchant : EnchantData
     {
-        public SpecialEnchant(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, 2)
+        public SpecialEnchant(Enchant.Level level, float bonus0, float bonus1, float bonus2) : base(level, (int)Enchant.ID.Special)
         {
             this.bonus0 = bonus0;
             this.bonus1 = bonus1;

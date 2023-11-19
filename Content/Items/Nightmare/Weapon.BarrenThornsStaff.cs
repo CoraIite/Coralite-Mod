@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.shoot = ProjectileType<BarrenFog>();
             Item.DamageType = DamageClass.Magic;
             Item.rare = RarityType<NightmareRarity>();
-            Item.value = Item.sellPrice(2, 0, 0, 0);
+            Item.value = Item.sellPrice(0, 50, 0, 0);
             Item.SetWeaponValues(204, 4, 4);
             Item.mana = 35;
             Item.autoReuse = true;

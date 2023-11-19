@@ -6,6 +6,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 {
     public class EnchantEntityPools : ModSystem
     {
+#pragma warning disable CA2211 // 非常量字段应当不可见
         public static EnchantEntityPool accessoryPool;
         public static EnchantEntityPool armorPool;
 
@@ -16,6 +17,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public static EnchantEntityPool weaponPool_Summon;
 
         public static EnchantEntityPool remodelableWeaponPool;
+#pragma warning restore CA2211 // 非常量字段应当不可见
 
         public override void Load()
         {
@@ -62,8 +64,11 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
                 .AddBonus(new SpecialEnchant_WeaponAttackBonus(Enchant.Level.Two, 1f, 0, 0))
                 .AddBonus(new SpecialEnchant_WeaponAttackBonus(Enchant.Level.Three, 1f, 0, 0))
                 .AddBonus(new SpecialEnchant_WeaponAttackBonus(Enchant.Level.Four, 2f, 0, 0))
-                .AddBonus(new SpecialEnchant_WeaponAttackBonus(Enchant.Level.Five, 2f, 0, 0));
-
+                .AddBonus(new SpecialEnchant_WeaponAttackBonus(Enchant.Level.Five, 2f, 0, 0))
+                //植生：叶刃
+                .AddBonus(new SpecialEnchant_BotanicusBonus(Enchant.Level.Max, 0, 0, 0))
+                //刚：强化防御
+                .AddBonus(new SpecialEnchant_MetallonBonus(Enchant.Level.Max, 0, 0, 0));
             #endregion
 
             remodelableWeaponPool = weaponPool_Generic.Clone();
@@ -82,17 +87,17 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
                 .AddBonus(new OtherEnchant_ArmorAttackBonus(Enchant.Level.One, 1f, 0, 0))
                 .AddBonus(new OtherEnchant_ArmorAttackBonus(Enchant.Level.Two, 1f, 0, 0))
                 .AddBonus(new OtherEnchant_ArmorAttackBonus(Enchant.Level.Three, 1f, 0, 0))
-                .AddBonus(new OtherEnchant_ArmorAttackBonus(Enchant.Level.Four, 1f, 0, 0))
+                .AddBonus(new OtherEnchant_ArmorAttackBonus(Enchant.Level.Four, 2f, 0, 0))
                 .AddBonus(new OtherEnchant_ArmorAttackBonus(Enchant.Level.Five, 2f, 0, 0))
-                .AddBonus(new OtherEnchant_ArmorAttackBonus(Enchant.Level.Max, 2f, 0, 0))
+                .AddBonus(new OtherEnchant_ArmorAttackBonus(Enchant.Level.Max, 3f, 0, 0))
 
                 .AddBonus(new OtherEnchant_ArmorCritBonus(Enchant.Level.Four, 1f, 0, 0))
-                .AddBonus(new OtherEnchant_ArmorCritBonus(Enchant.Level.Five, 2f, 0, 0))
-                .AddBonus(new OtherEnchant_ArmorCritBonus(Enchant.Level.Max, 3f, 0, 0))
+                .AddBonus(new OtherEnchant_ArmorCritBonus(Enchant.Level.Five, 1f, 0, 0))
+                .AddBonus(new OtherEnchant_ArmorCritBonus(Enchant.Level.Max, 2f, 0, 0))
 
                 .AddBonus(new OtherEnchant_ArmorKnockbackBonus(Enchant.Level.Four, 2f, 0, 0))
-                .AddBonus(new OtherEnchant_ArmorKnockbackBonus(Enchant.Level.Five, 4f, 0, 0))
-                .AddBonus(new OtherEnchant_ArmorKnockbackBonus(Enchant.Level.Max, 6f, 0, 0))
+                .AddBonus(new OtherEnchant_ArmorKnockbackBonus(Enchant.Level.Five, 3f, 0, 0))
+                .AddBonus(new OtherEnchant_ArmorKnockbackBonus(Enchant.Level.Max, 4f, 0, 0))
 
                 .AddBonus(new OtherEnchant_ArmorManaCostBonus(Enchant.Level.Four, 2f, 0, 0))
                 .AddBonus(new OtherEnchant_ArmorManaCostBonus(Enchant.Level.Five, 3f, 0, 0))
@@ -109,11 +114,11 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
             accessoryPool = new EnchantEntityPool();
             accessoryPool
                 .AddBonus(new BasicEnchant_AccessoryDefenceBonus(Enchant.Level.One, 1f, 0, 0))
-                .AddBonus(new BasicEnchant_AccessoryDefenceBonus(Enchant.Level.Two, 2f, 0, 0))
-                .AddBonus(new BasicEnchant_AccessoryDefenceBonus(Enchant.Level.Three, 3f, 0, 0))
-                .AddBonus(new BasicEnchant_AccessoryDefenceBonus(Enchant.Level.Four, 4f, 0, 0))
-                .AddBonus(new BasicEnchant_AccessoryDefenceBonus(Enchant.Level.Five, 5f, 0, 0))
-                .AddBonus(new BasicEnchant_AccessoryDefenceBonus(Enchant.Level.Max, 6f, 0, 0))
+                .AddBonus(new BasicEnchant_AccessoryDefenceBonus(Enchant.Level.Two, 1f, 0, 0))
+                .AddBonus(new BasicEnchant_AccessoryDefenceBonus(Enchant.Level.Three, 2f, 0, 0))
+                .AddBonus(new BasicEnchant_AccessoryDefenceBonus(Enchant.Level.Four, 2f, 0, 0))
+                .AddBonus(new BasicEnchant_AccessoryDefenceBonus(Enchant.Level.Five, 3f, 0, 0))
+                .AddBonus(new BasicEnchant_AccessoryDefenceBonus(Enchant.Level.Max, 4f, 0, 0))
 
                 .AddBonus(new OtherEnchant_AccessoryAttackBonus(Enchant.Level.One, 1f, 0, 0))
                 .AddBonus(new OtherEnchant_AccessoryAttackBonus(Enchant.Level.Two, 1f, 0, 0))

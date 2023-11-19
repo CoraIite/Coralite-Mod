@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.shoot = ProjectileType<EdenWhip>();
             Item.DamageType = DamageClass.Summon;
             Item.rare = RarityType<NightmareRarity>();
-            Item.value = Item.sellPrice(2, 0, 0, 0);
+            Item.value = Item.sellPrice(0, 50, 0, 0);
             Item.SetWeaponValues(170, 4, 4);
             Item.autoReuse = true;
             Item.noUseGraphic = true;

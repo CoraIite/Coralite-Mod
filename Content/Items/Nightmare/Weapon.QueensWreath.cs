@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.useAmmo = AmmoID.Arrow;
             Item.DamageType = DamageClass.Ranged;
             Item.rare = RarityType<NightmareRarity>();
-            Item.value = Item.sellPrice(2, 0, 0, 0);
+            Item.value = Item.sellPrice(0, 50, 0, 0);
             Item.SetWeaponValues(269, 4, 4);
             Item.autoReuse = true;
             Item.noUseGraphic = true;

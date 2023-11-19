@@ -44,6 +44,7 @@ namespace Coralite.Content.Items.Magike.EnchantPools
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
             TileObjectData.newTile.Height = 2;
+            TileObjectData.newTile.Width = 2;
             TileObjectData.newTile.CoordinateHeights = new int[2] {
                 16,
                 16

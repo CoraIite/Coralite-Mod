@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<CoralitePlayer>().redJadePendant = true;
+            player.GetModPlayer<CoralitePlayer>().equippedRedJadePendant = true;
         }
     }
 }

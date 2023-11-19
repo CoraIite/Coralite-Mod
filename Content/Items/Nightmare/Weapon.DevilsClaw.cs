@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.shoot = ProjectileType<DevilsClawLeaf>();
             Item.DamageType = DamageClass.Magic;
             Item.rare = RarityType<NightmareRarity>();
-            Item.value = Item.sellPrice(2, 0, 0, 0);
+            Item.value = Item.sellPrice(0, 50, 0, 0);
             Item.SetWeaponValues(166, 4, 4);
             Item.mana = 8;
             Item.autoReuse = true;

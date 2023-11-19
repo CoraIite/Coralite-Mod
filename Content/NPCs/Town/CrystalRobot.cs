@@ -325,7 +325,6 @@ namespace Coralite.Content.NPCs.Town
         {
             tag["numberOfTimesTalkedTo"] = NumberOfTimesTalkedTo;
         }
-
     }
 
     public class MagicCrystalCurrency : CustomCurrencySingleCoin

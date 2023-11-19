@@ -1690,6 +1690,11 @@ Mods: {
 				DisplayName: Reel_ Magike Advance
 				Tooltip: ""
 			}
+
+			PhantomMirror: {
+				DisplayName: Phantom Mirror
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1816,6 +1821,11 @@ Mods: {
 				DisplayName: Limb Rebirth
 				Description: I need Healing！
 				Current: Number of layers:
+			}
+
+			MetallionBuff: {
+				DisplayName: Metallion Buff
+				Description: Mods.Coralite.Buffs.MetallionBuff.Description
 			}
 		}
 
@@ -2115,6 +2125,8 @@ Mods: {
 			ShadowMirrorProj.DisplayName: Shadow Mirror Proj
 			SlimeSceptreBall.DisplayName: Slime Sceptre Ball
 			MagConnectProj.DisplayName: Mag Connect Proj
+			LeafShield.DisplayName: Leaf Shield
+			PhantomMirrorProj.DisplayName: Phantom Mirror Proj
 		}
 
 		Configs: {
