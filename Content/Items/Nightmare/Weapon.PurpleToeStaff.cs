@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.mana = 15;
             Item.knockBack = 3;
 
-            Item.value = Item.sellPrice(0, 50, 0, 0);
+            Item.value = Item.sellPrice(0, 30, 0, 0);
             Item.rare = RarityType<NightmareRarity>();
             Item.shoot = ProjectileType<PurpleToeProj>();
             Item.UseSound = CoraliteSoundID.TerraprismaSummon_Item82;

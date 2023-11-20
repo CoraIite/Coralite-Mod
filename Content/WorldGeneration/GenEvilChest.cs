@@ -55,7 +55,7 @@ namespace Coralite.Content.WorldGeneration
             new Point(13, 8),
         };
 
-        private static Point[] CrimsonLeft = new Point[6]
+        private static Point[] CrimsonLeft = new Point[7]
         {
             new Point(6,9),
             new Point(4,6),
@@ -63,8 +63,9 @@ namespace Coralite.Content.WorldGeneration
             new Point(3, 9),
             new Point(3, 3),
             new Point(2, 11),
+            new Point(11, 9),
         };
-        private static Point[] CrimsonRight = new Point[6]
+        private static Point[] CrimsonRight = new Point[7]
         {
             new Point(12,9),
             new Point(14, 6),
@@ -72,9 +73,10 @@ namespace Coralite.Content.WorldGeneration
             new Point(15,9),
             new Point(17,6),
             new Point(15,12),
+            new Point(15,9),
         };
 
-        private static Point[] CrimsonTorch1 = new Point[6]
+        private static Point[] CrimsonTorch1 = new Point[7]
         {
             new Point(8,6),
             new Point(7, 4),
@@ -82,8 +84,9 @@ namespace Coralite.Content.WorldGeneration
             new Point(8, 5),
             new Point(4, 7),
             new Point(7, 7),
+            new Point(7, 4),
         };
-        private static Point[] CrimsonTorch2 = new Point[6]
+        private static Point[] CrimsonTorch2 = new Point[7]
         {
             new Point(11, 6),
             new Point(12, 4),
@@ -91,6 +94,7 @@ namespace Coralite.Content.WorldGeneration
             new Point(11, 5),
             Point.Zero,
             new Point(12, 7),
+            new Point(14, 5),
         };
 
         public void GenEvilChest(GenerationProgress progress, GameConfiguration configuration)
@@ -181,7 +185,7 @@ namespace Coralite.Content.WorldGeneration
                         if (tileDictionary[TileID.Crimstone] + tileDictionary[TileID.Crimsand] + tileDictionary[TileID.CrimsonGrass] < 750)
                             continue; //如果不是，则返回false，这将导致调用方法尝试一个不同的origin。
 
-                        int whichOne = WorldGen.genRand.Next(6);
+                        int whichOne = WorldGen.genRand.Next(7);
                         Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrimsonChestShrine" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
                         Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrimsonChestClear" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
                         Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrimsonChestWall" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;

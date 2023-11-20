@@ -40,8 +40,8 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
                 .AddBonus(new OtherEnchant_WeaponAttackBonus(Enchant.Level.Five, 3f, 0, 0))
                 .AddBonus(new OtherEnchant_WeaponAttackBonus(Enchant.Level.Max, 4f, 0, 0))
                 //其他暴击加成
-                .AddBonus(new OtherEnchant_WeaponCritBonus(Enchant.Level.Five, 4f, 0, 0))
-                .AddBonus(new OtherEnchant_WeaponCritBonus(Enchant.Level.Max, 8f, 0, 0))
+                .AddBonus(new OtherEnchant_WeaponCritBonus(Enchant.Level.Five, 2f, 0, 0))
+                .AddBonus(new OtherEnchant_WeaponCritBonus(Enchant.Level.Max, 4f, 0, 0))
                 //其他击退加成
                 .AddBonus(new OtherEnchant_WeaponKnockbackBonus(Enchant.Level.Four, 5f, 0, 0))
                 .AddBonus(new OtherEnchant_WeaponKnockbackBonus(Enchant.Level.Five, 10f, 0, 0))
@@ -68,7 +68,12 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
                 //植生：叶刃
                 .AddBonus(new SpecialEnchant_BotanicusBonus(Enchant.Level.Max, 0, 0, 0))
                 //刚：强化防御
-                .AddBonus(new SpecialEnchant_MetallonBonus(Enchant.Level.Max, 0, 0, 0));
+                .AddBonus(new SpecialEnchant_MetallonBonus(Enchant.Level.Max, 0, 0, 0))
+                //冻：冰块
+                .AddBonus(new SpecialEnchant_FreosanBonus(Enchant.Level.Max, 0, 0, 0))
+                //灼：火球
+                .AddBonus(new SpecialEnchant_HeatanBonus(Enchant.Level.Max, 0, 0, 0))
+                .AddBonus(new SpecialEnchant_WeaponAttackBonus(Enchant.Level.Max, 3f, 0, 0));
             #endregion
 
             remodelableWeaponPool = weaponPool_Generic.Clone();

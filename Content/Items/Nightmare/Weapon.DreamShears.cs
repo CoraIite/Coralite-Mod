@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.shoot = ProjectileType<DreamShearsSlash>();
             Item.DamageType = DamageClass.Melee;
             Item.rare = RarityType<NightmareRarity>();
-            Item.value = Item.sellPrice(0, 50, 0, 0);
+            Item.value = Item.sellPrice(0, 30, 0, 0);
             Item.SetWeaponValues(275, 4, 4);
             Item.autoReuse = true;
             Item.noUseGraphic = true;

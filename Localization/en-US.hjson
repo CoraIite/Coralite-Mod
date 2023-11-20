@@ -2127,6 +2127,8 @@ Mods: {
 			MagConnectProj.DisplayName: Mag Connect Proj
 			LeafShield.DisplayName: Leaf Shield
 			PhantomMirrorProj.DisplayName: Phantom Mirror Proj
+			FreosanProj.DisplayName: Freosan Proj
+			HeatanProj.DisplayName: Heatan Proj
 		}
 
 		Configs: {
