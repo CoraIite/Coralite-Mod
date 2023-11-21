@@ -25,7 +25,7 @@ namespace Coralite.Content.NPCs.VanillaNPC
             switch (npc.type)
             {
                 default: break;
-                case NPCID.DemonEye:
+                case NPCID.DemonEye://恶魔眼
                 case NPCID.DemonEye2:
                     npcLoot.Add(ItemDropRule.Common(ItemType<EyeballSeed>(), 50));
                     break;
@@ -33,29 +33,29 @@ namespace Coralite.Content.NPCs.VanillaNPC
                     npcLoot.Add(ItemDropRule.Common(ItemType<EyeballSeed>(), 25));
                     break;
 
-                case NPCID.DarkCaster:
+                case NPCID.DarkCaster://地牢怪掉落影子
                     npcLoot.Add(ItemDropRule.Common(ItemType<ShadowEnergy>(), 3, 1, 3));
                     break;
 
-                case NPCID.EaterofSouls:
+                case NPCID.EaterofSouls://远古腐化御剑
                 case NPCID.CorruptGoldfish:
                 case NPCID.DevourerHead:
                     npcLoot.Add(ItemDropRule.Common(ItemType<AncientDemoniteYujian>(), 100));
                     break;
 
-                case NPCID.Crimera:
+                case NPCID.Crimera://远古血腥御剑
                 case NPCID.FaceMonster:
                 case NPCID.BloodCrawler:
                 case NPCID.CrimsonGoldfish:
                     npcLoot.Add(ItemDropRule.Common(ItemType<AncientCrimtaneYujian>(), 100));
                     break;
-                case NPCID.HallowBoss:
+                case NPCID.HallowBoss://光女掉落圣光残片
                     npcLoot.Add(ItemDropRule.ByCondition(new DownedGolemCondition(), ItemType<FragmentsOfLight>(), 1, 3, 5));
                     break;
-                case NPCID.DukeFishron:
+                case NPCID.DukeFishron://猪鲨掉落皮
                     npcLoot.Add(ItemDropRule.ByCondition(new DownedGolemCondition(), ItemType<DukeFishronSkin>(), 1, 3, 5));
                     break;
-                case NPCID.EyeballFlyingFish:
+                case NPCID.EyeballFlyingFish://血月怪掉落血红宝珠
                 case NPCID.ZombieMerman:
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<BloodyOrb>(), 4, 1, 3));
                     break;
@@ -65,6 +65,10 @@ namespace Coralite.Content.NPCs.VanillaNPC
                     break;
                 case NPCID.BloodNautilus:
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<BloodyOrb>(), 1, 1, 3));
+                    break;
+
+                case NPCID.FlyingSnake://羽蛇掉毛
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), ItemType<FlyingSnakeFeather>(), 1, 1, 2));
                     break;
             }
 

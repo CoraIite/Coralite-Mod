@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
 {
     public class SplendorRemodelPool : BaseMagikePlaceableItem,IMagikeFactoryItem
     {
-        public SplendorRemodelPool() : base(TileType<SplendorRemodelPoolTile>(), Item.sellPrice(0, 3, 0, 0), RarityType<SplendorMagicoreRarity>(), 600)
+        public SplendorRemodelPool() : base(TileType<SplendorRemodelPoolTile>(), Item.sellPrice(0, 3, 0, 0), RarityType<SplendorMagicoreRarity>(), 1000)
         { }
 
         public override int MagikeMax => 1_5000;
@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
         {
             CreateRecipe()
                 .AddIngredient<SoulRemodelPool>()
-                .AddIngredient<SplendorMagicore>(10)
+                .AddIngredient<SplendorMagicore>(5)
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
         }

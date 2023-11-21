@@ -64,6 +64,18 @@ namespace Coralite.Content.Items.Magike.LightLens
             DustType = DustID.WhiteTorch;
         }
 
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            Tile t = Framing.GetTileSafely(i, j);
+            if (t.TileFrameX == 0 && t.TileFrameY == 0)
+                if (Helper.OnScreen(new Vector2(i * 16, j * 16) - Main.screenPosition) && MagikeHelper.TryGetEntity(i, j, out BrightnessLensEntity entity))
+                {
+                    Color lightColor = Lighting.GetColor(entity.Position.ToPoint());
+                    float light = 0.3f * lightColor.R + 0.6f * lightColor.G + 0.1f * lightColor.B;
+                    entity.BrightEnough = light > 200;
+                }
+        }
+
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
             //这是特定于照明模式的，如果您手动绘制瓷砖，请始终包含此内容
@@ -117,6 +129,7 @@ namespace Coralite.Content.Items.Magike.LightLens
     {
         public const int sendDelay = 10 * 60;
         public int sendTimer;
+        public bool BrightEnough;
         public BrightnessLensEntity() : base(300, 5 * 16, 10 * 60) { }
 
         public override ushort TileType => (ushort)TileType<BrightnessLensTile>();
@@ -143,9 +156,7 @@ namespace Coralite.Content.Items.Magike.LightLens
 
         public override bool CanGenerate()
         {
-            Color lightColor = Lighting.GetColor(Position.ToPoint());
-            float light = 0.3f * lightColor.R + 0.6f * lightColor.G + 0.1f * lightColor.B;
-            return light > 200;
+            return BrightEnough;
         }
 
         public override void SendVisualEffect(IMagikeContainer container)

@@ -41,7 +41,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
                 .AddBonus(new OtherEnchant_WeaponAttackBonus(Enchant.Level.Max, 4f, 0, 0))
                 //其他暴击加成
                 .AddBonus(new OtherEnchant_WeaponCritBonus(Enchant.Level.Five, 2f, 0, 0))
-                .AddBonus(new OtherEnchant_WeaponCritBonus(Enchant.Level.Max, 4f, 0, 0))
+                .AddBonus(new OtherEnchant_WeaponCritBonus(Enchant.Level.Max, 3f, 0, 0))
                 //其他击退加成
                 .AddBonus(new OtherEnchant_WeaponKnockbackBonus(Enchant.Level.Four, 5f, 0, 0))
                 .AddBonus(new OtherEnchant_WeaponKnockbackBonus(Enchant.Level.Five, 10f, 0, 0))
@@ -74,10 +74,26 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
                 //灼：火球
                 .AddBonus(new SpecialEnchant_HeatanBonus(Enchant.Level.Max, 0, 0, 0))
                 .AddBonus(new SpecialEnchant_WeaponAttackBonus(Enchant.Level.Max, 3f, 0, 0));
+
+            weaponPool_Melee = weaponPool_Generic.Clone();
+            weaponPool_Melee.FindAndRemoveAll<OtherEnchant_ManaCostBonus>(1);
+
+            weaponPool_Ranged = weaponPool_Generic.Clone();
+            weaponPool_Ranged.FindAndRemoveAll<OtherEnchant_ManaCostBonus>(1);
+            weaponPool_Ranged.FindAndRemoveAll<OtherEnchant_ItemScaleBonus>(1);
+
+            weaponPool_Magic = weaponPool_Generic.Clone();
+            weaponPool_Magic.FindAndRemoveAll<OtherEnchant_ItemScaleBonus>(1);
+
+            weaponPool_Summon = weaponPool_Generic.Clone();
+            weaponPool_Summon.FindAndRemoveAll<OtherEnchant_ManaCostBonus>(1);
+            weaponPool_Summon.FindAndRemoveAll<OtherEnchant_WeaponKnockbackBonus>(1);
+            weaponPool_Summon.FindAndRemoveAll<OtherEnchant_WeaponCritBonus>(1);
+
             #endregion
 
             remodelableWeaponPool = weaponPool_Generic.Clone();
-            remodelableWeaponPool.FindAndRemoveAll<SpecialEnchant_ShootExtraBonus>(2, Enchant.Level.Max);
+            remodelableWeaponPool.FindAndRemoveAll(2, Enchant.Level.Max);
             remodelableWeaponPool.AddBonus(new SpecialEnchant_RemodelableBonus(Enchant.Level.Max, 0, 0, 0));
 
             armorPool = new EnchantEntityPool();
@@ -154,6 +170,11 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public override void Unload()
         {
             weaponPool_Generic = null;
+            weaponPool_Summon = null;
+            weaponPool_Magic = null;
+            weaponPool_Melee = null;
+            weaponPool_Ranged = null;
+
             armorPool = null;
             accessoryPool = null;
 

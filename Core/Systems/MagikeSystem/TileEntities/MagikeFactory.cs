@@ -126,6 +126,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             if (workTimer == -1)
             {
                 workTimer = 0;
+                CheckActive();
                 return true;
             }
 

@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
@@ -39,7 +40,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             if (containsItem is not null && !containsItem.IsAir &&
                 (containsItem.damage > 0 || 
                 ((containsItem.accessory || containsItem.defense > 0) && containsItem.TryGetGlobalItem(out MagikeItem mi) && mi.accessoryOrArmorCanEnchant)) &&
-                magike >= GetMagikeCost(this, containsItem))
+                magike >= GetMagikeCost(containsItem))
             {
                 return base.CanWork();
             }
@@ -70,7 +71,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             if (containsItem is not null && !containsItem.IsAir &&
                 (containsItem.damage > 0 || containsItem.accessory || containsItem.defense > 0))
             {
-                int cost = GetMagikeCost(this, containsItem);
+                int cost = GetMagikeCost(containsItem);
                 if (magike < cost)
                     return;
 
@@ -157,7 +158,12 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             }
         }
 
-        public static int GetMagikeCost(IMagikeContainer container, Item item)
+        public int GetMagikeCost( Item item)
+        {
+            return (int)(GetBaseMagikeCost(item) * (targetedEnchantSlot.HasValue ? 1.5f : 1f));
+        }
+
+        public static int GetBaseMagikeCost(Item item)
         {
             if (item.value < 1_00_00)
                 return 75;
@@ -269,7 +275,16 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             if (item.defense > 0)
                 return EnchantEntityPools.armorPool;
 
-            return EnchantEntityPools.weaponPool_Generic;
+            if (item.DamageType == DamageClass.Melee)
+                return EnchantEntityPools.weaponPool_Melee;
+            else if (item.DamageType == DamageClass.Magic)
+                return EnchantEntityPools.weaponPool_Magic;
+            else if (item.DamageType == DamageClass.Ranged)
+                return EnchantEntityPools.weaponPool_Ranged;
+            else if (item.DamageType == DamageClass.Summon)
+                return EnchantEntityPools.weaponPool_Summon;
+            else
+                return EnchantEntityPools.weaponPool_Generic;
         }
 
         public static Enchant.Level GetLevel(Enchant.Level currentLevel)
@@ -284,6 +299,29 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 Enchant.Level.Max => Enchant.Level.Max,
                 _ => Enchant.Level.One,
             };
+        }
+
+        public void SetTargetEnchant(Enchant.ID id)
+        {
+            targetedEnchantSlot = id;
+        }
+
+        public void SetTargetEnchant(int id)
+        {
+            if (id >= 0 && id < 3)
+                targetedEnchantSlot = (Enchant.ID)id;
+        }
+
+        public void RemoveTargetEnchant()
+        {
+            targetedEnchantSlot = null;
+        }
+
+        public void RemoveEnchant(int index)
+        {
+            Enchant enchant = containsItem.GetGlobalItem<MagikeItem>().Enchant;
+            if (index >= 0 && index < 3)
+                enchant.datas[index] = null;
         }
     }
 }

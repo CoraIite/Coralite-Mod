@@ -15,24 +15,23 @@ namespace Coralite.Content.Items.Magike.LiquidLens
 {
     public class ScorchingLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
-        public ScorchingLens() : base(TileType<ScorchingLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<CrystallineMagikeRarity>(), 300)
+        public ScorchingLens() : base(TileType<ScorchingLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<CrystallineMagikeRarity>(), 300)
         { }
 
-        public override int MagikeMax => 1200;
-        public string SendDelay => "6";
-        public int HowManyPerSend => 24;
+        public override int MagikeMax => 1500;
+        public string SendDelay => "5";
+        public int HowManyPerSend => 30;
         public int ConnectLengthMax => 5;
-        public int HowManyToGenerate => 48;
-        public string GenerateDelay => "12";
+        public int HowManyToGenerate => 60;
+        public string GenerateDelay => "10";
 
         public override void AddRecipes()
         {
-            //CreateRecipe()
-            //    .AddIngredient<MagicCrystal>(2)
-            //    .AddIngredient(ItemID.HellstoneBar, 8)
-            //    .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
-            //    .AddTile(TileID.Anvils)
-            //    .Register();
+            CreateRecipe()
+                .AddIngredient<LavaLens>()
+                .AddIngredient(ItemID.FragmentSolar, 5)
+                .AddTile(TileID.LunarCraftingStation)
+                .Register();
         }
     }
 
@@ -67,14 +66,14 @@ namespace Coralite.Content.Items.Magike.LiquidLens
 
     public class ScorchingLensEntity : MagikeGenerator_Normal
     {
-        public const int sendDelay = 6 * 60;
+        public const int sendDelay = 5 * 60;
         public int sendTimer;
-        public ScorchingLensEntity() : base(1200, 5 * 16, 12 * 60) { }
+        public ScorchingLensEntity() : base(1500, 5 * 16, 10 * 60) { }
 
         public override ushort TileType => (ushort)TileType<ScorchingLensTile>();
 
-        public override int HowManyPerSend => 24;
-        public override int HowManyToGenerate => 48;
+        public override int HowManyPerSend => 30;
+        public override int HowManyToGenerate => 60;
 
         public override bool CanSend()
         {

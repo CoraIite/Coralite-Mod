@@ -243,12 +243,12 @@ namespace Coralite.Content.UI
                         itemScale = pixelHeight / rectangle2.Height;
                 }
 
-                position.X += 26 * MagikeItemSlotPanel.scale - rectangle2.Width * itemScale / 2f;
-                position.Y += 26 * MagikeItemSlotPanel.scale - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
+                //position.X += 26 * MagikeItemSlotPanel.scale - rectangle2.Width * itemScale / 2f;
+                //position.Y += 26 * MagikeItemSlotPanel.scale - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
 
-                spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
+                spriteBatch.Draw(mainTex, center, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, rectangle2.Size()/2, itemScale, 0, 0f);
                 if (Item.color != default(Color))
-                    spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
+                    spriteBatch.Draw(mainTex, center, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, rectangle2.Size() / 2, itemScale, 0, 0f);
 
                 if (Item.stack > 1)
                     Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), center + new Vector2(12, 16), Color.White, MagikeItemSlotPanel.scale, 1, 0.5f);

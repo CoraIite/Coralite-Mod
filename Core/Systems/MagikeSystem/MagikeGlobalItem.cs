@@ -35,7 +35,8 @@ namespace Coralite.Core.Systems.MagikeSystem
         public int stack_CraftRequired;
         public IMagikeCraftCondition condition = null;
 
-        private Enchant enchant;
+        //只是为了判断是否为null才用的这个
+        internal Enchant enchant;
         public Enchant Enchant
         {
             get
@@ -205,8 +206,8 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             if (item.ModItem is IMagikeGeneratorItem generatorItem)
             {
-                string GenerateDelay = string.Concat("每 ", generatorItem.GenerateDelay, " 秒生产一次魔能\n");
-                string howManyToGenerate = generatorItem.HowManyToGenerate < 0 ? "" : $"每次生产魔能量：{generatorItem.HowManyToGenerate}";
+                string GenerateDelay = string.Concat("每 ", generatorItem.GenerateDelay, " 秒生产一次魔能");
+                string howManyToGenerate = generatorItem.HowManyToGenerate < 0 ? "" : $"\n每次生产魔能量：{generatorItem.HowManyToGenerate}";
                 TooltipLine line = new TooltipLine(Mod, "magikeGenerate", GenerateDelay+howManyToGenerate);
                 tooltips.Add(line);
             }
@@ -271,7 +272,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         }
 
-        private static Color GetColor(Enchant.Level level)
+        public static Color GetColor(Enchant.Level level)
         {
             return level switch
             {

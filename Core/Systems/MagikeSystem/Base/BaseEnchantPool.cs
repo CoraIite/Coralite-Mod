@@ -56,9 +56,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
         {
             if (MagikeHelper.TryGetEntity(i, j, out MagikeFactory_EnchantPool pool))
             {
-                MagikeItemSlotPanel.visible = true;
-                MagikeItemSlotPanel.tileEntity = pool;
-                UILoader.GetUIState<MagikeItemSlotPanel>().Recalculate();
+                MagikeEnchantUI.visible = true;
+                MagikeEnchantUI.tileEntity = pool;
+                UILoader.GetUIState<MagikeEnchantUI>().Recalculate();
             }
 
             return true;

@@ -1695,6 +1695,41 @@ Mods: {
 				DisplayName: Phantom Mirror
 				Tooltip: ""
 			}
+
+			SplendorLens: {
+				DisplayName: Splendor Lens
+				Tooltip: ""
+			}
+
+			SoulColumn: {
+				DisplayName: Soul Column
+				Tooltip: ""
+			}
+
+			FeatheredRefractor: {
+				DisplayName: Feathered Refractor
+				Tooltip: ""
+			}
+
+			FlyingSnakeFeather: {
+				DisplayName: Flying Snake Feather
+				Tooltip: ""
+			}
+
+			CrystalRefinery: {
+				DisplayName: Crystal Refinery
+				Tooltip: ""
+			}
+
+			BrilliantRefiner: {
+				DisplayName: Brilliant Refiner
+				Tooltip: ""
+			}
+
+			SplendorRefiner: {
+				DisplayName: Splendor Refiner
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2265,6 +2300,13 @@ Mods: {
 			YujianSystem: {
 				YujianDescription: It needs to be placed in a hulu for use
 				HuluDescription: Right click to open the UI panel, and place Yujian in a slot to summon Yujian
+			}
+
+			MagikeSystem: {
+				BotanicusBonus: 植生：攻击时生成叶刃环绕自身
+				MetallonBonus: 刚：攻击时获得防御加成Buff
+				FreosanBonus: 冻：攻击时生成冰块
+				HeatanBonus: 灼：攻击时生成灼火球
 			}
 		}
 	}

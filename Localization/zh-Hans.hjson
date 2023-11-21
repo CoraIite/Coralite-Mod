@@ -1703,6 +1703,41 @@ Mods: {
 				DisplayName: 镜中魅影
 				Tooltip: 照出你的魅影们，它们将沿着你的运动轨迹行动
 			}
+
+			SplendorLens: {
+				DisplayName: 光辉透镜
+				Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
+			}
+
+			SoulColumn: {
+				DisplayName: 灵魂水晶柱
+				Tooltip: 能够容纳很多魔能
+			}
+
+			FeatheredRefractor: {
+				DisplayName: 羽蛇广角镜
+				Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
+			}
+
+			FlyingSnakeFeather: {
+				DisplayName: 羽蛇神之羽
+				Tooltip: ""
+			}
+
+			CrystalRefinery: {
+				DisplayName: 晶体炼化器
+				Tooltip: 消耗魔能生成魔力晶体
+			}
+
+			BrilliantRefinery: {
+				DisplayName: 璀璨炼化器
+				Tooltip: 消耗魔能生成魔力晶体
+			}
+
+			SplendorRefinery: {
+				DisplayName: 光辉炼化器
+				Tooltip: 消耗魔能生成魔力晶体
+			}
 		}
 
 		Tiles: {
@@ -2277,6 +2312,13 @@ Mods: {
 			YujianSystem: {
 				YujianDescription: 需要放置在葫芦中以使用
 				HuluDescription: 右键单击打开UI面板，将御剑放进栏位后可召唤出御剑
+			}
+
+			MagikeSystem: {
+				// BotanicusBonus: 植生：攻击时生成叶刃环绕自身
+				// MetallonBonus: 刚：攻击时获得防御加成Buff
+				// FreosanBonus: 冻：攻击时生成冰块
+				// HeatanBonus: 灼：攻击时生成灼火球
 			}
 		}
 	}

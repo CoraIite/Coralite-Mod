@@ -119,7 +119,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
             //for (float m = 0f; m < 1f; m += 355f / (678f * (float)Math.PI))
             //    spriteBatch.Draw(texture, drawPos + (TwoPi * m).ToRotationVector2() * (6f + offset * 2f), frame, effectColor, 0f, origin, 1f, effects, 0f);
         }
-
     }
 
 
