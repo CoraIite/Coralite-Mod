@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -14,7 +15,8 @@ namespace Coralite.Content.Items.Magike.SpecialLens
 {
     public class RedJadeLens : BaseMagikePlaceableItem,IMagikeSenderItem,IMagikeGeneratorItem
     {
-        public RedJadeLens() : base(TileType<RedJadeLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
+        public RedJadeLens() : base(TileType<RedJadeLensTile>(), Item.sellPrice(0, 0, 10, 0)
+            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeLens)
         { }
 
         public override int MagikeMax => 20;
@@ -35,7 +37,7 @@ namespace Coralite.Content.Items.Magike.SpecialLens
         }
     }
 
-    public class RedJadeLensTile : BaseCostItemLensTile
+    public class RedJadeLensTile : BaseLensTile
     {
         public override void SetStaticDefaults()
         {

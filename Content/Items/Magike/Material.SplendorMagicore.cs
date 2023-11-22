@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Magike
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.GetMagikeItem().magiteAmount = 1000;
+            Item.GetMagikeItem().magikeAmount = 1000;
         }
     }
 }

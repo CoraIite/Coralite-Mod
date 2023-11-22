@@ -83,8 +83,8 @@ namespace Coralite.Content.NPCs.Town
             NPC.damage = 10;
             NPC.defense = 15;
             NPC.lifeMax = 250;
-            NPC.HitSound = SoundID.NPCHit1;
-            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.HitSound = CoraliteSoundID.DigStone_Tink;
+            NPC.DeathSound = CoraliteSoundID.RockGolem_NPCDeath43;
             NPC.knockBackResist = 0.5f;
 
             AnimationType = NPCID.Guide;
@@ -242,16 +242,27 @@ namespace Coralite.Content.NPCs.Town
         {
             var npcShop = new NPCShop(Type, ShopName);
             int magicCrystalCurrencyID = CurrencyLoader.GetCurrencyID<MagicCrystalCurrency>();
-            npcShop.Add(new Item(ModContent.ItemType<MagikeMonoclastic>())
+            npcShop.Add(new Item(ModContent.ItemType<MagikeMonoclastic>())//单片镜
             {
                 shopCustomPrice = 10,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
-            npcShop.Add(new Item(ModContent.ItemType<MagConnectStaff>())
+            npcShop.Add(new Item(ModContent.ItemType<MagConnectStaff>())//连接杖
             {
                 shopCustomPrice = 10,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
+            npcShop.Add(new Item(ModContent.ItemType<MagikeActivator>())//激活杖
+            {
+                shopCustomPrice = 10,
+                shopSpecialCurrency = magicCrystalCurrencyID
+            });
+            npcShop.Add(new Item(ModContent.ItemType<CondensedCrystalBall>())//充能球
+            {
+                shopCustomPrice = 10,
+                shopSpecialCurrency = magicCrystalCurrencyID
+            });
+
             npcShop.Register();
         }
 

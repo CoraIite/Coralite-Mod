@@ -18,7 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <summary>
         /// 物品中存储的魔能最大值
         /// </summary>
-        public int magikeMax;
+        public int magikeMax = -1;
         /// <summary>
         /// 物品中当前存储的魔能量
         /// </summary>
@@ -27,7 +27,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <summary>
         /// 物品自身的魔能含量，设置了这个就能让物品被普通透镜转化成魔能
         /// </summary>
-        public int magiteAmount = -1;
+        public int magikeAmount = -1;
 
         public bool accessoryOrArmorCanEnchant;
 
@@ -220,6 +220,12 @@ namespace Coralite.Core.Systems.MagikeSystem
                 tooltips.Add(line);
             }
 
+            if (magikeMax>=0)
+            {
+                TooltipLine line = new TooltipLine(Mod, "magikeFactory", $"魔能：{magike} / {magikeMax}");
+                tooltips.Add(line);
+            }
+
             if (enchant != null)
             {
                 for (int i = 0; i < 3; i++)
@@ -236,15 +242,15 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (MagikeSystem.remodelRecipes.ContainsKey(item.type))
                 tooltips.Add(new TooltipLine(Mod, "canRemodel", "可重塑"));
 
-            if (magiteAmount > 0)
+            if (magikeAmount > 0)
             {
-                string magikeAmount = $"魔能含量: {magiteAmount}";
+                string magikeAmount = $"魔能含量: {this.magikeAmount}";
                 TooltipLine line = new TooltipLine(Mod, "magiteAmount", magikeAmount);
-                if (magiteAmount < 300)
+                if (this.magikeAmount < 300)
                     line.OverrideColor = Coralite.Instance.MagicCrystalPink;
-                else if (magiteAmount < 1000)
+                else if (this.magikeAmount < 1000)
                     line.OverrideColor = Coralite.Instance.CrystallineMagikePurple;
-                else if (magiteAmount < 2_0000)
+                else if (this.magikeAmount < 2_0000)
                     line.OverrideColor = Coralite.Instance.SplendorMagicoreLightBlue;
                 else
                     line.OverrideColor = Color.Orange;
@@ -262,14 +268,13 @@ namespace Coralite.Core.Systems.MagikeSystem
                     line.OverrideColor = Coralite.Instance.MagicCrystalPink;
                 else if (magike_CraftRequired < 1000)
                     line.OverrideColor = Coralite.Instance.CrystallineMagikePurple;
-                else if (magiteAmount < 2_0000)
+                else if (this.magikeAmount < 2_0000)
                     line.OverrideColor = Coralite.Instance.SplendorMagicoreLightBlue;
                 else
                     line.OverrideColor = Color.Orange;
 
                 tooltips.Add(line);
             }
-
         }
 
         public static Color GetColor(Enchant.Level level)

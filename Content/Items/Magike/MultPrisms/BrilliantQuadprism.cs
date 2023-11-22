@@ -18,12 +18,13 @@ namespace Coralite.Content.Items.Magike.MultPrisms
 {
     public class BrilliantQuadprism : BaseMagikePlaceableItem,IMagikeSenderItem
     {
-        public BrilliantQuadprism() : base(TileType<BrilliantQuadprismTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<CrystallineMagikeRarity>(), 600)
+        public BrilliantQuadprism() : base(TileType<BrilliantQuadprismTile>(), Item.sellPrice(0, 1, 0, 0)
+            , RarityType<CrystallineMagikeRarity>(), 600,AssetDirectory.MagikeMultPrisms)
         { }
 
         public override int MagikeMax => 600;
         public string SendDelay => "3.5";
-        public int HowManyPerSend => 60;
+        public int HowManyPerSend => 30;
         public int ConnectLengthMax => 15;
         public int HowManyCanConnect => 4;
 
@@ -49,7 +50,7 @@ namespace Coralite.Content.Items.Magike.MultPrisms
 
     public class BrilliantQuadprismTile : BaseRefractorTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + "CrystalRefractorTile";
+        public override string Texture => AssetDirectory.MagikeRefractorTiles + "CrystalRefractorTile";
 
         public override void SetStaticDefaults()
         {
@@ -70,8 +71,8 @@ namespace Coralite.Content.Items.Magike.MultPrisms
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.MagicCrystalPink);
-            DustType = DustID.CrystalSerpent_Pink;
+            AddMapEntry(Coralite.Instance.CrystallineMagikePurple);
+            DustType = DustID.PurpleTorch;
         }
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
@@ -128,7 +129,7 @@ namespace Coralite.Content.Items.Magike.MultPrisms
         public int sendTimer;
         public BrilliantQuadprismEntity() : base(600, 15 * 16, 4) { }
 
-        public override int HowManyPerSend => 60;
+        public override int HowManyPerSend => 30;
 
         public override ushort TileType => (ushort)TileType<BrilliantQuadprismTile>();
 
@@ -154,5 +155,4 @@ namespace Coralite.Content.Items.Magike.MultPrisms
             MagikeHelper.SpawnDustOnGenerate(1, 2, Position, Coralite.Instance.CrystallineMagikePurple);
         }
     }
-
 }

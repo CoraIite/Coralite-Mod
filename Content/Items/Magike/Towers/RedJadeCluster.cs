@@ -18,7 +18,8 @@ namespace Coralite.Content.Items.Magike.Towers
 {
     public class RedJadeCluster : BaseMagikePlaceableItem, IMagikeFactoryItem
     {
-        public RedJadeCluster() : base(TileType<RedJadeClusterTile>(), Item.sellPrice(0, 0, 10, 0), ItemRarityID.Blue, 0)
+        public RedJadeCluster() : base(TileType<RedJadeClusterTile>(), Item.sellPrice(0, 0, 10, 0)
+            , ItemRarityID.Blue, 0, AssetDirectory.MagikeFactories)
         { }
 
         public override int MagikeMax => 100;
@@ -36,7 +37,8 @@ namespace Coralite.Content.Items.Magike.Towers
 
     public class RedJadeClusterTile : BaseColumnTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + "RedJadeLensTile";
+        public override string Texture => AssetDirectory.MagikeLensTiles + "RedJadeLensTile";
+        public override string TopTextureName => AssetDirectory.MagikeFactoryTiles + Name + "_Top";
 
         public override void SetStaticDefaults()
         {

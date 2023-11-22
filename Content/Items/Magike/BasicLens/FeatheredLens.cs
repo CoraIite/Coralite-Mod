@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.Materials;
 using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -16,7 +17,8 @@ namespace Coralite.Content.Items.Magike.BasicLens
 {
     public class FeatheredLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
-        public FeatheredLens() : base(TileType<FeatheredLensTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<CrystallineMagikeRarity>(), 600)
+        public FeatheredLens() : base(TileType<FeatheredLensTile>(), Item.sellPrice(0, 1, 0, 0)
+            , RarityType<CrystallineMagikeRarity>(), 600, AssetDirectory.MagikeLens)
         { }
 
         public override int MagikeMax => 900;

@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Magike
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.GetMagikeItem().magiteAmount = 25;
+            Item.GetMagikeItem().magikeAmount = 25;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)

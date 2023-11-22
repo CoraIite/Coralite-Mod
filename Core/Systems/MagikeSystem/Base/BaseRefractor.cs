@@ -12,8 +12,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 {
     public abstract class BaseRefractorTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
-        public virtual string TopTextureName => AssetDirectory.MagikeTiles + Name + "_Top";
+        public override string Texture => AssetDirectory.MagikeRefractorTiles + Name;
+        public virtual string TopTextureName => AssetDirectory.MagikeRefractorTiles + Name + "_Top";
 
         public Asset<Texture2D> TopTexture;
         public const int FrameWidth = 18;

@@ -15,7 +15,8 @@ namespace Coralite.Content.Items.Magike.Refractors
 {
     public class BrilliantRefractor : BaseMagikePlaceableItem,IMagikeSenderItem
     {
-        public BrilliantRefractor() : base(TileType<BrilliantRefractorTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<CrystallineMagikeRarity>(), 300)
+        public BrilliantRefractor() : base(TileType<BrilliantRefractorTile>(), Item.sellPrice(0, 0, 50, 0)
+            , RarityType<CrystallineMagikeRarity>(), 300, AssetDirectory.MagikeRefractors)
         { }
 
         public override int MagikeMax => 300;
@@ -45,7 +46,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class BrilliantRefractorTile : BaseRefractorTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + "CrystalRefractorTile";
+        public override string Texture => AssetDirectory.MagikeRefractorTiles + "CrystalRefractorTile";
 
         public override void SetStaticDefaults()
         {

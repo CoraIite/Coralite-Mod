@@ -1730,6 +1730,61 @@ Mods: {
 				DisplayName: Splendor Refiner
 				Tooltip: ""
 			}
+
+			SplendorColumn: {
+				DisplayName: Splendor Column
+				Tooltip: ""
+			}
+
+			SplendorPentaprism: {
+				DisplayName: Splendor Pentaprism
+				Tooltip: ""
+			}
+
+			BrilliantRefinery: {
+				DisplayName: Brilliant Refinery
+				Tooltip: ""
+			}
+
+			SplendorRefinery: {
+				DisplayName: Splendor Refinery
+				Tooltip: ""
+			}
+
+			SplendorRefractor: {
+				DisplayName: Splendor Refractor
+				Tooltip: ""
+			}
+
+			MiniBrilliantColumn: {
+				DisplayName: Mini Brilliant Column
+				Tooltip: ""
+			}
+
+			MiniCrimtaneColumn: {
+				DisplayName: Mini Crimtane Column
+				Tooltip: ""
+			}
+
+			MiniCrystalColumn: {
+				DisplayName: Mini Crystal Column
+				Tooltip: ""
+			}
+
+			MiniDemoniteColumn: {
+				DisplayName: Mini Demonite Column
+				Tooltip: ""
+			}
+
+			MiniSoulColumn: {
+				DisplayName: Mini Soul Column
+				Tooltip: ""
+			}
+
+			MiniSplendorColumn: {
+				DisplayName: Mini Splendor Column
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2164,6 +2219,7 @@ Mods: {
 			PhantomMirrorProj.DisplayName: Phantom Mirror Proj
 			FreosanProj.DisplayName: Freosan Proj
 			HeatanProj.DisplayName: Heatan Proj
+			Page_MagikeBaseProj.DisplayName: Page_ Magike Base Proj
 		}
 
 		Configs: {

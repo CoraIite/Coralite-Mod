@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -14,7 +15,8 @@ namespace Coralite.Content.Items.Magike.BasicLens
 {
     public class SplendorLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
-        public SplendorLens() : base(TileType<SplendorLensTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<SplendorMagicoreRarity>(), 1000)
+        public SplendorLens() : base(TileType<SplendorLensTile>(), Item.sellPrice(0, 1, 0, 0)
+            , RarityType<SplendorMagicoreRarity>(), 1000, AssetDirectory.MagikeLens)
         { }
 
         public override int MagikeMax => 2000;

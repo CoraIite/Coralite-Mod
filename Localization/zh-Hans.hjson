@@ -1729,6 +1729,26 @@ Mods: {
 				Tooltip: 消耗魔能生成魔力晶体
 			}
 
+			BrilliantRefiner: {
+				DisplayName: 璀璨炼化器
+				Tooltip: 消耗魔能生成魔力晶体
+			}
+
+			SplendorRefiner: {
+				DisplayName: 光辉炼化器
+				Tooltip: 消耗魔能生成魔力晶体
+			}
+
+			SplendorColumn: {
+				DisplayName: 光辉水晶柱
+				Tooltip: 能够容纳很多魔能
+			}
+
+			SplendorPentaprism: {
+				DisplayName: 光辉五棱镜
+				Tooltip: ""
+			}
+
 			BrilliantRefinery: {
 				DisplayName: 璀璨炼化器
 				Tooltip: 消耗魔能生成魔力晶体
@@ -1737,6 +1757,41 @@ Mods: {
 			SplendorRefinery: {
 				DisplayName: 光辉炼化器
 				Tooltip: 消耗魔能生成魔力晶体
+			}
+
+			SplendorRefractor: {
+				DisplayName: 光辉广角镜
+				Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
+			}
+
+			MiniBrilliantColumn: {
+				DisplayName: 微型璀璨水晶柱
+				Tooltip: 便携式水晶柱，能为你身上消耗魔能的设备供能
+			}
+
+			MiniCrimtaneColumn: {
+				DisplayName: 微型猩红水晶柱
+				Tooltip: 便携式水晶柱，能为你身上消耗魔能的设备供能
+			}
+
+			MiniCrystalColumn: {
+				DisplayName: 微型水晶柱
+				Tooltip: 便携式水晶柱，能为你身上消耗魔能的设备供能
+			}
+
+			MiniDemoniteColumn: {
+				DisplayName: 微型魔化水晶柱
+				Tooltip: 便携式水晶柱，能为你身上消耗魔能的设备供能
+			}
+
+			MiniSoulColumn: {
+				DisplayName: 微型灵魂水晶柱
+				Tooltip: 便携式水晶柱，能为你身上消耗魔能的设备供能
+			}
+
+			MiniSplendorColumn: {
+				DisplayName: 微型光辉水晶柱
+				Tooltip: 便携式水晶柱，能为你身上消耗魔能的设备供能
 			}
 		}
 
@@ -2172,6 +2227,7 @@ Mods: {
 			// PhantomMirrorProj.DisplayName: Phantom Mirror Proj
 			// FreosanProj.DisplayName: Freosan Proj
 			// HeatanProj.DisplayName: Heatan Proj
+			// Page_MagikeBaseProj.DisplayName: Page_ Magike Base Proj
 		}
 
 		Configs: {

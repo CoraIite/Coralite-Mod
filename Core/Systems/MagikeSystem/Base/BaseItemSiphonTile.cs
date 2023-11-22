@@ -10,7 +10,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 {
     public abstract class BaseItemSiphonTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
+        public override string Texture => AssetDirectory.MagikeFactoryTiles + Name;
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

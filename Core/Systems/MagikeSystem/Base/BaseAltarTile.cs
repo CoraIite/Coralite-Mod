@@ -15,7 +15,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 {
     public abstract class BaseAltarTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
+        public override string Texture => AssetDirectory.MagikeAltarTiles + Name;
 
         public const int FrameWidth = 18 * 2;
         public const int FrameHeight = 18 * 2;

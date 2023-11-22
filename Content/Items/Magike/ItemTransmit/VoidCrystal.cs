@@ -16,7 +16,8 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
 {
     public class VoidCrystal : BaseMagikePlaceableItem, IMagikePolymerizable,IMagikeFactoryItem
     {
-        public VoidCrystal() : base(TileType<VoidCrystalTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<MagicCrystalRarity>(), 50)
+        public VoidCrystal() : base(TileType<VoidCrystalTile>(), Item.sellPrice(0, 1, 0, 0)
+            , RarityType<MagicCrystalRarity>(), 50,AssetDirectory.MagikeFactories)
         { }
 
         public override int MagikeMax => 250;

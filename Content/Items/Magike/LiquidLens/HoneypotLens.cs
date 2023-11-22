@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -15,7 +16,8 @@ namespace Coralite.Content.Items.Magike.LiquidLens
 {
     public class HoneypotLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
-        public HoneypotLens() : base(TileType<HoneypotLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
+        public HoneypotLens() : base(TileType<HoneypotLensTile>(), Item.sellPrice(0, 0, 10, 0)
+            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeLens)
         { }
 
         public override int MagikeMax => 800;
@@ -36,7 +38,7 @@ namespace Coralite.Content.Items.Magike.LiquidLens
         }
     }
 
-    public class HoneypotLensTile : BaseCostItemLensTile
+    public class HoneypotLensTile : BaseLensTile
     {
         public override void SetStaticDefaults()
         {

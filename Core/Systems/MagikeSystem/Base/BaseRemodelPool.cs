@@ -16,8 +16,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 {
     public abstract class BaseRemodelPool : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
-        public virtual string ExtraTextureName => AssetDirectory.MagikeTiles + Name + "_Top";
+        public override string Texture => AssetDirectory.MagikeRemodelPoolTiles + Name;
+        public virtual string ExtraTextureName => AssetDirectory.MagikeRemodelPoolTiles + Name + "_Top";
 
         public Asset<Texture2D> ExtraTexture;
         public const int FrameWidth = 18 * 3;

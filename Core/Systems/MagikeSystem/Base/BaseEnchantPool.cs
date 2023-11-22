@@ -16,8 +16,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 {
     public abstract class BaseEnchantPool : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
-        public virtual string ExtraTextureName => AssetDirectory.MagikeTiles + Name + "_Top";
+        public override string Texture => AssetDirectory.MagikeEnchantPoolTiles + Name;
+        public virtual string ExtraTextureName => AssetDirectory.MagikeEnchantPoolTiles + Name + "_Top";
 
         public Asset<Texture2D> ExtraTexture;
         public const int FrameWidth = 18 * 3;

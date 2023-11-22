@@ -18,7 +18,8 @@ namespace Coralite.Content.Items.Magike.Factorys
 {
     public class CrystalStoneMaker : BaseMagikePlaceableItem,IMagikeFactoryItem
     {
-        public CrystalStoneMaker() : base(TileType<CrystalStoneMakerTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
+        public CrystalStoneMaker() : base(TileType<CrystalStoneMakerTile>(), Item.sellPrice(0, 0, 10, 0)
+            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeFactories)
         { }
 
         public override int MagikeMax => 100;
@@ -38,7 +39,7 @@ namespace Coralite.Content.Items.Magike.Factorys
 
     public class CrystalStoneMakerTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
+        public override string Texture => AssetDirectory.MagikeFactoryTiles + Name;
 
         public override void SetStaticDefaults()
         {

@@ -17,7 +17,8 @@ namespace Coralite.Content.Items.Magike.BasicLens
 {
     public class CrimtaneLens : BaseMagikePlaceableItem, IMagikePolymerizable, IMagikeGeneratorItem, IMagikeSenderItem
     {
-        public CrimtaneLens() : base(TileType<CrimtaneLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
+        public CrimtaneLens() : base(TileType<CrimtaneLensTile>(), Item.sellPrice(0, 0, 50, 0), 
+            RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeLens)
         { }
 
         public override int MagikeMax => 150;

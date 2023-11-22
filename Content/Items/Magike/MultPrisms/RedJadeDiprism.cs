@@ -19,7 +19,8 @@ namespace Coralite.Content.Items.Magike.MultPrisms
 {
     public class RedJadeDiprism : BaseMagikePlaceableItem,IMagikeSenderItem
     {
-        public RedJadeDiprism() : base(TileType<RedJadeDiprismTile>(), Item.sellPrice(0, 0, 5, 0), RarityType<MagicCrystalRarity>(), 25)
+        public RedJadeDiprism() : base(TileType<RedJadeDiprismTile>(), Item.sellPrice(0, 0, 5, 0)
+            , RarityType<MagicCrystalRarity>(), 25, AssetDirectory.MagikeMultPrisms)
         { }
 
         public override int MagikeMax => 25;
@@ -41,7 +42,7 @@ namespace Coralite.Content.Items.Magike.MultPrisms
 
     public class RedJadeDiprismTile : BaseRefractorTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + "RedJadeRefractorTile";
+        public override string Texture => AssetDirectory.MagikeRefractorTiles + "RedJadeRefractorTile";
 
         public override void SetStaticDefaults()
         {

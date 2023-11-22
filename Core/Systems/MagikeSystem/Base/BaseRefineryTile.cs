@@ -13,8 +13,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 {
     public abstract class BaseRefineryTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
-        public virtual string ExtraTextureName => AssetDirectory.MagikeTiles + Name + "_Top";
+        public override string Texture => AssetDirectory.MagikeFactoryTiles + Name;
+        public virtual string ExtraTextureName => AssetDirectory.MagikeFactoryTiles + Name + "_Top";
 
         public Asset<Texture2D> ExtraTexture;
         public const int FrameWidth = 18 * 2;

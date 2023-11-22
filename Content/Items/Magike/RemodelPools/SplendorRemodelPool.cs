@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -17,7 +18,8 @@ namespace Coralite.Content.Items.Magike.RemodelPools
 {
     public class SplendorRemodelPool : BaseMagikePlaceableItem,IMagikeFactoryItem
     {
-        public SplendorRemodelPool() : base(TileType<SplendorRemodelPoolTile>(), Item.sellPrice(0, 3, 0, 0), RarityType<SplendorMagicoreRarity>(), 1000)
+        public SplendorRemodelPool() : base(TileType<SplendorRemodelPoolTile>(), Item.sellPrice(0, 3, 0, 0)
+            , RarityType<SplendorMagicoreRarity>(), 1000, AssetDirectory.MagikeRemodelPools)
         { }
 
         public override int MagikeMax => 1_5000;

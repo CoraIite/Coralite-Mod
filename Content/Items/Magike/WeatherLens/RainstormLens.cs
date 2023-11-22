@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -16,7 +17,8 @@ namespace Coralite.Content.Items.Magike.WeatherLens
 {
     public class RainstormLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
-        public RainstormLens() : base(TileType<RainstormLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<CrystallineMagikeRarity>(), 300)
+        public RainstormLens() : base(TileType<RainstormLensTile>(), Item.sellPrice(0, 0, 50, 0)
+            , RarityType<CrystallineMagikeRarity>(), 300, AssetDirectory.MagikeLens)
         { }
 
         public override int MagikeMax => 300;
@@ -44,7 +46,7 @@ namespace Coralite.Content.Items.Magike.WeatherLens
         }
     }
 
-    public class RainstormLensTile : BaseCostItemLensTile
+    public class RainstormLensTile : BaseLensTile
     {
         public override void SetStaticDefaults()
         {

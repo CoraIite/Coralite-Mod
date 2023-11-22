@@ -112,7 +112,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public override bool CanGenerate() => !itemToCosume.IsAir;
 
-        public override int HowManyToGenerate => itemToCosume.GetMagikeItem().magiteAmount;
+        public override int HowManyToGenerate => itemToCosume.GetMagikeItem().magikeAmount;
         public Item ContainsItem { get => itemToCosume; set => itemToCosume = value; }
 
 
@@ -132,7 +132,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public virtual bool CanInsertItem(Item item)
         {
-            return item.GetMagikeItem().magiteAmount > 0;
+            return item.GetMagikeItem().magikeAmount > 0;
         }
 
         public bool InsertItem(Item item)

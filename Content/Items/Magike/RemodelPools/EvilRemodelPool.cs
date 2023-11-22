@@ -18,7 +18,8 @@ namespace Coralite.Content.Items.Magike.RemodelPools
 {
     public class EvilRemodelPool : BaseMagikePlaceableItem, IMagikePolymerizable,IMagikeFactoryItem
     {
-        public EvilRemodelPool() : base(TileType<EvilRemodelPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
+        public EvilRemodelPool() : base(TileType<EvilRemodelPoolTile>(), Item.sellPrice(0, 0, 50, 0)
+            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeRemodelPools)
         { }
 
         public override int MagikeMax => 450;
@@ -43,7 +44,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
 
     public class EvilRemodelPoolTile : BaseRemodelPool
     {
-        public override string ExtraTextureName => AssetDirectory.MagikeTiles + "BrilliantRemodelPoolTile_Top";
+        public override string ExtraTextureName => AssetDirectory.MagikeRemodelPoolTiles + "BrilliantRemodelPoolTile_Top";
 
         public override void SetStaticDefaults()
         {

@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.Magike.OtherPlaceables;
 using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -15,7 +16,8 @@ namespace Coralite.Content.Items.Magike.EnchantPools
 {
     public class CrystalEnchantPool : BaseMagikePlaceableItem,IMagikeFactoryItem
     {
-        public CrystalEnchantPool() : base(TileType<CrystalEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
+        public CrystalEnchantPool() : base(TileType<CrystalEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0)
+            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeEnchantPools)
         { }
 
         public override int MagikeMax => 300;

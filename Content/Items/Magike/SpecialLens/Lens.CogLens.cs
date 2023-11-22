@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -13,11 +14,12 @@ using Terraria.ID;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Magike
+namespace Coralite.Content.Items.Magike.SpecialLens
 {
-    public class CogLens : BaseMagikePlaceableItem,IMagikeGeneratorItem,IMagikeSenderItem
+    public class CogLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
-        public CogLens() : base(TileType<CogLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<CrystallineMagikeRarity>(), 300)
+        public CogLens() : base(TileType<CogLensTile>(), Item.sellPrice(0, 0, 50, 0)
+            , RarityType<CrystallineMagikeRarity>(), 300, AssetDirectory.MagikeLens)
         { }
 
         public override int MagikeMax => 300;
@@ -38,7 +40,7 @@ namespace Coralite.Content.Items.Magike
         }
     }
 
-    public class CogLensTile : BaseCostItemLensTile
+    public class CogLensTile : BaseLensTile
     {
         public override void SetStaticDefaults()
         {

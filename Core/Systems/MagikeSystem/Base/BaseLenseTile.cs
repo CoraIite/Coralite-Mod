@@ -15,8 +15,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 {
     public abstract class BaseLensTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
-        public virtual string TopTextureName => AssetDirectory.MagikeTiles + Name + "_Top";
+        public override string Texture => AssetDirectory.MagikeLensTiles + Name;
+        public virtual string TopTextureName => AssetDirectory.MagikeLensTiles + Name + "_Top";
 
         public Asset<Texture2D> TopTexture;
         public const int FrameWidth = 18 * 2;

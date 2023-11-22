@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -14,7 +15,8 @@ namespace Coralite.Content.Items.Magike.Columns
 {
     public class BrilliantColumn : BaseMagikePlaceableItem, IMagikeSenderItem
     {
-        public BrilliantColumn() : base(TileType<BrilliantColumnTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<CrystallineMagikeRarity>(), 600)
+        public BrilliantColumn() : base(TileType<BrilliantColumnTile>(), Item.sellPrice(0, 1, 0, 0)
+            , RarityType<CrystallineMagikeRarity>(), 600, AssetDirectory.MagikeColumns)
         { }
 
         public override int MagikeMax => 6000;

@@ -17,7 +17,8 @@ namespace Coralite.Content.Items.Magike.Refractors
 {
     public class DemoniteRefractor : BaseMagikePlaceableItem, IMagikePolymerizable, IMagikeSenderItem
     {
-        public DemoniteRefractor() : base(TileType<DemoniteRefractorTile>(), Item.sellPrice(0, 0, 25, 0), RarityType<MagicCrystalRarity>(), 25)
+        public DemoniteRefractor() : base(TileType<DemoniteRefractorTile>(), Item.sellPrice(0, 0, 25, 0)
+            , RarityType<MagicCrystalRarity>(), 25, AssetDirectory.MagikeRefractors)
         { }
 
         public override int MagikeMax => 50;

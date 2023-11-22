@@ -1,0 +1,28 @@
+﻿using Coralite.Content.Items.Materials;
+using Coralite.Content.Raritys;
+using Coralite.Core;
+using Coralite.Core.Prefabs.Items;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace Coralite.Content.Items.Magike.Tools.MiniColumns
+{
+    public class MiniCrimtaneColumn : BaseMagikeChargeableItem
+    {
+        public MiniCrimtaneColumn() : base(200, Item.sellPrice(0, 0, 10, 0)
+            , ModContent.RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeTools)
+        {
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<MiniCrystalColumn>()
+                .AddIngredient<GlistentBar>(2)
+                .AddIngredient(ItemID.TissueSample,5)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
+    }
+}

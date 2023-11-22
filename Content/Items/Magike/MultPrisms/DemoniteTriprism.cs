@@ -19,7 +19,8 @@ namespace Coralite.Content.Items.Magike.MultPrisms
 {
     public class DemoniteTriprism : BaseMagikePlaceableItem, IMagikePolymerizable,IMagikeSenderItem
     {
-        public DemoniteTriprism() : base(TileType<DemoniteTriprismTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 25)
+        public DemoniteTriprism() : base(TileType<DemoniteTriprismTile>(), Item.sellPrice(0, 0, 50, 0)
+            , RarityType<MagicCrystalRarity>(), 25, AssetDirectory.MagikeMultPrisms)
         { }
 
         public override int MagikeMax => 50;
@@ -40,7 +41,7 @@ namespace Coralite.Content.Items.Magike.MultPrisms
 
     public class DemoniteTriprismTile : BaseRefractorTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + "DemoniteRefractorTile";
+        public override string Texture => AssetDirectory.MagikeRefractorTiles + "DemoniteRefractorTile";
 
         public override void SetStaticDefaults()
         {

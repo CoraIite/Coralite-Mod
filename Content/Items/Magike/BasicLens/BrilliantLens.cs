@@ -13,9 +13,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.BasicLens
 {
-    public class BrilliantLens : BaseMagikePlaceableItem,IMagikeSenderItem,IMagikeGeneratorItem
+    public class BrilliantLens : BaseMagikePlaceableItem, IMagikeSenderItem, IMagikeGeneratorItem
     {
-        public BrilliantLens() : base(TileType<BrilliantLensTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<CrystallineMagikeRarity>(), 600)
+        public BrilliantLens() : base(TileType<BrilliantLensTile>(), Item.sellPrice(0, 1, 0, 0)
+            , RarityType<CrystallineMagikeRarity>(), 600, AssetDirectory.MagikeLens)
         { }
 
         public override int MagikeMax => 600;
@@ -47,7 +48,7 @@ namespace Coralite.Content.Items.Magike.BasicLens
 
     public class BrilliantLensTile : BaseCostItemLensTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + "CrystalLensTile";
+        public override string Texture => AssetDirectory.MagikeLensTiles + "CrystalLensTile";
 
         public override void SetStaticDefaults()
         {

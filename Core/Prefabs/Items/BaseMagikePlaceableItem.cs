@@ -33,7 +33,7 @@ namespace Coralite.Core.Prefabs.Items
             Item.DefaultToPlaceableTile(tileIDToPlace);
             Item.value = Value;
             Item.rare = Rare;
-            Item.GetMagikeItem().magiteAmount = magikeAmount;
+            Item.GetMagikeItem().magikeAmount = magikeAmount;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)

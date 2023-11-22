@@ -9,11 +9,11 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Coralite.Content.Items.Magike
+namespace Coralite.Content.Items.Magike.Tools
 {
     public class CondensedCrystalBall : ModItem
     {
-        public override string Texture => AssetDirectory.MagikeItems + Name;
+        public override string Texture => AssetDirectory.MagikeTools + Name;
 
         public override void SetDefaults()
         {
@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.Magike
             Item.value = Item.sellPrice(0, 0, 10, 0);
             Item.UseSound = CoraliteSoundID.ManaCrystal_Item29;
             Item.rare = ModContent.RarityType<MagicCrystalRarity>();
-            Item.GetMagikeItem().magiteAmount = 50;
+            Item.GetMagikeItem().magikeAmount = 50;
         }
 
         public override bool CanUseItem(Player player)
@@ -46,14 +46,13 @@ namespace Coralite.Content.Items.Magike
             return false;
         }
 
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient<MagicCrystal>(2)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
-                .AddTile(TileID.Anvils)
-                .Register();
-        }
-
+        //public override void AddRecipes()
+        //{
+        //    CreateRecipe()
+        //        .AddIngredient<MagicCrystal>(2)
+        //        .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+        //        .AddTile(TileID.Anvils)
+        //        .Register();
+        //}
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.Materials;
 using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -18,7 +19,8 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
 {
     public class BloodMoonLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
-        public BloodMoonLens() : base(TileType<BloodMoonLensTile>(), Item.sellPrice(0, 1, 0, 0), RarityType<CrystallineMagikeRarity>(), 300)
+        public BloodMoonLens() : base(TileType<BloodMoonLensTile>(), Item.sellPrice(0, 1, 0, 0)
+            , RarityType<CrystallineMagikeRarity>(), 300, AssetDirectory.MagikeLens)
         { }
 
         public override int MagikeMax => 700;
@@ -47,7 +49,7 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
         }
     }
 
-    public class BloodMoonLensTile : BaseCostItemLensTile
+    public class BloodMoonLensTile : BaseLensTile
     {
         public override void SetStaticDefaults()
         {

@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<MagicCrystalBrickTile>());
             Item.rare = ModContent.RarityType<MagicCrystalRarity>();
-            Item.GetMagikeItem().magiteAmount = 10;
+            Item.GetMagikeItem().magikeAmount = 10;
         }
 
         public override void AddRecipes()

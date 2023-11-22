@@ -14,11 +14,11 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace Coralite.Content.Items.Magike
+namespace Coralite.Content.Items.Magike.Tools
 {
     public class MagConnectStaff : ModItem
     {
-        public override string Texture => AssetDirectory.MagikeItems + Name;
+        public override string Texture => AssetDirectory.MagikeTools + Name;
 
         //private int mode;
         //private IMagikeSender sender;
@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Magike
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 0, 10, 0);
             Item.rare = ModContent.RarityType<MagicCrystalRarity>();
-            Item.GetMagikeItem().magiteAmount = 50;
+            Item.GetMagikeItem().magikeAmount = 50;
         }
 
         //public override bool AltFunctionUse(Player player) => true;
@@ -146,14 +146,14 @@ namespace Coralite.Content.Items.Magike
             return true;
         }
 
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient<MagicCrystal>(10)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
-                .AddTile(TileID.Anvils)
-                .Register();
-        }
+        //public override void AddRecipes()
+        //{
+        //    CreateRecipe()
+        //        .AddIngredient<MagicCrystal>(10)
+        //        .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+        //        .AddTile(TileID.Anvils)
+        //        .Register();
+        //}
     }
 
     public class MagConnectProj : ModProjectile
@@ -186,7 +186,7 @@ namespace Coralite.Content.Items.Magike
                 return;
             }
 
-            owner.itemTime=owner.itemAnimation = 5;
+            owner.itemTime = owner.itemAnimation = 5;
 
             Projectile.timeLeft = 2;
 
@@ -199,7 +199,7 @@ namespace Coralite.Content.Items.Magike
 
             selfPos = p1.ToWorldCoordinates(x, y);
 
-            Point16 p2 = new Point16((int)Main.MouseWorld.X/16, (int)Main.MouseWorld.Y/16);
+            Point16 p2 = new Point16((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
             aimPos = p2.ToWorldCoordinates();
 
             IMagikeContainer receiver = null;
@@ -215,9 +215,9 @@ namespace Coralite.Content.Items.Magike
                 aimPos = receiver.GetPosition.ToWorldCoordinates(x2, y2);
             }
 
-            if (MagikeHelper.TryGetEntityWithTopLeft(p1.X,p1.Y,out IMagikeSender_Line sender))
+            if (MagikeHelper.TryGetEntityWithTopLeft(p1.X, p1.Y, out IMagikeSender_Line sender))
             {
-                    c = sender.CanConnect(p2) ? Color.GreenYellow : Color.MediumVioletRed;
+                c = sender.CanConnect(p2) ? Color.GreenYellow : Color.MediumVioletRed;
 
                 if (owner.controlUseItem)
                 {

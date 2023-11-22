@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.Magike.OtherPlaceables;
 using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -15,7 +16,8 @@ namespace Coralite.Content.Items.Magike.Refractors
 {
     public class CrystalRefractor : BaseMagikePlaceableItem, IMagikeSenderItem
     {
-        public CrystalRefractor() : base(TileType<CrystalRefractorTile>(), Item.sellPrice(0, 0, 5, 0), RarityType<MagicCrystalRarity>(), 25)
+        public CrystalRefractor() : base(TileType<CrystalRefractorTile>(), Item.sellPrice(0, 0, 5, 0)
+            , RarityType<MagicCrystalRarity>(), 25, AssetDirectory.MagikeRefractors)
         { }
 
         public override int MagikeMax => 50;

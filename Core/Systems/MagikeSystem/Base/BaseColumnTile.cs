@@ -13,8 +13,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 {
     public abstract class BaseColumnTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
-        public virtual string TopTextureName => AssetDirectory.MagikeTiles + Name + "_Top";
+        public override string Texture => AssetDirectory.MagikeColumnTiles + Name;
+        public virtual string TopTextureName => AssetDirectory.MagikeColumnTiles + Name + "_Top";
 
         public Asset<Texture2D> TopTexture;
         public const int FrameWidth = 18 * 2;

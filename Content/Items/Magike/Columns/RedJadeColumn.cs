@@ -15,7 +15,8 @@ namespace Coralite.Content.Items.Magike.Columns
 {
     public class RedJadeColumn : BaseMagikePlaceableItem,IMagikeSenderItem
     {
-        public RedJadeColumn() : base(TileType<RedJadeColumnTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
+        public RedJadeColumn() : base(TileType<RedJadeColumnTile>(), Item.sellPrice(0, 0, 10, 0)
+            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeColumns)
         { }
 
         public override int MagikeMax => 550;
@@ -36,7 +37,7 @@ namespace Coralite.Content.Items.Magike.Columns
 
     public class RedJadeColumnTile : BaseColumnTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + "RedJadeLensTile";
+        public override string Texture => AssetDirectory.MagikeLensTiles + "RedJadeLensTile";
 
         public override void SetStaticDefaults()
         {

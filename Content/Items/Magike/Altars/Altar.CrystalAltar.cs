@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.Magike.OtherPlaceables;
 using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -16,7 +17,8 @@ namespace Coralite.Content.Items.Magike.Altars
 {
     public class CrystalAltar : BaseMagikePlaceableItem, IMagikeSenderItem, IMagikeFactoryItem
     {
-        public CrystalAltar() : base(TileType<CrystalAltarTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
+        public CrystalAltar() : base(TileType<CrystalAltarTile>(), Item.sellPrice(0, 0, 10, 0)
+            , RarityType<MagicCrystalRarity>(), 50,AssetDirectory.MagikeAltars)
         { }
 
         public override int MagikeMax => 150;

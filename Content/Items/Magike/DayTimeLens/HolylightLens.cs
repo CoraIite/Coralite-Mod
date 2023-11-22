@@ -20,7 +20,8 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
 {
     public class HolylightLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
-        public HolylightLens() : base(TileType<HolylightLensTile>(), Item.sellPrice(0, 2, 0, 0), RarityType<CrystallineMagikeRarity>(), 300)
+        public HolylightLens() : base(TileType<HolylightLensTile>(), Item.sellPrice(0, 2, 0, 0)
+            , RarityType<CrystallineMagikeRarity>(), 300, AssetDirectory.MagikeLens)
         { }
 
         public override int MagikeMax => 1200;
@@ -49,14 +50,14 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
         }
     }
 
-    public class HolylightLensTile : BaseCostItemLensTile
+    public class HolylightLensTile : BaseLensTile
     {
         public Asset<Texture2D> bottomGemTex;
 
         public override void Load()
         {
             base.Load();
-            bottomGemTex = Request<Texture2D>(AssetDirectory.MagikeTiles + Name + "_Bottom");
+            bottomGemTex = Request<Texture2D>(AssetDirectory.MagikeLensTiles + Name + "_Bottom");
         }
 
         public override void SetStaticDefaults()

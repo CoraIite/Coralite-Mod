@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -15,7 +16,8 @@ namespace Coralite.Content.Items.Magike.Refineries
 {
     public class BrilliantRefinery : BaseMagikePlaceableItem, IMagikeFactoryItem
     {
-        public BrilliantRefinery() : base(TileType<BrilliantRefineryTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<CrystallineMagikeRarity>(), 100)
+        public BrilliantRefinery() : base(TileType<BrilliantRefineryTile>(), Item.sellPrice(0, 0, 10, 0)
+            , RarityType<CrystallineMagikeRarity>(), 300,AssetDirectory.MagikeFactories)
         { }
 
         public override int MagikeMax => 800;

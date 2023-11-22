@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace Coralite.Content.Items.Magike
+namespace Coralite.Content.Items.Magike.Tools
 {
     public class DebugStick : ModItem
     {

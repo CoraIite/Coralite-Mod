@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -17,7 +18,8 @@ namespace Coralite.Content.Items.Magike.BiomeLens
 {
     public class HellLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
-        public HellLens() : base(TileType<HellLensTile>(), Item.sellPrice(0, 0, 50, 0), RarityType<MagicCrystalRarity>(), 50)
+        public HellLens() : base(TileType<HellLensTile>(), Item.sellPrice(0, 0, 50, 0)
+            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeLens)
         { }
 
         public override int MagikeMax => 80;
@@ -43,7 +45,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
         }
     }
 
-    public class HellLensTile : BaseCostItemLensTile
+    public class HellLensTile : BaseLensTile
     {
         public override void SetStaticDefaults()
         {

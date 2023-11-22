@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Base;
@@ -17,7 +18,8 @@ namespace Coralite.Content.Items.Magike.LightLens
 {
     public class BrightnessLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
-        public BrightnessLens() : base(TileType<BrightnessLensTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<CrystallineMagikeRarity>(), 300)
+        public BrightnessLens() : base(TileType<BrightnessLensTile>(), Item.sellPrice(0, 0, 10, 0)
+            , RarityType<CrystallineMagikeRarity>(), 300, AssetDirectory.MagikeLens)
         { }
 
         public override int MagikeMax => 300;
@@ -38,7 +40,7 @@ namespace Coralite.Content.Items.Magike.LightLens
         }
     }
 
-    public class BrightnessLensTile : BaseCostItemLensTile
+    public class BrightnessLensTile : BaseLensTile
     {
         public override void SetStaticDefaults()
         {

@@ -9,11 +9,11 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Coralite.Content.Items.Magike
+namespace Coralite.Content.Items.Magike.Tools
 {
     public class MagikeActivator : ModItem
     {
-        public override string Texture => AssetDirectory.MagikeItems + Name;
+        public override string Texture => AssetDirectory.MagikeTools + Name;
 
         public override void SetDefaults()
         {
@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Magike
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 0, 10, 0);
             Item.rare = ModContent.RarityType<MagicCrystalRarity>();
-            Item.GetMagikeItem().magiteAmount = 25;
+            Item.GetMagikeItem().magikeAmount = 25;
         }
 
         public override bool CanUseItem(Player player)
@@ -44,13 +44,13 @@ namespace Coralite.Content.Items.Magike
             return true;
         }
 
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient<MagicCrystal>(2)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
-                .AddTile(TileID.Anvils)
-                .Register();
-        }
+        //public override void AddRecipes()
+        //{
+        //    CreateRecipe()
+        //        .AddIngredient<MagicCrystal>(2)
+        //        .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+        //        .AddTile(TileID.Anvils)
+        //        .Register();
+        //}
     }
 }

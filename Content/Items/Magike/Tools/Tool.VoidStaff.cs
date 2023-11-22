@@ -11,11 +11,11 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace Coralite.Content.Items.Magike
+namespace Coralite.Content.Items.Magike.Tools
 {
     public class VoidStaff : ModItem, IMagikePolymerizable
     {
-        public override string Texture => AssetDirectory.MagikeItems + Name;
+        public override string Texture => AssetDirectory.MagikeTools + Name;
 
         private int mode;
         private IItemExtractor extractor;
@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Magike
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 0, 10, 0);
             Item.rare = ModContent.RarityType<MagicCrystalRarity>();
-            Item.GetMagikeItem().magiteAmount = 50;
+            Item.GetMagikeItem().magikeAmount = 50;
         }
 
         public override bool AltFunctionUse(Player player) => true;

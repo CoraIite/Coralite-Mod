@@ -19,7 +19,8 @@ namespace Coralite.Content.Items.Magike.Towers
 {
     public class CrystalSpotlighter : BaseMagikePlaceableItem,IMagikeFactoryItem
     {
-        public CrystalSpotlighter() : base(TileType<CrystalSpotlighterTile>(), Item.sellPrice(0, 0, 10, 0), RarityType<MagicCrystalRarity>(), 50)
+        public CrystalSpotlighter() : base(TileType<CrystalSpotlighterTile>(), Item.sellPrice(0, 0, 10, 0)
+            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeFactories)
         { }
 
         public override int MagikeMax => 50;
@@ -39,7 +40,8 @@ namespace Coralite.Content.Items.Magike.Towers
 
     public class CrystalSpotlighterTile : BaseColumnTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + "CrystalLensTile";
+        public override string Texture => AssetDirectory.MagikeLensTiles + "CrystalLensTile";
+        public override string TopTextureName => AssetDirectory.MagikeFactoryTiles + Name + "_Top";
 
         public override void SetStaticDefaults()
         {
