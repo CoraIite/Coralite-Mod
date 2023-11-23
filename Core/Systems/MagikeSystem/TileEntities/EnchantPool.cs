@@ -35,17 +35,16 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 Item.NewItem(new EntitySource_TileEntity(this), Position.ToWorldCoordinates(16, -8), containsItem);
         }
 
-        public override bool CanWork()
+        public override bool StartWork()
         {
             if (containsItem is not null && !containsItem.IsAir &&
                 (containsItem.damage > 0 || 
                 ((containsItem.accessory || containsItem.defense > 0) && containsItem.TryGetGlobalItem(out MagikeItem mi) && mi.accessoryOrArmorCanEnchant)) &&
                 magike >= GetMagikeCost(containsItem))
             {
-                return base.CanWork();
+                return base.StartWork();
             }
 
-            workTimer = -1;
             return false;
         }
 

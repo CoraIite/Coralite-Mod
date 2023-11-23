@@ -130,5 +130,54 @@ namespace Coralite.Helpers
             if (TryGetEntity(i, j, out IMagikeContainer magikeContainer))
                 Main.instance.MouseText(magikeContainer.Magike + " / " + magikeContainer.MagikeMax, 0, 0, -1, -1, -1, -1);
         }
+
+        /// <summary>
+        /// 消耗玩家背包中的魔能，前提是玩家背包内拥有可提供魔能的物品
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="howMany"></param>
+        /// <returns></returns>
+        public static bool TryCosumeMagike(this Player player, int howMany)
+        {
+            for (int i = 0; i < 58; i++)
+            {
+                Item item = player.inventory[i];
+                if (!item.IsAir && item.TryGetGlobalItem(out MagikeItem mi) && mi.magikeSendable && mi.magike >= howMany)
+                {
+                    mi.magike -= howMany;
+                    return true;
+                }
+            }
+
+            if (player.useVoidBag())
+                for (int i = 0; i < player.bank4.item.Length; i++)
+                {
+                    Item item = player.bank4.item[i];
+                    if (!item.IsAir && item.TryGetGlobalItem(out MagikeItem mi) && mi.magikeSendable && mi.magike >= howMany)
+                    {
+                        mi.magike -= howMany;
+                        return true;
+                    }
+                }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 尝试消耗物品自身的魔能
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="howMany"></param>
+        /// <returns></returns>
+        public static bool TryCosumeMagike(this Item item, int howMany)
+        {
+            if (item.TryGetGlobalItem(out MagikeItem mi)&&mi.magike>=howMany)
+            {
+                mi.magike -= howMany;
+                return true;
+            }
+
+            return false;
+        }
     }
 }

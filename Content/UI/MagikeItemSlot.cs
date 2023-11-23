@@ -270,6 +270,12 @@ namespace Coralite.Content.UI
     {
         public CloseButton() : base(ModContent.Request<Texture2D>(AssetDirectory.UI + "CloseButton", ReLogic.Content.AssetRequestMode.ImmediateLoad)) { }
 
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+            SoundEngine.PlaySound(CoraliteSoundID.MenuClose);
+        }
+
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             if (IsMouseHovering)

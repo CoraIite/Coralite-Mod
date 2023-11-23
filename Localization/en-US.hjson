@@ -1785,6 +1785,36 @@ Mods: {
 				DisplayName: Mini Splendor Column
 				Tooltip: ""
 			}
+
+			CrystalSword: {
+				DisplayName: Crystal Sword
+				Tooltip: ""
+			}
+
+			BrilliantCharger: {
+				DisplayName: Brilliant Charger
+				Tooltip: ""
+			}
+
+			CrystalCharger: {
+				DisplayName: Crystal Charger
+				Tooltip: ""
+			}
+
+			GlistentCharger: {
+				DisplayName: Glistent Charger
+				Tooltip: ""
+			}
+
+			SplendorCharger: {
+				DisplayName: Splendor Charger
+				Tooltip: ""
+			}
+
+			CrystalStaff: {
+				DisplayName: Crystal Staff
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2220,6 +2250,7 @@ Mods: {
 			FreosanProj.DisplayName: Freosan Proj
 			HeatanProj.DisplayName: Heatan Proj
 			Page_MagikeBaseProj.DisplayName: Page_ Magike Base Proj
+			CrystalSwordProj.DisplayName: Crystal Sword Proj
 		}
 
 		Configs: {

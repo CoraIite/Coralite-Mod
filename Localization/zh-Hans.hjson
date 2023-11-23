@@ -1793,6 +1793,36 @@ Mods: {
 				DisplayName: 微型光辉水晶柱
 				Tooltip: 便携式水晶柱，能为你身上消耗魔能的设备供能
 			}
+
+			CrystalSword: {
+				DisplayName: 魔力水晶剑
+				Tooltip: 消耗 5 魔能射出光束
+			}
+
+			BrilliantCharger: {
+				DisplayName: 璀璨充能站
+				Tooltip: 右键打开UI，放入可容纳魔能的物品后激活为该物品充能
+			}
+
+			CrystalCharger: {
+				DisplayName: 水晶充能站
+				Tooltip: 右键打开UI，放入可容纳魔能的物品后激活为该物品充能
+			}
+
+			GlistentCharger: {
+				DisplayName: 晶莹充能站
+				Tooltip: 右键打开UI，放入可容纳魔能的物品后激活为该物品充能
+			}
+
+			SplendorCharger: {
+				DisplayName: 光辉充能站
+				Tooltip: 右键打开UI，放入可容纳魔能的物品后激活为该物品充能
+			}
+
+			CrystalStaff: {
+				DisplayName: 魔力晶体杖
+				Tooltip: 消耗 1 魔能放置晶体框架
+			}
 		}
 
 		Tiles: {
@@ -2228,6 +2258,7 @@ Mods: {
 			// FreosanProj.DisplayName: Freosan Proj
 			// HeatanProj.DisplayName: Heatan Proj
 			// Page_MagikeBaseProj.DisplayName: Page_ Magike Base Proj
+			// CrystalSwordProj.DisplayName: Crystal Sword Proj
 		}
 
 		Configs: {

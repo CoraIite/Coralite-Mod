@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Materials;
-using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
+﻿using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -23,6 +22,10 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// 物品中当前存储的魔能量
         /// </summary>
         public int magike;
+        /// <summary>
+        /// 可以发送魔能给其他物品
+        /// </summary>
+        public bool magikeSendable;
 
         /// <summary>
         /// 物品自身的魔能含量，设置了这个就能让物品被普通透镜转化成魔能
@@ -161,6 +164,11 @@ namespace Coralite.Core.Systems.MagikeSystem
                     }
                 }
             }
+
+            if (magikeMax>=0)
+            {
+                tag.Add( "magike", magike);
+            }
         }
 
         public override void LoadData(Item item, TagCompound tag)
@@ -190,6 +198,10 @@ namespace Coralite.Core.Systems.MagikeSystem
                     }
                 }
             }
+
+            magike = tag.GetInt("magike");
+            if (magikeMax != -1)
+                magike = Math.Clamp(magike, 0, magikeMax);
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)

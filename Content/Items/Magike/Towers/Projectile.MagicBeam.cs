@@ -19,6 +19,12 @@ namespace Coralite.Content.Items.Magike.Towers
         //private Trail trail;
         private static VertexStrip _vertexStrip = new VertexStrip();
 
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[Type] = 18;
+            ProjectileID.Sets.TrailingMode[Type] = 2;
+        }
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 8;
@@ -30,8 +36,6 @@ namespace Coralite.Content.Items.Magike.Towers
             Projectile.netImportant = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.tileCollide = true;
-            ProjectileID.Sets.TrailCacheLength[Type] = 18;
-            ProjectileID.Sets.TrailingMode[Type] = 2;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -68,7 +72,7 @@ namespace Coralite.Content.Items.Magike.Towers
 
             //Projectile.oldPos[11] = Projectile.Center + Projectile.velocity;
             //trail.Positions = Projectile.oldPos;
-
+            Projectile.rotation = Projectile.velocity.ToRotation();
 
             int num18 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.RainbowMk2, 0f, 0f, 100, new Color(162, 42, 131), 1f);
             Main.dust[num18].velocity *= 0.1f;
@@ -125,6 +129,5 @@ namespace Coralite.Content.Items.Magike.Towers
         }
 
         private float StripWidth(float progressOnStrip) => MathHelper.Lerp(16f, 26f, Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true)) * Utils.GetLerpValue(0f, 0.07f, progressOnStrip, clamped: true);
-
     }
 }
