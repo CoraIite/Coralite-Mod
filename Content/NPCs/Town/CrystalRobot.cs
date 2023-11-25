@@ -254,14 +254,26 @@ namespace Coralite.Content.NPCs.Town
             });
             npcShop.Add(new Item(ModContent.ItemType<MagikeActivator>())//激活杖
             {
-                shopCustomPrice = 10,
+                shopCustomPrice = 8,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
             npcShop.Add(new Item(ModContent.ItemType<CondensedCrystalBall>())//充能球
             {
+                shopCustomPrice = 8,
+                shopSpecialCurrency = magicCrystalCurrencyID
+            });
+
+            npcShop.Add(new Item(ModContent.ItemType<CrystalSword>())//水晶剑
+            {
                 shopCustomPrice = 10,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
+            npcShop.Add(new Item(ModContent.ItemType<CrystalStaff>())//方块杖
+            {
+                shopCustomPrice = 10,
+                shopSpecialCurrency = magicCrystalCurrencyID
+            });
+
 
             npcShop.Register();
         }
