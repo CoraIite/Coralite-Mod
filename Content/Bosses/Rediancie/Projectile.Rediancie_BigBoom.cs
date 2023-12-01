@@ -32,7 +32,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override bool CanHitPlayer(Player target)
         {
-            return Vector2.Distance(Projectile.Center, target.Center) < 256;
+            return Vector2.Distance(Projectile.Center, target.Center) < Projectile.width / 2;
         }
     }
 }

@@ -1823,6 +1823,25 @@ Mods: {
 				DisplayName: 魔力晶体杖
 				Tooltip: 消耗 1 魔能放置晶体框架
 			}
+
+			Damnation: {
+				DisplayName: 灾星
+				// Tooltip: ""
+			}
+
+			BloodJadeCore: {
+				DisplayName: 赤血玉核心
+				Tooltip: 
+					'''
+					流淌的鲜血让赤玉变得更红了
+					召唤赤血玉灵，不消耗
+					'''
+			}
+
+			BloodJade: {
+				DisplayName: 赤血玉
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1871,6 +1890,8 @@ Mods: {
 				MapEntry1: 上锁脊柱箱
 				TryUnlock: 需要使用强大的猩红生物的素材制成钥匙以解锁
 			}
+
+			// BloodJadeTile.MapEntry: Blood Jade Tile
 		}
 
 		Buffs: {
@@ -2034,6 +2055,9 @@ Mods: {
 					Princess_LovesNPC: 哇，{NPCName}，一个无机生命体！这个世界果然充满奇妙的事情。
 				}
 			}
+
+			Bloodiancie.DisplayName: 赤血玉灵
+			// BloodiancieMinion.DisplayName: Bloodiancie Minion
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -2259,6 +2283,14 @@ Mods: {
 			// HeatanProj.DisplayName: Heatan Proj
 			// Page_MagikeBaseProj.DisplayName: Page_ Magike Base Proj
 			// CrystalSwordProj.DisplayName: Crystal Sword Proj
+			// Bloodiancie_BigBoom.DisplayName: Bloodiancie_ Big Boom
+			// BloodiancieBeam.DisplayName: Bloodiancie Beam
+			// DamnationHeldProj.DisplayName: Damnation Held Proj
+			// BloodWave.DisplayName: Blood Wave
+			// RedBomb.DisplayName: Red Bomb
+			// Bloodiancie_OnSpawnAnim.DisplayName: Bloodiancie_ On Spawn Anim
+			// BloodBall.DisplayName: Blood Ball
+			// BloodRain.DisplayName: Blood Rain
 		}
 
 		Configs: {

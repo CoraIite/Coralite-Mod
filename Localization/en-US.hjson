@@ -1815,6 +1815,21 @@ Mods: {
 				DisplayName: Crystal Staff
 				Tooltip: ""
 			}
+
+			Damnation: {
+				DisplayName: Damnation
+				Tooltip: ""
+			}
+
+			BloodJadeCore: {
+				DisplayName: Blood Jade Core
+				Tooltip: ""
+			}
+
+			BloodJade: {
+				DisplayName: Blood Jade
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1863,6 +1878,8 @@ Mods: {
 				MapEntry1: Locked Vertebrae Chest
 				TryUnlock: Requires a key to be unlocked using the materials of powerful crimson creatures
 			}
+
+			BloodJadeTile.MapEntry: Blood Jade Tile
 		}
 
 		Buffs: {
@@ -2026,6 +2043,9 @@ Mods: {
 					Princess_LovesNPC: I like {NPCName}.
 				}
 			}
+
+			Bloodiancie.DisplayName: Bloodiancie
+			BloodiancieMinion.DisplayName: Bloodiancie Minion
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -2251,6 +2271,14 @@ Mods: {
 			HeatanProj.DisplayName: Heatan Proj
 			Page_MagikeBaseProj.DisplayName: Page_ Magike Base Proj
 			CrystalSwordProj.DisplayName: Crystal Sword Proj
+			Bloodiancie_BigBoom.DisplayName: Bloodiancie_ Big Boom
+			BloodiancieBeam.DisplayName: Bloodiancie Beam
+			DamnationHeldProj.DisplayName: Damnation Held Proj
+			BloodWave.DisplayName: Blood Wave
+			RedBomb.DisplayName: Red Bomb
+			Bloodiancie_OnSpawnAnim.DisplayName: Bloodiancie_ On Spawn Anim
+			BloodBall.DisplayName: Blood Ball
+			BloodRain.DisplayName: Blood Rain
 		}
 
 		Configs: {

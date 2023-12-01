@@ -47,7 +47,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 }
             }
 
-            if (GetDatas(particle, out NPC rediancie))
+            if (GetDatas(particle, out Entity rediancie))
             {
                 particle.center = rediancie.Center;
             }
@@ -81,7 +81,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
 
 
-        public static void Spawn(NPC rediancie, int maxTime)
+        public static void Spawn(Entity rediancie, int maxTime)
         {
             Particle particle = Particle.NewParticleDirect(rediancie.Center, Vector2.Zero, CoraliteContent.ParticleType<RedShield>());
             particle.datas = new object[1]
@@ -100,15 +100,15 @@ namespace Coralite.Content.Bosses.Rediancie
             }
         }
 
-        private bool GetDatas(Particle particle, out NPC rediancie)
+        private bool GetDatas(Particle particle, out Entity rediancie)
         {
-            if (particle.datas == null || particle.datas[0] is not NPC)
+            if (particle.datas == null || particle.datas[0] is not Entity)
             {
                 rediancie = null;
                 return false;
             }
 
-            rediancie = (NPC)particle.datas[0];
+            rediancie = (Entity)particle.datas[0];
             return true;
         }
     }
