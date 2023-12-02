@@ -3,7 +3,6 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -30,7 +29,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         {
             Projectile.width = Projectile.height = 64;
             Projectile.aiStyle = -1;
-            Projectile.timeLeft = 400;
+            Projectile.timeLeft = 800;
 
             Projectile.penetrate = 1;
             Projectile.friendly = false;
@@ -88,7 +87,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                     break;
                 }
 
-                if (Timer < 460)
+                if (Timer < 660)
                 {
                     for (int i = 0; i < 2; i++)
                     {
@@ -96,16 +95,16 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             CoraliteContent.ParticleType<Fog>(), Color.DarkRed, Main.rand.NextFloat(1f, 1.5f));
                     }
 
-                    if (Timer % 6 == 0)
+                    if (Timer % 7 == 0)
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + Main.rand.NextVector2Circular(80, 80),
-                            shootDir * 14, ModContent.ProjectileType<BloodRain>(), 20, 2f);
+                            shootDir * 14, ModContent.ProjectileType<BloodRain>(), Helper.ScaleValueForDiffMode(30,40,50,50), 2f);
                     }
 
                     break;
                 }
 
-                if (Timer > 480)
+                if (Timer > 700)
                 {
                     Projectile.Kill();
                 }

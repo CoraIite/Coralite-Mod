@@ -86,7 +86,7 @@ namespace Coralite.Compat.BossCheckList
                     //ItemType<Content.Items.Icicle.RedianciePet>(),
                 };
 
-                string SlimeEmperorInfo = "一位伟大的凝胶领袖，在史莱姆中有着极高的地位";
+                string SlimeEmperorInfo = "一位伟大的凝胶领袖，在史莱姆中有着极高的地位，在记载中每100只史莱姆王中才会诞生一位皇帝，或许可以叫它“至高帝·史莱姆王”。";
                 bcl.Call(
                     "LogBoss",
                     Coralite.Instance,
@@ -102,6 +102,37 @@ namespace Coralite.Compat.BossCheckList
                         ["collectibles"] = SlimeEmperorCollection
                     });
 
+                //赤血玉灵
+                List<int> BloodiancieCollection = new List<int>()
+                {
+                    //ItemType<Content.Items.Icicle.IcicleCrystal>(),
+                    ItemType<Content.Items.RedJades.BloodiancieBossBag>(),
+                    //ItemType<Content.Items.Gels.EmperorSabre>(),
+                    //ItemType<Content.Items.Gels.SlimeEruption>(),
+                    //ItemType<Content.Items.Gels.GelWhip>(),
+                    //ItemType<Content.Items.Gels.RoyalClassics>(),
+                    //ItemType<Content.Items.Gels.SlimeSceptre>(),
+                    //ItemType<Content.Items.Gels.GelThrone>(),
+                    //ItemType<Content.Items.Gels.RoyalGelCannon>(),
+                    //ItemType<Content.Items.Icicle.RedianciePet>(),
+                };
+
+                string BloodiancieInfo = "吸收血月能量后能产生更大范围爆炸的赤玉灵，或者也可以叫它“血咒精·赤玉灵”。";
+                bcl.Call(
+                    "LogBoss",
+                    Coralite.Instance,
+                    "赤血玉灵",
+                    8.2f,
+                    () => DownedBossSystem.downedBloodiancie,
+                    NPCType<Content.Bosses.ModReinforce.Bloodiancie.Bloodiancie>(),
+                    new Dictionary<string, object>()
+                    {
+                        ["spawnInfo"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.Bloodiancie.SpawnInfo", () => BloodiancieInfo),
+                        ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.Bloodiancie.Despawn", () => "赤血玉灵回归了地底"),
+                        ["spawnItems"] = ItemType<BloodJadeCore>(),
+                        ["customPortrait"] = BloodianciePortrait.DrawPortrait,
+                        ["collectibles"] = BloodiancieCollection
+                    });
 
                 //梦魇之花
                 List<int> NightmarePlanteraCollection = new List<int>()
@@ -129,7 +160,7 @@ namespace Coralite.Compat.BossCheckList
                     //ItemType<Content.Items.Icicle.RedianciePet>(),
                 };
 
-                string NightmarePlanteraInfo = "噩梦占据了曾经被击败的世纪之花的躯体，变成了强大的梦魇之神";
+                string NightmarePlanteraInfo = "噩梦占据了曾经被击败的世纪之花的躯体，变成了强大的梦魇之神，或者也可以叫她“梦界主·世纪之花”。";
                 bcl.Call(
                     "LogBoss",
                     Coralite.Instance,

@@ -4,9 +4,9 @@
 暂时不支持多人
 
 已添加内容：
-	- 200+ 物品
+	- 300+ 物品
     - 100+ 物块
-	- 10+ 敌怪，包括4个BOSS
+	- 10+ 敌怪，包括5个BOSS
 	- 魔能系统
 
 (Most of the English translations are based on machine translation, because I am not good at English)

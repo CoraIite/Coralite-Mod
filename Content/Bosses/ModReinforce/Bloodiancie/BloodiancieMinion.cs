@@ -167,6 +167,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                     }
                 case 3://idle
                     {
+                        NPC.rotation = Helper.Lerp(NPC.rotation, 0, 0.1f);
+
                         Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 3.5f, 0.05f, 0.1f, 0.97f);
 
                         //控制Y方向的移动
@@ -195,8 +197,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             Vector2 origin = mainTex.Size() / 2;
 
             if (State == 0)
-                spriteBatch.Draw(mainTex, drawPos, null, new Color(248, 40, 24, NPC.alpha), NPC.rotation, origin, NPC.scale + 0.5f * (NPC.alpha / 255), SpriteEffects.None, 0f);
-            else if(State!=3)
+                spriteBatch.Draw(mainTex, drawPos, null, new Color(248, 40, 24, NPC.alpha), NPC.rotation, origin, NPC.scale + 0.5f * (NPC.alpha / 255f), SpriteEffects.None, 0f);
+            else if (State != 3)
             {
                 Texture2D extraTex = ModContent.Request<Texture2D>(AssetDirectory.RedJadeProjectiles + "RedBinkRush").Value;
                 int color = NPC.alpha;

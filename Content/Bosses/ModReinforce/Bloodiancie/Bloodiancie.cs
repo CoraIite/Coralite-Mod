@@ -1,5 +1,7 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
+using Coralite.Content.Items.RedJades;
 using Coralite.Core;
+using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,12 +11,15 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 {
+    [AutoloadBossHead]
     public partial class Bloodiancie : ModNPC
     {
         public override string Texture => AssetDirectory.Bloodiancie + Name;
@@ -55,7 +60,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             NPC.height = 80;
             NPC.damage = 125;
             NPC.defense = 40;
-            NPC.lifeMax = 16000;
+            NPC.lifeMax = 20000;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 10f;
@@ -78,16 +83,16 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((18000 + numPlayers * 4500) / journeyScale);
-                    NPC.damage = 30;
-                    NPC.defense = 16;
+                    NPC.lifeMax = (int)((21000 + numPlayers * 7500) / journeyScale);
+                    NPC.damage = 130;
+                    NPC.defense = 18;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((20000 + numPlayers * 5500) / journeyScale);
-                    NPC.damage = 45;
-                    NPC.defense = 16;
+                    NPC.lifeMax = (int)((25500 + numPlayers * 8500) / journeyScale);
+                    NPC.damage = 145;
+                    NPC.defense = 20;
                 }
 
                 if (Main.getGoodWorld)
@@ -98,20 +103,20 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 return;
             }
 
-            NPC.lifeMax = 16000 + numPlayers * 4500;
+            NPC.lifeMax = 21000 + numPlayers * 7500;
             NPC.damage = 130;
-            NPC.defense = 16;
+            NPC.defense = 18;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 20000 + numPlayers * 5500;
+                NPC.lifeMax = 25500 + numPlayers * 8500;
                 NPC.damage = 145;
-                NPC.defense = 18;
+                NPC.defense = 20;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 23000 + numPlayers * 6000;
+                NPC.lifeMax = 30000 + numPlayers * 9500;
                 NPC.damage = 145;
                 NPC.defense = 14;//因为FTW种能够拥有非常多的弹药所以就降低一下基础防御了
             }
@@ -121,18 +126,25 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         {
             //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<RediancieRelic>()));
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
-            //npcLoot.Add(ItemDropRule.BossBag(ItemType<RediancieBossBag>()));
+            npcLoot.Add(ItemDropRule.BossBag(ItemType<BloodiancieBossBag>()));
             //npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
 
-            //LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
-            //notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<RedJade>(), 1, 20, 24));
-            //npcLoot.Add(notExpertRule);
+            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+            notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<BloodJade>(), 1, 30, 38));
+            npcLoot.Add(notExpertRule);
+        }
+
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.GreaterHealingPotion;
         }
 
         public override void OnKill()
         {
             if (Main.netMode != NetmodeID.Server)
             {
+                SkyManager.Instance.Deactivate("BloodJadeSky");
+
                 for (int j = 0; j < 5; j++)
                 {
                     Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, -3).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore2").Type);
@@ -146,7 +158,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
             followers.ForEach(fo => fo = null);
             followers = null;
-            //DownedBossSystem.DownRediancie();
+            DownedBossSystem.DownBloodiancie();
         }
 
         public override void Load()
@@ -172,7 +184,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         {
             OnHit(hit.Damage);
         }
-
+        
         public void OnHit(int damage)
         {
             DamageCount += damage;
@@ -194,10 +206,18 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 Timer = 0;
                 NPC.dontTakeDamage = true;
                 NPC.life = 1;
+                SkyManager.Instance.Deactivate("BloodJadeSky");
                 return false;
             }
 
             return true;
+        }
+
+        public override bool CheckActive()
+        {
+            //SkyManager.Instance.Deactivate("BloodJadeSky");
+
+            return base.CheckActive();
         }
 
         #endregion

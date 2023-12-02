@@ -834,7 +834,7 @@ Mods: {
 
 			Diprism: {
 				DisplayName: Diprism
-				Tooltip: Connections: 2
+				Tooltip: ""
 			}
 
 			BrilliantRemodelPool: {
@@ -960,22 +960,22 @@ Mods: {
 
 			BrilliantQuadprism: {
 				DisplayName: Brilliant Quadprism
-				Tooltip: Connections: 4
+				Tooltip: ""
 			}
 
 			CrimtaneTriprism: {
 				DisplayName: Crimtane Triprism
-				Tooltip: Connections: 3
+				Tooltip: ""
 			}
 
 			DemoniteTriprism: {
 				DisplayName: Demonite Triprism
-				Tooltip: Connections: 3
+				Tooltip: ""
 			}
 
 			RedJadeDiprism: {
 				DisplayName: Red Jade Diprism
-				Tooltip: Connections: 2
+				Tooltip: ""
 			}
 
 			Basalt: {
@@ -1663,52 +1663,66 @@ Mods: {
 
 			IcicleSilkKnief: {
 				DisplayName: Icicle Silk Knief
-				Tooltip: ""
+				Tooltip:
+					'''
+					Hold rouse right to flick the knief, release to throw 
+					When the knief hit enemy, it will insert into the enemy, and the left click attack hits the enemy to increase marks
+					When the mark is greater than 3, right click to retract the knief and cause an explosion
+					'''
 			}
 
 			IronSilkKnief: {
 				DisplayName: Iron Silk Knief
-				Tooltip: ""
+				Tooltip:
+					'''
+					Hold rouse right to flick the knief, release to throw 
+					After hitting an enemy, hook the knief onto it, and then right click again to drag them towards you					
+					'''
 			}
 
 			ShadowMirror: {
 				DisplayName: Shadow Mirror
-				Tooltip: ""
+				Tooltip: Shine a light on your shadow, and your shadow will move to where you were 3 seconds ago
 			}
 
 			SlimeSceptre: {
 				DisplayName: Slime Sceptre
-				Tooltip: ""
+				Tooltip:
+					'''
+					shoot elastic gel balls when using
+					+4% damage and +8% move speed when equipped
+					Double tap W/A/S/D while holding or equipping to summon the Bouncy Gel Ball to shoot yourself
+					'''
 			}
 
 			MagikeMonoclastic: {
 				DisplayName: Magike Monoclastic
-				Tooltip: ""
+				Tooltip: When wearing and turning on the visibility of the accessory, the flow of magike can be visually observed
 			}
 
 			Reel_MagikeAdvance: {
-				DisplayName: Reel_ Magike Advance
-				Tooltip: ""
+				DisplayName: Scroll: Enhanced Magike Refining
+				Tooltip: Now you know how to strengthen your magike apparatus again
 			}
 
 			PhantomMirror: {
 				DisplayName: Phantom Mirror
-				Tooltip: ""
+				Tooltip: Shine a light on your phantoms and they will follow your trajectory
 			}
 
 			SplendorLens: {
 				DisplayName: Splendor Lens
-				Tooltip: ""
+				Tooltip: Right click to open the UI, put in the item containing magike, and convert the item into magike
 			}
 
 			SoulColumn: {
 				DisplayName: Soul Column
-				Tooltip: ""
+				Tooltip: It can hold a lot of magike
 			}
 
 			FeatheredRefractor: {
 				DisplayName: Feathered Refractor
-				Tooltip: ""
+				Tooltip: It has a strong sending ability and is able to send magike over long distances
 			}
 
 			FlyingSnakeFeather: {
@@ -1718,22 +1732,22 @@ Mods: {
 
 			CrystalRefinery: {
 				DisplayName: Crystal Refinery
-				Tooltip: ""
+				Tooltip: Consumes magike to generate magic crystals
 			}
 
 			BrilliantRefiner: {
 				DisplayName: Brilliant Refiner
-				Tooltip: ""
+				Tooltip: Consumes magike to generate magic crystals
 			}
 
 			SplendorRefiner: {
 				DisplayName: Splendor Refiner
-				Tooltip: ""
+				Tooltip: Consumes magike to generate magic crystals
 			}
 
 			SplendorColumn: {
 				DisplayName: Splendor Column
-				Tooltip: ""
+				Tooltip: It can hold a lot of magike
 			}
 
 			SplendorPentaprism: {
@@ -1743,77 +1757,77 @@ Mods: {
 
 			BrilliantRefinery: {
 				DisplayName: Brilliant Refinery
-				Tooltip: ""
+				Tooltip: Consumes magike to generate magic crystals
 			}
 
 			SplendorRefinery: {
 				DisplayName: Splendor Refinery
-				Tooltip: ""
+				Tooltip: Consumes magike to generate magic crystals
 			}
 
 			SplendorRefractor: {
 				DisplayName: Splendor Refractor
-				Tooltip: ""
+				Tooltip: It has a strong sending ability and is able to send magike over long distances
 			}
 
 			MiniBrilliantColumn: {
 				DisplayName: Mini Brilliant Column
-				Tooltip: ""
+				Tooltip: A portable column that can power your magike-consuming devices
 			}
 
 			MiniCrimtaneColumn: {
 				DisplayName: Mini Crimtane Column
-				Tooltip: ""
+				Tooltip: A portable column that can power your magike-consuming devices
 			}
 
 			MiniCrystalColumn: {
 				DisplayName: Mini Crystal Column
-				Tooltip: ""
+				Tooltip: A portable column that can power your magike-consuming devices
 			}
 
 			MiniDemoniteColumn: {
 				DisplayName: Mini Demonite Column
-				Tooltip: ""
+				Tooltip: A portable column that can power your magike-consuming devices
 			}
 
 			MiniSoulColumn: {
 				DisplayName: Mini Soul Column
-				Tooltip: ""
+				Tooltip: A portable column that can power your magike-consuming devices
 			}
 
 			MiniSplendorColumn: {
 				DisplayName: Mini Splendor Column
-				Tooltip: ""
+				Tooltip: A portable column that can power your magike-consuming devices
 			}
 
 			CrystalSword: {
 				DisplayName: Crystal Sword
-				Tooltip: ""
+				Tooltip: Consumes 5 magike to shoot a beam
 			}
 
 			BrilliantCharger: {
 				DisplayName: Brilliant Charger
-				Tooltip: ""
+				Tooltip: Right click to open the UI, insert an item that can hold magike, and activate to charge that item
 			}
 
 			CrystalCharger: {
 				DisplayName: Crystal Charger
-				Tooltip: ""
+				Tooltip: Right click to open the UI, insert an item that can hold magike, and activate to charge that item
 			}
 
 			GlistentCharger: {
 				DisplayName: Glistent Charger
-				Tooltip: ""
+				Tooltip: Right click to open the UI, insert an item that can hold magike, and activate to charge that item
 			}
 
 			SplendorCharger: {
 				DisplayName: Splendor Charger
-				Tooltip: ""
+				Tooltip: Right click to open the UI, insert an item that can hold magike, and activate to charge that item
 			}
 
 			CrystalStaff: {
 				DisplayName: Crystal Staff
-				Tooltip: ""
+				Tooltip: Consumes 1 magike to place a crystal frame
 			}
 
 			Damnation: {
@@ -1823,12 +1837,31 @@ Mods: {
 
 			BloodJadeCore: {
 				DisplayName: Blood Jade Core
-				Tooltip: ""
+				Tooltip:
+					'''
+					The blood that flowed made the Rediancie even redder
+					Summons Bloodiancie, without consuming
+					'''
 			}
 
 			BloodJade: {
 				DisplayName: Blood Jade
 				Tooltip: ""
+			}
+
+			BloodJadeMagicWeapon: {
+				DisplayName: 赤琰圭
+				Tooltip: ""
+			}
+
+			BloodJadeMeleeWeapon: {
+				DisplayName: 赤璋
+				Tooltip: ""
+			}
+
+			BloodiancieBossBag: {
+				DisplayName: 赤星匣
+				Tooltip: Right click to open
 			}
 		}
 
@@ -2026,9 +2059,9 @@ Mods: {
 				DisplayName: Crystal Robot
 
 				TownNPCMood: {
-					Content: 我很满足。
-					NoHome: 我讨厌没有家。
-					FarFromHome: 我离家太远了。
+					Content: I'm satisfied.
+					NoHome: Wild, dangerous, I need a home.
+					FarFromHome: Far from home, too far.
 					LoveSpace: 我非常喜欢有这么大的空间。
 					DislikeCrowded: 我不喜欢这么拥挤。
 					HateCrowded: 我讨厌这么拥挤。
@@ -2407,6 +2440,11 @@ Mods: {
 				NightmarePlantera: {
 					SpawnInfo: Nightmares took over the body of the once defeated Plantera and transformed into a powerful nightmare god
 					Despawn: The dream dissipated
+				}
+
+				Bloodiancie: {
+					SpawnInfo: 一位伟大的凝胶领袖，在史莱姆中有着极高的地位，在记载中每100只史莱姆王中才会诞生一位皇帝，或许可以叫它“至高帝·史莱姆王”。
+					Despawn: 赤血玉灵回归了地底
 				}
 			}
 		}

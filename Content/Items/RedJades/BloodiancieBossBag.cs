@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -10,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RediancieBossBag : ModItem
+    internal class BloodiancieBossBag:ModItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
 
@@ -18,6 +19,7 @@ namespace Coralite.Content.Items.RedJades
         {
             ItemID.Sets.BossBag[Type] = true;
             ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
+            ItemID.Sets.ItemNoGravity[Type] = true;
         }
 
         public override void SetDefaults()
@@ -43,14 +45,14 @@ namespace Coralite.Content.Items.RedJades
 
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<RedJadePendant>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<RedJade>(), 1, 26, 30));
+            //itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<RedJadePendant>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BloodJade>(), 1, 26, 30));
             itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<Rediancie>()));
         }
 
         public override void PostUpdate()
         {
-            Lighting.AddLight(Item.Center, Color.White.ToVector3() * 0.4f);
+            Lighting.AddLight(Item.Center, Color.Red.ToVector3() * 0.5f);
 
             if (Item.timeSinceItemSpawned % 12 == 0)
             {
@@ -96,16 +98,27 @@ namespace Coralite.Content.Items.RedJades
             for (float i = 0f; i < 1f; i += 0.25f)
             {
                 float radians = (i + timer) * MathHelper.TwoPi;
-                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 8f).RotatedBy(radians) * time, frame, new Color(90, 70, 255, 50), rotation, frameOrigin, scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 8f).RotatedBy(radians) * time, frame, new Color(232, 37, 98, 100)*0.25f, rotation, frameOrigin, scale, SpriteEffects.None, 0);
             }
 
             for (float i = 0f; i < 1f; i += 0.34f)
             {
                 float radians = (i + timer) * MathHelper.TwoPi;
-                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 4f).RotatedBy(radians) * time, frame, new Color(140, 120, 255, 77), rotation, frameOrigin, scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 4f).RotatedBy(radians) * time, frame, new Color(232, 37, 98, 100) * 0.25f, rotation, frameOrigin, scale, SpriteEffects.None, 0);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                float starRot = i * MathHelper.TwoPi / 5 - MathHelper.PiOver2;
+                Vector2 dir = starRot.ToRotationVector2();
+                ProjectilesHelper.DrawPrettyStarSparkle(1, 0, drawPos + dir * 16, new Color(255, 192, 192), Color.Red * 0.5f,
+                    0.5f + time * 0.3f, 0, 0.3f, 0.7f, 1, starRot, new Vector2(1, 0.5f), Vector2.One);
+                ProjectilesHelper.DrawPrettyStarSparkle(1, 0, drawPos + dir * 20, new Color(255, 192, 192), Color.Red * 0.5f,
+                    0.5f + time * 0.3f, 0, 0.3f, 0.7f, 1, starRot, new Vector2(1, 0.5f), Vector2.One);
             }
 
             return true;
         }
+
     }
 }

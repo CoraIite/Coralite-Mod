@@ -52,7 +52,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 return;
             }
 
-            float factor = ReadyTimer / 140;
+            float factor = ReadyTimer / Projectile.ai[2];
 
             for (int i = 0; i < 4; i++)
             {
@@ -60,11 +60,11 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 d.noGravity = true;
             }
 
-            if (ReadyTimer > 140)
+            if (ReadyTimer > Projectile.ai[2])
             {
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(),
                     Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Rediancie_BigBoom>(),
-                    50, 8, Projectile.owner);
+                    Helper.ScaleValueForDiffMode(40, 45, 50, 50), 8, Projectile.owner);
                 Projectile.Kill();
             }
 

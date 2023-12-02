@@ -9,6 +9,7 @@ namespace Coralite.Core.Systems.BossSystems
         public static bool downedRediancie;
         public static bool downedBabyIceDragon;
         public static bool downedSlimeEmperor;
+        public static bool downedBloodiancie;
         public static bool downedNightmarePlantera;
 
 
@@ -32,6 +33,9 @@ namespace Coralite.Core.Systems.BossSystems
             if (downedSlimeEmperor)
                 downed.Add("SlimeEmperor");
 
+            if (downedBloodiancie)
+                downed.Add("Bloodiancie");
+
             if (downedNightmarePlantera)
                 downed.Add("NightmarePlantera");
 
@@ -44,12 +48,18 @@ namespace Coralite.Core.Systems.BossSystems
             downedRediancie = list.Contains("Rediancie");
             downedBabyIceDragon = list.Contains("BabyIceDragon");
             downedSlimeEmperor = list.Contains("SlimeEmperor");
+            downedBloodiancie = list.Contains("Bloodiancie");
             downedNightmarePlantera = list.Contains("NightmarePlantera");
         }
 
         public static void DownSlimeEmperor()
         {
             downedSlimeEmperor = true;
+        }
+
+        public static void DownBloodiancie()
+        {
+            downedBloodiancie = true;
         }
 
         public static void DownNightmarePlantera()

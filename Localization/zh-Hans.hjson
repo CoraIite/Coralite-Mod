@@ -1831,7 +1831,7 @@ Mods: {
 
 			BloodJadeCore: {
 				DisplayName: 赤血玉核心
-				Tooltip: 
+				Tooltip:
 					'''
 					流淌的鲜血让赤玉变得更红了
 					召唤赤血玉灵，不消耗
@@ -1841,6 +1841,21 @@ Mods: {
 			BloodJade: {
 				DisplayName: 赤血玉
 				Tooltip: ""
+			}
+
+			BloodJadeMagicWeapon: {
+				DisplayName: 赤琰圭
+				Tooltip: 未完成物品，请勿使用
+			}
+
+			BloodJadeMeleeWeapon: {
+				DisplayName: 赤璋
+				Tooltip: 未完成物品，请勿使用
+			}
+
+			BloodiancieBossBag: {
+				DisplayName: 赤星匣
+				Tooltip: 右键点击以打开
 			}
 		}
 
@@ -1891,7 +1906,7 @@ Mods: {
 				TryUnlock: 需要使用强大的猩红生物的素材制成钥匙以解锁
 			}
 
-			// BloodJadeTile.MapEntry: Blood Jade Tile
+			BloodJadeTile.MapEntry: 赤血玉
 		}
 
 		Buffs: {
@@ -2057,7 +2072,7 @@ Mods: {
 			}
 
 			Bloodiancie.DisplayName: 赤血玉灵
-			// BloodiancieMinion.DisplayName: Bloodiancie Minion
+			BloodiancieMinion.DisplayName: 小赤血玉灵
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -2234,63 +2249,63 @@ Mods: {
 			LostSevensideChain.DisplayName: 迷失七棱钩
 			LostSevensideSpurt.DisplayName: 迷失突刺
 			LostVine.DisplayName: 迷失荆棘刺
-			// DreamShearsSlash.DisplayName: Dream Shears Slash
-			// DreamShearsSpurt.DisplayName: Dream Shears Spurt
-			// DreamShearsRolling.DisplayName: Dream Shears Rolling
-			// DreamShearsCut.DisplayName: Dream Shears Cut
-			// NightmareBite_Firendly.DisplayName: Nightmare Bite_ Firendly
-			// EuphorbiaMiliiProj.DisplayName: Euphorbia Milii Proj
-			// EuphorbiaSmallSpike.DisplayName: Euphorbia Small Spike
-			// EuphorbiaSpike.DisplayName: Euphorbia Spike
-			// EuphorbiaSilt.DisplayName: Euphorbia Silt
-			// EuphorbiaSpurt.DisplayName: Euphorbia Spurt
-			// EuphorbiaMiliiRightClick.DisplayName: Euphorbia Milii Right Click
-			// EuphorbiaSpecialSpike.DisplayName: Euphorbia Special Spike
-			// NightmareRaven.DisplayName: Nightmare Raven
-			// LycorisBullet.DisplayName: Lycoris Bullet
-			// LycorisHeldProj.DisplayName: Lycoris Held Proj
-			// LycorisSmallBullet.DisplayName: Lycoris Small Bullet
-			// LullabySlash.DisplayName: Lullaby Slash
-			// LullabyBall.DisplayName: Lullaby Ball
-			// LullabySlash2.DisplayName: Lullaby Slash2
-			// EdenWhip.DisplayName: Eden Whip
-			// EdenWhip2.DisplayName: Eden Whip2
-			// DevilsClawLeaf.DisplayName: Devils Claw Leaf
-			// BarrenFog.DisplayName: Barren Fog
-			// BarrenThorn.DisplayName: Barren Thorn
-			// PurpleToeProj.DisplayName: Purple Toe Proj
-			// RavenFeather.DisplayName: Raven Feather
-			// QueensWreathArrow.DisplayName: Queens Wreath Arrow
-			// QueensWreathHeldProj.DisplayName: Queens Wreath Held Proj
-			// BoneClaw.DisplayName: Bone Claw
-			// BoneHand.DisplayName: Bone Hand
-			// BoneSilt.DisplayName: Bone Silt
-			// BoneHands.DisplayName: Bone Hands
-			// CadaverousDragonBreath.DisplayName: Cadaverous Dragon Breath
-			// CadaverousDragonHeadProj.DisplayName: Cadaverous Dragon Head Proj
-			// VertebraeBladeProj.DisplayName: Vertebrae Blade Proj
-			// VertebraeSpike.DisplayName: Vertebrae Spike
-			// IronSilkKniefChain.DisplayName: Iron Silk Knief Chain
-			// IronSilkKniefSlash.DisplayName: Iron Silk Knief Slash
-			// IcicleKnief.DisplayName: Icicle Knief
-			// IcicleKniefChain.DisplayName: Icicle Knief Chain
-			// ShadowMirrorProj.DisplayName: Shadow Mirror Proj
-			// SlimeSceptreBall.DisplayName: Slime Sceptre Ball
-			// MagConnectProj.DisplayName: Mag Connect Proj
-			// LeafShield.DisplayName: Leaf Shield
-			// PhantomMirrorProj.DisplayName: Phantom Mirror Proj
-			// FreosanProj.DisplayName: Freosan Proj
-			// HeatanProj.DisplayName: Heatan Proj
-			// Page_MagikeBaseProj.DisplayName: Page_ Magike Base Proj
-			// CrystalSwordProj.DisplayName: Crystal Sword Proj
-			// Bloodiancie_BigBoom.DisplayName: Bloodiancie_ Big Boom
-			// BloodiancieBeam.DisplayName: Bloodiancie Beam
-			// DamnationHeldProj.DisplayName: Damnation Held Proj
-			// BloodWave.DisplayName: Blood Wave
-			// RedBomb.DisplayName: Red Bomb
-			// Bloodiancie_OnSpawnAnim.DisplayName: Bloodiancie_ On Spawn Anim
-			// BloodBall.DisplayName: Blood Ball
-			// BloodRain.DisplayName: Blood Rain
+			DreamShearsSlash.DisplayName: 碎梦斩击
+			DreamShearsSpurt.DisplayName: 碎梦穿刺
+			DreamShearsRolling.DisplayName: 碎梦回旋
+			DreamShearsCut.DisplayName: 碎梦剪击
+			NightmareBite_Firendly.DisplayName: 噩梦之咬
+			EuphorbiaMiliiProj.DisplayName: 刺梅
+			EuphorbiaSmallSpike.DisplayName: 刺梅尖刺
+			EuphorbiaSpike.DisplayName: 刺梅尖刺
+			EuphorbiaSilt.DisplayName: 刺梅裂隙
+			EuphorbiaSpurt.DisplayName: 刺梅穿心击
+			EuphorbiaMiliiRightClick.DisplayName: 刺梅穿斩
+			EuphorbiaSpecialSpike.DisplayName: 噩梦尖刺
+			NightmareRaven.DisplayName: 梦魇渡鸦
+			LycorisBullet.DisplayName: 彼岸弹
+			LycorisHeldProj.DisplayName: 彼岸花
+			LycorisSmallBullet.DisplayName: 彼岸花瓣
+			LullabySlash.DisplayName: 美梦斩击
+			LullabyBall.DisplayName: 七彩梦光球
+			LullabySlash2.DisplayName: 入梦曲之序章
+			EdenWhip.DisplayName: 伊甸
+			EdenWhip2.DisplayName: 巨蟒突击
+			DevilsClawLeaf.DisplayName: 暗黑飞叶
+			BarrenFog.DisplayName: 荒芜花雾
+			BarrenThorn.DisplayName: 荒芜荆棘刺
+			PurpleToeProj.DisplayName: 噩梦捕食者
+			RavenFeather.DisplayName: 梦魇飞羽
+			QueensWreathArrow.DisplayName: 梦锁箭
+			QueensWreathHeldProj.DisplayName: 珊瑚藤
+			BoneClaw.DisplayName: 梦魇骨爪
+			BoneHand.DisplayName: 梦魇鬼手
+			BoneSilt.DisplayName: 梦境间隙
+			BoneHands.DisplayName: 堕落的亡魂爪
+			CadaverousDragonBreath.DisplayName: 瘴气吐息
+			CadaverousDragonHeadProj.DisplayName: 迷失骨龙头
+			VertebraeBladeProj.DisplayName: 椎骨剑
+			VertebraeSpike.DisplayName: 椎骨碎片
+			IronSilkKniefChain.DisplayName: 铁链
+			IronSilkKniefSlash.DisplayName: 铁制丝刀
+			IcicleKnief.DisplayName: 冰晶匕首
+			IcicleKniefChain.DisplayName: 冰晶链条
+			ShadowMirrorProj.DisplayName: 影分身
+			SlimeSceptreBall.DisplayName: 弹弹凝胶球
+			MagConnectProj.DisplayName: 魔能连接仪
+			LeafShield.DisplayName: 叶刃
+			PhantomMirrorProj.DisplayName: 幻影分身
+			FreosanProj.DisplayName: 冻冰块
+			HeatanProj.DisplayName: 灼火球
+			Page_MagikeBaseProj.DisplayName: 魔能仪式
+			CrystalSwordProj.DisplayName: 水晶激光
+			Bloodiancie_BigBoom.DisplayName: 赤血爆破
+			BloodiancieBeam.DisplayName: 赤血射线
+			DamnationHeldProj.DisplayName: 灾星
+			BloodWave.DisplayName: 爆破浪潮
+			RedBomb.DisplayName: 赤血爆弹
+			Bloodiancie_OnSpawnAnim.DisplayName: 赤血玉灵
+			BloodBall.DisplayName: 血球
+			BloodRain.DisplayName: 血雨腥风
 		}
 
 		Configs: {
@@ -2416,13 +2431,18 @@ Mods: {
 				}
 
 				SlimeEmperor: {
-					SpawnInfo: 一位伟大的凝胶领袖，在史莱姆中有着极高的地位。
+					SpawnInfo: 一位伟大的凝胶领袖，在史莱姆中有着极高的地位，在记载中每100只史莱姆王中才会诞生一位皇帝，或许可以叫它“至高帝·史莱姆王”。
 					Despawn: 史莱姆皇帝回归了它的王国
 				}
 
 				NightmarePlantera: {
-					SpawnInfo: 噩梦占据了曾经被击败的世纪之花的躯体，变成了强大的梦魇之神
+					SpawnInfo: 噩梦占据了曾经被击败的世纪之花的躯体，变成了强大的梦魇之神，或者也可以叫她“梦界主·世纪之花”。
 					Despawn: 梦境消散了
+				}
+
+				Bloodiancie: {
+					SpawnInfo: 吸收血月能量后能产生更大范围爆炸的赤玉灵，或者也可以叫它“血咒精·赤玉灵”。
+					Despawn: 赤血玉灵回归了地底
 				}
 			}
 		}
@@ -2434,10 +2454,10 @@ Mods: {
 			}
 
 			MagikeSystem: {
-				// BotanicusBonus: 植生：攻击时生成叶刃环绕自身
-				// MetallonBonus: 刚：攻击时获得防御加成Buff
-				// FreosanBonus: 冻：攻击时生成冰块
-				// HeatanBonus: 灼：攻击时生成灼火球
+				BotanicusBonus: 植生：攻击时生成叶刃环绕自身
+				MetallonBonus: 刚：攻击时获得防御加成Buff
+				FreosanBonus: 冻：攻击时生成冰块
+				HeatanBonus: 灼：攻击时生成灼火球
 			}
 		}
 	}

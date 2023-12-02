@@ -107,16 +107,16 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((3520 + numPlayers * 1200) / journeyScale);
+                    NPC.lifeMax = (int)((3820 + numPlayers * 1400) / journeyScale);
                     NPC.damage = 35;
-                    NPC.defense = 10;
+                    NPC.defense = 12;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((4320 + numPlayers * 1600) / journeyScale);
+                    NPC.lifeMax = (int)((4720 + numPlayers * 1900) / journeyScale);
                     NPC.damage = 60;
-                    NPC.defense = 13;
+                    NPC.defense = 15;
                 }
 
                 if (Main.getGoodWorld)
@@ -133,15 +133,15 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 return;
             }
 
-            NPC.lifeMax = 3520 + numPlayers * 1200;
+            NPC.lifeMax = 3820 + numPlayers * 1400;
             NPC.damage = 35;
-            NPC.defense = 10;
+            NPC.defense = 12;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 4320 + numPlayers * 1600;
+                NPC.lifeMax = 4720 + numPlayers * 1900;
                 NPC.damage = 60;
-                NPC.defense = 13;
+                NPC.defense = 15;
             }
 
             if (Main.getGoodWorld)

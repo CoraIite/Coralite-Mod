@@ -35,13 +35,13 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(),
                     Projectile.Center + new Vector2(Main.rand.NextFloat(-16, 16), Main.rand.NextFloat(-80, 80)), Vector2.Zero, type,
-                    50, 8, Projectile.owner);
+                    Helpers.Helper.ScaleValueForDiffMode(40,45,50,50), 8, Projectile.owner);
             }
 
-            if (Projectile.ai[0]>200)
+            if (Projectile.ai[0] > 150)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center ,
-                    Vector2.Zero, ModContent.ProjectileType<Bloodiancie_BigBoom>(), 55, 8f);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,
+                    Vector2.Zero, ModContent.ProjectileType<Bloodiancie_BigBoom>(), Helpers.Helper.ScaleValueForDiffMode(40, 45, 50, 50), 8f);
 
                 Projectile.Kill();
             }
