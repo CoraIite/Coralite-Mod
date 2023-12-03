@@ -41,6 +41,8 @@ namespace Coralite.Content.ModPlayers
         public int DashDelay = 0;
         public int DashTimer = 0;
 
+        public int parryTime;
+
         /// <summary> 装备赤玉吊坠 </summary>
         public bool equippedRedJadePendant;
         /// <summary> 装备影魔镜 </summary>
@@ -65,6 +67,21 @@ namespace Coralite.Content.ModPlayers
             resistDreamErosion = false;
 
             nightmareEnergyMax = 7;
+            if (parryTime > 0)
+            {
+                parryTime--;
+                if (parryTime<=0)
+                {
+                    SoundEngine.PlaySound(CoraliteSoundID.MaxMana, Player.Center);
+                    for (int i = 0; i < 5; i++)
+                    {
+                        int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.ManaRegeneration, 0f, 0f, 255, default(Color), (float)Main.rand.Next(20, 26) * 0.1f);
+                        Main.dust[index].noLight = true;
+                        Main.dust[index].noGravity = true;
+                        Main.dust[index].velocity *= 0.5f;
+                    }
+                }
+            }
 
             if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15)
                 DashDir = DashDown;

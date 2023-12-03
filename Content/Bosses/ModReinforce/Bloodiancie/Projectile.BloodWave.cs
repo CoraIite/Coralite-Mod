@@ -40,8 +40,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
             if (Projectile.ai[0] > 150)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,
-                    Vector2.Zero, ModContent.ProjectileType<Bloodiancie_BigBoom>(), Helpers.Helper.ScaleValueForDiffMode(40, 45, 50, 50), 8f);
+                //Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,
+                //    Vector2.Zero, ModContent.ProjectileType<Bloodiancie_BigBoom>(), Helpers.Helper.ScaleValueForDiffMode(40, 45, 50, 50), 8f);
 
                 Projectile.Kill();
             }
@@ -52,7 +52,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         public override void OnKill(int timeLeft)
         {
             if (Main.myPlayer == Projectile.owner)
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,
+                    Vector2.Zero, ModContent.ProjectileType<Bloodiancie_BigBoom>(), Helpers.Helper.ScaleValueForDiffMode(40, 45, 50, 50), 8f);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

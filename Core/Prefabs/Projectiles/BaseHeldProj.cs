@@ -20,5 +20,11 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// 玩家拥有者的朝向
         /// </summary>
         public virtual int OwnerDirection => Math.Sign(Owner.gravDir) * Owner.direction;
+
+        public override void PostAI()
+        {
+            if (Owner.dead || !Owner.active)
+                Projectile.Kill();
+        }
     }
 }

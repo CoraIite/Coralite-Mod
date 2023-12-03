@@ -439,6 +439,9 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected virtual void GetCurrentTrailCount(out float count)
         {
             count = 0f;
+            if (oldRotate == null)
+                return;
+
             for (int i = 0; i < oldRotate.Length; i++)
                 if (oldRotate[i] != 100f)
                     count += 1f;
@@ -450,7 +453,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public void WarpDrawer(float trailBottomExtraMult)
         {
-            if (Timer < minTime)
+            if (Timer < minTime || oldRotate == null)
                 return;
 
             List<CustomVertexInfo> bars = new List<CustomVertexInfo>();

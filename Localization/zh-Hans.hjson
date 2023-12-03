@@ -1850,12 +1850,45 @@ Mods: {
 
 			BloodJadeMeleeWeapon: {
 				DisplayName: 赤璋
-				Tooltip: 未完成物品，请勿使用
+				Tooltip: 右键格挡攻击，成功格挡后获得BUFF，拥有BUFF时普通攻击可以产生爆破
 			}
 
 			BloodiancieBossBag: {
 				DisplayName: 赤星匣
 				Tooltip: 右键点击以打开
+			}
+
+			BrilliantAltar: {
+				DisplayName: 璀璨聚合坛
+				Tooltip:
+					'''
+					右键打开UI放入物品并选择聚合配方
+					使用魔能连接仪连接到台座上
+					在台座内放入聚合配方中的次要物品
+					激活后开始聚合
+					'''
+			}
+
+			GlistentAltar: {
+				DisplayName: 晶莹聚合坛
+				Tooltip:
+					'''
+					右键打开UI放入物品并选择聚合配方
+					使用魔能连接仪连接到台座上
+					在台座内放入聚合配方中的次要物品
+					激活后开始聚合
+					'''
+			}
+
+			ShadowAltar: {
+				DisplayName: 影子聚合坛
+				Tooltip:
+					'''
+					右键打开UI放入物品并选择聚合配方
+					使用魔能连接仪连接到台座上
+					在台座内放入聚合配方中的次要物品
+					激活后开始聚合
+					'''
 			}
 		}
 
@@ -1990,6 +2023,11 @@ Mods: {
 			MetallionBuff: {
 				DisplayName: 刚之魔能
 				Description: 伤害减免 +8%
+			}
+
+			BloodJadeBuff: {
+				DisplayName: 爆破能量
+				Description: 你手中赤血玉武器的不稳定性提升了
 			}
 		}
 
@@ -2306,6 +2344,10 @@ Mods: {
 			Bloodiancie_OnSpawnAnim.DisplayName: 赤血玉灵
 			BloodBall.DisplayName: 血球
 			BloodRain.DisplayName: 血雨腥风
+			// BloodJadeSlash.DisplayName: Blood Jade Slash
+			// BloodJade_BigBoom.DisplayName: Blood Jade_ Big Boom
+			// BloodJadeParry.DisplayName: Blood Jade Parry
+			// BloodJadeWave.DisplayName: Blood Jade Wave
 		}
 
 		Configs: {

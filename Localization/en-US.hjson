@@ -1863,6 +1863,21 @@ Mods: {
 				DisplayName: 赤星匣
 				Tooltip: Right click to open
 			}
+
+			BrilliantAltar: {
+				DisplayName: Brilliant Altar
+				Tooltip: ""
+			}
+
+			GlistentAltar: {
+				DisplayName: Glistent Altar
+				Tooltip: ""
+			}
+
+			ShadowAltar: {
+				DisplayName: Shadow Altar
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -1996,6 +2011,11 @@ Mods: {
 			MetallionBuff: {
 				DisplayName: Metallion Buff
 				Description: Mods.Coralite.Buffs.MetallionBuff.Description
+			}
+
+			BloodJadeBuff: {
+				DisplayName: Blood Jade Buff
+				Description: Mods.Coralite.Buffs.BloodJadeBuff.Description
 			}
 		}
 
@@ -2312,6 +2332,10 @@ Mods: {
 			Bloodiancie_OnSpawnAnim.DisplayName: Bloodiancie_ On Spawn Anim
 			BloodBall.DisplayName: Blood Ball
 			BloodRain.DisplayName: Blood Rain
+			BloodJadeSlash.DisplayName: Blood Jade Slash
+			BloodJade_BigBoom.DisplayName: Blood Jade_ Big Boom
+			BloodJadeParry.DisplayName: Blood Jade Parry
+			BloodJadeWave.DisplayName: Blood Jade Wave
 		}
 
 		Configs: {
