@@ -28,6 +28,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         private int _slimesRemaining;
         private bool _isActive;
         private bool _isLeaving;
+        private int _innerTimer;
 
         public override void OnLoad()
         {
@@ -107,8 +108,15 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 }
             }
 
+            _innerTimer++;
+            if (_innerTimer > 60 * 60 * 4)
+                _isLeaving = true;
+
             if (_slimesRemaining == 0)
+            {
                 _isActive = false;
+                _innerTimer = 0;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
@@ -176,6 +184,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             GenerateSlimes();
             _isActive = true;
             _isLeaving = false;
+            _innerTimer = 0;
         }
 
         public override void Deactivate(params object[] args)
@@ -186,9 +195,9 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         public override void Reset()
         {
             _isActive = false;
+            _innerTimer = 0;
         }
 
         public override bool IsActive() => _isActive;
-
     }
 }

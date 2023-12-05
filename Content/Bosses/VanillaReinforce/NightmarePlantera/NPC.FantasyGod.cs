@@ -301,10 +301,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             float factor = Math.Abs(MathF.Sin(Main.GlobalTimeWrappedHourly)) * 0.6f;
             Vector2 pos = NPC.Center - Main.screenPosition;
 
-            for (int i = 0; i < 3; i++)
+            if (leftTentacles!=null&&rightTentacles!=null)
             {
-                leftTentacles[i].DrawTentacle(i => 6 * MathF.Sin(i * factor), 2);
-                rightTentacles[i].DrawTentacle(i => 6 * -MathF.Sin(i * factor), 2);
+                for (int i = 0; i < 3; i++)
+                {
+                    leftTentacles[i].DrawTentacle(i => 6 * MathF.Sin(i * factor), 2);
+                    rightTentacles[i].DrawTentacle(i => 6 * -MathF.Sin(i * factor), 2);
+                }
             }
 
             Vector2 mainSparkleScale = new Vector2(8, 10);

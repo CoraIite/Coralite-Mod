@@ -195,7 +195,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            tentacle.DrawTentacle((i) => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
+            tentacle?.DrawTentacle((i) => 4 * MathF.Sin(i / 2 * Main.GlobalTimeWrappedHourly));
 
             Texture2D mainTex = TextureAssets.Npc[NPC.type].Value;
             Vector2 pos = NPC.Center - Main.screenPosition;

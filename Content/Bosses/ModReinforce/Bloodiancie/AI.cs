@@ -267,7 +267,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                         if (Timer == 160)       //生成弹幕
                         {
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero
-                                , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(55,55,50,45), 8f);
+                                , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(55, 55, 50, 45), 8f);
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(Target.Center.X > NPC.Center.X ? 1 : -1, 0) * 12, ProjectileType<BloodBall>(), 1, 8f);
                             SpawnFollowers(8);
                         }
@@ -283,12 +283,12 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 case (int)AIStates.firework:
                     {
                         //控制X方向的移动
-                        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 2f, 0.1f, 0.1f, 0.97f);
+                        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6f, 0.2f, 0.3f, 0.97f);
 
                         //控制Y方向的移动
                         float yLength2 = Math.Abs(Target.Center.Y - NPC.Center.Y);
                         if (yLength2 > 50)
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 1f, 0.06f, 0.06f, 0.97f);
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4f, 0.2f, 0.3f, 0.97f);
                         else
                             NPC.velocity.Y *= 0.96f;
 
@@ -317,7 +317,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             float rot = Main.rand.NextFloat(MathHelper.TwoPi);
                             int damage = NPC.GetAttackDamage_ForProjectiles(10, 15);
                             int timeleft = 16;
-                            int howMany = Main.rand.Next(3, 6);    //FTW能射出4个，其他模式只射3个
+                            int howMany = Main.rand.Next(3, 6);
                             for (int i = 0; i < howMany; i++)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[^1].center, rot.ToRotationVector2() * 12, ProjectileType<RedFirework>(), damage, 5f, NPC.target, 0, timeleft + i * 10);
@@ -743,7 +743,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             //为了保证同场召唤物数量不会过多所以还是保留了这一段
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                if (Main.npc.Count((n) => n.active && n.type == NPCType<BloodiancieMinion>()) < Helper.ScaleValueForDiffMode(2, 3, 4, 5))
+                                if (Main.npc.Count((n) => n.active && n.type == NPCType<BloodiancieMinion>()) < Helper.ScaleValueForDiffMode(2, 3, 3, 4))
                                     NPC.NewNPC(NPC.GetSource_FromThis(), (int)followers[^1].center.X, (int)followers[^1].center.Y, NPCType<BloodiancieMinion>());
                                 else
                                 {

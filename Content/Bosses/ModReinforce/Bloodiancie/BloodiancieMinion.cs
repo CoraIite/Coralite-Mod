@@ -90,7 +90,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             break;
                         }
 
-                        if (Timer % 30 == 0)
+                        if (Timer % 50 == 0)
                         {
                             NPC.TargetClosest();
 
@@ -101,7 +101,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), damage, 5f);
                         }
 
-                        if (Timer<160)
+                        if (Timer < 160)
                             break;
 
                         if (Timer == 160)
@@ -122,7 +122,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
                         Timer = 0;
                         NPC.alpha = 0;
-                        IdleTime = Main.rand.Next(30, 60);
+                        IdleTime = Main.rand.Next(60, 80);
                         State = 3;
                         break;
                     }
@@ -161,7 +161,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
                         Timer = 0;
                         NPC.alpha = 0;
-                        IdleTime = Main.rand.Next(60, 80);
+                        IdleTime = Main.rand.Next(80, 100);
                         State = 3;
                         break;
                     }

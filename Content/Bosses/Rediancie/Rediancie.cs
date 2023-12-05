@@ -1270,19 +1270,21 @@ namespace Coralite.Content.Bosses.Rediancie
             if (Main.zenithWorld)
                 color = Main.DiscoColor;
 
-            foreach (var follower in followers)
-            {
-                if (follower.drawBehind)
-                    follower.Draw(spriteBatch, color);
-            }
+            if (followers != null)
+                foreach (var follower in followers)
+                {
+                    if (follower.drawBehind)
+                        follower.Draw(spriteBatch, color);
+                }
 
             DrawSelf(spriteBatch, screenPos, color);
 
-            foreach (var follower in followers)
-            {
-                if (!follower.drawBehind)
-                    follower.Draw(spriteBatch, color);
-            }
+            if (followers != null)
+                foreach (var follower in followers)
+                {
+                    if (!follower.drawBehind)
+                        follower.Draw(spriteBatch, color);
+                }
 
             return false;
         }

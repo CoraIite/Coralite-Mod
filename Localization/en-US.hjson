@@ -1878,6 +1878,16 @@ Mods: {
 				DisplayName: Shadow Altar
 				Tooltip: ""
 			}
+
+			BloodiancieRelic: {
+				DisplayName: Bloodiancie Relic
+				Tooltip: ""
+			}
+
+			Whistle: {
+				DisplayName: Whistle
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2336,6 +2346,8 @@ Mods: {
 			BloodJade_BigBoom.DisplayName: Blood Jade_ Big Boom
 			BloodJadeParry.DisplayName: Blood Jade Parry
 			BloodJadeWave.DisplayName: Blood Jade Wave
+			BloodJadeStrike.DisplayName: Blood Jade Strike
+			WhistleProj.DisplayName: Whistle Proj
 		}
 
 		Configs: {

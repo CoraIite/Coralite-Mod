@@ -9,7 +9,6 @@ using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -34,9 +33,9 @@ namespace Coralite.Content.Items.RedJades
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 62;
-            Item.useTime = 25;
-            Item.useAnimation = 25;
+            Item.damage = 60;
+            Item.useTime = 27;
+            Item.useAnimation = 27;
             Item.knockBack = 2f;
 
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -71,7 +70,7 @@ namespace Coralite.Content.Items.RedJades
                         Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, useCount);
                         break;
                     case 3:
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, (int)(damage * 1.35f), knockback, player.whoAmI, useCount);
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, (int)(damage * 1.15f), knockback, player.whoAmI, useCount);
                         break;
                 }
             }
@@ -167,6 +166,7 @@ namespace Coralite.Content.Items.RedJades
                     Projectile.scale = 0.8f;
                     break;
                 case 3://重上挥
+                case 4:
                     startAngle = -2.6f;
                     totalAngle = -4.6f;
                     onHitFreeze = 12;
@@ -213,18 +213,19 @@ namespace Coralite.Content.Items.RedJades
                     switch ((int)Combo)
                     {
                         default:
+                            break;
                         case 0:
                         case 1:
-                            Projectile.NewProjectile(source, Owner.Center + dir * 100, Vector2.Zero, ProjectileType<RedJadeBoom>(),
-                                (int)(Projectile.damage * 1.35f), Projectile.knockBack, Projectile.owner);
+                            Projectile.NewProjectile(source, Owner.Center, dir * 9, ProjectileType<BloodJadeStrike>(),
+                                (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner, 0);
                             break;
                         case 2:
-                            Projectile.NewProjectile(source, Owner.Center + dir * 120, Vector2.Zero, ProjectileType<RedJadeBigBoom>(),
-                                (int)(Projectile.damage * 1.35f), Projectile.knockBack, Projectile.owner);
+                            Projectile.NewProjectile(source, Owner.Center, dir * 8, ProjectileType<BloodJadeStrike>(),
+                                (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner, 1);
                             break;
                         case 3:
-                            Projectile.NewProjectile(source, Owner.Center + dir * 140, Vector2.Zero, ProjectileType<BloodJade_BigBoom>(),
-                                (int)(Projectile.damage * 1.35f), Projectile.knockBack, Projectile.owner);
+                            Projectile.NewProjectile(source, Owner.Center, dir * 7, ProjectileType<BloodJadeStrike>(),
+                                (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner, 2);
                             break;
                     }
                 }
@@ -244,6 +245,7 @@ namespace Coralite.Content.Items.RedJades
                     Projectile.scale = Helper.EllipticalEase(1.2f - 4.2f * Smoother.Smoother(timer, maxTime - minTime), 1.2f, 1.4f);
                     break;
                 case 3:
+                case 4:
                     alpha = (int)(Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 80) + 160;
                     Projectile.scale = Helper.EllipticalEase(2.6f + 4.6f * Smoother.Smoother(timer, maxTime - minTime), 1.4f, 1.8f);
                     break;
@@ -414,7 +416,7 @@ namespace Coralite.Content.Items.RedJades
                     Owner.immune = true;
                 }
 
-                if (Timer < 24)
+                if (Timer < 20)
                 {
                     Rectangle rect = Projectile.getRect();
                     for (int i = 0; i < Main.maxProjectiles; i++)
@@ -447,7 +449,7 @@ namespace Coralite.Content.Items.RedJades
                     break;
                 }
 
-                if (Timer < 24 + 40)
+                if (Timer < 20 + 40)
                 {
                     alpha -= 1 / 40f;
                     if (distanceToOwner > 0)
@@ -469,32 +471,31 @@ namespace Coralite.Content.Items.RedJades
         {
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
             {
-                if (cp.parryTime < 200)
+                if (cp.parryTime < 100)
                 {
                     Owner.AddImmuneTime(ImmunityCooldownID.General, immuneTime);
                     Owner.immune = true;
                 }
 
-                if (cp.parryTime < 20)
+                if (cp.parryTime < 5)
                 {
                     var source = Projectile.GetSource_FromAI();
-
-                    Particle.NewParticle(Projectile.Center, Vector2.Zero,
-                        CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.RedJadeRed, 1.5f);
 
                     Projectile.NewProjectile(source, Owner.Center, (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 14, ProjectileType<BloodJadeWave>(),
                         (int)(Projectile.damage * 1.35f), Projectile.knockBack, Projectile.owner, 3);
 
-                    Owner.AddBuff(BuffType<BloodJadeBuff>(), 60 * 7);
+                    Owner.AddBuff(BuffType<BloodJadeBuff>(), 60 * 6);
                 }
 
-                if (cp.parryTime < 380)
-                    cp.parryTime += 80;
+                if (cp.parryTime < 280)
+                    cp.parryTime += 100;
             }
 
+            Particle.NewParticle(Projectile.Center, Vector2.Zero,
+                CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.RedJadeRed, 1.5f);
             SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<BloodJadeSlash>(),
-                (int)(Projectile.damage * 1.35f), Projectile.knockBack, Projectile.owner, 3);
+                (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner, 4);
             Projectile.Kill();
         }
 
@@ -516,6 +517,76 @@ namespace Coralite.Content.Items.RedJades
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, c, Projectile.rotation + 0.785f,
                 mainTex.Size() / 2, Projectile.scale, 0, 0);
             return false;
+        }
+    }
+
+    public class BloodJadeStrike : ModProjectile
+    {
+        public override string Texture => AssetDirectory.RedJadeProjectiles + "RedJadeStrike";
+
+        public ref float ExplosionType => ref Projectile.ai[0];
+
+        public override void SetDefaults()
+        {
+            Projectile.width = 10;
+            Projectile.height = 14;
+
+            Projectile.friendly = true;
+            Projectile.netImportant = true;
+            Projectile.aiStyle = -1;
+            Projectile.penetrate = 1;
+            Projectile.extraUpdates = 2;
+            Projectile.timeLeft = 45;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
+
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 20;
+        }
+
+        public override void AI()
+        {
+            if (Projectile.velocity.Y < 14)
+                Projectile.velocity.Y += 0.04f;
+
+            Projectile.rotation = Projectile.velocity.ToRotation();
+
+            if (Main.netMode != NetmodeID.Server)
+                for (int i = 0; i < 2; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(5, 5), DustID.GemRuby, -Projectile.velocity * 0.4f, 0, default, 0.7f);
+                    dust.noGravity = true;
+                }
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            if (Main.myPlayer == Projectile.owner)
+            {
+                var source = Projectile.GetSource_FromThis();
+                switch (Projectile.ai[0])
+                {
+                    default:
+                    case 0:
+                        Projectile.NewProjectile(source, Projectile.Center, Vector2.Zero, ProjectileType<RedJadeBoom>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
+                        break;
+                    case 1:
+                        Projectile.NewProjectile(source, Projectile.Center, Vector2.Zero, ProjectileType<RedJadeBigBoom>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
+                        break;
+                    case 2:
+                        Projectile.NewProjectile(source, Projectile.Center, Vector2.Zero, ProjectileType<BloodJade_BigBoom>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
+                        break;
+                }
+                return;
+            }
+
+            SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 6; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.GemRuby, Main.rand.NextVector2Circular(3, 3), 0, default, Main.rand.NextFloat(1f, 1.3f));
+                    dust.noGravity = true;
+                }
         }
     }
 
@@ -571,26 +642,31 @@ namespace Coralite.Content.Items.RedJades
             Color red = new Color(221, 50, 50);
             int type = CoraliteContent.ParticleType<LightBall>();
 
-            for (int i = 0; i < 5; i++)
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
             {
-                Particle.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(38, 40), type, red, Main.rand.NextFloat(0.15f, 0.2f));
-            }
-            for (int i = 0; i < 10; i++)
-            {
-                Particle.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(24, 30), type, red, Main.rand.NextFloat(0.1f, 0.15f));
-                Particle.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(24, 30), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
-                Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, Helper.NextVec2Dir() * Main.rand.NextFloat(6, 10), Scale: Main.rand.NextFloat(2f, 2.4f));
-                dust.noGravity = true;
+                for (int i = 0; i < 5; i++)
+                {
+                    Particle.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(38, 40), type, red, Main.rand.NextFloat(0.15f, 0.2f));
+                }
+                for (int i = 0; i < 10; i++)
+                {
+                    Particle.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(24, 30), type, red, Main.rand.NextFloat(0.1f, 0.15f));
+                    Particle.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(24, 30), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
+                    Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, Helper.NextVec2Dir() * Main.rand.NextFloat(6, 10), Scale: Main.rand.NextFloat(2f, 2.4f));
+                    dust.noGravity = true;
+                }
             }
 
-            Items.RedJades.RedExplosionParticle.Spawn(center, 1.4f, Coralite.Instance.RedJadeRed);
-            Items.RedJades.RedGlowParticle.Spawn(center, 1.3f, Coralite.Instance.RedJadeRed, 0.4f);
-            Items.RedJades.RedGlowParticle.Spawn(center, 1.3f, Coralite.Instance.RedJadeRed, 0.4f);
+            RedExplosionParticle.Spawn(center, 1.4f, Coralite.Instance.RedJadeRed);
+            RedGlowParticle.Spawn(center, 1.3f, Coralite.Instance.RedJadeRed, 0.4f);
+            RedGlowParticle.Spawn(center, 1.3f, Coralite.Instance.RedJadeRed, 0.4f);
 
-            var modifier = new PunchCameraModifier(center, Helper.NextVec2Dir(), 10, 8f, 14, 1000f);
-            Main.instance.CameraModifiers.Add(modifier);
+            if (VisualEffectSystem.HitEffect_ScreenShaking)
+            {
+                var modifier = new PunchCameraModifier(center, Helper.NextVec2Dir(), 10, 8f, 14, 1000f);
+                Main.instance.CameraModifiers.Add(modifier);
+            }
         }
-
     }
 
     public class BloodJadeWave : BloodWave

@@ -1890,6 +1890,16 @@ Mods: {
 					激活后开始聚合
 					'''
 			}
+
+			BloodiancieRelic: {
+				DisplayName: 赤尖碑
+				Tooltip: ""
+			}
+
+			Whistle: {
+				DisplayName: 赤玉窜天猴
+				Tooltip: 和窜天猴一起上天吧
+			}
 		}
 
 		Tiles: {
@@ -2348,6 +2358,8 @@ Mods: {
 			// BloodJade_BigBoom.DisplayName: Blood Jade_ Big Boom
 			// BloodJadeParry.DisplayName: Blood Jade Parry
 			// BloodJadeWave.DisplayName: Blood Jade Wave
+			// BloodJadeStrike.DisplayName: Blood Jade Strike
+			// WhistleProj.DisplayName: Whistle Proj
 		}
 
 		Configs: {

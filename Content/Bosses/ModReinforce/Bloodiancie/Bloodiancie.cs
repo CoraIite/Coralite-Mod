@@ -124,7 +124,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<RediancieRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<BloodiancieRelic>()));
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
             npcLoot.Add(ItemDropRule.BossBag(ItemType<BloodiancieBossBag>()));
             //npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));

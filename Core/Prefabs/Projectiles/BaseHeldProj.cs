@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -20,6 +21,12 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// 玩家拥有者的朝向
         /// </summary>
         public virtual int OwnerDirection => Math.Sign(Owner.gravDir) * Owner.direction;
+
+        /// <summary>
+        /// 鼠标的世界位置到玩家中心的弧度
+        /// </summary>
+        public virtual float MouseTargetAngle { get => (Main.MouseWorld - Owner.Center).ToRotation(); }
+        public virtual Vector2 MouseTargetVector2 { get => (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero); }
 
         public override void PostAI()
         {
