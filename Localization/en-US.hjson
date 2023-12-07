@@ -1888,6 +1888,11 @@ Mods: {
 				DisplayName: Whistle
 				Tooltip: ""
 			}
+
+			BloodJadeRangesWeapon: {
+				DisplayName: Blood Jade Ranges Weapon
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2348,6 +2353,8 @@ Mods: {
 			BloodJadeWave.DisplayName: Blood Jade Wave
 			BloodJadeStrike.DisplayName: Blood Jade Strike
 			WhistleProj.DisplayName: Whistle Proj
+			BloodJadeFrisbee.DisplayName: Blood Jade Frisbee
+			BloodJadeFrisbeeParry.DisplayName: Blood Jade Frisbee Parry
 		}
 
 		Configs: {

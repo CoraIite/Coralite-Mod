@@ -5,7 +5,9 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Utilities;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -61,6 +63,7 @@ namespace Coralite.Content.Items.RedJades
         public ref float Timer => ref Projectile.ai[2];
 
         public bool release;
+        private SlotId soundSlot;
 
         public override void SetDefaults()
         {
@@ -104,11 +107,13 @@ namespace Coralite.Content.Items.RedJades
                 {
                     Projectile.velocity = MouseTargetVector2 * 20;
                     Projectile.tileCollide = true;
-                    Projectile.timeLeft = 100;
+                    Projectile.timeLeft = 120;
                     Owner.itemAnimation = Owner.itemTime = 2;
+
+                    soundSlot = Helper.PlayPitched("Misc/Whistle", 0.4f, 0f, Projectile.Center);
                 }
 
-                if (Timer < 180)
+                if (Timer < 220)
                 {
                     if (!release)
                     {
@@ -118,7 +123,7 @@ namespace Coralite.Content.Items.RedJades
                             Owner.Center = Projectile.Center - Projectile.velocity.SafeNormalize(Vector2.Zero) * DistanceToOwner;
                             if (Projectile.velocity.Y < 10)
                             {
-                                Projectile.velocity.Y += 0.2f;
+                                Projectile.velocity.Y += 0.16f;
                                 Projectile.rotation = Projectile.velocity.ToRotation() + (Projectile.direction > 1 ? 0 : 3.141f);
                             }
                         }
@@ -148,7 +153,9 @@ namespace Coralite.Content.Items.RedJades
 
         public override void OnKill(int timeLeft)
         {
-            if (Main.myPlayer == Projectile.owner&&Timer>120)
+            if (SoundEngine.TryGetActiveSound(soundSlot, out ActiveSound sound))
+                sound.Stop();
+            if (Main.myPlayer == Projectile.owner && Timer > 120)
             {
                 var source = Projectile.GetSource_FromAI();
 
@@ -165,7 +172,7 @@ namespace Coralite.Content.Items.RedJades
                     for (int i = 0; i < howMany; i++)
                     {
                         p = Projectile.NewProjectileDirect(source, Projectile.Center, rot.ToRotationVector2() * 12, ProjectileType<RedFirework>(),
-                             Projectile.damage / 3, 5f, ai1: timeleft + j * 8);
+                             Projectile.damage / 4, 5f, ai1: timeleft + j * 8);
                         p.friendly = true;
                         rot += MathHelper.TwoPi / howMany;
                     }

@@ -1893,12 +1893,17 @@ Mods: {
 
 			BloodiancieRelic: {
 				DisplayName: 赤尖碑
-				Tooltip: ""
+				Tooltip: 赤血玉灵的灵魂寄宿在其中。摆放它时你感受到了一个掌控现实的强大生物正在某处注视着你。
 			}
 
 			Whistle: {
 				DisplayName: 赤玉窜天猴
 				Tooltip: 和窜天猴一起上天吧
+			}
+
+			BloodJadeRangesWeapon: {
+				DisplayName: 赫天凶璧
+				Tooltip: 右键格挡攻击，成功格挡后获得BUFF，拥有BUFF时普通攻击可以产生爆破
 			}
 		}
 
@@ -2360,6 +2365,8 @@ Mods: {
 			// BloodJadeWave.DisplayName: Blood Jade Wave
 			// BloodJadeStrike.DisplayName: Blood Jade Strike
 			// WhistleProj.DisplayName: Whistle Proj
+			// BloodJadeFrisbee.DisplayName: Blood Jade Frisbee
+			// BloodJadeFrisbeeParry.DisplayName: Blood Jade Frisbee Parry
 		}
 
 		Configs: {

@@ -58,9 +58,9 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         {
             NPC.width = 68;
             NPC.height = 80;
-            NPC.damage = 125;
+            NPC.damage = 75;
             NPC.defense = 40;
-            NPC.lifeMax = 20000;
+            NPC.lifeMax = 23000;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 10f;
@@ -83,15 +83,15 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((21000 + numPlayers * 7500) / journeyScale);
-                    NPC.damage = 130;
+                    NPC.lifeMax = (int)((21000 + numPlayers * 9500) / journeyScale);
+                    NPC.damage = 90;
                     NPC.defense = 18;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((25500 + numPlayers * 8500) / journeyScale);
-                    NPC.damage = 145;
+                    NPC.lifeMax = (int)((25500 + numPlayers * 11500) / journeyScale);
+                    NPC.damage = 115;
                     NPC.defense = 20;
                 }
 
@@ -103,21 +103,21 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 return;
             }
 
-            NPC.lifeMax = 21000 + numPlayers * 7500;
-            NPC.damage = 130;
+            NPC.lifeMax = 21000 + numPlayers * 9500;
+            NPC.damage = 90;
             NPC.defense = 18;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 25500 + numPlayers * 8500;
-                NPC.damage = 145;
+                NPC.lifeMax = 25500 + numPlayers * 11500;
+                NPC.damage = 115;
                 NPC.defense = 20;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 30000 + numPlayers * 9500;
-                NPC.damage = 145;
+                NPC.lifeMax = 30000 + numPlayers * 14500;
+                NPC.damage = 115;
                 NPC.defense = 14;//因为FTW种能够拥有非常多的弹药所以就降低一下基础防御了
             }
         }

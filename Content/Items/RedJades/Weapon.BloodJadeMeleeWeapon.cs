@@ -82,6 +82,13 @@ namespace Coralite.Content.Items.RedJades
             return false;
         }
 
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<BloodJade>(20)
+                .AddTile<Tiles.RedJades.MagicCraftStation>()
+                .Register();
+        }
     }
 
     public class BloodJadeSlash : BaseSwingProj, IDrawWarp
