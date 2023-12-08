@@ -1905,6 +1905,11 @@ Mods: {
 				DisplayName: 赫天凶璧
 				Tooltip: 右键格挡攻击，成功格挡后获得BUFF，拥有BUFF时普通攻击可以产生爆破
 			}
+
+			MagikeGuideBook: {
+				DisplayName: 魔能辞典
+				Tooltip: 记载着魔能的知识
+			}
 		}
 
 		Tiles: {

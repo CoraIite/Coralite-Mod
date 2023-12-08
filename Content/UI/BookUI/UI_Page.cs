@@ -1,14 +1,17 @@
-﻿using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader.UI;
-using Terraria.UI;
+﻿using Terraria.UI;
 
-namespace BiomesDangerSystem.UILib
+namespace Coralite.Content.UI.UILib
 {
     /// <summary>
     /// 书页
     /// </summary>
     public abstract class UI_Page : UIElement
     {
+        /// <summary>
+        /// 是否能在书中显示
+        /// </summary>
+        public bool CanShowInBook { get; }
+
         public UI_Page()
         {
             OverflowHidden = true;

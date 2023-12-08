@@ -1893,6 +1893,11 @@ Mods: {
 				DisplayName: Blood Jade Ranges Weapon
 				Tooltip: ""
 			}
+
+			MagikeGuideBook: {
+				DisplayName: Magike Guide Book
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {

@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.UI.BookUI;
+using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -6,7 +7,7 @@ using System;
 using Terraria;
 using Terraria.UI;
 
-namespace BiomesDangerSystem.UILib
+namespace Coralite.Content.UI.UILib
 {
     /// <summary>
     /// 面板，用于存储各种的信息
@@ -22,6 +23,8 @@ namespace BiomesDangerSystem.UILib
 
         public float scale;
         public float alpha;
+
+        private UIPageGroup[] _pageGroups;
 
         /// <summary>
         /// 左边那一页的ID
@@ -102,9 +105,20 @@ namespace BiomesDangerSystem.UILib
 
         public override void Recalculate()
         {
+            Elements.Clear();
+
+            for (int i = 0; i < _pageGroups.Length; i++)//刷新一下
+            {
+                if (!_pageGroups[i].CanShowInBook)
+                    continue;
+                for (int j = 0; j < _pageGroups[i].Pages.Length; j++)
+                    if (_pageGroups[i].Pages[j].CanShowInBook)
+                        Append(_pageGroups[i].Pages[j]);
+            }
+
             //防止出现越界的情况
-            currentDrawingPage = Math.Clamp(currentDrawingPage, 0, Elements.Count-1);
-            currentDrawingPage = currentDrawingPage / 2 * 2;
+            currentDrawingPage = Math.Clamp(currentDrawingPage, 0, Elements.Count - 1);
+            currentDrawingPage = currentDrawingPage / 2 * 2;//利用神奇算法让它变为偶数
 
             //设置可以控制的UI页
             for (int i = Elements.Count - 1; i >= 0; i--)
@@ -226,7 +240,6 @@ namespace BiomesDangerSystem.UILib
                 PreviousPage();
             else
                 NextPage();
-
         }
 
         public override void Update(GameTime gameTime)
@@ -234,7 +247,7 @@ namespace BiomesDangerSystem.UILib
             if (IsMouseHovering)
             {
                 Main.LocalPlayer.mouseInterface = true;
-                Terraria.GameInput.PlayerInput.LockVanillaMouseScroll(Coralite.Coralite.Instance.Name+"/UIBookPanel");
+                Terraria.GameInput.PlayerInput.LockVanillaMouseScroll(Coralite.Instance.Name+"/UIBookPanel");
             }
 
             base.Update(gameTime);
