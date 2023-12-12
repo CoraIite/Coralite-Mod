@@ -16,6 +16,7 @@
   <ItemGroup>
     <None Remove="Effects\AlphaGradientTrail.fx" />
     <None Remove="Effects\AlphaNoHLGradientTrail.fx" />
+    <None Remove="Effects\Flow.fx" />
     <None Remove="Effects\NoHLGradientTrail.fx" />
     <None Remove="Effects\SimpleTrailNoHL.fx" />
   </ItemGroup>
@@ -32,8 +33,9 @@
     <Folder Include="Content\Items\Pets\" />
     <Folder Include="Content\Items\Misc_Summon\" />
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />
-    <Folder Include="Content\UI\MagikeGuideBook\Introduce\" />
-    <Folder Include="Content\UI\MagikeGuideBook\Chapter1\" />
+    <Folder Include="Content\UI\MagikeGuideBook\Chapter2\" />
+    <Folder Include="Content\UI\MagikeGuideBook\Chapter3\" />
+    <Folder Include="Content\UI\MagikeGuideBook\Chapter4\" />
     <Folder Include="Core\Systems\AstronomySystem\" />
     <Folder Include="Core\Systems\MagikeSystem\Polymerizes\" />
     <Folder Include="Sounds\Shadows\" />

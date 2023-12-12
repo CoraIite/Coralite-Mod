@@ -1,0 +1,54 @@
+﻿using Microsoft.Xna.Framework;
+using Terraria.ModLoader;
+using Terraria.UI;
+
+namespace Coralite.Content.UI.UILib
+{
+    /// <summary>
+    /// 书页
+    /// </summary>
+    public abstract class UIPage : UIElement, ILocalizedModType
+    {
+        /// <summary>
+        /// 是否能在书中显示
+        /// </summary>
+        public abstract bool CanShowInBook { get; }
+
+        public float PageWidth => GetInnerDimensions().Width;
+        public float PageHeight => GetInnerDimensions().Height;
+        public Vector2 Center => GetInnerDimensions().Center();
+        public Vector2 PageTop
+        {
+            get
+            {
+                CalculatedStyle c = GetInnerDimensions();
+                return c.Position() + new Vector2(c.Width / 2, 0);
+            }
+        }
+        public Vector2 Bottom
+        {
+            get
+            {
+                CalculatedStyle c = GetInnerDimensions();
+                return c.Position() + new Vector2(c.Width / 2, c.Height);
+            }
+        }
+
+        public Vector2 Position => GetInnerDimensions().Position();
+
+        public abstract string LocalizationCategory { get; }
+
+        public Mod Mod => Coralite.Instance;
+
+        public string Name => GetType().Name;
+
+        public string FullName => (Mod?.Name ?? "Terraria") + "/" + Name;
+
+        public UIPage()
+        {
+            OverflowHidden = true;
+        }
+
+
+    }
+}

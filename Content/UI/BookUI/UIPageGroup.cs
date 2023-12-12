@@ -11,13 +11,13 @@ namespace Coralite.Content.UI.BookUI
         /// <summary>
         /// 是否能在书中显示
         /// </summary>
-        public bool CanShowInBook { get; }
+        public abstract bool CanShowInBook { get; }
 
         /// <summary>
         /// 用于存放所有的书页
         /// </summary>
-        private UI_Page[] _pages;
-        public UI_Page[] Pages { get=>_pages; }
+        public UIPage[] Pages;
 
+        public abstract void InitPages();
     }
 }

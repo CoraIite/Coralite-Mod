@@ -2,6 +2,7 @@
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Shaders;
@@ -9,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Core.Systems.ParticleSystem
 {
-    public class ParticleGroup
+    public class ParticleGroup:IEnumerable<Particle>
     {
         private List<Particle> _particles;
 
@@ -17,6 +18,23 @@ namespace Coralite.Core.Systems.ParticleSystem
         {
             _particles = new List<Particle>();
         }
+
+        public IEnumerator<Particle> GetEnumerator()
+        {
+            return _particles.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return _particles.GetEnumerator();
+        }
+
+        public void Clear()
+        {
+            _particles.Clear();
+        }
+
+        public Particle this[int i] => _particles[i];
 
         public Particle NewParticle(Vector2 center, Vector2 velocity, int type, Color newColor = default, float Scale = 1f)
         {
@@ -43,6 +61,11 @@ namespace Coralite.Core.Systems.ParticleSystem
                 return null;
 
             return particle;
+        }
+
+        public void Add(Particle particle)
+        {
+            _particles.Add(particle);
         }
 
         public void UpdateParticles()
@@ -113,5 +136,6 @@ namespace Coralite.Core.Systems.ParticleSystem
                 ParticleLoader.GetParticle(particle.type).Draw(spriteBatch, particle);
             }
         }
+
     }
 }

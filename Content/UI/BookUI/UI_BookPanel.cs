@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.UI;
 
@@ -18,14 +19,16 @@ namespace Coralite.Content.UI.UILib
     {
         public Asset<Texture2D> PanelTex;
         public readonly int topPageMargins;
+        public readonly int bottomPageMargins;
         public readonly int leftPageMargins;
         public readonly int rightPageMargins;
 
         public float scale;
         public float alpha;
 
-        private UIPageGroup[] _pageGroups;
-
+        public UIPageGroup[] pageGroups;
+        public Dictionary<UIPageGroup,int> pageGroupIndexes;
+        
         /// <summary>
         /// 左边那一页的ID
         /// </summary>
@@ -39,13 +42,30 @@ namespace Coralite.Content.UI.UILib
         /// <param name="topPageMargins">顶部页边距</param>
         /// <param name="leftPageMargins">左侧内页边距</param>
         /// <param name="rightPageMargins">右侧内页边距</param>
-        public UI_BookPanel(Asset<Texture2D> PanelTex, int topPageMargins, int leftPageMargins, int rightPageMargins, float scale = 1f)
+        public UI_BookPanel(Asset<Texture2D> PanelTex, int topPageMargins, int bottomPageMargins, int leftPageMargins, int rightPageMargins, float scale = 1f)
         {
             this.PanelTex = PanelTex;
             this.topPageMargins = (int)(topPageMargins * scale);
+            this.bottomPageMargins = (int)(bottomPageMargins * scale);
             this.leftPageMargins = (int)(leftPageMargins * scale);
             this.rightPageMargins = (int)(rightPageMargins * scale);
             this.scale = scale;
+        }
+
+        public abstract void InitPageGroups();
+
+        /// <summary>
+        /// 帮助方法，用于调用所有group的初始化方法
+        /// </summary>
+        public void InitGroups()
+        {
+            pageGroupIndexes = new Dictionary<UIPageGroup, int>();
+
+            foreach (var group in pageGroups)
+            {
+                group.InitPages();
+                pageGroupIndexes.Add(group, 0);
+            }
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -107,17 +127,20 @@ namespace Coralite.Content.UI.UILib
         {
             Elements.Clear();
 
-            for (int i = 0; i < _pageGroups.Length; i++)//刷新一下
+            for (int i = 0; i < pageGroups.Length; i++)//刷新一下
             {
-                if (!_pageGroups[i].CanShowInBook)
+                if (!pageGroups[i].CanShowInBook)
                     continue;
-                for (int j = 0; j < _pageGroups[i].Pages.Length; j++)
-                    if (_pageGroups[i].Pages[j].CanShowInBook)
-                        Append(_pageGroups[i].Pages[j]);
+                for (int j = 0; j < pageGroups[i].Pages.Length; j++)
+                    if (pageGroups[i].Pages[j].CanShowInBook)
+                        Append(pageGroups[i].Pages[j]);
             }
 
             //防止出现越界的情况
-            currentDrawingPage = Math.Clamp(currentDrawingPage, 0, Elements.Count - 1);
+            if (Elements.Count >= 2)
+                currentDrawingPage = Math.Clamp(currentDrawingPage, 0, Elements.Count - 1);
+            else 
+                currentDrawingPage = 0;
             currentDrawingPage = currentDrawingPage / 2 * 2;//利用神奇算法让它变为偶数
 
             //设置可以控制的UI页
@@ -133,7 +156,33 @@ namespace Coralite.Content.UI.UILib
                 Element.IgnoresMouseInteraction = true;
             }
 
+            SetIndexes();
+            InitalizePages();
+
             base.Recalculate();
+        }
+
+        public void SetIndexes()
+        {
+            int count = 0;
+            pageGroupIndexes.Clear();
+
+            for (int i = 0; i < pageGroups.Length; i++)//刷新一下
+            {
+                if (!pageGroups[i].CanShowInBook)
+                {
+                    pageGroupIndexes.Add(pageGroups[i],count);
+                    continue;
+                }
+
+                for (int j = 0; j < pageGroups[i].Pages.Length; j++)
+                {
+                    if (pageGroups[i].Pages[j].CanShowInBook)
+                        count++;
+                }
+
+                pageGroupIndexes.Add(pageGroups[i], count);
+            }
         }
 
         /// <summary>
@@ -141,12 +190,14 @@ namespace Coralite.Content.UI.UILib
         /// </summary>
         public override void RecalculateChildren()
         {
+            if (currentDrawingPage >= Elements.Count || Elements.Count == 0)
+                return;
             Elements[currentDrawingPage]?.Recalculate();
             if (Elements.Count > currentDrawingPage + 1)
                 Elements[currentDrawingPage + 1]?.Recalculate();
         }
 
-
+        public int GetPageIndex<T>() where T : UIPage => Elements.FindIndex(n => n is T);
 
         /// <summary>
         /// 初始化尺寸，请保证你调用了这个方法
