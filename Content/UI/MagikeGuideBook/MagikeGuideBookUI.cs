@@ -202,7 +202,7 @@ namespace Coralite.Content.UI.MagikeGuideBook
             //初始化特效
             particles.Clear();
             Vector2 position = BookPanel.GetDimensions().Position();
-            magicCircle = new MagicCircle(bookSize.X-100, (bookSize.Y / 2)-100)
+            magicCircle = new MagicCircle(bookSize.X + 50, bookSize.Y / 2+40)
             {
                 center = position + new Vector2(25, bookSize.Y / 2),
                 color = Color.White,
@@ -331,7 +331,7 @@ namespace Coralite.Content.UI.MagikeGuideBook
             Texture2D Texture = Texture2D.Value;
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearWrap/*注意了奥*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearWrap/*注意了奥*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
 
             List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
             //对法向量进行一个投影

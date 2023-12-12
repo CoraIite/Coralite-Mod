@@ -22,7 +22,8 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             Vector2 pos = Position + new Vector2(0, 40);
-            Helpers.Helper.DrawText(spriteBatch, History4.Value, PageWidth, pos, Vector2.Zero, Vector2.One, new Color(40, 40, 40), Color.White);
+            Helpers.Helper.DrawText(spriteBatch, History4.Value, PageWidth, pos, Vector2.Zero, Vector2.One
+                , new Color(40, 40, 40), Color.White, out _);
 
 
         }

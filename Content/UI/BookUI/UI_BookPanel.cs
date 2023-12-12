@@ -27,7 +27,7 @@ namespace Coralite.Content.UI.UILib
         public float alpha;
 
         public UIPageGroup[] pageGroups;
-        public Dictionary<UIPageGroup,int> pageGroupIndexes;
+        //public Dictionary<UIPageGroup,int> pageGroupIndexes;
         
         /// <summary>
         /// 左边那一页的ID
@@ -59,12 +59,12 @@ namespace Coralite.Content.UI.UILib
         /// </summary>
         public void InitGroups()
         {
-            pageGroupIndexes = new Dictionary<UIPageGroup, int>();
+            //pageGroupIndexes = new Dictionary<UIPageGroup, int>();
 
             foreach (var group in pageGroups)
             {
                 group.InitPages();
-                pageGroupIndexes.Add(group, 0);
+                //pageGroupIndexes.Add(group, 0);
             }
         }
 
@@ -164,25 +164,25 @@ namespace Coralite.Content.UI.UILib
 
         public void SetIndexes()
         {
-            int count = 0;
-            pageGroupIndexes.Clear();
+            //int count = 0;
+            //pageGroupIndexes.Clear();
 
-            for (int i = 0; i < pageGroups.Length; i++)//刷新一下
-            {
-                if (!pageGroups[i].CanShowInBook)
-                {
-                    pageGroupIndexes.Add(pageGroups[i],count);
-                    continue;
-                }
+            //for (int i = 0; i < pageGroups.Length; i++)//刷新一下
+            //{
+            //    if (!pageGroups[i].CanShowInBook)
+            //    {
+            //        pageGroupIndexes.Add(pageGroups[i],count);
+            //        continue;
+            //    }
 
-                for (int j = 0; j < pageGroups[i].Pages.Length; j++)
-                {
-                    if (pageGroups[i].Pages[j].CanShowInBook)
-                        count++;
-                }
+            //    for (int j = 0; j < pageGroups[i].Pages.Length; j++)
+            //    {
+            //        if (pageGroups[i].Pages[j].CanShowInBook)
+            //            count++;
+            //    }
 
-                pageGroupIndexes.Add(pageGroups[i], count);
-            }
+            //    pageGroupIndexes.Add(pageGroups[i], count);
+            //}
         }
 
         /// <summary>

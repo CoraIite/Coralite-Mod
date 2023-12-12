@@ -1,11 +1,15 @@
-﻿using Coralite.Content.UI.UILib;
+﻿using Coralite.Content.UI.BookUI;
+using Coralite.Content.UI.MagikeGuideBook.Chapter1;
+using Coralite.Content.UI.UILib;
+using Coralite.Core;
+using Coralite.Core.Loaders;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace Coralite.Content.UI.MagikeGuideBook.Introduce
 {
@@ -15,10 +19,81 @@ namespace Coralite.Content.UI.MagikeGuideBook.Introduce
 
         public override string LocalizationCategory => "MagikeSystem";
 
+        public static LocalizedText Index { get; private set; }
+        public static LocalizedText Chapter1 { get; private set; }
+
+        public C0_P2_Catalog()
+        {
+            Append(new Chapter1Jump());
+        }
+
+        public override void Recalculate()
+        {
+            float widdth = PageWidth;
+
+            for (int i = 0; i < Elements.Count; i++)
+            {
+                var element = Elements[i];
+                element.Width.Set(widdth, 0);
+                element.Height.Set(50, 0);
+                element.Top.Set(80 + i * 50, 0);
+                element.Left.Set(10, 0);
+            }
+
+            base.Recalculate();
+        }
+
+        public override void OnInitialize()
+        {
+            Index = this.GetLocalization("Index", () => "目录");
+            Chapter1 = this.GetLocalization("Chapter1", () => "-第一章 认识魔能-");
+        }
+
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Utils.DrawBorderStringBig(spriteBatch, "暂无", Center, Coralite.Instance.MagicCrystalPink, 1, 0.5f, 0.5f);
+            Utils.DrawBorderStringBig(spriteBatch, Index.Value, PageTop + new Vector2(0,60), Coralite.Instance.MagicCrystalPink, 1, 0.5f, 0.5f);
+        }
+    }
 
+    public class Chapter1Jump : PageJumpButton
+    {
+        public override int PageToJump => MagikeGuideBookUI.BookPanel.GetPageIndex<C1_ChapterName>();
+
+        public Chapter1Jump()
+        {
+            SetImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "Chapter1Button"));
+            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "Chapter1Button_Outline"));
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            int index = PageToJump;
+            if (index >= 0)
+            {
+                MagikeGuideBookUI.BookPanel.currentDrawingPage = index;
+                UILoader.GetUIState<MagikeGuideBookUI>().Recalculate();
+                Helper.PlayPitched("Misc/Pages", 0.4f, 0f, Main.LocalPlayer.Center);
+            }
+            base.LeftClick(evt);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            const float r = 40;
+            Vector2 pos = GetDimensions().Position() + new Vector2(r, Height.Pixels / 2);
+
+            float scale = GetScale();
+
+            spriteBatch.Draw(texture.Value, pos, null, Color.White, 0, texture.Size() / 2, scale, 0, 0);
+            Color textColor = Color.White;
+            if (IsMouseHovering)
+            {
+                spriteBatch.Draw(borderTexture.Value, pos, null, Color.White, 0, borderTexture.Size() / 2, scale, 0, 0);
+                textColor = Coralite.Instance.MagicCrystalPink;
+            }
+
+            pos += new Vector2(r, 4);
+            Utils.DrawBorderString(spriteBatch, C0_P2_Catalog.Chapter1.Value, pos, textColor, scale, anchory: 0.5f);
         }
     }
 }

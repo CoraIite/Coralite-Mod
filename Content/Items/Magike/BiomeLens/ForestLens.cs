@@ -109,7 +109,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
             GenerateAndChargeSelf(howMany);
         }
 
-        public override bool CanGenerate() => Main.dayTime;
+        public override bool CanGenerate() => true;
 
         public override void SendVisualEffect(IMagikeContainer container)
         {
