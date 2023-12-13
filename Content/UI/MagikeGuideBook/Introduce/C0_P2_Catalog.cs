@@ -61,8 +61,8 @@ namespace Coralite.Content.UI.MagikeGuideBook.Introduce
 
         public Chapter1Jump()
         {
-            SetImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "Chapter1Button"));
-            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "Chapter1Button_Outline"));
+            SetImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "MagikeButton"));
+            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "MagikeButton_Outline"));
         }
 
         public override void LeftClick(UIMouseEvent evt)

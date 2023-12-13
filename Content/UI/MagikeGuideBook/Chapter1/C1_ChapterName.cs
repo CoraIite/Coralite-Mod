@@ -22,12 +22,18 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
         public static LocalizedText History { get; private set; }
         public static LocalizedText Property { get; private set; }
         public static LocalizedText Classify { get; private set; }
+        public static LocalizedText Origin { get; private set; }
+        public static LocalizedText Function { get; private set; }
+        public static LocalizedText Instrument { get; private set; }
 
         public C1_ChapterName()
         {
             Append(new C1_History_Jump());
             Append(new C1_Property_Jump());
             Append(new C1_Classify_Jump());
+            Append(new C1_Origin_Jump());
+            Append(new C1_Function_Jump());
+            Append(new C1_Instrument_Jump());
         }
 
         public override void Recalculate()
@@ -52,6 +58,9 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
             History = this.GetLocalization("History", () => "-魔能的历史-");
             Property = this.GetLocalization("Property", () => "-魔能的性质-");
             Classify = this.GetLocalization("Classify", () => "-魔能的分类-");
+            Origin = this.GetLocalization("Origin", () => "-魔能的来源-");
+            Function = this.GetLocalization("Function", () => "-魔能的作用-");
+            Instrument = this.GetLocalization("Instrument", () => "-认识魔能仪器-");
         }
 
         public override bool CanShowInBook => true;
@@ -69,8 +78,8 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
 
         public C1_History_Jump()
         {
-            SetImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "C1_History_JumpButton"));
-            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "C1_History_JumpButton_Outline"));
+            SetImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "PageButton"));
+            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "PageButton_Outline"));
         }
 
         public override void LeftClick(UIMouseEvent evt)
@@ -112,8 +121,8 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
 
         public C1_Property_Jump()
         {
-            SetImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "Chapter1Button"));
-            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "Chapter1Button_Outline"));
+            SetImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "MagikeButton"));
+            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "MagikeButton_Outline"));
         }
     }
 
@@ -124,8 +133,44 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
 
         public C1_Classify_Jump()
         {
-            SetImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "C1_Classify_JumpButton"));
-            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "C1_Classify_JumpButton_Outline"));
+            SetImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "TalantosInABottleButton"));
+            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "TalantosInABottleButton_Outline"));
+        }
+    }
+
+    public class C1_Origin_Jump : C1_History_Jump
+    {
+        public override int PageToJump => MagikeGuideBookUI.BookPanel.GetPageIndex<C1_2_Origin1>();
+        public override string Text => C1_ChapterName.Origin.Value;
+
+        public C1_Origin_Jump()
+        {
+            SetImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "MagicCrystalButton"));
+            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "MagicCrystalButton_Outline"));
+        }
+    }
+
+    public class C1_Function_Jump : C1_History_Jump
+    {
+        public override int PageToJump => MagikeGuideBookUI.BookPanel.GetPageIndex<C1_3_Function>();
+        public override string Text => C1_ChapterName.Function.Value;
+
+        public C1_Function_Jump()
+        {
+            SetImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "CrystalStaffButton"));
+            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "CrystalStaffButton_Outline"));
+        }
+    }
+
+    public class C1_Instrument_Jump : C1_History_Jump
+    {
+        public override int PageToJump => MagikeGuideBookUI.BookPanel.GetPageIndex<C1_4_1_WhatIsInstrument>();
+        public override string Text => C1_ChapterName.Instrument.Value;
+
+        public C1_Instrument_Jump()
+        {
+            SetImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "CrystalLensButton"));
+            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "CrystalLensButton_Outline"));
         }
     }
 }

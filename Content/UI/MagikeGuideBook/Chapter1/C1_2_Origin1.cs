@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
 {
-    public class C1_2_Origin : UIPage
+    public class C1_2_Origin1 : UIPage
     {
         public override string LocalizationCategory => "MagikeSystem";
 
