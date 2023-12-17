@@ -1,4 +1,6 @@
 ﻿using Coralite.Content.Items.Accessories;
+using Coralite.Content.Items.Magike;
+using Coralite.Content.Tiles.Magike;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
@@ -85,6 +87,22 @@ namespace Coralite.Content.WorldGeneration
                         }
                         break;
                     default:
+                        if (tile.TileType == ModContent.TileType<BasaltChestTile>())
+                        {
+                            for (int i = 0; i < 3; i++)//究极偷懒写法，不建议学
+                            {
+                                foreach (var item in chest.item)
+                                    if (item.IsAir)
+                                    {
+                                        item.SetDefaults(ModContent.ItemType<MagikeNote1>());
+                                        if (item.ModItem is MagikeNote1 note1)
+                                            note1.RandomKnowledge();
+                                        break;
+                                    }
+                                if (WorldGen.genRand.NextBool(1, 3))
+                                    break;
+                            }
+                        }
                         break;
                 }
             }

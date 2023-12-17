@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.UI.BookUI;
 using Coralite.Content.UI.MagikeGuideBook.Chapter1;
+using Coralite.Content.UI.MagikeGuideBook.Chapter2;
 using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Coralite.Core.Loaders;
@@ -21,10 +22,12 @@ namespace Coralite.Content.UI.MagikeGuideBook.Introduce
 
         public static LocalizedText Index { get; private set; }
         public static LocalizedText Chapter1 { get; private set; }
+        public static LocalizedText Chapter2 { get; private set; }
 
         public C0_P2_Catalog()
         {
             Append(new Chapter1Jump());
+            Append(new Chapter2Jump());
         }
 
         public override void Recalculate()
@@ -47,6 +50,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Introduce
         {
             Index = this.GetLocalization("Index", () => "目录");
             Chapter1 = this.GetLocalization("Chapter1", () => "-第一章 认识魔能-");
+            Chapter2 = this.GetLocalization("Chapter2", () => "-第二章 探索发现-");
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -58,6 +62,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Introduce
     public class Chapter1Jump : PageJumpButton
     {
         public override int PageToJump => MagikeGuideBookUI.BookPanel.GetPageIndex<C1_ChapterName>();
+        public virtual string Text => C0_P2_Catalog.Chapter1.Value;
 
         public Chapter1Jump()
         {
@@ -93,7 +98,15 @@ namespace Coralite.Content.UI.MagikeGuideBook.Introduce
             }
 
             pos += new Vector2(r, 4);
-            Utils.DrawBorderString(spriteBatch, C0_P2_Catalog.Chapter1.Value, pos, textColor, scale, anchory: 0.5f);
+            Utils.DrawBorderString(spriteBatch, Text, pos, textColor, scale, anchory: 0.5f);
         }
+    }
+
+    public class Chapter2Jump: Chapter1Jump
+    {
+        public override int PageToJump => MagikeGuideBookUI.BookPanel.GetPageIndex<C2_ChapterName>();
+        public override string Text => C0_P2_Catalog.Chapter2.Value;
+
+        public Chapter2Jump() : base() { }
     }
 }

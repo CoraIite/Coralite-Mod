@@ -33,6 +33,22 @@ namespace Coralite.Content.UI.UILib
                 return c.Position() + new Vector2(c.Width / 2, c.Height);
             }
         }
+        public Vector2 BottomLeft
+        {
+            get
+            {
+                CalculatedStyle c = GetInnerDimensions();
+                return c.Position() + new Vector2(0, c.Height);
+            }
+        }
+        public Vector2 BottomRight
+        {
+            get
+            {
+                CalculatedStyle c = GetInnerDimensions();
+                return c.Position() + new Vector2(c.Width, c.Height);
+            }
+        }
 
         public Vector2 Position => GetInnerDimensions().Position();
 

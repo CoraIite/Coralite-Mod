@@ -1898,6 +1898,11 @@ Mods: {
 				DisplayName: Magike Guide Book
 				Tooltip: ""
 			}
+
+			MagikeNote1: {
+				DisplayName: Magike Note1
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2458,6 +2463,7 @@ Mods: {
 				learnedMagikeAdvanced: After learning "Scroll: Enhanced Magike Refining"
 				learnedMagikeBase: After learning "Pages: Basic Magike".
 				DecraftCondition: Mods.Coralite.MagikeSystem.MagikeSystem.DecraftCondition
+				NewKnowledgeUnlocked: 魔能辞典中解锁了新的知识
 			}
 
 			C0_P1_BookName: {
@@ -2481,6 +2487,7 @@ Mods: {
 			C0_P2_Catalog: {
 				Index: 目录
 				Chapter1: -第一章 认识魔能-
+				Chapter2: -第二章 探索发现-
 			}
 
 			C1_ChapterName: {
@@ -2547,6 +2554,14 @@ Mods: {
 				Classify2: "    传递类仪器：广角镜，拥有更强的传导能力，体积也较小。另外还有多面镜这类特殊的广角镜，它们牺牲了一些传递距离换来了更多的连接数量。"
 				Classify3: "    存储类仪器：水晶柱，内部空间比想象中的大许多，可以使魔能在其内部循环流动，一般作为存储魔能的仪器。"
 				Classify4: "    以上3种是最基础的魔能仪器，都需要放置在地上之后才能开始工作，除此之外还有统称为“魔能工厂”的仪器，可以进行物品重塑，注魔，聚合，或者是射出攻击性弹幕之类的特殊工作。"
+			}
+
+			C2_ChapterName.ChapterName: 第二章 探索发现
+
+			C2_1_CrystalCave1: {
+				_2_Name: 1.1 什么是魔能
+				CrystalCave1: "    探索这个泰拉大陆是一件令人兴奋的事情，你能找到蚁狮们的巢穴，丛林中的蜥蜴人神庙，或者是充满骷髅的地牢，又或者是影子们的地城......哦，我似乎说的太多了，这些有趣的地形都不是重点，重要的是，能够采集到“魔力晶体”的魔力水晶洞。"
+				Date: 【泰拉历235年11月15日】
 			}
 		}
 

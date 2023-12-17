@@ -1,11 +1,13 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Prefabs.Tiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.Magike
 {
@@ -16,7 +18,30 @@ namespace Coralite.Content.Tiles.Magike
         public override void SetStaticDefaults()
         {
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
-            this.ChestPrefab(DustID.CorruptionThorns, new Microsoft.Xna.Framework.Color(31, 31, 50), MapChestName);
+            Main.tileSpelunker[Type] = true;
+            Main.tileContainer[Type] = true;
+            Main.tileFrameImportant[Type] = true;
+            Main.tileNoAttach[Type] = true;
+            Main.tileOreFinderPriority[Type] = 500;
+            TileID.Sets.HasOutlines[Type] = true;
+            TileID.Sets.BasicChest[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
+
+            DustType = DustID.CrystalSerpent_Pink;
+            AdjTiles = new int[] { TileID.Containers };
+            LocalizedText name = CreateMapEntryName();
+            AddMapEntry(Coralite.Instance.MagicCrystalPink, name, MapChestName);
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+            TileObjectData.newTile.Origin = new Point16(0, 1);
+            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
+            TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
+            TileObjectData.newTile.AnchorInvalidTiles = new int[] { TileID.MagicalIceBlock };
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+            TileObjectData.addTile(Type);
         }
 
         public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);

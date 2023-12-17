@@ -65,6 +65,8 @@ namespace Coralite.Content.UI.UILib
             {
                 group.InitPages();
                 //pageGroupIndexes.Add(group, 0);
+                foreach (var element in group.Pages)
+                    element.OnInitialize();
             }
         }
 

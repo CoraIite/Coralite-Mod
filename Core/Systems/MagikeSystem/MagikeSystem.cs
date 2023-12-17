@@ -24,6 +24,13 @@ namespace Coralite.Core.Systems.MagikeSystem
         public LocalizedText LearnedMagikeBase => this.GetLocalization("learnedMagikeBase");
         public LocalizedText LearnedMagikeAdvanced => this.GetLocalization("learnedMagikeAdvanced");
 
+        public static LocalizedText NewKnowledgeUnlocked { get; private set; }
+
+        public override void OnModLoad()
+        {
+            NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked",()=>"魔能辞典中解锁了新的知识");
+        }
+
         public override void PostAddRecipes()
         {
             if (Main.dedServ)
@@ -38,12 +45,10 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (Main.dedServ)
                 return;
 
-            if (remodelRecipes != null)
-                remodelRecipes.Clear();
+            remodelRecipes?.Clear();
             remodelRecipes = null;
 
-            if (polymerizeRecipes != null)
-                polymerizeRecipes.Clear();
+            polymerizeRecipes?.Clear();
             polymerizeRecipes = null;
         }
 
@@ -56,6 +61,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (learnedMagikeAdvanced)
                 Knowledge.Add("learnedMagikeAdvanced");
 
+            SaveData_2_1(Knowledge);
+
             tag.Add("Knowledge", Knowledge);
 
         }
@@ -66,6 +73,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             learnedMagikeBase = list.Contains("learnedMagikeBase");
             learnedMagikeAdvanced = list.Contains("learnedMagikeAdvanced");
 
+            LoadData_2_1(list);
         }
     }
 }

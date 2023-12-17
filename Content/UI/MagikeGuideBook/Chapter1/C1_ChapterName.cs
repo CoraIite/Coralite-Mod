@@ -13,7 +13,7 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
 {
-    public class C1_ChapterName:UIPage
+    public class C1_ChapterName : UIPage
     {
         public override string LocalizationCategory => "MagikeSystem";
 
@@ -114,7 +114,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
         }
     }
 
-    public class C1_Property_Jump: C1_History_Jump
+    public class C1_Property_Jump : C1_History_Jump
     {
         public override int PageToJump => MagikeGuideBookUI.BookPanel.GetPageIndex<C1_1_2_Property>();
         public override string Text => C1_ChapterName.Property.Value;

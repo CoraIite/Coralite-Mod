@@ -274,7 +274,6 @@ namespace Coralite.Content.NPCs.Town
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
 
-
             npcShop.Register();
         }
 
