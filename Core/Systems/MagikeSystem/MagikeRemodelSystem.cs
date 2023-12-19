@@ -17,7 +17,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         private void RegisterRemodel()
         {
             Mod Mod = Coralite.Instance;
-
+            Mod[] m = ModLoader.Mods;
             remodelRecipes = new Dictionary<int, List<RemodelRecipe>>();
 
             foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))  //添加魔能重塑合成表
@@ -28,6 +28,18 @@ namespace Coralite.Core.Systems.MagikeSystem
                     magRemodel.AddMagikeRemodelRecipe();
                 }
             }
+
+            //跨模组添加重塑合成表
+            foreach (var mod in ModLoader.Mods)
+                if (mod is ICoralite)
+                    foreach (Type t in AssemblyManager.GetLoadableTypes(mod.Code))  //添加魔能重塑合成表
+                    {
+                        if (!t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikeRemodelable)))
+                        {
+                            IMagikeRemodelable magRemodel = Activator.CreateInstance(t) as IMagikeRemodelable;
+                            magRemodel.AddMagikeRemodelRecipe();
+                        }
+                    }
 
             foreach (var recipes in remodelRecipes)     //只是简单整理一下
             {

@@ -31,6 +31,8 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
+            ModItem modItem = ItemLoader.GetItem(5614);
+            Main.NewText(modItem.Name);
             //Main.dayTime = true;
             //Main.time = 4000;
             //Main.windSpeedTarget = 0.8f;
@@ -38,7 +40,7 @@ namespace Coralite.Content.WorldGeneration
 
             //Main.tile.ClearEverything();
 
-            CoraliteWorld.DungeonRoom((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, TileID.CrystalBlock, WallID.CryocoreBrickWall);
+            //CoraliteWorld.DungeonRoom((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, TileID.CrystalBlock, WallID.CryocoreBrickWall);
 
             return base.CanUseItem(player);
         }

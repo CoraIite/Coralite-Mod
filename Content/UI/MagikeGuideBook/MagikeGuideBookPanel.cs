@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.UI.MagikeGuideBook.Chapter1;
 using Coralite.Content.UI.MagikeGuideBook.Chapter2;
+using Coralite.Content.UI.MagikeGuideBook.Chapter3;
 using Coralite.Content.UI.MagikeGuideBook.Introduce;
 using Coralite.Content.UI.UILib;
 using Coralite.Core;
@@ -19,11 +20,12 @@ namespace Coralite.Content.UI.MagikeGuideBook
 
         public override void InitPageGroups()
         {
-            pageGroups = new BookUI.UIPageGroup[3]
+            pageGroups = new BookUI.UIPageGroup[4]
             {
                 new IntroduceGroup(),
                 new Chapter1Group(),
                 new Chapter2Group(),
+                new Chapter3Group(),
             };
 
             InitGroups();

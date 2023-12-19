@@ -19,7 +19,7 @@ namespace Coralite.Compat.BossCheckList
                 List<int> RediancieCollection = new List<int>()
                 {
                     //ItemType<Content.Items.RedJades.RedJade>(),
-                    ItemType<Content.Items.RedJades.RediancieBossBag>(),
+                    //ItemType<Content.Items.RedJades.RediancieBossBag>(),
                     ItemType<Content.Items.RedJades.RedJadePendant>(),
                     ItemType<Content.Items.RedJades.RediancieTrophy>(),
                     ItemType<Content.Items.RedJades.RediancieRelic>(),
@@ -47,7 +47,7 @@ namespace Coralite.Compat.BossCheckList
                 List<int> BabyIceDragonCollection = new List<int>()
                 {
                     ItemType<Content.Items.Icicle.IcicleCrystal>(),
-                    ItemType<Content.Items.Icicle.BabyIceDragonBossBag>(),
+                    //ItemType<Content.Items.Icicle.BabyIceDragonBossBag>(),
                     ItemType<Content.Items.Icicle.IcicleCoccyx>(),
                     ItemType<Content.Items.Icicle.BabyIceDragonTrophy>(),
                     ItemType<Content.Items.Icicle.BabyIceDragonRelic>(),
@@ -75,7 +75,7 @@ namespace Coralite.Compat.BossCheckList
                 List<int> SlimeEmperorCollection = new List<int>()
                 {
                     //ItemType<Content.Items.Icicle.IcicleCrystal>(),
-                    ItemType<Content.Items.Gels.SlimeEmperorSoulBox>(),
+                    //ItemType<Content.Items.Gels.SlimeEmperorSoulBox>(),
                     ItemType<Content.Items.Gels.EmperorSabre>(),
                     ItemType<Content.Items.Gels.SlimeEruption>(),
                     ItemType<Content.Items.Gels.GelWhip>(),
@@ -106,7 +106,7 @@ namespace Coralite.Compat.BossCheckList
                 List<int> BloodiancieCollection = new List<int>()
                 {
                     //ItemType<Content.Items.Icicle.IcicleCrystal>(),
-                    ItemType<Content.Items.RedJades.BloodiancieBossBag>(),
+                    //ItemType<Content.Items.RedJades.BloodiancieBossBag>(),
                     //ItemType<Content.Items.Gels.EmperorSabre>(),
                     //ItemType<Content.Items.Gels.SlimeEruption>(),
                     //ItemType<Content.Items.Gels.GelWhip>(),

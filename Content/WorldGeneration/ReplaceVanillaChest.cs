@@ -89,14 +89,23 @@ namespace Coralite.Content.WorldGeneration
                     default:
                         if (tile.TileType == ModContent.TileType<BasaltChestTile>())
                         {
-                            for (int i = 0; i < 3; i++)//究极偷懒写法，不建议学
+                            int which = 1;
+                            for (int i = 0; i < 4; i++)//究极偷懒写法，不建议学
                             {
                                 foreach (var item in chest.item)
                                     if (item.IsAir)
                                     {
                                         item.SetDefaults(ModContent.ItemType<MagikeNote1>());
                                         if (item.ModItem is MagikeNote1 note1)
-                                            note1.RandomKnowledge();
+                                        {
+                                            note1.RandomKnowledge(which);
+                                            if (which > 0)
+                                            {
+                                                which++;
+                                                if (which > 7)
+                                                    which = -1;
+                                            }
+                                        }
                                         break;
                                     }
                                 if (WorldGen.genRand.NextBool(1, 3))

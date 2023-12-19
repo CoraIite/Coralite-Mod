@@ -19,5 +19,26 @@ namespace Coralite.Content.UI.BookUI
         public UIPage[] Pages;
 
         public abstract void InitPages();
+
+        public bool TryGetPage<T>(out  T page) where T : UIPage
+        {
+            if (Pages ==null)
+            {
+                page = null;
+                return false;
+            }
+
+            foreach (var p in Pages)
+            {
+                if (p is T t)
+                {
+                    page = t;
+                    return true;
+                }
+            }
+
+            page = null;
+            return false;
+        }
     }
 }

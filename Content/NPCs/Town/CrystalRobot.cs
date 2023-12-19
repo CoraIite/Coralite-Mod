@@ -242,6 +242,11 @@ namespace Coralite.Content.NPCs.Town
         {
             var npcShop = new NPCShop(Type, ShopName);
             int magicCrystalCurrencyID = CurrencyLoader.GetCurrencyID<MagicCrystalCurrency>();
+            npcShop.Add(new Item(ModContent.ItemType<MagikeGuideBook>())//单片镜
+            {
+                shopCustomPrice = 15,
+                shopSpecialCurrency = magicCrystalCurrencyID
+            });
             npcShop.Add(new Item(ModContent.ItemType<MagikeMonoclastic>())//单片镜
             {
                 shopCustomPrice = 10,

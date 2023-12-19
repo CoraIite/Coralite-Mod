@@ -254,6 +254,26 @@ namespace Coralite.Content.UI.UILib
             }
         }
 
+        public bool TryGetGroup<T>(out T group) where T : UIPageGroup
+        {
+            if (pageGroups == null)
+            {
+                group = null;
+                return false;
+            }
+
+            foreach (var g in pageGroups)
+            {
+                if (g is T t)
+                {
+                    group = t;
+                    return true;
+                }
+            }
+
+            group = null;
+            return false;
+        }
 
 
 

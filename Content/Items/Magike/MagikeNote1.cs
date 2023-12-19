@@ -34,8 +34,13 @@ namespace Coralite.Content.Items.Magike
             Item.consumable = true;
         }
 
-        public void RandomKnowledge()
+        public void RandomKnowledge(int which)
         {
+            if (which>0&&which<7)
+            {
+                whichToUnlock = which;
+                return;
+            }
             whichToUnlock = WorldGen.genRand.Next(1, 7);
         }
 
