@@ -35,6 +35,15 @@ namespace Coralite.Core.Systems.ParticleSystem
             spriteBatch.Draw(modParticle.Texture2D.Value, particle.center - Main.screenPosition, frame, particle.color, particle.rotation, origin, particle.scale, SpriteEffects.None, 0f);
         }
 
+        public virtual void DrawInUI(SpriteBatch spriteBatch, Particle particle)
+        {
+            ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
+            Rectangle frame = particle.frame;
+            Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
+
+            spriteBatch.Draw(modParticle.Texture2D.Value, particle.center, frame, particle.color, particle.rotation, origin, particle.scale, SpriteEffects.None, 0f);
+        }
+
         #endregion
 
         protected sealed override void Register()

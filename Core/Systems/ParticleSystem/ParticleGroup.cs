@@ -135,7 +135,48 @@ namespace Coralite.Core.Systems.ParticleSystem
 
                 ParticleLoader.GetParticle(particle.type).Draw(spriteBatch, particle);
             }
+
+            if (armorShaderData!=null)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+            }
         }
 
+        public void DrawParticlesInUI(SpriteBatch spriteBatch)
+        {
+            ArmorShaderData armorShaderData = null;
+            for (int i = 0; i < _particles.Count; i++)
+            {
+                Particle particle = _particles[i];
+                if (!particle.active)
+                    continue;
+
+                if (!Helper.OnScreen(particle.center))
+                    continue;
+
+                if (particle.shader != armorShaderData)
+                {
+                    spriteBatch.End();
+                    armorShaderData = particle.shader;
+                    if (armorShaderData == null)
+                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.UIScaleMatrix);
+                    else
+                    {
+                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+                        particle.shader.Apply(null);
+                    }
+                }
+
+                ParticleLoader.GetParticle(particle.type).DrawInUI(spriteBatch, particle);
+            }
+
+            if (armorShaderData != null)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.UIScaleMatrix);
+            }
+
+        }
     }
 }

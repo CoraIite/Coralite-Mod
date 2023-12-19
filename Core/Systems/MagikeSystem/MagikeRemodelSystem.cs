@@ -17,7 +17,6 @@ namespace Coralite.Core.Systems.MagikeSystem
         private void RegisterRemodel()
         {
             Mod Mod = Coralite.Instance;
-            Mod[] m = ModLoader.Mods;
             remodelRecipes = new Dictionary<int, List<RemodelRecipe>>();
 
             foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))  //添加魔能重塑合成表

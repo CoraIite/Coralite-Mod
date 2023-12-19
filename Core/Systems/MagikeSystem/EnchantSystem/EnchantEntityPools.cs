@@ -1,12 +1,18 @@
-﻿using Terraria;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Core;
 
 namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 {
     public class EnchantEntityPools : ModSystem
     {
 #pragma warning disable CA2211 // 非常量字段应当不可见
+        public static Dictionary<int, EnchantEntityPool> SpecialEnchantPools;
+
         public static EnchantEntityPool accessoryPool;
         public static EnchantEntityPool armorPool;
 
@@ -21,6 +27,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
         public override void Load()
         {
+            #region 初始化各种注魔池
             weaponPool_Generic = new EnchantEntityPool();
             #region addWeaponPool
             weaponPool_Generic
@@ -165,6 +172,38 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
                 .AddBonus(new SpecialEnchant_AccessoryMoveSpeedBonus(Enchant.Level.Four, 1f, 0, 0))
                 .AddBonus(new SpecialEnchant_AccessoryMoveSpeedBonus(Enchant.Level.Five, 2f, 0, 0))
                 .AddBonus(new SpecialEnchant_AccessoryMoveSpeedBonus(Enchant.Level.Max, 3f, 0, 0));
+
+            #endregion
+        }
+
+        public override void PostAddRecipes()
+        {
+            if (Main.dedServ)
+                return;
+
+            Mod Mod = Coralite.Instance;
+            SpecialEnchantPools = new Dictionary<int, EnchantEntityPool>();
+
+            foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))  //添加魔能重塑合成表
+            {
+                if (!t.IsAbstract && t.GetInterfaces().Contains(typeof(ISpecialEnchantable)))
+                {
+                    ISpecialEnchantable sp = Activator.CreateInstance(t) as ISpecialEnchantable;
+                    SpecialEnchantPools.Add(sp.SelfType,sp.GetEntityPool());
+                }
+            }
+
+            //跨模组添加重塑合成表
+            foreach (var mod in ModLoader.Mods)
+                if (mod is ICoralite)
+                    foreach (Type t in AssemblyManager.GetLoadableTypes(mod.Code))  //添加魔能重塑合成表
+                    {
+                        if (!t.IsAbstract && t.GetInterfaces().Contains(typeof(ISpecialEnchantable)))
+                        {
+                            ISpecialEnchantable sp = Activator.CreateInstance(t) as ISpecialEnchantable;
+                            SpecialEnchantPools.Add(sp.SelfType, sp.GetEntityPool());
+                        }
+                    }
         }
 
         public override void Unload()
@@ -190,6 +229,12 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
                 case ItemID.SkyFracture:
                     pool = remodelableWeaponPool;
                     return true;
+            }
+
+            if (SpecialEnchantPools != null && SpecialEnchantPools.ContainsKey(item.type))
+            {
+                pool = SpecialEnchantPools[item.type];
+                return true;
             }
 
             pool = null;
