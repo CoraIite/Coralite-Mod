@@ -62,30 +62,27 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public bool canDrawShadows;
         private List<int> Moves;
 
-        public const int FrameWidth = 420 / 3;
-        public const int FrameHeight = 720 / 6;
-
-        public const int FlyingFrame = 6;
+        public const int FlyingFrame = 4;
         public const int DizyFrame = 4;
 
         #region tmlHooks
 
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[Type] = 6;
+            Main.npcFrameCount[Type] = 5;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
         }
 
         public override void SetDefaults()
         {
-            NPC.width = 118;
-            NPC.height = 72;
+            NPC.width = 106;
+            NPC.height = 68;
             NPC.damage = 30;
             NPC.defense = 6;
-            NPC.lifeMax = 3800;
+            NPC.lifeMax = 4500;
             NPC.knockBackResist = 0f;
-            NPC.scale = 1;
+            NPC.scale = 1.2f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 10f;
             NPC.value = Item.buyPrice(0, 6, 0, 0);
@@ -107,14 +104,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((3820 + numPlayers * 1400) / journeyScale);
+                    NPC.lifeMax = (int)((3820 + numPlayers * 1750) / journeyScale);
                     NPC.damage = 35;
                     NPC.defense = 12;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((4720 + numPlayers * 1900) / journeyScale);
+                    NPC.lifeMax = (int)((4720 + numPlayers * 2100) / journeyScale);
                     NPC.damage = 60;
                     NPC.defense = 15;
                 }
@@ -133,20 +130,20 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 return;
             }
 
-            NPC.lifeMax = 3820 + numPlayers * 1400;
+            NPC.lifeMax = 3820 + numPlayers * 1750;
             NPC.damage = 35;
             NPC.defense = 12;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 4720 + numPlayers * 1900;
+                NPC.lifeMax = 4720 + numPlayers * 2100;
                 NPC.damage = 60;
                 NPC.defense = 15;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 5320 + numPlayers * 1600;
+                NPC.lifeMax = 5320 + numPlayers * 2200;
                 NPC.damage = 80;
                 NPC.defense = 15;
             }
@@ -223,8 +220,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)
         {
-            int width = (int)(64 * NPC.scale);
-            int height = (int)(40 * NPC.scale);
+            int width = (int)(86 * NPC.scale);
+            int height = (int)(58 * NPC.scale);
             npcHitbox = new Rectangle((int)(NPC.Center.X - width / 2), (int)(NPC.Center.Y - height / 2), width, height);
             return true;
         }
@@ -239,7 +236,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             Moves = new List<int>();
             ResetMovePool(1);
             NPC.TargetClosest(false);
-            NPC.frame.Y = 2;
+            NPC.frame.Y = 3;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 State = (int)AIStates.onSpawnAnim;
@@ -309,7 +306,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         {
                             GlowAlpha += 1 / 60f;
                             NPC.velocity = -Vector2.UnitY;
-                            NPC.frame.X = 0;
+                            NPC.frame.X = 1;
                             NPC.frame.Y = 0;
 
                             Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(100, 100), DustID.ApprenticeStorm, Vector2.UnitY);
@@ -369,7 +366,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                             if ((int)Timer == 100)
                             {
-                                NPC.frame.Y = 2;
+                                NPC.frame.Y = 3;
                                 NPC.velocity *= 0;
                             }
 
@@ -379,7 +376,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             if ((int)Timer == 130)
                             {
                                 NPC.frame.X = 1;
-                                NPC.frame.Y = 0;
+                                NPC.frame.Y = 1;
                                 SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
                                 Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
@@ -404,7 +401,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 default:
                                     NPC.velocity.Y *= 0.96f;
                                     break;
-                                case 1:
                                 case 2:
                                 case 3:
                                     NPC.velocity.Y -= 0.3f;
@@ -435,7 +431,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                             if ((int)Timer == 20)
                             {
-                                NPC.frame.Y = 2;
+                                NPC.frame.Y = 3;
                                 NPC.velocity *= 0;
                             }
 
@@ -445,7 +441,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             if ((int)Timer == 40)
                             {
                                 NPC.frame.X = 1;
-                                NPC.frame.Y = 0;
+                                NPC.frame.Y = 1;
                                 SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
                                 Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
@@ -647,7 +643,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 default:
                     NPC.velocity.Y *= 0.94f;
                     break;
-                case 1:
                 case 2:
                 case 3:
                     NPC.velocity.Y -= 0.7f;
@@ -663,7 +658,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public void GetMouseCenter(out Vector2 targetDir, out Vector2 mouseCenter)
         {
             targetDir = (NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2();
-            mouseCenter = NPC.Center + targetDir * 60;
+            mouseCenter = NPC.Center + targetDir * 40 * NPC.scale;
         }
 
         public void SetDirection()
@@ -678,9 +673,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public Vector2 GetDizzyStarCenter()
         {
             if (NPC.frame.Y == 4)
-                return NPC.Center + new Vector2(NPC.direction * 30, -20);
+                return NPC.Center + new Vector2(NPC.direction * 30, -24);
 
-            return NPC.Center + new Vector2(NPC.direction * 30, -50);
+            return NPC.Center + new Vector2(NPC.direction * 30, -30);
         }
 
         public void InitCaches()
@@ -971,11 +966,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             NPC.frame.X = xFrame;
             NPC.frameCounter++;
-            if (NPC.frameCounter > 5)
+            if (NPC.frameCounter > 6)
             {
                 NPC.frameCounter = 0;
                 NPC.frame.Y += 1;
-                if (NPC.frame.Y > 5)
+                if (NPC.frame.Y > 3)
                     NPC.frame.Y = 0;
             }
 
@@ -991,9 +986,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             Texture2D mainTex = TextureAssets.Npc[Type].Value;
 
-            Rectangle frameBox = new Rectangle(NPC.frame.X * FrameWidth, NPC.frame.Y * FrameHeight, FrameWidth, FrameHeight);
+            Rectangle frameBox = mainTex.Frame(3, 5, NPC.frame.X, NPC.frame.Y);//new Rectangle(NPC.frame.X * FrameWidth, NPC.frame.Y * FrameHeight, FrameWidth, FrameHeight);
             SpriteEffects effects = SpriteEffects.None;
-            Vector2 origin = new Vector2(FrameWidth / 2, FrameHeight / 2);
+            Vector2 origin = frameBox.Size()/2;
 
             if (NPC.spriteDirection != 1)
                 effects = SpriteEffects.FlipHorizontally;

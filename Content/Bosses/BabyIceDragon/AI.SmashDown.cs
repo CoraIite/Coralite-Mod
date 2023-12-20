@@ -47,7 +47,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         movePhase = 1;
                         Timer = 0;
                         NPC.frame.X = 1;
-                        NPC.frame.Y = 5;
+                        NPC.frame.Y = 1;
                         NPC.velocity.X *= 0.4f;
                         NPC.velocity.Y *= 0;
                         NPC.noGravity = true;

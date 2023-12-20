@@ -95,7 +95,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         movePhase = 2;
                         NPC.frame.X = 0;
-                        NPC.frame.Y = 2;
+                        NPC.frame.Y = 3;
                         NPC.velocity *= 0;
                         Timer = 0;
                     }
@@ -109,7 +109,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         if ((int)Timer == 20)
                         {
                             NPC.frame.X = 1;
-                            NPC.frame.Y = 0;
+                            NPC.frame.Y = 1;
                             SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                             GetMouseCenter(out _, out Vector2 mouseCenter);
                             Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);

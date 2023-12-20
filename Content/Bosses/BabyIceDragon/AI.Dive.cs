@@ -37,7 +37,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                         movePhase = 1;
                         NPC.frame.X = 1;
-                        NPC.frame.Y = 5;
+                        NPC.frame.Y = 0;
                         Timer = 0;
                         NPC.netUpdate = true;
                     }
