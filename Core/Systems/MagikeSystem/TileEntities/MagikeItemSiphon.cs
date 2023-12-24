@@ -214,7 +214,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 for (int i = 0; i < Chest.maxItems; i++)//如果物品不为空且物品类型不同或stack超出最大stack那么就向下查找
                 {
                     Item item = chest.item[i];
-                    if (item == null || item.type != containsItem.type)
+                    if (item == null)
                         continue;
                     if (item.IsAir)
                     {
@@ -242,6 +242,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                                 containsItem.TurnToAir();
                         }
                     }
+                    else
+                        continue;
 
                     Charge(-sendItemCost);
                     SendVisualEffect(receiverPoint);

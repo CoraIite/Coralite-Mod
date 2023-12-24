@@ -105,7 +105,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             if (onHitTimer != 0 && VisualEffectSystem.HitEffect_HitFreeze && onHitTimer < onHitFreeze)//轻微的卡肉效果
             {
-                Projectile.Center = Owner.Center + RotateVec2 * (Projectile.scale * Projectile.height / 2 + distanceToOwner);
+                Projectile.Center = OwnerCenter() + RotateVec2 * (Projectile.scale * Projectile.height / 2 + distanceToOwner);
                 Top = Projectile.Center + RotateVec2 * (Projectile.scale * Projectile.height / 2 + trailTopWidth);
                 Bottom = Projectile.Center - RotateVec2 * (Projectile.scale * Projectile.height / 2);//弹幕的底端和顶端计算，用于检测碰撞以及绘制
                 onHitTimer++;
@@ -243,8 +243,17 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected void Slasher()
         {
             RotateVec2 = _Rotation.ToRotationVector2();
-            Projectile.Center = Owner.Center + RotateVec2 * (Projectile.scale * Projectile.height / 2 + distanceToOwner);
+            Projectile.Center = OwnerCenter() + RotateVec2 * (Projectile.scale * Projectile.height / 2 + distanceToOwner);
             Projectile.rotation = _Rotation;
+        }
+
+        /// <summary>
+        /// 获取这个弹幕所有者的中心，如果是npc的话就要自己找一下npc了
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Vector2 OwnerCenter()
+        {
+            return Owner.Center;
         }
 
         #endregion

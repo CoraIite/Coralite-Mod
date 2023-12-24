@@ -30,6 +30,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
                 new C1_4_1_WhatIsInstrument(),
                 //1.4.2 魔能仪器的分类
                 new C1_4_2_ClassifyOfInstrument(),
+                //new C1_4_3_HowToUseInstrument(),
             };
         }
     }

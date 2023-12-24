@@ -8,10 +8,12 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter3
 
         public override void InitPages()
         {
-            Pages = new UILib.UIPage[2]
+            Pages = new UILib.UIPage[4]
             {
                 new C3_ChapterName(),
-                new C3_BasicInstrument(),
+                new C3_BasicLens(),
+                new C3_BiomeLens1(),
+                new C3_BiomeLens2(),
             };
         }
     }

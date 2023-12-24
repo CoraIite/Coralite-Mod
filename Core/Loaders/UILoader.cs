@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -8,14 +9,12 @@ using Terraria.UI;
 
 namespace Coralite.Core.Loaders
 {
-    class UILoader : IOrderedLoadable
+    class UILoader : ModSystem
     {
-        public float Priority { get => 1.1f; }
-
         public static List<UserInterface> UserInterfaces;
         public static List<BetterUIState> UIStates;
 
-        public void Load()
+        public override void Load()
         {
             if (Main.dedServ)
                 return;
@@ -39,7 +38,7 @@ namespace Coralite.Core.Loaders
             }
         }
 
-        public void Unload()
+        public override void Unload()
         {
             UIStates?.ForEach(n => n.Unload());
             UserInterfaces = null;
@@ -53,10 +52,7 @@ namespace Coralite.Core.Loaders
                 delegate
                 {
                     if (visible)
-                    {
-                        userInterface.Update(Main._drawInterfaceGameTime);
                         state.Draw(Main.spriteBatch);
-                    }
                     return true;
                 }, scale));
         }
@@ -74,17 +70,24 @@ namespace Coralite.Core.Loaders
         /// <typeparam name="T">UI状态</typeparam>
         /// <returns></returns>
         public static UserInterface GetUserInterface<T>() where T : BetterUIState => UserInterfaces.FirstOrDefault(n => n.CurrentState is T);
-    }
 
-    class UISystem : ModSystem
-    {
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
-            for (int k = 0; k < UILoader.UIStates.Count; k++)
+            for (int k = 0; k < UIStates.Count; k++)
             {
-                var state = UILoader.UIStates[k];
-                UILoader.AddLayer(layers, UILoader.UserInterfaces[k], state, state.UILayer(layers), state.Visible, state.Scale);
+                var state = UIStates[k];
+                AddLayer(layers, UserInterfaces[k], state, state.UILayer(layers), state.Visible, state.Scale);
             }
         }
+
+        public override void UpdateUI(GameTime gameTime)
+        {
+            foreach (UserInterface eachState in UserInterfaces)
+            {
+                if (eachState?.CurrentState != null && ((BetterUIState)eachState.CurrentState).Visible)
+                    eachState.Update(gameTime);
+            }
+        }
+
     }
 }

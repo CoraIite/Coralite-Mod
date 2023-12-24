@@ -19,7 +19,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             polymerizeRecipes = new Dictionary<int, List<PolymerizeRecipe>>();
 
-            foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))  //添加魔能重塑合成表
+            foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))  //添加魔能聚合合成表
             {
                 if (!t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikePolymerizable)))
                 {
@@ -27,6 +27,17 @@ namespace Coralite.Core.Systems.MagikeSystem
                     magPolymerize.AddMagikePolymerizeRecipe();
                 }
             }
+
+            foreach (var mod in ModLoader.Mods)
+                if (mod is ICoralite)
+                    foreach (Type t in AssemblyManager.GetLoadableTypes(mod.Code))  //添加魔能聚合合成表
+                    {
+                        if (!t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikePolymerizable)))
+                        {
+                            IMagikePolymerizable magPolymerize = Activator.CreateInstance(t) as IMagikePolymerizable;
+                            magPolymerize.AddMagikePolymerizeRecipe();
+                        }
+                    }
 
             foreach (var recipes in polymerizeRecipes)     //只是简单整理一下
             {

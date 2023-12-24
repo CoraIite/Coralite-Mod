@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 default: break;
                 case 0: //普普通通的弹幕
-                    Projectile.Center = Owner.Center + Projectile.ai[0].ToRotationVector2() * 8;
+                    Projectile.Center = Owner.Center + Projectile.ai[0].ToRotationVector2() * 12;
                     break;
                 case 1: //旋转一圈后并判断玩家是否按下左键，是的话就射
                     do
@@ -118,7 +118,7 @@ namespace Coralite.Content.Items.Icicle
                     } while (false);
 
                     Projectile.rotation = Rotation;
-                    Projectile.Center = Owner.Center + Rotation.ToRotationVector2() * 8;
+                    Projectile.Center = Owner.Center + Rotation.ToRotationVector2() * 12;
                     Timer += 1f;
                     break;
             }

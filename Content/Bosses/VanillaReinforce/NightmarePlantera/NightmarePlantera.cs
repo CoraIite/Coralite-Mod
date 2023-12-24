@@ -44,8 +44,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public RotateTentacle[] rotateTentacles;
         public Color tentacleColor;
 
-        public static FlowerParticle[] particles_front;
-        public static FlowerParticle[] particles_ffront;
+        //public static FlowerParticle[] particles_front;
+        //public static FlowerParticle[] particles_ffront;
+
+        public static int phase2HeadSlot = -1;
+        public static int phase3HeadSlot = -1;
 
         /// <summary>
         /// 击杀美梦光的数量
@@ -262,6 +265,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 phantomColors[i] = Main.hslToRgb(i * 1 / 7f, 45 / 100f, 30 / 100f, 200);
             }
+
+            phase2HeadSlot = Mod.AddBossHeadTexture(AssetDirectory.NightmarePlantera + "Phase2Head", -1);
+            phase3HeadSlot = Mod.AddBossHeadTexture(AssetDirectory.NightmarePlantera + "Phase3Head", -1);
+
         }
 
         public override void Unload()
@@ -362,6 +369,21 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => useMeleeDamage;
+
+        public override void BossHeadSlot(ref int index)
+        {
+            if (Phase == (int)AIPhases.Dream_P2 && phase2HeadSlot != -1)
+            {
+                index = phase2HeadSlot;
+                return;
+            }
+
+            if (Phase == (int)AIPhases.Nightemare_P3 || phase2HeadSlot == (int)AIPhases.WakeUp_P4 && phase3HeadSlot != -1)
+            {
+                index = phase3HeadSlot;
+                return;
+            }
+        }
 
         #endregion
 

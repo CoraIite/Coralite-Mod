@@ -94,6 +94,7 @@ namespace Coralite.Content.UI
 
         public override void LeftClick(UIMouseEvent evt)
         {
+            base.LeftClick(evt);
             Point16 p = MagikeConnectUI.sender.GetPosition;
             Projectile.NewProjectile(new EntitySource_ItemUse(Main.LocalPlayer, Main.LocalPlayer.HeldItem), p.ToWorldCoordinates(8, 8),
                 Vector2.Zero, ModContent.ProjectileType<MagConnectProj>(), 1, 0, Main.myPlayer, p.X, p.Y);
@@ -103,6 +104,7 @@ namespace Coralite.Content.UI
 
         public override void RightClick(UIMouseEvent evt)
         {
+            base.RightClick(evt);
             if (MagikeConnectUI.sender != null)
                 MagikeConnectUI.sender.receiverPoints[index] = Point16.NegativeOne;
         }

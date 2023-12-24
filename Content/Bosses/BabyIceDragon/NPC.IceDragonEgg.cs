@@ -26,8 +26,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override void SetDefaults()
         {
             NPC.npcSlots = 0;
-            NPC.width = 38;
-            NPC.height = 36;
+            NPC.width = 32;
+            NPC.height = 32;
             NPC.damage = 0;
             NPC.defense = 0;
             NPC.lifeMax = 600;
@@ -151,7 +151,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             Texture2D mainTex = TextureAssets.Npc[NPC.type].Value;
 
-            spriteBatch.Draw(mainTex, NPC.Bottom - Main.screenPosition, null, drawColor, NPC.rotation, new Vector2(19, 36), 1, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, NPC.Bottom - Main.screenPosition, null, drawColor, NPC.rotation, new Vector2(mainTex.Width / 2, mainTex.Height), 1, SpriteEffects.None, 0f);
             return false;
         }
 

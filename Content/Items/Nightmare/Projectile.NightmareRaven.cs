@@ -83,7 +83,6 @@ namespace Coralite.Content.Items.Nightmare
             if (!CheckActive(Owner))
                 return;
 
-            Projectile.timeLeft = 2;
             Owner.AddBuff(BuffType<NightmareRavenBuff>(), 2);
 
             if (++Projectile.frameCounter >= 6)
@@ -292,9 +291,7 @@ namespace Coralite.Content.Items.Nightmare
                     Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), DustType<GlowBall>(),
                         -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)) * Main.rand.NextFloat(0.1f, 0.25f), 0, drawColor, Main.rand.NextFloat(0.2f, 0.45f));
                 }
-
             }
-
         }
 
         /// <summary>
@@ -317,7 +314,6 @@ namespace Coralite.Content.Items.Nightmare
         /// 获取目标NPC的索引
         /// </summary>
         /// <param name="Projectile"></param>
-        /// <param name="blackListedTargets"></param>
         /// <param name="skipBodyCheck"></param>
         /// <returns></returns>
         public int AI_156_TryAttackingNPCs(Projectile Projectile, bool skipBodyCheck = false)

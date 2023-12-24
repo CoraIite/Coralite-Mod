@@ -114,7 +114,7 @@ namespace Coralite.Content.Items.Icicle
             }
             else
             {
-                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4+0.1f;
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             }
         }
 
@@ -267,7 +267,7 @@ namespace Coralite.Content.Items.Icicle
             }
 
             //绘制自己
-            Main.spriteBatch.Draw(mainTex, endPos, null, lightColor, Projectile.rotation + MathHelper.PiOver4, mainTex.Size() / 2, Projectile.scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, endPos, null, lightColor, Projectile.rotation + MathHelper.PiOver2, mainTex.Size() / 2, Projectile.scale, 0, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
