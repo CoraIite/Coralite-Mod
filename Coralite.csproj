@@ -19,6 +19,7 @@
     <None Remove="Effects\Flow.fx" />
     <None Remove="Effects\NoHLGradientTrail.fx" />
     <None Remove="Effects\SimpleTrailNoHL.fx" />
+    <None Remove="effects\StarsTrail.fx" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />

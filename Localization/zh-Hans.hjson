@@ -1911,6 +1911,15 @@ Mods: {
 				DisplayName: 古代研究员笔记
 				Tooltip: ""
 			}
+
+			ShadowChain: {
+				DisplayName: 影之链
+				Tooltip:
+					'''
+					右键甩动链条，松手后射出，命中后会戳在目标身上
+					如果有链条戳在目标身上，左键会产生影子进行攻击
+					'''
+			}
 		}
 
 		Tiles: {
@@ -2373,6 +2382,9 @@ Mods: {
 			// WhistleProj.DisplayName: Whistle Proj
 			// BloodJadeFrisbee.DisplayName: Blood Jade Frisbee
 			// BloodJadeFrisbeeParry.DisplayName: Blood Jade Frisbee Parry
+			// ShadowChainSwing.DisplayName: Shadow Chain Swing
+			// ShadowChainShadows.DisplayName: Shadow Chain Shadows
+			// ShadowChainSpecial.DisplayName: Shadow Chain Special
 		}
 
 		Configs: {

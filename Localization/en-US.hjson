@@ -1903,6 +1903,11 @@ Mods: {
 				DisplayName: Magike Note1
 				Tooltip: ""
 			}
+
+			ShadowChain: {
+				DisplayName: Shadow Chain
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2365,6 +2370,9 @@ Mods: {
 			WhistleProj.DisplayName: Whistle Proj
 			BloodJadeFrisbee.DisplayName: Blood Jade Frisbee
 			BloodJadeFrisbeeParry.DisplayName: Blood Jade Frisbee Parry
+			ShadowChainSwing.DisplayName: Shadow Chain Swing
+			ShadowChainShadows.DisplayName: Shadow Chain Shadows
+			ShadowChainSpecial.DisplayName: Shadow Chain Special
 		}
 
 		Configs: {

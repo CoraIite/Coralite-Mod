@@ -210,7 +210,6 @@ namespace Coralite.Content.Items.Icicle
             }
             else
             {
-                //将玩家回弹
                 SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Projectile.Center);
                 Projectile.Kill();
             }

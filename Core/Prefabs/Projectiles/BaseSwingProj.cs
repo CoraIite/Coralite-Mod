@@ -40,7 +40,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public float _Rotation;// 实际角度，通过一系列计算得到的每一帧的弹幕角度
         public float Timer;
 
-        protected readonly float spriteRotation;
+        protected float spriteRotation;
         protected readonly short trailLength;
         public float distanceToOwner = 15;
 

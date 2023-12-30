@@ -9,9 +9,18 @@ namespace Coralite.Core.Prefabs.Projectiles
     /// </summary>
     public abstract class BaseSilkKnifeSpecialProj : BaseHeldProj
     {
+        /// <summary>
+        /// ai1
+        /// </summary>
         public ref float Target => ref Projectile.ai[1];
+        /// <summary>
+        /// ai2
+        /// </summary>
         public ref float HookState => ref Projectile.ai[2];
 
+        /// <summary>
+        /// loaclAI0
+        /// </summary>
         public ref float Timer => ref Projectile.localAI[0];
 
         protected Vector2 offset;

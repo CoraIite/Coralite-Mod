@@ -191,7 +191,6 @@ namespace Coralite.Content.Items.Nightmare
                     distanceToOwner = 80;
                     Smoother = Coralite.Instance.SqrtSmoother;
                     Projectile.scale = Helper.EllipticalEase(2f - 4.9f * Smoother.Smoother(0, maxTime - minTime), 0.9f, 1.1f);
-                    Projectile.scale = 0.9f;
                     break;
                 case 3:
                     maxTime = Owner.itemTimeMax * 3;
