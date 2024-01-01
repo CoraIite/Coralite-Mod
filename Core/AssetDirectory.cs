@@ -66,6 +66,7 @@ namespace Coralite.Core
         public const string DisturbanceItems = Items + "Disturbance/";
         public const string BlazingItems = Items + "Blazing/";
         public const string NightmareItems = Items + "Nightmare/";
+        public const string CoreKeeperItems = Items + "CoreKeeper/";
 
         public const string Materials = Items + "Materials/";
         public const string Accessories = Items + "Accessories/";

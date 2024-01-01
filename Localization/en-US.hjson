@@ -1908,6 +1908,50 @@ Mods: {
 				DisplayName: Shadow Chain
 				Tooltip: ""
 			}
+
+			RuneSong: {
+				DisplayName: Rune Song
+				Tooltip:
+					'''
+					+62 max health
+					+3 life on melee hit
+					[c/01fe06:+15% chance on hit to kill any target that has lower health than you]
+					A legendary sword that hums when swung through the air. 
+					Its durability is a sign of extraordinary craftsmanship and it has the power to defeat enemies in one strike.
+					'''
+			}
+
+			AncientGemstone: {
+				DisplayName: Ancient Gemstone
+				Tooltip: "Strange, blue gemstone emitting waves of energy."
+			}
+
+			BrokenHandle: {
+				DisplayName: Broken Handle
+				Tooltip: 
+				'''
+				+31 max health
+				A piece of an ancient weapon. Even though it's only the handle it already feels mysteriously balanced in your hand.
+				'''
+			}
+
+			ChippedBlade: {
+				DisplayName: Chipped Blade
+				Tooltip: 
+				'''
+				A piece of an ancient weapon. 
+				Its glass-like appearance makes it look fragile but it's harder than any material you've seen.
+				'''
+			}
+
+			ClearGemstone: {
+				DisplayName: Clear Gemstone
+				Tooltip: 
+				'''
+				A piece of an ancient weapon. 
+				Even though it's of the same material as ancient gemstones, this one feels unnaturally clear and infused with a strange energy.
+				'''
+			}
 		}
 
 		Tiles: {
@@ -2373,6 +2417,7 @@ Mods: {
 			ShadowChainSwing.DisplayName: Shadow Chain Swing
 			ShadowChainShadows.DisplayName: Shadow Chain Shadows
 			ShadowChainSpecial.DisplayName: Shadow Chain Special
+			RuneSoneSlash.DisplayName: Rune Sone Slash
 		}
 
 		Configs: {

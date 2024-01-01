@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.Shadow
         {
             Projectile.width = Projectile.height = 48;
             Projectile.DamageType = DamageClass.Melee;
-            Projectile.localNPCHitCooldown = 16;
+            Projectile.localNPCHitCooldown = 48;
             minTime = 0;
             onHitFreeze = 6;
             trailTopWidth = 4;
@@ -244,7 +244,7 @@ namespace Coralite.Content.Items.Shadow
                     int reverse = Main.rand.NextFromList(-1, 1);
                     startAngle = 2.6f*reverse;
                     totalAngle = 5.2f*reverse;
-                    distanceToOwner = Helper.EllipticalEase(2.6f - 5.2f * Smoother.Smoother(0, maxTime - minTime), 40, 80);
+                    distanceToOwner = Helper.EllipticalEase(2.6f - 5.2f * Smoother.Smoother(0, maxTime - minTime), 30, 60);
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     delay = 16;
                     break;
@@ -330,7 +330,7 @@ namespace Coralite.Content.Items.Shadow
                         distanceToOwner -= 1.6f;
                     break;
                 case 4:
-                    distanceToOwner = Helper.EllipticalEase(2.6f - 5.2f * Smoother.Smoother(timer, maxTime - minTime), 40, 80);
+                    distanceToOwner = Helper.EllipticalEase(2.6f - 5.2f * Smoother.Smoother(timer, maxTime - minTime), 30, 60);
                     break;
             }
 
@@ -649,7 +649,7 @@ namespace Coralite.Content.Items.Shadow
 
         public override void OnSpawn(IEntitySource source)
         {
-            maxTime = Main.player[Projectile.owner].itemTimeMax + 16;
+            maxTime = Main.player[Projectile.owner].itemTimeMax + 20;
             maxTime /= 3;
         }
 
@@ -660,15 +660,19 @@ namespace Coralite.Content.Items.Shadow
         {
             do
             {
-                if (Timer < 5)
+                if (Timer == 0)
                 {
-                    Alpha += 0.99f / 5;
+                    Alpha = 1;
+                }
+                if (Timer < 12)
+                {
+                    Alpha -= 0.99f / 12;
                     break;
                 }
 
-                if (Timer > maxTime - 5 && Timer < maxTime)
+                if (Timer > maxTime - 12 && Timer < maxTime)
                 {
-                    Alpha -= 0.99f / 5;
+                    Alpha += 0.99f / 12;
                 }
 
                 if (Timer > maxTime + 16 / 3)

@@ -1920,6 +1920,50 @@ Mods: {
 					如果有链条戳在目标身上，左键会产生影子进行攻击
 					'''
 			}
+
+			RuneSong: {
+				DisplayName: 符文之歌
+				Tooltip:
+					'''
+					+62 点生命值上限
+					近战攻击命中时 +3 生命值
+					[c/01fe06:若你击中的目标生命值比你低，则有 +15% 的几率一击必杀]
+					一把传奇级的宝剑，划过空气时会发出哼唱般的鸣响。
+					这把剑采用非同寻常的技艺打造而成，其超高的耐久度便是明证。只需要一击便足以击败敌人。
+					'''
+			}
+
+			AncientGemstone: {
+				DisplayName: 上古宝石
+				Tooltip: "奇怪的蓝色宝石，散发着能量波。"
+			}
+
+			BrokenHandle: {
+				DisplayName: 断裂的剑柄
+				Tooltip:
+				'''
+				+31 点生命值上限
+				某件上古武器的一部分。虽然只是剑柄，握在掌心时却依然能给你带来一种神秘的平衡感。
+				'''
+			}
+
+			ChippedBlade: {
+				DisplayName: 有缺口的剑刃
+				Tooltip: 
+				'''
+				独一无二的制作用部件。
+				某件上古武器的一部分。玻璃似的外观让它显得仿佛一触即碎，但它其实比你见过的任何材料都要坚硬。
+				'''
+			}
+
+			ClearGemstone: {
+				DisplayName: 透明宝石
+				Tooltip: 
+				'''
+				独一无二的制作用部件。
+				某件上古武器的一部分。虽然与普通的上古宝石材质相同，但这一颗让人感觉异常透明，里面还被注入了奇特的能量。
+				'''
+			}
 		}
 
 		Tiles: {
@@ -2385,6 +2429,7 @@ Mods: {
 			// ShadowChainSwing.DisplayName: Shadow Chain Swing
 			// ShadowChainShadows.DisplayName: Shadow Chain Shadows
 			// ShadowChainSpecial.DisplayName: Shadow Chain Special
+			// RuneSoneSlash.DisplayName: Rune Sone Slash
 		}
 
 		Configs: {
