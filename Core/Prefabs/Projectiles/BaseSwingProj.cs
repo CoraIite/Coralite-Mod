@@ -317,6 +317,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             if (useSlashTrail && VisualEffectSystem.DrawKniefLight && Timer > minTime)
                 DrawSlashTrail();
+
             return false;
         }
 

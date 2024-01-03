@@ -192,13 +192,14 @@ namespace Coralite.Helpers
             return (halfLongAxis * halfShortAxis) / MathF.Sqrt(halfLongAxis * halfLongAxis - halfFocalLength2 * cosX * cosX);
         }
 
-        public static float EllipticalEase(float Rotation, float zRot)
+        public static float EllipticalEase(float Rotation, float zRot, out float overrideAngle)
         {
             Vector3 v3 = Rotation.ToRotationVector2().Vec3();
             Vector3 v3D = Vector3.Transform(v3, Matrix.CreateRotationX(zRot - MathHelper.PiOver2));
 
             //float k1 = -1000 / (v3D.Z - 1000);
             Vector2 targetDir = /*k1 **/ new Vector2(v3D.X, v3D.Y);
+            overrideAngle = targetDir.ToRotation();
             return targetDir.Length();
         }
 

@@ -178,5 +178,16 @@ namespace Coralite.Core.Systems.ParticleSystem
             }
 
         }
+
+        public void DrawParticlesPrimitive()
+        {
+            for (int k = 0; k < _particles.Count; k++) // Particles.
+                if (_particles[k].active)
+                {
+                    ModParticle modParticle = ParticleLoader.GetParticle(_particles[k].type);
+                    if (modParticle is IDrawParticlePrimitive p)
+                        p.DrawPrimitives(_particles[k]);
+                }
+        }
     }
 }

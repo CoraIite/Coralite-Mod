@@ -25,6 +25,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public int useCount;
         public int oldCombo;
+        private int holdItemCount;
 
         public override void SetDefaults()
         {
@@ -34,12 +35,11 @@ namespace Coralite.Content.Items.CoreKeeper
             Item.useAnimation = 26;
             Item.knockBack = 4f;
 
-            Item.holdStyle = ItemHoldStyleID.HoldGolfClub;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Melee;
             Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.rare = RarityType<LegendaryRarity>();
-            Item.shoot = ProjectileType<RuneSoneSlash>();
+            Item.shoot = ProjectileType<RuneSongSlash>();
 
             Item.noUseGraphic = true;
             Item.noMelee = true;
@@ -47,9 +47,32 @@ namespace Coralite.Content.Items.CoreKeeper
             //Item.expert = true;
         }
 
+        //原作中有的效果，手持时会发出一点光粒子
+        public override void HoldItem(Player player)
+        {
+            Lighting.AddLight(player.Center, new Vector3(0.1f, 0.1f, 0.5f));
+            if (holdItemCount > 30 )
+            {
+                holdItemCount = 0;
+                Vector2 center = player.Center + new Vector2(0f, player.height * -0.1f);
+                Vector2 direction = Main.rand.NextVector2CircularEdge(Item.width * 0.6f, Item.height * 0.6f);
+                //float distance = 0.8f + Main.rand.NextFloat() * 0.2f;
+                Vector2 velocity = new Vector2(0f, -Main.rand.NextFloat() * 0.3f - 1.5f);
+
+                Dust dust = Dust.NewDustPerfect(center + direction, DustID.SilverFlame, velocity, newColor: new Color(150, 150, 150));
+                dust.scale = 0.5f;
+                dust.fadeIn = 1.1f;
+                dust.noGravity = true;
+                dust.noLight = true;
+                dust.alpha = 0;
+            }
+
+            holdItemCount++;
+        }
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.5f, 0, player.Center);
+            Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.9f,Main.rand.NextFloat(0.2f,0.3f), player.Center);
             if (Main.myPlayer == player.whoAmI)
             {
                 int combo = Main.rand.Next(2);
@@ -68,7 +91,7 @@ namespace Coralite.Content.Items.CoreKeeper
                     }
                 }
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero,
-                    type, (int)(damage*1.2f), knockback, player.whoAmI, combo);
+                    type, (int)(damage * 1.75f), knockback, player.whoAmI, combo);
 
                 oldCombo = combo;
             }
@@ -104,6 +127,18 @@ namespace Coralite.Content.Items.CoreKeeper
             return true;
         }
 
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<RuneParchment>()
+                .AddIngredient<CraftLock>()
+                .AddIngredient<ChippedBlade>()
+                .AddIngredient<BrokenHandle>()
+                .AddIngredient<ClearGemstone>()
+                .AddIngredient<AncientGemstone>(10)
+                .AddIngredient(ItemID.IronBar, 50)
+                .Register();
+        }
     }
 
     /// <summary>
@@ -120,7 +155,7 @@ namespace Coralite.Content.Items.CoreKeeper
         }
     }
 
-    public class RuneSoneSlash : BaseSwingProj, IDrawWarp
+    public class RuneSongSlash : BaseSwingProj, IDrawWarp
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + "RuneSong";
 
@@ -130,7 +165,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public RuneSoneSlash() : base(0.785f, trailLength: 48) { }
+        public RuneSongSlash() : base(0.785f, trailLength: 48) { }
 
         public int delay;
         public int alpha;
@@ -221,7 +256,12 @@ namespace Coralite.Content.Items.CoreKeeper
             alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 140) + 100;
             float scale = 1f;
             if (Owner.HeldItem.type == ItemType<RuneSong>())
+            {
                 scale = Owner.GetAdjustedItemScale(Owner.HeldItem);
+                scale = 1.5f * scale - 0.5f;
+                if (scale > 3f)
+                    scale = 3f;
+            }
             Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle - recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime), 1.2f, 1.6f);
             base.OnSlash();
         }
@@ -374,9 +414,11 @@ namespace Coralite.Content.Items.CoreKeeper
 
                 Main.graphics.GraphicsDevice.RasterizerState = originalState;
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             }
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
         }
     }
-
 }

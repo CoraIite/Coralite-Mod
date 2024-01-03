@@ -1935,33 +1935,56 @@ Mods: {
 
 			AncientGemstone: {
 				DisplayName: 上古宝石
-				Tooltip: "奇怪的蓝色宝石，散发着能量波。"
+				Tooltip: 奇怪的蓝色宝石，散发着能量波。
 			}
 
 			BrokenHandle: {
 				DisplayName: 断裂的剑柄
 				Tooltip:
-				'''
-				+31 点生命值上限
-				某件上古武器的一部分。虽然只是剑柄，握在掌心时却依然能给你带来一种神秘的平衡感。
-				'''
+					'''
+					+31 点生命值上限
+					某件上古武器的一部分。虽然只是剑柄，握在掌心时却依然能给你带来一种神秘的平衡感。
+					'''
 			}
 
 			ChippedBlade: {
 				DisplayName: 有缺口的剑刃
-				Tooltip: 
-				'''
-				独一无二的制作用部件。
-				某件上古武器的一部分。玻璃似的外观让它显得仿佛一触即碎，但它其实比你见过的任何材料都要坚硬。
-				'''
+				Tooltip:
+					'''
+					独一无二的制作用部件。
+					某件上古武器的一部分。玻璃似的外观让它显得仿佛一触即碎，但它其实比你见过的任何材料都要坚硬。
+					'''
 			}
 
 			ClearGemstone: {
 				DisplayName: 透明宝石
+				Tooltip:
+					'''
+					独一无二的制作用部件。
+					某件上古武器的一部分。虽然与普通的上古宝石材质相同，但这一颗让人感觉异常透明，里面还被注入了奇特的能量。
+					'''
+			}
+
+			RuneParchment: {
+				DisplayName: 符文羊皮纸
+				Tooltip:
+					'''
+					一张上古时代遗留下来的纸，被保存得异常完好。
+					你无法解读上面的符文，但从那些小小的符号可以看出，这应该是打造某件奇特武器用的配方。
+					'''
+			}
+
+			CraftLock: {
+				DisplayName: ！该物品无法合成！
+				Tooltip: 请左键使用合成表中的第一个物品以进行合成
+			}
+
+			HartcoreObsidian: {
+				DisplayName: 地心黑曜石
 				Tooltip: 
 				'''
-				独一无二的制作用部件。
-				某件上古武器的一部分。虽然与普通的上古宝石材质相同，但这一颗让人感觉异常透明，里面还被注入了奇特的能量。
+				一块坚不可摧的墙壁......等一下！
+				这东西本来不应该出现在你身上的！
 				'''
 			}
 		}
@@ -2430,6 +2453,9 @@ Mods: {
 			// ShadowChainShadows.DisplayName: Shadow Chain Shadows
 			// ShadowChainSpecial.DisplayName: Shadow Chain Special
 			// RuneSoneSlash.DisplayName: Rune Sone Slash
+			// BrokenHandleSlash.DisplayName: Broken Handle Slash
+			// RuneSongSlash.DisplayName: Rune Song Slash
+			// CraftUIProj.DisplayName: Craft U I Proj
 		}
 
 		Configs: {
