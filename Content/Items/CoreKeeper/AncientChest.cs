@@ -9,11 +9,22 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace Coralite.Content.Tiles.Magike
+namespace Coralite.Content.Items.CoreKeeper
 {
-    public class BasaltChestTile : ModTile
+    public class AncientChest : ModItem
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
+        public override string Texture => AssetDirectory.CoreKeeperItems + Name;
+
+        public override void SetDefaults()
+        {
+            Item.DefaultToPlaceableTile(ModContent.TileType<AncientChestTile>());
+            Item.maxStack = 999;
+        }
+    }
+
+    public class AncientChestTile : ModTile
+    {
+        public override string Texture => AssetDirectory.CoreKeeperItems + Name;
 
         public override void SetStaticDefaults()
         {
@@ -23,11 +34,13 @@ namespace Coralite.Content.Tiles.Magike
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileOreFinderPriority[Type] = 500;
+            Main.tileShine[Type] = 1000;
+            Main.tileShine2[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.BasicChest[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            DustType = DustID.CrystalSerpent_Pink;
+            DustType = DustID.AncientLight;
             AdjTiles = new int[] { TileID.Containers };
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(Coralite.Instance.MagicCrystalPink, name, MapChestName);
@@ -43,6 +56,7 @@ namespace Coralite.Content.Tiles.Magike
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
         }
+
 
         public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
 
@@ -173,11 +187,10 @@ namespace Coralite.Content.Tiles.Magike
                 player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
             else
             {
-                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "玄武岩箱";
-                if (player.cursorItemIconText == "玄武岩箱")
+                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "上古箱子";
+                if (player.cursorItemIconText == "上古箱子")
                 {
-                    player.cursorItemIconID = ModContent.ItemType<Items.Magike.OtherPlaceables.BasaltChest>();
-
+                    player.cursorItemIconID = ModContent.ItemType<AncientChest>();
                     player.cursorItemIconText = "";
                 }
             }

@@ -1916,14 +1916,14 @@ Mods: {
 					+62 max health
 					+3 life on melee hit
 					[c/01fe06:+15% chance on hit to kill any target that has lower health than you]
-					A legendary sword that hums when swung through the air. 
-					Its durability is a sign of extraordinary craftsmanship and it has the power to defeat enemies in one strike.
+					[c/8e8e8e:A legendary sword that hums when swung through the air. ]
+					[c/8e8e8e:Its durability is a sign of extraordinary craftsmanship and it has the power to defeat enemies in one strike.]
 					'''
 			}
 
 			AncientGemstone: {
 				DisplayName: Ancient Gemstone
-				Tooltip: Strange, blue gemstone emitting waves of energy.
+				Tooltip: "[c/8e8e8e:Strange, blue gemstone emitting waves of energy.]"
 			}
 
 			BrokenHandle: {
@@ -1931,7 +1931,7 @@ Mods: {
 				Tooltip:
 					'''
 					+31 max health
-					A piece of an ancient weapon. Even though it's only the handle it already feels mysteriously balanced in your hand.
+					[c/8e8e8e:A piece of an ancient weapon. Even though it's only the handle it already feels mysteriously balanced in your hand.]
 					'''
 			}
 
@@ -1940,7 +1940,7 @@ Mods: {
 				Tooltip:
 					'''
 					A piece of an ancient weapon. 
-					Its glass-like appearance makes it look fragile but it's harder than any material you've seen.
+					[c/8e8e8e:Its glass-like appearance makes it look fragile but it's harder than any material you've seen.]
 					'''
 			}
 
@@ -1949,31 +1949,58 @@ Mods: {
 				Tooltip:
 					'''
 					A piece of an ancient weapon. 
-					Even though it's of the same material as ancient gemstones, this one feels unnaturally clear and infused with a strange energy.
+					[c/8e8e8e:Even though it's of the same material as ancient gemstones, this one feels unnaturally clear and infused with a strange energy.]
 					'''
 			}
 
 			RuneParchment: {
 				DisplayName: Rune Parchment
-				Tooltip: 
-				'''
-				A unusually well preserved piece of ancient paper. 
-				The runes are impossible to decipher but small symbols hint at it being the recipe for a strange weapon.
-				'''
+				Tooltip:
+					'''
+					[c/8e8e8e:A unusually well preserved piece of ancient paper. ]
+					[c/8e8e8e:The runes are impossible to decipher but small symbols hint at it being the recipe for a strange weapon.]
+					'''
 			}
 
 			CraftLock: {
 				DisplayName: ! This recipe CANT craft !
-				Tooltip: "Left click the first item in the recipe to craft"
+				Tooltip: Left click the first item in the recipe to craft
 			}
 
 			HartcoreObsidian: {
 				DisplayName: Hartcore Obsidian
-				Tooltip: 
-				'''
-				An indestructible wall section...
-				wait! Yuo shouldn't have this! 
-				'''
+				Tooltip:
+					'''
+					[c/8e8e8e:An indestructible wall section...]
+					[c/8e8e8e:wait! Yuo shouldn't have this! ]
+					'''
+			}
+
+			PhantomSpark: {
+				DisplayName: Phantom Spark
+				Tooltip:
+					'''
+					+12% critical hit chance
+					+27% critical hit damage
+					[c/01fe06:+20% chance to summon a ghost caveling when killing any enemy]
+					[c/8e8e8e:A legendary, masterfully crafted bow that shoots pure energy projectiles. ]
+					[c/8e8e8e:Sometimes those pierce the veil of time and space, calling upon the spirits of the past.]
+					'''
+			}
+
+			PoisonousSickle: {
+				DisplayName: Poisonous Sickle
+				Tooltip:
+					'''
+					+18% critical hit damage
+					+28% chance to apply poison on hit, reduces enemy healing received by 75%
+					[c/8e8e8e:Farming tool that turned into a weapon when a great threat had to be slain.]
+					'''
+			}
+
+			AncientChest: {
+				DisplayName: Ancient Chest
+				Tooltip: "[c/8e8e8e:This chest seems to be thousands of years old.]"
 			}
 		}
 
@@ -2025,6 +2052,7 @@ Mods: {
 			}
 
 			BloodJadeTile.MapEntry: Blood Jade Tile
+			AncientChestTile.MapEntry: Ancient Chest Tile
 		}
 
 		Buffs: {

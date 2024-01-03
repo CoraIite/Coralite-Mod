@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public override void HoldItem(Player player)
         {
             Lighting.AddLight(player.Center, new Vector3(0.1f, 0.1f, 0.5f));
-            if (holdItemCount > 30 )
+            if (holdItemCount > 30)
             {
                 holdItemCount = 0;
                 Vector2 center = player.Center + new Vector2(0f, player.height * -0.1f);
@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.9f,Main.rand.NextFloat(0.2f,0.3f), player.Center);
+            Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.9f, Main.rand.NextFloat(0.2f, 0.3f), player.Center);
             if (Main.myPlayer == player.whoAmI)
             {
                 int combo = Main.rand.Next(2);
@@ -113,7 +113,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 string tip = (addLeadingSpace ? " " : "") + Item.DamageType.DisplayName;
 
                 tooltip.Text = string.Concat(((int)(Item.damage * 0.903f)).ToString()
-                    ,"-", ((int)(Item.damage * 1.098f)).ToString(),tip);
+                    , "-", ((int)(Item.damage * 1.098f)).ToString(), tip);
             }
         }
 
@@ -150,7 +150,7 @@ namespace Coralite.Content.Items.CoreKeeper
         {
             if (Player.HeldItem.type == ItemType<RuneSong>())
                 Player.statLifeMax2 += 62;
-            else if(Player.HeldItem.type == ItemType<BrokenHandle>())
+            else if (Player.HeldItem.type == ItemType<BrokenHandle>())
                 Player.statLifeMax2 += 31;
         }
     }
@@ -172,6 +172,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         private float recordStartAngle;
         private float recordTotalAngle;
+        private float extraScaleAngle;
 
         public override void Load()
         {
@@ -223,7 +224,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 case 0: //下挥
                     startAngle = 1.6f + Main.rand.NextFloat(-0.2f, 0.2f);
                     totalAngle = 4f + Main.rand.NextFloat(-0.2f, 0.2f);
-                    maxTime = (int)(Owner.itemTimeMax * 0.4f) + 44;
+                    maxTime = (int)(Owner.itemTimeMax * 0.6f) + 44;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     delay = 12;
                     break;
@@ -231,15 +232,16 @@ namespace Coralite.Content.Items.CoreKeeper
                     startAngle = -1.6f + Main.rand.NextFloat(-0.2f, 0.2f);
                     totalAngle = -4f + Main.rand.NextFloat(-0.2f, 0.2f);
                     minTime = 0;
-                    maxTime = (int)(Owner.itemTimeMax * 0.4f) + 44;
+                    maxTime = (int)(Owner.itemTimeMax * 0.6f) + 44;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     delay = 12;
                     break;
             }
 
+            extraScaleAngle = Main.rand.NextFloat(-0.4f, 0.4f);
             recordStartAngle = Math.Abs(startAngle);
             recordTotalAngle = Math.Abs(totalAngle);
-            Projectile.scale = Helper.EllipticalEase(recordStartAngle -recordTotalAngle * Smoother.Smoother(0, maxTime - minTime), 1.2f, 1.6f);
+            Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(0, maxTime - minTime), 1.2f, 1.7f);
 
             base.Initializer();
         }
@@ -262,7 +264,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 if (scale > 3f)
                     scale = 3f;
             }
-            Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle - recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime), 1.2f, 1.6f);
+            Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime), 1.2f, 1.7f);
             base.OnSlash();
         }
 
@@ -270,7 +272,7 @@ namespace Coralite.Content.Items.CoreKeeper
         {
             if (alpha > 20)
                 alpha -= 10;
-            if (Projectile.scale>0.8f)
+            if (Projectile.scale > 0.8f)
             {
                 Projectile.scale *= 0.999f;
             }
@@ -283,6 +285,8 @@ namespace Coralite.Content.Items.CoreKeeper
         {
             if (!target.immortal && target.life < Owner.statLife && Main.rand.NextBool(15, 100))
                 target.Kill();
+
+            Projectile.damage = (int)(Projectile.damage * 0.9f);
 
             if (onHitTimer == 0)
             {
@@ -323,28 +327,42 @@ namespace Coralite.Content.Items.CoreKeeper
                     for (int j = 0; j < 4; j++)
                     {
                         Vector2 dir = -RotateVec2.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
-                        dust = Dust.NewDustPerfect(pos, DustID.AncientLight, dir * Main.rand.NextFloat(1f, 5f), newColor: Color.Cyan*0.5f, Scale: Main.rand.NextFloat(1f, 2f));
+                        dust = Dust.NewDustPerfect(pos, DustID.AncientLight, dir * Main.rand.NextFloat(1f, 5f), newColor: Color.Cyan * 0.5f, Scale: Main.rand.NextFloat(1f, 2f));
                         dust.noGravity = true;
                     }
 
                     for (int i = 0; i < 6; i++)
                     {
                         Vector2 dir = RotateVec2.RotatedBy(Main.rand.NextFloat(-1.4f, 1.4f));
-                        dust = Dust.NewDustPerfect(pos, DustID.AncientLight, dir * Main.rand.NextFloat(5f, 10f),newColor:Color.Cyan * 0.5f, Scale: Main.rand.NextFloat(1.5f, 2f));
+                        dust = Dust.NewDustPerfect(pos, DustID.AncientLight, dir * Main.rand.NextFloat(1f, 10f), newColor: Color.Cyan * 0.5f, Scale: Main.rand.NextFloat(1.5f, 2f));
                         dust.noGravity = true;
                     }
                 }
 
                 if (VisualEffectSystem.HitEffect_SpecialParticles)
                 {
+                    int start = Main.rand.Next(6);
                     for (int i = 0; i < 6; i++)
+                    {
+                        float rot = ((start + i) % 6) * 0.2f - 0.2f * 3;
+                        byte hue = (byte)(Main.rand.NextFloat(0.45f, 0.65f) * 255f);
+                        Vector2 vel = RotateVec2.RotatedBy(Main.rand.NextFloat(rot - 0.15f, rot + 0.15f)) * Main.rand.NextFloat(4f * i, 5 + i * 0.9f);
+                        for (int j = 0; j < 4; j++)
+                            ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
+                            {
+                                PositionInWorld = pos,
+                                MovementVector = vel * (1 - 0.1f * j),
+                                UniqueInfoPiece = hue
+                            });
+                    }
+                    for (int i = 0; i < 3; i++)
                     {
                         byte hue = (byte)(Main.rand.NextFloat(0.45f, 0.65f) * 255f);
 
                         ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
                         {
                             PositionInWorld = pos,
-                            MovementVector = RotateVec2.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(4f, 16f),
+                            MovementVector = -RotateVec2.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * Main.rand.NextFloat(2f, 8f),
                             UniqueInfoPiece = hue
                         });
                     }

@@ -25,7 +25,10 @@ namespace Coralite.Content.Items.CoreKeeper
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
+            Main.tileBlockLight[Type] = true;
+            Main.tileLavaDeath[Type] = false;
 
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             MinPick = int.MaxValue;
             DustType = DustID.Obsidian;
             HitSound = new Terraria.Audio.SoundStyle("Coralite/Sounds/CoreKeeper/UnbreakableTile")

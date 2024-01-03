@@ -17,6 +17,7 @@ namespace Coralite.Content.WorldGeneration
             if (ShiniesIndex != -1)
             {
                 tasks.Insert(ShiniesIndex - 1, new PassLegacy("Coralite Magic Crystal Cave", GenMagicCrystalCave));
+                tasks.Insert(ShiniesIndex + 2, new PassLegacy("CoreKeeper Clear Gemstone Maze", GenClearGemstoneMaze));
             }
 
             int EvilBiome = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
@@ -37,6 +38,11 @@ namespace Coralite.Content.WorldGeneration
             {
                 tasks.Insert(Lakes + 1, new PassLegacy("Coralite Ice Dragon Nest", GenIceDragonNest));
             }
+
+            //int MudsWallsInJungle = tasks.FindIndex(genpass => genpass.Name.Equals("Muds Walls In Jungle"));
+            //if (MudsWallsInJungle!=-1)
+            //{
+            //}
 
             int FinalCleanup = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
             if (FinalCleanup != -1)
