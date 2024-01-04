@@ -1936,6 +1936,7 @@ Mods: {
 			AncientGemstone: {
 				DisplayName: 上古宝石
 				Tooltip: "[c/8e8e8e:奇怪的蓝色宝石，散发着能量波。]"
+				// ShlimmerTranslation: 此为微光转化合成表
 			}
 
 			BrokenHandle: {
@@ -2014,6 +2015,42 @@ Mods: {
 				DisplayName: 上古箱子
 				Tooltip: "[c/8e8e8e:这个宝箱似乎已经有几千年的历史了。]"
 			}
+
+			GlowTulipDoor: {
+				DisplayName: 发光郁金香遗迹门
+				Tooltip: "[c/8e8e8e:这东西本来不应该出现在你身上的！]"
+			}
+
+			GlowTulipRing: {
+				DisplayName: 光耀郁金香戒指
+				Tooltip:
+					'''
+					+3亮光
+					[c/8e8e8e:一只会发光的戒指，蕴含着光耀郁金香的精华。]
+					'''
+			}
+
+			AncientGemNecklace: {
+				DisplayName: 上古宝石项链
+				Tooltip:
+					'''
+					+5.6%近战攻击速度
+					[c/8e8e8e:一条完全采用上古宝石制作而成的项链，坠子则是一块超级稀有的白色上古宝石。]
+					'''
+				AncientGemSet: 2件套：将背包内物品的最高镐力的+7%加到攻击伤害上
+				AncientGemSetTips: 装备上古宝石戒指以获得套装效果
+			}
+
+			AncientGemRing: {
+				DisplayName: 上古宝石戒指
+				Tooltip:
+					'''
+					+15%暴击伤害
+					[c/8e8e8e:这只神秘的戒指完全采用上古宝石制作而成，上面更镶嵌着一块超级稀有的白色上古宝石。]
+					'''
+				AncientGemSet: 2件套：将背包内物品的最高镐力的+7%加到攻击伤害上
+				AncientGemSetTips: 装备上古宝石项链以获得套装效果
+			}
 		}
 
 		Tiles: {
@@ -2065,6 +2102,8 @@ Mods: {
 
 			BloodJadeTile.MapEntry: 赤血玉
 			// AncientChestTile.MapEntry: Ancient Chest Tile
+			// GlowTulipDoorClosed.MapEntry: Glow Tulip Door Closed
+			// GlowTulipDoorOpen.MapEntry: Glow Tulip Door Open
 		}
 
 		Buffs: {

@@ -1924,6 +1924,7 @@ Mods: {
 			AncientGemstone: {
 				DisplayName: Ancient Gemstone
 				Tooltip: "[c/8e8e8e:Strange, blue gemstone emitting waves of energy.]"
+				ShlimmerTranslation: 此为微光转化合成表
 			}
 
 			BrokenHandle: {
@@ -2002,6 +2003,42 @@ Mods: {
 				DisplayName: Ancient Chest
 				Tooltip: "[c/8e8e8e:This chest seems to be thousands of years old.]"
 			}
+
+			GlowTulipDoor: {
+				DisplayName: Glow Tulip Door
+				Tooltip: ""
+			}
+
+			GlowTulipRing: {
+				DisplayName: Glow Tulip Ring
+				Tooltip:
+					'''
+					+3 glow
+					[c/8e8e8e:A luminous ring that holds the essence of glow tulips.]
+					'''
+			}
+
+			AncientGemNecklace: {
+				DisplayName: Ancient Gem Necklace
+				Tooltip:
+					'''
+					+5.6% melee attack speed
+					[c/8e8e8e:A necklace crafted with only using ancient gemstones as well as a super rare white version.]
+					'''
+				AncientGemSet: 2 set: +7% of mining damage added as melee damage
+				AncientGemSetTips: Equip the Ancient Gem Ring to get the set effect
+			}
+
+			AncientGemRing: {
+				DisplayName: Ancient Gem Ring
+				Tooltip:
+					'''
+					+15% critical hit damage
+					[c/8e8e8e:This mysterious ring is entirely made out of ancient gemstones, featuring a super rare white one.]
+					'''
+				AncientGemSet: 2 set: +7% of mining damage added as melee damage
+				AncientGemSetTips: Equip the Ancient Gem Necklace to get the set effect
+			}
 		}
 
 		Tiles: {
@@ -2053,6 +2090,8 @@ Mods: {
 
 			BloodJadeTile.MapEntry: Blood Jade Tile
 			AncientChestTile.MapEntry: Ancient Chest Tile
+			GlowTulipDoorClosed.MapEntry: Glow Tulip Door Closed
+			GlowTulipDoorOpen.MapEntry: Glow Tulip Door Open
 		}
 
 		Buffs: {

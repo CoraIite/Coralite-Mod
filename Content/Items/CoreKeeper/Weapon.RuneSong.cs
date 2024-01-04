@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.9f, Main.rand.NextFloat(0.2f, 0.3f), player.Center);
+            Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.7f, Main.rand.NextFloat(0.2f, 0.3f), player.Center);
             if (Main.myPlayer == player.whoAmI)
             {
                 int combo = Main.rand.Next(2);

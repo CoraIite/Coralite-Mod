@@ -58,6 +58,11 @@ namespace Coralite.Content.ModPlayers
         /// <summary> 抵抗梦蚀 </summary>
         public bool resistDreamErosion;
 
+        /// <summary>
+        /// 爆伤加成
+        /// </summary>
+        public float critDamageBonus;
+
         public override void ResetEffects()
         {
             equippedRedJadePendant = false;
@@ -65,6 +70,8 @@ namespace Coralite.Content.ModPlayers
             equippedPhantomMirror = false;
             equippedBoneRing = false;
             resistDreamErosion = false;
+
+            critDamageBonus = 0;
 
             nightmareEnergyMax = 7;
             if (parryTime > 0)
@@ -255,6 +262,10 @@ namespace Coralite.Content.ModPlayers
             }
         }
 
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.CritDamage += critDamageBonus;
+        }
         #endregion
 
         #region 钓鱼系统

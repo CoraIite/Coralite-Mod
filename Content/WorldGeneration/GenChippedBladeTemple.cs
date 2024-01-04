@@ -1,26 +1,24 @@
-﻿using Coralite.Content.Items.Accessories;
-using Coralite.Content.Items.CoreKeeper;
+﻿using Coralite.Content.Items.CoreKeeper;
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using ReLogic.Content;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Terraria;
+using System;
 using Terraria.ID;
+using Terraria;
 using Terraria.IO;
 using Terraria.ModLoader;
-using Terraria.UI;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
-        public void GenClearGemstoneMaze(GenerationProgress progress, GameConfiguration configuration)
+        public void GenChippedBladeTemple(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = "正在生成透明宝石迷宫";
+            progress.Message = "正在生成破碎剑刃神庙";
 
             int itemCount = 1;
             int gened = 0;
@@ -35,9 +33,6 @@ namespace Coralite.Content.WorldGeneration
                 itemCount++;
             }
 
-            //if (itemCount > heartCount)
-            //    itemCount = heartCount;
-
             Dictionary<Color, int> clearDic = new Dictionary<Color, int>()
             {
                 [Color.White] = -2,
@@ -46,8 +41,14 @@ namespace Coralite.Content.WorldGeneration
 
             Dictionary<Color, int> mainDic = new Dictionary<Color, int>()
             {
-                [new Color(102, 57, 49)] = TileID.Dirt,
+                [new Color(155, 173, 183)] = TileID.LeadBrick,
                 [new Color(7, 60, 49)] = ModContent.TileType<HartcoreObsidianTile>(),
+                [Color.Black] = -1
+            };
+
+            Dictionary<Color, int> wallDic = new Dictionary<Color, int>()
+            {
+                [new Color(77, 146, 185)] = WallID.LeadBrick,
                 [Color.Black] = -1
             };
 
@@ -55,9 +56,9 @@ namespace Coralite.Content.WorldGeneration
             {
                 try
                 {
-
-                    //每隔一段选取一个点并检测是否有邪恶地形
-                    int junglePos = Main.rand.Next(GenVars.jungleOriginX - 100, GenVars.jungleOriginX + 100);//(GenVars.jungleMaxX + GenVars.jungleMinX) / 2;
+                    int offset = GenVars.dungeonSide;
+                    int origin = GenVars.jungleOriginX - offset * 250;
+                    int junglePos = Main.rand.Next(origin - 60, origin + 60);//(GenVars.jungleMaxX + GenVars.jungleMinX) / 2;
                     float r = Math.Abs(junglePos - Main.maxTilesX / 2);
 
                     Vector2 pos = new Vector2(Main.maxTilesX / 2, (float)Main.worldSurface);
@@ -70,31 +71,38 @@ namespace Coralite.Content.WorldGeneration
                     Dictionary<ushort, int> tileDictionary = new Dictionary<ushort, int>();
                     WorldUtils.Gen(
                         new Point(position.X - 25, position.Y - 25),
-                        new Shapes.Rectangle(58, 67),
+                        new Shapes.Rectangle(50, 50),
                         new Actions.TileScanner(TileID.Dirt, TileID.Mud, TileID.JungleGrass).Output(tileDictionary));
 
-                    if (tileDictionary[TileID.Dirt] + tileDictionary[TileID.Mud] + tileDictionary[TileID.JungleGrass] < 850)
+                    if (tileDictionary[TileID.Dirt] + tileDictionary[TileID.Mud] + tileDictionary[TileID.JungleGrass] < 750)
                         continue; //如果不是，则返回false，这将导致调用方法尝试一个不同的origin。
 
-                    int whichOne = WorldGen.genRand.Next(2);
-                    Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.WorldGen + "CoreKeeper/ClearGemstoneMaze" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
-                    Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.WorldGen + "CoreKeeper/ClearGemstoneMazeClear0", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.WorldGen + "CoreKeeper/ChippedBladeTemple", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.WorldGen + "CoreKeeper/ChippedBladeTempleClear", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.WorldGen + "CoreKeeper/ChippedBladeTempleWall", AssetRequestMode.ImmediateLoad).Value;
 
-                    position += new Point(-29, -33);
+                    position += new Point(-12, -13);
                     if (!WorldGen.InWorld(position.X, position.Y))
                         continue;
-                    if (!GenVars.structures.CanPlace(new Rectangle(position.X, position.Y, 29 * 2, 33 * 2)))
+                    if (!GenVars.structures.CanPlace(new Rectangle(position.X, position.Y, 12 * 2, 14 * 2)))
                         continue;
 
                     Task.Run(async () =>
                     {
-                        await GenIceNestWithTex(clearTex, shrineTex, clearDic, mainDic, position.X, position.Y);
+                        await GenShrine(clearTex, shrineTex, wallTex, clearDic, mainDic, wallDic, position.X, position.Y);
                     }).Wait();
 
-                    //放置箱子
-                    Point chestPos = position + new Point(29, 34);
+                    //放门
 
-                    int itemType = ModContent.ItemType<ClearGemstone>();
+                    Point doorPos = position + new Point(3,9);
+                    WorldGen.PlaceObject(doorPos.X, doorPos.Y, ModContent.TileType<GlowTulipDoorClosed>(), true);
+                    doorPos = position + new Point(20, 9);
+                    WorldGen.PlaceObject(doorPos.X, doorPos.Y, ModContent.TileType<GlowTulipDoorClosed>(), true);
+
+                    //放置箱子
+                    Point chestPos = position + new Point(12, 9);
+
+                    int itemType = ModContent.ItemType<ChippedBlade>();
 
                     if (WorldGen.AddBuriedChest(chestPos.X, chestPos.Y, itemType,
                          notNearOtherChests: false, 0, trySlope: false, (ushort)ModContent.TileType<AncientChestTile>()))
@@ -113,7 +121,7 @@ namespace Coralite.Content.WorldGeneration
                     }
 
                 placeover:
-                    GenVars.structures.AddProtectedStructure(new Rectangle(position.X, position.Y , 29 * 2, 33 * 2), 3);
+                    GenVars.structures.AddProtectedStructure(new Rectangle(position.X, position.Y, 29 * 2, 33 * 2), 3);
 
                     progress.Set(i / (float)itemCount);
                     gened++;

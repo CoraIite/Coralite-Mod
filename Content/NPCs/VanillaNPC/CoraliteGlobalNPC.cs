@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Items.Botanical.Seeds;
+using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Gels;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Misc;
@@ -20,6 +21,22 @@ namespace Coralite.Content.NPCs.VanillaNPC
 {
     public class CoraliteGlobalNPC : GlobalNPC
     {
+        public bool IvyPosion;
+
+        public override bool InstancePerEntity => true;
+
+        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        {
+            if (IvyPosion)
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = (int)(0.25f * npc.lifeRegen);
+        }
+
+        public override void ResetEffects(NPC npc)
+        {
+            IvyPosion = false;
+        }
+
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
             switch (npc.type)
@@ -70,6 +87,20 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 case NPCID.FlyingSnake://羽蛇掉毛
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), ItemType<FlyingSnakeFeather>(), 1, 1, 2));
                     break;
+                case NPCID.WallofFlesh://肉山和鸟妖掉落破碎剑柄
+                    npcLoot.Add(ItemDropRule.Common(ItemType<BrokenHandle>(), 10, 1, 1));
+                    break;
+                case NPCID.Harpy:
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(),ItemType<BrokenHandle>(), 100, 1, 1));
+                    break;
+
+                case NPCID.RockGolem://岩石巨人,花岗岩敌怪，附魔剑 掉落上古宝石
+                case NPCID.GraniteFlyer:
+                case NPCID.GraniteGolem:
+                case NPCID.EnchantedSword:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<AncientGemstone>(), 20, 1, 3));
+                    break;
+
             }
 
             if (Main.slimeRainNPC[npc.type])
@@ -113,6 +144,19 @@ namespace Coralite.Content.NPCs.VanillaNPC
                         }
 
                         items[i] = new Item(ItemType<TravelJournaling>());
+                        i++;
+
+                        if (Main.hardMode)
+                        {
+                            items[i] = new Item(ItemID.GlowTulip);
+                            i++;
+                        }
+
+                        if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+                        {
+                            items[i] = new Item(ItemType<RuneParchment>());
+                            i++;
+                        }
                     }
                     break;
                 default: break;

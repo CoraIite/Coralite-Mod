@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.CoreKeeper
@@ -8,13 +9,32 @@ namespace Coralite.Content.Items.CoreKeeper
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
 
+        public override void SetStaticDefaults()
+        {
+            //ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.GlowTulip;
+            //ItemID.Sets.ShimmerTransformToItem[ItemID.GlowTulip] = Type;
+        }
+
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
             Item.maxStack = 999;
 
-            Item.value = Item.sellPrice(0, 0, 12, 0);
+            Item.value = Item.sellPrice(0, 0, 50, 0);
             Item.rare = ModContent.RarityType<RareRarity>();
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe(10)
+                .AddCondition(this.GetLocalization("ShlimmerTranslation",()=>"此为微光转化合成表"),()=>false)
+                .AddCustomShimmerResult(ItemID.GlowTulip)
+                .Register();
+
+            Recipe.Create(ItemID.GlowTulip)
+                .AddCondition(this.GetLocalization("ShlimmerTranslation", () => "此为微光转化合成表"), () => false)
+                .AddCustomShimmerResult(Type, 10)
+                .Register();
         }
     }
 }

@@ -259,7 +259,7 @@ namespace Coralite.Content.WorldGeneration
             }
             catch (System.Exception)
             {
-
+                return false;
             }
 
             Point topLeft = origin - new Point(width, height);
