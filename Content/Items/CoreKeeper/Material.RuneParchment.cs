@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             if (!NPC.downedPlantBoss)
-            tooltips.Add(new TooltipLine(Mod, "Coralite:CraftLock", this.GetLocalization("CraftLock", () => "该物品已被一个强大的丛林生物诅咒，击败它以解放上古的力量").Value));
+                tooltips.Add(new TooltipLine(Mod, "Coralite:CraftLock", this.GetLocalization("CraftLock", () => "该物品已被一个强大的丛林生物诅咒，击败它以解放上古的力量").Value));
         }
     }
 }

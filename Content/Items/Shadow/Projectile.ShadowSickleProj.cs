@@ -11,7 +11,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Shadow
 {
@@ -172,7 +171,7 @@ namespace Coralite.Content.Items.Shadow
 
             if (completeAndRelease)
             {
-                Asset<Texture2D> slashTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "TerraBladeSlash");
+                Asset<Texture2D> slashTex = TextureAssets.Projectile[ProjectileID.TrueNightsEdge];//ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "TerraBladeSlash");
                 Rectangle rectangle = slashTex.Frame(1, 4);
                 Vector2 origin = rectangle.Size() / 2f;
                 SpriteEffects effects = Owner.direction < 0 ? SpriteEffects.FlipVertically : SpriteEffects.None;

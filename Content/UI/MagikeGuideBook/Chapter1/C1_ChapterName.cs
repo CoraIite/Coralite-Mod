@@ -1,8 +1,7 @@
 ﻿using Coralite.Content.UI.BookUI;
-using Coralite.Content.UI.MagikeGuideBook.Introduce;
 using Coralite.Content.UI.UILib;
-using Coralite.Core.Loaders;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

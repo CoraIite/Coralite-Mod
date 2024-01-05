@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.Crimson
 
         public override void SetStaticDefaults()
         {
-            ItemID.Sets.ShimmerTransformToItem[Type]=ItemType<CorruptJavelin>();
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<CorruptJavelin>();
         }
 
         public override void SetDefaults()
@@ -289,7 +289,7 @@ namespace Coralite.Content.Items.Crimson
             {
                 Owner.velocity *= 0;
                 Owner.Center = Vector2.Lerp(Owner.Center, Projectile.Center, 0.35f);
-                if (Timer==5)
+                if (Timer == 5)
                 {
                     canDamage = true;
                 }

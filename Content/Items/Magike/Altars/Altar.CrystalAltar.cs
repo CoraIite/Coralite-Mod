@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Magike.Altars
     public class CrystalAltar : BaseMagikePlaceableItem, IMagikeSenderItem, IMagikeFactoryItem
     {
         public CrystalAltar() : base(TileType<CrystalAltarTile>(), Item.sellPrice(0, 0, 10, 0)
-            , RarityType<MagicCrystalRarity>(), 50,AssetDirectory.MagikeAltars)
+            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeAltars)
         { }
 
         public override int MagikeMax => 150;

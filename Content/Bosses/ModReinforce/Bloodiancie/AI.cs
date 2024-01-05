@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
-using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
@@ -220,7 +219,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int damage = Helper.ScaleValueForDiffMode(30,35,35,30);
+                                int damage = Helper.ScaleValueForDiffMode(30, 35, 35, 30);
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter,
                                     (Target.Center - NPC.Center + Main.rand.NextVector2CircularEdge(48, 48)).SafeNormalize(Vector2.UnitY) * 12f,
                                     ProjectileType<RedPulse>(), damage, 5f, NPC.target);
@@ -371,7 +370,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                         if (Timer == 170)       //生成弹幕
                         {
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero
-                                , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(55,55,50,45), 8f);
+                                , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(55, 55, 50, 45), 8f);
                             Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(Target.Center.X > NPC.Center.X ? 1 : -1, 0) * 12, ProjectileType<BloodWave>(), 1, 8f);
                             SpawnFollowers(8);
                         }
@@ -430,7 +429,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             {
                                 if (realTime % 6 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_Explosion>()
-                                        , Helper.ScaleValueForDiffMode(20,30,35,30), 5f);
+                                        , Helper.ScaleValueForDiffMode(20, 30, 35, 30), 5f);
 
                                 break;
                             }
@@ -480,8 +479,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
                                 if (Timer % 70 == 0)//生成弹幕
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, 
-                                        ProjectileType<Rediancie_BigBoom>(), Helper.ScaleValueForDiffMode(50,50,45,45), 5f);
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero,
+                                        ProjectileType<Rediancie_BigBoom>(), Helper.ScaleValueForDiffMode(50, 50, 45, 45), 5f);
                                     SpawnFollowers(2);
                                 }
 
@@ -495,7 +494,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                                 if (Timer % 10 == 0)//生成弹幕
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero
-                                        , ProjectileType<Rediancie_Explosion>(), Helper.ScaleValueForDiffMode(30,35,35,30), 5f);
+                                        , ProjectileType<Rediancie_Explosion>(), Helper.ScaleValueForDiffMode(30, 35, 35, 30), 5f);
                                 }
 
                                 //控制Y方向的移动
@@ -520,7 +519,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             if (Timer == 310)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero
-                                    , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(80,80,75,70), 8f);
+                                    , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(80, 80, 75, 70), 8f);
                                 SpawnFollowers(8);
                             }
 
@@ -636,7 +635,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                                     velLength = 16;
 
                                 Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, dir.RotatedBy(i * 0.3f) * velLength
-                                    , ProjectileType<RedBomb>(), 1, 4, ai0: shootTime,ai2:Main.rand.Next(120,480));
+                                    , ProjectileType<RedBomb>(), 1, 4, ai0: shootTime, ai2: Main.rand.Next(120, 480));
 
                                 SoundEngine.PlaySound(CoraliteSoundID.WhipSwing_Item152, NPC.Center);
 

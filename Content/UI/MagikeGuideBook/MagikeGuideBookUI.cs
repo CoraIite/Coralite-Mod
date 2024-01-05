@@ -202,7 +202,7 @@ namespace Coralite.Content.UI.MagikeGuideBook
             //初始化特效
             particles.Clear();
             Vector2 position = BookPanel.GetDimensions().Position();
-            magicCircle = new MagicCircle(bookSize.X + 50, bookSize.Y / 2+40)
+            magicCircle = new MagicCircle(bookSize.X + 50, bookSize.Y / 2 + 40)
             {
                 center = position + new Vector2(25, bookSize.Y / 2),
                 color = Color.White,
@@ -418,7 +418,7 @@ namespace Coralite.Content.UI.MagikeGuideBook
 
             particle.trail.Positions = particle.oldCenter;
 
-            particle.datas[0] =length;
+            particle.datas[0] = length;
             particle.datas[1] = alpha;
             particle.datas[2] = maxLength;
         }

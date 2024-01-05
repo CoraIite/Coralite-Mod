@@ -23,8 +23,8 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
             if (player.TryGetModPlayer(out MagikePlayer mp) && mp.SpecialEnchantCD <= 0)
             {
                 Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
-                Projectile.NewProjectile(source, player.Center - dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * 64, dir*Main.rand.NextFloat(8,10), ModContent.ProjectileType<HeatanProj>()
-                    , (int)(damage * 0.25f), 2, player.whoAmI,Main.rand.NextFloat(0.05f,0.15f),Main.rand.NextFloat(-0.1f,0.1f));
+                Projectile.NewProjectile(source, player.Center - dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * 64, dir * Main.rand.NextFloat(8, 10), ModContent.ProjectileType<HeatanProj>()
+                    , (int)(damage * 0.25f), 2, player.whoAmI, Main.rand.NextFloat(0.05f, 0.15f), Main.rand.NextFloat(-0.1f, 0.1f));
                 mp.SpecialEnchantCD = 45;
             }
         }
@@ -52,7 +52,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
             for (int i = 0; i < 12; i++)
             {
                 Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height,
-                    DustID.Torch,Scale:Main.rand.NextFloat(1.5f, 2.5f));
+                    DustID.Torch, Scale: Main.rand.NextFloat(1.5f, 2.5f));
                 d.noGravity = true;
             }
         }
@@ -60,7 +60,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public override void AI()
         {
             float factor = Projectile.timeLeft / 240f;
-                //Projectile.velocity *= 0.998f;
+            //Projectile.velocity *= 0.998f;
 
             Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.ai[1] * MathF.Sin(factor * MathHelper.Pi));
             Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
@@ -91,7 +91,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         {
             Texture2D mainTex = TextureAssets.Projectile[Type].Value;
             var frameBox = mainTex.Frame(6, 1, Projectile.frame, 0);
-            var origin = frameBox.Size()/2;
+            var origin = frameBox.Size() / 2;
             Vector2 pos = Projectile.Center - Main.screenPosition;
 
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, Projectile.rotation,

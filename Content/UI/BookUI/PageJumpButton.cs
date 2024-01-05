@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.Audio;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.BookUI
@@ -16,9 +15,9 @@ namespace Coralite.Content.UI.BookUI
 
         protected float scaleInactive = 1f;
 
-        public abstract int PageToJump {  get; }
+        public abstract int PageToJump { get; }
 
-        public void SetSize(float width,float height)
+        public void SetSize(float width, float height)
         {
             Width.Set(width, 0);
             Height.Set(height, 0);

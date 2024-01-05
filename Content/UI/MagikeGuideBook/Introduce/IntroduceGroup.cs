@@ -2,7 +2,7 @@
 
 namespace Coralite.Content.UI.MagikeGuideBook.Introduce
 {
-    public class IntroduceGroup: UIPageGroup
+    public class IntroduceGroup : UIPageGroup
     {
         public override bool CanShowInBook => true;
 

@@ -17,7 +17,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Towers
 {
-    public class CrystalSpotlighter : BaseMagikePlaceableItem,IMagikeFactoryItem
+    public class CrystalSpotlighter : BaseMagikePlaceableItem, IMagikeFactoryItem
     {
         public CrystalSpotlighter() : base(TileType<CrystalSpotlighterTile>(), Item.sellPrice(0, 0, 10, 0)
             , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeFactories)

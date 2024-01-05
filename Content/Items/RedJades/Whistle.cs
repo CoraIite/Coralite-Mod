@@ -79,7 +79,7 @@ namespace Coralite.Content.Items.RedJades
             {
                 if (Timer < 120)
                 {
-                    DistanceToOwner = Helper.Lerp(48,32,Timer/120);
+                    DistanceToOwner = Helper.Lerp(48, 32, Timer / 120);
                     Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                     Projectile.rotation = MouseTargetAngle + (Owner.direction > 1 ? 0 : 3.141f);
 
@@ -89,7 +89,7 @@ namespace Coralite.Content.Items.RedJades
                     float count = Timer / 30;
                     for (int i = 0; i < count; i++)
                     {
-                        Dust dust = Dust.NewDustPerfect(Projectile.Center -dir*24  + Main.rand.NextVector2Circular(count * 4, count * 4), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.06f);
+                        Dust dust = Dust.NewDustPerfect(Projectile.Center - dir * 24 + Main.rand.NextVector2Circular(count * 4, count * 4), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.06f);
                         dust.noGravity = true;
                     }
 
@@ -146,7 +146,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override bool? CanDamage()
         {
-            if (Timer<120)
+            if (Timer < 120)
                 return false;
             return null;
         }

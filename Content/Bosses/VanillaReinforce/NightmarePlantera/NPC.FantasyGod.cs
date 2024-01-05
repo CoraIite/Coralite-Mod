@@ -301,7 +301,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             float factor = Math.Abs(MathF.Sin(Main.GlobalTimeWrappedHourly)) * 0.6f;
             Vector2 pos = NPC.Center - Main.screenPosition;
 
-            if (leftTentacles!=null&&rightTentacles!=null)
+            if (leftTentacles != null && rightTentacles != null)
             {
                 for (int i = 0; i < 3; i++)
                 {

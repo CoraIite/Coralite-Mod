@@ -227,8 +227,8 @@ namespace Coralite.Content.Items.CoreKeeper
 
                 float strength = 1;
 
-                int which = Main.rand.Next(0,2);
-                Helper.PlayPitched("CoreKeeper/swordImpact"+which, 0.5f, 0, Projectile.Center);
+                int which = Main.rand.Next(0, 2);
+                Helper.PlayPitched("CoreKeeper/swordImpact" + which, 0.5f, 0, Projectile.Center);
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {

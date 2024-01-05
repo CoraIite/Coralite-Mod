@@ -184,7 +184,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         {
             OnHit(hit.Damage);
         }
-        
+
         public void OnHit(int damage)
         {
             DamageCount += damage;

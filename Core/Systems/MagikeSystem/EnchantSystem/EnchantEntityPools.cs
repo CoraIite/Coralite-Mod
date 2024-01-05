@@ -189,7 +189,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
                 if (!t.IsAbstract && t.GetInterfaces().Contains(typeof(ISpecialEnchantable)))
                 {
                     ISpecialEnchantable sp = Activator.CreateInstance(t) as ISpecialEnchantable;
-                    SpecialEnchantPools.Add(sp.SelfType,sp.GetEntityPool());
+                    SpecialEnchantPools.Add(sp.SelfType, sp.GetEntityPool());
                 }
             }
 

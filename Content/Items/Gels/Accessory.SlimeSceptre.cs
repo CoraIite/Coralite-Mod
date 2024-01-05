@@ -64,10 +64,10 @@ namespace Coralite.Content.Items.Gels
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer==player.whoAmI)
+            if (Main.myPlayer == player.whoAmI)
             {
                 Projectile.NewProjectile(source, player.Center + (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 32,
-                    (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero)*Item.shootSpeed, type, damage, knockback, player.whoAmI);
+                    (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * Item.shootSpeed, type, damage, knockback, player.whoAmI);
             }
             return false;
         }
@@ -116,7 +116,7 @@ namespace Coralite.Content.Items.Gels
                         Projectile.rotation = Projectile.rotation.AngleTowards(targetRot, 0.01f);
                         State = 1;
                         Projectile.ai[2] = Projectile.scale;
-                        Projectile.tileCollide=true;
+                        Projectile.tileCollide = true;
                     }
                     break;
                 case 1:
@@ -175,7 +175,7 @@ namespace Coralite.Content.Items.Gels
                 dust.noGravity = true;
             }
 
-            if (Projectile.localAI[0]>3)
+            if (Projectile.localAI[0] > 3)
             {
                 Projectile.tileCollide = false;
                 State = 2;
@@ -192,7 +192,7 @@ namespace Coralite.Content.Items.Gels
 
         public override bool? CanDamage()
         {
-            if ((State == 1 && Projectile.ai[1]>5)||State==2)
+            if ((State == 1 && Projectile.ai[1] > 5) || State == 2)
                 return null;
             return false;
         }

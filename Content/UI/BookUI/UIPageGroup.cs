@@ -20,9 +20,9 @@ namespace Coralite.Content.UI.BookUI
 
         public abstract void InitPages();
 
-        public bool TryGetPage<T>(out  T page) where T : UIPage
+        public bool TryGetPage<T>(out T page) where T : UIPage
         {
-            if (Pages ==null)
+            if (Pages == null)
             {
                 page = null;
                 return false;

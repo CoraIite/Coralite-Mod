@@ -31,7 +31,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "C1_1_1_History1").Value;
-            spriteBatch.Draw(mainTex, Bottom+new Vector2(0,-60), null, Color.White, 0, new Vector2(mainTex.Width / 2, mainTex.Height), PageWidth / mainTex.Width, 0, 0);
+            spriteBatch.Draw(mainTex, Bottom + new Vector2(0, -60), null, Color.White, 0, new Vector2(mainTex.Width / 2, mainTex.Height), PageWidth / mainTex.Width, 0, 0);
 
             Vector2 pos = PageTop + new Vector2(0, 60);
             Utils.DrawBorderStringBig(spriteBatch, _1_Name.Value, pos, Coralite.Instance.MagicCrystalPink
@@ -41,7 +41,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
                 , 1, 0f, 00f);
             pos += new Vector2(0, 60);
             Helpers.Helper.DrawText(spriteBatch, History1.Value, PageWidth, pos, Vector2.Zero, Vector2.One
-                , new Color(40, 40, 40), Color.White,out _);
+                , new Color(40, 40, 40), Color.White, out _);
         }
     }
 }

@@ -13,7 +13,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.SpecialLens
 {
-    public class RedJadeLens : BaseMagikePlaceableItem,IMagikeSenderItem,IMagikeGeneratorItem
+    public class RedJadeLens : BaseMagikePlaceableItem, IMagikeSenderItem, IMagikeGeneratorItem
     {
         public RedJadeLens() : base(TileType<RedJadeLensTile>(), Item.sellPrice(0, 0, 10, 0)
             , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeLens)

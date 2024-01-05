@@ -30,7 +30,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         public override void OnSpawn(IEntitySource source)
         {
             Vector2 center = Projectile.Center;
-                Helper.PlayPitched("RedJade/RedJadeBoom", 1f, -1f, center);
+            Helper.PlayPitched("RedJade/RedJadeBoom", 1f, -1f, center);
 
             Color red = new Color(221, 50, 50);
             int type = CoraliteContent.ParticleType<LightBall>();
@@ -60,7 +60,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override bool CanHitPlayer(Player target)
         {
-            return Vector2.Distance(Projectile.Center, target.Center) < Projectile.width/2;
+            return Vector2.Distance(Projectile.Center, target.Center) < Projectile.width / 2;
         }
     }
 }

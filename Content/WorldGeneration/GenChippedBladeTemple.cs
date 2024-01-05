@@ -1,13 +1,13 @@
 ﻿using Coralite.Content.Items.CoreKeeper;
 using Coralite.Core;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
-using Terraria.ID;
 using Terraria;
+using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
@@ -57,7 +57,7 @@ namespace Coralite.Content.WorldGeneration
                 try
                 {
                     int offset = GenVars.dungeonSide;
-                    int origin = GenVars.jungleOriginX - offset * 250;
+                    int origin = GenVars.jungleOriginX - offset * 350;
                     int junglePos = Main.rand.Next(origin - 60, origin + 60);//(GenVars.jungleMaxX + GenVars.jungleMinX) / 2;
                     float r = Math.Abs(junglePos - Main.maxTilesX / 2);
 
@@ -94,7 +94,7 @@ namespace Coralite.Content.WorldGeneration
 
                     //放门
 
-                    Point doorPos = position + new Point(3,9);
+                    Point doorPos = position + new Point(3, 9);
                     WorldGen.PlaceObject(doorPos.X, doorPos.Y, ModContent.TileType<GlowTulipDoorClosed>(), true);
                     doorPos = position + new Point(20, 9);
                     WorldGen.PlaceObject(doorPos.X, doorPos.Y, ModContent.TileType<GlowTulipDoorClosed>(), true);

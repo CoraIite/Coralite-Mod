@@ -2028,6 +2028,12 @@ Mods: {
 					+3亮光
 					[c/8e8e8e:一只会发光的戒指，蕴含着光耀郁金香的精华。]
 					'''
+				Polished: "经过抛光的 "
+				PolishedToolTip:
+					'''
+					+4亮光
+					每秒+1.0点生命值
+					'''
 			}
 
 			AncientGemNecklace: {
@@ -2050,6 +2056,68 @@ Mods: {
 					'''
 				AncientGemSet: 2件套：将背包内物品的最高镐力的+7%加到攻击伤害上
 				AncientGemSetTips: 装备上古宝石项链以获得套装效果
+			}
+
+			GoldCrystalNecklace: {
+				DisplayName: 黄金水晶项链
+				Tooltip:
+					'''
+					+9.0%近战伤害
+					+9.4%远程伤害
+					[c/8e8e8e:将最为贵重的几种材料结合起来打造而成的饰物，闪闪发亮。]
+					'''
+				Polished: "经过抛光的 "
+				PolishedToolTip:
+					'''
+					+12.3%近战伤害
+					+12.5%远程伤害
+					'''
+			}
+
+			GoldCrystalRing: {
+				DisplayName: 黄金水晶戒指
+				Tooltip:
+					'''
+					+6.3%远程伤害
+					[c/8e8e8e:一枚珍奇的戒指，上面镶着一枚上古宝石。]
+					'''
+				Polished: "经过抛光的 "
+				PolishedToolTip:
+					'''
+					+8.9%远程伤害
+					+4%远程攻击速度
+					'''
+			}
+
+			OctarineBar: {
+				DisplayName: 幻光金属锭
+				Tooltip: ""
+			}
+
+			OctarineOre: {
+				DisplayName: 幻光金属矿石
+				Tooltip: ""
+			}
+
+			SkyRing: {
+				DisplayName: 天空戒指
+				Tooltip:
+					'''
+					+7%暴击几率
+					+8.5%近战伤害
+					[c/8e8e8e:这枚戒指让你想起了广袤无垠的天空。]
+					'''
+			}
+
+			CoreBoneRing: {
+				DisplayName: 骨制戒指
+				Tooltip:
+					'''
+					+10点护甲
+					+4%暴击几率
+					[c/8e8e8e:一枚用骨头制成的史前时代的戒指，做工粗糙。]
+					[c/8e8e8e:以前也有人在早期人类的墓穴中发现过类似的戒指。]
+					'''
 			}
 		}
 
@@ -2192,6 +2260,11 @@ Mods: {
 			BloodJadeBuff: {
 				DisplayName: 爆破能量
 				Description: 你手中赤血玉武器的不稳定性提升了
+			}
+
+			IvyPoison: {
+				// DisplayName: Ivy Poison
+				// Description: Mods.Coralite.Buffs.IvyPoison.Description
 			}
 		}
 
@@ -2523,6 +2596,7 @@ Mods: {
 			// BrokenHandleSlash.DisplayName: Broken Handle Slash
 			// RuneSongSlash.DisplayName: Rune Song Slash
 			// CraftUIProj.DisplayName: Craft U I Proj
+			// RuneSoneRightProj.DisplayName: Rune Sone Right Proj
 		}
 
 		Configs: {

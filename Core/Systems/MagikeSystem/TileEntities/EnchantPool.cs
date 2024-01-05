@@ -38,7 +38,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public override bool StartWork()
         {
             if (containsItem is not null && !containsItem.IsAir &&
-                (containsItem.damage > 0 || 
+                (containsItem.damage > 0 ||
                 ((containsItem.accessory || containsItem.defense > 0) && containsItem.TryGetGlobalItem(out MagikeItem mi) && mi.accessoryOrArmorCanEnchant)) &&
                 magike >= GetMagikeCost(containsItem))
             {
@@ -157,7 +157,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             }
         }
 
-        public int GetMagikeCost( Item item)
+        public int GetMagikeCost(Item item)
         {
             return (int)(GetBaseMagikeCost(item) * (targetedEnchantSlot.HasValue ? 1.5f : 1f));
         }
@@ -204,7 +204,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
             if (currentData.level == Enchant.Level.Max)
             {
-                List<int> otherDataIndex =new List<int>();
+                List<int> otherDataIndex = new List<int>();
 
                 for (int i = 0; i < enchant.datas.Length; i++)
                 {

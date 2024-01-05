@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.Crimson
         public override void Update(Player player, ref int buffIndex)
         {
             player.armorEffectDrawShadow = true;
-            if (player.TryGetModPlayer(out BloodAmuletPlayer bap)&& player.whoAmI == Main.myPlayer)
+            if (player.TryGetModPlayer(out BloodAmuletPlayer bap) && player.whoAmI == Main.myPlayer)
                 count = bap.bloodthirstyCount;
         }
 

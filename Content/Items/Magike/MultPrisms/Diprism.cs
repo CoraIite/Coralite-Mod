@@ -17,7 +17,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.MultPrisms
 {
-    public class Diprism : BaseMagikePlaceableItem,IMagikeSenderItem
+    public class Diprism : BaseMagikePlaceableItem, IMagikeSenderItem
     {
         public Diprism() : base(TileType<DiprismTile>(), Item.sellPrice(0, 0, 5, 0)
             , RarityType<MagicCrystalRarity>(), 25, AssetDirectory.MagikeMultPrisms)

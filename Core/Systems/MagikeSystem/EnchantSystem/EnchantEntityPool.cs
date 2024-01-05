@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
@@ -57,8 +56,8 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         public void FindAndRemoveAll(int whichSlot, Enchant.Level level)
         {
             IEnumerable<EnchantData> values = from d in _datas
-                                    where d.whichSlot == whichSlot && d.level == level
-                                    select d ;
+                                              where d.whichSlot == whichSlot && d.level == level
+                                              select d;
 
             EnchantData[] arr = values.ToArray();
 

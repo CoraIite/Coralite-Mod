@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.CoreKeeper
 {
-    public class PoisonousSickle:ModItem
+    public class PoisonousSickle : ModItem
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
 
@@ -48,6 +48,11 @@ namespace Coralite.Content.Items.CoreKeeper
                     , "-", ((int)(Item.damage * 1.098f)).ToString(), tip);
             }
         }
+
+    }
+
+    public class PoisonousSickleSlash
+    {
 
     }
 }

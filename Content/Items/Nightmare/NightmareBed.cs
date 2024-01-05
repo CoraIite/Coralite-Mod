@@ -2,7 +2,6 @@
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Microsoft.Xna.Framework;
-using System.Numerics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -97,16 +96,16 @@ namespace Coralite.Content.Items.Nightmare
                 if (whoAmI_X == 2)
                     info.AnchorTilePosition.X--;
                 if (whoAmI_X == 3)
-                    info.AnchorTilePosition.X-=2;
+                    info.AnchorTilePosition.X -= 2;
                 else if (whoAmI_X == 4)
                     info.AnchorTilePosition.X -= 3;
             }
             else
             {
                 if (whoAmI_X == 5)
-                    info.AnchorTilePosition.X+=3;
+                    info.AnchorTilePosition.X += 3;
                 if (whoAmI_X == 6)
-                    info.AnchorTilePosition.X+=2;
+                    info.AnchorTilePosition.X += 2;
             }
 
             int whoAmI_Y = tile.TileFrameY / 18;
@@ -116,8 +115,8 @@ namespace Coralite.Content.Items.Nightmare
                 info.AnchorTilePosition.Y -= 2;
 
             info.VisualOffset.Y -= 16f; // 将玩家向下移动一个档次，因为床没有普通床高
-            //info.VisualOffset.X += info.TargetDirection * 32f;
-           Point faa= info.AnchorTilePosition;
+                                        //info.VisualOffset.X += info.TargetDirection * 32f;
+            Point faa = info.AnchorTilePosition;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

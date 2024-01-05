@@ -13,9 +13,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
-    public class Damnation:ModItem
+    public class Damnation : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Shoot+Name;
+        public override string Texture => AssetDirectory.Misc_Shoot + Name;
 
         public override void SetDefaults()
         {

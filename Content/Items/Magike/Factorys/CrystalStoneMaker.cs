@@ -16,7 +16,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Factorys
 {
-    public class CrystalStoneMaker : BaseMagikePlaceableItem,IMagikeFactoryItem
+    public class CrystalStoneMaker : BaseMagikePlaceableItem, IMagikeFactoryItem
     {
         public CrystalStoneMaker() : base(TileType<CrystalStoneMakerTile>(), Item.sellPrice(0, 0, 10, 0)
             , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeFactories)

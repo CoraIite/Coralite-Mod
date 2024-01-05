@@ -59,7 +59,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Introduce
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Utils.DrawBorderStringBig(spriteBatch, Index.Value, PageTop + new Vector2(0,60), Coralite.Instance.MagicCrystalPink, 1, 0.5f, 0.5f);
+            Utils.DrawBorderStringBig(spriteBatch, Index.Value, PageTop + new Vector2(0, 60), Coralite.Instance.MagicCrystalPink, 1, 0.5f, 0.5f);
         }
     }
 
@@ -106,7 +106,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Introduce
         }
     }
 
-    public class Chapter2Jump: Chapter1Jump
+    public class Chapter2Jump : Chapter1Jump
     {
         public override int PageToJump => MagikeGuideBookUI.BookPanel.GetPageIndex<C2_ChapterName>();
         public override string Text => C0_P2_Catalog.Chapter2.Value;

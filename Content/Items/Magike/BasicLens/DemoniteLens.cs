@@ -67,9 +67,9 @@ namespace Coralite.Content.Items.Magike.BasicLens
 
     public class DemoniteLensEntity : MagikeGenerator_FromMagItem
     {
-        public const int sendDelay = 60*9;
+        public const int sendDelay = 60 * 9;
         public int sendTimer;
-        public DemoniteLensEntity() : base(150, 5 * 16, 60*9) { }
+        public DemoniteLensEntity() : base(150, 5 * 16, 60 * 9) { }
 
         public override ushort TileType => (ushort)TileType<DemoniteLensTile>();
 

@@ -49,7 +49,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter3
                 , new Color(40, 40, 40), Color.White, out textSize);
 
             Texture2D mainTex = TextureAssets.Item[ModContent.ItemType<ForestLens>()].Value;
-            spriteBatch.Draw(mainTex, new Vector2(Position.X+50,pos.Y+ textSize.Y / 2), null, Color.White, 0, mainTex.Size() / 2, 1, 0, 0);
+            spriteBatch.Draw(mainTex, new Vector2(Position.X + 50, pos.Y + textSize.Y / 2), null, Color.White, 0, mainTex.Size() / 2, 1, 0, 0);
 
             pos += new Vector2(0, textSize.Y + 30);
 

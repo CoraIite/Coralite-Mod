@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
     public class BrilliantRemodelPool : BaseMagikePlaceableItem, IMagikeFactoryItem
     {
         public BrilliantRemodelPool() : base(TileType<BrilliantRemodelPoolTile>(), Item.sellPrice(0, 1, 0, 0)
-            , RarityType<CrystallineMagikeRarity>(), 600,AssetDirectory.MagikeRemodelPools)
+            , RarityType<CrystallineMagikeRarity>(), 600, AssetDirectory.MagikeRemodelPools)
         { }
 
         public override int MagikeMax => 4500;

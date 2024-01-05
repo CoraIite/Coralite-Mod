@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.UI;
 
@@ -28,7 +27,7 @@ namespace Coralite.Content.UI.UILib
 
         public UIPageGroup[] pageGroups;
         //public Dictionary<UIPageGroup,int> pageGroupIndexes;
-        
+
         /// <summary>
         /// 左边那一页的ID
         /// </summary>
@@ -141,7 +140,7 @@ namespace Coralite.Content.UI.UILib
             //防止出现越界的情况
             if (Elements.Count >= 2)
                 currentDrawingPage = Math.Clamp(currentDrawingPage, 0, Elements.Count - 1);
-            else 
+            else
                 currentDrawingPage = 0;
             currentDrawingPage = currentDrawingPage / 2 * 2;//利用神奇算法让它变为偶数
 
@@ -320,7 +319,7 @@ namespace Coralite.Content.UI.UILib
             if (IsMouseHovering)
             {
                 Main.LocalPlayer.mouseInterface = true;
-                Terraria.GameInput.PlayerInput.LockVanillaMouseScroll(Coralite.Instance.Name+"/UIBookPanel");
+                Terraria.GameInput.PlayerInput.LockVanillaMouseScroll(Coralite.Instance.Name + "/UIBookPanel");
             }
 
             base.Update(gameTime);

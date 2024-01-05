@@ -139,7 +139,7 @@ namespace Coralite.Content.WorldGeneration
                 if (num6 > 0)
                     num6--;
 
-                if (num6 == 0 && WorldGen.genRand.NextBool(5)&& GenVars.dungeonY > Main.worldSurface + 100.0)
+                if (num6 == 0 && WorldGen.genRand.NextBool(5) && GenVars.dungeonY > Main.worldSurface + 100.0)
                 {
                     num6 = 10;
                     int dungeonX2 = GenVars.dungeonX;
@@ -787,7 +787,7 @@ namespace Coralite.Content.WorldGeneration
                     ushort chestTileType = 21;
                     int contain = 0;
                     int style2 = 0;
-                    switch (i1) 
+                    switch (i1)
                     {
                         case 0:
                             style2 = 23;
@@ -923,7 +923,7 @@ namespace Coralite.Content.WorldGeneration
                                     if (flag7)
                                     {
                                         WorldGen.PlaceTile(num83, num84 - 1, 50, mute: true);
-                                        if (WorldGen.genRand.NextBool(50)&& (double)num84 > (Main.worldSurface + Main.rockLayer) / 2.0 && Main.tile[num83, num84 - 1].TileType == 50)
+                                        if (WorldGen.genRand.NextBool(50) && (double)num84 > (Main.worldSurface + Main.rockLayer) / 2.0 && Main.tile[num83, num84 - 1].TileType == 50)
                                             Main.tile[num83, num84 - 1].TileFrameX = 90;
                                     }
 
@@ -1861,7 +1861,7 @@ namespace Coralite.Content.WorldGeneration
 
                             for (int num22 = num7 - 1; num22 <= num7 + 1; num22++)
                             {
-                                if (WorldGen.genRand.NextBool(2)&& !Main.tile[num22, j - 2].HasTile)
+                                if (WorldGen.genRand.NextBool(2) && !Main.tile[num22, j - 2].HasTile)
                                 {
                                     int num23 = WorldGen.genRand.Next(5);
                                     if (num8 != -1 && num23 <= 1 && !Main.tileLighted[Main.tile[num22 - 1, j - 2].TileType])
@@ -1905,7 +1905,7 @@ namespace Coralite.Content.WorldGeneration
 
                             for (int n = num7; n <= num7 + 1; n++)
                             {
-                                if (WorldGen.genRand.NextBool(2)&& !Main.tile[n, j - 1].HasTile)
+                                if (WorldGen.genRand.NextBool(2) && !Main.tile[n, j - 1].HasTile)
                                 {
                                     int num21 = WorldGen.genRand.Next(5);
                                     if (num8 != -1 && num21 <= 1 && !Main.tileLighted[Main.tile[n - 1, j - 1].TileType])
@@ -2231,7 +2231,7 @@ namespace Coralite.Content.WorldGeneration
                     if (!Main.wallDungeon[Main.tile[num11, num12].WallType] && Main.tile[num11, num12].TileType != GenVars.crackedType)
                     {
                         Main.tile[num11, num12].Clear(TileDataType.Slope);
-                        Main.tile[num11, num12].ResetToType ( tileType);
+                        Main.tile[num11, num12].ResetToType(tileType);
                         if (num11 > i - num6 && num11 < i + num6 && num12 < num2 + num7)
                             Main.tile[num11, num12].WallType = (ushort)wallType;
                     }
@@ -2680,7 +2680,7 @@ namespace Coralite.Content.WorldGeneration
                         {
                             if (Main.tile[num17, num18].HasTile || Main.tile[num17, num18].WallType != wallType)
                             {
-                                Main.tile[num17, num18].ResetToType( GenVars.crackedType);
+                                Main.tile[num17, num18].ResetToType(GenVars.crackedType);
                             }
                         }
                         else
@@ -2768,7 +2768,7 @@ namespace Coralite.Content.WorldGeneration
                         if (!Main.wallDungeon[Main.tile[k, l].WallType])
                         {
                             Main.tile[k, l].Clear(TileDataType.Slope);
-                            Main.tile[k, l].ResetToType ( tileType);
+                            Main.tile[k, l].ResetToType(tileType);
                         }
                     }
                 }
@@ -2917,7 +2917,7 @@ namespace Coralite.Content.WorldGeneration
                     Main.tile[num11, num12].LiquidAmount = 0;
                     if (Main.tile[num11, num12].WallType != wallType)
                     {
-                        Main.tile[num11, num12].ResetToType( tileType);
+                        Main.tile[num11, num12].ResetToType(tileType);
                         Main.tile[num11, num12].Clear(TileDataType.Slope);
                     }
                 }
@@ -2934,7 +2934,7 @@ namespace Coralite.Content.WorldGeneration
                     Main.tile[num13, num14].LiquidAmount = 0;
                     if (Main.tile[num13, num14].WallType != wallType)
                     {
-                        Main.tile[num13, num14].ResetToType(tileType) ;
+                        Main.tile[num13, num14].ResetToType(tileType);
                         Main.tile[num13, num14].Clear(TileDataType.Slope);
                     }
                 }
@@ -3388,7 +3388,7 @@ namespace Coralite.Content.WorldGeneration
                 {
                     for (int num57 = num5; num57 < num6 + 1; num57++)
                     {
-                        Main.tile[num56, num57].ResetToType( tileType);
+                        Main.tile[num56, num57].ResetToType(tileType);
                         Main.tile[num56, num57].Clear(TileDataType.Slope);
                     }
                 }
@@ -3523,9 +3523,9 @@ namespace Coralite.Content.WorldGeneration
                 while (num14 > 0)
                 {
                     num14--;
-                    Main.tile[num12, num13 ].ResetToType(191);
-                    Main.tile[num12, num13 ].Clear(TileDataType.Slope);
-                    WorldGen.paintTile(num12, num13 , 28);
+                    Main.tile[num12, num13].ResetToType(191);
+                    Main.tile[num12, num13].Clear(TileDataType.Slope);
+                    WorldGen.paintTile(num12, num13, 28);
                     if (WorldGen.genRand.NextBool(10))
                         num13 = ((!WorldGen.genRand.NextBool(2)) ? (num13 + 1) : (num13 - 1));
                     else
@@ -3543,9 +3543,9 @@ namespace Coralite.Content.WorldGeneration
                             Main.tile[num12, num13].ResetToType(191);
                             Main.tile[num12, num13].Clear(TileDataType.Slope);
                             WorldGen.paintTile(num12, num13, 28);
-                            Main.tile[num12, num13-1].ResetToType(191);
-                            Main.tile[num12, num13-1].Clear(TileDataType.Slope);
-                            WorldGen.paintTile(num12, num13-1, 28);
+                            Main.tile[num12, num13 - 1].ResetToType(191);
+                            Main.tile[num12, num13 - 1].Clear(TileDataType.Slope);
+                            WorldGen.paintTile(num12, num13 - 1, 28);
                             array5[num2] = num12;
                             array6[num2] = num13;
                             num2++;
@@ -3816,7 +3816,7 @@ namespace Coralite.Content.WorldGeneration
                             if (num4 == j && i > num6 - 2 && i <= num6 + 1)
                             {
                                 Main.tile[i, num4 + 1].ClearTile();
-                               WorldGen. PlaceTile(i, num4 + 1, 19, mute: true, forced: false, -1, 23);
+                                WorldGen.PlaceTile(i, num4 + 1, 19, mute: true, forced: false, -1, 23);
                             }
                         }
                     }
@@ -3831,7 +3831,7 @@ namespace Coralite.Content.WorldGeneration
                             }
 
                             if (Main.tile[i - 1, num4].TileType == 40)
-                                Main.tile[i - 1, num4].ResetToType( 0);
+                                Main.tile[i - 1, num4].ResetToType(0);
 
                             if (Main.tile[i + 1, num4].TileType == 40)
                                 Main.tile[i - 1, num4].ResetToType(0);
@@ -3843,7 +3843,7 @@ namespace Coralite.Content.WorldGeneration
 
                     if (!WorldGen.gen)
                     {
-                       WorldGen. SquareTileFrame(i, num4);
+                        WorldGen.SquareTileFrame(i, num4);
                         WorldGen.SquareWallFrame(i, num4);
                     }
                 }

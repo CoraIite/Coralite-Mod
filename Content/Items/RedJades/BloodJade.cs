@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class BloodJade:BaseMaterial
+    public class BloodJade : BaseMaterial
     {
         public BloodJade() : base(9999, Item.sellPrice(0, 0, 5, 50), ItemRarityID.LightRed, AssetDirectory.RedJadeItems) { }
 

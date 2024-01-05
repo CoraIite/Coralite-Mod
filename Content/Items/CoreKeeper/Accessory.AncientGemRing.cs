@@ -49,8 +49,8 @@ namespace Coralite.Content.Items.CoreKeeper
         {
             CreateRecipe()
                 .AddIngredient<AncientGemstone>(8)
-                .AddIngredient(ItemID.SoulofLight,5)
-                .AddIngredient(ItemID.SoulofNight,5)
+                .AddIngredient(ItemID.SoulofLight, 5)
+                .AddIngredient(ItemID.SoulofNight, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

@@ -13,7 +13,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.EnchantPools
 {
-    public class SoulEnchantPool : BaseMagikePlaceableItem,IMagikeFactoryItem
+    public class SoulEnchantPool : BaseMagikePlaceableItem, IMagikeFactoryItem
     {
         public SoulEnchantPool() : base(TileType<SoulEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0)
             , RarityType<CrystallineMagikeRarity>(), 300, AssetDirectory.MagikeEnchantPools)

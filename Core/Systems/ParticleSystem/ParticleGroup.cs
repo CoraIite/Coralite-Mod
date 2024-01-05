@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Core.Systems.ParticleSystem
 {
-    public class ParticleGroup:IEnumerable<Particle>
+    public class ParticleGroup : IEnumerable<Particle>
     {
         private List<Particle> _particles;
 
@@ -136,7 +136,7 @@ namespace Coralite.Core.Systems.ParticleSystem
                 ParticleLoader.GetParticle(particle.type).Draw(spriteBatch, particle);
             }
 
-            if (armorShaderData!=null)
+            if (armorShaderData != null)
             {
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.TransformationMatrix);

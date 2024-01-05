@@ -29,7 +29,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter2
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "Note4").Value;
             spriteBatch.Draw(mainTex, BottomRight + new Vector2(2, -58), null, new Color(50, 0, 28), 0, mainTex.Size(), 1, 0, 0);
             spriteBatch.Draw(mainTex, BottomRight + new Vector2(0, -60), null, Color.White, 0, mainTex.Size(), 1, 0, 0);
-            
+
             Vector2 pos = Position + new Vector2(0, 60);
             Utils.DrawBorderStringBig(spriteBatch, Date.Value, pos, Coralite.Instance.MagicCrystalPink
                 , 0.8f, 0f, 0f);

@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Misc_Melee;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
@@ -120,10 +119,10 @@ namespace Coralite.Content.Items.Icicle
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            foreach (var proj in Main.projectile.Where(p=>p.active&&p.friendly&&p.owner==Projectile.owner
-                && p.type == ProjectileType<IcicleKniefChain>() && p.ai[2]==(int)BaseSilkKnifeSpecialProj.AIStates.onHit))
+            foreach (var proj in Main.projectile.Where(p => p.active && p.friendly && p.owner == Projectile.owner
+                && p.type == ProjectileType<IcicleKniefChain>() && p.ai[2] == (int)BaseSilkKnifeSpecialProj.AIStates.onHit))
             {
-                if (proj.ai[1]==target.whoAmI)
+                if (proj.ai[1] == target.whoAmI)
                 {
                     proj.ai[0]++;
                     if (proj.ai[0] > 6)
@@ -261,7 +260,7 @@ namespace Coralite.Content.Items.Icicle
                 for (int i = 0; i < Count; i++)
                 {
                     float rot = i * MathHelper.TwoPi / 6;
-                    Main.spriteBatch.Draw(snowTex, endPos + rot.ToRotationVector2() * 32, null, lightColor * 0.6f,rot+ Main.GlobalTimeWrappedHourly * 2, snowTex.Size() / 2, Projectile.scale, 0, 0);
+                    Main.spriteBatch.Draw(snowTex, endPos + rot.ToRotationVector2() * 32, null, lightColor * 0.6f, rot + Main.GlobalTimeWrappedHourly * 2, snowTex.Size() / 2, Projectile.scale, 0, 0);
                 }
             }
 

@@ -3,7 +3,6 @@ using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -67,7 +66,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 containsItem.TryGetGlobalItem(out MagikeItem mi) && mi.magikeMax >= 0 && mi.magike < mi.magikeMax)
             {
                 int howMany = howManyPerCharge;
-                if (howMany > mi.magikeMax-mi.magike) 
+                if (howMany > mi.magikeMax - mi.magike)
                     howMany = mi.magikeMax - mi.magike;
 
                 mi.magike += howMany;

@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Magike.Refineries
     public class BrilliantRefinery : BaseMagikePlaceableItem, IMagikeFactoryItem
     {
         public BrilliantRefinery() : base(TileType<BrilliantRefineryTile>(), Item.sellPrice(0, 0, 10, 0)
-            , RarityType<CrystallineMagikeRarity>(), 300,AssetDirectory.MagikeFactories)
+            , RarityType<CrystallineMagikeRarity>(), 300, AssetDirectory.MagikeFactories)
         { }
 
         public override int MagikeMax => 800;

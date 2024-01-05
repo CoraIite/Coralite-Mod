@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Magike.Tools.MiniColumns
         {
             CreateRecipe()
                 .AddIngredient<MiniBrilliantColumn>()
-                .AddIngredient(ItemID.Ectoplasm,5)
+                .AddIngredient(ItemID.Ectoplasm, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

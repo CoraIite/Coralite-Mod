@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class LockedDoor:HookGroup
+    public class LockedDoor : HookGroup
     {
         public override void Load()
         {
@@ -14,7 +14,7 @@ namespace Coralite.Content.CustomHooks
         {
             Tile tile = Main.tile[i, j];
             ModTile mt = TileLoader.GetTile(tile.TileType);
-            if (mt != null && mt is ILockableDoor ld && !ld.Unlock(i,j))
+            if (mt != null && mt is ILockableDoor ld && !ld.Unlock(i, j))
                 return false;
 
             return orig.Invoke(i, j, direction);
@@ -23,6 +23,6 @@ namespace Coralite.Content.CustomHooks
 
     public interface ILockableDoor
     {
-        bool Unlock(int i,int j);
+        bool Unlock(int i, int j);
     }
 }

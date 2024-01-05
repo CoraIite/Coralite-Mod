@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.CoreKeeper
             for (int i = 3; i < 10; i++)
             {
                 Item item = player.armor[i];
-                if (item.type==ItemType<AncientGemRing>())
+                if (item.type == ItemType<AncientGemRing>())
                 {
                     if (player.TryGetModPlayer(out AncientGemPlayer agp))
                     {
@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.CoreKeeper
                         }
 
                         //伤害增加挖掘伤害的7%
-                        player.GetDamage(DamageClass.Generic) += mineDamage*0.01f * 0.07f;
+                        player.GetDamage(DamageClass.Generic) += mineDamage * 0.01f * 0.07f;
                     }
                 }
             }
@@ -63,11 +63,11 @@ namespace Coralite.Content.Items.CoreKeeper
             if (Main.LocalPlayer.TryGetModPlayer(out AncientGemPlayer agp))
             {
                 if (agp.AncientGemSet)
-                tooltips.Add(new TooltipLine(Mod, "AncientGemSet", this.GetLocalization("AncientGemSet", () => "2件套：将背包内物品的最高镐力的+7%加到攻击伤害上").Value));
+                    tooltips.Add(new TooltipLine(Mod, "AncientGemSet", this.GetLocalization("AncientGemSet", () => "2件套：将背包内物品的最高镐力的+7%加到攻击伤害上").Value));
                 else
                 {
                     TooltipLine line = new TooltipLine(Mod, "AncientGemSetTips"
-                         , this.GetLocalization("AncientGemSetTips", () => "装备上古宝石戒指以获得套装效果").Value+$"[i:{ItemType<AncientGemRing>()}]");
+                         , this.GetLocalization("AncientGemSetTips", () => "装备上古宝石戒指以获得套装效果").Value + $"[i:{ItemType<AncientGemRing>()}]");
                     line.OverrideColor = new Microsoft.Xna.Framework.Color(147, 147, 147);
                     tooltips.Add(line);
                 }
@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.CoreKeeper
         }
     }
 
-    public class AncientGemPlayer:ModPlayer
+    public class AncientGemPlayer : ModPlayer
     {
         public bool AncientGemSet;
 

@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.RedJades
 {
-    internal class BloodiancieBossBag:ModItem
+    internal class BloodiancieBossBag : ModItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
 
@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.RedJades
             for (float i = 0f; i < 1f; i += 0.25f)
             {
                 float radians = (i + timer) * MathHelper.TwoPi;
-                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 8f).RotatedBy(radians) * time, frame, new Color(232, 37, 98, 100)*0.25f, rotation, frameOrigin, scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 8f).RotatedBy(radians) * time, frame, new Color(232, 37, 98, 100) * 0.25f, rotation, frameOrigin, scale, SpriteEffects.None, 0);
             }
 
             for (float i = 0f; i < 1f; i += 0.34f)

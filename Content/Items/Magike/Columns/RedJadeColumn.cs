@@ -13,7 +13,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Columns
 {
-    public class RedJadeColumn : BaseMagikePlaceableItem,IMagikeSenderItem
+    public class RedJadeColumn : BaseMagikePlaceableItem, IMagikeSenderItem
     {
         public RedJadeColumn() : base(TileType<RedJadeColumnTile>(), Item.sellPrice(0, 0, 10, 0)
             , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeColumns)

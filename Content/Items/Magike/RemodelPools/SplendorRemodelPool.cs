@@ -16,7 +16,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.RemodelPools
 {
-    public class SplendorRemodelPool : BaseMagikePlaceableItem,IMagikeFactoryItem
+    public class SplendorRemodelPool : BaseMagikePlaceableItem, IMagikeFactoryItem
     {
         public SplendorRemodelPool() : base(TileType<SplendorRemodelPoolTile>(), Item.sellPrice(0, 3, 0, 0)
             , RarityType<SplendorMagicoreRarity>(), 1000, AssetDirectory.MagikeRemodelPools)

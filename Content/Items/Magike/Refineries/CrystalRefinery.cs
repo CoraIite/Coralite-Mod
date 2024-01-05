@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.Magike.Refineries
         }
     }
 
-    public class CrystalRefineryTile: BaseRefineryTile
+    public class CrystalRefineryTile : BaseRefineryTile
     {
         public override void SetStaticDefaults()
         {
@@ -65,7 +65,7 @@ namespace Coralite.Content.Items.Magike.Refineries
 
     public class CrystalRefinerEntity : Refinery
     {
-        public CrystalRefinerEntity() : base(200, 15 * 60, 50, 1){}
+        public CrystalRefinerEntity() : base(200, 15 * 60, 50, 1) { }
 
         public override ushort TileType => (ushort)TileType<CrystalRefineryTile>();
         public override Color MainColor => Coralite.Instance.MagicCrystalPink;

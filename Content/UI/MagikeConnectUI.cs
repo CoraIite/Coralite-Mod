@@ -43,7 +43,7 @@ namespace Coralite.Content.UI
 
             for (int i = 0; i < length; i++)
             {
-                connectButtons[i] = new MagikeConnectButton(ModContent.Request<Texture2D>(AssetDirectory.UI+ "MagikeConnectButton", AssetRequestMode.ImmediateLoad));
+                connectButtons[i] = new MagikeConnectButton(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikeConnectButton", AssetRequestMode.ImmediateLoad));
                 connectButtons[i].index = i;
 
                 Vector2 pos = ((i * MathHelper.TwoPi / length) - MathHelper.PiOver2).ToRotationVector2() * 80;

@@ -14,9 +14,9 @@ namespace Coralite.Content.Items.Icicle
 
         public ref float Combo => ref Projectile.ai[0];
 
-        public IcicleSwordHeldProj():base(new Vector2(46,56).ToRotation())
+        public IcicleSwordHeldProj() : base(new Vector2(46, 56).ToRotation())
         {
-            
+
         }
 
         public override void SetDefs()

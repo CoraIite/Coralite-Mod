@@ -17,7 +17,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.MultPrisms
 {
-    public class DemoniteTriprism : BaseMagikePlaceableItem, IMagikePolymerizable,IMagikeSenderItem
+    public class DemoniteTriprism : BaseMagikePlaceableItem, IMagikePolymerizable, IMagikeSenderItem
     {
         public DemoniteTriprism() : base(TileType<DemoniteTriprismTile>(), Item.sellPrice(0, 0, 50, 0)
             , RarityType<MagicCrystalRarity>(), 25, AssetDirectory.MagikeMultPrisms)

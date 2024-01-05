@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.Corruption
                 Projectile.Kill();
 
             //Point p = Projectile.Center.ToTileCoordinates();
-            Vector2 idlePos = Owner.Center+new Vector2(Owner.direction*32,0);
+            Vector2 idlePos = Owner.Center + new Vector2(Owner.direction * 32, 0);
             //Tile tile = Framing.GetTileSafely(p);
             //idlePos = Owner.Center;
             for (int i = 0; i < 4; i++)//检测头顶4个方块并尝试找到没有物块阻挡的那个
@@ -138,7 +138,7 @@ namespace Coralite.Content.Items.Corruption
                     break;
                 }
                 else
-                    idlePos += new Vector2(-Owner.direction*8, -16);
+                    idlePos += new Vector2(-Owner.direction * 8, -16);
             }
 
             TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.1f);

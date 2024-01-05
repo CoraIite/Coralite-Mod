@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.RedJades
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                if (player.altFunctionUse==2)
+                if (player.altFunctionUse == 2)
                 {
                     Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<BloodJadeParry>(), damage, knockback, player.whoAmI);
                     return false;
@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.RedJades
         {
             int timer = (int)Timer - minTime;
 
-            if (canShoot&&timer>(maxTime-minTime)/2)
+            if (canShoot && timer > (maxTime - minTime) / 2)
             {
                 if (Owner.HasBuff<BloodJadeBuff>())
                 {

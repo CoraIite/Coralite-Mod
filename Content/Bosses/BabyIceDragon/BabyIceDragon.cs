@@ -988,7 +988,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
             Rectangle frameBox = mainTex.Frame(3, 5, NPC.frame.X, NPC.frame.Y);//new Rectangle(NPC.frame.X * FrameWidth, NPC.frame.Y * FrameHeight, FrameWidth, FrameHeight);
             SpriteEffects effects = SpriteEffects.None;
-            Vector2 origin = frameBox.Size()/2;
+            Vector2 origin = frameBox.Size() / 2;
 
             if (NPC.spriteDirection != 1)
                 effects = SpriteEffects.FlipHorizontally;

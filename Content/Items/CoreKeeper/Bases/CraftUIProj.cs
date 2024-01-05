@@ -160,7 +160,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             particle.color = Main.rand.Next(2) switch
             {
                 0 => new Color(148, 247, 221),
-                _ => new Color(24,133,216)
+                _ => new Color(24, 133, 216)
             };
             particle.trail = new Trail(Main.instance.GraphicsDevice, 16, new NoTip(), factor => 1 * particle.scale, factor =>
             {
@@ -246,7 +246,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public override void OnSpawn(Particle particle)
         {
-            particle.color = new Color(148, 247, 221,100);
+            particle.color = new Color(148, 247, 221, 100);
             particle.velocity = new Vector2(2, 8);
         }
 
@@ -318,7 +318,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             spriteBatch.Draw(mainTex, pos, null, particle.color, particle.rotation, origin, particle.scale, SpriteEffects.None, 0f);
             mainTex = modParticle.Texture2D.Value;
 
-            spriteBatch.Draw(mainTex, pos, null, particle.color, particle.rotation, origin, particle.velocity*1.2f, SpriteEffects.FlipVertically, 0f);
+            spriteBatch.Draw(mainTex, pos, null, particle.color, particle.rotation, origin, particle.velocity * 1.2f, SpriteEffects.FlipVertically, 0f);
             spriteBatch.Draw(mainTex, pos, null, particle.color, particle.rotation, origin, particle.velocity * 1.2f, SpriteEffects.FlipVertically, 0f);
         }
     }

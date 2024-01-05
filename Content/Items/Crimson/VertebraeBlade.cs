@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.Crimson
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
                         Projectile p = Main.projectile[i];
-                        if (p.active && p.friendly && p.owner == player.whoAmI && p.type == type && p.ai[0]==1)
+                        if (p.active && p.friendly && p.owner == player.whoAmI && p.type == type && p.ai[0] == 1)
                         {
                             p.velocity *= 0;
                             p.tileCollide = false;
@@ -73,8 +73,8 @@ namespace Coralite.Content.Items.Crimson
                     }
 
                     bladePos /= indexs.Count;
-                    bladePos += ( player.Center-bladePos ).SafeNormalize(Vector2.Zero) * 120;
-                    Projectile bladePorj = Projectile.NewProjectileDirect(source, bladePos, Vector2.Zero, ModContent.ProjectileType<VertebraeBladeProj>(), (int)(damage * Math.Clamp(count*0.75f,1,0.75f*7)), knockback, player.whoAmI);
+                    bladePos += (player.Center - bladePos).SafeNormalize(Vector2.Zero) * 120;
+                    Projectile bladePorj = Projectile.NewProjectileDirect(source, bladePos, Vector2.Zero, ModContent.ProjectileType<VertebraeBladeProj>(), (int)(damage * Math.Clamp(count * 0.75f, 1, 0.75f * 7)), knockback, player.whoAmI);
                     (bladePorj.ModProjectile as VertebraeBladeProj).indexs = indexs.ToArray();
                     return false;
                 }
@@ -146,7 +146,7 @@ namespace Coralite.Content.Items.Crimson
 
         public override bool? CanDamage()
         {
-            if (Damage==1)
+            if (Damage == 1)
                 return false;
 
             return null;
@@ -370,7 +370,7 @@ namespace Coralite.Content.Items.Crimson
         {
             Projectile.localAI[0]++;
             Projectile.velocity = oldVelocity;
-            return Projectile.localAI[0]>8;
+            return Projectile.localAI[0] > 8;
         }
 
         public override void OnKill(int timeLeft)

@@ -49,7 +49,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 int num = (int)(Main.screenPosition.Y * 0.7 - Main.screenHeight);
                 int minValue = (int)(num - Main.worldSurface * 16.0);
                 _slimes[i].Position = new Vector2(_random.Next(0, Main.maxTilesX) * 16, _random.Next(minValue, num));
-                _slimes[i].rotation =Main.rand.NextFloat(6.282f);
+                _slimes[i].rotation = Main.rand.NextFloat(6.282f);
                 _slimes[i].Speed = 5f + 3f * (float)_random.NextDouble();
                 _slimes[i].Depth = (float)i / _slimes.Length * 1.75f + 1.6f;
                 _slimes[i].Texture = _textures[_random.Next(3)].Value;

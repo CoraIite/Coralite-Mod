@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class BloodJadeCore : ModItem,IMagikePolymerizable
+    public class BloodJadeCore : ModItem, IMagikePolymerizable
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 

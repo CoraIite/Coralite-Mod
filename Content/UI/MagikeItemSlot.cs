@@ -246,7 +246,7 @@ namespace Coralite.Content.UI
                 //position.X += 26 * MagikeItemSlotPanel.scale - rectangle2.Width * itemScale / 2f;
                 //position.Y += 26 * MagikeItemSlotPanel.scale - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
 
-                spriteBatch.Draw(mainTex, center, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, rectangle2.Size()/2, itemScale, 0, 0f);
+                spriteBatch.Draw(mainTex, center, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, rectangle2.Size() / 2, itemScale, 0, 0f);
                 if (Item.color != default(Color))
                     spriteBatch.Draw(mainTex, center, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, rectangle2.Size() / 2, itemScale, 0, 0f);
 

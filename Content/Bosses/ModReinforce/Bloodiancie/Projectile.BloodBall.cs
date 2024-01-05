@@ -98,7 +98,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                     if (Timer % 7 == 0)
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + Main.rand.NextVector2Circular(80, 80),
-                            shootDir * 14, ModContent.ProjectileType<BloodRain>(), Helper.ScaleValueForDiffMode(30,40,50,50), 2f);
+                            shootDir * 14, ModContent.ProjectileType<BloodRain>(), Helper.ScaleValueForDiffMode(30, 40, 50, 50), 2f);
                     }
 
                     break;

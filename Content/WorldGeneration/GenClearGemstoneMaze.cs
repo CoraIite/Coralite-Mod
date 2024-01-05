@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Accessories;
-using Coralite.Content.Items.CoreKeeper;
+﻿using Coralite.Content.Items.CoreKeeper;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,7 +10,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
-using Terraria.UI;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
@@ -55,9 +53,10 @@ namespace Coralite.Content.WorldGeneration
             {
                 try
                 {
+                    int offset = GenVars.dungeonSide;
+                    int origin = GenVars.jungleOriginX - offset * 50;
+                    int junglePos = Main.rand.Next(origin - 20, origin + 20);//(GenVars.jungleMaxX + GenVars.jungleMinX) / 2;
 
-                    //每隔一段选取一个点并检测是否有邪恶地形
-                    int junglePos = Main.rand.Next(GenVars.jungleOriginX - 100, GenVars.jungleOriginX + 100);//(GenVars.jungleMaxX + GenVars.jungleMinX) / 2;
                     float r = Math.Abs(junglePos - Main.maxTilesX / 2);
 
                     Vector2 pos = new Vector2(Main.maxTilesX / 2, (float)Main.worldSurface);
@@ -113,7 +112,7 @@ namespace Coralite.Content.WorldGeneration
                     }
 
                 placeover:
-                    GenVars.structures.AddProtectedStructure(new Rectangle(position.X, position.Y , 29 * 2, 33 * 2), 3);
+                    GenVars.structures.AddProtectedStructure(new Rectangle(position.X, position.Y, 29 * 2, 33 * 2), 3);
 
                     progress.Set(i / (float)itemCount);
                     gened++;

@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.CoreKeeper
 {
-    public class PhantomSpark:ModItem
+    public class PhantomSpark : ModItem
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
 

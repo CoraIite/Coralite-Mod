@@ -213,7 +213,7 @@ namespace Coralite.Content.Items.Nightmare
                     if (State == 1)
                     {
                         howMany = 7;
-                        if (Owner.TryGetModPlayer(out CoralitePlayer cp)&&cp.nightmareEnergyMax>7)
+                        if (Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergyMax > 7)
                             howMany = 10;
 
                         damage = (int)(Projectile.damage * 0.28f);
@@ -494,7 +494,7 @@ namespace Coralite.Content.Items.Nightmare
             Main.EntitySpriteDraw(extraTex, center, null, baseColor, Projectile.rotation, extraOrigin, Projectile.scale * 0.9f, 0);
             Main.EntitySpriteDraw(mainTex, center, null, Color.White, Projectile.rotation, mainTex.Size() / 2, Projectile.scale * 0.9f, 0);
 
-            Color c= NightmarePlantera.lightPurple;
+            Color c = NightmarePlantera.lightPurple;
             Vector2 exOffset = (Projectile.rotation + MathHelper.Pi).ToRotationVector2() * 4;
             Main.EntitySpriteDraw(mainTex, center + exOffset, null, c, Projectile.rotation - 0.4f, mainTex.Size() / 2, Projectile.scale * 0.8f, 0);
             //exOffset = (Projectile.rotation + MathHelper.PiOver2 * 3 / 2).ToRotationVector2() * 6;

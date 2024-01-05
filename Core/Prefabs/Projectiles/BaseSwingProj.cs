@@ -303,7 +303,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if ((int)Timer < minTime || !Collision.CanHitLine(Owner.Center, 1, 1, targetHitbox.Center.ToVector2(), 1, 1))
+            if ((int)Timer < minTime || !Collision.CanHitLine(OwnerCenter(), 1, 1, targetHitbox.Center.ToVector2(), 1, 1))
                 return false;
 
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Bottom, Top, Projectile.width / 2, ref Projectile.localAI[1]);

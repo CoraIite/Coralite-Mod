@@ -42,7 +42,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
             //插图1
             Texture2D mainTex1 = ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "C1_2_Origin1").Value;
             spriteBatch.Draw(mainTex1, pos, null, Color.White, 0, new Vector2(mainTex1.Width / 2, 0), 1, 0, 0);
-           
+
             pos += new Vector2(0, mainTex1.Height + 30);
 
             //文字段2

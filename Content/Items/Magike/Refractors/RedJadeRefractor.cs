@@ -13,7 +13,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Refractors
 {
-    public class RedJadeRefractor : BaseMagikePlaceableItem,IMagikeSenderItem
+    public class RedJadeRefractor : BaseMagikePlaceableItem, IMagikeSenderItem
     {
         public RedJadeRefractor() : base(TileType<RedJadeRefractorTile>(), Item.sellPrice(0, 0, 10, 0)
             , RarityType<MagicCrystalRarity>(), 25, AssetDirectory.MagikeRefractors)

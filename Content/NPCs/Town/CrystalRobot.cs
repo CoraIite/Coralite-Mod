@@ -23,9 +23,9 @@ using Terraria.Utilities;
 namespace Coralite.Content.NPCs.Town
 {
     [AutoloadHead]
-    public class CrystalRobot:ModNPC
+    public class CrystalRobot : ModNPC
     {
-        public override string Texture => AssetDirectory.TownNPC+Name;
+        public override string Texture => AssetDirectory.TownNPC + Name;
 
         public const string ShopName = "Shop";
         public int NumberOfTimesTalkedTo = 0;

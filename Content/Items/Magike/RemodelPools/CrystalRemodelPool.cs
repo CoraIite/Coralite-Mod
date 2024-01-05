@@ -16,7 +16,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.RemodelPools
 {
-    public class CrystalRemodelPool : BaseMagikePlaceableItem,IMagikeFactoryItem
+    public class CrystalRemodelPool : BaseMagikePlaceableItem, IMagikeFactoryItem
     {
         public CrystalRemodelPool() : base(TileType<CrystalRemodelPoolTile>(), Item.sellPrice(0, 0, 10, 0)
             , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeRemodelPools)

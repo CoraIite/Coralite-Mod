@@ -11,7 +11,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Items.Magike
 {
-    public class MagikeNote1: ModItem
+    public class MagikeNote1 : ModItem
     {
         public override string Texture => AssetDirectory.MagikeItems + Name;
 
@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.Magike
 
         public void RandomKnowledge(int which)
         {
-            if (which>0&&which<7)
+            if (which > 0 && which < 7)
             {
                 whichToUnlock = which;
                 return;

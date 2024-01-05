@@ -65,7 +65,7 @@ namespace Coralite.Content.Items.Magike.Chargers
 
     public class CrystalChargerEntity : MagikeCharger
     {
-        public CrystalChargerEntity() : base(300,5) { }
+        public CrystalChargerEntity() : base(300, 5) { }
 
         public override ushort TileType => (ushort)TileType<CrystalChargerTile>();
         public override Color MainColor => Coralite.Instance.MagicCrystalPink;

@@ -13,7 +13,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Crimson
 {
-    public class VertebraeChest: BaseChestItem
+    public class VertebraeChest : BaseChestItem
     {
         public VertebraeChest() : base(Item.sellPrice(0, 0, 0, 10), ItemRarityID.Blue, ModContent.TileType<VertebraeChestTile>(), AssetDirectory.CrimsonItems)
         { }

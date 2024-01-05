@@ -165,9 +165,9 @@ namespace Coralite.Core.Systems.MagikeSystem
                 }
             }
 
-            if (magikeMax>=0)
+            if (magikeMax >= 0)
             {
-                tag.Add( "magike", magike);
+                tag.Add("magike", magike);
             }
         }
 
@@ -220,7 +220,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             {
                 string GenerateDelay = string.Concat("每 ", generatorItem.GenerateDelay, " 秒生产一次魔能");
                 string howManyToGenerate = generatorItem.HowManyToGenerate < 0 ? "" : $"\n每次生产魔能量：{generatorItem.HowManyToGenerate}";
-                TooltipLine line = new TooltipLine(Mod, "magikeGenerate", GenerateDelay+howManyToGenerate);
+                TooltipLine line = new TooltipLine(Mod, "magikeGenerate", GenerateDelay + howManyToGenerate);
                 tooltips.Add(line);
             }
 
@@ -228,11 +228,11 @@ namespace Coralite.Core.Systems.MagikeSystem
             {
                 string workTimeMax = string.Concat("工作时间：", factoryItem.WorkTimeMax, " 秒\n");
                 string workCost = string.Concat("每次工作消耗 ", factoryItem.WorkCost, " 魔能");
-                TooltipLine line = new TooltipLine(Mod, "magikeFactory", workTimeMax+ workCost);
+                TooltipLine line = new TooltipLine(Mod, "magikeFactory", workTimeMax + workCost);
                 tooltips.Add(line);
             }
 
-            if (magikeMax>=0)
+            if (magikeMax >= 0)
             {
                 TooltipLine line = new TooltipLine(Mod, "magikeFactory", $"魔能：{magike} / {magikeMax}");
                 tooltips.Add(line);

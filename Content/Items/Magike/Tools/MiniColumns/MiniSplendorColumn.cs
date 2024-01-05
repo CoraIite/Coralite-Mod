@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Magike.Tools.MiniColumns
         {
             CreateRecipe()
                 .AddIngredient<MiniSoulColumn>()
-                .AddIngredient<SplendorMagicore>( 2)
+                .AddIngredient<SplendorMagicore>(2)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

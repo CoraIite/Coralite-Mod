@@ -15,7 +15,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Columns
 {
-    public class CrimtaneColumn : BaseMagikePlaceableItem, IMagikePolymerizable,IMagikeSenderItem
+    public class CrimtaneColumn : BaseMagikePlaceableItem, IMagikePolymerizable, IMagikeSenderItem
     {
         public CrimtaneColumn() : base(TileType<CrimtaneColumnTile>(), Item.sellPrice(0, 0, 50, 0)
             , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeColumns)

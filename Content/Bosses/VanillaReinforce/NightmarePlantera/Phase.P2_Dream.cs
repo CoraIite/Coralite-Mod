@@ -1288,7 +1288,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             int damage = Helper.ScaleValueForDiffMode(40, 30, 25, 25);
                             float angle2 = (NPC.Center - Target.Center).ToRotation() + (Timer % 60 == 0 ? MathHelper.PiOver4 : -MathHelper.PiOver4) + Main.rand.NextFloat(-0.25f, 0.25f);
                             NPC.NewProjectileInAI<HookSlash>(NPC.Center + (NPC.Center - Target.Center).SafeNormalize(Vector2.One) * 64, Vector2.Zero, damage,
-                                0, NPC.target,ai0: Main.zenithWorld ? Main.rand.NextFloat(0, 1) :0, ai1: angle2, ai2: 160);
+                                0, NPC.target, ai0: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : 0, ai1: angle2, ai2: 160);
                         }
 
                         if (Timer < ShootCount * 30 + 60)

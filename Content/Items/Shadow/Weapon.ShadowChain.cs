@@ -242,8 +242,8 @@ namespace Coralite.Content.Items.Shadow
                     useSlashTrail = true;
                     maxTime = Owner.itemTimeMax + 16;
                     int reverse = Main.rand.NextFromList(-1, 1);
-                    startAngle = 2.6f*reverse;
-                    totalAngle = 5.2f*reverse;
+                    startAngle = 2.6f * reverse;
+                    totalAngle = 5.2f * reverse;
                     distanceToOwner = Helper.EllipticalEase(2.6f - 5.2f * Smoother.Smoother(0, maxTime - minTime), 30, 60);
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     delay = 16;
@@ -274,7 +274,7 @@ namespace Coralite.Content.Items.Shadow
                     float maxLength = Main.rand.NextFloat(300, 400);
                     float xxxxxxxFactor = Main.rand.NextFloat(0.9f, 1f);
                     Vector2 pos = nPC.Center + Helper.NextVec2Dir() * maxLength / 2;
-                    Vector2 vel = (nPC.Center - pos).SafeNormalize(Vector2.Zero) * maxLength / ((Owner.itemTimeMax + 16)*xxxxxxxFactor);
+                    Vector2 vel = (nPC.Center - pos).SafeNormalize(Vector2.Zero) * maxLength / ((Owner.itemTimeMax + 16) * xxxxxxxFactor);
                     int index = Projectile.NewProjectile(source, pos, vel, ProjectileType<ShadowChainShadows>(), 1, 0, Projectile.owner);
                     Projectile.NewProjectile(source, pos, Vector2.Zero, ProjectileType<ShadowChainSwing>()
                         , Projectile.damage, 0, Projectile.owner, index, 4, vel.ToRotation());
@@ -542,7 +542,7 @@ namespace Coralite.Content.Items.Shadow
         public override void OnHookedToNPC()
         {
             base.OnHookedToNPC();
-            if (SpecialAttackCount>3)
+            if (SpecialAttackCount > 3)
                 HookState = (int)AIStates.drag;
         }
 
@@ -625,7 +625,7 @@ namespace Coralite.Content.Items.Shadow
         }
     }
 
-    public class ShadowChainShadows:ModProjectile
+    public class ShadowChainShadows : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 

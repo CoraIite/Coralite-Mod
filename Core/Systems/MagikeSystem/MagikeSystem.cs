@@ -28,7 +28,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public override void OnModLoad()
         {
-            NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked",()=>"魔能辞典中解锁了新的知识");
+            NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
         }
 
         public override void PostAddRecipes()

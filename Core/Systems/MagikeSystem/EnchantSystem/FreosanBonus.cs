@@ -52,7 +52,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
         public override bool? CanDamage()
         {
-            if (Projectile.ai[0]==0)
+            if (Projectile.ai[0] == 0)
                 return false;
 
             return null;

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Nightmare
 {
-    public class BloodJadeMagicWeapon:ModItem
+    public class BloodJadeMagicWeapon : ModItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
 

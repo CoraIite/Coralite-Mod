@@ -43,7 +43,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter3
             pos += new Vector2(0, textSize.Y + 20);
 
             //插图1
-            Vector2 itemPos =  new Vector2(Position.X+80, pos.Y);
+            Vector2 itemPos = new Vector2(Position.X + 80, pos.Y);
             Texture2D mainTex1 = TextureAssets.Item[ModContent.ItemType<CrystalLens>()].Value;
             spriteBatch.Draw(mainTex1, itemPos, null, Color.White, 0, new Vector2(mainTex1.Width / 2, 0), 1, 0, 0);
             itemPos += new Vector2(80, 0);
@@ -82,7 +82,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter3
             pos += new Vector2(0, textSize.Y + 30);
 
             Texture2D mainTex2 = ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "C3_BasicLens").Value;
-            spriteBatch.Draw(mainTex2, pos+new Vector2(6,6), null, Color.Brown, 0, new Vector2(mainTex2.Width / 2, 0), 1, 0, 0);
+            spriteBatch.Draw(mainTex2, pos + new Vector2(6, 6), null, Color.Brown, 0, new Vector2(mainTex2.Width / 2, 0), 1, 0, 0);
             spriteBatch.Draw(mainTex2, pos, null, Color.White, 0, new Vector2(mainTex2.Width / 2, 0), 1, 0, 0);
         }
     }

@@ -90,8 +90,9 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 case NPCID.WallofFlesh://肉山和鸟妖掉落破碎剑柄
                     npcLoot.Add(ItemDropRule.Common(ItemType<BrokenHandle>(), 10, 1, 1));
                     break;
-                case NPCID.Harpy:
-                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(),ItemType<BrokenHandle>(), 100, 1, 1));
+                case NPCID.Harpy://女妖额外掉落天空戒指
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<BrokenHandle>(), 150, 1, 1));
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), ItemType<SkyRing>(), 50, 1, 1));
                     break;
 
                 case NPCID.RockGolem://岩石巨人,花岗岩敌怪，附魔剑 掉落上古宝石
@@ -101,6 +102,12 @@ namespace Coralite.Content.NPCs.VanillaNPC
                     npcLoot.Add(ItemDropRule.Common(ItemType<AncientGemstone>(), 20, 1, 3));
                     break;
 
+                case NPCID.AngryBones://愤怒骷髅掉落骨质戒指
+                case NPCID.AngryBonesBig:
+                case NPCID.AngryBonesBigHelmet:
+                case NPCID.AngryBonesBigMuscle:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<CoreBoneRing>(), 200, 1, 3));
+                    break;
             }
 
             if (Main.slimeRainNPC[npc.type])

@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 {
-    public class BloodWave:ModProjectile
+    public class BloodWave : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -29,13 +29,13 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void AI()
         {
-            if ((int)Projectile.ai[0]%10==0)
+            if ((int)Projectile.ai[0] % 10 == 0)
             {
                 int type = Main.rand.NextFromList(ModContent.ProjectileType<Rediancie_Explosion>(), ModContent.ProjectileType<Rediancie_BigBoom>());
 
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(),
                     Projectile.Center + new Vector2(Main.rand.NextFloat(-16, 16), Main.rand.NextFloat(-80, 80)), Vector2.Zero, type,
-                    Helpers.Helper.ScaleValueForDiffMode(40,45,50,50), 8, Projectile.owner);
+                    Helpers.Helper.ScaleValueForDiffMode(40, 45, 50, 50), 8, Projectile.owner);
             }
 
             if (Projectile.ai[0] > 150)

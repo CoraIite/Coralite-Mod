@@ -5,10 +5,12 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
 using Terraria.Graphics.CameraModifiers;
@@ -47,6 +49,8 @@ namespace Coralite.Content.Items.CoreKeeper
             //Item.expert = true;
         }
 
+        public override bool AltFunctionUse(Player player) => true;
+
         //原作中有的效果，手持时会发出一点光粒子
         public override void HoldItem(Player player)
         {
@@ -72,9 +76,15 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.7f, Main.rand.NextFloat(0.2f, 0.3f), player.Center);
             if (Main.myPlayer == player.whoAmI)
             {
+                if (player.altFunctionUse == 2)
+                {
+                    Projectile.NewProjectile(source, player.Center, Vector2.Zero,
+                        type, (int)(damage * 1f), knockback, player.whoAmI, 2, -1);
+                    return false;
+                }
+
                 int combo = Main.rand.Next(2);
                 if (combo == oldCombo)
                 {
@@ -90,8 +100,10 @@ namespace Coralite.Content.Items.CoreKeeper
 
                     }
                 }
+
+                Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.7f, Main.rand.NextFloat(0.2f, 0.3f), player.Center);
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero,
-                    type, (int)(damage * 1.75f), knockback, player.whoAmI, combo);
+                    type, (int)(damage * 1.6f), knockback, player.whoAmI, combo, -1);
 
                 oldCombo = combo;
             }
@@ -160,6 +172,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public override string Texture => AssetDirectory.CoreKeeperItems + "RuneSong";
 
         public ref float Combo => ref Projectile.ai[0];
+        public ref float OwnerIndex => ref Projectile.ai[1];
 
         public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> WarpTexture;
@@ -173,6 +186,14 @@ namespace Coralite.Content.Items.CoreKeeper
         private float recordStartAngle;
         private float recordTotalAngle;
         private float extraScaleAngle;
+        private float channelTimer;
+        private float channelAlpha;
+        private float channelShineAlpha;
+        private float channelCount;
+
+        public const int ChannelTimeMax = 90 * 4;
+
+        public SlotId soundSlot;
 
         public override void Load()
         {
@@ -208,6 +229,10 @@ namespace Coralite.Content.Items.CoreKeeper
 
         protected override float ControlTrailBottomWidth(float factor)
         {
+            if (Combo > 2)
+            {
+                return 85 * Projectile.scale;
+            }
             return 65 * Projectile.scale;
         }
 
@@ -227,6 +252,8 @@ namespace Coralite.Content.Items.CoreKeeper
                     maxTime = (int)(Owner.itemTimeMax * 0.6f) + 44;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     delay = 12;
+                    ExtraInit();
+
                     break;
                 case 1://下挥，圆
                     startAngle = -1.6f + Main.rand.NextFloat(-0.2f, 0.2f);
@@ -235,28 +262,190 @@ namespace Coralite.Content.Items.CoreKeeper
                     maxTime = (int)(Owner.itemTimeMax * 0.6f) + 44;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     delay = 12;
+                    ExtraInit();
+
+                    break;
+                case 2:
+                    startAngle = 2f + Main.rand.NextFloat(-0.2f, 0.2f);
+                    totalAngle = 4.7f + Main.rand.NextFloat(-0.2f, 0.2f);
+                    Smoother = Coralite.Instance.BezierEaseSmoother;
+                    maxTime = (int)(Owner.itemTimeMax * 0.6f) + 54;
+                    minTime = 5;
+                    Projectile.scale = 0.8f;
+
+                    soundSlot = Helper.PlayPitched("CoreKeeper/windupSwordUnsheathe", 0.7f, 0, Owner.Center);
+                    ExtraInit();
+                    break;
+                case 3:
+                    startAngle = 0f;
+                    totalAngle = 30.5f;
+                    maxTime = 90 * 4;
+                    Smoother = Coralite.Instance.BezierEaseSmoother;
+                    delay = 20;
+                    Projectile.localNPCHitCooldown = 60;
+                    Projectile.scale = 1.3f;
+
+                    break;
+                case 4:
+                    startAngle = 3.14f;
+                    totalAngle = 30.5f;
+                    maxTime = 90 * 4;
+                    Smoother = Coralite.Instance.BezierEaseSmoother;
+                    delay = 20;
+                    Projectile.localNPCHitCooldown = 60;
+                    Projectile.scale = 1.3f;
+
                     break;
             }
 
+            if (Combo != 2)
+            {
+                base.Initializer();
+                return;
+            }
+
+            Projectile.velocity *= 0f;
+            if (Owner.whoAmI == Main.myPlayer)
+            {
+                _Rotation = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
+                //totalAngle *= OwnerDirection;
+            }
+
+            Slasher();
+            Smoother.ReCalculate(maxTime - minTime);
+
+            if (useShadowTrail || useSlashTrail)
+            {
+                oldRotate = new float[trailLength];
+                oldDistanceToOwner = new float[trailLength];
+                oldLength = new float[trailLength];
+                InitializeCaches();
+            }
+
+            onStart = false;
+            Projectile.netUpdate = true;
+        }
+
+        private void ExtraInit()
+        {
             extraScaleAngle = Main.rand.NextFloat(-0.4f, 0.4f);
             recordStartAngle = Math.Abs(startAngle);
             recordTotalAngle = Math.Abs(totalAngle);
             Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(0, maxTime - minTime), 1.2f, 1.7f);
-
-            base.Initializer();
         }
 
         protected override void AIBefore()
         {
             Lighting.AddLight(Projectile.Center, 0.3f, 0.3f, 1f);
-            base.AIBefore();
+            if (Combo < 3)
+                base.AIBefore();
+        }
+
+        protected override void BeforeSlash()
+        {
+            if (Combo != 2)
+                return;
+
+            if (Main.mouseRight)
+            {
+                channelCount++;
+                Timer = 1;
+                _Rotation = GetStartAngle() - OwnerDirection * startAngle;
+                Slasher();
+                if (channelTimer < ChannelTimeMax)
+                {
+                    channelAlpha = channelTimer / (ChannelTimeMax + 300);
+                    channelTimer++;
+                    startAngle += 0.4f / ChannelTimeMax;
+                    Projectile.scale += 0.3f / ChannelTimeMax;
+                    if (channelTimer == ChannelTimeMax)
+                    {
+                        channelShineAlpha = 1;
+                        Helper.PlayPitched("CoreKeeper/sword", 0.5f, 0.1f, Owner.Center);
+                    }
+                }
+                else
+                {
+                    channelAlpha = 0;
+                    if (channelShineAlpha > 0)
+                        channelShineAlpha -= 0.01f;
+
+                    if (channelCount % 120 == 0)
+                        channelShineAlpha = 1;
+                }
+            }
+            else
+            {
+                if (channelTimer >= ChannelTimeMax)
+                {
+                    Timer = minTime + 1;
+
+                    _Rotation = startAngle = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
+                    totalAngle *= OwnerDirection;
+
+                    //Helper.PlayPitched("Misc/Slash", 0.4f, 0f, Owner.Center);
+                    Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.7f, 0, Owner.Center);
+                    //射弹幕
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center
+                        , (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 8
+                        , ProjectileType<RuneSoneRightProj>(), (int)(Projectile.damage * 1.3f), Projectile.knockBack, Projectile.owner);
+                    InitializeCaches();
+                }
+                else
+                {
+                    Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.7f, Main.rand.NextFloat(0.2f, 0.3f), Owner.Center);
+
+                    if (SoundEngine.TryGetActiveSound(soundSlot, out var result))
+                        result.Stop();
+                    Timer = 0;
+                    Combo = Main.rand.Next(2);
+                    Initializer();
+                }
+            }
         }
 
         protected override void OnSlash()
         {
             int timer = (int)Timer - minTime;
-            alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 140) + 100;
             float scale = 1f;
+
+            if (Combo > 2)
+            {
+                if (alpha < 255)
+                    alpha += 2;
+                if (timer % 30 == 0)
+                    onHitTimer = 0;
+                int nextcount = 4;
+                if (timer > 70 * 4)
+                {
+                    Projectile.scale -= 0.005f;
+                    nextcount = 12;
+                }
+
+                if (Main.rand.NextBool(nextcount))
+                {
+                    Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
+                    int a = Main.rand.Next(5);
+                    int type = a switch
+                    {
+                        0 => DustType<Runes>(),
+                        _ => DustID.AncientLight
+                    };
+                    float scale2 = a switch
+                    {
+                        0 => Main.rand.NextFloat(0.5f, 1.2f),
+                        _ => 1.1f
+                    };
+
+                    Dust dust = Dust.NewDustPerfect(Top + RotateVec2 * Main.rand.Next(-45, 5), type,
+                           dir * Main.rand.NextFloat(0.5f, 3f), Scale: scale2);
+                    dust.noGravity = true;
+                }
+            }
+            else
+            {
+                alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 140) + 100;
+            }
             if (Owner.HeldItem.type == ItemType<RuneSong>())
             {
                 scale = Owner.GetAdjustedItemScale(Owner.HeldItem);
@@ -264,7 +453,11 @@ namespace Coralite.Content.Items.CoreKeeper
                 if (scale > 3f)
                     scale = 3f;
             }
-            Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime), 1.2f, 1.7f);
+            else
+                Projectile.Kill();
+
+            if (Combo < 3)
+                Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime), 1.2f, 1.7f);
             base.OnSlash();
         }
 
@@ -281,29 +474,78 @@ namespace Coralite.Content.Items.CoreKeeper
                 Projectile.Kill();
         }
 
+        protected override void AIAfter()
+        {
+            if (Combo < 3)
+                base.AIAfter();
+            else
+            {
+                Top = Projectile.Center + RotateVec2 * (Projectile.scale * Projectile.height / 2 + trailTopWidth);
+                Bottom = Projectile.Center - RotateVec2 * (Projectile.scale * Projectile.height / 2);//弹幕的底端和顶端计算，用于检测碰撞以及绘制
+
+                if (useShadowTrail || useSlashTrail)
+                    UpdateCaches();
+            }
+        }
+
+        protected override Vector2 OwnerCenter()
+        {
+            if (Main.projectile.IndexInRange((int)OwnerIndex))
+            {
+                Projectile p = Main.projectile[(int)OwnerIndex];
+                if (p.active && p.type == ProjectileType<RuneSoneRightProj>())
+                    return p.Center;
+
+                Projectile.Kill();
+                return Vector2.Zero;
+            }
+
+            //Projectile.Kill();
+            return base.OwnerCenter();
+        }
+
+        protected override Vector2 GetCenter(int i)
+        {
+            if (Main.projectile.IndexInRange((int)OwnerIndex))
+            {
+                Projectile p = Main.projectile[(int)OwnerIndex];
+                if (p.active && p.type == ProjectileType<RuneSoneRightProj>())
+                    return p.Center;
+
+                Projectile.Kill();
+                return Vector2.Zero;
+            }
+
+            //Projectile.Kill();
+            return base.GetCenter(i);
+        }
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (!target.immortal && target.life < Owner.statLife && Main.rand.NextBool(15, 100))
+            bool TrueMelee = Combo < 3;
+            if (TrueMelee && !target.immortal && target.life < Owner.statLife && Main.rand.NextBool(15, 100))
                 target.Kill();
 
-            Projectile.damage = (int)(Projectile.damage * 0.9f);
+            Projectile.damage = (int)(Projectile.damage * 0.8f);
 
             if (onHitTimer == 0)
             {
                 onHitTimer = 1;
-                if (!target.immortal)
+                if (TrueMelee && !target.immortal && !target.SpawnedFromStatue)
                     Owner.Heal(3);
                 if (Main.netMode == NetmodeID.Server)
                     return;
 
-                float strength = 2;
+                float strength = 3;
+                if (Combo > 2)
+                    strength = 2;
                 //float baseScale = 1;
 
                 Helper.PlayPitched("CoreKeeper/swordLegendaryImpact", 0.5f, 0, Projectile.Center);
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
-                    PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, RotateVec2, strength, 6, 6, 1000);
+                    PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, RotateVec2, strength, 4, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
 
@@ -437,6 +679,162 @@ namespace Coralite.Content.Items.CoreKeeper
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+        }
+
+        protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
+        {
+            if (Combo > 2)
+            {
+
+                return;
+            }
+
+            base.DrawSelf(mainTex, origin, lightColor, extraRot);
+            if (Combo == 2 && Timer < minTime)
+            {
+                Texture2D highlightTex = Request<Texture2D>(AssetDirectory.CoreKeeperItems + "RuneSongHighlight").Value;
+                Texture2D mainTex2 = Request<Texture2D>(AssetDirectory.CoreKeeperItems + "CraftUI").Value;
+                DrawBar(mainTex2, Color.White);
+                mainTex2 = Request<Texture2D>(AssetDirectory.CoreKeeperItems + "CraftUIHighlight").Value;
+
+                if (channelTimer<ChannelTimeMax)
+                {
+                    base.DrawSelf(highlightTex, origin, lightColor*channelAlpha, extraRot);
+                    DrawBar(mainTex2, Color.White * channelAlpha);
+                }
+                else
+                {
+                    base.DrawSelf(highlightTex, origin, lightColor * channelShineAlpha, extraRot);
+
+                    Vector2 pos = Owner.Center + new Vector2(0, 200) - Main.screenPosition;
+                    var frameBox = mainTex2.Frame(1, 2, 0, 0);
+                    Vector2 origin2 = frameBox.Size() / 2;
+
+                    Main.spriteBatch.Draw(mainTex2, pos, frameBox, Color.White*channelShineAlpha, 0, origin2, 1, 0, 0);
+                }
+            }
+        }
+
+        private void DrawBar(Texture2D mainTex,Color c)
+        {
+            Vector2 pos = Owner.Center + new Vector2(0, 200) - Main.screenPosition;
+            var frameBox = mainTex.Frame(1, 2, 0, 0);
+
+            Vector2 origin2 = frameBox.Size() / 2;
+
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, c, 0, origin2, 1, 0, 0);
+
+            frameBox = mainTex.Frame(1, 2, 0, 1);
+            int width = frameBox.Width;
+            frameBox.Width = 2 + (int)(width * channelTimer / ChannelTimeMax);
+
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, c, 0, origin2, 1, 0, 0);
+        }
+    }
+
+    public class RuneSoneRightProj : ModProjectile
+    {
+        public override string Texture => AssetDirectory.Blank;
+
+        public override void SetDefaults()
+        {
+            Projectile.timeLeft = 90;
+            Projectile.width = Projectile.height = 24;
+            Projectile.friendly = true;
+        }
+
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
+        public override bool? CanDamage() => false;
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            var source2 = Projectile.GetSource_FromAI();
+            var Owner = Main.player[Projectile.owner];
+
+            Projectile.NewProjectile(source2, Owner.Center, Vector2.Zero, ProjectileType<RuneSongSlash>()
+                , Projectile.damage, Projectile.knockBack, Projectile.owner, 3, Projectile.whoAmI);
+            Projectile.NewProjectile(source2, Owner.Center, Vector2.Zero, ProjectileType<RuneSongSlash>()
+                , Projectile.damage, Projectile.knockBack, Projectile.owner, 4, Projectile.whoAmI);
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return false;
+        }
+
+        public override void AI()
+        {
+            if (Projectile.timeLeft < 50)
+            {
+                Projectile.velocity *= 0.9f;
+            }
+            //if (Main.rand.NextBool(4))
+            //{
+            //    Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(120, 120), DustType<Runes>(),
+            //        new Vector2(0, -Main.rand.NextFloat(2f, 5f))+Projectile.velocity, Scale: Main.rand.NextFloat(0.8f, 1f));
+            //}
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
+        }
+    }
+
+    public class Runes : ModDust
+    {
+        public override string Texture => AssetDirectory.CoreKeeperItems + Name;
+
+        public override void OnSpawn(Dust dust)
+        {
+            dust.frame = Texture2D.Frame(6, 1, Main.rand.Next(6), 0);
+            dust.color = Color.Transparent;
+
+        }
+
+        public override bool Update(Dust dust)
+        {
+            if (dust.fadeIn < 8)
+            {
+                dust.color = Color.White * (dust.fadeIn / 8f);
+            }
+            else
+            {
+                dust.color = Color.White * ((16 - dust.fadeIn) / 8f);
+                if (dust.fadeIn > 16)
+                {
+                    dust.active = false;
+                }
+            }
+
+            dust.position += dust.velocity;
+            dust.fadeIn++;
+            return false;
+        }
+
+        public override Color? GetAlpha(Dust dust, Color lightColor)
+        {
+            return dust.color;
+        }
+
+        public override bool PreDraw(Dust dust)
+        {
+            Texture2D mainTex = Texture2D.Value;
+            var frameBox = dust.frame;
+            var origin = frameBox.Size() / 2;
+            Vector2 pos = dust.position - Main.screenPosition;
+            Color c = Coralite.Instance.IcicleCyan * (dust.color.R / 255f) * 0.3f;
+
+
+            float r = MathHelper.PiOver4;
+            for (int i = 0; i < 4; i++)
+            {
+                Main.EntitySpriteDraw(mainTex, pos + r.ToRotationVector2() * 2, frameBox, c, 0, origin, dust.scale, 0, 0);
+                r += MathHelper.PiOver2;
+            }
+            Main.EntitySpriteDraw(mainTex, pos, frameBox, dust.color, 0, origin, dust.scale, 0, 0);
+
+            return false;
         }
     }
 }

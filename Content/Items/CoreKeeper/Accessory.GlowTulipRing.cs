@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.CoreKeeper.Bases;
+using Coralite.Core;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -9,11 +10,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.CoreKeeper
 {
-    public class GlowTulipRing : ModItem
+    public class GlowTulipRing : PolishableAccessory
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
-
-        public bool polished;
 
         public override void SetDefaults()
         {
@@ -34,7 +33,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 .Register();
         }
 
-        public void Polish(Recipe recipe, Item item, List<Item> list, Item destinationStack)
+        public override void Polish(Recipe recipe, Item item, List<Item> list, Item destinationStack)
         {
             if (item.type == Type)
             {
@@ -70,28 +69,18 @@ namespace Coralite.Content.Items.CoreKeeper
                 }
 
                 TooltipLine tooltip2 = tooltips.FirstOrDefault(t => t.Mod == "Terraria" && t.Name == "Tooltip0", null);
-                if (tooltip2 != null )
+                if (tooltip2 != null)
                 {
                     tooltip2.Text = this.GetLocalization("PolishedToolTip", () => "+4亮光\n每秒+1.0点生命值").Value;
                 }
             }
         }
 
-        public override void SaveData(TagCompound tag)
-        {
-            if (polished)
-                tag.Add("Polished",polished);
-        }
-
         public override void LoadData(TagCompound tag)
         {
-            if (tag.TryGet("Polished",out bool p))
-                polished = p;
-
+            base.LoadData(tag);
             if (polished)
-            {
                 Item.rare = RarityType<RareRarity>();
-            }
         }
     }
 }

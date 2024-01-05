@@ -338,7 +338,7 @@ namespace Coralite.Content.WorldGeneration
                                 ModContent.ItemType<CadaverousDragonHead>(),
                                 ModContent.ItemType<RottenAmulet>());
 
-                        if (WorldGen.AddBuriedChest(chestPos.X, chestPos.Y,itemType ,
+                        if (WorldGen.AddBuriedChest(chestPos.X, chestPos.Y, itemType,
                              notNearOtherChests: false, 0, trySlope: false, (ushort)ModContent.TileType<RottenChestTile>()))
                         {
                             int index = Chest.FindChest(chestPos.X - 1, chestPos.Y);

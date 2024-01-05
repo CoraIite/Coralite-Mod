@@ -67,9 +67,9 @@ namespace Coralite.Content.Items.Magike.BasicLens
 
     public class CrystalLensEntity : MagikeGenerator_FromMagItem
     {
-        public const int sendDelay = 60*10;
+        public const int sendDelay = 60 * 10;
         public int sendTimer;
-        public CrystalLensEntity() : base(50, 5 * 16, 60*10) { }
+        public CrystalLensEntity() : base(50, 5 * 16, 60 * 10) { }
 
         public override ushort TileType => (ushort)TileType<CrystalLensTile>();
 

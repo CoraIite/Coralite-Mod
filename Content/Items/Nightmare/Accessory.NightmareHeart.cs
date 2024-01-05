@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             Item.width = Item.height = 40;
             Item.maxStack = 1;
-            Item.value = Item.sellPrice(0,30);
+            Item.value = Item.sellPrice(0, 30);
             Item.accessory = true;
             Item.expert = true;
         }

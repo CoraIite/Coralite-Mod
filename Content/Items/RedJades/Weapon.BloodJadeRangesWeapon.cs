@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.RedJades
                 if (player.ownedProjectileCounts[type] < 6)
                 {
                     //Main.NewText(player.ownedProjectileCounts[type]);
-                    Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.04f,0.04f)) * 11, type, damage, knockback, player.whoAmI, powerful);
+                    Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 11, type, damage, knockback, player.whoAmI, powerful);
                 }
             }
 
@@ -128,9 +128,9 @@ namespace Coralite.Content.Items.RedJades
             trail ??= new Trail(Main.instance.GraphicsDevice, 14, new NoTip(), factor => Helper.Lerp(4, 8, factor), factor =>
             {
                 if (factor.X < 0.7f)
-                    return Color.Lerp(Color.Transparent, new Color(81,11,47,150), factor.X / 0.7f);
+                    return Color.Lerp(Color.Transparent, new Color(81, 11, 47, 150), factor.X / 0.7f);
 
-                return Color.Lerp(new Color(81, 11, 47,150), Color.Transparent, (factor.X - 0.7f) / 0.3f);
+                return Color.Lerp(new Color(81, 11, 47, 150), Color.Transparent, (factor.X - 0.7f) / 0.3f);
             });
             //trail2 ??= new Trail(Main.instance.GraphicsDevice, 6, new NoTip(), factor => Helper.Lerp(8, 10, factor), factor =>
             //{
@@ -204,7 +204,7 @@ namespace Coralite.Content.Items.RedJades
                 }
 
                 if (Powerful == 0)
-                    ChangeState(1, State==0);
+                    ChangeState(1, State == 0);
                 else
                 {
                     var source = Projectile.GetSource_FromAI();
@@ -245,7 +245,7 @@ namespace Coralite.Content.Items.RedJades
                 Projectile.velocity.Y = -oldVelY;
 
 
-            if (hitTileCount>2)
+            if (hitTileCount > 2)
             {
                 Projectile.tileCollide = false;
                 ChangeState(1);
@@ -270,7 +270,7 @@ namespace Coralite.Content.Items.RedJades
 
             for (int i = 12; i > 8; i--)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, null,
-                c2 * (1f - (12-i) * 1 / 5f), Projectile.rotation, mainTex.Size() / 2, Projectile.scale, 0, 0);
+                c2 * (1f - (12 - i) * 1 / 5f), Projectile.rotation, mainTex.Size() / 2, Projectile.scale, 0, 0);
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, c, Projectile.rotation,
                 mainTex.Size() / 2, Projectile.scale, 0, 0);
 
@@ -404,9 +404,9 @@ namespace Coralite.Content.Items.RedJades
             {
                 if (cp.parryTime < 100)
                 {
-                    for (int i = -1; i < 2; i+=2)
+                    for (int i = -1; i < 2; i += 2)
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, MouseTargetVector2.RotatedBy(i*0.3f) * 11, ProjectileType<BloodJadeFrisbee>(),
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, MouseTargetVector2.RotatedBy(i * 0.3f) * 11, ProjectileType<BloodJadeFrisbee>(),
                             (int)(Projectile.damage * 0.6f), Projectile.knockBack, Projectile.owner, 1);
                     }
                     Owner.AddImmuneTime(ImmunityCooldownID.General, immuneTime);

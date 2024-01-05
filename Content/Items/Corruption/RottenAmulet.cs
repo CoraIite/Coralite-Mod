@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Corruption
 {
-    public class RottenAmulet:ModItem
+    public class RottenAmulet : ModItem
     {
         public override string Texture => AssetDirectory.CorruptionItems + Name;
 
@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.Corruption
         }
     }
 
-    public class RottenAmuletPlayer:ModPlayer
+    public class RottenAmuletPlayer : ModPlayer
     {
         public bool equippedRottenAmulet;
         public int limbRebirthCount;

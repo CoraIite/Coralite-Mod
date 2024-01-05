@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.Magike.Tools
             }
             else if (frameCounter > restTime * 2 + frameTime && frameCounter <= restTime * 2 + frameTime * 2)
             {
-                frame = 4 - (frameCounter - restTime *2 - frameTime) / 6;
+                frame = 4 - (frameCounter - restTime * 2 - frameTime) / 6;
             }
             else if (frameCounter > restTime * 2 + frameTime * 2)
             {

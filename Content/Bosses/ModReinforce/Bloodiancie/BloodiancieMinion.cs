@@ -12,11 +12,11 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 {
-    public class BloodiancieMinion:ModNPC
+    public class BloodiancieMinion : ModNPC
     {
         public override string Texture => AssetDirectory.Bloodiancie + "BloodBink";
 
-       public Player Target => Main.player[NPC.target];
+        public Player Target => Main.player[NPC.target];
         public ref float Timer => ref NPC.ai[0];
         public ref float IdleTime => ref NPC.ai[1];
         public ref float State => ref NPC.ai[2];
@@ -94,7 +94,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                         {
                             NPC.TargetClosest();
 
-                            NPC.velocity =Vector2.Lerp(NPC.velocity, (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitY) * 8f,0.6f);
+                            NPC.velocity = Vector2.Lerp(NPC.velocity, (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitY) * 8f, 0.6f);
                             NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
 
                             int damage = NPC.GetAttackDamage_ForProjectiles(15, 25);

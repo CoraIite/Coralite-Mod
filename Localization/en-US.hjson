@@ -2016,6 +2016,12 @@ Mods: {
 					+3 glow
 					[c/8e8e8e:A luminous ring that holds the essence of glow tulips.]
 					'''
+				Polished: "Polished "
+				PolishedToolTip:
+					'''
+					+4 glow
+					+1 health every sec
+					'''
 			}
 
 			AncientGemNecklace: {
@@ -2038,6 +2044,67 @@ Mods: {
 					'''
 				AncientGemSet: 2 set: +7% of mining damage added as melee damage
 				AncientGemSetTips: Equip the Ancient Gem Necklace to get the set effect
+			}
+
+			GoldCrystalNecklace: {
+				DisplayName: Gold Crystal Necklace
+				Tooltip:
+					'''
+					+9.0% melee damage
+					+9.4% range damage
+					[c/8e8e8e:A shiny trinket combining the most valuable of materials.]
+					'''
+				Polished: "Polished "
+				PolishedToolTip:
+					'''
+					+12.3% melee damage
+					+12.5% range damage
+					'''
+			}
+
+			GoldCrystalRing: {
+				DisplayName: Gold Crystal Ring
+				Tooltip:
+					'''
+					+6.3% range damage
+					[c/8e8e8e:A precious ring featuring an ancient gemstone.]
+					'''
+				Polished: "Polished "
+				PolishedToolTip:
+					'''
+					+8.9% range damage
+					+4% range attack speed
+					'''
+			}
+
+			OctarineBar: {
+				DisplayName: Octarine Bar
+				Tooltip: ""
+			}
+
+			OctarineOre: {
+				DisplayName: Octarine Ore
+				Tooltip: ""
+			}
+
+			SkyRing: {
+				DisplayName: Sky Ring
+				Tooltip:
+					'''
+					+7% critical hit chance
+					+8.5% melee damage
+					[c/8e8e8e:This ring reminds you of the wide open sky.]
+					'''
+			}
+
+			CoreBoneRing: {
+				DisplayName: Bone Ring
+				Tooltip:
+					'''
+					+10 armor
+					+4% critical hit chance
+					[c/8e8e8e:A prehistoric, crude ring made from bone. Rings like these have been discovered in early human graves.]
+					'''
 			}
 		}
 
@@ -2180,6 +2247,11 @@ Mods: {
 			BloodJadeBuff: {
 				DisplayName: Blood Jade Buff
 				Description: Mods.Coralite.Buffs.BloodJadeBuff.Description
+			}
+
+			IvyPoison: {
+				DisplayName: Ivy Poison
+				Description: Mods.Coralite.Buffs.IvyPoison.Description
 			}
 		}
 
@@ -2511,6 +2583,7 @@ Mods: {
 			BrokenHandleSlash.DisplayName: Broken Handle Slash
 			RuneSongSlash.DisplayName: Rune Song Slash
 			CraftUIProj.DisplayName: Craft U I Proj
+			RuneSoneRightProj.DisplayName: Rune Sone Right Proj
 		}
 
 		Configs: {

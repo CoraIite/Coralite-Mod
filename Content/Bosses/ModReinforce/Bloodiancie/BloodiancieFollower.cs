@@ -24,7 +24,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         public BloodiancieFollower(Vector2 center)
         {
             this.center = center;
-            lengthOffset = Main.rand.NextFloat(0.6f,1f);
+            lengthOffset = Main.rand.NextFloat(0.6f, 1f);
             textureType = Main.rand.Next(2);
         }
 

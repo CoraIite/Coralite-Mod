@@ -16,10 +16,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.MultPrisms
 {
-    public class BrilliantQuadprism : BaseMagikePlaceableItem,IMagikeSenderItem
+    public class BrilliantQuadprism : BaseMagikePlaceableItem, IMagikeSenderItem
     {
         public BrilliantQuadprism() : base(TileType<BrilliantQuadprismTile>(), Item.sellPrice(0, 1, 0, 0)
-            , RarityType<CrystallineMagikeRarity>(), 600,AssetDirectory.MagikeMultPrisms)
+            , RarityType<CrystallineMagikeRarity>(), 600, AssetDirectory.MagikeMultPrisms)
         { }
 
         public override int MagikeMax => 600;

@@ -15,7 +15,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.WeatherLens
 {
-    public class BreezeLens : BaseMagikePlaceableItem,IMagikeGeneratorItem,IMagikeSenderItem
+    public class BreezeLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
     {
         public BreezeLens() : base(TileType<BreezeLensTile>(), Item.sellPrice(0, 0, 10, 0)
             , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeLens)

@@ -77,15 +77,15 @@ namespace Coralite.Content.ModPlayers
             if (parryTime > 0)
             {
                 parryTime--;
-                if (parryTime<=0)
+                if (parryTime <= 0)
                 {
                     SoundEngine.PlaySound(CoraliteSoundID.MaxMana, Player.Center);
                     for (int i = 0; i < 5; i++)
                     {
-                        int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Clentaminator_Red, 0f, 0f, 255, Scale:Main.rand.Next(20, 26) * 0.1f);
+                        int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Clentaminator_Red, 0f, 0f, 255, Scale: Main.rand.Next(20, 26) * 0.1f);
                         Main.dust[index].noLight = true;
                         Main.dust[index].noGravity = true;
-                        Main.dust[index].velocity = Player.velocity*0.5f;
+                        Main.dust[index].velocity = Player.velocity * 0.5f;
                     }
                 }
             }
@@ -166,10 +166,10 @@ namespace Coralite.Content.ModPlayers
                     SoundEngine.PlaySound(CoraliteSoundID.MaxMana, Player.Center);
                     for (int i = 0; i < 5; i++)
                     {
-                        int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.YellowTorch, 0f, 0f, 255,Scale: Main.rand.Next(20, 26) * 0.15f);
+                        int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.YellowTorch, 0f, 0f, 255, Scale: Main.rand.Next(20, 26) * 0.15f);
                         Main.dust[index].noLight = true;
                         Main.dust[index].noGravity = true;
-                        Main.dust[index].velocity = Player.velocity ;
+                        Main.dust[index].velocity = Player.velocity;
                     }
                 }
             }

@@ -58,7 +58,7 @@ namespace Coralite.Content.UI
                 panel.Left.Set(34, 0f);
                 panel.index = i;
 
-                removeButton.Top.Set(-26 - 54 + i * 54+10, 0f);
+                removeButton.Top.Set(-26 - 54 + i * 54 + 10, 0f);
                 removeButton.Left.Set(34 + 50, 0f);
                 removeButton.index = i;
 
@@ -106,7 +106,7 @@ namespace Coralite.Content.UI
         }
     }
 
-    public class EnchantShowPanel:UIElement
+    public class EnchantShowPanel : UIElement
     {
         public int index;
 
@@ -144,7 +144,7 @@ namespace Coralite.Content.UI
             spriteBatch.Draw(backTex, center, null, Color.White, 0, backTex.Size() / 2, 1.5f, SpriteEffects.None, 0);
 
             if (!MagikeEnchantUI.tileEntity.targetedEnchantSlot.HasValue
-                || MagikeEnchantUI.tileEntity.targetedEnchantSlot==(Enchant.ID)index)
+                || MagikeEnchantUI.tileEntity.targetedEnchantSlot == (Enchant.ID)index)
             {
                 Item Item = MagikeEnchantUI.tileEntity.GetItem();
                 if (Item is null || Item.IsAir)
@@ -159,14 +159,14 @@ namespace Coralite.Content.UI
                 Vector2 origin = flowTex.Size() / 2;
                 spriteBatch.Draw(flowTex, center, null, c, 0, origin, 1.5f, SpriteEffects.None, 0);
                 c.A = 0;
-                    spriteBatch.Draw(flowTex, center, null, c, 0, origin, 1.5f, SpriteEffects.None, 0);
+                spriteBatch.Draw(flowTex, center, null, c, 0, origin, 1.5f, SpriteEffects.None, 0);
             }
         }
     }
 
     public class EnchantRetargetButton : UIImageButton
     {
-        public EnchantRetargetButton() : base(ModContent.Request<Texture2D>(AssetDirectory.UI+ "EnchantClearButton", AssetRequestMode.ImmediateLoad))
+        public EnchantRetargetButton() : base(ModContent.Request<Texture2D>(AssetDirectory.UI + "EnchantClearButton", AssetRequestMode.ImmediateLoad))
         {
 
         }

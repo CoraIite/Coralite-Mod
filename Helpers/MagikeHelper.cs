@@ -1,12 +1,9 @@
-﻿using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
+﻿using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Coralite.Helpers
@@ -174,7 +171,7 @@ namespace Coralite.Helpers
         /// <returns></returns>
         public static bool TryCosumeMagike(this Item item, int howMany)
         {
-            if (item.TryGetGlobalItem(out MagikeItem mi)&&mi.magike>=howMany)
+            if (item.TryGetGlobalItem(out MagikeItem mi) && mi.magike >= howMany)
             {
                 mi.magike -= howMany;
                 return true;

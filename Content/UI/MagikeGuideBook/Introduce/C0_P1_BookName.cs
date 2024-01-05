@@ -24,7 +24,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Introduce
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Utils.DrawBorderStringBig(spriteBatch, BookName.Value, Center,Coralite.Instance.MagicCrystalPink, 1, 0.5f, 0.5f);
+            Utils.DrawBorderStringBig(spriteBatch, BookName.Value, Center, Coralite.Instance.MagicCrystalPink, 1, 0.5f, 0.5f);
 
             Utils.DrawBorderString(spriteBatch, Author.Value, Bottom + new Vector2(0, -80), Color.White, 1, 0.5f, 1f);
         }

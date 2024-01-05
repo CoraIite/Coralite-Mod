@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Magike.Tools.MiniColumns
             CreateRecipe()
                 .AddIngredient<MiniCrystalColumn>()
                 .AddIngredient<GlistentBar>(2)
-                .AddIngredient(ItemID.TissueSample,5)
+                .AddIngredient(ItemID.TissueSample, 5)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

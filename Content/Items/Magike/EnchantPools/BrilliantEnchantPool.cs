@@ -13,10 +13,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.EnchantPools
 {
-    public class BrilliantEnchantPool : BaseMagikePlaceableItem,IMagikeFactoryItem
+    public class BrilliantEnchantPool : BaseMagikePlaceableItem, IMagikeFactoryItem
     {
         public BrilliantEnchantPool() : base(TileType<BrilliantEnchantPoolTile>(), Item.sellPrice(0, 0, 50, 0)
-            , RarityType<CrystallineMagikeRarity>(), 300,AssetDirectory.MagikeEnchantPools)
+            , RarityType<CrystallineMagikeRarity>(), 300, AssetDirectory.MagikeEnchantPools)
         { }
 
         public override int MagikeMax => 1500;

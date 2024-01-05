@@ -49,7 +49,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer==player.whoAmI)
+            if (Main.myPlayer == player.whoAmI)
             {
                 PlayerNightmareEnergy.Spawn(player, source);
                 Projectile.NewProjectile(source, position, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 24, type, damage, knockback, player.whoAmI);
@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             NPCIndex = target.whoAmI;
             State = 1;
-            Projectile.velocity= Vector2.Zero;
+            Projectile.velocity = Vector2.Zero;
             offset = Projectile.Center - target.Center;
         }
 
@@ -159,7 +159,7 @@ namespace Coralite.Content.Items.Nightmare
 
                         Projectile.scale = Helper.Lerp(Projectile.scale, 0.55f, 0.1f);
                         Projectile.rotation = (npc.Center - Projectile.Center).ToRotation();
-                        Projectile.Center= npc.Center+offset;
+                        Projectile.Center = npc.Center + offset;
 
                         if (Main.mouseRight && Main.mouseRightRelease
                             && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy >= 5)
@@ -182,17 +182,17 @@ namespace Coralite.Content.Items.Nightmare
                             //生成弹幕
                             int dir = Main.rand.NextFromList(-1, 1);
                             Vector2 position = Projectile.Center + (Projectile.rotation + dir * 2.2f).ToRotationVector2() * Main.rand.Next(60, 80);
-                            Vector2 velocity = (Projectile.rotation - dir * Main.rand.NextFloat(0.2f,0.45f)).ToRotationVector2() * Main.rand.Next(16,20);
+                            Vector2 velocity = (Projectile.rotation - dir * Main.rand.NextFloat(0.2f, 0.45f)).ToRotationVector2() * Main.rand.Next(16, 20);
 
                             int state = Main.rand.Next(2);
 
-                            if (state==1)
+                            if (state == 1)
                             {
                                 position = Projectile.Center + (Projectile.rotation + dir * 1.8f).ToRotationVector2() * Main.rand.Next(70, 90);
                             }
 
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), position, velocity, ProjectileType<BoneClaw>(), Projectile.damage, 0, Projectile.owner,
-                              state , ShootCount, -dir);
+                              state, ShootCount, -dir);
 
                             Projectile.scale = 0.25f;
                             ShootCount++;
@@ -259,9 +259,9 @@ namespace Coralite.Content.Items.Nightmare
     /// 使用ai1传入颜色，为1时可变成红色并可以获得梦魇光能<br></br>
     /// 使用ai2传入攻击方向
     /// </summary>
-    public class BoneClaw : ModProjectile,IDrawPrimitive
+    public class BoneClaw : ModProjectile, IDrawPrimitive
     {
-        public override string Texture => AssetDirectory.OtherProjectiles+"ClawsTrail2";
+        public override string Texture => AssetDirectory.OtherProjectiles + "ClawsTrail2";
 
         public ref float State => ref Projectile.ai[0];
         public ref float ColorState => ref Projectile.ai[1];
@@ -377,13 +377,13 @@ namespace Coralite.Content.Items.Nightmare
                             Projectile.oldPos[15] = Projectile.Center + Projectile.velocity;
 
                             float rot;
-                            if (Timer<9)
+                            if (Timer < 9)
                             {
-                                rot = Helper.Lerp(HowManyRot / 3, HowManyRot*2, Timer / 9);
+                                rot = Helper.Lerp(HowManyRot / 3, HowManyRot * 2, Timer / 9);
                             }
                             else
                             {
-                                rot = Helper.Lerp(HowManyRot*2, HowManyRot/3, (Timer-9) / 9);
+                                rot = Helper.Lerp(HowManyRot * 2, HowManyRot / 3, (Timer - 9) / 9);
                             }
                             Projectile.velocity = Projectile.velocity.RotatedBy(RotDir * rot);
                             if (Alpha < 1)
@@ -430,7 +430,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public float WidthFunction(float factor)
         {
-            return Helper.Lerp(TrailWidth/3, TrailWidth, factor);  
+            return Helper.Lerp(TrailWidth / 3, TrailWidth, factor);
         }
 
         public Color ColorFunction(Vector2 factor)
@@ -636,7 +636,7 @@ namespace Coralite.Content.Items.Nightmare
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Vector2 origin = mainTex.Size() / 2;
 
-            Color c = NightmarePlantera.nightmareRed * 0.5f*alpha;
+            Color c = NightmarePlantera.nightmareRed * 0.5f * alpha;
 
             float scale = 0.45f;
 
@@ -644,9 +644,9 @@ namespace Coralite.Content.Items.Nightmare
             {
                 Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
 
-                for (int i = 1; i < 0; i ++)
+                for (int i = 1; i < 0; i++)
                     Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    c * (0.5f - i * 0.5f/8), Projectile.oldRot[i], origin, scale, 0, 0);
+                    c * (0.5f - i * 0.5f / 8), Projectile.oldRot[i], origin, scale, 0, 0);
             }
 
             for (int i = 0; i < 3; i++)
@@ -655,7 +655,7 @@ namespace Coralite.Content.Items.Nightmare
                     , null, c, Projectile.rotation, origin, scale, 0, 0);
             }
 
-            Main.spriteBatch.Draw(mainTex, pos, null, Color.DarkGray*alpha, Projectile.rotation, origin, scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, Color.DarkGray * alpha, Projectile.rotation, origin, scale, 0, 0);
             return false;
         }
     }
@@ -790,7 +790,7 @@ namespace Coralite.Content.Items.Nightmare
             Texture2D mainTex = TextureAssets.Projectile[ProjectileID.InsanityShadowFriendly].Value;
             Vector2 origin = mainTex.Size() / 2;
 
-            Color c = NightmarePlantera.nightmareRed * 0.5f*ExHandAlpha;
+            Color c = NightmarePlantera.nightmareRed * 0.5f * ExHandAlpha;
 
             if (ExHandAlpha > 0)
             {
