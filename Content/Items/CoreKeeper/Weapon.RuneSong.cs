@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
@@ -21,7 +22,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.CoreKeeper
 {
-    public class RuneSong : ModItem
+    public class RuneSong : ModItem, IBuffHeldItem
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
 
@@ -151,19 +152,10 @@ namespace Coralite.Content.Items.CoreKeeper
                 .AddIngredient(ItemID.IronBar, 50)
                 .Register();
         }
-    }
 
-    /// <summary>
-    /// 由于在物品里改这个完全不生效所以单独开了个mp来改
-    /// </summary>
-    public class RuneSongPlayer : ModPlayer
-    {
-        public override void PreUpdateBuffs()
+        public void UpdateBuffHeldItem(Player player)
         {
-            if (Player.HeldItem.type == ItemType<RuneSong>())
-                Player.statLifeMax2 += 62;
-            else if (Player.HeldItem.type == ItemType<BrokenHandle>())
-                Player.statLifeMax2 += 31;
+            player.statLifeMax2 += 62;
         }
     }
 

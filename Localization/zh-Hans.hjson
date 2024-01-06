@@ -2119,6 +2119,56 @@ Mods: {
 					[c/8e8e8e:以前也有人在早期人类的墓穴中发现过类似的戒指。]
 					'''
 			}
+
+			OceanheartNecklace: {
+				DisplayName: 海洋之心项链
+				Tooltip:
+					'''
+					+42点生命值上限
+					随时间逐渐恢复的生命值治疗效果提高 +21%
+					[c/8e8e8e:一件非同寻常的珍宝，上面那颗大大的蓝宝石尤为显眼。]
+					[c/8e8e8e:将它捧在胸前，会让你有一种被爱的感觉。]
+					'''
+			}
+
+			HeartBerryNecklace: {
+				DisplayName: 心形莓果项链
+				Tooltip:
+					'''
+					每秒+0.5点生命值
+					[c/8e8e8e:挂在脖子上的一颗心形莓果，随时随地都能拿来当零食吃！]
+					'''
+			}
+
+			BubblePearlNecklace: {
+				DisplayName: 气泡珍珠项链
+				Tooltip:
+					'''
+					+12点生命值上限
+					+7护甲
+					+5闪避几率
+					[c/8e8e8e:自然生成的首饰，用稀有的气泡珍珠打造而成。]
+					'''
+			}
+
+			AncientGuardianRing: {
+				DisplayName: 上古守护者戒指
+				Tooltip:
+					'''
+					+18点生命值上限
+					被头目攻击时受到的伤害降低5%
+					[c/8e8e8e:一件遗物，制作方式与上古守护者项链相同，专门用来抵御那些最为凶悍的敌人。]
+					'''
+			}
+
+			AncientGuardianNecklace: {
+				DisplayName: 上古守护者项链
+				Tooltip:
+					'''
+					被头目攻击时受到的伤害降低10%
+					[c/8e8e8e:古人留下的遗物，蕴含着极强的法力，专门用来抵御那些最为凶悍的敌人。]
+					'''
+			}
 		}
 
 		Tiles: {
@@ -2597,6 +2647,7 @@ Mods: {
 			// RuneSongSlash.DisplayName: Rune Song Slash
 			// CraftUIProj.DisplayName: Craft U I Proj
 			// RuneSoneRightProj.DisplayName: Rune Sone Right Proj
+			// PoisonousSickleSlash.DisplayName: Poisonous Sickle Slash
 		}
 
 		Configs: {

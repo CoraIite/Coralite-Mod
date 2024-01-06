@@ -2106,6 +2106,56 @@ Mods: {
 					[c/8e8e8e:A prehistoric, crude ring made from bone. Rings like these have been discovered in early human graves.]
 					'''
 			}
+
+			OceanheartNecklace: {
+				DisplayName: Oceanheart Necklace
+				Tooltip:
+					'''
+					+42 max health
+					+21% more healing from health over time regeneration
+					[c/8e8e8e:A big blue diamond is the centerpiece of this extraordinary treasure.]
+					[c/8e8e8e:You feel loved when holding it up to your chest.]
+					'''
+			}
+
+			HeartBerryNecklace: {
+				DisplayName: Heart Berry Necklace
+				Tooltip:
+					'''
+					+0.5 health every sec
+					[c/8e8e8e:A heart berry on the neck makes for an easy snack!]
+					'''
+			}
+
+			BubblePearlNecklace: {
+				DisplayName: Bubble Pearl Necklace
+				Tooltip:
+					'''
+					+12 max health
+					+7 armor
+					+6% dodge chance
+					[c/8e8e8e:Natural grown jewelry made from rare bubble pearls.]
+					'''
+			}
+
+			AncientGuardianRing: {
+				DisplayName: Ancient Guardian Ring
+				Tooltip:
+					'''
+					+18 max health
+					+5% reduced damage taken from bosses
+					[c/8e8e8e:A relic that is made in the same way as the Ancient Guardian Necklace, made for fending off the strongest of foes.]
+					'''
+			}
+
+			AncientGuardianNecklace: {
+				DisplayName: Ancient Guardian Necklace
+				Tooltip:
+					'''
+					+10% reduced damage taken from bosses
+					[c/8e8e8e:A truly powerful relic of the past, made for fending off the strongest of foes.]
+					'''
+			}
 		}
 
 		Tiles: {
@@ -2584,6 +2634,7 @@ Mods: {
 			RuneSongSlash.DisplayName: Rune Song Slash
 			CraftUIProj.DisplayName: Craft U I Proj
 			RuneSoneRightProj.DisplayName: Rune Sone Right Proj
+			PoisonousSickleSlash.DisplayName: Poisonous Sickle Slash
 		}
 
 		Configs: {

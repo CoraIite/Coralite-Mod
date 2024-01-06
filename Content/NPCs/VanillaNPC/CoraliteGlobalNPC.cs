@@ -97,9 +97,13 @@ namespace Coralite.Content.NPCs.VanillaNPC
 
                 case NPCID.RockGolem://岩石巨人,花岗岩敌怪，附魔剑 掉落上古宝石
                 case NPCID.GraniteFlyer:
-                case NPCID.GraniteGolem:
                 case NPCID.EnchantedSword:
                     npcLoot.Add(ItemDropRule.Common(ItemType<AncientGemstone>(), 20, 1, 3));
+                    break;
+                case NPCID.GraniteGolem://花岗岩巨人额外掉落上古守护者饰品
+                    npcLoot.Add(ItemDropRule.Common(ItemType<AncientGemstone>(), 20, 1, 3));
+                    npcLoot.Add(ItemDropRule.Common(ItemType<AncientGuardianNecklace>(), 250, 1, 1));
+                    npcLoot.Add(ItemDropRule.Common(ItemType<AncientGuardianRing>(), 150, 1, 1));
                     break;
 
                 case NPCID.AngryBones://愤怒骷髅掉落骨质戒指

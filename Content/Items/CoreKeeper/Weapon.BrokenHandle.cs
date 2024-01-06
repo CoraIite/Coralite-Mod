@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
@@ -18,7 +19,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.CoreKeeper
 {
-    public class BrokenHandle : ModItem
+    public class BrokenHandle : ModItem,IBuffHeldItem
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
 
@@ -96,6 +97,10 @@ namespace Coralite.Content.Items.CoreKeeper
             return true;
         }
 
+        public void UpdateBuffHeldItem(Player player)
+        {
+            player.statLifeMax2 += 31;
+        }
     }
 
     public class BrokenHandleSlash : BaseSwingProj, IDrawWarp

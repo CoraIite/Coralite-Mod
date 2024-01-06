@@ -1,8 +1,10 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Items.Botanical.Seeds;
+using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.RedJades;
+using Coralite.Content.Projectiles.Globals;
 using Coralite.Content.UI;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
@@ -62,6 +64,20 @@ namespace Coralite.Content.ModPlayers
         /// 爆伤加成
         /// </summary>
         public float critDamageBonus;
+        /// <summary>
+        /// 回复量乘算加成
+        /// </summary>
+        public float lifeReganBonus;
+        /// <summary>
+        /// 来自BOSS的伤害减免
+        /// </summary>
+        public float bossDamageReduce;
+
+
+        /// <summary>
+        /// 地心护核者的闪避
+        /// </summary>
+        public float coreKeeperDodge;
 
         public override void ResetEffects()
         {
@@ -72,6 +88,10 @@ namespace Coralite.Content.ModPlayers
             resistDreamErosion = false;
 
             critDamageBonus = 0;
+            lifeReganBonus = 0;
+            bossDamageReduce = 0;
+
+            coreKeeperDodge = 0;
 
             nightmareEnergyMax = 7;
             if (parryTime > 0)
@@ -181,8 +201,17 @@ namespace Coralite.Content.ModPlayers
             }
         }
 
+        public override void PreUpdateBuffs()
+        {
+            if (Player.HeldItem.ModItem is IBuffHeldItem buffHeldItem)
+                buffHeldItem.UpdateBuffHeldItem(Player);
+        }
+
         public override void PostUpdateEquips()
         {
+            if (Player.HeldItem.ModItem is IEquipHeldItem ehi)
+                ehi.UpdateEquipHeldItem(Player);
+
             if (ownedYujianProj)
             {
                 bool justCompleteCharge = nianli < nianliMax;
@@ -219,6 +248,11 @@ namespace Coralite.Content.ModPlayers
             }
         }
 
+        public override void UpdateLifeRegen()
+        {
+            Player.lifeRegen = (int)(Player.lifeRegen * (1 + lifeReganBonus));
+        }
+
         public override void PostUpdate()
         {
             equippedRedJadePendant = false;
@@ -244,6 +278,22 @@ namespace Coralite.Content.ModPlayers
 
         #region 受击与攻击
 
+        public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
+        {
+            if (proj.TryGetGlobalProjectile(out CoraliteGlobalProjectile cgp) && cgp.isBossProjectile)
+            {
+                modifiers.SourceDamage -= bossDamageReduce;
+            }
+        }
+
+        public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
+        {
+            if (npc.boss)
+            {
+                modifiers.SourceDamage -= bossDamageReduce;
+            }
+        }
+
         public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
         {
             if (equippedRedJadePendant && Main.myPlayer == Player.whoAmI && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
@@ -266,6 +316,23 @@ namespace Coralite.Content.ModPlayers
         {
             modifiers.CritDamage += critDamageBonus;
         }
+
+        public override bool FreeDodge(Player.HurtInfo info)
+        {
+            if (coreKeeperDodge > 0.9f)
+                coreKeeperDodge = 0.9f;
+            //coreKeeperDodge = 1f;
+            if (info.Dodgeable && Main.rand.NextBool((int)(coreKeeperDodge * 100), 100))
+            {
+                CombatText.NewText(new Rectangle((int)Player.Top.X, (int)Player.Top.Y, 1, 1)
+                    , Color.White, "闪避");
+                Player.AddImmuneTime(ImmunityCooldownID.General, 20);
+                Player.immune = true;
+                return true;
+            }
+            return base.FreeDodge(info);
+        }
+
         #endregion
 
         #region 钓鱼系统
@@ -274,10 +341,24 @@ namespace Coralite.Content.ModPlayers
         {
             bool inWater = !attempt.inLava && !attempt.inHoney;
 
-            if (inWater && Player.ZoneBeach && attempt.common && !attempt.crate)
+            if (inWater && Player.ZoneBeach && !attempt.crate)
             {
-                if (Main.rand.NextBool(15))
-                    itemDrop = ItemType<NacliteSeedling>();
+                if (attempt.common)
+                {
+                    if (Main.rand.NextBool(15))
+                        itemDrop = ItemType<NacliteSeedling>();
+                }
+                else if (attempt.uncommon)
+                {
+                    if (Main.hardMode && Main.rand.NextBool(15))
+                        itemDrop = ItemType<BubblePearlNecklace>();
+                }
+                else if (attempt.legendary)
+                {
+                    if (NPC.downedFishron && Main.rand.NextBool(5))
+                        itemDrop = ItemType<OceanheartNecklace>();
+                }
+
             }
 
             if (attempt.crate)
