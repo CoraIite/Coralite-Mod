@@ -109,7 +109,7 @@ namespace Coralite.Content.Items.CoreKeeper
             CreateRecipe()
                 .AddIngredient(ItemID.Gel, 99)
                 .AddIngredient(ItemID.MythrilBar, 20)
-                .AddIngredient(ItemID.VialofVenom, 20)
+                .AddIngredient(ItemID.FlaskofPoison, 3)
                 .AddIngredient(ItemID.SoulofFright)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
@@ -117,7 +117,7 @@ namespace Coralite.Content.Items.CoreKeeper
             CreateRecipe()
                 .AddIngredient(ItemID.Gel, 99)
                 .AddIngredient(ItemID.OrichalcumBar, 20)
-                .AddIngredient(ItemID.VialofVenom, 20)
+                .AddIngredient(ItemID.FlaskofPoison, 3)
                 .AddIngredient(ItemID.SoulofFright)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
