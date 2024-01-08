@@ -47,7 +47,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
             Vector2 pos = Projectile.Center - Main.screenPosition;
-            float rot = Projectile.rotation + MathHelper.PiOver2;
+            //float rot = Projectile.rotation + MathHelper.PiOver2;
             //中心的闪光
 
             Texture2D lightTex = MainLight.Value;
@@ -65,7 +65,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             origin = flowTex.Size() / 2;
 
             Color shineC = ShineColor * 0.75f;
-            ShineColor.A = 0;
+            shineC.A = 0;
 
             var scale2 = scale.X * 0.5f;
             Main.spriteBatch.Draw(flowTex, pos, null, shineC, Projectile.rotation + 1.57f + Main.GlobalTimeWrappedHourly, origin, scale2, 0, 0);

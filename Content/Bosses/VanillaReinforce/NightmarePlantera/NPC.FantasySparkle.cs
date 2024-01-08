@@ -23,7 +23,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// 3状态为帮助，会先固定玩家位置，之后将玩家投射出以躲避噩梦之咬<br></br>
     /// 使用ai1和ai2传入目标点
     /// </summary>
-    public class FantasySparkle : ModNPC, IDrawNonPremultiplied
+    public class FantasySparkle : ModNPC/*, IDrawNonPremultiplied*/
     {
         public override string Texture => AssetDirectory.NightmarePlantera + Name;
 
@@ -54,7 +54,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPC.lifeMax = 230;
             NPC.width = NPC.height = 85;
 
-            mainSparkleScale = new Vector2(4f, 1.5f);
+            mainSparkleScale = new Vector2( 2f,4f);
             circleSparkleScale = 1f;
 
             NPC.HitSound = CoraliteSoundID.MountSummon_Item25;
@@ -297,24 +297,58 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
             Vector2 pos = NPC.Center - screenPos;
-            float rot = NPC.rotation + MathHelper.PiOver2;
+            float rot = NPC.rotation;
             Color shineColor = new Color(252, 233, 194);
             //中心的闪光
-            ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos, Color.White, shineColor * 0.6f,
-                0.5f, 0f, 0.5f, 0.5f, 1f, rot, mainSparkleScale, Vector2.One);
 
+            Texture2D lightTex = BaseNightmareSparkle.MainLight.Value;
+            var origin = lightTex.Size() / 2;
+
+            Color c = shineColor;
+            c.A = 0;
+            var scale = mainSparkleScale * 0.15f;
+            spriteBatch.Draw(lightTex, pos, null, c, rot, origin, scale, 0, 0);
+            spriteBatch.Draw(lightTex, pos, null, c*0.5f, rot, origin, scale, 0, 0);
+
+            //ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos, Color.White, shineColor * 0.6f,
+            //    0.5f, 0f, 0.5f, 0.5f, 1f, rot, mainSparkleScale, Vector2.One);
+
+            Texture2D flowTex = BaseNightmareSparkle.Flow.Value;
+            origin = flowTex.Size() / 2;
+
+            Color shineC = shineColor * 0.75f;
+            shineC.A = 0;
+
+            var scale2 = scale.X * 0.55f;
+            spriteBatch.Draw(flowTex, pos, null, shineC, NPC.rotation + 1.57f + Main.GlobalTimeWrappedHourly, origin, scale2, 0, 0);
+            spriteBatch.Draw(flowTex, pos, null, c * 0.3f, NPC.rotation - Main.GlobalTimeWrappedHourly, origin, scale2, 0, 0);
+
+            Vector2 secondScale = scale * 0.4f;
             for (int i = -1; i < 2; i += 2)
             {
-                ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + new Vector2(i * 16, 0), Color.White, shineColor * 0.6f,
-                    0.5f, 0f, 0.5f, 0.5f, 1f, rot, mainSparkleScale * 0.4f, Vector2.One);
+                Vector2 offsetPos = pos + rot.ToRotationVector2()*i*22;
+                float rot3 = rot + i * 0.3f;
+                spriteBatch.Draw(lightTex, offsetPos, null, c, rot3, origin, secondScale, 0, 0);
+                //spriteBatch.Draw(lightTex, offsetPos, null, c, rot3, origin, secondScale, 0, 0);
+
+                //ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + new Vector2(i * 16, 0), Color.White, shineColor * 0.6f,
+                //    0.5f, 0f, 0.5f, 0.5f, 1f, rot, mainSparkleScale * 0.4f, Vector2.One);
             }
 
             //周围一圈小星星
             for (int i = 0; i < 7; i++)
             {
-                Vector2 dir = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7).ToRotationVector2();
-                ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + dir * (36 + factor * 4), Color.White, NightmarePlantera.phantomColors[i],
-                    0.5f + factor * 0.1f, 0f, 0.5f, 0.5f, 1f, rot, new Vector2(circleSparkleScale, circleSparkleScale), Vector2.One);
+                float rot2 = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7);
+                Vector2 dir = rot2.ToRotationVector2();
+                dir = pos + dir * (36 + factor * 4);
+                rot2 += 1.57f;
+                Color phantomC = NightmarePlantera.phantomColors[i];
+                phantomC.A = 0;
+                spriteBatch.Draw(lightTex, dir, null, phantomC, rot2, origin, circleSparkleScale*0.2f, 0, 0);
+
+                //Vector2 dir = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7).ToRotationVector2();
+                //ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + dir * (36 + factor * 4), Color.White, NightmarePlantera.phantomColors[i],
+                //    0.5f + factor * 0.1f, 0f, 0.5f, 0.5f, 1f, rot, new Vector2(circleSparkleScale, circleSparkleScale), Vector2.One);
             }
 
             //绘制额外旋转的星星，和上面叠起来变成一个
@@ -327,10 +361,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             return false;
         }
 
-        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
-        {
-            Texture2D mainTex = TextureAssets.Npc[NPC.type].Value;
-            spriteBatch.Draw(mainTex, NPC.Center - Main.screenPosition, null, Color.White, 0, mainTex.Size() / 2, (1 + 0.1f * MathF.Sin(Main.GlobalTimeWrappedHourly)) * mainSparkleScale.Y / 4, 0, 0);
-        }
+        //public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        //{
+        //    //Texture2D mainTex = TextureAssets.Npc[NPC.type].Value;
+        //    //spriteBatch.Draw(mainTex, NPC.Center - Main.screenPosition, null, Color.White, 0, mainTex.Size() / 2, (1 + 0.1f * MathF.Sin(Main.GlobalTimeWrappedHourly)) * mainSparkleScale.Y / 4, 0, 0);
+        //}
     }
 }

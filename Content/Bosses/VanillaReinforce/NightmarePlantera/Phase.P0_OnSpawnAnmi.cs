@@ -44,20 +44,26 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1f));
                         }
 
-                        if (Timer == 2)
-                        {
-                            float angle = Main.rand.NextFloat(MathHelper.TwoPi);
-                            for (int i = 0; i < 7; i++)
-                            {
-                                NPC.NewProjectileInAI<NightmareEnergy>(NPC.Center + angle.ToRotationVector2() * 750, (angle + MathHelper.PiOver2).ToRotationVector2() * 5, 1, 1, -1, i);
-                                angle += MathHelper.TwoPi / 7;
-                            }
-                        }
+                        //if (Timer == 2)
+                        //{
+                        //    float angle = Main.rand.NextFloat(MathHelper.TwoPi);
+                        //    for (int i = 0; i < 7; i++)
+                        //    {
+                        //        NPC.NewProjectileInAI<NightmareEnergy>(NPC.Center + angle.ToRotationVector2() * 750, (angle + MathHelper.PiOver2).ToRotationVector2() * 5, 1, 1, -1, i);
+                        //        angle += MathHelper.TwoPi / 7;
+                        //    }
+                        //}
 
                         if (Timer > 2 && Timer % 8 == 0)
                         {
                             float angle = Main.rand.NextFloat(MathHelper.TwoPi);
-                            NPC.NewProjectileInAI<NightmareEnergy>(NPC.Center + angle.ToRotationVector2() * Main.rand.Next(400, 600), (angle + 2.5f).ToRotationVector2() * 5, 1, 1, -1, -1);
+                            int howMany = Main.rand.Next(6);
+                            for (int i = 0; i < howMany; i++)
+                            {
+                                float distance = Main.rand.Next(400, 600);
+                                NPC.NewProjectileInAI<NightmareSpawnEnergy>(NPC.Center + (angle + i * MathHelper.TwoPi / howMany).ToRotationVector2() * distance
+                                    , Vector2.Zero, 1, 1, -1, -1, distance, 1);
+                            }
                         }
 
                         if (Timer > 60)

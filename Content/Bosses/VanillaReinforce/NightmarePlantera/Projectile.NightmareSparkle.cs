@@ -138,6 +138,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         float factor = Timer / RollingTime;
 
                         ShineColor = Color.Lerp(Color.Transparent, NightmarePlantera.nightPurple, factor);
+                        ShineColor.A = 0;
                         mainSparkleScale = Vector2.Lerp(Vector2.Zero, new Vector2(1f, 2f), factor);
                         circleSparkleScale = MathHelper.Lerp(0, 0.4f, factor);
 

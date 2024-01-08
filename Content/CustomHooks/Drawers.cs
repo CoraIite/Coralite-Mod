@@ -67,6 +67,18 @@ namespace Coralite.Content.CustomHooks
                     }
             }
 
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
+                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IPostDrawAdditive)
+                    (Main.projectile[k].ModProjectile as IPostDrawAdditive).DrawAdditive(spriteBatch);
+
+            for (int k = 0; k < Main.maxNPCs; k++) //NPCs
+                if (Main.npc[k].active && Main.npc[k].ModNPC is IPostDrawAdditive)
+                    (Main.npc[k].ModNPC as IPostDrawAdditive).DrawAdditive(spriteBatch);
+
+            spriteBatch.End();
+
             //绘制Non
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 

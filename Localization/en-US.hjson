@@ -2635,6 +2635,9 @@ Mods: {
 			CraftUIProj.DisplayName: Craft U I Proj
 			RuneSoneRightProj.DisplayName: Rune Sone Right Proj
 			PoisonousSickleSlash.DisplayName: Poisonous Sickle Slash
+			NightmareHarpProj.DisplayName: Nightmare Harp Proj
+			NightmareMusicalNotes.DisplayName: Nightmare Musical Notes
+			NightmareSpawnEnergy.DisplayName: Nightmare Spawn Energy
 		}
 
 		Configs: {
