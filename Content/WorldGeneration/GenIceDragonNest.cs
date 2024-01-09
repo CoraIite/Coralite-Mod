@@ -104,4 +104,34 @@ namespace Coralite.Content.WorldGeneration
             return Task.CompletedTask;
         }
     }
+
+    public class IceDragonNestReplacer : ModItem
+    {
+        public override string Texture => AssetDirectory.Misc + "WorldGenCoralite";
+
+        public override void SetDefaults()
+        {
+            Item.rare = ItemRarityID.Pink;
+            Item.useTime = Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+        }
+
+        public override bool AltFunctionUse(Player player) => true;
+
+        public override bool CanUseItem(Player player)
+        {
+            if (player.altFunctionUse == 2)
+            {
+                if (CoraliteWorld.NestCenter != Point.Zero)
+                    Main.NewText("冰龙巢穴位于" + CoraliteWorld.NestCenter);
+                else
+                    Main.NewText("当前世界中不存在冰龙巢穴");
+                return true;
+            }
+
+            CoraliteWorld.NestCenter = player.Center.ToPoint();
+            Main.NewText("已将冰龙巢穴的位置设置到" + CoraliteWorld.NestCenter);
+            return base.CanUseItem(player);
+        }
+    }
 }

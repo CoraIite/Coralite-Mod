@@ -2169,6 +2169,11 @@ Mods: {
 					[c/8e8e8e:古人留下的遗物，蕴含着极强的法力，专门用来抵御那些最为凶悍的敌人。]
 					'''
 			}
+
+			IceDragonNestReplacer: {
+				// DisplayName: Ice Dragon Nest Replacer
+				// Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2651,6 +2656,7 @@ Mods: {
 			// NightmareHarpProj.DisplayName: Nightmare Harp Proj
 			// NightmareMusicalNotes.DisplayName: Nightmare Musical Notes
 			// NightmareSpawnEnergy.DisplayName: Nightmare Spawn Energy
+			// SpawnLight.DisplayName: Spawn Light
 		}
 
 		Configs: {

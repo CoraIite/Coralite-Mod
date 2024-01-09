@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void PostUpdate()
         {
-            Lighting.AddLight(Item.Center, Color.White.ToVector3() * 0.4f);
+            Lighting.AddLight(Item.Center, Color.White.ToVector3() * 0.8f);
 
             if (Item.timeSinceItemSpawned % 18 == 0)
             {
@@ -115,8 +115,35 @@ namespace Coralite.Content.Items.Nightmare
 
             Vector2 mainSparkleScale = new Vector2(2f, 5f);
             //中心的闪光
-            ProjectilesHelper.DrawPrettyStarSparkle(1, 0, effectDrawPos, NightmarePlantera.nightmareRed, NightmarePlantera.nightmareRed,
-                0.5f + time * 0.1f, 0f, 0.5f, 0.5f, 1f, 0, mainSparkleScale, Vector2.One);
+            //ProjectilesHelper.DrawPrettyStarSparkle(1, 0, effectDrawPos, NightmarePlantera.nightmareRed, NightmarePlantera.nightmareRed,
+            //    0.5f + time * 0.1f, 0f, 0.5f, 0.5f, 1f, 0, mainSparkleScale, Vector2.One);
+
+            float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
+            Vector2 pos = drawPos;
+            //float rot = Projectile.rotation + MathHelper.PiOver2;
+            //中心的闪光
+
+            Texture2D lightTex = BaseNightmareSparkle.MainLight.Value;
+            var origin = lightTex.Size() / 2;
+
+            Color c = NightmarePlantera.nightmareRed;
+            c.A = 0;
+            var scale1 = mainSparkleScale * 0.15f;
+            Main.spriteBatch.Draw(lightTex, pos, null, c, 0f, origin, scale1, 0, 0);
+            Main.spriteBatch.Draw(lightTex, pos, null, c, 0f, origin, scale1, 0, 0);
+
+            //Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, NightmarePlantera.lightPurple, NightmarePlantera.lightPurple,
+            //    0.5f, 0f, 0.5f, 0.5f, 1f, rot, mainSparkleScale, Vector2.One * 2);
+            Texture2D flowTex = BaseNightmareSparkle.Flow.Value;
+            origin = flowTex.Size() / 2;
+
+            Color shineC = NightmarePlantera.nightmareRed*0.5f;
+            shineC.A = 0;
+
+            var scale2 = scale1.X * 0.65f;
+            float exScale = scale1.X * 0.1f;
+            Main.spriteBatch.Draw(flowTex, pos, null, shineC,  1.57f + Main.GlobalTimeWrappedHourly, origin, scale2+factor*exScale, 0, 0);
+            Main.spriteBatch.Draw(flowTex, pos, null, c * 0.5f, - Main.GlobalTimeWrappedHourly, origin, scale2-factor*exScale, 0, 0);
 
             //float rot2 = timer * 10f;
             //周围一圈小星星
@@ -128,8 +155,8 @@ namespace Coralite.Content.Items.Nightmare
             //}
 
             //绘制额外旋转的星星，和上面叠起来变成一个
-            ProjectilesHelper.DrawPrettyStarSparkle(1, 0, effectDrawPos, Color.White * 0.3f, NightmarePlantera.nightmareRed * 0.5f,
-                0.5f - time * 0.3f, 0f, 0.5f, 0.5f, 1f, MathHelper.PiOver4, new Vector2(mainSparkleScale.Y * 0.75f), Vector2.One); ;
+            //ProjectilesHelper.DrawPrettyStarSparkle(1, 0, effectDrawPos, Color.White * 0.3f, NightmarePlantera.nightmareRed * 0.5f,
+            //    0.5f - time * 0.3f, 0f, 0.5f, 0.5f, 1f, MathHelper.PiOver4, new Vector2(mainSparkleScale.Y * 0.75f), Vector2.One); ;
 
             //ProjectilesHelper.DrawPrettyStarSparkle(1, 0, drawPos, new Color(38, 104, 185) * 0.7f, new Color(158, 222, 255),
             //    time, 0, 0.3f, 0.7f, 1, timer * MathHelper.TwoPi, (timer * MathHelper.TwoPi).ToRotationVector2() * 4, Vector2.One);
@@ -139,11 +166,11 @@ namespace Coralite.Content.Items.Nightmare
             //ProjectilesHelper.DrawPrettyStarSparkle(1, 0, drawPos, new Color(38, 104, 185) * 0.7f, new Color(50, 152, 225),
             //    0.4f + time * 0.2f, 0, 0.5f, 0.5f, 1, 0, Vector2.One * 3, Vector2.One * 1.5f);
 
-            float rot = -0.3f + MathF.Sin(timer * 3f) * 0.2f;
+            float rot = -0.3f /*+ MathF.Sin(timer * 3f) * 0.2f*/;
             for (float i = 0f; i < 1f; i += 0.25f)
             {
                 float radians = (i + timer) * MathHelper.TwoPi;
-                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 8f).RotatedBy(radians) * time, frame, new Color(50, 50, 50, 50), rot, frameOrigin, scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 8f).RotatedBy(radians) * time, frame, new Color(150, 150, 150, 100), rot, frameOrigin, scale, SpriteEffects.None, 0);
             }
             //Main.NewText(time);
             spriteBatch.Draw(texture, drawPos, frame, lightColor, rot, frameOrigin, scale, SpriteEffects.None, 0);

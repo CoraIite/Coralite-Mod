@@ -8,7 +8,7 @@ namespace Coralite.Content.CustomHooks
 
         public override void Load()
         {
-            On_Player.PlaceThing_Tiles_PlaceIt += On_Player_PlaceThing_Tiles_PlaceIt; ;
+            On_Player.PlaceThing_Tiles_PlaceIt += On_Player_PlaceThing_Tiles_PlaceIt;
         }
 
         public override void Unload()

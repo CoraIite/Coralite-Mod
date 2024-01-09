@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,7 +33,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.DamageType = DamageClass.Magic;
             Item.rare = RarityType<FantasyRarity>();
             Item.value = Item.sellPrice(0, 30, 0, 0);
-            Item.SetWeaponValues(178, 4, 4);
+            Item.SetWeaponValues(188, 4, 4);
             Item.mana = 36;
             Item.autoReuse = true;
             Item.noUseGraphic = true;
@@ -437,7 +436,7 @@ namespace Coralite.Content.Items.Nightmare
     /// <summary>
     /// 使用ai2传入颜色
     /// </summary>
-    public class LullabyBall : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied
+    public class LullabyBall : ModProjectile, IDrawPrimitive/*, IDrawNonPremultiplied*/,IPostDrawAdditive
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "FantasyBall";
 
@@ -620,20 +619,20 @@ namespace Coralite.Content.Items.Nightmare
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Vector2 pos = Projectile.Center - Main.screenPosition;
-            Vector2 scale = new Vector2(0.5f);
-            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, FantasyGod.shineColor,
-                0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, new Vector2(1.5f, 2.5f), Vector2.One);
 
-            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, FantasyGod.shineColor,
-                0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, new Vector2(1f, 2.25f), Vector2.One * 2);
+            //Vector2 scale = new Vector2(0.5f);
+            //ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, FantasyGod.shineColor,
+            //    0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, new Vector2(1.5f, 2.5f), Vector2.One);
 
-            float exRot = Main.GlobalTimeWrappedHourly * 2;
-            for (int i = 0; i < 4; i++)
-            {
-                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos + (exRot + i * MathHelper.PiOver2).ToRotationVector2() * 18, Color.White, DrawColor * 0.8f,
-                    0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, scale, Vector2.One);
-            }
+            //ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, FantasyGod.shineColor,
+            //    0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, new Vector2(1f, 2.25f), Vector2.One * 2);
+
+            //float exRot = Main.GlobalTimeWrappedHourly * 2;
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos + (exRot + i * MathHelper.PiOver2).ToRotationVector2() * 18, Color.White, DrawColor * 0.8f,
+            //        0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, scale, Vector2.One);
+            //}
             return false;
         }
 
@@ -658,12 +657,68 @@ namespace Coralite.Content.Items.Nightmare
             trail?.Render(effect);
         }
 
-        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        public void DrawAdditive(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
+            Vector2 pos = Projectile.Center - Main.screenPosition;
 
-            spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, DrawColor, 0, mainTex.Size() / 2, 0.15f, 0, 0);
+            float rot = Projectile.rotation;
+            Color shineColor = new Color(252, 233, 194, 255);
+            //中心的闪光
+
+            Texture2D lightTex = BaseNightmareSparkle.MainLight.Value;
+            var origin = lightTex.Size() / 2;
+
+            Color c = shineColor;
+            //c.A = 0;
+            var scale = new Vector2(1f, 2.25f) * 0.15f;
+            Main.spriteBatch.Draw(lightTex, pos, null, c, rot, origin, scale, 0, 0);
+            Main.spriteBatch.Draw(lightTex, pos, null, c * 0.5f, rot, origin, scale, 0, 0);
+
+            Main.spriteBatch.Draw(lightTex, pos, null, c, rot + 1.57f, origin, scale * 0.5f, 0, 0);
+            Main.spriteBatch.Draw(lightTex, pos, null, c * 0.5f, rot + 1.57f, origin, scale * 0.5f, 0, 0);
+
+            Texture2D flowTex = BaseNightmareSparkle.Flow.Value;
+            origin = flowTex.Size() / 2;
+
+            Color shineC = shineColor * 0.75f;
+            //shineC.A = 0;
+
+            var scale2 = scale.X * 0.55f;
+            Main.spriteBatch.Draw(flowTex, pos, null, shineC, rot + Main.GlobalTimeWrappedHourly, origin, scale2, 0, 0);
+            Main.spriteBatch.Draw(flowTex, pos, null, c * 0.3f, Projectile.rotation - Main.GlobalTimeWrappedHourly, origin, scale2, 0, 0);
+
+            Vector2 secondScale = scale * 0.4f;
+            for (int i = -1; i < 2; i += 2)
+            {
+                Vector2 offsetPos = pos + rot.ToRotationVector2() * i * 12;
+                float rot3 = rot - i * 0.3f;
+                Main.spriteBatch.Draw(lightTex, offsetPos, null, c, rot3, origin, secondScale, 0, 0);
+                //spriteBatch.Draw(lightTex, offsetPos, null, c, rot3, origin, secondScale, 0, 0);
+
+                //ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + new Vector2(i * 16, 0), Color.White, shineColor * 0.6f,
+                //    0.5f, 0f, 0.5f, 0.5f, 1f, rot, mainSparkleScale * 0.4f, Vector2.One);
+            }
+
+            //周围一圈小星星
+            for (int i = 0; i < 7; i++)
+            {
+                float rot2 = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7);
+                Vector2 dir = rot2.ToRotationVector2();
+                dir = pos + dir * (18 + factor * 4);
+                rot2 += 1.57f;
+                Color phantomC = DrawColor;
+                //phantomC.A = 0;
+                Main.spriteBatch.Draw(lightTex, dir, null, phantomC, rot2, origin, 0.4f * 0.2f, 0, 0);
+            }
         }
+
+        //public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        //{
+        //    Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+
+        //    spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, DrawColor, 0, mainTex.Size() / 2, 0.15f, 0, 0);
+        //}
 
     }
 }

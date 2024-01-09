@@ -2156,6 +2156,11 @@ Mods: {
 					[c/8e8e8e:A truly powerful relic of the past, made for fending off the strongest of foes.]
 					'''
 			}
+
+			IceDragonNestReplacer: {
+				DisplayName: Ice Dragon Nest Replacer
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2638,6 +2643,7 @@ Mods: {
 			NightmareHarpProj.DisplayName: Nightmare Harp Proj
 			NightmareMusicalNotes.DisplayName: Nightmare Musical Notes
 			NightmareSpawnEnergy.DisplayName: Nightmare Spawn Energy
+			SpawnLight.DisplayName: Spawn Light
 		}
 
 		Configs: {

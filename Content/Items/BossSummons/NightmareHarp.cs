@@ -273,7 +273,18 @@ namespace Coralite.Content.Items.BossSummons
             else if (Timer == 10 + part * 7)
                 PlaySound(Si1);
             else if (Timer == 10 + part * 7 + part / 2)
+            {
                 PlaySound(Do);
+
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile p = Main.projectile[i];
+                    if (p.active && p.type == ModContent.ProjectileType<NightmareMusicalNotes>())
+                    {
+                        p.localAI[1] = 1;
+                    }
+                }
+            }
 
             else if (Timer == 10 + part * 8)
                 PlaySound(Rai);
@@ -353,6 +364,7 @@ namespace Coralite.Content.Items.BossSummons
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 600;
+            Projectile.width = Projectile.height = 32;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
@@ -378,11 +390,31 @@ namespace Coralite.Content.Items.BossSummons
             Projectile.localAI[0]++;
 
             float factor2 = Math.Clamp(Projectile.localAI[0] / 140, 0, 1);
-            Vector2 pos = Owner.Center + (Main.GlobalTimeWrappedHourly + MathHelper.TwoPi * Which / 7).ToRotationVector2() * (80 + factor * 32);
+            Vector2 pos = Owner.Center + (Main.GlobalTimeWrappedHourly + MathHelper.TwoPi * Which / 7).ToRotationVector2() * (96 + factor * 16);
             float length = Vector2.Distance(pos, Projectile.Center);
             Projectile.velocity = (pos - Projectile.Center).SafeNormalize(Vector2.Zero) * factor2 * (length < 16 ? length : 16);
 
             Lighting.AddLight(Projectile.Center, drawColor.ToVector3());
+
+            if (Projectile.localAI[1]==1)
+            {
+                Dust d = Dust.NewDustDirect(Projectile.position, 32, 32, DustID.VilePowder, Scale: Main.rand.NextFloat(1, 1.5f));
+                d.noGravity = true;
+
+                if (Projectile.localAI[2]<30)
+                {
+                    Projectile.scale *= 1.01f;
+                }
+                else
+                {
+                    if (Projectile.scale > 0.1f)
+                    {
+                        Projectile.scale *= 0.99f;
+                    }
+                }
+
+                Projectile.localAI[2]++;
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -392,8 +424,12 @@ namespace Coralite.Content.Items.BossSummons
 
             var pos = Projectile.Center - Main.screenPosition;
 
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, drawColor, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, drawColor * 0.75f, Projectile.rotation, frameBox.Size() / 2, Projectile.scale + 0.2f, 0, 0);
+            Color d = drawColor;
+            d.A = 0;
+
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, d, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, d, Projectile.rotation, frameBox.Size() / 2, Projectile.scale + 0.2f, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, d, Projectile.rotation, frameBox.Size() / 2, Projectile.scale + 0.2f, 0, 0);
 
             return false;
         }

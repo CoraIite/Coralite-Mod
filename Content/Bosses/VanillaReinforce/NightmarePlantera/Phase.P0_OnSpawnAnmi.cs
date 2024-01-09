@@ -89,8 +89,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             if (Timer % 15 == 0)
                             {
+                                //float angle = Main.rand.NextFloat(MathHelper.TwoPi);
+                                //NPC.NewProjectileInAI<NightmareEnergy>(NPC.Center + angle.ToRotationVector2() * Main.rand.Next(400, 600), (angle + 2.5f).ToRotationVector2() * 5, 1, 1, -1, -1);
                                 float angle = Main.rand.NextFloat(MathHelper.TwoPi);
-                                NPC.NewProjectileInAI<NightmareEnergy>(NPC.Center + angle.ToRotationVector2() * Main.rand.Next(400, 600), (angle + 2.5f).ToRotationVector2() * 5, 1, 1, -1, -1);
+                                int howMany = Main.rand.Next(6);
+                                for (int i = 0; i < howMany; i++)
+                                {
+                                    float distance = Main.rand.Next(200, 300);
+                                    NPC.NewProjectileInAI<NightmareSpawnEnergy>(NPC.Center + (angle + i * MathHelper.TwoPi / howMany).ToRotationVector2() * distance
+                                        , Vector2.Zero, 1, 1, -1, -1, distance, 1);
+                                }
                             }
 
                             for (int i = 0; i < 2; i++)
@@ -207,6 +215,24 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
 
             Timer++;
+        }
+    }
+
+    public class SpawnLight:ModProjectile
+    {
+        public override string Texture => AssetDirectory.Blank;
+
+        public override void SetDefaults()
+        {
+        }
+
+        public override void AI()
+        {
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return base.PreDraw(ref lightColor);
         }
     }
 }

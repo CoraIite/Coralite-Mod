@@ -277,9 +277,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Main.spriteBatch.Draw(BlackBack.Value, basePos, null, Color.White * nameAlpha, 0, BlackBack.Size() / 2, nameScale, 0, 0);
             if (Timer > 8)
             {
-                Utils.DrawBorderStringBig(Main.spriteBatch, DisplayName.Value, basePos - new Vector2(0, 145), Color.Red * nameAlpha, 1.3f, 0.5f);
+                Utils.DrawBorderStringBig(Main.spriteBatch, DisplayName.Value, basePos , Color.Red * nameAlpha, 1.6f, 0.5f,0.5f);
 
-                Main.spriteBatch.Draw(NameLine.Value, basePos - new Vector2(0, 40), null, Color.Red * nameAlpha, 0f, NameLine.Size() / 2, 1.6f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(NameLine.Value, basePos + new Vector2(0, 80), null, Color.Red * nameAlpha, 0f, NameLine.Size() / 2, 1.3f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(NameLine.Value, basePos - new Vector2(0, 120), null, Color.Red * nameAlpha, 0f, NameLine.Size() / 2, 1.3f, SpriteEffects.None, 0f);
             }
 
             Main.spriteBatch.End();

@@ -88,6 +88,5 @@ namespace Coralite.Core.Loaders
                     eachState.Update(gameTime);
             }
         }
-
     }
 }
