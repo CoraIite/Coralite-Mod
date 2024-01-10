@@ -29,6 +29,7 @@
     <Folder Include="Assets\Items\Misc_Summon\" />
     <Folder Include="Assets\Walls\Magike\" />
     <Folder Include="Assets\WorldGeneration\Shrines\" />
+    <Folder Include="Assets\WorldGeneration\ShadowCastleRooms\" />
     <Folder Include="Content\Items\Magike\Armors\" />
     <Folder Include="Content\Items\Magike\Accessorys\" />
     <Folder Include="Content\Items\Pets\" />

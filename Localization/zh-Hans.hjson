@@ -2171,8 +2171,18 @@ Mods: {
 			}
 
 			IceDragonNestReplacer: {
-				// DisplayName: Ice Dragon Nest Replacer
-				// Tooltip: ""
+				DisplayName: 蓝色珊瑚石[冰封]
+				Tooltip: 
+				'''
+				“你不该使用这个物品，除非这是一个没有冰龙巢穴的老旧世界。”
+				左键将冰龙巢穴的位置设置到自身中心
+				右键查看当前世界的冰龙巢穴位置
+				'''
+			}
+
+			ShadowBrick: {
+				DisplayName: 影方砖
+				Tooltip: ""
 			}
 		}
 

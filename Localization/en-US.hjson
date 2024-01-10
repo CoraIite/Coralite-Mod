@@ -2161,6 +2161,11 @@ Mods: {
 				DisplayName: Ice Dragon Nest Replacer
 				Tooltip: ""
 			}
+
+			ShadowBrick: {
+				DisplayName: Shadow Brick
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {

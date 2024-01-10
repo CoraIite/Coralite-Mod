@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
@@ -19,7 +18,9 @@ namespace Coralite.Content.UI
         //public override bool Visible => visible;
         //public static bool visible = false;
 
-        public static UIPanel panel=new UIPanel();
+        public static UIPanel panel = new UIPanel();
+        public static UIText descriptionText;
+
         public static GroupOptionButton<WorldDenguonID>[] DenguonButtons;
 
         public static WorldDenguonID DenguonType;
@@ -44,6 +45,27 @@ namespace Coralite.Content.UI
 
             state. Append(panel);
 
+            int height = 10;
+            AddDenguonSelect(panel,height);//添加地牢选择
+            height += 48;
+            AddHorizontalSeparator(panel, height);//添加分割线
+            AddDescriptionPanel(panel, height, "desc");//添加描述文本
+
+            SetDefaultOptions();
+        }
+
+        //public override void Update(GameTime gameTime)
+        //{
+        //    base.Update(gameTime);
+        //}
+
+        //public override void Recalculate()
+        //{
+        //    base.Recalculate();
+        //}
+
+        private static void AddDenguonSelect(UIElement container,float accumualtedHeight)
+        {
             WorldDenguonID[] array = new WorldDenguonID[3] {
             WorldDenguonID.Random,
             WorldDenguonID.Denguon,
@@ -56,9 +78,9 @@ namespace Coralite.Content.UI
             };
 
             LocalizedText[] array3 = new LocalizedText[3] {
-            Language.GetText("UI.WorldDescriptionEvilRandom"),
-            Language.GetText("UI.WorldDescriptionEvilCorrupt"),
-            Language.GetText("UI.WorldDescriptionEvilCrimson")
+            Language.GetOrRegister("World/DenguonRandomDescription",()=>"让大自然来决定你的世界中出现地牢还是影之城"),//Language.GetText("UI.WorldDescriptionEvilRandom"),
+            Language.GetOrRegister("World/DenguonDescription",()=>"充满骷髅与亡魂的邪恶地牢"),//Language.GetText("UI.WorldDescriptionEvilCorrupt"),
+            Language.GetOrRegister("World/ShadowCastleDescription",()=>"影子们的城堡"),//Language.GetText("UI.WorldDescriptionEvilCrimson")
             };
 
             Color[] array4 = new Color[3] {
@@ -84,35 +106,79 @@ namespace Coralite.Content.UI
                 groupOptionButton.Width = StyleDimension.FromPixelsAndPercent(-4 * (array6.Length - 1), 1f / array6.Length * 1f);
                 groupOptionButton.Left = StyleDimension.FromPercent(1f - 1f);
                 groupOptionButton.HAlign = i / (float)(array6.Length - 1);
-                groupOptionButton.Top.Set(10f, 0f);
+                groupOptionButton.Top.Set(accumualtedHeight, 0f);
                 groupOptionButton.OnLeftMouseDown += ClickDenguonOption;
-                //groupOptionButton.OnMouseOver += ShowOptionDescription;
-                //groupOptionButton.OnMouseOut += ClearOptionDescription;
+                groupOptionButton.OnMouseOver += ShowOptionDescription;
+                groupOptionButton.OnMouseOut += ClearOptionDescription;
                 groupOptionButton.SetSnapPoint("Denguon", i);
-                panel.Append(groupOptionButton);
+                container.Append(groupOptionButton);
                 array6[i] = groupOptionButton;
             }
 
-
+            //私有是吧，全给你反射喽
             for (int i = 1; i < 3; i++)
             {
                 Type t = array6[i].GetType();
-                FieldInfo info = t.GetField("_iconTexture", BindingFlags.NonPublic |BindingFlags.Instance|BindingFlags.GetField|BindingFlags.DeclaredOnly);
+                FieldInfo info = t.GetField("_iconTexture", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
                 info?.SetValue(array6[i], ModContent.Request<Texture2D>(AssetDirectory.UI + "DenguonType" + i));
             }
 
             DenguonButtons = array6;
         }
 
-        //public override void Update(GameTime gameTime)
-        //{
-        //    base.Update(gameTime);
-        //}
+        private static void AddDescriptionPanel(UIElement container, float accumulatedHeight, string tagGroup)
+        {
+            float num = 0f;
+            UISlicedImage uISlicedImage = new UISlicedImage(Main.Assets.Request<Texture2D>("Images/UI/CharCreation/CategoryPanelHighlight"))
+            {
+                HAlign = 0.5f,
+                VAlign = 1f,
+                Width = StyleDimension.FromPixelsAndPercent((0f - num) * 2f, 1f),
+                Left = StyleDimension.FromPixels(0f - num),
+                Height = StyleDimension.FromPixelsAndPercent(40f, 0f),
+                Top = StyleDimension.FromPixels(2f)
+            };
 
-        //public override void Recalculate()
-        //{
-        //    base.Recalculate();
-        //}
+            uISlicedImage.SetSliceDepths(10);
+            uISlicedImage.Color = Color.LightGray * 0.7f;
+            container.Append(uISlicedImage);
+            UIText uIText = new UIText(Language.GetText("UI.WorldDescriptionDefault"), 0.82f)
+            {
+                HAlign = 0f,
+                VAlign = 0f,
+                Width = StyleDimension.FromPixelsAndPercent(0f, 1f),
+                Height = StyleDimension.FromPixelsAndPercent(0f, 1f),
+                Top = StyleDimension.FromPixelsAndPercent(5f, 0f)
+            };
+
+            uIText.PaddingLeft = 20f;
+            uIText.PaddingRight = 20f;
+            uIText.PaddingTop = 6f;
+            uISlicedImage.Append(uIText);
+            descriptionText = uIText;
+        }
+
+        private static void AddHorizontalSeparator(UIElement Container, float accumualtedHeight)
+        {
+            UIHorizontalSeparator element = new UIHorizontalSeparator
+            {
+                Width = StyleDimension.FromPercent(1f),
+                Top = StyleDimension.FromPixels(accumualtedHeight - 8f),
+                Color = Color.Lerp(Color.White, new Color(63, 65, 151, 255), 0.85f) * 0.9f
+            };
+
+            Container.Append(element);
+        }
+
+
+        private static void SetDefaultOptions()
+        {
+            GroupOptionButton<WorldDenguonID>[] evilButtons = DenguonButtons;
+            for (int i = 0; i < evilButtons.Length; i++)
+            {
+                evilButtons[i].SetCurrentOption(WorldDenguonID.Random);
+            }
+        }
 
         private static void ClickDenguonOption(UIMouseEvent evt, UIElement listeningElement)
         {
@@ -124,5 +190,21 @@ namespace Coralite.Content.UI
                 evilButtons[i].SetCurrentOption(groupOptionButton.OptionValue);
             }
         }
+
+        public static void ShowOptionDescription(UIMouseEvent evt, UIElement listeningElement)
+        {
+            LocalizedText localizedText = null;
+            if (listeningElement is GroupOptionButton<WorldDenguonID> groupOptionButton3)
+                localizedText = groupOptionButton3.Description;
+
+            if (localizedText != null)
+                descriptionText.SetText(localizedText);
+        }
+
+        public static  void ClearOptionDescription(UIMouseEvent evt, UIElement listeningElement)
+        {
+            descriptionText.SetText(Language.GetText("UI.WorldDescriptionDefault"));
+        }
+
     }
 }

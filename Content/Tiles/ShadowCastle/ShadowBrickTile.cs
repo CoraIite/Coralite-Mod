@@ -3,21 +3,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Coralite.Content.Items.CoreKeeper
+namespace Coralite.Content.Tiles.ShadowCastle
 {
-    public class HartcoreObsidian : ModItem
+    public class ShadowBrickTile:ModTile
     {
-        public override string Texture => AssetDirectory.CoreKeeperItems + Name;
-
-        public override void SetDefaults()
-        {
-            Item.DefaultToPlaceableTile(ModContent.TileType<HartcoreObsidianTile>());
-        }
-    }
-
-    public class HartcoreObsidianTile : ModTile
-    {
-        public override string Texture => AssetDirectory.CoreKeeperItems + Name;
+        public override string Texture => AssetDirectory.ShadowCastleTiles+Name;
 
         private const int sheetWidth = 234;
         private const int sheetHeight = 90;
@@ -29,20 +19,21 @@ namespace Coralite.Content.Items.CoreKeeper
             Main.tileLavaDeath[Type] = false;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
-            MinPick = int.MaxValue;
-            DustType = DustID.Obsidian;
+            MinPick = 100;
+            DustType = DustID.Shadowflame;
             MineResist = 0.3f;
-            AddMapEntry(new Microsoft.Xna.Framework.Color(7, 60, 49));
-            HitSound = new Terraria.Audio.SoundStyle("Coralite/Sounds/CoreKeeper/UnbreakableTile")
-            {
-                Volume = 0.5f,
-                Pitch = 0,
-                MaxInstances = 0
-            };
+
+            AddMapEntry(new Microsoft.Xna.Framework.Color(104, 54, 192));
+            HitSound = CoraliteSoundID.DigStone_Tink;
         }
 
         public override bool CanExplode(int i, int j) => false;
         public override bool Slope(int i, int j) => false;
+
+        public override void NumDust(int i, int j, bool fail, ref int num)
+        {
+            num = fail ? 1 : 3;
+        }
 
         public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset)
         {
@@ -51,5 +42,6 @@ namespace Coralite.Content.Items.CoreKeeper
             frameXOffset = xPos * sheetWidth;
             frameYOffset = yPos * sheetHeight;
         }
+
     }
 }
