@@ -21,14 +21,14 @@ namespace Coralite.Content.UI
         public static UIPanel panel = new UIPanel();
         public static UIText descriptionText;
 
-        public static GroupOptionButton<WorldDenguonID>[] DenguonButtons;
+        public static GroupOptionButton<WorldDungeonID>[] DungeonButtons;
 
-        public static WorldDenguonID DenguonType;
+        public static WorldDungeonID DungeonType;
 
-        public enum WorldDenguonID
+        public enum WorldDungeonID
         {
             Random,
-            Denguon,
+            Dungeon,
             ShadowCastle
         }
 
@@ -46,7 +46,7 @@ namespace Coralite.Content.UI
             state. Append(panel);
 
             int height = 10;
-            AddDenguonSelect(panel,height);//添加地牢选择
+            AddDungeonSelect(panel,height);//添加地牢选择
             height += 48;
             AddHorizontalSeparator(panel, height);//添加分割线
             AddDescriptionPanel(panel, height, "desc");//添加描述文本
@@ -64,22 +64,22 @@ namespace Coralite.Content.UI
         //    base.Recalculate();
         //}
 
-        private static void AddDenguonSelect(UIElement container,float accumualtedHeight)
+        private static void AddDungeonSelect(UIElement container,float accumualtedHeight)
         {
-            WorldDenguonID[] array = new WorldDenguonID[3] {
-            WorldDenguonID.Random,
-            WorldDenguonID.Denguon,
-            WorldDenguonID.ShadowCastle
+            WorldDungeonID[] array = new WorldDungeonID[3] {
+            WorldDungeonID.Random,
+            WorldDungeonID.Dungeon,
+            WorldDungeonID.ShadowCastle
             };
             LocalizedText[] array2 = new LocalizedText[3] {
             Lang.misc[103],
-            Language.GetOrRegister("World/DenguonTitle",()=>"地牢"),//Lang.misc[101],
+            Language.GetOrRegister("World/DungeonTitle",()=>"地牢"),//Lang.misc[101],
              Language.GetOrRegister("World/ShadowCastleTitle",()=>"影之城")//Lang.misc[102]
             };
 
             LocalizedText[] array3 = new LocalizedText[3] {
-            Language.GetOrRegister("World/DenguonRandomDescription",()=>"让大自然来决定你的世界中出现地牢还是影之城"),//Language.GetText("UI.WorldDescriptionEvilRandom"),
-            Language.GetOrRegister("World/DenguonDescription",()=>"充满骷髅与亡魂的邪恶地牢"),//Language.GetText("UI.WorldDescriptionEvilCorrupt"),
+            Language.GetOrRegister("World/DungeonRandomDescription",()=>"让大自然来决定你的世界中出现地牢还是影之城"),//Language.GetText("UI.WorldDescriptionEvilRandom"),
+            Language.GetOrRegister("World/DungeonDescription",()=>"充满骷髅与亡魂的邪恶地牢"),//Language.GetText("UI.WorldDescriptionEvilCorrupt"),
             Language.GetOrRegister("World/ShadowCastleDescription",()=>"影子们的城堡"),//Language.GetText("UI.WorldDescriptionEvilCrimson")
             };
 
@@ -97,20 +97,20 @@ namespace Coralite.Content.UI
 
             //Asset<Texture2D> t = Main.Assets.Request<Texture2D>("Coralite/Assets/Items/DefaultItem");
 
-            GroupOptionButton<WorldDenguonID>[] array6 = new GroupOptionButton<WorldDenguonID>[array.Length];
+            GroupOptionButton<WorldDungeonID>[] array6 = new GroupOptionButton<WorldDungeonID>[array.Length];
             for (int i = 0; i < array6.Length; i++)
             {
-                GroupOptionButton<WorldDenguonID> groupOptionButton =
-                    new GroupOptionButton<WorldDenguonID>(array[i], array2[i], array3[i], array4[i],
+                GroupOptionButton<WorldDungeonID> groupOptionButton =
+                    new GroupOptionButton<WorldDungeonID>(array[i], array2[i], array3[i], array4[i],
                     i == 0 ? array5[i] : null, 1f, 1f, 16f);
                 groupOptionButton.Width = StyleDimension.FromPixelsAndPercent(-4 * (array6.Length - 1), 1f / array6.Length * 1f);
                 groupOptionButton.Left = StyleDimension.FromPercent(1f - 1f);
                 groupOptionButton.HAlign = i / (float)(array6.Length - 1);
                 groupOptionButton.Top.Set(accumualtedHeight, 0f);
-                groupOptionButton.OnLeftMouseDown += ClickDenguonOption;
+                groupOptionButton.OnLeftMouseDown += ClickDungeonOption;
                 groupOptionButton.OnMouseOver += ShowOptionDescription;
                 groupOptionButton.OnMouseOut += ClearOptionDescription;
-                groupOptionButton.SetSnapPoint("Denguon", i);
+                groupOptionButton.SetSnapPoint("Dungeon", i);
                 container.Append(groupOptionButton);
                 array6[i] = groupOptionButton;
             }
@@ -120,10 +120,10 @@ namespace Coralite.Content.UI
             {
                 Type t = array6[i].GetType();
                 FieldInfo info = t.GetField("_iconTexture", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
-                info?.SetValue(array6[i], ModContent.Request<Texture2D>(AssetDirectory.UI + "DenguonType" + i));
+                info?.SetValue(array6[i], ModContent.Request<Texture2D>(AssetDirectory.UI + "DungeonType" + i));
             }
 
-            DenguonButtons = array6;
+            DungeonButtons = array6;
         }
 
         private static void AddDescriptionPanel(UIElement container, float accumulatedHeight, string tagGroup)
@@ -173,18 +173,18 @@ namespace Coralite.Content.UI
 
         private static void SetDefaultOptions()
         {
-            GroupOptionButton<WorldDenguonID>[] evilButtons = DenguonButtons;
+            GroupOptionButton<WorldDungeonID>[] evilButtons = DungeonButtons;
             for (int i = 0; i < evilButtons.Length; i++)
             {
-                evilButtons[i].SetCurrentOption(WorldDenguonID.Random);
+                evilButtons[i].SetCurrentOption(WorldDungeonID.Random);
             }
         }
 
-        private static void ClickDenguonOption(UIMouseEvent evt, UIElement listeningElement)
+        private static void ClickDungeonOption(UIMouseEvent evt, UIElement listeningElement)
         {
-            GroupOptionButton<WorldDenguonID> groupOptionButton = (GroupOptionButton<WorldDenguonID>)listeningElement;
-            DenguonType = groupOptionButton.OptionValue;
-            GroupOptionButton<WorldDenguonID>[] evilButtons = DenguonButtons;
+            GroupOptionButton<WorldDungeonID> groupOptionButton = (GroupOptionButton<WorldDungeonID>)listeningElement;
+            DungeonType = groupOptionButton.OptionValue;
+            GroupOptionButton<WorldDungeonID>[] evilButtons = DungeonButtons;
             for (int i = 0; i < evilButtons.Length; i++)
             {
                 evilButtons[i].SetCurrentOption(groupOptionButton.OptionValue);
@@ -194,7 +194,7 @@ namespace Coralite.Content.UI
         public static void ShowOptionDescription(UIMouseEvent evt, UIElement listeningElement)
         {
             LocalizedText localizedText = null;
-            if (listeningElement is GroupOptionButton<WorldDenguonID> groupOptionButton3)
+            if (listeningElement is GroupOptionButton<WorldDungeonID> groupOptionButton3)
                 localizedText = groupOptionButton3.Description;
 
             if (localizedText != null)

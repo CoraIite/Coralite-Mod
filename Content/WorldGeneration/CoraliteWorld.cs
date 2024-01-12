@@ -28,10 +28,10 @@ namespace Coralite.Content.WorldGeneration
             }
 
             int Dungeon = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
-            if (ShadowCastle)
+            bool shadowCastle = ShadowCastle;
+            if (shadowCastle)
             {
                 tasks.RemoveAt(Dungeon);
-                tasks.Insert(Dungeon, new PassLegacy("Coralite Shadow Castle", GenShadowCastle));
             }
 
             int Lakes = tasks.FindIndex(genpass => genpass.Name.Equals("Lakes"));
@@ -49,6 +49,10 @@ namespace Coralite.Content.WorldGeneration
             if (FinalCleanup != -1)
             {
                 tasks.Insert(FinalCleanup + 1, new PassLegacy("Coralite Replase Vanilla Chest", ReplaceVanillaChest));
+                if (shadowCastle)
+                {
+                    tasks.Insert(FinalCleanup + 2, new PassLegacy("Coralite Shadow Castle", GenShadowCastle));
+                }
             }
         }
 

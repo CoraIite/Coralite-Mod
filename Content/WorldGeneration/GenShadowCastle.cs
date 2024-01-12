@@ -1,18 +1,26 @@
-﻿using Coralite.Content.UI;
+﻿using Coralite.Content.Tiles.ShadowCastle;
+using Coralite.Content.UI;
 using Coralite.Content.WorldGeneration.Generators;
+using Coralite.Content.WorldGeneration.ShadowCastleRooms;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Generation;
+using Terraria.GameContent.UI;
+using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 using Terraria.WorldBuilding;
 //using static Terraria.WorldGen;
 
@@ -20,29 +28,102 @@ namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
+        internal static UnifiedRandom shadowCastleRand = new UnifiedRandom();
+        internal static Rectangle shadowCastleRestraint;
+
         public static bool ShadowCastle
         {
             get
             {
-                switch (CoraliteWorldSettings.DenguonType)
+                return CoraliteWorldSettings.DungeonType switch
                 {
-                    case CoraliteWorldSettings.WorldDenguonID.Random:
-                        return Main.rand.NextBool();
-                    default:
-                    case CoraliteWorldSettings.WorldDenguonID.Denguon:
-                        return false;
-                    case CoraliteWorldSettings.WorldDenguonID.ShadowCastle:
-                        return true;
-                }
+                    CoraliteWorldSettings.WorldDungeonID.Random => Main.rand.NextBool(),
+                    CoraliteWorldSettings.WorldDungeonID.ShadowCastle => true,
+                    _ => false,
+                };
             }
         }
 
         public void GenShadowCastle(GenerationProgress progress, GameConfiguration configuration)
         {
+            progress.Message = "正在修建影之城";
 
+            GenVars.dEnteranceX = 0;
+            GenVars.numDRooms = 0;
+            GenVars.numDDoors = 0;
+            GenVars.numDungeonPlatforms = 0;
+
+            int limit = 700;
+            int roomCount = 40;
+            if (Main.maxTilesX>6000)
+            {
+                limit += 100;
+                roomCount = 50;
+            }
+            if (Main.maxTilesY>8000)
+            {
+                limit += 100;
+                roomCount = 60;
+            }
+
+            for (int i = 0; i < 20000; i++)
+            {
+                int dungeonLocation = GenVars.dungeonLocation;
+                int num756 = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + 200;
+                int dungeonHeight = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + WorldGen.genRand.Next(-200, 200);
+                bool flag47 = false;
+                for (int j = 0; j < 10; j++)
+                {
+                    if (WorldGen.SolidTile(dungeonLocation, dungeonHeight + j))
+                    {
+                        flag47 = true;
+                        break;
+                    }
+                }
+
+                if (!flag47)
+                {
+                    for (; dungeonHeight < num756 && !WorldGen.SolidTile(dungeonLocation, dungeonHeight + 10); dungeonHeight++)
+                    {
+                    }
+                }
+
+                if (WorldGen.drunkWorldGen)
+                    dungeonHeight = (int)Main.worldSurface + 70;
+
+                shadowCastleRand = new UnifiedRandom(WorldGen.genRand.Next());
+
+                shadowCastleRestraint = new Rectangle(dungeonLocation - limit, dungeonHeight, limit * 2, Main.UnderworldLayer - dungeonHeight);
+
+                NormalRoom root = new NormalRoom(new Point(dungeonLocation, dungeonHeight));
+                root.InitializeType();
+
+                if (root.shadowCastleRooms.Count < roomCount)
+                    continue;
+
+                List<ShadowCastleRoom> rooms = root.shadowCastleRooms;
+
+                for (int m = 0; m < rooms.Count; m++)
+                {
+                    ShadowCastleRoom room = rooms[m];
+
+                    if ((room.childrenRooms == null || room.childrenRooms.Count == 0)
+                        && room.parentDirection != ShadowCastleRoom.Direction.Down
+                        && WorldGen.genRand.NextBool())
+                    {
+                        Spire spire = new Spire(room.roomRect.Center);//底端换成 我超，塔！
+                        ShadowCastleRoom.Exchange(room, spire);//交换一下信息
+                        rooms[m] = spire;//替换列表里的
+                    }
+                }
+
+                root.Generate();
+                root.CreateCorridor();
+                break;
+            }
         }
 
-
+        #region 原版地牢
         public static void MakeDungeon(int x, int y)
         {
             GenVars.dEnteranceX = 0;
@@ -3928,7 +4009,7 @@ namespace Coralite.Content.WorldGeneration
                 }
             }
         }
-
+        #endregion
     }
 
     public class ShadowCastleRoom
@@ -3936,7 +4017,7 @@ namespace Coralite.Content.WorldGeneration
         public enum RoomType
         {
             /// <summary> 普通房间，毛都没有，一般较小 </summary>
-            Normal,
+            Normal = 0,
             /// <summary> 普通影箱子 </summary>
             SingleChest,
             /// <summary> 所有存放地牢宝箱的地方 </summary>
@@ -3945,6 +4026,12 @@ namespace Coralite.Content.WorldGeneration
             Lobby,
             /// <summary> 尖顶,作为末端而存在 </summary>
             Spire,
+            /// <summary> 书房，包含水矢 </summary>
+            Sanctum,
+            /// <summary> 厨房 </summary>
+            Kitchen,
+            /// <summary> 温室，用于种植花朵 </summary>
+            Greenhouse,
         }
 
         public enum Direction
@@ -3962,8 +4049,10 @@ namespace Coralite.Content.WorldGeneration
             "DenguonChest",
             "Lobby",
             "Spire",
+            "Sanctum",
+            "Kitchen",
+            "Greenhouse",
         };
-
         public static string[] RoomTypeString => _roomTypeString;
 
         /// <summary>
@@ -3976,37 +4065,99 @@ namespace Coralite.Content.WorldGeneration
             [Color.White] = -2,
             [Color.Black] = -1
         };
+        public static Dictionary<Color, int> GenDic = new Dictionary<Color, int>()
+        {
+            [Color.Black] = -1,
+            [Color.White] = ModContent.TileType<ShadowBrickTile>(),
+            [new Color(160, 95, 185)] = ModContent.TileType<ShadowBrickTile>(),//a05fb9
+
+        };
+        public static Dictionary<Color, int> WallDic = new Dictionary<Color, int>()
+        {
+            [Color.Black] = -1,
+            [Color.White] = WallID.SandFall,
+        };
 
 
         public RoomType roomType;
         /// <summary>
-        /// 房间左上角的位置
+        /// 房间的位置，大小
         /// </summary>
-        public Point topLeft;
-        public Point RoomSize;
+        public Rectangle roomRect;
+
+        /// <summary>
+        /// 房间链的深度
+        /// </summary>
+        public int depth;
+        /// <summary>
+        /// 随机类型<br></br>
+        /// 使用<see cref="RandomTypeCount"/>来控制有多少种类型<br></br>
+        /// 默认-1，在new的时候赋值
+        /// </summary>
+        public int randomType = -1;
 
         public virtual int RandomTypeCount { get => 1; }
+        /// <summary>
+        /// 顶部通道的位置
+        /// </summary>
+        public virtual Point[] UpCorridor { get; }
+        /// <summary>
+        /// 下方通道的位置
+        /// </summary>
+        public virtual Point[] DownCorridor { get; }
+        /// <summary>
+        /// 左边通道的位置
+        /// </summary>
+        public virtual Point[] LeftCorridor { get; }
+        /// <summary>
+        /// 右边通道的位置
+        /// </summary>
+        public virtual Point[] RightCorridor { get; }
 
-        public virtual string RoomGenTex { get=>string.Empty; }
-        public virtual string WallGenTex { get => string.Empty; }
-        public virtual string RoomClearTex { get => string.Empty; }
-        public virtual string WallClearTex { get => string.Empty; }
+
+        public virtual string RoomGenTex { get => GetType().Name; }
+        public virtual string WallGenTex { get => RoomGenTex + "Wall"; }
+        public virtual string RoomClearTex { get => RoomGenTex + "Clear"; }
+        public virtual string WallClearTex { get => WallGenTex + "Clear"; }
+
+        public int Width => roomRect.Width;
+        public int Height => roomRect.Height;
 
         //父节点相对于自身的位置
         public Direction parentDirection;
         public ShadowCastleRoom parentRoom;
-        public List< ShadowCastleRoom> childrenRooms;
+        public List<ShadowCastleRoom> childrenRooms;
+
+        public ShadowCastleRoom(Point center, RoomType roomType)
+        {
+            if (RandomTypeCount > 1)
+                randomType = WorldGen.genRand.Next(RandomTypeCount);
+
+            string rand = "";
+            if (randomType >= 0)
+                rand = randomType.ToString();
+
+            Texture2D roomTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleRooms + RoomGenTex + rand, AssetRequestMode.ImmediateLoad).Value;
+
+            roomRect = new Rectangle(center.X - roomTex.Width / 2, center.Y - roomTex.Height / 2, roomTex.Width, roomTex.Height);
+            this.roomType = roomType;
+        }
+
+
 
         /// <summary>
         /// 生成type,并且创建
         /// </summary>
         public void InitializeType()
         {
-            shadowCastleRooms = new List<ShadowCastleRoom>();
+            shadowCastleRooms = new List<ShadowCastleRoom>
+            {
+                this
+            };
             OnInitialize(shadowCastleRooms);
         }
 
-        public void OnInitialize(List<ShadowCastleRoom> rooms=null)
+        public void OnInitialize(List<ShadowCastleRoom> rooms = null)
         {
             InitializeChildrens(rooms);
 
@@ -4021,8 +4172,8 @@ namespace Coralite.Content.WorldGeneration
         /// 在这里new出子类，并添加进lizt中<br></br>
         /// 请使用<see cref="Append"/>以将实例化出的子房间加入自身列表中
         /// </summary>
-        /// <param name="childrenRooms"></param>
-        public virtual void InitializeChildrens(List<ShadowCastleRoom> childrenRooms = null)
+        /// <param name="rooms"></param>
+        public virtual void InitializeChildrens(List<ShadowCastleRoom> rooms = null)
         {
 
         }
@@ -4032,61 +4183,133 @@ namespace Coralite.Content.WorldGeneration
         /// </summary>
         /// <param name="room">子房间</param>
         /// <param name="direction">子房间相对于自身的方向</param>
-        public void Append(ShadowCastleRoom room, Direction direction, List<ShadowCastleRoom> rooms = null)
+        public bool Append(ShadowCastleRoom room, Direction direction, List<ShadowCastleRoom> rooms = null)
         {
-            childrenRooms ??= new List<ShadowCastleRoom>();
-
-            room.parentRoom = this;
-
-            room.parentDirection = direction switch
+            Vector2 topLeft = room.roomRect.TopLeft();
+            Vector2 bottomRight = room.roomRect.BottomRight();
+            if (!WorldGen.InWorld((int)topLeft.X, (int)topLeft.Y) || !WorldGen.InWorld((int)bottomRight.X, (int)bottomRight.Y))
             {
-                Direction.Down => Direction.Up,
-                Direction.Left => Direction.Right,
-                Direction.Right => Direction.Left,
-                _ => Direction.Down,
-            };
+                return false;
+            }
+
+            //检测碰撞，如果产生了碰撞那么就直接重来！
+            if (rooms != null)
+            {
+                foreach (var room2 in rooms)
+                {
+                    if (room2.roomRect.Intersects(room.roomRect))
+                        return false;
+                }
+            }
+
+            childrenRooms ??= new List<ShadowCastleRoom>();
+            CoraliteWorld.shadowCastleRand.SetSeed(WorldGen.genRand.Next());
+
+            room.depth = depth + 1;
+            room.parentRoom = this;
+            room.parentDirection = ReverseDirection(direction);
 
             childrenRooms.Add(room);
             rooms?.Add(room);
+            return true;
         }
 
-        public virtual void Generate(int rate)
+        public virtual void Generate()
         {
             //生成自己
             GenerateSelf();
+            PostGenerateSelf();
+
             //生成子房间
-
-
+            GenChild();
         }
 
         public virtual void GenerateSelf()
         {
             string rand = "";
-            if (RandomTypeCount>1)
-            {
-                rand = WorldGen.genRand.Next(RandomTypeCount).ToString();
-            }
+            if (randomType >= 0)
+                rand = randomType.ToString();
 
-            Texture2D roomTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleRooms + RoomGenTex+ rand, AssetRequestMode.ImmediateLoad).Value;
-            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleRooms + RoomClearTex+ rand, AssetRequestMode.ImmediateLoad).Value;
+            Texture2D roomTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleRooms + RoomGenTex + rand, AssetRequestMode.ImmediateLoad).Value;
+            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleRooms + RoomClearTex + rand, AssetRequestMode.ImmediateLoad).Value;
             Texture2D wallClearTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleRooms + WallClearTex + rand, AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleRooms + WallGenTex+ rand, AssetRequestMode.ImmediateLoad).Value;
+            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleRooms + WallGenTex + rand, AssetRequestMode.ImmediateLoad).Value;
+
+            //Task.Run(async () =>
+            //{
+            //    await GenRoom(clearTex, roomTex, wallClearTex, wallTex, clearDic, GenDic, clearDic, WallDic, roomRect.X, roomRect.Y);
+            //}); 
+
+            GenRoom2(clearTex, roomTex, wallClearTex, wallTex, clearDic, GenDic, clearDic, WallDic, roomRect.X, roomRect.Y);
         }
 
         public virtual void GenChild()
         {
-            //生成随机子类
-            //将子类加入自身的list
             //调用子类的Generate方法
+            if (childrenRooms != null)
+                foreach (var room in childrenRooms)
+                    room.Generate();
         }
+
+        public virtual void CreateCorridor()
+        {
+            CreateSelfCorridor();
+
+            CreateChildCorridor();
+        }
+
+        public virtual void CreateSelfCorridor()
+        {
+            if (childrenRooms != null)
+            {
+                foreach (var child in childrenRooms)
+                {
+                    Direction dir = child.parentDirection;
+                    Point endPoint = new Point(child.roomRect.X, child.roomRect.Y) + child.GetCorridorPoint(dir);
+                    dir = ReverseDirection(dir);
+                    Point startPoint = new Point(roomRect.X, roomRect.Y) + GetCorridorPoint(dir);
+
+                    GenerateCorridor(startPoint, endPoint, dir);
+                }
+            }
+        }
+
+        public virtual void CreateChildCorridor()
+        {
+            //调用子类的方法
+            if (childrenRooms != null)
+                foreach (var room in childrenRooms)
+                    room.CreateCorridor();
+        }
+
 
         /// <summary>
         /// 在生成完自身主体房间和墙壁后执行，用于生成特殊建筑物
         /// </summary>
         public virtual void PostGenerateSelf() { }
 
-        public static Task GenShrine(Texture2D clearTex, Texture2D shrineTex, Texture2D wallClearTex, Texture2D wallTex,
-            Dictionary<Color, int> clearDic, Dictionary<Color, int> shrineDic, Dictionary<Color, int> wallClearDic, Dictionary<Color, int> wallDic,
+        public virtual bool NextDirection(out Direction direction)
+        {
+            List<Direction> directions = new List<Direction>() { Direction.Up, Direction.Down, Direction.Left, Direction.Right };
+            directions.Remove(parentDirection);
+
+            if (childrenRooms != null)
+                foreach (var child in childrenRooms)
+                    directions.Remove(ReverseDirection(child.parentDirection));
+
+            if (!directions.Any())
+            {
+                direction = Direction.Up;
+                return false;
+            }
+
+            direction = CoraliteWorld.shadowCastleRand.NextFromList(directions.ToArray());
+            return true;
+        }
+
+        #region 一些帮助方法
+        public static Task GenRoom(Texture2D clearTex, Texture2D roomTex, Texture2D wallClearTex, Texture2D wallTex,
+            Dictionary<Color, int> clearDic, Dictionary<Color, int> roomDic, Dictionary<Color, int> wallClearDic, Dictionary<Color, int> wallDic,
             int genOrigin_x, int genOrigin_y)
         {
             bool genned = false;
@@ -4103,11 +4326,11 @@ namespace Coralite.Content.WorldGeneration
                     clearGenerator.Generate(genOrigin_x, genOrigin_y, true);
 
                     //生成主体地形
-                    Texture2TileGenerator shrineGenerator = TextureGeneratorDatas.GetTex2TileGenerator(shrineTex, shrineDic);
-                    shrineGenerator.Generate(genOrigin_x, genOrigin_y, true);
+                    Texture2TileGenerator roomGenerator = TextureGeneratorDatas.GetTex2TileGenerator(roomTex, roomDic);
+                    roomGenerator.Generate(genOrigin_x, genOrigin_y, true);
 
                     //清理范围
-                   if(wallClearTex != null)
+                    if (wallClearTex != null)
                     {
                         Texture2WallGenerator wallClearGenerator = TextureGeneratorDatas.GetTex2WallGenerator(wallClearTex, wallClearDic);
                         wallClearGenerator.Generate(genOrigin_x, genOrigin_y, true);
@@ -4128,5 +4351,221 @@ namespace Coralite.Content.WorldGeneration
             return Task.CompletedTask;
         }
 
+        public static void GenRoom2(Texture2D clearTex, Texture2D roomTex, Texture2D wallClearTex, Texture2D wallTex,
+            Dictionary<Color, int> clearDic, Dictionary<Color, int> roomDic, Dictionary<Color, int> wallClearDic, Dictionary<Color, int> wallDic,
+            int genOrigin_x, int genOrigin_y)
+        {
+            bool genned = false;
+            bool placed = false;
+
+            WorldGenHelper.ClearLiuid(genOrigin_x, genOrigin_y, clearTex.Width, clearTex.Height);
+
+            Texture2TileGenerator clearGenerator = null;
+            Texture2TileGenerator roomGenerator = null;
+            Texture2WallGenerator wallClearGenerator = null;
+            Texture2WallGenerator wallGenerator = null;
+
+            while (!genned)
+            {
+                if (placed)
+                    continue;
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    //清理范围
+                    clearGenerator = TextureGeneratorDatas.GetTex2TileGenerator(clearTex, clearDic);
+
+                    //生成主体地形
+                    roomGenerator = TextureGeneratorDatas.GetTex2TileGenerator(roomTex, roomDic);
+
+                    //清理范围
+                    if (wallClearTex != null)
+                        wallClearGenerator = TextureGeneratorDatas.GetTex2WallGenerator(wallClearTex, wallClearDic);
+
+                    //生成墙壁
+                    if (wallTex != null)
+                        wallGenerator = TextureGeneratorDatas.GetTex2WallGenerator(wallTex, wallDic);
+
+                    genned = true;
+                });
+                placed = true;
+            }
+
+            clearGenerator?.Generate(genOrigin_x, genOrigin_y, true);
+            roomGenerator?.Generate(genOrigin_x, genOrigin_y, true);
+            wallClearGenerator?.Generate(genOrigin_x, genOrigin_y, true);
+            wallGenerator?.Generate(genOrigin_x, genOrigin_y, true);
+        }
+
+        /// <summary>
+        /// 将第一个房间替换为第二个房间
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="newRoom"></param>
+        public static void Exchange(ShadowCastleRoom room, ShadowCastleRoom newRoom)
+        {
+            ShadowCastleRoom parentRoom = room.parentRoom;
+            List<ShadowCastleRoom> childrens = room.childrenRooms;
+
+            parentRoom.childrenRooms?.Remove(room);
+
+            newRoom.parentDirection = room.parentDirection;
+            newRoom.depth = room.depth;
+            newRoom.parentRoom = parentRoom;
+            newRoom.childrenRooms = childrens;
+
+            parentRoom.childrenRooms?.Add(newRoom);
+        }
+
+        public void ResetCenter(Point center)
+        {
+            int width = roomRect.Width;
+            int height = roomRect.Height;
+
+            roomRect = new Rectangle(center.X - width / 2, center.Y - height / 2, width, height);
+        }
+
+        public static Direction ReverseDirection(Direction baseDirection)
+        {
+            return baseDirection switch
+            {
+                Direction.Down => Direction.Up,
+                Direction.Left => Direction.Right,
+                Direction.Right => Direction.Left,
+                _ => Direction.Down,
+            };
+
+        }
+
+        public static Point GetDir(Direction d)
+        {
+            return d switch
+            {
+                Direction.Up => new Point(0, -1),
+                Direction.Down => new Point(0, 1),
+                Direction.Left => new Point(-1, 0),
+                _ => new Point(1, 0),
+            };
+        }
+
+        public Point GetCorridorPoint(Direction direction)
+        {
+            int random = randomType == -1 ? 0 : randomType;
+            Point p = direction switch
+            {
+                Direction.Up => UpCorridor[random],
+                Direction.Down => DownCorridor[random],
+                Direction.Left => LeftCorridor[random],
+                _ => RightCorridor[random],
+            };
+
+            return p;
+        }
+
+        /// <summary>
+        /// 生成通道
+        /// </summary>
+        /// <param name="startPoint">起始中心点</param>
+        /// <param name="endPoint">结束中心点</param>
+        /// <param name="direction">方向</param>
+        /// <param name="CorridorHeight">通道的宽度，默认5格</param>
+        /// <param name="WallWidth">通道墙壁的厚度，默认5格</param>
+        public static void GenerateCorridor(Point startPoint, Point endPoint, Direction direction, int CorridorHeight = 5, int WallWidth = 5)
+        {
+            int shadowBrick = ModContent.TileType<ShadowBrickTile>();
+            //墙壁
+
+            switch (direction)
+            {
+                default:
+                case Direction.Up:
+                case Direction.Down:
+                    {
+                        //方向
+                        int dir = endPoint.Y > startPoint.Y ? 1 : -1;
+                        //生成多远
+                        int count = Math.Abs(endPoint.Y - startPoint.Y);
+                        if (direction == Direction.Up)
+                            startPoint += new Point(0, -1);
+
+                        //把中心点挪到最左边
+                        startPoint -= new Point(CorridorHeight / 2 + WallWidth, 0);
+                        endPoint -= new Point(CorridorHeight / 2 + WallWidth, 0);
+
+                        for (int y = 0; y < count; y++)
+                        {
+                            //当前的y位置
+                            int currentY = startPoint.Y + y * dir;
+                            int baseX = (int)Math.Round(Helper.Lerp(startPoint.X, endPoint.X, y / (float)(count - 1)));
+                            for (int x = 0; x < CorridorHeight + WallWidth * 2; x++)
+                            {
+                                int currentX = baseX + x;
+
+                                Tile tile = Main.tile[currentX, currentY];
+
+                                //放置两边墙壁块
+                                if (x < WallWidth || x > CorridorHeight + WallWidth)
+                                {
+                                    Main.tile[currentX, currentY].ClearEverything();
+                                    WorldGen.PlaceTile(currentX, currentY, shadowBrick);
+                                    //放墙
+                                }
+                                else//清空中间范围
+                                {
+                                    Main.tile[currentX, currentY].ClearEverything();
+                                    //放墙
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case Direction.Left:
+                case Direction.Right:
+                    {
+                        //方向
+                        int dir = endPoint.X > startPoint.X ? 1 : -1;
+                        //生成多远
+                        int count = Math.Abs(endPoint.X - startPoint.X);
+                        //把中心点挪到最上边
+                        if (direction == Direction.Left)//左边要额外减一下，不然会出问题
+                            startPoint += new Point(-1, 0);
+
+                        startPoint -= new Point(0, CorridorHeight / 2 + WallWidth);
+                        endPoint -= new Point(0, CorridorHeight / 2 + WallWidth);
+
+
+                        for (int x = 0; x < count; x++)
+                        {
+                            //当前的x位置
+                            int currentX = startPoint.X + x * dir;
+                            int baseY = (int)Math.Round(Helper.Lerp(startPoint.Y, endPoint.Y, x / (float)(count - 1)));
+
+                            for (int y = 0; y < CorridorHeight + WallWidth * 2; y++)
+                            {
+                                int currentY = baseY + y;
+
+                                Tile tile = Main.tile[currentX, currentY];
+
+                                //放置上下两边墙壁物块
+                                if (y < WallWidth || y > CorridorHeight + WallWidth)
+                                {
+                                    Main.tile[currentX, currentY].ClearEverything();
+                                    WorldGen.PlaceTile(currentX, currentY, shadowBrick);
+                                    //放墙壁
+                                }
+                                else//清空中间范围
+                                {
+                                    Main.tile[currentX, currentY].ClearEverything();
+                                    //放墙壁
+                                }
+                            }
+                        }
+
+                    }
+                    break;
+            }
+        }
+
+        #endregion
     }
 }

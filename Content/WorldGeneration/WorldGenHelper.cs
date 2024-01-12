@@ -3,6 +3,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ObjectData;
 
@@ -413,7 +414,11 @@ namespace Coralite.Content.WorldGeneration
                 if (wall != -1)
                 {
                     if (wall == -2)
+                    {
                         wall = 0;
+                        WorldGen.KillWall(x, y);
+                        return;
+                    }
                     Main.tile[x, y].WallType = 0;
                     WorldGen.PlaceWall(x, y, wall, true);
                 }
@@ -425,7 +430,17 @@ namespace Coralite.Content.WorldGeneration
 
         }
 
+        public static void ClearLiuid(int x, int y,int width,int height)
+        {
+            for (int x1 = 0; x1 < width; x1++)
+                for (int y1 = 0; y1 < height; y1++)
+                {
+                    int current_x = x + x1;
+                    int current_y = y + y1;
 
+                    Main.tile[current_x, current_y].Clear(TileDataType.Liquid);
+                }
+        }
 
     }
 }
