@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.CoreKeeper;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -46,22 +45,22 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                 rate = 36;
             }
 
-            bool canGen = CoraliteWorld.shadowCastleRand.NextBool(rate - depth, rate);
+            bool canGen = WorldGen.genRand.NextBool(rate - depth, rate);
 
             if (canGen)
             {
-                int howManyRoom = CoraliteWorld.shadowCastleRand.Next(1, 4);
+                int howManyRoom = WorldGen.genRand.Next(1, 4);
                 for (int i = 0; i < howManyRoom; i++)
                 {
                     if (NextDirection(out Direction direction))
                     {
                         Point d = GetDir(direction);
                         NormalRoom childRoom = new NormalRoom(roomRect.Center);
-                        int length = roomRect.Width / 2 + childRoom.Width / 2 + 4 + CoraliteWorld.shadowCastleRand.Next(0, childRoom.Width / 2);
-                        int height = roomRect.Height / 2 + childRoom.Height / 2 + 4 + CoraliteWorld.shadowCastleRand.Next(0, childRoom.Height / 2);
+                        int length = roomRect.Width / 2 + childRoom.Width / 2 + 4 + WorldGen.genRand.Next(0, childRoom.Width / 2);
+                        int height = roomRect.Height / 2 + childRoom.Height / 2 + 4 + WorldGen.genRand.Next(0, childRoom.Height / 2);
 
                         Point newCenter = roomRect.Center + new Point(d.X * length, d.Y * height)
-                            + new Point(CoraliteWorld.shadowCastleRand.Next(-2, 2), CoraliteWorld.shadowCastleRand.Next(-2, 2));
+                            + new Point(WorldGen.genRand.Next(-2, 2), WorldGen.genRand.Next(-2, 2));
 
                         if (!CoraliteWorld.shadowCastleRestraint.Contains(newCenter.X, newCenter.Y))
                         {
@@ -99,7 +98,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                 return false;
             }
 
-            direction = CoraliteWorld.shadowCastleRand.NextFromList(directions.ToArray());
+            direction = WorldGen.genRand.NextFromList(directions.ToArray());
             return true;
         }
 

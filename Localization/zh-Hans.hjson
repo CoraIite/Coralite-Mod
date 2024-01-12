@@ -2184,6 +2184,11 @@ Mods: {
 				DisplayName: 影方砖
 				Tooltip: ""
 			}
+
+			ShadowQuadrel: {
+				// DisplayName: Shadow Quadrel
+				// Tooltip: ""
+			}
 		}
 
 		Tiles: {

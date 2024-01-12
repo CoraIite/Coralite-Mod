@@ -23,4 +23,18 @@ namespace Coralite.Content.WorldGeneration.Generators
             this.wallID = wallID;
         }
     }
+
+    public class TileObjectInfo
+    {
+        public int tileID = -1;
+        public int tileStyle;
+        public bool mute;
+
+        public TileObjectInfo(int tileID, int style,bool mute)
+        {
+            this.tileID = tileID;
+            tileStyle = style;
+            this.mute= mute;
+        }
+    }
 }

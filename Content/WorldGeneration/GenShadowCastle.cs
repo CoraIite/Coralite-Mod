@@ -14,13 +14,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.Generation;
-using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 using Terraria.WorldBuilding;
 //using static Terraria.WorldGen;
 
@@ -28,7 +25,6 @@ namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
-        internal static UnifiedRandom shadowCastleRand = new UnifiedRandom();
         internal static Rectangle shadowCastleRestraint;
 
         public static bool ShadowCastle
@@ -55,12 +51,12 @@ namespace Coralite.Content.WorldGeneration
 
             int limit = 700;
             int roomCount = 40;
-            if (Main.maxTilesX>6000)
+            if (Main.maxTilesX > 6000)
             {
                 limit += 100;
                 roomCount = 50;
             }
-            if (Main.maxTilesY>8000)
+            if (Main.maxTilesY > 8000)
             {
                 limit += 100;
                 roomCount = 60;
@@ -73,25 +69,18 @@ namespace Coralite.Content.WorldGeneration
                 int dungeonHeight = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + WorldGen.genRand.Next(-200, 200);
                 bool flag47 = false;
                 for (int j = 0; j < 10; j++)
-                {
                     if (WorldGen.SolidTile(dungeonLocation, dungeonHeight + j))
                     {
                         flag47 = true;
                         break;
                     }
-                }
 
                 if (!flag47)
-                {
                     for (; dungeonHeight < num756 && !WorldGen.SolidTile(dungeonLocation, dungeonHeight + 10); dungeonHeight++)
-                    {
-                    }
-                }
+                    { }
 
                 if (WorldGen.drunkWorldGen)
                     dungeonHeight = (int)Main.worldSurface + 70;
-
-                shadowCastleRand = new UnifiedRandom(WorldGen.genRand.Next());
 
                 shadowCastleRestraint = new Rectangle(dungeonLocation - limit, dungeonHeight, limit * 2, Main.UnderworldLayer - dungeonHeight);
 
@@ -107,6 +96,7 @@ namespace Coralite.Content.WorldGeneration
                 {
                     ShadowCastleRoom room = rooms[m];
 
+                    #region 最优先：尖塔替换
                     if ((room.childrenRooms == null || room.childrenRooms.Count == 0)
                         && room.parentDirection != ShadowCastleRoom.Direction.Down
                         && WorldGen.genRand.NextBool())
@@ -114,7 +104,10 @@ namespace Coralite.Content.WorldGeneration
                         Spire spire = new Spire(room.roomRect.Center);//底端换成 我超，塔！
                         ShadowCastleRoom.Exchange(room, spire);//交换一下信息
                         rooms[m] = spire;//替换列表里的
+                        continue;
                     }
+                    #endregion
+
                 }
 
                 root.Generate();
@@ -4070,6 +4063,7 @@ namespace Coralite.Content.WorldGeneration
             [Color.Black] = -1,
             [Color.White] = ModContent.TileType<ShadowBrickTile>(),
             [new Color(160, 95, 185)] = ModContent.TileType<ShadowBrickTile>(),//a05fb9
+            [new Color(154, 153, 168)] = ModContent.TileType<ShadowQuadrelTile>(),//9a99a8
 
         };
         public static Dictionary<Color, int> WallDic = new Dictionary<Color, int>()
@@ -4203,7 +4197,6 @@ namespace Coralite.Content.WorldGeneration
             }
 
             childrenRooms ??= new List<ShadowCastleRoom>();
-            CoraliteWorld.shadowCastleRand.SetSeed(WorldGen.genRand.Next());
 
             room.depth = depth + 1;
             room.parentRoom = this;
@@ -4303,7 +4296,7 @@ namespace Coralite.Content.WorldGeneration
                 return false;
             }
 
-            direction = CoraliteWorld.shadowCastleRand.NextFromList(directions.ToArray());
+            direction = WorldGen.genRand.NextFromList(directions.ToArray());
             return true;
         }
 
@@ -4472,7 +4465,11 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="WallWidth">通道墙壁的厚度，默认5格</param>
         public static void GenerateCorridor(Point startPoint, Point endPoint, Direction direction, int CorridorHeight = 5, int WallWidth = 5)
         {
-            int shadowBrick = ModContent.TileType<ShadowBrickTile>();
+            int shadowBrick = WorldGen.genRand.Next(3) switch
+            {
+                0 => ModContent.TileType<ShadowBrickTile>(),
+                _ => ModContent.TileType<ShadowQuadrelTile>()
+            };
             //墙壁
 
             switch (direction)

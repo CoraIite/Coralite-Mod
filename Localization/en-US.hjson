@@ -2166,6 +2166,11 @@ Mods: {
 				DisplayName: Shadow Brick
 				Tooltip: ""
 			}
+
+			ShadowQuadrel: {
+				DisplayName: Shadow Quadrel
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {

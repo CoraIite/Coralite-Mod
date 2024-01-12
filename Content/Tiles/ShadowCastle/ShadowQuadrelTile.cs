@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.ShadowCastle
 {
-    public class ShadowBrickTile : ModTile
+    public class ShadowQuadrelTile : ModTile
     {
         public override string Texture => AssetDirectory.ShadowCastleTiles + Name;
 
@@ -17,15 +17,13 @@ namespace Coralite.Content.Tiles.ShadowCastle
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLavaDeath[Type] = false;
-            Main.tileMerge[Type][ModContent.TileType<ShadowQuadrelTile>()] = true;
-            Main.tileMerge[ModContent.TileType<ShadowQuadrelTile>()][Type] = true;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             MinPick = 100;
-            DustType = DustID.Shadowflame;
+            DustType = DustID.SilverCoin;
             MineResist = 0.3f;
 
-            AddMapEntry(new Microsoft.Xna.Framework.Color(104, 54, 192));
+            AddMapEntry(new Microsoft.Xna.Framework.Color(154, 153, 168));
             HitSound = CoraliteSoundID.DigStone_Tink;
         }
 
