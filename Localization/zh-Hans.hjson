@@ -2181,12 +2181,32 @@ Mods: {
 			}
 
 			ShadowBrick: {
-				DisplayName: 影方砖
+				DisplayName: 影之城砖
 				Tooltip: ""
 			}
 
 			ShadowQuadrel: {
-				// DisplayName: Shadow Quadrel
+				DisplayName: 影方砖
+				Tooltip: ""
+			}
+
+			ShadowImaginaryBrick: {
+				DisplayName: 影虚砖
+				Tooltip: ""
+			}
+
+			ShadowBrickWall: {
+				DisplayName: 影砖墙
+				Tooltip: ""
+			}
+
+			MercuryPlatform: {
+				DisplayName: 水银平台
+				Tooltip: ""
+			}
+
+			MercuryDroplight: {
+				// DisplayName: Mercury Droplight
 				// Tooltip: ""
 			}
 		}

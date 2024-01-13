@@ -21,5 +21,11 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
         public Spire(Point center) : base(center, RoomType.Spire)
         {
         }
+
+        public override void PostGenerateSelf()
+        {
+            GenerateObject();
+        }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Tiles.ShadowCastle;
+using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -31,8 +32,11 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            ModItem modItem = ItemLoader.GetItem(5614);
-            Main.NewText(modItem.Name);
+            Point pos = Main.MouseWorld.ToTileCoordinates();
+            WorldGen.PlaceObject(pos.X, pos.Y, ModContent.TileType<MercuryPlatformTile>());
+
+            //ModItem modItem = ItemLoader.GetItem(5614);
+            //Main.NewText(modItem.Name);
             //Main.dayTime = true;
             //Main.time = 4000;
             //Main.windSpeedTarget = 0.8f;

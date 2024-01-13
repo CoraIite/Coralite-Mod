@@ -102,6 +102,11 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
             return true;
         }
 
+        public override void PostGenerateSelf()
+        {
+            GenerateObject();
+        }
+
         //public override void GenerateSelf()
         //{
         //    if (roomGenerator == null)

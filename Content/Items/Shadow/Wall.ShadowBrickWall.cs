@@ -1,16 +1,15 @@
-﻿using Coralite.Content.Tiles.ShadowCastle;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Shadow
 {
-    public class ShadowBrick : ModItem
+    public class ShadowBrickWall:ModItem
     {
         public override string Texture => AssetDirectory.ShadowItems + Name;
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<ShadowBrickTile>());
+            Item.DefaultToPlaceableWall(ModContent.WallType<Tiles.ShadowCastle.ShadowBrickWall>());
         }
     }
 }

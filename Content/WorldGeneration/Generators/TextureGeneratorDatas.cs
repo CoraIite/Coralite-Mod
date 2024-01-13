@@ -70,7 +70,7 @@ namespace Coralite.Content.WorldGeneration.Generators
             return gen;
         }
 
-        public static Texture2Object GetTex2ObjectGenerator(Texture2D tex,Dictionary<Color,(int,int,bool)> colorToObject)
+        public static Texture2Object GetTex2ObjectGenerator(Texture2D tex,Dictionary<Color,(int,int)> colorToObject)
         {
             Color[] objectData = new Color[tex.Width * tex.Height];
 
@@ -82,8 +82,8 @@ namespace Coralite.Content.WorldGeneration.Generators
             for (int m = 0; m < objectData.Length; m++)
             {
                 Color wallColor = tex == null ? Color.Black : objectData[m];
-                (int, int, bool) tileInfos = colorToObject.ContainsKey(wallColor) ? colorToObject[wallColor] : (-1, 0, false);
-                gen.tileObjectGen[x, y] = new TileObjectInfo(tileInfos.Item1, tileInfos.Item2, tileInfos.Item3);
+                (int, int) tileInfos = colorToObject.ContainsKey(wallColor) ? colorToObject[wallColor] : (-1, 0);
+                gen.tileObjectGen[x, y] = new TileObjectInfo(tileInfos.Item1, tileInfos.Item2);
                 x++;
                 if (x >= tex.Width)
                 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace Coralite.Content.WorldGeneration.Generators
 {
@@ -27,7 +22,7 @@ namespace Coralite.Content.WorldGeneration.Generators
 
                     if (info.tileID != -1)
                     {
-                        WorldGen.PlaceObject(current_x, current_y, info.tileID, info.mute, info.tileStyle);
+                        WorldGen.PlaceObject(current_x, current_y, info.tileID, true, info.tileStyle);
                     }
                 }
         }

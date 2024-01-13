@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.ShadowCastle
 {
-    public class ShadowBrickTile : ModTile
+    public class ShadowImaginaryBrickTile : ModTile
     {
         public override string Texture => AssetDirectory.ShadowCastleTiles + Name;
 
@@ -17,12 +17,8 @@ namespace Coralite.Content.Tiles.ShadowCastle
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLavaDeath[Type] = false;
-            Main.tileMerge[Type][ModContent.TileType<ShadowQuadrelTile>()] = true;
-            Main.tileMerge[ModContent.TileType<ShadowQuadrelTile>()][Type] = true;
-            //Main.tileMerge[Type][ModContent.TileType<ShadowImaginaryBrickTile>()] = true;
-            //Main.tileMerge[ModContent.TileType<ShadowImaginaryBrickTile>()][Type] = true;
-            Main.tileMerge[ModContent.TileType<ShadowQuadrelTile>()][ModContent.TileType<ShadowImaginaryBrickTile>()] = true;
-            //Main.tileMerge[ModContent.TileType<ShadowImaginaryBrickTile>()][ModContent.TileType<ShadowQuadrelTile>()] = true;
+            //Main.tileMerge[Type][ModContent.TileType<ShadowQuadrelTile>()] = true;
+            //Main.tileMerge[ModContent.TileType<ShadowQuadrelTile>()][Type] = true;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             MinPick = 100;

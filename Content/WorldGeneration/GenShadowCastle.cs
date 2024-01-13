@@ -4062,16 +4062,20 @@ namespace Coralite.Content.WorldGeneration
         {
             [Color.Black] = -1,
             [Color.White] = ModContent.TileType<ShadowBrickTile>(),
-            [new Color(160, 95, 185)] = ModContent.TileType<ShadowBrickTile>(),//a05fb9
-            [new Color(154, 153, 168)] = ModContent.TileType<ShadowQuadrelTile>(),//9a99a8
-
+            [new Color(160, 95, 185)] = ModContent.TileType<ShadowBrickTile>(),//影之城砖 a05fb9
+            [new Color(154, 153, 168)] = ModContent.TileType<ShadowQuadrelTile>(),//影方砖9a99a8
+            [new Color(189, 109, 255)] = ModContent.TileType<ShadowImaginaryBrickTile>(),//影虚砖bd6dff
         };
         public static Dictionary<Color, int> WallDic = new Dictionary<Color, int>()
         {
             [Color.Black] = -1,
             [Color.White] = WallID.SandFall,
+            [new Color(48, 18, 37)] =  ModContent.WallType<ShadowBrickWall>(),//影砖墙301225
         };
-
+        public static Dictionary<Color, (int, int)> ObjectDic = new Dictionary<Color, (int, int)>
+        {
+            [new Color(186, 255, 196)] = (ModContent.TileType<MercuryPlatformTile>(), 0),//水银平台baffc4
+        };
 
         public RoomType roomType;
         /// <summary>
@@ -4113,6 +4117,7 @@ namespace Coralite.Content.WorldGeneration
         public virtual string WallGenTex { get => RoomGenTex + "Wall"; }
         public virtual string RoomClearTex { get => RoomGenTex + "Clear"; }
         public virtual string WallClearTex { get => WallGenTex + "Clear"; }
+        public virtual string ObjectTex { get => RoomGenTex + "Object"; }
 
         public int Width => roomRect.Width;
         public int Height => roomRect.Height;
@@ -4233,7 +4238,8 @@ namespace Coralite.Content.WorldGeneration
             //    await GenRoom(clearTex, roomTex, wallClearTex, wallTex, clearDic, GenDic, clearDic, WallDic, roomRect.X, roomRect.Y);
             //}); 
 
-            GenRoom2(clearTex, roomTex, wallClearTex, wallTex, clearDic, GenDic, clearDic, WallDic, roomRect.X, roomRect.Y);
+            GenRoom2(clearTex, roomTex, wallClearTex, wallTex, clearDic, GenDic, clearDic, WallDic
+                , roomRect.X, roomRect.Y);
         }
 
         public virtual void GenChild()
@@ -4390,69 +4396,28 @@ namespace Coralite.Content.WorldGeneration
             wallGenerator?.Generate(genOrigin_x, genOrigin_y, true);
         }
 
-        /// <summary>
-        /// 将第一个房间替换为第二个房间
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="newRoom"></param>
-        public static void Exchange(ShadowCastleRoom room, ShadowCastleRoom newRoom)
+        public static void GenObject(Texture2D objectTex, Dictionary<Color, (int,int)> objectDic, int genOrigin_x, int genOrigin_y)
         {
-            ShadowCastleRoom parentRoom = room.parentRoom;
-            List<ShadowCastleRoom> childrens = room.childrenRooms;
+            bool genned = false;
+            bool placed = false;
+            Texture2Object objectGenerator = null;
 
-            parentRoom.childrenRooms?.Remove(room);
-
-            newRoom.parentDirection = room.parentDirection;
-            newRoom.depth = room.depth;
-            newRoom.parentRoom = parentRoom;
-            newRoom.childrenRooms = childrens;
-
-            parentRoom.childrenRooms?.Add(newRoom);
-        }
-
-        public void ResetCenter(Point center)
-        {
-            int width = roomRect.Width;
-            int height = roomRect.Height;
-
-            roomRect = new Rectangle(center.X - width / 2, center.Y - height / 2, width, height);
-        }
-
-        public static Direction ReverseDirection(Direction baseDirection)
-        {
-            return baseDirection switch
+            while (!genned)
             {
-                Direction.Down => Direction.Up,
-                Direction.Left => Direction.Right,
-                Direction.Right => Direction.Left,
-                _ => Direction.Down,
-            };
+                if (placed)
+                    continue;
 
-        }
+                Main.QueueMainThreadAction(() =>
+                {
+                    //清理范围
+                    objectGenerator = TextureGeneratorDatas.GetTex2ObjectGenerator(objectTex, objectDic);
+                    genned = true;
+                });
 
-        public static Point GetDir(Direction d)
-        {
-            return d switch
-            {
-                Direction.Up => new Point(0, -1),
-                Direction.Down => new Point(0, 1),
-                Direction.Left => new Point(-1, 0),
-                _ => new Point(1, 0),
-            };
-        }
+                placed = true;
+            }
 
-        public Point GetCorridorPoint(Direction direction)
-        {
-            int random = randomType == -1 ? 0 : randomType;
-            Point p = direction switch
-            {
-                Direction.Up => UpCorridor[random],
-                Direction.Down => DownCorridor[random],
-                Direction.Left => LeftCorridor[random],
-                _ => RightCorridor[random],
-            };
-
-            return p;
+            objectGenerator?.Generate(genOrigin_x, genOrigin_y, true);
         }
 
         /// <summary>
@@ -4468,7 +4433,7 @@ namespace Coralite.Content.WorldGeneration
             int shadowBrick = WorldGen.genRand.Next(3) switch
             {
                 0 => ModContent.TileType<ShadowBrickTile>(),
-                _ => ModContent.TileType<ShadowQuadrelTile>()
+                _ => ModContent.TileType<ShadowImaginaryBrickTile>()
             };
             //墙壁
 
@@ -4562,6 +4527,83 @@ namespace Coralite.Content.WorldGeneration
                     break;
             }
         }
+
+        /// <summary>
+        /// 将第一个房间替换为第二个房间
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="newRoom"></param>
+        public static void Exchange(ShadowCastleRoom room, ShadowCastleRoom newRoom)
+        {
+            ShadowCastleRoom parentRoom = room.parentRoom;
+            List<ShadowCastleRoom> childrens = room.childrenRooms;
+
+            parentRoom.childrenRooms?.Remove(room);
+
+            newRoom.parentDirection = room.parentDirection;
+            newRoom.depth = room.depth;
+            newRoom.parentRoom = parentRoom;
+            newRoom.childrenRooms = childrens;
+
+            parentRoom.childrenRooms?.Add(newRoom);
+        }
+
+        public void ResetCenter(Point center)
+        {
+            int width = roomRect.Width;
+            int height = roomRect.Height;
+
+            roomRect = new Rectangle(center.X - width / 2, center.Y - height / 2, width, height);
+        }
+
+        public static Direction ReverseDirection(Direction baseDirection)
+        {
+            return baseDirection switch
+            {
+                Direction.Down => Direction.Up,
+                Direction.Left => Direction.Right,
+                Direction.Right => Direction.Left,
+                _ => Direction.Down,
+            };
+
+        }
+
+        public static Point GetDir(Direction d)
+        {
+            return d switch
+            {
+                Direction.Up => new Point(0, -1),
+                Direction.Down => new Point(0, 1),
+                Direction.Left => new Point(-1, 0),
+                _ => new Point(1, 0),
+            };
+        }
+
+        public Point GetCorridorPoint(Direction direction)
+        {
+            int random = randomType == -1 ? 0 : randomType;
+            Point p = direction switch
+            {
+                Direction.Up => UpCorridor[random],
+                Direction.Down => DownCorridor[random],
+                Direction.Left => LeftCorridor[random],
+                _ => RightCorridor[random],
+            };
+
+            return p;
+        }
+
+        public void GenerateObject()
+        {
+            string rand = "";
+            if (randomType >= 0)
+                rand = randomType.ToString();
+
+            Texture2D objectTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleRooms + ObjectTex + rand, AssetRequestMode.ImmediateLoad).Value;
+
+            GenObject(objectTex, ObjectDic, roomRect.X, roomRect.Y);
+        }
+
 
         #endregion
     }

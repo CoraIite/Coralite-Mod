@@ -28,13 +28,11 @@ namespace Coralite.Content.WorldGeneration.Generators
     {
         public int tileID = -1;
         public int tileStyle;
-        public bool mute;
 
-        public TileObjectInfo(int tileID, int style,bool mute)
+        public TileObjectInfo(int tileID, int style)
         {
             this.tileID = tileID;
             tileStyle = style;
-            this.mute= mute;
         }
     }
 }

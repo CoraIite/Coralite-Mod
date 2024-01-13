@@ -2171,6 +2171,26 @@ Mods: {
 				DisplayName: Shadow Quadrel
 				Tooltip: ""
 			}
+
+			ShadowImaginaryBrick: {
+				DisplayName: Shadow Imaginary Brick
+				Tooltip: ""
+			}
+
+			ShadowBrickWall: {
+				DisplayName: Shadow Brick Wall
+				Tooltip: ""
+			}
+
+			MercuryPlatform: {
+				DisplayName: Mercury Platform
+				Tooltip: ""
+			}
+
+			MercuryDroplight: {
+				DisplayName: Mercury Droplight
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
