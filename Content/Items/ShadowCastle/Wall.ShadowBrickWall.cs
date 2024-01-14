@@ -1,11 +1,11 @@
 ﻿using Coralite.Core;
 using Terraria.ModLoader;
 
-namespace Coralite.Content.Items.Shadow
+namespace Coralite.Content.Items.ShadowCastle
 {
-    public class ShadowBrickWall:ModItem
+    public class ShadowBrickWall : ModItem
     {
-        public override string Texture => AssetDirectory.ShadowItems + Name;
+        public override string Texture => AssetDirectory.ShadowCastleItems + Name;
 
         public override void SetDefaults()
         {

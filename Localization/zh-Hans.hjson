@@ -2209,6 +2209,11 @@ Mods: {
 				// DisplayName: Mercury Droplight
 				// Tooltip: ""
 			}
+
+			BlackHoleChest: {
+				// DisplayName: Black Hole Chest
+				// Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2262,6 +2267,7 @@ Mods: {
 			// AncientChestTile.MapEntry: Ancient Chest Tile
 			// GlowTulipDoorClosed.MapEntry: Glow Tulip Door Closed
 			// GlowTulipDoorOpen.MapEntry: Glow Tulip Door Open
+			// BlackHoleChestTile.MapEntry: Black Hole Chest Tile
 		}
 
 		Buffs: {

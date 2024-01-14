@@ -92,12 +92,19 @@ namespace Coralite.Content.WorldGeneration
 
                 List<ShadowCastleRoom> rooms = root.shadowCastleRooms;
 
+                int rand = WorldGen.genRand.Next(0, rooms.Count);
+
+                BlackHoleRoom blackHole = new BlackHoleRoom(rooms[rand].roomRect.Center);
+                ShadowCastleRoom.Exchange(rooms[rand], blackHole);
+                rooms[rand] = blackHole;
+
                 for (int m = 0; m < rooms.Count; m++)
                 {
                     ShadowCastleRoom room = rooms[m];
 
                     #region 最优先：尖塔替换
                     if ((room.childrenRooms == null || room.childrenRooms.Count == 0)
+                        && room.roomType == ShadowCastleRoom.RoomType.Normal
                         && room.parentDirection != ShadowCastleRoom.Direction.Down
                         && WorldGen.genRand.NextBool())
                     {
@@ -4025,6 +4032,8 @@ namespace Coralite.Content.WorldGeneration
             Kitchen,
             /// <summary> 温室，用于种植花朵 </summary>
             Greenhouse,
+            /// <summary> 黑洞箱，内部包含“宙切” </summary>
+            BlackHoleRoom,
         }
 
         public enum Direction
@@ -4045,6 +4054,7 @@ namespace Coralite.Content.WorldGeneration
             "Sanctum",
             "Kitchen",
             "Greenhouse",
+            "BlackHoleRoom",
         };
         public static string[] RoomTypeString => _roomTypeString;
 
@@ -4071,6 +4081,7 @@ namespace Coralite.Content.WorldGeneration
             [Color.Black] = -1,
             [Color.White] = WallID.SandFall,
             [new Color(48, 18, 37)] =  ModContent.WallType<ShadowBrickWall>(),//影砖墙301225
+            [new Color(245, 115, 31)] =  ModContent.WallType<BlackHoleWall>(),//黑洞墙f5731f
         };
         public static Dictionary<Color, (int, int)> ObjectDic = new Dictionary<Color, (int, int)>
         {

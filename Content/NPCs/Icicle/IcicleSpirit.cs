@@ -49,7 +49,7 @@ namespace Coralite.Content.NPCs.Icicle
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (spawnInfo.Player.ZoneSnow && spawnInfo.Player.ZoneRockLayerHeight && DownedBossSystem.downedBabyIceDragon)
-                return 0.005f;
+                return 0.08f;
             return 0f;
         }
 
