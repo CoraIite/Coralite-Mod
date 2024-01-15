@@ -73,7 +73,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
 
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, 0, 0);
             return false;

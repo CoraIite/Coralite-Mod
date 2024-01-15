@@ -452,7 +452,7 @@ namespace Coralite.Content.Items.Nightmare
             Texture2D colotTex = ColorState == 1 ? redGradient.Value : purpleGradient.Value;
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(TextureAssets.Projectile[Projectile.type].Value);
+            effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
             effect.Parameters["gradientTexture"].SetValue(colotTex);
             effect.Parameters["alpha"].SetValue(Alpha);
 

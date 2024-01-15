@@ -532,7 +532,7 @@ namespace Coralite.Content.Items.Mushroom
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
 
             int frameWidth = mainTex.Width;
             int frameHeight = mainTex.Height / Main.projFrames[Type];

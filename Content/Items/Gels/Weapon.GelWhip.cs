@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -208,7 +209,7 @@ namespace Coralite.Content.Items.Gels
             SpriteEffects flip = Projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Main.instance.LoadProjectile(Type);
-            Texture2D texture = TextureAssets.Projectile[Type].Value;
+            Texture2D texture = Projectile.GetTexture();
 
             Vector2 pos = list[0];
 

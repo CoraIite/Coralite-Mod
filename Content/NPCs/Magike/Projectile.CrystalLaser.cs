@@ -174,7 +174,7 @@ namespace Coralite.Content.NPCs.Magike
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
-            Texture2D laserTex = TextureAssets.Projectile[Type].Value;
+            Texture2D laserTex = Projectile.GetTexture();
             Texture2D flowTex = FlowTex.Value;
 
             Color color = new Color(162, 42, 131);

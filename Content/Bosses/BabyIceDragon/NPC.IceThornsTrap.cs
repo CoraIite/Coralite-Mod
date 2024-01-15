@@ -102,7 +102,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 State += 1;
             } while (false);
 
-
+            
             Timer++;
         }
 

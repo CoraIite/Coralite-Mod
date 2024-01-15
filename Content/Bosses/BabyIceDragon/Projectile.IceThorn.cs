@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Coralite.Helpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -107,7 +108,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Rectangle frame = mainTex.Frame(1, 5, 0, Projectile.frame);
             SpriteEffects effects = SpriteEffects.None;
             Vector2 origin = new Vector2(16f, frame.Height / 2);

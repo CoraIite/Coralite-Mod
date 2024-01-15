@@ -192,7 +192,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 spriteBatch.Draw(warningTex, destination, null, new Color(190, 0, 101, (byte)(warningLineAlpha * 255)), Projectile.rotation, new Vector2(0, warningTex.Height / 2), 0, 0);
             }
 
-            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Texture2D sparkleTex = SparkleTex.Value;
             Texture2D blackholeTex = BlackHole.BlackHoleTex.Value;
 

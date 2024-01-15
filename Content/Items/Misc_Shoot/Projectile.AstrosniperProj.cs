@@ -1,5 +1,6 @@
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -59,7 +60,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
 
             SpriteEffects effects = dir > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), Projectile.scale, effects, 0f);

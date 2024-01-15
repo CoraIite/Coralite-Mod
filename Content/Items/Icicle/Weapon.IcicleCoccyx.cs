@@ -202,7 +202,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex =     Projectile.GetTexture();
             Vector2 origin = mainTex.Size() / 2f;
 
             //绘制本体
@@ -545,7 +545,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 origin = mainTex.Size() / 2f;
 
             float rot = Projectile.rotation + (float)Math.PI / 4f;

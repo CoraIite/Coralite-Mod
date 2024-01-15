@@ -56,7 +56,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, SpriteEffects.None, 0f);
             return false;
         }

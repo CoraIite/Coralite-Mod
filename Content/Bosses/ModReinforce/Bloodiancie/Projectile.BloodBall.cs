@@ -173,7 +173,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
 
             Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 8, 1, 8, 1, new Vector2(1, 0.5f));
 

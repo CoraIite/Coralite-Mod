@@ -209,7 +209,7 @@ namespace Coralite.Content.Items.Stars
 
         public void DrawSelf(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 origin = new Vector2(128, 128);
 
             float cosProgress = MathF.Cos(timer * 0.1f);
@@ -240,7 +240,7 @@ namespace Coralite.Content.Items.Stars
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 6);
             Rectangle source = new Rectangle(0, 255, 256, 256);
 

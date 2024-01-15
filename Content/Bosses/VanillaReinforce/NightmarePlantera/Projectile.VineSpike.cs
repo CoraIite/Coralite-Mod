@@ -227,7 +227,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 selforigin = mainTex.Size() / 2;
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2) - Main.screenPosition;
@@ -260,7 +260,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 selforigin = mainTex.Size() / 2;
             Vector2 pos = Projectile.Center - Main.screenPosition;
 

@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -43,7 +44,7 @@ namespace Coralite.Content.NPCs.Shadow
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D maintex = TextureAssets.Projectile[Type].Value;
+            Texture2D maintex = Projectile.GetTexture();
             Rectangle source = new Rectangle(0, Projectile.frame * maintex.Height / 3, maintex.Width, maintex.Height / 3);
             Vector2 origin = new Vector2(maintex.Width / 2, maintex.Height / 6);
 

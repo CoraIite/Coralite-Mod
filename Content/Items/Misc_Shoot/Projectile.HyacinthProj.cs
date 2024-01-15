@@ -680,7 +680,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             Vector2 center = Projectile.Center - Main.screenPosition;
 
-            Texture2D haloTex = TextureAssets.Projectile[Type].Value;
+            Texture2D haloTex = Projectile.GetTexture();
             Vector2 haloOrigin = haloTex.Size() / 2;
 
             Color black = new Color(0, 0, 0, (int)(Projectile.ai[1] * 255));
@@ -707,7 +707,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public void DrawWarp()
         {
-            Texture2D warpTex = TextureAssets.Projectile[Type].Value;
+            Texture2D warpTex = Projectile.GetTexture();
             Color warpColor = new Color(45, 45, 45) * Projectile.ai[1];
             for (int i = 0; i < 3; i++)
             {

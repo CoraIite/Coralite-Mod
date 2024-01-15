@@ -253,5 +253,15 @@ namespace Coralite.Helpers
             Main.EntitySpriteDraw(value, drawPos, null, color, (float)Math.PI / 2f + rotation, origin, vector, dir, 0);
             Main.EntitySpriteDraw(value, drawPos, null, color2, (float)Math.PI / 2f + rotation, origin, vector * 0.6f, dir, 0);
         }
+
+        /// <summary>
+        /// 从<see cref="TextureAssets"/>中获取弹幕的贴图
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <returns></returns>
+        public static Texture2D GetTexture(this Projectile projectile)
+        {
+            return TextureAssets.Projectile[projectile.type].Value;
+        }
     }
 }

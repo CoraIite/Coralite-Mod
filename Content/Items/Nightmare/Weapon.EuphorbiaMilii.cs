@@ -1102,7 +1102,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 pos = Projectile.Center - Main.screenPosition;
             var origin = new Vector2(3 * mainTex.Width / 4, mainTex.Height / 4);
             float Rot = Projectile.rotation + 0.785f;
@@ -1326,7 +1326,7 @@ namespace Coralite.Content.Items.Nightmare
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(TextureAssets.Projectile[Projectile.type].Value);
+            effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
             effect.Parameters["gradientTexture"].SetValue(EuphorbiaMiliiProj.GradientTexture.Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
@@ -1533,7 +1533,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             Vector2 pos = Projectile.Center - Main.screenPosition;
 
-            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Texture2D sparkleTex = SparkleTex.Value;
             Texture2D blackholeTex = BlackHole.BlackHoleTex.Value;
 

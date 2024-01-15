@@ -5,6 +5,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.ParticleSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -335,7 +336,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             var pos = Projectile.Center - Main.screenPosition;
             SpriteEffects effect = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
@@ -419,7 +420,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             var frameBox = mainTex.Frame(2, 1, (int)NoteType, 0);
 
             var pos = Projectile.Center - Main.screenPosition;

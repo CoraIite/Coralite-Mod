@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -178,7 +179,7 @@ namespace Coralite.Content.Items.RedJades
             Projectile Projectile = yujianProj.Projectile;
 
             //绘制影子拖尾
-            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Rectangle source = mainTex.Frame();
             Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
             float scale = 1.6f + yujianProj.trailCacheLength * 0.015f;

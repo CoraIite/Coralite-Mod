@@ -2,6 +2,7 @@
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -99,7 +100,7 @@ namespace Coralite.Content.Items.Magike
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D texture = Projectile.GetTexture();
             Rectangle frame = texture.Frame();
 
             Vector2 frameOrigin = frame.Size() / 2f;

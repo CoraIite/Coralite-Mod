@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.Crimson;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -180,7 +181,7 @@ namespace Coralite.Content.Items.Corruption
             Vector2 pos = Projectile.Center - Main.screenPosition;
 
             //绘制上下鄂
-            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Rectangle frameBox = mainTex.Frame(1, 2, 0, 1);
             Vector2 origin = new Vector2(frameBox.Width * 0.3f, frameBox.Height / 2);
             Color c = lightColor;

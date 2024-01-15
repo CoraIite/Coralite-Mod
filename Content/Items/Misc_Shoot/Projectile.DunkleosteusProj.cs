@@ -82,7 +82,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Player Owner = Main.player[Projectile.owner];
             Vector2 center = Projectile.Center - Main.screenPosition;
             bool ownerDir = Owner.gravDir * Owner.direction > 0;

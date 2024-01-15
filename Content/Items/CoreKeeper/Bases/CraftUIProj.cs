@@ -107,7 +107,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
 
             Vector2 pos = Owner.Center + new Vector2(0, 200) - Main.screenPosition;
             var frameBox = mainTex.Frame(1, 2, 0, 0);

@@ -199,7 +199,7 @@ namespace Coralite.Content.Items.Shadow
                 ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, drawPos, new Color(255, 255, 255, 0) * num3 * 0.5f, color2, num2, 0f, 0.5f, 0.5f, 1f, (float)Math.PI / 4f, new Vector2(2f, 2f), Vector2.One);
             }
 
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             SpriteEffects effect = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 
             spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, new Vector2(20, 19), 1.2f, effect, 0f);

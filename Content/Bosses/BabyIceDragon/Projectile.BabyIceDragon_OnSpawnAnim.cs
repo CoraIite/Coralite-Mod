@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -59,7 +60,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             SpriteBatch sb = Main.spriteBatch;
 
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 screenPosition = Main.screenPosition;
 
             Utils.DrawBorderStringBig(sb, ModContent.GetInstance<BabyIceDragon>().DisplayName.Value, Main.LocalPlayer.Center - new Vector2(0, 315) - screenPosition, drawCharColor, 1f, 0.5f);

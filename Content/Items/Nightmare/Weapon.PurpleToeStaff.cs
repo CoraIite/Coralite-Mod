@@ -380,7 +380,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             tentacle?.DrawTentacle((i) => 4 * MathF.Sin(i / 3 * Main.GlobalTimeWrappedHourly));
 
-            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Rectangle frameBox = mainTex.Frame(1, 4, 0, Projectile.frame);
             Vector2 selforigin = frameBox.Size() / 2;

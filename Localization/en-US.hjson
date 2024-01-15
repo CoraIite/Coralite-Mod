@@ -2680,6 +2680,7 @@ Mods: {
 			NightmareMusicalNotes.DisplayName: Nightmare Musical Notes
 			NightmareSpawnEnergy.DisplayName: Nightmare Spawn Energy
 			SpawnLight.DisplayName: Spawn Light
+			BlackHoleMainProj.DisplayName: Black Hole Main Proj
 		}
 
 		Configs: {

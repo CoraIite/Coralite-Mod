@@ -81,7 +81,7 @@ namespace Coralite.Content.Bosses.Rediancie
         {
             SpriteBatch sb = Main.spriteBatch;
 
-            Texture2D maintex = TextureAssets.Projectile[Type].Value;
+            Texture2D maintex = Projectile.GetTexture();
             Vector2 screenPosition = Main.screenPosition;
 
             Utils.DrawBorderStringBig(sb, ModContent.GetInstance<Rediancie>().DisplayName.Value, Main.LocalPlayer.Center - new Vector2(0, 325) - screenPosition, drawCharColor, 1.3f, 0.5f);

@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -304,7 +305,7 @@ namespace Coralite.Content.Items.Corruption
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 pos = Projectile.Center - Main.screenPosition;
             var origin = new Vector2(3 * mainTex.Width / 4, mainTex.Height / 4);
             float Rot = Projectile.rotation + Projectile.spriteDirection * 0.9f;
@@ -423,7 +424,7 @@ namespace Coralite.Content.Items.Corruption
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 pos = Projectile.Center - Main.screenPosition;
             var origin = mainTex.Size() / 2;
             float rot = Projectile.rotation + Projectile.spriteDirection * 0.9f;
@@ -539,7 +540,7 @@ namespace Coralite.Content.Items.Corruption
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 pos = Projectile.Center - Main.screenPosition;
             float Rot = Projectile.rotation + MathHelper.Pi / 4;
             SpriteEffects effect = SpriteEffects.None;

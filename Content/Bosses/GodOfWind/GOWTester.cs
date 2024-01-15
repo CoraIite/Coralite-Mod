@@ -1,6 +1,8 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.Evevts.ShadowCastle;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -44,7 +46,7 @@ namespace Coralite.Content.Bosses.GodOfWind
             //        Projectile.NewProjectile(source, player.Center,
             //-dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<ConfusionHole>(), damage, 0, player.whoAmI, Main.rand.Next(60, 80), 01, Main.rand.Next(600, 900));
 
-            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<NightmareSparkle_Normal>(), 1, 1, ai0: 0, ai1: 20, ai2: -1);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<BlackHoleMainProj>(), 1, 1);
             return false;
         }
     }
@@ -66,7 +68,7 @@ namespace Coralite.Content.Bosses.GodOfWind
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture2 = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D texture2 = Projectile.GetTexture();
 
             Texture2D texture = ModContent.Request<Texture2D>(AssetDirectory.GodOfWind + "CycloneSample").Value;
             Effect shader = Filters.Scene["GlowingMarblingBlack"].GetShader().Shader;
@@ -93,7 +95,7 @@ namespace Coralite.Content.Bosses.GodOfWind
 
         public void DrawColorReverse(SpriteBatch spriteBatch)
         {
-            Texture2D texture2 = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D texture2 = Projectile.GetTexture();
             spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, Color.White);
         }
     }

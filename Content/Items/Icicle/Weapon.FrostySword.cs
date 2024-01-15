@@ -868,7 +868,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
 
             Projectile.DrawShadowTrails(new Color(138, 225, 249), 0.4f, 0.03f, 1, 12, 2, new Vector2(1, 1.4f), 0.02f, 0);
 

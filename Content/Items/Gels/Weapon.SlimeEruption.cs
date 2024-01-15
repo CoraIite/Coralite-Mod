@@ -222,7 +222,7 @@ namespace Coralite.Content.Items.Gels
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             var pos = Projectile.Center - Main.screenPosition;
 
             Color color = lightColor * Projectile.localAI[0];

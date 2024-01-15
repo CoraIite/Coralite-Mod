@@ -508,7 +508,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public void DrawSelf(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             SpriteEffects effect = SpriteEffects.None;
             if (State > 0)
                 effect = GetCurrentAI().GetSpriteEffect(this);

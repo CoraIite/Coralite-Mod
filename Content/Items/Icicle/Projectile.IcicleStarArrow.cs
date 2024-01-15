@@ -115,7 +115,7 @@ namespace Coralite.Content.Items.Icicle
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 center = Projectile.Center - Main.screenPosition;
             Vector2 origin = mainTex.Size() / 2;
             int Timer = 1000 - Projectile.timeLeft;

@@ -184,11 +184,18 @@ namespace Coralite.Core
 
         public const string Backgrounds = Assets + "Backgrounds/";
 
+
         public const string WorldGen = Assets + "WorldGeneration/";
 
         public const string IceNest = WorldGen + "IceNest/";
         public const string Shrines = WorldGen + "Shrines/";
         public const string ShadowCastleRooms = WorldGen + "ShadowCastleRooms/";
+
+
+
+        public const string Events = Assets + "Events/";
+
+        public const string ShadowCastleEvents = Events + "ShadowCastle/";
 
     }
 }

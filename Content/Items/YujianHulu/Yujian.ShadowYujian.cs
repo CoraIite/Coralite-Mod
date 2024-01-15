@@ -338,7 +338,7 @@ namespace Coralite.Content.Items.YujianHulu
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
 
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, Color.Black * 0.5f, Projectile.rotation - 1 / 57f, mainTex.Size() / 2, Projectile.scale, SpriteEffects.None, 0);
             return false;

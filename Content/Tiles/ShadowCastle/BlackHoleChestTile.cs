@@ -35,12 +35,12 @@ namespace Coralite.Content.Tiles.ShadowCastle
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.BasicChest[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
-
+            
             DustType = DustID.Granite;
             AdjTiles = new int[] { TileID.Containers };
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(245, 115, 31), name, MapChestName);
-
+            
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
@@ -53,7 +53,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             TileObjectData.addTile(Type);
         }
 
-
+        
         //public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
 
         public override bool IsLockedChest(int i, int j) => false;
@@ -212,16 +212,27 @@ namespace Coralite.Content.Tiles.ShadowCastle
             }
         }
 
+        public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+        {
+            //Vector2 offScreen = new Vector2(Main.offScreenRange);
+            //if (Main.drawToScreen)
+            //    offScreen = Vector2.Zero;
+
+            //spriteBatch.Draw(drawData.drawTexture, new Vector2(i, j) * 16 + offScreen - Main.screenPosition
+            //    , new Rectangle(drawData.tileFrameX + drawData.addFrX, drawData.tileFrameY + drawData.addFrY, 18, 18), Color.White);
+            //drawData.finalColor = Color.White;
+            //drawData.colorTint = Color.White;
+            //drawData.glowColor = Color.White;
+            drawData.tileLight=Color.White;
+        }
+
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Tile tile = Main.tile[i, j];
-            Texture2D tex = TextureAssets.Tile[tile.TileType].Value;
-            Vector2 offScreen = new Vector2(Main.offScreenRange);
-            if (Main.drawToScreen)
-                offScreen = Vector2.Zero;
+            //Tile tile = Main.tile[i, j];
+            //Texture2D tex = TextureAssets.Tile[tile.TileType].Value;
 
-            spriteBatch.Draw(tex, new Vector2(i, j) * 16+offScreen-Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY, 18, 18), Color.White);
-            return false;
+            //spriteBatch.Draw(tex, new Vector2(i, j) * 16+offScreen-Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY, 18, 18), Color.White);
+            return true;
         }
     }
 }

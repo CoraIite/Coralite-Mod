@@ -111,7 +111,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Rectangle frameBox = mainTex.Frame(1, 5, 0, Projectile.frame);
             Vector2 origin = frameBox.Size() / 2;
