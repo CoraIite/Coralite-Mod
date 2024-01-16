@@ -1,11 +1,12 @@
-﻿using Coralite.Content.Items.ShadowCastle;
+﻿using Coralite.Content.Evevts.ShadowCastle;
+using Coralite.Content.Items.ShadowCastle;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
@@ -93,14 +94,18 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
         public override bool RightClick(int i, int j)
         {
-            //if (!BlackHoleTrials.DownedBlackHoleTrails)
-            //{
-            //    //开启试炼
-            //    return false;
-            //}
+            Tile tile = Main.tile[i, j];
+            //BlackHoleTrials.DownedBlackHoleTrails = false;
+            if (!BlackHoleTrials.DownedBlackHoleTrails && !Main.projectile.Any(p => p.active && p.type == ModContent.ProjectileType<BlackHoleMainProj>()))
+            {
+                //开启试炼
+                Vector2 pos = new Vector2(i - tile.TileFrameX / 18 + 1, j - tile.TileFrameY / 18 + 1) * 16;
+                Projectile.NewProjectile(new EntitySource_TileInteraction(Main.LocalPlayer, i, j), pos,
+                    Vector2.Zero, ModContent.ProjectileType<BlackHoleMainProj>(), 100, 0, Main.myPlayer);
+                return false;
+            }
 
             Player player = Main.LocalPlayer;
-            Tile tile = Main.tile[i, j];
             Main.mouseRightRelease = false;
             int left = i;
             int top = j;

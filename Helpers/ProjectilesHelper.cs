@@ -263,5 +263,31 @@ namespace Coralite.Helpers
         {
             return TextureAssets.Projectile[projectile.type].Value;
         }
+
+        public static void InitOldPosCache(this Projectile projectile,int trailCount,bool useCenter=true)
+        {
+            projectile.oldPos = new Vector2[trailCount];
+
+            for (int i = 0; i < trailCount; i++)
+            {
+                if (useCenter)
+                    projectile.oldPos[i] = projectile.Center;
+                else
+                    projectile.oldPos[i] = projectile.position;
+            }
+        }
+
+        public static void UpdateOldPosCache(this Projectile projectile, bool useCenter = true, bool addVelocity = true)
+        {
+            for (int i = 0; i < projectile.oldPos.Length - 1; i++)
+                projectile.oldPos[i] = projectile.oldPos[i + 1];
+            projectile.oldPos[^1] = (useCenter ? projectile.Center : projectile.position) + (addVelocity ? projectile.velocity : Vector2.Zero);
+        }
+
+        public static int NewProjectileFromThis(this Projectile projectile, Vector2 position, Vector2 velocity
+            , int type, int damage, float knockback, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+        {
+            return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, type, damage, knockback, projectile.owner, ai0, ai1, ai2);
+        }
     }
 }

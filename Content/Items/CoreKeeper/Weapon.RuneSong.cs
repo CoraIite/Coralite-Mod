@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.CoreKeeper
         {
             Projectile.localNPCHitCooldown = 60;
             Projectile.width = 40;
-            Projectile.height = 80;
+            Projectile.height = 85;
             trailTopWidth = 0;
             distanceToOwner = 8;
             minTime = 0;

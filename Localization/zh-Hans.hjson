@@ -2206,13 +2206,18 @@ Mods: {
 			}
 
 			MercuryDroplight: {
-				// DisplayName: Mercury Droplight
-				// Tooltip: ""
+				DisplayName: 水银吊灯
+				Tooltip: 看上去似乎只能摆在地上？
 			}
 
 			BlackHoleChest: {
-				// DisplayName: Black Hole Chest
-				// Tooltip: ""
+				DisplayName: 黑洞箱
+				Tooltip: 从理想的世界中诞生的微型黑洞，能够分成两半，里面可以存放一些物品。
+			}
+
+			Cosmophore: {
+				DisplayName: 宙切
+				Tooltip: "以理想的天体为原型制作的近战武器"
 			}
 		}
 
@@ -2699,6 +2704,7 @@ Mods: {
 			// NightmareSpawnEnergy.DisplayName: Nightmare Spawn Energy
 			// SpawnLight.DisplayName: Spawn Light
 			// BlackHoleMainProj.DisplayName: Black Hole Main Proj
+			// BlackStarProj.DisplayName: Black Star Proj
 		}
 
 		Configs: {

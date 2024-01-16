@@ -2196,6 +2196,11 @@ Mods: {
 				DisplayName: Black Hole Chest
 				Tooltip: ""
 			}
+
+			Cosmophore: {
+				DisplayName: Cosmophore
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2681,6 +2686,7 @@ Mods: {
 			NightmareSpawnEnergy.DisplayName: Nightmare Spawn Energy
 			SpawnLight.DisplayName: Spawn Light
 			BlackHoleMainProj.DisplayName: Black Hole Main Proj
+			BlackStarProj.DisplayName: Black Star Proj
 		}
 
 		Configs: {

@@ -134,7 +134,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public PoisonousSickleSlash() : base(MathF.Atan2(50, 62), trailLength: 32) { }
+        public PoisonousSickleSlash() : base(MathF.Atan2(48, 60), trailLength: 32) { }
 
         public int delay;
         public int alpha;
