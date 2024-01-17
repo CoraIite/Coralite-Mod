@@ -2201,6 +2201,11 @@ Mods: {
 				DisplayName: Cosmophore
 				Tooltip: ""
 			}
+
+			Shadura: {
+				DisplayName: Shadura
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2687,6 +2692,7 @@ Mods: {
 			SpawnLight.DisplayName: Spawn Light
 			BlackHoleMainProj.DisplayName: Black Hole Main Proj
 			BlackStarProj.DisplayName: Black Star Proj
+			ShaduraSlash.DisplayName: Shadura Slash
 		}
 
 		Configs: {

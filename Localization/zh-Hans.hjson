@@ -2217,7 +2217,12 @@ Mods: {
 
 			Cosmophore: {
 				DisplayName: 宙切
-				Tooltip: "以理想的天体为原型制作的近战武器"
+				Tooltip: 以理想的天体为原型制作的近战武器
+			}
+
+			Shadura: {
+				DisplayName: 影煌 「虚物为真」
+				Tooltip: "曾经仅存在于刀匠理想中的太刀现在正被你握在手中"
 			}
 		}
 
@@ -2705,6 +2710,7 @@ Mods: {
 			// SpawnLight.DisplayName: Spawn Light
 			// BlackHoleMainProj.DisplayName: Black Hole Main Proj
 			// BlackStarProj.DisplayName: Black Star Proj
+			// ShaduraSlash.DisplayName: Shadura Slash
 		}
 
 		Configs: {
