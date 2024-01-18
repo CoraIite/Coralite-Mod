@@ -6,6 +6,7 @@ texture sampleTexture;
 texture gradientTexture;
 float2 worldSize;
 float uTime;
+float uExchange;
 
 sampler2D samplerTex = sampler_state
 {
@@ -85,11 +86,12 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
     float4 tc = tex2D(samplerTex, coords);
     
-    if (tc.r < 0.95f)
-    {
-        float4 color2 = tex2D(gradientTex, float2(input.TexCoords.y, 0)).xyzw; //读取颜色图
+    float4 color2 = tex2D(gradientTex, float2(input.TexCoords.y, 0)).xyzw; //读取颜色图
     // 如果刀光灰度图上的r大于0.8f，也就是它颜色比较白的话那么就给它加地更加亮
-        float3 bright = tc.xyz /** (1.0 + color.x * 2.0)*/ * color2.xyz + (tc.r > 0.8 ? ((tc.r - 0.8) * 3.5) : float3(0, 0, 0));
+    float3 bright = tc.xyz /** (1.0 + color.x * 2.0)*/ * color2.xyz;
+
+    if (tc.r < uExchange)
+    {
     //透明度是由传入颜色的透明度诚意刀光灰度图的r
         return float4(bright, input.Color.w * tc.r);
     }
@@ -133,6 +135,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	
     float y = .0015 * length(O);
     O = .0085 * O + float4(y, y, y, y);
+    O = float4(lerp(bright, O.xyz, clamp(((tc.r - uExchange) / 0.05f), 0, 1)), O.a);
+    
     return float4(O.xyz, input.Color.a);
 }
 

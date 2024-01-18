@@ -245,7 +245,7 @@ namespace Coralite.Content.Items.CoreKeeper
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     delay = 12;
                     ExtraInit();
-
+                    
                     break;
                 case 1://下挥，圆
                     startAngle = -1.6f + Main.rand.NextFloat(-0.2f, 0.2f);

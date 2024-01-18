@@ -497,6 +497,7 @@ namespace Coralite.Content.Items.Shadow
                 effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
                 effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
                 effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);
+                effect.Parameters["uExchange"].SetValue(0.87f + 0.05f * MathF.Sin(Main.GlobalTimeWrappedHourly));
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点

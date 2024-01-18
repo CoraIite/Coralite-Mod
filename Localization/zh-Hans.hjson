@@ -2221,8 +2221,8 @@ Mods: {
 			}
 
 			Shadura: {
-				DisplayName: 影煌 「虚物为真」
-				Tooltip: "曾经仅存在于刀匠理想中的太刀现在正被你握在手中"
+				DisplayName: 影煌 「虚理为真」
+				Tooltip: 曾经仅存在于刀匠理想中的太刀现在正被你握在手中
 			}
 		}
 
