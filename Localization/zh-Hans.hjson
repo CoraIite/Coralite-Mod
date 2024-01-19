@@ -2224,6 +2224,16 @@ Mods: {
 				DisplayName: 影煌 「虚理为真」
 				Tooltip: 曾经仅存在于刀匠理想中的太刀现在正被你握在手中
 			}
+
+			MercuryChest: {
+				DisplayName: 水银箱
+				Tooltip: 无毒无害
+			}
+
+			ShadowMagneticCard: {
+				DisplayName: 影磁卡
+				Tooltip: 用于解锁影之城中的水银箱
+			}
 		}
 
 		Tiles: {
@@ -2278,6 +2288,11 @@ Mods: {
 			// GlowTulipDoorClosed.MapEntry: Glow Tulip Door Closed
 			// GlowTulipDoorOpen.MapEntry: Glow Tulip Door Open
 			// BlackHoleChestTile.MapEntry: Black Hole Chest Tile
+
+			MercuryChestTile: {
+				// MapEntry0: Mods.Coralite.Tiles.MercuryChestTile.MapEntry0
+				// MapEntry1: Mods.Coralite.Tiles.MercuryChestTile.MapEntry1
+			}
 		}
 
 		Buffs: {
@@ -2711,6 +2726,7 @@ Mods: {
 			// BlackHoleMainProj.DisplayName: Black Hole Main Proj
 			// BlackStarProj.DisplayName: Black Star Proj
 			// ShaduraSlash.DisplayName: Shadura Slash
+			// ShaduraShoot.DisplayName: Shadura Shoot
 		}
 
 		Configs: {

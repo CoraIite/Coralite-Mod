@@ -2206,6 +2206,16 @@ Mods: {
 				DisplayName: Shadura
 				Tooltip: ""
 			}
+
+			MercuryChest: {
+				DisplayName: Mercury Chest
+				Tooltip: ""
+			}
+
+			ShadowMagneticCard: {
+				DisplayName: Shadow Magnetic Card
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2260,6 +2270,11 @@ Mods: {
 			GlowTulipDoorClosed.MapEntry: Glow Tulip Door Closed
 			GlowTulipDoorOpen.MapEntry: Glow Tulip Door Open
 			BlackHoleChestTile.MapEntry: Black Hole Chest Tile
+
+			MercuryChestTile: {
+				MapEntry0: Mods.Coralite.Tiles.MercuryChestTile.MapEntry0
+				MapEntry1: Mods.Coralite.Tiles.MercuryChestTile.MapEntry1
+			}
 		}
 
 		Buffs: {
@@ -2693,6 +2708,7 @@ Mods: {
 			BlackHoleMainProj.DisplayName: Black Hole Main Proj
 			BlackStarProj.DisplayName: Black Star Proj
 			ShaduraSlash.DisplayName: Shadura Slash
+			ShaduraShoot.DisplayName: Shadura Shoot
 		}
 
 		Configs: {

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
+using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
 {
@@ -63,9 +65,23 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                             + new Point(WorldGen.genRand.Next(-2, 2), WorldGen.genRand.Next(-2, 2));
 
                         if (!CoraliteWorld.shadowCastleRestraint.Contains(newCenter.X, newCenter.Y))
-                        {
                             continue;
-                        }
+
+                        Dictionary<ushort, int> tileDictionary = new Dictionary<ushort, int>();
+
+                        WorldUtils.Gen(
+                            new Point(newCenter.X - 32, newCenter.Y - 32),
+                            new Shapes.Rectangle(58, 67),
+                            new Actions.TileScanner(TileID.Sand, TileID.LihzahrdBrick).Output(tileDictionary));
+                        //放置创了海沟
+                        if (tileDictionary[TileID.Sand] > 20 * 20)
+                            continue;
+                        //防止创了神庙
+                        if (tileDictionary[TileID.LihzahrdBrick] > 2)
+                            continue;
+                        //防止露出地面
+                        if (newCenter.Y - 32 < Main.worldSurface)
+                            continue;
 
                         childRoom.ResetCenter(newCenter);
 
