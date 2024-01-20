@@ -27,6 +27,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             //Main.tileGlowMask[Type] = TextureAssets.GlowMask.Length;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             Main.tileSpelunker[Type] = true;
+            Main.tileLighted[Type] = true;
             Main.tileContainer[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -85,6 +86,12 @@ namespace Coralite.Content.Tiles.ShadowCastle
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = 1;
+        }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.2f;
+            g = 0.15f;
         }
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Tiles.ShadowCastle;
+﻿using Coralite.Content.Items.ShadowCastle;
+using Coralite.Content.Tiles.ShadowCastle;
 using Coralite.Content.UI;
 using Coralite.Content.WorldGeneration.Generators;
 using Coralite.Content.WorldGeneration.ShadowCastleRooms;
@@ -94,9 +95,33 @@ namespace Coralite.Content.WorldGeneration
 
                 int rand = WorldGen.genRand.Next(0, rooms.Count);
 
+                //生成黑洞房间
                 BlackHoleRoom blackHole = new BlackHoleRoom(rooms[rand].roomRect.Center);
                 ShadowCastleRoom.Exchange(rooms[rand], blackHole);
                 rooms[rand] = blackHole;
+
+                //生成宝箱房间
+
+                int[] tresures = new int[]
+                {
+                    ItemID.ShadowKey,
+                    ModContent.ItemType<Shadura>()
+                };
+
+                int chestRoomCount = 0;
+                while (chestRoomCount < tresures.Length)
+                {
+                    rand = WorldGen.genRand.Next(0, rooms.Count);
+
+                    if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
+                        continue;
+
+                    ChestRoom chestRoom = new ChestRoom(rooms[rand].roomRect.Center, tresures[chestRoomCount]);
+                    ShadowCastleRoom.Exchange(rooms[rand], chestRoom);
+                    rooms[rand] = chestRoom;
+
+                    chestRoomCount++;
+                }
 
                 for (int m = 0; m < rooms.Count; m++)
                 {
@@ -4080,7 +4105,7 @@ namespace Coralite.Content.WorldGeneration
         {
             [Color.Black] = -1,
             [Color.White] = WallID.SandFall,
-            [new Color(48, 18, 37)] =  ModContent.WallType<ShadowBrickWall>(),//影砖墙301225
+            [new Color(48, 18, 37)] =  ModContent.WallType<Tiles.ShadowCastle.ShadowBrickWall>(),//影砖墙301225
             [new Color(245, 115, 31)] =  ModContent.WallType<BlackHoleWall>(),//黑洞墙f5731f
         };
         public static Dictionary<Color, (int, int)> ObjectDic = new Dictionary<Color, (int, int)>

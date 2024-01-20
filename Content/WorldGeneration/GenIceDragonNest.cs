@@ -31,7 +31,7 @@ namespace Coralite.Content.WorldGeneration
             for (; nestCenter_y < Main.worldSurface; nestCenter_y++)
             {
                 Tile tile = Framing.GetTileSafely(nestCenter_x, nestCenter_y);
-                if (tile.HasTile && (tile.TileType == TileID.SnowBlock || tile.TileType == TileID.IceBlock))
+                if (tile.HasTile && nestCenter_y>Main.worldSurface*0.35f)
                     break;
             }
 

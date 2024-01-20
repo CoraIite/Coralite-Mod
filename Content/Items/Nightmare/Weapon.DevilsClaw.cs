@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.shootSpeed = 13;
             Item.UseSound = CoraliteSoundID.NoUse_BlowgunPlus_Item65;
         }
-
+        
         public override bool AltFunctionUse(Player player) => true;
         public override bool MagicPrefix() => true;
 

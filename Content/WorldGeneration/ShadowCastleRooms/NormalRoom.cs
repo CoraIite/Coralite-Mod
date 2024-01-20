@@ -113,7 +113,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                 direction = Direction.Up;
                 return false;
             }
-
+            
             direction = WorldGen.genRand.NextFromList(directions.ToArray());
             return true;
         }

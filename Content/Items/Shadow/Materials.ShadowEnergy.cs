@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Shadow
         public override void SetStaticDefaults()
         {
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 7));
-            ItemID.Sets.ItemIconPulse[Item.type] = true;
+            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
         }
 

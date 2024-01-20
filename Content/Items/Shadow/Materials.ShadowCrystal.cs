@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Shadow
         public override void SetStaticDefaults()
         {
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 3));
-            ItemID.Sets.ItemIconPulse[Item.type] = true;
+            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }
 
         public override void SetDefaults()
@@ -22,6 +22,8 @@ namespace Coralite.Content.Items.Shadow
             Item.value = Item.sellPrice(0, 0, 18, 0);
             Item.maxStack = 9999;
             Item.height = Item.width = 40;
+            //Item.useStyle = ItemUseStyleID.Swing;
+            //Item.useTime = Item.useAnimation = 50;
         }
 
         public override void AddRecipes()

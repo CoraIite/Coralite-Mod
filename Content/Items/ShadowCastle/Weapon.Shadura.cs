@@ -349,7 +349,7 @@ namespace Coralite.Content.Items.ShadowCastle
 
         protected override void AIBefore()
         {
-            Lighting.AddLight(Projectile.Center, new Vector3(0.8f, 0.3f, 0.8f));
+            Lighting.AddLight(Owner.Center, new Vector3(0.8f, 0.3f, 0.8f));
 
             base.AIBefore();
         }
