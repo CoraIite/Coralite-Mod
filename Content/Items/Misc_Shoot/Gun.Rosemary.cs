@@ -80,12 +80,12 @@ namespace Coralite.Content.Items.Misc_Shoot
             .Register();
 
             //供普通模式使用
-            CreateRecipe()
-            .AddIngredient<ArethusaNormalMode>()
-            .AddIngredient(ItemID.SoulofNight, 5)
-            .AddIngredient(ItemID.SoulofSight, 5)
-            .AddTile(TileID.MythrilAnvil)
-            .Register();
+            //CreateRecipe()
+            //.AddIngredient<ArethusaNormalMode>()
+            //.AddIngredient(ItemID.SoulofNight, 5)
+            //.AddIngredient(ItemID.SoulofSight, 5)
+            //.AddTile(TileID.MythrilAnvil)
+            //.Register();
         }
 
     }
@@ -169,19 +169,19 @@ namespace Coralite.Content.Items.Misc_Shoot
             .Register();
 
             //供普通模式使用
-            CreateRecipe()
-            .AddIngredient<ArethusaNormalMode>()
-            .AddIngredient(ItemID.SoulofNight, 5)
-            .AddIngredient(ItemID.SoulofMight, 5)
-            .AddTile(TileID.MythrilAnvil)
-            .Register();
+            //CreateRecipe()
+            //.AddIngredient<ArethusaNormalMode>()
+            //.AddIngredient(ItemID.SoulofNight, 5)
+            //.AddIngredient(ItemID.SoulofMight, 5)
+            //.AddTile(TileID.MythrilAnvil)
+            //.Register();
 
-            CreateRecipe()
-            .AddIngredient<ArethusaNormalMode>()
-            .AddIngredient(ItemID.SoulofNight, 5)
-            .AddIngredient(ItemID.SoulofFright, 5)
-            .AddTile(TileID.MythrilAnvil)
-            .Register();
+            //CreateRecipe()
+            //.AddIngredient<ArethusaNormalMode>()
+            //.AddIngredient(ItemID.SoulofNight, 5)
+            //.AddIngredient(ItemID.SoulofFright, 5)
+            //.AddTile(TileID.MythrilAnvil)
+            //.Register();
         }
 
     }

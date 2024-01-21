@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Tiles.ShadowCastle;
+﻿using Coralite.Content.Items.Shadow;
+using Coralite.Content.Tiles.ShadowCastle;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -60,6 +61,11 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
 
                 RandChestItem(chest, tresureItemType);
 
+                //放影水晶
+                if (WorldGen.genRand.NextBool(1, 2))
+                    RandChestItem(chest, ModContent.ItemType<ShadowCrystal>()
+                        , WorldGen.genRand.Next(1, 5));
+
                 //放第一批药水
                 for (int i = 0; i < 3; i++)
                     if (WorldGen.genRand.NextBool(2, 3))
@@ -93,11 +99,11 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                     RandChestItem(chest, ItemID.GoldCoin
                         , WorldGen.genRand.Next(1, 2));
                 for (int i = 0; i < 5; i++)
-                    if (WorldGen.genRand.NextBool(1, 4))
+                    if (WorldGen.genRand.NextBool(1, 3))
                         RandChestItem(chest, ItemID.SilverCoin
                             , WorldGen.genRand.Next(1, 20));
                 for (int i = 0; i < 8; i++)
-                    if (WorldGen.genRand.NextBool(1, 5))
+                    if (WorldGen.genRand.NextBool(1, 3))
                         RandChestItem(chest, ItemID.SilverCoin
                             , WorldGen.genRand.Next(1, 90));
                 Chest.Lock(chest.x, chest.y);

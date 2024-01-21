@@ -133,12 +133,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             canDrawWarp = true;
                             warpScale = 4f;
                             Angle = (NPC.Center - np.Center).ToRotation();
+                            NPC.TargetClosest();
 
                             for (int i = 0; i < 4; i++)
                             {
                                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                                 Vector2 center = np.Center + Main.rand.NextVector2CircularEdge(1000, 1000);
-                                Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), center, (np.Center - center).SafeNormalize(Vector2.Zero),
+                                 Projectile.NewProjectile(NPC.GetSource_FromAI(), center, (np.Center - center).SafeNormalize(Vector2.Zero),
                                     ModContent.ProjectileType<FantasySpike_Visual>(), 1, 0, NPC.target, 300, 1100);
                             }
                         }

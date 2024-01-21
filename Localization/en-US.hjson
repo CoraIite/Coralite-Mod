@@ -2216,6 +2216,11 @@ Mods: {
 				DisplayName: Shadow Magnetic Card
 				Tooltip: ""
 			}
+
+			ShadowWave: {
+				DisplayName: Shadow Wave
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2709,6 +2714,8 @@ Mods: {
 			BlackStarProj.DisplayName: Black Star Proj
 			ShaduraSlash.DisplayName: Shadura Slash
 			ShaduraShoot.DisplayName: Shadura Shoot
+			ShadowWaveHeldProj.DisplayName: Shadow Wave Held Proj
+			ShadowWaveReLoad.DisplayName: Shadow Wave Re Load
 		}
 
 		Configs: {
@@ -2990,6 +2997,11 @@ Mods: {
 			MagicCrystalCave: {
 				DisplayName: Magic Crystal Cave
 				TownNPCDialogueName: the Magic Crystal Cave
+			}
+
+			ShadowCastleBiome: {
+				DisplayName: Shadow Castle Biome
+				TownNPCDialogueName: the Shadow Castle Biome
 			}
 		}
 

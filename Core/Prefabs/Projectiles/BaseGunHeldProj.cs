@@ -65,8 +65,8 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public virtual void Initialize()
         {
-            Projectile.timeLeft = Owner.itemAnimation;
-            MaxTime = Owner.itemAnimation;
+            Projectile.timeLeft = Owner.itemTimeMax;
+            MaxTime = Owner.itemTimeMax;
             if (Main.myPlayer == Projectile.owner)
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;

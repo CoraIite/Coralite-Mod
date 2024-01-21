@@ -284,7 +284,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         if (Timer > 20)
                         {
-                            State++;
+                            State=1;
                             Timer = 0;
                         }
                     }

@@ -2234,6 +2234,15 @@ Mods: {
 				DisplayName: 影磁卡
 				Tooltip: 用于解锁影之城中的水银箱
 			}
+
+			ShadowWave: {
+				DisplayName: 影波
+				Tooltip:
+					'''
+					右键以填充弹药，填充后可以一口气将弹药全部发射出去
+					曾经是枪械商的得意设计，可惜由于图纸丢失而无法制造出来
+					'''
+			}
 		}
 
 		Tiles: {
@@ -2727,6 +2736,8 @@ Mods: {
 			// BlackStarProj.DisplayName: Black Star Proj
 			// ShaduraSlash.DisplayName: Shadura Slash
 			// ShaduraShoot.DisplayName: Shadura Shoot
+			// ShadowWaveHeldProj.DisplayName: Shadow Wave Held Proj
+			// ShadowWaveReLoad.DisplayName: Shadow Wave Re Load
 		}
 
 		Configs: {
@@ -3012,6 +3023,11 @@ Mods: {
 			MagicCrystalCave: {
 				DisplayName: 魔力水晶洞
 				TownNPCDialogueName: 魔力水晶洞
+			}
+
+			ShadowCastleBiome: {
+				// DisplayName: Shadow Castle Biome
+				// TownNPCDialogueName: the Shadow Castle Biome
 			}
 		}
 

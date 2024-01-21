@@ -5,6 +5,7 @@ using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -33,8 +34,13 @@ namespace Coralite.Content.Bosses.GodOfWind
             //    NightmareScreen.size -= 0.05f;
             //}
 
-            if (player.TryGetModPlayer(out CoralitePlayer cp))
-                cp.nightmareCount = 0;
+            //if (player.TryGetModPlayer(out CoralitePlayer cp))
+            //    cp.nightmareCount = 0;
+
+            //if (Item is not Entity p)
+            //{
+            //    int a = 1;
+            //}
 
             return base.CanUseItem(player);
         }
@@ -46,7 +52,7 @@ namespace Coralite.Content.Bosses.GodOfWind
             //        Projectile.NewProjectile(source, player.Center,
             //-dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<ConfusionHole>(), damage, 0, player.whoAmI, Main.rand.Next(60, 80), 01, Main.rand.Next(600, 900));
 
-            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<BlackHoleMainProj>(), 1, 1);
+            //Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<BlackHoleMainProj>(), 1, 1);
             return false;
         }
     }

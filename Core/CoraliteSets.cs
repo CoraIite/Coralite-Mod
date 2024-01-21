@@ -7,9 +7,20 @@ namespace Coralite.Core
 {
     public class CoraliteSets : ModSystem
     {
+        /// <summary>
+        /// 爆破弹幕
+        /// </summary>
         public static bool[] ProjectileExplosible;
 
+        /// <summary>
+        /// 粘性物块
+        /// </summary>
         public static bool[] TileSticky;
+
+        /// <summary>
+        /// 会被判定为影之城环境
+        /// </summary>
+        public static bool[] WallShadowCastle;
 
         public override void SetStaticDefaults()
         {
@@ -42,6 +53,11 @@ namespace Coralite.Core
             TileSticky[TileID.Cobweb] = true;
             TileSticky[ModContent.TileType<Content.Bosses.VanillaReinforce.SlimeEmperor.StickyGelTile>()] = true;
             #endregion
+
+            #region 影之城墙壁
+            WallShadowCastle[ModContent.WallType<Content.Tiles.ShadowCastle.BlackHoleWall>()] = true;
+            WallShadowCastle[ModContent.WallType<Content.Tiles.ShadowCastle.ShadowBrickWall>()] = true;
+            #endregion
         }
 
         private void InitAll()
@@ -53,6 +69,10 @@ namespace Coralite.Core
             TileSticky = new bool[TileLoader.TileCount];
             for (int i = 0; i < TileSticky.Length; i++)
                 TileSticky[i] = false;
+
+            WallShadowCastle = new bool[WallLoader.WallCount];
+            for (int i = 0; i < WallShadowCastle.Length; i++)
+                WallShadowCastle[i] = false;
         }
     }
 }

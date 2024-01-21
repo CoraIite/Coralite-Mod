@@ -8,7 +8,7 @@ namespace Coralite.Content.Biomes
 {
     public class MagicCrystalCave : ModBiome
     {
-        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
 
         public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Coralite/MagicCrystalCaveBackground");
 

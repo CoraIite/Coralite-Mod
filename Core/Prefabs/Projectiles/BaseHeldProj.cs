@@ -33,5 +33,15 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (Owner.dead || !Owner.active)
                 Projectile.Kill();
         }
+
+        public void LockOwnerItemTime(int time = 2)
+        {
+            Owner.itemTime = Owner.itemAnimation = time;
+        }
+
+        public void SetHeldPorj()
+        {
+            Owner.heldProj = Projectile.whoAmI;
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.GlobalItems
             {
                 default: break;
                 case ItemID.PhoenixBlaster: //削弱凤凰爆破枪，目的是为了给幽兰让路
-                    item.damage = 27;
+                    item.damage = 30;
                     break;
                 case ItemID.IceRod:     //削弱冰雪魔仗，因为它现在在肉前就能获得
                     item.damage = (int)(item.damage * 0.45f);
@@ -25,5 +25,7 @@ namespace Coralite.Content.Items.GlobalItems
                     break;
             }
         }
+
+        
     }
 }

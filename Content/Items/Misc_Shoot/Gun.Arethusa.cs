@@ -1,4 +1,4 @@
-using Coralite.Content.Items.Shadow;
+using Coralite.Content.Items.ShadowCastle;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Ranged;
             Item.value = Item.sellPrice(0, 0, 40, 0);
-            Item.rare = ItemRarityID.Expert;
+            Item.rare = ItemRarityID.LightRed;
             Item.shoot = ProjectileType<ArethusaHeldProj>();
             Item.useAmmo = AmmoID.Bullet;
 
@@ -71,98 +71,112 @@ namespace Coralite.Content.Items.Misc_Shoot
         public override void AddRecipes()
         {
             CreateRecipe()
-            .AddIngredient<InvertedShadow>()
+            .AddIngredient<ShadowWave>()
             .AddIngredient<WoodWax>()
             .AddIngredient(ItemID.Musket)
-            .AddIngredient(ItemID.PhoenixBlaster)
             .AddIngredient(ItemID.Moonglow, 5)
             .AddTile(TileID.Anvils)
             .Register();
 
             CreateRecipe()
-            .AddIngredient<InvertedShadow>()
+            .AddIngredient(ItemID.PhoenixBlaster)
+            .AddIngredient<WoodWax>()
+            .AddIngredient(ItemID.Musket)
+            .AddIngredient(ItemID.Moonglow, 5)
+            .AddTile(TileID.Anvils)
+            .Register();
+
+            CreateRecipe()
+            .AddIngredient<ShadowWave>()
             .AddIngredient<WoodWax>()
             .AddIngredient(ItemID.TheUndertaker)
+            .AddIngredient(ItemID.Moonglow, 5)
+            .AddTile(TileID.Anvils)
+            .Register();
+
+            CreateRecipe()
             .AddIngredient(ItemID.PhoenixBlaster)
+            .AddIngredient<WoodWax>()
+            .AddIngredient(ItemID.TheUndertaker)
             .AddIngredient(ItemID.Moonglow, 5)
             .AddTile(TileID.Anvils)
             .Register();
         }
     }
 
-    public class ArethusaNormalMode : ModItem
-    {
-        public override string Texture => AssetDirectory.Misc_Shoot + "Arethusa";
+    //public class ArethusaNormalMode : ModItem
+    //{
+    //    public override string Texture => AssetDirectory.Misc_Shoot + "Arethusa";
 
-        public int shootCount;
+    //    public int shootCount;
 
-        public override void SetDefaults()
-        {
-            Item.damage = 34;
-            Item.useTime = 26;
-            Item.useAnimation = 26;
-            Item.knockBack = 6;
-            Item.shootSpeed = 10f;
+    //    public override void SetDefaults()
+    //    {
+    //        Item.damage = 34;
+    //        Item.useTime = 26;
+    //        Item.useAnimation = 26;
+    //        Item.knockBack = 6;
+    //        Item.shootSpeed = 10f;
 
-            Item.useStyle = ItemUseStyleID.Rapier;
-            Item.DamageType = DamageClass.Ranged;
-            Item.value = Item.sellPrice(0, 0, 40, 0);
-            Item.rare = ItemRarityID.LightRed;
-            Item.shoot = ProjectileType<ArethusaHeldProj>();
-            Item.useAmmo = AmmoID.Bullet;
+    //        Item.useStyle = ItemUseStyleID.Rapier;
+    //        Item.DamageType = DamageClass.Ranged;
+    //        Item.value = Item.sellPrice(0, 0, 40, 0);
+    //        Item.rare = ItemRarityID.LightRed;
+    //        Item.shoot = ProjectileType<ArethusaHeldProj>();
+    //        Item.useAmmo = AmmoID.Bullet;
 
-            Item.useTurn = false;
-            Item.noMelee = true;
-            Item.noUseGraphic = true;
-            Item.autoReuse = true;
-        }
+    //        Item.useTurn = false;
+    //        Item.noMelee = true;
+    //        Item.noUseGraphic = true;
+    //        Item.autoReuse = true;
+    //    }
 
-        public override bool CanUseItem(Player player)
-        {
-            shootCount++;
-            return base.CanUseItem(player);
-        }
+    //    public override bool CanUseItem(Player player)
+    //    {
+    //        shootCount++;
+    //        return base.CanUseItem(player);
+    //    }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            if (Main.myPlayer == player.whoAmI)
-            {
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<ArethusaHeldProj>(), damage, knockback, player.whoAmI);
-                if (shootCount > 3)
-                {
-                    Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
-                    Projectile.NewProjectile(source, player.Center, targetDir * 14, ProjectileType<ArethusaBullet>(), (int)(damage * 1.3f), knockback, player.whoAmI);
-                    SoundEngine.PlaySound(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, player.Center);
-                    shootCount = 0;
-                    return false;
-                }
+    //    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+    //    {
+    //        if (Main.myPlayer == player.whoAmI)
+    //        {
+    //            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<ArethusaHeldProj>(), damage, knockback, player.whoAmI);
+    //            if (shootCount > 3)
+    //            {
+    //                Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
+    //                Projectile.NewProjectile(source, player.Center, targetDir * 14, ProjectileType<ArethusaBullet>(), (int)(damage * 1.3f), knockback, player.whoAmI);
+    //                SoundEngine.PlaySound(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, player.Center);
+    //                shootCount = 0;
+    //                return false;
+    //            }
 
-                SoundEngine.PlaySound(CoraliteSoundID.Gun_Item11, player.Center);
-                return true;
-            }
+    //            SoundEngine.PlaySound(CoraliteSoundID.Gun_Item11, player.Center);
+    //            return true;
+    //        }
 
-            return false;
-        }
+    //        return false;
+    //    }
 
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-            .AddIngredient<ShadowCrystal>(12)
-            .AddIngredient<WoodWax>()
-            .AddIngredient(ItemID.Musket)
-            .AddIngredient(ItemID.PhoenixBlaster)
-            .AddIngredient(ItemID.Moonglow, 5)
-            .AddTile(TileID.Anvils)
-            .Register();
+    //    public override void AddRecipes()
+    //    {
+    //        CreateRecipe()
+    //        .AddIngredient<ShadowCrystal>(12)
+    //        .AddIngredient<WoodWax>()
+    //        .AddIngredient(ItemID.Musket)
+    //        .AddIngredient(ItemID.PhoenixBlaster)
+    //        .AddIngredient(ItemID.Moonglow, 5)
+    //        .AddTile(TileID.Anvils)
+    //        .Register();
 
-            CreateRecipe()
-            .AddIngredient<ShadowCrystal>(12)
-            .AddIngredient<WoodWax>()
-            .AddIngredient(ItemID.TheUndertaker)
-            .AddIngredient(ItemID.PhoenixBlaster)
-            .AddIngredient(ItemID.Moonglow, 5)
-            .AddTile(TileID.Anvils)
-            .Register();
-        }
-    }
+    //        CreateRecipe()
+    //        .AddIngredient<ShadowCrystal>(12)
+    //        .AddIngredient<WoodWax>()
+    //        .AddIngredient(ItemID.TheUndertaker)
+    //        .AddIngredient(ItemID.PhoenixBlaster)
+    //        .AddIngredient(ItemID.Moonglow, 5)
+    //        .AddTile(TileID.Anvils)
+    //        .Register();
+    //    }
+    //}
 }

@@ -105,7 +105,8 @@ namespace Coralite.Content.WorldGeneration
                 int[] tresures = new int[]
                 {
                     ItemID.ShadowKey,
-                    ModContent.ItemType<Shadura>()
+                    ModContent.ItemType<Shadura>(),
+                    ModContent.ItemType<ShadowWave>(),
                 };
 
                 int chestRoomCount = 0;
@@ -4472,6 +4473,11 @@ namespace Coralite.Content.WorldGeneration
                 _ => ModContent.TileType<ShadowImaginaryBrickTile>()
             };
             //墙壁
+            int shadowWall= WorldGen.genRand.Next(3) switch
+            {
+                0 => ModContent.WallType<Tiles.ShadowCastle.ShadowBrickWall>(),
+                _ => ModContent.WallType<Tiles.ShadowCastle.ShadowBrickWall>(),
+            };
 
             switch (direction)
             {
@@ -4507,11 +4513,14 @@ namespace Coralite.Content.WorldGeneration
                                     Main.tile[currentX, currentY].ClearEverything();
                                     WorldGen.PlaceTile(currentX, currentY, shadowBrick);
                                     //放墙
+                                    if (x > 0 && x < CorridorHeight + WallWidth * 2 - 1)
+                                        WorldGen.PlaceWall(currentX, currentY, shadowWall);
                                 }
                                 else//清空中间范围
                                 {
                                     Main.tile[currentX, currentY].ClearEverything();
                                     //放墙
+                                    WorldGen.PlaceWall(currentX, currentY, shadowWall);
                                 }
                             }
                         }
@@ -4550,11 +4559,14 @@ namespace Coralite.Content.WorldGeneration
                                     Main.tile[currentX, currentY].ClearEverything();
                                     WorldGen.PlaceTile(currentX, currentY, shadowBrick);
                                     //放墙壁
+                                    if (x > 0 && x < CorridorHeight + WallWidth * 2 - 1)
+                                        WorldGen.PlaceWall(currentX, currentY, shadowWall);
                                 }
                                 else//清空中间范围
                                 {
                                     Main.tile[currentX, currentY].ClearEverything();
                                     //放墙壁
+                                    WorldGen.PlaceWall(currentX, currentY, shadowWall);
                                 }
                             }
                         }

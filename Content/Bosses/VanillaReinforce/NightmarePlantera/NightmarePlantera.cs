@@ -743,8 +743,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Vector2 pos = NPC.Center - screenPos;
             float selfRot = NPC.rotation + MathHelper.PiOver2;
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
             if (rotateTentacles != null)
                 for (int j = 0; j < 3; j++)
@@ -754,9 +754,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 if (Main.projectile[k].active && Main.projectile[k].ModProjectile is INightmareTentacle)
                     (Main.projectile[k].ModProjectile as INightmareTentacle).DrawTentacle();
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default, null, Main.Transform);
-
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, default, null, Main.Transform);
             if (alpha != 1)
             {
                 //绘制7个幻影
@@ -771,7 +770,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
 
             //绘制自己
-            spriteBatch.Draw(mainTex, pos, frameBox, Color.White * alpha, selfRot, origin, NPC.scale, 0, 0);
+            spriteBatch.Draw(mainTex, NPC.Center-Main.screenPosition, frameBox, Color.White * alpha, selfRot, origin, NPC.scale, 0, 0);
 
             return false;
         }
