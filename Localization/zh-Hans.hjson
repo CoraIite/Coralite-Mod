@@ -2227,7 +2227,7 @@ Mods: {
 
 			MercuryChest: {
 				DisplayName: 水银箱
-				Tooltip: 无毒无害
+				Tooltip: ""
 			}
 
 			ShadowMagneticCard: {
@@ -2239,9 +2239,33 @@ Mods: {
 				DisplayName: 影波
 				Tooltip:
 					'''
-					右键以填充弹药，填充后可以一口气将弹药全部发射出去
+					右键以填充弹药，填充后可以一口气将大部分弹药发射出去
 					曾经是枪械商的得意设计，可惜由于图纸丢失而无法制造出来
 					'''
+			}
+
+			MercuryStaff: {
+				// DisplayName: Mercury Staff
+				// Tooltip: ""
+			}
+
+			MercuryScepter: {
+				DisplayName: 水银权杖
+				Tooltip: 无毒无害！
+			}
+
+			ShadowMask: {
+				DisplayName: 影面
+				Tooltip:
+					'''
+					+3% 移速
+					免疫击退
+					'''
+			}
+
+			Shadurion: {
+				// DisplayName: Shadurion
+				// Tooltip: ""
 			}
 		}
 
@@ -2738,6 +2762,7 @@ Mods: {
 			// ShaduraShoot.DisplayName: Shadura Shoot
 			// ShadowWaveHeldProj.DisplayName: Shadow Wave Held Proj
 			// ShadowWaveReLoad.DisplayName: Shadow Wave Re Load
+			// MercuryStream.DisplayName: Mercury Stream
 		}
 
 		Configs: {
@@ -2833,7 +2858,10 @@ Mods: {
 			}
 		}
 
-		Keybinds.套装效果.DisplayName: 套装效果键
+		Keybinds: {
+			套装效果.DisplayName: 套装效果键
+			// 特殊攻击.DisplayName: 特殊攻击
+		}
 
 		MagikeSystem: {
 			MagikeSystem: {

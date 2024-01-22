@@ -2,6 +2,7 @@
 using Coralite.Content.Items.RedJades;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core
 {
@@ -21,6 +22,10 @@ namespace Coralite.Core
         /// 会被判定为影之城环境
         /// </summary>
         public static bool[] WallShadowCastle;
+        /// <summary>
+        /// 会被判定为影子物块
+        /// </summary>
+        public static bool[] TileShadowCastle;
 
         public override void SetStaticDefaults()
         {
@@ -51,13 +56,21 @@ namespace Coralite.Core
 
             #region 粘性物块
             TileSticky[TileID.Cobweb] = true;
-            TileSticky[ModContent.TileType<Content.Bosses.VanillaReinforce.SlimeEmperor.StickyGelTile>()] = true;
+            TileSticky[TileType<Content.Bosses.VanillaReinforce.SlimeEmperor.StickyGelTile>()] = true;
             #endregion
 
             #region 影之城墙壁
-            WallShadowCastle[ModContent.WallType<Content.Tiles.ShadowCastle.BlackHoleWall>()] = true;
-            WallShadowCastle[ModContent.WallType<Content.Tiles.ShadowCastle.ShadowBrickWall>()] = true;
+            WallShadowCastle[WallType<Content.Tiles.ShadowCastle.BlackHoleWall>()] = true;
+            WallShadowCastle[WallType<Content.Tiles.ShadowCastle.ShadowBrickWall>()] = true;
             #endregion
+
+            #region 影之城物块
+            TileShadowCastle[TileType<Content.Tiles.ShadowCastle.ShadowBrickTile>()] = true;
+            TileShadowCastle[TileType<Content.Tiles.ShadowCastle.ShadowImaginaryBrickTile>()] = true;
+            TileShadowCastle[TileType<Content.Tiles.ShadowCastle.ShadowQuadrelTile>()] = true;
+            TileShadowCastle[TileType<Content.Tiles.ShadowCastle.MercuryPlatformTile>()] = true;
+            #endregion
+
         }
 
         private void InitAll()
@@ -73,6 +86,10 @@ namespace Coralite.Core
             WallShadowCastle = new bool[WallLoader.WallCount];
             for (int i = 0; i < WallShadowCastle.Length; i++)
                 WallShadowCastle[i] = false;
+
+            TileShadowCastle = new bool[TileLoader.TileCount];
+            for (int i = 0; i < TileShadowCastle.Length; i++)
+                TileShadowCastle[i] = false;
         }
     }
 }

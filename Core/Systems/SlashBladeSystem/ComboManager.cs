@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coralite.Content.ModPlayers;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -20,6 +21,9 @@ namespace Coralite.Core.Systems.SlashBladeSystem
             Right_Up = 3,
             Left_Down = 4,
             Right_Down = 5,
+            Special = 6,
+            Special_Up = 7,
+            Special_Down = 8,
         }
 
         /// <summary>
@@ -69,8 +73,8 @@ namespace Coralite.Core.Systems.SlashBladeSystem
             {
                 if (player.altFunctionUse == 2)//右键
                 {
-                    if (ComboDatas.ContainsKey((int)ControlType.Right_Up) 
-                        && ComboDatas[(int)ControlType.Right_Up].ContainsKey(combo) 
+                    if (ComboDatas.ContainsKey((int)ControlType.Right_Up)
+                        && ComboDatas[(int)ControlType.Right_Up].ContainsKey(combo)
                         && player.controlUp)//按住上同时右键
                     {
                         data = ComboDatas[(int)ControlType.Right_Up];
@@ -87,6 +91,28 @@ namespace Coralite.Core.Systems.SlashBladeSystem
                     {
                         data = ComboDatas[(int)ControlType.Right];
                         controlType = ControlType.Right;
+                    }
+                }
+                else if (player.GetModPlayer<CoralitePlayer>().useSpecialAttack)
+                {
+                    if (ComboDatas.ContainsKey((int)ControlType.Special_Up)
+                        && ComboDatas[(int)ControlType.Special_Up].ContainsKey(combo)
+                        && player.controlUp)//按住上
+                    {
+                        data = ComboDatas[(int)ControlType.Special_Up];
+                        controlType = ControlType.Special_Up;
+                    }
+                    else if (ComboDatas.ContainsKey((int)ControlType.Special_Down)
+                        && ComboDatas[(int)ControlType.Special_Down].ContainsKey(combo)
+                        && player.controlDown) //按住下
+                    {
+                        data = ComboDatas[(int)ControlType.Special_Down];
+                        controlType = ControlType.Special_Down;
+                    }
+                    else
+                    {
+                        data = ComboDatas[(int)ControlType.Special];
+                        controlType = ControlType.Special;
                     }
                 }
                 else

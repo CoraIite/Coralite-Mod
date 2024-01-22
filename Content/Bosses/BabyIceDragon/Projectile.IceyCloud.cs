@@ -30,6 +30,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
+            Projectile.coldDamage = true;
         }
 
         public override void OnSpawn(IEntitySource source)

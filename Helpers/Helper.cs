@@ -192,8 +192,18 @@ namespace Coralite.Helpers
             return (halfLongAxis * halfShortAxis) / MathF.Sqrt(halfLongAxis * halfLongAxis - halfFocalLength2 * cosX * cosX);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Rotation"></param>
+        /// <param name="zRot"></param>
+        /// <param name="overrideAngle"></param>
+        /// <returns></returns>
         public static float EllipticalEase(float Rotation, float zRot, out float overrideAngle)
         {
+            //先搞一个圆形，经过变换-Pi/2后就是在XY平面的一个圆
+            //然后使用zRot将它转到指定的位置
+            //此时的V3D的XY坐标就是投影的坐标
             Vector3 v3 = Rotation.ToRotationVector2().Vec3();
             Vector3 v3D = Vector3.Transform(v3, Matrix.CreateRotationX(zRot - MathHelper.PiOver2));
 

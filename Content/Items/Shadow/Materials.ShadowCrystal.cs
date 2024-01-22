@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Shadow
         {
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.Amethyst, 2);
-            recipe.AddIngredient(ModContent.ItemType<ShadowEnergy>(), 3);
+            recipe.AddIngredient(ModContent.ItemType<ShadowEnergy>(), 8);
             recipe.AddTile(TileID.Hellforge);
             recipe.Register();
         }

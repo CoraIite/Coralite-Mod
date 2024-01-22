@@ -79,6 +79,8 @@ namespace Coralite.Content.ModPlayers
         /// </summary>
         public float coreKeeperDodge;
 
+        public bool useSpecialAttack;
+
         public override void ResetEffects()
         {
             equippedRedJadePendant = false;
@@ -420,6 +422,8 @@ namespace Coralite.Content.ModPlayers
                     }
                 }
             }
+
+            useSpecialAttack = Core.Loaders.KeybindLoader.SpecialAttack.Current;
         }
 
         public bool UsingVanillaDash() => Player.dashType != 0 || Player.setSolar || Player.mount.Active;

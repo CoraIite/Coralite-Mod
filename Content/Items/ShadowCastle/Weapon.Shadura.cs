@@ -38,6 +38,8 @@ namespace Coralite.Content.Items.ShadowCastle
         public override void SetStaticDefaults()
         {
             ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Muramasa;
+            ItemID.Sets.ShimmerTransformToItem[ItemID.Muramasa] = Type;
         }
 
         public override void SetDefaults()

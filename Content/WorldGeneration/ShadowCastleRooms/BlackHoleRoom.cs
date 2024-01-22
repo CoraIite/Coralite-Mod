@@ -1,4 +1,6 @@
-﻿using Coralite.Content.Tiles.ShadowCastle;
+﻿using Coralite.Content.Items.Shadow;
+using Coralite.Content.Items.ShadowCastle;
+using Coralite.Content.Tiles.ShadowCastle;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -36,9 +38,26 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
             if (index>=0)
             {
                 Chest chest = Main.chest[index];
-                int itemIndex = 0;
-                chest.item[itemIndex].SetDefaults(ItemID.Zenith);
-                itemIndex++;
+                ChestRoom.RandChestItem(chest, ModContent.ItemType<Cosmophore>());
+
+                //放影水晶
+                if (WorldGen.genRand.NextBool(1, 3))
+                    ChestRoom. RandChestItem(chest, ModContent.ItemType<ShadowCrystal>()
+                        , WorldGen.genRand.Next(1, 5));
+
+                //放马内，放一大堆的Money
+                for (int i = 0; i < 4; i++)
+                    if (WorldGen.genRand.NextBool(1, 2))
+                        ChestRoom.RandChestItem(chest, ItemID.GoldCoin
+                            , WorldGen.genRand.Next(1, 2));
+                for (int i = 0; i < 5; i++)
+                    if (WorldGen.genRand.NextBool(1, 3))
+                        ChestRoom.RandChestItem(chest, ItemID.SilverCoin
+                            , WorldGen.genRand.Next(1, 20));
+                for (int i = 0; i < 8; i++)
+                    if (WorldGen.genRand.NextBool(1, 3))
+                        ChestRoom.RandChestItem(chest, ItemID.SilverCoin
+                            , WorldGen.genRand.Next(1, 90));
             }
         }
     }

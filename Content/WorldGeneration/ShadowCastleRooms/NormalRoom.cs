@@ -14,21 +14,31 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
         //public static Texture2WallGenerator wallClearGenerator;
         //public static Texture2WallGenerator wallGenerator;
 
+        public override int RandomTypeCount => 3;
+
         public override Point[] UpCorridor => new Point[]
         {
-            new Point(32,4),
+            new Point(32,10),
+            new Point(32,19),
+            new Point(32,8),
         };
         public override Point[] DownCorridor => new Point[]
         {
-            new Point(32,64-4),
+            new Point(31,58),
+            new Point(32,44),
+            new Point(32,55),
         };
         public override Point[] LeftCorridor => new Point[]
         {
-            new Point(4,32),
+            new Point(12,28),
+            new Point(19,32),
+            new Point(8,32),
         };
         public override Point[] RightCorridor => new Point[]
         {
-            new Point(64-4,32),
+            new Point(53,31),
+            new Point(45,32),
+            new Point(55,32),
         };
 
         public NormalRoom(Point center) : base(center, RoomType.Normal)
@@ -58,8 +68,8 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                     {
                         Point d = GetDir(direction);
                         NormalRoom childRoom = new NormalRoom(roomRect.Center);
-                        int length = roomRect.Width / 2 + childRoom.Width / 2 + 4 + WorldGen.genRand.Next(0, childRoom.Width / 2);
-                        int height = roomRect.Height / 2 + childRoom.Height / 2 + 4 + WorldGen.genRand.Next(0, childRoom.Height / 2);
+                        int length = (roomRect.Width / 2) + (childRoom.Width / 2) + WorldGen.genRand.Next(-4, childRoom.Width / 4);
+                        int height = (roomRect.Height / 2) + (childRoom.Height / 2) + WorldGen.genRand.Next(-4, childRoom.Height / 4);
 
                         Point newCenter = roomRect.Center + new Point(d.X * length, d.Y * height)
                             + new Point(WorldGen.genRand.Next(-2, 2), WorldGen.genRand.Next(-2, 2));

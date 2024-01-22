@@ -107,6 +107,8 @@ namespace Coralite.Content.WorldGeneration
                     ItemID.ShadowKey,
                     ModContent.ItemType<Shadura>(),
                     ModContent.ItemType<ShadowWave>(),
+                    Main.remixWorld ? ItemID.BubbleGun : ModContent.ItemType<MercuryScepter>(),
+                    ModContent.ItemType<ShadowMask>(),
                 };
 
                 int chestRoomCount = 0;

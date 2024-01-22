@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+﻿using Coralite.Content.Biomes;
+using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Gels;
@@ -11,6 +12,7 @@ using Coralite.Content.Items.YujianHulu;
 using Coralite.Core.Configs;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -50,9 +52,9 @@ namespace Coralite.Content.NPCs.VanillaNPC
                     npcLoot.Add(ItemDropRule.Common(ItemType<EyeballSeed>(), 25));
                     break;
 
-                case NPCID.DarkCaster://地牢怪掉落影子
-                    npcLoot.Add(ItemDropRule.Common(ItemType<ShadowEnergy>(), 3, 1, 3));
-                    break;
+                //case NPCID.DarkCaster://地牢怪掉落影子
+                //    npcLoot.Add(ItemDropRule.Common(ItemType<ShadowEnergy>(), 3, 1, 3));
+                //    break;
 
                 case NPCID.EaterofSouls://远古腐化御剑
                 case NPCID.CorruptGoldfish:
@@ -198,5 +200,17 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 }
             }
         }
+
+        public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.InModBiome<MagicCrystalCave>())
+            {
+                pool[0] = 0.04f;
+            }
+
+            if (spawnInfo.Player.InModBiome<ShadowCastleBiome>())
+                pool[0] = 0f;
+        }
+
     }
 }

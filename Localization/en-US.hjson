@@ -2221,6 +2221,26 @@ Mods: {
 				DisplayName: Shadow Wave
 				Tooltip: ""
 			}
+
+			MercuryStaff: {
+				DisplayName: Mercury Staff
+				Tooltip: ""
+			}
+
+			MercuryScepter: {
+				DisplayName: Mercury Scepter
+				Tooltip: ""
+			}
+
+			ShadowMask: {
+				DisplayName: Shadow Mask
+				Tooltip: ""
+			}
+
+			Shadurion: {
+				DisplayName: Shadurion
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2716,6 +2736,7 @@ Mods: {
 			ShaduraShoot.DisplayName: Shadura Shoot
 			ShadowWaveHeldProj.DisplayName: Shadow Wave Held Proj
 			ShadowWaveReLoad.DisplayName: Shadow Wave Re Load
+			MercuryStream.DisplayName: Mercury Stream
 		}
 
 		Configs: {
@@ -2807,7 +2828,10 @@ Mods: {
 			}
 		}
 
-		Keybinds.套装效果.DisplayName: Armor bonus Keybind
+		Keybinds: {
+			套装效果.DisplayName: Armor bonus Keybind
+			特殊攻击.DisplayName: 特殊攻击
+		}
 
 		MagikeSystem: {
 			MagikeSystem: {

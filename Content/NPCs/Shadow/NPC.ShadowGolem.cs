@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Shadow;
+﻿using Coralite.Content.Biomes;
+using Coralite.Content.Items.Shadow;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -204,7 +205,15 @@ namespace Coralite.Content.NPCs.Shadow
             Vector2 origin = new Vector2(32, 32);
             SpriteEffects effects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(mainTex, new Vector2(NPC.Center.X, NPC.Top.Y + 16) - screenPos, frameBox, Color.White, NPC.rotation, origin, NPC.scale, effects, 0f);
+            Vector2 pos = new Vector2(NPC.Center.X, NPC.Top.Y + 16)  - screenPos;
+            Color c = Color.Purple;
+            c.A = 0;
+            c *= 0.5f;
+            for (int i = 0; i < 3; i++)
+                spriteBatch.Draw(mainTex, pos + (Main.GlobalTimeWrappedHourly + i * MathHelper.TwoPi / 3).ToRotationVector2() * 4
+                    , frameBox, c, NPC.rotation, origin, NPC.scale, effects, 0f);
+
+            spriteBatch.Draw(mainTex, pos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, effects, 0f);
             return false;
         }
 
@@ -241,8 +250,8 @@ namespace Coralite.Content.NPCs.Shadow
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneDungeon)
-                return 0.05f;
+            if (spawnInfo.Player.InModBiome<ShadowCastleBiome>()&&CoraliteSets.TileShadowCastle[spawnInfo.SpawnTileType])
+                return 0.08f;
             return 0f;
         }
     }

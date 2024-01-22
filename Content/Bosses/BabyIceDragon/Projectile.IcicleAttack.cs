@@ -19,6 +19,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
             Projectile.hostile = true;
             Projectile.tileCollide = true;
+            Projectile.coldDamage = true;
         }
 
         public override void AI()
