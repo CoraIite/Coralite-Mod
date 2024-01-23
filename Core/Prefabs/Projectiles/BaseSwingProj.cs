@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using static Terraria.ModLoader.ModContent;
 
@@ -301,9 +300,17 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// </summary>
         protected virtual void OnHitEvent(NPC target, NPC.HitInfo hit, int damageDone) { }
 
+        public override bool? CanHitNPC(NPC target)
+        {
+            if (target.noTileCollide || target.friendly || Projectile.hostile)
+                return null;
+
+            return Collision.CanHit(Owner, target);
+        }
+
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if ((int)Timer < minTime || !Collision.CanHitLine(OwnerCenter(), 1, 1, targetHitbox.Center.ToVector2(), 1, 1))
+            if ((int)Timer < minTime /*|| !Collision.CanHit(OwnerCenter(), 0, 0, targetHitbox.Center.ToVector2(), 0,0)*/)
                 return false;
 
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Bottom, Top, Projectile.width / 2, ref Projectile.localAI[1]);

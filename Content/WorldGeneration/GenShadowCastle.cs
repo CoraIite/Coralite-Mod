@@ -28,6 +28,11 @@ namespace Coralite.Content.WorldGeneration
     {
         internal static Rectangle shadowCastleRestraint;
 
+        /// <summary>
+        /// 影子球的战斗房间
+        /// </summary>
+        public static Rectangle shadowBallsFightArea;
+
         public static bool ShadowCastle
         {
             get
@@ -50,23 +55,23 @@ namespace Coralite.Content.WorldGeneration
             GenVars.numDDoors = 0;
             GenVars.numDungeonPlatforms = 0;
 
-            int limit = 700;
+            int limit = 180;
             int roomCount = 40;
             if (Main.maxTilesX > 6000)
             {
-                limit += 100;
+                limit += 80;
                 roomCount = 50;
             }
             if (Main.maxTilesY > 8000)
             {
-                limit += 100;
+                limit += 80;
                 roomCount = 60;
             }
 
             for (int i = 0; i < 20000; i++)
             {
                 int dungeonLocation = GenVars.dungeonLocation;
-                int num756 = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + 200;
+                int num756 = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + Main.rand.Next(-20,100);
                 int dungeonHeight = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + WorldGen.genRand.Next(-200, 200);
                 bool flag47 = false;
                 for (int j = 0; j < 10; j++)
@@ -95,12 +100,15 @@ namespace Coralite.Content.WorldGeneration
 
                 int rand = WorldGen.genRand.Next(0, rooms.Count);
 
-                //生成黑洞房间
+                #region 生成黑洞房间
+
                 BlackHoleRoom blackHole = new BlackHoleRoom(rooms[rand].roomRect.Center);
                 ShadowCastleRoom.Exchange(rooms[rand], blackHole);
                 rooms[rand] = blackHole;
 
-                //生成宝箱房间
+                #endregion
+
+                #region 生成宝箱房间
 
                 int[] tresures = new int[]
                 {
@@ -126,6 +134,9 @@ namespace Coralite.Content.WorldGeneration
                     chestRoomCount++;
                 }
 
+                #endregion
+
+                //各类替换
                 for (int m = 0; m < rooms.Count; m++)
                 {
                     ShadowCastleRoom room = rooms[m];
@@ -145,8 +156,31 @@ namespace Coralite.Content.WorldGeneration
 
                 }
 
+                //生成地下的主要地形
                 root.Generate();
                 root.CreateCorridor();
+
+                #region 生成影子球BOSS房间
+
+                Point basePoint = root.roomRect.Center;
+                Point recordPoint = basePoint;
+                //向上查找空地
+                for (; basePoint.Y > Main.worldSurface * 0.35f; basePoint.Y--)
+                {
+                    Tile tile = Main.tile[basePoint.X, basePoint.Y];
+                    if (tile.HasTile && tile.TileType != TileID.Cloud && tile.TileType != TileID.RainCloud && tile.TileType != TileID.Trees)
+                        recordPoint = basePoint;
+                }
+
+                recordPoint += new Point(0, 6);
+                BossRoom bossRoom = new BossRoom(recordPoint);
+                bossRoom.Append(root, ShadowCastleRoom.Direction.Down);
+
+                bossRoom.GenerateSelf();
+                bossRoom.CreateSelfCorridor();
+                bossRoom.PostGenerateSelf();
+
+                #endregion
                 break;
             }
         }
@@ -4062,6 +4096,8 @@ namespace Coralite.Content.WorldGeneration
             Greenhouse,
             /// <summary> 黑洞箱，内部包含“宙切” </summary>
             BlackHoleRoom,
+            /// <summary> 在地面上的BOSS房间 </summary>
+            BossRoom,
         }
 
         public enum Direction
@@ -4103,13 +4139,15 @@ namespace Coralite.Content.WorldGeneration
             [new Color(160, 95, 185)] = ModContent.TileType<ShadowBrickTile>(),//影之城砖 a05fb9
             [new Color(154, 153, 168)] = ModContent.TileType<ShadowQuadrelTile>(),//影方砖9a99a8
             [new Color(189, 109, 255)] = ModContent.TileType<ShadowImaginaryBrickTile>(),//影虚砖bd6dff
+            [new Color(164, 135, 154)] = ModContent.TileType<ShadowBeamTile>(),//影立柱a4879a
         };
         public static Dictionary<Color, int> WallDic = new Dictionary<Color, int>()
         {
             [Color.Black] = -1,
             [Color.White] = WallID.SandFall,
-            [new Color(48, 18, 37)] =  ModContent.WallType<Tiles.ShadowCastle.ShadowBrickWall>(),//影砖墙301225
-            [new Color(245, 115, 31)] =  ModContent.WallType<BlackHoleWall>(),//黑洞墙f5731f
+            [new Color(48, 18, 37)] = ModContent.WallType<Tiles.ShadowCastle.ShadowBrickWall>(),//影砖墙301225
+            [new Color(245, 115, 31)] = ModContent.WallType<BlackHoleWall>(),//黑洞墙f5731f
+            [new Color(210, 123, 198)] = ModContent.WallType<ShadowGlassWall>(),//影玻璃墙d27bc6
         };
         public static Dictionary<Color, (int, int)> ObjectDic = new Dictionary<Color, (int, int)>
         {
@@ -4435,7 +4473,7 @@ namespace Coralite.Content.WorldGeneration
             wallGenerator?.Generate(genOrigin_x, genOrigin_y, true);
         }
 
-        public static void GenObject(Texture2D objectTex, Dictionary<Color, (int,int)> objectDic, int genOrigin_x, int genOrigin_y)
+        public static void GenObject(Texture2D objectTex, Dictionary<Color, (int, int)> objectDic, int genOrigin_x, int genOrigin_y)
         {
             bool genned = false;
             bool placed = false;
@@ -4475,7 +4513,7 @@ namespace Coralite.Content.WorldGeneration
                 _ => ModContent.TileType<ShadowImaginaryBrickTile>()
             };
             //墙壁
-            int shadowWall= WorldGen.genRand.Next(3) switch
+            int shadowWall = WorldGen.genRand.Next(3) switch
             {
                 0 => ModContent.WallType<Tiles.ShadowCastle.ShadowBrickWall>(),
                 _ => ModContent.WallType<Tiles.ShadowCastle.ShadowBrickWall>(),

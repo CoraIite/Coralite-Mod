@@ -60,12 +60,20 @@ namespace Coralite.Content.WorldGeneration
         {
             tag.Add("IceNestCenterX", NestCenter.X);
             tag.Add("IceNestCenterY", NestCenter.Y);
+
+            tag.Add("shadowBallsFightAreaX", shadowBallsFightArea.X);
+            tag.Add("shadowBallsFightAreaY", shadowBallsFightArea.Y);
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
             NestCenter.X = tag.Get<int>("IceNestCenterX");
             NestCenter.Y = tag.Get<int>("IceNestCenterY");
+
+
+            shadowBallsFightArea = new Microsoft.Xna.Framework.Rectangle(
+                tag.Get<int>("shadowBallsFightAreaX"),
+                tag.Get<int>("shadowBallsFightAreaY"), 70 * 16, 54 * 16);
         }
     }
 }

@@ -31,17 +31,17 @@ namespace Coralite.Content.Items.Misc_Shoot
                     TargetRot = 0.0001f;
             }
 
-            Projectile.localAI[1] += 1;
+            //Projectile.localAI[1] += 1;
             HeldPositionX = heldPositionX;
             Projectile.netUpdate = true;
         }
 
         public override void ModifyAI(float factor)
         {
-            if (Projectile.localAI[1] > 2)
-                return;
-            if (Projectile.timeLeft < 2)
-                Initialize();
+            //if (Projectile.localAI[1] > 2)
+            //    return;
+            //if (Projectile.timeLeft < 2)
+            //    Initialize();
         }
     }
 
