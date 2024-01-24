@@ -436,7 +436,7 @@ namespace Coralite.Content.Items.Nightmare
     /// <summary>
     /// 使用ai2传入颜色
     /// </summary>
-    public class LullabyBall : ModProjectile, IDrawPrimitive/*, IDrawNonPremultiplied*/,IPostDrawAdditive
+    public class LullabyBall : ModProjectile, IDrawPrimitive/*, IDrawNonPremultiplied*/, IPostDrawAdditive
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "FantasyBall";
 

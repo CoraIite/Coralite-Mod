@@ -45,7 +45,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
             new Point(31,18),
         };
 
-        public ChestRoom(Point center,int tresureItemType) : base(center, RoomType.SingleChest)
+        public ChestRoom(Point center, int tresureItemType) : base(center, RoomType.SingleChest)
         {
             this.tresureItemType = tresureItemType;
         }
@@ -91,7 +91,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
 
                 //放火把
                 if (WorldGen.genRand.NextBool(1, 2))
-                    RandChestItem(chest, WorldGen.genRand.NextFromList(ItemID.Torch,ItemID.Glowstick)
+                    RandChestItem(chest, WorldGen.genRand.NextFromList(ItemID.Torch, ItemID.Glowstick)
                         , WorldGen.genRand.Next(15, 29));
 
                 //放马内，放一大堆的Money

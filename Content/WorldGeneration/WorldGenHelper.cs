@@ -430,7 +430,7 @@ namespace Coralite.Content.WorldGeneration
 
         }
 
-        public static void ClearLiuid(int x, int y,int width,int height)
+        public static void ClearLiuid(int x, int y, int width, int height)
         {
             for (int x1 = 0; x1 < width; x1++)
                 for (int y1 = 0; y1 < height; y1++)

@@ -1,43 +1,55 @@
-﻿using Coralite.Content.Bosses.BabyIceDragon;
-using Coralite.Content.Items.Icicle;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
     /// <summary>
     ///                                               马赛克
-    ///           ○○○○○○○○○○○                         l   l  
-    ///       ○○○○○○○○○○○○○○○○○○                      l   l
-    ///     ○○○○○○○○○○○○○○○○○○○○○○               _ _  l   l_  
-    ///    ○○○○○○影○○○○○○○○○○○○○球○○○           !  !  l   l l ˉl
-    ///   ○○○○○○影影影○○○子○○○○球球球○○○         l               l
-    /// ○○○○○○○○○影○○○○○○○○○○○○○球○○○○○         l               l
-    /// ○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○           l             l
-    ///  ○○○○○○○~○○○○○○○○○○○○○○○○○○○○            l            l
-    ///    ○○○○○○○~○○○○○○○○○○○○○○○○○             l           l
-    ///     ○○○○○○○~~~~~~~~~○○○○○○               l           l
-    ///       ○○○○○○○○○○○○○○○○○○
-    ///           ○○○○○○○○○○○
+    ///           ○○○○○○○○○○ ○                        l   l  
+    ///       ○○○○○○○○○○○○○○○○○ ○                     l   l
+    ///     ○○○○○○○○○○○○○○○○○○○○○ ○              _ _  l   l_  
+    ///    ○○○○○{影}○○○○○○○○○○○{球}○ ○          !  !  l   l l ˉl
+    ///   ○○○○○{影影影}○○子○○○{球球球}○ ○        l               l
+    /// ○○○○○○○○{影}○○○○○○○○○○○{球}○○○ ○        l               l
+    /// ○○○○○○○○○○○○○○○○○○○○○○○○○○○○○ ○          l             l
+    ///  ○○○○○○==○○○○○○○○○○○○○○○○○○○ ○           l            l
+    ///    ○○○○○○==○○○○○○○○○○○○○○○○ ○            l           l
+    ///     ○○○○○○○=========○○○○○ ○              l           l
+    ///       ○○○○○○○○○○○○○○○○○ ○
+    ///           ○○○○○○○○○○ ○
     /// 
+    ///             就贼搁赤玉灵嗷，别让我在影之城看见你嗷，
+    ///                 抓到你，指定没你好果汁吃
+    ///                     你记住我说的话嗷！
     /// 
     /// </summary>
-    public class ShadowBall:ModNPC
+    public class ShadowBall : ModNPC
     {
-        public override string Texture => AssetDirectory.ShadowBalls+ "SmallShadowBall";
+        public override string Texture => AssetDirectory.ShadowBalls + "SmallShadowBall";
 
         internal ref float Phase => ref NPC.ai[0];
         internal ref float State => ref NPC.ai[1];
+        internal ref float SonState => ref NPC.ai[2];
+        internal ref float Timer => ref NPC.ai[3];
+
+        public Player Target => Main.player[NPC.target];
+
+        public bool SpawnedSmallBalls;
+        public List<NPC> smallBalls;
 
         #region tmlHooks
+
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
+        }
 
         public override void SetDefaults()
         {
@@ -150,14 +162,115 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         #region AI
 
+        public enum AIPhases
+        {
+            WithSmallBalls,
+            ShadowPlayer,
+            BigBallSmash
+        }
+
         public enum AIStates
         {
+            OnSpawnAnmi,
+            /// <summary> 狂暴，为出框惩罚 </summary>
+            Rampage,
+            /// <summary> 一阶段和2阶段的切换，使用在2阶段 </summary>
+            P1ToP2Exchange,
 
         }
 
         public override void AI()
         {
+            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || /*Target.Distance(NPC.Center) > 4800 ||*/ Main.dayTime) //世花也是4800
+            {
+                NPC.TargetClosest();
 
+                do
+                {
+                    if (!Main.dayTime)
+                    {
+                        State = (int)AIStates.Rampage; //狂暴的AI
+                        break;
+                    }
+
+                    if (Target.dead || !Target.active)
+                    {
+                        NPC.EncourageDespawn(10);
+                        NPC.dontTakeDamage = true;  //脱战无敌
+                        NPC.velocity.Y += 0.25f;
+
+                        return;
+                    }
+                    //else
+                    //    ResetStates();
+                } while (false);
+            }
+
+            switch (Phase)
+            {
+                default:
+                case (int)AIPhases.WithSmallBalls:
+                    {
+                        if (!SpawnedSmallBalls)
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                               int index= NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI);
+                                Main.npc[index].realLife = NPC.whoAmI;
+                            }
+                            SpawnedSmallBalls = true;
+                        }
+
+                        if (!GetSmallBalls())
+                        {
+                            //切换状态
+                            return;
+                        }
+
+                        switch (State)
+                        {
+                            default:
+                            case (int)AIStates.OnSpawnAnmi:
+                                {
+
+                                }
+                                break;
+                        }
+                    }
+                    break;
+                case (int)AIPhases.ShadowPlayer:
+                    {
+
+                    }
+                    break;
+                case (int)AIPhases.BigBallSmash:
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region HelperMethods
+
+        public bool GetSmallBalls()
+        {
+            smallBalls.Clear();
+            int count=0;
+            for (int i = 0; i < 200; i++)
+                if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<SmallShadowBall>())
+                {
+                    smallBalls.Add(Main.npc[i]);
+                    count++;
+                    if (count>=5)
+                    {
+                        break;
+                    }
+                }
+
+            if (count==0)
+                return false;
+
+            return true;
         }
 
         #endregion
@@ -166,7 +279,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            return false;
+            return true;
         }
 
         #endregion

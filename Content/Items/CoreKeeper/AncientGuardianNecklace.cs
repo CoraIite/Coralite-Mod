@@ -6,7 +6,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.CoreKeeper
 {
-    public class AncientGuardianNecklace:ModItem
+    public class AncientGuardianNecklace : ModItem
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
 
@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if(player.TryGetModPlayer(out CoralitePlayer cp))
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.bossDamageReduce += 0.10f;
             }

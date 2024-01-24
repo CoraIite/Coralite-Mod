@@ -7,7 +7,6 @@ using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Misc;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Placeable;
-using Coralite.Content.Items.Shadow;
 using Coralite.Content.Items.YujianHulu;
 using Coralite.Core.Configs;
 using Coralite.Helpers;

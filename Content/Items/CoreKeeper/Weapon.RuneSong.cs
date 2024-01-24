@@ -245,7 +245,7 @@ namespace Coralite.Content.Items.CoreKeeper
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     delay = 12;
                     ExtraInit();
-                    
+
                     break;
                 case 1://下挥，圆
                     startAngle = -1.6f + Main.rand.NextFloat(-0.2f, 0.2f);
@@ -689,9 +689,9 @@ namespace Coralite.Content.Items.CoreKeeper
                 DrawBar(mainTex2, Color.White);
                 mainTex2 = Request<Texture2D>(AssetDirectory.CoreKeeperItems + "CraftUIHighlight").Value;
 
-                if (channelTimer<ChannelTimeMax)
+                if (channelTimer < ChannelTimeMax)
                 {
-                    base.DrawSelf(highlightTex, origin, lightColor*channelAlpha, extraRot);
+                    base.DrawSelf(highlightTex, origin, lightColor * channelAlpha, extraRot);
                     DrawBar(mainTex2, Color.White * channelAlpha);
                 }
                 else
@@ -702,12 +702,12 @@ namespace Coralite.Content.Items.CoreKeeper
                     var frameBox = mainTex2.Frame(1, 2, 0, 0);
                     Vector2 origin2 = frameBox.Size() / 2;
 
-                    Main.spriteBatch.Draw(mainTex2, pos, frameBox, Color.White*channelShineAlpha, 0, origin2, 1, 0, 0);
+                    Main.spriteBatch.Draw(mainTex2, pos, frameBox, Color.White * channelShineAlpha, 0, origin2, 1, 0, 0);
                 }
             }
         }
 
-        private void DrawBar(Texture2D mainTex,Color c)
+        private void DrawBar(Texture2D mainTex, Color c)
         {
             Vector2 pos = Owner.Center + new Vector2(0, 200) - Main.screenPosition;
             var frameBox = mainTex.Frame(1, 2, 0, 0);

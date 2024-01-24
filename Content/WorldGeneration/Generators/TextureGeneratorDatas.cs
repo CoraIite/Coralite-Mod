@@ -70,7 +70,7 @@ namespace Coralite.Content.WorldGeneration.Generators
             return gen;
         }
 
-        public static Texture2Object GetTex2ObjectGenerator(Texture2D tex,Dictionary<Color,(int,int)> colorToObject)
+        public static Texture2Object GetTex2ObjectGenerator(Texture2D tex, Dictionary<Color, (int, int)> colorToObject)
         {
             Color[] objectData = new Color[tex.Width * tex.Height];
 

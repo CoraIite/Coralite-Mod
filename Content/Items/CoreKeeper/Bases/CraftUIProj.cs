@@ -10,7 +10,6 @@ using ReLogic.Utilities;
 using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.CoreKeeper.Bases

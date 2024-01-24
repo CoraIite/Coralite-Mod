@@ -12,7 +12,6 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -202,7 +201,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex =     Projectile.GetTexture();
+            Texture2D mainTex = Projectile.GetTexture();
             Vector2 origin = mainTex.Size() / 2f;
 
             //绘制本体

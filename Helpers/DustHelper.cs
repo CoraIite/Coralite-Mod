@@ -99,7 +99,7 @@ namespace Coralite.Helpers
             dust.velocity = -Projectile.velocity * velocityMult;
         }
 
-        public static void SpawnTrailDust(this Projectile Projectile, int type, float velocityMult,float extraRot, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
+        public static void SpawnTrailDust(this Projectile Projectile, int type, float velocityMult, float extraRot, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
         {
             Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, type, Alpha: Alpha, newColor: newColor, Scale: Scale);
             dust.noGravity = noGravity;

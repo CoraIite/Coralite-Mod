@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.ShadowCastle
 {
-    public class ShadowMagneticCard:ModItem
+    public class ShadowMagneticCard : ModItem
     {
-        public override string Texture => AssetDirectory.ShadowCastleItems+Name;
+        public override string Texture => AssetDirectory.ShadowCastleItems + Name;
 
         public override void SetDefaults()
         {

@@ -137,7 +137,7 @@ namespace Coralite.Core
         public const string RedJadeTiles = Tiles + "RedJades/";
         public const string IcicleTiles = Tiles + "Icicle/";
         public const string ShadowCastleTiles = Tiles + "ShadowCastle/";
-        
+
 
         public const string MagikeTiles = Tiles + "Magike/";
         public const string MagikeLensTiles = MagikeTiles + "Lens/";

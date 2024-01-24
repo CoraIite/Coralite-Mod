@@ -19,7 +19,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.CoreKeeper
 {
-    public class BrokenHandle : ModItem,IBuffHeldItem
+    public class BrokenHandle : ModItem, IBuffHeldItem
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
 

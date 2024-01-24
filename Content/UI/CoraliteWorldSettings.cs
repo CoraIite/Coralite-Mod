@@ -43,10 +43,10 @@ namespace Coralite.Content.UI
             panel.Top.Set(-240, 0.5f);
             panel.Left.Set(60, 0);
 
-            state. Append(panel);
+            state.Append(panel);
 
             int height = 10;
-            AddDungeonSelect(panel,height);//添加地牢选择
+            AddDungeonSelect(panel, height);//添加地牢选择
             height += 48;
             AddHorizontalSeparator(panel, height);//添加分割线
             AddDescriptionPanel(panel, height, "desc");//添加描述文本
@@ -64,7 +64,7 @@ namespace Coralite.Content.UI
         //    base.Recalculate();
         //}
 
-        private static void AddDungeonSelect(UIElement container,float accumualtedHeight)
+        private static void AddDungeonSelect(UIElement container, float accumualtedHeight)
         {
             WorldDungeonID[] array = new WorldDungeonID[3] {
             WorldDungeonID.Random,
@@ -201,7 +201,7 @@ namespace Coralite.Content.UI
                 descriptionText.SetText(localizedText);
         }
 
-        public static  void ClearOptionDescription(UIMouseEvent evt, UIElement listeningElement)
+        public static void ClearOptionDescription(UIMouseEvent evt, UIElement listeningElement)
         {
             descriptionText.SetText(Language.GetText("UI.WorldDescriptionDefault"));
         }

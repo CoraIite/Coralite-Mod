@@ -245,7 +245,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.Center = OwnerCenter() + RotateVec2 * (Projectile.scale * Projectile.height / 2 + distanceToOwner);
             Projectile.rotation = _Rotation;
         }
-        
+
         /// <summary>
         /// 获取这个弹幕所有者的中心，如果是npc的话就要自己找一下npc了
         /// </summary>

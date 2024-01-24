@@ -186,7 +186,7 @@ namespace Coralite.Content.Items.ShadowCastle
                             startAngle = 1.6f;
                             totalAngle = 3.6f;
                             minTime = 32;
-                            maxTime = (int)(Owner.itemTimeMax * 0.4f) + 54+5;
+                            maxTime = (int)(Owner.itemTimeMax * 0.4f) + 54 + 5;
                             Smoother = Coralite.Instance.NoSmootherInstance;
                             delay = 12;
                             extraScaleAngle = 0;
@@ -200,7 +200,7 @@ namespace Coralite.Content.Items.ShadowCastle
                             startAngle = 1.8f;
                             totalAngle = 6f;
                             minTime = 32;
-                            maxTime = (int)(Owner.itemTimeMax * 0.4f) + 66+6;
+                            maxTime = (int)(Owner.itemTimeMax * 0.4f) + 66 + 6;
                             Smoother = Coralite.Instance.NoSmootherInstance;
                             delay = 8;
                             extraScaleAngle = 0;
@@ -310,7 +310,7 @@ namespace Coralite.Content.Items.ShadowCastle
                             startAngle = -2.7f;
                             totalAngle = 0.01f;
                             minTime = 16;
-                            maxTime = (int)(Owner.itemTimeMax * 0.4f)+24;
+                            maxTime = (int)(Owner.itemTimeMax * 0.4f) + 24;
                             Smoother = Coralite.Instance.BezierEaseSmoother;
                             delay = 16;
                             extraScaleAngle = 0f;
@@ -326,7 +326,7 @@ namespace Coralite.Content.Items.ShadowCastle
                             st.Pitch = -0.5f;
                             //SoundEngine.PlaySound(st, Owner.Center);
                             SoundEngine.PlaySound(st, Owner.Center);
-                            
+
                             break;
                     }
                     break;
@@ -389,7 +389,7 @@ namespace Coralite.Content.Items.ShadowCastle
 
             Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime), minScale, maxScale);
 
-            if ((ControlType == (int)ComboManager.ControlType.Right_Down||
+            if ((ControlType == (int)ComboManager.ControlType.Right_Down ||
                 ControlType == (int)ComboManager.ControlType.Right_Up) && Combo == 3)
             {
                 float halfTime = (maxTime - minTime) / 2;
@@ -436,11 +436,11 @@ namespace Coralite.Content.Items.ShadowCastle
                     for (int i = 0; i < 6; i++)
                     {
                         byte hue = (byte)(Main.rand.NextFloat(0.65f, 0.75f) * 255f);
-                        Vector2 vel = dir * (i+0.1f) * 1.5f;
+                        Vector2 vel = dir * (i + 0.1f) * 1.5f;
                         for (int j = 0; j < 3; j++)
                             ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
                             {
-                                PositionInWorld = pos+dir*j*2 + dir * i * (Main.rand.NextFloat(6f, 12f)),
+                                PositionInWorld = pos + dir * j * 2 + dir * i * (Main.rand.NextFloat(6f, 12f)),
                                 MovementVector = vel * (1 - 0.1f * j),
                                 UniqueInfoPiece = hue
                             });
@@ -452,7 +452,7 @@ namespace Coralite.Content.Items.ShadowCastle
                         for (int j = 0; j < 3; j++)
                             ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
                             {
-                                PositionInWorld = pos-dir*j*2 - dir * i * (Main.rand.NextFloat(6f, 12f)),
+                                PositionInWorld = pos - dir * j * 2 - dir * i * (Main.rand.NextFloat(6f, 12f)),
                                 MovementVector = vel * (1 - 0.1f * j),
                                 UniqueInfoPiece = hue
                             });
@@ -572,9 +572,9 @@ namespace Coralite.Content.Items.ShadowCastle
         {
             for (int i = 0; i < 16; i++)
             {
-               Dust d= Dust.NewDustDirect(Projectile.position, 16, 16, DustID.Shadowflame, 0, 0, Scale: Main.rand.NextFloat(1f, 1.3f));
+                Dust d = Dust.NewDustDirect(Projectile.position, 16, 16, DustID.Shadowflame, 0, 0, Scale: Main.rand.NextFloat(1f, 1.3f));
                 d.noGravity = true;
-            }     
+            }
         }
 
         public override void AI()
@@ -608,7 +608,7 @@ namespace Coralite.Content.Items.ShadowCastle
         {
             for (int i = 0; i < 16; i++)
                 Projectile.SpawnTrailDust(DustID.Shadowflame, Main.rand.NextFloat(0.1f, 0.7f)
-                    , Main.rand.NextFloat(-0.45f,0.45f),Scale: Main.rand.NextFloat(1f, 1.3f));
+                    , Main.rand.NextFloat(-0.45f, 0.45f), Scale: Main.rand.NextFloat(1f, 1.3f));
         }
 
         public override bool PreDraw(ref Color lightColor)

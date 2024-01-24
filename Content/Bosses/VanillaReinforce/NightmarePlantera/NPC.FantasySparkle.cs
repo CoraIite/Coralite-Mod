@@ -8,7 +8,6 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -54,7 +53,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPC.lifeMax = 230;
             NPC.width = NPC.height = 85;
 
-            mainSparkleScale = new Vector2( 2f,4f);
+            mainSparkleScale = new Vector2(2f, 4f);
             circleSparkleScale = 1f;
 
             NPC.HitSound = CoraliteSoundID.MountSummon_Item25;
@@ -308,7 +307,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             c.A = 0;
             var scale = mainSparkleScale * 0.15f;
             spriteBatch.Draw(lightTex, pos, null, c, rot, origin, scale, 0, 0);
-            spriteBatch.Draw(lightTex, pos, null, c*0.5f, rot, origin, scale, 0, 0);
+            spriteBatch.Draw(lightTex, pos, null, c * 0.5f, rot, origin, scale, 0, 0);
 
             //ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos, Color.White, shineColor * 0.6f,
             //    0.5f, 0f, 0.5f, 0.5f, 1f, rot, mainSparkleScale, Vector2.One);
@@ -326,7 +325,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Vector2 secondScale = scale * 0.4f;
             for (int i = -1; i < 2; i += 2)
             {
-                Vector2 offsetPos = pos + rot.ToRotationVector2()*i*22;
+                Vector2 offsetPos = pos + rot.ToRotationVector2() * i * 22;
                 float rot3 = rot + i * 0.3f;
                 spriteBatch.Draw(lightTex, offsetPos, null, c, rot3, origin, secondScale, 0, 0);
                 //spriteBatch.Draw(lightTex, offsetPos, null, c, rot3, origin, secondScale, 0, 0);
@@ -344,7 +343,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 rot2 += 1.57f;
                 Color phantomC = NightmarePlantera.phantomColors[i];
                 phantomC.A = 0;
-                spriteBatch.Draw(lightTex, dir, null, phantomC, rot2, origin, circleSparkleScale*0.2f, 0, 0);
+                spriteBatch.Draw(lightTex, dir, null, phantomC, rot2, origin, circleSparkleScale * 0.2f, 0, 0);
 
                 //Vector2 dir = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7).ToRotationVector2();
                 //ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + dir * (36 + factor * 4), Color.White, NightmarePlantera.phantomColors[i],

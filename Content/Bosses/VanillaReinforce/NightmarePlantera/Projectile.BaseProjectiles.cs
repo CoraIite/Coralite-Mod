@@ -32,7 +32,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 MainLight = null;
                 Flow = null;
-            }   
+            }
         }
 
         public Color ShineColor;
@@ -76,7 +76,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             for (int i = 0; i < 7; i++)
             {
                 float rot2 = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7);
-                Vector2 dir =rot2.ToRotationVector2();
+                Vector2 dir = rot2.ToRotationVector2();
                 dir = pos + dir * (18 + factor * 2);
                 rot2 += 1.57f;
                 Main.spriteBatch.Draw(lightTex, dir, null, shineC, rot2, origin, scale2, 0, 0);

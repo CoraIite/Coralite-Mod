@@ -242,7 +242,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             , factor =>
             {
                 if (Timer < TrailLength)
-                    return Color.Lerp(drawColor, new Color(0, 0, 0, 0),  Math.Clamp((1-factor.X) / (Timer / TrailLength), 0, 1));
+                    return Color.Lerp(drawColor, new Color(0, 0, 0, 0), Math.Clamp((1 - factor.X) / (Timer / TrailLength), 0, 1));
                 return Color.Lerp(new Color(0, 0, 0, 0), drawColor, factor.X);
             });
 

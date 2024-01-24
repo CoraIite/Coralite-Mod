@@ -2502,6 +2502,7 @@ Mods: {
 
 			Bloodiancie.DisplayName: 赤血玉灵
 			BloodiancieMinion.DisplayName: 小赤血玉灵
+			// ShadowBall.DisplayName: Shadow Ball
 		}
 
 		Prefixes.支配.DisplayName: 支配

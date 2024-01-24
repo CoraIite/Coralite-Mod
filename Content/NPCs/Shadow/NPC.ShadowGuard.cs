@@ -81,7 +81,7 @@ namespace Coralite.Content.NPCs.Shadow
             c.A = 0;
             c *= 0.4f;
             for (int i = 0; i < 3; i++)
-                spriteBatch.Draw(mainTex, pos+(Main.GlobalTimeWrappedHourly+i*MathHelper.TwoPi/3).ToRotationVector2()*2
+                spriteBatch.Draw(mainTex, pos + (Main.GlobalTimeWrappedHourly + i * MathHelper.TwoPi / 3).ToRotationVector2() * 2
                     , frameBox, c, NPC.rotation, origin, NPC.scale, effects, 0f);
             spriteBatch.Draw(mainTex, pos, frameBox, drawColor * 0.7f, NPC.rotation, origin, NPC.scale, effects, 0f);
             return false;

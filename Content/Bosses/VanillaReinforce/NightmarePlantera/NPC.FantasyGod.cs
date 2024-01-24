@@ -139,8 +139,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             {
                                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                                 Vector2 center = np.Center + Main.rand.NextVector2CircularEdge(1000, 1000);
-                                 Projectile.NewProjectile(NPC.GetSource_FromAI(), center, (np.Center - center).SafeNormalize(Vector2.Zero),
-                                    ModContent.ProjectileType<FantasySpike_Visual>(), 1, 0, NPC.target, 300, 1100);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), center, (np.Center - center).SafeNormalize(Vector2.Zero),
+                                   ModContent.ProjectileType<FantasySpike_Visual>(), 1, 0, NPC.target, 300, 1100);
                             }
                         }
                     }

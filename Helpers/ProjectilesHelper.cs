@@ -264,7 +264,7 @@ namespace Coralite.Helpers
             return TextureAssets.Projectile[projectile.type].Value;
         }
 
-        public static void InitOldPosCache(this Projectile projectile,int trailCount,bool useCenter=true)
+        public static void InitOldPosCache(this Projectile projectile, int trailCount, bool useCenter = true)
         {
             projectile.oldPos = new Vector2[trailCount];
 

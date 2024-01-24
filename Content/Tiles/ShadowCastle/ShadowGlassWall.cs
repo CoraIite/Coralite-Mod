@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.ShadowCastle
 {
-    public class ShadowGlassWall:ModWall
+    public class ShadowGlassWall : ModWall
     {
         public override string Texture => AssetDirectory.ShadowCastleTiles + Name;
 

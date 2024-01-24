@@ -218,7 +218,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         }
     }
 
-    public class SpawnLight:ModProjectile
+    public class SpawnLight : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;

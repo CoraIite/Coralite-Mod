@@ -54,7 +54,7 @@ namespace Coralite.Core.Systems.SlashBladeSystem
 
         public void UpdateDelay(Player player)
         {
-            if (player.ItemTimeIsZero&&!player.controlUseItem && combo != 0)
+            if (player.ItemTimeIsZero && !player.controlUseItem && combo != 0)
             {
                 resetTimer++;
                 if (resetTimer > resetMaxTime)
@@ -179,7 +179,7 @@ namespace Coralite.Core.Systems.SlashBladeSystem
 
         public static void ResetCombo(Projectile proj, ref int combo)
         {
-            combo=0;
+            combo = 0;
         }
 
     }

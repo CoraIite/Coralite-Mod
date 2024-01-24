@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.ShadowCastle
 {
-    public class ShadowBeamTile:ModTile
+    public class ShadowBeamTile : ModTile
     {
         public override string Texture => AssetDirectory.ShadowCastleTiles + Name;
 
@@ -20,7 +20,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             MinPick = 100;
             DustType = DustID.Shadowflame;
             MineResist = 0.3f;
-            
+
             AddMapEntry(new Microsoft.Xna.Framework.Color(104, 34, 192));
             HitSound = CoraliteSoundID.DigStone_Tink;
         }

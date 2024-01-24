@@ -770,7 +770,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
 
             //绘制自己
-            spriteBatch.Draw(mainTex, NPC.Center-Main.screenPosition, frameBox, Color.White * alpha, selfRot, origin, NPC.scale, 0, 0);
+            spriteBatch.Draw(mainTex, NPC.Center - Main.screenPosition, frameBox, Color.White * alpha, selfRot, origin, NPC.scale, 0, 0);
 
             return false;
         }

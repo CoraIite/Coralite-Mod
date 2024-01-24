@@ -34,15 +34,15 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
         public override void PostGenerateSelf()
         {
             GenerateObject();
-          int index=  WorldGen.PlaceChest(roomRect.X + 31, roomRect.Y + 32, (ushort)ModContent.TileType<BlackHoleChestTile>());
-            if (index>=0)
+            int index = WorldGen.PlaceChest(roomRect.X + 31, roomRect.Y + 32, (ushort)ModContent.TileType<BlackHoleChestTile>());
+            if (index >= 0)
             {
                 Chest chest = Main.chest[index];
                 ChestRoom.RandChestItem(chest, ModContent.ItemType<Cosmophore>());
 
                 //放影水晶
                 if (WorldGen.genRand.NextBool(1, 3))
-                    ChestRoom. RandChestItem(chest, ModContent.ItemType<ShadowCrystal>()
+                    ChestRoom.RandChestItem(chest, ModContent.ItemType<ShadowCrystal>()
                         , WorldGen.genRand.Next(1, 5));
 
                 //放马内，放一大堆的Money

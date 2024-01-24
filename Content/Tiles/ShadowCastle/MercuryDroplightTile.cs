@@ -45,7 +45,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
         public override void Load()
         {
             if (!Main.dedServ)
-                ExtraTexture = ModContent.Request<Texture2D>(Texture+"Extra");
+                ExtraTexture = ModContent.Request<Texture2D>(Texture + "Extra");
         }
 
         public override void Unload()
@@ -68,7 +68,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             //由于此磁贴在其工作表上没有悬停部分，因此我们必须自己对其进行动画处理
             //因此，我们将瓷砖的左上角注册为“特殊点”
             //这使我们能够在SpecialDraw中绘制内容
-            if (drawData.tileFrameX  == 0 && drawData.tileFrameY  == 0)
+            if (drawData.tileFrameX == 0 && drawData.tileFrameY == 0)
                 Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
         }
 
@@ -97,7 +97,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
             Vector2 center = worldPos + new Vector2(24, 24);
             float distance = Vector2.Distance(Main.LocalPlayer.Center, center);
-            Vector2 dir = (  Main.LocalPlayer.Center- center).SafeNormalize(Vector2.Zero);
+            Vector2 dir = (Main.LocalPlayer.Center - center).SafeNormalize(Vector2.Zero);
 
             Vector2 drawPos = worldPos + offScreen - Main.screenPosition + dir * Helpers.Helper.Lerp(0, 6, Math.Clamp(distance / 400, 0, 1));
 

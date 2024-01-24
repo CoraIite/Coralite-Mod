@@ -76,7 +76,7 @@ namespace Coralite.Content.Items.ShadowCastle
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             position += Main.screenPosition;
-            Main.instance.DrawHealthBar(position.X, position.Y + 12, ShootCount+1, 10, 1, 1);
+            Main.instance.DrawHealthBar(position.X, position.Y + 12, ShootCount + 1, 10, 1, 1);
         }
     }
 
@@ -127,7 +127,7 @@ namespace Coralite.Content.Items.ShadowCastle
         {
             LockOwnerItemTime();
             SetHeldPorj();
-            Owner.itemRotation = MouseTargetAngle +(OwnerDirection>0? 0f : MathHelper.Pi) + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + OwnerDirection * 0.3f;
+            Owner.itemRotation = MouseTargetAngle + (OwnerDirection > 0 ? 0f : MathHelper.Pi) + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + OwnerDirection * 0.3f;
             Projectile.Center = Owner.Center + MouseTargetVector2 * 20;
             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
@@ -144,7 +144,7 @@ namespace Coralite.Content.Items.ShadowCastle
                         {
                             if (Owner.HeldItem.ModItem is ShadowWave sw)//填充弹药
                                 sw.ShootCount = 9;
-                            
+
                             if (Main.mouseRight)
                             {
                                 Timer = 0;
@@ -176,7 +176,7 @@ namespace Coralite.Content.Items.ShadowCastle
                             Projectile.NewProjectileFromThis(Owner.Center, Vector2.Zero, ModContent.ProjectileType<ShadowWaveHeldProj>(),
                                 1, 1);
 
-                            Owner.itemTime = Owner.itemAnimation = (int)(Owner.itemTimeMax*0.8f);
+                            Owner.itemTime = Owner.itemAnimation = (int)(Owner.itemTimeMax * 0.8f);
                         }
                         else
                             Projectile.timeLeft = 20;

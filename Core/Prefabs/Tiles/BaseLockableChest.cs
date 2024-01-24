@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Crimson;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -12,7 +11,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Core.Prefabs.Tiles
 {
-    public abstract class BaseLockableChest:ModTile
+    public abstract class BaseLockableChest : ModTile
     {
         public abstract int KeyType { get; }
         public abstract int ChestItemType { get; }

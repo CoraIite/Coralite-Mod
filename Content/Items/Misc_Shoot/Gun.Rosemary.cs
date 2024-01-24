@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             if (Main.myPlayer == player.whoAmI)
             {
                 Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 14, ProjectileType<RosemaryBullet>(), damage, knockback, player.whoAmI);
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<RosemaryHeldProj>(), damage,knockback, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<RosemaryHeldProj>(), damage, knockback, player.whoAmI);
             }
 
             return false;

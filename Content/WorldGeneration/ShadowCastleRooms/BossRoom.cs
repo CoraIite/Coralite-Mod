@@ -9,7 +9,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
             new Point(47,128)
         };
 
-        public BossRoom(Point center) : base(center+new Point(0, -64), RoomType.BossRoom)
+        public BossRoom(Point center) : base(center + new Point(0, -64), RoomType.BossRoom)
         {
         }
 

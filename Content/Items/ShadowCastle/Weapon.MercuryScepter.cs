@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.ShadowCastle
             {
                 float min;
                 float max;
-                if (player.direction>0)
+                if (player.direction > 0)
                 {
                     min = -0.15f;
                     max = 0.05f;
@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.ShadowCastle
                     max = 0.15f;
                 }
 
-                Projectile.NewProjectile(source,position, velocity.RotatedBy(Main.rand.NextFloat(min, max)), type,
+                Projectile.NewProjectile(source, position, velocity.RotatedBy(Main.rand.NextFloat(min, max)), type,
                     damage, knockback, player.whoAmI, ai1: Main.rand.NextFloat(0.1f, 0.3f));
             }
             return false;
@@ -118,8 +118,8 @@ namespace Coralite.Content.Items.ShadowCastle
                         float num133 = Projectile.velocity.X / 3f * j;
                         float num134 = Projectile.velocity.Y / 3f * j;
                         int offset = 4;
-                        int index = Dust.NewDust(new Vector2(Projectile.position.X + offset, Projectile.position.Y + offset),Projectile. width - offset * 2, Projectile. height - offset * 2
-                            ,Main.rand.NextBool(1,5)?DustID.GemDiamond: DustID.SilverCoin, 0f, 0f, 100, default, 1.3f);
+                        int index = Dust.NewDust(new Vector2(Projectile.position.X + offset, Projectile.position.Y + offset), Projectile.width - offset * 2, Projectile.height - offset * 2
+                            , Main.rand.NextBool(1, 5) ? DustID.GemDiamond : DustID.SilverCoin, 0f, 0f, 100, default, 1.3f);
                         Dust dust = Main.dust[index];
                         dust.noGravity = true;
                         dust.velocity *= 0.3f;
@@ -131,8 +131,8 @@ namespace Coralite.Content.Items.ShadowCastle
                     if (Main.rand.NextBool(8))
                     {
                         int offset = 6;
-                        int index = Dust.NewDust(new Vector2(Projectile.position.X + offset, Projectile.position.Y + offset), Projectile. width - offset * 2, Projectile. height - offset * 2
-                            , Main.rand.NextBool(1,5) ? DustID.GemDiamond : DustID.SilverCoin, 0f, 0f, 100, default(Color), 0.75f);
+                        int index = Dust.NewDust(new Vector2(Projectile.position.X + offset, Projectile.position.Y + offset), Projectile.width - offset * 2, Projectile.height - offset * 2
+                            , Main.rand.NextBool(1, 5) ? DustID.GemDiamond : DustID.SilverCoin, 0f, 0f, 100, default(Color), 0.75f);
                         Dust dust2 = Main.dust[index];
                         dust2.velocity *= 0.5f;
                         dust2.velocity += Projectile.velocity * 0.5f;

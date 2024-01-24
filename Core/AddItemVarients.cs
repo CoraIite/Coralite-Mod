@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Terraria.GameContent.Items;
-using Terraria.GameContent.UI;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 
@@ -20,7 +19,7 @@ namespace Coralite.Core
                 var entrys = (List<ItemVariants.VariantEntry>[])info.GetValue(null);
                 if (entrys != null)
                 {
-                    var newEntrys=(List<ItemVariants.VariantEntry>[])entrys.Clone();
+                    var newEntrys = (List<ItemVariants.VariantEntry>[])entrys.Clone();
 
                     Array.Resize(ref newEntrys, ItemLoader.ItemCount);
 

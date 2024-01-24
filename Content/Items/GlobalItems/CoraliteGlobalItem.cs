@@ -26,6 +26,6 @@ namespace Coralite.Content.Items.GlobalItems
             }
         }
 
-        
+
     }
 }

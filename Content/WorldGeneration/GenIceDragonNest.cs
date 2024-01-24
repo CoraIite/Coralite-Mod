@@ -31,7 +31,7 @@ namespace Coralite.Content.WorldGeneration
             for (; nestCenter_y < Main.worldSurface; nestCenter_y++)
             {
                 Tile tile = Framing.GetTileSafely(nestCenter_x, nestCenter_y);
-                if (tile.HasTile && nestCenter_y>Main.worldSurface*0.35f)
+                if (tile.HasTile && nestCenter_y > Main.worldSurface * 0.35f)
                     break;
             }
 
@@ -129,7 +129,7 @@ namespace Coralite.Content.WorldGeneration
                 return true;
             }
 
-            CoraliteWorld.NestCenter = (player.Center/16).ToPoint();
+            CoraliteWorld.NestCenter = (player.Center / 16).ToPoint();
             Main.NewText("已将冰龙巢穴的位置设置到" + CoraliteWorld.NestCenter);
             return base.CanUseItem(player);
         }

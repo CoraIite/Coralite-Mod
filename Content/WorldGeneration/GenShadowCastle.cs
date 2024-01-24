@@ -71,7 +71,7 @@ namespace Coralite.Content.WorldGeneration
             for (int i = 0; i < 20000; i++)
             {
                 int dungeonLocation = GenVars.dungeonLocation;
-                int num756 = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + Main.rand.Next(-20,100);
+                int num756 = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + Main.rand.Next(-20, 100);
                 int dungeonHeight = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + WorldGen.genRand.Next(-200, 200);
                 bool flag47 = false;
                 for (int j = 0; j < 10; j++)
@@ -4151,7 +4151,9 @@ namespace Coralite.Content.WorldGeneration
         };
         public static Dictionary<Color, (int, int)> ObjectDic = new Dictionary<Color, (int, int)>
         {
+            [Color.Black] = (-1, 0),
             [new Color(186, 255, 196)] = (ModContent.TileType<MercuryPlatformTile>(), 0),//水银平台baffc4
+            [new Color(184, 0, 255)] = (ModContent.TileType<ShadowCandelabraTile>(), 0),//灯之影b800ff
         };
 
         public RoomType roomType;

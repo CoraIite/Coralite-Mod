@@ -37,12 +37,12 @@ namespace Coralite.Content.Tiles.ShadowCastle
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.BasicChest[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
-            
+
             DustType = DustID.Granite;
             AdjTiles = new int[] { TileID.Containers };
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(245, 115, 31), name, MapChestName);
-            
+
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
@@ -55,7 +55,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             TileObjectData.addTile(Type);
         }
 
-        
+
         //public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
 
         public override bool IsLockedChest(int i, int j) => false;
@@ -235,7 +235,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             //drawData.finalColor = Color.White;
             //drawData.colorTint = Color.White;
             //drawData.glowColor = Color.White;
-            drawData.tileLight=Color.White;
+            drawData.tileLight = Color.White;
         }
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)

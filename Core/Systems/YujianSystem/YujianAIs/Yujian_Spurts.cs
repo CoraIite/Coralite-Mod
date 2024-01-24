@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameContent;
 
 namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 {

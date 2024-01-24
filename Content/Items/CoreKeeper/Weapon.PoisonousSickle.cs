@@ -242,8 +242,8 @@ namespace Coralite.Content.Items.CoreKeeper
             if (Owner.whoAmI == Main.myPlayer)
             {
                 _Rotation = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
-                //if (Combo < 2)
-                    totalAngle *= OwnerDirection;
+                                                                          //if (Combo < 2)
+                totalAngle *= OwnerDirection;
             }
 
             Slasher();
@@ -292,7 +292,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 channelCount++;
                 Timer = 1;
                 _Rotation = GetStartAngle() - OwnerDirection * startAngle;
-                totalAngle =recordTotalAngle* OwnerDirection;
+                totalAngle = recordTotalAngle * OwnerDirection;
 
                 Slasher();
                 if (channelTimer < ChannelTimeMax)
@@ -413,7 +413,7 @@ namespace Coralite.Content.Items.CoreKeeper
             if (VisualEffectSystem.HitEffect_SpecialParticles)
             {
                 int type = addbuff ? DustType<PoisonExplosion>() : DustType<PoisonImpact>();
-                Dust.NewDustPerfect(target.Bottom+Main.rand.NextVector2Circular(16,16), type,
+                Dust.NewDustPerfect(target.Bottom + Main.rand.NextVector2Circular(16, 16), type,
                     Scale: target.width);
                 //dust.rotation = _Rotation + MathHelper.PiOver2 + Main.rand.NextFloat(-0.2f, 0.2f);
 
@@ -450,14 +450,14 @@ namespace Coralite.Content.Items.CoreKeeper
                     for (int j = 0; j < 4; j++)
                     {
                         Vector2 dir = -RotateVec2.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
-                         Dust.NewDustPerfect(pos, DustID.UnholyWater, dir * Main.rand.NextFloat(1f, 3f), newColor: Color.Cyan * 0.5f, Scale: Main.rand.NextFloat(1f, 2f));
+                        Dust.NewDustPerfect(pos, DustID.UnholyWater, dir * Main.rand.NextFloat(1f, 3f), newColor: Color.Cyan * 0.5f, Scale: Main.rand.NextFloat(1f, 2f));
                         //dust.noGravity = true;
                     }
 
                     for (int i = 0; i < 6; i++)
                     {
                         Vector2 dir = RotateVec2.RotatedBy(Main.rand.NextFloat(-1.4f, 1.4f));
-                         Dust.NewDustPerfect(pos, DustID.Water_Corruption, dir * Main.rand.NextFloat(1f, 4f), newColor: Color.Cyan * 0.5f, Scale: Main.rand.NextFloat(1.5f, 2f));
+                        Dust.NewDustPerfect(pos, DustID.Water_Corruption, dir * Main.rand.NextFloat(1f, 4f), newColor: Color.Cyan * 0.5f, Scale: Main.rand.NextFloat(1.5f, 2f));
                         //dust.noGravity = true;
                     }
                 }
@@ -575,8 +575,8 @@ namespace Coralite.Content.Items.CoreKeeper
         public override void OnSpawn(Dust dust)
         {
             dust.frame = Texture2D.Frame(11, 1, 0, 0);
-            float width = 32; 
-            dust.scale =  width/ dust.scale;
+            float width = 32;
+            dust.scale = width / dust.scale;
             if (dust.scale > 6)
                 dust.scale = 6;
         }

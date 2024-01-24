@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {

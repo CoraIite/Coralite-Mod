@@ -205,7 +205,7 @@ namespace Coralite.Content.NPCs.Shadow
             Vector2 origin = new Vector2(32, 32);
             SpriteEffects effects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Vector2 pos = new Vector2(NPC.Center.X, NPC.Top.Y + 16)  - screenPos;
+            Vector2 pos = new Vector2(NPC.Center.X, NPC.Top.Y + 16) - screenPos;
             Color c = Color.Purple;
             c.A = 0;
             c *= 0.5f;
@@ -250,7 +250,7 @@ namespace Coralite.Content.NPCs.Shadow
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome<ShadowCastleBiome>()&&CoraliteSets.TileShadowCastle[spawnInfo.SpawnTileType])
+            if (spawnInfo.Player.InModBiome<ShadowCastleBiome>() && CoraliteSets.TileShadowCastle[spawnInfo.SpawnTileType])
                 return 0.08f;
             return 0f;
         }

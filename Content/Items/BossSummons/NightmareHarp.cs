@@ -12,11 +12,9 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.BossSummons
 {
@@ -66,7 +64,7 @@ namespace Coralite.Content.Items.BossSummons
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                if (DownedBossSystem.downedNightmarePlantera&&player.altFunctionUse == 2)
+                if (DownedBossSystem.downedNightmarePlantera && player.altFunctionUse == 2)
                 {
                     int npcType = ModContent.NPCType<NightmarePlantera>();
 
@@ -309,8 +307,8 @@ namespace Coralite.Content.Items.BossSummons
                     Projectile p = Main.projectile[i];
                     if (p.active && p.type == ModContent.ProjectileType<NightmareMusicalNotes>())
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), p.Center, (p.Center-Owner.Center).SafeNormalize(Vector2.Zero)*16
-                            , ModContent.ProjectileType<NightmareSpawnEnergy>() , 1, 0, Projectile.owner, p.ai[1],ai2:0);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), p.Center, (p.Center - Owner.Center).SafeNormalize(Vector2.Zero) * 16
+                            , ModContent.ProjectileType<NightmareSpawnEnergy>(), 1, 0, Projectile.owner, p.ai[1], ai2: 0);
                         p.Kill();
                     }
                 }
@@ -397,12 +395,12 @@ namespace Coralite.Content.Items.BossSummons
 
             Lighting.AddLight(Projectile.Center, drawColor.ToVector3());
 
-            if (Projectile.localAI[1]==1)
+            if (Projectile.localAI[1] == 1)
             {
                 Dust d = Dust.NewDustDirect(Projectile.position, 32, 32, DustID.VilePowder, Scale: Main.rand.NextFloat(1, 1.5f));
                 d.noGravity = true;
 
-                if (Projectile.localAI[2]<30)
+                if (Projectile.localAI[2] < 30)
                 {
                     Projectile.scale *= 1.01f;
                 }

@@ -19,6 +19,8 @@
     <None Remove="Effects\Flow.fx" />
     <None Remove="Effects\Flow2.fx" />
     <None Remove="Effects\NoHLGradientTrail.fx" />
+    <None Remove="effects\ShadowLaser.fx" />
+    <None Remove="effects\ShadowStars.fx" />
     <None Remove="Effects\SimpleTrailNoHL.fx" />
     <None Remove="effects\StarsTrail.fx" />
   </ItemGroup>

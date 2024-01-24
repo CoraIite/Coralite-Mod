@@ -59,7 +59,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
         public override bool? CanDamage()
         {
-            if (State==0)
+            if (State == 0)
             {
                 return false;
             }
@@ -214,9 +214,9 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
                         if (Timer < 60 * 30)
                         {
-                            scale = 0.5f + 3.5f *Timer/ (60 * 30f);
+                            scale = 0.5f + 3.5f * Timer / (60 * 30f);
 
-                            int width =(int)( 108 * scale);
+                            int width = (int)(108 * scale);
                             Projectile.Resize(width, width);
                             if (warpScale < 15)
                             {
@@ -420,7 +420,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
                         else
                         {
                             //生成粒子
-                            Projectile.SpawnTrailDust(8f,DustID.OrangeTorch, 0.2f);
+                            Projectile.SpawnTrailDust(8f, DustID.OrangeTorch, 0.2f);
 
                             if (Vector2.Distance(owner.Center, Projectile.Center) < 16)
                                 Projectile.Kill();
@@ -430,7 +430,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
                     case 1:
                         {
                             Projectile.UpdateOldPosCache(addVelocity: false);
-                            
+
                             if (Projectile.ai[2] == 80)
                             {
                                 SoundStyle st = CoraliteSoundID.FireBallExplosion_Item74;
@@ -445,7 +445,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
                             }
                             else
                             {
-                                Projectile.SpawnTrailDust(8f,DustID.OrangeTorch, 0f);
+                                Projectile.SpawnTrailDust(8f, DustID.OrangeTorch, 0f);
 
                                 float angle = (Projectile.Center - owner.Center).ToRotation();
                                 angle += Projectile.velocity.Y * 0.005f;

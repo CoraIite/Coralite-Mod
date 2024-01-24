@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Core;
-using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -137,13 +136,13 @@ namespace Coralite.Content.Items.Nightmare
             Texture2D flowTex = BaseNightmareSparkle.Flow.Value;
             origin = flowTex.Size() / 2;
 
-            Color shineC = NightmarePlantera.nightmareRed*0.5f;
+            Color shineC = NightmarePlantera.nightmareRed * 0.5f;
             shineC.A = 0;
 
             var scale2 = scale1.X * 0.65f;
             float exScale = scale1.X * 0.1f;
-            Main.spriteBatch.Draw(flowTex, pos, null, shineC,  1.57f + Main.GlobalTimeWrappedHourly, origin, scale2+factor*exScale, 0, 0);
-            Main.spriteBatch.Draw(flowTex, pos, null, c * 0.5f, - Main.GlobalTimeWrappedHourly, origin, scale2-factor*exScale, 0, 0);
+            Main.spriteBatch.Draw(flowTex, pos, null, shineC, 1.57f + Main.GlobalTimeWrappedHourly, origin, scale2 + factor * exScale, 0, 0);
+            Main.spriteBatch.Draw(flowTex, pos, null, c * 0.5f, -Main.GlobalTimeWrappedHourly, origin, scale2 - factor * exScale, 0, 0);
 
             //float rot2 = timer * 10f;
             //周围一圈小星星

@@ -9,7 +9,7 @@ namespace Coralite.Content.Items.ShadowCastle
 {
     public class MercuryChest : BaseChestItem
     {
-        public MercuryChest() : base(Item.sellPrice(0, 0, 0, 10), 
+        public MercuryChest() : base(Item.sellPrice(0, 0, 0, 10),
             ItemRarityID.Blue, ModContent.TileType<MercuryChestTile>(), AssetDirectory.ShadowCastleItems)
         { }
     }
