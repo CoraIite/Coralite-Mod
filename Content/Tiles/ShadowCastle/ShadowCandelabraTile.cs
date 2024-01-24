@@ -1,11 +1,12 @@
 ﻿using Coralite.Content.Bosses.ShadowBalls;
-using Coralite.Content.Tiles.Plants;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -27,26 +28,40 @@ namespace Coralite.Content.Tiles.ShadowCastle
             Main.tileNoAttach[Type] = true;
             Main.tileTable[Type] = true;
             Main.tileLavaDeath[Type] = false;
-            TileID.Sets.Platforms[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 
             MinPick = 130;
             DustType = DustID.SilverCoin;
             AdjTiles = new int[] { TileID.Candles };
             AddMapEntry(Color.Purple);
 
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
+            //TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
+            TileObjectData.newTile.Height = 3;
+            TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.PlanterBox, TileObjectData.newTile.Width, 0);
+
             TileObjectData.newTile.Width = 2;
-            TileObjectData.newTile.CoordinateHeights = new[] { 16, 22 };
+            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.newTile.Origin = new Point16(0, 1);
+            TileObjectData.newTile.DrawYOffset = 0;
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
         }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.8f;
+            g = 0.1f;
+            b = 1f;
+        }
+
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 

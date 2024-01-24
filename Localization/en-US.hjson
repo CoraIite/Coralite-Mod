@@ -2241,6 +2241,11 @@ Mods: {
 				DisplayName: Shadurion
 				Tooltip: ""
 			}
+
+			ShadowCandelabra: {
+				DisplayName: Shadow Candelabra
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2477,6 +2482,7 @@ Mods: {
 			Bloodiancie.DisplayName: Bloodiancie
 			BloodiancieMinion.DisplayName: Bloodiancie Minion
 			ShadowBall.DisplayName: Shadow Ball
+			SmallShadowBall.DisplayName: Small Shadow Ball
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -2738,6 +2744,9 @@ Mods: {
 			ShadowWaveHeldProj.DisplayName: Shadow Wave Held Proj
 			ShadowWaveReLoad.DisplayName: Shadow Wave Re Load
 			MercuryStream.DisplayName: Mercury Stream
+			SmallLaser.DisplayName: Small Laser
+			SmallLaserPredictionLine.DisplayName: Small Laser Prediction Line
+			StarsBack.DisplayName: Stars Back
 		}
 
 		Configs: {

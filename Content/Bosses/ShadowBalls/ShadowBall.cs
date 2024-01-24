@@ -42,7 +42,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public Player Target => Main.player[NPC.target];
 
         public bool SpawnedSmallBalls;
-        public List<NPC> smallBalls;
+        public List<NPC> smallBalls=new List<NPC>();
 
         #region tmlHooks
 

@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Tiles.ShadowCastle;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,6 +37,14 @@ namespace Coralite.Content.Bosses.GodOfWind
             //{
             //    int a = 1;
             //}
+
+            Point p = Main.MouseWorld.ToTileCoordinates();
+
+            Tile t = Framing.GetTileSafely(p);
+            Main.NewText(t.TileFrameX);
+            Main.NewText(t.TileFrameY);
+
+            ModContent.GetInstance<ShadowCandelabraTile>().SetStaticDefaults();
 
             return base.CanUseItem(player);
         }

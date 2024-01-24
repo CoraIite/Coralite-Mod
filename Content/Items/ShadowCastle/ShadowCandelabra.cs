@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.ShadowCastle
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<>());
+            Item.DefaultToPlaceableTile(ModContent.TileType<ShadowCandelabraTile>());
             Item.rare = ItemRarityID.LightPurple;
         }
     }

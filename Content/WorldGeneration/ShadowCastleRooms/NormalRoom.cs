@@ -25,7 +25,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
         public override Point[] DownCorridor => new Point[]
         {
             new Point(31,59),
-            new Point(32,43),
+            new Point(32,45),
             new Point(32,55),
         };
         public override Point[] LeftCorridor => new Point[]

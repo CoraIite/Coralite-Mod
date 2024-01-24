@@ -2264,8 +2264,13 @@ Mods: {
 			}
 
 			Shadurion: {
-				// DisplayName: Shadurion
+				DisplayName: 极影刀 「虚理为真」
 				// Tooltip: ""
+			}
+
+			ShadowCandelabra: {
+				DisplayName: 灯之影
+				Tooltip: "照出你的影子"
 			}
 		}
 
@@ -2503,6 +2508,7 @@ Mods: {
 			Bloodiancie.DisplayName: 赤血玉灵
 			BloodiancieMinion.DisplayName: 小赤血玉灵
 			// ShadowBall.DisplayName: Shadow Ball
+			// SmallShadowBall.DisplayName: Small Shadow Ball
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -2736,23 +2742,23 @@ Mods: {
 			Bloodiancie_OnSpawnAnim.DisplayName: 赤血玉灵
 			BloodBall.DisplayName: 血球
 			BloodRain.DisplayName: 血雨腥风
-			// BloodJadeSlash.DisplayName: Blood Jade Slash
-			// BloodJade_BigBoom.DisplayName: Blood Jade_ Big Boom
-			// BloodJadeParry.DisplayName: Blood Jade Parry
-			// BloodJadeWave.DisplayName: Blood Jade Wave
-			// BloodJadeStrike.DisplayName: Blood Jade Strike
-			// WhistleProj.DisplayName: Whistle Proj
-			// BloodJadeFrisbee.DisplayName: Blood Jade Frisbee
-			// BloodJadeFrisbeeParry.DisplayName: Blood Jade Frisbee Parry
-			// ShadowChainSwing.DisplayName: Shadow Chain Swing
-			// ShadowChainShadows.DisplayName: Shadow Chain Shadows
-			// ShadowChainSpecial.DisplayName: Shadow Chain Special
-			// RuneSoneSlash.DisplayName: Rune Sone Slash
-			// BrokenHandleSlash.DisplayName: Broken Handle Slash
-			// RuneSongSlash.DisplayName: Rune Song Slash
-			// CraftUIProj.DisplayName: Craft U I Proj
-			// RuneSoneRightProj.DisplayName: Rune Sone Right Proj
-			// PoisonousSickleSlash.DisplayName: Poisonous Sickle Slash
+			BloodJadeSlash.DisplayName: 绯红斩击
+			BloodJade_BigBoom.DisplayName: 血色爆破
+			BloodJadeParry.DisplayName: 绯红斩击
+			BloodJadeWave.DisplayName: 绯红浪潮
+			BloodJadeStrike.DisplayName: 绯红冲击
+			WhistleProj.DisplayName: 窜天猴
+			BloodJadeFrisbee.DisplayName: 赤玉飞冲
+			BloodJadeFrisbeeParry.DisplayName: 赤玉飞冲
+			ShadowChainSwing.DisplayName: 影之链
+			ShadowChainShadows.DisplayName: 链之影
+			ShadowChainSpecial.DisplayName: 影之链
+			RuneSoneSlash.DisplayName: 符文之歌
+			BrokenHandleSlash.DisplayName: 断裂的剑柄
+			RuneSongSlash.DisplayName: 符文之歌
+			CraftUIProj.DisplayName: 传奇合成
+			RuneSoneRightProj.DisplayName: 符文旋风
+			PoisonousSickleSlash.DisplayName: 带毒镰刀
 			// NightmareHarpProj.DisplayName: Nightmare Harp Proj
 			// NightmareMusicalNotes.DisplayName: Nightmare Musical Notes
 			// NightmareSpawnEnergy.DisplayName: Nightmare Spawn Energy
@@ -2764,6 +2770,9 @@ Mods: {
 			// ShadowWaveHeldProj.DisplayName: Shadow Wave Held Proj
 			// ShadowWaveReLoad.DisplayName: Shadow Wave Re Load
 			// MercuryStream.DisplayName: Mercury Stream
+			// SmallLaser.DisplayName: Small Laser
+			// SmallLaserPredictionLine.DisplayName: Small Laser Prediction Line
+			// StarsBack.DisplayName: Stars Back
 		}
 
 		Configs: {
