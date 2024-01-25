@@ -38,13 +38,13 @@ namespace Coralite.Content.Bosses.GodOfWind
             //    int a = 1;
             //}
 
-            Point p = Main.MouseWorld.ToTileCoordinates();
+            //Point p = Main.MouseWorld.ToTileCoordinates();
 
-            Tile t = Framing.GetTileSafely(p);
-            Main.NewText(t.TileFrameX);
-            Main.NewText(t.TileFrameY);
+            //Tile t = Framing.GetTileSafely(p);
+            //Main.NewText(t.TileFrameX);
+            //Main.NewText(t.TileFrameY);
 
-            ModContent.GetInstance<ShadowCandelabraTile>().SetStaticDefaults();
+            //ModContent.GetInstance<ShadowCandelabraTile>().SetStaticDefaults();
 
             return base.CanUseItem(player);
         }

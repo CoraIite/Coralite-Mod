@@ -1,6 +1,7 @@
 ﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
+using Terraria.Map;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
@@ -15,6 +16,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <param name="maxTime"></param>
         /// <returns></returns>
         float Smoother(int timer, int maxTime);
+        float Smoother(float factor);
     }
 
     public class NoSmoother : ISmoother
@@ -24,6 +26,16 @@ namespace Coralite.Core.Prefabs.Projectiles
         public float Smoother(int timer, int maxTime)
         {
             return (float)timer / maxTime;
+        }
+
+        /// <summary>
+        /// 你觉得这样很有意思吗？
+        /// </summary>
+        /// <param name="factor"></param>
+        /// <returns></returns>
+        public float Smoother(float factor)
+        {
+            return factor;
         }
     }
 
@@ -40,6 +52,11 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             return Helper.BezierEase((float)timer / maxTime);
         }
+
+        public float Smoother(float factor)
+        {
+            return Helper.BezierEase(factor);
+        }
     }
 
     public class HeavySmoother : ISmoother
@@ -49,6 +66,11 @@ namespace Coralite.Core.Prefabs.Projectiles
         public float Smoother(int timer, int maxTime)
         {
             float factor = (float)timer / maxTime;
+            return Helper.HeavyEase(factor);
+        }
+
+        public float Smoother(float factor)
+        {
             return Helper.HeavyEase(factor);
         }
     }
@@ -62,6 +84,11 @@ namespace Coralite.Core.Prefabs.Projectiles
             float factor = (float)timer / maxTime;
             return factor * factor;
         }
+
+        public float Smoother(float factor)
+        {
+            return factor * factor;
+        }
     }
 
     public class SqrtSmoother : ISmoother
@@ -71,6 +98,11 @@ namespace Coralite.Core.Prefabs.Projectiles
         public float Smoother(int timer, int maxTime)
         {
             float factor = (float)timer / maxTime;
+            return MathF.Sqrt(factor);
+        }
+
+        public float Smoother(float factor)
+        {
             return MathF.Sqrt(factor);
         }
     }
@@ -87,6 +119,11 @@ namespace Coralite.Core.Prefabs.Projectiles
             float factor = (float)timer / maxTime;
             return MathF.Sin(factor * MathHelper.Pi);
         }
+
+        public float Smoother(float factor)
+        {
+            return MathF.Sin(factor * MathHelper.Pi);
+        }
     }
 
     /// <summary>
@@ -100,6 +137,15 @@ namespace Coralite.Core.Prefabs.Projectiles
         public float Smoother(int timer, int maxTime)
         {
             float factor = (float)timer / maxTime;
+            if (factor < 0.5f)
+                return 4 * factor * factor;
+
+            factor--;
+            return 4 * factor * factor;
+        }
+
+        public float Smoother(float factor)
+        {
             if (factor < 0.5f)
                 return 4 * factor * factor;
 

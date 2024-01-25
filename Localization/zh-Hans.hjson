@@ -2759,20 +2759,20 @@ Mods: {
 			CraftUIProj.DisplayName: 传奇合成
 			RuneSoneRightProj.DisplayName: 符文旋风
 			PoisonousSickleSlash.DisplayName: 带毒镰刀
-			// NightmareHarpProj.DisplayName: Nightmare Harp Proj
-			// NightmareMusicalNotes.DisplayName: Nightmare Musical Notes
-			// NightmareSpawnEnergy.DisplayName: Nightmare Spawn Energy
-			// SpawnLight.DisplayName: Spawn Light
-			// BlackHoleMainProj.DisplayName: Black Hole Main Proj
-			// BlackStarProj.DisplayName: Black Star Proj
-			// ShaduraSlash.DisplayName: Shadura Slash
-			// ShaduraShoot.DisplayName: Shadura Shoot
-			// ShadowWaveHeldProj.DisplayName: Shadow Wave Held Proj
-			// ShadowWaveReLoad.DisplayName: Shadow Wave Re Load
+			NightmareHarpProj.DisplayName: 梦魇竖琴
+			NightmareMusicalNotes.DisplayName: 梦魇音符
+			NightmareSpawnEnergy.DisplayName: 梦魇能量
+			SpawnLight.DisplayName: 梦魇光
+			BlackHoleMainProj.DisplayName: 黑星
+			BlackStarProj.DisplayName: 黑星
+			ShaduraSlash.DisplayName: 影煌
+			ShaduraShoot.DisplayName: 幻影刃
+			ShadowWaveHeldProj.DisplayName: 影波
+			ShadowWaveReLoad.DisplayName: 影波
 			// MercuryStream.DisplayName: Mercury Stream
 			// SmallLaser.DisplayName: Small Laser
 			// SmallLaserPredictionLine.DisplayName: Small Laser Prediction Line
-			// StarsBack.DisplayName: Stars Back
+			StarsBack.DisplayName: 影之星
 		}
 
 		Configs: {

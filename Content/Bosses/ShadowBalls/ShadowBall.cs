@@ -30,7 +30,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     ///                     你记住我说的话嗷！
     /// 
     /// </summary>
-    public class ShadowBall : ModNPC
+    public partial class ShadowBall : ModNPC
     {
         public override string Texture => AssetDirectory.ShadowBalls + "SmallShadowBall";
 
@@ -43,7 +43,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public bool SpawnedSmallBalls;
         public List<NPC> smallBalls=new List<NPC>();
-
+        public int smallBallCount;
         #region tmlHooks
 
         public override void SetStaticDefaults()
@@ -176,7 +176,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Rampage,
             /// <summary> 一阶段和2阶段的切换，使用在2阶段 </summary>
             P1ToP2Exchange,
-
+            RollingLaser,
         }
 
         public override void AI()
@@ -215,7 +215,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             for (int i = 0; i < 5; i++)
                             {
-                               int index= NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI);
+                                int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, 
+                                    ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI,NPC.whoAmI);
                                 Main.npc[index].realLife = NPC.whoAmI;
                             }
                             SpawnedSmallBalls = true;
@@ -231,6 +232,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             default:
                             case (int)AIStates.OnSpawnAnmi:
+                                {
+                                    State = (int)AIStates.RollingLaser;
+                                }
+                                break;
+                            case (int)AIStates.RollingLaser:
                                 {
 
                                 }
@@ -250,27 +256,55 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         #endregion
 
+        #region States
+
+        public void ResetState()
+        {
+
+        }
+
+        #endregion
+
         #region HelperMethods
 
         public bool GetSmallBalls()
         {
             smallBalls.Clear();
-            int count=0;
+            int count = 0;
             for (int i = 0; i < 200; i++)
-                if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<SmallShadowBall>())
+                if (Main.npc[i].active &&
+                    Main.npc[i].type == ModContent.NPCType<SmallShadowBall>() &&
+                    Main.npc[i].ai[0] == NPC.whoAmI &&//小球主人是自己
+                    Main.npc[i].ai[1] != (int)SmallShadowBall.AIStates.OnKillAnmi)//小球不在死亡动画
                 {
                     smallBalls.Add(Main.npc[i]);
                     count++;
-                    if (count>=5)
+                    if (count >= 5)
                     {
                         break;
                     }
                 }
 
-            if (count==0)
+            smallBallCount = count;
+            if (count == 0)
                 return false;
 
             return true;
+        }
+
+        public bool CheckSmallBallsReady()
+        {
+            int howManyReady = 0;
+
+            foreach (var ball in smallBalls)
+            {
+                if ((ball.ModNPC as SmallShadowBall).Sign == (int)SmallShadowBall.SignType.Ready)
+                    howManyReady++;
+                else
+                    break;
+            }
+
+            return howManyReady == smallBallCount;//全准备好了
         }
 
         #endregion
