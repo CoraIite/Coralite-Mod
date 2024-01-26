@@ -1,20 +1,20 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.CodeAnalysis.FlowAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
     /// <summary>
-    /// 使用ai0传入持有者
+    /// 使用ai0传入持有者,ai1传入射击时间
     /// </summary>
     public class SmallLaser : ModProjectile
     {
@@ -22,8 +22,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public List<Vector2> laserTrailPoints = new List<Vector2>();
 
-       protected ref float OwnerIndex => ref Projectile.ai[0];
-       protected ref float LaserWidth => ref Projectile.localAI[0];
+        protected ref float OwnerIndex => ref Projectile.ai[0];
+        protected ref float ShootTime => ref Projectile.ai[1];
+        protected ref float LaserWidth => ref Projectile.localAI[0];
+
+        protected float timer;
 
         public static Asset<Texture2D> gradientTex;
 
@@ -60,6 +63,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool? CanCutTiles() => false;
 
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.timeLeft = (int)ShootTime;
+        }
+
         public override void AI()
         {
             if (!GetOwner(out NPC owner))
@@ -75,12 +83,27 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             for (int i = 0; i < 300; i++)
             {
-                Vector2 currentPos = originPos + dir * 8;
+                Vector2 currentPos = originPos + dir * i * 8;
                 if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
                     break;
 
                 laserTrailPoints.Add(currentPos);
             }
+
+            if (timer < 8)
+            {
+                LaserWidth += 60 / 8f;
+            }
+            else if (timer < (ShootTime - 10))
+            {
+                LaserWidth = Helper.Lerp(LaserWidth, 25, 0.4f);
+            }
+            else
+            {
+                LaserWidth -=25/10f;
+            }
+
+            timer++;
         }
 
         public bool GetOwner(out NPC owner)
@@ -133,7 +156,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);
+                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
                 effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
                 effect.Parameters["gradientTexture"].SetValue(gradientTex.Value);
@@ -160,8 +183,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// <returns></returns>
         public float GetWidh(float factor)
         {
-            if (factor < 0.1f)
-                return MathF.Sin(MathHelper.PiOver2 * factor / 0.1f) * LaserWidth;
+            if (factor < 0.5f)
+                return MathF.Sin(MathHelper.PiOver2 * factor / 0.5f) * LaserWidth;
             return LaserWidth;
         }
     }
@@ -172,10 +195,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
     public class SmallLaserPredictionLine : SmallLaser
     {
         float alpha;
-        float timer;
         ref float ChannelTime => ref Projectile.ai[1];
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
+        public override bool? CanDamage() => false;
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.timeLeft = (int)ChannelTime;
+        }
 
         public override void AI()
         {
@@ -184,15 +212,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (timer < ChannelTime / 2)
             {
-                LaserWidth = 6;
-                if (alpha < 0.5f)
+                LaserWidth = 16;
+                if (alpha < 0.8f)
                 {
-                    alpha += 0.3f / 60;
+                    alpha += 0.8f / (ChannelTime / 2);
                 }
             }
             else
             {
-                LaserWidth *= 0.9f;
+                LaserWidth -= 16 / (ChannelTime / 2);
             }
 
             timer++;
@@ -207,7 +235,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             for (int i = 0; i < 300; i++)
             {
-                Vector2 currentPos = originPos + dir * 8;
+                Vector2 currentPos = originPos + dir * i * 8;
                 if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
                     break;
 

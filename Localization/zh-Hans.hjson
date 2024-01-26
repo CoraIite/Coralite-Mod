@@ -2270,7 +2270,7 @@ Mods: {
 
 			ShadowCandelabra: {
 				DisplayName: 灯之影
-				Tooltip: "照出你的影子"
+				Tooltip: 照出你的影子
 			}
 		}
 

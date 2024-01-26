@@ -1,8 +1,11 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.WorldGeneration;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -44,6 +47,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public bool SpawnedSmallBalls;
         public List<NPC> smallBalls=new List<NPC>();
         public int smallBallCount;
+
         #region tmlHooks
 
         public override void SetStaticDefaults()
@@ -71,8 +75,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //NPC.BossBar = GetInstance<BabyIceDragonBossBar>();
 
             //BGM：冰结寒流
-            if (!Main.dedServ)
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/IcyColdStream");
+            //if (!Main.dedServ)
+            //    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/IcyColdStream");
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -176,7 +180,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Rampage,
             /// <summary> 一阶段和2阶段的切换，使用在2阶段 </summary>
             P1ToP2Exchange,
+            /// <summary> 一阶段招式：小球转转转后射激光 </summary>
             RollingLaser,
+            /// <summary> 一阶段招式：小球瞄准玩家后射激光 </summary>
+            ConvergeLaser
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            NPC.Center = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
         }
 
         public override void AI()
@@ -238,7 +250,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                 break;
                             case (int)AIStates.RollingLaser:
                                 {
-
+                                    RollingLaser();
+                                    Timer++;
+                                }
+                                break;
+                            case (int)AIStates.ConvergeLaser:
+                                {
+                                    ConvergeLaser();
+                                    Timer++;
                                 }
                                 break;
                         }
@@ -260,7 +279,33 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void ResetState()
         {
+            Timer = 0;
+            SonState = 0;
 
+            switch (Phase)
+            {
+                default:
+                case (int)AIPhases.WithSmallBalls:
+                    {
+                        State = Main.rand.Next(2) switch
+                        {
+                            0=> (int)AIStates.RollingLaser,
+                            _=>(int)AIStates.ConvergeLaser,
+                        }; 
+                    }
+                    break;
+                case (int)AIPhases.ShadowPlayer:
+                    {
+
+                    }
+                    break;
+                case (int)AIPhases.BigBallSmash:
+                    {
+
+                    }
+                    break;
+
+            }
         }
 
         #endregion
@@ -305,6 +350,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
 
             return howManyReady == smallBallCount;//全准备好了
+        }
+
+        public void SetDirection(Vector2 targetPos, out float xLength, out float yLength)
+        {
+            xLength = NPC.Center.X - targetPos.X;
+            yLength = NPC.Center.Y - targetPos.Y;
+
+            NPC.direction = xLength > 0 ? -1 : 1;
+            NPC.directionY = yLength > 0 ? -1 : 1;
+
+            xLength=Math.Abs(xLength);
+            yLength=Math.Abs(yLength);
         }
 
         #endregion
