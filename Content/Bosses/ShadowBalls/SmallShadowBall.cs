@@ -3,8 +3,6 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Configuration;
-using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -27,16 +25,23 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         internal ref float Timer => ref NPC.localAI[0];
         internal ref float Recorder => ref NPC.localAI[1];
-        //internal ref float Recorder2 => ref NPC.localAI[2];
+        internal ref float Recorder2 => ref NPC.localAI[2];
 
         public enum AIStates
         {
             OnSpawnAnmi,
             OnKillAnmi,
+            Idle,
             /// <summary> 转转激光 </summary>
             RollingLaser,
             /// <summary> 汇集激光 </summary>
             ConvergeLaser,
+            /// <summary> 激光+光束-激光 </summary>
+            LaserWithBeam_Laser,
+            /// <summary> 激光+光束-光束 </summary>
+            LaserWithBeam_Beam,
+
+
         }
 
         public enum SignType
@@ -71,6 +76,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
             switch (State)
             {
                 default:
+                case (int)AIStates.Idle:
+                    {
+                        NPC.velocity *= 0.9f;
+                        NPC.rotation += 0.05f;
+                        if (Timer<=0)
+                        {
+                            ResetState((AIStates)Recorder);
+                            break;
+                        }
+
+                        Timer--;
+                    }
+                    break;
                 case (int)AIStates.RollingLaser:
                     {
                         RollingLaser(owner);
@@ -83,6 +101,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         Timer++;
                     }
                     break;
+                case (int)AIStates.LaserWithBeam_Laser:
+                    {
+                        LaserWithBeam_Laser(owner);
+                        Timer++;
+                    }
+                    break;
+                case (int)AIStates.LaserWithBeam_Beam:
+                    {
+                        LaserWithBeam_Beam(owner);
+                        Timer++;
+                    }
+                    break;
+
             }
         }
 
@@ -104,7 +135,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         Vector2 dir = (owner.rotation + index * MathHelper.TwoPi / totalIndexes).ToRotationVector2();
                         Vector2 targetPos = owner.Center + dir * ReadyLength;
 
-                        float factor = Math.Clamp(Timer / 80, 0, 1);
+                        float factor = Math.Clamp(Timer / 70, 0, 1);
 
                         Vector2 dirToTarget = targetPos - NPC.Center;
                         float length = dirToTarget.Length();
@@ -124,7 +155,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         float factor = Timer / RollingTime;
 
                         //增加旋转，此状态中的记录者代表初始的自身相对于主人的角度
-                        float currentRot = Recorder + Coralite.Instance.BezierEaseSmoother.Smoother(factor) * (MathHelper.TwoPi*1.5f + 0.5f);
+                        float currentRot = Recorder + Coralite.Instance.BezierEaseSmoother.Smoother(factor) * (MathHelper.TwoPi * 1.5f + 0.5f);
 
                         NPC.Center = owner.Center + currentRot.ToRotationVector2() * ReadyLength;
                         NPC.rotation = (NPC.Center - owner.Center).ToRotation();
@@ -198,18 +229,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             SonState++;
                             Timer = 0;
-                            NPC.velocity = Helper.NextVec2Dir();
+                            //NPC.velocity = Helper.NextVec2Dir();
                         }
                     }
                     break;
                 case 4://射完了虚一会
                     {
-                        NPC.velocity = NPC.velocity.SafeNormalize(Vector2.Zero).RotatedBy(0.05f) * (Timer / 30) * 8;
+                        //NPC.velocity = NPC.velocity.SafeNormalize(Vector2.Zero).RotatedBy(0.05f) * (Timer / 30) * 8;
 
-                        if (Timer > 10)
-                        {
-                            Sign = (int)SignType.Ready;
-                        }
+                        //if (Timer > 10)
+                        //{
+                        Sign = (int)SignType.Ready;
+                        //}
                     }
                     break;
             }
@@ -234,11 +265,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //聚合中心点与主人的距离
             const int ConvergeCenterLength = 80;
             //蓄力向后缩时聚合中心点与主人的距离
-            const int ConvergeCenterLengthOnChannel = 48;
+            const int ConvergeCenterLengthOnChannel = 32;
             const int ConvergeCenterLengthOnShoot = 100;
             //自身与聚合中心点开始是的距离
-            const int ReadyLongAxis = 160;
-            const int ReadyShortAxis = 160;
+            const int ReadyLongAxis = 80;
+            const int ReadyShortAxis = 40;
 
             switch (SonState)
             {
@@ -251,12 +282,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         //直线运动到目标位置
                         float dir = owner.rotation + index * MathHelper.TwoPi / totalIndexes;
                         Vector2 toConvergeCenter = (target.Center - owner.Center).SafeNormalize(Vector2.Zero);
+                        float aimRot = toConvergeCenter.ToRotation();
+
                         Vector2 targetPos = owner.Center
                            + toConvergeCenter * ConvergeCenterLength //到汇聚中心的向量
-                           + toConvergeCenter.RotatedBy(1.57f) * (Helper.EllipticalEase(dir, ReadyShortAxis, ReadyLongAxis));
+                           + (dir + aimRot).ToRotationVector2() * (Helper.EllipticalEase(dir + 1.57f, ReadyShortAxis, ReadyLongAxis));
                         //         👆 额外的椭圆形旋转，这次不像赤玉灵就先不搞什么3D了
 
-                        float factor = Math.Clamp(Timer / 80, 0, 1);
+                        float factor = Math.Clamp(Timer / 40, 0, 1);
 
                         Vector2 dirToTarget = targetPos - NPC.Center;
                         float length = dirToTarget.Length();
@@ -267,13 +300,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             Sign = (int)SignType.Ready;
                         }
-
                     }
                     break;
                 case 1://向后缩，此时微微瞄准
                     {
                         //蓄力时间
-                        const int ChannelTime = 60;
+                        const int ChannelTime = 40;
                         float factor = Timer / ChannelTime;
 
                         Player target = Main.player[owner.target];
@@ -284,12 +316,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         float toConvergeCenter = (target.Center - owner.Center).ToRotation();
 
                         //随时间降低对玩家的跟踪性能
-                        float aimRot = Helper.Lerp(Recorder, toConvergeCenter, 1 - factor * 0.3f);
+                        float aimRot = Recorder.AngleLerp(toConvergeCenter, factor * 0.5f);
                         Vector2 aimDir = aimRot.ToRotationVector2();
                         Vector2 targetPos = owner.Center
                            + aimDir * Helper.Lerp(ConvergeCenterLength, ConvergeCenterLengthOnChannel,
                                 Coralite.Instance.SqrtSmoother.Smoother(factor)) //到汇聚中心的向量
-                           + (dir + aimRot).ToRotationVector2() * (Helper.EllipticalEase(dir + aimRot + 1.57f, ReadyShortAxis, ReadyLongAxis));
+                           + (dir + aimRot).ToRotationVector2() * (Helper.EllipticalEase(dir + 1.57f, ReadyShortAxis, ReadyLongAxis));
                         //         👆 额外的椭圆形旋转，这次不像赤玉灵就先不搞什么3D了
 
                         Vector2 dirToTarget = targetPos - NPC.Center;
@@ -298,11 +330,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         NPC.velocity = dirToTarget.SafeNormalize(Vector2.Zero) * velocity;
                         NPC.rotation = aimRot;
 
-                        if (Timer>ChannelTime)
+                        if (Timer > ChannelTime)
                         {
                             Timer = 0;
                             SonState++;
                             Recorder = NPC.rotation;
+                            NPC.velocity *= 0;
+                            Sign = (int)SignType.Ready;
                         }
                     }
                     break;
@@ -324,7 +358,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             Vector2 aimDir = Recorder.ToRotationVector2();
                             Vector2 targetPos = owner.Center
                            + aimDir * targetLength //到汇聚中心的向量
-                               + aimDir.RotatedBy(1.57f) * (Helper.EllipticalEase(dir, ReadyShortAxis, ReadyLongAxis));
+                           + (dir + Recorder).ToRotationVector2() * (Helper.EllipticalEase(dir + 1.57f, ReadyShortAxis, ReadyLongAxis));
                             //         👆 额外的椭圆形旋转，这次不像赤玉灵就先不搞什么3D了
 
                             NPC.Center = targetPos;
@@ -345,7 +379,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             Vector2 aimDir = Recorder.ToRotationVector2();
                             Vector2 targetPos = owner.Center
                            + aimDir * targetLength //到汇聚中心的向量
-                               + aimDir.RotatedBy(1.57f) * (Helper.EllipticalEase(dir, ReadyShortAxis, ReadyLongAxis));
+                           + (dir + Recorder).ToRotationVector2() * (Helper.EllipticalEase(dir + 1.57f, ReadyShortAxis, ReadyLongAxis));
                             //         👆 额外的椭圆形旋转，这次不像赤玉灵就先不搞什么3D了
 
                             NPC.Center = targetPos;
@@ -354,18 +388,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             SonState++;
                             Timer = 0;
-                            NPC.velocity = Helper.NextVec2Dir();
+                            //NPC.velocity = Helper.NextVec2Dir();
                         }
                     }
                     break;
                 case 3://萎了
                     {
-                        NPC.velocity = NPC.velocity.SafeNormalize(Vector2.Zero).RotatedBy(0.05f) * (Timer / 30) * 8;
+                        //NPC.velocity = NPC.velocity.SafeNormalize(Vector2.Zero).RotatedBy(0.05f) * (Timer / 30) * 8;
 
-                        if (Timer > 10)
-                        {
-                            Sign = (int)SignType.Ready;
-                        }
+                        //if (Timer > 10)
+                        //{
+                        Sign = (int)SignType.Ready;
+                        //}
                     }
                     break;
             }
@@ -380,11 +414,168 @@ namespace Coralite.Content.Bosses.ShadowBalls
             NPC.NewProjectileInAI<SmallLaserPredictionLine>(NPC.Center, Vector2.Zero, 1, 2, NPC.target, NPC.whoAmI, 60);
 
             NPC.velocity *= 0;
-            Recorder = (NPC.Center - owner.Center).ToRotation();
             Player target = Main.player[owner.target];
 
-            Recorder=(target.Center- owner.Center).ToRotation();
+            Recorder = (target.Center - owner.Center).ToRotation();
         }
+        #endregion
+
+        #region LaserWithBeam 激光+光束
+
+        public void LaserWithBeam_Laser(NPC Owner)
+        {
+            switch (SonState)
+            {
+                default:
+                case 0:
+                    {
+                        Timer = 0;
+                        SonState = 1;
+                        Recorder = (Main.player[Owner.target].Center - NPC.Center).ToRotation();
+                        NPC.TargetClosest();
+                    }
+                    break;
+                case 1://朝向玩家身边运动
+                    {
+                        const int RollingTime = 160;
+                        const int PredictTime = 80;
+                        Player target = Main.player[Owner.target];
+
+                        float factor = Math.Clamp(1 - Timer / (RollingTime * 3), 0, 1);
+
+                        Recorder += 0.02f + factor * 0.06f;
+
+                        Vector2 dirToTarget = target.Center + Recorder.ToRotationVector2() * 340 - NPC.Center;
+                        float length = dirToTarget.Length();
+                        float velocity = Math.Clamp(length / 80, 0, 1) * 20;
+                        NPC.velocity = dirToTarget.SafeNormalize(Vector2.Zero) * factor * velocity;
+                        NPC.rotation = (target.Center - NPC.Center).ToRotation();
+
+                        if (Timer == PredictTime)//生成预判线
+                        {
+                            NPC.NewProjectileInAI<SmallLaserPredictionLine>(NPC.Center, Vector2.Zero, 1, 2, NPC.target, NPC.whoAmI, 110);
+                        }
+
+                        if (Timer > RollingTime)
+                        {
+                            NPC.velocity *= 0.3f;
+                            SonState++;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+                case 2://射激光
+                    {
+                        if (Timer < 30)
+                        {
+                            NPC.velocity *= 0.9f;
+                            break;
+                        }
+
+                        if (Timer == 30)
+                        {
+                            NPC.TargetClosest();
+                            int damage = Helper.ScaleValueForDiffMode(30, 50, 40, 40);
+                            NPC.NewProjectileInAI<SmallLaser>(NPC.Center, Vector2.Zero, damage, 2, NPC.target, NPC.whoAmI, 25);
+                            Helper.PlayPitched("Shadows/ShadowLaser", 0.2f, 0f, NPC.Center);
+                            NPC.velocity = (NPC.rotation + MathHelper.Pi).ToRotationVector2() * 8;
+                        }
+
+                        if (Timer < 55)
+                        {
+                            NPC.velocity *= 0.98f;
+                            break;
+                        }
+
+                        SonState++;
+                        Timer = 0;
+                    }
+                    break;
+                case 3://虚一会
+                    {
+                        if (Timer > 20)
+                        {
+                            SonState = 1;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        public void LaserWithBeam_Beam(NPC Owner)
+        {
+            switch (SonState)
+            {
+                default:
+                case 0:
+                    {
+                        Timer = 0;
+                        SonState ++;
+                        Recorder = (Main.player[Owner.target].Center - NPC.Center).ToRotation();
+                        NPC.TargetClosest();
+                    }
+                    break;
+                case 1://选定玩家附近一个点
+                    {
+                        if (Timer <= 1)
+                        {
+                            Recorder = Main.rand.NextFloat(6.282f);
+                            Recorder2 = Main.rand.NextFloat(240, 400);
+                            break;
+                        }
+                        const int RollingTime = 120;
+                        Player target = Main.player[Owner.target];
+
+                        Recorder += 0.025f;
+
+                        float factor = Math.Clamp(Timer / RollingTime, 0, 1);
+
+                        Vector2 dirToTarget = target.Center + Recorder.ToRotationVector2() * Recorder2 - NPC.Center;
+                        float length = dirToTarget.Length();
+                        float velocity = Math.Clamp(length / 80, 0, 1) * 20;
+                        NPC.velocity = dirToTarget.SafeNormalize(Vector2.Zero) * factor * velocity;
+                        NPC.rotation = (target.Center-NPC.Center).ToRotation();
+
+                        if (Timer > RollingTime)
+                        {
+                            SonState++;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+                case 2://射光束
+                    {
+                        if (Timer == 2)
+                        {
+                            NPC.TargetClosest();
+                            int damage = Helper.ScaleValueForDiffMode(30, 50, 40, 40);
+                            NPC.NewProjectileInAI<ShadowBeam>(NPC.Center, NPC.rotation.ToRotationVector2(), damage, 2, NPC.target);
+                            NPC.velocity = (NPC.rotation + MathHelper.Pi).ToRotationVector2() * 8;
+                        }
+
+                        if (Timer < 35)
+                        {
+                            NPC.velocity *= 0.98f;
+                            break;
+                        }
+
+                        SonState++;
+                        Timer = 0;
+                    }
+                    break;
+                case 3://虚一会
+                    {
+                        if (Timer > 30)
+                        {
+                            SonState = 1;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+            }
+        }
+
         #endregion
 
         #endregion
@@ -400,9 +591,21 @@ namespace Coralite.Content.Bosses.ShadowBalls
             SonState = 0;
             Sign = (int)SignType.Nothing;
             Recorder = 0;
+            Recorder2 = 0;
+            NPC.TargetClosest();
         }
 
-
+        public void Idle(AIStates afterIdleState,int idleTime)
+        {
+            if (State == (int)AIStates.OnKillAnmi)//死亡动画时不会被改状态
+                return;
+            Timer = idleTime;
+            State = (int)AIStates.Idle;
+            SonState = 0;
+            Sign = (int)SignType.Nothing;
+            Recorder = (int)afterIdleState;
+            Recorder2 = 0;
+        }
 
         #endregion
 

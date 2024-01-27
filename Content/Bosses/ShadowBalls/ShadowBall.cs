@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Xml.Schema;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -45,7 +44,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public Player Target => Main.player[NPC.target];
 
         public bool SpawnedSmallBalls;
-        public List<NPC> smallBalls=new List<NPC>();
+        public List<NPC> smallBalls = new List<NPC>();
         public int smallBallCount;
 
         #region tmlHooks
@@ -183,7 +182,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// <summary> 一阶段招式：小球转转转后射激光 </summary>
             RollingLaser,
             /// <summary> 一阶段招式：小球瞄准玩家后射激光 </summary>
-            ConvergeLaser
+            ConvergeLaser,
+            /// <summary> 一阶段招式：一个小球射激光，其他射弹幕 </summary>
+            LaserWithBeam,
+
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -227,8 +229,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             for (int i = 0; i < 5; i++)
                             {
-                                int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, 
-                                    ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI,NPC.whoAmI);
+                                int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y,
+                                    ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI, NPC.whoAmI);
                                 Main.npc[index].realLife = NPC.whoAmI;
                             }
                             SpawnedSmallBalls = true;
@@ -260,6 +262,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                     Timer++;
                                 }
                                 break;
+                            case (int)AIStates.LaserWithBeam:
+                                {
+                                    LaserWithBeam();
+                                }
+                                break;
                         }
                     }
                     break;
@@ -287,11 +294,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case (int)AIPhases.WithSmallBalls:
                     {
-                        State = Main.rand.Next(2) switch
+                        State = Main.rand.Next(3) switch
                         {
-                            0=> (int)AIStates.RollingLaser,
-                            _=>(int)AIStates.ConvergeLaser,
-                        }; 
+                            0 => (int)AIStates.RollingLaser,
+                            1 => (int)AIStates.ConvergeLaser,
+                            _ => (int)AIStates.LaserWithBeam,
+                        };
+
+                        //State = State == (int)AIStates.ConvergeLaser ? (int)AIStates.RollingLaser : (int)AIStates.ConvergeLaser;
+                        //State = (int)AIStates.LaserWithBeam;
                     }
                     break;
                 case (int)AIPhases.ShadowPlayer:
@@ -360,8 +371,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             NPC.direction = xLength > 0 ? -1 : 1;
             NPC.directionY = yLength > 0 ? -1 : 1;
 
-            xLength=Math.Abs(xLength);
-            yLength=Math.Abs(yLength);
+            xLength = Math.Abs(xLength);
+            yLength = Math.Abs(yLength);
         }
 
         #endregion

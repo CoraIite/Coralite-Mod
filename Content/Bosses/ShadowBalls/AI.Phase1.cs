@@ -59,10 +59,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 3://重设状态，或许会在这里稍等一会
                     {
-                        if (Timer>30)
-                        {
+                        //if (Timer>30)
+                        //{
                             ResetState();
-                        }
+                        //}
                     }
                     break;
             }
@@ -100,7 +100,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         if (CheckSmallBallsReady())//全准备好了
                         {
                             foreach (var ball in smallBalls)
-                                (ball.ModNPC as SmallShadowBall).RollingLaser_OnAllReady(NPC);
+                                (ball.ModNPC as SmallShadowBall).ConvergeLaser_OnAllReady(NPC);
 
                             SonState++;
                         }
@@ -115,18 +115,88 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             SonState++;
                             Timer = 0;
+                            foreach (var ball in smallBalls)
+                                (ball.ModNPC as SmallShadowBall).Sign=(int)SmallShadowBall.SignType.Nothing;
                         }
                     }
                     break;
-                case 3://重设状态，或许会在这里稍等一会
+                case 3://此时小球全部就位，停止自身旋转
                     {
-                        if (Timer > 30)
+                        NPC.velocity *= 0.96f;
+                        if (CheckSmallBallsReady())
                         {
-                            ResetState();
+                            SonState++;
+                            Timer = 0;
                         }
+                    }
+                    break;
+                case 4://重设状态，或许会在这里稍等一会
+                    {
+                        //if (Timer > 30)
+                        //{
+                            ResetState();
+                        //}
                     }
                     break;
 
+            }
+        }
+
+        #endregion
+
+        #region LaserWithBeam激光+光束
+
+        public void LaserWithBeam()
+        {
+            switch (SonState)
+            {
+                default:
+                case 0://让一个小球进入射激光状态，其他变成射光束状态
+                    {
+                        //随机一下持续时间
+                        Timer = Main.rand.Next(60 * 8, 60 * 12);
+
+                        int whoToShootLaser = Main.rand.Next(0, smallBalls.Count);
+                        for (int i = 0; i < smallBalls.Count; i++)
+                        {
+                            if (i == whoToShootLaser)
+                                (smallBalls[i].ModNPC as SmallShadowBall)
+                                    .Idle(SmallShadowBall.AIStates.LaserWithBeam_Laser, 30);
+                            else
+                                (smallBalls[i].ModNPC as SmallShadowBall)
+                                    .Idle(SmallShadowBall.AIStates.LaserWithBeam_Beam, Main.rand.Next(2, 60));
+                        }
+
+                        SonState++;
+                    }
+                    break;
+                case 1://随便动一动等待计时结束
+                    {
+                        //自身运动
+
+                        if (Timer <= 0)
+                        {
+                            foreach (var smallBall in smallBalls)
+                            {
+                                if (smallBall.ai[1] == (int)SmallShadowBall.AIStates.LaserWithBeam_Laser)
+                                {
+                                    if (smallBall.ai[2] == 3)
+                                    {
+                                        SonState++;
+                                        Timer = 0;
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        Timer--;
+                    }
+                    break;
+                case 2://后摇
+                    {
+                        ResetState();
+                    }
+                    break;
             }
         }
 

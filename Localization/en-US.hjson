@@ -2747,6 +2747,7 @@ Mods: {
 			SmallLaser.DisplayName: Small Laser
 			SmallLaserPredictionLine.DisplayName: Small Laser Prediction Line
 			StarsBack.DisplayName: Stars Back
+			ShadowBeam.DisplayName: Shadow Beam
 		}
 
 		Configs: {
