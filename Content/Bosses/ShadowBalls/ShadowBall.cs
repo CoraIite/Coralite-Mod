@@ -185,7 +185,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             ConvergeLaser,
             /// <summary> 一阶段招式：一个小球射激光，其他射弹幕 </summary>
             LaserWithBeam,
-
+            /// <summary> 一阶段招式：小球到场地左右两边射激光 </summary>
+            LeftRightLaser,
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -267,6 +268,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                     LaserWithBeam();
                                 }
                                 break;
+                            case (int)AIStates.LeftRightLaser:
+                                {
+                                    LeftRightLaser();
+                                }
+                                break;
+
                         }
                     }
                     break;
@@ -294,15 +301,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case (int)AIPhases.WithSmallBalls:
                     {
-                        State = Main.rand.Next(3) switch
+                        State = Main.rand.Next(4) switch
                         {
                             0 => (int)AIStates.RollingLaser,
                             1 => (int)AIStates.ConvergeLaser,
-                            _ => (int)AIStates.LaserWithBeam,
+                            2 => (int)AIStates.LaserWithBeam,
+                            _ => (int)AIStates.LeftRightLaser,
                         };
 
                         //State = State == (int)AIStates.ConvergeLaser ? (int)AIStates.RollingLaser : (int)AIStates.ConvergeLaser;
-                        //State = (int)AIStates.LaserWithBeam;
+                        //State = (int)AIStates.LeftRightLaser;
                     }
                     break;
                 case (int)AIPhases.ShadowPlayer:

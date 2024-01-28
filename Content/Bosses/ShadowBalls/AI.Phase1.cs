@@ -31,7 +31,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.X, xLength, NPC.direction
                             , 3f, 32, 0.08f, 0.1f, 0.97f);
-                        Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.X, yLength, NPC.direction
+                        Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.Y, yLength, NPC.directionY
                             , 3f, 16, 0.08f, 0.1f, 0.97f);
 
                         NPC.rotation += 0.05f;
@@ -92,7 +92,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.X, xLength, NPC.direction
                             , 3f, 32, 0.08f, 0.1f, 0.97f);
-                        Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.X, yLength, NPC.direction
+                        Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.Y, yLength, NPC.directionY
                             , 3f, 16, 0.08f, 0.1f, 0.97f);
 
                         NPC.rotation += 0.05f;
@@ -187,6 +187,69 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                     }
                                     break;
                                 }
+                            }
+                        }
+                        Timer--;
+                    }
+                    break;
+                case 2://后摇
+                    {
+                        ResetState();
+                    }
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region LeftRightLaser左右激光
+
+        public void LeftRightLaser()
+        {
+            switch (SonState)
+            {
+                default:
+                case 0://随机小球的状态
+                    {
+                        //随机一下持续时间
+                        Timer = Main.rand.Next(60 * 6, 60 * 9);
+                        NPC.TargetClosest();
+                        foreach (var ball in smallBalls)
+                            (ball.ModNPC as SmallShadowBall).ResetState(SmallShadowBall.AIStates.LeftRightLaser);
+
+                        SonState++;
+                    }
+                    break;
+                case 1://随便动一动等待计时结束
+                    {
+                        //自身运动
+                        Vector2 targetPos = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
+                        SetDirection(targetPos, out float xLength, out float yLength);
+
+                        Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.X, xLength, NPC.direction
+                            , 3f, 32, 0.08f, 0.1f, 0.97f);
+                        Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.Y, yLength, NPC.directionY
+                            , 3f, 16, 0.08f, 0.1f, 0.97f);
+
+                        if (Timer <= 0)
+                        {
+                            bool allReady = true;
+                            foreach (var smallBall in smallBalls)
+                            {
+                                if (smallBall.ai[2] == 4)//此时表示已准备就绪
+                                    continue;
+
+                                if (smallBall.ai[2] == 3)
+                                    smallBall.ai[2] = 4;
+
+                                allReady = false;
+                            }
+
+                            if (allReady)
+                            {
+                                SonState++;
+                                Timer = 0;
+                                break;
                             }
                         }
                         Timer--;
