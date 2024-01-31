@@ -187,11 +187,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
             LaserWithBeam,
             /// <summary> 一阶段招式：小球到场地左右两边射激光 </summary>
             LeftRightLaser,
+            /// <summary> 一阶段招式：旋转后释放影子玩家 </summary>
+            RollingShadowPlayer,
+            /// <summary> 一阶段招式：随便射点激光 </summary>
+            RandomLaser,
+
+
         }
 
         public override void OnSpawn(IEntitySource source)
         {
             NPC.Center = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
+            NPC.dontTakeDamage = true;
+            State = (int)AIStates.OnSpawnAnmi;
         }
 
         public override void AI()
@@ -226,18 +234,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case (int)AIPhases.WithSmallBalls:
                     {
-                        if (!SpawnedSmallBalls)
-                        {
-                            for (int i = 0; i < 5; i++)
-                            {
-                                int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y,
-                                    ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI, NPC.whoAmI);
-                                Main.npc[index].realLife = NPC.whoAmI;
-                            }
-                            SpawnedSmallBalls = true;
-                        }
+                        //SpawnSmallBalls();
 
-                        if (!GetSmallBalls())
+                        if (State!=(int)AIStates.OnSpawnAnmi&&!GetSmallBalls())
                         {
                             //切换状态
                             return;
@@ -248,7 +247,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             default:
                             case (int)AIStates.OnSpawnAnmi:
                                 {
-                                    State = (int)AIStates.RollingLaser;
+                                    OnSpawnAnmi();
+                                    Timer++;
                                 }
                                 break;
                             case (int)AIStates.RollingLaser:
@@ -271,6 +271,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             case (int)AIStates.LeftRightLaser:
                                 {
                                     LeftRightLaser();
+                                }
+                                break;
+                            case (int)AIStates.RollingShadowPlayer:
+                                {
+                                    RollingShadowPlayer();
+                                    Timer++;
+                                }
+                                break;
+                            case (int)AIStates.RandomLaser:
+                                {
+                                    RandomLaser();
                                 }
                                 break;
 
@@ -301,16 +312,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case (int)AIPhases.WithSmallBalls:
                     {
-                        State = Main.rand.Next(4) switch
+                        State = Main.rand.Next(6) switch
                         {
                             0 => (int)AIStates.RollingLaser,
                             1 => (int)AIStates.ConvergeLaser,
                             2 => (int)AIStates.LaserWithBeam,
-                            _ => (int)AIStates.LeftRightLaser,
+                            3 => (int)AIStates.LeftRightLaser,
+                            4 => (int)AIStates.RollingShadowPlayer,
+                            _ => (int)AIStates.RandomLaser,
                         };
 
                         //State = State == (int)AIStates.ConvergeLaser ? (int)AIStates.RollingLaser : (int)AIStates.ConvergeLaser;
-                        //State = (int)AIStates.LeftRightLaser;
+                        //State = (int)AIStates.ConvergeLaser;
                     }
                     break;
                 case (int)AIPhases.ShadowPlayer:
@@ -383,12 +396,36 @@ namespace Coralite.Content.Bosses.ShadowBalls
             yLength = Math.Abs(yLength);
         }
 
+        public void SpawnSmallBalls()
+        {
+            if (!SpawnedSmallBalls)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y,
+                        ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI, NPC.whoAmI);
+                    Main.npc[index].realLife = NPC.whoAmI;
+                    NPC.lifeMax += Main.npc[index].lifeMax;
+                }
+
+                NPC.life = NPC.lifeMax;
+                SpawnedSmallBalls = true;
+            }
+
+        }
+
+
         #endregion
 
         #region Draw
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (State == (int)AIStates.OnSpawnAnmi)
+            {
+
+            }
+
             return true;
         }
 

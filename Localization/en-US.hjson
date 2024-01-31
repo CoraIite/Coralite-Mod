@@ -2748,6 +2748,8 @@ Mods: {
 			SmallLaserPredictionLine.DisplayName: Small Laser Prediction Line
 			StarsBack.DisplayName: Stars Back
 			ShadowBeam.DisplayName: Shadow Beam
+			ShadowPlayerSpurt.DisplayName: Shadow Player Spurt
+			SpawnProj.DisplayName: Spawn Proj
 		}
 
 		Configs: {

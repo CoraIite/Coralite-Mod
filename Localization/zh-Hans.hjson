@@ -2774,6 +2774,8 @@ Mods: {
 			// SmallLaserPredictionLine.DisplayName: Small Laser Prediction Line
 			StarsBack.DisplayName: 影之星
 			// ShadowBeam.DisplayName: Shadow Beam
+			// ShadowPlayerSpurt.DisplayName: Shadow Player Spurt
+			// SpawnProj.DisplayName: Spawn Proj
 		}
 
 		Configs: {

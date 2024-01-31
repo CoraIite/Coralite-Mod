@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
 
@@ -29,12 +30,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
         protected float timer;
 
         public static Asset<Texture2D> gradientTex;
+        public static Asset<Texture2D> extraTex;
 
         public override void Load()
         {
             if (!Main.dedServ)
             {
                 gradientTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "LaserGradient");
+                extraTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaser");
             }
         }
 
@@ -43,6 +46,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!Main.dedServ)
             {
                 gradientTex = null;
+                extraTex = null;
             }
         }
 
@@ -92,15 +96,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (timer < 8)
             {
-                LaserWidth += 60 / 8f;
+                LaserWidth += 50 / 8f;
             }
             else if (timer < (ShootTime - 10))
             {
-                LaserWidth = Helper.Lerp(LaserWidth, 25, 0.4f);
+                LaserWidth = Helper.Lerp(LaserWidth, 16, 0.5f);
             }
             else
             {
-                LaserWidth -=25/10f;
+                LaserWidth -=16/10f;
             }
 
             timer++;
@@ -156,10 +160,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
+                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly*2);
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
                 effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
                 effect.Parameters["gradientTexture"].SetValue(gradientTex.Value);
+                effect.Parameters["extTexture"].SetValue(extraTex.Value);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
@@ -194,8 +199,31 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// </summary>
     public class SmallLaserPredictionLine : SmallLaser
     {
+        public override string Texture => AssetDirectory.OtherProjectiles+ "LaserBody";
+
         float alpha;
         ref float ChannelTime => ref Projectile.ai[1];
+
+        public static Asset<Texture2D> gradientTex2;
+        public static Asset<Texture2D> extraTex2;
+
+        public override void Load()
+        {
+            if (!Main.dedServ)
+            {
+                gradientTex2 = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "PredictionGradient");
+                extraTex2 = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserTrail");
+            }
+        }
+
+        public override void Unload()
+        {
+            if (!Main.dedServ)
+            {
+                gradientTex2 = null;
+                extraTex2 = null;
+            }
+        }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
         public override bool? CanDamage() => false;
@@ -276,7 +304,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
                 effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
-                effect.Parameters["gradientTexture"].SetValue(gradientTex.Value);
+                effect.Parameters["gradientTexture"].SetValue(gradientTex2.Value);
+                effect.Parameters["extTexture"].SetValue(extraTex2.Value);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点

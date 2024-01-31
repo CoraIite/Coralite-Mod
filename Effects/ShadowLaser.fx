@@ -3,6 +3,8 @@ matrix transformMatrix;
 texture sampleTexture;
 //颜色图，大概是一张横向的色图
 texture gradientTexture;
+//额外叠加的图
+texture extTexture;
 
 sampler2D samplerTex = sampler_state
 {
@@ -17,6 +19,16 @@ sampler2D samplerTex = sampler_state
 sampler2D gradientTex = sampler_state
 {
     texture = <gradientTexture>;
+    magfilter = LINEAR;
+    minfilter = LINEAR;
+    mipfilter = LINEAR;
+    AddressU = wrap;
+    AddressV = wrap; //循环UV
+};
+
+sampler2D extraTex = sampler_state
+{
+    texture = <extTexture>;
     magfilter = LINEAR;
     minfilter = LINEAR;
     mipfilter = LINEAR;
@@ -56,10 +68,13 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
     float2 st = float2((xcoord + uTime) % 1.0, ycoord);
     float4 color = tex2D(samplerTex, st).xyzw;
-    float4 color2 = tex2D(gradientTex, float2(input.TexCoords.y, 0)).xyzw; //读取颜色图
-    float3 bright = color.xyz  * color2.xyz ;
+    float2 st2 = float2((xcoord + uTime / 2) % 1.0, ycoord);
 
-    return float4(bright, input.Color.w * color.r);
+    float4 colorEX = tex2D(extraTex, st2).xyzw;
+    float4 color2 = tex2D(gradientTex, float2(input.TexCoords.y, 0)).xyzw; //读取颜色图
+    float3 bright = (color.xyz + colorEX.xyz ) * color2.xyz;
+
+    return float4(bright, input.Color.w * (color.r+colorEX.r));
 }
 
 technique Technique1

@@ -2,6 +2,8 @@
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -67,16 +69,12 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
         public override bool RightClick(int i, int j)
         {
-            int type = ModContent.NPCType<ShadowBall>();
+            int npcType = ModContent.NPCType<ShadowBall>();
 
-            if (Main.dayTime && !NPC.AnyNPCs(type))
+            if (Main.dayTime && !NPC.AnyNPCs(npcType)
+                && !Main.projectile.Any(p => p.active && p.type == ModContent.ProjectileType<SpawnProj>()))
             {
-                SoundEngine.PlaySound(SoundID.Roar, Main.LocalPlayer.position);
-
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, type);
-                else
-                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: Main.LocalPlayer.whoAmI, number2: type);
+                SoundEngine.PlaySound(CoraliteSoundID.FireBallExplosion_Item74, Main.LocalPlayer.position);
 
                 Tile t = Main.tile[i, j];
 
@@ -84,8 +82,17 @@ namespace Coralite.Content.Tiles.ShadowCastle
                 int y = t.TileFrameY / 18;
 
                 Point p = new Point(i - x, j - y);
+
+                Projectile.NewProjectile(new EntitySource_TileInteraction(Main.LocalPlayer, i, j),
+                    p.ToVector2() * 16, Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 1, 0, Main.myPlayer);
+
                 p -= new Point(34, 6);
                 CoraliteWorld.shadowBallsFightArea = new Rectangle(p.X * 16, p.Y * 16, 70 * 16, 54 * 16);
+
+                //if (Main.netMode != NetmodeID.MultiplayerClient)
+                //    NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, type);
+                //else
+                //    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: Main.LocalPlayer.whoAmI, number2: type);
 
                 return true;
             }

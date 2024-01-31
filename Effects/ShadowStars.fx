@@ -1,37 +1,50 @@
 //缩放矩阵
-matrix transformMatrix;
+//matrix transformMatrix;
 
-float2 worldSize;
+sampler uImage0 : register(s0);
+texture exTexture;
 float uTime;
+float4 uSourceRect;
+float2 uImageSize0;
+
 float uExchange;
 float uLerp;
-sampler uImage0 : register(s0);
 
-struct VertexShaderInput
+sampler2D exTex = sampler_state
 {
-    float4 Position : SV_POSITION;
-    float2 TexCoords : TEXCOORD0;
-    float4 Color : COLOR0;
+    texture = <exTexture>;
+    magfilter = LINEAR;
+    minfilter = LINEAR;
+    mipfilter = LINEAR;
+    AddressU = wrap;
+    AddressV = wrap; //循环UV
 };
 
-struct VertexShaderOutput
-{
-    float4 Position : SV_POSITION;
-    float2 TexCoords : TEXCOORD0;
-    //float4 NewPosition : POSITION1;
-    float4 Color : COLOR0;
-};
+//struct VertexShaderInput
+//{
+//    float4 Position : SV_POSITION;
+//    float2 TexCoords : TEXCOORD0;
+//    float4 Color : COLOR0;
+//};
 
-VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
-{
-    VertexShaderOutput output;
+//struct VertexShaderOutput
+//{
+//    float4 Position : SV_POSITION;
+//    float2 TexCoords : TEXCOORD0;
+//    //float4 NewPosition : POSITION1;
+//    float4 Color : COLOR0;
+//};
+
+//VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
+//{
+//    VertexShaderOutput output;
     
-    output.Color = input.Color;
-    output.TexCoords = input.TexCoords;
-    output.Position = mul(input.Position, transformMatrix);
-    //output.Position = output.NewPosition;
-    return output;
-}
+//    output.Color = input.Color;
+//    output.TexCoords = input.TexCoords;
+//    output.Position = mul(input.Position, transformMatrix);
+//    //output.Position = output.NewPosition;
+//    return output;
+//}
 
 
 // Star Nest by Pablo Roman Andrioli
@@ -59,17 +72,26 @@ float3 mod(float3 x, float y)
     return x - y * floor(x / y);
 }
 
-float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
+float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 {
-    float2 coords = input.TexCoords;
+    //float2 coords = input.TexCoords;
 
     float4 tc = tex2D(uImage0, coords);
     
-    float3 bright = tc.rgb * input.Color.rgb;
+    float3 bright = tc.rgb * sampleColor.rgb; //input.Color.rgb;
+    
+    float fx = (coords.x * uImageSize0.x - uSourceRect.x) / uSourceRect.z;
+    float fy = (coords.y * uImageSize0.y - uSourceRect.y) / uSourceRect.w;
+    float2 uv = float2(fx, fy);
+    
+    float4 color2 = tex2D(exTex, uv);
+
+    float finR = tc.r * color2.r;
+    float4 baseC = float4(bright, /*input.Color.w **/finR);
     if (tc.r < uExchange)
     {
     //透明度是由传入颜色的透明度诚意刀光灰度图的r
-        return float4(bright, input.Color.w * tc.r);
+        return baseC;
     }
     
     //float2 R = input.NewPosition.xy / worldSize.xy - float2(0.5f,0.5f);
@@ -78,9 +100,10 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     O -= O;
     float t = uTime * .01 + .25, s = .6, f = 2, a, l;
 
-    float2 R = worldSize; /*float2(800, 450);*/
+    //float2 R = worldSize; /*float2(800, 450);*/
+
     float3 p,
-	      D = float3((input.Position.xy - .5 * R.xy) / R.x * .4, .5),
+	      D = float3((uv - float2(0.5f, 0.5f)) * .4, .5),
           //M = 2. * iMouse.xyz / R,
           o = float3(1, .5, .5) + float3(t + t, t, -2);
     //O -= O;
@@ -110,17 +133,17 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     }
 	
     float y = .0015 * length(O);
-    O = .0085 * O + float4(y, y, y, y);
-    O = float4(lerp(bright, O.xyz, clamp(((tc.r - uExchange) / uLerp), 0, 1)), O.a);
+    O = .0085 * O + float4(y, y, y, 1);
+    O = lerp(baseC, O, clamp(((baseC.r - uExchange) / uLerp), 0, 1));
     
-    return float4(O.xyz, input.Color.a);
+    return float4(O.xyz, sampleColor.a* O.a);
 }
 
 technique Technique1
 {
     pass StarsTrailPass
     {
-        VertexShader = compile vs_3_0 VertexShaderFunction();
+        //VertexShader = compile vs_3_0 VertexShaderFunction();
         PixelShader = compile ps_3_0 PixelShaderFunction();
     }
 };
