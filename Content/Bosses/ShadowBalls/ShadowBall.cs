@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// </summary>
     public partial class ShadowBall : ModNPC
     {
-        public override string Texture => AssetDirectory.ShadowBalls + "SmallShadowBall";
+        public override string Texture => AssetDirectory.ShadowBalls + Name;
 
         internal ref float Phase => ref NPC.ai[0];
         internal ref float State => ref NPC.ai[1];
@@ -47,6 +47,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public List<NPC> smallBalls = new List<NPC>();
         public int smallBallCount;
 
+        public Rectangle MovementLimitRect;
+        /// <summary>
+        /// 生成时自下而上出现的高度
+        /// </summary>
+        public float SpawnOverflowHeight;
+        //public bool CanDamage; 
+
+        private static readonly RasterizerState OverflowHiddenRasterizerState = new RasterizerState
+        {
+            CullMode = CullMode.None,
+            ScissorTestEnable = true
+        };
+
         #region tmlHooks
 
         public override void SetStaticDefaults()
@@ -56,8 +69,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void SetDefaults()
         {
-            NPC.width = 100;
-            NPC.height = 100;
+            NPC.width = 120;
+            NPC.height = 120;
             NPC.damage = 50;
             NPC.defense = 6;
             NPC.lifeMax = 4500;
@@ -160,6 +173,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //npcLoot.Add(notExpertRule);
         }
 
+        public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
+        {
+            return false;
+        }
+
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return false;
+        }
 
         #endregion
 
@@ -200,6 +222,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
             NPC.Center = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
             NPC.dontTakeDamage = true;
             State = (int)AIStates.OnSpawnAnmi;
+
+            MovementLimitRect = CoraliteWorld.shadowBallsFightArea;
+            MovementLimitRect.X += 200;
+            MovementLimitRect.Y += 200;
+            MovementLimitRect.Width -= 400;
+            MovementLimitRect.Height -= 400;
+
+            //CanDamage = false;
         }
 
         public override void AI()
@@ -236,7 +266,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         //SpawnSmallBalls();
 
-                        if (State!=(int)AIStates.OnSpawnAnmi&&!GetSmallBalls())
+                        if (State != (int)AIStates.OnSpawnAnmi && !GetSmallBalls())
                         {
                             //切换状态
                             return;
@@ -323,7 +353,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         };
 
                         //State = State == (int)AIStates.ConvergeLaser ? (int)AIStates.RollingLaser : (int)AIStates.ConvergeLaser;
-                        //State = (int)AIStates.ConvergeLaser;
+                        //State = (int)AIStates.RollingLaser;
                     }
                     break;
                 case (int)AIPhases.ShadowPlayer:
@@ -414,6 +444,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         }
 
+        public void MovementLimit()
+        {
+            Vector2 center = NPC.Center;
+            center.X = Math.Clamp(center.X, MovementLimitRect.X, MovementLimitRect.X + MovementLimitRect.Width);
+            center.Y = Math.Clamp(center.Y, MovementLimitRect.Y, MovementLimitRect.Y + MovementLimitRect.Height);
+            NPC.Center = center;
+        }
 
         #endregion
 
@@ -423,10 +460,70 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             if (State == (int)AIStates.OnSpawnAnmi)
             {
+                Texture2D mainTex = NPC.GetTexture();
 
+                var pos = NPC.Center - screenPos;
+                var frameBox = mainTex.Frame();
+                var origin = frameBox.Size() / 2;
+
+
+                RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
+                Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
+                SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
+
+                spriteBatch.End();
+                Rectangle scissorRectangle2 = Rectangle.Intersect(GetClippingRectangle(spriteBatch, pos, frameBox), spriteBatch.GraphicsDevice.ScissorRectangle);
+                spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle2;
+                spriteBatch.GraphicsDevice.RasterizerState = OverflowHiddenRasterizerState;
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null);
+
+                spriteBatch.Draw(mainTex, pos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, 0, 0);
+
+                rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
+                spriteBatch.End();
+                spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle;
+                spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, rasterizerState, null);
+
+                return false;
             }
 
-            return true;
+            DrawSelf(spriteBatch, screenPos, drawColor);
+
+            return false;
+        }
+
+        public void DrawSelf(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D mainTex = NPC.GetTexture();
+
+            var pos = NPC.Center - screenPos;
+            var frameBox = mainTex.Frame();
+            var origin = frameBox.Size() / 2;
+
+            spriteBatch.Draw(mainTex, pos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, 0, 0);
+        }
+
+        public Rectangle GetClippingRectangle(SpriteBatch spriteBatch, Vector2 center, Rectangle frameBox)
+        {
+            float height = SpawnOverflowHeight * frameBox.Height;
+            Vector2 position = center + new Vector2(-frameBox.Width / 2, frameBox.Height / 2 - height);
+            Vector2 size = new Vector2(frameBox.Width, height);
+            position = Vector2.Transform(position, Main.Transform);
+            size = Vector2.Transform(size, Main.Transform);
+            Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+            int screenWidth = Main.screenWidth;
+            int screenHeight = Main.screenHeight;
+            rectangle.X = Utils.Clamp(rectangle.X, 0, screenWidth);
+            rectangle.Y = Utils.Clamp(rectangle.Y, 0, screenHeight);
+            rectangle.Width = Utils.Clamp(rectangle.Width, 0, screenWidth - rectangle.X);
+            rectangle.Height = Utils.Clamp(rectangle.Height, 0, screenHeight - rectangle.Y);
+            Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
+            int num3 = Utils.Clamp(rectangle.Left, scissorRectangle.Left, scissorRectangle.Right);
+            int num4 = Utils.Clamp(rectangle.Top, scissorRectangle.Top, scissorRectangle.Bottom);
+            int num5 = Utils.Clamp(rectangle.Right, scissorRectangle.Left, scissorRectangle.Right);
+            int num6 = Utils.Clamp(rectangle.Bottom, scissorRectangle.Top, scissorRectangle.Bottom);
+            return new Rectangle(num3, num4, num5 - num3, num6 - num4);
         }
 
         #endregion

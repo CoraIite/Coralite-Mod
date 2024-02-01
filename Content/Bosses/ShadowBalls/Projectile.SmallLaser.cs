@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
+            if (laserTrailPoints.Count<1)
+                return false;
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, laserTrailPoints[^1], 10, ref Projectile.localAI[2]);
         }
 
@@ -177,6 +180,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             }
+
+            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
+            var pos = laserTrailPoints[^1] - Main.screenPosition;
+            var origin = mainTex.Size() / 2;
+            Color c = new Color(189, 109, 255, 0);
+            c.A = 0;
+
+            Vector2 scale = new Vector2(LaserWidth / 90, LaserWidth / 130);
+
+            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale, 0, 0); 
+            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale*0.75f, 0, 0); 
+            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale*0.5f, 0, 0); 
 
             return false;
         }

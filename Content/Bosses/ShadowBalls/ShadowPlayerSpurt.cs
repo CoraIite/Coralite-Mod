@@ -15,13 +15,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override string Texture => AssetDirectory.Blank;
 
         ref float Timer => ref Projectile.ai[0];
+        ref float Shadow => ref Projectile.ai[1];
+
         private Vector2 recordVelocity;
 
         public ParticleGroup triangles;
 
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 32;
+            Projectile.width = Projectile.height = 16;
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 500;
@@ -32,11 +34,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             recordVelocity = Projectile.velocity;
             Projectile.velocity *= 0;
+            Shadow = 1;
         }
 
         public override bool? CanDamage()
         {
-            if (Timer<160||Timer > 160 + 120)
+            if (Timer < 160 || Timer > 160 + 100)
             {
                 return false;
             }
@@ -47,23 +50,31 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             triangles ??= new ParticleGroup();
 
-            if (Timer < 80*2)//反方向运动
+            if (Timer < 80 * 2)//反方向运动
             {
                 float factor = Timer / 160;
+                Shadow -= 0.95f / 160;
 
                 Projectile.velocity = -recordVelocity * MathF.Cos(factor * MathHelper.Pi);
+                triangles.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(24, 24)
+                    , -Projectile.velocity * Main.rand.NextFloat(0.5f, 0.75f), CoraliteContent.ParticleType<ShadowTriangle>(),
+                      new Color(100, 60, 200, 100) * Main.rand.NextFloat(0.9f, 1.15f)
+                    , Main.rand.NextFloat(0.3f, 0.5f));
             }
-            else if (Timer < 160 + 120)
+            else if (Timer < 160 + 100)
             {
+                Shadow += 0.3f / 100;
                 for (int i = 0; i < 2; i++)
-                triangles.NewParticle(Projectile.position + new Vector2(Main.rand.Next(Projectile.width), Main.rand.Next(Projectile.height))
-                    , Helpers.Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f, 1.5f), CoraliteContent.ParticleType<ShadowTriangle>(),
-                    Main.rand.NextBool() ? new Color(0, 0, 0, 100) : new Color(189, 109, 255, 50)*Main.rand.NextFloat(0.7f,1.05f)
-                    , Main.rand.NextFloat(0.5f, 0.75f));
+                    triangles.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(24, 24)
+                        , -Projectile.velocity * Main.rand.NextFloat(0.5f, 0.75f), CoraliteContent.ParticleType<ShadowTriangle>(),
+                         new Color(100, 60, 200, 100) * Main.rand.NextFloat(0.9f, 1.15f)
+                    , Main.rand.NextFloat(0.3f, 0.5f));
             }
             else
             {
-                Projectile.velocity *= 0.95f;
+                if (Shadow < 1)
+                    Shadow *= 1.05f;
+                Projectile.velocity *= 0.93f;
                 if (!triangles.Any())
                 {
                     Projectile.Kill();
@@ -78,9 +89,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             Player owner = Main.player[Projectile.owner];
 
-            float shadow = Timer < 120 ? Math.Clamp(1 - Timer / 120, 0.2f, 1f) : Math.Clamp((Timer - 120) / 120, 0.2f, 1f);
+            //float shadow = Timer < 160 ? Math.Clamp(1 - Timer / 160, 0.1f, 1f) : Math.Clamp((Timer - 160) / 100, 0.1f, 1f);
 
-            Main.PlayerRenderer.DrawPlayer(Main.Camera, owner, Projectile.position, 0f, owner.fullRotationOrigin,shadow );
+            Main.PlayerRenderer.DrawPlayer(Main.Camera, owner, Projectile.Center + new Vector2(-16, -24), 0f, owner.fullRotationOrigin, Shadow);
 
             triangles?.DrawParticles(Main.spriteBatch);
 

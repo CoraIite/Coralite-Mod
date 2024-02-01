@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 
@@ -19,6 +21,11 @@ namespace Coralite.Helpers
             NPC.checkDead();
             NPC.HitEffect();
             NPC.active = false;
+        }
+
+        public static Texture2D GetTexture(this NPC npc)
+        {
+            return TextureAssets.Npc[npc.type].Value;
         }
 
         /// <summary>

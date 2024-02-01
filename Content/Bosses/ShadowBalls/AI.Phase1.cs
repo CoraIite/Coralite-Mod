@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
@@ -42,17 +43,26 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 1://自下而上地出现
                     {
+                        const int ShowUpTime = 60;
+
+                        SpawnOverflowHeight = Timer / ShowUpTime;
+                        //生成粒子挡住
+
+                        if (Timer > 60)
+                        {
+                            SonState++;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+                case 2://生成吼叫粒子和名称
+                    {
                         NPC.dontTakeDamage = false;
                         ResetState();
                         SpawnSmallBalls();
                     }
                     break;
-                case 2://生成吼叫粒子和名称
-                    {
-
-                    }
-                    break;
-                case 3://生成小球
+                case 3://生成小球并等待小球完成生成
                     {
 
                     }
@@ -81,16 +91,31 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 1://检测小球球状态，如果全部准备好了那么就进入下一个阶段
                     {
-                        //自身的运动
-                        Vector2 targetPos = (CoraliteWorld.shadowBallsFightArea.Center.ToVector2() + Target.Center) / 2;
+                        //自身的运动，会尝试和玩家保持一定距离，并且会将自身限制在一个框里
+                        Vector2 targetPos =  Target.Center;
                         SetDirection(targetPos, out float xLength, out float yLength);
 
-                        Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.X, xLength, NPC.direction
-                            , 3f, 32, 0.08f, 0.1f, 0.97f);
-                        Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.Y, yLength, NPC.directionY
-                            , 3f, 16, 0.08f, 0.1f, 0.97f);
+                        if (xLength > 450)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction
+                                , 5f, 0.1f, 0.18f, 0.97f);
+                        else if (xLength < 200)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction
+                                , 5f, 0.1f, 0.18f, 0.97f);
+                        else
+                            NPC.velocity.X *= 0.92f;
+
+                        //控制Y方向的移动
+                        if (yLength > 350)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY
+                                , 5f, 0.1f, 0.18f, 0.97f);
+                        else if (yLength < 200)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, -NPC.directionY
+                                , 5f, 0.1f, 0.18f, 0.97f);
+                        else
+                            NPC.velocity.Y *= 0.92f;
 
                         NPC.rotation += 0.05f;
+                        MovementLimit();
 
                         if (CheckSmallBallsReady())//全准备好了
                         {
@@ -98,18 +123,49 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                 (ball.ModNPC as SmallShadowBall).RollingLaser_OnAllReady(NPC);
 
                             SonState++;
+                            Timer = 0;
                         }
                     }
                     break;
                 case 2://此时是小球转转射激光，就稍等一会随便动一动等待小球完成射击
                     {
-                        //自身的运动
-                        NPC.velocity *= 0.96f;
+                        if (Timer < 60)
+                        {
+                            //自身的运动
+                            Vector2 targetPos = Target.Center;
+                            SetDirection(targetPos, out float xLength, out float yLength);
+
+                            if (xLength > 450)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction
+                                    , 5f, 0.1f, 0.18f, 0.97f);
+                            else if (xLength < 200)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction
+                                    , 5f, 0.1f, 0.18f, 0.97f);
+                            else
+                                NPC.velocity.X *= 0.92f;
+
+                            //控制Y方向的移动
+                            if (yLength > 350)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY
+                                    , 5f, 0.1f, 0.18f, 0.97f);
+                            else if (yLength < 200)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, -NPC.directionY
+                                    , 5f, 0.1f, 0.18f, 0.97f);
+                            else
+                                NPC.velocity.Y *= 0.92f;
+                        }
+                        else
+                        {
+                            NPC.velocity *= 0.95f;
+                        }
+
+                        MovementLimit();
 
                         if (CheckSmallBallsReady())
                         {
                             SonState++;
                             Timer = 0;
+                            NPC.velocity = Vector2.Zero;
                         }
                     }
                     break;
@@ -143,13 +199,29 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 1://检测小球状态，如果好了那么进入下一个阶段
                     {
-                        Vector2 targetPos = (CoraliteWorld.shadowBallsFightArea.Center.ToVector2() + Target.Center) / 2;
+                        Vector2 targetPos = Target.Center;
                         SetDirection(targetPos, out float xLength, out float yLength);
 
-                        Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.X, xLength, NPC.direction
-                            , 3f, 32, 0.08f, 0.1f, 0.97f);
-                        Helper.Movement_SimpleOneLine_Limit(ref NPC.velocity.Y, yLength, NPC.directionY
-                            , 3f, 16, 0.08f, 0.1f, 0.97f);
+                        if (xLength > 450)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction
+                                , 3f, 0.1f, 0.18f, 0.97f);
+                        else if (xLength < 200)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction
+                                , 3f, 0.1f, 0.18f, 0.97f);
+                        else
+                            NPC.velocity.X *= 0.92f;
+
+                        //控制Y方向的移动
+                        if (yLength > 350)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY
+                                , 3f, 0.1f, 0.18f, 0.97f);
+                        else if (yLength < 200)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, -NPC.directionY
+                                , 3f, 0.1f, 0.18f, 0.97f);
+                        else
+                            NPC.velocity.Y *= 0.92f;
+
+                        MovementLimit();
 
                         NPC.rotation += 0.05f;
 
@@ -159,13 +231,44 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                 (ball.ModNPC as SmallShadowBall).ConvergeLaser_OnAllReady(NPC);
 
                             SonState++;
+                            Timer = 0;
                         }
                     }
                     break;
                 case 2://此时是小球蓄力射激光，就稍等一会随便动一动等待小球完成射击
                     {
-                        //自身的运动
-                        NPC.velocity *= 0.96f;
+                        if (Timer < 50)
+                        {
+                            //自身的运动
+                            Vector2 targetPos = Target.Center;
+                            SetDirection(targetPos, out float xLength, out float yLength);
+
+                            if (xLength > 450)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction
+                                    , 3f, 0.1f, 0.18f, 0.97f);
+                            else if (xLength < 200)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction
+                                    , 3f, 0.1f, 0.18f, 0.97f);
+                            else
+                                NPC.velocity.X *= 0.92f;
+
+                            //控制Y方向的移动
+                            if (yLength > 350)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY
+                                    , 3f, 0.1f, 0.18f, 0.97f);
+                            else if (yLength < 200)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, -NPC.directionY
+                                    , 3f, 0.1f, 0.18f, 0.97f);
+                            else
+                                NPC.velocity.Y *= 0.92f;
+
+                            MovementLimit();
+                        }
+                        else
+                        {
+                            NPC.velocity *= 0.9f;
+                        }
+
                         NPC.rotation += 0.1f;
                         if (CheckSmallBallsReady())
                         {

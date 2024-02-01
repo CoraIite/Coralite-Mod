@@ -1,4 +1,5 @@
-﻿using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -41,29 +42,34 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void AI()
         {
-            if (Timer < 60 * 3)
+            if (Timer < 60 * 3)//向下飘
             {
                 if (Timer < 20)
                 {
                     alpha += 1 / 20f;
-                    Projectile.scale += 0.4f / 20;
+                    Projectile.scale += 0.3f / 20;
                 }
 
                 float factor = Timer / (60 * 3);
 
                 Vector2 targetPos = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
 
-                float x = targetPos.X+ MathF.Sin(factor * MathHelper.TwoPi * 2) * (factor * 40);
+                float x = targetPos.X + MathF.Sin(factor * MathHelper.TwoPi * 2) * (factor * 80);
                 float y = Helper.Lerp(OriginY, targetPos.Y, factor);
 
                 Projectile.Center = new Vector2(x, y);
 
                 //生成粒子
+
+                Dust.NewDustPerfect(Projectile.Center+Main.rand.NextVector2Circular(16,16), ModContent.DustType<GlowBall>()
+                    , (Projectile.oldPosition - Projectile.position).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1f, 4f),
+                    newColor: Color.Purple, Scale: Main.rand.NextFloat(0.2f, 0.5f));
+                    
             }
             else if (Timer > 60 * 3)
             {
                 Projectile.velocity = Vector2.Zero;
-                Projectile.scale -= 1 / 20f;
+                Projectile.scale -= 0.3f / 20f;
 
                 if (Timer > 60 * 3 + 20)
                 {
@@ -91,8 +97,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Main.spriteBatch.Draw(mainTex, pos, null, c, 1.57f, origin, Projectile.scale, 0, 0); ;
             Main.spriteBatch.Draw(mainTex, pos, null, c, 1.57f, origin, Projectile.scale, 0, 0); ;
 
-            Main.spriteBatch.Draw(mainTex, pos, null, c, 0, origin, Projectile.scale / 3, 0, 0); ;
-            Main.spriteBatch.Draw(mainTex, pos, null, c, 0, origin, Projectile.scale / 3, 0, 0); ;
+            //Main.spriteBatch.Draw(mainTex, pos, null, c, 0, origin, Projectile.scale / 3, 0, 0); ;
+            //Main.spriteBatch.Draw(mainTex, pos, null, c, 0, origin, Projectile.scale / 3, 0, 0); ;
 
             return false;
         }

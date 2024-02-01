@@ -59,8 +59,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void SetDefaults()
         {
-            NPC.width = 100;
-            NPC.height = 100;
+            NPC.width = 60;
+            NPC.height = 60;
             NPC.damage = 50;
             NPC.defense = 6;
             NPC.lifeMax = 3500;
@@ -148,9 +148,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public void RollingLaser(NPC owner)
         {
             //最开始与主人的距离
-            const int ReadyLength = 64;
+            const int ReadyLength = 64 + 48;
             //聚集后与主人的距离
-            const int ShrinkLength = 32;
+            const int ShrinkLength = 32 + 32;
 
             switch (SonState)
             {
@@ -192,6 +192,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             SonState++;
                             Timer = 0;
                             Recorder = ShrinkLength;
+                            Recorder2 = NPC.rotation;
                         }
                     }
                     break;
@@ -203,9 +204,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         float length = Helper.Lerp(ReadyLength, ShrinkLength, Coralite.Instance.SqrtSmoother.Smoother(factor));
 
-                        float currentRot = (NPC.Center - owner.Center).ToRotation();
+                        float currentRot = Recorder2;
                         NPC.Center = owner.Center + currentRot.ToRotationVector2() * length;
-                        NPC.rotation = (NPC.Center - owner.Center).ToRotation();
+                        NPC.rotation = Recorder2;
                         if (Timer > SmallTime)
                         {
                             SonState++;
@@ -221,15 +222,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         const int ShootTime = ReadyShootTime + 25;
 
                         //射击时与主人距离，比较远
-                        const int ReadyShootLength = 120;
+                        const int ReadyShootLength = 120 + 32;
                         //受到后坐力后与主人的距离
-                        const int RecoilLength = 64;
+                        const int RecoilLength = 64 + 32;
 
                         if (Timer < ReadyShootTime)//准备射，与主人距离拉远
                         {
                             float factor = Timer / ReadyShootTime;
 
-                            float currentRot = (NPC.Center - owner.Center).ToRotation();
+                            float currentRot = Recorder2;
                             float targetLength = Helper.Lerp(Recorder, ReadyShootLength, Coralite.Instance.SqrtSmoother.Smoother(factor));
 
                             NPC.Center = owner.Center + currentRot.ToRotationVector2() * targetLength;
@@ -246,7 +247,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             float factor = (Timer - ReadyShootTime) / ShootTime;
 
-                            float currentRot = (NPC.Center - owner.Center).ToRotation();
+                            float currentRot = Recorder2;
                             float targetLength = Helper.Lerp(ReadyShootLength, RecoilLength, Coralite.Instance.SqrtSmoother.Smoother(factor));
 
                             NPC.Center = owner.Center + currentRot.ToRotationVector2() * targetLength;
@@ -292,8 +293,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //聚合中心点与主人的距离
             const int ConvergeCenterLength = 12;
             //蓄力向后缩时聚合中心点与主人的距离
-            const int ConvergeCenterLengthOnChannel = 32;
-            const int ConvergeCenterLengthOnShoot = 100;
+            const int ConvergeCenterLengthOnChannel = 0;
+            const int ConvergeCenterLengthOnShoot = 40;
             //自身与聚合中心点开始时的距离
             const int ReadyLongAxis = 160;
             const int ReadyShortAxis = 80;
@@ -587,7 +588,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             NPC.TargetClosest();
                             int damage = Helper.ScaleValueForDiffMode(30, 50, 40, 40);
-                            NPC.NewProjectileInAI<ShadowBeam>(NPC.Center, NPC.rotation.ToRotationVector2(), damage, 2, NPC.target);
+                            NPC.NewProjectileInAI<ShadowPlayerSpurt>(NPC.Center, 
+                                NPC.rotation.ToRotationVector2()*6, damage, 2, NPC.target);
                             NPC.velocity = (NPC.rotation + MathHelper.Pi).ToRotationVector2() * 8;
                         }
 
@@ -868,7 +870,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         Player target = Main.player[owner.target];
                         const int aimTime = 50;
-                        const int shootTime = 125;
+                        const int shootTime = 105;
                         if (Timer < aimTime)
                         {
                             Recorder = (target.Center - NPC.Center).ToRotation();
