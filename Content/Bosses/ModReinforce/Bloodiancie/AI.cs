@@ -402,7 +402,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             if (realTime == 18 && Main.netMode != NetmodeID.Server)
                             {
                                 SoundEngine.PlaySound(SoundID.Item4, NPC.Center);
-                                Particle.NewParticle(NPC.Center + new Vector2(0, -16), Vector2.Zero, CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.RedJadeRed, 1.5f);
+                                Particle.NewParticle(NPC.Center + new Vector2(0, -16), Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.RedJadeRed, 1.5f);
                             }
 
                             if (realTime < 20)

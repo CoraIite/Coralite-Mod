@@ -44,7 +44,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         SetDirection();
                         movePhase = 1;
                         Timer = 0;
-                        Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.IcicleCyan, 0.8f);
+                        Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.IcicleCyan, 0.8f);
                         SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                         NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 8;
                         NPC.rotation = NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f);

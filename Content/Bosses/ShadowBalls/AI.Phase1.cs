@@ -1,10 +1,8 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.Graphics.Effects;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {

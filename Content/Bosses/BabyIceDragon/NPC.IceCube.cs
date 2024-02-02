@@ -87,7 +87,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 //生成闪光粒子以及蓄力效果
                 Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 3f);
                 Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 4f);
-                Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.IcicleCyan, 2.5f);
+                Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.IcicleCyan, 2.5f);
                 NPC.localAI[1] = 1f;
             }
 

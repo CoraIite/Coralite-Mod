@@ -498,7 +498,7 @@ namespace Coralite.Content.Items.RedJades
             }
 
             Particle.NewParticle(Projectile.Center, Vector2.Zero,
-                CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.RedJadeRed, 1.5f);
+                CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.RedJadeRed, 1.5f);
             SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<BloodJadeSlash>(),
                 (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner, 4);

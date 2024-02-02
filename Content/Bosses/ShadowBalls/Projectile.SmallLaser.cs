@@ -163,7 +163,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly*2);
+                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly*6);
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
                 effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
                 effect.Parameters["gradientTexture"].SetValue(gradientTex.Value);

@@ -54,7 +54,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 Vector2 targetPos = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
 
-                float x = targetPos.X + MathF.Sin(factor * MathHelper.TwoPi * 2) * (factor * 80);
+                float x = targetPos.X + MathF.Sin(factor * MathHelper.TwoPi * 2) * (factor * 60);
                 float y = Helper.Lerp(OriginY, targetPos.Y, factor);
 
                 Projectile.Center = new Vector2(x, y);
@@ -62,7 +62,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 //生成粒子
 
                 Dust.NewDustPerfect(Projectile.Center+Main.rand.NextVector2Circular(16,16), ModContent.DustType<GlowBall>()
-                    , (Projectile.oldPosition - Projectile.position).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1f, 4f),
+                    , (Projectile.oldPosition - Projectile.position).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.5f, 2f),
                     newColor: Color.Purple, Scale: Main.rand.NextFloat(0.2f, 0.5f));
                     
             }

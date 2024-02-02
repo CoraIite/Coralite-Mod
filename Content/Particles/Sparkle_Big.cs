@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class Flash_WithOutLine : ModParticle
+    public class Sparkle_Big : ModParticle
     {
         public override void OnSpawn(Particle particle)
         {

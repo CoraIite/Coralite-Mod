@@ -53,7 +53,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         NPC.noGravity = true;
                         NPC.noTileCollide = true;
                         SetDirection();
-                        Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.IcicleCyan, 0.8f);
+                        Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.IcicleCyan, 0.8f);
                         SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                         NPC.netUpdate = true;
                     }

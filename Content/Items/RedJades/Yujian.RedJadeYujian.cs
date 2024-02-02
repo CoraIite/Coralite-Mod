@@ -146,7 +146,7 @@ namespace Coralite.Content.Items.RedJades
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity * (Projectile.extraUpdates + 1), ModContent.ProjectileType<SpurtProj>(),
                         Projectile.damage, Projectile.knockBack, Projectile.owner, spurtTime / (Projectile.extraUpdates + 1), 32);
 
-                Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.RedJadeRed, 0.8f);
+                Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.RedJadeRed, 0.8f);
                 SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
             }
 

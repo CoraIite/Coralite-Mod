@@ -188,7 +188,7 @@ namespace Coralite.Content.Items.Icicle
                     {
                         Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.5f);
                         Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1f);
-                        Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.IcicleCyan, 0.8f);
+                        Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.IcicleCyan, 0.8f);
                     }
 
                     if (Timer >= 40)

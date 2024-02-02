@@ -1,4 +1,5 @@
-﻿using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -41,6 +43,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
         internal ref float SonState => ref NPC.ai[2];
         internal ref float Timer => ref NPC.ai[3];
 
+        internal ref float Recorder => ref NPC.localAI[0];
+        internal ref float Recorder2 => ref NPC.localAI[1];
+
         public Player Target => Main.player[NPC.target];
 
         public bool SpawnedSmallBalls;
@@ -53,6 +58,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// </summary>
         public float SpawnOverflowHeight;
         //public bool CanDamage; 
+
+        private Player ShadowPlayer;
 
         private static readonly RasterizerState OverflowHiddenRasterizerState = new RasterizerState
         {
@@ -199,8 +206,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             OnSpawnAnmi,
             /// <summary> 狂暴，为出框惩罚 </summary>
             Rampage,
-            /// <summary> 一阶段和2阶段的切换，使用在2阶段 </summary>
-            P1ToP2Exchange,
             /// <summary> 一阶段招式：小球转转转后射激光 </summary>
             RollingLaser,
             /// <summary> 一阶段招式：小球瞄准玩家后射激光 </summary>
@@ -213,8 +218,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
             RollingShadowPlayer,
             /// <summary> 一阶段招式：随便射点激光 </summary>
             RandomLaser,
+            /// <summary> 一阶段招式：依次射激光 </summary>
+            RandomLaser_Master,
 
-
+            /// <summary> 一阶段和2阶段的切换，使用在2阶段 </summary>
+            P1ToP2Exchange,
+            /// <summary> 二阶段招式，跳起后斜向下冲刺之后玩家在头顶就升龙拳宰回旋砍，不在就只回旋砍 </summary>
+            SmashDownh,
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -259,6 +269,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 } while (false);
             }
 
+            StarsBackSky sky = ((StarsBackSky)SkyManager.Instance["StarsBackSky"]);
+            if (sky.Timeleft < 100)
+                sky.Timeleft += 2;
+            if (sky.Timeleft>100)
+                sky.Timeleft = 100;
+
             switch (Phase)
             {
                 default:
@@ -269,6 +285,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         if (State != (int)AIStates.OnSpawnAnmi && !GetSmallBalls())
                         {
                             //切换状态
+                            ExchangeToPhase2();
                             return;
                         }
 
@@ -320,7 +337,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case (int)AIPhases.ShadowPlayer:
                     {
+                        switch (SonState)
+                        {
+                            default:
+                            case (int)AIStates.P1ToP2Exchange:
+                                {
 
+                                }
+                                break;
+                            case (int)AIStates.SmashDownh:
+                                {
+
+                                }
+                                break;
+                        }
                     }
                     break;
                 case (int)AIPhases.BigBallSmash:
@@ -336,6 +366,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             Timer = 0;
             SonState = 0;
+            Recorder = 0;
+            Recorder2 = 0;
 
             switch (Phase)
             {
@@ -368,6 +400,21 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
 
             }
+        }
+
+        public void ExchangeToPhase2()
+        {
+            Timer = 0;
+            SonState = 0;
+            Recorder = 0;
+            Recorder2 = 0;
+
+            Phase = (int)AIPhases.ShadowPlayer;
+            State = (int)AIStates.P1ToP2Exchange;
+
+            NPC.TargetClosest();
+            ShadowPlayer=Target.clientClone();
+
         }
 
         #endregion
@@ -434,14 +481,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 {
                     int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y,
                         ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI, NPC.whoAmI);
-                    Main.npc[index].realLife = NPC.whoAmI;
-                    NPC.lifeMax += Main.npc[index].lifeMax;
+                    //Main.npc[index].realLife = NPC.whoAmI;
+                    //NPC.lifeMax += Main.npc[index].lifeMax;
                 }
 
-                NPC.life = NPC.lifeMax;
+                //NPC.life = NPC.lifeMax;
                 SpawnedSmallBalls = true;
             }
-
         }
 
         public void MovementLimit()
@@ -465,7 +511,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 var pos = NPC.Center - screenPos;
                 var frameBox = mainTex.Frame();
                 var origin = frameBox.Size() / 2;
-
 
                 RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
                 Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;

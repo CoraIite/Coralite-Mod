@@ -47,7 +47,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         //前往冲刺攻击
                         SetDirection();
-                        Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Flash_WithOutLine>(), Coralite.Instance.IcicleCyan, 1.2f);
+                        Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.IcicleCyan, 1.2f);
                         SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                         movePhase = 1;
                         NPC.velocity *= 0;
