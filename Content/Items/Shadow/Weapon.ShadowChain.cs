@@ -164,22 +164,6 @@ namespace Coralite.Content.Items.Shadow
             return base.OwnerCenter();
         }
 
-        protected override Vector2 GetCenter(int i)
-        {
-            if (Main.projectile.IndexInRange((int)OwnerIndex))
-            {
-                Projectile p = Main.projectile[(int)OwnerIndex];
-                if (p.active && p.type == ProjectileType<ShadowChainShadows>())
-                    return p.Center;
-
-                Projectile.Kill();
-                return Vector2.Zero;
-            }
-
-            //Projectile.Kill();
-            return base.GetCenter(i);
-        }
-
         protected override float GetStartAngle()
         {
             if (Main.projectile.IndexInRange((int)OwnerIndex))
@@ -251,7 +235,6 @@ namespace Coralite.Content.Items.Shadow
 
             if (!Main.projectile.IndexInRange((int)OwnerIndex))//防止无限套娃
             {
-
                 bool hasSpecialProj = false;
                 NPC nPC = null;
                 foreach (var proj in Main.projectile)

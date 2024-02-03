@@ -115,7 +115,6 @@ namespace Coralite.Content.Items.ShadowCastle
         public ref float Combo => ref Projectile.ai[1];
 
         public static Asset<Texture2D> trailTexture;
-        public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
         public ShaduraSlash() : base(new Vector2(52, 56).ToRotation(), trailLength: 48) { }
@@ -135,7 +134,6 @@ namespace Coralite.Content.Items.ShadowCastle
                 return;
 
             trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "HLightSlashTrail");
-            WarpTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "WarpTex");
             GradientTexture = Request<Texture2D>(AssetDirectory.ShadowCastleItems + "ShaduraGradient");
         }
 
@@ -145,7 +143,6 @@ namespace Coralite.Content.Items.ShadowCastle
                 return;
 
             trailTexture = null;
-            WarpTexture = null;
             GradientTexture = null;
         }
 

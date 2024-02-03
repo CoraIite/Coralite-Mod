@@ -332,12 +332,8 @@ namespace Coralite.Content.Evevts.ShadowCastle
         {
             get
             {
-                if (Main.projectile.IndexInRange((int)Projectile.ai[0]))
-                {
-                    Projectile p = Main.projectile[(int)Projectile.ai[0]];
-                    if (p.active && p.type == ModContent.ProjectileType<BlackHoleMainProj>())
-                        return p;
-                }
+                if (ProjectilesHelper.GetProjectile<BlackHoleMainProj>((int)Projectile.ai[0], out Projectile p))
+                    return p;
 
                 Projectile.Kill();
                 return null;

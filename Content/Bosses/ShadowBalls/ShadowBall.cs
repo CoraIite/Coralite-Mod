@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+﻿using Coralite.Content.Items.Shadow;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
@@ -57,15 +57,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
         /// 生成时自下而上出现的高度
         /// </summary>
         public float SpawnOverflowHeight;
-        //public bool CanDamage; 
+        public bool CanDamage;
 
         private Player ShadowPlayer;
 
-        private static readonly RasterizerState OverflowHiddenRasterizerState = new RasterizerState
+        internal static readonly RasterizerState OverflowHiddenRasterizerState = new RasterizerState
         {
             CullMode = CullMode.None,
             ScissorTestEnable = true
         };
+
+        public const int ShadowCount = 16;
 
         #region tmlHooks
 
@@ -187,6 +189,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
+            if (CanDamage)
+                return base.CanHitPlayer(target, ref cooldownSlot);
+
             return false;
         }
 
@@ -224,7 +229,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// <summary> 一阶段和2阶段的切换，使用在2阶段 </summary>
             P1ToP2Exchange,
             /// <summary> 二阶段招式，跳起后斜向下冲刺之后玩家在头顶就升龙拳宰回旋砍，不在就只回旋砍 </summary>
-            SmashDownh,
+            SmashDown,
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -240,6 +245,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             MovementLimitRect.Height -= 400;
 
             //CanDamage = false;
+
+            NPC.oldPos = new Vector2[ShadowCount];
         }
 
         public override void AI()
@@ -272,7 +279,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             StarsBackSky sky = ((StarsBackSky)SkyManager.Instance["StarsBackSky"]);
             if (sky.Timeleft < 100)
                 sky.Timeleft += 2;
-            if (sky.Timeleft>100)
+            if (sky.Timeleft > 100)
                 sky.Timeleft = 100;
 
             switch (Phase)
@@ -337,17 +344,22 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case (int)AIPhases.ShadowPlayer:
                     {
-                        switch (SonState)
+                        switch (State)
                         {
                             default:
                             case (int)AIStates.P1ToP2Exchange:
                                 {
-
+                                    Vector2 center = NPC.Center;
+                                    NPC.width = (int)(32 * NPC.scale);
+                                    NPC.height = (int)(48 * NPC.scale);
+                                    NPC.Center = center;
+                                    State = (int)AIStates.SmashDown;
                                 }
                                 break;
-                            case (int)AIStates.SmashDownh:
+                            case (int)AIStates.SmashDown:
                                 {
-
+                                    SmashDown();
+                                    Timer++;
                                 }
                                 break;
                         }
@@ -390,7 +402,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case (int)AIPhases.ShadowPlayer:
                     {
-
+                        State = (int)AIStates.SmashDown;
                     }
                     break;
                 case (int)AIPhases.BigBallSmash:
@@ -413,8 +425,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             State = (int)AIStates.P1ToP2Exchange;
 
             NPC.TargetClosest();
-            ShadowPlayer=Target.clientClone();
-
+            ShadowPlayer = new Player();
+            ShadowPlayer.armor[0] = new Item(ModContent.ItemType<ShadowHead>());
+            ShadowPlayer.armor[1] = new Item(ModContent.ItemType<ShadowBreastplate>());
+            ShadowPlayer.armor[2] = new Item(ModContent.ItemType<ShadowLegs>());
         }
 
         #endregion
@@ -498,42 +512,78 @@ namespace Coralite.Content.Bosses.ShadowBalls
             NPC.Center = center;
         }
 
+        public void InitCaches()
+        {
+            for (int i = 0; i < ShadowCount; i++)
+                NPC.oldPos[i] = NPC.Center;
+        }
+
+        public void UpdateCachesNormally()
+        {
+
+        }
+
+        /// <summary>
+        /// 让拖尾数组随机出现在NPC周围的一个圆圈范围
+        /// </summary>
+        /// <param name="width"></param>
+        public void UpdateCacheRandom(float width)
+        {
+            for (int i = 0; i < ShadowCount; i++)
+                NPC.oldPos[i] = NPC.Center + Main.rand.NextVector2CircularEdge(width, width);
+        }
+
         #endregion
 
         #region Draw
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            if (State == (int)AIStates.OnSpawnAnmi)
+            switch (Phase)
             {
-                Texture2D mainTex = NPC.GetTexture();
+                default:
+                case (int)AIPhases.WithSmallBalls:
+                    {
+                        if (State == (int)AIStates.OnSpawnAnmi)
+                        {
+                            Texture2D mainTex = NPC.GetTexture();
 
-                var pos = NPC.Center - screenPos;
-                var frameBox = mainTex.Frame();
-                var origin = frameBox.Size() / 2;
+                            var pos = NPC.Center - screenPos;
+                            var frameBox = mainTex.Frame();
+                            var origin = frameBox.Size() / 2;
 
-                RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
-                Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
-                SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
+                            RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
+                            Rectangle scissorRectangle = spriteBatch.GraphicsDevice.ScissorRectangle;
+                            SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
 
-                spriteBatch.End();
-                Rectangle scissorRectangle2 = Rectangle.Intersect(GetClippingRectangle(spriteBatch, pos, frameBox), spriteBatch.GraphicsDevice.ScissorRectangle);
-                spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle2;
-                spriteBatch.GraphicsDevice.RasterizerState = OverflowHiddenRasterizerState;
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null);
+                            spriteBatch.End();
+                            Rectangle scissorRectangle2 = Rectangle.Intersect(GetClippingRectangle(spriteBatch, pos, frameBox), spriteBatch.GraphicsDevice.ScissorRectangle);
+                            spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle2;
+                            spriteBatch.GraphicsDevice.RasterizerState = OverflowHiddenRasterizerState;
+                            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null);
 
-                spriteBatch.Draw(mainTex, pos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, 0, 0);
+                            spriteBatch.Draw(mainTex, pos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, 0, 0);
 
-                rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
-                spriteBatch.End();
-                spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle;
-                spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, rasterizerState, null);
+                            rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
+                            spriteBatch.End();
+                            spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle;
+                            spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
+                            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, rasterizerState, null);
 
-                return false;
+                            return false;
+                        }
+
+                        DrawSelf(spriteBatch, screenPos, drawColor);
+                    }
+                    break;
+                case (int)AIPhases.ShadowPlayer:
+                    {
+                        //绘制影子玩家
+                        Main.PlayerRenderer.DrawPlayer(Main.Camera, ShadowPlayer, NPC.Center - new Vector2(16, 24),
+                            0, new Vector2(16, 24));
+                    }
+                    break;
             }
-
-            DrawSelf(spriteBatch, screenPos, drawColor);
 
             return false;
         }

@@ -993,6 +993,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
             return true;
         }
 
+        public void DrawSelf(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D mainTex = NPC.GetTexture();
+
+            var pos = NPC.Center - screenPos;
+            var frameBox = mainTex.Frame();
+            var origin = frameBox.Size() / 2;
+
+            spriteBatch.Draw(mainTex, pos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, 0, 0);
+        }
+
         #endregion
     }
 }

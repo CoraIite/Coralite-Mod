@@ -449,7 +449,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
-        protected virtual Vector2 GetCenter(int i) => Owner.Center;
+        protected virtual Vector2 GetCenter(int i) => OwnerCenter();
 
         protected virtual Color GetTrailColor(float factor) => Color.White;
 

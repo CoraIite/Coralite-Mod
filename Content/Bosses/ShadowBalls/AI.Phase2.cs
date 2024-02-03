@@ -26,39 +26,49 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         if (Recorder2 == 0)//自身高度还没达到指定高度时
                         {
-                            Vector2 targetPos = Target.Center + new Vector2(0, -400);
+                            Vector2 targetPos = Target.Center + new Vector2(0, -320);
                             SetDirection(targetPos, out float xLength, out _);
 
-                            if (xLength > 450)
+                            if (xLength > 250)
                                 Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction
                                     , 5f, 0.1f, 0.18f, 0.97f);
-                            else if (xLength < 200)
+                            else if (xLength < 150)
                                 Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction
                                     , 5f, 0.1f, 0.18f, 0.97f);
                             else
                                 NPC.velocity.X *= 0.92f;
 
-                            if (NPC.Center.Y < targetPos.Y)//没达到指定高度就向上加速，否则向下
+                            if (NPC.Center.Y > targetPos.Y)//没达到指定高度就向上加速，否则向下
                             {
-                                if (NPC.velocity.Y>-16)//向上加速度逐渐递减
+                                if (NPC.velocity.Y > -20)//向上加速度逐渐递减
                                 {
-                                    float factor = MathHelper.Clamp(1 - Timer / 25, 0, 1);
-                                    NPC.velocity.Y -= 0.08f + factor * 0.1f;
+                                    float factor = MathHelper.Clamp(1 - Timer / 15, 0, 1);
+                                    NPC.velocity.Y -= 0.2f + factor * 1.8f;
                                 }
                             }
                             else
                             {
+                                Recorder = targetPos.Y + 20;
                                 Recorder2 = 1;
                             }
                         }
                         else//自然下落至指定高度
                         {
-                            Vector2 targetPos = Target.Center + new Vector2(0, -380);
+                            Vector2 targetPos = new Vector2(Target.Center.X, Recorder);
+                            SetDirection(targetPos, out float xLength, out _);
 
-                            NPC.velocity.X *= 0.95f;
-                            if (NPC.velocity.Y<16)
+                            if (xLength > 250)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction
+                                    , 5f, 0.1f, 0.18f, 0.97f);
+                            else if (xLength < 150)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction
+                                    , 5f, 0.1f, 0.18f, 0.97f);
+                            else
+                                NPC.velocity.X *= 0.92f;
+
+                            if (NPC.velocity.Y < 20)
                             {
-                                NPC.velocity.Y+=0.2f;
+                                NPC.velocity.Y += 0.6f;
                             }
 
                             if (NPC.Center.Y >= targetPos.Y)//到达指定高度,准备斩击
@@ -70,68 +80,149 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         }
                     }
                     break;
-                    case 1://向下冲刺到指定位置
+                case 1://向下冲刺到指定位置
                     {
-                        const int ReadyTime = 20;
-                        const int DashTime = ReadyTime + 8;
+                        const int ReadyTime = 35;
+                        const int DashTime = ReadyTime + 25;
 
-                        if (Timer<ReadyTime)//生成闪光
+                        if (Timer < ReadyTime)//生成闪光
                         {
-                            if (Timer==2)
+                            if (Timer == 2)
                             {
                                 Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(),
-                                    Color.Purple, 0.75f);
+                                    Color.Purple, 1.2f);
+
+                                NPC.rotation = (Target.Center - NPC.Center).ToRotation();
+
+                                int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
+                                Recorder2 = ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.SmashDown_SmashDown, NPC.rotation);
                             }
 
-                            if (Timer<10)
+                            if (Timer < 10)
                             {
                                 NPC.rotation = (Target.Center - NPC.Center).ToRotation();
-                                NPC.rotation = MathHelper.Clamp(NPC.rotation, 3.141f, 0);
+                                NPC.rotation = MathHelper.Clamp(NPC.rotation, 0, 3.141f);
                             }
                         }
-                        else if(Timer<DashTime)//向下冲刺
+                        else if (Timer == ReadyTime)
                         {
-                            NPC.velocity = NPC.rotation.ToRotationVector2() * 40;//冲刺速度
-                            if (NPC.Center.Y<Target.Center.Y+80)//低于玩家后停止并在脚下生成一个弹幕平台
-                            {
+                            NPC.velocity = NPC.rotation.ToRotationVector2() * 44;//冲刺速度
+                            CanDamage = true;
+                        }
+                        else if (Timer < DashTime)//向下冲刺
+                        {
+                            NPC.velocity *= 0.99f;
+                            if (NPC.Center.Y > Target.Center.Y + 120)//低于玩家后停止并在脚下生成一个弹幕平台
+                                OnSmashDown();
+                        }
+                        else
+                            OnSmashDown();
+                    }
+                    break;
+                case 2://进行准备后向上升龙，角度根据玩家位置进行微微调整
+                    {
+                        const int ChannelTime = 30;
+                        const int ShouryuukennTime = ChannelTime + 18;
 
-                            }
+                        if (Timer < ChannelTime)
+                        {
+                            //生成蓄力粒子
+                        }
+                        else if (Timer == ChannelTime)
+                        {
+                            //向上冲刺并生成弹幕，让地面逐渐消失并生成爆炸弹幕
+                            float xLength = Target.Center.X - NPC.Center.X;
+                            float velocityX = MathHelper.Clamp((xLength / 30), -5.5f, 5.5f);
+
+                            NPC.velocity = new Vector2(velocityX, -30);
+                            CanDamage = true;
+
+                            if (ProjectilesHelper.GetProjectile<ShadowGround>((int)Recorder, out Projectile p))//让地面消失
+                                (p.ModProjectile as ShadowGround).Fade();
+                            int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
+                            ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.SmashDown_Shouryuukenn, NPC.velocity.ToRotation());
+                        }
+                        else if (Timer < ShouryuukennTime)
+                        {
+                            float factor = (Timer - ChannelTime) / (ShouryuukennTime - ChannelTime);
+
+                            NPC.velocity.Y = -40 * (1.1f - Coralite.Instance.SqrtSmoother.Smoother(factor));
+                            NPC.velocity.X *= 0.97f;
                         }
                         else
                         {
+                            CanDamage = false;
+                            SonState = 3;
+                            Timer = 0;
                         }
                     }
                     break;
-                    case 2://进行准备后向上升龙，角度根据玩家位置进行微微调整
+                case 3://悬停后朝玩家进行回旋斩
                     {
+                        const int ChannelTime = 45;
+                        const int SlashTime = ChannelTime + 80;
+                        if (Timer < ChannelTime)
+                        {
+                            //生成蓄力粒子
+                            NPC.velocity *= 0.94f;
+                        }
+                        else if (Timer == ChannelTime)
+                        {
+                            //生成斩击弹幕
+                            int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
+                           int index= ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.SmashDown_Rolling, Target.Center.X > NPC.Center.X ? 0 : 3.141f);
 
+                             (Main.projectile[index].ModProjectile as ShadowBallSlash).extraScaleAngle = MathHelper.Clamp((Target.Center.X - NPC.Center.X ) / 300, -1, 1) * 0.25f;
+                            NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 14;
+
+                            if (ProjectilesHelper.GetProjectile<ShadowGround>((int)Recorder, out Projectile p))//让地面消失
+                                (p.ModProjectile as ShadowGround).Fade();
+                        }
+                        else if (Timer < SlashTime)
+                        {
+                            NPC.velocity *= 0.96f;
+                        }
+                        else
+                        {
+                            SonState++;
+                            Timer = 0;
+                        }
                     }
                     break;
-                    case 3://悬停后朝玩家进行回旋斩
+                case 4://后摇阶段
                     {
-
+                        ResetState();
                     }
                     break;
-                    case 4://后摇阶段
-                    {
-
-                    }
-                    break;
-
             }
         }
 
+        /// <summary>
+        /// 检测玩家位置进行出招，同时生成地面，使用<see cref="Recorder"/>进行记录
+        /// </summary>
         public void OnSmashDown()
         {
             NPC.velocity *= 0;
-            SonState++;
+            CanDamage = false;
+
+            //检测玩家位置，如果离自身较高就升龙，否则直接回旋斩
+            Vector2 targetPos = new Vector2(Target.Center.X, Recorder);
+            SetDirection(targetPos, out float xLength, out _);
+
+            if (xLength < 200 && Target.Center.Y < NPC.Center.Y - 100)
+                SonState = 2;
+            else
+                SonState = 3;
+
             Timer = 0;
-            Recorder = 0;
+
+            if (ProjectilesHelper.GetProjectile<ShadowBallSlash>((int)Recorder2, out Projectile p))
+                p.Kill();
+
             Recorder2 = 0;
 
-            NPC.NewProjectileInAI<ShadowGround>(NPC.Center + new Vector2(0, NPC.height / 2)
-                ,Vector2.Zero,1,0,NPC.target,NPC.whoAmI);
-
+            Recorder = NPC.NewProjectileInAI<ShadowGround>(NPC.Center + new Vector2(0, NPC.height / 2)
+                , Vector2.Zero, 1, 0, NPC.target, NPC.whoAmI);
         }
 
         #endregion

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Evevts.ShadowCastle;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
@@ -494,22 +495,6 @@ namespace Coralite.Content.Items.CoreKeeper
 
             //Projectile.Kill();
             return base.OwnerCenter();
-        }
-
-        protected override Vector2 GetCenter(int i)
-        {
-            if (Main.projectile.IndexInRange((int)OwnerIndex))
-            {
-                Projectile p = Main.projectile[(int)OwnerIndex];
-                if (p.active && p.type == ProjectileType<RuneSoneRightProj>())
-                    return p.Center;
-
-                Projectile.Kill();
-                return Vector2.Zero;
-            }
-
-            //Projectile.Kill();
-            return base.GetCenter(i);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

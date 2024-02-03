@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
@@ -107,6 +108,38 @@ namespace Coralite.Helpers
                     totalIndexesInGroup++;
                 }
             }
+        }
+
+        public static bool GetProjectile(int projType,int index ,out Projectile p)
+        {
+            if (Main.projectile.IndexInRange(index))
+            {
+                Projectile proj = Main.projectile[index];
+                if (proj.active&&proj.type==projType)
+                {
+                    p = proj;
+                    return true;
+                }
+            }
+
+            p = null;
+            return false;
+        }
+
+        public static bool GetProjectile<T>(int index, out Projectile p) where T : ModProjectile
+        {
+            if (Main.projectile.IndexInRange(index))
+            {
+                Projectile proj = Main.projectile[index];
+                if (proj.active && proj.type == ModContent.ProjectileType<T>())
+                {
+                    p = proj;
+                    return true;
+                }
+            }
+
+            p = null;
+            return false;
         }
 
         [DebuggerHidden]

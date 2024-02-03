@@ -90,9 +90,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             for (int i = 0; i < 300; i++)
             {
-                Vector2 currentPos = originPos + dir * i * 8;
+                Vector2 currentPos = originPos + dir * i * 12;
                 if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
+                {
+                    currentPos.X = MathHelper.Clamp(currentPos.X, 
+                        CoraliteWorld.shadowBallsFightArea.X, 
+                        CoraliteWorld.shadowBallsFightArea.X + CoraliteWorld.shadowBallsFightArea.Width);
+                    currentPos.Y = MathHelper.Clamp(currentPos.Y,
+                        CoraliteWorld.shadowBallsFightArea.Y,
+                        CoraliteWorld.shadowBallsFightArea.Y + CoraliteWorld.shadowBallsFightArea.Height);
+
+                    laserTrailPoints.Add(currentPos);
                     break;
+                }
 
                 laserTrailPoints.Add(currentPos);
             }
@@ -280,7 +290,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 Vector2 currentPos = originPos + dir * i * 8;
                 if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
+                {
+                    currentPos.X = MathHelper.Clamp(currentPos.X,
+                        CoraliteWorld.shadowBallsFightArea.X,
+                        CoraliteWorld.shadowBallsFightArea.X + CoraliteWorld.shadowBallsFightArea.Width);
+                    currentPos.Y = MathHelper.Clamp(currentPos.Y,
+                        CoraliteWorld.shadowBallsFightArea.Y,
+                        CoraliteWorld.shadowBallsFightArea.Y + CoraliteWorld.shadowBallsFightArea.Height);
+
+                    laserTrailPoints.Add(currentPos);
                     break;
+                }
 
                 laserTrailPoints.Add(currentPos);
             }
