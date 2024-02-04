@@ -73,7 +73,7 @@ namespace Coralite.Content.WorldGeneration
 
             shadowBallsFightArea = new Microsoft.Xna.Framework.Rectangle(
                 tag.Get<int>("shadowBallsFightAreaX"),
-                tag.Get<int>("shadowBallsFightAreaY"), 70 * 16, 54 * 16);
+                tag.Get<int>("shadowBallsFightAreaY"), 74 * 16, 59 * 16);
         }
     }
 }

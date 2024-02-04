@@ -3,13 +3,11 @@ using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
 
@@ -18,7 +16,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// <summary>
     /// 使用ai0传入持有者,ai1传入射击时间
     /// </summary>
-    public class SmallLaser : ModProjectile
+    public class SmallLaser : ModProjectile,IShadowBallPrimitive
     {
         public override string Texture => AssetDirectory.ShadowCastleEvents + "Trail";
 
@@ -88,18 +86,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Vector2 originPos = owner.Center + dir * owner.width / 2;
             laserTrailPoints.Add(originPos);
 
-            for (int i = 0; i < 300; i++)
+            for (int i = 0; i < 200; i++)
             {
                 Vector2 currentPos = originPos + dir * i * 12;
                 if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
                 {
-                    currentPos.X = MathHelper.Clamp(currentPos.X, 
-                        CoraliteWorld.shadowBallsFightArea.X, 
-                        CoraliteWorld.shadowBallsFightArea.X + CoraliteWorld.shadowBallsFightArea.Width);
-                    currentPos.Y = MathHelper.Clamp(currentPos.Y,
-                        CoraliteWorld.shadowBallsFightArea.Y,
-                        CoraliteWorld.shadowBallsFightArea.Y + CoraliteWorld.shadowBallsFightArea.Height);
-
+                    for (int j = 0; j < 12; j++)
+                    {
+                        if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
+                            currentPos -= dir;
+                        else break;
+                    }
                     laserTrailPoints.Add(currentPos);
                     break;
                 }
@@ -146,51 +143,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool PreDraw(ref Color lightColor)
         {
-            RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
-            float count = laserTrailPoints.Count;
-            Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
-            for (int i = 0; i < count; i++)
-            {
-                float factor = 1f - i / count;
-                Vector2 Center = laserTrailPoints[i];
-                Vector2 width = GetWidh(1f - factor) * dir;
-                Vector2 Top = Center + width;
-                Vector2 Bottom = Center - width;
-
-                bars.Add(new(Top.Vec3(), Color.White, new Vector2(factor, 0)));
-                bars.Add(new(Bottom.Vec3(), Color.White, new Vector2(factor, 1)));
-            }
-
-            if (bars.Count > 2)
-            {
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
-
-                Effect effect = Filters.Scene["ShadowLaser"].GetShader().Shader;
-
-                Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-                Matrix view = Main.GameViewMatrix.TransformationMatrix;
-                Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly*6);
-                effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
-                effect.Parameters["gradientTexture"].SetValue(gradientTex.Value);
-                effect.Parameters["extTexture"].SetValue(extraTex.Value);
-
-                Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
-                foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
-                {
-                    pass.Apply();
-                    Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
-                }
-
-                Main.graphics.GraphicsDevice.RasterizerState = originalState;
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-            }
-
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
             var pos = laserTrailPoints[^1] - Main.screenPosition;
             var origin = mainTex.Size() / 2;
@@ -216,6 +168,49 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (factor < 0.5f)
                 return MathF.Sin(MathHelper.PiOver2 * factor / 0.5f) * LaserWidth;
             return LaserWidth;
+        }
+
+        public virtual void DrawPrimitive(SpriteBatch spriteBatch)
+        {
+            RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
+            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            float count = laserTrailPoints.Count;
+            Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
+            for (int i = 0; i < count; i++)
+            {
+                float factor = 1f - i / count;
+                Vector2 Center = laserTrailPoints[i];
+                Vector2 width = GetWidh(1f - factor) * dir;
+                Vector2 Top = Center + width;
+                Vector2 Bottom = Center - width;
+
+                bars.Add(new(Top.Vec3(), Color.White, new Vector2(factor, 0)));
+                bars.Add(new(Bottom.Vec3(), Color.White, new Vector2(factor, 1)));
+            }
+
+            if (bars.Count > 2)
+            {
+                Effect effect = Filters.Scene["ShadowLaser"].GetShader().Shader;
+
+                Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+                Matrix view = Main.GameViewMatrix.TransformationMatrix;
+                Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 6);
+                effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+                effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
+                effect.Parameters["gradientTexture"].SetValue(gradientTex.Value);
+                effect.Parameters["extTexture"].SetValue(extraTex.Value);
+
+                Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
+                foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+                {
+                    pass.Apply();
+                    Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                }
+
+                Main.graphics.GraphicsDevice.RasterizerState = originalState;
+            }
         }
     }
 
@@ -308,6 +303,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool PreDraw(ref Color lightColor)
         {
+            return false;
+        }
+
+        public override void DrawPrimitive(SpriteBatch spriteBatch)
+        {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
             List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
             float count = laserTrailPoints.Count;
@@ -327,9 +327,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (bars.Count > 2)
             {
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
-
                 Effect effect = Filters.Scene["ShadowLaser"].GetShader().Shader;
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
@@ -350,12 +347,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 }
 
                 Main.graphics.GraphicsDevice.RasterizerState = originalState;
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             }
-
-            return false;
         }
-
     }
 }

@@ -2778,6 +2778,7 @@ Mods: {
 			// SpawnProj.DisplayName: Spawn Proj
 			// ShadowBallSlash.DisplayName: Shadow Ball Slash
 			// ShadowGround.DisplayName: Shadow Ground
+			// ShadowBallSlash2.DisplayName: Shadow Ball Slash2
 		}
 
 		Configs: {

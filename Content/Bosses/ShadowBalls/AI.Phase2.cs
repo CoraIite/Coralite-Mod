@@ -126,6 +126,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         if (Timer < ChannelTime)
                         {
+                            if (Timer == 2)
+                            {
+                                float xLength = Target.Center.X - NPC.Center.X;
+                                float velocityX = MathHelper.Clamp((xLength / 30), -5.5f, 5.5f);
+
+                                Vector2 velocity = new Vector2(velocityX, -30);
+
+                                int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
+                                ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.SmashDown_Shouryuukenn, velocity.ToRotation());
+                            }
                             //生成蓄力粒子
                         }
                         else if (Timer == ChannelTime)
@@ -139,8 +149,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                             if (ProjectilesHelper.GetProjectile<ShadowGround>((int)Recorder, out Projectile p))//让地面消失
                                 (p.ModProjectile as ShadowGround).Fade();
-                            int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
-                            ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.SmashDown_Shouryuukenn, NPC.velocity.ToRotation());
                         }
                         else if (Timer < ShouryuukennTime)
                         {
@@ -159,20 +167,23 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 3://悬停后朝玩家进行回旋斩
                     {
-                        const int ChannelTime = 45;
+                        const int ChannelTime = 35;
                         const int SlashTime = ChannelTime + 80;
                         if (Timer < ChannelTime)
                         {
+                            if (Timer == 2)
+                            {
+                                //生成斩击弹幕
+                                int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
+                                int index = ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.SmashDown_Rolling, Target.Center.X > NPC.Center.X ? 0 : 3.141f);
+
+                                (Main.projectile[index].ModProjectile as ShadowBallSlash).extraScaleAngle = MathHelper.Clamp((Target.Center.X - NPC.Center.X) / 300, -1, 1) * 0.25f;
+                            }
                             //生成蓄力粒子
                             NPC.velocity *= 0.94f;
                         }
                         else if (Timer == ChannelTime)
                         {
-                            //生成斩击弹幕
-                            int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
-                           int index= ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.SmashDown_Rolling, Target.Center.X > NPC.Center.X ? 0 : 3.141f);
-
-                             (Main.projectile[index].ModProjectile as ShadowBallSlash).extraScaleAngle = MathHelper.Clamp((Target.Center.X - NPC.Center.X ) / 300, -1, 1) * 0.25f;
                             NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 14;
 
                             if (ProjectilesHelper.GetProjectile<ShadowGround>((int)Recorder, out Projectile p))//让地面消失
@@ -227,5 +238,172 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         #endregion
 
+        #region VerticalRolling 横砍->旋转
+
+        public void VerticalRolling()
+        {
+            switch (SonState)
+            {
+                default:
+                case 0://移动到与玩家平齐后开砍！
+                case 1://同上
+                case 2://同上
+                    {
+                        const int ChasingTime = 75;
+                        const int ReadyTime = ChasingTime + 30;
+                        const int SlashTIme = ReadyTime + 20;
+
+                        if (Timer < ChasingTime)
+                        {
+                            Vector2 targetPos = Target.Center;
+                            SetDirection(targetPos, out float xLength, out float yLength);
+
+                            if (xLength > 160)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction
+                                    , 13f, 0.45f, 0.58f, 0.97f);
+                            else if (xLength < 140)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction
+                                    , 13f, 0.45f, 0.58f, 0.97f);
+                            else
+                                NPC.velocity.X *= 0.8f;
+
+                            //控制Y方向的移动
+                            if (yLength > 5)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY
+                                    , 12f, 0.44f, 0.58f, 0.97f);
+                            else
+                                NPC.velocity.Y *= 0.8f;
+                        }
+                        else if (Timer == ChasingTime)
+                        {
+                            int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
+                            ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.VerticalRolling, NPC.spriteDirection > 0 ? 0 : 3.141f);
+                        }
+                        else if (Timer < ReadyTime)
+                        {
+                            if (Timer<ReadyTime+10)
+                            {
+                                Vector2 targetPos = Target.Center;
+                                SetDirection(targetPos, out float xLength, out float yLength);
+
+                                if (xLength > 160)
+                                    Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction
+                                        , 6f, 0.35f, 0.48f, 0.97f);
+                                else if (xLength < 140)
+                                    Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction
+                                        , 6f, 0.35f, 0.48f, 0.97f);
+                                else
+                                    NPC.velocity.X *= 0.8f;
+
+                                //控制Y方向的移动
+                                if (yLength > 5)
+                                    Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY
+                                        , 4f, 0.24f, 0.38f, 0.97f);
+                                else
+                                    NPC.velocity.Y *= 0.8f;
+                            }
+                            else
+                            NPC.velocity *= 0.93f;
+                        }
+                        else if (Timer == ReadyTime)//冲刺！冲刺！
+                        {
+                            NPC.velocity = new Vector2(NPC.spriteDirection * 14, 0);
+                            CanDamage = true;
+                        }
+                        else if (Timer < SlashTIme)
+                        {
+                            NPC.velocity *= 0.99f;
+                        }
+                        else//如果玩家与自身距离较远那么就接着尝试接近并砍，否则直接进入转圈圈阶段
+                        {
+                            CanDamage = false;
+                            NPC.velocity *= 0;
+                            if (Vector2.Distance(NPC.Center, Target.Center) < 140)
+                                SonState = 3;
+                            else
+                                SonState++;
+
+                            Timer = 0;
+                        }
+                    }
+                    break;
+                case 3://向上运动后转圈圈，自身消散后结束时重组
+                    {
+                        const int ReadyTime = 25;
+                        const int SlashTime = ReadyTime + 90;
+                        const int DelayTime = SlashTime + 30;
+
+                        if (Timer < ReadyTime)
+                        {
+                            //消散
+                            if (Timer == 2)
+                            {
+                                float angle = Main.rand.NextFloat(MathHelper.TwoPi);
+                                int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
+                                ShadowBallSlash2.Spawn(NPC, damage, angle);
+                                ShadowBallSlash2.Spawn(NPC, damage, angle + MathHelper.Pi);
+                            }
+                        }
+                        else if (Timer == ReadyTime)
+                        {
+                            NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 12;
+                            CanDamage = true;
+                        }
+                        else if (Timer < SlashTime)
+                        {
+                            float factor = (Timer - ReadyTime) / (SlashTime - ReadyTime);
+
+                            float targetAngle = (Target.Center - NPC.Center).ToRotation();
+                            float velAngle = NPC.velocity.ToRotation();
+
+                            NPC.velocity = velAngle.AngleLerp(targetAngle, 0.4f).ToRotationVector2()
+                                * (1 - Coralite.Instance.SqrtSmoother.Smoother(factor)) * 12;
+                        }
+                        else if (Timer == SlashTime)
+                        {
+                            NPC.velocity *= 0;
+                            CanDamage = false;
+                        }
+                        else if (Timer < DelayTime)
+                        {
+                            //聚集重组回来
+                        }
+                        else
+                        {
+                            ResetState();
+                        }
+                    }
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region SkJump 斜上方冲刺->下砸
+
+        public void SkyJump()
+        {
+            switch (SonState)
+            {
+                default:
+                case 0://斜上方冲刺
+                    {
+
+                    }
+                    break;
+                    case 1://在玩家头顶悬停，并跟随
+                    {
+
+                    }
+                    break;
+                case 2://下砸
+                    {
+
+                    }
+                    break;
+            }
+        }
+
+        #endregion
     }
 }

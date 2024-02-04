@@ -86,8 +86,8 @@ namespace Coralite.Content.Tiles.ShadowCastle
                 Projectile.NewProjectile(new EntitySource_TileInteraction(Main.LocalPlayer, i, j),
                     p.ToVector2() * 16, Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 1, 0, Main.myPlayer);
 
-                p -= new Point(34, 6);
-                CoraliteWorld.shadowBallsFightArea = new Rectangle(p.X * 16, p.Y * 16, 70 * 16, 54 * 16);
+                p -= new Point(36, 8);
+                CoraliteWorld.shadowBallsFightArea = new Rectangle(p.X * 16, p.Y * 16, 74 * 16, 59 * 16);
 
                 //if (Main.netMode != NetmodeID.MultiplayerClient)
                 //    NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, type);

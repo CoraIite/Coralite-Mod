@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Humanizer.In;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
@@ -74,8 +75,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override void SetStaticDefaults()
         {
             NPCID.Sets.MPAllowedEnemies[Type] = true;
+            NPCID.Sets.MustAlwaysDraw[Type] = true;
         }
-
+        
         public override void SetDefaults()
         {
             NPC.width = 120;
@@ -230,6 +232,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             P1ToP2Exchange,
             /// <summary> 二阶段招式，跳起后斜向下冲刺之后玩家在头顶就升龙拳宰回旋砍，不在就只回旋砍 </summary>
             SmashDown,
+            /// <summary> 二阶段招式，与玩家尝试水平后进行斩击，之后大风车 </summary>
+            VerticalRolling,
+            /// <summary> 二阶段招式，先向斜上方冲刺，之后下砸 </summary>
+            SkyJump,
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -299,6 +305,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         switch (State)
                         {
                             default:
+                                ResetState();
+                                break;
                             case (int)AIStates.OnSpawnAnmi:
                                 {
                                     OnSpawnAnmi();
@@ -347,6 +355,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         switch (State)
                         {
                             default:
+                                ResetState();
+                                break;
                             case (int)AIStates.P1ToP2Exchange:
                                 {
                                     Vector2 center = NPC.Center;
@@ -362,7 +372,23 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                     Timer++;
                                 }
                                 break;
+                            case (int)AIStates.VerticalRolling:
+                                {
+                                    VerticalRolling();
+                                    Timer++;
+                                }
+                                break;
                         }
+
+                        //更新影子玩家
+                        ShadowPlayer.direction = NPC.spriteDirection;
+                        ShadowPlayer.velocity = NPC.velocity;
+                        ShadowPlayer.Center = NPC.Center;
+                        ShadowPlayer.UpdateDyes();
+                        //Shadow.DisplayDollUpdate();
+                        ShadowPlayer.UpdateSocialShadow();
+                        ShadowPlayer.PlayerFrame();
+
                     }
                     break;
                 case (int)AIPhases.BigBallSmash:
@@ -402,7 +428,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case (int)AIPhases.ShadowPlayer:
                     {
-                        State = (int)AIStates.SmashDown;
+                        State = Main.rand.Next(2) switch
+                        {
+                            0 => (int)AIStates.SmashDown,
+                            _ => (int)AIStates.VerticalRolling,
+                            //2 => (int)AIStates.LaserWithBeam,
+                            //3 => (int)AIStates.LeftRightLaser,
+                            //4 => (int)AIStates.RollingShadowPlayer,
+                            //_ => (int)AIStates.RandomLaser,
+                        };
+
+                        State = (int)AIStates.VerticalRolling;
                     }
                     break;
                 case (int)AIPhases.BigBallSmash:
@@ -425,10 +461,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
             State = (int)AIStates.P1ToP2Exchange;
 
             NPC.TargetClosest();
-            ShadowPlayer = new Player();
-            ShadowPlayer.armor[0] = new Item(ModContent.ItemType<ShadowHead>());
-            ShadowPlayer.armor[1] = new Item(ModContent.ItemType<ShadowBreastplate>());
-            ShadowPlayer.armor[2] = new Item(ModContent.ItemType<ShadowLegs>());
+            ShadowPlayer = Target.clientClone();
+            ShadowPlayer.armor[10] = new Item(ModContent.ItemType<ShadowHead>());
+            ShadowPlayer.armor[11] = new Item(ModContent.ItemType<ShadowBreastplate>());
+            ShadowPlayer.armor[12] = new Item(ModContent.ItemType<ShadowLegs>());
+
+            ShadowPlayer.ResetVisibleAccessories();
         }
 
         #endregion
@@ -480,7 +518,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             xLength = NPC.Center.X - targetPos.X;
             yLength = NPC.Center.Y - targetPos.Y;
 
-            NPC.direction = xLength > 0 ? -1 : 1;
+            NPC.direction= NPC.spriteDirection = xLength > 0 ? -1 : 1;
             NPC.directionY = yLength > 0 ? -1 : 1;
 
             xLength = Math.Abs(xLength);
@@ -539,6 +577,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
+
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile p = Main.projectile[i];
+                if (p.active&&p.ModProjectile is IShadowBallPrimitive primitive)
+                    primitive.DrawPrimitive(Main.spriteBatch);
+            }
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
             switch (Phase)
             {
                 default:

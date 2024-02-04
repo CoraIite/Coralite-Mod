@@ -69,9 +69,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 //    scale = Vector2.Lerp(new Vector2(0.5f, 0.5f)
                 //        , new Vector2(0.05f, 0.05f), factor);
                 //}
-                if (Timer < 45)
+                if (Timer < 30)
                 {
-                    float factor = Timer / 45f;
+                    float factor = Timer / 30f;
                     factor = Coralite.Instance.BezierEaseSmoother.Smoother(factor);
 
                     scale = Vector2.Lerp(Vector2.Zero/*new Vector2(0.5f, 0.5f)*/, Vector2.One * 1.3f, factor/*(Timer - 70) / 15*/);
@@ -165,7 +165,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         private void DrawSunAndMoon(SceneArea sceneArea)
         {
-            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera+ "NightmareSparkle").Value;
+            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "NightmareSparkle").Value;
             var frameBox = mainTex.Frame(1, 2, 0, 1);
 
             int num2 = sceneArea.bgTopY;
@@ -191,7 +191,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
 
             scale *= ForcedMinimumZoom;
-                starsHit = 0;
+            starsHit = 0;
 
             if (dayTime)
             {
@@ -263,6 +263,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
             State = 0;
             Timer = 0;
             _isActive = false;
+        }
+    }
+
+    public class StarsBackSystem : ModSystem
+    {
+        public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
+        {
+            if (SkyManager.Instance["StarsBackSky"].IsActive())
+            {
+                StarsBackSky sky = ((StarsBackSky)SkyManager.Instance["StarsBackSky"]);
+                backgroundColor = Color.Lerp(backgroundColor,new Color(68,0,96), 0.7f * sky.Timeleft / 100f);
+                tileColor= Color.Lerp(tileColor, new Color(88, 20, 146), 0.5f * sky.Timeleft / 100f);
+            }
         }
     }
 }
