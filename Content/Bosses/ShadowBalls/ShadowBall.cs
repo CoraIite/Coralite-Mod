@@ -236,6 +236,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             VerticalRolling,
             /// <summary> 二阶段招式，先向斜上方冲刺，之后下砸 </summary>
             SkyJump,
+            /// <summary> 二阶段招式，横向冲刺，主要用于过渡 </summary>
+            HorizontalDash,
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -378,6 +380,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                     Timer++;
                                 }
                                 break;
+                            case (int)AIStates.SkyJump:
+                                {
+                                    SkyJump();
+                                    Timer++;
+                                }
+                                break;
                         }
 
                         //更新影子玩家
@@ -428,17 +436,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case (int)AIPhases.ShadowPlayer:
                     {
-                        State = Main.rand.Next(2) switch
+                        State = Main.rand.Next(3) switch
                         {
                             0 => (int)AIStates.SmashDown,
-                            _ => (int)AIStates.VerticalRolling,
-                            //2 => (int)AIStates.LaserWithBeam,
+                            1 => (int)AIStates.VerticalRolling,
+                            _ => (int)AIStates.SkyJump,
                             //3 => (int)AIStates.LeftRightLaser,
                             //4 => (int)AIStates.RollingShadowPlayer,
                             //_ => (int)AIStates.RandomLaser,
                         };
 
-                        State = (int)AIStates.VerticalRolling;
+                        //State = (int)AIStates.SkyJump;
                     }
                     break;
                 case (int)AIPhases.BigBallSmash:

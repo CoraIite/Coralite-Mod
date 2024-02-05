@@ -84,6 +84,9 @@ namespace Coralite.Content.WorldGeneration
                     position += new Point(-12, -13);
                     if (!WorldGen.InWorld(position.X, position.Y))
                         continue;
+                    if (!WorldGen.InWorld(position.X+shrineTex.Width, position.Y+shrineTex.Height))
+                        continue;
+
                     if (!GenVars.structures.CanPlace(new Rectangle(position.X, position.Y, 12 * 2, 14 * 2)))
                         continue;
 

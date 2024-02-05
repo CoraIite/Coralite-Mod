@@ -58,6 +58,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// 横砍
             /// </summary>
             VerticalRolling,
+
+            /// <summary>
+            /// 跳跃下砸，向上跳
+            /// </summary>
+            SkyJump_JumpUp,
         }
 
         /// <summary>
@@ -224,6 +229,19 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         setScale = false;
                     }
                     break;
+                    case (int)ComboType.SkyJump_JumpUp:{
+                    startAngle = 0f;
+                    totalAngle = 0.02f;
+                    minTime = 30 * 5;
+                    maxTime = minTime + 20 * 5;
+                    Smoother = Coralite.Instance.BezierEaseSmoother;
+                    extraScaleAngle = 0f;
+                    minScale = 1f;
+                    maxScale = 1f;
+                    useSlashTrail = false;
+                    distanceToOwner = -40;
+                    }
+                    break;
             }
 
             recordStartAngle = Math.Abs(startAngle);
@@ -246,6 +264,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                     break;
                 case (int)ComboType.SmashDown_SmashDown:
+                case (int)ComboType.SkyJump_JumpUp:
                     {
                         spriteRotation += MathHelper.TwoPi * 3 / minTime;
                         distanceToOwner = Helper.Lerp(-40, 8, (Timer / minTime));

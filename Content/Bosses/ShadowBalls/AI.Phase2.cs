@@ -281,7 +281,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         }
                         else if (Timer < ReadyTime)
                         {
-                            if (Timer<ReadyTime+10)
+                            if (Timer < ReadyTime + 10)
                             {
                                 Vector2 targetPos = Target.Center;
                                 SetDirection(targetPos, out float xLength, out float yLength);
@@ -303,7 +303,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                     NPC.velocity.Y *= 0.8f;
                             }
                             else
-                            NPC.velocity *= 0.93f;
+                                NPC.velocity *= 0.93f;
                         }
                         else if (Timer == ReadyTime)//冲刺！冲刺！
                         {
@@ -383,20 +383,154 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void SkyJump()
         {
+            const int yOffset = 340;
+
             switch (SonState)
             {
                 default:
                 case 0://斜上方冲刺
                     {
+                        const int ChasingTime = 70;
+                        const int DashTime = ChasingTime + 20;
 
+                        //先尝试与玩家平齐
+                        if (Timer < ChasingTime)
+                        {
+                            Vector2 targetPos = Target.Center;
+                            SetDirection(targetPos, out float xLength, out float yLength);
+
+                            if (xLength > 320)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction
+                                    , 13f, 0.45f, 0.58f, 0.97f);
+                            else if (xLength < 280)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction
+                                    , 13f, 0.45f, 0.58f, 0.97f);
+                            else
+                                NPC.velocity.X *= 0.8f;
+
+                            //控制Y方向的移动
+                            if (yLength > 5)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY
+                                    , 12f, 0.44f, 0.58f, 0.97f);
+                            else
+                                NPC.velocity.Y *= 0.8f;
+
+                            if (Timer == ChasingTime - 30)
+                            {
+                                //生成斩击弹幕
+                                int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
+                                ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.SkyJump_JumpUp, NPC.velocity.ToRotation());
+                            }
+                        }
+                        else if (Timer == ChasingTime)//记录玩家头顶的点
+                        {
+                            Recorder = Target.Center.X;
+                            Recorder2 = Target.Center.Y - yOffset;
+                            Vector2 targetPos = new Vector2(Recorder, Recorder2);
+
+                            float distance = (targetPos - NPC.Center).Length();
+                            NPC.velocity = (targetPos - NPC.Center).SafeNormalize(Vector2.Zero) * distance / (DashTime - ChasingTime);
+                        }
+                        else if (Timer < DashTime)
+                        {
+
+                        }
+                        else
+                        {
+                            NPC.velocity *= 0;
+                            SonState++;
+                            Timer = 0;
+                        }
                     }
                     break;
-                    case 1://在玩家头顶悬停，并跟随
+                case 1://在玩家头顶悬停，并跟随
+                    {
+                        const int StayTime = 40;
+
+                        if (Timer == 2)//生成球弹幕
+                        {
+
+                        }
+                        if (Timer < StayTime)
+                        {
+                            Vector2 targetPos = Target.Center + new Vector2(0, -yOffset-50);
+                            SetDirection(targetPos, out float xLength, out float yLength);
+                            if (xLength > 20)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction
+                                    , 8f, 0.45f, 0.58f, 0.9f);
+                            else
+                                NPC.velocity.X *= 0.85f;
+
+                            //控制Y方向的移动
+                            if (yLength > 20)
+                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY
+                                    , 6f, 0.44f, 0.58f, 0.9f);
+                            else
+                                NPC.velocity.Y *= 0.85f;
+                        }
+                        else
+                        {
+                            SonState++;
+                            Timer = 0;
+                            Vector2 targetPos = Target.Center;
+                            SetDirection(targetPos, out float xLength, out _);
+
+                            NPC.velocity = new Vector2(MathHelper.Clamp(NPC.direction*xLength/30,-6,6), 40);
+                        }
+                    }
+                    break;
+                case 2://下砸
+                    {
+                        const int SmashDownTime = 20;
+                        const int DelayTime = SmashDownTime + 40;
+
+                        if (Timer < SmashDownTime)
+                        {
+                                NPC.velocity.X *= 0.95f;
+
+                            if (Target.Center.Y + 100 < NPC.Center.Y)
+                            {
+                                Timer = SmashDownTime - 1;
+                            }
+                        }
+                        else if (Timer == SmashDownTime)
+                        {
+                            NPC.velocity = Vector2.Zero;
+                            //生成地面和其他弹幕和粒子
+                            Recorder = NPC.NewProjectileInAI<ShadowGround>(NPC.Center + new Vector2(0, NPC.height / 2)
+                                , Vector2.Zero, 1, 0, NPC.target, NPC.whoAmI);
+                        }
+                        else if (Timer < DelayTime)
+                        {
+
+                        }
+                        else
+                        {
+                            if (ProjectilesHelper.GetProjectile<ShadowGround>((int)Recorder, out Projectile p))//让地面消失
+                                (p.ModProjectile as ShadowGround).Fade();
+
+                            ResetState();
+                        }
+                    }
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region HorizontalDash 水平冲刺
+
+        public void HorizontalDash()
+        {
+            switch (SonState)
+            {
+                default:
+                case 0://尝试与玩家水平对齐
                     {
 
                     }
                     break;
-                case 2://下砸
+                case 1://水平冲刺
                     {
 
                     }

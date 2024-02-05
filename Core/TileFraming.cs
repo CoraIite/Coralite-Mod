@@ -17,7 +17,7 @@ namespace Coralite.Core
     {
         public static bool[][] tileMergeTypes;
 
-        public override void OnModLoad()
+        public override void PostAddRecipes()
         {
             tileMergeTypes = new bool[TileLoader.TileCount][];
             for (int i = 0; i < tileMergeTypes.Length; i++)
