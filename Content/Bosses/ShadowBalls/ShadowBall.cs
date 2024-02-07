@@ -238,6 +238,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             SkyJump,
             /// <summary> 二阶段招式，横向冲刺，主要用于过渡 </summary>
             HorizontalDash,
+            /// <summary> 二阶段招式，水平冲刺，之后冲向灯之影的位置并向四周抛出弹幕 </summary>
+            NightmareKingDash,
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -286,7 +288,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             StarsBackSky sky = ((StarsBackSky)SkyManager.Instance["StarsBackSky"]);
             if (sky.Timeleft < 100)
-                sky.Timeleft += 2;
+                sky.Timeleft += 3;
             if (sky.Timeleft > 100)
                 sky.Timeleft = 100;
 
@@ -386,6 +388,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                     Timer++;
                                 }
                                 break;
+                            case (int)AIStates.HorizontalDash:
+                                {
+                                    HorizontalDash();
+                                    Timer++;
+                                }
+                                break;
+                            case (int)AIStates.NightmareKingDash:
+                                {
+                                    NightmareKingDash();
+                                    Timer++;
+                                }
+                                break;
                         }
 
                         //更新影子玩家
@@ -436,17 +450,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case (int)AIPhases.ShadowPlayer:
                     {
-                        State = Main.rand.Next(3) switch
+                        State = Main.rand.Next(5) switch
                         {
                             0 => (int)AIStates.SmashDown,
                             1 => (int)AIStates.VerticalRolling,
-                            _ => (int)AIStates.SkyJump,
-                            //3 => (int)AIStates.LeftRightLaser,
-                            //4 => (int)AIStates.RollingShadowPlayer,
+                            2 => (int)AIStates.SkyJump,
+                            3 => (int)AIStates.HorizontalDash,
+                            _ => (int)AIStates.NightmareKingDash,
                             //_ => (int)AIStates.RandomLaser,
                         };
 
-                        //State = (int)AIStates.SkyJump;
+                        //State = (int)AIStates.NightmareKingDash;
                     }
                     break;
                 case (int)AIPhases.BigBallSmash:

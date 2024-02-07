@@ -142,7 +142,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             // effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
             effect.Parameters["exTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BallBack").Value);
-            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 7);
+            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 3);
             effect.Parameters["uSourceRect"].SetValue(new Vector4(frameBox.X, frameBox.Y, frameBox.Width, frameBox.Height));
             effect.Parameters["uExchange"].SetValue(0.15f + 0.05f * MathF.Sin(Main.GlobalTimeWrappedHourly));
             effect.Parameters["uImageSize0"].SetValue(mainTex.Size());

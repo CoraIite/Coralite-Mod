@@ -63,6 +63,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// 跳跃下砸，向上跳
             /// </summary>
             SkyJump_JumpUp,
+            NightmareKingDash,
         }
 
         /// <summary>
@@ -229,17 +230,32 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         setScale = false;
                     }
                     break;
-                    case (int)ComboType.SkyJump_JumpUp:{
-                    startAngle = 0f;
-                    totalAngle = 0.02f;
-                    minTime = 30 * 5;
-                    maxTime = minTime + 20 * 5;
-                    Smoother = Coralite.Instance.BezierEaseSmoother;
-                    extraScaleAngle = 0f;
-                    minScale = 1f;
-                    maxScale = 1f;
-                    useSlashTrail = false;
-                    distanceToOwner = -40;
+                case (int)ComboType.SkyJump_JumpUp:
+                    {
+                        startAngle = 0f;
+                        totalAngle = 0.02f;
+                        minTime = 30 * 5;
+                        maxTime = minTime + 20 * 5;
+                        Smoother = Coralite.Instance.BezierEaseSmoother;
+                        extraScaleAngle = 0f;
+                        minScale = 1f;
+                        maxScale = 1f;
+                        useSlashTrail = false;
+                        distanceToOwner = -40;
+                    }
+                    break;
+                case (int)ComboType.NightmareKingDash:
+                    {
+                        startAngle = 2.4f;
+                        totalAngle = 4.8f + MathHelper.TwoPi;
+                        minTime = 28 * 5;
+                        maxTime = minTime + 30 * 5;
+                        Smoother = Coralite.Instance.NoSmootherInstance;
+                        minScale = 0.8f;
+                        maxScale = 1.4f;
+                        extraScaleAngle = 0;
+
+                        setScale=false;
                     }
                     break;
             }
@@ -264,7 +280,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                     break;
                 case (int)ComboType.SmashDown_SmashDown:
-                case (int)ComboType.SkyJump_JumpUp:
                     {
                         spriteRotation += MathHelper.TwoPi * 3 / minTime;
                         distanceToOwner = Helper.Lerp(-40, 8, (Timer / minTime));
@@ -284,6 +299,22 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case (int)ComboType.VerticalRolling:
                     {
                         Projectile.scale = Helper.Lerp(0, 1f, Coralite.Instance.SqrtSmoother.Smoother(Timer / minTime));
+                    }
+                    break;
+                case (int)ComboType.SkyJump_JumpUp:
+                    {
+                        spriteRotation += MathHelper.TwoPi * 3 / minTime;
+                        distanceToOwner = Helper.Lerp(-40, 8, (Timer / minTime));
+                        if ((int)Timer == minTime)
+                        {
+                            spriteRotation = new Vector2(66, 70).ToRotation();
+                            startAngle = owner.velocity.ToRotation();
+                        }
+                    }
+                    break;
+                case (int)ComboType.NightmareKingDash:
+                    {
+                        Projectile.scale = Helper.Lerp(0, 0.8f, Coralite.Instance.SqrtSmoother.Smoother(Timer / minTime));
                     }
                     break;
 
@@ -320,10 +351,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
-            lightColor = new Color(80,0,120,0);
+            lightColor = new Color(80, 0, 120, 0);
 
             base.DrawSelf(mainTex, origin, lightColor, extraRot);
-            base.DrawSelf(mainTex, origin, lightColor*0.9f, extraRot);
+            base.DrawSelf(mainTex, origin, lightColor * 0.9f, extraRot);
         }
 
         protected override void DrawSlashTrail()
@@ -395,9 +426,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
             startAngle = 0f;
             totalAngle = 38.5f;
             minTime = 20 * 4;
-            maxTime = minTime+90 * 4;
+            maxTime = minTime + 90 * 4;
             Smoother = Coralite.Instance.BezierEaseSmoother;
-            delay = 20*4;
+            delay = 20 * 4;
             Projectile.localNPCHitCooldown = 60;
             Projectile.scale = 0.01f;
 
@@ -444,7 +475,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!GetOwner(out _))
                 return;
 
-            if (alpha<255)
+            if (alpha < 255)
             {
                 alpha += 5;
             }
@@ -454,7 +485,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         protected override void AfterSlash()
         {
-            Projectile.scale = Helper.Lerp(1f, 0, Coralite.Instance.SqrtSmoother.Smoother((Timer-maxTime) / delay));
+            Projectile.scale = Helper.Lerp(1f, 0, Coralite.Instance.SqrtSmoother.Smoother((Timer - maxTime) / delay));
 
             if (Timer > maxTime + delay)
                 Projectile.Kill();
