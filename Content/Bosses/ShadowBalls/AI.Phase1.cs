@@ -56,6 +56,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case 2://生成吼叫粒子和名称
                     {
                         //NPC.dontTakeDamage = false;
+                        InitCaches();
                         ResetState();
                         SpawnSmallBalls();
                     }

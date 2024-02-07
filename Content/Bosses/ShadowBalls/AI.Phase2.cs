@@ -4,7 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
-using System.CodeDom;
+using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls
@@ -255,6 +255,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         const int ReadyTime = ChasingTime + 30;
                         const int SlashTIme = ReadyTime + 20;
 
+                        UpdateCachesNormally();
+
                         if (Timer < ChasingTime)
                         {
                             Vector2 targetPos = Target.Center;
@@ -279,7 +281,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         else if (Timer == ChasingTime)
                         {
                             int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
-                           Recorder= ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.VerticalRolling, NPC.spriteDirection > 0 ? 0 : 3.141f);
+                            Recorder = ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.VerticalRolling, NPC.spriteDirection > 0 ? 0 : 3.141f);
                         }
                         else if (Timer < ReadyTime)
                         {
@@ -348,12 +350,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                 int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
                                 ShadowBallSlash2.Spawn(NPC, damage, angle);
                                 ShadowBallSlash2.Spawn(NPC, damage, angle + MathHelper.Pi);
+                                InitCaches();
                             }
+
+                            float factor = Timer / ReadyTime;
+                            UpdateCacheRandom(factor * 64, (int)(80 - factor * 70));
+                            alpha = 1 - factor;
                         }
                         else if (Timer == ReadyTime)
                         {
                             NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 12;
                             CanDamage = true;
+
                         }
                         else if (Timer < SlashTime)
                         {
@@ -369,10 +377,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             NPC.velocity *= 0;
                             CanDamage = false;
+                            InitCaches();
                         }
                         else if (Timer < DelayTime)
                         {
                             //聚集重组回来
+                            float factor = (Timer - SlashTime) / (DelayTime - SlashTime);
+                            factor = 1 - factor;
+                            UpdateCacheRandom(factor * 64, (int)(80 - factor * 70));
+                            alpha = 1 - factor;
                         }
                         else
                         {
@@ -621,6 +634,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 default:
                 case 0://与玩家平齐
                     {
+                        UpdateCachesNormally();
+
                         Vector2 targetPos = Target.Center;
                         SetDirection(targetPos, out float xLength, out float yLength);
 
@@ -661,12 +676,15 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         const int ReadyTime = 30;
                         const int DashTime = ReadyTime + 20;
+
+                        UpdateCachesNormally();
+
                         if (Timer < ReadyTime)
                         {
-                            if (Timer==2)
+                            if (Timer == 2)
                             {
                                 int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
-                                Recorder2 = ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.NightmareKingDash,NPC.spriteDirection>0?0:3.141f);
+                                Recorder2 = ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.NightmareKingDash, NPC.spriteDirection > 0 ? 0 : 3.141f);
                             }
                         }
                         else if (Timer == ReadyTime)//冲刺！
@@ -689,6 +707,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         const int ReadyTime = 25;
                         const int DashTime = ReadyTime + 22;
+
+                        UpdateCachesNormally();
 
                         if (Timer < ReadyTime)
                         {
@@ -737,16 +757,27 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                 NPC.NewProjectileInAI<ShadowFire>(NPC.Center, vel, damage, 0, NPC.target);
                                 baseAngle += angle * 2 / 8;
                             }
+
+                            InitCaches();
                         }
 
                         if (Timer < FadeTime)//消散
                         {
-
+                            float factor = Timer / FadeTime;
+                            UpdateCacheRandom(factor * 64, (int)(80 - factor * 70));
+                            alpha = 1-factor;
                         }
                         else if (Timer < WaitTime) { }
+                        //else if (Timer == WaitTime)
+                        //{
+                        //    InitCaches();
+                        //}
                         else if (Timer < ReTime)
                         {
-
+                            float factor = (Timer - WaitTime) / (ReTime - WaitTime);
+                            factor = 1 - factor;
+                            UpdateCacheRandom(factor * 64, (int)(80 - factor * 70));
+                            alpha = 1 - factor;
                         }
                         else
                             ResetState();

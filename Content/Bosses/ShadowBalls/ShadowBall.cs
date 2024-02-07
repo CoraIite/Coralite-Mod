@@ -11,7 +11,6 @@ using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Humanizer.In;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
@@ -70,6 +69,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public const int ShadowCount = 16;
 
+        /// <summary>
+        /// NPC的透明度
+        /// </summary>
+        public float alpha;
+
         #region tmlHooks
 
         public override void SetStaticDefaults()
@@ -77,7 +81,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.MustAlwaysDraw[Type] = true;
         }
-        
+
         public override void SetDefaults()
         {
             NPC.width = 120;
@@ -257,6 +261,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             //CanDamage = false;
 
             NPC.oldPos = new Vector2[ShadowCount];
+            alpha = 1;
         }
 
         public override void AI()
@@ -320,38 +325,45 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             case (int)AIStates.RollingLaser:
                                 {
                                     RollingLaser();
+                                    UpdateCachesNormally();
                                     Timer++;
                                 }
                                 break;
                             case (int)AIStates.ConvergeLaser:
                                 {
                                     ConvergeLaser();
+                                    UpdateCachesNormally();
                                     Timer++;
                                 }
                                 break;
                             case (int)AIStates.LaserWithBeam:
                                 {
                                     LaserWithBeam();
+                                    UpdateCachesNormally();
                                 }
                                 break;
                             case (int)AIStates.LeftRightLaser:
                                 {
                                     LeftRightLaser();
+                                    UpdateCachesNormally();
                                 }
                                 break;
                             case (int)AIStates.RollingShadowPlayer:
                                 {
                                     RollingShadowPlayer();
+                                    UpdateCachesNormally();
                                     Timer++;
                                 }
                                 break;
                             case (int)AIStates.RandomLaser:
                                 {
                                     RandomLaser();
+                                    UpdateCachesNormally();
                                 }
                                 break;
 
                         }
+
                     }
                     break;
                 case (int)AIPhases.ShadowPlayer:
@@ -373,6 +385,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             case (int)AIStates.SmashDown:
                                 {
                                     SmashDown();
+                                    UpdateCachesNormally();
                                     Timer++;
                                 }
                                 break;
@@ -385,6 +398,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             case (int)AIStates.SkyJump:
                                 {
                                     SkyJump();
+                                    UpdateCachesNormally();
                                     Timer++;
                                 }
                                 break;
@@ -540,7 +554,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             xLength = NPC.Center.X - targetPos.X;
             yLength = NPC.Center.Y - targetPos.Y;
 
-            NPC.direction= NPC.spriteDirection = xLength > 0 ? -1 : 1;
+            NPC.direction = NPC.spriteDirection = xLength > 0 ? -1 : 1;
             NPC.directionY = yLength > 0 ? -1 : 1;
 
             xLength = Math.Abs(xLength);
@@ -580,17 +594,22 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void UpdateCachesNormally()
         {
-
+            for (int i = ShadowCount - 1; i >0; i--)
+                NPC.oldPos[i] = NPC.oldPos[i-1];
+            NPC.oldPos[0] = NPC.Center;
         }
 
         /// <summary>
         /// 让拖尾数组随机出现在NPC周围的一个圆圈范围
         /// </summary>
         /// <param name="width"></param>
-        public void UpdateCacheRandom(float width)
+        public void UpdateCacheRandom(float width, int percent)
         {
             for (int i = 0; i < ShadowCount; i++)
-                NPC.oldPos[i] = NPC.Center + Main.rand.NextVector2CircularEdge(width, width);
+            {
+                if (Main.rand.NextBool(percent, 100))
+                    NPC.oldPos[i] = NPC.Center + Main.rand.NextVector2CircularEdge(width, width);
+            }
         }
 
         #endregion
@@ -605,7 +624,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile p = Main.projectile[i];
-                if (p.active&&p.ModProjectile is IShadowBallPrimitive primitive)
+                if (p.active && p.ModProjectile is IShadowBallPrimitive primitive)
                     primitive.DrawPrimitive(Main.spriteBatch);
             }
 
@@ -635,7 +654,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             spriteBatch.GraphicsDevice.RasterizerState = OverflowHiddenRasterizerState;
                             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null);
 
-                            spriteBatch.Draw(mainTex, pos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, 0, 0);
+                            spriteBatch.Draw(mainTex, pos, frameBox, drawColor * alpha, NPC.rotation, origin, NPC.scale, 0, 0);
 
                             rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
                             spriteBatch.End();
@@ -646,14 +665,22 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             return false;
                         }
 
-                        DrawSelf(spriteBatch, screenPos, drawColor);
+                        DrawSelf(spriteBatch, screenPos, drawColor * alpha);
                     }
                     break;
                 case (int)AIPhases.ShadowPlayer:
                     {
                         //绘制影子玩家
-                        Main.PlayerRenderer.DrawPlayer(Main.Camera, ShadowPlayer, NPC.Center - new Vector2(16, 24),
-                            0, new Vector2(16, 24));
+                        Vector2 pos = NPC.Center - new Vector2(16, 24);
+
+                        for (int i = 0; i < ShadowCount/2; i++)
+                        {
+                            Main.PlayerRenderer.DrawPlayer(Main.Camera, ShadowPlayer, NPC.oldPos[i] - new Vector2(16, 24),
+                                0, new Vector2(16, 24),Helper.Lerp(1 - alpha,1, (float)i / (ShadowCount/2)));
+                        }
+
+                        Main.PlayerRenderer.DrawPlayer(Main.Camera, ShadowPlayer, pos,
+                            0, new Vector2(16, 24), 1 - alpha);
                     }
                     break;
             }
@@ -670,6 +697,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
             var origin = frameBox.Size() / 2;
 
             spriteBatch.Draw(mainTex, pos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, 0, 0);
+
+            for (int i = 0; i < ShadowCount; i++)
+            {
+                spriteBatch.Draw(mainTex, NPC.oldPos[i] - screenPos, frameBox, drawColor * ((float)i / ShadowCount)
+                    , NPC.rotation, origin, NPC.scale, 0, 0);
+            }
         }
 
         public Rectangle GetClippingRectangle(SpriteBatch spriteBatch, Vector2 center, Rectangle frameBox)
