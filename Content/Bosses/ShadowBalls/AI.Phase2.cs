@@ -6,6 +6,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
@@ -24,6 +25,24 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             NPC.velocity *= 0;
                             //生成跳起的粒子
+                            for (int i = 0; i < 12; i++)
+                            {
+                                Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(8, 8),
+                                    DustID.ShadowbeamStaff, (Main.rand.NextFloat(-1.2f, 1.2f) + 1.57f).ToRotationVector2() * Main.rand.NextFloat(2, 8));
+                            }
+                        }
+
+                        for (int j = 0; j < 3; j++)
+                        {
+                            float speedDir = NPC.velocity.ToRotation();
+                            float factor2 = MathF.Sin((Timer - j / 3f) * 0.3f);
+
+                            for (int i = -1; i < 2; i += 2)
+                            {
+                                Dust d = Dust.NewDustPerfect(Vector2.Lerp(NPC.Center, NPC.oldPos[0], j / 3f) + (speedDir + 1.57f * i).ToRotationVector2() * factor2 * 16,
+                                     DustID.Clentaminator_Purple, -NPC.velocity * 0.05f);
+                                d.noGravity = true;
+                            }
                         }
 
                         if (Recorder2 == 0)//自身高度还没达到指定高度时
@@ -764,8 +783,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         if (Timer < FadeTime)//消散
                         {
                             float factor = Timer / FadeTime;
-                            UpdateCacheRandom(factor * 64, (int)(80 - factor * 70));
-                            alpha = 1-factor;
+                            UpdateCacheRandom(factor * 80, (int)(80 - factor * 70));
+                            alpha = 1 - factor;
                         }
                         else if (Timer < WaitTime) { }
                         //else if (Timer == WaitTime)
@@ -776,7 +795,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             float factor = (Timer - WaitTime) / (ReTime - WaitTime);
                             factor = 1 - factor;
-                            UpdateCacheRandom(factor * 64, (int)(80 - factor * 70));
+                            UpdateCacheRandom(factor * 80, (int)(80 - factor * 70));
                             alpha = 1 - factor;
                         }
                         else

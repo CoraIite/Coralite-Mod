@@ -297,6 +297,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (sky.Timeleft > 100)
                 sky.Timeleft = 100;
 
+            Lighting.AddLight(NPC.Center, new Vector3(1f, 0.5f, 1.8f));
+
             switch (Phase)
             {
                 default:
@@ -459,7 +461,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         };
 
                         //State = State == (int)AIStates.ConvergeLaser ? (int)AIStates.RollingLaser : (int)AIStates.ConvergeLaser;
-                        //State = (int)AIStates.RollingLaser;
+                        State = (int)AIStates.RollingLaser;
                     }
                     break;
                 case (int)AIPhases.ShadowPlayer:
@@ -474,7 +476,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             //_ => (int)AIStates.RandomLaser,
                         };
 
-                        //State = (int)AIStates.NightmareKingDash;
+                        State = (int)AIStates.NightmareKingDash;
                     }
                     break;
                 case (int)AIPhases.BigBallSmash:
@@ -569,7 +571,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 {
                     int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y,
                         ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI, NPC.whoAmI);
-                    //Main.npc[index].realLife = NPC.whoAmI;
+                    (Main.npc[index].ModNPC as SmallShadowBall).smallBallType = i;
                     //NPC.lifeMax += Main.npc[index].lifeMax;
                 }
 
@@ -594,8 +596,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void UpdateCachesNormally()
         {
-            for (int i = ShadowCount - 1; i >0; i--)
-                NPC.oldPos[i] = NPC.oldPos[i-1];
+            for (int i = ShadowCount - 1; i > 0; i--)
+                NPC.oldPos[i] = NPC.oldPos[i - 1];
             NPC.oldPos[0] = NPC.Center;
         }
 
@@ -608,7 +610,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             for (int i = 0; i < ShadowCount; i++)
             {
                 if (Main.rand.NextBool(percent, 100))
-                    NPC.oldPos[i] = NPC.Center + Main.rand.NextVector2CircularEdge(width, width);
+                    NPC.oldPos[i] = NPC.Center + Main.rand.NextVector2Circular(width, width);
             }
         }
 
@@ -652,9 +654,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             Rectangle scissorRectangle2 = Rectangle.Intersect(GetClippingRectangle(spriteBatch, pos, frameBox), spriteBatch.GraphicsDevice.ScissorRectangle);
                             spriteBatch.GraphicsDevice.ScissorRectangle = scissorRectangle2;
                             spriteBatch.GraphicsDevice.RasterizerState = OverflowHiddenRasterizerState;
-                            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null);
+                            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
 
                             spriteBatch.Draw(mainTex, pos, frameBox, drawColor * alpha, NPC.rotation, origin, NPC.scale, 0, 0);
+
+
 
                             rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
                             spriteBatch.End();
@@ -673,10 +677,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         //绘制影子玩家
                         Vector2 pos = NPC.Center - new Vector2(16, 24);
 
-                        for (int i = 0; i < ShadowCount/2; i++)
+                        for (int i = 0; i < ShadowCount / 2; i++)
                         {
                             Main.PlayerRenderer.DrawPlayer(Main.Camera, ShadowPlayer, NPC.oldPos[i] - new Vector2(16, 24),
-                                0, new Vector2(16, 24),Helper.Lerp(1 - alpha,1, (float)i / (ShadowCount/2)));
+                                0, new Vector2(16, 24), Helper.Lerp(1 - alpha, 1, (float)i / (ShadowCount / 2)));
                         }
 
                         Main.PlayerRenderer.DrawPlayer(Main.Camera, ShadowPlayer, pos,
@@ -696,13 +700,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
             var frameBox = mainTex.Frame();
             var origin = frameBox.Size() / 2;
 
-            spriteBatch.Draw(mainTex, pos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, 0, 0);
-
-            for (int i = 0; i < ShadowCount; i++)
+            for (int i = 0; i < ShadowCount / 2; i++)
             {
-                spriteBatch.Draw(mainTex, NPC.oldPos[i] - screenPos, frameBox, drawColor * ((float)i / ShadowCount)
+                spriteBatch.Draw(mainTex, NPC.oldPos[i] - screenPos, frameBox, drawColor * alpha * (1 - (float)i / (ShadowCount / 2))
                     , NPC.rotation, origin, NPC.scale, 0, 0);
             }
+
+            spriteBatch.Draw(mainTex, pos, frameBox, drawColor * alpha, NPC.rotation, origin, NPC.scale, 0, 0);
+
         }
 
         public Rectangle GetClippingRectangle(SpriteBatch spriteBatch, Vector2 center, Rectangle frameBox)
@@ -710,8 +715,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
             float height = SpawnOverflowHeight * frameBox.Height;
             Vector2 position = center + new Vector2(-frameBox.Width / 2, frameBox.Height / 2 - height);
             Vector2 size = new Vector2(frameBox.Width, height);
+
             position = Vector2.Transform(position, Main.Transform);
-            size = Vector2.Transform(size, Main.Transform);
+            //size = Vector2.Transform(size, Main.Transform);
+            size *= Main.GameZoomTarget;
+
             Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
             int screenWidth = Main.screenWidth;
             int screenHeight = Main.screenHeight;

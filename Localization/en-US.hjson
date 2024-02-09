@@ -2754,6 +2754,8 @@ Mods: {
 			ShadowGround.DisplayName: Shadow Ground
 			ShadowBallSlash2.DisplayName: Shadow Ball Slash2
 			ShadowFire.DisplayName: Shadow Fire
+			ShadowBallSmash.DisplayName: Shadow Ball Smash
+			ShadowBall_NameLine.DisplayName: Shadow Ball_ Name Line
 		}
 
 		Configs: {

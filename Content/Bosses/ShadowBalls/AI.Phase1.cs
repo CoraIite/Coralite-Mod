@@ -1,4 +1,7 @@
-﻿using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.Particles;
+using Coralite.Content.WorldGeneration;
+using Coralite.Core.Systems.ParticleSystem;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -36,6 +39,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             SonState++;
                             Timer = 0;
+
+                            NPC.NewProjectileInAI<ShadowBall_NameLine>(NPC.Center, Vector2.Zero, 1, 0, NPC.target);
                         }
                     }
                     break;
@@ -56,14 +61,26 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case 2://生成吼叫粒子和名称
                     {
                         //NPC.dontTakeDamage = false;
-                        InitCaches();
-                        ResetState();
-                        SpawnSmallBalls();
+
+                        if ((int)Timer % 10 == 0)
+                            Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>()
+                                , new Color(180, 80, 255), 0.6f);
+                        if ((int)Timer % 20 == 0)
+                            Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>()
+                                , new Color(180, 80, 255), 0.6f);
+
+                        if (Timer > 180)
+                        {
+                            SonState++;
+                            Timer = 0;
+                        }
                     }
                     break;
                 case 3://生成小球并等待小球完成生成
                     {
-
+                        InitCaches();
+                        ResetState();
+                        SpawnSmallBalls();
                     }
                     break;
 
@@ -91,7 +108,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case 1://检测小球球状态，如果全部准备好了那么就进入下一个阶段
                     {
                         //自身的运动，会尝试和玩家保持一定距离，并且会将自身限制在一个框里
-                        Vector2 targetPos =  Target.Center;
+                        Vector2 targetPos = Target.Center;
                         SetDirection(targetPos, out float xLength, out float yLength);
 
                         if (xLength > 450)

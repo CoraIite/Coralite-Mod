@@ -48,6 +48,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             (Projectile.velocity*Main.rand.NextFloat(0.8f,1.5f)).RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)),
                             CoraliteContent.ParticleType<FireParticle>(), new Color(140, 60, 255), Main.rand.NextFloat(0.8f, 1f));
 
+                        Lighting.AddLight(Projectile.Center, new Vector3(1f, 0.2f, 1.4f));
+
                         if (Projectile.Center.Y > CoraliteWorld.shadowBallsFightArea.Bottom)
                         {
                             Projectile.velocity *= 0;

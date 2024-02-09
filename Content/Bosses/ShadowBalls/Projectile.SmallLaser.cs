@@ -3,11 +3,13 @@ using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using rail;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Drawing;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
 
@@ -16,7 +18,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// <summary>
     /// 使用ai0传入持有者,ai1传入射击时间
     /// </summary>
-    public class SmallLaser : ModProjectile,IShadowBallPrimitive
+    public class SmallLaser : ModProjectile, IShadowBallPrimitive
     {
         public override string Texture => AssetDirectory.ShadowCastleEvents + "Trail";
 
@@ -25,6 +27,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         protected ref float OwnerIndex => ref Projectile.ai[0];
         protected ref float ShootTime => ref Projectile.ai[1];
         protected ref float LaserWidth => ref Projectile.localAI[0];
+        protected ref float Random => ref Projectile.localAI[1];
 
         protected float timer;
 
@@ -61,7 +64,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if (laserTrailPoints.Count<1)
+            if (laserTrailPoints.Count < 1)
                 return false;
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, laserTrailPoints[^1], 10, ref Projectile.localAI[2]);
         }
@@ -71,6 +74,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override void OnSpawn(IEntitySource source)
         {
             Projectile.timeLeft = (int)ShootTime;
+            Random = Main.rand.NextFloat(3f) * 10f;
         }
 
         public override void AI()
@@ -83,8 +87,75 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             Projectile.rotation = owner.rotation;
             Vector2 dir = owner.rotation.ToRotationVector2();
-            Vector2 originPos = owner.Center + dir * owner.width / 2;
-            laserTrailPoints.Add(originPos);
+            Projectile.Center = owner.Center + dir * owner.width / 2;
+
+
+            if (timer < 8)
+            {
+                LaserWidth += 50 / 8f;
+                UpdateCachesNormally(dir, Projectile.Center);
+
+                //if (Main.rand.NextBool())
+                //{
+                //    float rot = Projectile.rotation+Main.rand.NextFloat(-0.3f,0.3f);
+                //    Vector2 vel = rot.ToRotationVector2() * Main.rand.NextFloat(10, 18);
+                //    byte hue = (byte)(0.85f * 255f);
+                //    for (int i = 0; i < 4; i++)
+                //    ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
+                //    {
+                //        PositionInWorld = Projectile.Center,
+                //        MovementVector = vel*Main.rand.NextFloat(0.9f,1.1f),
+                //        UniqueInfoPiece = hue
+                //    });
+                //}
+            }
+            else if (timer < (ShootTime - 12))
+            {
+                LaserWidth = Helper.Lerp(LaserWidth, 16, 0.5f);
+                UpdateCachesNormally(dir, Projectile.Center);
+
+                //if (Main.rand.NextBool())
+                //{
+                //    float rot = Projectile.rotation + Main.rand.NextFloat(-0.3f, 0.3f);
+                //    Vector2 vel = rot.ToRotationVector2() * Main.rand.NextFloat(8, 12);
+                //    byte hue = (byte)(0.85f * 255f);
+                //    for (int i = 0; i < 4; i++)
+                //        ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
+                //    {
+                //        PositionInWorld = Projectile.Center,
+                //        MovementVector = vel * Main.rand.NextFloat(0.9f, 1.1f),
+                //        UniqueInfoPiece = hue
+                //    });
+
+                //}
+            }
+            else
+            {
+                LaserWidth -= 16 / 12f;
+
+                Vector2 offset = (Projectile.rotation + 1.57f).ToRotationVector2();
+                float factor = (timer - ShootTime + 10) / 10;
+
+                offset *= factor * 14;
+
+                laserTrailPoints.Add(Projectile.Center);
+
+                for (int i = 0; i < 200; i++)
+                {
+                    Vector2 currentPos = Projectile.Center + dir * i * 12 + offset * MathF.Sin(Random + i * 0.1f + timer / 4);
+                    if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
+                        break;
+
+                    laserTrailPoints.Add(currentPos);
+                }
+            }
+
+            timer++;
+        }
+
+        public void UpdateCachesNormally(Vector2 dir, Vector2 originPos)
+        {
+            laserTrailPoints.Add(Projectile.Center);
 
             for (int i = 0; i < 200; i++)
             {
@@ -103,21 +174,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 laserTrailPoints.Add(currentPos);
             }
-
-            if (timer < 8)
-            {
-                LaserWidth += 50 / 8f;
-            }
-            else if (timer < (ShootTime - 10))
-            {
-                LaserWidth = Helper.Lerp(LaserWidth, 16, 0.5f);
-            }
-            else
-            {
-                LaserWidth -=16/10f;
-            }
-
-            timer++;
         }
 
         public bool GetOwner(out NPC owner)
@@ -151,9 +207,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             Vector2 scale = new Vector2(LaserWidth / 90, LaserWidth / 130);
 
-            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale, 0, 0); 
-            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale*0.75f, 0, 0); 
-            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale*0.5f, 0, 0); 
+            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale * 0.75f, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale * 0.5f, 0, 0);
 
             return false;
         }
@@ -219,7 +275,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// </summary>
     public class SmallLaserPredictionLine : SmallLaser
     {
-        public override string Texture => AssetDirectory.OtherProjectiles+ "LaserBody";
+        public override string Texture => AssetDirectory.OtherProjectiles + "LaserBody";
 
         float alpha;
         ref float ChannelTime => ref Projectile.ai[1];
@@ -333,7 +389,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);
+                effect.Parameters["uTime"].SetValue(Random + Main.GlobalTimeWrappedHourly / 5);
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
                 effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
                 effect.Parameters["gradientTexture"].SetValue(gradientTex2.Value);

@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Dusts;
 using Coralite.Content.Items.Nightmare;
+using Coralite.Content.Items.ShadowCastle;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.Trails;
@@ -231,6 +232,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                     return new Color(127, 127, 127);
                 case 23:    //迷迭香
                     return NightmarePlantera.nightmareRed;
+                case 24:    //月影
+                    return new Color(189, 109, 255);
             }
 
             return Color.White;
@@ -438,7 +441,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             SpriteEffects effects;
             effects = Projectile.spriteDirection < 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Color backgroundColor = Color.Lerp(new Color(200, 0, 0, 0), new Color(0, 0, 0, 50), Timer / 60);
+            Color backgroundColor = Color.Lerp(new Color(200, 0, 0, 0), new Color(0, 0, 0, 0), Timer / 60);
             Main.spriteBatch.Draw(mainTex, center, null, backgroundColor * alpha, Projectile.rotation, mainTex.Size() / 2, 1f, effects, 0f);
             Main.spriteBatch.Draw(mainTex, center, null, new Color(204, 204, 204) * alpha, Projectile.rotation, mainTex.Size() / 2, 0.8f, effects, 0f);
 
@@ -502,6 +505,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                     return ItemID.Handgun;
                 case 23:
                     return ModContent.ItemType<Lycoris>();
+                case 24:
+                    return ModContent.ItemType<ShadowWave>();
             }
 
             return (int)Projectile.ai[0];

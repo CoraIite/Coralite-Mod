@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             if (Main.myPlayer == player.whoAmI)
             {
                 List<int> textureList = new List<int>();
-                for (int i = 1; i < 24; i++)
+                for (int i = 1; i < 25; i++)
                     textureList.Add(-i);
 
                 for (int i = 0; i < 3; i++)     //生成环绕的幻影枪弹幕

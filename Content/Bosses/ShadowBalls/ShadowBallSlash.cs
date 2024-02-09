@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Effects;
+using static Humanizer.In;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Bosses.ShadowBalls
@@ -187,7 +188,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     useSlashTrail = false;
                     distanceToOwner = -40;
 
-                    Helper.PlayPitched("Misc/Swing", 0.4f, 0f, Owner.Center);
                     break;
                 case (int)ComboType.SmashDown_Shouryuukenn://升龙
                     startAngle = 1.6f;
@@ -200,7 +200,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     minScale = 0.8f;
                     maxScale = 1.3f;
 
-                    Helper.PlayPitched("Misc/Swing", 0.4f, 0f, Owner.Center);
                     setScale = false;
                     break;
                 case (int)ComboType.SmashDown_Rolling://旋转
@@ -212,7 +211,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     minScale = 0.8f;
                     maxScale = 1.4f;
 
-                    //Helper.PlayPitched("Misc/SwingFlow", 0.4f, 0f, Owner.Center);
                     setScale = false;
                     break;
                 case (int)ComboType.VerticalRolling:
@@ -255,7 +253,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         maxScale = 1.4f;
                         extraScaleAngle = 0;
 
-                        setScale=false;
+                        setScale = false;
                     }
                     break;
             }
@@ -287,6 +285,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             spriteRotation = new Vector2(66, 70).ToRotation();
                             startAngle = owner.rotation;
+                            Helper.PlayPitched("Misc/SwingWave", 0.4f, 0f, Owner.Center);
                         }
                     }
                     break;
@@ -294,11 +293,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case (int)ComboType.SmashDown_Rolling:
                     {
                         Projectile.scale = Helper.Lerp(0, 0.8f, Coralite.Instance.SqrtSmoother.Smoother(Timer / minTime));
+                        if ((int)Timer == minTime)
+                        {
+                            Helper.PlayPitched("Misc/Swing", 0.4f, 0f, Owner.Center);
+                        }
+
                     }
                     break;
                 case (int)ComboType.VerticalRolling:
                     {
                         Projectile.scale = Helper.Lerp(0, 1f, Coralite.Instance.SqrtSmoother.Smoother(Timer / minTime));
+                        if ((int)Timer == minTime)
+                        {
+                            Helper.PlayPitched("Misc/Swing", 0.4f, 0f, Owner.Center);
+                        }
                     }
                     break;
                 case (int)ComboType.SkyJump_JumpUp:
@@ -309,12 +317,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             spriteRotation = new Vector2(66, 70).ToRotation();
                             startAngle = owner.velocity.ToRotation();
+                            Helper.PlayPitched("Misc/SwingWave", 0.4f, 0f, Owner.Center);
                         }
                     }
                     break;
                 case (int)ComboType.NightmareKingDash:
                     {
                         Projectile.scale = Helper.Lerp(0, 0.8f, Coralite.Instance.SqrtSmoother.Smoother(Timer / minTime));
+                        if ((int)Timer == minTime)
+                        {
+                            Helper.PlayPitched("Misc/Swing", 0.4f, 0f, Owner.Center);
+                        }
                     }
                     break;
 
@@ -331,12 +344,28 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         protected override void OnSlash()
         {
-            if (!GetOwner(out _))
+            if (!GetOwner(out NPC owner))
                 return;
 
             int timer = (int)Timer - minTime;
 
             Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime), minScale, maxScale);
+
+            switch (Combo)
+            {
+                default:
+                    break;
+                case (int)ComboType.SmashDown_Rolling:
+                case (int)ComboType.NightmareKingDash:
+                    {
+                        Vector2 dir = _Rotation.ToRotationVector2();
+
+                        owner.spriteDirection = owner.direction = MathF.Sign(dir.X);
+                        if (timer % 60 == 0)
+                            Helper.PlayPitched("Misc/SwingFlow", 0.4f, 0f, Owner.Center);
+                    }
+                    break;
+            }
 
             base.OnSlash();
         }
@@ -472,13 +501,17 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         protected override void OnSlash()
         {
-            if (!GetOwner(out _))
+            if (!GetOwner(out NPC owner))
                 return;
 
             if (alpha < 255)
             {
                 alpha += 5;
             }
+
+            if (Timer % 60 == 0)
+                Helper.PlayPitched("Misc/SwingFlow", 0.4f, 0f, Owner.Center);
+
             _Rotation = startAngle + totalAngle * Smoother.Smoother((int)Timer - minTime, maxTime - minTime);
             Slasher();
         }

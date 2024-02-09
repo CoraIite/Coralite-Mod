@@ -2236,7 +2236,7 @@ Mods: {
 			}
 
 			ShadowWave: {
-				DisplayName: 影波
+				DisplayName: 月影
 				Tooltip:
 					'''
 					右键以填充弹药，填充后可以一口气将大部分弹药发射出去
@@ -2507,8 +2507,8 @@ Mods: {
 
 			Bloodiancie.DisplayName: 赤血玉灵
 			BloodiancieMinion.DisplayName: 小赤血玉灵
-			// ShadowBall.DisplayName: Shadow Ball
-			// SmallShadowBall.DisplayName: Small Shadow Ball
+			ShadowBall.DisplayName: 影子球
+			SmallShadowBall.DisplayName: 小影子球
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -2780,6 +2780,8 @@ Mods: {
 			// ShadowGround.DisplayName: Shadow Ground
 			// ShadowBallSlash2.DisplayName: Shadow Ball Slash2
 			// ShadowFire.DisplayName: Shadow Fire
+			// ShadowBallSmash.DisplayName: Shadow Ball Smash
+			// ShadowBall_NameLine.DisplayName: Shadow Ball_ Name Line
 		}
 
 		Configs: {
