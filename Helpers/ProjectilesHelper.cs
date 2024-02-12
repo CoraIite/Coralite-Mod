@@ -317,6 +317,13 @@ namespace Coralite.Helpers
             projectile.oldPos[^1] = (useCenter ? projectile.Center : projectile.position) + (addVelocity ? projectile.velocity : Vector2.Zero);
         }
 
+        public static void UpdateOldRotCache(this Projectile projectile)
+        {
+            for (int i = 0; i < projectile.oldRot.Length - 1; i++)
+                projectile.oldRot[i] = projectile.oldRot[i + 1];
+            projectile.oldRot[^1] = projectile.rotation;
+        }
+
         public static int NewProjectileFromThis(this Projectile projectile, Vector2 position, Vector2 velocity
             , int type, int damage, float knockback, float ai0 = 0, float ai1 = 0, float ai2 = 0)
         {

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.Items.Shadow;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
@@ -34,6 +35,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public int smallBallType;
         public float ballScale = 1;
         public float ballAlpha = 1;
+
+        public ShadowCircleController shadowCircle;
 
         public enum AIStates
         {
@@ -91,6 +94,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!GetOwner(out NPC owner))
                 return;
 
+            shadowCircle ??= new ShadowCircleController(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallCircle0", ReLogic.Content.AssetRequestMode.ImmediateLoad));
             UpdateFrame();
             Lighting.AddLight(NPC.Center, new Vector3(0.5f, 0.4f, 0.6f));
 
@@ -154,6 +158,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
 
             }
+
+            shadowCircle.zRotation = NPC.rotation - 1.57f;
+            shadowCircle.Update();
         }
 
         #region RollingLaser 旋转激光
@@ -184,6 +191,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         NPC.velocity = dirToTarget.SafeNormalize(Vector2.Zero) * factor * velocity;
                         NPC.rotation += 0.2f;
                         eyeRuneOffset = NPC.velocity;
+                        shadowCircle.xRotation += 0.1f;
+                        //shadowCircle.yRotation += 0.15f;
 
                         if (length < 16)
                         {
@@ -203,6 +212,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         NPC.Center = owner.Center + currentRot.ToRotationVector2() * ReadyLength;
                         NPC.rotation = NPC.rotation.AngleLerp((NPC.Center - owner.Center).ToRotation(), 0.5f);
                         eyeRuneOffset = Vector2.Lerp(eyeRuneOffset, (factor * MathHelper.TwoPi).ToRotationVector2() * 8, 0.2f);
+                        shadowCircle.xRotation += 0.1f;
 
                         if (Timer >= RollingTime)
                         {
@@ -226,6 +236,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         NPC.rotation = Recorder2;
                         ballScale = Helper.Lerp(1, 1.15f, factor);
                         eyeRuneOffset = Vector2.Lerp(eyeRuneOffset, Vector2.Zero, 0.2f);
+                        shadowCircle.xRotation = shadowCircle.xRotation.AngleLerp(-1.4f, factor);
 
                         if (Timer > SmallTime)
                         {
@@ -258,7 +269,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             ballScale = Helper.Lerp(1.15f, 0.8f, factor);
                             ballAlpha = Helper.Lerp(1f, 0.4f, factor);
 
-                            eyeRuneOffset = Vector2.Lerp(eyeRuneOffset, NPC.rotation.ToRotationVector2()*16, 0.2f);
+                            eyeRuneOffset = Vector2.Lerp(eyeRuneOffset, NPC.rotation.ToRotationVector2() * 16, 0.2f);
+                            shadowCircle.xRotation = (-1.4f).AngleLerp(-1f, factor);
                         }
                         else if (Timer == ReadyShootTime)//生成激光弹幕
                         {
@@ -285,7 +297,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             SonState++;
                             Timer = 0;
                             ballScale = 1;
-                            ballAlpha= 1;
+                            ballAlpha = 1;
                             //NPC.velocity = Helper.NextVec2Dir();
                         }
                     }
@@ -352,7 +364,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         float length = dirToTarget.Length();
                         float velocity = Math.Clamp(length / 40, 0, 1) * 24;
                         NPC.velocity = dirToTarget.SafeNormalize(Vector2.Zero) * factor * velocity;
-                        NPC.rotation = toConvergeCenter.ToRotation();
+                        NPC.rotation += 0.1f;
+                        eyeRuneOffset = NPC.velocity;
+
                         if (length < 16)
                         {
                             Sign = (int)SignType.Ready;
@@ -395,7 +409,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         float length = dirToTarget.Length();
                         float velocity = Math.Clamp(length / 40, 0, 1) * 20;
                         NPC.velocity = dirToTarget.SafeNormalize(Vector2.Zero) * velocity;
-                        NPC.rotation = toConvergeCenter;
+                        NPC.rotation = NPC.rotation.AngleLerp(toConvergeCenter, 0.2f);
+                        eyeRuneOffset = Vector2.Lerp(eyeRuneOffset, (factor * MathHelper.TwoPi).ToRotationVector2() * 8, 0.2f);
 
                         if (Timer > ChannelTime)
                         {
@@ -430,6 +445,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             //         👆 额外的椭圆形旋转，这次不像赤玉灵就先不搞什么3D了
 
                             NPC.Center = targetPos;
+                            ballScale = Helper.Lerp(1.15f, 0.8f, factor);
+                            ballAlpha = Helper.Lerp(1f, 0.4f, factor);
+                            eyeRuneOffset = Vector2.Lerp(eyeRuneOffset, NPC.rotation.ToRotationVector2() * 16, 0.2f);
                         }
                         else if (Timer == ReadyShootTime)//生成激光弹幕
                         {
@@ -451,6 +469,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             //         👆 额外的椭圆形旋转，这次不像赤玉灵就先不搞什么3D了
 
                             NPC.Center = targetPos;
+                            ballScale = Helper.Lerp(0.8f, 1f, factor);
+                            ballAlpha = Helper.Lerp(0.4f, 1f, factor);
+                            eyeRuneOffset = Vector2.Lerp(eyeRuneOffset, Vector2.Zero, 0.2f);
                         }
                         else
                         {
@@ -517,6 +538,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         float velocity = Math.Clamp(length / 80, 0, 1) * 20;
                         NPC.velocity = dirToTarget.SafeNormalize(Vector2.Zero) * factor * velocity;
                         NPC.rotation = (target.Center - NPC.Center).ToRotation();
+                        eyeRuneOffset = NPC.velocity;
 
                         if (Timer == PredictTime)//生成预判线
                         {
@@ -535,7 +557,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         if (Timer < 30)
                         {
-                            NPC.velocity *= 0.9f;
+                            NPC.velocity *= 0.8f;
                             break;
                         }
 
@@ -1015,7 +1037,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void UpdateFrame()
         {
-            if (++NPC.frameCounter > 6)
+            if (++NPC.frameCounter > 4)
             {
                 NPC.frameCounter = 0;
                 if (++NPC.frame.Y > 6)
@@ -1029,7 +1051,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Vector2 pos = NPC.Center - screenPos;
+
+            shadowCircle?.DrawBackCircle(spriteBatch, pos, drawColor);
             DrawSelf(spriteBatch, screenPos, drawColor);
+            shadowCircle?.DrawFrontCircle(spriteBatch, pos, drawColor);
             return false;
         }
 
@@ -1037,26 +1063,26 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             Texture2D ballTex = NPC.GetTexture();
             Texture2D eyeTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallShadowBallEye").Value;
-            Texture2D frontTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallShadowBallFront").Value;
-            Texture2D backTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallShadowBallBack").Value;
+            //Texture2D frontTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallShadowBallFront").Value;
+            //Texture2D backTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallShadowBallBack").Value;
 
             var pos = NPC.Center - screenPos;
             var ballFrameBox = ballTex.Frame(1, 7, 0, NPC.frame.Y);
             var eyeFrameBox = eyeTex.Frame(1, 5, 0, smallBallType);
-            var frameBox = frontTex.Frame();
-            var origin = frameBox.Size() / 2;
+            //var frameBox = frontTex.Frame();
+            var origin = eyeFrameBox.Size() / 2;
 
             //绘制背后
-            spriteBatch.Draw(backTex, pos, frameBox, drawColor, NPC.rotation - 1.57f, origin, NPC.scale, 0, 0);
+            //spriteBatch.Draw(backTex, pos, frameBox, drawColor, NPC.rotation - 1.57f, origin, NPC.scale, 0, 0);
 
             //绘制球
             spriteBatch.Draw(ballTex, pos, ballFrameBox, drawColor * ballAlpha, ballRotation, origin, ballScale, 0, 0);
 
             //绘制眼睛
-            spriteBatch.Draw(eyeTex, pos+eyeRuneOffset, eyeFrameBox, Color.White, 0, origin, 1, 0, 0);
+            spriteBatch.Draw(eyeTex, pos + eyeRuneOffset, eyeFrameBox, Color.White, 0, origin, 1, 0, 0);
 
             //绘制前面
-            spriteBatch.Draw(frontTex, pos, frameBox, drawColor, NPC.rotation - 1.57f, origin, NPC.scale, 0, 0);
+            //spriteBatch.Draw(frontTex, pos, frameBox, drawColor, NPC.rotation - 1.57f, origin, NPC.scale, 0, 0);
         }
 
         #endregion

@@ -323,7 +323,6 @@ namespace Coralite.Content.UI.MagikeGuideBook
             DrawCircle(spriteBatch, 90, vector2s.Length);
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);
-
         }
 
         public void DrawCircle(SpriteBatch spriteBatch, int start, int end)

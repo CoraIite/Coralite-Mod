@@ -572,6 +572,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y,
                         ModContent.NPCType<SmallShadowBall>(), NPC.whoAmI, NPC.whoAmI);
                     (Main.npc[index].ModNPC as SmallShadowBall).smallBallType = i;
+                    (Main.npc[index].ModNPC as SmallShadowBall).shadowCircle =
+                        new ShadowCircleController
+                        (ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "SmallCircle" + i, ReLogic.Content.AssetRequestMode.ImmediateLoad));
+
                     //NPC.lifeMax += Main.npc[index].lifeMax;
                 }
 
