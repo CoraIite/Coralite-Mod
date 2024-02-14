@@ -2272,6 +2272,40 @@ Mods: {
 				DisplayName: 灯之影
 				Tooltip: 照出你的影子
 			}
+
+			GlassShield: {
+				DisplayName: 玻璃盾
+				Tooltip: 一块玻璃制成的盾牌，或许防御时就会碎成碎片
+			}
+
+			BisketyHead: {
+				DisplayName: Biskety的头
+				Tooltip:
+					'''
+					生成一个可爱的Biskety！
+					等等，你要对它做什么？
+					'''
+			}
+
+			StretchGlue: {
+				DisplayName: 弹力胶
+				Tooltip: 让飞盾能够在敌人间弹射一次
+			}
+
+			TrashCanLid: {
+				DisplayName: 垃圾桶盖
+				Tooltip: 在没有武器的时候可以使用的简易盾牌
+			}
+
+			FlyingShieldMaintenanceGuide: {
+				// DisplayName: Flying Shield Maintenance Guide
+				// Tooltip: ""
+			}
+
+			FlyingShieldVarnish: {
+				// DisplayName: Flying Shield Varnish
+				// Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2509,6 +2543,7 @@ Mods: {
 			BloodiancieMinion.DisplayName: 小赤血玉灵
 			ShadowBall.DisplayName: 影子球
 			SmallShadowBall.DisplayName: 小影子球
+			// Biskety.DisplayName: Biskety
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -2782,6 +2817,10 @@ Mods: {
 			// ShadowFire.DisplayName: Shadow Fire
 			// ShadowBallSmash.DisplayName: Shadow Ball Smash
 			// ShadowBall_NameLine.DisplayName: Shadow Ball_ Name Line
+			// GlassShieldGuard.DisplayName: Glass Shield Guard
+			// GlassShieldProj.DisplayName: Glass Shield Proj
+			// TrashCanLidGuard.DisplayName: Trash Can Lid Guard
+			// TrashCanLidProj.DisplayName: Trash Can Lid Proj
 		}
 
 		Configs: {

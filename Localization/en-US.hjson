@@ -2246,6 +2246,36 @@ Mods: {
 				DisplayName: Shadow Candelabra
 				Tooltip: ""
 			}
+
+			GlassShield: {
+				DisplayName: Glass Shield
+				Tooltip: ""
+			}
+
+			BisketyHead: {
+				DisplayName: Biskety Head
+				Tooltip: ""
+			}
+
+			StretchGlue: {
+				DisplayName: Stretch Glue
+				Tooltip: ""
+			}
+
+			TrashCanLid: {
+				DisplayName: Trash Can Lid
+				Tooltip: ""
+			}
+
+			FlyingShieldMaintenanceGuide: {
+				DisplayName: Flying Shield Maintenance Guide
+				Tooltip: ""
+			}
+
+			FlyingShieldVarnish: {
+				DisplayName: Flying Shield Varnish
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2483,6 +2513,7 @@ Mods: {
 			BloodiancieMinion.DisplayName: Bloodiancie Minion
 			ShadowBall.DisplayName: Shadow Ball
 			SmallShadowBall.DisplayName: Small Shadow Ball
+			Biskety.DisplayName: Biskety
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -2756,6 +2787,10 @@ Mods: {
 			ShadowFire.DisplayName: Shadow Fire
 			ShadowBallSmash.DisplayName: Shadow Ball Smash
 			ShadowBall_NameLine.DisplayName: Shadow Ball_ Name Line
+			GlassShieldGuard.DisplayName: Glass Shield Guard
+			GlassShieldProj.DisplayName: Glass Shield Proj
+			TrashCanLidGuard.DisplayName: Trash Can Lid Guard
+			TrashCanLidProj.DisplayName: Trash Can Lid Proj
 		}
 
 		Configs: {

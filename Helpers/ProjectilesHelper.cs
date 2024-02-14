@@ -84,6 +84,27 @@ namespace Coralite.Helpers
             return target;
         }
 
+        [DebuggerHidden]
+        public static bool TryFindClosestEnemy(Vector2 position, float maxDistance, Func<NPC, bool> predicate, out NPC target)
+        {
+            float maxDis = maxDistance;
+            target = null;
+            foreach (var npc in Main.npc.Where(n => n.active && !n.friendly && predicate(n)))
+            {
+                float dis = Vector2.Distance(position, npc.Center);
+                if (dis < maxDis)
+                {
+                    maxDis = dis;
+                    target = npc;
+                }
+            }
+
+            if (target == null)
+                return false;
+
+            return true;
+        }
+
         /// <summary>
         /// 找到同类弹幕并知道自己是第几个弹幕
         /// </summary>
@@ -110,12 +131,12 @@ namespace Coralite.Helpers
             }
         }
 
-        public static bool GetProjectile(int projType,int index ,out Projectile p)
+        public static bool GetProjectile(int projType, int index, out Projectile p)
         {
             if (Main.projectile.IndexInRange(index))
             {
                 Projectile proj = Main.projectile[index];
-                if (proj.active&&proj.type==projType)
+                if (proj.active && proj.type == projType)
                 {
                     p = proj;
                     return true;

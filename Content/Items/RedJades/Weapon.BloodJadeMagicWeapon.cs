@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Coralite.Content.Items.Nightmare
+namespace Coralite.Content.Items.RedJades
 {
     public class BloodJadeMagicWeapon : ModItem
     {

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Coralite.Content.ModPlayers;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -36,15 +37,29 @@ namespace Coralite.Core.Prefabs.Items
 
             Item.noUseGraphic = true;
             Item.noMelee = true;
+            SetDefaults2();
         }
 
         /// <summary>
-        /// 需要在这里设置使用时间，射的弹幕等
+        /// 需要在这里设置使用时间，射的弹幕等<br></br>
+        /// 别忘了设置伤害！！！
         /// </summary>
         public abstract void SetDefaults2();
 
         public override bool AltFunctionUse(Player player) => true;
 
+        public override bool CanUseItem(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                if (player.ownedProjectileCounts[Item.shoot] >= cp.MaxFlyingShield)
+                    return false;
+                //不能同时使用并且 有左键弹幕的情况下右键使用了
+                if (!cp.FlyingShieldLRMeantime && player.ownedProjectileCounts[Item.shoot] > 0 && player.altFunctionUse == 2)
+                    return false;
+            }
+            return base.CanUseItem(player);
+        }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -53,7 +68,7 @@ namespace Coralite.Core.Prefabs.Items
 
             if (player.altFunctionUse == 2)//防御
             {
-                RightShoot(player, source, velocity, damage, knockback);
+                RightShoot(player, source, damage);
                 return false;
             }
 
@@ -73,12 +88,12 @@ namespace Coralite.Core.Prefabs.Items
         /// <param name="knockback"></param>
         public virtual void LeftShoot(Player player, EntitySource_ItemUse_WithAmmo source,  Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback);
+            Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback,player.whoAmI);
         }
 
-        public virtual void RightShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 velocity, int damage, float knockback)
+        public virtual void RightShoot(Player player, EntitySource_ItemUse_WithAmmo source, int damage)
         {
-            Projectile.NewProjectile(source, player.Center, velocity, ModContent.ProjectileType<TRightProj>(), damage, knockback);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TRightProj>(), damage, 6, player.whoAmI);
         }
     }
 }

@@ -73,6 +73,15 @@ namespace Coralite.Content.ModPlayers
         /// </summary>
         public float bossDamageReduce;
 
+        /// <summary>
+        /// 同时存在的飞盾弹幕数量
+        /// </summary>
+        public int MaxFlyingShield;
+        /// <summary>
+        /// 是否能够同时使用左右键
+        /// </summary>
+        public bool FlyingShieldLRMeantime;
+
 
         /// <summary>
         /// 地心护核者的闪避
@@ -92,6 +101,9 @@ namespace Coralite.Content.ModPlayers
             critDamageBonus = 0;
             lifeReganBonus = 0;
             bossDamageReduce = 0;
+
+            MaxFlyingShield = 1;
+            FlyingShieldLRMeantime = false;
 
             coreKeeperDodge = 0;
 
