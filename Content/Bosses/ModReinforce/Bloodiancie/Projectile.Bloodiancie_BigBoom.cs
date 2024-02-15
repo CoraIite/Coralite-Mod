@@ -21,7 +21,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             Projectile.aiStyle = -1;
             Projectile.timeLeft = 10;
 
-            Projectile.penetrate = 1;
+            Projectile.penetrate = -1;
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.tileCollide = false;

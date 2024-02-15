@@ -14,7 +14,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Projectile.tileCollide = false;
             Projectile.hostile = true;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 1;
             Projectile.aiStyle = -1;
             Projectile.width = Projectile.height = 32;
             ShineColor = NightmarePlantera.nightmareSparkleColor;
@@ -52,7 +52,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Projectile.tileCollide = false;
             Projectile.hostile = true;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 1;
             Projectile.aiStyle = -1;
             Projectile.width = Projectile.height = 32;
             ShineColor = NightmarePlantera.nightmareRed;
@@ -107,7 +107,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.timeLeft = 1200;
             Projectile.tileCollide = false;
             Projectile.hostile = true;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 1;
             Projectile.aiStyle = -1;
             Projectile.width = Projectile.height = 32;
             //ShineColor = Color.Transparent;

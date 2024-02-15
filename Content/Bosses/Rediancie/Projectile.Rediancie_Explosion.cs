@@ -20,6 +20,7 @@ namespace Coralite.Content.Bosses.Rediancie
             Projectile.timeLeft = 10;
             Projectile.aiStyle = -1;
 
+            Projectile.penetrate = -1;
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.ignoreWater = true;

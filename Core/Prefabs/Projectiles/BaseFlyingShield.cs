@@ -89,6 +89,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             UpdateShieldAccessory(accessory => accessory.PostInitialize(this));
             Timer = flyingTime;
 
+            Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * shootSpeed;
             Projectile.oldPos = new Vector2[trailCachesLength];
             Projectile.oldRot = new float[trailCachesLength];
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -331,6 +332,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         virtual void OnJustHited(BaseFlyingShield projectile) { }
 
+        virtual bool OnParry(BaseFlyingShieldGuard projectile) => false;
         virtual void OnGuard(BaseFlyingShieldGuard projectile) { }
 
         virtual void OnHitNPC(BaseFlyingShield projectile, NPC target, NPC.HitInfo hit, int damageDone) { }

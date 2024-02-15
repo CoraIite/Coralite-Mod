@@ -30,6 +30,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 1800;
+            Projectile.penetrate = -1;
         }
 
         public override bool? CanHitNPC(NPC target) => false;

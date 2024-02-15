@@ -21,6 +21,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             Projectile.width = Projectile.height = 16;
             Projectile.hostile = true;
+            Projectile.penetrate = -1;
             Projectile.timeLeft = 600;
             Projectile.tileCollide = false;
         }

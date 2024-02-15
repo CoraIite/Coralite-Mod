@@ -46,6 +46,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.Chest, 150, ItemID.Radar, selfStack: 2);
             AddRemodelRecipe(ItemID.Chest, 10, ItemID.PortableStool);
             AddRemodelRecipe<FlyingShieldVarnish>(0f, ItemID.Chest, 100, selfStack: 3);
+            AddRemodelRecipe<HeavyWedges>(0f, ItemID.Chest, 100, selfStack: 3);
 
             //金箱子
             AddRemodelRecipe(ItemID.GoldChest, 150, ItemID.BandofRegeneration, selfStack: 3);

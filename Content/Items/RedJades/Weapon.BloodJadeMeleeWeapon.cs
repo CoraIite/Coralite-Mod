@@ -681,9 +681,6 @@ namespace Coralite.Content.Items.RedJades
         {
             Projectile.width = Projectile.height = 16;
 
-            Projectile.friendly = false;
-            Projectile.hostile = true;
-            Projectile.netImportant = true;
             Projectile.scale = 1.6f;
             Projectile.aiStyle = -1;
             Projectile.penetrate = 1;
@@ -691,6 +688,8 @@ namespace Coralite.Content.Items.RedJades
             Projectile.tileCollide = true;
             Projectile.ignoreWater = false;
         }
+
+        public override bool? CanDamage() => false;
 
         public override void AI()
         {

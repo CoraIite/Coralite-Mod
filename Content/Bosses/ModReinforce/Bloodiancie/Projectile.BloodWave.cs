@@ -19,7 +19,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             Projectile.netImportant = true;
             Projectile.scale = 1.6f;
             Projectile.aiStyle = -1;
-            Projectile.penetrate = 1;
+            Projectile.penetrate = -1;
             Projectile.timeLeft = 600;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = false;

@@ -50,6 +50,13 @@ namespace Coralite.Content.WorldGeneration
                                                     item.SetDefaults(ModContent.ItemType<FlyingShieldVarnish>());
                                                     break;
                                                 }
+                                        if (WorldGen.genRand.NextBool(10, 100))
+                                            foreach (var item in chest.item)
+                                                if (item.IsAir)
+                                                {
+                                                    item.SetDefaults(ModContent.ItemType<HeavyWedges>());
+                                                    break;
+                                                }
                                     }
 
                                 }

@@ -39,9 +39,9 @@ namespace Coralite.Core.Prefabs.Projectiles
         public int[] localProjectileImmunity = new int[Main.maxProjectiles];
 
         /// <summary>
-        /// 是否能削减弹幕的穿透数
+        /// 是否能削减弹幕的穿透数的概率
         /// </summary>
-        public bool StrongGuard;
+        public float StrongGuard;
 
         public enum GuardState
         {
@@ -113,7 +113,13 @@ namespace Coralite.Core.Prefabs.Projectiles
                         SetPos();
 
                         if (CheckCollide())
+                        {
+                            State = (int)GuardState.Guarding;
+                            ParryUpdate = true;
+                            ParryFactor = 0;
                             OnParry();
+                            UpdateShieldAccessory(accessory => accessory.OnParry(this));
+                        }
 
                         Timer--;
                         if (Timer < 1)
@@ -192,11 +198,13 @@ namespace Coralite.Core.Prefabs.Projectiles
                     if (proj.damage < 1)
                         proj.damage = 1;
 
-                    if (StrongGuard && proj.penetrate > 0)//削减穿透数
+                    float percent = MathHelper.Clamp(StrongGuard, 0, 1);
+                    if (Main.rand.NextBool((int)(percent * 100), 100) && proj.penetrate > 0)//削减穿透数
                     {
                         proj.penetrate--;
                         if (proj.penetrate < 1)
                             proj.Kill();
+                        OnStrongGuard();
                     }
                     localProjectileImmunity[i] = 30;
                     return true;
@@ -227,8 +235,6 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public virtual void OnParry()
         {
-            ParryUpdate = true;
-            ParryFactor = 0;
         }
 
         /// <summary>
@@ -238,6 +244,11 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             DistanceToOwner /= 3;
             Helper.PlayPitched("Misc/ShieldGuard", 0.4f, 0f, Projectile.Center);
+        }
+
+        public virtual void OnStrongGuard()
+        {
+            SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
         }
 
         public void UpdateShieldAccessory(Action<IFlyingShieldAccessory> action)
@@ -265,6 +276,38 @@ namespace Coralite.Core.Prefabs.Projectiles
                     if (i.active && i.ModItem is IFlyingShieldAccessory accessory)
                     {
                         action(accessory);
+                    }
+                }
+            }
+        }
+
+        public void UpdateShieldAccessory(Func<IFlyingShieldAccessory, bool> action)
+        {
+            for (int i = 3; i < 10; i++)
+            {
+                if (!Owner.IsItemSlotUnlockedAndUsable(i))
+                    continue;
+                if (!Owner.armor[i].active)
+                    continue;
+                if (Owner.armor[i].ModItem is IFlyingShieldAccessory accessory)
+                {
+                    if (action(accessory))
+                        return;
+                }
+            }
+
+            var loader = LoaderManager.Get<AccessorySlotLoader>();
+
+            ModAccessorySlotPlayer masp = Owner.GetModPlayer<ModAccessorySlotPlayer>();
+            for (int k = 0; k < masp.SlotCount; k++)
+            {
+                if (loader.ModdedIsItemSlotUnlockedAndUsable(k, Owner))
+                {
+                    Item i = loader.Get(k, Owner).FunctionalItem;
+                    if (i.active && i.ModItem is IFlyingShieldAccessory accessory)
+                    {
+                        if (action(accessory))
+                            return;
                     }
                 }
             }

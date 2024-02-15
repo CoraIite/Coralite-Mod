@@ -16,7 +16,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         {
             Projectile.width = Projectile.height = 16;
             Projectile.aiStyle = -1;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 1;
             Projectile.timeLeft = 1200;
 
             Projectile.hostile = true;

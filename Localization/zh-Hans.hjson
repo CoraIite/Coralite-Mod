@@ -2314,12 +2314,22 @@ Mods: {
 
 			FlyingShieldToolbox: {
 				DisplayName: 飞盾工具箱
-				Tooltip: 
-				'''
-				让飞盾能够在敌人间弹射一次
-				增加飞盾飞行速度
-				增加飞盾右键格挡能力
-				'''
+				Tooltip:
+					'''
+					让飞盾能够在敌人间弹射一次
+					增加飞盾飞行速度
+					增加飞盾右键格挡能力
+					'''
+			}
+
+			HeavyWedges: {
+				DisplayName: 重型楔石
+				Tooltip: 减慢飞盾飞行速度，提升飞盾大小和近战伤害
+			}
+
+			DemonsProtection: {
+				DisplayName: 魔界护盾符
+				Tooltip: "增加飞盾格挡时减少弹幕穿透数的概率"
 			}
 		}
 

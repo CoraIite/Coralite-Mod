@@ -19,7 +19,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             Projectile.width = Projectile.height = 1920;
             Projectile.aiStyle = -1;
-            Projectile.penetrate = 1;
+            Projectile.penetrate = -1;
             Projectile.timeLeft = 20;
 
             Projectile.friendly = false;

@@ -97,7 +97,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void SetDefaults()
         {
-            Projectile.hostile = true;
+            Projectile.friendly = true;
             Projectile.tileCollide = true;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;

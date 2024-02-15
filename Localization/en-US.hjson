@@ -2286,6 +2286,16 @@ Mods: {
 				DisplayName: Flying Shield Toolbox
 				Tooltip: ""
 			}
+
+			HeavyWedges: {
+				DisplayName: Heavy Wedges
+				Tooltip: ""
+			}
+
+			DemonsProtection: {
+				DisplayName: Demons Protection
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {

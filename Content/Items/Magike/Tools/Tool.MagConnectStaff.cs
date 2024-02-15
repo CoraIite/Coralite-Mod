@@ -168,7 +168,6 @@ namespace Coralite.Content.Items.Magike.Tools
             Projectile.timeLeft = 1200;
             Projectile.width = Projectile.height = 16;
             Projectile.tileCollide = false;
-            Projectile.hostile = true;
         }
 
         public override bool ShouldUpdatePosition() => false;

@@ -26,7 +26,7 @@ namespace Coralite.Content.Bosses.Rediancie
             Projectile.hostile = true;
             Projectile.netImportant = true;
             Projectile.aiStyle = -1;
-            Projectile.penetrate = 1;
+            Projectile.penetrate = -1;
             Projectile.timeLeft = 900;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = false;
