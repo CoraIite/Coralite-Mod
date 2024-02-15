@@ -48,8 +48,6 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// </summary>
         public int backTime = 60;
 
-        private int justHitNPC;
-
         /// <summary>
         /// 反弹次数
         /// </summary>
@@ -149,7 +147,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void Chasing()
         {
             if (canChase)
-                if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, 1000, n => true, out NPC target))
+                if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, Timer * shootSpeed, n => true, out NPC target))
                 {
                     Vector2 dir = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
                     Projectile.velocity = dir * shootSpeed;
@@ -166,13 +164,13 @@ namespace Coralite.Core.Prefabs.Projectiles
                 TurnToBack();
             else
                 JumpInNpcs();
-            
+
             UpdateShieldAccessory(accessory => accessory.OnJustHited(this));
         }
 
         public virtual void JumpInNpcs()
         {
-            if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, flyingTime*shootSpeed, n => n.whoAmI!=justHitNPC, out NPC target))
+            if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, flyingTime * shootSpeed, n => Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
             {
                 Vector2 dir = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
                 Projectile.velocity = dir * shootSpeed;
@@ -223,10 +221,9 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (State!=(int)FlyingShieldStates.Backing)
-            State = (int)FlyingShieldStates.JustHited;
+            if (State != (int)FlyingShieldStates.Backing)
+                State = (int)FlyingShieldStates.JustHited;
             UpdateShieldAccessory(accessory => accessory.OnHitNPC(this, target, hit, damageDone));
-            justHitNPC = target.whoAmI;
         }
 
         public void UpdateShieldAccessory(Action<IFlyingShieldAccessory> action)

@@ -712,13 +712,13 @@ namespace Coralite.Core
         public static SoundStyle Unicorn_NPCDeath18 => SoundID.NPCDeath18;
 
         /// <summary>脓血乌贼，血腥水母，沙漠蝎子，血腥食人鱼，猪鲨泡泡的死亡音效</summary>
-        public static SoundStyle BloodyDeath2_NPCDeath19 => SoundID.NPCDeath19;
+        public static SoundStyle BloodyDeath3_NPCDeath19 => SoundID.NPCDeath19;
 
         /// <summary> 猪鲨的死亡音效</summary>
         public static SoundStyle DukeFishron_NPCDeath20 => SoundID.NPCDeath20;
 
         /// <summary> 鲜血僵尸，僵尸鱼人的死亡音效 </summary>
-        public static SoundStyle BloodyDeath3_NPCDeath21 => SoundID.NPCDeath21;
+        public static SoundStyle BloodyDeath4_NPCDeath21 => SoundID.NPCDeath21;
 
         /// <summary>滴滴怪，日耀蜈蚣，荷兰人飞艇的死亡音效 </summary>
         public static SoundStyle Drippler_NPCDeath22 => SoundID.NPCDeath22;

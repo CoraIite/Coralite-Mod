@@ -52,12 +52,22 @@ namespace Coralite.Core.Prefabs.Items
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
+                if (player.altFunctionUse == 2)//右键了
+                {
+                    if (player.ownedProjectileCounts[Item.shoot] > 0)//如果右键时有左键弹幕
+                    {
+                        if (cp.FlyingShieldLRMeantime)//如果能同时使用
+                            return true;
+                        return false;
+                    }
+
+                    return true;//右键时没有左键弹幕
+                }
+
                 if (player.ownedProjectileCounts[Item.shoot] >= cp.MaxFlyingShield)
                     return false;
-                //不能同时使用并且 有左键弹幕的情况下右键使用了
-                if (!cp.FlyingShieldLRMeantime && player.ownedProjectileCounts[Item.shoot] > 0 && player.altFunctionUse == 2)
-                    return false;
             }
+
             return base.CanUseItem(player);
         }
 
@@ -72,7 +82,7 @@ namespace Coralite.Core.Prefabs.Items
                 return false;
             }
 
-            LeftShoot(player, source,  velocity, type, damage, knockback);
+            LeftShoot(player, source, velocity, type, damage, knockback);
             return false;
         }
 
@@ -86,9 +96,9 @@ namespace Coralite.Core.Prefabs.Items
         /// <param name="type"></param>
         /// <param name="damage"></param>
         /// <param name="knockback"></param>
-        public virtual void LeftShoot(Player player, EntitySource_ItemUse_WithAmmo source,  Vector2 velocity, int type, int damage, float knockback)
+        public virtual void LeftShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback,player.whoAmI);
+            Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
         }
 
         public virtual void RightShoot(Player player, EntitySource_ItemUse_WithAmmo source, int damage)

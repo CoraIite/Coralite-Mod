@@ -313,7 +313,7 @@ namespace Coralite.Content.Items.Crimson
             if (Main.netMode != NetmodeID.Server && (int)HookState < 3 && (int)HookState > -1)
             {
                 //生成血液粒子和钩子gore
-                SoundEngine.PlaySound(CoraliteSoundID.BloodyDeath3_NPCDeath21, Projectile.Center);
+                SoundEngine.PlaySound(CoraliteSoundID.BloodyDeath4_NPCDeath21, Projectile.Center);
                 //Gore.NewGoreDirect(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, Mod.Find<ModGore>("BloodyHookProj").Type);
                 Vector2 direction = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.One);
                 float length = (Owner.Center - Projectile.Center).Length();

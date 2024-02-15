@@ -14,13 +14,13 @@ namespace Coralite.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetDamage(DamageClass.Melee) += 0.05f;
+            player.GetDamage(DamageClass.Melee) += 0.08f;
         }
 
         public void OnInitialize(BaseFlyingShield projectile)
         {
             projectile.shootSpeed *= 0.65f;
-            projectile.backSpeed *= 0.65f;
+            //projectile.backSpeed *= 0.65f;
 
             Projectile p = projectile.Projectile;
 

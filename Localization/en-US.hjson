@@ -2296,6 +2296,21 @@ Mods: {
 				DisplayName: Demons Protection
 				Tooltip: ""
 			}
+
+			FlyingShieldToolboxProMax: {
+				DisplayName: Flying Shield Toolbox Pro Max
+				Tooltip: ""
+			}
+
+			LevitationBlossom: {
+				DisplayName: Levitation Blossom
+				Tooltip: ""
+			}
+
+			DeliciousSteak: {
+				DisplayName: Delicious Steak
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2813,6 +2828,8 @@ Mods: {
 			TrashCanLidProj.DisplayName: Trash Can Lid Proj
 			RedJadeShieldGuard.DisplayName: Red Jade Shield Guard
 			RedJadeShieldProj.DisplayName: Red Jade Shield Proj
+			DeliciousSteakGuard.DisplayName: Delicious Steak Guard
+			DeliciousSteakProj.DisplayName: Delicious Steak Proj
 		}
 
 		Configs: {

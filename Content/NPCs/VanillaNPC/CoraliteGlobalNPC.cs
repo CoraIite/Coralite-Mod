@@ -2,6 +2,7 @@
 using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Content.Items.CoreKeeper;
+using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.Gels;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Misc;
@@ -83,6 +84,14 @@ namespace Coralite.Content.NPCs.VanillaNPC
                     break;
                 case NPCID.BloodNautilus:
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<BloodyOrb>(), 1, 1, 3));
+                    break;
+
+                case NPCID.EyeofCthulhu://克眼，脑子，世吞掉落美味肉排
+                case NPCID.BrainofCthulhu://克眼，脑子，世吞掉落美味肉排
+                    npcLoot.Add(ItemDropRule.Common( ItemType<DeliciousSteak>(), 10, 1, 1));
+                    break;
+                case NPCID.EaterofWorldsBody://克眼，脑子，世吞掉落美味肉排
+                    npcLoot.Add(ItemDropRule.Common(ItemType<DeliciousSteak>(), 50, 1, 1));
                     break;
 
                 case NPCID.FlyingSnake://羽蛇掉毛
