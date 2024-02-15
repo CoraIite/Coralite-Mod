@@ -10,16 +10,16 @@ namespace Coralite.Content.Items.FlyingShields
 {
     public class GlassShield : BaseFlyingShieldItem<GlassShieldGuard>
     {
-        public GlassShield() : base(Item.sellPrice(0,0,0,10), ItemRarityID.White, AssetDirectory.FlyingShieldItems)
+        public GlassShield() : base(Item.sellPrice(0, 0, 0, 10), ItemRarityID.White, AssetDirectory.FlyingShieldItems)
         {
         }
 
         public override void SetDefaults2()
         {
-            Item.useTime = Item.useAnimation = 20;
+            Item.useTime = Item.useAnimation = 15;
             Item.shoot = ModContent.ProjectileType<GlassShieldProj>();
             Item.shootSpeed = 12;
-            Item.damage = 12;
+            Item.damage = 15;
         }
 
         public override void AddRecipes()
@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.FlyingShields
 
     public class GlassShieldProj : BaseFlyingShield
     {
-        public override string Texture => AssetDirectory.FlyingShieldItems+ "GlassShield";
+        public override string Texture => AssetDirectory.FlyingShieldItems + "GlassShield";
 
         public override void SetDefaults()
         {
@@ -46,18 +46,19 @@ namespace Coralite.Content.Items.FlyingShields
             flyingTime = 15;
             backTime = 4;
             backSpeed = 12;
-            trailCachesLength = 6 ;
+            trailCachesLength = 6;
         }
     }
 
-    public class GlassShieldGuard :BaseFlyingShieldGuard
+    public class GlassShieldGuard : BaseFlyingShieldGuard
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + "GlassShield";
 
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = Projectile.height = 26;
+            Projectile.width = 26;
+            Projectile.height = 30;
         }
 
         public override void SetOtherValues()

@@ -2298,13 +2298,28 @@ Mods: {
 			}
 
 			FlyingShieldMaintenanceGuide: {
-				// DisplayName: Flying Shield Maintenance Guide
-				// Tooltip: ""
+				DisplayName: 飞盾维护指南
+				Tooltip: 增加飞盾右键格挡能力
 			}
 
 			FlyingShieldVarnish: {
-				// DisplayName: Flying Shield Varnish
-				// Tooltip: ""
+				DisplayName: 飞盾光油
+				Tooltip: 增加飞盾飞行速度
+			}
+
+			RedJadeShield: {
+				DisplayName: 赤玉飞盾
+				Tooltip: 格挡攻击时有概率产生爆炸
+			}
+
+			FlyingShieldToolbox: {
+				DisplayName: 飞盾工具箱
+				Tooltip: 
+				'''
+				让飞盾能够在敌人间弹射一次
+				增加飞盾飞行速度
+				增加飞盾右键格挡能力
+				'''
 			}
 		}
 
@@ -2821,6 +2836,8 @@ Mods: {
 			// GlassShieldProj.DisplayName: Glass Shield Proj
 			// TrashCanLidGuard.DisplayName: Trash Can Lid Guard
 			// TrashCanLidProj.DisplayName: Trash Can Lid Proj
+			// RedJadeShieldGuard.DisplayName: Red Jade Shield Guard
+			// RedJadeShieldProj.DisplayName: Red Jade Shield Proj
 		}
 
 		Configs: {

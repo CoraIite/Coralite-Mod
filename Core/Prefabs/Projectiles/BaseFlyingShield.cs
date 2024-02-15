@@ -76,6 +76,8 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 2000;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 24;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -84,6 +86,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             shootSpeed = Projectile.velocity.Length();
             SetOtherValues();
             UpdateShieldAccessory(accessory => accessory.OnInitialize(this));
+            UpdateShieldAccessory(accessory => accessory.PostInitialize(this));
             Timer = flyingTime;
 
             Projectile.oldPos = new Vector2[trailCachesLength];
@@ -168,7 +171,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public virtual void JumpInNpcs()
         {
-            if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, 1000, n => n.whoAmI!=justHitNPC, out NPC target))
+            if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, flyingTime*shootSpeed, n => n.whoAmI!=justHitNPC, out NPC target))
             {
                 Vector2 dir = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
                 Projectile.velocity = dir * shootSpeed;
@@ -321,6 +324,7 @@ namespace Coralite.Core.Prefabs.Projectiles
     public interface IFlyingShieldAccessory
     {
         virtual void OnInitialize(BaseFlyingShield projectile) { }
+        virtual void PostInitialize(BaseFlyingShield projectile) { }
         virtual void OnGuardInitialize(BaseFlyingShieldGuard projectile) { }
 
         virtual void OnTileCollide(BaseFlyingShield projectile) { }

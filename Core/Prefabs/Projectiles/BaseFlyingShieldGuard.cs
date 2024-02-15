@@ -70,6 +70,9 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             SetOtherValues();
             UpdateShieldAccessory(accessory => accessory.OnGuardInitialize(this));
+            if (DamageReduce > 1)
+                DamageReduce = 1;
+
             Projectile.rotation = Projectile.velocity.ToRotation();
             if (Timer > 0)
             {
@@ -93,7 +96,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Owner.heldProj = Projectile.whoAmI;
             Owner.itemTime = Owner.itemAnimation = 2;
-           Projectile.velocity.X= Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+            Projectile.velocity.X = Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.timeLeft = 4;
 
@@ -235,7 +238,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             DistanceToOwner /= 3;
             Helper.PlayPitched("Misc/ShieldGuard", 0.4f, 0f, Projectile.Center);
-        } 
+        }
 
         public void UpdateShieldAccessory(Action<IFlyingShieldAccessory> action)
         {
