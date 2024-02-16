@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -147,10 +146,12 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void Chasing()
         {
             if (canChase)
-                if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, Timer * shootSpeed, n => true, out NPC target))
+                if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, Timer * shootSpeed, n => Projectile.localNPCImmunity[n.whoAmI]==0, out NPC target))
                 {
-                    Vector2 dir = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
-                    Projectile.velocity = dir * shootSpeed;
+                    float selfAngle = Projectile.velocity.ToRotation();
+                    float targetAngle = (target.Center - Projectile.Center).ToRotation();
+
+                    Projectile.velocity = selfAngle.AngleLerp(targetAngle,(1 - Timer / flyingTime)).ToRotationVector2() * shootSpeed;
                 }
         }
 

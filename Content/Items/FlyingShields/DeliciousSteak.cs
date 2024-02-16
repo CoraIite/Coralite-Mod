@@ -50,6 +50,17 @@ namespace Coralite.Content.Items.FlyingShields
             backTime = 4;
             backSpeed = 14;
             trailCachesLength = 6;
+            maxJump++;
+        }
+
+        public override void OnShootDusts()
+        {
+            extraRotation += 0.3f;
+        }
+
+        public override void OnBackDusts()
+        {
+            extraRotation += 0.3f;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

@@ -2352,6 +2352,11 @@ Mods: {
 				DisplayName: 美味肉排
 				Tooltip: 一块很大的牛排，看起来很美味，但这只是看起来而已……
 			}
+
+			ChlorophyteMedal: {
+				DisplayName: 叶绿徽章
+				Tooltip: 让飞盾拥有追踪能力
+			}
 		}
 
 		Tiles: {
