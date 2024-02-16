@@ -3,16 +3,16 @@ using Coralite.Core.Prefabs.Projectiles;
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Accessories
+namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class FlyingShieldMaintenanceGuide : BaseAccessory,IFlyingShieldAccessory
+    public class FlyingShieldMaintenanceGuide : BaseAccessory, IFlyingShieldAccessory
     {
         public FlyingShieldMaintenanceGuide() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 20))
         { }
 
-        public  void OnGuardInitialize(BaseFlyingShieldGuard projectile)
+        public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
         {
-            projectile.DamageReduce *= 1.2f;
+            projectile.damageReduce *= 1.2f;
         }
     }
 }

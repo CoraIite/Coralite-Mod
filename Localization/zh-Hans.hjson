@@ -2329,7 +2329,11 @@ Mods: {
 
 			DemonsProtection: {
 				DisplayName: 魔界护盾符
-				Tooltip: +15% 飞盾格挡时减少弹幕穿透数的概率
+				Tooltip:
+					'''
+					+15% 飞盾格挡时减少弹幕穿透数的概率
+					略微增加飞盾格挡能力
+					'''
 			}
 
 			FlyingShieldToolboxProMax: {
@@ -2356,6 +2360,34 @@ Mods: {
 			ChlorophyteMedal: {
 				DisplayName: 叶绿徽章
 				Tooltip: 让飞盾拥有追踪能力
+			}
+
+			SilverAngel: {
+				DisplayName: 银天使
+				Tooltip: 命中敌人时降下制裁之盾
+			}
+
+			FloralHarmonyMedallion: {
+				DisplayName: 花韵之勋
+				Tooltip:
+					'''
+					大幅增加飞盾飞行时间
+					让飞盾拥有追踪能力
+					'''
+			}
+
+			PearlRay: {
+				DisplayName: 白玉鳐
+				Tooltip: 飞盾命中或成功防御后下一次攻击伤害增加
+			}
+
+			FlyingShieldCore: {
+				DisplayName: 飞盾核心
+				Tooltip: 
+				'''
+				减慢飞盾飞行速度，提升飞盾大小
+				+12% 近战伤害
+				'''
 			}
 		}
 
@@ -2876,6 +2908,11 @@ Mods: {
 			// RedJadeShieldProj.DisplayName: Red Jade Shield Proj
 			// DeliciousSteakGuard.DisplayName: Delicious Steak Guard
 			// DeliciousSteakProj.DisplayName: Delicious Steak Proj
+			// SilverAngelGuard.DisplayName: Silver Angel Guard
+			// SilverAngelProj.DisplayName: Silver Angel Proj
+			// SilverAngelStrike.DisplayName: Silver Angel Strike
+			// PearlRayGuard.DisplayName: Pearl Ray Guard
+			// PearlRayProj.DisplayName: Pearl Ray Proj
 		}
 
 		Configs: {

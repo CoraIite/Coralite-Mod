@@ -29,6 +29,7 @@ namespace Coralite.Core.Prefabs.Items
             Item.autoReuse = true;
             Item.useTurn = true;
             Item.useStyle = ItemUseStyleID.Swing;
+            Item.DamageType = DamageClass.Melee;
             Item.width = 16;
             Item.height = 16;
             Item.maxStack = 1;
@@ -47,6 +48,8 @@ namespace Coralite.Core.Prefabs.Items
         public abstract void SetDefaults2();
 
         public override bool AltFunctionUse(Player player) => true;
+        public override bool AllowPrefix(int pre) => true;
+        public override bool MeleePrefix() => true;
 
         public override bool CanUseItem(Player player)
         {

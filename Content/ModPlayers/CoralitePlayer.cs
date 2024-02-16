@@ -364,8 +364,13 @@ namespace Coralite.Content.ModPlayers
                 }
                 else if (attempt.uncommon)
                 {
-                    if (Main.hardMode && Main.rand.NextBool(15))
-                        itemDrop = ItemType<BubblePearlNecklace>();
+                    if (Main.hardMode )
+                    {
+                        if (Main.rand.NextBool(6))
+                            itemDrop = ItemType<BubblePearlNecklace>();
+                    }
+                    if (Main.rand.NextBool(3))
+                        itemDrop = ItemType<Items.FlyingShields.PearlRay>();
                 }
                 else if (attempt.legendary)
                 {

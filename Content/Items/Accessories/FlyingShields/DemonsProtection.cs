@@ -4,7 +4,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Accessories
+namespace Coralite.Content.Items.Accessories.FlyingShields
 {
     public class DemonsProtection : BaseAccessory, IFlyingShieldAccessory
     {
@@ -13,7 +13,8 @@ namespace Coralite.Content.Items.Accessories
 
         public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
         {
-            projectile.StrongGuard +=0.15f;
+            projectile.StrongGuard += 0.15f;
+            projectile.damageReduce *= 1.1f;
         }
 
         public override void AddRecipes()
@@ -26,7 +27,7 @@ namespace Coralite.Content.Items.Accessories
 
             CreateRecipe()
                 .AddIngredient(ItemID.GuideVoodooDoll)
-                .AddIngredient<ShadowCrystal>( 8)
+                .AddIngredient<ShadowCrystal>(8)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
         }

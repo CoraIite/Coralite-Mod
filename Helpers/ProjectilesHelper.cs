@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Coralite.Content.Bosses.ShadowBalls;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -181,6 +182,70 @@ namespace Coralite.Helpers
             }
         }
 
+        public static bool GetNPCOwner(this float index,int npcType, out NPC owner,Action notExistAction=null)
+        {
+            if (!Main.npc.IndexInRange((int)index))
+            {
+                notExistAction ? .Invoke();
+                owner = null;
+                return false;
+            }
+
+            NPC npc = Main.npc[(int)index];
+            if (!npc.active || npc.type != npcType)
+            {
+                notExistAction?.Invoke();
+                owner = null;
+                return false;
+            }
+
+            owner = npc;
+            return true;
+        }
+
+        public static bool GetNPCOwner(this float index, out NPC owner,Action notExistAction=null)
+        {
+            if (!Main.npc.IndexInRange((int)index))
+            {
+                notExistAction ? .Invoke();
+                owner = null;
+                return false;
+            }
+
+            NPC npc = Main.npc[(int)index];
+            if (!npc.active)
+            {
+                notExistAction?.Invoke();
+                owner = null;
+                return false;
+            }
+
+            owner = npc;
+            return true;
+        }
+
+        public static bool GetNPCOwner<T>(this float index, out NPC owner, Action notExistAction = null) where T : ModNPC
+        {
+            if (!Main.npc.IndexInRange((int)index))
+            {
+                notExistAction?.Invoke();
+                owner = null;
+                return false;
+            }
+
+            NPC npc = Main.npc[(int)index];
+            if (!npc.active || npc.type != ModContent.NPCType<T>())
+            {
+                notExistAction?.Invoke();
+                owner = null;
+                return false;
+            }
+
+            owner = npc;
+            return true;
+        }
+
+
 
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float extraRot = 0, float scale = -1)
         {
@@ -349,6 +414,11 @@ namespace Coralite.Helpers
             , int type, int damage, float knockback, float ai0 = 0, float ai1 = 0, float ai2 = 0)
         {
             return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, type, damage, knockback, projectile.owner, ai0, ai1, ai2);
+        }
+        public static int NewProjectileFromThis<T>(this Projectile projectile, Vector2 position, Vector2 velocity
+            , int damage, float knockback, float ai0 = 0, float ai1 = 0, float ai2 = 0)where T :ModProjectile
+        {
+            return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockback, projectile.owner, ai0, ai1, ai2);
         }
     }
 }

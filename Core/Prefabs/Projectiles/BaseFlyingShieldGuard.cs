@@ -18,22 +18,27 @@ namespace Coralite.Core.Prefabs.Projectiles
         public Player Owner => Main.player[Projectile.owner];
 
         public virtual int ParryTime { get => 0; }
-        public float ParryFactor;
-        public bool ParryUpdate;
+        public float parryFactor;
+        public bool parryUpdate;
         /// <summary>
         /// 弹反的特效颜色
         /// </summary>
-        public Color ParryColor = Color.White;
+        public Color parryColor = Color.White;
 
         /// <summary>
         /// 伤害削减
         /// </summary>
-        public float DamageReduce;
+        public float damageReduce;
         /// <summary>
         /// 后摇时间
         /// </summary>
-        public int DelayTime = 15;
+        public int delayTime = 15;
 
+        public float extraRotation;
+        /// <summary>
+        /// 到最远时候的比例......这个数越小那么防御时盾就越扁
+        /// </summary>
+        public float scalePercent=2.8f;
         public float DistanceToOwner = 0;
 
         public int[] localProjectileImmunity = new int[Main.maxProjectiles];
@@ -70,8 +75,8 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             SetOtherValues();
             UpdateShieldAccessory(accessory => accessory.OnGuardInitialize(this));
-            if (DamageReduce > 1)
-                DamageReduce = 1;
+            if (damageReduce > 1)
+                damageReduce = 1;
 
             Projectile.rotation = Projectile.velocity.ToRotation();
             if (Timer > 0)
@@ -85,9 +90,9 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         /// <summary>
         /// 在这里设置大部分属性的值<br></br>
-        /// 弹反特效的颜色 <see cref="ParryColor"/><br></br>
-        /// 伤害削减量 <see cref="DamageReduce"/><br></br>
-        /// 后摇时间，默认25 <see cref="DelayTime"/><br></br>
+        /// 弹反特效的颜色 <see cref="parryColor"/><br></br>
+        /// 伤害削减量 <see cref="damageReduce"/><br></br>
+        /// 后摇时间，默认25 <see cref="delayTime"/><br></br>
         /// 是否能削减弹幕的穿透数 <see cref="StrongGuard"/><br></br>
         /// </summary>
         public virtual void SetOtherValues() { }
@@ -115,8 +120,8 @@ namespace Coralite.Core.Prefabs.Projectiles
                         if (CheckCollide())
                         {
                             State = (int)GuardState.Guarding;
-                            ParryUpdate = true;
-                            ParryFactor = 0;
+                            parryUpdate = true;
+                            parryFactor = 0;
                             OnParry();
                             UpdateShieldAccessory(accessory => accessory.OnParry(this));
                         }
@@ -144,7 +149,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                     break;
                 case (int)GuardState.Delay:
                     {
-                        DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / DelayTime);
+                        DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / delayTime);
                         SetPos();
                         Timer--;
                         if (Timer < 1)
@@ -153,7 +158,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                     break;
             }
 
-            if (ParryUpdate)
+            if (parryUpdate)
             {
 
             }
@@ -178,6 +183,10 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * DistanceToOwner;
         }
 
+        /// <summary>
+        /// 用于获取弹幕离玩家的距离
+        /// </summary>
+        /// <returns></returns>
         public virtual float GetWidth()
         {
             return Projectile.width / 2 + 8;
@@ -194,7 +203,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
                 if (proj.Colliding(proj.getRect(), rect))
                 {
-                    proj.damage = (int)(proj.damage * (1 - DamageReduce));//削减伤害
+                    proj.damage = (int)(proj.damage * (1 - damageReduce));//削减伤害
                     if (proj.damage < 1)
                         proj.damage = 1;
 
@@ -230,7 +239,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void TurnToDelay()
         {
             State = (int)GuardState.Delay;
-            Timer = DelayTime;
+            Timer = delayTime;
         }
 
         public virtual void OnParry()
@@ -319,11 +328,11 @@ namespace Coralite.Core.Prefabs.Projectiles
             var pos = Projectile.Center - Main.screenPosition;
             var origin = mainTex.Size() / 2;
 
-            Vector2 scale = new Vector2(1 - DistanceToOwner / (Projectile.width * 2.8f), 1);
+            Vector2 scale = new Vector2(1 - DistanceToOwner / (Projectile.width * scalePercent), 1);
             scale *= Projectile.scale;
             var effect = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 
-            Main.spriteBatch.Draw(mainTex, pos, null, lightColor, Projectile.rotation
+            Main.spriteBatch.Draw(mainTex, pos, null, lightColor, Projectile.rotation+extraRotation
                 , origin, scale, effect, 0);
             return false;
         }

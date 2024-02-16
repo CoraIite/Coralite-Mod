@@ -21,6 +21,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             Item.useTime = Item.useAnimation = 15;
             Item.shoot = ModContent.ProjectileType<DeliciousSteakProj>();
+            Item.knockBack = 5;
             Item.shootSpeed = 14;
             Item.damage = 26;
         }
@@ -98,7 +99,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            DamageReduce = 0.1f;
+            damageReduce = 0.1f;
         }
 
         public override void OnGuard()

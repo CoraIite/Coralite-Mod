@@ -3,7 +3,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Accessories
+namespace Coralite.Content.Items.Accessories.FlyingShields
 {
     public class ChlorophyteMedal : BaseAccessory, IFlyingShieldAccessory
     {
@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Accessories
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.ChlorophyteBar,10)
+                .AddIngredient(ItemID.ChlorophyteBar, 10)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
         }

@@ -12,6 +12,8 @@ namespace Coralite.Core.Prefabs.Projectiles
 {
     /// <summary>
     /// 规则：<br></br>
+    /// ai0记录状态<br></br>
+    /// ai1记录时间
     /// </summary>
     public abstract class BaseFlyingShield : ModProjectile
     {
@@ -146,7 +148,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void Chasing()
         {
             if (canChase)
-                if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, Timer * shootSpeed, n => Projectile.localNPCImmunity[n.whoAmI]==0, out NPC target))
+                if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, Timer * shootSpeed+Projectile.width*4, n => Projectile.localNPCImmunity[n.whoAmI]==0, out NPC target))
                 {
                     float selfAngle = Projectile.velocity.ToRotation();
                     float targetAngle = (target.Center - Projectile.Center).ToRotation();

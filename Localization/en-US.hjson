@@ -2316,6 +2316,26 @@ Mods: {
 				DisplayName: Chlorophyte Medal
 				Tooltip: ""
 			}
+
+			SilverAngel: {
+				DisplayName: Silver Angel
+				Tooltip: ""
+			}
+
+			FloralHarmonyMedallion: {
+				DisplayName: Floral Harmony Medallion
+				Tooltip: ""
+			}
+
+			PearlRay: {
+				DisplayName: Pearl Ray
+				Tooltip: ""
+			}
+
+			FlyingShieldCore: {
+				DisplayName: Flying Shield Core
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2835,6 +2855,11 @@ Mods: {
 			RedJadeShieldProj.DisplayName: Red Jade Shield Proj
 			DeliciousSteakGuard.DisplayName: Delicious Steak Guard
 			DeliciousSteakProj.DisplayName: Delicious Steak Proj
+			SilverAngelGuard.DisplayName: Silver Angel Guard
+			SilverAngelProj.DisplayName: Silver Angel Proj
+			SilverAngelStrike.DisplayName: Silver Angel Strike
+			PearlRayGuard.DisplayName: Pearl Ray Guard
+			PearlRayProj.DisplayName: Pearl Ray Proj
 		}
 
 		Configs: {

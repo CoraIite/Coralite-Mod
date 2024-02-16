@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Coralite.Content.Bosses.ShadowBalls;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
@@ -131,8 +132,6 @@ namespace Coralite.Helpers
                 }
             }
         }
-
-
 
         [DebuggerHidden]
         public static int NewProjectileInAI(this NPC npc, Vector2 position, Vector2 velocity, int type, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)

@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.Accessories;
+using Coralite.Content.Items.Accessories.FlyingShields;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Tiles.Magike;
 using Terraria;

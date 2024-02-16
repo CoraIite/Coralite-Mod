@@ -18,6 +18,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             Item.useTime = Item.useAnimation = 15;
             Item.shoot = ModContent.ProjectileType<GlassShieldProj>();
+            Item.knockBack = 2;
             Item.shootSpeed = 12;
             Item.damage = 15;
         }
@@ -63,7 +64,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            DamageReduce = 0.1f;
+            damageReduce = 0.1f;
         }
 
         public override void OnGuard()

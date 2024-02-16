@@ -2,13 +2,20 @@
 using Coralite.Core.Prefabs.Projectiles;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
-namespace Coralite.Content.Items.Accessories
+namespace Coralite.Content.Items.Accessories.FlyingShields
 {
     public class LevitationBlossom : BaseAccessory, IFlyingShieldAccessory
     {
         public LevitationBlossom() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 20))
         { }
+
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        {
+            return !(equippedItem.type == ModContent.ItemType<FloralHarmonyMedallion>()
+                && incomingItem.type == ModContent.ItemType<LevitationBlossom>());
+        }
 
         public void OnInitialize(BaseFlyingShield projectile)
         {

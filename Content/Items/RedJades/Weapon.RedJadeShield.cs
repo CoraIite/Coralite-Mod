@@ -76,7 +76,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void SetOtherValues()
         {
-            DamageReduce = 0.1f;
+            damageReduce = 0.1f;
         }
 
         public override void OnGuard()

@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Coralite.Content.Items.Accessories
+namespace Coralite.Content.Items.Accessories.FlyingShields
 {
     public class FlyingShieldToolboxProMax : BaseAccessory, IFlyingShieldAccessory
     {
@@ -14,7 +14,15 @@ namespace Coralite.Content.Items.Accessories
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
-            return !(equippedItem.type == ModContent.ItemType<FlyingShieldToolbox>()
+            return !((equippedItem.type == ModContent.ItemType<FlyingShieldToolbox>()//素材
+
+                || equippedItem.type == ModContent.ItemType<FlyingShieldVarnish>()//下位
+                || equippedItem.type == ModContent.ItemType<FlyingShieldMaintenanceGuide>()//下位
+                || equippedItem.type == ModContent.ItemType<StretchGlue>()//下位
+
+                || equippedItem.type == ModContent.ItemType<FlyingShieldCore>()//与重型冲突
+                || equippedItem.type == ModContent.ItemType<HeavyWedges>())//与重型冲突
+
                 && incomingItem.type == ModContent.ItemType<FlyingShieldToolboxProMax>());
         }
 
@@ -28,7 +36,7 @@ namespace Coralite.Content.Items.Accessories
 
         public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
         {
-            projectile.DamageReduce *= 1.2f;
+            projectile.damageReduce *= 1.2f;
         }
 
         public void OnInitialize(BaseFlyingShield projectile)
@@ -39,7 +47,7 @@ namespace Coralite.Content.Items.Accessories
         public void PostInitialize(BaseFlyingShield projectile)
         {
             projectile.shootSpeed += 3f / (projectile.Projectile.extraUpdates + 1);//加速
-            projectile.backSpeed += 3f / (projectile.Projectile.extraUpdates + 1);
+            projectile.backSpeed += 5f / (projectile.Projectile.extraUpdates + 1);
             if (projectile.shootSpeed > projectile.Projectile.width / (projectile.Projectile.extraUpdates + 1))
             {
                 projectile.Projectile.extraUpdates++;
@@ -55,9 +63,9 @@ namespace Coralite.Content.Items.Accessories
         {
             CreateRecipe()
                 .AddIngredient<FlyingShieldToolbox>()
-                .AddIngredient(ItemID.GoldBar,10)
-                .AddIngredient(ItemID.BeeWax,10)
-                .AddIngredient(ItemID.SoulofLight,10)
+                .AddIngredient(ItemID.GoldBar, 10)
+                .AddIngredient(ItemID.BeeWax, 10)
+                .AddIngredient(ItemID.SoulofLight, 10)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
         }
