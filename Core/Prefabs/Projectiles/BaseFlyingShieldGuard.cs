@@ -47,6 +47,10 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// 是否能削减弹幕的穿透数的概率
         /// </summary>
         public float StrongGuard;
+        /// <summary>
+        /// 决定了举盾时每帧的距离增加量，这个数越大举盾速度越快
+        /// </summary>
+        public int distanceAdder=4;
 
         public enum GuardState
         {
@@ -110,12 +114,11 @@ namespace Coralite.Core.Prefabs.Projectiles
                 default: Projectile.Kill(); break;
                 case (int)GuardState.Parry:
                     {
-                        if (DistanceToOwner < GetWidth())
-                            DistanceToOwner += 4;
-                        else if (!Main.mouseRight)
+                        if (!Main.mouseRight)
                             TurnToDelay();
 
                         SetPos();
+                        OnHoldShield();
 
                         if (CheckCollide())
                         {
@@ -133,12 +136,17 @@ namespace Coralite.Core.Prefabs.Projectiles
                     break;
                 case (int)GuardState.Guarding:
                     {
-                        if (DistanceToOwner < GetWidth())
-                            DistanceToOwner += 4;
-                        else if (!Main.mouseRight)
+                        if (!Main.mouseRight)
                             TurnToDelay();
 
                         SetPos();
+                        OnHoldShield();
+
+                        if (DistanceToOwner < GetWidth())
+                        {
+                            DistanceToOwner += distanceAdder;
+                            break;
+                        }
 
                         if (CheckCollide())
                         {
@@ -254,6 +262,8 @@ namespace Coralite.Core.Prefabs.Projectiles
             DistanceToOwner /= 3;
             Helper.PlayPitched("Misc/ShieldGuard", 0.4f, 0f, Projectile.Center);
         }
+
+        public virtual void OnHoldShield() { }
 
         public virtual void OnStrongGuard()
         {

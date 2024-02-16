@@ -2383,11 +2383,26 @@ Mods: {
 
 			FlyingShieldCore: {
 				DisplayName: 飞盾核心
-				Tooltip: 
-				'''
-				减慢飞盾飞行速度，提升飞盾大小
-				+12% 近战伤害
-				'''
+				Tooltip:
+					'''
+					减慢飞盾飞行速度，提升飞盾大小
+					+12% 近战伤害
+					'''
+			}
+
+			TortoiseshellFortress: {
+				DisplayName: 乌龟壳重盾
+				Tooltip: 一块相当重的盾牌，可以很好地保护你
+			}
+
+			ShieldbearersBand: {
+				DisplayName: 额外背带
+				Tooltip: "+1 同时存在的飞盾数量"
+			}
+
+			RustedShield: {
+				DisplayName: 腐朽的盾
+				Tooltip: "据说很久以前，英雄就是拿着这面盾驱走了灾厄。而现在早已变得锈迹斑斑。"
 			}
 		}
 
@@ -2913,6 +2928,8 @@ Mods: {
 			// SilverAngelStrike.DisplayName: Silver Angel Strike
 			// PearlRayGuard.DisplayName: Pearl Ray Guard
 			// PearlRayProj.DisplayName: Pearl Ray Proj
+			// TortoiseshellFortressGuard.DisplayName: Tortoiseshell Fortress Guard
+			// TortoiseshellFortressProj.DisplayName: Tortoiseshell Fortress Proj
 		}
 
 		Configs: {

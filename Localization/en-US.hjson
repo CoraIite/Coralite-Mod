@@ -2336,6 +2336,21 @@ Mods: {
 				DisplayName: Flying Shield Core
 				Tooltip: ""
 			}
+
+			TortoiseshellFortress: {
+				DisplayName: Tortoiseshell Fortress
+				Tooltip: ""
+			}
+
+			ShieldbearersBand: {
+				DisplayName: Shieldbearers Band
+				Tooltip: ""
+			}
+
+			RustedShield: {
+				DisplayName: Rusted Shield
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2860,6 +2875,8 @@ Mods: {
 			SilverAngelStrike.DisplayName: Silver Angel Strike
 			PearlRayGuard.DisplayName: Pearl Ray Guard
 			PearlRayProj.DisplayName: Pearl Ray Proj
+			TortoiseshellFortressGuard.DisplayName: Tortoiseshell Fortress Guard
+			TortoiseshellFortressProj.DisplayName: Tortoiseshell Fortress Proj
 		}
 
 		Configs: {
