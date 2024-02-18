@@ -35,7 +35,7 @@ namespace Coralite.Content.UI
         public override void OnInitialize()
         {
             for (int i = 0; i < ShowFlags.Length; i++)
-                ShowFlags[i] = true;
+                ShowFlags[i] = false;
             UIPanel panel = new UIPanel();
 
             panel.Width.Set(240, 0);

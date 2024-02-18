@@ -1,43 +1,42 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core.Prefabs.Items;
-using Terraria;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class ShieldbearersBand : BaseAccessory
+    public class PowerliftExoskeleton : BaseAccessory
     {
-        public ShieldbearersBand() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 20))
+        public PowerliftExoskeleton() : base(ItemRarityID.Pink, Item.sellPrice(0, 1, 30))
         { }
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
-            return !((equippedItem.type == ModContent.ItemType<PowerliftExoskeleton>()//上位
+            return !((equippedItem.type == ModContent.ItemType<ShieldbearersBand>()//下位
                 || equippedItem.type == ModContent.ItemType<BeetleLimbStrap>())//上位
 
-                && incomingItem.type == ModContent.ItemType<ShieldbearersBand>());
+                && incomingItem.type == ModContent.ItemType<PowerliftExoskeleton>());
         }
-        
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.MaxFlyingShield++;
+                cp.MaxFlyingShield += 2;
             }
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.Leather)
-                .AddIngredient(ItemID.ShadowScale, 5)
-                .AddTile(TileID.TinkerersWorkbench)
-                .Register();
-
-            CreateRecipe()
-                .AddIngredient(ItemID.Leather)
-                .AddIngredient(ItemID.TissueSample, 5)
+                .AddIngredient<ShieldbearersBand>()
+                .AddIngredient(ItemID.HallowedBar, 8)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
         }

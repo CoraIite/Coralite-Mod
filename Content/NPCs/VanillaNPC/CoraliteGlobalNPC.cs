@@ -78,6 +78,9 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 case NPCID.ZombieMerman:
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<BloodyOrb>(), 4, 1, 3));
                     break;
+                case NPCID.Mothron:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<RustedShield>(), 4, 1, 1));
+                    break;
                 case NPCID.GoblinShark:
                 case NPCID.BloodEelHead:
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<BloodyOrb>(), 2, 1, 3));

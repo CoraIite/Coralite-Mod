@@ -35,6 +35,7 @@ namespace Coralite.Core.Prefabs.Items
             Item.maxStack = 1;
             Item.value = Value;
             Item.rare = Rare;
+            Item.UseSound = CoraliteSoundID.Swing_Item1;
 
             Item.noUseGraphic = true;
             Item.noMelee = true;
@@ -79,6 +80,7 @@ namespace Coralite.Core.Prefabs.Items
             if (Main.myPlayer != player.whoAmI)
                 return false;
 
+            velocity = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * Item.shootSpeed;
             if (player.altFunctionUse == 2)//防御
             {
                 RightShoot(player, source, damage);
@@ -106,7 +108,8 @@ namespace Coralite.Core.Prefabs.Items
 
         public virtual void RightShoot(Player player, EntitySource_ItemUse_WithAmmo source, int damage)
         {
-            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TRightProj>(), damage, 6, player.whoAmI);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TRightProj>()
+                , (int)(damage*0.9f), 6, player.whoAmI);
         }
     }
 }

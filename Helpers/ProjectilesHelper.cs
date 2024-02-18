@@ -182,6 +182,14 @@ namespace Coralite.Helpers
             }
         }
 
+        /// <summary>
+        /// 使用一个变量来获取对应npc数组中的NPC
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="npcType"></param>
+        /// <param name="owner"></param>
+        /// <param name="notExistAction"></param>
+        /// <returns></returns>
         public static bool GetNPCOwner(this float index,int npcType, out NPC owner,Action notExistAction=null)
         {
             if (!Main.npc.IndexInRange((int)index))

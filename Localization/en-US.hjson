@@ -2351,6 +2351,36 @@ Mods: {
 				DisplayName: Rusted Shield
 				Tooltip: ""
 			}
+
+			BeetleLimbStrap: {
+				DisplayName: Beetle Limb Strap
+				Tooltip: ""
+			}
+
+			PowerliftExoskeleton: {
+				DisplayName: Powerlift Exoskeleton
+				Tooltip: ""
+			}
+
+			HolyCharm: {
+				DisplayName: Holy Charm
+				Tooltip: ""
+			}
+
+			Terracrest: {
+				DisplayName: Terracrest
+				Tooltip: ""
+			}
+
+			Fishronguard: {
+				DisplayName: Fishronguard
+				Tooltip: ""
+			}
+
+			MechRioter: {
+				DisplayName: Mech Rioter
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2877,6 +2907,14 @@ Mods: {
 			PearlRayProj.DisplayName: Pearl Ray Proj
 			TortoiseshellFortressGuard.DisplayName: Tortoiseshell Fortress Guard
 			TortoiseshellFortressProj.DisplayName: Tortoiseshell Fortress Proj
+			HolyCharmProj.DisplayName: Holy Charm Proj
+			TortoiseshellFortressDash.DisplayName: Tortoiseshell Fortress Dash
+			TerracrestSpike.DisplayName: Terracrest Spike
+			FishronguardGuard.DisplayName: Fishronguard Guard
+			FishronguardProj.DisplayName: Fishronguard Proj
+			MechRioterGuard.DisplayName: Mech Rioter Guard
+			MechRioterProj.DisplayName: Mech Rioter Proj
+			SmallMechRioter.DisplayName: Small Mech Rioter
 		}
 
 		Configs: {

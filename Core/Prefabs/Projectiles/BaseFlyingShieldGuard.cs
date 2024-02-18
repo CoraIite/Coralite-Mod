@@ -17,9 +17,8 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public Player Owner => Main.player[Projectile.owner];
 
-        public virtual int ParryTime { get => 0; }
+        public int parryTime;
         public float parryFactor;
-        public bool parryUpdate;
         /// <summary>
         /// 弹反的特效颜色
         /// </summary>
@@ -38,7 +37,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <summary>
         /// 到最远时候的比例......这个数越小那么防御时盾就越扁
         /// </summary>
-        public float scalePercent=2.8f;
+        public float scalePercent = 2.8f;
         public float DistanceToOwner = 0;
 
         public int[] localProjectileImmunity = new int[Main.maxProjectiles];
@@ -50,11 +49,12 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <summary>
         /// 决定了举盾时每帧的距离增加量，这个数越大举盾速度越快
         /// </summary>
-        public int distanceAdder=4;
+        public float distanceAdder = 2;
 
         public enum GuardState
         {
             Parry,
+            ParryDelay,
             Guarding,
             Delay,
         }
@@ -73,20 +73,32 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.localNPCHitCooldown = 30;
         }
 
+        public override bool? CanDamage()
+        {
+            if (State == (int)GuardState.Delay || State == (int)GuardState.ParryDelay)
+                return false;
+            return base.CanDamage();
+        }
+
         public override void OnSpawn(IEntitySource source)
         {
-            Timer = ParryTime;
+            Projectile.scale *= Owner.GetAdjustedItemScale(Owner.HeldItem);
+            Projectile.Resize((int)(Projectile.width * Projectile.scale), (int)(Projectile.height * Projectile.scale));
 
             SetOtherValues();
             UpdateShieldAccessory(accessory => accessory.OnGuardInitialize(this));
             if (damageReduce > 1)
                 damageReduce = 1;
 
+            Timer = parryTime;
+
             Projectile.rotation = Projectile.velocity.ToRotation();
             if (Timer > 0)
             {
                 State = (int)GuardState.Parry;
                 DistanceToOwner = GetWidth();
+                Owner.immuneTime = parryTime;
+                Owner.immune = true;
             }
             else
                 State = (int)GuardState.Guarding;
@@ -123,7 +135,6 @@ namespace Coralite.Core.Prefabs.Projectiles
                         if (CheckCollide())
                         {
                             State = (int)GuardState.Guarding;
-                            parryUpdate = true;
                             parryFactor = 0;
                             OnParry();
                             UpdateShieldAccessory(accessory => accessory.OnParry(this));
@@ -131,7 +142,22 @@ namespace Coralite.Core.Prefabs.Projectiles
 
                         Timer--;
                         if (Timer < 1)
+                        {
+                            State = (int)GuardState.ParryDelay;
+                            Timer = parryTime * 2;
+                        }
+                    }
+                    break;
+                case (int)GuardState.ParryDelay:
+                    {
+                        DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / (parryTime * 2));
+                        SetPos();
+
+                        Timer--;
+                        if (Timer < 1)
+                        {
                             State = (int)GuardState.Guarding;
+                        }
                     }
                     break;
                 case (int)GuardState.Guarding:
@@ -166,11 +192,6 @@ namespace Coralite.Core.Prefabs.Projectiles
                     break;
             }
 
-            if (parryUpdate)
-            {
-
-            }
-
             //更新弹幕的无敌帧
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
@@ -197,7 +218,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <returns></returns>
         public virtual float GetWidth()
         {
-            return Projectile.width / 2 + 8;
+            return Projectile.width / 2/Projectile.scale + 8;
         }
 
         public bool CheckCollide()
@@ -341,9 +362,21 @@ namespace Coralite.Core.Prefabs.Projectiles
             Vector2 scale = new Vector2(1 - DistanceToOwner / (Projectile.width * scalePercent), 1);
             scale *= Projectile.scale;
             var effect = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+            float rotation = Projectile.rotation + extraRotation;
 
-            Main.spriteBatch.Draw(mainTex, pos, null, lightColor, Projectile.rotation+extraRotation
+            Main.spriteBatch.Draw(mainTex, pos, null, lightColor, rotation
                 , origin, scale, effect, 0);
+
+            if (State == (int)GuardState.Parry)
+            {
+                float factor = Timer / parryTime;
+                lightColor.A = 0;
+                Main.spriteBatch.Draw(mainTex, pos, null, lightColor * factor, rotation
+                    , origin, scale * (1f + factor * 0.4f), effect, 0);
+                //Main.spriteBatch.Draw(mainTex, pos, null, lightColor * factor, rotation
+                //    , origin, scale * (1f + factor * 0.4f), effect, 0);
+            }
+
             return false;
         }
     }

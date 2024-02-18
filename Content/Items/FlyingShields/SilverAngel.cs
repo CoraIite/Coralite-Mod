@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetDefaults2()
         {
-            Item.useTime = Item.useAnimation = 24;
+            Item.useTime = Item.useAnimation = 18;
             Item.shoot = ModContent.ProjectileType<SilverAngelProj>();
             Item.knockBack = 3;
             Item.shootSpeed = 16;
@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            flyingTime = 22;
+            flyingTime = 18;
             backTime = 5;
             backSpeed = 14;
             trailCachesLength = 10;
@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.FlyingShields
                 if (!target.friendly && target.CanBeChasedBy())
                 {
                     Projectile.NewProjectileFromThis<SilverAngelStrike>(target.Top + new Vector2(0, -20),
-                        Vector2.Zero, Projectile.damage / 2, 4, target.whoAmI);
+                        Vector2.Zero, Projectile.damage, 4, target.whoAmI);
                 }
         }
 
@@ -127,7 +127,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override float GetWidth()
         {
-            return Projectile.width / 2 + 4;
+            return Projectile.width / 2/Projectile.scale + 4;
         }
     }
 

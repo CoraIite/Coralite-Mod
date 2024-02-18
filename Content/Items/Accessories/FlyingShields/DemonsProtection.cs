@@ -3,6 +3,7 @@ using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
@@ -11,9 +12,16 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         public DemonsProtection() : base(ItemRarityID.Orange, Item.sellPrice(0, 0, 20))
         { }
 
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        {
+            return !((equippedItem.type == ModContent.ItemType<Terracrest>())//上位
+                
+                && incomingItem.type == ModContent.ItemType<DemonsProtection>());
+        }
+
         public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
         {
-            projectile.StrongGuard += 0.15f;
+            projectile.StrongGuard += 0.1f;
             projectile.damageReduce *= 1.1f;
         }
 

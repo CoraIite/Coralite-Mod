@@ -2331,7 +2331,7 @@ Mods: {
 				DisplayName: 魔界护盾符
 				Tooltip:
 					'''
-					+15% 飞盾格挡时减少弹幕穿透数的概率
+					+10% 飞盾格挡时减少弹幕穿透数的概率
 					略微增加飞盾格挡能力
 					'''
 			}
@@ -2392,17 +2392,73 @@ Mods: {
 
 			TortoiseshellFortress: {
 				DisplayName: 乌龟壳重盾
-				Tooltip: 一块相当重的盾牌，可以很好地保护你
+				Tooltip:
+					'''
+					一块相当重的盾牌，可以很好地保护你
+					双击方向键以成为丛林之王
+					'''
 			}
 
 			ShieldbearersBand: {
 				DisplayName: 额外背带
-				Tooltip: "+1 同时存在的飞盾数量"
+				Tooltip: +1 同时存在的飞盾数量
 			}
 
 			RustedShield: {
 				DisplayName: 腐朽的盾
-				Tooltip: "据说很久以前，英雄就是拿着这面盾驱走了灾厄。而现在早已变得锈迹斑斑。"
+				Tooltip: 据说很久以前，英雄就是拿着这面盾驱走了灾厄。而现在早已变得锈迹斑斑。
+			}
+
+			BeetleLimbStrap: {
+				DisplayName: 甲虫附肢
+				Tooltip:
+					'''
+					+3 同时存在的飞盾数量
+					很多昆虫都能举起几倍与自身体重的物品，这个附肢也是如此
+					'''
+			}
+
+			PowerliftExoskeleton: {
+				DisplayName: 外骨骼
+				Tooltip:
+					'''
+					+2 同时存在的飞盾数量
+					一个强有力的机械臂，能够让你多携带几块盾牌
+					'''
+			}
+
+			HolyCharm: {
+				DisplayName: 神圣荣耀
+				Tooltip:
+					'''
+					举起盾牌的瞬间能够进行完美格挡并释放神圣盾冲
+					飞盾未回归时也可以使用右键格挡
+					'''
+			}
+
+			Terracrest: {
+				DisplayName: 泰拉荣耀
+				Tooltip:
+					'''
+					举起盾牌的瞬间能够进行完美格挡并释放泰拉魔刺
+					飞盾未回归时也可以使用右键格挡
+					+18% 飞盾格挡时减少弹幕穿透数的概率
+					增加飞盾格挡能力
+					'''
+			}
+
+			Fishronguard: {
+				DisplayName: 亘古爵王
+				Tooltip:
+					'''
+					在空中划过的样子宛如真正的猪鲨飞过
+					飞行时喷出追踪泡泡
+					'''
+			}
+
+			MechRioter: {
+				DisplayName: 机械暴徒
+				Tooltip: 射出3个一组的机械暴徒，它们将在命中敌人后散开
 			}
 		}
 
@@ -2930,6 +2986,14 @@ Mods: {
 			// PearlRayProj.DisplayName: Pearl Ray Proj
 			// TortoiseshellFortressGuard.DisplayName: Tortoiseshell Fortress Guard
 			// TortoiseshellFortressProj.DisplayName: Tortoiseshell Fortress Proj
+			// HolyCharmProj.DisplayName: Holy Charm Proj
+			// TortoiseshellFortressDash.DisplayName: Tortoiseshell Fortress Dash
+			// TerracrestSpike.DisplayName: Terracrest Spike
+			// FishronguardGuard.DisplayName: Fishronguard Guard
+			// FishronguardProj.DisplayName: Fishronguard Proj
+			// MechRioterGuard.DisplayName: Mech Rioter Guard
+			// MechRioterProj.DisplayName: Mech Rioter Proj
+			// SmallMechRioter.DisplayName: Small Mech Rioter
 		}
 
 		Configs: {
