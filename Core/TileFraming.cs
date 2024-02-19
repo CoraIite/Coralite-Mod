@@ -5,13 +5,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Core
 {
-    /*
-     * 这里的码是来自厄厄的
-     * 部分码其实需要改一改，比方说没什么意义的额外补充贴图
-     * 但是.......改起来难度过于地高了，所以还算放弃了
-     */
-
     //TODO: 增加在改变自身进入到CustomMergeConditionalTree方法中之前检测融合的物块的各种半砖或斜坡
+    //嗯.....现在这个类里最大的问题是使用这样去改变帧图的话会导致不需要变化的地方也会重新在3个样式之中随机一个
+    //等什么时候有时间就给它重写优化一下吧
 
     public class TileFraming : ModSystem
     {

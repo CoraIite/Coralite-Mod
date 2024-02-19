@@ -877,7 +877,7 @@ namespace Coralite.Content.Items.Gels
             color *= 0.75f;
 
             //绘制影子拖尾
-            Projectile.DrawShadowTrails(color, 0.3f, 0.03f, 1, 8, 2, Scale, frameBox);
+            Projectile.DrawShadowTrails(color, 0.3f, 0.03f, 1, 8, 2, Scale, frameBox,0);
 
             //绘制发光
             frameBox = mainTex.Frame(1, 2, 0, 1);

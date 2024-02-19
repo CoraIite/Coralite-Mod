@@ -2381,6 +2381,46 @@ Mods: {
 				DisplayName: Mech Rioter
 				Tooltip: ""
 			}
+
+			BatfangShield: {
+				DisplayName: Batfang Shield
+				Tooltip: ""
+			}
+
+			VampiresFang: {
+				DisplayName: Vampires Fang
+				Tooltip: ""
+			}
+
+			GlazeBulwark: {
+				DisplayName: Glaze Bulwark
+				Tooltip: ""
+			}
+
+			GemrainAegis: {
+				DisplayName: Gemrain Aegis
+				Tooltip: ""
+			}
+
+			Leonids: {
+				DisplayName: Leonids
+				Tooltip: ""
+			}
+
+			Solleonis: {
+				DisplayName: Solleonis
+				Tooltip: ""
+			}
+
+			RoyalAngel: {
+				DisplayName: Royal Angel
+				Tooltip: ""
+			}
+
+			Noctiflair: {
+				DisplayName: Noctiflair
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2915,6 +2955,28 @@ Mods: {
 			MechRioterGuard.DisplayName: Mech Rioter Guard
 			MechRioterProj.DisplayName: Mech Rioter Proj
 			SmallMechRioter.DisplayName: Small Mech Rioter
+			BatfangShieldGuard.DisplayName: Batfang Shield Guard
+			BatfangShieldProj.DisplayName: Batfang Shield Proj
+			VampiresFangGuard.DisplayName: Vampires Fang Guard
+			VampiresFangProj.DisplayName: Vampires Fang Proj
+			GlazeBulwarkEXProj.DisplayName: Glaze Bulwark E X Proj
+			GlazeBulwarkGuard.DisplayName: Glaze Bulwark Guard
+			GlazeBulwarkProj.DisplayName: Glaze Bulwark Proj
+			GemrainAegisEXProj.DisplayName: Gemrain Aegis E X Proj
+			GemrainAegisGuard.DisplayName: Gemrain Aegis Guard
+			GemrainAegisProj.DisplayName: Gemrain Aegis Proj
+			LeonidsGuard.DisplayName: Leonids Guard
+			LeonidsMeteor.DisplayName: Leonids Meteor
+			LeonidsProj.DisplayName: Leonids Proj
+			SolleonisGuard.DisplayName: Solleonis Guard
+			SolleonisMeteor.DisplayName: Solleonis Meteor
+			SolleonisProj.DisplayName: Solleonis Proj
+			RoyalAngelGuard.DisplayName: Royal Angel Guard
+			RoyalAngelProj.DisplayName: Royal Angel Proj
+			RoyalAngelStrike.DisplayName: Royal Angel Strike
+			NoctiflairGuard.DisplayName: Noctiflair Guard
+			NoctiflairProj.DisplayName: Noctiflair Proj
+			NoctiflairStrike.DisplayName: Noctiflair Strike
 		}
 
 		Configs: {

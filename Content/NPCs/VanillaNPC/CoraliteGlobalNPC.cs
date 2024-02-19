@@ -51,7 +51,9 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 case NPCID.WanderingEye:
                     npcLoot.Add(ItemDropRule.Common(ItemType<EyeballSeed>(), 25));
                     break;
-
+                case NPCID.CaveBat:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<BatfangShield>(), 120,1,1));
+                    break;
                 //case NPCID.DarkCaster://地牢怪掉落影子
                 //    npcLoot.Add(ItemDropRule.Common(ItemType<ShadowEnergy>(), 3, 1, 3));
                 //    break;

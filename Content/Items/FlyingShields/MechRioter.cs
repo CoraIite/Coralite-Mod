@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.FlyingShields
                     d.noGravity = true;
                 }
 
-                if (Timer == 20 && ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, 1000, n => true, out NPC target))
+                if (Timer == 24 && ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, 1000, n => true, out NPC target))
                 {
                     int index = Projectile.NewProjectileFromThis(Projectile.Center
                         , (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 12,
@@ -102,10 +102,10 @@ namespace Coralite.Content.Items.FlyingShields
                 Projectile.NewProjectileFromThis<SmallMechRioter>(target.Center, Helper.NextVec2Dir() * 12, Projectile.damage, Projectile.knockBack);
                 Vector2 offset = Helper.NextVec2Dir();
                 Projectile.NewProjectileFromThis<SmallMechRioter>(target.Center + offset * 16, offset * 2, Projectile.damage, Projectile.knockBack, 1);
+                hited = true;
             }
 
             base.OnHitNPC(target, hit, damageDone);
-            hited = true;
         }
 
         public override Color GetColor(float factor)
@@ -164,7 +164,7 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.friendly = true;
             Projectile.tileCollide = true;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 25;
+            Projectile.idStaticNPCHitCooldown = 20;
             Projectile.penetrate = -1;
             Projectile.width = Projectile.height = 24;
         }
@@ -204,6 +204,12 @@ namespace Coralite.Content.Items.FlyingShields
                                 Target = target.whoAmI;
                             else
                                 TurnToBack();
+                        }
+
+                        if (target == null)
+                        {
+                            TurnToBack();
+                            return;
                         }
 
                         if (Phase == 0)//机械佝偻王 转转乐
@@ -324,7 +330,7 @@ namespace Coralite.Content.Items.FlyingShields
             if (Phase == 0)
             {
                 var frameBox = mainTex.Frame(3, 1, Projectile.frame, 0);
-                Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 8, 1, 8, 1, 0.9f, frameBox);
+                Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 8, 1, 8, 1, 0.9f, frameBox, -1.57f);
 
                 Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, Projectile.rotation - 1.57f, frameBox.Size() / 2, Projectile.scale, 0, 0);
             }

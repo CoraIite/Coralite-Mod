@@ -2333,6 +2333,7 @@ Mods: {
 					'''
 					+10% 飞盾格挡时减少弹幕穿透数的概率
 					略微增加飞盾格挡能力
+					略微增加举盾速度
 					'''
 			}
 
@@ -2444,6 +2445,7 @@ Mods: {
 					飞盾未回归时也可以使用右键格挡
 					+18% 飞盾格挡时减少弹幕穿透数的概率
 					增加飞盾格挡能力
+					增加举盾速度
 					'''
 			}
 
@@ -2458,7 +2460,51 @@ Mods: {
 
 			MechRioter: {
 				DisplayName: 机械暴徒
-				Tooltip: 射出3个一组的机械暴徒，它们将在命中敌人后散开
+				Tooltip: 扔出3个一组的机械暴徒，它们将在命中敌人后散开
+			}
+
+			BatfangShield: {
+				DisplayName: 血鄂
+				Tooltip: 有概率产生吸血效果
+			}
+
+			VampiresFang: {
+				DisplayName: 血饶之牙
+				Tooltip:
+					'''
+					+1 同时存在的飞盾数量
+					扔出嗜血的盾牌
+					'''
+			}
+
+			GlazeBulwark: {
+				DisplayName: 琉璃重盾
+				Tooltip: 在防御时会变成碎片
+			}
+
+			GemrainAegis: {
+				DisplayName: 七彩宝石盾
+				Tooltip: 防御时变成七彩碎片
+			}
+
+			Leonids: {
+				DisplayName: 十二星-狮子座
+				Tooltip: 射出流星雨
+			}
+
+			Solleonis: {
+				DisplayName: 狮煌 破日
+				Tooltip: “释放吞噬太阳的巨狮”
+			}
+
+			RoyalAngel: {
+				DisplayName: 圣光天使
+				Tooltip: 命中敌人后降下制裁
+			}
+
+			Noctiflair: {
+				DisplayName: 极夜之诗
+				Tooltip: 命中敌人后降下裁决
 			}
 		}
 
@@ -2994,6 +3040,28 @@ Mods: {
 			// MechRioterGuard.DisplayName: Mech Rioter Guard
 			// MechRioterProj.DisplayName: Mech Rioter Proj
 			// SmallMechRioter.DisplayName: Small Mech Rioter
+			// BatfangShieldGuard.DisplayName: Batfang Shield Guard
+			// BatfangShieldProj.DisplayName: Batfang Shield Proj
+			// VampiresFangGuard.DisplayName: Vampires Fang Guard
+			// VampiresFangProj.DisplayName: Vampires Fang Proj
+			// GlazeBulwarkEXProj.DisplayName: Glaze Bulwark E X Proj
+			// GlazeBulwarkGuard.DisplayName: Glaze Bulwark Guard
+			// GlazeBulwarkProj.DisplayName: Glaze Bulwark Proj
+			// GemrainAegisEXProj.DisplayName: Gemrain Aegis E X Proj
+			// GemrainAegisGuard.DisplayName: Gemrain Aegis Guard
+			// GemrainAegisProj.DisplayName: Gemrain Aegis Proj
+			// LeonidsGuard.DisplayName: Leonids Guard
+			// LeonidsMeteor.DisplayName: Leonids Meteor
+			// LeonidsProj.DisplayName: Leonids Proj
+			// SolleonisGuard.DisplayName: Solleonis Guard
+			// SolleonisMeteor.DisplayName: Solleonis Meteor
+			// SolleonisProj.DisplayName: Solleonis Proj
+			// RoyalAngelGuard.DisplayName: Royal Angel Guard
+			// RoyalAngelProj.DisplayName: Royal Angel Proj
+			// RoyalAngelStrike.DisplayName: Royal Angel Strike
+			// NoctiflairGuard.DisplayName: Noctiflair Guard
+			// NoctiflairProj.DisplayName: Noctiflair Proj
+			// NoctiflairStrike.DisplayName: Noctiflair Strike
 		}
 
 		Configs: {

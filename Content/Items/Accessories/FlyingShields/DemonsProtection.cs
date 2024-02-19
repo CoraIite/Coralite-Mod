@@ -23,6 +23,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         {
             projectile.StrongGuard += 0.1f;
             projectile.damageReduce *= 1.1f;
+            projectile.distanceAdder *= 1.1f;
         }
 
         public override void AddRecipes()

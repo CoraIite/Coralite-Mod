@@ -212,6 +212,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             State = (int)FlyingShieldStates.Backing;
             Timer = 0;
             Projectile.damage /= 4;
+            Projectile.tileCollide = false;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

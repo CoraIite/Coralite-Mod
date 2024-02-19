@@ -45,6 +45,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             projectile.parryTime = 10;
             projectile.StrongGuard += 0.18f;
             projectile.damageReduce *= 1.15f;
+            projectile.distanceAdder *= 1.2f;
         }
 
         public bool OnParry(BaseFlyingShieldGuard projectile)
