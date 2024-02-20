@@ -125,7 +125,11 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 case NPCID.AngryBonesBig:
                 case NPCID.AngryBonesBigHelmet:
                 case NPCID.AngryBonesBigMuscle:
-                    npcLoot.Add(ItemDropRule.Common(ItemType<CoreBoneRing>(), 200, 1, 3));
+                    npcLoot.Add(ItemDropRule.Common(ItemType<CoreBoneRing>(), 200, 1, 1));
+                    npcLoot.Add(ItemDropRule.Common(ItemType<RemainsOfSamurai>(), 100, 1, 1));
+                    break;
+                case NPCID.MoonLordCore:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<ConquerorOfTheSeas>(), 9, 1, 1));
                     break;
             }
 

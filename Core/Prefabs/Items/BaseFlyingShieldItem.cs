@@ -24,6 +24,11 @@ namespace Coralite.Core.Prefabs.Items
 
         public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
 
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+        }
+
         public sealed override void SetDefaults()
         {
             Item.autoReuse = true;

@@ -1,5 +1,4 @@
-﻿using Coralite.Content.UI.MagikeGuideBook;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
@@ -16,7 +15,7 @@ namespace Coralite.Content.Items.FlyingShields
 {
     public class Solleonis : BaseFlyingShieldItem<SolleonisGuard>
     {
-        public Solleonis() : base(Item.sellPrice(0, 0, 80), ItemRarityID.Red, AssetDirectory.FlyingShieldItems)
+        public Solleonis() : base(Item.sellPrice(0, 8), ItemRarityID.Red, AssetDirectory.FlyingShieldItems)
         { }
 
         public override void SetDefaults2()
@@ -141,7 +140,7 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.idStaticNPCHitCooldown = 10;
             Projectile.width = Projectile.height = 20;
             Projectile.friendly = true;
-            Projectile.timeLeft = 28;
+            Projectile.timeLeft = 22;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -166,8 +165,8 @@ namespace Coralite.Content.Items.FlyingShields
                 default:
                 case 0://刚生成没多久
                     {
-                        if (Projectile.timeLeft < 8)
-                            if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, 400, n => !n.immortal, out NPC target))
+                        if (Projectile.timeLeft < 6)
+                            if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, 400, n => n.CanBeChasedBy(), out NPC target))
                             {
                                 Target = target.whoAmI;
                                 State = 1;
@@ -184,6 +183,11 @@ namespace Coralite.Content.Items.FlyingShields
                             break;
                         }
 
+                        if (!target.CanBeChasedBy())
+                        {
+                            State++;
+                            Projectile.timeLeft = 10;
+                        }
                         float length = Projectile.velocity.Length();
                         float factor = Coralite.Instance.X2Smoother.Smoother(Projectile.timeLeft / 200f);
                         Projectile.velocity = Projectile.rotation.AngleLerp((target.Center - Projectile.Center).ToRotation(), 1-factor)
@@ -207,7 +211,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.NewProjectileFromThis(target.Center, Vector2.Zero,ProjectileID.SolarWhipSwordExplosion
-                , (int)(Projectile.damage*0.8f) , 10f, 0f, 0.85f + Main.rand.NextFloat() * 1.15f);
+                , (int)(Projectile.damage*0.65f) , 10f, 0f, 0.85f + Main.rand.NextFloat() * 1.15f);
 
             for (int i = 0; i < 3; i++)
             {

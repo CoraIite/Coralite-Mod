@@ -152,7 +152,6 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHoldShield()
         {
-            Owner.velocity.X *= 0.93f;
             Owner.wingTime = 0;
         }
 

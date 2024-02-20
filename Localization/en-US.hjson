@@ -2421,6 +2421,31 @@ Mods: {
 				DisplayName: Noctiflair
 				Tooltip: ""
 			}
+
+			FlyingShieldTerminalChip: {
+				DisplayName: Flying Shield Terminal Chip
+				Tooltip: ""
+			}
+
+			NanoAmplifier: {
+				DisplayName: Nano Amplifier
+				Tooltip: ""
+			}
+
+			ConquerorOfTheSeas: {
+				DisplayName: Conqueror Of The Seas
+				Tooltip: ""
+			}
+
+			GoldenSamurai: {
+				DisplayName: Golden Samurai
+				Tooltip: ""
+			}
+
+			RemainsOfSamurai: {
+				DisplayName: Remains Of Samurai
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2977,6 +3002,12 @@ Mods: {
 			NoctiflairGuard.DisplayName: Noctiflair Guard
 			NoctiflairProj.DisplayName: Noctiflair Proj
 			NoctiflairStrike.DisplayName: Noctiflair Strike
+			ConquerorFlyProj.DisplayName: Conqueror Fly Proj
+			ConquerorOfTheSeasGuard.DisplayName: Conqueror Of The Seas Guard
+			ConquerorOfTheSeasProj.DisplayName: Conqueror Of The Seas Proj
+			ConquerorSlash.DisplayName: Conqueror Slash
+			GoldenSamuraiGuard.DisplayName: Golden Samurai Guard
+			GoldenSamuraiProj.DisplayName: Golden Samurai Proj
 		}
 
 		Configs: {

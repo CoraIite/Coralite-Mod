@@ -413,6 +413,16 @@ namespace Coralite.Helpers
                 else
                     projectile.oldPos[i] = projectile.position;
             }
+        }        
+        
+        public static void InitOldRotCache(this Projectile projectile, int trailCount)
+        {
+            projectile.oldRot = new float[trailCount];
+
+            for (int i = 0; i < trailCount; i++)
+            {
+                projectile.oldRot[i] = projectile.rotation;
+            }
         }
 
         public static void UpdateOldPosCache(this Projectile projectile, bool useCenter = true, bool addVelocity = true)

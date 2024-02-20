@@ -81,6 +81,14 @@ namespace Coralite.Content.ModPlayers
         /// 是否能够同时使用左右键
         /// </summary>
         public bool FlyingShieldLRMeantime;
+        /// <summary>
+        /// 飞盾格挡后获得的伤害减免
+        /// </summary>
+        public float FlyingShieldDamageReduce;
+        /// <summary>
+        /// 防御时间，
+        /// </summary>
+        public int FlyingShieldGuardTime;
 
 
         /// <summary>
@@ -104,6 +112,11 @@ namespace Coralite.Content.ModPlayers
 
             MaxFlyingShield = 1;
             FlyingShieldLRMeantime = false;
+            if (FlyingShieldGuardTime > 0)
+            {
+                FlyingShieldGuardTime--;
+                FlyingShieldDamageReduce -= FlyingShieldDamageReduce / FlyingShieldGuardTime;
+            }
 
             coreKeeperDodge = 0;
 
@@ -298,6 +311,11 @@ namespace Coralite.Content.ModPlayers
             {
                 modifiers.SourceDamage -= bossDamageReduce;
             }
+
+            if (FlyingShieldGuardTime > 0)
+            {
+                modifiers.ModifyHurtInfo += FlyingShield_DamageReduce;
+            }
         }
 
         public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
@@ -306,6 +324,16 @@ namespace Coralite.Content.ModPlayers
             {
                 modifiers.SourceDamage -= bossDamageReduce;
             }
+
+            if (FlyingShieldGuardTime > 0)
+            {
+                modifiers.ModifyHurtInfo += FlyingShield_DamageReduce;
+            }
+        }
+
+        private void FlyingShield_DamageReduce(ref Player.HurtInfo info)
+        {
+            info.Damage = (int)(info.Damage * FlyingShieldDamageReduce);
         }
 
         public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
@@ -445,6 +473,10 @@ namespace Coralite.Content.ModPlayers
 
         public bool UsingVanillaDash() => Player.dashType != 0 || Player.setSolar || Player.mount.Active;
 
-
+        public void Guard(float damageReduce)
+        {
+            FlyingShieldGuardTime = 30;
+            FlyingShieldDamageReduce = damageReduce;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -57,6 +58,13 @@ namespace Coralite.Core.Prefabs.Projectiles
             ParryDelay,
             Guarding,
             Delay,
+        }
+
+        public enum GuardType
+        {
+            notGuard=0,
+            Projectile=1,
+            NPC=2
         }
 
         public override bool ShouldUpdatePosition() => false;
@@ -132,7 +140,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                         SetPos();
                         OnHoldShield();
 
-                        if (CheckCollide())
+                        if (CheckCollide()>0)
                         {
                             State = (int)GuardState.Guarding;
                             parryFactor = 0;
@@ -174,10 +182,15 @@ namespace Coralite.Core.Prefabs.Projectiles
                             break;
                         }
 
-                        if (CheckCollide())
+                        int which = CheckCollide();
+                        if (which > 0)
                         {
                             UpdateShieldAccessory(accessory => accessory.OnGuard(this));
                             OnGuard();
+                            if (which == (int)GuardType.Projectile)
+                                OnGuardProjectile();
+                            else if (which == (int)GuardType.NPC)
+                                OnGuardNPC();
                         }
                     }
                     break;
@@ -221,7 +234,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             return Projectile.width / 2/Projectile.scale + 8;
         }
 
-        public bool CheckCollide()
+        public int CheckCollide()
         {
             Rectangle rect = Projectile.getRect();
             for (int i = 0; i < Main.maxProjectiles; i++)
@@ -232,9 +245,8 @@ namespace Coralite.Core.Prefabs.Projectiles
 
                 if (proj.Colliding(proj.getRect(), rect))
                 {
-                    proj.damage = (int)(proj.damage * (1 - damageReduce));//削减伤害
-                    if (proj.damage < 1)
-                        proj.damage = 1;
+                    if (Owner.TryGetModPlayer(out CoralitePlayer cp))
+                        cp.Guard(damageReduce);
 
                     float percent = MathHelper.Clamp(StrongGuard, 0, 1);
                     if (Main.rand.NextBool((int)(percent * 100), 100) && proj.penetrate > 0)//削减穿透数
@@ -244,8 +256,8 @@ namespace Coralite.Core.Prefabs.Projectiles
                             proj.Kill();
                         OnStrongGuard();
                     }
-                    localProjectileImmunity[i] = 30;
-                    return true;
+                    localProjectileImmunity[i] = Projectile.localNPCHitCooldown;
+                    return (int)GuardType.Projectile;
                 }
             }
 
@@ -258,11 +270,14 @@ namespace Coralite.Core.Prefabs.Projectiles
 
                 if (Projectile.Colliding(rect, npc.getRect()))
                 {
-                    return true;
+                    if (Owner.TryGetModPlayer(out CoralitePlayer cp))
+                        cp.Guard(damageReduce);
+
+                    return (int)GuardType.NPC;
                 }
             }
 
-            return false;
+            return (int)GuardType.notGuard;
         }
 
         public virtual void TurnToDelay()
@@ -283,6 +298,10 @@ namespace Coralite.Core.Prefabs.Projectiles
             DistanceToOwner /= 3;
             Helper.PlayPitched("Misc/ShieldGuard", 0.4f, 0f, Projectile.Center);
         }
+
+        public virtual void OnGuardProjectile() { }
+
+        public virtual void OnGuardNPC() { }
 
         public virtual void OnHoldShield() { }
 

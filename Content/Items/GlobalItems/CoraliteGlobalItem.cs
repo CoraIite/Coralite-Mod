@@ -1,4 +1,6 @@
+using Coralite.Content.Items.FlyingShields;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Coralite.Content.Items.GlobalItems
@@ -26,6 +28,16 @@ namespace Coralite.Content.Items.GlobalItems
             }
         }
 
-
+        public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
+        {
+            switch (item.type)
+            {
+                default:
+                    break;
+                case ItemID.MoonLordBossBag:
+                    itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ConquerorOfTheSeas>(), 6, 1, 1));
+                    break;
+            }
+        }
     }
 }
