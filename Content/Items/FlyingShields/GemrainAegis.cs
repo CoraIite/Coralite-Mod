@@ -16,8 +16,7 @@ namespace Coralite.Content.Items.FlyingShields
     public class GemrainAegis : BaseFlyingShieldItem<GemrainAegisGuard>
     {
         public GemrainAegis() : base(Item.sellPrice(0, 0, 80), ItemRarityID.LightRed, AssetDirectory.FlyingShieldItems)
-        {
-        }
+        { }
 
         public override void SetDefaults2()
         {

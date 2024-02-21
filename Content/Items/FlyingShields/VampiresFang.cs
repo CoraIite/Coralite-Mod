@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             if (!Owner.moonLeech && !target.immortal && State == (int)FlyingShieldStates.Shooting)
             {
-                float num = damageDone * 0.05f;
+                float num = damageDone * 0.035f;
                 if ((int)num != 0 && !(Owner.lifeSteal <= 0f))
                 {
                     Owner.lifeSteal -= num * 1.5f;

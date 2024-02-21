@@ -37,12 +37,13 @@ namespace Coralite.Content.WorldGeneration
         {
             get
             {
-                return CoraliteWorldSettings.DungeonType switch
-                {
-                    CoraliteWorldSettings.WorldDungeonID.Random => Main.rand.NextBool(),
-                    CoraliteWorldSettings.WorldDungeonID.ShadowCastle => true,
-                    _ => false,
-                };
+                return false;
+                //return CoraliteWorldSettings.DungeonType switch
+                //{
+                //    CoraliteWorldSettings.WorldDungeonID.Random => Main.rand.NextBool(),
+                //    CoraliteWorldSettings.WorldDungeonID.ShadowCastle => true,
+                //    _ => false,
+                //};
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -115,6 +116,22 @@ namespace Coralite.Core.Prefabs.Items
         {
             Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TRightProj>()
                 , (int)(damage*0.9f), 6, player.whoAmI);
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if(Main.LocalPlayer.controlUp)
+            {
+                string text = "左键以丢出盾牌，右键进行防御，成功防御时会根据盾牌属性以及饰品加成获得短暂伤害减免";
+                TooltipLine line = new TooltipLine(Mod, "Coralite FlyingShield Description", text);
+                tooltips.Add(line);
+            }
+            else
+            {
+                string text = "飞盾（按上键以查看详细内容）";
+                TooltipLine line = new TooltipLine(Mod, "Coralite FlyingShield Description", text);
+                tooltips.Add(line);
+            }
         }
     }
 }

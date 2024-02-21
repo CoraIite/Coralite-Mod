@@ -234,7 +234,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             return Projectile.width / 2/Projectile.scale + 8;
         }
 
-        public int CheckCollide()
+        public virtual int CheckCollide()
         {
             Rectangle rect = Projectile.getRect();
             for (int i = 0; i < Main.maxProjectiles; i++)

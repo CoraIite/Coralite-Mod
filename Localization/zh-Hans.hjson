@@ -2365,7 +2365,7 @@ Mods: {
 
 			SilverAngel: {
 				DisplayName: 银天使
-				Tooltip: 命中敌人时降下制裁之盾
+				Tooltip: 命中敌人时降下制裁之剑
 			}
 
 			FloralHarmonyMedallion: {
@@ -2500,7 +2500,7 @@ Mods: {
 
 			RoyalAngel: {
 				DisplayName: 圣光天使
-				Tooltip: 命中敌人后降下制裁
+				Tooltip: 命中敌人后降下圣光羽剑
 			}
 
 			Noctiflair: {
@@ -2544,6 +2544,29 @@ Mods: {
 			RemainsOfSamurai: {
 				DisplayName: 武士的遗容
 				Tooltip: 一位武士的亡魂
+			}
+
+			HorseshoeCrab: {
+				DisplayName: 冥凯鲎
+				Tooltip: 
+				'''
+				飞盾命中或成功防御后下一次攻击伤害增加
+				命中敌人时呼唤同伴一同攻击
+				'''
+			}
+
+			MineShield: {
+				DisplayName: 我的盾牌
+				Tooltip:
+					'''
+					“配方：铁锭，木板和一些羊毛”
+					能够将弹幕弹回去
+					'''
+			}
+
+			ShanHai: {
+				DisplayName: 山海无极
+				Tooltip: ""
 			}
 		}
 
@@ -3107,6 +3130,14 @@ Mods: {
 			// ConquerorSlash.DisplayName: Conqueror Slash
 			// GoldenSamuraiGuard.DisplayName: Golden Samurai Guard
 			// GoldenSamuraiProj.DisplayName: Golden Samurai Proj
+			// HorseshoeCrabEXProj.DisplayName: Horseshoe Crab E X Proj
+			// HorseshoeCrabGuard.DisplayName: Horseshoe Crab Guard
+			// HorseshoeCrabProj.DisplayName: Horseshoe Crab Proj
+			// MineShieldGuard.DisplayName: Mine Shield Guard
+			// MineShieldProj.DisplayName: Mine Shield Proj
+			// ShanHaiGuard.DisplayName: Shan Hai Guard
+			// ShanHaiProj.DisplayName: Shan Hai Proj
+			// TaiJi.DisplayName: Tai Ji
 		}
 
 		Configs: {

@@ -7,19 +7,19 @@ namespace Coralite.Content.CustomHooks
 {
     public class WorldSettings : HookGroup
     {
-        public override void Load()
-        {
-            On_UIWorldSelect.NewWorldClick += On_UIWorldSelect_NewWorldClick;
-            On_UIWorldCreation.Click_GoBack += On_UIWorldCreation_Click_GoBack;
-            On_UIWorldCreation.Click_NamingAndCreating += On_UIWorldCreation_Click_NamingAndCreating;
-        }
+        //public override void Load()
+        //{
+        //    On_UIWorldSelect.NewWorldClick += On_UIWorldSelect_NewWorldClick;
+        //    On_UIWorldCreation.Click_GoBack += On_UIWorldCreation_Click_GoBack;
+        //    On_UIWorldCreation.Click_NamingAndCreating += On_UIWorldCreation_Click_NamingAndCreating;
+        //}
 
-        public override void Unload()
-        {
-            On_UIWorldSelect.NewWorldClick -= On_UIWorldSelect_NewWorldClick;
-            On_UIWorldCreation.Click_GoBack -= On_UIWorldCreation_Click_GoBack;
-            On_UIWorldCreation.Click_NamingAndCreating -= On_UIWorldCreation_Click_NamingAndCreating;
-        }
+        //public override void Unload()
+        //{
+        //    On_UIWorldSelect.NewWorldClick -= On_UIWorldSelect_NewWorldClick;
+        //    On_UIWorldCreation.Click_GoBack -= On_UIWorldCreation_Click_GoBack;
+        //    On_UIWorldCreation.Click_NamingAndCreating -= On_UIWorldCreation_Click_NamingAndCreating;
+        //}
 
         /// <summary>
         /// 创建世界

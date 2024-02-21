@@ -2249,7 +2249,7 @@ Mods: {
 
 			GlassShield: {
 				DisplayName: Glass Shield
-				Tooltip: ""
+				Tooltip: "A shield made of glass, perhaps it would shatter into pieces when defending."
 			}
 
 			BisketyHead: {
@@ -2259,182 +2259,251 @@ Mods: {
 
 			StretchGlue: {
 				DisplayName: Stretch Glue
-				Tooltip: ""
+				Tooltip: "Allowing flying shield to ricochet once among enemies."
 			}
 
 			TrashCanLid: {
 				DisplayName: Trash Can Lid
-				Tooltip: ""
+				Tooltip: "A makeshift shield that can be used when there are no weapons available."
 			}
 
 			FlyingShieldMaintenanceGuide: {
 				DisplayName: Flying Shield Maintenance Guide
-				Tooltip: ""
+				Tooltip: "Enhancing the flying shield with the ability to block using the right click."
 			}
 
 			FlyingShieldVarnish: {
 				DisplayName: Flying Shield Varnish
-				Tooltip: ""
+				Tooltip: "Increasing the flying speed of the flying shield."
 			}
 
 			RedJadeShield: {
 				DisplayName: Red Jade Shield
-				Tooltip: ""
+				Tooltip: "Blocking attacks has a chance to generate an explosion."
 			}
 
 			FlyingShieldToolbox: {
 				DisplayName: Flying Shield Toolbox
-				Tooltip: ""
+				Tooltip: 
+				'''
+				Allowing flying shield to ricochet once among enemies.
+				Enhancing the flying shield with the ability to block using the right click.
+				Increasing the flying speed of the flying shield.
+				'''
 			}
 
 			HeavyWedges: {
 				DisplayName: Heavy Wedges
-				Tooltip: ""
+				Tooltip: "Slowing down the flying speed of the flying shield, increasing its size and melee damage."
 			}
 
 			DemonsProtection: {
 				DisplayName: Demons Protection
-				Tooltip: ""
+				Tooltip: 
+					'''
+					+10% chance to reduce the number of projectiles penetrated when blocking with the flying shield.
+					Slightly enhancing the blocking capability of the flying shield.
+					Slightly increasing the speed of raising the shield.
+					'''
 			}
 
 			FlyingShieldToolboxProMax: {
 				DisplayName: Flying Shield Toolbox Pro Max
-				Tooltip: ""
+				Tooltip: 
+					'''
+					Allowing flying shield to ricochet once among enemies.
+					Enhancing the flying shield with the ability to block using the right click.
+					Increasing the flying speed of the flying shield.
+					The right click block can be used even when the flying shield has not returned.
+					'''
 			}
 
 			LevitationBlossom: {
 				DisplayName: Levitation Blossom
-				Tooltip: ""
+				Tooltip: "Increasing the flying time of the flying shield."
 			}
 
 			DeliciousSteak: {
 				DisplayName: Delicious Steak
-				Tooltip: ""
+				Tooltip: "A large steak that looks very delicious, but that's just how it appears..."
 			}
 
 			ChlorophyteMedal: {
 				DisplayName: Chlorophyte Medal
-				Tooltip: ""
+				Tooltip: "Granting the flying shield tracking abilities."
 			}
 
 			SilverAngel: {
 				DisplayName: Silver Angel
-				Tooltip: ""
+				Tooltip: "Summoning the Sword of Justice upon hitting an enemy with the flying shield."
 			}
 
 			FloralHarmonyMedallion: {
 				DisplayName: Floral Harmony Medallion
-				Tooltip: ""
+				Tooltip: 
+					'''
+					Significantly increasing the flight time of the flying shield.
+					Granting the flying shield tracking abilities.
+					'''
 			}
 
 			PearlRay: {
 				DisplayName: Pearl Ray
-				Tooltip: ""
+				Tooltip: "After the flying shield hits or successfully defends, the damage of the next attack increases."
 			}
 
 			FlyingShieldCore: {
 				DisplayName: Flying Shield Core
-				Tooltip: ""
+				Tooltip: 
+					'''
+					Slowing down the flying speed of the flying shield, increasing its size.
+					The right click block can be used even when the flying shield has not returned.
+					+12% Melee Damage
+					'''
 			}
 
 			TortoiseshellFortress: {
 				DisplayName: Tortoiseshell Fortress
-				Tooltip: ""
+				Tooltip: 
+					'''
+					A rather heavy shield that can protect you well.
+					Double tap the directional keys to become the King of the Jungle.
+					'''
 			}
 
 			ShieldbearersBand: {
 				DisplayName: Shieldbearers Band
-				Tooltip: ""
+				Tooltip: "+1 the number of flying shields that can exist simultaneously."
 			}
 
 			RustedShield: {
 				DisplayName: Rusted Shield
-				Tooltip: ""
+				Tooltip: "It is said that a hero used this shield to halt a terrible disaster in ancient times. But it's grown rusty and worn."
 			}
 
 			BeetleLimbStrap: {
 				DisplayName: Beetle Limb Strap
-				Tooltip: ""
+				Tooltip: 
+					'''
+					+3 the number of flying shields that can exist simultaneously.
+					Many insects can lift objects several times their own body weight, and this limb is no exception.
+					'''
 			}
 
 			PowerliftExoskeleton: {
 				DisplayName: Powerlift Exoskeleton
-				Tooltip: ""
+				Tooltip: 
+					'''
+					+2 the number of flying shields that can exist simultaneously.
+					A powerful mechanical arm that allows you to carry several more shields.
+					'''
 			}
 
 			HolyCharm: {
 				DisplayName: Holy Charm
-				Tooltip: ""
+				Tooltip: 
+					'''
+					At the moment of raising the shield, it is possible to perform a perfect block and unleash a holy shield charge.
+					The right click block can be used even when the flying shield has not returned.
+					'''
 			}
 
 			Terracrest: {
 				DisplayName: Terracrest
-				Tooltip: ""
+				Tooltip: 
+					'''
+					At the moment of raising the shield, it is possible to perform a perfect block and unleash Terra Spike.
+					The right click block can be used even when the flying shield has not returned.
+					+18% chance to reduce the number of projectiles penetrated when blocking with the flying shield.
+					Enhancing the blocking capability of the flying shield.
+					Increasing the speed of raising the shield.
+					'''
 			}
 
 			Fishronguard: {
 				DisplayName: Fishronguard
-				Tooltip: ""
+				Tooltip: 
+					'''
+					Its appearance while gliding through the air is akin to that of a real Duke Fishron flying by.
+					Emitting tracking bubbles while in flight.
+					'''
 			}
 
 			MechRioter: {
 				DisplayName: Mech Rioter
-				Tooltip: ""
+				Tooltip: "Throwing out a set of three mechanical thugs, they will disperse upon hitting an enemy."
 			}
 
 			BatfangShield: {
 				DisplayName: Batfang Shield
-				Tooltip: ""
+				Tooltip: "Has a chance to produce a life-stealing effect."
 			}
 
 			VampiresFang: {
 				DisplayName: Vampires Fang
-				Tooltip: ""
+				Tooltip: 
+					'''
+					+1 the number of flying shields that can exist simultaneously.
+					Throwing out a bloodthirsty shield.
+					'''
 			}
 
 			GlazeBulwark: {
 				DisplayName: Glaze Bulwark
-				Tooltip: ""
+				Tooltip: "It will turn into fragments when defending."
 			}
 
 			GemrainAegis: {
 				DisplayName: Gemrain Aegis
-				Tooltip: ""
+				Tooltip: "Turns into rainbow shards when defending."
 			}
 
 			Leonids: {
 				DisplayName: Leonids
-				Tooltip: ""
+				Tooltip: "Shoots out a meteor shower."
 			}
 
 			Solleonis: {
 				DisplayName: Solleonis
-				Tooltip: ""
+				Tooltip: "“Unleashes the giant lion that devours the sun.”"
 			}
 
 			RoyalAngel: {
-				DisplayName: Royal Angel
-				Tooltip: ""
+				DisplayName: Holylight Angel
+				Tooltip: "After hitting the enemy, descends the Holy Light Feather Sword."
 			}
 
 			Noctiflair: {
 				DisplayName: Noctiflair
-				Tooltip: ""
+				Tooltip: "The angel spreads its wings, summoning the world-ending azure star."
 			}
 
 			FlyingShieldTerminalChip: {
 				DisplayName: Flying Shield Terminal Chip
-				Tooltip: ""
+				Tooltip: 
+					'''
+					Slowing down the flying speed of the flying shield, increasing its size.
+					The right click block can be used even when the flying shield has not returned.
+					Increasing the return speed of the flying shield.
+					+15% Melee Damage
+					+7% Melee Attack Speed
+					'''
 			}
 
 			NanoAmplifier: {
 				DisplayName: Nano Amplifier
-				Tooltip: ""
+				Tooltip: 
+					'''
+					+2 The number of times the flying shield ricochets among enemies.
+					Significantly increase the flying speed of the flying shield.
+					Enhance the right click blocking ability of the flying shield.
+					Allow right click blocking even when the flying shield has not returned.
+					'''
 			}
 
 			ConquerorOfTheSeas: {
 				DisplayName: Conqueror Of The Seas
-				Tooltip: ""
+				Tooltip: "A giant shield that bestows upon you the blessing of the sea god."
 			}
 
 			GoldenSamurai: {
@@ -2444,6 +2513,29 @@ Mods: {
 
 			RemainsOfSamurai: {
 				DisplayName: Remains Of Samurai
+				Tooltip: "The lingering spirit of a samurai."
+			}
+
+			HorseshoeCrab: {
+				DisplayName: Horseshoe Crab
+				Tooltip: 
+				'''
+				After the flying shield hits or successfully defends, the damage of the next attack increases.
+				Calls upon companions to attack together upon hitting an enemy.
+				'''
+			}
+
+			MineShield: {
+				DisplayName: Mine Shield
+				Tooltip: 
+					'''
+					“Recipe: Iron ingot, wooden plank, and some wool.”
+					Capable of bouncing back projectiles.
+					'''
+			}
+
+			ShanHai: {
+				DisplayName: Shan Hai
 				Tooltip: ""
 			}
 		}
@@ -3008,6 +3100,14 @@ Mods: {
 			ConquerorSlash.DisplayName: Conqueror Slash
 			GoldenSamuraiGuard.DisplayName: Golden Samurai Guard
 			GoldenSamuraiProj.DisplayName: Golden Samurai Proj
+			HorseshoeCrabEXProj.DisplayName: Horseshoe Crab E X Proj
+			HorseshoeCrabGuard.DisplayName: Horseshoe Crab Guard
+			HorseshoeCrabProj.DisplayName: Horseshoe Crab Proj
+			MineShieldGuard.DisplayName: Mine Shield Guard
+			MineShieldProj.DisplayName: Mine Shield Proj
+			ShanHaiGuard.DisplayName: Shan Hai Guard
+			ShanHaiProj.DisplayName: Shan Hai Proj
+			TaiJi.DisplayName: Tai Ji
 		}
 
 		Configs: {

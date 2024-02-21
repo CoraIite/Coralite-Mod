@@ -164,7 +164,7 @@ namespace Coralite.Content.NPCs.VanillaNPC
                         }
                         break;
                     }
-                case NPCID.TravellingMerchant:
+                case NPCID.TravellingMerchant://游商
                     {
                         int i = 0;
                         for (; i < items.Length - 1; i++)
@@ -179,6 +179,8 @@ namespace Coralite.Content.NPCs.VanillaNPC
                         if (Main.hardMode)
                         {
                             items[i] = new Item(ItemID.GlowTulip);
+                            i++;
+                            items[i] = new Item(ItemType<MineShield>());
                             i++;
                         }
 

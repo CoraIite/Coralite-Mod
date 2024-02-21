@@ -4,8 +4,11 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -23,6 +26,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.knockBack = 2;
             Item.shootSpeed = 12;
             Item.damage = 240;
+            Item.crit = 6;
         }
 
         public override void AddRecipes()
@@ -49,13 +53,18 @@ namespace Coralite.Content.Items.FlyingShields
             flyingTime = 15;
             backTime = 24;
             backSpeed = 12;
-            trailCachesLength = 6;
+            trailCachesLength = 8;
             trailWidth = 30 / 2;
+        }
+
+        public override void OnShootDusts()
+        {
+            Projectile.SpawnTrailDust(DustID.Water, Main.rand.NextFloat(0.1f, 0.7f));
         }
 
         public override Color GetColor(float factor)
         {
-            return new Color(122,122,156,0)*factor;
+            return new Color(122, 122, 156) * factor;
         }
     }
 
@@ -68,7 +77,7 @@ namespace Coralite.Content.Items.FlyingShields
             base.SetDefaults();
             Projectile.width = 58;
             Projectile.height = 62;
-            Projectile.scale = 1.2f;
+            Projectile.scale = 1.25f;
             Projectile.localNPCHitCooldown = 20;
         }
 
@@ -127,14 +136,35 @@ namespace Coralite.Content.Items.FlyingShields
         public ref float Combo => ref Projectile.ai[0];
         public ref float StartAngle => ref Projectile.ai[1];
 
-        public ConquerorSlash() : base(-MathHelper.PiOver2, trailLength: 8) { }
+        public ConquerorSlash() : base(-MathHelper.PiOver2, trailLength: 35) { }
 
         public int delay;
         public int alpha;
 
+        public static Asset<Texture2D> trailTexture;
+        public static Asset<Texture2D> GradientTexture;
+
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+
+            trailTexture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "NormalSlashTrail3");
+            GradientTexture = ModContent.Request<Texture2D>(AssetDirectory.FlyingShieldItems + "ConquerorGradient");
+        }
+
+        public override void Unload()
+        {
+            if (Main.dedServ)
+                return;
+
+            trailTexture = null;
+            GradientTexture = null;
+        }
+
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[Type] = 12;
+            ProjectileID.Sets.TrailCacheLength[Type] = 10;
             ProjectileID.Sets.TrailingMode[Type] = 4;
         }
 
@@ -142,17 +172,18 @@ namespace Coralite.Content.Items.FlyingShields
         {
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
-            Projectile.height = 100;
-            trailTopWidth = 2;
+            Projectile.height = 80;
+            trailTopWidth = -15;
             distanceToOwner = 20;
             minTime = 0;
             onHitFreeze = 0;
             useShadowTrail = true;
+            useSlashTrail = true;
         }
 
         protected override float ControlTrailBottomWidth(float factor)
         {
-            return 85 * Projectile.scale;
+            return 100;
         }
 
         protected override float GetStartAngle() => StartAngle;
@@ -168,7 +199,7 @@ namespace Coralite.Content.Items.FlyingShields
                     startAngle = 1.6f;
                     totalAngle = 3.8f;
                     maxTime = 55;
-                    Smoother = Coralite.Instance.NoSmootherInstance;
+                    Smoother = Coralite.Instance.BezierEaseSmoother;
                     Projectile.scale = 0.9f;
                     delay = 24;
                     break;
@@ -176,7 +207,7 @@ namespace Coralite.Content.Items.FlyingShields
                     startAngle = 2.2f;
                     totalAngle = 4.6f;
                     maxTime = 55;
-                    Smoother = Coralite.Instance.NoSmootherInstance;
+                    Smoother = Coralite.Instance.BezierEaseSmoother;
                     delay = 28;
                     Projectile.scale = 0.8f;
                     break;
@@ -184,7 +215,7 @@ namespace Coralite.Content.Items.FlyingShields
                     startAngle = -1.6f;
                     totalAngle = -4.6f;
                     maxTime = 55;
-                    Smoother = Coralite.Instance.NoSmootherInstance;
+                    Smoother = Coralite.Instance.BezierEaseSmoother;
                     delay = 12;
                     break;
             }
@@ -200,7 +231,9 @@ namespace Coralite.Content.Items.FlyingShields
         protected override void OnSlash()
         {
             int timer = (int)Timer - minTime;
-
+            Dust d = Dust.NewDustPerfect(Projectile.Center + RotateVec2 * Main.rand.NextFloat(-20, 20), DustID.FireflyHit,
+                RotateVec2.RotatedBy(1.57f) * Main.rand.NextFloat(1, 4),150);
+            d.noGravity = true;
             switch ((int)Combo)
             {
                 default:
@@ -222,16 +255,11 @@ namespace Coralite.Content.Items.FlyingShields
         protected override void AfterSlash()
         {
             if (alpha > 20)
-                alpha -= 5;
+                alpha -= 10;
             Slasher();
             distanceToOwner *= 0.9f;
             if (Timer > maxTime + delay)
                 Projectile.Kill();
-        }
-
-        public void DrawWarp()
-        {
-            WarpDrawer(0.5f);
         }
 
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
@@ -245,11 +273,59 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
 
             SpriteEffects effect = CheckEffect();
-            for (int i = 1; i < 12; i += 1)
+            for (int i = 1; i < 10; i += 1)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                lightColor * (0.5f - i * 0.5f / 12), Projectile.oldRot[i] + extraRot, origin, Projectile.scale, effect, 0);
+                lightColor * (0.5f - i * 0.5f / 10), Projectile.oldRot[i] + extraRot, origin, Projectile.scale, effect, 0);
         }
 
+        protected override void DrawSlashTrail()
+        {
+            RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
+            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            GetCurrentTrailCount(out float count);
+
+            for (int i = 0; i < oldRotate.Length; i++)
+            {
+                if (oldRotate[i] == 100f)
+                    continue;
+
+                float factor = 1f - i / count;
+                Vector2 Center = GetCenter(i);
+                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
+                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
+
+                var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
+                bars.Add(new(Top.Vec3(), topColor, new Vector2(factor, 0)));
+                bars.Add(new(Bottom.Vec3(), topColor, new Vector2(factor, 1)));
+            }
+
+            if (bars.Count > 2)
+            {
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
+
+                Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
+
+                Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+                Matrix view = Main.GameViewMatrix.TransformationMatrix;
+                Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+                effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+                effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
+
+                Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
+                foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+                {
+                    pass.Apply();
+                    Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                }
+
+                Main.graphics.GraphicsDevice.RasterizerState = originalState;
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            }
+        }
     }
 
     public class ConquerorFlyProj : ModProjectile
@@ -354,6 +430,14 @@ namespace Coralite.Content.Items.FlyingShields
             float num617 = Projectile.velocity.Length();
             Projectile.velocity.Normalize();
             Projectile.velocity *= num617 + 0.0025f;
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                Dust.NewDustPerfect(Projectile.Center, DustID.WoodFurniture, Helper.NextVec2Dir() * Main.rand.NextFloat(2, 8), Scale: Main.rand.NextFloat(1, 1.6f));
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)

@@ -115,7 +115,10 @@ namespace Coralite.Content.ModPlayers
             if (FlyingShieldGuardTime > 0)
             {
                 FlyingShieldGuardTime--;
-                FlyingShieldDamageReduce -= FlyingShieldDamageReduce / FlyingShieldGuardTime;
+                if (FlyingShieldGuardTime <= 25)
+                    FlyingShieldDamageReduce -= FlyingShieldDamageReduce / FlyingShieldGuardTime;
+                if (FlyingShieldGuardTime == 0)
+                    FlyingShieldDamageReduce = 0;
             }
 
             coreKeeperDodge = 0;
@@ -392,10 +395,12 @@ namespace Coralite.Content.ModPlayers
                 }
                 else if (attempt.uncommon)
                 {
-                    if (Main.hardMode )
+                    if (Main.hardMode)
                     {
                         if (Main.rand.NextBool(6))
                             itemDrop = ItemType<BubblePearlNecklace>();
+                        if (Main.rand.NextBool(3))
+                            itemDrop = ItemType<Items.FlyingShields.HorseshoeCrab>();
                     }
                     if (Main.rand.NextBool(3))
                         itemDrop = ItemType<Items.FlyingShields.PearlRay>();
@@ -475,7 +480,7 @@ namespace Coralite.Content.ModPlayers
 
         public void Guard(float damageReduce)
         {
-            FlyingShieldGuardTime = 30;
+            FlyingShieldGuardTime = 35;
             FlyingShieldDamageReduce = damageReduce;
         }
     }
