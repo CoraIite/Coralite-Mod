@@ -28,14 +28,6 @@ namespace Coralite.Content.Items.FlyingShields
             Item.damage = 240;
             Item.crit = 6;
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ItemID.Glass, 20)
-                .AddTile(TileID.Anvils)
-                .Register();
-        }
     }
 
     public class ConquerorOfTheSeasProj : BaseFlyingShield
@@ -78,13 +70,13 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.width = 58;
             Projectile.height = 62;
             Projectile.scale = 1.25f;
-            Projectile.localNPCHitCooldown = 20;
+            Projectile.localNPCHitCooldown = 24;
         }
 
         public override void SetOtherValues()
         {
             damageReduce = 0.35f;
-            distanceAdder = 3f;
+            distanceAdder = 2.6f;
             StrongGuard = 0.15f;
             scalePercent = 1.3f;
         }

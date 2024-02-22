@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<FlyingShieldCore>()
+                .AddIngredient<FlyingShieldToolboxProMax>()
                 .AddIngredient(ItemID.Nanites, 20)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

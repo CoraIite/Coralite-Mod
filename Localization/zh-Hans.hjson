@@ -2538,7 +2538,7 @@ Mods: {
 
 			GoldenSamurai: {
 				DisplayName: 金武士
-				Tooltip: ""
+				Tooltip: +1 同时存在的飞盾数量
 			}
 
 			RemainsOfSamurai: {
@@ -2548,11 +2548,11 @@ Mods: {
 
 			HorseshoeCrab: {
 				DisplayName: 冥凯鲎
-				Tooltip: 
-				'''
-				飞盾命中或成功防御后下一次攻击伤害增加
-				命中敌人时呼唤同伴一同攻击
-				'''
+				Tooltip:
+					'''
+					飞盾命中或成功防御后下一次攻击伤害增加
+					命中敌人时呼唤同伴一同攻击
+					'''
 			}
 
 			MineShield: {

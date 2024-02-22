@@ -336,7 +336,7 @@ namespace Coralite.Content.ModPlayers
 
         private void FlyingShield_DamageReduce(ref Player.HurtInfo info)
         {
-            info.Damage = (int)(info.Damage * FlyingShieldDamageReduce);
+            info.Damage = (int)(info.Damage * (1 - FlyingShieldDamageReduce));
         }
 
         public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)

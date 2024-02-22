@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.Materials;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
@@ -20,8 +21,17 @@ namespace Coralite.Content.Items.FlyingShields
             Item.useTime = Item.useAnimation = 15;
             Item.shoot = ModContent.ProjectileType<GoldenSamuraiProj>();
             Item.knockBack = 2;
-            Item.shootSpeed = 14;
-            Item.damage = 36;
+            Item.shootSpeed = 15;
+            Item.damage = 38;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.MaxFlyingShield++;
+            }
+            return base.CanUseItem(player);
         }
 
         public override void AddRecipes()
@@ -46,8 +56,8 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            flyingTime = 17;
-            backTime = 4;
+            flyingTime = 20;
+            backTime = 6;
             backSpeed = 14;
             trailCachesLength = 6;
             trailWidth = 20 / 2;
