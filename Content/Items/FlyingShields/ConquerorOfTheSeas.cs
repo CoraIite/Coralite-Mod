@@ -5,6 +5,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -344,7 +345,8 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void AI()
         {
-            Projectile.SpawnTrailDust(DustID.WoodFurniture, Main.rand.NextFloat(0.2f, 0.4f));
+            Lighting.AddLight(Projectile.Center, new Vector3(0.1f, 0.2f, 0.15f));
+            Projectile.SpawnTrailDust(Main.rand.NextBool()?DustID.GemEmerald:DustID.WoodFurniture, Main.rand.NextFloat(0.2f, 0.4f));
             Projectile.rotation += Projectile.velocity.X * 0.05f;
 
             int npcIndex = -1;
@@ -428,16 +430,19 @@ namespace Coralite.Content.Items.FlyingShields
         {
             for (int i = 0; i < 6; i++)
             {
-                Dust.NewDustPerfect(Projectile.Center, DustID.WoodFurniture, Helper.NextVec2Dir() * Main.rand.NextFloat(2, 8), Scale: Main.rand.NextFloat(1, 1.6f));
+                Dust.NewDustPerfect(Projectile.Center, DustID.WoodFurniture, Helper.NextVec2Dir(2, 8), Scale: Main.rand.NextFloat(1, 1.6f));
             }
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTexture();
+            var pos = Projectile.Center - Main.screenPosition;
 
             Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 6, 1, 6, 1);
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, 0, 0);
+
+            Main.spriteBatch.Draw(mainTex, pos, null, lightColor, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, new Color(92, 202, 158, 0), Projectile.rotation, mainTex.Size() / 2, Projectile.scale * 1.2f, 0, 0);
 
             return false;
         }

@@ -131,7 +131,7 @@ namespace Coralite.Content.Items.RedJades
                 if (Projectile.timeLeft > 22)
                 {
                     float factor = 1 - (36 - Projectile.timeLeft) / 14f;
-                    ProjectilesHelper.DrawPrettyStarSparkle(1, SpriteEffects.None, center + Projectile.velocity, new Color(255, 255, 255, 0) * 0.8f,
+                    Helper.DrawPrettyStarSparkle(1, SpriteEffects.None, center + Projectile.velocity, new Color(255, 255, 255, 0) * 0.8f,
                         Coralite.Instance.RedJadeRed, factor, 0f, 0.4f, 0.6f, 1f, 0f, new Vector2(6, 3f) * factor, Vector2.One);
                 }
             }

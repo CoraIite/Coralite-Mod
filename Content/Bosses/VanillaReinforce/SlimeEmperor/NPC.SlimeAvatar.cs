@@ -260,7 +260,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             for (int i = 0; i < 8; i++)
             {
                 Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(NPC.width, NPC.height), DustID.t_Slime,
-                     Helper.NextVec2Dir() * Main.rand.NextFloat(1f, 2.5f), 150, new Color(78, 136, 255, 80), Main.rand.NextFloat(1f, 1.4f));
+                     Helper.NextVec2Dir(1f, 2.5f), 150, new Color(78, 136, 255, 80), Main.rand.NextFloat(1f, 1.4f));
             }
 
             if (NPC.life <= 0)

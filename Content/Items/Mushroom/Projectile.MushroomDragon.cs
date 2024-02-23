@@ -87,7 +87,7 @@ namespace Coralite.Content.Items.Mushroom
             Projectile.netUpdate = true;
 
             //寻敌
-            NPC target = ProjectilesHelper.FindClosestEnemy(Projectile.Center, 1200f, (n) =>
+            NPC target = Helper.FindClosestEnemy(Projectile.Center, 1200f, (n) =>
             {
                 return n.CanBeChasedBy() &&
                 !n.dontTakeDamage && Collision.CanHitLine(Projectile.Center, 1, 1, n.Center, 1, 1);

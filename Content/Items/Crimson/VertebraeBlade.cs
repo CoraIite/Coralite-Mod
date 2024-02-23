@@ -156,7 +156,7 @@ namespace Coralite.Content.Items.Crimson
             for (int i = 0; i < 6; i++)
             {
                 Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Blood);
-                d.velocity = Helper.NextVec2Dir() * Main.rand.NextFloat(1, 3f);
+                d.velocity = Helper.NextVec2Dir(1, 3f);
             }
         }
 
@@ -361,7 +361,7 @@ namespace Coralite.Content.Items.Crimson
             }
 
             Dust d2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Blood, Scale: Main.rand.NextFloat(1, 2));
-            d2.velocity = Helper.NextVec2Dir() * Main.rand.NextFloat(1, 2);
+            d2.velocity = Helper.NextVec2Dir(1, 2);
             d2.noGravity = true;
         }
 

@@ -152,7 +152,7 @@ namespace Coralite.Content.Items.Magike.Towers
 
         public override bool StartWork()
         {
-            NPC npc = ProjectilesHelper.FindClosestEnemy(Position.ToWorldCoordinates(16, 16), 2000, npc => npc.CanBeChasedBy());
+            NPC npc = Helper.FindClosestEnemy(Position.ToWorldCoordinates(16, 16), 2000, npc => npc.CanBeChasedBy());
             if (magike >= magikeCost && workTimer == -1 && npc != null)
             {
                 workTimer = 0;
@@ -175,7 +175,7 @@ namespace Coralite.Content.Items.Magike.Towers
                 }
                 else
                 {
-                    NPC find = ProjectilesHelper.FindClosestEnemy(Position.ToWorldCoordinates(16, 16), 2000, npc => npc.CanBeChasedBy());
+                    NPC find = Helper.FindClosestEnemy(Position.ToWorldCoordinates(16, 16), 2000, npc => npc.CanBeChasedBy());
                     if (find != null)
                         targetNPC = find.whoAmI;
                     else
@@ -186,7 +186,7 @@ namespace Coralite.Content.Items.Magike.Towers
             else
             {
                 rotation = 0;
-                NPC find = ProjectilesHelper.FindClosestEnemy(Position.ToWorldCoordinates(16, 16), 2000, npc => npc.CanBeChasedBy());
+                NPC find = Helper.FindClosestEnemy(Position.ToWorldCoordinates(16, 16), 2000, npc => npc.CanBeChasedBy());
                 if (find != null)
                     targetNPC = find.whoAmI;
             }

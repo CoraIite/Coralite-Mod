@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Shadow
                         if (Main.myPlayer == Projectile.owner)
                         {
                             Vector2 targetCenter = Main.MouseWorld;
-                            NPC target = ProjectilesHelper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
+                            NPC target = Helper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
                             {
                                 return n.CanBeChasedBy() &&
                                 !n.dontTakeDamage && Collision.CanHitLine(Projectile.Center, 1, 1, n.Center, 1, 1);
@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.Shadow
                         if (Main.myPlayer == Projectile.owner)
                         {
                             Vector2 targetCenter = Main.MouseWorld;
-                            NPC target = ProjectilesHelper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
+                            NPC target = Helper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
                             {
                                 return n.CanBeChasedBy() &&
                                 !n.dontTakeDamage && Collision.CanHitLine(Projectile.Center, 1, 1, n.Center, 1, 1);
@@ -142,7 +142,7 @@ namespace Coralite.Content.Items.Shadow
                         if (Main.myPlayer == Projectile.owner)
                         {
                             Vector2 targetCenter = Main.MouseWorld;
-                            NPC target = ProjectilesHelper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
+                            NPC target = Helper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
                             {
                                 return n.CanBeChasedBy() &&
                                 !n.dontTakeDamage && Collision.CanHitLine(Projectile.Center, 1, 1, n.Center, 1, 1);
@@ -163,7 +163,7 @@ namespace Coralite.Content.Items.Shadow
                         if (Main.myPlayer == Projectile.owner)
                         {
                             Vector2 targetCenter = Main.MouseWorld;
-                            NPC target = ProjectilesHelper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
+                            NPC target = Helper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
                             {
                                 return n.CanBeChasedBy() &&
                                 !n.dontTakeDamage && Collision.CanHitLine(Projectile.Center, 1, 1, n.Center, 1, 1);
@@ -195,7 +195,7 @@ namespace Coralite.Content.Items.Shadow
                         if (Main.myPlayer == Projectile.owner)
                         {
                             Vector2 targetCenter = Main.MouseWorld;
-                            NPC target = ProjectilesHelper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
+                            NPC target = Helper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
                             {
                                 return n.CanBeChasedBy() &&
                                 !n.dontTakeDamage && Collision.CanHitLine(Projectile.Center, 1, 1, n.Center, 1, 1);
@@ -721,7 +721,7 @@ namespace Coralite.Content.Items.Shadow
             #region 回到玩家身边，回到玩家身边后将ai0设为0，进入尝试攻击阶段
             if (Projectile.ai[0] == -1f)
             {
-                ProjectilesHelper.GetMyProjIndexWithModProj<ShadowCircle_CrystalMinion>(Projectile, out var index, out var totalIndexesInGroup);
+                Helper.GetMyProjIndexWithModProj<ShadowCircle_CrystalMinion>(Projectile, out var index, out var totalIndexesInGroup);
                 GetIdlePosition(index, totalIndexesInGroup, player, out var idleSpot, out var idleRotation);
                 Projectile.velocity = Vector2.Zero;
                 Projectile.Center = Projectile.Center.MoveTowards(idleSpot, 32f);
@@ -744,7 +744,7 @@ namespace Coralite.Content.Items.Shadow
                     Projectile.Kill();
                     return;
                 }
-                ProjectilesHelper.GetMyProjIndexWithModProj<ShadowCircle_CrystalMinion>(Projectile, out var index, out var totalIndexesInGroup);
+                Helper.GetMyProjIndexWithModProj<ShadowCircle_CrystalMinion>(Projectile, out var index, out var totalIndexesInGroup);
                 GetIdlePosition(index, totalIndexesInGroup, player, out var idleSpot, out var idleRotation);
                 Projectile.velocity = Vector2.Zero;
                 Projectile.Center = Vector2.SmoothStep(Projectile.Center, idleSpot, 0.45f);

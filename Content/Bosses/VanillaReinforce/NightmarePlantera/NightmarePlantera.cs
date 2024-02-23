@@ -299,7 +299,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     _ => nightmareRed
                 };
 
-                Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(64, 64), Helper.NextVec2Dir() * Main.rand.NextFloat(6, 24f),
+                Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(64, 64), Helper.NextVec2Dir(6, 24f),
                     CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1.5f));
             }
 

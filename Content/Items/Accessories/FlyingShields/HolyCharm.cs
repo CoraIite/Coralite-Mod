@@ -201,7 +201,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                 float num6 = Projectile.rotation + Timer2 * num5 * (MathHelper.Pi * -2.1f) * 0.025f + Utils.Remap(num2, 0f, 1f, 0f, MathHelper.PiOver4 * Timer2);
                 Vector2 drawpos = pos + num6.ToRotationVector2() * (extraTex.Width * 0.5f - 6f) * num;
                 float num7 = num5 / 9f;
-                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None
+                Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None
                     , drawpos, new Color(255, 255, 255, 0) * num3 * num7, color3, num2, 0f, 0.5f, 0.5f, 1f, num6, new Vector2(0f, Utils.Remap(num2, 0f, 1f, 3f, 0f)) * num, Vector2.One * num);
             }
 
@@ -210,7 +210,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             {
                 Vector2 drawpos2 = pos + (Projectile.rotation + Timer2 * (-0.4f + i * 0.4f)).ToRotationVector2() * (extraTex.Width * 0.5f - 4f) * num;
 
-                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None
+                Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None
                     , drawpos2, new Color(255, 255, 255, 0) * num3 * 0.5f, color3, num2
                     , 0f, 0.5f, 0.5f, 1f, 0f
                     , new Vector2(2f, Utils.Remap(num2, 0f, 1f, 3f + i * 0.5f, 1f)) * num

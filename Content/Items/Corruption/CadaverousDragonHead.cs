@@ -171,7 +171,7 @@ namespace Coralite.Content.Items.Corruption
 
             Vector2 neckPos = Projectile.Center - (Projectile.rotation + (Projectile.spriteDirection > 0 ? 0 : 3.141f) - Projectile.spriteDirection * 0.6f).ToRotationVector2() * 10;
             //在尾部生成粒子
-            Dust d = Dust.NewDustPerfect(neckPos + Main.rand.NextVector2Circular(6, 6), DustID.Shadowflame, Helpers.Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f, 1f));
+            Dust d = Dust.NewDustPerfect(neckPos + Main.rand.NextVector2Circular(6, 6), DustID.Shadowflame, Helpers.Helper.NextVec2Dir(0.5f, 1f));
             d.noGravity = true;
 
         }

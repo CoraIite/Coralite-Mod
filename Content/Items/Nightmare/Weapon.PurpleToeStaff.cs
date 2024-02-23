@@ -133,7 +133,7 @@ namespace Coralite.Content.Items.Nightmare
 
             if (Timer == 0f)
             {
-                ProjectilesHelper.GetMyProjIndexWithSameType(Projectile.type, Projectile.whoAmI, Projectile.owner, out int index, out int totalIndexesInGroup);
+                Helper.GetMyProjIndexWithSameType(Projectile.type, Projectile.whoAmI, Projectile.owner, out int index, out int totalIndexesInGroup);
                 float num2 = (float)Math.PI * 2f / totalIndexesInGroup;
                 float num3 = totalIndexesInGroup * 0.66f;
                 Vector2 vector2 = new Vector2(50f, 8f) / 3f * (totalIndexesInGroup - 1);

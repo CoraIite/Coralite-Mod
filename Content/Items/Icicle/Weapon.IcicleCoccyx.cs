@@ -347,7 +347,7 @@ namespace Coralite.Content.Items.Icicle
         public override bool PreDraw(ref Color lightColor)
         {
             //绘制线条
-            ProjectilesHelper.DrawLine(Projectile.oldPos.ToList(), Coralite.Instance.IcicleCyan);
+            Helper.DrawLine(Projectile.oldPos.ToList(), Coralite.Instance.IcicleCyan);
 
             //绘制骨头节
             Texture2D _boneTex = boneTex.Value;
@@ -411,7 +411,7 @@ namespace Coralite.Content.Items.Icicle
                 _ => new Color(252, 255, 255, 200)
             };
             Tornado.Spawn(Projectile.Center, Projectile.velocity * 0.2f, tornadoColor, 60, Projectile.velocity.ToRotation(), Main.rand.NextFloat(0.3f, 0.4f));
-            ProjectilesHelper.AutomaticTracking(Projectile, 6, 12);
+            Helper.AutomaticTracking(Projectile, 6, 12);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

@@ -196,7 +196,7 @@ namespace Coralite.Content.Items.Shadow
 
                 spriteBatch.Draw(slashTex.Value, center, slashTex.Frame(1, 4, 0, 3), Color.White * 0.3f * Alpha * (1f - fromValue * 0.7f), _Rotation + Owner.direction * 0.01f, origin, num, effects, 0f);
                 Vector2 drawPos = center + (_Rotation + Utils.Remap(num2, 0f, 1.4f, 0f, (float)Math.PI / 2f) * Owner.direction).ToRotationVector2() * (slashTex.Width() * 0.5f - 4f) * num;
-                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, drawPos, new Color(255, 255, 255, 0) * num3 * 0.5f, color2, num2, 0f, 0.5f, 0.5f, 1f, (float)Math.PI / 4f, new Vector2(2f, 2f), Vector2.One);
+                Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, drawPos, new Color(255, 255, 255, 0) * num3 * 0.5f, color2, num2, 0f, 0.5f, 0.5f, 1f, (float)Math.PI / 4f, new Vector2(2f, 2f), Vector2.One);
             }
 
             Texture2D mainTex = Projectile.GetTexture();

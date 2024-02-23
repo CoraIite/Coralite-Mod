@@ -125,7 +125,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
                                 Vector2 pos = Projectile.Center +
                                     (Main.rand.NextBool(10) ?
                                         (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(450, 700)
-                                        : Helper.NextVec2Dir() * Main.rand.NextFloat(450, 700));
+                                        : Helper.NextVec2Dir(450, 700));
                                 Projectile.NewProjectileFromThis(pos, (Projectile.Center - pos).SafeNormalize(Vector2.Zero) * 0.1f, ModContent.ProjectileType<BlackStarProj>(),
                                     50, 0, Projectile.whoAmI);
                             }
@@ -174,7 +174,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
                                 Vector2 pos = Projectile.Center +
                                     (Main.rand.NextBool(5) ?
                                         (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(450, 700)
-                                        : Helper.NextVec2Dir() * Main.rand.NextFloat(450, 700));
+                                        : Helper.NextVec2Dir(450, 700));
                                 Projectile.NewProjectileFromThis(pos, (Projectile.Center - pos).SafeNormalize(Vector2.Zero) * 0.1f, ModContent.ProjectileType<BlackStarProj>(),
                                     50, 0, Projectile.whoAmI);
                             }
@@ -183,7 +183,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
                             if (Timer % delay2 == 0)
                             {
-                                Vector2 pos = Projectile.Center + Helper.NextVec2Dir() * Main.rand.NextFloat(450, 700);
+                                Vector2 pos = Projectile.Center + Helper.NextVec2Dir(450, 700);
                                 Projectile.NewProjectileFromThis(pos, new Vector2(0, Main.rand.NextFloat(3f, 5)), ModContent.ProjectileType<BlackStarProj>(),
                                     50, 0, Projectile.whoAmI, 1);
                             }
@@ -235,7 +235,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
                                 Vector2 pos = Projectile.Center +
                                     (Main.rand.NextBool(10) ?
                                         (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(450, 700)
-                                        : Helper.NextVec2Dir() * Main.rand.NextFloat(450, 700));
+                                        : Helper.NextVec2Dir(450, 700));
                                 Projectile.NewProjectileFromThis(pos, (Projectile.Center - pos).SafeNormalize(Vector2.Zero) * 0.1f, ModContent.ProjectileType<BlackStarProj>(),
                                     50, 0, Projectile.whoAmI);
                             }
@@ -244,7 +244,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
                             if (Timer % delay2 == 0)
                             {
-                                Vector2 pos = Projectile.Center + Helper.NextVec2Dir() * Main.rand.NextFloat(450, 700);
+                                Vector2 pos = Projectile.Center + Helper.NextVec2Dir(450, 700);
                                 Projectile.NewProjectileFromThis(pos, new Vector2(0, Main.rand.NextFloat(3f, 6)), ModContent.ProjectileType<BlackStarProj>(),
                                     50, 0, Projectile.whoAmI, 1);
                             }
@@ -332,7 +332,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
         {
             get
             {
-                if (ProjectilesHelper.GetProjectile<BlackHoleMainProj>((int)Projectile.ai[0], out Projectile p))
+                if (Helper.GetProjectile<BlackHoleMainProj>((int)Projectile.ai[0], out Projectile p))
                     return p;
 
                 Projectile.Kill();

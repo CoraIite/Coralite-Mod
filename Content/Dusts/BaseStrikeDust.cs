@@ -25,10 +25,10 @@ namespace Coralite.Content.Dusts
         {
             Vector3 light = Main.rgbToHsl(Lighting.GetColor(dust.position.ToTileCoordinates()));
             float factor = dust.fadeIn / MaxTime;
-            Helpers.ProjectilesHelper.DrawPrettyLine(light.Z, SpriteEffects.None, dust.position - Main.screenPosition, Highlight, Dark,
+            Helpers.Helper.DrawPrettyLine(light.Z, SpriteEffects.None, dust.position - Main.screenPosition, Highlight, Dark,
                 factor, 0, 0.1f, 0.5f, 1f, dust.rotation, dust.scale, new Vector2(2f, 1f));
 
-            Helpers.ProjectilesHelper.DrawPrettyLine(light.Z, SpriteEffects.None, dust.position - Main.screenPosition, Color.White, Color.White * 0.3f,
+            Helpers.Helper.DrawPrettyLine(light.Z, SpriteEffects.None, dust.position - Main.screenPosition, Color.White, Color.White * 0.3f,
                 factor, 0, 0.1f, 0.5f, 1f, dust.rotation, dust.scale * 0.9f, new Vector2(2f, 1f));
 
             return false;

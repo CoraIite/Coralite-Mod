@@ -48,7 +48,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             if (Timer % 9 == 0)
             {
-                Projectile.NewProjectileFromThis(Projectile.Center, Helper.NextVec2Dir() * Main.rand.NextFloat(1, 4), ProjectileID.FlaironBubble,
+                Projectile.NewProjectileFromThis(Projectile.Center, Helper.NextVec2Dir(1, 4), ProjectileID.FlaironBubble,
                     Projectile.damage, Projectile.knockBack, -10);
             }
 
@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             if (Timer < 60 && Timer % 12 == 0)
             {
-                Projectile.NewProjectileFromThis(Projectile.Center, Helper.NextVec2Dir() * Main.rand.NextFloat(1, 4), ProjectileID.FlaironBubble,
+                Projectile.NewProjectileFromThis(Projectile.Center, Helper.NextVec2Dir(1, 4), ProjectileID.FlaironBubble,
                     (int)(Projectile.damage * 0.8f), Projectile.knockBack, -10);
             }
 

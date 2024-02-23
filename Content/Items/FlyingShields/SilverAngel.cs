@@ -244,9 +244,9 @@ namespace Coralite.Content.Items.FlyingShields
             var origin = frameBox.Size() / 2;
             lightColor *= alpha;
 
-            ProjectilesHelper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, new Color(77, 69, 181),
+            Helper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, new Color(77, 69, 181),
                 Timer / 20, 0, 1, 1, 2, MathHelper.PiOver2, 1.8f, Vector2.One);
-            ProjectilesHelper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, new Color(77, 69, 181),
+            Helper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, new Color(77, 69, 181),
                 Timer / 20, 0, 1, 1, 2, MathHelper.PiOver2, 1.6f, Vector2.One*1.2f);
 
             //绘制左边翅膀

@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 float factor = Projectile.timeLeft / (float)Owner.itemTimeMax;
                 float rotation = Projectile.rotation + (ownerDir ? -0.4f : 3.541f); //额...魔法数字，3.141f+0.36f
-                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + rotation.ToRotationVector2() * 22, new Color(255, 255, 255, 0) * 0.8f, Color.Red, factor, 0f, 0.5f, 0.5f, 1f, 0f, new Vector2(3, 1.5f), Vector2.One);
+                Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + rotation.ToRotationVector2() * 22, new Color(255, 255, 255, 0) * 0.8f, Color.Red, factor, 0f, 0.5f, 0.5f, 1f, 0f, new Vector2(3, 1.5f), Vector2.One);
             }
 
             return false;

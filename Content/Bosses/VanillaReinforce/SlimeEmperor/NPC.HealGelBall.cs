@@ -58,7 +58,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             if (NPC.life <= 0)
                 for (int i = 0; i < 10; i++)
                     Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(NPC.width, NPC.height), DustID.t_Slime,
-                         Helper.NextVec2Dir() * Main.rand.NextFloat(1f, 2.5f), 150, new Color(78, 136, 255, 80), Main.rand.NextFloat(1.2f, 1.6f));
+                         Helper.NextVec2Dir(1f, 2.5f), 150, new Color(78, 136, 255, 80), Main.rand.NextFloat(1.2f, 1.6f));
         }
 
         public override void OnKill()

@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void SetOtherValues()
         {
             scalePercent = 2f;
-            damageReduce = 0.15f;
+            damageReduce = 0.25f;
         }
 
         public override void OnGuard()
@@ -350,17 +350,17 @@ namespace Coralite.Content.Items.FlyingShields
                     , origin2,new Vector2( Projectile.scale*0.6f,Projectile.scale) , 0, 0);
 
                 Vector2 exPos = pos+Projectile.rotation.ToRotationVector2() * 28;
-                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, exPos, Color.White * 0.5f, Color.DeepSkyBlue*0.8f,
+                Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, exPos, Color.White * 0.5f, Color.DeepSkyBlue*0.8f,
                     1, 0, 1, 1, 2, 0, new Vector2(2.2f, 1), Vector2.One);
-                ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, exPos, Color.White, Color.SkyBlue,
+                Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, exPos, Color.White, Color.SkyBlue,
                     1, 0, 1, 1, 2, 0, new Vector2(1.2f, 0.75f), Vector2.One * 1.2f);
 
                 return false;
             }
 
-            ProjectilesHelper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, Color.Gold,
+            Helper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, Color.Gold,
                 Timer / 20, 0, 1, 1, 2, -1.57f, 2.3f, Vector2.One);
-            ProjectilesHelper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, Color.Gold,
+            Helper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, Color.Gold,
                 Timer / 20, 0, 1, 1, 2, -1.57f, 2f, Vector2.One * 1.2f);
 
             if (State > 0)

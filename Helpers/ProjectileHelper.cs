@@ -1,18 +1,18 @@
-﻿using Coralite.Content.Bosses.ShadowBalls;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Helpers
 {
-    public static class ProjectilesHelper
+    public static partial class Helper
     {
         /// <summary>
         /// 自动追踪最近敌人的弹幕
@@ -253,7 +253,16 @@ namespace Coralite.Helpers
             return true;
         }
 
-
+        /// <summary>
+        /// 快速设置拖尾相关数据
+        /// </summary>
+        /// <param name="trailingMode"></param>
+        /// <param name="trailCacheLength"></param>
+        public static void QuickSetTrailSets(int type, int trailingMode,int trailCacheLength)
+        {
+            ProjectileID.Sets.TrailingMode[type] = trailingMode;
+            ProjectileID.Sets.TrailCacheLength[type] = trailCacheLength;
+        }
 
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float extraRot = 0, float scale = -1)
         {
@@ -357,6 +366,22 @@ namespace Coralite.Helpers
 
                 pos += diff;
             }
+        }
+
+        public static void QuickDraw(this Projectile projectile,Color lightColor,float exRot)
+        {
+            Texture2D mainTex = projectile.GetTexture();
+
+            Main.spriteBatch.Draw(mainTex, projectile.Center - Main.screenPosition, null, lightColor, projectile.rotation + exRot,
+                mainTex.Size() / 2, projectile.scale, 0, 0);
+        }
+
+        public static void QuickDraw(this Projectile projectile, Color lightColor,float overrideScale, float exRot)
+        {
+            Texture2D mainTex = projectile.GetTexture();
+
+            Main.spriteBatch.Draw(mainTex, projectile.Center - Main.screenPosition, null, lightColor, projectile.rotation + exRot,
+                mainTex.Size() / 2, overrideScale, 0, 0);
         }
 
         public static void DrawPrettyStarSparkle(float opacity, SpriteEffects dir, Vector2 drawPos, Color drawColor, Color shineColor, float flareCounter, float fadeInStart, float fadeInEnd, float fadeOutStart, float fadeOutEnd, float rotation, Vector2 scale, Vector2 fatness)

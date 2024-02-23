@@ -111,9 +111,9 @@ namespace Coralite.Content.Items.RedJades
             {
                 float starRot = i * MathHelper.TwoPi / 5 - MathHelper.PiOver2;
                 Vector2 dir = starRot.ToRotationVector2();
-                ProjectilesHelper.DrawPrettyStarSparkle(1, 0, drawPos + dir * 16, new Color(255, 192, 192), Color.Red * 0.5f,
+                Helper.DrawPrettyStarSparkle(1, 0, drawPos + dir * 16, new Color(255, 192, 192), Color.Red * 0.5f,
                     0.5f + time * 0.3f, 0, 0.3f, 0.7f, 1, starRot, new Vector2(1, 0.5f), Vector2.One);
-                ProjectilesHelper.DrawPrettyStarSparkle(1, 0, drawPos + dir * 20, new Color(255, 192, 192), Color.Red * 0.5f,
+                Helper.DrawPrettyStarSparkle(1, 0, drawPos + dir * 20, new Color(255, 192, 192), Color.Red * 0.5f,
                     0.5f + time * 0.3f, 0, 0.3f, 0.7f, 1, starRot, new Vector2(1, 0.5f), Vector2.One);
             }
 

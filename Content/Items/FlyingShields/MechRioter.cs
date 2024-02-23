@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.FlyingShields
                     d.noGravity = true;
                 }
 
-                if (Timer == 24 && ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, 1000, n => n.CanBeChasedBy(), out NPC target))
+                if (Timer == 24 && Helper.TryFindClosestEnemy(Projectile.Center, 1000, n => n.CanBeChasedBy(), out NPC target))
                 {
                     int index = Projectile.NewProjectileFromThis(Projectile.Center
                         , (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 12,
@@ -199,7 +199,7 @@ namespace Coralite.Content.Items.FlyingShields
 
                         if (!Target.GetNPCOwner(out NPC target))//没有就找一下，再没有就直接返回
                         {
-                            if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, 650
+                            if (Helper.TryFindClosestEnemy(Projectile.Center, 650
                                 , n => n.CanBeChasedBy(), out target))
                                 Target = target.whoAmI;
                             else

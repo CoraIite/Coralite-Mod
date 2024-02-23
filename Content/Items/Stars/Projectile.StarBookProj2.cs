@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.Stars
         {
             Projectile.friendly = true;
             Projectile.tileCollide = true;
-            if (!ProjectilesHelper.AutomaticTracking(Projectile, 3f, 16, 2000f))
+            if (!Helper.AutomaticTracking(Projectile, 3f, 16, 2000f))
                 if (Projectile.velocity.Length() > 5f)
                     Projectile.velocity *= 0.98f;
         }

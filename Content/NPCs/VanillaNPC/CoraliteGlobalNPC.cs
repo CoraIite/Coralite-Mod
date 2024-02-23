@@ -70,6 +70,9 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 case NPCID.CrimsonGoldfish:
                     npcLoot.Add(ItemDropRule.Common(ItemType<AncientCrimtaneYujian>(), 100));
                     break;
+                case NPCID.Mimic:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<EekShield>(), 10));
+                    break;
                 case NPCID.HallowBoss://光女掉落圣光残片
                     npcLoot.Add(ItemDropRule.ByCondition(new DownedGolemCondition(), ItemType<FragmentsOfLight>(), 1, 3, 5));
                     break;

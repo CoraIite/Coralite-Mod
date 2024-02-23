@@ -177,9 +177,9 @@ namespace Coralite.Content.Items.Nightmare
             Dust d;
             for (int i = 0; i < 3; i++)
             {
-                d = Dust.NewDustPerfect(Projectile.Center, DustID.SpookyWood, Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f, 2), Scale: Main.rand.NextFloat(1f, 2f));
+                d = Dust.NewDustPerfect(Projectile.Center, DustID.SpookyWood, Helper.NextVec2Dir(0.5f, 2), Scale: Main.rand.NextFloat(1f, 2f));
                 d.noGravity = true;
-                Dust.NewDustPerfect(Projectile.Center, DustID.VilePowder, Helper.NextVec2Dir() * Main.rand.NextFloat(1f, 3), Scale: Main.rand.NextFloat(1f, 2f));
+                Dust.NewDustPerfect(Projectile.Center, DustID.VilePowder, Helper.NextVec2Dir(1f, 3), Scale: Main.rand.NextFloat(1f, 2f));
             }
         }
 

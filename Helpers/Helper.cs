@@ -74,6 +74,29 @@ namespace Coralite.Helpers
             return Main.rand.NextFloat(MathHelper.TwoPi).ToRotationVector2();
         }
 
+        /// <summary>
+        /// 随机一个角度的方向向量，并随机长度
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public static Vector2 NextVec2Dir(float min, float max)
+        {
+            return Main.rand.NextFloat(MathHelper.TwoPi).ToRotationVector2() * Main.rand.NextFloat(min, max);
+        }
+
+        /// <summary>
+        /// 把一个向量随机旋转
+        /// </summary>
+        /// <param name="baseVec2"></param>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public static Vector2 RotateByRandom(this Vector2 baseVec2, float min, float max)
+        {
+            return baseVec2.RotatedBy(Main.rand.NextFloat(min, max));
+        }
+
         public static bool PointInTile(Vector2 point)
         {
             var startCoords = new Point16((int)point.X / 16, (int)point.Y / 16);

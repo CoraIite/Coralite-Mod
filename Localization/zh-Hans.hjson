@@ -2568,6 +2568,16 @@ Mods: {
 				DisplayName: 山海无极
 				Tooltip: ""
 			}
+
+			IcicleArrowItem: {
+				DisplayName: 冰晶箭
+				Tooltip: 命中后生成冰锥
+			}
+
+			EekShield: {
+				DisplayName: 伊柯之盾
+				Tooltip: “兄弟，你飞来吧”
+			}
 		}
 
 		Tiles: {
@@ -3138,6 +3148,9 @@ Mods: {
 			// ShanHaiGuard.DisplayName: Shan Hai Guard
 			// ShanHaiProj.DisplayName: Shan Hai Proj
 			// TaiJi.DisplayName: Tai Ji
+			// EekShieldEXProj.DisplayName: Eek Shield E X Proj
+			// EekShieldGuard.DisplayName: Eek Shield Guard
+			// EekShieldProj.DisplayName: Eek Shield Proj
 		}
 
 		Configs: {

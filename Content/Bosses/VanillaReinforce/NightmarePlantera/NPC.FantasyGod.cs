@@ -312,12 +312,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
 
             Vector2 mainSparkleScale = new Vector2(8, 10);
-            ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos, Color.White, shineColor * 0.6f,
+            Helper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos, Color.White, shineColor * 0.6f,
                 LightScale, 0f, 1, 1, 1.5f, 0, mainSparkleScale, Vector2.One * 3); ;
 
             for (int i = -1; i < 2; i += 2)
             {
-                ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + new Vector2(i * 38, 0), Color.White, shineColor * 0.6f,
+                Helper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + new Vector2(i * 38, 0), Color.White, shineColor * 0.6f,
                     LightScale, 0f, 1, 1, 1.5f, 0, mainSparkleScale * 0.6f, Vector2.One);
             }
             return false;
@@ -336,7 +336,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             for (int i = 0; i < 7; i++)
             {
                 Vector2 dir = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7).ToRotationVector2();
-                ProjectilesHelper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + dir * 48, Color.White, NightmarePlantera.phantomColors[i],
+                Helper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + dir * 48, Color.White, NightmarePlantera.phantomColors[i],
                     0.5f, 0f, 0.5f, 0.5f, 1f, 0, new Vector2(1, 3), Vector2.One);
             }
 

@@ -166,7 +166,7 @@ namespace Coralite.Content.Items.FlyingShields
                 case 0://刚生成没多久
                     {
                         if (Projectile.timeLeft < 6)
-                            if (ProjectilesHelper.TryFindClosestEnemy(Projectile.Center, 400, n => n.CanBeChasedBy(), out NPC target))
+                            if (Helper.TryFindClosestEnemy(Projectile.Center, 400, n => n.CanBeChasedBy(), out NPC target))
                             {
                                 Target = target.whoAmI;
                                 State = 1;

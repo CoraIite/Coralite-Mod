@@ -623,7 +623,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             _ => new Color(122, 110, 134)
                         };
 
-                        Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir() * Main.rand.NextFloat(2, 10f),
+                        Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(2, 10f),
                             CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1f));
 
                         float rotFactor = Math.Clamp(Timer / ((float)RollingTime / 3), 0, 1);
@@ -788,7 +788,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             _ => new Color(122, 110, 134)
                         };
 
-                        Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir() * Main.rand.NextFloat(2, 10f),
+                        Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(2, 10f),
                             CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1f));
 
                         float rotFactor = Math.Clamp(Timer / ((float)RollingTime / 3), 0, 1);
@@ -1196,7 +1196,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             _ => new Color(122, 110, 134)
                         };
 
-                        Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir() * Main.rand.NextFloat(2, 10f),
+                        Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(2, 10f),
                             CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1f));
 
                         for (int i = 0; i < 3; i++)
@@ -2399,7 +2399,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         _ => new Color(122, 110, 134)
                     };
 
-                    Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir() * Main.rand.NextFloat(6, 10f),
+                    Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(6, 10f),
                         CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1.5f));
                 }
 

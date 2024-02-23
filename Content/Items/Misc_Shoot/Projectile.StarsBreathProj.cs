@@ -135,7 +135,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             };
             shineColor *= 0.8f;
 
-            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center, new Color(255, 255, 255, 0) * 0.7f, shineColor, 0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, new Vector2(3, 1.5f), Vector2.One);
+            Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center, new Color(255, 255, 255, 0) * 0.7f, shineColor, 0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, new Vector2(3, 1.5f), Vector2.One);
             return false;
         }
     }

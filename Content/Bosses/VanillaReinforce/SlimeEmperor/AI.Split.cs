@@ -55,7 +55,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             for (int i = 0; i < 6; i++)
             {
                 Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(width, height), DustID.TintableDust,
-                    Helpers.Helper.NextVec2Dir() * Main.rand.NextFloat(0.2f, 1f), 150, new Color(78, 136, 255, 80), 2f);
+                    Helpers.Helper.NextVec2Dir(0.2f, 1f), 150, new Color(78, 136, 255, 80), 2f);
                 dust.noGravity = true;
                 dust.velocity *= 0.5f;
             }

@@ -191,7 +191,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         dust.noGravity = true;
                     }
 
-                    Dust.NewDustPerfect(pos, DustID.VilePowder, Helper.NextVec2Dir() * Main.rand.NextFloat(1f, 3), Scale: Main.rand.NextFloat(1f, 2f));
+                    Dust.NewDustPerfect(pos, DustID.VilePowder, Helper.NextVec2Dir(1f, 3), Scale: Main.rand.NextFloat(1f, 2f));
 
                     break;
                 }

@@ -168,7 +168,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             NPC.velocity = new Vector2(velocityX, -30);
                             CanDamage = true;
 
-                            if (ProjectilesHelper.GetProjectile<ShadowGround>((int)Recorder, out Projectile p))//让地面消失
+                            if (Helper.GetProjectile<ShadowGround>((int)Recorder, out Projectile p))//让地面消失
                                 (p.ModProjectile as ShadowGround).Fade();
                         }
                         else if (Timer < ShouryuukennTime)
@@ -207,7 +207,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 14;
 
-                            if (ProjectilesHelper.GetProjectile<ShadowGround>((int)Recorder, out Projectile p))//让地面消失
+                            if (Helper.GetProjectile<ShadowGround>((int)Recorder, out Projectile p))//让地面消失
                                 (p.ModProjectile as ShadowGround).Fade();
                         }
                         else if (Timer < SlashTime)
@@ -248,7 +248,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             Timer = 0;
 
-            if (ProjectilesHelper.GetProjectile<ShadowBallSlash>((int)Recorder2, out Projectile p))
+            if (Helper.GetProjectile<ShadowBallSlash>((int)Recorder2, out Projectile p))
                 p.Kill();
 
             Recorder2 = 0;
@@ -546,7 +546,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         }
                         else
                         {
-                            if (ProjectilesHelper.GetProjectile<ShadowGround>((int)Recorder, out Projectile p))//让地面消失
+                            if (Helper.GetProjectile<ShadowGround>((int)Recorder, out Projectile p))//让地面消失
                                 (p.ModProjectile as ShadowGround).Fade();
 
                             ResetState();

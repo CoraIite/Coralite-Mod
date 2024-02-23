@@ -132,7 +132,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             for (int i = 0; i < 4; i++)
             {
-                Dust.NewDustPerfect(Projectile.Center, DustID.Glass, Helpers.Helper.NextVec2Dir() * Main.rand.NextFloat(1, 4));
+                Dust.NewDustPerfect(Projectile.Center, DustID.Glass, Helpers.Helper.NextVec2Dir(1, 4));
             }
         }
 

@@ -2538,6 +2538,16 @@ Mods: {
 				DisplayName: Shan Hai
 				Tooltip: ""
 			}
+
+			IcicleArrowItem: {
+				DisplayName: Icicle Arrow Item
+				Tooltip: ""
+			}
+
+			EekShield: {
+				DisplayName: Eek Shield
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -3108,6 +3118,9 @@ Mods: {
 			ShanHaiGuard.DisplayName: Shan Hai Guard
 			ShanHaiProj.DisplayName: Shan Hai Proj
 			TaiJi.DisplayName: Tai Ji
+			EekShieldEXProj.DisplayName: Eek Shield E X Proj
+			EekShieldGuard.DisplayName: Eek Shield Guard
+			EekShieldProj.DisplayName: Eek Shield Proj
 		}
 
 		Configs: {

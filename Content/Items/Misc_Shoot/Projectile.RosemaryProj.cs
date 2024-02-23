@@ -228,7 +228,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 {
                     if (Timer % 6 == 0 && Main.myPlayer == Projectile.owner)
                     {
-                        NPC target = Helpers.ProjectilesHelper.FindClosestEnemy(Projectile.Center, 440,
+                        NPC target = Helpers.Helper.FindClosestEnemy(Projectile.Center, 440,
                             npc => npc.active && !npc.friendly && npc.CanBeChasedBy() && Collision.CanHitLine(Projectile.Center, 1, 1, npc.Center, 1, 1));
 
                         if (target is not null)

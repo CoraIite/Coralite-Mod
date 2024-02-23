@@ -177,7 +177,7 @@ namespace Coralite.Core.Systems.YujianSystem
                 default:
                     break;
                 case -1f:       //回到玩家身边
-                    ProjectilesHelper.GetMyProjIndexWithModProj<BaseYujianProj>(Projectile, out var index, out var totalIndexesInGroup);
+                    Helper.GetMyProjIndexWithModProj<BaseYujianProj>(Projectile, out var index, out var totalIndexesInGroup);
                     GetIdlePosition(index, totalIndexesInGroup, out var idleSpot, out var idleRotation);
                     Projectile.velocity = Vector2.Zero;
                     Projectile.Center = Projectile.Center.MoveTowards(idleSpot, 10f);
@@ -191,7 +191,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
                     return false;
                 case 0f:        //尝试开始攻击
-                    ProjectilesHelper.GetMyProjIndexWithModProj<BaseYujianProj>(Projectile, out var index2, out var totalIndexesInGroup2);
+                    Helper.GetMyProjIndexWithModProj<BaseYujianProj>(Projectile, out var index2, out var totalIndexesInGroup2);
                     GetIdlePosition(index2, totalIndexesInGroup2, out var idleSpot2, out var idleRotation2);
                     Projectile.velocity = Vector2.Zero;
                     Projectile.Center = Vector2.SmoothStep(Projectile.Center, idleSpot2, 0.18f);

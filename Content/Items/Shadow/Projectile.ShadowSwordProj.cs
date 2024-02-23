@@ -67,7 +67,7 @@ namespace Coralite.Content.Items.Shadow
                 Projectile projectile = proj.Projectile;
 
                 if (projectile.velocity.Length() < 1f)
-                    ProjectilesHelper.AimingTheNearestNPC(projectile, 10, 1000f);
+                    Helper.AimingTheNearestNPC(projectile, 10, 1000f);
 
                 projectile.alpha = 60 - (int)(Math.Cos(proj.Timer * 0.0314f) * 60);
 
@@ -110,7 +110,7 @@ namespace Coralite.Content.Items.Shadow
 
                 projectile.velocity = new Vector2(0, -0.5f * factor);
 
-                ProjectilesHelper.AutomaticTracking(projectile, 0.2f, 10, 600f);
+                Helper.AutomaticTracking(projectile, 0.2f, 10, 600f);
                 if (factor >= 1)
                     Dust.NewDustPerfect(projectile.position + new Vector2(Main.rand.Next(projectile.width), Main.rand.Next(projectile.height)), DustID.Granite, null, 0, default, 1.2f);
             }

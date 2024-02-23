@@ -71,7 +71,7 @@ namespace Coralite.Content.Items.Icicle
             //添加Buff
             Owner.AddBuff(BuffType<IcicleThornBuff>(), 2);
 
-            NPC target = ProjectilesHelper.FindClosestEnemy(Projectile.Center, 1200f, (n) =>
+            NPC target = Helper.FindClosestEnemy(Projectile.Center, 1200f, (n) =>
                    n.CanBeChasedBy() && !n.dontTakeDamage && Collision.CanHitLine(Projectile.Center, 1, 1, n.Center, 1, 1));
 
             if (Timer == 0)
@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.Icicle
                 default: break;
                 case (int)AIStates.idle:    //回到玩家身边
                     Timer = 0;
-                    ProjectilesHelper.GetMyProjIndexWithSameType(Type, Projectile.whoAmI, Projectile.owner, out int index, out int totalIndexes);
+                    Helper.GetMyProjIndexWithSameType(Type, Projectile.whoAmI, Projectile.owner, out int index, out int totalIndexes);
                     Vector2 idlePosition = Owner.Center + new Vector2(0, -16 - totalIndexes * 2).RotatedBy(6.282f * index / totalIndexes);
 
                     if (Vector2.Distance(idlePosition, Projectile.position) > 2000)

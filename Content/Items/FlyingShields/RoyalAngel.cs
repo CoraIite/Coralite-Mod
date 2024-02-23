@@ -252,9 +252,9 @@ namespace Coralite.Content.Items.FlyingShields
 
             float rot = selfRotation - 1.57f;
 
-            ProjectilesHelper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, Color.Gold,
+            Helper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, Color.Gold,
                 Timer / 20, 0, 1, 1, 2, selfRotation, 2.3f, Vector2.One);
-            ProjectilesHelper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, Color.Gold,
+            Helper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, Color.Gold,
                 Timer / 20, 0, 1, 1, 2, selfRotation, 2f, Vector2.One * 1.2f);
 
 

@@ -359,7 +359,7 @@ namespace Coralite.Content.Items.Nightmare
                             _ => new Color(122, 110, 134)
                         };
 
-                        Particle.NewParticle(Owner.Center + Main.rand.NextVector2Circular(16, 16), Helper.NextVec2Dir() * Main.rand.NextFloat(2, 5f),
+                        Particle.NewParticle(Owner.Center + Main.rand.NextVector2Circular(16, 16), Helper.NextVec2Dir(2, 5f),
                             CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1.5f));
                     }
 

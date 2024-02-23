@@ -1002,7 +1002,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override bool PreDraw(ref Color lightColor)
         {
-            ProjectilesHelper.DrawPrettyLine(1, SpriteEffects.None, Projectile.Center - Main.screenPosition,
+            Helper.DrawPrettyLine(1, SpriteEffects.None, Projectile.Center - Main.screenPosition,
                 new Color(0, 28, 59, 0), Color.White * 0.8f, Alpha, 0, 0.5f, 0.5f, 0, Projectile.rotation, 3, Vector2.One);
             return false;
         }
@@ -1029,7 +1029,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override bool PreDraw(Dust dust)
         {
-            ProjectilesHelper.DrawPrettyStarSparkle(1f, 0, dust.position - Main.screenPosition, new Color(40, 40, 40, 40), dust.color,
+            Helper.DrawPrettyStarSparkle(1f, 0, dust.position - Main.screenPosition, new Color(40, 40, 40, 40), dust.color,
                 dust.fadeIn / 24, 0, 0.5f, 0.5f, 1, dust.rotation, new Vector2(dust.scale, dust.scale), Vector2.One);
             return false;
         }

@@ -101,7 +101,7 @@ namespace Coralite.Content.Items.Magike.Towers
             _vertexStrip.DrawTrail();
             Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
-            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, Projectile.oldPos[0] - Main.screenPosition,
+            Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, Projectile.oldPos[0] - Main.screenPosition,
                 Color.White * 0.8f, Coralite.Instance.MagicCrystalPink, 0.5f, 0f, 0.5f, 0.5f, 0f, 0f,
                 new Vector2(2f, 1f), Vector2.One);
             return false;

@@ -133,7 +133,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             for (int i = 0; i < 10; i++)
             {
                 Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(Projectile.width, Projectile.height), DustID.t_Slime,
-                     Helper.NextVec2Dir() * Main.rand.NextFloat(1f, 2.5f), 150, new Color(78, 136, 255, 80), Main.rand.NextFloat(1.2f, 1.6f));
+                     Helper.NextVec2Dir(1f, 2.5f), 150, new Color(78, 136, 255, 80), Main.rand.NextFloat(1.2f, 1.6f));
             }
 
             //FTW中才会有分裂弹幕
@@ -238,7 +238,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             for (int i = 0; i < 10; i++)
             {
                 Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(Projectile.width, Projectile.height), DustID.t_Slime,
-                     Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f, 1.5f), 150, new Color(78, 136, 255, 80), Main.rand.NextFloat(1.2f, 1.6f));
+                     Helper.NextVec2Dir(0.5f, 1.5f), 150, new Color(78, 136, 255, 80), Main.rand.NextFloat(1.2f, 1.6f));
             }
         }
     }

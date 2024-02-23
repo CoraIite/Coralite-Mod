@@ -153,7 +153,7 @@ namespace Coralite.Content.Items.Nightmare
                 };
 
             group?.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
-                Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f, 3), CoraliteContent.ParticleType<BarrenFogParticle>(), color, Main.rand.NextFloat(1f, 2f));
+                Helper.NextVec2Dir(0.5f, 3), CoraliteContent.ParticleType<BarrenFogParticle>(), color, Main.rand.NextFloat(1f, 2f));
 
             group?.UpdateParticles();
 

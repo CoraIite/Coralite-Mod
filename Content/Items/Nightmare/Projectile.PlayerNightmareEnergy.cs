@@ -92,10 +92,10 @@ namespace Coralite.Content.Items.Nightmare
                 Vector2 dir = (Projectile.rotation + i * MathHelper.TwoPi / howMany).ToRotationVector2();
                 Vector2 position = pos + dir * (40 + factor * 2);
                 float factor2 = 0.5f + factor * 0.1f;
-                Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, position, Color.White * 0.7f, NightmarePlantera.nightmareRed,
+                Helpers.Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, position, Color.White * 0.7f, NightmarePlantera.nightmareRed,
                    factor2, 0f, 0.5f, 0.5f, 1f, Projectile.rotation + rot, new Vector2(0.9f, 0.9f), Vector2.One * 1.2f);
                 if (nightmareHeart)
-                    Helpers.ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, position, Color.White * 0.7f, NightmarePlantera.nightPurple,
+                    Helpers.Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, position, Color.White * 0.7f, NightmarePlantera.nightPurple,
                        factor2, 0f, 0.5f, 0.5f, 1f, Projectile.rotation + rot + MathHelper.PiOver4, new Vector2(0.4f, 0.4f), Vector2.One);
             }
             return false;

@@ -235,7 +235,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
         public override bool PreDraw(ref Color lightColor) {
 
-            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, Projectile.oldPos[12] - Main.screenPosition,
+            Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, Projectile.oldPos[12] - Main.screenPosition,
                 Color.White, Color.LimeGreen, Timer / 35, 0, 0.2f, 0.6f, 1, Projectile.rotation+1.57f,
                 new Vector2(0.1f, 2.4f), Vector2.One);
             //ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, Projectile.oldPos[12] - Main.screenPosition,

@@ -104,7 +104,7 @@ namespace Coralite.Content.Items.Shadow
             triangles ??= new ParticleGroup();
 
             triangles.NewParticle(Projectile.position + new Vector2(Main.rand.Next(Projectile.width), Main.rand.Next(Projectile.height))
-                , Helpers.Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f, 1.5f), CoraliteContent.ParticleType<ShadowTriangle>(),
+                , Helpers.Helper.NextVec2Dir(0.5f, 1.5f), CoraliteContent.ParticleType<ShadowTriangle>(),
                 Main.rand.NextBool() ? new Color(0, 0, 0, 150) : new Color(35, 16, 62, 150), Main.rand.NextFloat(0.5f, 0.75f));
 
             if (Projectile.ai[0] > 2)

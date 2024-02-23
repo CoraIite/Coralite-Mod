@@ -488,7 +488,7 @@ namespace Coralite.Content.Items.Nightmare
             //Main.EntitySpriteDraw(extraTex, position4, null, color37, 0f, origin7, vector32 * 0.6f, 0);
 
             //额外星星
-            ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, center, NightmarePlantera.nightPurple, NightmarePlantera.lightPurple, 0.5f, 0, 0.5f, 0.5f, 1, Projectile.rotation, new Vector2(0.6f, 1.2f), Vector2.One);
+            Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, center, NightmarePlantera.nightPurple, NightmarePlantera.lightPurple, 0.5f, 0, 0.5f, 0.5f, 1, Projectile.rotation, new Vector2(0.6f, 1.2f), Vector2.One);
 
             //主帖图
             Main.EntitySpriteDraw(extraTex, center, null, baseColor, Projectile.rotation, extraOrigin, Projectile.scale * 0.9f, 0);

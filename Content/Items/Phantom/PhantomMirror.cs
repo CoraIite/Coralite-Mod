@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Phantom
                 _ => new Color(207, 46, 12, 150) * 0.5f
             };
             triangles.NewParticle(Projectile.position + new Vector2(Main.rand.Next(Projectile.width), Main.rand.Next(Projectile.height))
-                , Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f, 1.5f), CoraliteContent.ParticleType<ShadowTriangle>(),
+                , Helper.NextVec2Dir(0.5f, 1.5f), CoraliteContent.ParticleType<ShadowTriangle>(),
                 c, Main.rand.NextFloat(0.5f, 0.75f));
 
             Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0, 0));
@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.Phantom
                 Main.PlayerRenderer.DrawPlayer(Main.Camera, owner, Projectile.oldPos[i], 0f, owner.fullRotationOrigin, 0.5f + i * 0.5f / 7);
             }
 
-            ProjectilesHelper.DrawPrettyStarSparkle(1, 0, Projectile.position + new Vector2(8, 8) - Main.screenPosition, Color.White, Color.Red, 0.5f, 0, 0.5f
+            Helper.DrawPrettyStarSparkle(1, 0, Projectile.position + new Vector2(8, 8) - Main.screenPosition, Color.White, Color.Red, 0.5f, 0, 0.5f
                 , 0.5f, 1, 0, new Vector2(2, 1), Vector2.One);
             triangles?.DrawParticles(Main.spriteBatch);
             return false;
