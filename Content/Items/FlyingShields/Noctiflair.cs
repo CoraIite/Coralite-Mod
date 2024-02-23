@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void SetOtherValues()
         {
             scalePercent = 2f;
-            damageReduce = 0.25f;
+            damageReduce = 0.3f;
         }
 
         public override void OnGuard()

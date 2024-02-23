@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<PearlRayProj>();
             Item.knockBack = 2;
             Item.shootSpeed = 13;
-            Item.damage = 18;
+            Item.damage = 21;
         }
 
         public override void HoldItem(Player player)
@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             flyingTime = 18;
             backTime = 20;
-            backSpeed = 13;
+            backSpeed = 14;
             trailCachesLength = 6;
             trailWidth = 8 / 2;
         }

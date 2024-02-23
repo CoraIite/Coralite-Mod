@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             flyingTime = 26;
             backTime = 22;
-            backSpeed = 18;
+            backSpeed = 20;
             trailCachesLength = 8;
             trailWidth = 20 / 2;
         }
@@ -112,7 +112,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            damageReduce = 0.15f;
+            damageReduce = 0.3f;
         }
 
         public override void OnGuard()

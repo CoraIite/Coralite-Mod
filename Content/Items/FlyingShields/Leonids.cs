@@ -23,8 +23,8 @@ namespace Coralite.Content.Items.FlyingShields
             Item.useTime = Item.useAnimation = 15;
             Item.shoot = ModContent.ProjectileType<LeonidsProj>();
             Item.knockBack = 8;
-            Item.shootSpeed = 15;
-            Item.damage = 41;
+            Item.shootSpeed = 16;
+            Item.damage = 50;
         }
 
         public override void AddRecipes()
@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             flyingTime = 18;
             backTime = 22;
-            backSpeed = 15;
+            backSpeed = 17;
             trailCachesLength = 6;
             trailWidth = 30 / 2;
         }
@@ -91,7 +91,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            damageReduce = 0.1f;
+            damageReduce = 0.15f;
         }
     }
 

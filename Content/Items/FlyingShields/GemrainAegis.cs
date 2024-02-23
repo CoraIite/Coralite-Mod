@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<GemrainAegisProj>();
             Item.knockBack = 2;
             Item.shootSpeed = 12;
-            Item.damage = 50;
+            Item.damage = 55;
         }
 
         public override void AddRecipes()
@@ -84,7 +84,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            damageReduce = 0.1f;
+            damageReduce = 0.25f;
         }
 
         public override void OnGuard()

@@ -26,8 +26,8 @@ namespace Coralite.Content.Items.FlyingShields
             Item.useTime = Item.useAnimation = 15;
             Item.shoot = ModContent.ProjectileType<HorseshoeCrabProj>();
             Item.knockBack = 2;
-            Item.shootSpeed = 13;
-            Item.damage = 38;
+            Item.shootSpeed = 15;
+            Item.damage = 47;
         }
 
         public override void HoldItem(Player player)
@@ -71,9 +71,9 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            flyingTime = 18;
-            backTime = 20;
-            backSpeed = 13;
+            flyingTime = 20;
+            backTime = 14;
+            backSpeed = 16;
             trailCachesLength = 6;
             trailWidth = 8 / 2;
         }
@@ -185,7 +185,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.damage = (int)(Projectile.damage * 0.8f);
+            Projectile.damage = (int)(Projectile.damage * 0.9f);
         }
 
         public override void AI()

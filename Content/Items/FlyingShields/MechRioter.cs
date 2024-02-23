@@ -78,7 +78,6 @@ namespace Coralite.Content.Items.FlyingShields
                     Main.projectile[index].hostile = false;
                     Main.projectile[index].friendly = true;
                     Main.projectile[index].penetrate = 1;
-                    Main.projectile[index].soundDelay = 10000;
                 }
             }
         }
@@ -136,7 +135,23 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            damageReduce = 0.1f;
+            damageReduce = 0.2f;
+        }
+
+        public override void OnGuard()
+        {
+            base.OnGuard();
+            Vector2 dir = Projectile.rotation.ToRotationVector2();
+            for (int i = 0; i < 3; i++)
+            {
+                int index = Projectile.NewProjectileFromThis(Projectile.Center
+                    , dir.RotateByRandom(-0.2f,0.2f) * 12,
+                    ProjectileID.DeathLaser, Projectile.damage, Projectile.knockBack, ai1: 1);
+                Main.projectile[index].hostile = false;
+                Main.projectile[index].friendly = true;
+                Main.projectile[index].penetrate = 1;
+                Main.projectile[index].soundDelay = 10000;
+            }
         }
     }
 

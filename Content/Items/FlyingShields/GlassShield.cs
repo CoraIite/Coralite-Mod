@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<GlassShieldProj>();
             Item.knockBack = 2;
             Item.shootSpeed = 12;
-            Item.damage = 15;
+            Item.damage = 17;
         }
 
         public override void AddRecipes()
@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            damageReduce = 0.1f;
+            damageReduce = 0.15f;
         }
 
         public override void OnGuard()

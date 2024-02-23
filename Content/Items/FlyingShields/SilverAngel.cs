@@ -7,6 +7,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -141,6 +142,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         float distanceToTarget;
         float alpha;
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 24;
@@ -184,6 +186,8 @@ namespace Coralite.Content.Items.FlyingShields
                     Scale: Main.rand.NextFloat(1.5f, 2f));
                 d.noGravity = true;
             }
+
+            SoundEngine.PlaySound(CoraliteSoundID.Hit_Item10, Projectile.Center);
         }
 
         public override void AI()

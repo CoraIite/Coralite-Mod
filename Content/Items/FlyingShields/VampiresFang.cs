@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<VampiresFangProj>();
             Item.knockBack = 2;
             Item.shootSpeed = 17;
-            Item.damage = 37;
+            Item.damage = 40;
         }
 
         public override bool CanUseItem(Player player)
@@ -97,7 +97,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            damageReduce = 0.05f;
+            damageReduce = 0.15f;
             scalePercent = 1.4f;
         }
 

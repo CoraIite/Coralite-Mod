@@ -3,6 +3,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -77,6 +78,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.penetrate = -1;
             Projectile.timeLeft = 2000;
 
+            Projectile.hide = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 30;
         }
@@ -86,6 +88,11 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (State == (int)GuardState.Delay || State == (int)GuardState.ParryDelay)
                 return false;
             return base.CanDamage();
+        }
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            overPlayers.Add(index);
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -123,7 +130,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override void AI()
         {
-            Owner.heldProj = Projectile.whoAmI;
+            //Owner.heldProj = Projectile.whoAmI;
             Owner.itemTime = Owner.itemAnimation = 2;
             Projectile.velocity.X = Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 

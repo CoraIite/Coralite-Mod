@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void SetOtherValues()
         {
             scalePercent = 1.4f;
-            damageReduce = 0.1f;
+            damageReduce = 0.15f;
             extraRotation = MathHelper.Pi;
         }
 
