@@ -109,7 +109,7 @@ namespace Coralite.Core.Prefabs.Items
         /// <param name="knockback"></param>
         public virtual void LeftShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(source, player.Center+new Vector2(0,-16), velocity, type, damage, knockback, player.whoAmI);
         }
 
         public virtual void RightShoot(Player player, EntitySource_ItemUse_WithAmmo source, int damage)

@@ -2559,7 +2559,7 @@ Mods: {
 				DisplayName: 我的盾牌
 				Tooltip:
 					'''
-					“配方：铁锭，木板和一些羊毛”
+					“不吃这套，谢谢”
 					能够将弹幕弹回去
 					'''
 			}
@@ -2577,6 +2577,20 @@ Mods: {
 			EekShield: {
 				DisplayName: 伊柯之盾
 				Tooltip: “兄弟，你飞来吧”
+			}
+
+			AncientFurnace: {
+				DisplayName: 远古锻造炉
+				Tooltip:
+					'''
+					可作为熔炉和远古操纵机
+					“来自远古时代的锻造炉，似乎还未发挥出它所有的能力”
+					'''
+			}
+
+			Hephaesth: {
+				DisplayName: 炼心城
+				Tooltip: 传说中远古时期所有的盾牌均由这个锻造炉打造而出
 			}
 		}
 
@@ -3151,6 +3165,11 @@ Mods: {
 			// EekShieldEXProj.DisplayName: Eek Shield E X Proj
 			// EekShieldGuard.DisplayName: Eek Shield Guard
 			// EekShieldProj.DisplayName: Eek Shield Proj
+			// HephaesthGuard.DisplayName: Hephaesth Guard
+			// HephaesthProj.DisplayName: Hephaesth Proj
+			// HephaesthFire.DisplayName: Hephaesth Fire
+			// HephaesthBurst.DisplayName: Hephaesth Burst
+			// HephaesthWave.DisplayName: Hephaesth Wave
 		}
 
 		Configs: {

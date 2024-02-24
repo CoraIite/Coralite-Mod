@@ -85,7 +85,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override bool? CanDamage()
         {
-            if (State == (int)GuardState.Delay || State == (int)GuardState.ParryDelay)
+            if (State == (int)GuardState.Delay || State == (int)GuardState.ParryDelay|| DistanceToOwner < GetWidth())
                 return false;
             return base.CanDamage();
         }
@@ -102,11 +102,12 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             SetOtherValues();
             UpdateShieldAccessory(accessory => accessory.OnGuardInitialize(this));
-            if (damageReduce > 1)
-                damageReduce = 1;
+            if (damageReduce > 0.8f)
+                damageReduce = 0.8f;
+            if (StrongGuard > 0.75f)
+                StrongGuard = 0.75f;
 
             Timer = parryTime;
-
             Projectile.rotation = Projectile.velocity.ToRotation();
             if (Timer > 0)
             {
@@ -383,27 +384,40 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Texture2D mainTex = Projectile.GetTexture();
             var pos = Projectile.Center - Main.screenPosition;
-            var origin = mainTex.Size() / 2;
 
             Vector2 scale = new Vector2(1 - DistanceToOwner / (Projectile.width * scalePercent), 1);
             scale *= Projectile.scale;
             var effect = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
             float rotation = Projectile.rotation + extraRotation;
 
-            Main.spriteBatch.Draw(mainTex, pos, null, lightColor, rotation
-                , origin, scale, effect, 0);
+            DrawSelf(mainTex, pos, rotation, lightColor, scale, effect);
 
             if (State == (int)GuardState.Parry)
             {
                 float factor = Timer / parryTime;
                 lightColor.A = 0;
-                Main.spriteBatch.Draw(mainTex, pos, null, lightColor * factor, rotation
-                    , origin, scale * (1f + factor * 0.4f), effect, 0);
-                //Main.spriteBatch.Draw(mainTex, pos, null, lightColor * factor, rotation
-                //    , origin, scale * (1f + factor * 0.4f), effect, 0);
+                DrawSelf(mainTex, pos, rotation, lightColor * factor, scale * (1f + factor * 0.4f), effect);
             }
 
             return false;
+        }
+
+        public virtual void DrawSelf(Texture2D mainTex,Vector2 pos,float rotation,Color lightColor,Vector2 scale,SpriteEffects effect)
+        {
+            var origin = mainTex.Size() / 2;
+            Vector2 dir = Projectile.rotation.ToRotationVector2() * (DistanceToOwner / (Projectile.width * scalePercent));
+            Color c = lightColor * 0.7f;
+            c.A = 255;
+            Main.spriteBatch.Draw(mainTex, pos - dir * 5, null, c, rotation
+                , origin, scale, effect, 0);
+
+            c = lightColor * 0.5f;
+            c.A = 255;
+            Main.spriteBatch.Draw(mainTex, pos - dir * 10, null, c, rotation
+                , origin, scale, effect, 0);
+
+            Main.spriteBatch.Draw(mainTex, pos, null, lightColor, rotation
+                , origin, scale, effect, 0);
         }
     }
 }

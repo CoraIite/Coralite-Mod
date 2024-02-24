@@ -12,23 +12,6 @@ namespace Coralite.Content.GlobalTiles
 {
     public class CoraliteGlobalTile : GlobalTile
     {
-        public override void SetStaticDefaults()
-        {
-            //用于修复原版的一个BUG，那就是透明方块会阻挡楼梯绘制，而不透明方块却不会阻挡
-            for (int i = 0; i < TileID.Count; i++)
-            {
-                if (i == 386 || i == 387 || i == 54 || i == 541)
-                {
-                    TileID.Sets.BlocksStairs[i] = false;
-                    TileID.Sets.BlocksStairsAbove[i] = false;
-                    continue;
-                }
-
-                TileID.Sets.BlocksStairs[i] = true;
-                TileID.Sets.BlocksStairsAbove[i] = true;
-            }
-        }
-
         //public override void RandomUpdate(int i, int j, int type)
         //{
         //    #region 天空层

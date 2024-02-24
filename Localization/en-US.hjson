@@ -2529,7 +2529,7 @@ Mods: {
 				DisplayName: Mine Shield
 				Tooltip:
 					'''
-					“Recipe: Iron ingot, wooden plank, and some wool.”
+					“Not Today, Thank You”
 					Capable of bouncing back projectiles.
 					'''
 			}
@@ -2546,6 +2546,16 @@ Mods: {
 
 			EekShield: {
 				DisplayName: Eek Shield
+				Tooltip: ""
+			}
+
+			AncientFurnace: {
+				DisplayName: Ancient Furnace
+				Tooltip: ""
+			}
+
+			Hephaesth: {
+				DisplayName: Hephaesth
 				Tooltip: ""
 			}
 		}
@@ -3121,6 +3131,11 @@ Mods: {
 			EekShieldEXProj.DisplayName: Eek Shield E X Proj
 			EekShieldGuard.DisplayName: Eek Shield Guard
 			EekShieldProj.DisplayName: Eek Shield Proj
+			HephaesthGuard.DisplayName: Hephaesth Guard
+			HephaesthProj.DisplayName: Hephaesth Proj
+			HephaesthFire.DisplayName: Hephaesth Fire
+			HephaesthBurst.DisplayName: Hephaesth Burst
+			HephaesthWave.DisplayName: Hephaesth Wave
 		}
 
 		Configs: {

@@ -5,7 +5,6 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Steamworks;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -346,7 +345,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void AI()
         {
             Lighting.AddLight(Projectile.Center, new Vector3(0.1f, 0.2f, 0.15f));
-            Projectile.SpawnTrailDust(Main.rand.NextBool()?DustID.GemEmerald:DustID.WoodFurniture, Main.rand.NextFloat(0.2f, 0.4f));
+            Projectile.SpawnTrailDust(Main.rand.NextBool() ? DustID.GemEmerald : DustID.WoodFurniture, Main.rand.NextFloat(0.2f, 0.4f));
             Projectile.rotation += Projectile.velocity.X * 0.05f;
 
             int npcIndex = -1;

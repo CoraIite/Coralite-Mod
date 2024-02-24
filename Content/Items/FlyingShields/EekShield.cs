@@ -82,7 +82,6 @@ namespace Coralite.Content.Items.FlyingShields
         {
             scalePercent = 1.4f;
             damageReduce = 0.15f;
-            extraRotation = MathHelper.Pi;
         }
 
         public override void OnGuard()

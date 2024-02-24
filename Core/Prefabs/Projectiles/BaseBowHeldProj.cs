@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
-    public class BaseBowHeldProj : BaseHeldProj
+    public abstract class BaseBowHeldProj : BaseHeldProj
     {
         /// <summary> 弓弦位置与贴图中心位置的X差值 </summary>
         public readonly int toCenterX;
