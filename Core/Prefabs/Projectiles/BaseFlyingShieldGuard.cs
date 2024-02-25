@@ -407,12 +407,12 @@ namespace Coralite.Core.Prefabs.Projectiles
             var origin = mainTex.Size() / 2;
             Vector2 dir = Projectile.rotation.ToRotationVector2() * (DistanceToOwner / (Projectile.width * scalePercent));
             Color c = lightColor * 0.7f;
-            c.A = 255;
+            c.A = lightColor.A;
             Main.spriteBatch.Draw(mainTex, pos - dir * 5, null, c, rotation
                 , origin, scale, effect, 0);
 
             c = lightColor * 0.5f;
-            c.A = 255;
+            c.A = lightColor.A;
             Main.spriteBatch.Draw(mainTex, pos - dir * 10, null, c, rotation
                 , origin, scale, effect, 0);
 

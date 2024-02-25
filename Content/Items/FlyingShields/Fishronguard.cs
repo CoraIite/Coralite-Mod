@@ -4,6 +4,8 @@ using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -87,7 +89,7 @@ namespace Coralite.Content.Items.FlyingShields
 
     public class FishronguardGuard : BaseFlyingShieldGuard
     {
-        public override string Texture => AssetDirectory.FlyingShieldItems + "Fishronguard";
+        public override string Texture => AssetDirectory.FlyingShieldItems + Name;
 
         public override void SetDefaults()
         {
@@ -106,6 +108,41 @@ namespace Coralite.Content.Items.FlyingShields
         {
             DistanceToOwner /= 3;
             SoundEngine.PlaySound(CoraliteSoundID.DukeFishron_NPCHit14, Projectile.Center);
+        }
+
+        public override float GetWidth()
+        {
+            return Projectile.width / 2;
+        }
+
+        public override void DrawSelf(Texture2D mainTex, Vector2 pos, float rotation, Color lightColor, Vector2 scale, SpriteEffects effect)
+        {
+            Rectangle frameBox;
+            Vector2 rotDir = Projectile.rotation.ToRotationVector2();
+            Vector2 dir = rotDir * (DistanceToOwner / (Projectile.width * scalePercent));
+            Color c = lightColor * 0.7f;
+            c.A = lightColor.A;
+            Color c2 = lightColor * 0.5f;
+            c2.A = lightColor.A;
+
+            frameBox = mainTex.Frame(3, 1, 0, 0);
+            Vector2 origin2 = frameBox.Size() / 2;
+
+            //绘制基底
+            Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+
+            //绘制上部
+            frameBox = mainTex.Frame(3, 1, 1, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 8, frameBox, c2, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 12, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 17, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+
+            //绘制上上部
+            frameBox = mainTex.Frame(3, 1, 2, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 22, frameBox, c2, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 30, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 38, frameBox, lightColor, rotation, origin2, scale, effect, 0);
         }
     }
 }

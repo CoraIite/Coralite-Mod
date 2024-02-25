@@ -14,5 +14,13 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         {
             projectile.maxJump++;
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.Bottle)
+                .AddIngredient(ItemID.PinkGel, 5)
+                .Register();
+        }
     }
 }

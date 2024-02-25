@@ -2540,23 +2540,27 @@ Mods: {
 			}
 
 			IcicleArrowItem: {
-				DisplayName: Icicle Arrow Item
-				Tooltip: ""
+				DisplayName: Icicle Arrow
+				Tooltip: Creates an ice pick upon hit.
 			}
 
 			EekShield: {
 				DisplayName: Eek Shield
-				Tooltip: ""
+				Tooltip: “Brother, you fly”
 			}
 
 			AncientFurnace: {
 				DisplayName: Ancient Furnace
-				Tooltip: ""
+				Tooltip:
+					'''
+					Can be used as a furnace and an lunar craft station.
+					"The forge from ancient times doesn't seem to be using all its abilities"
+					'''
 			}
 
 			Hephaesth: {
 				DisplayName: Hephaesth
-				Tooltip: ""
+				Tooltip: Legend has it that all the shields of ancient times were made from this forge.
 			}
 		}
 
@@ -3136,6 +3140,7 @@ Mods: {
 			HephaesthFire.DisplayName: Hephaesth Fire
 			HephaesthBurst.DisplayName: Hephaesth Burst
 			HephaesthWave.DisplayName: Hephaesth Wave
+			HephaesthSmeltingResults.DisplayName: Hephaesth Smelting Results
 		}
 
 		Configs: {

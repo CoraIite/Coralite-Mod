@@ -3170,6 +3170,7 @@ Mods: {
 			// HephaesthFire.DisplayName: Hephaesth Fire
 			// HephaesthBurst.DisplayName: Hephaesth Burst
 			// HephaesthWave.DisplayName: Hephaesth Wave
+			// HephaesthSmeltingResults.DisplayName: Hephaesth Smelting Results
 		}
 
 		Configs: {

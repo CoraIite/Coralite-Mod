@@ -4,6 +4,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -22,7 +23,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<RoyalAngelProj>();
             Item.knockBack = 3;
             Item.shootSpeed = 16;
-            Item.damage = 100;
+            Item.damage = 115;
         }
 
         public override void AddRecipes()
@@ -92,7 +93,9 @@ namespace Coralite.Content.Items.FlyingShields
 
     public class RoyalAngelGuard : BaseFlyingShieldGuard
     {
-        public override string Texture => AssetDirectory.FlyingShieldItems + "RoyalAngel";
+        public override string Texture => AssetDirectory.FlyingShieldItems + Name;
+
+        private float wing;
 
         public override void SetDefaults()
         {
@@ -105,6 +108,12 @@ namespace Coralite.Content.Items.FlyingShields
         {
             scalePercent = 2f;
             damageReduce = 0.2f;
+        }
+
+        public override void OnHoldShield()
+        {
+            wing += Math.Abs(Owner.velocity.Y / 30);
+            wing += 0.01f;
         }
 
         public override void OnGuard()
@@ -122,6 +131,38 @@ namespace Coralite.Content.Items.FlyingShields
         public override float GetWidth()
         {
             return Projectile.width / 2 / Projectile.scale + 4;
+        }
+
+        public override void DrawSelf(Texture2D mainTex, Vector2 pos, float rotation, Color lightColor, Vector2 scale, SpriteEffects effect)
+        {
+            Rectangle frameBox;
+            Vector2 rotDir = Projectile.rotation.ToRotationVector2();
+            Vector2 dir = rotDir * (DistanceToOwner / (Projectile.width * scalePercent));
+            Color c = lightColor * 0.6f;
+            c.A = lightColor.A;
+
+            float exRot = rotation - Owner.direction * (0.2f + 0.3f * MathF.Sin(wing));
+            float exRot2 = rotation + Owner.direction * (0.2f + 0.3f * MathF.Sin(wing));
+
+            frameBox = mainTex.Frame(4, 1, 0, 0);
+            Vector2 origin2 = frameBox.Size() / 2;
+            //绘制基底
+            Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, exRot, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, exRot, origin2, scale, effect, 0);
+
+            frameBox = mainTex.Frame(4, 1, 1, 0);
+            Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, exRot2, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, exRot2, origin2, scale, effect, 0);
+
+            //绘制上部
+            frameBox = mainTex.Frame(4, 1, 2, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 3, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 8, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+
+            //绘制上上部
+            frameBox = mainTex.Frame(4, 1, 3, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 11, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 16, frameBox, lightColor, rotation, origin2, scale, effect, 0);
         }
     }
 
