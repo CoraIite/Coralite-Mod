@@ -84,7 +84,7 @@ namespace Coralite.Content.Items.FlyingShields
             if (BurstTime < 1)
                 GetFuel(30, true);
             else
-                damage = (int)(1.3f * damage);
+                damage = (int)(1.5f * damage);
 
             Projectile.NewProjectile(source, player.Center + new Vector2(0, -16), velocity, type
                 , damage, knockback, player.whoAmI, ai2: BurstTime > 0 ? 1 : 0);
@@ -135,7 +135,7 @@ namespace Coralite.Content.Items.FlyingShields
             flyingTime = 26*2;
             backTime = 18*2;
             backSpeed = 24/2;
-            trailCachesLength = 8*2;
+            trailCachesLength = 8 * 2;
             trailWidth = 20 / 2;
         }
 
@@ -156,10 +156,10 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnShootDusts()
         {
             if (Timer == flyingTime / 2)
-                SpawnShield(14);
+                SpawnShield(12);
 
             if (Burning && Timer == 35 * flyingTime / 100)
-                SpawnShield(12);
+                SpawnShield(10);
 
             float factor = 1 - Timer / flyingTime;
             trailColor = ColorFunc(factor);
@@ -169,9 +169,16 @@ namespace Coralite.Content.Items.FlyingShields
 
         public void SpawnShield(float speed)
         {
-            Vector2 dir = Projectile.rotation.ToRotationVector2();
-            int index = Projectile.NewProjectileFromThis<HephaesthSmeltingResults>(Projectile.Center, dir.RotateByRandom(-0.4f, 0.4f) * speed,
-                  Projectile.damage, Projectile.knockBack, ai2: -Main.rand.Next(1, 17));//Main.rand.Next(1, ItemLoader.ItemCount));
+            for (int i = 0; i < 7; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(Projectile.Center
+                    , DustID.PortalBoltTrail, Helper.NextVec2Dir(2f, 9f), newColor: trailColor,Scale:Main.rand.NextFloat(1,1.5f));
+                dust.noGravity = true;
+            }
+            Vector2 dir = Projectile.rotation.ToRotationVector2().RotateByRandom(-0.3f, 0.3f);
+            int type = -Main.rand.Next(1, 17);
+            int index = Projectile.NewProjectileFromThis<HephaesthSmeltingResults>(Projectile.Center, dir * speed ,
+                  (int)(Projectile.damage * 1.25f), Projectile.knockBack, ai2: type);//Main.rand.Next(1, ItemLoader.ItemCount));
             if (Burning)
             {
                 (Main.projectile[index].ModProjectile as HephaesthSmeltingResults).DefaultColor = new Color(89, 219, 255);
@@ -662,12 +669,10 @@ namespace Coralite.Content.Items.FlyingShields
 
         public void SpawnDust()
         {
-            if (Main.rand.NextBool(15))
+            if (Main.rand.NextBool(10))
             {
                 float a = 1;
                 Color c = GetColor(ref a);
-                Projectile.SpawnTrailDust((float)(Projectile.width), DustID.PortalBoltTrail
-                    , Main.rand.NextFloat(-0.7f, 0.5f), newColor: c);
                 Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(Projectile.width, Projectile.width)
                     , DustID.PortalBoltTrail, Vector2.Zero,  newColor: c);
                 dust.noGravity = true;
@@ -685,7 +690,7 @@ namespace Coralite.Content.Items.FlyingShields
             backSpeed = 48 / 3;
             trailCachesLength = 10;
             canChase = true;
-            maxJump++;
+            maxJump+=2;
 
             UpdateShieldAccessory(accessory => accessory.OnInitialize(this));
             UpdateShieldAccessory(accessory => accessory.PostInitialize(this));
@@ -828,12 +833,12 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 float a = 1;
                 Color c = GetColor(ref a);
-                Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White*0.5f, c*0.7f,
-                    Timer / flyingTime,0.5f,0.7f,0.9f,1,MathHelper.PiOver4
-                    ,new Vector2(3.5f,2f),Vector2.One);
+                Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White * 0.5f, c * 0.7f,
+                    Timer / flyingTime, 0.7f, 0.8f, 0.9f, 1, MathHelper.PiOver4
+                    , new Vector2(3.5f, 1.5f), Vector2.One);
                 Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, c,
-                    Timer / flyingTime,0.3f,0.5f,0.7f,1,MathHelper.PiOver4
-                    ,new Vector2(2f,3.5f),Vector2.One);
+                    Timer / flyingTime, 0.6f, 0.7f, 0.8f, 0.9f, MathHelper.PiOver4
+                    , new Vector2(1.5f, 3.5f), Vector2.One);
             }
         }
 
@@ -1105,7 +1110,7 @@ namespace Coralite.Content.Items.FlyingShields
                 default:
                 case 0://星星旋转放大
                     {
-                        const int RollingTime = 10;
+                        const int RollingTime = 9;
                         float factor = Timer / RollingTime;
                         factor = Coralite.Instance.SqrtSmoother.Smoother(factor);
 
@@ -1130,7 +1135,7 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
                 case 1://星星缩小
                     {
-                        const int ScaleTime = 8;
+                        const int ScaleTime = 7;
                         float factor = Timer / ScaleTime;
 
                         Projectile.scale = Helper.Lerp(1f, 0f, factor);

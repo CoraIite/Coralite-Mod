@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -79,12 +80,26 @@ namespace Coralite.Content.Items.Misc
         {
             Timer = 0;
             itemDamageRecorder += damageDone;
+            SoundStyle st = Main.rand.Next(3) switch
+            {
+                0 => CoraliteSoundID.TargetDummy_NPCHit15,
+                1 => CoraliteSoundID.TargetDummy2_NPCHit16,
+                _ => CoraliteSoundID.TargetDummy3_NPCHit17
+            };
+            SoundEngine.PlaySound(st, NPC.Center);
         }
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             Timer = 0;
             projectileDamageRecorder += damageDone;
+            SoundStyle st = Main.rand.Next(3) switch
+            {
+                0 => CoraliteSoundID.TargetDummy_NPCHit15,
+                1 => CoraliteSoundID.TargetDummy2_NPCHit16,
+                _ => CoraliteSoundID.TargetDummy3_NPCHit17
+            };
+            SoundEngine.PlaySound(st, NPC.Center);
         }
 
         public override void AI()

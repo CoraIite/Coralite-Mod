@@ -134,7 +134,6 @@ namespace Coralite.Core.Prefabs.Projectiles
             //Owner.heldProj = Projectile.whoAmI;
             Owner.itemTime = Owner.itemAnimation = 2;
             Projectile.velocity.X = Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-
             Projectile.timeLeft = 4;
 
             switch (State)
@@ -148,7 +147,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                         SetPos();
                         OnHoldShield();
 
-                        if (CheckCollide()>0)
+                        if (CheckCollide() > 0)
                         {
                             State = (int)GuardState.Guarding;
                             parryFactor = 0;
@@ -280,6 +279,9 @@ namespace Coralite.Core.Prefabs.Projectiles
                 {
                     if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                         cp.Guard(damageReduce);
+
+                    Projectile.localNPCImmunity[i] = Projectile.localNPCHitCooldown;
+                    npc.SimpleStrikeNPC(Projectile.damage, Projectile.direction, knockBack: Projectile.knockBack, damageType: DamageClass.Melee );
 
                     return (int)GuardType.NPC;
                 }
