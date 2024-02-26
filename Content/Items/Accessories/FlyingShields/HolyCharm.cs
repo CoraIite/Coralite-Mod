@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             {
                 if (cp.parryTime < 100)
                 {
-                    Owner.immuneTime = 20;
+                    Owner.immuneTime = 30;
                     Owner.immune = true;
                 }
 

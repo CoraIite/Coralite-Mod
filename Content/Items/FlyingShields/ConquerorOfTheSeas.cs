@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.FlyingShields
 
     public class ConquerorOfTheSeasGuard : BaseFlyingShieldGuard
     {
-        public override string Texture => AssetDirectory.FlyingShieldItems + "ConquerorOfTheSeas";
+        public override string Texture => AssetDirectory.FlyingShieldItems + Name;
 
         public override void SetDefaults()
         {
@@ -79,6 +79,29 @@ namespace Coralite.Content.Items.FlyingShields
             distanceAdder = 2.6f;
             StrongGuard = 0.15f;
             scalePercent = 1.3f;
+        }
+
+        public override void OnHoldShield()
+        {
+            if (Projectile.frameCounter > 0)
+            {
+                Projectile.frameCounter--;
+                if (Projectile.frameCounter == 0)
+                {
+                    Projectile.frame = 0;
+                    return;
+                }
+
+                if (Projectile.frameCounter % 3 == 0)
+                    if (++Projectile.frame > 4)
+                        Projectile.frame = 1;
+            }
+        }
+
+        public override void OnGuard()
+        {
+            base.OnGuard();
+            Projectile.frameCounter = 3 * 4 * Main.rand.Next(8, 12);
         }
 
         public override void OnGuardNPC()
@@ -118,6 +141,48 @@ namespace Coralite.Content.Items.FlyingShields
         public override float GetWidth()
         {
             return Projectile.width / 2.8f;
+        }
+
+        public override void DrawSelf(Texture2D mainTex, Vector2 pos, float rotation, Color lightColor, Vector2 scale, SpriteEffects effect)
+        {
+            Rectangle frameBox;
+            Vector2 rotDir = Projectile.rotation.ToRotationVector2();
+            Vector2 dir = rotDir * (DistanceToOwner / (Projectile.width * scalePercent));
+            Color c = lightColor * 0.7f;
+            c.A = lightColor.A;
+            Color c2 = lightColor * 0.5f;
+            c2.A = lightColor.A;
+
+            frameBox = mainTex.Frame(5, 2, 0, 1);
+            Vector2 origin2 = frameBox.Size() / 2;
+
+            //绘制基底
+            Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+
+            //绘制上部
+            frameBox = mainTex.Frame(5, 2, Projectile.frame, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 4, frameBox, c2, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 9, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 14, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+
+            //
+            frameBox = mainTex.Frame(5, 2, 1, 1);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 14, frameBox, c2, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 19, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 24, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            
+            //
+            frameBox = mainTex.Frame(5, 2, 2, 1);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 24, frameBox, c2, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 28, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 32, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            
+            //
+            frameBox = mainTex.Frame(5, 2, 3, 1);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 32, frameBox, c2, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 36, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 40, frameBox, lightColor, rotation, origin2, scale, effect, 0);
         }
     }
 

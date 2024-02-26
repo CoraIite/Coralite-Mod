@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.MaxFlyingShield++;
+                cp.MaxFlyingShield = 2;
             }
         }
 

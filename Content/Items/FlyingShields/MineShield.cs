@@ -119,6 +119,10 @@ namespace Coralite.Content.Items.FlyingShields
                     if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                         cp.Guard(damageReduce);
 
+                    Projectile.localNPCImmunity[i] = Projectile.localNPCHitCooldown;
+                    if (!npc.dontTakeDamage)
+                        npc.SimpleStrikeNPC(Projectile.damage, Projectile.direction, knockBack: Projectile.knockBack, damageType: DamageClass.Melee);
+
                     return (int)GuardType.NPC;
                 }
             }

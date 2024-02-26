@@ -20,8 +20,8 @@ namespace Coralite.Content.Items.FlyingShields
             Item.useTime = Item.useAnimation = 15;
             Item.shoot = ModContent.ProjectileType<BatfangShieldProj>();
             Item.knockBack = 2;
-            Item.shootSpeed = 12;
-            Item.damage = 16;
+            Item.shootSpeed = 12.5f;
+            Item.damage = 17;
         }
     }
 
@@ -37,18 +37,18 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            flyingTime = 15;
+            flyingTime = 17;
             backTime = 12;
-            backSpeed = 13;
+            backSpeed = 13.5f;
             trailCachesLength = 6;
             trailWidth = 16 / 2;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (Main.rand.NextBool()&& !Owner.moonLeech && !target.immortal && State ==(int)FlyingShieldStates.Shooting)
+            if (Main.rand.NextBool(3, 4) && !Owner.moonLeech && !target.immortal && State == (int)FlyingShieldStates.Shooting)
             {
-                float num = damageDone * 0.05f;
+                float num = damageDone * 0.065f;
                 if ((int)num != 0 && !(Owner.lifeSteal <= 0f))
                 {
                     Owner.lifeSteal -= num;
@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override Color GetColor(float factor)
         {
-            return Color.Red*factor;
+            return Color.Red * factor;
         }
     }
 

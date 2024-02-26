@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.useTime = Item.useAnimation = 15;
             Item.shoot = ModContent.ProjectileType<PearlRayProj>();
             Item.knockBack = 2;
-            Item.shootSpeed = 13;
+            Item.shootSpeed = 13.5f;
             Item.damage = 21;
         }
 
@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             flyingTime = 18;
             backTime = 20;
-            backSpeed = 14;
+            backSpeed = 14.5f;
             trailCachesLength = 6;
             trailWidth = 8 / 2;
         }

@@ -252,8 +252,13 @@ namespace Coralite.Core.Prefabs.Projectiles
 
                 if (proj.Colliding(proj.getRect(), rect))
                 {
+                    float damageR = damageReduce;
+                    if (proj.penetrate < 0)//对于无限穿透的弹幕额外减伤
+                        damageR += Main.rand.NextFloat(0, StrongGuard / 3);
+
+                    damageR = Math.Clamp(damageR, 0f, 0.8f);
                     if (Owner.TryGetModPlayer(out CoralitePlayer cp))
-                        cp.Guard(damageReduce);
+                        cp.Guard(damageR);
 
                     float percent = MathHelper.Clamp(StrongGuard, 0, 1);
                     if (Main.rand.NextBool((int)(percent * 100), 100) && proj.penetrate > 0)//削减穿透数
@@ -281,7 +286,8 @@ namespace Coralite.Core.Prefabs.Projectiles
                         cp.Guard(damageReduce);
 
                     Projectile.localNPCImmunity[i] = Projectile.localNPCHitCooldown;
-                    npc.SimpleStrikeNPC(Projectile.damage, Projectile.direction, knockBack: Projectile.knockBack, damageType: DamageClass.Melee );
+                    if (!npc.dontTakeDamage)
+                        npc.SimpleStrikeNPC(Projectile.damage, Projectile.direction, knockBack: Projectile.knockBack, damageType: DamageClass.Melee);
 
                     return (int)GuardType.NPC;
                 }
@@ -306,7 +312,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void OnGuard()
         {
             DistanceToOwner /= 3;
-            Helper.PlayPitched("Misc/ShieldGuard", 0.4f, 0f, Projectile.Center);
+            Helper.PlayPitched("Misc/ShieldGuard", 0.3f, 0f, Projectile.Center);
         }
 
         public virtual void OnGuardProjectile() { }

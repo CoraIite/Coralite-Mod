@@ -21,17 +21,9 @@ namespace Coralite.Content.Items.FlyingShields
         {
             Item.useTime = Item.useAnimation = 15;
             Item.shoot = ModContent.ProjectileType<DeliciousSteakProj>();
-            Item.knockBack = 5;
+            Item.knockBack = 7;
             Item.shootSpeed = 14;
             Item.damage = 26;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ItemID.Glass, 20)
-                .AddTile(TileID.Anvils)
-                .Register();
         }
     }
 

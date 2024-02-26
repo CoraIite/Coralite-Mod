@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Coralite.Core.Prefabs.Projectiles.BaseFlyingShield;
 
 namespace Coralite.Content.Items.FlyingShields
 {
@@ -105,6 +106,17 @@ namespace Coralite.Content.Items.FlyingShields
         {
             DistanceToOwner /= 3;
             SoundEngine.PlaySound(CoraliteSoundID.Fleshy_NPCHit1, Projectile.Center);
+
+            if (!Owner.moonLeech && State == (int)FlyingShieldStates.Shooting)
+            {
+                float num = Projectile.damage * 0.035f;
+                if ((int)num != 0 && !(Owner.lifeSteal <= 0f))
+                {
+                    Owner.lifeSteal -= num * 1.5f;
+                    int num2 = Projectile.owner;
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, 305, 0, 0f, Projectile.owner, num2, num);
+                }
+            }
         }
 
         public override float GetWidth()

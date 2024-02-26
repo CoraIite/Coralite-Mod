@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.ShadowCastle
         {
             Item.useAnimation = Item.useTime = 30;
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.shoot = ProjectileType<ShaduraSlash>();
+            //Item.shoot = ProjectileType<ShaduraSlash>();
             Item.DamageType = DamageClass.Melee;
             Item.rare = ItemRarityID.Orange;
             Item.value = Item.sellPrice(0, 1, 0, 0);

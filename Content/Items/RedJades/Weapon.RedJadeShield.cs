@@ -45,9 +45,9 @@ namespace Coralite.Content.Items.RedJades
 
         public override void SetOtherValues()
         {
-            flyingTime = 20;
+            flyingTime = 23;
             backTime = 5;
-            backSpeed = 13;
+            backSpeed = 13.5f;
             trailCachesLength = 8;
             trailWidth = 22 / 2;
         }

@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.useTime = Item.useAnimation = 15;
             Item.shoot = ModContent.ProjectileType<TrashCanLidProj>();
             Item.knockBack = 3;
-            Item.shootSpeed = 12;
+            Item.shootSpeed = 12.5f;
             Item.damage = 17;
         }
 
@@ -45,11 +45,17 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            flyingTime = 20;
+            flyingTime = 22;
             backTime = 20;
             backSpeed = 12;
             trailCachesLength = 5;
-            trailWidth = 24/2;
+            trailWidth = 24 / 2;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            SoundEngine.PlaySound(CoraliteSoundID.WafflesIron_Item178, Projectile.Center);
+            base.OnHitNPC(target, hit, damageDone);
         }
 
         public override void OnShootDusts()

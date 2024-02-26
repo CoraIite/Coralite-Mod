@@ -5,7 +5,6 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -24,7 +23,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<FishronguardProj>();
             Item.knockBack = 4.5f;
             Item.shootSpeed = 15;
-            Item.damage = 75;
+            Item.damage = 77;
         }
 
         public override void AddRecipes()

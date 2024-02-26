@@ -36,11 +36,11 @@ namespace Coralite.Content.Items.FlyingShields
         /// </summary>
         public int BurstTime;
 
-        public bool GetFuel(int fuel, bool turnToBurst = false)
+        public bool GetFuel(int fuel)
         {
             Fuel += fuel;
             Fuel = Math.Clamp(Fuel, 0, 30 * 30);
-            if (turnToBurst && Fuel > 30 * 20)
+            if (Fuel > 30 * 25)
             {
                 BurstTime = Fuel;
                 Fuel = 0;
@@ -82,7 +82,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void LeftShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 velocity, int type, int damage, float knockback)
         {
             if (BurstTime < 1)
-                GetFuel(30, true);
+                GetFuel(30);
             else
                 damage = (int)(1.5f * damage);
 
@@ -250,7 +250,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             damageReduce = 0.4f;
             distanceAdder = 2.6f;
-            StrongGuard = 0.5f;
+            StrongGuard = 0.3f;
             scalePercent = 1.4f;
         }
 
@@ -303,7 +303,11 @@ namespace Coralite.Content.Items.FlyingShields
             base.OnGuard();
             if (Owner.HeldItem.ModItem is Hephaesth hephaesth)
             {
-                hephaesth.GetFuel(30 * 2);
+                if (!Burning && hephaesth.GetFuel(30 * 2))
+                {
+                    //特效
+                    turnToBuring = 30;
+                }
             }
 
             Vector2 dir = (Projectile.rotation+1.57f).ToRotationVector2();
@@ -338,7 +342,7 @@ namespace Coralite.Content.Items.FlyingShields
             SoundEngine.PlaySound(st, Projectile.Center);
             if (Owner.HeldItem.ModItem is Hephaesth hephaesth)
             {
-                if (!Burning&&hephaesth.GetFuel(30 * 8, true))
+                if (!Burning && hephaesth.GetFuel(30 * 8))
                 {
                     //特效
                     turnToBuring = 30;
