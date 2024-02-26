@@ -2598,6 +2598,11 @@ Mods: {
 				DisplayName: 炼心城
 				Tooltip: 传说中远古时期所有的盾牌均由这个锻造炉打造而出
 			}
+
+			RedJadeFountain: {
+				DisplayName: 赤玉喷泉
+				Tooltip: 被电路激活时释放红色喷泉
+			}
 		}
 
 		Tiles: {
@@ -2657,6 +2662,8 @@ Mods: {
 				// MapEntry0: Mods.Coralite.Tiles.MercuryChestTile.MapEntry0
 				// MapEntry1: Mods.Coralite.Tiles.MercuryChestTile.MapEntry1
 			}
+
+			// RedJadeFountain.MapEntry: Red Jade Fountain
 		}
 
 		Buffs: {
