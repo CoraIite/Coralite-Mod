@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<SolleonisProj>();
             Item.knockBack = 8;
             Item.shootSpeed = 18;
-            Item.damage = 90;
+            Item.damage = 78;
         }
 
         public override void AddRecipes()
@@ -61,12 +61,12 @@ namespace Coralite.Content.Items.FlyingShields
             Lighting.AddLight(Projectile.Center, Color.Orange.ToVector3());
             Projectile.SpawnTrailDust(14f, DustID.SolarFlare, -Main.rand.NextFloat(0.1f, 0.4f), Scale: Main.rand.NextFloat(0.6f, 0.8f));
 
-            if (Timer>flyingTime*0.3f&&Timer % (flyingTime / 3) == 0)
+            if (Timer > flyingTime * 0.3f && Timer % (flyingTime / 3) == 0)
             {
                 //射流星
                 Projectile.NewProjectileFromThis<SolleonisMeteor>(Projectile.Center
                     , (Projectile.extraUpdates + 1) * Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.25f, 0.25f)) * Main.rand.NextFloat(0.8f, 1.2f),
-                    Projectile.damage, Projectile.knockBack);
+                    (int)(Projectile.damage * 0.75f), Projectile.knockBack);
             }
         }
 
@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.NewProjectileFromThis(target.Center, Vector2.Zero,ProjectileID.SolarWhipSwordExplosion
-                , (int)(Projectile.damage*0.65f) , 10f, 0f, 0.85f + Main.rand.NextFloat() * 1.15f);
+                , (int)(Projectile.damage*0.5f) , 10f, 0f, 0.85f + Main.rand.NextFloat() * 1.15f);
 
             for (int i = 0; i < 3; i++)
             {

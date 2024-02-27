@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                     Owner.immune = true;
                 }
 
-                int damage = (int)(projectile.Projectile.damage * (1.35f - 0.25f * cp.parryTime / 280f));
+                int damage = (int)(projectile.Projectile.damage * (1.45f - 0.3f * cp.parryTime / 280f));
 
                 SoundEngine.PlaySound(CoraliteSoundID.TerraBlade_Item60, projectile.Projectile.Center);
                 Helper.PlayPitched("Misc/ShieldGuard", 0.4f, 0f, projectile.Projectile.Center);

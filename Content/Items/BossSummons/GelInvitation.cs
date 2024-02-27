@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor;
+using Coralite.Content.Items.Gels;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
@@ -10,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class GelInvitation : ModItem, IMagikeRemodelable
+    public class GelInvitation : ModItem, IMagikePolymerizable
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 
@@ -56,10 +57,24 @@ namespace Coralite.Content.Items.BossSummons
             return true;
         }
 
-        public void AddMagikeRemodelRecipe()
+        public void AddMagikePolymerizeRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<SymbolOfRoyal, GelInvitation>(400);
-            MagikeSystem.AddRemodelRecipe<GelInvitation>(0f, ItemID.SlimeCrown, 400, selfStack: 3);
+            PolymerizeRecipe.CreateRecipe<GelInvitation>(400)
+                .SetMainItem<SymbolOfRoyal>()
+                .AddIngredient<GelFiber>(20)
+                .AddIngredient(ItemID.Gel, 99)
+                .Register();
+            PolymerizeRecipe.CreateRecipe<GelInvitation>(400)
+                .SetMainItem(ItemID.SlimeCrown, 3)
+                .AddIngredient<GelFiber>(20)
+                .AddIngredient(ItemID.Gel, 99)
+                .Register();
         }
+
+        //public void AddMagikeRemodelRecipe()
+        //{
+        //MagikeSystem.AddRemodelRecipe<SymbolOfRoyal, GelInvitation>(400);
+        //MagikeSystem.AddRemodelRecipe<GelInvitation>(0f, ItemID.SlimeCrown, 400, selfStack: 3);
+        //}
     }
 }

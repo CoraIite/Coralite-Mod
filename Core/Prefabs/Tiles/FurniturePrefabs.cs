@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using rail;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -275,6 +276,79 @@ namespace Coralite.Core.Prefabs.Tiles
             tile.AddMapEntry(mapColor, name);
         }
 
+        public static void NormalCandlePrefab(this ModTile tile, int dustType, Color mapColor, bool LavaDeath = true)
+        {
+            Main.tileLighted[tile.Type] = true;
+            Main.tileNoAttach[tile.Type] = true;
+            Main.tileSolid[tile.Type] = false;
+            Main.tileLavaDeath[tile.Type] = LavaDeath;
+            Main.tileFrameImportant[tile.Type] = true;
+            TileID.Sets.DisableSmartCursor[tile.Type] = true;
+
+            tile.DustType = dustType;
+            //tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = itemDrop;
+
+            tile.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.LavaDeath = LavaDeath;
+            TileObjectData.addTile(tile.Type);
+
+            LocalizedText name = tile.CreateMapEntryName();
+            // name.SetDefault(mapName);
+            tile.AddMapEntry(mapColor, name);
+        }
+
+        public static void FloorLampPrefab(this ModTile tile, int width,int height, int[] heights,int dustType, Color mapColor, bool LavaDeath = true)
+        {
+            Main.tileLighted[tile.Type] = true;
+            Main.tileNoAttach[tile.Type] = true;
+            Main.tileSolid[tile.Type] = false;
+            Main.tileLavaDeath[tile.Type] = LavaDeath;
+            Main.tileFrameImportant[tile.Type] = true;
+            TileID.Sets.DisableSmartCursor[tile.Type] = true;
+
+            tile.DustType = dustType;
+            //tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = itemDrop;
+
+            tile.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
+            TileObjectData.newTile.Width = width;
+            TileObjectData.newTile.Height = height;
+            TileObjectData.newTile.CoordinateHeights = heights;
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.LavaDeath = LavaDeath;
+            TileObjectData.addTile(tile.Type);
+
+            LocalizedText name = tile.CreateMapEntryName();
+            // name.SetDefault(mapName);
+            tile.AddMapEntry(mapColor, name);
+        }
+
+        public static void BookcasePrefab(this ModTile tile, int dustType, Color mapColor, bool LavaDeath = true)
+        {
+            Main.tileNoAttach[tile.Type] = true;
+            Main.tileSolid[tile.Type] = false;
+            Main.tileSolidTop[tile.Type] = true;
+            Main.tileLavaDeath[tile.Type] = LavaDeath;
+            Main.tileFrameImportant[tile.Type] = true;
+            TileID.Sets.DisableSmartCursor[tile.Type] = true;
+
+            tile.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+
+            tile.DustType = dustType;
+            tile.AdjTiles = new int[] { TileID.Bookcases }; // Condider adding TileID.Chairs to AdjTiles to mirror "(regular) Toilet" and "Golden Toilet" behavior for crafting stations
+
+            tile.AddMapEntry(mapColor, Language.GetText("MapObject.Toilet"));
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
+            TileObjectData.newTile.LavaDeath = LavaDeath;
+            TileObjectData.newTile.StyleHorizontal = true;
+
+            TileObjectData.addTile(tile.Type);
+        }
         public static void ToiletPrefab(this ModTile tile, int dustType, Color mapColor, bool LavaDeath = true)
         {
             Main.tileFrameImportant[tile.Type] = true;

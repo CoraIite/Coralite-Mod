@@ -3,11 +3,11 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Coralite.Core.Prefabs.Projectiles.BaseFlyingShield;
 
 namespace Coralite.Content.Items.FlyingShields
 {
@@ -87,7 +87,7 @@ namespace Coralite.Content.Items.FlyingShields
 
     public class VampiresFangGuard : BaseFlyingShieldGuard
     {
-        public override string Texture => AssetDirectory.FlyingShieldItems + "VampiresFang";
+        public override string Texture => AssetDirectory.FlyingShieldItems + Name;
 
         public override void SetDefaults()
         {
@@ -107,7 +107,7 @@ namespace Coralite.Content.Items.FlyingShields
             DistanceToOwner /= 3;
             SoundEngine.PlaySound(CoraliteSoundID.Fleshy_NPCHit1, Projectile.Center);
 
-            if (!Owner.moonLeech && State == (int)FlyingShieldStates.Shooting)
+            if (!Owner.moonLeech)
             {
                 float num = Projectile.damage * 0.035f;
                 if ((int)num != 0 && !(Owner.lifeSteal <= 0f))
@@ -119,9 +119,48 @@ namespace Coralite.Content.Items.FlyingShields
             }
         }
 
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+            if (Main.rand.NextBool(1,6) && !Owner.moonLeech && !target.immortal)
+            {
+                float num = damageDone * 0.035f;
+                if ((int)num != 0 && !(Owner.lifeSteal <= 0f))
+                {
+                    Owner.lifeSteal -= num * 1.5f;
+                    int num2 = Projectile.owner;
+                    Projectile.NewProjectile(Projectile.GetSource_OnHit(target), Projectile.Center, Vector2.Zero, 305, 0, 0f, Projectile.owner, num2, num);
+                }
+            }
+
+            base.OnHitNPC(target, hit, damageDone);
+        }
+
+
         public override float GetWidth()
         {
             return Projectile.width / 2;
+        }
+
+        public override void DrawSelf(Texture2D mainTex, Vector2 pos, float rotation, Color lightColor, Vector2 scale, SpriteEffects effect)
+        {
+            Rectangle frameBox;
+            Vector2 rotDir = Projectile.rotation.ToRotationVector2();
+            Vector2 dir = rotDir * (DistanceToOwner / (Projectile.width * scalePercent));
+            Color c = lightColor * 0.6f;
+            c.A = lightColor.A;
+
+            frameBox = mainTex.Frame(2, 1, 0, 0);
+            Vector2 origin2 = frameBox.Size() / 2;
+
+            //绘制基底
+            Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+
+            //绘制上部
+            frameBox = mainTex.Frame(2, 1, 1, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 3, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + dir * 7, frameBox, lightColor, rotation, origin2, scale, effect, 0);
         }
     }
 }

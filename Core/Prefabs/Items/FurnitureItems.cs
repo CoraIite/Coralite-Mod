@@ -271,7 +271,49 @@ namespace Coralite.Core.Prefabs.Items
         {
             Item.width = 30;
             Item.height = 30;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.value = Value;
+            Item.rare = Rare;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.noMelee = true;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.consumable = true;
+            Item.createTile = CreateTile;
+        }
+    }
+
+    public abstract class BaseFloorLampItem : ModItem
+    {
+        private readonly int Value;
+        private readonly int Rare;
+        private readonly int CreateTile;
+        private readonly string TexturePath;
+        private readonly bool PathHasName;
+
+        public BaseFloorLampItem(int value, int rare, int createTile, string texturePath, bool pathHasName = false)
+        {
+            Value = value;
+            Rare = rare;
+            CreateTile = createTile;
+            TexturePath = texturePath;
+            PathHasName = pathHasName;
+        }
+
+        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
+
+        public override void SetStaticDefaults()
+        {
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.width = 30;
+            Item.height = 30;
+            Item.maxStack = 9999;
             Item.useAnimation = 15;
             Item.useTime = 10;
             Item.value = Value;

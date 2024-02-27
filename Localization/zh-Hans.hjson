@@ -2603,6 +2603,46 @@ Mods: {
 				DisplayName: 赤玉喷泉
 				Tooltip: 被电路激活时释放红色喷泉
 			}
+
+			SandWall: {
+				DisplayName: 古沙之壁
+				Tooltip: 防御时生成沙龙卷
+			}
+
+			GelFiberTable: {
+				DisplayName: 凝胶纤维桌
+				Tooltip: ""
+			}
+
+			GeiFiberDroplight: {
+				DisplayName: 凝胶纤维挂灯
+				Tooltip: ""
+			}
+
+			GelFiberChair: {
+				DisplayName: 凝胶纤维椅
+				Tooltip: ""
+			}
+
+			GelFiberBookcase: {
+				DisplayName: 凝胶纤维书架
+				Tooltip: ""
+			}
+
+			GelFiberCandle: {
+				DisplayName: 凝胶纤维蜡烛
+				Tooltip: ""
+			}
+
+			GelFiberFloorLamp: {
+				DisplayName: 凝胶纤维灯球
+				Tooltip: ""
+			}
+
+			GelFiberTallFloorLamp: {
+				DisplayName: 凝胶纤维火炬
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2664,6 +2704,11 @@ Mods: {
 			}
 
 			// RedJadeFountain.MapEntry: Red Jade Fountain
+			// GelFiberTableTile.MapEntry: Gel Fiber Table Tile
+			// GeiFiberDroplightTile.MapEntry: Gei Fiber Droplight Tile
+			// GelFiberCandleTile.MapEntry: Gel Fiber Candle Tile
+			// GelFiberFloorLampTile.MapEntry: Gel Fiber Floor Lamp Tile
+			// GelFiberTallFloorLampTile.MapEntry: Gel Fiber Tall Floor Lamp Tile
 		}
 
 		Buffs: {
@@ -3103,87 +3148,90 @@ Mods: {
 			ShaduraShoot.DisplayName: 幻影刃
 			ShadowWaveHeldProj.DisplayName: 影波
 			ShadowWaveReLoad.DisplayName: 影波
-			// MercuryStream.DisplayName: Mercury Stream
-			// SmallLaser.DisplayName: Small Laser
-			// SmallLaserPredictionLine.DisplayName: Small Laser Prediction Line
+			MercuryStream.DisplayName: 水银流
+			SmallLaser.DisplayName: 影激光
+			SmallLaserPredictionLine.DisplayName: 影激光
 			StarsBack.DisplayName: 影之星
-			// ShadowBeam.DisplayName: Shadow Beam
-			// ShadowPlayerSpurt.DisplayName: Shadow Player Spurt
-			// SpawnProj.DisplayName: Spawn Proj
-			// ShadowBallSlash.DisplayName: Shadow Ball Slash
-			// ShadowGround.DisplayName: Shadow Ground
-			// ShadowBallSlash2.DisplayName: Shadow Ball Slash2
-			// ShadowFire.DisplayName: Shadow Fire
-			// ShadowBallSmash.DisplayName: Shadow Ball Smash
-			// ShadowBall_NameLine.DisplayName: Shadow Ball_ Name Line
-			// GlassShieldGuard.DisplayName: Glass Shield Guard
-			// GlassShieldProj.DisplayName: Glass Shield Proj
-			// TrashCanLidGuard.DisplayName: Trash Can Lid Guard
-			// TrashCanLidProj.DisplayName: Trash Can Lid Proj
-			// RedJadeShieldGuard.DisplayName: Red Jade Shield Guard
-			// RedJadeShieldProj.DisplayName: Red Jade Shield Proj
-			// DeliciousSteakGuard.DisplayName: Delicious Steak Guard
-			// DeliciousSteakProj.DisplayName: Delicious Steak Proj
-			// SilverAngelGuard.DisplayName: Silver Angel Guard
-			// SilverAngelProj.DisplayName: Silver Angel Proj
-			// SilverAngelStrike.DisplayName: Silver Angel Strike
-			// PearlRayGuard.DisplayName: Pearl Ray Guard
-			// PearlRayProj.DisplayName: Pearl Ray Proj
-			// TortoiseshellFortressGuard.DisplayName: Tortoiseshell Fortress Guard
-			// TortoiseshellFortressProj.DisplayName: Tortoiseshell Fortress Proj
-			// HolyCharmProj.DisplayName: Holy Charm Proj
-			// TortoiseshellFortressDash.DisplayName: Tortoiseshell Fortress Dash
-			// TerracrestSpike.DisplayName: Terracrest Spike
-			// FishronguardGuard.DisplayName: Fishronguard Guard
-			// FishronguardProj.DisplayName: Fishronguard Proj
-			// MechRioterGuard.DisplayName: Mech Rioter Guard
-			// MechRioterProj.DisplayName: Mech Rioter Proj
-			// SmallMechRioter.DisplayName: Small Mech Rioter
-			// BatfangShieldGuard.DisplayName: Batfang Shield Guard
-			// BatfangShieldProj.DisplayName: Batfang Shield Proj
-			// VampiresFangGuard.DisplayName: Vampires Fang Guard
-			// VampiresFangProj.DisplayName: Vampires Fang Proj
-			// GlazeBulwarkEXProj.DisplayName: Glaze Bulwark E X Proj
-			// GlazeBulwarkGuard.DisplayName: Glaze Bulwark Guard
-			// GlazeBulwarkProj.DisplayName: Glaze Bulwark Proj
-			// GemrainAegisEXProj.DisplayName: Gemrain Aegis E X Proj
-			// GemrainAegisGuard.DisplayName: Gemrain Aegis Guard
-			// GemrainAegisProj.DisplayName: Gemrain Aegis Proj
-			// LeonidsGuard.DisplayName: Leonids Guard
-			// LeonidsMeteor.DisplayName: Leonids Meteor
-			// LeonidsProj.DisplayName: Leonids Proj
-			// SolleonisGuard.DisplayName: Solleonis Guard
-			// SolleonisMeteor.DisplayName: Solleonis Meteor
-			// SolleonisProj.DisplayName: Solleonis Proj
-			// RoyalAngelGuard.DisplayName: Royal Angel Guard
-			// RoyalAngelProj.DisplayName: Royal Angel Proj
-			// RoyalAngelStrike.DisplayName: Royal Angel Strike
-			// NoctiflairGuard.DisplayName: Noctiflair Guard
-			// NoctiflairProj.DisplayName: Noctiflair Proj
-			// NoctiflairStrike.DisplayName: Noctiflair Strike
-			// ConquerorFlyProj.DisplayName: Conqueror Fly Proj
-			// ConquerorOfTheSeasGuard.DisplayName: Conqueror Of The Seas Guard
-			// ConquerorOfTheSeasProj.DisplayName: Conqueror Of The Seas Proj
-			// ConquerorSlash.DisplayName: Conqueror Slash
-			// GoldenSamuraiGuard.DisplayName: Golden Samurai Guard
-			// GoldenSamuraiProj.DisplayName: Golden Samurai Proj
-			// HorseshoeCrabEXProj.DisplayName: Horseshoe Crab E X Proj
-			// HorseshoeCrabGuard.DisplayName: Horseshoe Crab Guard
-			// HorseshoeCrabProj.DisplayName: Horseshoe Crab Proj
-			// MineShieldGuard.DisplayName: Mine Shield Guard
-			// MineShieldProj.DisplayName: Mine Shield Proj
-			// ShanHaiGuard.DisplayName: Shan Hai Guard
-			// ShanHaiProj.DisplayName: Shan Hai Proj
-			// TaiJi.DisplayName: Tai Ji
-			// EekShieldEXProj.DisplayName: Eek Shield E X Proj
-			// EekShieldGuard.DisplayName: Eek Shield Guard
-			// EekShieldProj.DisplayName: Eek Shield Proj
-			// HephaesthGuard.DisplayName: Hephaesth Guard
-			// HephaesthProj.DisplayName: Hephaesth Proj
-			// HephaesthFire.DisplayName: Hephaesth Fire
-			// HephaesthBurst.DisplayName: Hephaesth Burst
-			// HephaesthWave.DisplayName: Hephaesth Wave
-			// HephaesthSmeltingResults.DisplayName: Hephaesth Smelting Results
+			ShadowBeam.DisplayName: 影射线
+			ShadowPlayerSpurt.DisplayName: 影子突袭
+			SpawnProj.DisplayName: 照出你的影子
+			ShadowBallSlash.DisplayName: 影刃斩击
+			ShadowGround.DisplayName: 影成地面
+			ShadowBallSlash2.DisplayName: 影刃斩击
+			ShadowFire.DisplayName: 影焰
+			ShadowBallSmash.DisplayName: 影子球冲击
+			ShadowBall_NameLine.DisplayName: 影子球
+			GlassShieldGuard.DisplayName: 玻璃盾
+			GlassShieldProj.DisplayName: 玻璃盾
+			TrashCanLidGuard.DisplayName: 垃圾桶盖
+			TrashCanLidProj.DisplayName: 垃圾桶盖
+			RedJadeShieldGuard.DisplayName: 赤玉飞盾
+			RedJadeShieldProj.DisplayName: 赤玉飞盾
+			DeliciousSteakGuard.DisplayName: 美味肉排
+			DeliciousSteakProj.DisplayName: 美味肉排
+			SilverAngelGuard.DisplayName: 银天使
+			SilverAngelProj.DisplayName: 银天使
+			SilverAngelStrike.DisplayName: 制裁羽剑
+			PearlRayGuard.DisplayName: 白玉鳐
+			PearlRayProj.DisplayName: 白玉鳐
+			TortoiseshellFortressGuard.DisplayName: 乌龟壳重盾
+			TortoiseshellFortressProj.DisplayName: 乌龟壳重盾
+			HolyCharmProj.DisplayName: 神圣盾冲波
+			TortoiseshellFortressDash.DisplayName: 丛林之王的馈赠
+			TerracrestSpike.DisplayName: 泰拉魔刺
+			FishronguardGuard.DisplayName: 亘古爵王
+			FishronguardProj.DisplayName: 亘古爵王
+			MechRioterGuard.DisplayName: 机械暴徒
+			MechRioterProj.DisplayName: 机械暴徒
+			SmallMechRioter.DisplayName: 机械小暴徒
+			BatfangShieldGuard.DisplayName: 血鄂
+			BatfangShieldProj.DisplayName: 血鄂
+			VampiresFangGuard.DisplayName: 血饶之牙
+			VampiresFangProj.DisplayName: 血饶之牙
+			GlazeBulwarkEXProj.DisplayName: 琉璃碎片
+			GlazeBulwarkGuard.DisplayName: 琉璃重盾
+			GlazeBulwarkProj.DisplayName: 琉璃重盾
+			GemrainAegisEXProj.DisplayName: 七彩碎片
+			GemrainAegisGuard.DisplayName: 七彩宝石盾
+			GemrainAegisProj.DisplayName: 七彩宝石盾
+			LeonidsGuard.DisplayName: 十二星-狮子座
+			LeonidsMeteor.DisplayName: 狮子座流星雨
+			LeonidsProj.DisplayName: 十二星-狮子座
+			SolleonisGuard.DisplayName: 狮煌 破日
+			SolleonisMeteor.DisplayName: 吞噬太阳的雄狮
+			SolleonisProj.DisplayName: 狮煌 破日
+			RoyalAngelGuard.DisplayName: 圣光天使
+			RoyalAngelProj.DisplayName: 圣光天使
+			RoyalAngelStrike.DisplayName: 圣光羽剑
+			NoctiflairGuard.DisplayName: 极夜之诗
+			NoctiflairProj.DisplayName: 极夜之诗
+			NoctiflairStrike.DisplayName: 灭世苍星
+			ConquerorFlyProj.DisplayName: 破旧船舵
+			ConquerorOfTheSeasGuard.DisplayName: 海洋征服者
+			ConquerorOfTheSeasProj.DisplayName: 海洋征服者
+			ConquerorSlash.DisplayName: 破旧船锚
+			GoldenSamuraiGuard.DisplayName: 金武士
+			GoldenSamuraiProj.DisplayName: 金武士
+			HorseshoeCrabEXProj.DisplayName: 唤来的冥凯鲎
+			HorseshoeCrabGuard.DisplayName: 冥凯鲎
+			HorseshoeCrabProj.DisplayName: 冥凯鲎
+			MineShieldGuard.DisplayName: 我的盾牌
+			MineShieldProj.DisplayName: 我的盾牌
+			ShanHaiGuard.DisplayName: 山海无极
+			ShanHaiProj.DisplayName: 山海无极
+			TaiJi.DisplayName: 太极
+			EekShieldEXProj.DisplayName: EEK的小飞盾
+			EekShieldGuard.DisplayName: EEK的盾
+			EekShieldProj.DisplayName: EEK的盾
+			HephaesthGuard.DisplayName: 炼心城
+			HephaesthProj.DisplayName: 炼心城
+			HephaesthFire.DisplayName: 炼狱之火
+			HephaesthBurst.DisplayName: 炼狱爆破
+			HephaesthWave.DisplayName: 熔铸波
+			HephaesthSmeltingResults.DisplayName: 熔炼之成果
+			SandWallGuard.DisplayName: 古沙之壁
+			SandWallProj.DisplayName: 古沙之壁
+			SandWallStorm.DisplayName: 沙龙卷
 		}
 
 		Configs: {

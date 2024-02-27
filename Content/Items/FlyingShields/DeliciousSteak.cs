@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<DeliciousSteakProj>();
             Item.knockBack = 7;
             Item.shootSpeed = 14;
-            Item.damage = 26;
+            Item.damage = 27;
         }
     }
 

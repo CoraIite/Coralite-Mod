@@ -2567,6 +2567,46 @@ Mods: {
 				DisplayName: Red Jade Fountain
 				Tooltip: ""
 			}
+
+			SandWall: {
+				DisplayName: Sand Wall
+				Tooltip: ""
+			}
+
+			GelFiberTable: {
+				DisplayName: Gel Fiber Table
+				Tooltip: ""
+			}
+
+			GeiFiberDroplight: {
+				DisplayName: Gei Fiber Droplight
+				Tooltip: ""
+			}
+
+			GelFiberChair: {
+				DisplayName: Gel Fiber Chair
+				Tooltip: ""
+			}
+
+			GelFiberBookcase: {
+				DisplayName: Gel Fiber Bookcase
+				Tooltip: ""
+			}
+
+			GelFiberCandle: {
+				DisplayName: Gel Fiber Candle
+				Tooltip: ""
+			}
+
+			GelFiberFloorLamp: {
+				DisplayName: Gel Fiber Floor Lamp
+				Tooltip: ""
+			}
+
+			GelFiberTallFloorLamp: {
+				DisplayName: Gel Fiber Tall Floor Lamp
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2628,6 +2668,11 @@ Mods: {
 			}
 
 			RedJadeFountain.MapEntry: Red Jade Fountain
+			GelFiberTableTile.MapEntry: Gel Fiber Table Tile
+			GeiFiberDroplightTile.MapEntry: Gei Fiber Droplight Tile
+			GelFiberCandleTile.MapEntry: Gel Fiber Candle Tile
+			GelFiberFloorLampTile.MapEntry: Gel Fiber Floor Lamp Tile
+			GelFiberTallFloorLampTile.MapEntry: Gel Fiber Tall Floor Lamp Tile
 		}
 
 		Buffs: {
@@ -3148,6 +3193,9 @@ Mods: {
 			HephaesthBurst.DisplayName: Hephaesth Burst
 			HephaesthWave.DisplayName: Hephaesth Wave
 			HephaesthSmeltingResults.DisplayName: Hephaesth Smelting Results
+			SandWallGuard.DisplayName: Sand Wall Guard
+			SandWallProj.DisplayName: Sand Wall Proj
+			SandWallStorm.DisplayName: Sand Wall Storm
 		}
 
 		Configs: {

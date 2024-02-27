@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<ConquerorOfTheSeasProj>();
             Item.knockBack = 2;
             Item.shootSpeed = 12;
-            Item.damage = 240;
+            Item.damage = 225;
             Item.crit = 6;
         }
     }

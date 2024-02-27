@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<NoctiflairProj>();
             Item.knockBack = 3;
             Item.shootSpeed = 17;
-            Item.damage = 240;
+            Item.damage = 183;
         }
 
         public override void AddRecipes()
@@ -79,7 +79,7 @@ namespace Coralite.Content.Items.FlyingShields
                 if (!target.friendly && target.CanBeChasedBy())
                 {
                     Projectile.NewProjectileFromThis<NoctiflairStrike>(target.Center + Main.rand.NextFloat(-1.57f - 0.5f, -1.57f + 0.5f).ToRotationVector2() * 20,
-                        Vector2.Zero, (int)(Projectile.damage*1.2f), 4, target.whoAmI);
+                        Vector2.Zero, (int)(Projectile.damage * 0.7f), 4, target.whoAmI);
                 }
         }
 
@@ -301,21 +301,22 @@ namespace Coralite.Content.Items.FlyingShields
 
                             SoundEngine.PlaySound(CoraliteSoundID.MagicShoot_Item9, Projectile.Center);
 
+                            int damage = Projectile.damage / 2;
                             if (Main.rand.NextBool())
                                 Projectile.NewProjectileFromThis<NoctiflairStrike>(Projectile.Center,
-                                    Vector2.Zero, Projectile.damage, 4, Target, 2);
+                                    Vector2.Zero, damage, 4, Target, 2);
 
                             if (Main.rand.NextBool(4))
                                 Projectile.NewProjectileFromThis<NoctiflairStrike>(Projectile.Center,
-                                    Vector2.Zero, Projectile.damage, 4, Target, 2);
+                                    Vector2.Zero, damage, 4, Target, 2);
 
                             if (Main.rand.NextBool(8))
                                 Projectile.NewProjectileFromThis<NoctiflairStrike>(Projectile.Center,
-                                    Vector2.Zero, Projectile.damage, 4, Target, 2);
+                                    Vector2.Zero, damage, 4, Target, 2);
 
                             if (Main.rand.NextBool(16))
                                 Projectile.NewProjectileFromThis<NoctiflairStrike>(Projectile.Center,
-                                    Vector2.Zero, Projectile.damage, 4, Target, 2);
+                                    Vector2.Zero, damage, 4, Target, 2);
 
                             for (int i = 0; i < 2; i++)
                             {
