@@ -2643,6 +2643,66 @@ Mods: {
 				DisplayName: 凝胶纤维火炬
 				Tooltip: ""
 			}
+
+			GelFiberBed: {
+				DisplayName: 凝胶纤维床
+				Tooltip: ""
+			}
+
+			GelFiberBigDroplight: {
+				DisplayName: 凝胶纤维大吊灯
+				Tooltip: ""
+			}
+
+			GelFiberPiano: {
+				DisplayName: 凝胶纤维钢琴
+				Tooltip: ""
+			}
+
+			GelFiberSofa: {
+				DisplayName: 凝胶纤维沙发
+				Tooltip: ""
+			}
+
+			GelFiberToilet: {
+				DisplayName: 凝胶纤维马桶
+				Tooltip: ""
+			}
+
+			GelFiberBathtub: {
+				DisplayName: 凝胶纤维浴缸
+				Tooltip: ""
+			}
+
+			GelFiberChest: {
+				DisplayName: 凝胶纤维箱
+				Tooltip: ""
+			}
+
+			GelFiberClock: {
+				DisplayName: 凝胶纤维钟
+				Tooltip: ""
+			}
+
+			GelFiberDresser: {
+				DisplayName: 凝胶纤维梳妆台
+				Tooltip: ""
+			}
+
+			GelFiberSink: {
+				DisplayName: 凝胶纤维水槽
+				Tooltip: ""
+			}
+
+			GelFiberDoor: {
+				DisplayName: 凝胶纤维门
+				Tooltip: ""
+			}
+
+			GelFiberWorkBench: {
+				DisplayName: 凝胶纤维工作台
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2693,22 +2753,33 @@ Mods: {
 			}
 
 			BloodJadeTile.MapEntry: 赤血玉
-			// AncientChestTile.MapEntry: Ancient Chest Tile
-			// GlowTulipDoorClosed.MapEntry: Glow Tulip Door Closed
-			// GlowTulipDoorOpen.MapEntry: Glow Tulip Door Open
-			// BlackHoleChestTile.MapEntry: Black Hole Chest Tile
+			AncientChestTile.MapEntry: 上古宝箱
+			GlowTulipDoorClosed.MapEntry: 远古郁金香门
+			GlowTulipDoorOpen.MapEntry: 远古郁金香门
+			BlackHoleChestTile.MapEntry: 地心黑曜石
 
 			MercuryChestTile: {
 				// MapEntry0: Mods.Coralite.Tiles.MercuryChestTile.MapEntry0
 				// MapEntry1: Mods.Coralite.Tiles.MercuryChestTile.MapEntry1
 			}
 
-			// RedJadeFountain.MapEntry: Red Jade Fountain
-			// GelFiberTableTile.MapEntry: Gel Fiber Table Tile
-			// GeiFiberDroplightTile.MapEntry: Gei Fiber Droplight Tile
-			// GelFiberCandleTile.MapEntry: Gel Fiber Candle Tile
-			// GelFiberFloorLampTile.MapEntry: Gel Fiber Floor Lamp Tile
-			// GelFiberTallFloorLampTile.MapEntry: Gel Fiber Tall Floor Lamp Tile
+			RedJadeFountain.MapEntry: 赤玉喷泉
+			GelFiberTableTile.MapEntry: 凝胶纤维桌子
+			GeiFiberDroplightTile.MapEntry: 凝胶纤维吊灯
+			GelFiberCandleTile.MapEntry: 凝胶纤维蜡烛
+			GelFiberFloorLampTile.MapEntry: 凝胶纤维灯球
+			GelFiberTallFloorLampTile.MapEntry: 凝胶纤维火炬
+			GelFiberBedTile.MapEntry: 凝胶纤维床
+			GelFiberBigDroplightTile.MapEntry: 凝胶纤维大吊灯
+			GelFiberBookcaseTile.MapEntry: 凝胶纤维书架
+			GelFiberPianoTile.MapEntry: 凝胶纤维钢琴
+			GelFiberSofaTile.MapEntry: 凝胶纤维沙发
+			GelFiberBathtubTile.MapEntry: 凝胶纤维浴缸
+			GelFiberChestTile.MapEntry: 凝胶纤维箱子
+			GelFiberDresserTile.MapEntry: 凝胶纤维梳妆台
+			GelFiberDoorClosedTile.MapEntry: 凝胶纤维门
+			GelFiberDoorOpen.MapEntry: 凝胶纤维门
+			GelFiberWorkBenchTile.MapEntry: 凝胶纤维工作台
 		}
 
 		Buffs: {

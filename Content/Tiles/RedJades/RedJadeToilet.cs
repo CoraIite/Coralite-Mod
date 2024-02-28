@@ -82,6 +82,5 @@ namespace Coralite.Content.Tiles.RedJades
             if (Main.tile[i, j].TileFrameX / 18 < 1)
                 player.cursorItemIconReversed = true;
         }
-
     }
 }

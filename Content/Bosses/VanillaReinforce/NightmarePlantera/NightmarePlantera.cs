@@ -220,11 +220,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             //if ((projectile.penetrate < 0 || projectile.penetrate > 1) && modifiers.DamageType != DamageClass.Melee)
             //    modifiers.SourceDamage *= 0.75f;
-            if (projectile.type == ProjectileID.FinalFractal)
-            {
-                modifiers.SourceDamage *= 0.6f;
-                return;
-            }
+            //if (projectile.type == ProjectileID.FinalFractal)
+            //{
+            //    modifiers.SourceDamage *= 0.6f;
+            //    return;
+            //}
 
             if (projectile.hostile)
                 modifiers.SetMaxDamage(1);

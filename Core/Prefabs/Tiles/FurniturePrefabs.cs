@@ -250,6 +250,34 @@ namespace Coralite.Core.Prefabs.Tiles
             tile.AddMapEntry(mapColor, name);
         }
 
+        public static void DropLight2Prefab(this ModTile tile, int width,int height, int[] coordinateHeights, int dustType, Color mapColor, bool LavaDeath = true)
+        {
+            Main.tileLighted[tile.Type] = true;
+            Main.tileNoAttach[tile.Type] = true;
+            Main.tileSolid[tile.Type] = false;
+            Main.tileLavaDeath[tile.Type] = LavaDeath;
+            Main.tileFrameImportant[tile.Type] = true;
+            TileID.Sets.DisableSmartCursor[tile.Type] = true;
+
+            tile.DustType = dustType;
+
+            tile.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
+            TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom /*| AnchorType.PlanterBox*/, 1, 0);
+            TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.LavaDeath = LavaDeath;
+            TileObjectData.newTile.Width = width;
+            TileObjectData.newTile.Height = height;
+            TileObjectData.newTile.CoordinateHeights = coordinateHeights;
+            TileObjectData.addTile(tile.Type);
+
+            LocalizedText name = tile.CreateMapEntryName();
+            // name.SetDefault(mapName);
+            tile.AddMapEntry(mapColor, name);
+        }
+
         public static void CandlePrefab(this ModTile tile, int dustType, Color mapColor, bool LavaDeath = true)
         {
             Main.tileLighted[tile.Type] = true;
@@ -341,7 +369,8 @@ namespace Coralite.Core.Prefabs.Tiles
             tile.DustType = dustType;
             tile.AdjTiles = new int[] { TileID.Bookcases }; // Condider adding TileID.Chairs to AdjTiles to mirror "(regular) Toilet" and "Golden Toilet" behavior for crafting stations
 
-            tile.AddMapEntry(mapColor, Language.GetText("MapObject.Toilet"));
+            LocalizedText name = tile.CreateMapEntryName();
+            tile.AddMapEntry(mapColor, name);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
             TileObjectData.newTile.LavaDeath = LavaDeath;

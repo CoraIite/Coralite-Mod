@@ -2607,6 +2607,66 @@ Mods: {
 				DisplayName: Gel Fiber Tall Floor Lamp
 				Tooltip: ""
 			}
+
+			GelFiberBed: {
+				DisplayName: Gel Fiber Bed
+				Tooltip: ""
+			}
+
+			GelFiberBigDroplight: {
+				DisplayName: Gel Fiber Big Droplight
+				Tooltip: ""
+			}
+
+			GelFiberPiano: {
+				DisplayName: Gel Fiber Piano
+				Tooltip: ""
+			}
+
+			GelFiberSofa: {
+				DisplayName: Gel Fiber Sofa
+				Tooltip: ""
+			}
+
+			GelFiberToilet: {
+				DisplayName: Gel Fiber Toilet
+				Tooltip: ""
+			}
+
+			GelFiberBathtub: {
+				DisplayName: Gel Fiber Bathtub
+				Tooltip: ""
+			}
+
+			GelFiberChest: {
+				DisplayName: Gel Fiber Chest
+				Tooltip: ""
+			}
+
+			GelFiberClock: {
+				DisplayName: Gel Fiber Clock
+				Tooltip: ""
+			}
+
+			GelFiberDresser: {
+				DisplayName: Gel Fiber Dresser
+				Tooltip: ""
+			}
+
+			GelFiberSink: {
+				DisplayName: Gel Fiber Sink
+				Tooltip: ""
+			}
+
+			GelFiberDoor: {
+				DisplayName: Gel Fiber Door
+				Tooltip: ""
+			}
+
+			GelFiberWorkBench: {
+				DisplayName: Gel Fiber Work Bench
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2673,6 +2733,17 @@ Mods: {
 			GelFiberCandleTile.MapEntry: Gel Fiber Candle Tile
 			GelFiberFloorLampTile.MapEntry: Gel Fiber Floor Lamp Tile
 			GelFiberTallFloorLampTile.MapEntry: Gel Fiber Tall Floor Lamp Tile
+			GelFiberBedTile.MapEntry: Gel Fiber Bed Tile
+			GelFiberBigDroplightTile.MapEntry: Gel Fiber Big Droplight Tile
+			GelFiberBookcaseTile.MapEntry: Gel Fiber Bookcase Tile
+			GelFiberPianoTile.MapEntry: Gel Fiber Piano Tile
+			GelFiberSofaTile.MapEntry: Gel Fiber Sofa Tile
+			GelFiberBathtubTile.MapEntry: Gel Fiber Bathtub Tile
+			GelFiberChestTile.MapEntry: Gel Fiber Chest Tile
+			GelFiberDresserTile.MapEntry: Gel Fiber Dresser Tile
+			GelFiberDoorClosedTile.MapEntry: Gel Fiber Door Closed Tile
+			GelFiberDoorOpen.MapEntry: Gel Fiber Door Open
+			GelFiberWorkBenchTile.MapEntry: Gel Fiber Work Bench Tile
 		}
 
 		Buffs: {
