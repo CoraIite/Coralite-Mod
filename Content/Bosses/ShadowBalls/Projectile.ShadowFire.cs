@@ -44,9 +44,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             Projectile.velocity.Y += 0.15f;
 
                         //for (int i = 0; i < 2; i++)
-                            fireParticles.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
-                            (Projectile.velocity*Main.rand.NextFloat(0.8f,1.5f)).RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)),
-                            CoraliteContent.ParticleType<FireParticle>(), new Color(140, 60, 255), Main.rand.NextFloat(0.8f, 1f));
+                        fireParticles.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
+                        (Projectile.velocity * Main.rand.NextFloat(0.8f, 1.5f)).RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)),
+                        CoraliteContent.ParticleType<FireParticle>(), new Color(140, 60, 255), Main.rand.NextFloat(0.8f, 1f));
 
                         Lighting.AddLight(Projectile.Center, new Vector3(1f, 0.2f, 1.4f));
 

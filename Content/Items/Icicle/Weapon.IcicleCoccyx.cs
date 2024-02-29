@@ -25,6 +25,11 @@ namespace Coralite.Content.Items.Icicle
         public int useCount;
         public bool canDash;
 
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+        }
+
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;

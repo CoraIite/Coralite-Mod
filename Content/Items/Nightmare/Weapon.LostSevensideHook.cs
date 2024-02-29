@@ -168,7 +168,7 @@ namespace Coralite.Content.Items.Nightmare
             {
                 default:
                 case 0:
-                    maxTime = Owner.itemTimeMax * 2;
+                    maxTime = (int)(Owner.itemTimeMax * 0.8f) + 20;
                     startAngle = 2f;
                     totalAngle = 4.9f;
                     distanceToOwner = Helper.EllipticalEase(2f - 4.9f * Smoother.Smoother(0, maxTime - minTime), 40, 80);
@@ -176,7 +176,7 @@ namespace Coralite.Content.Items.Nightmare
                     Smoother = Coralite.Instance.SqrtSmoother;
                     break;
                 case 1:
-                    maxTime = Owner.itemTimeMax * 2;
+                    maxTime = (int)(Owner.itemTimeMax * 0.8f) + 20;
                     startAngle = -2f;
                     totalAngle = -4.9f;
                     distanceToOwner = Helper.EllipticalEase(2f - 4.9f * Smoother.Smoother(0, maxTime - minTime), 40, 80);
@@ -184,7 +184,7 @@ namespace Coralite.Content.Items.Nightmare
                     Smoother = Coralite.Instance.SqrtSmoother;
                     break;
                 case 2:
-                    maxTime = Owner.itemTimeMax * 2;
+                    maxTime = (int)(Owner.itemTimeMax * 0.8f) + 20;
                     startAngle = 2f;
                     totalAngle = 4.9f;
                     distanceToOwner = 80;
@@ -192,14 +192,14 @@ namespace Coralite.Content.Items.Nightmare
                     Projectile.scale = Helper.EllipticalEase(2f - 4.9f * Smoother.Smoother(0, maxTime - minTime), 0.9f, 1.1f);
                     break;
                 case 3:
-                    maxTime = Owner.itemTimeMax * 3;
+                    maxTime = (int)(Owner.itemTimeMax * 0.8f) + 22 + 15;
                     startAngle = -3f;
                     totalAngle = -12;
                     distanceToOwner = Helper.EllipticalEase(3f - 12f * Smoother.Smoother(0, maxTime - minTime), 80, 110);
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     break;
                 case 4:
-                    maxTime = Owner.itemTimeMax * 3;
+                    maxTime = (int)(Owner.itemTimeMax * 0.8f) + 22 + 15;
                     startAngle = 3f;
                     totalAngle = 12;
                     distanceToOwner = Helper.EllipticalEase(3f - 12f * Smoother.Smoother(0, maxTime - minTime), 90, 120);

@@ -190,11 +190,11 @@ namespace Coralite.Helpers
         /// <param name="owner"></param>
         /// <param name="notExistAction"></param>
         /// <returns></returns>
-        public static bool GetNPCOwner(this float index,int npcType, out NPC owner,Action notExistAction=null)
+        public static bool GetNPCOwner(this float index, int npcType, out NPC owner, Action notExistAction = null)
         {
             if (!Main.npc.IndexInRange((int)index))
             {
-                notExistAction ? .Invoke();
+                notExistAction?.Invoke();
                 owner = null;
                 return false;
             }
@@ -211,11 +211,11 @@ namespace Coralite.Helpers
             return true;
         }
 
-        public static bool GetNPCOwner(this float index, out NPC owner,Action notExistAction=null)
+        public static bool GetNPCOwner(this float index, out NPC owner, Action notExistAction = null)
         {
             if (!Main.npc.IndexInRange((int)index))
             {
-                notExistAction ? .Invoke();
+                notExistAction?.Invoke();
                 owner = null;
                 return false;
             }
@@ -258,7 +258,7 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="trailingMode"></param>
         /// <param name="trailCacheLength"></param>
-        public static void QuickSetTrailSets(int type, int trailingMode,int trailCacheLength)
+        public static void QuickSetTrailSets(int type, int trailingMode, int trailCacheLength)
         {
             ProjectileID.Sets.TrailingMode[type] = trailingMode;
             ProjectileID.Sets.TrailCacheLength[type] = trailCacheLength;
@@ -283,7 +283,7 @@ namespace Coralite.Helpers
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, null,
                     drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, (scale == -1 ? projectile.scale : scale) * (1 - i * scaleStep), 0, 0);
         }
-        
+
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scaleStep, Rectangle frameBox, float extraRot = 0, float scale = -1)
         {
             Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
@@ -368,7 +368,7 @@ namespace Coralite.Helpers
             }
         }
 
-        public static void QuickDraw(this Projectile projectile,Color lightColor,float exRot)
+        public static void QuickDraw(this Projectile projectile, Color lightColor, float exRot)
         {
             Texture2D mainTex = projectile.GetTexture();
 
@@ -376,7 +376,7 @@ namespace Coralite.Helpers
                 mainTex.Size() / 2, projectile.scale, 0, 0);
         }
 
-        public static void QuickDraw(this Projectile projectile, Color lightColor,float overrideScale, float exRot)
+        public static void QuickDraw(this Projectile projectile, Color lightColor, float overrideScale, float exRot)
         {
             Texture2D mainTex = projectile.GetTexture();
 
@@ -438,8 +438,8 @@ namespace Coralite.Helpers
                 else
                     projectile.oldPos[i] = projectile.position;
             }
-        }        
-        
+        }
+
         public static void InitOldRotCache(this Projectile projectile, int trailCount)
         {
             projectile.oldRot = new float[trailCount];
@@ -470,7 +470,7 @@ namespace Coralite.Helpers
             return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, type, damage, knockback, projectile.owner, ai0, ai1, ai2);
         }
         public static int NewProjectileFromThis<T>(this Projectile projectile, Vector2 position, Vector2 velocity
-            , int damage, float knockback, float ai0 = 0, float ai1 = 0, float ai2 = 0)where T :ModProjectile
+            , int damage, float knockback, float ai0 = 0, float ai1 = 0, float ai2 = 0) where T : ModProjectile
         {
             return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockback, projectile.owner, ai0, ai1, ai2);
         }

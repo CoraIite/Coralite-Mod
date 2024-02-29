@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Gels
 {
-    public class GelFiberTallFloorLamp:BaseFloorLampItem
+    public class GelFiberTallFloorLamp : BaseFloorLampItem
     {
         public GelFiberTallFloorLamp() : base(0, ItemRarityID.White, ModContent.TileType<GelFiberTallFloorLampTile>(), AssetDirectory.GelItems)
         {

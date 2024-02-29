@@ -85,7 +85,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override Color GetColor(float factor)
         {
-            return new Color(83,129,155,0) * factor;
+            return new Color(83, 129, 155, 0) * factor;
         }
     }
 
@@ -201,7 +201,7 @@ namespace Coralite.Content.Items.FlyingShields
                 Projectile.extraUpdates++;
                 Projectile.timeLeft = 80;
                 Projectile.velocity = (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero)
-                    .RotatedBy(Main.rand.NextFloat(-1.2f, 1.2f)) * Main.rand.NextFloat(15.5f,18);
+                    .RotatedBy(Main.rand.NextFloat(-1.2f, 1.2f)) * Main.rand.NextFloat(15.5f, 18);
                 Projectile.rotation = Projectile.velocity.ToRotation();
                 Projectile.InitOldPosCache(14);
                 Projectile.InitOldRotCache(14);
@@ -230,7 +230,7 @@ namespace Coralite.Content.Items.FlyingShields
             for (int i = 0; i < 6; i++)
             {
                 Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24, 24),
-                    DustID.UnusedWhiteBluePurple, Helper.NextVec2Dir()*Main.rand.NextFloat(2,8),
+                    DustID.UnusedWhiteBluePurple, Helper.NextVec2Dir() * Main.rand.NextFloat(2, 8),
                     Scale: Main.rand.NextFloat(1f, 2.5f));
 
             }
@@ -265,15 +265,15 @@ namespace Coralite.Content.Items.FlyingShields
                         alpha = Helper.Lerp(0f, 0.5f, sqrtFactor);
                         Projectile.rotation = Helper.Lerp(2.5f, 0, sqrtFactor);
                         Projectile.scale = Helper.Lerp(0.01f, 1f, sqrtFactor);
-                        Projectile.Center = owner.Center +new Vector2( 0, distanceToTarget);
+                        Projectile.Center = owner.Center + new Vector2(0, distanceToTarget);
                         Timer++;
                         if (Timer > FlowTime)
                         {
                             State++;
                             Timer = 0;
                             Projectile.timeLeft = 60;
-                            Projectile.velocity = new Vector2(0,-14);
-                            Projectile.extraUpdates ++;
+                            Projectile.velocity = new Vector2(0, -14);
+                            Projectile.extraUpdates++;
                             Projectile.InitOldPosCache(14);
                         }
                     }
@@ -294,7 +294,7 @@ namespace Coralite.Content.Items.FlyingShields
                         {
                             State++;
                             Projectile.timeLeft = 80;
-                            Projectile.velocity = (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-1.2f,1.2f)) * 18;
+                            Projectile.velocity = (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-1.2f, 1.2f)) * 18;
                             Projectile.rotation = Projectile.velocity.ToRotation();
                             Projectile.InitOldPosCache(14);
                             Projectile.InitOldRotCache(14);
@@ -339,7 +339,7 @@ namespace Coralite.Content.Items.FlyingShields
                             for (int i = 0; i < 16; i++)
                             {
                                 Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.MushroomTorch,
-                                    (i * MathHelper.TwoPi / 16).ToRotationVector2() * 3f,Scale:Main.rand.NextFloat(1.4f,1.6f));
+                                    (i * MathHelper.TwoPi / 16).ToRotationVector2() * 3f, Scale: Main.rand.NextFloat(1.4f, 1.6f));
                                 d.noGravity = true;
                             }
                         }
@@ -381,7 +381,7 @@ namespace Coralite.Content.Items.FlyingShields
             var origin = frameBox.Size() / 2;
             lightColor *= alpha;
 
-            if (State==2)
+            if (State == 2)
             {
                 Texture2D exTex2 = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "VanillaStarTrail").Value;
                 var origin2 = exTex2.Size() / 2;
@@ -389,16 +389,16 @@ namespace Coralite.Content.Items.FlyingShields
                 Vector2 scale = new Vector2(0.8f, 1) * Projectile.scale;
                 for (int i = 1; i < 14; i++)
                 {
-                    Color c = Color.Lerp(new Color(64, 58, 79), new Color(83, 129, 255), i / 22f) * (0.9f*i / 14f);
-                    Main.spriteBatch.Draw(exTex2, Projectile.oldPos[i] - Main.screenPosition, null, c, Projectile.oldRot[i] +1.57f
+                    Color c = Color.Lerp(new Color(64, 58, 79), new Color(83, 129, 255), i / 22f) * (0.9f * i / 14f);
+                    Main.spriteBatch.Draw(exTex2, Projectile.oldPos[i] - Main.screenPosition, null, c, Projectile.oldRot[i] + 1.57f
                         , origin2, scale * (0.7f + i * 0.3f / 14), 0, 0);
                 }
 
-                Main.spriteBatch.Draw(exTex2, pos, null, new Color(83, 129, 255,0)*0.8f, rot2
-                    , origin2,new Vector2( Projectile.scale*0.6f,Projectile.scale) , 0, 0);
+                Main.spriteBatch.Draw(exTex2, pos, null, new Color(83, 129, 255, 0) * 0.8f, rot2
+                    , origin2, new Vector2(Projectile.scale * 0.6f, Projectile.scale), 0, 0);
 
-                Vector2 exPos = pos+Projectile.rotation.ToRotationVector2() * 28;
-                Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, exPos, Color.White * 0.5f, Color.DeepSkyBlue*0.8f,
+                Vector2 exPos = pos + Projectile.rotation.ToRotationVector2() * 28;
+                Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, exPos, Color.White * 0.5f, Color.DeepSkyBlue * 0.8f,
                     1, 0, 1, 1, 2, 0, new Vector2(2.2f, 1), Vector2.One);
                 Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, exPos, Color.White, Color.SkyBlue,
                     1, 0, 1, 1, 2, 0, new Vector2(1.2f, 0.75f), Vector2.One * 1.2f);
@@ -423,7 +423,7 @@ namespace Coralite.Content.Items.FlyingShields
             }
 
             //绘制左边翅膀
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, -Projectile.rotation , origin, 1, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, -Projectile.rotation, origin, 1, 0, 0);
 
             //绘制右边翅膀
             frameBox = mainTex.Frame(3, 1, 1, 0);

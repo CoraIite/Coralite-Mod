@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
-            if (Main.rand.NextBool(1,6) && !Owner.moonLeech && !target.immortal)
+            if (Main.rand.NextBool(1, 6) && !Owner.moonLeech && !target.immortal)
             {
                 float num = damageDone * 0.035f;
                 if ((int)num != 0 && !(Owner.lifeSteal <= 0f))

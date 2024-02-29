@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    Dust d = Dust.NewDustPerfect(player.Center + (5*Main.GlobalTimeWrappedHourly + i * MathHelper.Pi).ToRotationVector2() * 32,
+                    Dust d = Dust.NewDustPerfect(player.Center + (5 * Main.GlobalTimeWrappedHourly + i * MathHelper.Pi).ToRotationVector2() * 32,
                         DustID.Water, Vector2.Zero);
                     d.noGravity = true;
                 }
@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.FlyingShields
                     for (int i = -1; i < 2; i += 2)
                     {
                         Dust d = Dust.NewDustPerfect(Projectile.Center + (j / 3f) * Projectile.velocity + dir * 8 * Projectile.scale + i * dir2 * Projectile.scale * Projectile.width / 2,
-                            DustID.Water, -Projectile.velocity * Main.rand.NextFloat(0f,0.5f), newColor: Color.White);
+                            DustID.Water, -Projectile.velocity * Main.rand.NextFloat(0f, 0.5f), newColor: Color.White);
                         d.noGravity = true;
                     }
             }
@@ -145,7 +145,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override float GetWidth()
         {
-            return Projectile.width / 2/Projectile.scale;
+            return Projectile.width / 2 / Projectile.scale;
         }
     }
 }

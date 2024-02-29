@@ -4,9 +4,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedJadeFountain:ModItem
+    public class RedJadeFountain : ModItem
     {
-        public override string Texture => AssetDirectory.RedJadeItems+Name;
+        public override string Texture => AssetDirectory.RedJadeItems + Name;
 
         public override void SetDefaults()
         {

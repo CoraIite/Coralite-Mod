@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Nightmare
             Item.useAnimation = Item.useTime = 27;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.shoot = ProjectileType<EdenWhip>();
-            Item.DamageType = DamageClass.Summon;
+            Item.DamageType = DamageClass.SummonMeleeSpeed;
             Item.rare = RarityType<NightmareRarity>();
             Item.value = Item.sellPrice(0, 30, 0, 0);
             Item.SetWeaponValues(170, 4, 4);
@@ -46,6 +46,8 @@ namespace Coralite.Content.Items.Nightmare
         }
 
         public override bool AltFunctionUse(Player player) => true;
+        public override bool AllowPrefix(int pre) => true;
+        public override bool MeleePrefix() => true;
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {

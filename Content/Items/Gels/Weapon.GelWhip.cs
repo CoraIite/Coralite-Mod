@@ -38,10 +38,8 @@ namespace Coralite.Content.Items.Gels
             Item.noUseGraphic = true;
         }
 
-        public override bool MeleePrefix()
-        {
-            return true;
-        }
+        public override bool AllowPrefix(int pre) => true;
+        public override bool MeleePrefix() => true;
 
     }
 

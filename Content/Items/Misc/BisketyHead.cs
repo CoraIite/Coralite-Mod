@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.UI;
-using Coralite.Content.UI.MagikeGuideBook;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;

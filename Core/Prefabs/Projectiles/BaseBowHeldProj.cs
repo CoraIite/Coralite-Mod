@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {

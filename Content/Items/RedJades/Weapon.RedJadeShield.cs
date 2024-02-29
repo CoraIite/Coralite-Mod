@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override Color GetColor(float factor)
         {
-            return Coralite.Instance.RedJadeRed*factor;
+            return Coralite.Instance.RedJadeRed * factor;
         }
     }
 

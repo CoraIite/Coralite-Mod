@@ -109,18 +109,18 @@ namespace Coralite.Core.Prefabs.Items
         /// <param name="knockback"></param>
         public virtual void LeftShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, player.Center+new Vector2(0,-16), velocity, type, damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(source, player.Center + new Vector2(0, -16), velocity, type, damage, knockback, player.whoAmI);
         }
 
         public virtual void RightShoot(Player player, EntitySource_ItemUse_WithAmmo source, int damage)
         {
             Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TRightProj>()
-                , (int)(damage*0.9f), 6, player.whoAmI);
+                , (int)(damage * 0.9f), 6, player.whoAmI);
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            if(Main.LocalPlayer.controlUp)
+            if (Main.LocalPlayer.controlUp)
             {
                 string text = "左键以丢出盾牌，右键进行防御，成功防御时会根据盾牌属性以及饰品加成获得短暂伤害减免";
                 TooltipLine line = new TooltipLine(Mod, "Coralite FlyingShield Description", text);

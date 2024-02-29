@@ -30,13 +30,13 @@ namespace Coralite.Content.Items.FlyingShields
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.TitaniumBar,12)
-                .AddIngredient(ItemID.SoulofFlight,5)
+                .AddIngredient(ItemID.TitaniumBar, 12)
+                .AddIngredient(ItemID.SoulofFlight, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
             CreateRecipe()
-                .AddIngredient(ItemID.AdamantiteBar,12)
-                .AddIngredient(ItemID.SoulofFlight,5)
+                .AddIngredient(ItemID.AdamantiteBar, 12)
+                .AddIngredient(ItemID.SoulofFlight, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnShootDusts()
         {
-            if ( Timer % (flyingTime / 2) == 0)
+            if (Timer % (flyingTime / 2) == 0)
             {
                 //射流星
                 Projectile.NewProjectileFromThis<LeonidsMeteor>(Projectile.Center
@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override Color GetColor(float factor)
         {
-            return new Color(32, 180, 186,0) * factor;
+            return new Color(32, 180, 186, 0) * factor;
         }
     }
 
@@ -146,10 +146,10 @@ namespace Coralite.Content.Items.FlyingShields
         {
             Lighting.AddLight(Projectile.Center, Coralite.Instance.IcicleCyan.ToVector3());
 
-            Projectile.UpdateOldPosCache(addVelocity:true);
+            Projectile.UpdateOldPosCache(addVelocity: true);
             Projectile.UpdateOldRotCache();
 
-            Projectile.SpawnTrailDust(8f, DustID.Clentaminator_Cyan, -Main.rand.NextFloat(0.1f,0.4f),Scale:Main.rand.NextFloat(0.6f,0.8f));
+            Projectile.SpawnTrailDust(8f, DustID.Clentaminator_Cyan, -Main.rand.NextFloat(0.1f, 0.4f), Scale: Main.rand.NextFloat(0.6f, 0.8f));
             Projectile.rotation = Projectile.velocity.ToRotation();
         }
 
@@ -194,8 +194,8 @@ namespace Coralite.Content.Items.FlyingShields
                 float factor = (float)i / trailCachesLength;
                 Vector2 Center = Projectile.oldPos[i];
                 Vector2 normal = (Projectile.oldRot[i] + MathHelper.PiOver2).ToRotationVector2();
-                Vector2 Top = Center - Main.screenPosition + normal * 5 *  factor;
-                Vector2 Bottom = Center - Main.screenPosition - normal * 5 *factor;
+                Vector2 Top = Center - Main.screenPosition + normal * 5 * factor;
+                Vector2 Bottom = Center - Main.screenPosition - normal * 5 * factor;
 
                 var Color = new Color(20, 255, 199, 0) * factor;
                 bars.Add(new(Top, Color, new Vector3(factor, 0, 1)));

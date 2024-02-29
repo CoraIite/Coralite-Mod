@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Evevts.ShadowCastle;
-using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;

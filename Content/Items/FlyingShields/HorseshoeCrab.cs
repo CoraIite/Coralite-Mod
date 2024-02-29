@@ -119,7 +119,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override Color GetColor(float factor)
         {
-            return new Color(110,91,255)* factor;
+            return new Color(110, 91, 255) * factor;
         }
     }
 
@@ -181,7 +181,7 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class HorseshoeCrabEXProj:ModProjectile
+    public class HorseshoeCrabEXProj : ModProjectile
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + "HorseshoeCrab";
 
@@ -226,7 +226,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             Texture2D mainTex = Projectile.GetTexture();
 
-            Projectile.DrawShadowTrails(new Color(110, 91, 255) * alpha, 0.5f, 0.5f / 6, 0, 6, 1, -1.57f,-1);
+            Projectile.DrawShadowTrails(new Color(110, 91, 255) * alpha, 0.5f, 0.5f / 6, 0, 6, 1, -1.57f, -1);
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor * alpha, Projectile.rotation - 1.57f, mainTex.Size() / 2, Projectile.scale, 0, 0);
             return false;
         }

@@ -273,8 +273,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (SkyManager.Instance["StarsBackSky"].IsActive())
             {
                 StarsBackSky sky = ((StarsBackSky)SkyManager.Instance["StarsBackSky"]);
-                backgroundColor = Color.Lerp(backgroundColor,new Color(68,0,96), 0.7f * sky.Timeleft / 100f);
-                tileColor= Color.Lerp(tileColor, new Color(88, 20, 146), 0.5f * sky.Timeleft / 100f);
+                backgroundColor = Color.Lerp(backgroundColor, new Color(68, 0, 96), 0.7f * sky.Timeleft / 100f);
+                tileColor = Color.Lerp(tileColor, new Color(88, 20, 146), 0.5f * sky.Timeleft / 100f);
             }
         }
     }

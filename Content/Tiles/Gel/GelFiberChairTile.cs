@@ -1,12 +1,12 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Gels;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
-using Terraria.DataStructures;
-using Terraria.GameContent.ObjectInteractions;
-using Terraria.GameContent;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Coralite.Content.Items.Gels;
 
 namespace Coralite.Content.Tiles.Gel
 {

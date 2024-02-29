@@ -83,7 +83,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             var pos = Projectile.Top - Main.screenPosition;
             var origin = new Vector2(mainTex.Width / 2, 0);
 
-            Color c = new Color(104,54,192,0)*Alpha;
+            Color c = new Color(104, 54, 192, 0) * Alpha;
 
             Main.spriteBatch.Draw(mainTex, pos, null, c, 0, origin, 0.2f, 0, 0);
             Main.spriteBatch.Draw(mainTex, pos, null, c * 0.75f, 0, origin, 0.2f, 0, 0);

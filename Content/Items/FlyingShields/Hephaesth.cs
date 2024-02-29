@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.useTime = Item.useAnimation = 20;
             Item.shoot = ModContent.ProjectileType<HephaesthProj>();
             Item.knockBack = 2;
-            Item.shootSpeed = 22/2;
+            Item.shootSpeed = 22 / 2;
             Item.damage = 235;
             Item.UseSound = CoraliteSoundID.Zenith_Item169;
         }
@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.MaxFlyingShield+=2;
+                cp.MaxFlyingShield += 2;
             }
 
             return base.CanUseItem(player);
@@ -132,9 +132,9 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            flyingTime = 26*2;
-            backTime = 18*2;
-            backSpeed = 24/2;
+            flyingTime = 26 * 2;
+            backTime = 18 * 2;
+            backSpeed = 24 / 2;
             trailCachesLength = 8 * 2;
             trailWidth = 20 / 2;
         }
@@ -164,7 +164,7 @@ namespace Coralite.Content.Items.FlyingShields
             float factor = 1 - Timer / flyingTime;
             trailColor = ColorFunc(factor);
             if (Main.rand.NextBool())
-                Projectile.SpawnTrailDust((float)(Projectile.width/3),DustID.RainbowMk2, Main.rand.NextFloat(0.2f, 0.4f), newColor: trailColor);
+                Projectile.SpawnTrailDust((float)(Projectile.width / 3), DustID.RainbowMk2, Main.rand.NextFloat(0.2f, 0.4f), newColor: trailColor);
         }
 
         public void SpawnShield(float speed)
@@ -172,12 +172,12 @@ namespace Coralite.Content.Items.FlyingShields
             for (int i = 0; i < 7; i++)
             {
                 Dust dust = Dust.NewDustPerfect(Projectile.Center
-                    , DustID.PortalBoltTrail, Helper.NextVec2Dir(2f, 9f), newColor: trailColor,Scale:Main.rand.NextFloat(1,1.5f));
+                    , DustID.PortalBoltTrail, Helper.NextVec2Dir(2f, 9f), newColor: trailColor, Scale: Main.rand.NextFloat(1, 1.5f));
                 dust.noGravity = true;
             }
             Vector2 dir = Projectile.rotation.ToRotationVector2().RotateByRandom(-0.3f, 0.3f);
             int type = -Main.rand.Next(1, 17);
-            int index = Projectile.NewProjectileFromThis<HephaesthSmeltingResults>(Projectile.Center, dir * speed ,
+            int index = Projectile.NewProjectileFromThis<HephaesthSmeltingResults>(Projectile.Center, dir * speed,
                   (int)(Projectile.damage * 1.25f), Projectile.knockBack, ai2: type);//Main.rand.Next(1, ItemLoader.ItemCount));
             if (Burning)
             {
@@ -212,10 +212,10 @@ namespace Coralite.Content.Items.FlyingShields
 
             if (factor < 1)
                 return Color.Lerp(new Color(86, 80, 112), new Color(155, 26, 10), factor);
-            else if(factor<2)
-                return Color.Lerp(new Color(155, 26, 10), new Color(255, 174, 33), factor-1);
-            else if(factor<3)
-                return Color.Lerp(new Color(255, 174, 33), new Color(255, 237, 134), factor-2);
+            else if (factor < 2)
+                return Color.Lerp(new Color(155, 26, 10), new Color(255, 174, 33), factor - 1);
+            else if (factor < 3)
+                return Color.Lerp(new Color(255, 174, 33), new Color(255, 237, 134), factor - 2);
             else
                 return new Color(255, 237, 134);
         }
@@ -310,7 +310,7 @@ namespace Coralite.Content.Items.FlyingShields
                 }
             }
 
-            Vector2 dir = (Projectile.rotation+1.57f).ToRotationVector2();
+            Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
             for (int i = -2; i < 2; i++)
             {
                 Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.RainbowMk2, dir * i * 0.8f, 100, newColor: Burning ? new Color(89, 219, 255) : new Color(255, 237, 134),
@@ -323,7 +323,7 @@ namespace Coralite.Content.Items.FlyingShields
             //    1.2f);
 
             //生成弹幕
-            Projectile.NewProjectileFromThis<HephaesthFire>(Projectile.Center,( Projectile.rotation+Main.rand.NextFloat(-0.08f,0.08f)).ToRotationVector2() * Main.rand.NextFloat(14, 18),
+            Projectile.NewProjectileFromThis<HephaesthFire>(Projectile.Center, (Projectile.rotation + Main.rand.NextFloat(-0.08f, 0.08f)).ToRotationVector2() * Main.rand.NextFloat(14, 18),
                 Projectile.damage, Projectile.knockBack, ai2: Projectile.ai[2]);
 
             if (Main.rand.NextBool())
@@ -354,7 +354,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             Rectangle frameBox;
             Vector2 rotDir = Projectile.rotation.ToRotationVector2();
-            Vector2 dir =rotDir * (DistanceToOwner / (Projectile.width * scalePercent));
+            Vector2 dir = rotDir * (DistanceToOwner / (Projectile.width * scalePercent));
             Color c = lightColor * 0.7f;
             c.A = lightColor.A;
 
@@ -367,8 +367,8 @@ namespace Coralite.Content.Items.FlyingShields
             if (turnToBuring > 0)
             {
                 float factor = MathF.Sin(MathHelper.Pi * turnToBuring / 30f);
-                pos1 += (Projectile.rotation - Owner.direction*0.7f * factor).ToRotationVector2() * factor * 12;
-                pos2 += (Projectile.rotation + Owner.direction*0.7f * factor).ToRotationVector2() * factor * 12;
+                pos1 += (Projectile.rotation - Owner.direction * 0.7f * factor).ToRotationVector2() * factor * 12;
+                pos2 += (Projectile.rotation + Owner.direction * 0.7f * factor).ToRotationVector2() * factor * 12;
             }
 
             if (Burning)
@@ -377,7 +377,7 @@ namespace Coralite.Content.Items.FlyingShields
                 Vector2 origin1 = frameBox.Size() / 2;
                 //绘制基底
                 Main.spriteBatch.Draw(mainTex, pos - dir * 10, frameBox, c2, rotation, origin1, scale, effect, 0);
-                Main.spriteBatch.Draw(mainTex, pos-dir*5, frameBox, c, rotation, origin1, scale, effect, 0);
+                Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, rotation, origin1, scale, effect, 0);
                 Main.spriteBatch.Draw(mainTex, pos, frameBox, Color.White, rotation, origin1, scale, effect, 0);
 
                 //绘制上部
@@ -398,8 +398,8 @@ namespace Coralite.Content.Items.FlyingShields
             frameBox = mainTex.Frame(4, 2, 1, 0);
             Vector2 origin2 = frameBox.Size() / 2;
             //绘制基底
-            Main.spriteBatch.Draw(mainTex, pos-dir*10, frameBox, c2, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos-dir*5, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos - dir * 10, frameBox, c2, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, rotation, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, Color.White, rotation, origin2, scale, effect, 0);
 
             //绘制上部
@@ -417,7 +417,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override float GetWidth()
         {
-            return Projectile.width / 2 /Projectile.scale;
+            return Projectile.width / 2 / Projectile.scale;
         }
     }
 
@@ -678,9 +678,9 @@ namespace Coralite.Content.Items.FlyingShields
                 float a = 1;
                 Color c = GetColor(ref a);
                 Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(Projectile.width, Projectile.width)
-                    , DustID.PortalBoltTrail, Vector2.Zero,  newColor: c);
+                    , DustID.PortalBoltTrail, Vector2.Zero, newColor: c);
                 dust.noGravity = true;
-                dust.velocity = Projectile.velocity.RotateByRandom(-0.5f,0.5f) * Main.rand.NextFloat(0.3f,0.7f);
+                dust.velocity = Projectile.velocity.RotateByRandom(-0.5f, 0.5f) * Main.rand.NextFloat(0.3f, 0.7f);
             }
         }
 
@@ -694,7 +694,7 @@ namespace Coralite.Content.Items.FlyingShields
             backSpeed = 48 / 3;
             trailCachesLength = 10;
             canChase = true;
-            maxJump+=2;
+            maxJump += 2;
 
             UpdateShieldAccessory(accessory => accessory.OnInitialize(this));
             UpdateShieldAccessory(accessory => accessory.PostInitialize(this));
@@ -755,7 +755,7 @@ namespace Coralite.Content.Items.FlyingShields
                     float selfAngle = Projectile.velocity.ToRotation();
                     float targetAngle = (target.Center - Projectile.Center).ToRotation();
 
-                    Projectile.velocity = selfAngle.AngleLerp(targetAngle, 0.2f*(1 - Timer / flyingTime)).ToRotationVector2() * shootSpeed;
+                    Projectile.velocity = selfAngle.AngleLerp(targetAngle, 0.2f * (1 - Timer / flyingTime)).ToRotationVector2() * shootSpeed;
                 }
         }
 
@@ -857,10 +857,10 @@ namespace Coralite.Content.Items.FlyingShields
                 float factor = (float)i / trailCachesLength;
                 Vector2 Center = Projectile.oldPos[i] - Main.screenPosition;
                 Vector2 normal = (Projectile.oldRot[i] + MathHelper.PiOver2).ToRotationVector2();
-                Vector2 Top = Center  + normal * trailWidth;
-                Vector2 Bottom = Center  - normal * trailWidth;
+                Vector2 Top = Center + normal * trailWidth;
+                Vector2 Bottom = Center - normal * trailWidth;
 
-                Vector2 Top2 = Center+ normal * 6;
+                Vector2 Top2 = Center + normal * 6;
                 Vector2 Bottom2 = Center - normal * 6;
 
                 var Color = GetColor(ref factor);//.MultiplyRGB(lightColor);
@@ -1091,7 +1091,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override bool? CanDamage()
         {
-            if (State<2)
+            if (State < 2)
             {
                 return false;
             }
@@ -1162,7 +1162,7 @@ namespace Coralite.Content.Items.FlyingShields
 
                             for (int i = 0; i < 4; i++)
                             {
-                                Dust.NewDustPerfect(Projectile.Center, DustID.Smoke, Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f,3f),100, Color.White,Main.rand.NextFloat(1.3f,1.6f));
+                                Dust.NewDustPerfect(Projectile.Center, DustID.Smoke, Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f, 3f), 100, Color.White, Main.rand.NextFloat(1.3f, 1.6f));
                                 //Dust.NewDustPerfect(Projectile.Center, DustID.Titanium, Helper.NextVec2Dir() * Main.rand.NextFloat(0.5f,5f),100, Color.White,Main.rand.NextFloat(1f,1.3f));
                             }
                         }
@@ -1211,7 +1211,7 @@ namespace Coralite.Content.Items.FlyingShields
 
                 Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation,
                     mainTex.Size() / 2, scale, 0, 0);
-                c = Color.White*0.5f;
+                c = Color.White * 0.5f;
                 c.A = (byte)(255 * alpha);
                 Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation + MathHelper.Pi,
                     mainTex.Size() / 2, scale * 0.5f, 0, 0);

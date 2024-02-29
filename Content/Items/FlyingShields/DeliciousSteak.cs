@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.FlyingShields
             for (int i = 0; i < 3; i++)
             {
                 Helper.SpawnDirDustJet(Projectile.Center,
-                    () => Main.rand.NextFloat(-1.57f -1f, -1.57f + 1f).ToRotationVector2()
+                    () => Main.rand.NextFloat(-1.57f - 1f, -1.57f + 1f).ToRotationVector2()
                     , 2, 4, i => Main.rand.NextFloat(1, 1.5f) + i * 0.5f,
                     DustID.Poop, Scale: Main.rand.NextFloat(1f, 1.5f), noGravity: false);
             }
@@ -97,13 +97,13 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnGuard()
         {
             DistanceToOwner /= 3;
-            SoundEngine.PlaySound(Main.rand.NextBool()? CoraliteSoundID.Bloody2_NPCHit13:
+            SoundEngine.PlaySound(Main.rand.NextBool() ? CoraliteSoundID.Bloody2_NPCHit13 :
                 CoraliteSoundID.BloodyDeath4_NPCDeath21, Projectile.Center);
             for (int i = 0; i < 4; i++)
             {
                 Helper.SpawnDirDustJet(Projectile.Center,
                     () => Projectile.rotation.ToRotationVector2().RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f))
-                    , 2, 4, i =>Main.rand.NextFloat(1f,1.5f) +i * 0.6f,
+                    , 2, 4, i => Main.rand.NextFloat(1f, 1.5f) + i * 0.6f,
                     DustID.Poop, noGravity: false);
             }
         }

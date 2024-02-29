@@ -49,8 +49,8 @@ namespace Coralite.Content.Particles
             Color c = particle.color * 0.5f;
             if (particle.oldCenter != null)
             {
-                spriteBatch.Draw(modParticle.Texture2D.Value,pos , frame, particle.color, particle.rotation, origin, particle.oldCenter[0], SpriteEffects.None, 0f);
-                spriteBatch.Draw(modParticle.Texture2D.Value,pos , frame, c, particle.rotation, origin, particle.oldCenter[0]*0.5f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(modParticle.Texture2D.Value, pos, frame, particle.color, particle.rotation, origin, particle.oldCenter[0], SpriteEffects.None, 0f);
+                spriteBatch.Draw(modParticle.Texture2D.Value, pos, frame, c, particle.rotation, origin, particle.oldCenter[0] * 0.5f, SpriteEffects.None, 0f);
             }
         }
     }

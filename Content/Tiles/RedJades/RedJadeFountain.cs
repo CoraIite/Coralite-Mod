@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -32,14 +31,14 @@ namespace Coralite.Content.Tiles.RedJades
         {
             //if (Main.rand.NextBool(4))
             //{
-                Tile tile = Framing.GetTileSafely(i, j);
-                int xOff = tile.TileFrameX / 18;
-                int yOff = tile.TileFrameY / 18;
+            Tile tile = Framing.GetTileSafely(i, j);
+            int xOff = tile.TileFrameX / 18;
+            int yOff = tile.TileFrameY / 18;
 
-                Vector2 topLeft = new Vector2(i - xOff, j - yOff) * 16;
-                topLeft += new Vector2(16 + 8, 8);
-                Dust.NewDustPerfect(topLeft, DustID.GemRuby,
-                    (-1.57f + Main.rand.NextFloat(-0.2f, 0.2f)).ToRotationVector2() * Main.rand.NextFloat(2f, 4f));
+            Vector2 topLeft = new Vector2(i - xOff, j - yOff) * 16;
+            topLeft += new Vector2(16 + 8, 8);
+            Dust.NewDustPerfect(topLeft, DustID.GemRuby,
+                (-1.57f + Main.rand.NextFloat(-0.2f, 0.2f)).ToRotationVector2() * Main.rand.NextFloat(2f, 4f));
             //}
         }
     }

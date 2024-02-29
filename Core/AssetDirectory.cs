@@ -12,6 +12,7 @@ namespace Coralite.Core
         public const string Rediancie = Bosses + "Rediancie/";
         public const string BabyIceDragon = Bosses + "BabyIceDragon/";
         public const string ShadowBalls = Bosses + "ShadowBalls/";
+        public const string ThunderveinDragon = Bosses + "ThunderveinDragon/";
 
         public const string SlimeEmperor = Bosses + "SlimeEmperor/";
         public const string NightmarePlantera = Bosses + "NightmarePlantera/";

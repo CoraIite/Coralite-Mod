@@ -194,7 +194,7 @@ namespace Coralite.Content.Items.FlyingShields
             if (!Target.GetNPCOwner(out NPC owner, Projectile.Kill))
                 return;
 
-            angle = (owner.Center- Projectile.Center ).ToRotation();
+            angle = (owner.Center - Projectile.Center).ToRotation();
             selfRotation = angle;
             distanceToTarget = -20;
             alpha = 0.4f;
@@ -206,7 +206,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (target.whoAmI == (int)Target&&State>0)
+            if (target.whoAmI == (int)Target && State > 0)
                 return base.CanHitNPC(target);
 
             return false;
@@ -223,7 +223,7 @@ namespace Coralite.Content.Items.FlyingShields
             for (int i = 0; i < 8; i++)
             {
                 Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24, 24),
-                    DustID.GoldCoin, dir.RotatedBy(Main.rand.NextFloat(-0.4f,0.4f)) * Main.rand.NextFloat(1, 5),
+                    DustID.GoldCoin, dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(1, 5),
                     Scale: Main.rand.NextFloat(1.5f, 2f));
                 d.noGravity = true;
             }
@@ -251,7 +251,7 @@ namespace Coralite.Content.Items.FlyingShields
                         distanceToTarget = Helper.Lerp(-20, -270, sqrtFactor);
                         alpha = Helper.Lerp(0.4f, 1f, sqrtFactor);
                         Projectile.rotation = Helper.Lerp(2.5f, 0, sqrtFactor);
-                        selfRotation =Helper.Lerp(angle,angle+Projectile.velocity.X*MathHelper.TwoPi,sqrtFactor) ;
+                        selfRotation = Helper.Lerp(angle, angle + Projectile.velocity.X * MathHelper.TwoPi, sqrtFactor);
                         Projectile.scale = Helper.Lerp(0.01f, 1f, sqrtFactor);
                         Projectile.Center = owner.Center + angle.ToRotationVector2() * distanceToTarget;
                         Timer++;
@@ -306,10 +306,10 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 var frameBox2 = mainTex.Frame(3, 1, 2, 0);
 
-                for (int i = 13; i >1; i--)
+                for (int i = 13; i > 1; i--)
                 {
                     Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, frameBox2, lightColor * (i * 0.5f / 14), rot
-                        , origin, Projectile.scale * (0.5f + i * 0.5f/14), 0, 0);
+                        , origin, Projectile.scale * (0.5f + i * 0.5f / 14), 0, 0);
                 }
             }
 

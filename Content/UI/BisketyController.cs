@@ -11,7 +11,7 @@ using static Coralite.Content.UI.BisketyController;
 
 namespace Coralite.Content.UI
 {
-    public class BisketyController:BetterUIState
+    public class BisketyController : BetterUIState
     {
         public static bool visible = false;
         public static Vector2 basePos = new Vector2((Main.screenWidth / 2) - 100, (Main.screenHeight / 2) - 150);
@@ -52,7 +52,7 @@ namespace Coralite.Content.UI
 
             for (int i = 0; i < ShowFlags.Length; i++)
             {
-                BisketyButton uIImageButton = new BisketyButton(ModContent.Request<Texture2D>(AssetDirectory.Misc + "Biskety",AssetRequestMode.ImmediateLoad),i);
+                BisketyButton uIImageButton = new BisketyButton(ModContent.Request<Texture2D>(AssetDirectory.Misc + "Biskety", AssetRequestMode.ImmediateLoad), i);
                 list.Add(uIImageButton);
             }
 
@@ -73,7 +73,7 @@ namespace Coralite.Content.UI
     {
         public int type;
 
-        public BisketyButton(Asset<Texture2D> texture,int type) : base(texture)
+        public BisketyButton(Asset<Texture2D> texture, int type) : base(texture)
         {
             this.type = type;
         }
@@ -100,7 +100,7 @@ namespace Coralite.Content.UI
             if (ShowFlags[type])
                 c = Color.LightSeaGreen;
 
-            Utils.DrawBorderString(spriteBatch, GetText(type), 
+            Utils.DrawBorderString(spriteBatch, GetText(type),
                 dimensions.Position() + new Vector2(dimensions.Width + 10, dimensions.Height / 2 + 4), c, anchory: 0.5f);
         }
 

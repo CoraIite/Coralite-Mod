@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             CreateRecipe()
                 .AddIngredient<GlassShield>()
-                .AddIngredient(ItemID.Hellstone,5)
+                .AddIngredient(ItemID.Hellstone, 5)
                 .AddTile(TileID.Hellforge)
                 .Register();
         }
@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.FlyingShields
             for (int i = 0; i < 3; i++)
             {
                 Projectile.NewProjectileFromThis<GlazeBulwarkEXProj>(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
-                    dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(4, 8), (int)(Projectile.damage*0.75f), Projectile.knockBack, Main.rand.Next(4));
+                    dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(4, 8), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Main.rand.Next(4));
             }
         }
     }
@@ -140,7 +140,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             Texture2D mainTex = Projectile.GetTexture();
             var frameBox = mainTex.Frame(4, 1, Projectile.frame, 0);
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor*alpha, Projectile.rotation, frameBox.Size() / 2,
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor * alpha, Projectile.rotation, frameBox.Size() / 2,
                 Projectile.scale, 0, 0);
 
             return false;

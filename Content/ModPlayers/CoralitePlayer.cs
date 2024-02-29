@@ -440,11 +440,15 @@ namespace Coralite.Content.ModPlayers
 
         #endregion
 
+        #region 绘制部分
+
         public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
         {
             if (equippedBoneRing)
                 drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "BoneRing", EquipType.HandsOn);
         }
+
+        #endregion
 
         public void GetNightmareEnergy(int howMany)
         {

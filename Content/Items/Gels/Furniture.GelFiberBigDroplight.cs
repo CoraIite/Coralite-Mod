@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Gels
 {
-    public class GelFiberBigDroplight:BaseDroplightItem
+    public class GelFiberBigDroplight : BaseDroplightItem
     {
         public GelFiberBigDroplight() : base(0, ItemRarityID.White, ModContent.TileType<GelFiberBigDroplightTile>(), AssetDirectory.GelItems)
         {

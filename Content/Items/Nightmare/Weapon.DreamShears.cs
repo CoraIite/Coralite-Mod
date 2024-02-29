@@ -39,7 +39,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void SetDefaults()
         {
-            Item.useAnimation = Item.useTime = 23;
+            Item.useAnimation = Item.useTime = 22;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.shoot = ProjectileType<DreamShearsSlash>();
             Item.DamageType = DamageClass.Melee;
@@ -169,7 +169,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 0: //下挥，较为椭圆
                     startAngle = 2.4f;
                     totalAngle = 4.6f;
-                    maxTime = Owner.itemTimeMax * 2;
+                    maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     Projectile.scale = Helper.EllipticalEase(2.4f - 3.8f * Smoother.Smoother(0, maxTime - minTime), 1.5f, 2.1f);
                     st.Pitch = 0.8f;
@@ -178,7 +178,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 1://下挥，圆
                     startAngle = -2.4f;
                     totalAngle = -3.8f;
-                    maxTime = Owner.itemTimeMax * 2;
+                    maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     Projectile.scale = Helper.EllipticalEase(2.4f - 3.8f * Smoother.Smoother(0, maxTime - minTime), 1.5f, 2.1f);
                     st.Pitch = 0.6f;
@@ -416,7 +416,7 @@ namespace Coralite.Content.Items.Nightmare
 
             if (init)
             {
-                rolllingTime = (int)(Owner.itemTimeMax * 3.5f);
+                rolllingTime = (int)(Owner.itemTimeMax * 1.5f) + 21 * 2;
                 Projectile.rotation = startAngle = (Main.MouseWorld - Owner.Center).ToRotation() + (Owner.direction > 0 ? -1 : 1) * 2f;
                 totalAngle = (Owner.direction > 0 ? 1 : -1) * (9.7f);
                 SelfRot = startAngle + totalAngle;

@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void SetOtherValues()
         {
             damageReduce = 0.15f;
-            distanceAdder=3f;
+            distanceAdder = 3f;
         }
 
         public override int CheckCollide()
@@ -78,12 +78,12 @@ namespace Coralite.Content.Items.FlyingShields
                         cp.Guard(damageReduce);
 
                     //如果不应该瞎JB乱该这东西的速度那就跳过
-                    if (proj.aiStyle == 4 || proj.aiStyle == 38 || proj.aiStyle == 84 || proj.aiStyle == 148 || 
-                        (proj.aiStyle == 7 && proj.ai[0] == 2f) || ((proj.type == 440 || proj.type == 449 || 
-                        proj.type == 606) && proj.ai[1] == 1f) || (proj.aiStyle == 93 && proj.ai[0] < 0f) || 
-                        proj.type == 540 || proj.  type == 756 || proj.type == 818 || proj.type == 856 || 
+                    if (proj.aiStyle == 4 || proj.aiStyle == 38 || proj.aiStyle == 84 || proj.aiStyle == 148 ||
+                        (proj.aiStyle == 7 && proj.ai[0] == 2f) || ((proj.type == 440 || proj.type == 449 ||
+                        proj.type == 606) && proj.ai[1] == 1f) || (proj.aiStyle == 93 && proj.ai[0] < 0f) ||
+                        proj.type == 540 || proj.type == 756 || proj.type == 818 || proj.type == 856 ||
                         proj.type == 961 || proj.type == 933 || ProjectileID.Sets.IsAGolfBall[proj.type])
-                            goto over;
+                        goto over;
 
                     if (!ProjectileLoader.ShouldUpdatePosition(proj))
                         goto over;
@@ -91,9 +91,9 @@ namespace Coralite.Content.Items.FlyingShields
                     //修改速度
                     proj.velocity *= -1;
                     float angle = proj.velocity.ToRotation();
-                    proj.velocity = angle.AngleLerp(Projectile.rotation,0.5f).ToRotationVector2() * proj.velocity.Length();
+                    proj.velocity = angle.AngleLerp(Projectile.rotation, 0.5f).ToRotationVector2() * proj.velocity.Length();
 
-                    over:
+                over:
                     float percent = MathHelper.Clamp(StrongGuard, 0, 1);
                     if (Main.rand.NextBool((int)(percent * 100), 100) && proj.penetrate > 0)//削减穿透数
                     {

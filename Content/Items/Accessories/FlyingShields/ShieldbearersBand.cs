@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
                 && incomingItem.type == ModContent.ItemType<ShieldbearersBand>());
         }
-        
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))

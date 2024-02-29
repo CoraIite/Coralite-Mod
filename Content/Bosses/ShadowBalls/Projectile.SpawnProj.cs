@@ -19,7 +19,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "Light";
 
-        float alpha =0;
+        float alpha = 0;
         ref float Timer => ref Projectile.ai[0];
         ref float OriginY => ref Projectile.ai[1];
 
@@ -62,10 +62,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 //生成粒子
 
-                Dust.NewDustPerfect(Projectile.Center+Main.rand.NextVector2Circular(16,16), ModContent.DustType<GlowBall>()
+                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16, 16), ModContent.DustType<GlowBall>()
                     , (Projectile.oldPosition - Projectile.position).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.5f, 2f),
                     newColor: Color.Purple, Scale: Main.rand.NextFloat(0.2f, 0.5f));
-                    
+
             }
             else if (Timer > 60 * 3)
             {

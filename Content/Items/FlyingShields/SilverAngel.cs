@@ -68,7 +68,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnShootDusts()
         {
             if (Main.rand.NextBool())
-                Projectile.SpawnTrailDust(10f,DustID.ShadowbeamStaff, Main.rand.NextFloat(0.5f, 0.8f),
+                Projectile.SpawnTrailDust(10f, DustID.ShadowbeamStaff, Main.rand.NextFloat(0.5f, 0.8f),
                    Scale: Main.rand.NextFloat(1f, 1.3f));
             Lighting.AddLight(Projectile.Center, new Vector3(0.2f, 0.2f, 0.4f));
         }
@@ -156,7 +156,7 @@ namespace Coralite.Content.Items.FlyingShields
             //绘制基底
             Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, exRot, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, exRot, origin2, scale, effect, 0);
-            
+
             frameBox = mainTex.Frame(4, 1, 1, 0);
             Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, exRot2, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, exRot2, origin2, scale, effect, 0);
@@ -292,7 +292,7 @@ namespace Coralite.Content.Items.FlyingShields
             Helper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, new Color(77, 69, 181),
                 Timer / 20, 0, 1, 1, 2, MathHelper.PiOver2, 1.8f, Vector2.One);
             Helper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, new Color(77, 69, 181),
-                Timer / 20, 0, 1, 1, 2, MathHelper.PiOver2, 1.6f, Vector2.One*1.2f);
+                Timer / 20, 0, 1, 1, 2, MathHelper.PiOver2, 1.6f, Vector2.One * 1.2f);
 
             //绘制左边翅膀
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, -Projectile.rotation, origin, 1, 0, 0);

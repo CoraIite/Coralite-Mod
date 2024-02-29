@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
             return !((equippedItem.type == ModContent.ItemType<Terracrest>())//上位
-                
+
                 && incomingItem.type == ModContent.ItemType<DemonsProtection>());
         }
 

@@ -53,7 +53,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 {
                     for (int i = 0; i < 2; i++)
                     {
-                        particles.NewParticle(Projectile.Center, Helper.NextVec2Dir(2,4) ,
+                        particles.NewParticle(Projectile.Center, Helper.NextVec2Dir(2, 4),
                             CoraliteContent.ParticleType<Fog>(), Color.DarkRed, Main.rand.NextFloat(1f, 1.5f));
                     }
 
@@ -80,7 +80,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 {
                     for (int i = 0; i < 2; i++)
                     {
-                        particles.NewParticle(Projectile.Center, Helper.NextVec2Dir(2,4),
+                        particles.NewParticle(Projectile.Center, Helper.NextVec2Dir(2, 4),
                             CoraliteContent.ParticleType<Fog>(), Color.DarkRed, Main.rand.NextFloat(1f, 1.5f));
                     }
                     break;

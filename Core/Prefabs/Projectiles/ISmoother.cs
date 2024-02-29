@@ -1,7 +1,6 @@
 ﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using System;
-using Terraria.Map;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {

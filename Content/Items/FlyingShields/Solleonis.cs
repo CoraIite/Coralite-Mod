@@ -118,7 +118,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnGuard()
         {
             base.OnGuard();
-            int num4 = Projectile.NewProjectileFromThis(Owner.Center,Vector2.Zero, 608, Projectile.damage, 15f);
+            int num4 = Projectile.NewProjectileFromThis(Owner.Center, Vector2.Zero, 608, Projectile.damage, 15f);
             Main.projectile[num4].netUpdate = true;
             Main.projectile[num4].Kill();
         }
@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.FlyingShields
                         }
                         float length = Projectile.velocity.Length();
                         float factor = Coralite.Instance.X2Smoother.Smoother(Projectile.timeLeft / 200f);
-                        Projectile.velocity = Projectile.rotation.AngleLerp((target.Center - Projectile.Center).ToRotation(), 1-factor)
+                        Projectile.velocity = Projectile.rotation.AngleLerp((target.Center - Projectile.Center).ToRotation(), 1 - factor)
                             .ToRotationVector2() * length;
                     }
                     break;
@@ -210,8 +210,8 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.NewProjectileFromThis(target.Center, Vector2.Zero,ProjectileID.SolarWhipSwordExplosion
-                , (int)(Projectile.damage*0.5f) , 10f, 0f, 0.85f + Main.rand.NextFloat() * 1.15f);
+            Projectile.NewProjectileFromThis(target.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion
+                , (int)(Projectile.damage * 0.5f), 10f, 0f, 0.85f + Main.rand.NextFloat() * 1.15f);
 
             for (int i = 0; i < 3; i++)
             {
@@ -254,7 +254,7 @@ namespace Coralite.Content.Items.FlyingShields
                 effects = SpriteEffects.FlipVertically;
 
             Main.spriteBatch.Draw(mainTex, pos, null, Color.White, Projectile.rotation, origin, 0.7f, effects, 0);
-            Main.spriteBatch.Draw(mainTex, pos, null, c*0.15f, Projectile.rotation, origin, 0.85f, effects, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, c * 0.15f, Projectile.rotation, origin, 0.85f, effects, 0);
             return false;
         }
 

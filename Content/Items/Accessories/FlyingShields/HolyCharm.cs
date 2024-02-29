@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
             return !((equippedItem.type == ModContent.ItemType<Terracrest>())//上位
-                
+
                 && incomingItem.type == ModContent.ItemType<HolyCharm>());
         }
 
@@ -182,7 +182,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             color5.G = (byte)(color5.G * fromValue);
             color5.B = (byte)(color5.R * (0.25f + fromValue * 0.75f));
             Main.spriteBatch.Draw(extraTex, pos, frameBox, color5 * 0.15f, rot + Timer2 * 0.04f, extraOrigin, num, effects, 0f);
-            Main.spriteBatch.Draw(extraTex, pos, frameBox, color3 * fromValue * num3 * 0.3f, rot, extraOrigin, num, effects, 0f);   
+            Main.spriteBatch.Draw(extraTex, pos, frameBox, color3 * fromValue * num3 * 0.3f, rot, extraOrigin, num, effects, 0f);
             Main.spriteBatch.Draw(extraTex, pos, frameBox, color2 * fromValue * num3 * 0.5f, rot, extraOrigin, num * num4, effects, 0f);
             Main.spriteBatch.Draw(extraTex, pos, extraTex.Frame(1, 4, 0, 3), Color.White * 0.6f * num3, rot + Timer2 * 0.02f, extraOrigin, num, effects, 0f);
             Main.spriteBatch.Draw(extraTex, pos, extraTex.Frame(1, 4, 0, 3), Color.White * 0.5f * num3, rot + Timer2 * -0.1f, extraOrigin, num * 0.8f, effects, 0f);
@@ -192,7 +192,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             for (int i = 0; i < 3; i++)
             {
                 Main.spriteBatch.Draw(mainTex, pos + Projectile.rotation.ToRotationVector2() * (extraTex.Width * (0.25f + i * 0.1f) - 6f) * num, null
-                    , shieldColor * (0.4f + i * 0.2f), Projectile.rotation, mainOrigin, new Vector2(0.8f - num2 * 0.6f, 1) * Projectile.scale*scale * (1f + i*0.9f), effects, 0f);
+                    , shieldColor * (0.4f + i * 0.2f), Projectile.rotation, mainOrigin, new Vector2(0.8f - num2 * 0.6f, 1) * Projectile.scale * scale * (1f + i * 0.9f), effects, 0f);
             }
 
             //绘制闪光

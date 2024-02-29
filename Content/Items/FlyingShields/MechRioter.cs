@@ -63,10 +63,10 @@ namespace Coralite.Content.Items.FlyingShields
         {
             if (hited)
             {
-                for (int i = 0; i < 3; i ++)
+                for (int i = 0; i < 3; i++)
                 {
-                    Dust d = Dust.NewDustPerfect(Projectile.Center +Projectile.velocity*(i/3f),
-                        DustID.TheDestroyer, -Projectile.velocity*0.2f);
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + Projectile.velocity * (i / 3f),
+                        DustID.TheDestroyer, -Projectile.velocity * 0.2f);
                     d.noGravity = true;
                 }
 
@@ -145,7 +145,7 @@ namespace Coralite.Content.Items.FlyingShields
             for (int i = 0; i < 3; i++)
             {
                 int index = Projectile.NewProjectileFromThis(Projectile.Center
-                    , dir.RotateByRandom(-0.2f,0.2f) * 12,
+                    , dir.RotateByRandom(-0.2f, 0.2f) * 12,
                     ProjectileID.DeathLaser, Projectile.damage, Projectile.knockBack, ai1: 1);
                 Main.projectile[index].hostile = false;
                 Main.projectile[index].friendly = true;
@@ -223,7 +223,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnSpawn(IEntitySource source)
         {
             Target = -1;
-            if (Phase==1)
+            if (Phase == 1)
             {
                 Projectile.tileCollide = false;
             }
@@ -260,7 +260,7 @@ namespace Coralite.Content.Items.FlyingShields
                                 Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 14;
                             else if (length > 50 && length < 60)
                                 Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.Pi + Main.rand.NextFloat(-0.5f, 0.5f));
-                            else if (Projectile.velocity.Length()<4)
+                            else if (Projectile.velocity.Length() < 4)
                             {
                                 Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 14;
                             }
@@ -277,8 +277,8 @@ namespace Coralite.Content.Items.FlyingShields
                             else
                                 Projectile.velocity *= 0.7f;
 
-                            Projectile.velocity += (Projectile.rotation + 1.57f).ToRotationVector2()/2;
-                            Projectile.rotation = (target.Center-Projectile.Center).ToRotation();
+                            Projectile.velocity += (Projectile.rotation + 1.57f).ToRotationVector2() / 2;
+                            Projectile.rotation = (target.Center - Projectile.Center).ToRotation();
                             if (Timer > 0)
                             {
                                 if (Timer == 30)//射激光
@@ -287,13 +287,13 @@ namespace Coralite.Content.Items.FlyingShields
                                     {
                                         int index = Projectile.NewProjectileFromThis(Projectile.Center + (Projectile.rotation + 1.57f * i).ToRotationVector2() * 12
                                             , (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 12,
-                                            ProjectileID.EyeLaser, Projectile.damage, Projectile.knockBack, ai1: i+1);
+                                            ProjectileID.EyeLaser, Projectile.damage, Projectile.knockBack, ai1: i + 1);
                                         Main.projectile[index].hostile = false;
                                         Main.projectile[index].friendly = true;
                                         Main.projectile[index].penetrate = 1;
                                     }
                                 }
-                                if (Timer ==50)//射火球
+                                if (Timer == 50)//射火球
                                 {
                                     int index = Projectile.NewProjectileFromThis(Projectile.Center
                                         , (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 12,
@@ -325,11 +325,11 @@ namespace Coralite.Content.Items.FlyingShields
                         Projectile.velocity = angle.AngleLerp(targetAngle, 1).ToRotationVector2() * 8;
                         Projectile.rotation = Projectile.velocity.ToRotation();
 
-                        if (Phase==1)
+                        if (Phase == 1)
                         {
                             Vector2 dustVel = (Projectile.rotation + MathHelper.Pi).ToRotationVector2() * 2;
 
-                            for (int i = -1; i < 2; i+=2)
+                            for (int i = -1; i < 2; i += 2)
                             {
                                 Dust d = Dust.NewDustPerfect(Projectile.Center + (Projectile.rotation + 1.57f * i).ToRotationVector2() * 12,
                                     DustID.TheDestroyer, dustVel);
@@ -337,7 +337,7 @@ namespace Coralite.Content.Items.FlyingShields
                             }
                         }
 
-                        if (Vector2.Distance(Projectile.Center,Owner.Center)<20)
+                        if (Vector2.Distance(Projectile.Center, Owner.Center) < 20)
                         {
                             Projectile.Kill();
                         }
@@ -360,7 +360,7 @@ namespace Coralite.Content.Items.FlyingShields
             State = 1;
             Projectile.tileCollide = false;
             Projectile.frame = 1;
-            Projectile.extraUpdates+=2;
+            Projectile.extraUpdates += 2;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -379,7 +379,7 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 var frameBox = mainTex.Frame(3, 1, 2, 0);
 
-                Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, Projectile.rotation-1.57f, frameBox.Size() / 2, Projectile.scale, 0, 0);
+                Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, Projectile.rotation - 1.57f, frameBox.Size() / 2, Projectile.scale, 0, 0);
             }
 
             return false;

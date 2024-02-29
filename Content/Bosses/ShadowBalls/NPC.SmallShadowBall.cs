@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Shadow;
-using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;

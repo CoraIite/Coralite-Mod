@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void SetDefaults()
         {
-            Item.useAnimation = Item.useTime = 23;
+            Item.useAnimation = Item.useTime = 22;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.shoot = ProjectileType<EuphorbiaMiliiProj>();
             Item.DamageType = DamageClass.Melee;
@@ -161,7 +161,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 0: //刺1
                     startAngle = Main.rand.NextFloat(-0.2f, 0.2f);
                     totalAngle = 0.001f;
-                    maxTime = Owner.itemTimeMax * 2;
+                    maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27;
                     Smoother = Coralite.Instance.ReverseX2Smoother;
                     distanceToOwner = -Projectile.height / 2;
                     useSlashTrail = false;
@@ -170,7 +170,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 1://刺2
                     startAngle = Main.rand.NextFloat(-0.1f, 0.1f);
                     totalAngle = 0.001f;
-                    maxTime = Owner.itemTimeMax * 2;
+                    maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27;
                     Smoother = Coralite.Instance.ReverseX2Smoother;
                     distanceToOwner = -Projectile.height / 2;
 
@@ -181,7 +181,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 2 when innerCombo == 0://下挥1 小幅度转圈
                     startAngle = 1.9f;
                     totalAngle = 4f;
-                    maxTime = Owner.itemTimeMax * 3;
+                    maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27 + 22;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     distanceToOwner = -Projectile.height / 2;
                     nextStartAngle = GetStartAngle() - OwnerDirection * 2.4f;
@@ -194,7 +194,7 @@ namespace Coralite.Content.Items.Nightmare
                     {
                         startAngle = 2.4f;
                         totalAngle = 4.9f;
-                        maxTime = Owner.itemTimeMax * 4;
+                        maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27 + 22 * 2;
                         Smoother = Coralite.Instance.HeavySmootherInstance;
                         distanceToOwner = -Projectile.height / 2;
                         delay = 0;
@@ -205,7 +205,7 @@ namespace Coralite.Content.Items.Nightmare
                     {
                         startAngle = 3f;
                         totalAngle = 4.4f;
-                        maxTime = Owner.itemTimeMax * 3;
+                        maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27 + 22;
                         Smoother = Coralite.Instance.BezierEaseSmoother;
                         distanceToOwner = 10 - Projectile.height / 2;
                         nextStartAngle = GetStartAngle() - OwnerDirection * -2.2f;
@@ -219,7 +219,7 @@ namespace Coralite.Content.Items.Nightmare
                     {
                         startAngle = -1.4f;
                         totalAngle = -4.4f;
-                        maxTime = Owner.itemTimeMax * 4;
+                        maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27 + 22 * 2;
                         Smoother = Coralite.Instance.BezierEaseSmoother;
                         //distanceToOwner = -Projectile.height / 2;
                         delay = 18;
@@ -230,7 +230,7 @@ namespace Coralite.Content.Items.Nightmare
                     {
                         startAngle = -2.2f;
                         totalAngle = -4.4f;
-                        maxTime = Owner.itemTimeMax * 3;
+                        maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27 + 22;
                         Smoother = Coralite.Instance.HeavySmootherInstance;
                         //distanceToOwner = -Projectile.height / 2;
                         delay = 12;
@@ -240,7 +240,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 4 when innerCombo == 0://在手里转圈圈
                     startAngle = 0.001f;
                     totalAngle = -6.282f;
-                    maxTime = Owner.itemTimeMax * 3;
+                    maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27 + 22;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     distanceToOwner = -Projectile.height / 2;
                     delay = 18;
@@ -250,7 +250,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 4 when innerCombo == 1://大力刺出
                     startAngle = 0.001f;
                     totalAngle = 0.001f;
-                    maxTime = Owner.itemTimeMax * 2;
+                    maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27;
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     distanceToOwner = -Projectile.height / 2;
                     delay = 20;
@@ -268,7 +268,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 5://未完全蓄力的普通上挥
                     startAngle = -2.2f;
                     totalAngle = -4.85f;
-                    maxTime = Owner.itemTimeMax * 5;
+                    maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27 + 22 * 3;
                     Smoother = Coralite.Instance.HeavySmootherInstance;
                     //distanceToOwner = -Projectile.height / 2;
                     delay = 18;
@@ -277,7 +277,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 6 when innerCombo == 0://普通上挥1
                     startAngle = -2.2f;
                     totalAngle = -4.85f;
-                    maxTime = Owner.itemTimeMax * 3;
+                    maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27 + 22;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     nextStartAngle = GetStartAngle() - OwnerDirection * -2.2f;
 
@@ -289,7 +289,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 6 when innerCombo == 1://普通上挥2
                     startAngle = -2.2f;
                     totalAngle = -4.4f;
-                    maxTime = Owner.itemTimeMax * 3;
+                    maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27 + 22;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     //distanceToOwner = -Projectile.height / 2;
                     delay = 4;
@@ -299,7 +299,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 6 when innerCombo == 2://普通突刺3
                     startAngle = 0.001f;
                     totalAngle = 0.001f;
-                    maxTime = Owner.itemTimeMax * 2;
+                    maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27;
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     distanceToOwner = -Projectile.height / 2;
                     delay = 20;
@@ -384,7 +384,7 @@ namespace Coralite.Content.Items.Nightmare
                 Over:
                     startAngle = 0.001f;
                     totalAngle = -8f;
-                    maxTime = Owner.itemTimeMax * 4;
+                    maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27 + 22 * 2;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     distanceToOwner = -Projectile.height / 2;
                     delay = 18;

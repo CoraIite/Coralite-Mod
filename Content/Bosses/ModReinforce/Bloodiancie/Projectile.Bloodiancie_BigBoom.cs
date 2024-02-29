@@ -37,13 +37,13 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
             for (int i = 0; i < 5; i++)
             {
-                Particle.NewParticle(center, Helper.NextVec2Dir(38,40), type, red, Main.rand.NextFloat(0.15f, 0.2f));
+                Particle.NewParticle(center, Helper.NextVec2Dir(38, 40), type, red, Main.rand.NextFloat(0.15f, 0.2f));
             }
             for (int i = 0; i < 10; i++)
             {
                 Particle.NewParticle(center, Helper.NextVec2Dir(24, 30), type, red, Main.rand.NextFloat(0.1f, 0.15f));
                 Particle.NewParticle(center, Helper.NextVec2Dir(24, 30), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
-                Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, Helper.NextVec2Dir(6,10), Scale: Main.rand.NextFloat(2f, 2.4f));
+                Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, Helper.NextVec2Dir(6, 10), Scale: Main.rand.NextFloat(2f, 2.4f));
                 dust.noGravity = true;
             }
 

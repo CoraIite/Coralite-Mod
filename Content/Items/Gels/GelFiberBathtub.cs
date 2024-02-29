@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Gels
 {
-    public class GelFiberBathtub:BasePlaceableItem
+    public class GelFiberBathtub : BasePlaceableItem
     {
         public GelFiberBathtub() : base(0, ItemRarityID.White, ModContent.TileType<GelFiberBathtubTile>(), AssetDirectory.GelItems)
         {

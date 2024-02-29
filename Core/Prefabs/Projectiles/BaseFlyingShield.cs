@@ -148,12 +148,12 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void Chasing()
         {
             if (canChase)
-                if (Helper.TryFindClosestEnemy(Projectile.Center, Timer * shootSpeed+Projectile.width*4, n => n.CanBeChasedBy()&&Projectile.localNPCImmunity[n.whoAmI]==0, out NPC target))
+                if (Helper.TryFindClosestEnemy(Projectile.Center, Timer * shootSpeed + Projectile.width * 4, n => n.CanBeChasedBy() && Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
                 {
                     float selfAngle = Projectile.velocity.ToRotation();
                     float targetAngle = (target.Center - Projectile.Center).ToRotation();
 
-                    Projectile.velocity = selfAngle.AngleLerp(targetAngle,(1 - Timer / flyingTime)).ToRotationVector2() * shootSpeed;
+                    Projectile.velocity = selfAngle.AngleLerp(targetAngle, (1 - Timer / flyingTime)).ToRotationVector2() * shootSpeed;
                 }
         }
 

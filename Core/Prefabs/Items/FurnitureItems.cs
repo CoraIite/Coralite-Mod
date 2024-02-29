@@ -436,7 +436,7 @@ namespace Coralite.Core.Prefabs.Items
         }
     }
 
-    public abstract class BasePlaceableItem:ModItem
+    public abstract class BasePlaceableItem : ModItem
     {
         private readonly int Value;
         private readonly int Rare;

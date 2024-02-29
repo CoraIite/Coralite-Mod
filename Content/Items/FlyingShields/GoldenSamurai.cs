@@ -38,7 +38,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             CreateRecipe()
                 .AddIngredient<RemainsOfSamurai>()
-                .AddIngredient(ItemID.GoldBar,10)
+                .AddIngredient(ItemID.GoldBar, 10)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
@@ -65,7 +65,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override Color GetColor(float factor)
         {
-            return new Color(238,202,158)*factor;
+            return new Color(238, 202, 158) * factor;
         }
     }
 

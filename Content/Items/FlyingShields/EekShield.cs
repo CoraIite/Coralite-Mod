@@ -96,7 +96,7 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class EekShieldEXProj:ModProjectile
+    public class EekShieldEXProj : ModProjectile
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + "EekShield";
 
@@ -134,7 +134,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override bool PreDraw(ref Color lightColor)
         {
             lightColor *= alpha;
-            Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 6, 1, 6, 1, extraRot: -1.57f,scale: 0.5f);
+            Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 6, 1, 6, 1, extraRot: -1.57f, scale: 0.5f);
             Projectile.QuickDraw(lightColor, 0.5f, -1.57f);
             return false;
         }

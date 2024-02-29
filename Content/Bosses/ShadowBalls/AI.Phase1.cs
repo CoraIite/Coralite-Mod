@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Content.WorldGeneration;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;

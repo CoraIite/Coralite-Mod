@@ -67,7 +67,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
                 Projectile p = projectile.Projectile;
                 Vector2 dir = p.rotation.ToRotationVector2();
-                p.NewProjectileFromThis<TerracrestSpike>(p.Center, dir * Main.rand.NextFloat(17f, 19f)*p.scale,
+                p.NewProjectileFromThis<TerracrestSpike>(p.Center, dir * Main.rand.NextFloat(17f, 19f) * p.scale,
                      damage, p.knockBack, Owner.whoAmI, ai1: 14);
 
                 for (int i = -1; i < 2; i += 2)
@@ -78,10 +78,10 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
                     p.NewProjectileFromThis<TerracrestSpike>(p.Center + Owner.direction * i * (p.rotation + 1.57f).ToRotationVector2() * Main.rand.NextFloat(8, 16)
                         , aimDir * Main.rand.NextFloat(10f, 14f) * p.scale,
-                         (int)(damage*0.95f), p.knockBack, Owner.whoAmI, ai1: Main.rand.NextFloat(12, 14));
+                         (int)(damage * 0.95f), p.knockBack, Owner.whoAmI, ai1: Main.rand.NextFloat(12, 14));
                 }
 
-                p.NewProjectileFromThis<TerracrestSpike>(p.Center + Main.rand.NextVector2Circular(12,12)
+                p.NewProjectileFromThis<TerracrestSpike>(p.Center + Main.rand.NextVector2Circular(12, 12)
                     , dir.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(8f, 16f) * p.scale,
                      (int)(damage * 0.95f), p.knockBack, Owner.whoAmI, ai1: Main.rand.NextFloat(8, 12));
 
@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                     MovementVector = dir,
                     PositionInWorld = projectile.Projectile.Center,
                     UniqueInfoPiece = 90,
-                }) ;
+                });
 
                 if (cp.parryTime < 250)
                     cp.parryTime += 80;
@@ -168,7 +168,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             if (Timer < ShootTime)
             {
                 Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(TrailWidth, TrailWidth) / 2, DustID.TerraBlade,
-                    Projectile.rotation.ToRotationVector2() * Main.rand.NextFloat(1f, 4f),Scale:Main.rand.NextFloat(0.5f,1f));
+                    Projectile.rotation.ToRotationVector2() * Main.rand.NextFloat(1f, 4f), Scale: Main.rand.NextFloat(0.5f, 1f));
                 if (Main.rand.NextBool())
                     dust.noGravity = true;
                 if (Timer < 14)
@@ -196,7 +196,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             trail.Positions = Projectile.oldPos;
 
             Timer++;
-            if (Timer>DelayTime)
+            if (Timer > DelayTime)
             {
                 Projectile.Kill();
             }
@@ -233,10 +233,11 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             trail.Render(effect);
         }
 
-        public override bool PreDraw(ref Color lightColor) {
+        public override bool PreDraw(ref Color lightColor)
+        {
 
             Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, Projectile.oldPos[12] - Main.screenPosition,
-                Color.White, Color.LimeGreen, Timer / 35, 0, 0.2f, 0.6f, 1, Projectile.rotation+1.57f,
+                Color.White, Color.LimeGreen, Timer / 35, 0, 0.2f, 0.6f, 1, Projectile.rotation + 1.57f,
                 new Vector2(0.1f, 2.4f), Vector2.One);
             //ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, Projectile.oldPos[12] - Main.screenPosition,
             //    Color.White, Color.LimeGreen, Timer / 35, 0, 0.2f, 0.6f, 1, Projectile.rotation+MathHelper.PiOver4,

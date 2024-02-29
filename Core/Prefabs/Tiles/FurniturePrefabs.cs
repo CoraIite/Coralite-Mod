@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using rail;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -250,7 +249,7 @@ namespace Coralite.Core.Prefabs.Tiles
             tile.AddMapEntry(mapColor, name);
         }
 
-        public static void DropLight2Prefab(this ModTile tile, int width,int height, int[] coordinateHeights, int dustType, Color mapColor, bool LavaDeath = true)
+        public static void DropLight2Prefab(this ModTile tile, int width, int height, int[] coordinateHeights, int dustType, Color mapColor, bool LavaDeath = true)
         {
             Main.tileLighted[tile.Type] = true;
             Main.tileNoAttach[tile.Type] = true;
@@ -328,7 +327,7 @@ namespace Coralite.Core.Prefabs.Tiles
             tile.AddMapEntry(mapColor, name);
         }
 
-        public static void FloorLampPrefab(this ModTile tile, int width,int height, int[] heights,int dustType, Color mapColor, bool LavaDeath = true)
+        public static void FloorLampPrefab(this ModTile tile, int width, int height, int[] heights, int dustType, Color mapColor, bool LavaDeath = true)
         {
             Main.tileLighted[tile.Type] = true;
             Main.tileNoAttach[tile.Type] = true;

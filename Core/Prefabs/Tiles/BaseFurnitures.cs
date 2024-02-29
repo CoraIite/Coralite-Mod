@@ -1,10 +1,7 @@
-﻿using Coralite.Content.Items.RedJades;
-using Coralite.Content.Tiles.RedJades;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
@@ -630,7 +627,7 @@ namespace Coralite.Core.Prefabs.Tiles
         }
     }
 
-    public abstract class BaseSinkTile:BaseTile
+    public abstract class BaseSinkTile : BaseTile
     {
         private readonly int dustType;
         private readonly Color mapColor;
@@ -929,7 +926,7 @@ namespace Coralite.Core.Prefabs.Tiles
         }
     }
 
-    public abstract class BaseDoorOpenTile<TItem,TClosed> : BaseTile where TItem : ModItem where TClosed : ModTile
+    public abstract class BaseDoorOpenTile<TItem, TClosed> : BaseTile where TItem : ModItem where TClosed : ModTile
     {
         private readonly int dustType;
         private readonly Color mapColor;
@@ -956,7 +953,7 @@ namespace Coralite.Core.Prefabs.Tiles
         }
     }
 
-    public abstract class BaseDoorClosedTile<TItem,TOpen> : BaseTile where TItem : ModItem where TOpen : ModTile
+    public abstract class BaseDoorClosedTile<TItem, TOpen> : BaseTile where TItem : ModItem where TOpen : ModTile
     {
         private readonly int dustType;
         private readonly Color mapColor;

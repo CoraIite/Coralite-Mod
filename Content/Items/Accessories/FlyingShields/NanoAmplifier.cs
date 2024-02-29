@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
                 || equippedItem.type == ModContent.ItemType<FlyingShieldCore>()//与重型冲突
                 || equippedItem.type == ModContent.ItemType<HeavyWedges>())//与重型冲突
-                
+
                 && incomingItem.type == ModContent.ItemType<NanoAmplifier>());
         }
 

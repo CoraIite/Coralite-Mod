@@ -37,14 +37,14 @@ namespace Coralite.Content.WorldGeneration
                                                                    or WallID.BlueDungeonSlabUnsafe or WallID.GreenDungeonSlabUnsafe or WallID.PinkDungeonSlabUnsafe
                                                                    or WallID.BlueDungeonTileUnsafe or WallID.GreenDungeonTileUnsafe or WallID.PinkDungeonTileUnsafe)
                                     {
-                                        if (WorldGen.genRand.NextBool(10,100))
+                                        if (WorldGen.genRand.NextBool(10, 100))
                                             foreach (var item in chest.item)
                                                 if (item.IsAir)
                                                 {
                                                     item.SetDefaults(ModContent.ItemType<MaintenanceFluid>());
                                                     break;
                                                 }
-                                        if (WorldGen.genRand.NextBool(10,100))
+                                        if (WorldGen.genRand.NextBool(10, 100))
                                             foreach (var item in chest.item)
                                                 if (item.IsAir)
                                                 {

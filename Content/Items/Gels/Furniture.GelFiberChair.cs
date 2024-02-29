@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Gels
 {
-    public class GelFiberChair:BaseChairItem
+    public class GelFiberChair : BaseChairItem
     {
         public GelFiberChair() : base(0, ItemRarityID.White, ModContent.TileType<GelFiberChairTile>(), AssetDirectory.GelItems)
         {

@@ -2703,6 +2703,11 @@ Mods: {
 				DisplayName: 凝胶纤维工作台
 				Tooltip: ""
 			}
+
+			PirateKingHat: {
+				// DisplayName: Pirate King Hat
+				// Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2959,6 +2964,7 @@ Mods: {
 			ShadowBall.DisplayName: 影子球
 			SmallShadowBall.DisplayName: 小影子球
 			// Biskety.DisplayName: Biskety
+			// ThunderveinDragon.DisplayName: Thundervein Dragon
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -3303,6 +3309,7 @@ Mods: {
 			SandWallGuard.DisplayName: 古沙之壁
 			SandWallProj.DisplayName: 古沙之壁
 			SandWallStorm.DisplayName: 沙龙卷
+			// LightingDash.DisplayName: Lighting Dash
 		}
 
 		Configs: {
@@ -3434,6 +3441,7 @@ Mods: {
 				Chapter1: -第一章 认识魔能-
 				Chapter2: -第二章 探索发现-
 				// Chapter3: -第三章 基础仪器-
+				// Chapter4: -第四章 手持仪器-
 			}
 
 			C1_ChapterName: {
@@ -3584,6 +3592,14 @@ Mods: {
 				// HellLens: "    地狱透镜需要被放置在地狱环境中。比岩浆更深的地方，有一个巨大的空间，那是恶魔们的住所。被雕刻成恶魔头颅形状的黑曜石包裹着中心的晶体，漂浮在狱岩石底座之上。"
 				// GlowingMushroomLens: "    夜光菇透镜需要被放置在夜光蘑菇环境中。地底深处亮起的蓝色光芒，这是地下为数不多的光源。据说一种稀有的饵料就生活在这个地方。夜光蘑菇的菌丝包裹着中心的水晶，漂浮在菌柄上。"
 				// BoneLens: "    骸骨透镜需要呗放置在地牢环境中。深邃的回廊中传来哀嚎声，这是地牢的幽魂在讨论他们的午饭。扭曲的骨头上镶嵌着水晶，漂浮在地牢砖块之上。"
+			}
+
+			// C4_ChapterName.ChapterName: 第四章 手持仪器
+
+			C4_ConnectStaff: {
+				// TitleName: 魔能连接仪
+				// ConnectStaff1: "    魔能仪器之间需要手动地建立连接，而魔能连接仪就是为此而生的。左键单击一个具有发送功能的魔能仪器，将会唤出一个面板，上面的空位就是该仪器的连接槽位。点击槽位后就可以开始连接了，大部分仪器都有传输距离的限制，超出距离的话连接线将变为红色。"
+				// ConnectStaff2: "    点击一个范围内的魔能仪器就可以在两者之间建立起连接了，魔能将会自动的从发送器发向接收器。"
 			}
 		}
 

@@ -4,9 +4,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
-    public class ShadowBallSmash:ModProjectile
+    public class ShadowBallSmash : ModProjectile
     {
-        public override string Texture => AssetDirectory.ShadowBalls+Name;
+        public override string Texture => AssetDirectory.ShadowBalls + Name;
 
         ref float State => ref Projectile.ai[0];
 

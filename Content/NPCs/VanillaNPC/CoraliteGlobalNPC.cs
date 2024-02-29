@@ -52,7 +52,7 @@ namespace Coralite.Content.NPCs.VanillaNPC
                     npcLoot.Add(ItemDropRule.Common(ItemType<EyeballSeed>(), 25));
                     break;
                 case NPCID.CaveBat:
-                    npcLoot.Add(ItemDropRule.Common(ItemType<BatfangShield>(), 120,1,1));
+                    npcLoot.Add(ItemDropRule.Common(ItemType<BatfangShield>(), 120, 1, 1));
                     break;
                 //case NPCID.DarkCaster://地牢怪掉落影子
                 //    npcLoot.Add(ItemDropRule.Common(ItemType<ShadowEnergy>(), 3, 1, 3));
@@ -96,7 +96,7 @@ namespace Coralite.Content.NPCs.VanillaNPC
 
                 case NPCID.EyeofCthulhu://克眼，脑子，世吞掉落美味肉排
                 case NPCID.BrainofCthulhu://克眼，脑子，世吞掉落美味肉排
-                    npcLoot.Add(ItemDropRule.Common( ItemType<DeliciousSteak>(), 6, 1, 1));
+                    npcLoot.Add(ItemDropRule.Common(ItemType<DeliciousSteak>(), 6, 1, 1));
                     break;
                 case NPCID.EaterofWorldsBody://克眼，脑子，世吞掉落美味肉排
                 case NPCID.Creeper://克眼，脑子，世吞掉落美味肉排

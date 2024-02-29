@@ -3,7 +3,6 @@ using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

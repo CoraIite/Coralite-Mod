@@ -63,9 +63,9 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public enum GuardType
         {
-            notGuard=0,
-            Projectile=1,
-            NPC=2
+            notGuard = 0,
+            Projectile = 1,
+            NPC = 2
         }
 
         public override bool ShouldUpdatePosition() => false;
@@ -85,7 +85,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override bool? CanDamage()
         {
-            if (State == (int)GuardState.Delay || State == (int)GuardState.ParryDelay|| DistanceToOwner < GetWidth())
+            if (State == (int)GuardState.Delay || State == (int)GuardState.ParryDelay || DistanceToOwner < GetWidth())
                 return false;
             return base.CanDamage();
         }
@@ -238,7 +238,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <returns></returns>
         public virtual float GetWidth()
         {
-            return Projectile.width / 2/Projectile.scale + 8;
+            return Projectile.width / 2 / Projectile.scale + 8;
         }
 
         public virtual int CheckCollide()
@@ -410,7 +410,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             return false;
         }
 
-        public virtual void DrawSelf(Texture2D mainTex,Vector2 pos,float rotation,Color lightColor,Vector2 scale,SpriteEffects effect)
+        public virtual void DrawSelf(Texture2D mainTex, Vector2 pos, float rotation, Color lightColor, Vector2 scale, SpriteEffects effect)
         {
             var origin = mainTex.Size() / 2;
             Vector2 dir = Projectile.rotation.ToRotationVector2() * (DistanceToOwner / (Projectile.width * scalePercent));

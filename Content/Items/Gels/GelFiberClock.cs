@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Gels
 {
-    public class GelFiberClock:BasePlaceableItem
+    public class GelFiberClock : BasePlaceableItem
     {
         public GelFiberClock() : base(0, ItemRarityID.White, ModContent.TileType<GelFiberClockTile>(), AssetDirectory.GelItems)
         {

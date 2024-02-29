@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.Gel
 {
-    public class GelFiberBookcaseTile:ModTile
+    public class GelFiberBookcaseTile : ModTile
     {
         public override string Texture => AssetDirectory.GelTiles + Name;
 

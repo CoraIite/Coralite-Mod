@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Bosses.ShadowBalls;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
@@ -133,6 +132,21 @@ namespace Coralite.Helpers
             }
         }
 
+        /// <summary>
+        /// 根据NPC与目标的位置关系快速设置<br></br>
+        /// <see cref="NPC.spriteDirection"/><br></br>
+        /// <see cref="NPC.directionY"/><br></br>
+        /// <see cref="Entity.direction"/>
+        /// </summary>
+        /// <param name="npc"></param>
+        public static void QuickSetDirection(this NPC npc)
+        {
+            Player p = Main.player[npc.target];
+
+            npc.direction = npc.spriteDirection = p.Center.X > npc.Center.X ? 1 : -1;
+            npc.directionY = p.Center.Y > npc.Center.Y ? 1 : -1;
+        }
+
         [DebuggerHidden]
         public static int NewProjectileInAI(this NPC npc, Vector2 position, Vector2 velocity, int type, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
         {
@@ -158,6 +172,44 @@ namespace Coralite.Helpers
         {
             return Projectile.NewProjectileDirect(npc.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockBack, owner, ai0, ai1, ai2);
         }
+
+        public static void InitOldPosCache(this NPC npc, int trailCount, bool useCenter = true)
+        {
+            npc.oldPos = new Vector2[trailCount];
+
+            for (int i = 0; i < trailCount; i++)
+            {
+                if (useCenter)
+                    npc.oldPos[i] = npc.Center;
+                else
+                    npc.oldPos[i] = npc.position;
+            }
+        }
+
+        public static void InitOldRotCache(this NPC npc, int trailCount)
+        {
+            npc.oldRot = new float[trailCount];
+
+            for (int i = 0; i < trailCount; i++)
+            {
+                npc.oldRot[i] = npc.rotation;
+            }
+        }
+
+        public static void UpdateOldPosCache(this NPC npc, bool useCenter = true, bool addVelocity = true)
+        {
+            for (int i = 0; i < npc.oldPos.Length - 1; i++)
+                npc.oldPos[i] = npc.oldPos[i + 1];
+            npc.oldPos[^1] = (useCenter ? npc.Center : npc.position) + (addVelocity ? npc.velocity : Vector2.Zero);
+        }
+
+        public static void UpdateOldRotCache(this NPC npc)
+        {
+            for (int i = 0; i < npc.oldRot.Length - 1; i++)
+                npc.oldRot[i] = npc.oldRot[i + 1];
+            npc.oldRot[^1] = npc.rotation;
+        }
+
 
     }
 }

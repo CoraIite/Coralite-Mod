@@ -5,13 +5,13 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.Gel
 {
-    public class GelFiberCandleTile:ModTile
+    public class GelFiberCandleTile : ModTile
     {
         public override string Texture => AssetDirectory.GelTiles + Name;
 
         public override void SetStaticDefaults()
         {
-            this.NormalCandlePrefab( DustID.Water, new Microsoft.Xna.Framework.Color(0, 138, 122));
+            this.NormalCandlePrefab(DustID.Water, new Microsoft.Xna.Framework.Color(0, 138, 122));
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

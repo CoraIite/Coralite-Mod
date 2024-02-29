@@ -2,6 +2,7 @@
 using Coralite.Content.UI.MagikeGuideBook.Chapter1;
 using Coralite.Content.UI.MagikeGuideBook.Chapter2;
 using Coralite.Content.UI.MagikeGuideBook.Chapter3;
+using Coralite.Content.UI.MagikeGuideBook.Chapter4;
 using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Coralite.Core.Loaders;
@@ -25,12 +26,14 @@ namespace Coralite.Content.UI.MagikeGuideBook.Introduce
         public static LocalizedText Chapter1 { get; private set; }
         public static LocalizedText Chapter2 { get; private set; }
         public static LocalizedText Chapter3 { get; private set; }
+        public static LocalizedText Chapter4 { get; private set; }
 
         public C0_P2_Catalog()
         {
             Append(new Chapter1Jump());
             Append(new Chapter2Jump());
             Append(new Chapter3Jump());
+            Append(new Chapter4Jump());
         }
 
         public override void Recalculate()
@@ -55,6 +58,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Introduce
             Chapter1 = this.GetLocalization("Chapter1", () => "-第一章 认识魔能-");
             Chapter2 = this.GetLocalization("Chapter2", () => "-第二章 探索发现-");
             Chapter3 = this.GetLocalization("Chapter3", () => "-第三章 基础仪器-");
+            Chapter4 = this.GetLocalization("Chapter4", () => "-第四章 手持仪器-");
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -120,5 +124,13 @@ namespace Coralite.Content.UI.MagikeGuideBook.Introduce
         public override string Text => C0_P2_Catalog.Chapter3.Value;
 
         public Chapter3Jump() : base() { }
+    }
+
+    public class Chapter4Jump : Chapter1Jump
+    {
+        public override int PageToJump => MagikeGuideBookUI.BookPanel.GetPageIndex<C4_ChapterName>();
+        public override string Text => C0_P2_Catalog.Chapter4.Value;
+
+        public Chapter4Jump() : base() { }
     }
 }

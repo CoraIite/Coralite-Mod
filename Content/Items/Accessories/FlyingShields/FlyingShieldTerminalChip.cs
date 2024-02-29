@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         {
             CreateRecipe()
                 .AddIngredient<FlyingShieldCore>()
-                .AddIngredient(ItemID.MartianConduitPlating,40)
+                .AddIngredient(ItemID.MartianConduitPlating, 40)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

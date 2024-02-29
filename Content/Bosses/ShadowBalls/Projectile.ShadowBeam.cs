@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
-    public class ShadowBeam:ModProjectile
+    public class ShadowBeam : ModProjectile
     {
-        public override string Texture => AssetDirectory.ShadowBalls+Name;
+        public override string Texture => AssetDirectory.ShadowBalls + Name;
 
         Vector2 originVelocity;
 
@@ -65,7 +65,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 //加速
                 Projectile.velocity = Vector2.Lerp(Vector2.Zero, originVelocity.SafeNormalize(Vector2.Zero) * 12,
-                    (Projectile.ai[0] - StayTime) / (AccTime-StayTime));
+                    (Projectile.ai[0] - StayTime) / (AccTime - StayTime));
                 Projectile.ai[0]++;
             }
         }
