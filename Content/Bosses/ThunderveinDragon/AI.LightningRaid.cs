@@ -47,11 +47,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             FlyingFrame();
                         }
 
+                        if (NPC.direction!=NPC.oldDirection)
+                            NPC.rotation += 3.141f;
                         float targetRot = NPC.velocity.Length() * 0.03f * NPC.direction + (NPC.direction > 0 ? 0 : MathHelper.Pi);
                         NPC.rotation = NPC.rotation.AngleLerp(targetRot, 0.08f);
 
                         Timer++;
-                        if (Timer > chasingTime || (xLength > 200 && xLength < 400 && yLength < 70))
+                        if (Timer > chasingTime || (xLength > 200 && xLength < 400 && yLength < 150))
                         {
                             SonState++;
                             Timer = 0;
@@ -76,7 +78,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
                            
                             targetrot += Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(0.9f, 1f);
-                            NPC.velocity = targetrot.ToRotationVector2() * 30;
+                            NPC.velocity = targetrot.ToRotationVector2() * 35;
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
                         }
@@ -92,7 +94,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
                             targetrot += (Timer / smallDashTime > 1 ? -1 : 1) * Main.rand.NextFloat(0.4f, 1f);
-                            NPC.velocity = targetrot.ToRotationVector2() * 25;
+                            NPC.velocity = targetrot.ToRotationVector2() * 30;
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
                         }
@@ -119,7 +121,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         NPC.QuickSetDirection();
 
                         float targetRot = NPC.velocity.Length() * 0.03f * NPC.direction + (NPC.direction > 0 ? 0 : MathHelper.Pi);
-                        NPC.rotation = NPC.rotation.AngleLerp(targetRot, 0.08f);
+                        NPC.rotation = targetRot;
 
                         if (NPC.velocity.Length() < 8)
                             NPC.velocity += (NPC.Center - Target.Center).SafeNormalize(Vector2.Zero) * 0.35f;
@@ -166,7 +168,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             NPC.velocity *= 0.8f;
                             FlyingFrame();
-                            if (Math.Abs(NPC.velocity.X) < 0.2f)
+                            if (Math.Abs(NPC.velocity.X) < 2f)
                             {
                                 NPC.QuickSetDirection();
                                 NPC.rotation = NPC.direction > 0 ? 0 : 3.141f;

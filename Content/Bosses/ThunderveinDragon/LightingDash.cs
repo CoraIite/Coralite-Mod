@@ -15,18 +15,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// 使用ai0传入冲刺时间，ai1传入主人
     /// 使用ai2传入闪电每个点间的间隔
     /// </summary>
-    public class LightingDash : ModProjectile
+    public class LightingDash : BaseThunderProj
     {
         public override string Texture => AssetDirectory.Blank;
 
         public ref float DashTime => ref Projectile.ai[0];
         public ref float OwnerIndex => ref Projectile.ai[1];
-        public ref float PointDistance => ref Projectile.ai[2];
         public ref float Timer => ref Projectile.localAI[0];
-        public ref float ThunderWidth => ref Projectile.localAI[1];
-        public ref float ThunderAlpha => ref Projectile.localAI[2];
-
-        private ThunderTrail[] thunderTrails;
 
         public override bool ShouldUpdatePosition() => false;
 
