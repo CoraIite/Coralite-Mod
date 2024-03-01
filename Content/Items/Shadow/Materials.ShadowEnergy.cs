@@ -14,7 +14,9 @@ namespace Coralite.Content.Items.Shadow
         {
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 7));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
-            ItemID.Sets.ItemNoGravity[Item.type] = true;
+            //ItemID.Sets.ItemNoGravity[Item.type] = true;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Bone;
+            ItemID.Sets.ShimmerTransformToItem[ItemID.Bone] = Type;
         }
 
         public override void SetDefaults()

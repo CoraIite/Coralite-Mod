@@ -2705,8 +2705,8 @@ Mods: {
 			}
 
 			PirateKingHat: {
-				// DisplayName: Pirate King Hat
-				// Tooltip: ""
+				DisplayName: 海盗王的鲨鱼帽
+				Tooltip: ""
 			}
 		}
 
@@ -2964,7 +2964,7 @@ Mods: {
 			ShadowBall.DisplayName: 影子球
 			SmallShadowBall.DisplayName: 小影子球
 			// Biskety.DisplayName: Biskety
-			// ThunderveinDragon.DisplayName: Thundervein Dragon
+			ThunderveinDragon.DisplayName: 荒雷龙
 		}
 
 		Prefixes.支配.DisplayName: 支配

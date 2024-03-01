@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Magike.Columns
         {
             PolymerizeRecipe.CreateRecipe<CrimtaneColumn>(75)
                 .SetMainItem<CrystalColumn>()
-                .AddIngredient<GlistentBar>(4)
+                .AddIngredient<GlistentBar>(2)
                 .AddIngredient(ItemID.TissueSample, 8)
                 .Register();
         }

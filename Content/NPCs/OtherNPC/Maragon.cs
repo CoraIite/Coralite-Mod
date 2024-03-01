@@ -81,6 +81,9 @@ namespace Coralite.Content.NPCs.OtherNPC
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
+            if (spawnInfo.Player.townNPCs > 2f)
+                return 0;
+
             if (spawnInfo.Player.statLifeMax2 > 150 && !Main.dayTime && spawnInfo.Player.ZoneOverworldHeight)
                 return 0.04f;
             return 0f;

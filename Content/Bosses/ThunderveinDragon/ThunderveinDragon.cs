@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
+using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -29,8 +30,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public readonly int trailCacheLength = 12;
         public Point[] oldFrame;
+        public int[] oldDirection;
 
         public bool canDrawShadows;
+        public bool isDashing;
 
         #region tmlHooks
 
@@ -205,7 +208,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void OnSpawn(IEntitySource source)
         {
-            ResetOldCaches();
+            ResetAllOldCaches();
             Phase = 1;
             State = (int)AIStates.LightningRaid;
         }
@@ -250,13 +253,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         }
 
 
-
         #endregion
 
         #region States
 
         public void ResetStates()
         {
+            canDrawShadows = false;
             Timer = 0;
             SonState = 0;
 
@@ -294,7 +297,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         }
 
         /// <summary>
-        /// 
+        /// 向上飞，会改变速度
         /// </summary>
         /// <param name="acc">加速度</param>
         /// <param name="velMax">速度最大值</param>
@@ -338,6 +341,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 oldFrame[i] = new Point(NPC.frame.X, NPC.frame.Y);
         }
 
+        public void InitOldDirection()
+        {
+            oldDirection ??= new int[trailCacheLength];
+            for (int i = 0; i < trailCacheLength; i++)
+                oldDirection[i] = NPC.spriteDirection;
+        }
+
         public void UpdateOldFrame()
         {
             for (int i = 0; i < oldFrame.Length - 1; i++)
@@ -345,11 +355,27 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             oldFrame[^1] = new Point(NPC.frame.X, NPC.frame.Y);
         }
 
-        public void ResetOldCaches()
+        public void UpdateOldDirection()
+        {
+            for (int i = 0; i < oldDirection.Length - 1; i++)
+                oldDirection[i] = oldDirection[i + 1];
+            oldDirection[^1] = NPC.spriteDirection;
+        }
+
+        public void ResetAllOldCaches()
         {
             NPC.InitOldPosCache(trailCacheLength);
-            NPC.InitOldPosCache(trailCacheLength);
+            NPC.InitOldRotCache(trailCacheLength);
             InitOldFrame();
+            InitOldDirection();
+        }
+
+        public void UpdateAllOldCaches()
+        {
+            NPC.UpdateOldPosCache();
+            NPC.UpdateOldRotCache();
+            UpdateOldFrame();
+            UpdateOldDirection();
         }
 
         #endregion
@@ -375,11 +401,37 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             if (canDrawShadows)
             {
-                Color shadowColor = new Color();
+                Color shadowColor = new Color(255, 202, 101, 50);
+
+                for (int i = 0; i < trailCacheLength; i++)
+                {
+                    Vector2 oldPos = NPC.oldPos[i] - screenPos;
+                    float oldrot = NPC.oldRot[i];
+                    var frameOld = mainTex.Frame(3, 8, oldFrame[i].X, oldFrame[i].Y);
+                    float factor = (float)i / trailCacheLength;
+
+                    SpriteEffects oldEffect = oldDirection[i] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+                    Main.spriteBatch.Draw(mainTex, oldPos, frameOld, shadowColor * factor, oldrot, origin
+                        , NPC.scale * 1.1f * (1 - (1 - factor) * 0.3f), oldEffect, 0);
+                }
             }
 
             //绘制自己
             Main.spriteBatch.Draw(mainTex, pos, frameBox, drawColor, rot, origin, NPC.scale, effects, 0);
+
+            if (isDashing)
+            {
+                Texture2D exTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "StrikeTrail").Value;
+
+                Vector2 exOrigin = new Vector2(exTex.Width * 6 / 10, exTex.Height / 2);
+
+                Vector2 scale = new Vector2(1.3f, 1.5f) * NPC.scale;
+                Main.spriteBatch.Draw(exTex, pos, null, new Color(255, 202, 101, 0), rot
+                    , exOrigin, scale, effects, 0);
+                scale.Y *= 1.2f;
+                Main.spriteBatch.Draw(exTex, pos-NPC.rotation.ToRotationVector2()*50, null, new Color(255, 202, 101, 0) * 0.5f, rot
+                    , exOrigin, scale, effects, 0);
+            }
 
             return false;
         }

@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.CoreKeeper
             Main.tileLavaDeath[Type] = false;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
-            MinPick = int.MaxValue;
+            MinPick = 220;
             DustType = DustID.Obsidian;
             MineResist = 0.3f;
             AddMapEntry(new Microsoft.Xna.Framework.Color(7, 60, 49));

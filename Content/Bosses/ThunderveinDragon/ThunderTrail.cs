@@ -19,9 +19,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         private Func<float, float> thunderWidthFunc;
         private Func<float, Color> thunderColorFunc;
-        public (float, float) thunderRandomRange;
+        private (float, float) thunderRandomOffsetRange;
 
         public Asset<Texture2D> ThunderTex { get; private set; }
+
+        private float randomExpandWidth;
 
         public ThunderTrail(Asset<Texture2D> thunderTex, Func<float, float> widthFunc, Func<float, Color> colorFunc)
         {
@@ -40,9 +42,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (range.Item1 > range.Item2)
                 throw new Exception("第一个元素不可以比第二个元素大!");
 
-            thunderRandomRange = range;
+            thunderRandomOffsetRange = range;
         }
 
+        public void SetExpandWidth(float width)
+        {
+            randomExpandWidth= width;
+        }
+
+        public void ExchangeTexture(Asset<Texture2D> asset)
+        {
+            ThunderTex = asset;
+        }
+
+        /// <summary>
+        /// 随机改变闪电形状
+        /// </summary>
         public void RandomThunder()
         {
             RandomlyPositions = new Vector2[BasePositions.Length];
@@ -59,10 +74,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 Vector2 normal = (BasePositions[i - 1] - BasePositions[i + 1]).SafeNormalize(Vector2.One).RotatedBy(MathHelper.PiOver2);
 
                 //长度
-                float length = Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(thunderRandomRange.Item1, thunderRandomRange.Item2);
+                float length = Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(thunderRandomOffsetRange.Item1, thunderRandomOffsetRange.Item2);
 
                 //最后赋值
-                RandomlyPositions[i] = BasePositions[i] + normal * length;
+                RandomlyPositions[i] = BasePositions[i] + normal * length+Main.rand.NextVector2Circular(randomExpandWidth,randomExpandWidth);
             }
 
             RandomlyPositions[^1] = BasePositions[^1];
@@ -75,6 +90,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             Texture2D Texture = ThunderTex.Value;
             List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars2 = new List<CustomVertexInfo>();
 
             int trailCachesLength = RandomlyPositions.Length;
 
@@ -85,12 +101,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             //先添加0的
             Vector2 Center = RandomlyPositions[0] - Main.screenPosition;
 
-            Vector2 normal = RandomlyPositions[1] - RandomlyPositions[0].SafeNormalize(Vector2.One).RotatedBy(MathHelper.PiOver2);
+            Vector2 normal = (RandomlyPositions[1] - RandomlyPositions[0]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
             Color thunderColor = thunderColorFunc(0);
             float tipWidth = thunderWidthFunc(0);
             Vector2 lengthVec2 = normal * tipWidth;
-            bars.Add(new(Center + lengthVec2, thunderColor, new Vector3(0, 0, 1)));
-            bars.Add(new(Center - lengthVec2, thunderColor, new Vector3(0, 1, 1)));
+            bars.Add(new(Center + lengthVec2, thunderColor, new Vector3(0, 0, 0)));
+            bars.Add(new(Center - lengthVec2, thunderColor, new Vector3(0, 1, 0)));
+            bars2.Add(new(Center + lengthVec2, thunderColor, new Vector3(0, 0, 0)));
+            bars2.Add(new(Center - lengthVec2, thunderColor, new Vector3(0, 1, 0)));
 
             for (int i = 1; i < trailCachesLength - 1; i++)
             {
@@ -102,27 +120,32 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                  *                  C
                  * AC连线的垂直点作为B的法向量
                  */
-                normal = (RandomlyPositions[i - 1] - RandomlyPositions[i + 1].SafeNormalize(Vector2.One).RotatedBy(MathHelper.PiOver2));
+                normal = (RandomlyPositions[i - 1] - RandomlyPositions[i + 1]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
                 float width = thunderWidthFunc(factor);
 
                 Vector2 Top = Center + normal * width;
                 Vector2 Bottom = Center - normal * width;
 
                 thunderColor = thunderColorFunc(factor);
-                bars.Add(new(Top, thunderColor, new Vector3(factor, 0, 1)));
-                bars.Add(new(Bottom, thunderColor, new Vector3(factor, 1, 1)));
+                bars.Add(new(Top, thunderColor, new Vector3(factor, 0, 0)));
+                bars.Add(new(Bottom, thunderColor, new Vector3(factor, 1, 0)));
+                bars2.Add(new(Center + normal * width / 3, thunderColor, new Vector3(factor, 0, 0)));
+                bars2.Add(new(Center - normal * width / 3, thunderColor, new Vector3(factor, 1, 0)));
             }
 
             Center = RandomlyPositions[^1] - Main.screenPosition;
-            normal = RandomlyPositions[^2] - RandomlyPositions[^1].SafeNormalize(Vector2.One).RotatedBy(MathHelper.PiOver2);
+            normal = (RandomlyPositions[^2] - RandomlyPositions[^1]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
             thunderColor = thunderColorFunc(1);
             float bottomWidth = thunderWidthFunc(1);
             lengthVec2 = normal * bottomWidth;
-            bars.Add(new(Center + lengthVec2, thunderColor, new Vector3(1, 0, 1)));
-            bars.Add(new(Center - lengthVec2, thunderColor, new Vector3(1, 1, 1)));
+            bars.Add(new(Center + lengthVec2, thunderColor, new Vector3(1, 0, 0)));
+            bars.Add(new(Center - lengthVec2, thunderColor, new Vector3(1, 1, 0)));
+            bars2.Add(new(Center + lengthVec2, thunderColor, new Vector3(1, 0, 0)));
+            bars2.Add(new(Center - lengthVec2, thunderColor, new Vector3(1, 1, 0)));
 
             Main.graphics.GraphicsDevice.Textures[0] = Texture;
             Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars2.ToArray(), 0, bars2.Count - 2);
         }
     }
 }

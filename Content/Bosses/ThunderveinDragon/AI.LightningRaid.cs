@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.Audio;
 
@@ -10,6 +11,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     {
         public void LightningRaidP1()
         {
+            const int smallDashTime = 12;
+            const int bigDashTime = 25;
+
             switch (SonState)
             {
                 default:
@@ -31,7 +35,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.velocity.X *= 0.95f;
 
                         if (NPC.directionY < 0)
-                            FlyingUp(0.25f, 15, 0.95f);
+                            FlyingUp(0.35f, 15, 0.9f);
                         else if (yLength > 70)
                         {
                             Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 15f, 0.25f, 0.6f, 0.95f);
@@ -45,40 +49,58 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                         float targetRot = NPC.velocity.Length() * 0.03f * NPC.direction + (NPC.direction > 0 ? 0 : MathHelper.Pi);
                         NPC.rotation = NPC.rotation.AngleLerp(targetRot, 0.08f);
+
                         Timer++;
                         if (Timer > chasingTime || (xLength > 200 && xLength < 400 && yLength < 70))
                         {
                             SonState++;
                             Timer = 0;
                             DashFrame();
+                            ResetAllOldCaches();
+                            canDrawShadows = true;
+                            isDashing = true;
                         }
                     }
                     break;
                 case 1://开始乱窜几下
                     {
-                        const int dashTime = 15;
-
                         if (Timer == 0)
                         {
                             //生成弹幕并随机速度方向
-
-                            SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
+                            NPC.TargetClosest();
+                            int damage = Helper.ScaleValueForDiffMode(30, 40, 35, 30);
+                            NPC.NewProjectileDirectInAI<LightingDash>(NPC.Center, Vector2.Zero, damage, 0
+                                , NPC.target, smallDashTime, NPC.whoAmI,40);
+                            
+                            SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
-                            targetrot += Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(1f, 1.37f);
-                            NPC.velocity = targetrot.ToRotationVector2() * 16;
+                           
+                            targetrot += Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(0.9f, 1f);
+                            NPC.velocity = targetrot.ToRotationVector2() * 30;
                             NPC.rotation = NPC.velocity.ToRotation();
+                            NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
                         }
-                        else if (Timer % dashTime == 0)
+                        else if (Timer % smallDashTime == 0)
                         {
-                            SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
+                            NPC.TargetClosest();
+
+                            int damage = Helper.ScaleValueForDiffMode(30, 40, 35, 30);
+                            NPC.NewProjectileDirectInAI<LightingDash>(NPC.Center, Vector2.Zero, damage, 0
+                                , NPC.target, smallDashTime, NPC.whoAmI,40);
+
+                            SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
+                            
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
-                            targetrot += (Timer / dashTime > 1 ? -1 : 1) * Main.rand.NextFloat(1f, 1.37f);
-                            NPC.velocity = targetrot.ToRotationVector2() * 16;
+                            targetrot += (Timer / smallDashTime > 1 ? -1 : 1) * Main.rand.NextFloat(0.4f, 1f);
+                            NPC.velocity = targetrot.ToRotationVector2() * 25;
                             NPC.rotation = NPC.velocity.ToRotation();
+                            NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
                         }
+
+                        UpdateAllOldCaches();
 
                         Timer++;
-                        if (Timer > dashTime * 3 - 2)
+                        if (Timer > smallDashTime * 3 - 2)
                         {
                             SonState++;
                             Timer = 0;
@@ -87,6 +109,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.frame.Y = 4;
                             NPC.frameCounter = 0;
                             NPC.rotation = NPC.direction > 0 ? 0 : 3.141f;
+                            NPC.TargetClosest();
+                            isDashing = false;
                         }
                     }
                     break;
@@ -98,9 +122,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         NPC.rotation = NPC.rotation.AngleLerp(targetRot, 0.08f);
 
                         if (NPC.velocity.Length() < 8)
-                        {
-                            NPC.velocity += (NPC.Center - Target.Center).SafeNormalize(Vector2.Zero) * 0.25f;
-                        }
+                            NPC.velocity += (NPC.Center - Target.Center).SafeNormalize(Vector2.Zero) * 0.35f;
+
+                        UpdateAllOldCaches();
+
                         //向后扇一下翅膀
                         if (++NPC.frameCounter > 7)
                         {
@@ -111,18 +136,45 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 SonState++;
                                 Timer = 0;
 
+                                int damage = Helper.ScaleValueForDiffMode(30, 40, 35, 30);
+                                NPC.NewProjectileDirectInAI<LightingDash>(NPC.Center, Vector2.Zero, damage, 0
+                                    , NPC.target, bigDashTime, NPC.whoAmI,75);
+
+                                SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
                                 DashFrame();
 
-                                NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 16;
+                                NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 40;
                                 NPC.rotation = NPC.velocity.ToRotation();
+                                NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
+                                isDashing = true;
                             }
                         }
                     }
                     break;
                 case 3://冲刺！冲刺！
                     {
+                        UpdateAllOldCaches();
+
+                        if (Timer == bigDashTime)
+                        {
+                            isDashing = false;
+                            NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
+
+                            NPC.rotation = NPC.direction > 0 ? 0 : 3.141f;
+                        }
+                        else if (Timer > bigDashTime)
+                        {
+                            NPC.velocity *= 0.8f;
+                            FlyingFrame();
+                            if (Math.Abs(NPC.velocity.X) < 0.2f)
+                            {
+                                NPC.QuickSetDirection();
+                                NPC.rotation = NPC.direction > 0 ? 0 : 3.141f;
+                            }
+
+                        }
                         Timer++;
-                        if (Timer > 30)
+                        if (Timer > bigDashTime + 20)
                             ResetStates();
                     }
                     break;

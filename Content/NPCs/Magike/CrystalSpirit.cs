@@ -55,6 +55,8 @@ namespace Coralite.Content.NPCs.Magike
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
+            if (spawnInfo.Player.townNPCs > 2f)
+                return 0;
             if ((!Main.dayTime && spawnInfo.Player.ZoneForest))
                 return 0.08f;
             if (spawnInfo.Player.InModBiome<MagicCrystalCave>())

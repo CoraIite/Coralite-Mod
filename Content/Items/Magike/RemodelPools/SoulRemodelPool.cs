@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.Items.Magike.EnchantPools;
+using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
@@ -28,10 +29,8 @@ namespace Coralite.Content.Items.Magike.RemodelPools
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<EvilRemodelPool>()
-                .AddIngredient<CrystallineMagike>(10)
-                .AddIngredient(ItemID.SoulofLight, 8)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeAdvanced, () => MagikeSystem.learnedMagikeAdvanced)
+                .AddIngredient<BrilliantEnchantPool>()
+                .AddIngredient(ItemID.Ectoplasm, 10)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

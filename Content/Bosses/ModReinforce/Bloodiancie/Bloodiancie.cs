@@ -252,19 +252,24 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             if (Main.zenithWorld)
                 color = Main.DiscoColor;
 
-            foreach (var follower in followers)
+            if (followers != null)
             {
-                if (follower.drawBehind)
-                    follower.Draw(spriteBatch, color);
-            }
+                foreach (var follower in followers)
+                {
+                    if (follower.drawBehind)
+                        follower.Draw(spriteBatch, color);
+                }
 
-            DrawSelf(spriteBatch, screenPos, color);
+                DrawSelf(spriteBatch, screenPos, color);
 
-            foreach (var follower in followers)
-            {
-                if (!follower.drawBehind)
-                    follower.Draw(spriteBatch, color);
+                foreach (var follower in followers)
+                {
+                    if (!follower.drawBehind)
+                        follower.Draw(spriteBatch, color);
+                }
             }
+            else
+                DrawSelf(spriteBatch, screenPos, color);
 
             return false;
         }

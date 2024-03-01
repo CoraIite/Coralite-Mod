@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public override void SetStaticDefaults()
         {
             this.DoorClosedPrefab(ModContent.TileType<GlowTulipDoorOpen>(), DustID.Stone, Color.Gray);
-            MinPick = int.MaxValue;
+            MinPick = 220;
             HitSound = new Terraria.Audio.SoundStyle("Coralite/Sounds/CoreKeeper/UnbreakableTile")
             {
                 Volume = 0.5f,

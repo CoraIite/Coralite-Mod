@@ -175,20 +175,22 @@ namespace Coralite.Helpers
 
         public static void InitOldPosCache(this NPC npc, int trailCount, bool useCenter = true)
         {
-            npc.oldPos = new Vector2[trailCount];
+            if (npc.oldPos.Length != trailCount)
+                npc.oldPos = new Vector2[trailCount];
 
+            Vector2 pos = npc.position;
+            if (useCenter)
+                pos = npc.Center;
             for (int i = 0; i < trailCount; i++)
             {
-                if (useCenter)
-                    npc.oldPos[i] = npc.Center;
-                else
-                    npc.oldPos[i] = npc.position;
+                npc.oldPos[i] = pos;
             }
         }
 
         public static void InitOldRotCache(this NPC npc, int trailCount)
         {
-            npc.oldRot = new float[trailCount];
+            if (npc.oldRot.Length != trailCount)
+                npc.oldRot = new float[trailCount];
 
             for (int i = 0; i < trailCount; i++)
             {
