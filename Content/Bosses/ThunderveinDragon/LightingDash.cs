@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,6 +22,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public ref float OwnerIndex => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.localAI[0];
 
+        protected ThunderTrail[] thunderTrails;
+
         public override bool ShouldUpdatePosition() => false;
 
         public override void SetDefaults()
@@ -30,6 +31,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Projectile.hostile = true;
             Projectile.width = Projectile.height = 40;
             Projectile.tileCollide = false;
+            Projectile.penetrate = -1;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -132,7 +134,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 foreach (var trail in thunderTrails)
                 {
                     trail.SetRange((5, 25 + sinFactor * PointDistance / 2));
-                    trail.SetExpandWidth((1 - factor) * PointDistance / 2);
+                    trail.SetExpandWidth((1 - factor) * PointDistance / 3);
 
                     if (Timer % 6 == 0)
                     {
@@ -154,7 +156,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 foreach (var trail in thunderTrails)
                 {
-                    trail?.DrawThunder(Main.spriteBatch);
+                    trail?.DrawThunder(Main.instance.GraphicsDevice);
                 }
             }
             return false;

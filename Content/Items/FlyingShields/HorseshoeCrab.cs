@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<HorseshoeCrabProj>();
             Item.knockBack = 2;
             Item.shootSpeed = 15;
-            Item.damage = 47;
+            Item.damage = 46;
         }
 
         public override void HoldItem(Player player)
@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.damage = (int)(Projectile.damage * 0.9f);
+            Projectile.damage = (int)(Projectile.damage * 0.87f);
         }
 
         public override void AI()

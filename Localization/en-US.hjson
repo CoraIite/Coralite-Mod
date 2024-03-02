@@ -3274,6 +3274,7 @@ Mods: {
 			SandWallProj.DisplayName: Sand Wall Proj
 			SandWallStorm.DisplayName: Sand Wall Storm
 			LightingDash.DisplayName: Lighting Dash
+			DischargingBurst.DisplayName: Discharging Burst
 		}
 
 		Configs: {

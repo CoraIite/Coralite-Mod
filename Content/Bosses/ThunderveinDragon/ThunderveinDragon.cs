@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
-using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -34,6 +33,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public bool canDrawShadows;
         public bool isDashing;
+
+        public float shadowAlpha = 1f;
+        public float shadowScale = 1f;
 
         #region tmlHooks
 
@@ -201,9 +203,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             onSpawnAnmi,
             onKillAnim,
             /// <summary>
-            /// 闪电突袭
+            /// 闪电突袭，先3段短冲后进行一次长冲
             /// </summary>
             LightningRaid,
+            /// <summary>
+            /// 放电，在身体周围生成电流环绕
+            /// </summary>
+            Discharging,
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -249,6 +255,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
                     }
                     break;
+                case (int)AIStates.Discharging://闪电突袭
+                    Discharging();
+                    break;
             }
         }
 
@@ -259,6 +268,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void ResetStates()
         {
+            if (NPC.spriteDirection != NPC.oldDirection)
+                NPC.rotation += 3.141f;
+
+            shadowAlpha = 1;
+            shadowScale = 1;
             canDrawShadows = false;
             Timer = 0;
             SonState = 0;
@@ -275,7 +289,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case 1://一阶段
                     {
-                        State = (int)AIStates.LightningRaid;
+                        State = (int)AIStates.Discharging;
                     }
                     break;
                 case 2:
@@ -332,6 +346,29 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             NPC.frame.X = 2;
             NPC.frame.Y = 0;
+        }
+
+        /// <summary>
+        /// 根据Y方向速度设置旋转
+        /// </summary>
+        public void SetRotationNormally(float rate=0.08f)
+        {
+            if (NPC.spriteDirection != NPC.oldDirection)
+                NPC.rotation += 3.141f;
+            float targetRot = NPC.velocity.Y * 0.05f * NPC.direction + (NPC.direction > 0 ? 0 : MathHelper.Pi);
+            NPC.rotation = NPC.rotation.AngleLerp(targetRot, rate);
+        }
+
+        /// <summary>
+        /// 将身体回正
+        /// </summary>
+        /// <param name="rate"></param>
+        public void TurnToNoRot(float rate=0.08f)
+        {
+            if (NPC.spriteDirection != NPC.oldDirection)
+                NPC.rotation += 3.141f;
+
+            NPC.rotation = NPC.rotation.AngleLerp(NPC.direction > 0 ? 0 : MathHelper.Pi, rate);
         }
 
         public void InitOldFrame()
@@ -401,7 +438,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             if (canDrawShadows)
             {
-                Color shadowColor = new Color(255, 202, 101, 50);
+                Color shadowColor = new Color(255, 202, 101, 50) * shadowAlpha;
 
                 for (int i = 0; i < trailCacheLength; i++)
                 {
@@ -412,7 +449,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                     SpriteEffects oldEffect = oldDirection[i] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
                     Main.spriteBatch.Draw(mainTex, oldPos, frameOld, shadowColor * factor, oldrot, origin
-                        , NPC.scale * 1.1f * (1 - (1 - factor) * 0.3f), oldEffect, 0);
+                        , NPC.scale * shadowScale * (1 - (1 - factor) * 0.3f), oldEffect, 0);
                 }
             }
 

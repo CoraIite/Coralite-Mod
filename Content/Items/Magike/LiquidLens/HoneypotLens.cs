@@ -21,18 +21,18 @@ namespace Coralite.Content.Items.Magike.LiquidLens
         { }
 
         public override int MagikeMax => 800;
-        public string SendDelay => "5";
+        public string SendDelay => "6";
         public int HowManyPerSend => 15;
         public int ConnectLengthMax => 5;
         public int HowManyToGenerate => 15;
-        public string GenerateDelay => "5";
+        public string GenerateDelay => "6";
 
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<MagicCrystal>(2)
-                .AddIngredient(ItemID.BeeWax, 8)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+                .AddIngredient<SweetLens>()
+                .AddIngredient(ItemID.ChlorophyteBar, 4)
+                .AddCondition(MagikeSystem.Instance.LearnedMagikeAdvanced, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
@@ -70,9 +70,9 @@ namespace Coralite.Content.Items.Magike.LiquidLens
 
     public class HoneypotLensEntity : MagikeGenerator_Normal
     {
-        public const int sendDelay = 5 * 60;
+        public const int sendDelay = 6 * 60;
         public int sendTimer;
-        public HoneypotLensEntity() : base(800, 5 * 16, 5 * 60) { }
+        public HoneypotLensEntity() : base(800, 5 * 16, 6 * 60) { }
 
         public override ushort TileType => (ushort)TileType<HoneypotLensTile>();
 

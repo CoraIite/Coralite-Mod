@@ -40,6 +40,24 @@ namespace Coralite.Helpers
         }
 
         /// <summary>
+        /// 计算两个向量的弧度夹角
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        public static float AngleRad(Vector2 from, Vector2 to)
+        {
+            float num = (float)Math.Sqrt(from.SqrMagnitude() * to.SqrMagnitude());
+            if (num < 1E-15f)
+            {
+                return 0f;
+            }
+
+            float num2 = Clamp(Dot(from, to) / num, -0.9999f, 0.9999f);
+            return (float)Math.Acos(num2);
+        }
+
+        /// <summary>
         /// 将value限定在min和max之间
         /// </summary>
         /// <param name="value"></param>
@@ -111,7 +129,7 @@ namespace Coralite.Helpers
 
                     Tile tile = Framing.GetTileSafely(thisPoint);
 
-                    if (Main.tileSolid[tile.TileType] && tile.HasTile)
+                    if (Main.tileSolid[tile.TileType] && tile.HasUnactuatedTile)
                     {
                         var rect = new Rectangle(thisPoint.X * 16, thisPoint.Y * 16, 16, 16);
 

@@ -47,10 +47,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             FlyingFrame();
                         }
 
-                        if (NPC.direction!=NPC.oldDirection)
-                            NPC.rotation += 3.141f;
-                        float targetRot = NPC.velocity.Length() * 0.03f * NPC.direction + (NPC.direction > 0 ? 0 : MathHelper.Pi);
-                        NPC.rotation = NPC.rotation.AngleLerp(targetRot, 0.08f);
+                        SetRotationNormally();
 
                         Timer++;
                         if (Timer > chasingTime || (xLength > 200 && xLength < 400 && yLength < 150))
@@ -61,6 +58,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             ResetAllOldCaches();
                             canDrawShadows = true;
                             isDashing = true;
+                            shadowScale = 1.15f;
+                            shadowAlpha = 1;
                         }
                     }
                     break;
@@ -72,7 +71,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.TargetClosest();
                             int damage = Helper.ScaleValueForDiffMode(30, 40, 35, 30);
                             NPC.NewProjectileDirectInAI<LightingDash>(NPC.Center, Vector2.Zero, damage, 0
-                                , NPC.target, smallDashTime, NPC.whoAmI,40);
+                                , NPC.target, smallDashTime, NPC.whoAmI,55);
                             
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
@@ -88,7 +87,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                             int damage = Helper.ScaleValueForDiffMode(30, 40, 35, 30);
                             NPC.NewProjectileDirectInAI<LightingDash>(NPC.Center, Vector2.Zero, damage, 0
-                                , NPC.target, smallDashTime, NPC.whoAmI,40);
+                                , NPC.target, smallDashTime, NPC.whoAmI,55);
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                             
@@ -120,8 +119,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     {
                         NPC.QuickSetDirection();
 
-                        float targetRot = NPC.velocity.Length() * 0.03f * NPC.direction + (NPC.direction > 0 ? 0 : MathHelper.Pi);
-                        NPC.rotation = targetRot;
+                        SetRotationNormally();
 
                         if (NPC.velocity.Length() < 8)
                             NPC.velocity += (NPC.Center - Target.Center).SafeNormalize(Vector2.Zero) * 0.35f;

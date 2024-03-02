@@ -147,6 +147,11 @@ namespace Coralite.Helpers
             npc.directionY = p.Center.Y > npc.Center.Y ? 1 : -1;
         }
 
+        public static int GetProjDamage(int normalDamage, int expertDamage, int masterDamage)
+        {
+            return ScaleValueForDiffMode(normalDamage / 2, expertDamage / 4, masterDamage / 6, masterDamage / 6);
+        }
+
         [DebuggerHidden]
         public static int NewProjectileInAI(this NPC npc, Vector2 position, Vector2 velocity, int type, int damage, float knockBack, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
         {

@@ -26,12 +26,12 @@ namespace Coralite.Content.WorldGeneration
             progress.Set(0);
             //随机选择雪原上的某个地方
             int nestCenter_x = GenVars.snowOriginLeft + WorldGen.genRand.Next(GenVars.snowOriginRight - GenVars.snowOriginLeft);
-            int nestCenter_y = 10;
+            int nestCenter_y = (int)(Main.worldSurface * 0.35f);
 
             for (; nestCenter_y < Main.worldSurface; nestCenter_y++)
             {
                 Tile tile = Framing.GetTileSafely(nestCenter_x, nestCenter_y);
-                if (tile.HasTile && nestCenter_y > Main.worldSurface * 0.35f)
+                if (tile.HasTile)
                     break;
             }
 

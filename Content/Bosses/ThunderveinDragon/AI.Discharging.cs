@@ -1,5 +1,10 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Core;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework;
+using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -7,6 +12,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     {
         public void Discharging()
         {
+            const int burstTime = 35;
+
             switch (SonState)
             {
                 default:
@@ -15,7 +22,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case 0://蓄力，微微靠近玩家
                     {
                         //由于已经是离玩家很近才会使用的招式所以直接微微靠近
-
+                        const int ReadyTime = 40;
                         NPC.QuickSetDirection();
 
                         //追踪玩家
@@ -39,7 +46,15 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             FlyingFrame();
                         }
 
-                        if (NPC.frame.Y == 0)
+                        SetRotationNormally();
+                        float edge = 400 + 220 * Math.Clamp(Timer / ReadyTime,0,1);
+                        edge /= 2;
+                        for (int i = 0; i < 4; i++)
+                        {
+                            SpawnDischargingDust(edge);
+                        }
+                        Timer++;
+                        if (NPC.frame.Y == 0 && Timer > ReadyTime)
                         {
                             SonState++;
                             Timer = 0;
@@ -49,6 +64,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case 1://挥下翅膀
                     {
                         NPC.velocity *= 0.96f;
+                        NPC.QuickSetDirection();
+                        TurnToNoRot();
+                        float edge = (40 + 580)/2;
+                        for (int i = 0; i < 4; i++)
+                        {
+                            SpawnDischargingDust(edge);
+                        }
+
                         if (NPC.frame.Y != 4)
                             FlyingFrame();
                         else
@@ -59,13 +82,46 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 SonState++;
                                 Timer = 0;
                                 //生成爆炸弹幕
+
+                                NPC.TargetClosest();
+                                int damage = Helper.GetProjDamage(80, 100, 120);
+                                NPC.NewProjectileDirectInAI<DischargingBurst>(NPC.Center, Vector2.Zero, damage, 0, NPC.target
+                                    , burstTime, NPC.whoAmI);
+
+                                SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
+                                SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
+                                canDrawShadows = true;
+                                ResetAllOldCaches();
                             }
                         }
                     }
                     break;
                 case 2://爆！！！！！！！！！
                     {
+                        UpdateAllOldCaches();
+                        float factor = Coralite.Instance.SqrtSmoother.Smoother (Timer / burstTime);
+                        shadowScale = Helper.Lerp(1f, 2.5f, factor);
+                        shadowAlpha = Helper.Lerp(1f, 0f, factor);
 
+                        if (NPC.frame.Y != 0)
+                        {
+                            NPC.frame.X =   1;
+
+                            if (++NPC.frameCounter > 1)
+                            {
+                                NPC.frameCounter = 0;
+                                if (++NPC.frame.Y > 7)
+                                    NPC.frame.Y = 0;
+                            }
+
+                        }
+                        Timer++;
+                        if (Timer > burstTime)
+                        {
+                            canDrawShadows = false;
+                            Timer = 0;
+                            SonState++;
+                        }
                     }
                     break;
                 case 3://短暂后摇
@@ -77,6 +133,20 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     }
                     break;
             }
+        }
+
+        public void SpawnDischargingDust(float edge)
+        {
+            Vector2 pos = NPC.Center + Main.rand.NextVector2CircularEdge(edge, edge);
+            Dust d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail
+                , (pos - NPC.Center).SafeNormalize(Vector2.Zero).RotatedBy(NPC.direction * MathHelper.PiOver2) * Main.rand.NextFloat(4f, 8f)
+                , newColor: new Color(255, 202, 101),Scale:Main.rand.NextFloat(1f,1.5f));
+            d.noGravity = true;
+            pos= NPC.Center + Main.rand.NextVector2Circular(edge, edge);
+            d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail
+                , (pos - NPC.Center).SafeNormalize(Vector2.Zero)* Main.rand.NextFloat(4f, 8f)
+                , newColor: new Color(255, 202, 101));
+            d.noGravity = true;
         }
     }
 }

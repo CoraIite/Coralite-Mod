@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetDefaults2()
         {
-            Item.useTime = Item.useAnimation = 15;
+            Item.useTime = Item.useAnimation = 20;
             Item.shoot = ModContent.ProjectileType<TrashCanLidProj>();
             Item.knockBack = 3;
             Item.shootSpeed = 12.5f;

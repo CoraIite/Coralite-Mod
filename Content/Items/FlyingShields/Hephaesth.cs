@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<HephaesthProj>();
             Item.knockBack = 2;
             Item.shootSpeed = 22 / 2;
-            Item.damage = 235;
+            Item.damage = 225;
             Item.UseSound = CoraliteSoundID.Zenith_Item169;
         }
 
@@ -178,7 +178,7 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 dir = Projectile.rotation.ToRotationVector2().RotateByRandom(-0.3f, 0.3f);
             int type = -Main.rand.Next(1, 17);
             int index = Projectile.NewProjectileFromThis<HephaesthSmeltingResults>(Projectile.Center, dir * speed,
-                  (int)(Projectile.damage * 1.25f), Projectile.knockBack, ai2: type);//Main.rand.Next(1, ItemLoader.ItemCount));
+                  (int)(Projectile.damage * 1.2f), Projectile.knockBack, ai2: type);//Main.rand.Next(1, ItemLoader.ItemCount));
             if (Burning)
             {
                 (Main.projectile[index].ModProjectile as HephaesthSmeltingResults).DefaultColor = new Color(89, 219, 255);
