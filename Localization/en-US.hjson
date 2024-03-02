@@ -3275,6 +3275,7 @@ Mods: {
 			SandWallStorm.DisplayName: Sand Wall Storm
 			LightingDash.DisplayName: Lighting Dash
 			DischargingBurst.DisplayName: Discharging Burst
+			LightingBreath.DisplayName: Lighting Breath
 		}
 
 		Configs: {

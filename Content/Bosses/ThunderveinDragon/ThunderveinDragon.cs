@@ -4,6 +4,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -36,6 +37,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public float shadowAlpha = 1f;
         public float shadowScale = 1f;
+
+        public int oldSpriteDirection;
 
         #region tmlHooks
 
@@ -210,6 +213,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             /// 放电，在身体周围生成电流环绕
             /// </summary>
             Discharging,
+            /// <summary>
+            /// 放电，在身体周围生成电流环绕
+            /// </summary>
+            LightingBreath,
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -258,9 +265,16 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case (int)AIStates.Discharging://闪电突袭
                     Discharging();
                     break;
+                case (int)AIStates.LightingBreath://闪电突袭
+                    LightingBreath();
+                    break;
             }
         }
 
+        public override void PostAI()
+        {
+            oldSpriteDirection = NPC.spriteDirection;
+        }
 
         #endregion
 
@@ -268,14 +282,17 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void ResetStates()
         {
-            if (NPC.spriteDirection != NPC.oldDirection)
+            if (NPC.spriteDirection != oldSpriteDirection)
                 NPC.rotation += 3.141f;
 
             shadowAlpha = 1;
             shadowScale = 1;
             canDrawShadows = false;
+            isDashing = false;
             Timer = 0;
             SonState = 0;
+
+            List <int> moves = new List<int>();
 
             switch (Phase)
             {
@@ -289,7 +306,23 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case 1://一阶段
                     {
-                        State = (int)AIStates.Discharging;
+                        int dir = Target.Center.X > NPC.Center.X ? 1 : -1;
+                        if (dir != NPC.spriteDirection)
+                        {
+                            for (int i = 0; i < 5; i++)
+                                moves.Add((int)AIStates.LightningRaid);
+                        }
+
+                        if (Vector2.Distance(NPC.Center, Target.Center) < 480)
+                        {
+                            for (int i = 0; i < 3; i++)
+                                moves.Add((int)AIStates.Discharging);
+                        }
+
+                        moves.Add((int)AIStates.LightningRaid);
+                        moves.Add((int)AIStates.LightingBreath);
+
+                        State = Main.rand.NextFromList(moves.ToArray());
                     }
                     break;
                 case 2:
@@ -348,14 +381,19 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             NPC.frame.Y = 0;
         }
 
+        public Vector2 GetMousePos()
+        {
+            return NPC.Center + (NPC.rotation - NPC.direction * 0.1f).ToRotationVector2() * 60;
+        }
+
         /// <summary>
         /// 根据Y方向速度设置旋转
         /// </summary>
         public void SetRotationNormally(float rate=0.08f)
         {
-            if (NPC.spriteDirection != NPC.oldDirection)
+            if (NPC.spriteDirection != oldSpriteDirection)
                 NPC.rotation += 3.141f;
-            float targetRot = NPC.velocity.Y * 0.05f * NPC.direction + (NPC.direction > 0 ? 0 : MathHelper.Pi);
+            float targetRot = NPC.velocity.Y * 0.05f * NPC.spriteDirection + (NPC.spriteDirection > 0 ? 0 : MathHelper.Pi);
             NPC.rotation = NPC.rotation.AngleLerp(targetRot, rate);
         }
 
@@ -363,12 +401,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         /// 将身体回正
         /// </summary>
         /// <param name="rate"></param>
-        public void TurnToNoRot(float rate=0.08f)
+        public void TurnToNoRot(float rate = 0.2f)
         {
-            if (NPC.spriteDirection != NPC.oldDirection)
+            if (NPC.spriteDirection != oldSpriteDirection)
                 NPC.rotation += 3.141f;
 
-            NPC.rotation = NPC.rotation.AngleLerp(NPC.direction > 0 ? 0 : MathHelper.Pi, rate);
+            NPC.rotation = NPC.rotation.AngleLerp(NPC.spriteDirection > 0 ? 0 : MathHelper.Pi, rate);
         }
 
         public void InitOldFrame()
@@ -455,6 +493,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             //绘制自己
             Main.spriteBatch.Draw(mainTex, pos, frameBox, drawColor, rot, origin, NPC.scale, effects, 0);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(AssetDirectory.ThunderveinDragon + "ThunderveinDragon_Glow").Value
+                , pos, frameBox, Color.White*0.75f, rot, origin, NPC.scale, effects, 0);
 
             if (isDashing)
             {

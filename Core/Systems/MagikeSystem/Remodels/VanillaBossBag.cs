@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.Items.Materials;
 using Coralite.Core.Systems.MagikeSystem.CraftConditions;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
@@ -197,6 +198,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.LunarFlareBook);
             AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.RainbowCrystalStaff);
             AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.MoonlordTurretStaff);
+            AddRemodelRecipe<ConquerorOfTheSeas>(0f, ItemID.MoonLordBossBag, 7000);
             AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.Celeb2);
             AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.LunarOre, 170);
             AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.MeowmereMinecart);

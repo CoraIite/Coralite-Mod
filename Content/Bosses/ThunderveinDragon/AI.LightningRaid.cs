@@ -118,8 +118,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case 2://准备冲刺！
                     {
                         NPC.QuickSetDirection();
-
-                        SetRotationNormally();
+                        SetRotationNormally(0.2f);
 
                         if (NPC.velocity.Length() < 8)
                             NPC.velocity += (NPC.Center - Target.Center).SafeNormalize(Vector2.Zero) * 0.35f;

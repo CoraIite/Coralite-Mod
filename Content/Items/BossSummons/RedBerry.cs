@@ -63,39 +63,32 @@ namespace Coralite.Content.Items.BossSummons
         {
             //黄玉
             CreateRecipe()
-    .AddIngredient<RedJade>(3)
-    .AddIngredient(ItemID.GemTreeTopazSeed)
-    .Register();
+                .AddIngredient(ItemID.GemTreeTopazSeed, 6)
+                .Register();
             //紫晶
             CreateRecipe()
-    .AddIngredient<RedJade>(3)
-    .AddIngredient(ItemID.GemTreeAmethystSeed)
-    .Register();
+                .AddIngredient(ItemID.GemTreeAmethystSeed, 6)
+                .Register();
             //蓝玉
             CreateRecipe()
-    .AddIngredient<RedJade>(3)
-    .AddIngredient(ItemID.GemTreeSapphireSeed)
-    .Register();
+                .AddIngredient(ItemID.GemTreeSapphireSeed, 6)
+                .Register();
             //翡翠
             CreateRecipe()
-    .AddIngredient<RedJade>(3)
-    .AddIngredient(ItemID.GemTreeEmeraldSeed)
-    .Register();
+                .AddIngredient(ItemID.GemTreeEmeraldSeed, 6)
+                .Register();
             //红玉
             CreateRecipe()
-                .AddIngredient<RedJade>(3)
-                .AddIngredient(ItemID.GemTreeRubySeed)
+                .AddIngredient(ItemID.GemTreeRubySeed, 6)
                 .Register();
             //钻石
             CreateRecipe()
-    .AddIngredient<RedJade>(3)
-    .AddIngredient(ItemID.GemTreeDiamondSeed)
-    .Register();
+                .AddIngredient(ItemID.GemTreeDiamondSeed, 6)
+                .Register();
             //琥珀
             CreateRecipe()
-    .AddIngredient<RedJade>(3)
-    .AddIngredient(ItemID.GemTreeAmberSeed)
-    .Register();
+                .AddIngredient(ItemID.GemTreeAmberSeed, 6)
+                .Register();
         }
     }
 }

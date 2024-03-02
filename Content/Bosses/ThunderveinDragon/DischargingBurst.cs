@@ -33,10 +33,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override bool ShouldUpdatePosition() => false;
 
-        public override void OnSpawn(IEntitySource source)
-        {
-        }
-
         public float ThunderWidthFunc(float factor)
         {
             return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth;
@@ -123,7 +119,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
 
             if (Timer > 10 && Timer % 4 == 0)
-            {
                 foreach (var outer in outers)
                 {
                     bool canDraw = Main.rand.NextBool();
@@ -145,7 +140,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         outer.RandomThunder();
                     }
                 }
-            }
 
             if (Timer > 10 && Timer % 6 == 0)
                 foreach (var circle in circles)

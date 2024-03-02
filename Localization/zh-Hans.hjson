@@ -3311,6 +3311,7 @@ Mods: {
 			SandWallStorm.DisplayName: 沙龙卷
 			// LightingDash.DisplayName: Lighting Dash
 			// DischargingBurst.DisplayName: Discharging Burst
+			// LightingBreath.DisplayName: Lighting Breath
 		}
 
 		Configs: {

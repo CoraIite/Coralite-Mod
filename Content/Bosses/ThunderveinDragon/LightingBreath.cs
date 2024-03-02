@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
@@ -13,40 +14,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// 使用ai0传入冲刺时间，ai1传入主人
     /// 使用ai2传入闪电每个点间的间隔
     /// </summary>
-    public class LightingDash : BaseThunderProj
+    public class LightingBreath : LightingDash
     {
-        public override string Texture => AssetDirectory.Blank;
-
-        public ref float DashTime => ref Projectile.ai[0];
-        public ref float OwnerIndex => ref Projectile.ai[1];
-        public ref float Timer => ref Projectile.localAI[0];
-
-        protected ThunderTrail[] thunderTrails;
-
-        public override bool ShouldUpdatePosition() => false;
-
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
-            Projectile.hostile = true;
-            Projectile.width = Projectile.height = 40;
-            Projectile.tileCollide = false;
-            Projectile.penetrate = -1;
-        }
-
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            float a = 0;
-            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(),Projectile.velocity,Projectile.Center,Projectile.width,ref a);
-        }
-
-        public float ThunderWidthFunc(float factor)
-        {
-            return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth;
-        }
-
-        public Color ThunderColorFunc(float factor)
-        {
-            return new Color(255, 202, 101, 0) * ThunderAlpha;
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2800;
         }
 
         public override void AI()
@@ -54,10 +26,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (!OwnerIndex.GetNPCOwner<ThunderveinDragon>(out NPC owner, Projectile.Kill))
                 return;
 
-            if (thunderTrails==null)
+            if (thunderTrails == null)
             {
                 Projectile.Resize((int)PointDistance, 40);
-                Projectile.velocity = Projectile.Center;
+
                 thunderTrails = new ThunderTrail[3];
                 for (int i = 0; i < 3; i++)
                 {
@@ -71,12 +43,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     };
                 }
             }
-
             const int DelayTime = 30;
 
             if (Timer < DashTime)
             {
-                Projectile.Center = owner.Center;
                 Vector2 pos2 = Projectile.velocity;
                 List<Vector2> pos = new List<Vector2>
                 {
@@ -112,10 +82,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     }
                 }
 
-                ThunderWidth = 20;
+                float factor = Timer / DashTime;
+                float sinFactor = MathF.Sin(factor * MathHelper.Pi);
+
+                ThunderWidth = 30 + sinFactor * 30;
                 ThunderAlpha = Timer / DashTime;
             }
-            else if ((int)Timer==(int)DashTime)
+            else if ((int)Timer == (int)DashTime)
             {
                 foreach (var trail in thunderTrails)
                 {
@@ -127,7 +100,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 float factor = (Timer - DashTime) / (DelayTime);
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
-                ThunderWidth = 20 + sinFactor * 30;
+                ThunderWidth = 30 * (1 - factor);
                 ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
 
                 foreach (var trail in thunderTrails)
@@ -149,16 +122,5 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Timer++;
         }
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            if (thunderTrails!=null)
-            {
-                foreach (var trail in thunderTrails)
-                {
-                    trail?.DrawThunder(Main.instance.GraphicsDevice);
-                }
-            }
-            return false;
-        }
     }
 }
