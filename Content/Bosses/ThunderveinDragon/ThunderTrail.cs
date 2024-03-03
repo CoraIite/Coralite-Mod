@@ -55,6 +55,16 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             ThunderTex = asset;
         }
 
+        public void UpdateTrail(Vector2 velocity)
+        {
+            if (RandomlyPositions==null)
+                return;
+            for (int i = 0; i < RandomlyPositions.Length; i++)
+            {
+                RandomlyPositions[i] += velocity;
+            }    
+        }
+
         /// <summary>
         /// 随机改变闪电形状
         /// </summary>

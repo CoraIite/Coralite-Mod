@@ -3312,6 +3312,8 @@ Mods: {
 			// LightingDash.DisplayName: Lighting Dash
 			// DischargingBurst.DisplayName: Discharging Burst
 			// LightingBreath.DisplayName: Lighting Breath
+			// LightingBall.DisplayName: Lighting Ball
+			// ChainBall.DisplayName: Chain Ball
 		}
 
 		Configs: {

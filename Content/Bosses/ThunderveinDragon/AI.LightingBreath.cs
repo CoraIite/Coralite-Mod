@@ -61,6 +61,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             shadowScale = 1.15f;
                             shadowAlpha = 1;
 
+                            currentSurrounding = true;
+
                             NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero)
                                 .RotatedBy(-NPC.direction * MathHelper.PiOver2) * 20;
                         }
@@ -155,6 +157,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         if (Timer > burstTime)
                         {
                             canDrawShadows = false;
+                            currentSurrounding = false;
+
                             Timer = 0;
                             SonState++;
 

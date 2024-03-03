@@ -2,6 +2,7 @@
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -49,6 +50,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             return new Color(255, 202, 101, 0) * ThunderAlpha;
         }
 
+        public Color ThunderColorFunc2(float factor)
+        {
+            return new Color(230, 127, 23, 0) * ThunderAlpha;
+        }
+
         public override void AI()
         {
             if (!OwnerIndex.GetNPCOwner<ThunderveinDragon>(out NPC owner, Projectile.Kill))
@@ -59,10 +65,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 Projectile.Resize((int)PointDistance, 40);
                 Projectile.velocity = Projectile.Center;
                 thunderTrails = new ThunderTrail[3];
+                Asset<Texture2D> trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody");
                 for (int i = 0; i < 3; i++)
                 {
-                    thunderTrails[i] = new ThunderTrail(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserBody2")
-                        , ThunderWidthFunc, ThunderColorFunc);
+                    if (i==0)
+                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc, ThunderColorFunc2);
+                    else
+                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc, ThunderColorFunc);
                     thunderTrails[i].CanDraw = false;
                     thunderTrails[i].SetRange((5, 20));
                     thunderTrails[i].BasePositions = new Vector2[3]

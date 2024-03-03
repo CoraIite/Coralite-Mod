@@ -1,12 +1,12 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,18 +27,36 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         internal ref float Recorder => ref NPC.localAI[0];
         internal ref float Recorder2 => ref NPC.localAI[1];
+        internal ref float StateRecorder => ref NPC.localAI[2];
 
         public readonly int trailCacheLength = 12;
         public Point[] oldFrame;
         public int[] oldDirection;
 
+        /// <summary>
+        /// 是否绘制残影
+        /// </summary>
         public bool canDrawShadows;
+        /// <summary>
+        /// 是否绘制冲刺是的特殊贴图
+        /// </summary>
         public bool isDashing;
 
+        /// <summary>
+        /// 残影的透明度
+        /// </summary>
         public float shadowAlpha = 1f;
+        /// <summary>
+        /// 残影的大小
+        /// </summary>
         public float shadowScale = 1f;
 
         public int oldSpriteDirection;
+
+        /// <summary>
+        /// 身上有电流环绕，会减伤并生成闪电粒子
+        /// </summary>
+        public bool currentSurrounding;
 
         #region tmlHooks
 
@@ -51,8 +69,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void SetDefaults()
         {
-            NPC.width = 106;
-            NPC.height = 68;
+            NPC.width = 130;
+            NPC.height = 100;
             NPC.damage = 30;
             NPC.defense = 6;
             NPC.lifeMax = 4500;
@@ -140,27 +158,42 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             //npcLoot.Add(notExpertRule);
         }
 
-        public override void Load()
+        public override bool? CanCollideWithPlayerMeleeAttack(Player player, Item item, Rectangle meleeAttackHitbox)
         {
-            if (Main.dedServ)
-                return;
-
-            //GlowTex = ModContent.Request<Texture2D>(AssetDirectory.BabyIceDragon + Name + "_Glow");
-            //for (int i = 0; i < 5; i++)
-            //    GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.BossGores + "Rediancie_Gore" + i);
+            return base.CanCollideWithPlayerMeleeAttack(player, item, meleeAttackHitbox);
         }
 
-        public override void Unload()
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
-            if (Main.dedServ)
-                return;
-
-            //GlowTex = null;
+            if (currentSurrounding)
+                modifiers.SourceDamage -= 0.25f;
         }
 
-        public override void HitEffect(NPC.HitInfo hit)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
-            SoundEngine.PlaySound(CoraliteSoundID.DigIce, NPC.Center);
+            if (projectile.Colliding(projectile.getRect(), HeadHitBox()))
+                modifiers.SourceDamage += 0.15f;
+
+            if (currentSurrounding)
+                modifiers.SourceDamage -= 0.25f;
+
+            if (projectile.hostile)
+                modifiers.SourceDamage -= 0.5f;
+        }
+
+        public Rectangle HeadHitBox()
+        {
+            Vector2 pos = GetMousePos();
+            return new Rectangle((int)(pos.X - 25), (int)(pos.Y - 25), 50, 50);
+        }
+
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
+        {
+            if (Main.rand.NextBool())
+            {
+                Particle.NewParticle(NPC.Center.MoveTowards(projectile.Center, 50), Vector2.Zero,
+                    CoraliteContent.ParticleType<LightingParticle>(), Scale: Main.rand.NextFloat(1f, 1.5f));
+            }
         }
 
         public override void OnKill()
@@ -191,9 +224,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)
         {
-            //int width = (int)(86 * NPC.scale);
-            //int height = (int)(58 * NPC.scale);
-            //npcHitbox = new Rectangle((int)(NPC.Center.X - width / 2), (int)(NPC.Center.Y - height / 2), width, height);
+            int width = (int)(95 * NPC.scale);
+            int height = (int)(70 * NPC.scale);
+            npcHitbox = new Rectangle((int)(NPC.Center.X - width / 2), (int)(NPC.Center.Y - height / 2), width, height);
             return true;
         }
 
@@ -206,6 +239,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             onSpawnAnmi,
             onKillAnim,
             /// <summary>
+            /// 短冲，用于调整身位
+            /// </summary>
+            SmallDash,
+            /// <summary>
             /// 闪电突袭，先3段短冲后进行一次长冲
             /// </summary>
             LightningRaid,
@@ -214,9 +251,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             /// </summary>
             Discharging,
             /// <summary>
-            /// 放电，在身体周围生成电流环绕
+            /// 闪电吐息，原地转一圈后使用吐息
             /// </summary>
             LightingBreath,
+            /// <summary>
+            /// 电球，吐出一个电球
+            /// </summary>
+            LightingBall,
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -252,6 +293,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case (int)AIStates.onKillAnim:
                     break;
+                case (int)AIStates.SmallDash://闪电突袭
+                    SmallDash();
+                    break;
                 case (int)AIStates.LightningRaid://闪电突袭
                     {
                         if (Phase == 1)
@@ -268,12 +312,21 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case (int)AIStates.LightingBreath://闪电突袭
                     LightingBreath();
                     break;
+                case (int)AIStates.LightingBall://闪电吐息
+                    LightingBall();
+                    break;
             }
         }
 
         public override void PostAI()
         {
             oldSpriteDirection = NPC.spriteDirection;
+
+            if (currentSurrounding && Main.rand.NextBool(3))
+            {
+                Vector2 offset = Main.rand.NextVector2Circular(100 * NPC.scale, 70 * NPC.scale);
+                ElectricParticle_Follow.Spawn(NPC.Center, offset, () => NPC.Center, Main.rand.NextFloat(0.75f, 1f));
+            }
         }
 
         #endregion
@@ -289,8 +342,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             shadowScale = 1;
             canDrawShadows = false;
             isDashing = false;
+            currentSurrounding = false;
+
             Timer = 0;
             SonState = 0;
+            Recorder = 0;
+            Recorder2 = 0;
 
             List <int> moves = new List<int>();
 
@@ -306,28 +363,74 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case 1://一阶段
                     {
+                        int oldState = (int)State;
+
                         int dir = Target.Center.X > NPC.Center.X ? 1 : -1;
-                        if (dir != NPC.spriteDirection)
+                        if (dir != NPC.spriteDirection)//玩家在背后时大概率使用闪电突袭
                         {
                             for (int i = 0; i < 5; i++)
                                 moves.Add((int)AIStates.LightningRaid);
                         }
 
-                        if (Vector2.Distance(NPC.Center, Target.Center) < 480)
+                        if (Vector2.Distance(NPC.Center, Target.Center) < 480)//距离较近是大概率使用放电
                         {
                             for (int i = 0; i < 3; i++)
                                 moves.Add((int)AIStates.Discharging);
                         }
 
+                        if (oldState!=(int)AIStates.SmallDash)//如果上次招式不是小冲刺那就小冲一下
+                        {
+                            for (int i = 0; i < 5; i++)
+                                moves.Add((int)AIStates.SmallDash);
+                        }
+
                         moves.Add((int)AIStates.LightningRaid);
                         moves.Add((int)AIStates.LightingBreath);
+                        moves.Add((int)AIStates.LightingBall);
 
+                        //当上次使用的是短距离冲刺的话，额外移除上上次所使用的招式
+                        if (oldState == (int)AIStates.SmallDash)
+                            moves.RemoveAll(i => i == (int)StateRecorder);
+                        //移除上次使用的招式
+                            moves.RemoveAll(i => i == oldState);
+
+                        //随机一个招式出来
                         State = Main.rand.NextFromList(moves.ToArray());
+                        //State = (int)AIStates.LightingBall;
+
+                        //如果本次使用的是短距离冲刺那么旧记录上一招
+                        if ((int)State == (int)AIStates.SmallDash)
+                            StateRecorder = oldState;
                     }
                     break;
                 case 2:
+                    {
+
+                    }
                     break;
             }
+
+
+
+        }
+
+        public void ResetToSelectedState(AIStates state)
+        {
+            if (NPC.spriteDirection != oldSpriteDirection)
+                NPC.rotation += 3.141f;
+
+            shadowAlpha = 1;
+            shadowScale = 1;
+            canDrawShadows = false;
+            isDashing = false;
+            currentSurrounding = false;
+
+            Timer = 0;
+            SonState = 0;
+            Recorder = 0;
+            Recorder2 = 0;
+
+            State = (int)state;
         }
 
         #endregion
@@ -473,7 +576,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 effects = SpriteEffects.FlipVertically;
             }
-
+            
+            //绘制残影
             if (canDrawShadows)
             {
                 Color shadowColor = new Color(255, 202, 101, 50) * shadowAlpha;
@@ -496,6 +600,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Main.spriteBatch.Draw(ModContent.Request<Texture2D>(AssetDirectory.ThunderveinDragon + "ThunderveinDragon_Glow").Value
                 , pos, frameBox, Color.White*0.75f, rot, origin, NPC.scale, effects, 0);
 
+            //绘制冲刺时的特效
             if (isDashing)
             {
                 Texture2D exTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "StrikeTrail").Value;

@@ -50,7 +50,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         SetRotationNormally();
 
                         Timer++;
-                        if (Timer > chasingTime || (xLength > 200 && xLength < 400 && yLength < 150))
+                        if (Timer > chasingTime || (xLength > 150 && xLength < 450 && yLength < 150))
                         {
                             SonState++;
                             Timer = 0;
@@ -60,6 +60,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             isDashing = true;
                             shadowScale = 1.15f;
                             shadowAlpha = 1;
+
+                            currentSurrounding = true;
                         }
                     }
                     break;
@@ -69,7 +71,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             //生成弹幕并随机速度方向
                             NPC.TargetClosest();
-                            int damage = Helper.ScaleValueForDiffMode(30, 40, 35, 30);
+                            int damage = Helper.GetProjDamage(20, 30, 40);
                             NPC.NewProjectileDirectInAI<LightingDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI,55);
                             
@@ -85,7 +87,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             NPC.TargetClosest();
 
-                            int damage = Helper.ScaleValueForDiffMode(30, 40, 35, 30);
+                            int damage = Helper.GetProjDamage(20,30,40);
                             NPC.NewProjectileDirectInAI<LightingDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI,55);
 
@@ -160,6 +162,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
 
                             NPC.rotation = NPC.direction > 0 ? 0 : 3.141f;
+                            currentSurrounding = false;
                         }
                         else if (Timer > bigDashTime)
                         {
@@ -170,10 +173,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 NPC.QuickSetDirection();
                                 NPC.rotation = NPC.direction > 0 ? 0 : 3.141f;
                             }
-
                         }
                         Timer++;
-                        if (Timer > bigDashTime + 20)
+                        if (Timer > bigDashTime + 60)
                             ResetStates();
                     }
                     break;

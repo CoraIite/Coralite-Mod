@@ -48,6 +48,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             return new Color(255, 202, 101, 0) * ThunderAlpha;
         }
 
+        public Color ThunderColorFunc2(float factor)
+        {
+            return new Color(230, 127, 23, 0) * ThunderAlpha;
+        }
+
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             return Vector2.Distance(projHitbox.Center.ToVector2(), targetHitbox.Center.ToVector2()) < (Projectile.width / 2);
@@ -66,18 +71,25 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 ThunderAlpha = 1;
                 circles = new ThunderTrail[4];
                 outers = new ThunderTrail[6];
-                Asset<Texture2D> thunderTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserBody2");
+                Asset<Texture2D> thunderTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody");
 
                 for (int i = 0; i < circles.Length; i++)
                 {
-                    circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc);
+                    if (i == 0)
+                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc2);
+                    else
+                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc);
+
                     circles[i].SetRange((5, 10));
                     circles[i].SetExpandWidth(8);
                 }
 
                 for (int i = 0; i < outers.Length; i++)
                 {
-                    outers[i] = new ThunderTrail(thunderTex, ThunderWidthFunc, ThunderColorFunc);
+                    if (i<2)
+                        outers[i] = new ThunderTrail(thunderTex, ThunderWidthFunc, ThunderColorFunc2);
+                    else
+                        outers[i] = new ThunderTrail(thunderTex, ThunderWidthFunc, ThunderColorFunc);
                     outers[i].SetRange((5, 30));
                     outers[i].SetExpandWidth(8);
                 }
