@@ -1,56 +1,23 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
-    public class LightingBall : BaseThunderProj,IDrawAdditive
+    /// <summary>
+    /// ai0传入主人，ai1传入角度，如果为0的话就会随机选取一个
+    /// </summary>
+    public class CrossLightingBall : LightingBall
     {
-        public override string Texture => AssetDirectory.ThunderveinDragon + "LightingBall";
-
-        public ThunderTrail[] circles;
-        public ThunderTrail[] trails;
-
-        public ref float Timer => ref Projectile.localAI[0];
-
-        public override void SetDefaults()
-        {
-            Projectile.width = Projectile.height = 110;
-            Projectile.hostile = true;
-            Projectile.timeLeft = 300;
-        }
-
-        public float ThunderWidthFunc(float factor)
-        {
-            return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth;
-        }
-
-        public float ThunderWidthFunc2(float factor)
-        {
-            return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth * 1.2f;
-        }
-
-        public Color ThunderColorFunc(float factor)
-        {
-            return new Color(255, 202, 101, 0) * ThunderAlpha;
-        }
-
-        public Color ThunderColorFunc2(float factor)
-        {
-            return new Color(230, 127, 23, 0) * ThunderAlpha;
-        }
-
-        public Color ThunderColorFunc_Fade(float factor)
-        {
-            return new Color(255, 202, 101, 0) * ThunderAlpha*(1-factor);
-        }
+        public ref float OwnerIndex => ref Projectile.ai[0];
+        public ref float Angle => ref Projectile.ai[1];
 
         public override void AI()
         {
@@ -124,35 +91,36 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             foreach (var trail in trails)
                 trail.UpdateTrail(Projectile.velocity);
 
-            if (Timer % 5 == 0)
-            {
-                float cacheLength = Projectile.velocity.Length() * 0.55f;
-
-                foreach (var trail in trails)
+            if (Timer < 30)
+                if (Timer % 5 == 0)
                 {
-                    if (cacheLength < 3)
-                        trail.CanDraw = false;
-                    else
+                    float cacheLength = Projectile.velocity.Length() * 0.55f;
+
+                    foreach (var trail in trails)
                     {
-                        trail.CanDraw = Main.rand.NextBool();
-                        if (trail.CanDraw)
+                        if (cacheLength < 3)
+                            trail.CanDraw = false;
+                        else
                         {
-                            Vector2[] vec = new Vector2[(int)cacheLength];
-                            Vector2 basePos = Projectile.Center + Helper.NextVec2Dir() * 10;
-                            Vector2 dir = -Projectile.velocity * 0.55f;
-                            vec[0] = basePos;
-
-                            for (int i = 1; i < (int)cacheLength; i++)
+                            trail.CanDraw = Main.rand.NextBool();
+                            if (trail.CanDraw)
                             {
-                                vec[i] = basePos + dir * i;
-                            }
+                                Vector2[] vec = new Vector2[(int)cacheLength];
+                                Vector2 basePos = Projectile.Center + Helper.NextVec2Dir() * 10;
+                                Vector2 dir = -Projectile.velocity * 0.55f;
+                                vec[0] = basePos;
 
-                            trail.BasePositions = vec;
-                            trail.RandomThunder();
+                                for (int i = 1; i < (int)cacheLength; i++)
+                                {
+                                    vec[i] = basePos + dir * i;
+                                }
+
+                                trail.BasePositions = vec;
+                                trail.RandomThunder();
+                            }
                         }
                     }
                 }
-            }
 
             if (Timer % 4 == 0)
             {
@@ -191,54 +159,62 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     ThunderAlpha = 1;
             }
 
-            if (Timer > 30)
+            Projectile.SpawnTrailDust(30f, DustID.PortalBoltTrail, Main.rand.NextFloat(0.1f, 0.4f),
+                newColor: new Color(255, 202, 101), Scale: Main.rand.NextFloat(1f, 1.3f));
+
+            if (Timer == 60)
             {
-                Projectile.SpawnTrailDust(30f,DustID.PortalBoltTrail, Main.rand.NextFloat(0.1f, 0.4f),
-                    newColor: new Color(255, 202, 101), Scale: Main.rand.NextFloat(1f, 1.3f));
-                ThunderWidth = Main.rand.NextFloat(20, 30);
-
-                if (Projectile.velocity.Length() < 20)
-                    Projectile.velocity *= 1.05f;
-            }
-        }
-
-        public override void OnKill(int timeLeft)
-        {
-            Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<LightingParticle>(),Scale:2.5f);
-
-            float baseRot = Main.rand.NextFloat(6.282f);
-            for (int i = 0; i < 5; i++)
-            {
-                Particle.NewParticle(Projectile.Center + (baseRot + i * MathHelper.TwoPi / 5).ToRotationVector2() * Main.rand.NextFloat(20, 30)
-                    , Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>());
-            }
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Projectile.QuickDraw(Color.White,0f);
-
-            if (circles != null)
-                foreach (var circle in circles)
-                    circle.DrawThunder(Main.instance.GraphicsDevice);
-            if (trails != null)
+                if (Angle == 0)
+                    Angle = Main.rand.NextFloat();
+                Projectile.velocity *= 0;
                 foreach (var trail in trails)
-                    trail.DrawThunder(Main.instance.GraphicsDevice);
+                {
+                    trail.CanDraw = false;
+                }
+            }
+            if (Timer > 60)
+            {
+                float factor = (Timer - 60) / 90f;
 
-            return false;
+                float length = Helper.Lerp(20, 400, factor);
+                for (int i = 0; i < 4; i++)
+                {
+                    Vector2 dir = (Angle + i * MathHelper.PiOver2).ToRotationVector2();
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(6, 6) + dir * Main.rand.NextFloat(20, length), DustID.PortalBoltTrail
+                        , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: new Color(255, 202, 101),
+                        Scale: Main.rand.NextFloat(1f, 1.5f));
+                    d.noGravity = true;
+                }
+
+                if (Timer > 150)
+                {
+                    SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, Projectile.Center);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        Vector2 dir = (Angle + i * MathHelper.PiOver2).ToRotationVector2();
+                        Vector2 pos = Projectile.Center + dir * 40;
+                        Projectile.NewProjectileFromThis<LightingBreath>(pos + dir * 550, pos, Projectile.damage, 0, 20,
+                            (int)OwnerIndex, 70);
+                    }
+                    Projectile.Kill();
+                }
+            }
         }
 
-        public void DrawAdditive(SpriteBatch spriteBatch)
+        public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Texture2D exTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightFog").Value;
-
-            Vector2 pos = Projectile.Center - Main.screenPosition;
-            Color c = new Color(255, 202, 101, (int)(ThunderAlpha * 250));
-            var origin = exTex.Size() / 2;
-            var scale = Projectile.scale * 0.5f;
-
-            spriteBatch.Draw(exTex, pos, null, c, Projectile.rotation + Main.GlobalTimeWrappedHourly, origin, scale, 0, 0);
-            spriteBatch.Draw(exTex, pos, null, c * 0.5f, Projectile.rotation - Main.GlobalTimeWrappedHourly / 2, origin, scale, 0, 0);
+            if (Timer < 60)
+            {
+                Timer = 60;
+                if (Angle == 0)
+                    Angle = Main.rand.NextFloat();
+                Projectile.velocity *= 0;
+                foreach (var trail in trails)
+                {
+                    trail.CanDraw = false;
+                }
+            }
+            return false;
         }
     }
 }

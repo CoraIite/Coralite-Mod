@@ -127,8 +127,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                     , burstTime, NPC.whoAmI, 85);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
-                                SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
+                                SoundEngine.PlaySound(CoraliteSoundID.BottleExplosion_Item107, NPC.Center);
                                 canDrawShadows = true;
+                                SetBackgroungLight(0.3f, burstTime / 2);
+
                                 ResetAllOldCaches();
                             }
                         }

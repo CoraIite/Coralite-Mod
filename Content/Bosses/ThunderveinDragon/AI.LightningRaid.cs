@@ -27,10 +27,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         //追踪玩家
                         GetLengthToTargetPos(Target.Center, out float xLength, out float yLength);
 
-                        if (xLength < 200)
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction, 18f, 0.3f, 0.6f, 0.95f);
-                        else if (xLength > 400)
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 18f, 0.3f, 0.6f, 0.95f);
+                        if (xLength < 250)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction, 18f, 0.35f, 0.6f, 0.95f);
+                        else if (xLength > 500)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 18f, 0.35f, 0.6f, 0.95f);
                         else
                             NPC.velocity.X *= 0.95f;
 
@@ -50,7 +50,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         SetRotationNormally();
 
                         Timer++;
-                        if (Timer > chasingTime || (xLength > 150 && xLength < 450 && yLength < 150))
+                        if (Timer > chasingTime || (xLength > 350 && yLength < 250))
                         {
                             SonState++;
                             Timer = 0;
@@ -77,8 +77,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
-                           
-                            targetrot += Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(0.9f, 1f);
+
+                            if (Vector2.Distance(NPC.Center, Target.Center) < 700)
+                                targetrot += Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(0.9f, 1.1f);
                             NPC.velocity = targetrot.ToRotationVector2() * 35;
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
@@ -94,7 +95,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                             
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
-                            targetrot += (Timer / smallDashTime > 1 ? -1 : 1) * Main.rand.NextFloat(0.4f, 1f);
+                            if (Vector2.Distance(NPC.Center, Target.Center) < 700)
+                                targetrot += (Timer / smallDashTime > 1 ? -1 : 1) * Main.rand.NextFloat(0.6f, 1.1f);
                             NPC.velocity = targetrot.ToRotationVector2() * 30;
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
@@ -123,7 +125,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         SetRotationNormally(0.2f);
 
                         if (NPC.velocity.Length() < 8)
-                            NPC.velocity += (NPC.Center - Target.Center).SafeNormalize(Vector2.Zero) * 0.35f;
+                            NPC.velocity += (NPC.Center - Target.Center).SafeNormalize(Vector2.Zero) * 0.65f;
 
                         UpdateAllOldCaches();
 
@@ -148,6 +150,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 NPC.rotation = NPC.velocity.ToRotation();
                                 NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
                                 isDashing = true;
+                                SetBackgroungLight(0.4f, bigDashTime);
                             }
                         }
                     }
@@ -175,7 +178,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             }
                         }
                         Timer++;
-                        if (Timer > bigDashTime + 60)
+                        int delayTime = 40;
+                        if (Main.getGoodWorld)
+                            delayTime = 15;
+                        if (Timer > bigDashTime + delayTime)
                             ResetStates();
                     }
                     break;

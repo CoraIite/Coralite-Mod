@@ -51,7 +51,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         Timer++;
                         if (Timer > smallDashTime - 2)
                         {
-                            if (Vector2.Distance(Target.Center, NPC.Center) > 1000)
+                            if (Vector2.Distance(Target.Center, NPC.Center) > 700)
                             {
                                 SonState = 1;
                             }

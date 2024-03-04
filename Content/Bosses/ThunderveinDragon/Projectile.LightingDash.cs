@@ -22,6 +22,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public ref float OwnerIndex => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.localAI[0];
 
+        const int DelayTime = 30;
+
         protected ThunderTrail[] thunderTrails;
 
         public override bool ShouldUpdatePosition() => false;
@@ -34,10 +36,18 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Projectile.penetrate = -1;
         }
 
+        public override bool? CanDamage()
+        {
+            if (Timer > DashTime + DelayTime / 2)
+                return false;
+
+            return null;
+        }
+
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             float a = 0;
-            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(),Projectile.velocity,Projectile.Center,Projectile.width,ref a);
+            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.velocity, Projectile.Center, Projectile.width, ref a);
         }
 
         public float ThunderWidthFunc(float factor)
@@ -60,7 +70,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (!OwnerIndex.GetNPCOwner<ThunderveinDragon>(out NPC owner, Projectile.Kill))
                 return;
 
-            if (thunderTrails==null)
+            if (thunderTrails == null)
             {
                 Projectile.Resize((int)PointDistance, 40);
                 Projectile.velocity = Projectile.Center;
@@ -68,7 +78,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 Asset<Texture2D> trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody");
                 for (int i = 0; i < 3; i++)
                 {
-                    if (i==0)
+                    if (i == 0)
                         thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc, ThunderColorFunc2);
                     else
                         thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc, ThunderColorFunc);
@@ -80,8 +90,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     };
                 }
             }
-
-            const int DelayTime = 30;
 
             if (Timer < DashTime)
             {
@@ -124,7 +132,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 ThunderWidth = 20;
                 ThunderAlpha = Timer / DashTime;
             }
-            else if ((int)Timer==(int)DashTime)
+            else if ((int)Timer == (int)DashTime)
             {
                 foreach (var trail in thunderTrails)
                 {
@@ -160,7 +168,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (thunderTrails!=null)
+            if (thunderTrails != null)
             {
                 foreach (var trail in thunderTrails)
                 {

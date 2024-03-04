@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -32,6 +33,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public readonly int trailCacheLength = 12;
         public Point[] oldFrame;
         public int[] oldDirection;
+
+        public float selfAlpha = 1f;
 
         /// <summary>
         /// 是否绘制残影
@@ -258,6 +261,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             /// 电球，吐出一个电球
             /// </summary>
             LightingBall,
+            /// <summary>
+            /// 电球，吐出一个电球，飞行一段时间后向四周爆开
+            /// </summary>
+            CrossLightingBall,
+            /// <summary>
+            /// 落雷，先吼叫一声后飞向空中并隐身，之后选择落点，再下落
+            /// </summary>
+            FallingThunder,
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -265,6 +276,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             ResetAllOldCaches();
             Phase = 1;
             State = (int)AIStates.LightningRaid;
+            if (!SkyManager.Instance["ThunderveinSky"].IsActive())//如果这个天空没激活
+                SkyManager.Instance.Activate("ThunderveinSky");
         }
 
         public override void AI()
@@ -283,6 +296,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     return;
                 }
             }
+
+            ThunderveinSky sky = ((ThunderveinSky)SkyManager.Instance["ThunderveinSky"]);
+            if (sky.Timeleft < 100)
+                sky.Timeleft += 3;
+            if (sky.Timeleft > 100)
+                sky.Timeleft = 100;
 
             switch (State)
             {
@@ -314,6 +333,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case (int)AIStates.LightingBall://闪电吐息
                     LightingBall();
+                    break;
+                case (int)AIStates.CrossLightingBall://闪电吐息
+                    CrossLightingBall();
                     break;
             }
         }
@@ -365,14 +387,15 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     {
                         int oldState = (int)State;
 
+                        float distance = Vector2.Distance(NPC.Center, Target.Center);
                         int dir = Target.Center.X > NPC.Center.X ? 1 : -1;
-                        if (dir != NPC.spriteDirection)//玩家在背后时大概率使用闪电突袭
+                        if (dir != NPC.spriteDirection || distance > 800)//玩家在背后时，或者距离较远时大概率使用闪电突袭
                         {
                             for (int i = 0; i < 5; i++)
                                 moves.Add((int)AIStates.LightningRaid);
                         }
 
-                        if (Vector2.Distance(NPC.Center, Target.Center) < 480)//距离较近是大概率使用放电
+                        if (distance < 420)//距离较近是大概率使用放电
                         {
                             for (int i = 0; i < 3; i++)
                                 moves.Add((int)AIStates.Discharging);
@@ -387,6 +410,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         moves.Add((int)AIStates.LightningRaid);
                         moves.Add((int)AIStates.LightingBreath);
                         moves.Add((int)AIStates.LightingBall);
+                        if (Main.masterMode)
+                            moves.Add((int)AIStates.CrossLightingBall);
 
                         //当上次使用的是短距离冲刺的话，额外移除上上次所使用的招式
                         if (oldState == (int)AIStates.SmallDash)
@@ -396,7 +421,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                         //随机一个招式出来
                         State = Main.rand.NextFromList(moves.ToArray());
-                        //State = (int)AIStates.LightingBall;
+                        //State = (int)AIStates.CrossLightingBall;
 
                         //如果本次使用的是短距离冲刺那么旧记录上一招
                         if ((int)State == (int)AIStates.SmallDash)
@@ -409,9 +434,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     }
                     break;
             }
-
-
-
         }
 
         public void ResetToSelectedState(AIStates state)
@@ -512,6 +534,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             NPC.rotation = NPC.rotation.AngleLerp(NPC.spriteDirection > 0 ? 0 : MathHelper.Pi, rate);
         }
 
+        public static void SetBackgroungLight(float light,int fadeTime)
+        {
+            ThunderveinSky sky = ((ThunderveinSky)SkyManager.Instance["ThunderveinSky"]);
+            sky.light = light;
+            sky.LightTime = fadeTime;
+        }
+
         public void InitOldFrame()
         {
             oldFrame ??= new Point[trailCacheLength];
@@ -576,7 +605,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 effects = SpriteEffects.FlipVertically;
             }
-            
+
             //绘制残影
             if (canDrawShadows)
             {
@@ -596,9 +625,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
 
             //绘制自己
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, drawColor, rot, origin, NPC.scale, effects, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, drawColor * selfAlpha, rot, origin, NPC.scale, effects, 0);
+            //绘制glow
             Main.spriteBatch.Draw(ModContent.Request<Texture2D>(AssetDirectory.ThunderveinDragon + "ThunderveinDragon_Glow").Value
-                , pos, frameBox, Color.White*0.75f, rot, origin, NPC.scale, effects, 0);
+                , pos, frameBox, Color.White * 0.75f * selfAlpha, rot, origin, NPC.scale, effects, 0);
 
             //绘制冲刺时的特效
             if (isDashing)

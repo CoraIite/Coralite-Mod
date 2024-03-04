@@ -17,6 +17,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     {
         public override string Texture => AssetDirectory.Blank;
 
+        const int DelayTime = 30;
+
         public ref float LightingTime => ref Projectile.ai[0];
         public ref float OwnerIndex => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.localAI[0];
@@ -29,6 +31,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.width = Projectile.height = 630;
+        }
+
+        public override bool? CanDamage()
+        {
+            if (Timer > LightingTime + DelayTime / 2)
+                return false;
+
+            return null;
         }
 
         public override bool ShouldUpdatePosition() => false;
@@ -65,7 +75,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             Projectile.Center = owner.Center;
 
-            const int DelayTime = 30;
             if (circles == null)
             {
                 ThunderAlpha = 1;

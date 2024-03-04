@@ -9,6 +9,7 @@ namespace Coralite
         public Color MagicCrystalPink { get; private set; }
         public Color CrystallineMagikePurple { get; private set; }
         public Color SplendorMagicoreLightBlue { get; private set; }
+        public Color ThunderveinYellow { get; private set; }
 
         public void InitColor()
         {
@@ -17,6 +18,7 @@ namespace Coralite
             MagicCrystalPink = new Color(255, 190, 236);
             CrystallineMagikePurple = new Color(140, 130, 252);
             SplendorMagicoreLightBlue = new Color(190, 225, 235);
+            ThunderveinYellow = new Color(255, 202, 101);
         }
 
     }

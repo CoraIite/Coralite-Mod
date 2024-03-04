@@ -5,6 +5,7 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -112,8 +113,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Vector2 Center = RandomlyPositions[0] - Main.screenPosition;
 
             Vector2 normal = (RandomlyPositions[1] - RandomlyPositions[0]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
+            float tipRotaion = normal.ToRotation();
             Color thunderColor = thunderColorFunc(0);
             float tipWidth = thunderWidthFunc(0);
+            drawInTip = tipWidth > 10;
             Vector2 lengthVec2 = normal * tipWidth;
             bars.Add(new(Center + lengthVec2, thunderColor, new Vector3(0, 0, 0)));
             bars.Add(new(Center - lengthVec2, thunderColor, new Vector3(0, 1, 0)));
@@ -232,6 +235,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             normal = (RandomlyPositions[^2] - RandomlyPositions[^1]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
             thunderColor = thunderColorFunc(1);
             float bottomWidth = thunderWidthFunc(1);
+            drawInBack = bottomWidth > 10;
             lengthVec2 = normal * bottomWidth;
             bars.Add(new(Center + lengthVec2, thunderColor, new Vector3(1, 0, 0)));
             bars.Add(new(Center - lengthVec2, thunderColor, new Vector3(1, 1, 0)));
@@ -241,6 +245,34 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             graphicsDevice.Textures[0] = Texture;
             graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
             graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars2.ToArray(), 0, bars2.Count - 2);
+
+            if (drawInTip)
+            {
+                Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
+                var pos = RandomlyPositions[0] - Main.screenPosition;
+                var origin = mainTex.Size() / 2;
+                Color c = new Color(255, 202, 101, 0);
+
+                Vector2 scale = new Vector2(thunderWidthFunc(0) / 90, thunderWidthFunc(0) / 130);
+
+                Main.spriteBatch.Draw(mainTex, pos, null, c, tipRotaion, origin, scale, 0, 0);
+                Main.spriteBatch.Draw(mainTex, pos, null, c, tipRotaion, origin, scale * 0.75f, 0, 0);
+                Main.spriteBatch.Draw(mainTex, pos, null, c, tipRotaion, origin, scale * 0.5f, 0, 0);
+            }
+
+            if (drawInBack)
+            {
+                Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
+                var pos = RandomlyPositions[^1] - Main.screenPosition;
+                var origin = mainTex.Size() / 2;
+                Color c = new Color(255, 202, 101, 0);
+
+                Vector2 scale = new Vector2(thunderWidthFunc(1) / 90, thunderWidthFunc(1) / 130);
+                float rot = normal.ToRotation();
+                Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale, 0, 0);
+                Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale * 0.75f, 0, 0);
+                Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale * 0.5f, 0, 0);
+            }
         }
     }
 }

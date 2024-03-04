@@ -3314,6 +3314,7 @@ Mods: {
 			// LightingBreath.DisplayName: Lighting Breath
 			// LightingBall.DisplayName: Lighting Ball
 			// ChainBall.DisplayName: Chain Ball
+			// CrossLightingBall.DisplayName: Cross Lighting Ball
 		}
 
 		Configs: {

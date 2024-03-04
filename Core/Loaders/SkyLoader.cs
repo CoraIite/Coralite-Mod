@@ -22,7 +22,6 @@ namespace Coralite.Core.Loaders
                 if (t.IsSubclassOf(typeof(CustomSky)))
                     SkyManager.Instance[t.Name] = (CustomSky)Activator.CreateInstance(t);
             }
-
         }
 
         public void Unload()

@@ -13,12 +13,23 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// <summary>
     /// 使用ai0传入冲刺时间，ai1传入主人
     /// 使用ai2传入闪电每个点间的间隔
+    /// 使用速度传入中心点的位置，位置传入末端的位置
     /// </summary>
     public class LightingBreath : LightingDash
     {
+        const int DelayTime = 30;
+
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2800;
+        }
+
+        public override bool? CanDamage()
+        {
+            if (Timer > DashTime + DelayTime / 2)
+                return false;
+
+            return null;
         }
 
         public override void AI()
@@ -43,7 +54,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     };
                 }
             }
-            const int DelayTime = 30;
 
             if (Timer < DashTime)
             {
@@ -105,7 +115,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.SetRange((5, 25 + sinFactor * PointDistance / 2));
+                    trail.SetRange((5, 20 + sinFactor * PointDistance / 2));
                     trail.SetExpandWidth((1 - factor) * PointDistance / 3);
 
                     if (Timer % 6 == 0)

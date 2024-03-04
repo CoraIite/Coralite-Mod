@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BrilliantEnchantPool>()
+                .AddIngredient<BrilliantRemodelPool>()
                 .AddIngredient(ItemID.Ectoplasm, 10)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
