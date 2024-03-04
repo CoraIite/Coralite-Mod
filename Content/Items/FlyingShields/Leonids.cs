@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.FlyingShields
 {
     public class Leonids : BaseFlyingShieldItem<LeonidsGuard>
     {
-        public Leonids() : base(Item.sellPrice(0, 0, 80), ItemRarityID.LightRed, AssetDirectory.FlyingShieldItems)
+        public Leonids() : base(Item.sellPrice(0, 1, 50), ItemRarityID.LightRed, AssetDirectory.FlyingShieldItems)
         { }
 
         public override void SetDefaults2()

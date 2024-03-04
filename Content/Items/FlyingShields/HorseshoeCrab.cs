@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.FlyingShields
 {
     public class HorseshoeCrab : BaseFlyingShieldItem<HorseshoeCrabGuard>
     {
-        public HorseshoeCrab() : base(Item.sellPrice(0, 0, 0, 10), ItemRarityID.LightRed, AssetDirectory.FlyingShieldItems)
+        public HorseshoeCrab() : base(Item.sellPrice(0, 2), ItemRarityID.LightRed, AssetDirectory.FlyingShieldItems)
         {
         }
 

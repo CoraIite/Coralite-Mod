@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.FlyingShields
 {
     public class MechRioter : BaseFlyingShieldItem<MechRioterGuard>
     {
-        public MechRioter() : base(Item.sellPrice(0, 0, 0, 10), ItemRarityID.LightPurple, AssetDirectory.FlyingShieldItems)
+        public MechRioter() : base(Item.sellPrice(0, 4), ItemRarityID.LightPurple, AssetDirectory.FlyingShieldItems)
         { }
 
         public override void SetDefaults2()

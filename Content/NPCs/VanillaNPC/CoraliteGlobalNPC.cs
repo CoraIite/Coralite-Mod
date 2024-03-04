@@ -188,7 +188,7 @@ namespace Coralite.Content.NPCs.VanillaNPC
                             i++;
                         }
 
-                        if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+                        if (NPC.downedPlantBoss)//花后获取符文羊皮纸
                         {
                             items[i] = new Item(ItemType<RuneParchment>());
                             i++;

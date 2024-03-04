@@ -115,6 +115,7 @@ Mods: {
 					'''
 					Occasionally grows on a gem tree that attracts a strange ruddy stone
 					Summon the Rediancie
+						Chance of being dropped by cutting down the gem tree
 					'''
 			}
 
@@ -1279,7 +1280,7 @@ Mods: {
 
 			GelFiber: {
 				DisplayName: Gel Fiber
-				Tooltip: ""
+				Tooltip: Dropped when a slime tree is cut down, and the slime sapling is dropped by the slime
 			}
 
 			NightmareHarp: {
@@ -1960,6 +1961,7 @@ Mods: {
 					'''
 					[c/8e8e8e:A unusually well preserved piece of ancient paper. ]
 					[c/8e8e8e:The runes are impossible to decipher but small symbols hint at it being the recipe for a strange weapon.]
+						Sold by the Traveling Merchant after defeating Plantera
 					'''
 			}
 
