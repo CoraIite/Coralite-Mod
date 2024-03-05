@@ -113,7 +113,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Vector2 Center = RandomlyPositions[0] - Main.screenPosition;
 
             Vector2 normal = (RandomlyPositions[1] - RandomlyPositions[0]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
-            float tipRotaion = normal.ToRotation();
+            float tipRotaion = normal.ToRotation()+1.57f;
             Color thunderColor = thunderColorFunc(0);
             float tipWidth = thunderWidthFunc(0);
             drawInTip = tipWidth > 10;
@@ -257,7 +257,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                 Main.spriteBatch.Draw(mainTex, pos, null, c, tipRotaion, origin, scale, 0, 0);
                 Main.spriteBatch.Draw(mainTex, pos, null, c, tipRotaion, origin, scale * 0.75f, 0, 0);
-                Main.spriteBatch.Draw(mainTex, pos, null, c, tipRotaion, origin, scale * 0.5f, 0, 0);
+                //Main.spriteBatch.Draw(mainTex, pos, null, c, tipRotaion, origin, scale * 0.5f, 0, 0);
             }
 
             if (drawInBack)
@@ -267,11 +267,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 var origin = mainTex.Size() / 2;
                 Color c = new Color(255, 202, 101, 0);
 
-                Vector2 scale = new Vector2(thunderWidthFunc(1) / 90, thunderWidthFunc(1) / 130);
-                float rot = normal.ToRotation();
+                Vector2 scale = new Vector2(thunderWidthFunc(1) / 170, thunderWidthFunc(1) / 200);
+                float rot = normal.ToRotation()+1.57f;
                 Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale, 0, 0);
                 Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale * 0.75f, 0, 0);
-                Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale * 0.5f, 0, 0);
+                //Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale * 0.5f, 0, 0);
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿using Terraria.ModLoader;
+﻿using Microsoft.Xna.Framework;
+using System;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -11,6 +13,21 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public ref float ThunderWidth => ref Projectile.localAI[1];
         public ref float ThunderAlpha => ref Projectile.localAI[2];
+
+        public virtual float ThunderWidthFunc_Sin(float factor)
+        {
+            return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth;
+        }
+
+        public virtual Color ThunderColorFunc_Yellow(float factor)
+        {
+            return ThunderveinDragon.ThunderveinYellowAlpha * ThunderAlpha;
+        }
+
+        public virtual Color ThunderColorFunc2_Orange(float factor)
+        {
+            return ThunderveinDragon.ThunderveinOrangeAlpha * ThunderAlpha;
+        }
 
     }
 }

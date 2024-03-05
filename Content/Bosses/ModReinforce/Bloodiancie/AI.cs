@@ -104,665 +104,701 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             switch ((int)State)
             {
                 case (int)AIStates.onKillAnim:
-                    {
-                        SlowDownAndGoUp(0.96f, -0.05f, -0.5f);
-                        ChangeRotationNormally();
-                        UpdateFollower_Summon();
-
-                        if (Timer < 30)
-                            break;
-
-                        if (Timer > 40 && Timer % 20 == 0 && Main.netMode != NetmodeID.Server)
-                        {
-                            Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, 1).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore2").Type);
-                            Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, 1).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore3").Type);
-                            Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, -3).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore4").Type);
-                        }
-
-                        if (Timer < 230 && Timer % 15 == 0)
-                            Helper.RedJadeExplosion(NPC.Center + Main.rand.NextVector2Circular(30, 40));
-
-                        if (Timer == 245)
-                        {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Bloodiancie_BigBoom>(), 150, 8f);
-                            if (Main.netMode != NetmodeID.Server)
-                            {
-                                var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
-                                Main.instance.CameraModifiers.Add(modifier);
-                            }
-                        }
-
-                        if (Timer > ON_KILL_ANIM_TIME)
-                            NPC.Kill();
-                    }
+                    OnKillAnim();
                     break;
                 case (int)AIStates.onSpawnAnim:         //生成时的动画
-                    {
-                        if (Timer == 0) //生成动画弹幕
-                        {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Bloodiancie_OnSpawnAnim>(), 0, 0);
-                            NPC.velocity = new Vector2(0, 1.5f);
-                            NPC.dontTakeDamage = true;
-                        }
-
-                        if (Timer % 5 == 0 && Main.netMode != NetmodeID.Server)
-                        {
-                            int count = Timer / 25;
-                            for (int i = 0; i < count; i++)
-                            {
-                                Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
-                                dust.noGravity = true;
-                            }
-                        }
-
-                        if (Timer > 120)
-                            NPC.velocity *= 0.998f;
-
-                        if (Timer == 260)
-                        {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Bloodiancie_BigBoom>(), 80, 8f);
-                            SkyManager.Instance.Activate("BloodJadeSky");
-                        }
-
-                        if (Timer == 270 && Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            State = (int)AIStates.explosion;
-                            RefillAIList(1);
-                            Timer = 0;
-                            NPC.TargetClosest();
-                            NPC.dontTakeDamage = false;
-                            NPC.netUpdate = true;
-                        }
-
-                        ChangeRotationNormally();
-                        UpdateFollower_Idle();
-                    }
+                    OnSpawnAnim();
                     break;
                 case (int)AIStates.pulse:               //蓄力射出大型弹幕
-                    {
-                        float yLength = NPC.Center.Y - Target.Center.Y;
-                        if (yLength > -150)
-                            SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
-                        else
-                            NPC.velocity *= 0.99f;
-
-                        Vector2 targetVec = Target.Center - NPC.Center;
-                        float factor = Math.Clamp(targetVec.Length() / 150f, 0f, 1f);
-                        Vector2 targetDir = targetVec.SafeNormalize(Vector2.One);
-                        Vector2 targetCenter = NPC.Center + targetDir * (32 + factor * 32);
-                        int realTime = Timer - 100;
-
-                        ChangeRotationNormally();
-
-                        if (Timer < 100)
-                        {
-                            UpdateFollower_Pulse(targetCenter, targetDir, factor, -1, 0.1f + 0.5f * Timer / 60);
-                            for (int i = 0; i < 2; i++)
-                                Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, (d) => -targetDir * 6f, Scale: 1.1f);
-                            break;
-                        }
-                        else if (Timer < 255)
-                        {
-                            UpdateFollower_Pulse(targetCenter, targetDir, factor, realTime % 45);
-                            Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, (d) => -targetDir * 6f, Scale: 1.1f + 2f * (realTime % 65) / 65f);
-                        }
-                        else
-                            UpdateFollower_Idle(0.08f);
-
-                        if (realTime % 45 == 0)//生成弹幕
-                        {
-                            if (!CanDespawnFollower())
-                            {
-                                ResetState();
-                                break;
-                            }
-
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                int damage = Helper.ScaleValueForDiffMode(30, 35, 35, 30);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter,
-                                    (Target.Center - NPC.Center + Main.rand.NextVector2CircularEdge(48, 48)).SafeNormalize(Vector2.UnitY) * 12f,
-                                    ProjectileType<RedPulse>(), damage, 5f, NPC.target);
-                            }
-
-                            Helper.PlayPitched("RedJade/RedJadeBeam", 0.13f, 0f, NPC.Center);
-                            if (!DespawnFollowers(1))
-                                ResetState();
-                        }
-
-                        if (Timer > 275)
-                            ResetState();
-                    }
+                    Pulse();
                     break;
                 case (int)AIStates.bloodRain:
-                    {
-                        if (Timer < 150)
-                        {
-                            float xLength = Math.Abs(Target.Center.X - NPC.Center.X);
-                            if (xLength > 50)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 9.5f, 0.25f, 0.3f, 0.97f);
-                            else
-                                NPC.velocity.X *= 0.96f;
-                            //控制Y方向的移动
-                            float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
-                            if (yLength > 50)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6.5f, 0.2f, 0.4f, 0.97f);
-                            else
-                                NPC.velocity.Y *= 0.96f;
-
-                            if (Timer % 5 == 0)
-                            {
-                                int count = Timer / 15;
-                                for (int i = 0; i < count; i++)
-                                {
-                                    Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 4, count * 4), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
-                                    dust.noGravity = true;
-                                }
-                            }
-                        }
-                        else
-                            NPC.velocity *= 0.995f;
-
-                        if (Timer == 160)       //生成弹幕
-                        {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero
-                                , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(55, 55, 50, 45), 8f);
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(Target.Center.X > NPC.Center.X ? 1 : -1, 0) * 12, ProjectileType<BloodBall>(), 1, 8f);
-                            SpawnFollowers(8);
-                        }
-
-                        if (Timer > 180)
-                            ResetState();
-
-                        ChangeRotationNormally();
-                        UpdateFollower_Firework();
-
-                        break;
-                    }
+                    BloodRain();
+                    break;
                 case (int)AIStates.firework:
-                    {
-                        //控制X方向的移动
-                        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6f, 0.2f, 0.3f, 0.97f);
-
-                        //控制Y方向的移动
-                        float yLength2 = Math.Abs(Target.Center.Y - NPC.Center.Y);
-                        if (yLength2 > 50)
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4f, 0.2f, 0.3f, 0.97f);
-                        else
-                            NPC.velocity.Y *= 0.96f;
-
-                        if (Timer == 2)
-                        {
-                            NPC.reflectsProjectiles = true;
-                            NPC.dontTakeDamage = true;
-                            RedShield.Spawn(NPC, 250);
-                            SpawnFollowers(Main.getGoodWorld ? 6 : 3);
-                        }
-
-                        ChangeRotationNormally();
-                        if (OwnedFollowersCount == 0 || followers.Count == 0)
-                        {
-                            ResetState();
-                            break;
-                        }
-
-                        UpdateFollower_Firework();
-
-                        if (Timer < 49)
-                            break;
-
-                        if (Timer % 25 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            float rot = Main.rand.NextFloat(MathHelper.TwoPi);
-                            int damage = NPC.GetAttackDamage_ForProjectiles(10, 15);
-                            int timeleft = 16;
-                            int howMany = Main.rand.Next(3, 6);
-                            for (int i = 0; i < howMany; i++)
-                            {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[^1].center, rot.ToRotationVector2() * 12, ProjectileType<RedFirework>(), damage, 5f, NPC.target, 0, timeleft + i * 10);
-                                rot += MathHelper.TwoPi / howMany;
-                            }
-
-                            SoundEngine.PlaySound(SoundID.Item5, NPC.Center);
-                            if (!DespawnFollowers(1))
-                            {
-                                ResetState();
-                                RedShield.Kill();
-                            }
-                        }
-
-                        if (Timer > 265)
-                            ResetState();
-                    }
+                    Firework();
                     break;
                 case (int)AIStates.explosionHorizontally:          //追逐玩家并蓄力爆炸
-                    {
-                        //控制X方向的移动
-                        if (Timer < 160)
-                        {
-                            float xLength = Math.Abs(Target.Center.X - NPC.Center.X);
-                            if (xLength > 350)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 9.5f, 0.3f, 0.4f, 0.97f);
-                            else if (xLength < 300)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction, 9.5f, 0.3f, 0.4f, 0.97f);
-                            else
-                                NPC.velocity.X *= 0.96f;
-                            //控制Y方向的移动
-                            float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
-                            if (yLength > 50)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 7.5f, 0.3f, 0.4f, 0.97f);
-                            else
-                                NPC.velocity.Y *= 0.96f;
-
-                            if (Timer % 5 == 0)
-                            {
-                                int count = Timer / 13;
-                                for (int i = 0; i < count; i++)
-                                {
-                                    Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 4, count * 4), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
-                                    dust.noGravity = true;
-                                }
-                            }
-                        }
-                        else
-                            NPC.velocity *= 0.997f;
-
-                        if (Timer == 170)       //生成弹幕
-                        {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero
-                                , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(55, 55, 50, 45), 8f);
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(Target.Center.X > NPC.Center.X ? 1 : -1, 0) * 12, ProjectileType<BloodWave>(), 1, 8f);
-                            SpawnFollowers(8);
-                        }
-
-                        if (Timer > 210)
-                            ResetState();
-
-                        ChangeRotationNormally();
-                        UpdateFollower_Idle();
-                    }
+                    ExplosionHorizontally();
                     break;
                 case (int)AIStates.dash:            //连续5次冲刺攻击
-                    {
-                        int realTime = (Timer - 45) % 65;
-
-                        do
-                        {
-                            if (Timer < 45)
-                            {
-                                NPC.rotation = NPC.rotation.AngleLerp((Target.Center - NPC.Center).ToRotation() + 1.57f, Timer / 45f);
-                                if (Timer % 4 == 0)
-                                {
-                                    Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(70, 70), Vector2.UnitY * -2,
-                                        CoraliteContent.ParticleType<HorizontalStar>(), Coralite.Instance.RedJadeRed, Main.rand.NextFloat(0.5f, 0.8f));
-                                }
-                                break;
-                            }
-
-                            if (realTime == 18 && Main.netMode != NetmodeID.Server)
-                            {
-                                SoundEngine.PlaySound(SoundID.Item4, NPC.Center);
-                                Particle.NewParticle(NPC.Center + new Vector2(0, -16), Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.RedJadeRed, 1.5f);
-                            }
-
-                            if (realTime < 20)
-                            {
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 5f, 0.2f, 0.3f, 0.97f);
-                                float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
-
-                                if (yLength > 50)//控制Y方向的移动
-                                    Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4f, 0.15f, 0.3f, 0.97f);
-                                else
-                                    NPC.velocity.Y *= 0.96f;
-
-                                break;
-                            }
-
-                            if (realTime == 22)//开始冲刺
-                            {
-                                SpawnFollowers(3);
-                                NPC.velocity = (Target.Center + new Vector2(0, Timer / 70 % 2 == 0 ? 50 : -50) - NPC.Center).SafeNormalize(Vector2.One) * 14f;
-                                NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
-                            }
-
-                            if (realTime < 51)//边冲边炸
-                            {
-                                if (realTime % 6 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_Explosion>()
-                                        , Helper.ScaleValueForDiffMode(20, 30, 35, 30), 5f);
-
-                                break;
-                            }
-
-                            if (realTime == 52 && Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Bloodiancie_BigBoom>()
-                                    , Helper.ScaleValueForDiffMode(100, 100, 90, 80), 5f);
-
-                            float targetRot = NPC.velocity.Length() * 0.04f * NPC.direction;
-                            NPC.rotation = NPC.rotation.AngleLerp(targetRot, 0.1f);
-
-                            NPC.velocity *= 0.97f;
-                        } while (false);
-
-                        if (Timer > 65 * 5 + 45)
-                            ResetState();
-
-                        UpdateFollower_Idle();
-                    }
+                    Dash();
                     break;
                 default:
+                    ResetState();
+                    break;
                 case (int)AIStates.explosion:       //追着玩家并爆炸
-                    {
-                        do
-                        {
-                            if (Timer <= 210)
-                            {
-                                //控制X方向的移动
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 9f, 0.28f, 0.38f, 0.97f);
-
-                                //控制Y方向的移动
-                                float yLength2 = Math.Abs(Target.Center.Y - NPC.Center.Y);
-                                if (yLength2 > 50)
-                                    Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6.5f, 0.2f, 0.25f, 0.97f);
-                                else
-                                    NPC.velocity.Y *= 0.96f;
-
-                                if (Timer % 3 == 0)
-                                {
-                                    int count = Timer % 70 / 10;
-                                    for (int i = 0; i < count; i++)
-                                    {
-                                        Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 4, count * 4), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.06f);
-                                        dust.noGravity = true;
-                                    }
-                                }
-
-                                if (Timer % 70 == 0)//生成弹幕
-                                {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero,
-                                        ProjectileType<Rediancie_BigBoom>(), Helper.ScaleValueForDiffMode(50, 50, 45, 45), 5f);
-                                    SpawnFollowers(2);
-                                }
-
-                                break;
-                            }
-
-                            if (Timer < 310)
-                            {
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 11.5f, 0.38f, 0.54f, 0.97f);
-
-                                if (Timer % 10 == 0)//生成弹幕
-                                {
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero
-                                        , ProjectileType<Rediancie_Explosion>(), Helper.ScaleValueForDiffMode(30, 35, 35, 30), 5f);
-                                }
-
-                                //控制Y方向的移动
-                                float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
-                                if (yLength > 50)
-                                    Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 7.5f, 0.3f, 0.44f, 0.97f);
-                                else
-                                    NPC.velocity.Y *= 0.96f;
-
-                                if (Timer % 5 == 0)
-                                {
-                                    int count = Timer / 25;
-                                    for (int i = 0; i < count; i++)
-                                    {
-                                        Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
-                                        dust.noGravity = true;
-                                    }
-                                }
-                                break;
-                            }
-
-                            if (Timer == 310)
-                            {
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero
-                                    , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(80, 80, 75, 70), 8f);
-                                SpawnFollowers(8);
-                            }
-
-                            if (Timer < 320)
-                            {
-                                NPC.velocity *= 0.9f;
-                                break;
-                            }
-
-                            ResetState();
-
-                        } while (false);
-
-                        ChangeRotationNormally();
-                        UpdateFollower_Idle();
-                    }
+                    Explosion();
                     break;
                 case (int)AIStates.upShoot:         //朝上连续射击
-                    {
-                        float xLength = Math.Abs(Target.Center.X - NPC.Center.X);
-                        if (xLength > 250)
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 7.5f, 0.2f, 0.3f, 0.97f);
-                        else
-                            NPC.velocity.X *= 0.96f;
-
-                        float yLength = NPC.Center.Y - Target.Center.Y;
-                        if (yLength > -250)
-                        {
-                            NPC.velocity.Y -= 0.25f;
-                            if (NPC.velocity.Y < -6)
-                                NPC.velocity.Y = -6;
-                        }
-                        else if (yLength < -400)
-                        {
-                            NPC.velocity.Y += 0.2f;
-                            if (NPC.velocity.Y < 6)
-                                NPC.velocity.Y = 6;
-                        }
-                        else
-                            NPC.velocity.Y *= 0.98f;
-
-                        ChangeRotationNormally();
-
-                        if (OwnedFollowersCount == 0 || followers.Count == 0)
-                        {
-                            ResetState();
-                            break;
-                        }
-
-                        UpdateFollower_UpShoot();
-
-                        if (Timer < 30)
-                            break;
-
-                        if (Timer < 200 && Timer % 20 == 0)//隔固定时间射弹幕
-                        {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                int index = Main.rand.Next(followers.Count);
-                                int damage = Helper.ScaleValueForDiffMode(40, 40, 35, 30);
-                                int shootCount = Helper.ScaleValueForDiffMode(2, 3, 3, 4);
-                                for (int i = 0; i < shootCount; i++)
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[index].center, new Vector2(0, -10).RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)), ProjectileType<Rediancie_Strike>(), damage, 5f, NPC.target);
-                            }
-
-                            SoundEngine.PlaySound(SoundID.Item5, NPC.Center);
-                            if (!DespawnFollowers(1))
-                                ResetState();
-                        }
-
-                        if (Timer > 260)
-                            ResetState();
-                    }
+                    UpShoot();
                     break;
                 case (int)AIStates.shootBomb:
-                    {
-                        if (Timer < 60)
-                        {
-                            float xLength = Math.Abs(Target.Center.X - NPC.Center.X);
-                            if (xLength > 50)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 9.5f, 0.2f, 0.3f, 0.97f);
-                            else
-                                NPC.velocity.X *= 0.96f;
-                            //控制Y方向的移动
-                            float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
-                            if (yLength > 50)
-                                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 7.5f, 0.2f, 0.4f, 0.97f);
-                            else
-                                NPC.velocity.Y *= 0.96f;
-
-                            if (Timer % 5 == 0)
-                            {
-                                int count = Timer / 5;
-                                for (int i = 0; i < count; i++)
-                                {
-                                    Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 4, count * 4), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
-                                    dust.noGravity = true;
-                                }
-                            }
-                        }
-                        else
-                            NPC.velocity *= 0.995f;
-
-                        if (Timer == 70)
-                        {
-                            Vector2 dir = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
-                            float length = (Target.Center - NPC.Center).Length();
-                            for (int i = -3; i < 4; i++)
-                            {
-                                int shootTime = Main.rand.Next(45, 80);
-                                float velLength = length * Main.rand.NextFloat(0.55f, 2f) / shootTime;
-                                if (velLength > 16)
-                                    velLength = 16;
-
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, dir.RotatedBy(i * 0.3f) * velLength
-                                    , ProjectileType<RedBomb>(), 1, 4, ai0: shootTime, ai2: Main.rand.Next(120, 480));
-
-                                SoundEngine.PlaySound(CoraliteSoundID.WhipSwing_Item152, NPC.Center);
-
-                                if (!DespawnFollowers(1))
-                                    break;
-                            }
-                        }
-
-                        if (Timer > 120)
-                            ResetState();
-
-                        ChangeRotationNormally();
-                        UpdateFollower_Idle();
-
-                        break;
-                    }
+                    ShootBomb();
+                    break;
                 case (int)AIStates.magicShoot:      //蓄力射好多魔法弹幕
-                    {
-                        float yLength = NPC.Center.Y - Target.Center.Y;
-                        if (yLength > -150)
-                            SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
-                        else
-                            NPC.velocity *= 0.99f;
-
-                        Vector2 targetVec = Target.Center - NPC.Center;
-                        float factor = Math.Clamp(targetVec.Length() / 150f, 0f, 1f);
-                        Vector2 targetDir = targetVec.SafeNormalize(Vector2.One);
-                        Vector2 targetCenter = NPC.Center + targetDir * (32 + factor * 32);
-
-                        if (Timer % 3 == 0)
-                            for (int i = 0; i < 6; i++)
-                                Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby,
-                                    (dust) => (NPC.Center - dust.position).SafeNormalize(Vector2.UnitY) * 3f, Scale: 1.3f);
-
-                        ChangeRotationNormally();
-
-                        if (Timer < 60)
-                        {
-                            UpdateFollower_MagicShoot(targetCenter, targetDir, factor, 0.1f + 0.5f * Timer / 60);
-                            break;
-                        }
-                        else if (Timer < 140)
-                            UpdateFollower_MagicShoot(targetCenter, targetDir, factor);
-                        else
-                            UpdateFollower_Idle(0.1f);
-
-
-                        if (Timer % 15 == 0)//生成弹幕
-                        {
-                            if (!CanDespawnFollower())
-                            {
-                                ResetState();
-                                break;
-                            }
-
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                int damage = Helper.ScaleValueForDiffMode(40, 50, 40, 40);
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter, (Target.Center - NPC.Center + new Vector2(0, 30 * (Timer / 30) == 1 ? 1 : -1)).SafeNormalize(Vector2.UnitY) * 14f, ProjectileType<BloodiancieBeam>(), damage, 5f);
-                            }
-
-                            Helper.PlayPitched("RedJade/RedJadeBeam", 0.13f, 0f, NPC.Center);
-                            if (!DespawnFollowers(1))
-                                ResetState();
-                        }
-
-                        if (Timer > 155)
-                            ResetState();
-                    }
+                    MagicShoot();
                     break;
                 case (int)AIStates.summon:          //召唤小赤玉灵
-                    {
-                        float yLength = NPC.Center.Y - Target.Center.Y;
-                        if (yLength > -150)
-                            SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
-                        else
-                            NPC.velocity *= 0.99f;
-
-                        ChangeRotationNormally();
-
-                        if (OwnedFollowersCount == 0 || followers.Count == 0)
-                        {
-                            ResetState();
-                            break;
-                        }
-
-                        UpdateFollower_Summon();
-
-                        if (Timer % 10 == 0)
-                            for (int i = 0; i < 6; i++)
-                            {
-                                Dust dust = Dust.NewDustPerfect(followers[^1].center + Main.rand.NextVector2Circular(20, 20), DustID.GemRuby, Vector2.Zero, 0, default, 1.3f);
-                                dust.noGravity = true;
-                            }
-
-                        if (Timer % 40 == 0)
-                        {
-                            if (!CanDespawnFollower())
-                            {
-                                ResetState();
-                                break;
-                            }
-
-                            //为了保证同场召唤物数量不会过多所以还是保留了这一段
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                if (Main.npc.Count((n) => n.active && n.type == NPCType<BloodiancieMinion>()) < Helper.ScaleValueForDiffMode(2, 3, 3, 4))
-                                    NPC.NewNPC(NPC.GetSource_FromThis(), (int)followers[^1].center.X, (int)followers[^1].center.Y, NPCType<BloodiancieMinion>());
-                                else
-                                {
-                                    ResetState();
-                                    break;
-                                }
-                            }
-
-                            SoundEngine.PlaySound(CoraliteSoundID.MagicStaff_Item8, NPC.Center);
-                            if (!DespawnFollowers(1))
-                                ResetState();
-                        }
-
-                        if (Timer > 200)//防止出BUG
-                            ResetState();
-                    }
+                    Summon();
                     break;
             }
 
             Timer++;
+        }
+
+        public void OnKillAnim()
+        {
+            SlowDownAndGoUp(0.96f, -0.05f, -0.5f);
+            ChangeRotationNormally();
+            UpdateFollower_Summon();
+
+            if (Timer < 30)
+                return;
+
+            if (Timer > 40 && Timer % 20 == 0 && Main.netMode != NetmodeID.Server)
+            {
+                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, 1).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore2").Type);
+                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, 1).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore3").Type);
+                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, -3).RotatedBy(Main.rand.NextFloat(-1.5f, 1.5f)), Mod.Find<ModGore>("Rediancie_Gore4").Type);
+            }
+
+            if (Timer < 230 && Timer % 15 == 0)
+                Helper.RedJadeExplosion(NPC.Center + Main.rand.NextVector2Circular(30, 40));
+
+            if (Timer == 245)
+            {
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Bloodiancie_BigBoom>(), 150, 8f);
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
+                    Main.instance.CameraModifiers.Add(modifier);
+                }
+            }
+
+            if (Timer > ON_KILL_ANIM_TIME)
+                NPC.Kill();
+        }
+
+        public void OnSpawnAnim()
+        {
+            if (Timer == 0) //生成动画弹幕
+            {
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Bloodiancie_OnSpawnAnim>(), 0, 0);
+                NPC.velocity = new Vector2(0, 1.5f);
+                NPC.dontTakeDamage = true;
+            }
+
+            if (Timer % 5 == 0 && Main.netMode != NetmodeID.Server)
+            {
+                int count = Timer / 25;
+                for (int i = 0; i < count; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
+                    dust.noGravity = true;
+                }
+            }
+
+            if (Timer > 120)
+                NPC.velocity *= 0.998f;
+
+            if (Timer == 260)
+            {
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Bloodiancie_BigBoom>(), 80, 8f);
+                SkyManager.Instance.Activate("BloodJadeSky");
+            }
+
+            if (Timer == 270 && Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                State = (int)AIStates.explosion;
+                RefillAIList(1);
+                Timer = 0;
+                NPC.TargetClosest();
+                NPC.dontTakeDamage = false;
+                NPC.netUpdate = true;
+            }
+
+            ChangeRotationNormally();
+            UpdateFollower_Idle();
+        }
+
+        public void Pulse()
+        {
+            float yLength = NPC.Center.Y - Target.Center.Y;
+            if (yLength > -150)
+                SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
+            else
+                NPC.velocity *= 0.99f;
+
+            Vector2 targetVec = Target.Center - NPC.Center;
+            float factor = Math.Clamp(targetVec.Length() / 150f, 0f, 1f);
+            Vector2 targetDir = targetVec.SafeNormalize(Vector2.One);
+            Vector2 targetCenter = NPC.Center + targetDir * (32 + factor * 32);
+            int realTime = Timer - 100;
+
+            ChangeRotationNormally();
+
+            if (Timer < 100)
+            {
+                UpdateFollower_Pulse(targetCenter, targetDir, factor, -1, 0.1f + 0.5f * Timer / 60);
+                for (int i = 0; i < 2; i++)
+                    Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, (d) => -targetDir * 6f, Scale: 1.1f);
+                return;
+            }
+            else if (Timer < 255)
+            {
+                UpdateFollower_Pulse(targetCenter, targetDir, factor, realTime % 45);
+                Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, (d) => -targetDir * 6f, Scale: 1.1f + 2f * (realTime % 65) / 65f);
+            }
+            else
+                UpdateFollower_Idle(0.08f);
+
+            if (realTime % 45 == 0)//生成弹幕
+            {
+                if (!CanDespawnFollower())
+                {
+                    ResetState();
+                    return;
+                }
+
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    int damage = Helper.ScaleValueForDiffMode(30, 35, 35, 30);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter,
+                        (Target.Center - NPC.Center + Main.rand.NextVector2CircularEdge(48, 48)).SafeNormalize(Vector2.UnitY) * 12f,
+                        ProjectileType<RedPulse>(), damage, 5f, NPC.target);
+                }
+
+                Helper.PlayPitched("RedJade/RedJadeBeam", 0.13f, 0f, NPC.Center);
+                if (!DespawnFollowers(1))
+                    ResetState();
+            }
+
+            if (Timer > 275)
+                ResetState();
+        }
+
+        public void BloodRain()
+        {
+            if (Timer < 150)
+            {
+                float xLength = Math.Abs(Target.Center.X - NPC.Center.X);
+                if (xLength > 50)
+                    Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 9.5f, 0.25f, 0.3f, 0.97f);
+                else
+                    NPC.velocity.X *= 0.96f;
+                //控制Y方向的移动
+                float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
+                if (yLength > 50)
+                    Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6.5f, 0.2f, 0.4f, 0.97f);
+                else
+                    NPC.velocity.Y *= 0.96f;
+
+                if (Timer % 5 == 0)
+                {
+                    int count = Timer / 15;
+                    for (int i = 0; i < count; i++)
+                    {
+                        Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 4, count * 4), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
+                        dust.noGravity = true;
+                    }
+                }
+            }
+            else
+                NPC.velocity *= 0.995f;
+
+            if (Timer == 160)       //生成弹幕
+            {
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero
+                    , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(55, 55, 50, 45), 8f);
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(Target.Center.X > NPC.Center.X ? 1 : -1, 0) * 12, ProjectileType<BloodBall>(), 1, 8f);
+                SpawnFollowers(8);
+            }
+
+            if (Timer > 180)
+                ResetState();
+
+            ChangeRotationNormally();
+            UpdateFollower_Firework();
+        }
+
+        public void Firework()
+        {
+            //控制X方向的移动
+            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6f, 0.2f, 0.3f, 0.97f);
+
+            //控制Y方向的移动
+            float yLength2 = Math.Abs(Target.Center.Y - NPC.Center.Y);
+            if (yLength2 > 50)
+                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4f, 0.2f, 0.3f, 0.97f);
+            else
+                NPC.velocity.Y *= 0.96f;
+
+            if (Timer == 2)
+            {
+                NPC.reflectsProjectiles = true;
+                NPC.dontTakeDamage = true;
+                RedShield.Spawn(NPC, 250);
+                SpawnFollowers(Main.getGoodWorld ? 6 : 3);
+            }
+
+            ChangeRotationNormally();
+            if (OwnedFollowersCount == 0 || followers.Count == 0)
+            {
+                ResetState();
+                return;
+            }
+
+            UpdateFollower_Firework();
+
+            if (Timer < 49)
+                return;
+
+            if (Timer % 25 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                float rot = Main.rand.NextFloat(MathHelper.TwoPi);
+                int damage = NPC.GetAttackDamage_ForProjectiles(10, 15);
+                int timeleft = 16;
+                int howMany = Main.rand.Next(3, 6);
+                for (int i = 0; i < howMany; i++)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[^1].center, rot.ToRotationVector2() * 12, ProjectileType<RedFirework>(), damage, 5f, NPC.target, 0, timeleft + i * 10);
+                    rot += MathHelper.TwoPi / howMany;
+                }
+
+                SoundEngine.PlaySound(SoundID.Item5, NPC.Center);
+                if (!DespawnFollowers(1))
+                {
+                    ResetState();
+                    RedShield.Kill();
+                }
+            }
+
+            if (Timer > 265)
+                ResetState();
+        }
+
+        public void ExplosionHorizontally()
+        {
+            //控制X方向的移动
+            if (Timer < 160)
+            {
+                float xLength = Math.Abs(Target.Center.X - NPC.Center.X);
+                if (xLength > 350)
+                    Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 9.5f, 0.3f, 0.4f, 0.97f);
+                else if (xLength < 300)
+                    Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction, 9.5f, 0.3f, 0.4f, 0.97f);
+                else
+                    NPC.velocity.X *= 0.96f;
+                //控制Y方向的移动
+                float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
+                if (yLength > 50)
+                    Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 7.5f, 0.3f, 0.4f, 0.97f);
+                else
+                    NPC.velocity.Y *= 0.96f;
+
+                if (Timer % 5 == 0)
+                {
+                    int count = Timer / 13;
+                    for (int i = 0; i < count; i++)
+                    {
+                        Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 4, count * 4), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
+                        dust.noGravity = true;
+                    }
+                }
+            }
+            else
+                NPC.velocity *= 0.997f;
+
+            if (Timer == 170)       //生成弹幕
+            {
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero
+                    , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(55, 55, 50, 45), 8f);
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, new Vector2(Target.Center.X > NPC.Center.X ? 1 : -1, 0) * 12, ProjectileType<BloodWave>(), 1, 8f);
+                SpawnFollowers(8);
+            }
+
+            if (Timer > 210)
+                ResetState();
+
+            ChangeRotationNormally();
+            UpdateFollower_Idle();
+        }
+
+        public void Dash()
+        {
+            int realTime = (Timer - 45) % 65;
+
+            do
+            {
+                if (Timer < 45)
+                {
+                    NPC.rotation = NPC.rotation.AngleLerp((Target.Center - NPC.Center).ToRotation() + 1.57f, Timer / 45f);
+                    if (Timer % 4 == 0)
+                    {
+                        Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(70, 70), Vector2.UnitY * -2,
+                            CoraliteContent.ParticleType<HorizontalStar>(), Coralite.Instance.RedJadeRed, Main.rand.NextFloat(0.5f, 0.8f));
+                    }
+                    break;
+                }
+
+                if (realTime == 18 && Main.netMode != NetmodeID.Server)
+                {
+                    SoundEngine.PlaySound(SoundID.Item4, NPC.Center);
+                    Particle.NewParticle(NPC.Center + new Vector2(0, -16), Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.RedJadeRed, 1.5f);
+                }
+
+                if (realTime < 20)
+                {
+                    Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 5f, 0.2f, 0.3f, 0.97f);
+                    float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
+
+                    if (yLength > 50)//控制Y方向的移动
+                        Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4f, 0.15f, 0.3f, 0.97f);
+                    else
+                        NPC.velocity.Y *= 0.96f;
+
+                    break;
+                }
+
+                if (realTime == 22)//开始冲刺
+                {
+                    SpawnFollowers(3);
+                    NPC.velocity = (Target.Center + new Vector2(0, Timer / 70 % 2 == 0 ? 50 : -50) - NPC.Center).SafeNormalize(Vector2.One) * 14f;
+                    NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                }
+
+                if (realTime < 51)//边冲边炸
+                {
+                    if (realTime % 6 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_Explosion>()
+                            , Helper.ScaleValueForDiffMode(20, 30, 35, 30), 5f);
+
+                    break;
+                }
+
+                if (realTime == 52 && Main.netMode != NetmodeID.MultiplayerClient)
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Bloodiancie_BigBoom>()
+                        , Helper.ScaleValueForDiffMode(100, 100, 90, 80), 5f);
+
+                float targetRot = NPC.velocity.Length() * 0.04f * NPC.direction;
+                NPC.rotation = NPC.rotation.AngleLerp(targetRot, 0.1f);
+
+                NPC.velocity *= 0.97f;
+            } while (false);
+
+            if (Timer > 65 * 5 + 45)
+                ResetState();
+
+            UpdateFollower_Idle();
+        }
+
+        public void Explosion()
+        {
+            do
+            {
+                if (Timer <= 210)
+                {
+                    //控制X方向的移动
+                    Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 9f, 0.28f, 0.38f, 0.97f);
+
+                    //控制Y方向的移动
+                    float yLength2 = Math.Abs(Target.Center.Y - NPC.Center.Y);
+                    if (yLength2 > 50)
+                        Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 6.5f, 0.2f, 0.25f, 0.97f);
+                    else
+                        NPC.velocity.Y *= 0.96f;
+
+                    if (Timer % 3 == 0)
+                    {
+                        int count = Timer % 70 / 10;
+                        for (int i = 0; i < count; i++)
+                        {
+                            Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 4, count * 4), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.06f);
+                            dust.noGravity = true;
+                        }
+                    }
+
+                    if (Timer % 70 == 0)//生成弹幕
+                    {
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero,
+                            ProjectileType<Rediancie_BigBoom>(), Helper.ScaleValueForDiffMode(50, 50, 45, 45), 5f);
+                        SpawnFollowers(2);
+                    }
+
+                    break;
+                }
+
+                if (Timer < 310)
+                {
+                    Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 11.5f, 0.38f, 0.54f, 0.97f);
+
+                    if (Timer % 10 == 0)//生成弹幕
+                    {
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero
+                            , ProjectileType<Rediancie_Explosion>(), Helper.ScaleValueForDiffMode(30, 35, 35, 30), 5f);
+                    }
+
+                    //控制Y方向的移动
+                    float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
+                    if (yLength > 50)
+                        Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 7.5f, 0.3f, 0.44f, 0.97f);
+                    else
+                        NPC.velocity.Y *= 0.96f;
+
+                    if (Timer % 5 == 0)
+                    {
+                        int count = Timer / 25;
+                        for (int i = 0; i < count; i++)
+                        {
+                            Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
+                            dust.noGravity = true;
+                        }
+                    }
+                    break;
+                }
+
+                if (Timer == 310)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero
+                        , ProjectileType<Bloodiancie_BigBoom>(), Helper.ScaleValueForDiffMode(80, 80, 75, 70), 8f);
+                    SpawnFollowers(8);
+                }
+
+                if (Timer < 320)
+                {
+                    NPC.velocity *= 0.9f;
+                    break;
+                }
+
+                ResetState();
+
+            } while (false);
+
+            ChangeRotationNormally();
+            UpdateFollower_Idle();
+        }
+
+        public void UpShoot()
+        {
+            float xLength = Math.Abs(Target.Center.X - NPC.Center.X);
+            if (xLength > 250)
+                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 7.5f, 0.2f, 0.3f, 0.97f);
+            else
+                NPC.velocity.X *= 0.96f;
+
+            float yLength = NPC.Center.Y - Target.Center.Y;
+            if (yLength > -250)
+            {
+                NPC.velocity.Y -= 0.25f;
+                if (NPC.velocity.Y < -6)
+                    NPC.velocity.Y = -6;
+            }
+            else if (yLength < -400)
+            {
+                NPC.velocity.Y += 0.2f;
+                if (NPC.velocity.Y < 6)
+                    NPC.velocity.Y = 6;
+            }
+            else
+                NPC.velocity.Y *= 0.98f;
+
+            ChangeRotationNormally();
+
+            if (OwnedFollowersCount == 0 || followers.Count == 0)
+            {
+                ResetState();
+                return;
+            }
+
+            UpdateFollower_UpShoot();
+
+            if (Timer < 30)
+                return;
+
+            if (Timer < 200 && Timer % 20 == 0)//隔固定时间射弹幕
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    int index = Main.rand.Next(followers.Count);
+                    int damage = Helper.ScaleValueForDiffMode(40, 40, 35, 30);
+                    int shootCount = Helper.ScaleValueForDiffMode(2, 3, 3, 4);
+                    for (int i = 0; i < shootCount; i++)
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[index].center, new Vector2(0, -10).RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)), ProjectileType<Rediancie_Strike>(), damage, 5f, NPC.target);
+                }
+
+                SoundEngine.PlaySound(SoundID.Item5, NPC.Center);
+                if (!DespawnFollowers(1))
+                    ResetState();
+            }
+
+            if (Timer > 260)
+                ResetState();
+        }
+
+        public void ShootBomb()
+        {
+            if (Timer < 60)
+            {
+                float xLength = Math.Abs(Target.Center.X - NPC.Center.X);
+                if (xLength > 50)
+                    Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 9.5f, 0.2f, 0.3f, 0.97f);
+                else
+                    NPC.velocity.X *= 0.96f;
+                //控制Y方向的移动
+                float yLength = Math.Abs(Target.Center.Y - NPC.Center.Y);
+                if (yLength > 50)
+                    Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 7.5f, 0.2f, 0.4f, 0.97f);
+                else
+                    NPC.velocity.Y *= 0.96f;
+
+                if (Timer % 5 == 0)
+                {
+                    int count = Timer / 5;
+                    for (int i = 0; i < count; i++)
+                    {
+                        Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 4, count * 4), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
+                        dust.noGravity = true;
+                    }
+                }
+            }
+            else
+                NPC.velocity *= 0.995f;
+
+            if (Timer == 70)
+            {
+                Vector2 dir = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
+                float length = (Target.Center - NPC.Center).Length();
+                for (int i = -3; i < 4; i++)
+                {
+                    int shootTime = Main.rand.Next(45, 80);
+                    float velLength = length * Main.rand.NextFloat(0.55f, 2f) / shootTime;
+                    if (velLength > 16)
+                        velLength = 16;
+
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, dir.RotatedBy(i * 0.3f) * velLength
+                        , ProjectileType<RedBomb>(), 1, 4, ai0: shootTime, ai2: Main.rand.Next(120, 480));
+
+                    SoundEngine.PlaySound(CoraliteSoundID.WhipSwing_Item152, NPC.Center);
+
+                    if (!DespawnFollowers(1))
+                        break;
+                }
+            }
+
+            if (Timer > 120)
+                ResetState();
+
+            ChangeRotationNormally();
+            UpdateFollower_Idle();
+        }
+
+        public void MagicShoot()
+        {
+            float yLength = NPC.Center.Y - Target.Center.Y;
+            if (yLength > -150)
+                SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
+            else
+                NPC.velocity *= 0.99f;
+
+            Vector2 targetVec = Target.Center - NPC.Center;
+            float factor = Math.Clamp(targetVec.Length() / 150f, 0f, 1f);
+            Vector2 targetDir = targetVec.SafeNormalize(Vector2.One);
+            Vector2 targetCenter = NPC.Center + targetDir * (32 + factor * 32);
+
+            if (Timer % 3 == 0)
+                for (int i = 0; i < 6; i++)
+                    Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby,
+                        (dust) => (NPC.Center - dust.position).SafeNormalize(Vector2.UnitY) * 3f, Scale: 1.3f);
+
+            ChangeRotationNormally();
+
+            if (Timer < 60)
+            {
+                UpdateFollower_MagicShoot(targetCenter, targetDir, factor, 0.1f + 0.5f * Timer / 60);
+                return;
+            }
+            else if (Timer < 140)
+                UpdateFollower_MagicShoot(targetCenter, targetDir, factor);
+            else
+                UpdateFollower_Idle(0.1f);
+
+
+            if (Timer % 15 == 0)//生成弹幕
+            {
+                if (!CanDespawnFollower())
+                {
+                    ResetState();
+                    return;
+                }
+
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    int damage = Helper.ScaleValueForDiffMode(40, 50, 40, 40);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter, (Target.Center - NPC.Center + new Vector2(0, 30 * (Timer / 30) == 1 ? 1 : -1)).SafeNormalize(Vector2.UnitY) * 14f, ProjectileType<BloodiancieBeam>(), damage, 5f);
+                }
+
+                Helper.PlayPitched("RedJade/RedJadeBeam", 0.13f, 0f, NPC.Center);
+                if (!DespawnFollowers(1))
+                    ResetState();
+            }
+
+            if (Timer > 155)
+                ResetState();
+        }
+
+        public void Summon()
+        {
+            float yLength = NPC.Center.Y - Target.Center.Y;
+            if (yLength > -150)
+                SlowDownAndGoUp(0.98f, -0.14f, -1.5f);
+            else
+                NPC.velocity *= 0.99f;
+
+            ChangeRotationNormally();
+
+            if (OwnedFollowersCount == 0 || followers.Count == 0)
+            {
+                ResetState();
+                return;
+            }
+
+            UpdateFollower_Summon();
+
+            if (Timer % 10 == 0)
+                for (int i = 0; i < 6; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(followers[^1].center + Main.rand.NextVector2Circular(20, 20), DustID.GemRuby, Vector2.Zero, 0, default, 1.3f);
+                    dust.noGravity = true;
+                }
+
+            if (Timer % 40 == 0)
+            {
+                if (!CanDespawnFollower())
+                {
+                    ResetState();
+                    return;
+                }
+
+                //为了保证同场召唤物数量不会过多所以还是保留了这一段
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    if (Main.npc.Count((n) => n.active && n.type == NPCType<BloodiancieMinion>()) < Helper.ScaleValueForDiffMode(2, 3, 3, 4))
+                        NPC.NewNPC(NPC.GetSource_FromThis(), (int)followers[^1].center.X, (int)followers[^1].center.Y, NPCType<BloodiancieMinion>());
+                    else
+                    {
+                        ResetState();
+                        return;
+                    }
+                }
+
+                SoundEngine.PlaySound(CoraliteSoundID.MagicStaff_Item8, NPC.Center);
+                if (!DespawnFollowers(1))
+                    ResetState();
+            }
+
+            if (Timer > 200)//防止出BUG
+                ResetState();
         }
 
         public void ResetState()

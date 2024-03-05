@@ -92,7 +92,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
                                 canDrawShadows = true;
                                 currentSurrounding = true;
-                                SetBackgroungLight(0.5f, burstTime);
+                                SetBackgroundLight(0.5f, burstTime - 3, 8);
 
                                 ResetAllOldCaches();
                             }
@@ -144,12 +144,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Vector2 pos = NPC.Center + Main.rand.NextVector2CircularEdge(edge, edge);
             Dust d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail
                 , (pos - NPC.Center).SafeNormalize(Vector2.Zero).RotatedBy(NPC.direction * MathHelper.PiOver2) * Main.rand.NextFloat(4f, 8f)
-                , newColor: new Color(255, 202, 101),Scale:Main.rand.NextFloat(1f,1.5f));
+                , newColor: Coralite.Instance.ThunderveinYellow,Scale:Main.rand.NextFloat(1f,1.5f));
             d.noGravity = true;
             pos= NPC.Center + Main.rand.NextVector2Circular(edge, edge);
             d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail
                 , (pos - NPC.Center).SafeNormalize(Vector2.Zero)* Main.rand.NextFloat(4f, 8f)
-                , newColor: new Color(255, 202, 101));
+                , newColor: Coralite.Instance.ThunderveinYellow);
             d.noGravity = true;
         }
     }

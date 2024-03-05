@@ -1,6 +1,7 @@
-﻿using Coralite.Content.Bosses.ShadowBalls;
+﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
@@ -16,9 +17,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public int Timer;
         public int Timeleft = 0; //弄一个计时器，让天空能自己消失
 
+        public const float BaseLight = 0.07f;
         //亮度
-        public float light = 0.05f;
+        public float light = 0.1f;
+        public float oldLight = BaseLight;
+        public float targetLight = BaseLight;
         public int LightTime;
+        public int ExchangeTime;
+        public int MaxExchangeTime;
 
         public override void Activate(Vector2 position, params object[] args)
         {
@@ -26,9 +32,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             State = 0;
             Timer = 0;
             _isActive = true;
-            Timeleft = 4;
+            Timeleft = 3;
             LightTime = 0;
-            light = 0.05f;
+            light = BaseLight;
             Main.StartRain();
         }
 
@@ -72,20 +78,30 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 return;
             }
 
+            float factor = Timeleft / 100f;
             if (owner.ai[0] == 1)
             {
-                Main.maxRaining = 0.5f;
-                Main.cloudAlpha = 0.5f;
+                Main.maxRaining = Math.Clamp(0.5f * factor,0f,1f);
+                Main.cloudAlpha = Main.maxRaining;
+                Main.windSpeedCurrent = 0;
+                Main.windSpeedTarget = 0;
             }
             else
             {
-                Main.maxRaining = 0.8f;
-                Main.cloudAlpha = 0.8f;
+                Main.maxRaining = Math.Clamp(0.8f * factor, 0f, 1f);
+                Main.cloudAlpha = Main.maxRaining;
+                Main.windSpeedCurrent = 0;
+                Main.windSpeedTarget = 0;
             }
 
-            if (LightTime > 0)
+            if (ExchangeTime > 0)
             {
-                light -= (light - 0.05f) / LightTime;
+                ExchangeTime--;
+                light = Helper.Lerp(targetLight, oldLight, ExchangeTime / (float)MaxExchangeTime);
+            }
+            else if (LightTime > 0)
+            {
+                light -= (light - BaseLight) / LightTime;
                 LightTime--;
             }
         }
@@ -118,8 +134,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (SkyManager.Instance["ThunderveinSky"].IsActive())
             {
                 ThunderveinSky sky = ((ThunderveinSky)SkyManager.Instance["ThunderveinSky"]);
-
-                backgroundColor = Color.Lerp(Color.Black, new Color(255,202,101), sky.light);
+                Color c = backgroundColor;
+                Color c2 = tileColor;
+                backgroundColor = Color.Lerp(new Color(10, 10, 10, 255), new Color(255, 202, 101), sky.light);
+                backgroundColor = Color.Lerp(c, backgroundColor, sky.Timeleft / 100f);
+                tileColor = Color.Lerp(c2, backgroundColor, sky.Timeleft / 100f);
             }
         }
     }

@@ -3317,6 +3317,11 @@ Mods: {
 			// LightingBall.DisplayName: Lighting Ball
 			// ChainBall.DisplayName: Chain Ball
 			// CrossLightingBall.DisplayName: Cross Lighting Ball
+			// ThunderFalling.DisplayName: Thunder Falling
+			// CrossLightingBallChasable.DisplayName: Cross Lighting Ball Chasable
+			// StrongerCrossLightingBall.DisplayName: Stronger Cross Lighting Ball
+			// StrongerLightingBreath.DisplayName: Stronger Lighting Breath
+			// StrongLightingDash.DisplayName: Strong Lighting Dash
 		}
 
 		Configs: {

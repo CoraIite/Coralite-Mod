@@ -45,7 +45,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 for (int i = 0; i < 3; i++)
                 {
                     thunderTrails[i] = new ThunderTrail(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserBody2")
-                        , ThunderWidthFunc, ThunderColorFunc);
+                        , ThunderWidthFunc_Sin, ThunderColorFunc_Yellow);
                     thunderTrails[i].CanDraw = false;
                     thunderTrails[i].SetRange((5, 20));
                     thunderTrails[i].BasePositions = new Vector2[3]
@@ -109,14 +109,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             else
             {
                 float factor = (Timer - DashTime) / (DelayTime);
-                float sinFactor = MathF.Sin(factor * MathHelper.Pi);
                 ThunderWidth = 30 * (1 - factor);
                 ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.SetRange((5, 20 + sinFactor * PointDistance / 2));
-                    trail.SetExpandWidth((1 - factor) * PointDistance / 3);
+                    trail.SetRange(GetRange(factor));
+                    trail.SetExpandWidth(GetExpandWidth(factor));
 
                     if (Timer % 6 == 0)
                     {
@@ -132,5 +131,44 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Timer++;
         }
 
+        public virtual (float ,float) GetRange(float factor)
+        {
+            float sinFactor = MathF.Sin(factor * MathHelper.Pi);
+
+            return (5, 20 + sinFactor * PointDistance / 2);
+        }
+
+        public virtual float GetExpandWidth(float factor)
+        {
+            return (1 - factor) * PointDistance / 3;
+        }
+    }
+
+    /// <summary>
+    /// 使用ai0传入冲刺时间，ai1传入主人
+    /// 使用ai2传入闪电每个点间的间隔
+    /// 使用速度传入中心点的位置，位置传入末端的位置
+    /// </summary>
+    public class StrongerLightingBreath: LightingBreath
+    {
+        public override Color ThunderColorFunc_Yellow(float factor)
+        {
+            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinYellowAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
+        }
+
+        public override Color ThunderColorFunc2_Orange(float factor)
+        {
+            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinOrangeAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
+        }
+
+        public override (float, float) GetRange(float factor)
+        {
+            return (0, 5 + (1 - factor) * PointDistance / 3);
+        }
+
+        public override float GetExpandWidth(float factor)
+        {
+            return (1 - factor) * PointDistance / 4;
+        }
     }
 }

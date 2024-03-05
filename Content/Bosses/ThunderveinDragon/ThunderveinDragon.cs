@@ -36,6 +36,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public float selfAlpha = 1f;
 
+        public static Color ThunderveinYellowAlpha = new Color(255, 202, 101, 0);
+        public static Color ThunderveinPurpleAlpha = new Color(135, 94, 255, 0);
+        public static Color ThunderveinOrangeAlpha = new Color(230, 127, 23, 0);
+
         /// <summary>
         /// 是否绘制残影
         /// </summary>
@@ -74,9 +78,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             NPC.width = 130;
             NPC.height = 100;
-            NPC.damage = 30;
-            NPC.defense = 6;
-            NPC.lifeMax = 4500;
+            NPC.damage = 40;
+            NPC.defense = 20;
+            NPC.lifeMax = 24000;
             NPC.knockBackResist = 0f;
             NPC.scale = 1.2f;
             NPC.aiStyle = -1;
@@ -100,54 +104,54 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((3820 + numPlayers * 1750) / journeyScale);
-                    NPC.damage = 35;
-                    NPC.defense = 12;
+                    NPC.lifeMax = (int)((26000 + numPlayers * 2500) / journeyScale);
+                    NPC.damage = 46;
+                    NPC.defense = 20;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((4720 + numPlayers * 2100) / journeyScale);
-                    NPC.damage = 60;
-                    NPC.defense = 15;
+                    NPC.lifeMax = (int)((28500 + numPlayers * 4550) / journeyScale);
+                    NPC.damage = 50;
+                    NPC.defense = 20;
                 }
 
                 if (Main.getGoodWorld)
                 {
-                    NPC.damage = 80;
-                    NPC.defense = 15;
+                    NPC.damage = 50;
+                    NPC.defense = 20;
                 }
 
-                if (Main.zenithWorld)
-                {
-                    NPC.scale = 0.4f;
-                }
+                //if (Main.zenithWorld)
+                //{
+                //    NPC.scale = 0.4f;
+                //}
 
                 return;
             }
 
-            NPC.lifeMax = 3820 + numPlayers * 1750;
-            NPC.damage = 35;
-            NPC.defense = 12;
+            NPC.lifeMax = 26000 + numPlayers * 2500;
+            NPC.damage = 46;
+            NPC.defense = 20;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 4720 + numPlayers * 2100;
-                NPC.damage = 60;
-                NPC.defense = 15;
+                NPC.lifeMax = 28500 + numPlayers * 4550;
+                NPC.damage = 50;
+                NPC.defense = 20;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 5320 + numPlayers * 2200;
-                NPC.damage = 80;
-                NPC.defense = 15;
+                NPC.lifeMax = 30000 + numPlayers * 6850;
+                NPC.damage = 50;
+                NPC.defense = 20;
             }
 
-            if (Main.zenithWorld)
-            {
-                NPC.scale = 0.4f;
-            }
+            //if (Main.zenithWorld)
+            //{
+            //    NPC.scale = 0.4f;
+            //}
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -239,36 +243,27 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public enum AIStates
         {
-            onSpawnAnmi,
+            onSpawnAnmi = 1,
             onKillAnim,
-            /// <summary>
-            /// 短冲，用于调整身位
-            /// </summary>
+            /// <summary> 短冲，用于调整身位 </summary>
             SmallDash,
-            /// <summary>
-            /// 闪电突袭，先3段短冲后进行一次长冲
-            /// </summary>
+            /// <summary> 闪电突袭，先3段短冲后进行一次长冲 </summary>
             LightningRaid,
-            /// <summary>
-            /// 放电，在身体周围生成电流环绕
-            /// </summary>
+            /// <summary> 放电，在身体周围生成电流环绕 </summary>
             Discharging,
-            /// <summary>
-            /// 闪电吐息，原地转一圈后使用吐息
-            /// </summary>
+            /// <summary> 闪电吐息，原地转一圈后使用吐息 </summary>
             LightingBreath,
-            /// <summary>
-            /// 电球，吐出一个电球
-            /// </summary>
+            /// <summary> 电球，吐出一个电球 </summary>
             LightingBall,
-            /// <summary>
-            /// 电球，吐出一个电球，飞行一段时间后向四周爆开
-            /// </summary>
+            /// <summary> 电球，吐出一个电球，飞行一段时间后向四周爆开 </summary>
             CrossLightingBall,
-            /// <summary>
-            /// 落雷，先吼叫一声后飞向空中并隐身，之后选择落点，再下落
-            /// </summary>
+            /// <summary> 落雷，先吼叫一声后飞向空中并隐身，之后选择落点，再下落 </summary>
             FallingThunder,
+
+            /// <summary> 一二阶段的切换动画 </summary>
+            ExchangeP1_P2,
+            /// <summary> 先冲刺，再放电 </summary>
+            DashDischarging,
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -282,6 +277,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void AI()
         {
+            ThunderveinPurpleAlpha = new Color(135, 94, 255, 0);
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || !Target.ZoneSnow)
             {
                 NPC.TargetClosest();
@@ -297,11 +293,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 }
             }
 
-            ThunderveinSky sky = ((ThunderveinSky)SkyManager.Instance["ThunderveinSky"]);
-            if (sky.Timeleft < 100)
-                sky.Timeleft += 3;
-            if (sky.Timeleft > 100)
-                sky.Timeleft = 100;
+            UpdateSky();
 
             switch (State)
             {
@@ -320,9 +312,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         if (Phase == 1)
                             LightningRaidP1();
                         else
-                        {
-
-                        }
+                            LightningRaidP2();
                     }
                     break;
                 case (int)AIStates.Discharging://闪电突袭
@@ -337,6 +327,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case (int)AIStates.CrossLightingBall://闪电吐息
                     CrossLightingBall();
                     break;
+                case (int)AIStates.FallingThunder://闪电吐息
+                    FallingThunder();
+                    break;
+                case (int)AIStates.ExchangeP1_P2://切换动画
+                    ExchangeP1_P2();
+                    break;
             }
         }
 
@@ -349,6 +345,15 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 Vector2 offset = Main.rand.NextVector2Circular(100 * NPC.scale, 70 * NPC.scale);
                 ElectricParticle_Follow.Spawn(NPC.Center, offset, () => NPC.Center, Main.rand.NextFloat(0.75f, 1f));
             }
+        }
+
+        public void UpdateSky()
+        {
+            ThunderveinSky sky = ((ThunderveinSky)SkyManager.Instance["ThunderveinSky"]);
+            if (sky.Timeleft < 100)
+                sky.Timeleft += 3;
+            if (sky.Timeleft > 100)
+                sky.Timeleft = 100;
         }
 
         #endregion
@@ -376,40 +381,46 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             switch (Phase)
             {
                 default:
-                    {
-                        if (NPC.life < NPC.lifeMax / 2)
-                            Phase = 2;
-                        else
-                            Phase = 1;
-                    }
+                    SetPhase();
                     break;
                 case 1://一阶段
                     {
+                        if (SetPhase())
+                            return;
                         int oldState = (int)State;
 
                         float distance = Vector2.Distance(NPC.Center, Target.Center);
                         int dir = Target.Center.X > NPC.Center.X ? 1 : -1;
-                        if (dir != NPC.spriteDirection || distance > 800)//玩家在背后时，或者距离较远时大概率使用闪电突袭
+                        if (dir != NPC.spriteDirection )//玩家在背后时，或者距离较远时大概率使用闪电突袭
                         {
                             for (int i = 0; i < 5; i++)
                                 moves.Add((int)AIStates.LightningRaid);
                         }
 
+                        if (distance > 800)
+                        {
+                            for (int i = 0; i < 7; i++)
+                                moves.Add((int)AIStates.LightningRaid);
+                            for (int i = 0; i < 7; i++)
+                                moves.Add((int)AIStates.FallingThunder);
+                        }
+
                         if (distance < 420)//距离较近是大概率使用放电
                         {
-                            for (int i = 0; i < 3; i++)
+                            for (int i = 0; i < 4; i++)
                                 moves.Add((int)AIStates.Discharging);
                         }
 
-                        if (oldState!=(int)AIStates.SmallDash)//如果上次招式不是小冲刺那就小冲一下
+                        if (oldState != (int)AIStates.SmallDash)//如果上次招式不是小冲刺那就小冲一下
                         {
-                            for (int i = 0; i < 5; i++)
+                            for (int i = 0; i < 6; i++)
                                 moves.Add((int)AIStates.SmallDash);
                         }
 
                         moves.Add((int)AIStates.LightningRaid);
                         moves.Add((int)AIStates.LightingBreath);
                         moves.Add((int)AIStates.LightingBall);
+                        moves.Add((int)AIStates.FallingThunder);
                         if (Main.masterMode)
                             moves.Add((int)AIStates.CrossLightingBall);
 
@@ -430,10 +441,37 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case 2:
                     {
-
+                        State = (int)AIStates.LightningRaid;
                     }
                     break;
             }
+        }
+
+        public bool SetPhase()
+        {
+            int oldPhase = (int)Phase;
+            if (Main.masterMode || Main.getGoodWorld)
+            {
+                if (NPC.life < NPC.lifeMax * 3 / 4)
+                    Phase = 2;
+                else
+                    Phase = 1;
+            }
+            else
+            {
+                if (NPC.life < NPC.lifeMax / 2)
+                    Phase = 2;
+                else
+                    Phase = 1;
+            }
+
+            if (oldPhase == 1 && Phase == 2)
+            {
+                State = (int)AIStates.ExchangeP1_P2;
+                return true;
+            }
+
+            return false;
         }
 
         public void ResetToSelectedState(AIStates state)
@@ -534,10 +572,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             NPC.rotation = NPC.rotation.AngleLerp(NPC.spriteDirection > 0 ? 0 : MathHelper.Pi, rate);
         }
 
-        public static void SetBackgroungLight(float light,int fadeTime)
+        public static void SetBackgroundLight(float light, int fadeTime, int exchangeTime = 5)
         {
             ThunderveinSky sky = ((ThunderveinSky)SkyManager.Instance["ThunderveinSky"]);
-            sky.light = light;
+            sky.ExchangeTime = sky.MaxExchangeTime = exchangeTime;
+            sky.targetLight = light;
+            sky.oldLight = sky.light;
             sky.LightTime = fadeTime;
         }
 
@@ -609,14 +649,21 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             //绘制残影
             if (canDrawShadows)
             {
-                Color shadowColor = new Color(255, 202, 101, 50) * shadowAlpha;
-
+                Color shadowColor = ThunderveinYellowAlpha;
+                    shadowColor.A = 50;
+                    shadowColor *= shadowAlpha;
                 for (int i = 0; i < trailCacheLength; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i] - screenPos;
                     float oldrot = NPC.oldRot[i];
                     var frameOld = mainTex.Frame(3, 8, oldFrame[i].X, oldFrame[i].Y);
                     float factor = (float)i / trailCacheLength;
+                    if (Phase == 2)
+                    {
+                        shadowColor = Color.Lerp(new Color(135, 94, 255, 50)
+                            , new Color(255, 202, 101, 50), factor);
+                        shadowColor *= shadowAlpha;
+                    }
 
                     SpriteEffects oldEffect = oldDirection[i] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
                     Main.spriteBatch.Draw(mainTex, oldPos, frameOld, shadowColor * factor, oldrot, origin

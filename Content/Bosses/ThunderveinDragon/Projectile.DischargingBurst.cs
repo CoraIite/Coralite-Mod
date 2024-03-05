@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
@@ -43,24 +42,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override bool ShouldUpdatePosition() => false;
 
-        public float ThunderWidthFunc(float factor)
-        {
-            return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth;
-        }
-
         public float ThunderWidthFunc2(float factor)
         {
             return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth*1.5f;
-        }
-
-        public Color ThunderColorFunc(float factor)
-        {
-            return new Color(255, 202, 101, 0) * ThunderAlpha;
-        }
-
-        public Color ThunderColorFunc2(float factor)
-        {
-            return new Color(230, 127, 23, 0) * ThunderAlpha;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -85,9 +69,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 for (int i = 0; i < circles.Length; i++)
                 {
                     if (i == 0)
-                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc2);
+                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc2_Orange);
                     else
-                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc);
+                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc_Yellow);
 
                     circles[i].SetRange((5, 10));
                     circles[i].SetExpandWidth(8);
@@ -96,9 +80,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 for (int i = 0; i < outers.Length; i++)
                 {
                     if (i<2)
-                        outers[i] = new ThunderTrail(thunderTex, ThunderWidthFunc, ThunderColorFunc2);
+                        outers[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange);
                     else
-                        outers[i] = new ThunderTrail(thunderTex, ThunderWidthFunc, ThunderColorFunc);
+                        outers[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow);
                     outers[i].SetRange((5, 30));
                     outers[i].SetExpandWidth(8);
                 }
@@ -214,6 +198,19 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 foreach (var outer in outers)
                     outer.DrawThunder(Main.instance.GraphicsDevice);
             return false;
+        }
+    }
+
+    public class StrongDischargingBurst: DischargingBurst
+    {
+        public override Color ThunderColorFunc_Yellow(float factor)
+        {
+            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinYellowAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
+        }
+
+        public override Color ThunderColorFunc2_Orange(float factor)
+        {
+            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinOrangeAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
         }
     }
 }

@@ -27,29 +27,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Projectile.timeLeft = 300;
         }
 
-        public float ThunderWidthFunc(float factor)
-        {
-            return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth;
-        }
-
         public float ThunderWidthFunc2(float factor)
         {
             return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth * 1.2f;
         }
 
-        public Color ThunderColorFunc(float factor)
-        {
-            return new Color(255, 202, 101, 0) * ThunderAlpha;
-        }
-
-        public Color ThunderColorFunc2(float factor)
-        {
-            return new Color(230, 127, 23, 0) * ThunderAlpha;
-        }
-
         public Color ThunderColorFunc_Fade(float factor)
         {
-            return new Color(255, 202, 101, 0) * ThunderAlpha*(1-factor);
+            return new Color(255, 202, 101, 0) * ThunderAlpha * (1 - factor);
         }
 
         public override void AI()
@@ -64,9 +49,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 for (int i = 0; i < circles.Length; i++)
                 {
                     if (i < 2)
-                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc, ThunderColorFunc);
+                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow);
                     else
-                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc, ThunderColorFunc2);
+                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange);
 
                     circles[i].SetRange((0, 10));
                     circles[i].SetExpandWidth(6);
@@ -194,7 +179,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (Timer > 30)
             {
                 Projectile.SpawnTrailDust(30f,DustID.PortalBoltTrail, Main.rand.NextFloat(0.1f, 0.4f),
-                    newColor: new Color(255, 202, 101), Scale: Main.rand.NextFloat(1f, 1.3f));
+                    newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.3f));
                 ThunderWidth = Main.rand.NextFloat(20, 30);
 
                 if (Projectile.velocity.Length() < 20)
