@@ -29,6 +29,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         internal ref float Recorder => ref NPC.localAI[0];
         internal ref float Recorder2 => ref NPC.localAI[1];
         internal ref float StateRecorder => ref NPC.localAI[2];
+        internal ref float UseMoveCount => ref NPC.localAI[3];
 
         public readonly int trailCacheLength = 12;
         public Point[] oldFrame;
@@ -38,7 +39,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public static Color ThunderveinYellowAlpha = new Color(255, 202, 101, 0);
         public static Color ThunderveinPurpleAlpha = new Color(135, 94, 255, 0);
-        public static Color ThunderveinOrangeAlpha = new Color(230, 127, 23, 0);
+        public static Color ThunderveinOrangeAlpha = new Color(219, 114, 22, 0);
 
         /// <summary>
         /// 是否绘制残影
@@ -199,7 +200,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (Main.rand.NextBool())
             {
                 Particle.NewParticle(NPC.Center.MoveTowards(projectile.Center, 50), Vector2.Zero,
-                    CoraliteContent.ParticleType<LightingParticle>(), Scale: Main.rand.NextFloat(1f, 1.5f));
+                    CoraliteContent.ParticleType<LightningParticle>(), Scale: Main.rand.NextFloat(1f, 1.5f));
             }
         }
 
@@ -264,6 +265,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             ExchangeP1_P2,
             /// <summary> 先冲刺，再放电 </summary>
             DashDischarging,
+            /// <summary> 引力雷球 </summary>
+            GravitationThunder,
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -304,8 +307,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case (int)AIStates.onKillAnim:
                     break;
-                case (int)AIStates.SmallDash://闪电突袭
-                    SmallDash();
+                case (int)AIStates.SmallDash://短距离冲刺
+                    {
+                        if (Phase == 1)
+                            SmallDashP1();
+                        else
+                            SmallDashP2();
+                    }
                     break;
                 case (int)AIStates.LightningRaid://闪电突袭
                     {
@@ -332,6 +340,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case (int)AIStates.ExchangeP1_P2://切换动画
                     ExchangeP1_P2();
+                    break;
+                case (int)AIStates.DashDischarging://冲刺放电
+                    DashDischarging();
+                    break;
+                case (int)AIStates.GravitationThunder://引力电球
+                    GravitationThunder();
                     break;
             }
         }
@@ -377,6 +391,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Recorder2 = 0;
 
             List <int> moves = new List<int>();
+            int oldState = (int)State;
+            float distance = Vector2.Distance(NPC.Center, Target.Center);
+            int dir = Target.Center.X > NPC.Center.X ? 1 : -1;
 
             switch (Phase)
             {
@@ -387,22 +404,21 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     {
                         if (SetPhase())
                             return;
-                        int oldState = (int)State;
 
-                        float distance = Vector2.Distance(NPC.Center, Target.Center);
-                        int dir = Target.Center.X > NPC.Center.X ? 1 : -1;
-                        if (dir != NPC.spriteDirection )//玩家在背后时，或者距离较远时大概率使用闪电突袭
+                        if (dir != NPC.spriteDirection )//玩家在背后时，大概率使用闪电突袭
                         {
                             for (int i = 0; i < 5; i++)
                                 moves.Add((int)AIStates.LightningRaid);
                         }
 
-                        if (distance > 800)
+                        if (distance > 800)//距离较大，使用闪电突袭，距离再大就直接落雷
                         {
-                            for (int i = 0; i < 7; i++)
-                                moves.Add((int)AIStates.LightningRaid);
-                            for (int i = 0; i < 7; i++)
-                                moves.Add((int)AIStates.FallingThunder);
+                            if (distance > 1400)
+                                for (int i = 0; i < 7; i++)
+                                    moves.Add((int)AIStates.FallingThunder);
+                            else
+                                for (int i = 0; i < 7; i++)
+                                    moves.Add((int)AIStates.LightningRaid);
                         }
 
                         if (distance < 420)//距离较近是大概率使用放电
@@ -421,6 +437,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         moves.Add((int)AIStates.LightingBreath);
                         moves.Add((int)AIStates.LightingBall);
                         moves.Add((int)AIStates.FallingThunder);
+
                         if (Main.masterMode)
                             moves.Add((int)AIStates.CrossLightingBall);
 
@@ -441,7 +458,55 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case 2:
                     {
-                        State = (int)AIStates.LightningRaid;
+                        if (dir != NPC.spriteDirection)//玩家在背后时，大概率使用闪电突袭
+                        {
+                            for (int i = 0; i < 5; i++)
+                                moves.Add((int)AIStates.LightningRaid);
+                        }
+
+                        if (distance > 800)//距离较大，使用闪电突袭，距离再大就直接落雷
+                        {
+                            if (distance > 1400)
+                                for (int i = 0; i < 7; i++)
+                                    moves.Add((int)AIStates.FallingThunder);
+                            else
+                                for (int i = 0; i < 7; i++)
+                                    moves.Add((int)AIStates.LightningRaid);
+                        }
+
+                        if (oldState != (int)AIStates.SmallDash)//如果上次招式不是小冲刺那就小冲一下
+                        {
+                            for (int i = 0; i < 6; i++)
+                                moves.Add((int)AIStates.SmallDash);
+                        }
+
+
+                        moves.Add((int)AIStates.LightningRaid);
+                        moves.Add((int)AIStates.DashDischarging);
+                        moves.Add((int)AIStates.FallingThunder);
+                        if (UseMoveCount > 7)
+                        {
+                            for (int i = 0; i < (int)UseMoveCount; i++)
+                                moves.Add((int)AIStates.GravitationThunder);
+                        }
+
+                        //当上次使用的是短距离冲刺的话，额外移除上上次所使用的招式
+                        if (oldState == (int)AIStates.SmallDash)
+                            moves.RemoveAll(i => i == (int)StateRecorder);
+                        //移除上次使用的招式
+                        moves.RemoveAll(i => i == oldState);
+
+                        //随机一个招式出来
+                        State = Main.rand.NextFromList(moves.ToArray());
+                        //State = (int)AIStates.GravitationThunder;
+
+                        UseMoveCount++;
+                        //如果使用了引力雷球那么重置计时
+                        if (State == (int)AIStates.GravitationThunder)
+                            UseMoveCount = 0;
+                        //如果本次使用的是短距离冲刺那么旧记录上一招
+                        if ((int)State == (int)AIStates.SmallDash)
+                            StateRecorder = oldState;
                     }
                     break;
             }

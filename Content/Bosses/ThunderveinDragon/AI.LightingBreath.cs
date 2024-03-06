@@ -37,7 +37,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.velocity.X *= 0.95f;
 
                         if (NPC.directionY < 0)
-                            FlyingUp(0.45f, 16, 0.9f);
+                            FlyingUp(0.55f, 20, 0.9f);
                         else if (yLength > 70)
                         {
                             Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 15f, 0.25f, 0.6f, 0.95f);

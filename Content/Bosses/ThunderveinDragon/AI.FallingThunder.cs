@@ -149,8 +149,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         if (Timer < ChasingTime)
                         {
                             float factor1 = Timer / 30;
-                            Vector2 targetPos = Target.Center + Target.velocity * 10 * factor1;
-                            targetPos = new Vector2(Recorder, Recorder2).MoveTowards(targetPos, 13);
+                            Vector2 targetPos = Target.Center + Target.velocity * 28 * factor1;
+                            targetPos = new Vector2(Recorder, Recorder2).MoveTowards(targetPos, 20);
                             Recorder = targetPos.X;
                             Recorder2 = targetPos.Y;
                             NPC.Center = targetPos + new Vector2(0, -UpLength);

@@ -3,6 +3,7 @@ using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -28,6 +29,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     particle.active = false;
             }
         }
+    }
+
+    public class ElectricParticle_Purple: ElectricParticle
+    {
+        public override string Texture => AssetDirectory.ThunderveinDragon + "ElectricParticle_Purple";
     }
 
     public class ElectricParticle_Follow : ElectricParticle
@@ -74,7 +80,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         }
     }
 
-    public class LightingParticle : ModParticle
+    public class LightningParticle : ModParticle
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + Name;
 
@@ -95,6 +101,37 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 if (particle.frame.X > 32 * 3)
                     particle.active = false;
             }
+        }
+    }
+
+    public class LightningShineBall : ModDust
+    {
+        public override string Texture => AssetDirectory.Particles + "LightBall";
+
+        public override void OnSpawn(Dust dust)
+        {
+            dust.color.A = 0;
+        }
+
+        public override bool Update(Dust dust)
+        {
+            dust.position += dust.velocity;
+            dust.fadeIn++;
+            if (dust.fadeIn > 5)
+                dust.scale *= 0.9f;
+
+            if (dust.fadeIn > 60 || dust.scale < 0.001f)
+            {
+                dust.active = false;
+            }
+            return false;
+        }
+
+        public override bool PreDraw(Dust dust)
+        {
+            Main.spriteBatch.Draw(Texture2D.Value, dust.position - Main.screenPosition, null, dust.color, 0, Texture2D.Size() / 2, dust.scale, 0, 0);
+            Main.spriteBatch.Draw(Texture2D.Value, dust.position - Main.screenPosition, null, dust.color, 0, Texture2D.Size() / 2, dust.scale / 2, 0, 0);
+            return false;
         }
     }
 }

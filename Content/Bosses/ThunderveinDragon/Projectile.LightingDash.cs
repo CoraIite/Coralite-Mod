@@ -68,7 +68,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     else
                         thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow);
                     thunderTrails[i].CanDraw = false;
-                    thunderTrails[i].SetRange((5, 20));
+                    thunderTrails[i].SetRange((0, 15));
                     thunderTrails[i].BasePositions = new Vector2[3]
                     {
                     Projectile.Center,Projectile.Center,Projectile.Center
@@ -134,7 +134,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.SetRange((5, 25 + sinFactor * PointDistance / 2));
+                    trail.SetRange((0, 17 + sinFactor * PointDistance / 2));
                     trail.SetExpandWidth((1 - factor) * PointDistance / 3);
 
                     if (Timer % 6 == 0)

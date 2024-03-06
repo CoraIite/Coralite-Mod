@@ -47,8 +47,8 @@ namespace Coralite.Content.Items.RedJades
         {
             flyingTime = 23;
             backTime = 5;
-            backSpeed = 13.5f;
-            trailCachesLength = 8;
+            backSpeed = 14f;
+            trailCachesLength = 9;
             trailWidth = 22 / 2;
         }
 
@@ -56,6 +56,14 @@ namespace Coralite.Content.Items.RedJades
         {
             if (Main.rand.NextBool(3))
                 Projectile.SpawnTrailDust(DustID.GemRuby, 0.2f, Scale: Main.rand.NextFloat(1f, 1.4f));
+        }
+
+        public override void OnJustHited()
+        {
+            base.OnJustHited();
+            if (Main.rand.NextBool(3))
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center
+                    , Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
         }
 
         public override Color GetColor(float factor)
@@ -76,7 +84,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void SetOtherValues()
         {
-            damageReduce = 0.1f;
+            damageReduce = 0.15f;
         }
 
         public override void OnGuard()

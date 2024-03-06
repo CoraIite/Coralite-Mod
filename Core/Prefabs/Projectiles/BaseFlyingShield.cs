@@ -61,6 +61,9 @@ namespace Coralite.Core.Prefabs.Projectiles
         public float extraRotation;
         public int trailWidth;
 
+        private bool firstShoot = true;
+        private bool recordTileCollide;
+
         public enum FlyingShieldStates
         {
             Shooting,
@@ -98,6 +101,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                 Projectile.oldRot[i] = Projectile.rotation;
             }
             State = (int)FlyingShieldStates.Shooting;
+            recordTileCollide = Projectile.tileCollide;
         }
 
         /// <summary>
@@ -135,6 +139,15 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void Shooting()
         {
             Chasing();
+            if (firstShoot && Timer >= flyingTime - 6)
+            {
+                Projectile.tileCollide = false;
+                if (Timer == flyingTime - 6)
+                {
+                    firstShoot = false;
+                    Projectile.tileCollide = recordTileCollide;
+                }
+            }
             Projectile.rotation = Projectile.velocity.ToRotation();
             Timer--;
             if (Timer < 0)

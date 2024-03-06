@@ -12,6 +12,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     {
         public void ExchangeP1_P2()
         {
+            const int BurstTime = 40;
+            const int RoaringTime = 60;
+
             switch (SonState)
             {
                 default:
@@ -65,6 +68,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             st.Pitch = 0.4f;
                             SoundEngine.PlaySound(st, NPC.Center);
                             SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
+
+                            NPC.NewProjectileDirectInAI<ExchangePhaseAnmi>(NPC.Center, Vector2.Zero, 1, 0, NPC.target,
+                                BurstTime, NPC.whoAmI);
                         }
                     }
                     break;
@@ -72,14 +78,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     {
                         UpdateAllOldCaches();
 
-                        const int BurstTime = 40;
-                        const int RoaringTime = 60;
                         if (Timer < BurstTime)
                         {
                             float factor = Timer / BurstTime;
                             float length = Helper.Lerp(80, 1400, factor);
 
-                            for (int i = 0; i < 3; i++)
+                            for (int i = 0; i < 5; i++)
                             {
                                 Particle.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
                                     Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));

@@ -190,7 +190,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void LightningRaidP2()
         {
-            const int smallDashTime = 12;
+            const int smallDashTime = 14;
             const int bigDashTime = 25;
 
             switch (SonState)
@@ -309,7 +309,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         UpdateAllOldCaches();
 
                         //向后扇一下翅膀
-                        if (++NPC.frameCounter > 7)
+                        if (++NPC.frameCounter > 6)
                         {
                             NPC.frameCounter = 0;
                             NPC.frame.Y++;

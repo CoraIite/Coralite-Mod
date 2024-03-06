@@ -38,7 +38,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             CreateRecipe()
                 .AddIngredient<BatfangShield>()
-                .AddIngredient(ItemID.BrokenBatWing, 2)
+                .AddIngredient(ItemID.BrokenBatWing)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

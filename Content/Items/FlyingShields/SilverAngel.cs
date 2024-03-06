@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.FlyingShields
 {
     public class SilverAngel : BaseFlyingShieldItem<SilverAngelGuard>
     {
-        public SilverAngel() : base(Item.sellPrice(0, 0, 0, 50), ItemRarityID.Blue, AssetDirectory.FlyingShieldItems) { }
+        public SilverAngel() : base(Item.sellPrice(0, 0, 50), ItemRarityID.Blue, AssetDirectory.FlyingShieldItems) { }
 
         public override void SetDefaults2()
         {
