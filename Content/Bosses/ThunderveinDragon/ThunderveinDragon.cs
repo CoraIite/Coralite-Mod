@@ -269,6 +269,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             DashDischarging,
             /// <summary> 引力雷球 </summary>
             GravitationThunder,
+            /// <summary> 电磁炮 </summary>
+            ElectromagneticCannon,
             /// <summary> 冥雷，旋转飞，之后进入背景，并生成一些幻影，在天被照亮时才能看到，击破一定数量幻影后打断招式并使用落雷<br></br>
             /// 否则就释放超大范围放电
             /// </summary>
@@ -358,6 +360,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case (int)AIStates.GravitationThunder://引力电球
                     GravitationThunder();
                     break;
+                case (int)AIStates.ElectromagneticCannon://引力电球
+                    ElectromagneticCannon();
+                    break;
             }
         }
 
@@ -408,6 +413,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             moves.Add((int)AIStates.LightningRaid);
             moves.Add((int)AIStates.FallingThunder);
+            moves.Add((int)AIStates.LightningBall);
 
             if (Main.masterMode)
                 moves.Add((int)AIStates.CrossLightingBall);
@@ -441,8 +447,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             return;
 
                         moves.Add((int)AIStates.LightningBreath);
-                        moves.Add((int)AIStates.LightningBall);
-
 
                         if (distance > 800)//距离较大，使用闪电突袭，距离再大就直接落雷
                         {
@@ -493,7 +497,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                         //随机一个招式出来
                         State = Main.rand.NextFromList(moves.ToArray());
-                        //State = (int)AIStates.GravitationThunder;
+                        State = (int)AIStates.ElectromagneticCannon;
 
                         UseMoveCount++;
                         //如果使用了引力雷球那么重置计时

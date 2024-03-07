@@ -3293,6 +3293,7 @@ Mods: {
 			LightningBall.DisplayName: Lightning Ball
 			StrongLightningBall.DisplayName: Strong Lightning Ball
 			StrongerCrossLightingBallChasable.DisplayName: Stronger Cross Lighting Ball Chasable
+			ElectromagneticCannon.DisplayName: Electromagnetic Cannon
 		}
 
 		Configs: {

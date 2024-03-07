@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
-    public class LightningBall : BaseThunderProj,IDrawAdditive
+    public class LightningBall : BaseThunderProj, IDrawAdditive
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "LightingBall";
 

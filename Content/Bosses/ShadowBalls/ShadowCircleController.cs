@@ -81,8 +81,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             else
                 DrawCircle(spriteBatch, center, lightColor, 90, vector2s.Length - 1);
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.End();
+            spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         }
 
         public void DrawFrontCircle(SpriteBatch spriteBatch, Vector2 center, Color lightColor)
@@ -92,16 +92,37 @@ namespace Coralite.Content.Bosses.ShadowBalls
             else
                 DrawCircle(spriteBatch, center, lightColor, 0, 90);
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+            spriteBatch.End();
+            spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+        }
+
+        public void DrawFrontCircle_NoEndBegin( Vector2 center, Color lightColor)
+        {
+            if (xRotation.ToRotationVector2().Y > 0)
+                DrawCircle_NoEndBegin( center, lightColor, 90, vector2s.Length - 1);
+            else
+                DrawCircle_NoEndBegin( center, lightColor, 0, 90);
+        }
+
+        public void DrawBackCircle_NoEndBegin( Vector2 center, Color lightColor)
+        {
+            if (xRotation.ToRotationVector2().Y > 0)
+                DrawCircle_NoEndBegin( center, lightColor, 0, 90);
+            else
+                DrawCircle_NoEndBegin( center, lightColor, 90, vector2s.Length - 1);
         }
 
         public void DrawCircle(SpriteBatch spriteBatch, Vector2 center, Color lightColor, int start, int end)
         {
-            Texture2D Texture = CircleTex.Value;
-
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearWrap/*注意了奥*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+
+            DrawCircle_NoEndBegin(center,lightColor,start,end);
+        }
+
+        public void DrawCircle_NoEndBegin(Vector2 center, Color lightColor, int start, int end)
+        {
+            Texture2D Texture = CircleTex.Value;
 
             List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
             //对法向量进行一个投影
@@ -140,6 +161,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             Main.graphics.GraphicsDevice.Textures[0] = Texture;
             Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, Vx.ToArray(), 0, Vx.Count / 3);
+
         }
     }
 }

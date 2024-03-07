@@ -82,9 +82,50 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 //生成爆炸弹幕
 
                                 NPC.TargetClosest();
-                                int damage = Helper.GetProjDamage(80, 100, 120);
-                                NPC.NewProjectileDirectInAI<LightningBall>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 2
-                                    , damage, 0, NPC.target);
+
+                                if (Phase == 1)
+                                {
+                                    int damage = Helper.GetProjDamage(35, 45, 55);
+                                    NPC.NewProjectileDirectInAI<LightningBall>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 2
+                                        , damage, 0, NPC.target);
+                                }
+                                else
+                                {
+                                    int damage = Helper.GetProjDamage(45, 55, 65);
+                                    int randomMove = Main.rand.Next(3);
+
+                                    switch (randomMove)
+                                    {
+                                        default:
+                                        case 0://3重电球
+                                            {
+                                                for (int i = -1; i < 2; i++)
+                                                {
+                                                    NPC.NewProjectileDirectInAI<StrongLightningBall>(GetMousePos()
+                                                        , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero).RotatedBy(i * 0.35f) 
+                                                        , damage, 0, NPC.target);
+                                                }
+                                            }
+                                            break;
+                                        case 1://单电球+直线链球
+                                            {
+                                                NPC.NewProjectileDirectInAI<StrongLightningBall>(GetMousePos()
+                                                    , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 2
+                                                    , damage, 0, NPC.target);
+                                                NPC.NewProjectileDirectInAI<ChainBall>(GetMousePos()
+                                                    , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 7
+                                                    , damage, 0, NPC.target, 0);
+                                            }
+                                            break;
+                                        case 2://旋转链球
+                                            {
+                                                NPC.NewProjectileDirectInAI<ChainBall>(GetMousePos()
+                                                    , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 7
+                                                    , damage, 0, NPC.target, 1);
+                                            }
+                                            break;
+                                    }
+                                }
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                                 canDrawShadows = true;

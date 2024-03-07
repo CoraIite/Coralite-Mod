@@ -61,7 +61,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         private Player ShadowPlayer;
 
-        public ShadowCircleController shadowCircle;
+        public ShadowCircleController[] shadowCircle;
 
         internal static readonly RasterizerState OverflowHiddenRasterizerState = new RasterizerState
         {
@@ -372,9 +372,25 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         UpdateFrameNormally();
                         if (shadowCircle != null)
                         {
-                            shadowCircle.xRotation += 0.05f;
-                            shadowCircle.zRotation = NPC.rotation - 1.57f;
-                            shadowCircle.Update();
+                            shadowCircle[0].xRotation += 0.03f;
+                            shadowCircle[0].zRotation = NPC.rotation - 1.57f;
+                            shadowCircle[0].selfRotation += 0.002f;
+                            if (shadowCircle[0].selfRotation > 1)
+                                shadowCircle[0].selfRotation -= 1;
+                            shadowCircle[0].Update();
+                            shadowCircle[1].xRotation += 0.03f;
+                            shadowCircle[1].zRotation = NPC.rotation;
+                            shadowCircle[1].selfRotation += 0.002f;
+                            if (shadowCircle[1].selfRotation > 1)
+                                shadowCircle[1].selfRotation -= 1;
+                            shadowCircle[1].Update();
+                            shadowCircle[2].xRotation +=0.01f;
+                            shadowCircle[2].zRotation = 0f;
+                            shadowCircle[2].selfRotation += 0.005f;
+                            if (shadowCircle[2].selfRotation > 1)
+                                shadowCircle[2].selfRotation -= 1;
+                            shadowCircle[2].Update();
+
                         }
                     }
                     break;
@@ -692,9 +708,22 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             return false;
                         }
 
-                        shadowCircle?.DrawBackCircle(spriteBatch, pos, drawColor);
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearWrap/*注意了奥*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+
+                        for (int i = 2; i >= 0; i--)
+                        {
+                            shadowCircle[i]?.DrawBackCircle_NoEndBegin(pos, drawColor);
+                        }
                         DrawSelf(spriteBatch, screenPos, drawColor * alpha);
-                        shadowCircle?.DrawFrontCircle(spriteBatch,pos, drawColor);
+                        for (int i = 0; i < 3; i++)
+                        {
+                            shadowCircle[i]?.DrawFrontCircle(spriteBatch, pos, drawColor);
+                        }
+
+                        spriteBatch.End();
+                        spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+
                     }
                     break;
                 case (int)AIPhases.ShadowPlayer:

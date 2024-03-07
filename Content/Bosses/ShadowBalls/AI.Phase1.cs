@@ -83,7 +83,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         if (shadowCircle == null)
                         {
-                            shadowCircle = new ShadowCircleController(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BigCircle1", AssetRequestMode.ImmediateLoad));
+                            shadowCircle = new ShadowCircleController[3]
+                            {
+                                new ShadowCircleController(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BigCircle1", AssetRequestMode.ImmediateLoad)),
+                                new ShadowCircleController(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BigCircle2", AssetRequestMode.ImmediateLoad)),
+                                new ShadowCircleController(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BigCircle3", AssetRequestMode.ImmediateLoad)),
+                            };
                         }
                         InitCaches();
                         ResetState();
