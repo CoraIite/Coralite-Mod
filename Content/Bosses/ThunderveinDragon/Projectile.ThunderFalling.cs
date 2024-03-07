@@ -177,4 +177,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             return false;
         }
     }
+
+    /// <summary>
+    /// 使用速度传入目标点位
+    /// ai0传入闪电降下的时间
+    /// ai1传入主人
+    /// </summary>
+    public class StrongThunderFalling:ThunderFalling
+    {
+        public override Color ThunderColorFunc_Yellow(float factor)
+        {
+            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinYellowAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
+        }
+
+        public override Color ThunderColorFunc2_Orange(float factor)
+        {
+            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinOrangeAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
+        }
+    }
 }

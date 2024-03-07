@@ -4,8 +4,11 @@ using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Graphics.Effects;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
@@ -78,6 +81,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 3://生成小球并等待小球完成生成
                     {
+                        if (shadowCircle == null)
+                        {
+                            shadowCircle = new ShadowCircleController(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BigCircle1", AssetRequestMode.ImmediateLoad));
+                        }
                         InitCaches();
                         ResetState();
                         SpawnSmallBalls();

@@ -70,7 +70,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         NPC.rotation = NPC.velocity.ToRotation();
 
                         Timer++;
-                        if (Timer > bigDashTime || Vector2.Distance(Target.Center, NPC.Center) < 150)
+                        if (Timer > bigDashTime || Vector2.Distance(Target.Center, NPC.Center) < 200)
                         {
                             SonState++;
                             Timer = 0;
@@ -99,7 +99,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         else
                             NPC.velocity.Y *= 0.95f;
 
-                        const int maxTime = 7 * 4 + 30;
+                        const int maxTime = 7 * 4 + 20;
                         Timer++;
                         float edge = 200 + 420 * Math.Clamp(Timer / maxTime, 0, 1);
                         edge /= 2;

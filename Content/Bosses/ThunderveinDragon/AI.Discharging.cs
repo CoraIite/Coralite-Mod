@@ -85,8 +85,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                                 NPC.TargetClosest();
                                 int damage = Helper.GetProjDamage(80, 100, 120);
-                                NPC.NewProjectileDirectInAI<DischargingBurst>(NPC.Center, Vector2.Zero, damage, 0, NPC.target
-                                    , burstTime, NPC.whoAmI);
+                                if (Phase == 1)
+                                    NPC.NewProjectileDirectInAI<DischargingBurst>(NPC.Center, Vector2.Zero, damage, 0, NPC.target
+                                        , burstTime, NPC.whoAmI);
+                                else
+                                    NPC.NewProjectileDirectInAI<StrongDischargingBurst>(NPC.Center, Vector2.Zero, damage, 0, NPC.target
+                                        , burstTime, NPC.whoAmI);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                                 SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);

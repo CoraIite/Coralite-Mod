@@ -61,6 +61,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         private Player ShadowPlayer;
 
+        public ShadowCircleController shadowCircle;
+
         internal static readonly RasterizerState OverflowHiddenRasterizerState = new RasterizerState
         {
             CullMode = CullMode.None,
@@ -80,6 +82,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.MustAlwaysDraw[Type] = true;
+            Main.npcFrameCount[Type] = 9;
         }
 
         public override void SetDefaults()
@@ -366,6 +369,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         }
 
+                        UpdateFrameNormally();
+                        if (shadowCircle != null)
+                        {
+                            shadowCircle.xRotation += 0.05f;
+                            shadowCircle.zRotation = NPC.rotation - 1.57f;
+                            shadowCircle.Update();
+                        }
                     }
                     break;
                 case (int)AIPhases.ShadowPlayer:
@@ -605,6 +615,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
             NPC.oldPos[0] = NPC.Center;
         }
 
+        public void UpdateFrameNormally()
+        {
+            if (++NPC.frameCounter > 4)
+            {
+                NPC.frameCounter = 0;
+                if (++NPC.frame.Y > 8)
+                    NPC.frame.Y = 0;
+            }
+        }
+
         /// <summary>
         /// 让拖尾数组随机出现在NPC周围的一个圆圈范围
         /// </summary>
@@ -624,30 +644,31 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile p = Main.projectile[i];
                 if (p.active && p.ModProjectile is IShadowBallPrimitive primitive)
-                    primitive.DrawPrimitive(Main.spriteBatch);
+                    primitive.DrawPrimitive(spriteBatch);
             }
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             switch (Phase)
             {
                 default:
                 case (int)AIPhases.WithSmallBalls:
                     {
+                        var pos = NPC.Center - screenPos;
+
                         if (State == (int)AIStates.OnSpawnAnmi)
                         {
                             Texture2D mainTex = NPC.GetTexture();
 
-                            var pos = NPC.Center - screenPos;
-                            var frameBox = mainTex.Frame();
+                            var frameBox = mainTex.Frame(1, 9, 0, NPC.frame.Y);
                             var origin = frameBox.Size() / 2;
 
                             RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
@@ -660,9 +681,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             spriteBatch.GraphicsDevice.RasterizerState = OverflowHiddenRasterizerState;
                             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
 
-                            spriteBatch.Draw(mainTex, pos, frameBox, drawColor * alpha, NPC.rotation, origin, NPC.scale, 0, 0);
-
-
+                            spriteBatch.Draw(mainTex, pos, frameBox, drawColor * alpha, 0, origin, NPC.scale, 0, 0);
 
                             rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
                             spriteBatch.End();
@@ -673,7 +692,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             return false;
                         }
 
+                        shadowCircle?.DrawBackCircle(spriteBatch, pos, drawColor);
                         DrawSelf(spriteBatch, screenPos, drawColor * alpha);
+                        shadowCircle?.DrawFrontCircle(spriteBatch,pos, drawColor);
                     }
                     break;
                 case (int)AIPhases.ShadowPlayer:
@@ -701,16 +722,16 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Texture2D mainTex = NPC.GetTexture();
 
             var pos = NPC.Center - screenPos;
-            var frameBox = mainTex.Frame();
+            var frameBox = mainTex.Frame(1,9,0,NPC.frame.Y);
             var origin = frameBox.Size() / 2;
 
             for (int i = 0; i < ShadowCount / 2; i++)
             {
                 spriteBatch.Draw(mainTex, NPC.oldPos[i] - screenPos, frameBox, drawColor * alpha * (1 - (float)i / (ShadowCount / 2))
-                    , NPC.rotation, origin, NPC.scale, 0, 0);
+                    , 0, origin, NPC.scale, 0, 0);
             }
 
-            spriteBatch.Draw(mainTex, pos, frameBox, drawColor * alpha, NPC.rotation, origin, NPC.scale, 0, 0);
+            spriteBatch.Draw(mainTex, pos, frameBox, drawColor * alpha, 0, origin, NPC.scale, 0, 0);
 
         }
 

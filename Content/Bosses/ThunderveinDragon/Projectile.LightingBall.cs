@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
-    public class LightingBall : BaseThunderProj,IDrawAdditive
+    public class LightningBall : BaseThunderProj,IDrawAdditive
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "LightingBall";
 
@@ -224,6 +224,19 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             spriteBatch.Draw(exTex, pos, null, c, Projectile.rotation + Main.GlobalTimeWrappedHourly, origin, scale, 0, 0);
             spriteBatch.Draw(exTex, pos, null, c * 0.5f, Projectile.rotation - Main.GlobalTimeWrappedHourly / 2, origin, scale, 0, 0);
+        }
+    }
+
+    public class StrongLightningBall: LightningBall
+    {
+        public override Color ThunderColorFunc_Yellow(float factor)
+        {
+            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinYellowAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
+        }
+
+        public override Color ThunderColorFunc2_Orange(float factor)
+        {
+            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinOrangeAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
         }
     }
 }

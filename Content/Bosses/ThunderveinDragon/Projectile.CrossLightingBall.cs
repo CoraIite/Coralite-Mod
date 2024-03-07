@@ -14,7 +14,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// <summary>
     /// ai0传入主人，ai1传入角度，如果为0的话就会随机选取一个
     /// </summary>
-    public class CrossLightingBall : LightingBall
+    public class CrossLightingBall : LightningBall
     {
         public ref float OwnerIndex => ref Projectile.ai[0];
         public ref float Angle => ref Projectile.ai[1];
@@ -247,7 +247,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             float factor = (Timer - 60) / 90f;
 
-            float length = Helper.Lerp(20, 400, factor);
+            float length = Helper.Lerp(20, 500, factor);
             for (int i = 0; i < 2; i++)
             {
                 Vector2 dir = (Angle + i * MathHelper.Pi).ToRotationVector2();
@@ -439,32 +439,30 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
             if (Timer > 300)
             {
-                float factor = (Timer - 300) / 90f;
-
-                float length = Helper.Lerp(20, 400, factor);
-                for (int i = 0; i < 4; i++)
-                {
-                    Vector2 dir = (Angle + i * MathHelper.PiOver2).ToRotationVector2();
-                    Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(6, 6) + dir * Main.rand.NextFloat(20, length), DustID.PortalBoltTrail
-                        , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: new Color(255, 202, 101),
-                        Scale: Main.rand.NextFloat(1f, 1.5f));
-                    d.noGravity = true;
-                }
-
-                if (Timer > 300+90)
+                SpawnThunderDusts();
+                if (Timer > 300 + 90)
                 {
                     SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, Projectile.Center);
-                    for (int i = 0; i < 4; i++)
-                    {
-                        Vector2 dir = (Angle + i * MathHelper.PiOver2).ToRotationVector2();
-                        Vector2 pos = Projectile.Center + dir * 40;
-                        Projectile.NewProjectileFromThis<LightingBreath>(pos + dir * 550, pos, Projectile.damage, 0, 20,
-                            (int)OwnerIndex, 70);
-                    }
+                    SpawnThunders();
                     Projectile.Kill();
                 }
             }
             Timer++;
+        }
+
+        public override void SpawnThunderDusts()
+        {
+            float factor = (Timer - 300) / 90f;
+
+            float length = Helper.Lerp(20, 400, factor);
+            for (int i = 0; i < 4; i++)
+            {
+                Vector2 dir = (Angle + i * MathHelper.PiOver2).ToRotationVector2();
+                Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(6, 6) + dir * Main.rand.NextFloat(20, length), DustID.PortalBoltTrail
+                    , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: new Color(255, 202, 101),
+                    Scale: Main.rand.NextFloat(1f, 1.5f));
+                d.noGravity = true;
+            }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -482,6 +480,32 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
             return false;
         }
+    }
 
+    /// <summary>
+    /// ai0传入主人，ai1传入角度，如果为0的话就会随机选取一个
+    /// </summary>
+    public class StrongerCrossLightingBallChasable: CrossLightingBallChasable
+    {
+        public override Color ThunderColorFunc_Yellow(float factor)
+        {
+            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinYellowAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
+        }
+
+        public override Color ThunderColorFunc2_Orange(float factor)
+        {
+            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinOrangeAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
+        }
+
+        public override void SpawnThunders()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Vector2 dir = (Angle + i * MathHelper.PiOver2).ToRotationVector2();
+                Vector2 pos = Projectile.Center + dir * 40;
+                Projectile.NewProjectileFromThis<StrongerLightingBreath>(pos + dir * 650, pos, Projectile.damage, 0, 20,
+                    (int)OwnerIndex, 70);
+            }
+        }
     }
 }

@@ -246,27 +246,33 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             onSpawnAnmi = 1,
             onKillAnim,
+
             /// <summary> 短冲，用于调整身位 </summary>
             SmallDash,
-            /// <summary> 闪电突袭，先3段短冲后进行一次长冲 </summary>
+            /// <summary> 闪电突袭，先3段短冲后进行一次长冲，二阶段的长冲会在路径上留下电球 </summary>
             LightningRaid,
             /// <summary> 放电，在身体周围生成电流环绕 </summary>
             Discharging,
-            /// <summary> 闪电吐息，原地转一圈后使用吐息 </summary>
-            LightingBreath,
-            /// <summary> 电球，吐出一个电球 </summary>
-            LightingBall,
+            /// <summary> 闪电吐息，原地转一圈后使用吐息，二阶段改为使用电磁炮，会根据玩家位置持续调整方向 </summary>
+            LightningBreath,
+            /// <summary> 电球，吐出一个电球，二阶段时吐出多个 </summary>
+            LightningBall,
             /// <summary> 电球，吐出一个电球，飞行一段时间后向四周爆开 </summary>
             CrossLightingBall,
-            /// <summary> 落雷，先吼叫一声后飞向空中并隐身，之后选择落点，再下落 </summary>
+            /// <summary> 落雷，先吼叫一声后飞向空中并隐身，之后选择落点，再下落，二阶段会连续使用，最多3次 </summary>
             FallingThunder,
 
             /// <summary> 一二阶段的切换动画 </summary>
             ExchangeP1_P2,
+
             /// <summary> 先冲刺，再放电 </summary>
             DashDischarging,
             /// <summary> 引力雷球 </summary>
             GravitationThunder,
+            /// <summary> 冥雷，旋转飞，之后进入背景，并生成一些幻影，在天被照亮时才能看到，击破一定数量幻影后打断招式并使用落雷<br></br>
+            /// 否则就释放超大范围放电
+            /// </summary>
+            StygianThunder
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -326,17 +332,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case (int)AIStates.Discharging://闪电突袭
                     Discharging();
                     break;
-                case (int)AIStates.LightingBreath://闪电突袭
+                case (int)AIStates.LightningBreath://闪电突袭
                     LightingBreath();
                     break;
-                case (int)AIStates.LightingBall://闪电吐息
+                case (int)AIStates.LightningBall://闪电吐息
                     LightingBall();
                     break;
                 case (int)AIStates.CrossLightingBall://闪电吐息
                     CrossLightingBall();
                     break;
                 case (int)AIStates.FallingThunder://闪电吐息
-                    FallingThunder();
+                    {
+                        if (Phase == 1)
+                            FallingThunderP1();
+                        else
+                            FallingThunderP2();
+                    }
                     break;
                 case (int)AIStates.ExchangeP1_P2://切换动画
                     ExchangeP1_P2();
@@ -395,6 +406,30 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             float distance = Vector2.Distance(NPC.Center, Target.Center);
             int dir = Target.Center.X > NPC.Center.X ? 1 : -1;
 
+            moves.Add((int)AIStates.LightningRaid);
+            moves.Add((int)AIStates.FallingThunder);
+
+            if (Main.masterMode)
+                moves.Add((int)AIStates.CrossLightingBall);
+
+            if (dir != NPC.spriteDirection)//玩家在背后时，大概率使用闪电突袭
+            {
+                for (int i = 0; i < 5; i++)
+                    moves.Add((int)AIStates.LightningRaid);
+            }
+
+            if (oldState != (int)AIStates.SmallDash)//如果上次招式不是小冲刺那就小冲一下
+            {
+                for (int i = 0; i < 6; i++)
+                    moves.Add((int)AIStates.SmallDash);
+            }
+
+            if (distance < 420)//距离较近是大概率使用放电
+            {
+                for (int i = 0; i < 4; i++)
+                    moves.Add((int)AIStates.Discharging);
+            }
+
             switch (Phase)
             {
                 default:
@@ -405,11 +440,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         if (SetPhase())
                             return;
 
-                        if (dir != NPC.spriteDirection )//玩家在背后时，大概率使用闪电突袭
-                        {
-                            for (int i = 0; i < 5; i++)
-                                moves.Add((int)AIStates.LightningRaid);
-                        }
+                        moves.Add((int)AIStates.LightningBreath);
+                        moves.Add((int)AIStates.LightningBall);
+
 
                         if (distance > 800)//距离较大，使用闪电突袭，距离再大就直接落雷
                         {
@@ -420,26 +453,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 for (int i = 0; i < 7; i++)
                                     moves.Add((int)AIStates.LightningRaid);
                         }
-
-                        if (distance < 420)//距离较近是大概率使用放电
-                        {
-                            for (int i = 0; i < 4; i++)
-                                moves.Add((int)AIStates.Discharging);
-                        }
-
-                        if (oldState != (int)AIStates.SmallDash)//如果上次招式不是小冲刺那就小冲一下
-                        {
-                            for (int i = 0; i < 6; i++)
-                                moves.Add((int)AIStates.SmallDash);
-                        }
-
-                        moves.Add((int)AIStates.LightningRaid);
-                        moves.Add((int)AIStates.LightingBreath);
-                        moves.Add((int)AIStates.LightingBall);
-                        moves.Add((int)AIStates.FallingThunder);
-
-                        if (Main.masterMode)
-                            moves.Add((int)AIStates.CrossLightingBall);
 
                         //当上次使用的是短距离冲刺的话，额外移除上上次所使用的招式
                         if (oldState == (int)AIStates.SmallDash)
@@ -450,19 +463,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         //随机一个招式出来
                         State = Main.rand.NextFromList(moves.ToArray());
                         //State = (int)AIStates.CrossLightingBall;
-
-                        //如果本次使用的是短距离冲刺那么旧记录上一招
-                        if ((int)State == (int)AIStates.SmallDash)
-                            StateRecorder = oldState;
                     }
                     break;
                 case 2:
                     {
-                        if (dir != NPC.spriteDirection)//玩家在背后时，大概率使用闪电突袭
-                        {
-                            for (int i = 0; i < 5; i++)
-                                moves.Add((int)AIStates.LightningRaid);
-                        }
+                        moves.Add((int)AIStates.DashDischarging);
 
                         if (distance > 800)//距离较大，使用闪电突袭，距离再大就直接落雷
                         {
@@ -471,19 +476,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                     moves.Add((int)AIStates.FallingThunder);
                             else
                                 for (int i = 0; i < 7; i++)
-                                    moves.Add((int)AIStates.LightningRaid);
+                                    moves.Add((int)AIStates.DashDischarging);
                         }
 
-                        if (oldState != (int)AIStates.SmallDash)//如果上次招式不是小冲刺那就小冲一下
-                        {
-                            for (int i = 0; i < 6; i++)
-                                moves.Add((int)AIStates.SmallDash);
-                        }
-
-
-                        moves.Add((int)AIStates.LightningRaid);
-                        moves.Add((int)AIStates.DashDischarging);
-                        moves.Add((int)AIStates.FallingThunder);
                         if (UseMoveCount > 7)
                         {
                             for (int i = 0; i < (int)UseMoveCount; i++)
@@ -504,12 +499,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         //如果使用了引力雷球那么重置计时
                         if (State == (int)AIStates.GravitationThunder)
                             UseMoveCount = 0;
-                        //如果本次使用的是短距离冲刺那么旧记录上一招
-                        if ((int)State == (int)AIStates.SmallDash)
-                            StateRecorder = oldState;
                     }
                     break;
             }
+
+            //如果本次使用的是短距离冲刺那么旧记录上一招
+            if ((int)State == (int)AIStates.SmallDash)
+                StateRecorder = oldState;
         }
 
         public bool SetPhase()

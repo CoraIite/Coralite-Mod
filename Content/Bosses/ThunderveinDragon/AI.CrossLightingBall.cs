@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -83,8 +84,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                                 NPC.TargetClosest();
                                 int damage = Helper.GetProjDamage(80, 100, 120);
-                                NPC.NewProjectileDirectInAI<CrossLightingBallChasable>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 8
-                                    , damage, 0, NPC.target);
+                                if (Phase == 1)
+                                    NPC.NewProjectileDirectInAI<CrossLightingBallChasable>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 8
+                                        , damage, 0, NPC.target);
+                                else
+                                    NPC.NewProjectileDirectInAI<StrongerCrossLightingBallChasable>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 8
+                                        , damage, 0, NPC.target);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
                                 canDrawShadows = true;

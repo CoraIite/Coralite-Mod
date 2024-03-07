@@ -3289,6 +3289,10 @@ Mods: {
 			ExchangePhaseAnmi.DisplayName: Exchange Phase Anmi
 			StrongDischargingBurst.DisplayName: Strong Discharging Burst
 			GravitationThunderBall.DisplayName: Gravitation Thunder Ball
+			StrongThunderFalling.DisplayName: Strong Thunder Falling
+			LightningBall.DisplayName: Lightning Ball
+			StrongLightningBall.DisplayName: Strong Lightning Ball
+			StrongerCrossLightingBallChasable.DisplayName: Stronger Cross Lighting Ball Chasable
 		}
 
 		Configs: {
