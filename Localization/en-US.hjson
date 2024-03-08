@@ -2931,6 +2931,7 @@ Mods: {
 			SmallShadowBall.DisplayName: Small Shadow Ball
 			Biskety.DisplayName: Biskety
 			ThunderveinDragon.DisplayName: Thundervein Dragon
+			ThunderPhantom.DisplayName: Thunder Phantom
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -3294,6 +3295,7 @@ Mods: {
 			StrongLightningBall.DisplayName: Strong Lightning Ball
 			StrongerCrossLightingBallChasable.DisplayName: Stronger Cross Lighting Ball Chasable
 			ElectromagneticCannon.DisplayName: Electromagnetic Cannon
+			EndThunder.DisplayName: End Thunder
 		}
 
 		Configs: {

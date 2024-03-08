@@ -94,7 +94,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
-            if (minDepth < 9 && maxDepth > 9)//绘制在最后的背景
+            if (minDepth < 9 && maxDepth > 9)//绘制在最前的背景
             {
                 Texture2D sky = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "ShadowBallSky").Value;
 

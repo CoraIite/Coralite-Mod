@@ -108,6 +108,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
             else if (Timer == chasingTime + 50)
             {
+                float factor = (Timer - chasingTime) / 50f;
+                float length = Helper.Lerp(80, 1400, factor);
+
+                for (int i = 0; i < 5; i++)
+                {
+                    Particle.NewParticle(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length),
+                        Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Purple>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
+                }
             }
             else
             {

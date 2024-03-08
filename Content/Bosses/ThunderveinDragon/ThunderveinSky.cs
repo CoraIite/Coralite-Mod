@@ -48,6 +48,25 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
         {
+            if (!OwnerIndex.GetNPCOwner<ThunderveinDragon>(out NPC owner))
+                return;
+
+            if (minDepth < 0 && maxDepth > 0 && owner.ai[1] == (int)ThunderveinDragon.AIStates.StygianThunder
+                && owner.localAI[0].GetNPCOwner<ThunderPhantom>(out NPC phantom))//绘制在最前的背景
+            {
+                Texture2D mainTex = phantom.GetTexture();
+                Vector2 origin = mainTex.Size() / 2;
+                Color c = Color.Lerp(Color.Transparent, Color.White, light - BaseLight);
+                Color c2 = c *= 0.5f;
+
+                for (int i = -4; i < 5; i++)
+                {
+                    Vector2 pos = phantom.Center + new Vector2(i * phantom.ai[3], 0)+new Vector2(0,-Math.Abs(i)*20);
+                    spriteBatch.Draw(mainTex, pos - Main.screenPosition, null, c2, 0, origin, phantom.scale, 0, 0);
+                }
+
+                spriteBatch.Draw(mainTex, phantom.Center - Main.screenPosition, null, c, 0, origin, phantom.scale, 0, 0);
+            }
         }
 
         public override bool IsActive()

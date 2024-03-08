@@ -3,26 +3,36 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
     public partial class ThunderveinDragon
     {
-        public void ElectromagneticCannon()
+        public void StygianThunder()
         {
-            const int burstTime = 100;
-
+            const int burstTime = 50;
             switch (SonState)
             {
                 default:
                     ResetStates();
                     break;
-                case 0://与玩家拉近距离
+                case -1://幻影被打破
+                    {
+                        Timer++;
+
+                        FlyingFrame();
+                        TurnToNoRot(1);
+                        selfAlpha += 1 / 120f;
+                        if (Timer > 120)
+                            ResetStates();
+                    }
+                    break;
+                case 0://靠近玩家
                     {
                         const int chasingTime = 60 * 4;
 
-                        Vector2 targetPos = Target.Center + new Vector2(0, -300);
+                        Vector2 targetPos = Target.Center;
 
                         NPC.direction = NPC.spriteDirection = targetPos.X > NPC.Center.X ? 1 : -1;
                         NPC.directionY = targetPos.Y > NPC.Center.Y ? 1 : -1;
@@ -31,8 +41,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         //追踪玩家
                         GetLengthToTargetPos(targetPos, out float xLength, out float yLength);
 
-                        if (xLength > 400)
+                        if (xLength > 600)
                             Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 18f, 0.3f, 0.6f, 0.95f);
+                        else if (xLength < 200)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction, 18f, 0.3f, 0.6f, 0.95f);
                         else
                             NPC.velocity.X *= 0.95f;
 
@@ -50,14 +62,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
 
                         Timer++;
-                        if (Timer > chasingTime || (xLength < 400 && yLength < 100))
+                        if (Timer > chasingTime || (xLength > 200 && xLength < 600 && yLength < 300))
                         {
                             SonState++;
                             Timer = 0;
                             DashFrame();
                             ResetAllOldCaches();
                             canDrawShadows = true;
-                            isDashing = true;
                             shadowScale = 1.15f;
                             shadowAlpha = 1;
 
@@ -68,89 +79,110 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
                     }
                     break;
-                case 1://飞行一圈
+                case 1://旋转飞进背景中，并生成幻影
                     {
-                        const int rollingTime = 45;
+                        const int rollingTime = 65;
                         const int rollingFactor = 60;
 
                         UpdateAllOldCaches();
-                        NPC.velocity = NPC.velocity.RotatedBy(-NPC.spriteDirection * MathHelper.TwoPi / rollingFactor);
+                        NPC.velocity = NPC.velocity.RotatedBy(NPC.spriteDirection * MathHelper.TwoPi / rollingFactor);
+                        NPC.velocity *= 0.996f;
                         NPC.rotation = NPC.velocity.ToRotation();
+
+                        shadowAlpha = selfAlpha = 1 - Timer / rollingTime;
+
                         Timer++;
                         if (Timer > rollingTime)
                         {
                             SonState++;
                             Timer = 0;
                             TurnToNoRot();
-                            isDashing = false;
+                            canDrawShadows = false;
+
+                            currentSurrounding = false;
+                            NPC.dontTakeDamage = true;
+                            NPC.velocity *= 0;
+                            Recorder = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ThunderPhantom>(),
+                                  ai0: NPC.whoAmI, Target: NPC.target);
                         }
                     }
                     break;
-                case 2://瞄准
+                case 2://幻影释放雷击
+                case 3:
+                case 4:
+                case 5:
                     {
-                        NPC.velocity *= 0.9f;
-                        UpdateAllOldCaches();
-
-                        if (Timer < 10)
+                        if (!Recorder.GetNPCOwner<ThunderPhantom>(out _, () =>
                         {
+                            SonState = -1;
+                            Timer = 0;
+
+                            NPC.dontTakeDamage = false;
                             NPC.QuickSetDirection();
-                            TurnToNoRot();
-                            Recorder = (Target.Center - NPC.Center).ToRotation();
-                        }
+                            TurnToNoRot(1);
+                        }))
+                            break;
 
-                        Vector2 pos2 = NPC.Center + (NPC.rotation - NPC.direction * 0.25f).ToRotationVector2() * 60;
-                        Vector2 dir2 = Recorder.ToRotationVector2();
-                        for (int i = 0; i < 3; i++)
-                        {
-                            Dust d = Dust.NewDustPerfect(pos2 + dir2 * Main.rand.NextFloat(20f, 1220f), DustID.PortalBoltTrail
-                                , dir2.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: new Color(255, 202, 101),
-                                Scale: Main.rand.NextFloat(1f, 1.5f));
-                            d.noGravity = true;
-                        }
+                        NPC.Center = Target.Center + new Vector2(0, -400);
+                    }
+                    break;
+                case 6://nmd输出这么低打不死幻影是吧，那你死了，直接闪现到玩家头顶释放交错闪电
+                    {
+                        NPC.Center = Target.Center + new Vector2(0, -400);
+                        NPC.velocity *= 0.96f;
+                        NPC.QuickSetDirection();
+                        TurnToNoRot();
+
+                        selfAlpha = shadowAlpha = Timer / 10;
 
                         if (NPC.frame.Y != 4)
                             FlyingFrame();
                         else
                         {
                             Timer++;
-                            if (Timer > 35)
+                            if (Timer > 30)
                             {
                                 SonState++;
                                 Timer = 0;
-                                //生成吐息弹幕
+                                //生成爆炸弹幕
 
-                                NPC.velocity *= 0;
                                 NPC.TargetClosest();
-                                Vector2 pos = GetMousePos();
                                 int damage = Helper.GetProjDamage(80, 100, 120);
-                                NPC.NewProjectileDirectInAI<ElectromagneticCannon>(pos + Recorder.ToRotationVector2() * 1800, pos, damage, 0, NPC.target
-                                    , burstTime, NPC.whoAmI, 85);
+
+                                NPC.NewProjectileDirectInAI<EndThunder>(
+                                    NPC.Center + new Vector2(0, -200)
+                                    , NPC.Center + new Vector2(0, 800), damage, 0, NPC.target, 20, NPC.whoAmI, 70);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
-                                SoundEngine.PlaySound(CoraliteSoundID.BottleExplosion_Item107, NPC.Center);
+                                SoundEngine.PlaySound(CoraliteSoundID.Thunder, NPC.Center);
                                 canDrawShadows = true;
-                                SetBackgroundLight(0.3f, burstTime / 2);
+                                currentSurrounding = true;
+                                NPC.dontTakeDamage = false;
+                                SetBackgroundLight(0.7f, burstTime, 12);
 
                                 ResetAllOldCaches();
                             }
                         }
                     }
                     break;
-                case 3://吐息
+                case 7:
                     {
                         UpdateAllOldCaches();
-
-                        GetLengthToTargetPos(Target.Center, out float xLength, out _);
-
-                        if (xLength > 50)
-                            NPC.QuickSetDirection();
-                        TurnToNoRot(1);
-                        Recorder = Recorder.AngleTowards((Target.Center - GetMousePos()).ToRotation(), 0.012f);
-                        FlyingFrame(true);
                         float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / burstTime);
-                        shadowScale = Helper.Lerp(1f, 2f, factor);
+                        shadowScale = Helper.Lerp(1f, 2.5f, factor);
                         shadowAlpha = Helper.Lerp(1f, 0f, factor);
 
+                        if (NPC.frame.Y != 0)
+                        {
+                            NPC.frame.X = 1;
+
+                            if (++NPC.frameCounter > 1)
+                            {
+                                NPC.frameCounter = 0;
+                                if (++NPC.frame.Y > 7)
+                                    NPC.frame.Y = 0;
+                            }
+                        }
                         Timer++;
                         if (Timer > burstTime)
                         {
@@ -159,19 +191,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                             Timer = 0;
                             SonState++;
-
-                            NPC.QuickSetDirection();
-                            TurnToNoRot();
                         }
                     }
                     break;
-                case 4://后摇
+                case 8://短暂后摇
                     {
-                        TurnToNoRot();
-
                         FlyingFrame();
                         Timer++;
-                        if (Timer > 30)
+                        if (Timer > 20)
                             ResetStates();
                     }
                     break;

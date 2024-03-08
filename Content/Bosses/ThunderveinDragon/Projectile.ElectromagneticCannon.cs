@@ -72,12 +72,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             InitTrails();
 
             ThunderveinDragon dragon = owner.ModNPC as ThunderveinDragon;
-            Projectile.velocity = dragon.GetMousePos();
-            Projectile.Center = Projectile.velocity + dragon.Recorder.ToRotationVector2() * 2000;
-            Projectile.rotation = (Projectile.Center - Projectile.velocity).ToRotation();
 
             if (Timer < DashTime)
             {
+                Projectile.velocity = dragon.GetMousePos();
+                Projectile.Center = Projectile.velocity + dragon.Recorder.ToRotationVector2() * 2000;
+                Projectile.rotation = (Projectile.Center - Projectile.velocity).ToRotation();
+
                 Vector2 pos2 = Projectile.velocity;
                 List<Vector2> pos = new List<Vector2>
                 {
@@ -117,7 +118,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
 
                 ThunderWidth = 30 + sinFactor * 30;
-                if (ThunderAlpha<1)
+                if (ThunderAlpha < 1)
                 {
                     ThunderAlpha += 1 / 10f;
                 }

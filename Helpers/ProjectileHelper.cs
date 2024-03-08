@@ -253,6 +253,11 @@ namespace Coralite.Helpers
             return true;
         }
 
+        public static bool GetNPCOwner<T>(this int index, out NPC owner, Action notExistAction = null) where T : ModNPC
+        {
+            return GetNPCOwner<T>((float)index, out owner, notExistAction);
+        }
+
         /// <summary>
         /// 快速设置拖尾相关数据
         /// </summary>

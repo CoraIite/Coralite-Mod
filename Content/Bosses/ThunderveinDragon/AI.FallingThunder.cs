@@ -207,7 +207,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             {
                                 NPC.NewProjectileDirectInAI<ThunderFalling>(
                                     NPC.Center + new Vector2(-250 + i * 500 / 3, Main.rand.Next(40, 300))
-                                    , targetPos+new Vector2(0,250), damage, 0, NPC.target, SmashDownTime + 8, NPC.whoAmI, 50);
+                                    , targetPos+new Vector2(0,250), damage, 0, NPC.target, SmashDownTime + 8, NPC.whoAmI, 60);
                             }
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);

@@ -131,7 +131,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             {
                                 0 => AIStates.LightningRaid,
                                 1 => AIStates.DashDischarging,
-                                _ => AIStates.LightningBreath
+                                _ => AIStates.ElectromagneticCannon
                             };
                             ResetToSelectedState(state);
                         }
