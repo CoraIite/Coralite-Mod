@@ -124,7 +124,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     {
                         FlyingFrame();
                         Timer++;
-                        if (Timer > 35)
+                        if (Timer > 30)
                         {
                             //使用冲刺放电或闪电突袭或电磁炮
                             AIStates state = Main.rand.Next(3) switch

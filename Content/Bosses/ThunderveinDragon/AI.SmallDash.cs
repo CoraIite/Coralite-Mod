@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             //生成弹幕并随机速度方向
                             NPC.TargetClosest();
                             int damage = Helper.GetProjDamage(20, 30, 40);
-                            NPC.NewProjectileDirectInAI<LightingDash>(NPC.Center, Vector2.Zero, damage, 0
+                            NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
@@ -78,7 +78,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             //生成弹幕并随机速度方向
                             NPC.TargetClosest();
                             int damage = Helper.GetProjDamage(20, 30, 40);
-                            NPC.NewProjectileDirectInAI<LightingDash>(NPC.Center, Vector2.Zero, damage, 0
+                            NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
@@ -145,7 +145,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             //生成弹幕并随机速度方向
                             NPC.TargetClosest();
                             int damage = Helper.GetProjDamage(20, 30, 40);
-                            NPC.NewProjectileDirectInAI<StrongLightingDash>(NPC.Center, Vector2.Zero, damage, 0
+                            NPC.NewProjectileDirectInAI<StrongLightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
@@ -190,7 +190,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             //生成弹幕并随机速度方向
                             NPC.TargetClosest();
                             int damage = Helper.GetProjDamage(20, 30, 40);
-                            NPC.NewProjectileDirectInAI<StrongLightingDash>(NPC.Center, Vector2.Zero, damage, 0
+                            NPC.NewProjectileDirectInAI<StrongLightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);

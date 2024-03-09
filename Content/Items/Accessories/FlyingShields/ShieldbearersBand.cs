@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                 .Register();
 
             CreateRecipe()
-                .AddIngredient(ItemID.Leather)
+                .AddIngredient(ItemID.Vertebrae, 5)
                 .AddIngredient(ItemID.TissueSample, 5)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();

@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Coralite.Compat.BossCheckList
 {
-    public static class BabyIceDragonPortrait
+    public static class ThunderveinDragonPortrait
     {
         public static int frameCounter;
         public static int frame;
@@ -15,23 +15,20 @@ namespace Coralite.Compat.BossCheckList
         {
             Vector2 center = rect.Center();
 
-            float scale = 1f;
-            if (Main.zenithWorld)
-                scale = 0.4f;
+            float scale = 1.2f;
 
-            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.BabyIceDragon + "BabyIceDragon").Value;
+            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.ThunderveinDragon + "ThunderveinDragon").Value;
 
-            if (++frameCounter > 7)
+            if (++frameCounter > 5)
             {
                 frameCounter = 0;
-                if (++frame > 3)
+                if (++frame > 7)
                     frame = 0;
             }
-            Rectangle frameBox = mainTex.Frame(3, 5, 1, frame);
+            Rectangle frameBox = mainTex.Frame(3, 8, 0, frame);
             Vector2 origin = frameBox.Size() / 2;
 
             spriteBatch.Draw(mainTex, center, frameBox, color, 0, origin, scale, SpriteEffects.None, 0f);
         }
-
     }
 }

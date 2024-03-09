@@ -1,4 +1,6 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -59,6 +61,33 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             Projectile.Center = owner.Center;
 
+            InitTrails();
+            UpdateTrails();
+
+            if (Timer < LightingTime)
+            {
+                float factor = Timer  / LightingTime;
+                float sinFactor = MathF.Sin(factor * MathHelper.Pi);
+
+                ThunderWidth = 30 + sinFactor * 30;
+                SpawnDusts();
+            }
+            else
+            {
+                float factor = (Timer - LightingTime) / DelayTime;
+                float x2Factor = Coralite.Instance.X2Smoother.Smoother(factor);
+
+                ThunderWidth = (1 - x2Factor) * 30;
+                ThunderAlpha = 1 - x2Factor;
+                if (Timer > LightingTime + DelayTime)
+                    Projectile.Kill();
+            }
+
+            Timer++;
+        }
+
+        public void InitTrails()
+        {
             if (circles == null)
             {
                 ThunderAlpha = 1;
@@ -79,7 +108,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                 for (int i = 0; i < outers.Length; i++)
                 {
-                    if (i<2)
+                    if (i < 2)
                         outers[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange);
                     else
                         outers[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow);
@@ -123,6 +152,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 }
             }
 
+        }
+
+        public void UpdateTrails()
+        {
             if (Timer > 10 && Timer % 4 == 0)
                 foreach (var outer in outers)
                 {
@@ -167,26 +200,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         circle.RandomThunder();
                     }
                 }
+        }
 
-            if (Timer < LightingTime)
+        public virtual void SpawnDusts()
+        {
+            if (Timer % 2 == 0)
             {
-                float factor = Timer  / LightingTime;
-                float sinFactor = MathF.Sin(factor * MathHelper.Pi);
-
-                ThunderWidth = 30 + sinFactor * 30;
+                Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(Projectile.width / 5, Projectile.width / 5),
+                    Vector2.Zero, CoraliteContent.ParticleType<BigFog>(), Coralite.Instance.ThunderveinYellow * Main.rand.NextFloat(0.5f, 0.8f),
+                    Main.rand.NextFloat(2f, 2.5f));
+                ElectricParticle_Follow.Spawn(Projectile.Center, Helper.NextVec2Dir(Projectile.width / 3, Projectile.width*0.56f), () => Projectile.Center, Main.rand.NextFloat(0.7f, 1.1f));
             }
             else
             {
-                float factor = (Timer - LightingTime) / DelayTime;
-                float x2Factor = Coralite.Instance.X2Smoother.Smoother(factor);
-
-                ThunderWidth = (1 - x2Factor) * 30;
-                ThunderAlpha = 1 - x2Factor;
-                if (Timer > LightingTime + DelayTime)
-                    Projectile.Kill();
+                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(Projectile.width / 3, Projectile.width / 3)
+                    , ModContent.DustType<LightningShineBall>(), Vector2.Zero, newColor: ThunderveinDragon.ThunderveinYellowAlpha, Scale: Main.rand.NextFloat(0.3f, 0.5f));
             }
-
-            Timer++;
         }
 
         public override bool PreDraw(ref Color lightColor)

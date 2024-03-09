@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,7 +16,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// 使用ai2传入闪电每个点间的间隔
     /// 使用速度传入中心点的位置，位置传入末端的位置
     /// </summary>
-    public class LightingBreath : LightingDash
+    public class LightingBreath : LightningDash
     {
         const int DelayTime = 30;
 
@@ -57,6 +58,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             if (Timer < DashTime)
             {
+                SpawnDusts();
                 Vector2 pos2 = Projectile.velocity;
                 List<Vector2> pos = new List<Vector2>
                 {
@@ -129,6 +131,23 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
 
             Timer++;
+        }
+
+        public override void SpawnDusts()
+        {
+            if (Main.rand.NextBool())
+            {
+                Vector2 pos = Vector2.Lerp(Projectile.velocity, Projectile.Center, Main.rand.NextFloat(0.1f, 0.9f))
+                    + Main.rand.NextVector2Circular(Projectile.width / 2, Projectile.width / 2);
+                if (Main.rand.NextBool())
+                {
+                    Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.7f, 1.1f));
+                }
+                else
+                {
+                    Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>(), Vector2.Zero, newColor: ThunderveinDragon.ThunderveinYellowAlpha, Scale: Main.rand.NextFloat(0.1f, 0.3f));
+                }
+            }
         }
 
         public virtual (float ,float) GetRange(float factor)

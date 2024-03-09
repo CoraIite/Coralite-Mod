@@ -2710,6 +2710,11 @@ Mods: {
 				DisplayName: 海盗王的鲨鱼帽
 				Tooltip: ""
 			}
+
+			LightningRods: {
+				DisplayName: 避雷针
+				Tooltip: 放置后右键召唤荒雷龙
+			}
 		}
 
 		Tiles: {
@@ -3332,6 +3337,10 @@ Mods: {
 			// StrongerCrossLightingBallChasable.DisplayName: Stronger Cross Lighting Ball Chasable
 			// ElectromagneticCannon.DisplayName: Electromagnetic Cannon
 			// EndThunder.DisplayName: End Thunder
+			// ThunderveinDragon_OnSpawnAnim.DisplayName: Thundervein Dragon_ On Spawn Anim
+			// ThunderSpawn.DisplayName: Thunder Spawn
+			// LightningDash.DisplayName: Lightning Dash
+			// StrongLightningDash.DisplayName: Strong Lightning Dash
 		}
 
 		Configs: {
@@ -3662,6 +3671,11 @@ Mods: {
 				Bloodiancie: {
 					SpawnInfo: 吸收血月能量后能产生更大范围爆炸的赤玉灵，或者也可以叫它“血咒精·赤玉灵”。
 					Despawn: 赤血玉灵回归了地底
+				}
+
+				ThunderveinDragon: {
+					// SpawnInfo: 掌控雷电魔法的双足飞龙种，体内储存着十分庞大的电能。
+					// Despawn: 荒雷龙如闪电般离去
 				}
 			}
 		}

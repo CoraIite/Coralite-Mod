@@ -27,7 +27,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             NPC.damage = 40;
             NPC.scale = 1.1f;
             NPC.defense = 20;
-            NPC.lifeMax = 1000;
+            NPC.lifeMax = 1100;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 1f;
@@ -42,14 +42,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((1000 + numPlayers * 500) / journeyScale);
+                    NPC.lifeMax = (int)((1100 + numPlayers * 500) / journeyScale);
                     NPC.damage = 46;
                     NPC.defense = 20;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((1000 + numPlayers * 1000) / journeyScale);
+                    NPC.lifeMax = (int)((1100 + numPlayers * 1000) / journeyScale);
                     NPC.damage = 50;
                     NPC.defense = 20;
                 }
@@ -68,20 +68,20 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 return;
             }
 
-            NPC.lifeMax = 1000 + numPlayers * 500;
+            NPC.lifeMax = 1100 + numPlayers * 500;
             NPC.damage = 46;
             NPC.defense = 20;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 1000 + numPlayers * 1000;
+                NPC.lifeMax = 1100 + numPlayers * 1000;
                 NPC.damage = 50;
                 NPC.defense = 20;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 1500 + numPlayers * 1000;
+                NPC.lifeMax = 1500 + numPlayers * 1100;
                 NPC.damage = 50;
                 NPC.defense = 20;
             }
@@ -111,12 +111,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         NPC.target = owner.target;
                         NPC.Center = Target.Center + new Vector2(0, -100);
                         Timer++;
-                        if (Timer > 40)
+                        if (Timer > 60)
                         {
                             State++;
                             Timer = 0;
-                            NPC.Center += new Vector2(Main.rand.NextFromList(-1,1)*200+Main.rand.Next(-250, 250), 0);
-                            ThunderveinDragon.SetBackgroundLight(0.9f, 40, 18);
+                            NPC.Center += new Vector2(Main.rand.NextFromList(-1, 1) * 200 + Main.rand.Next(-250, 250), 0);
+                            ThunderveinDragon.SetBackgroundLight(0.9f, 50, 18);
                             SoundEngine.PlaySound(CoraliteSoundID.Thunder, NPC.Center);
                             NPC.dontTakeDamage = false;
                         }
@@ -125,9 +125,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case 1://让天空闪烁一下，同时让分身就位
                     {
                         Timer++;
-                        float factor = Coralite.Instance.SqrtSmoother.Smoother((int)Timer, 60);
+                        float factor = Coralite.Instance.SqrtSmoother.Smoother((int)Timer, 75);
                         PhantomDistance = factor * 220;
-                        if (Timer > 60)
+                        if (Timer > 75)
                         {
                             State++;
                             Timer = 0;
@@ -143,7 +143,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
                             Vector2 pos = NPC.Center;
-                            int damage = Helper.GetProjDamage(20, 40, 60);
+                            int damage = Helper.GetProjDamage(60, 70, 80);
 
                             NPC.NewProjectileDirectInAI<StrongThunderFalling>(
                                 pos + new Vector2(0, -Main.rand.Next(170, 320)), pos + new Vector2(0, 750), damage, 0, NPC.target

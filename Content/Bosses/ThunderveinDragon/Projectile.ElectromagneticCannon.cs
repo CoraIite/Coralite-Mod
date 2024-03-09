@@ -1,15 +1,15 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
-using ReLogic.Content;
-using Terraria.Graphics.Effects;
-using Coralite.Content.WorldGeneration;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -19,7 +19,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// 使用速度传入中心点的位置，位置传入末端的位置
     /// 激光长度2000，激光旋转跟随recorder1;
     /// </summary>
-    public class ElectromagneticCannon: LightingDash
+    public class ElectromagneticCannon: LightningDash
     {
         const int DelayTime = 30;
         private float laserWidth;
@@ -78,6 +78,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 Projectile.velocity = dragon.GetMousePos();
                 Projectile.Center = Projectile.velocity + dragon.Recorder.ToRotationVector2() * 2000;
                 Projectile.rotation = (Projectile.Center - Projectile.velocity).ToRotation();
+
+                SpawnDusts();
 
                 Vector2 pos2 = Projectile.velocity;
                 List<Vector2> pos = new List<Vector2>
@@ -163,6 +165,25 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             Timer++;
             UpdateCachesNormally();
+        }
+
+        public override void SpawnDusts()
+        {
+            if (Main.rand.NextBool())
+            {
+                Vector2 pos = Vector2.Lerp(Projectile.velocity, Projectile.Center, Main.rand.NextFloat(0.1f, 0.9f))
+                    + Main.rand.NextVector2Circular(Projectile.width / 2, Projectile.width / 2);
+                if (Main.rand.NextBool())
+                {
+                    Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Purple>(), Scale: Main.rand.NextFloat(0.7f, 1.1f));
+                }
+                else
+                {
+                    Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>()
+                        , Projectile.rotation.ToRotationVector2() * Main.rand.NextFloat(2, 4)
+                        , newColor: ThunderveinDragon.ThunderveinYellowAlpha, Scale: Main.rand.NextFloat(0.1f, 0.2f));
+                }
+            }
         }
 
         public void InitTrails()

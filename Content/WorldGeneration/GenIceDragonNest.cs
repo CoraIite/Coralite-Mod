@@ -26,7 +26,7 @@ namespace Coralite.Content.WorldGeneration
             progress.Set(0);
             //随机选择雪原上的某个地方
             int nestCenter_x = GenVars.snowOriginLeft + WorldGen.genRand.Next(GenVars.snowOriginRight - GenVars.snowOriginLeft);
-            int nestCenter_y = (int)(Main.worldSurface * 0.35f);
+            int nestCenter_y = (int)(Main.worldSurface * 0.4f);
 
             for (; nestCenter_y < Main.worldSurface; nestCenter_y++)
             {

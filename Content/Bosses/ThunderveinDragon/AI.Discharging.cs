@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
@@ -97,6 +98,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 canDrawShadows = true;
                                 currentSurrounding = true;
                                 SetBackgroundLight(0.5f, burstTime - 3, 8);
+                                var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY*1.4f, 26, 26, 25, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
 
                                 ResetAllOldCaches();
                             }
@@ -136,7 +139,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     {
                         FlyingFrame();
                         Timer++;
-                        if (Timer > 20)
+                        if (Timer > 25)
                             ResetStates();
                     }
                     break;

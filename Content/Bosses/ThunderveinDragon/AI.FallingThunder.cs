@@ -5,7 +5,9 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -197,7 +199,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             Timer = 0;
                             //生成闪电弹幕
                             Vector2 targetPos = new Vector2(Recorder, Recorder2);
-                            int damage = Helper.GetProjDamage(80, 100, 120);
+                            int damage = Helper.GetProjDamage(70, 80, 90);
 
                             NPC.velocity = new Vector2(0, UpLength / (float)SmashDownTime);
                             NPC.rotation = NPC.velocity.ToRotation();
@@ -237,15 +239,25 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             TurnToNoRot(1);
                             NPC.frame.Y = 0;
                             NPC.frame.X = 1;
-                            //生成粒子
+                            var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY * 1.3f, 20, 22, 25, 1000);
+                            Main.instance.CameraModifiers.Add(modifyer);
                         }
                         else if (Timer < SmashDownTime + 30)
                         {
+                            if (Timer % 2 == 0)
+                            {
+                                Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(NPC.width / 5, NPC.height / 5),
+                                    Vector2.Zero, CoraliteContent.ParticleType<BigFog>(), Coralite.Instance.ThunderveinYellow * Main.rand.NextFloat(0.5f, 0.8f),
+                                    Main.rand.NextFloat(1.5f, 2f));
+                                Vector2 pos = NPC.Center + Main.rand.NextVector2Circular(NPC.width * 0.8f, NPC.height * 0.8f);
+                                Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>(), Vector2.Zero, newColor: ThunderveinYellowAlpha, Scale: Main.rand.NextFloat(0.1f, 0.3f));
+                            }
+
                             float factor = Coralite.Instance.SqrtSmoother.Smoother((Timer - SmashDownTime) / 30);
                             shadowScale = Helper.Lerp(1f, 2.5f, factor);
                             shadowAlpha = Helper.Lerp(1f, 0f, factor);
                         }
-                        else if (Timer < SmashDownTime + 30 + 40)
+                        else if (Timer < SmashDownTime + 30 + 50)
                         {
                             FlyingFrame();
                         }
@@ -454,7 +466,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             Timer = 0;
                             //生成闪电弹幕
                             Vector2 targetPos = new Vector2(Recorder, Recorder2);
-                            int damage = Helper.GetProjDamage(80, 100, 120);
+                            int damage = Helper.GetProjDamage(80, 100, 110);
 
                             NPC.velocity = new Vector2(0, UpLength / (float)SmashDownTime);
                             NPC.rotation = NPC.velocity.ToRotation();
@@ -491,7 +503,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         else if (Timer == SmashDownTime)
                         {
                             SetBackgroundLight(0.4f, 40);
-                            //生成粒子
+                            var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY * 1.3f, 16, 20, 20, 1000);
+                            Main.instance.CameraModifiers.Add(modifyer);
                         }
                         else if (Timer < SmashDownTime * 2)
                         {
@@ -531,15 +544,25 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             TurnToNoRot(1);
                             NPC.frame.Y = 0;
                             NPC.frame.X = 1;
-                            //生成粒子
+                            var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY * 1.3f, 20, 22, 25, 1000);
+                            Main.instance.CameraModifiers.Add(modifyer);
                         }
                         else if (Timer < SmashDownTime + 30)
                         {
+                            if (Timer % 2 == 0)
+                            {
+                                Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(NPC.width / 5, NPC.height / 5),
+                                    Vector2.Zero, CoraliteContent.ParticleType<BigFog>(), Coralite.Instance.ThunderveinYellow * Main.rand.NextFloat(0.5f, 0.8f),
+                                    Main.rand.NextFloat(1.5f, 2f));
+                                Vector2 pos = NPC.Center + Main.rand.NextVector2Circular(NPC.width * 0.8f, NPC.height * 0.8f);
+                                Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>(), Vector2.Zero, newColor: ThunderveinYellowAlpha, Scale: Main.rand.NextFloat(0.1f, 0.3f));
+                            }
+
                             float factor = Coralite.Instance.SqrtSmoother.Smoother((Timer - SmashDownTime) / 30);
                             shadowScale = Helper.Lerp(1f, 2.5f, factor);
                             shadowAlpha = Helper.Lerp(1f, 0f, factor);
                         }
-                        else if (Timer < SmashDownTime + 30 + 40)
+                        else if (Timer < SmashDownTime + 30 + 25)
                         {
                             FlyingFrame();
                         }

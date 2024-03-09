@@ -352,10 +352,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (Timer < 300)
             {
                 Projectile.velocity += (player.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
-                if (Projectile.velocity.Length() > 12)
-                    Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * 12;
+                if (Projectile.velocity.Length() > 20)
+                    Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * 20;
 
-                if (Vector2.Distance(player.Center, Projectile.Center) < 120)
+                if (Vector2.Distance(player.Center, Projectile.Center) < 180)
                     Timer = 300;
                 if (Timer % 5 == 0)
                 {

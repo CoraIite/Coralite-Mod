@@ -4,6 +4,7 @@ using System;
 using Terraria.Audio;
 using Terraria;
 using Microsoft.Xna.Framework;
+using Terraria.Graphics.CameraModifiers;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -62,8 +63,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case 1://开冲，直到与玩家距离小于一定值后停止
                     {
                         UpdateAllOldCaches();
-                        GetLengthToTargetPos(Target.Center, out _, out float yLength);
-                        if (yLength > 50)
+                        GetLengthToTargetPos(Target.Center, out float xLength,out _);
+                        if (xLength > 100)
                             NPC.QuickSetDirection();
 
                         NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 40;
@@ -130,6 +131,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                                 SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
+                                var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY * 1.4f, 26, 26, 25, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
+
                                 canDrawShadows = true;
                                 currentSurrounding = true;
                                 SetBackgroundLight(0.5f, burstTime - 3, 8);
@@ -147,6 +151,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         shadowScale = Helper.Lerp(1f, 2.5f, factor);
                         shadowAlpha = Helper.Lerp(1f, 0f, factor);
 
+                        NPC.velocity *= 0.985f;
                         if (NPC.frame.Y != 0)
                         {
                             NPC.frame.X = 1;
@@ -173,7 +178,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     {
                         FlyingFrame();
                         Timer++;
-                        if (Timer > 20)
+                        if (Timer > 25)
                             ResetStates();
                     }
                     break;

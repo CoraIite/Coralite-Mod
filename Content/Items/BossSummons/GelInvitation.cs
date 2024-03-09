@@ -59,12 +59,12 @@ namespace Coralite.Content.Items.BossSummons
 
         public void AddMagikePolymerizeRecipe()
         {
-            PolymerizeRecipe.CreateRecipe<GelInvitation>(400)
+            PolymerizeRecipe.CreateRecipe<GelInvitation>(250)
                 .SetMainItem<SymbolOfRoyal>()
                 .AddIngredient<GelFiber>(20)
                 .AddIngredient(ItemID.Gel, 99)
                 .Register();
-            PolymerizeRecipe.CreateRecipe<GelInvitation>(400)
+            PolymerizeRecipe.CreateRecipe<GelInvitation>(250)
                 .SetMainItem(ItemID.SlimeCrown, 3)
                 .AddIngredient<GelFiber>(20)
                 .AddIngredient(ItemID.Gel, 99)

@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.BossSummons;
+using Coralite.Content.Items.Thunder;
 using Coralite.Core.Systems.BossSystems;
 using System.Collections.Generic;
 using Terraria.Localization;
@@ -105,7 +106,6 @@ namespace Coralite.Compat.BossCheckList
                 //赤血玉灵
                 List<int> BloodiancieCollection = new List<int>()
                 {
-                    //ItemType<Content.Items.Icicle.IcicleCrystal>(),
                     //ItemType<Content.Items.RedJades.BloodiancieBossBag>(),
                     //ItemType<Content.Items.Gels.EmperorSabre>(),
                     //ItemType<Content.Items.Gels.SlimeEruption>(),
@@ -132,6 +132,37 @@ namespace Coralite.Compat.BossCheckList
                         ["spawnItems"] = ItemType<BloodJadeCore>(),
                         ["customPortrait"] = BloodianciePortrait.DrawPortrait,
                         ["collectibles"] = BloodiancieCollection
+                    });
+
+                List<int> ThunderveinDragonCollection = new List<int>()
+                {
+                    //ItemType<Content.Items.Icicle.IcicleCrystal>(),
+                    //ItemType<Content.Items.RedJades.BloodiancieBossBag>(),
+                    //ItemType<Content.Items.Gels.EmperorSabre>(),
+                    //ItemType<Content.Items.Gels.SlimeEruption>(),
+                    //ItemType<Content.Items.Gels.GelWhip>(),
+                    //ItemType<Content.Items.Gels.RoyalClassics>(),
+                    //ItemType<Content.Items.Gels.SlimeSceptre>(),
+                    //ItemType<Content.Items.Gels.GelThrone>(),
+                    //ItemType<Content.Items.Gels.RoyalGelCannon>(),
+                    //ItemType<Content.Items.Icicle.RedianciePet>(),
+                };
+
+                string ThunderveinDragonInfo = "掌控雷电魔法的双足飞龙种，体内储存着十分庞大的电能。";
+                bcl.Call(
+                    "LogBoss",
+                    Coralite.Instance,
+                    "荒雷龙",
+                    11.1f,
+                    () => DownedBossSystem.downedThunderveinDragon,
+                    NPCType<Content.Bosses.ThunderveinDragon.ThunderveinDragon>(),
+                    new Dictionary<string, object>()
+                    {
+                        ["spawnInfo"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.ThunderveinDragon.SpawnInfo", () => ThunderveinDragonInfo),
+                        ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.ThunderveinDragon.Despawn", () => "荒雷龙如闪电般离去"),
+                        ["spawnItems"] = ItemType<LightningRods>(),
+                        ["customPortrait"] = ThunderveinDragonPortrait.DrawPortrait,
+                        ["collectibles"] = ThunderveinDragonCollection
                     });
 
                 //梦魇之花

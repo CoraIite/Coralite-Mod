@@ -1,5 +1,5 @@
-﻿using Coralite.Content.Bosses.BabyIceDragon;
-using Coralite.Content.Items.Icicle;
+﻿using Coralite.Content.Items.Thunder;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.ParticleSystem;
@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -84,8 +85,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             NPC.width = 130;
             NPC.height = 100;
             NPC.damage = 40;
-            NPC.defense = 20;
-            NPC.lifeMax = 24000;
+            NPC.defense = 24;
+            NPC.lifeMax = 25500;
             NPC.knockBackResist = 0f;
             NPC.scale = 1.2f;
             NPC.aiStyle = -1;
@@ -110,22 +111,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((26000 + numPlayers * 2500) / journeyScale);
+                    NPC.lifeMax = (int)((28000 + numPlayers * 3500) / journeyScale);
                     NPC.damage = 46;
-                    NPC.defense = 20;
+                    NPC.defense = 24;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((28500 + numPlayers * 4550) / journeyScale);
+                    NPC.lifeMax = (int)((30500 + numPlayers * 5550) / journeyScale);
                     NPC.damage = 50;
-                    NPC.defense = 20;
+                    NPC.defense = 24;
                 }
 
                 if (Main.getGoodWorld)
                 {
                     NPC.damage = 50;
-                    NPC.defense = 20;
+                    NPC.defense = 24;
                 }
 
                 //if (Main.zenithWorld)
@@ -136,22 +137,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 return;
             }
 
-            NPC.lifeMax = 26000 + numPlayers * 2500;
+            NPC.lifeMax = 28000 + numPlayers * 3500;
             NPC.damage = 46;
-            NPC.defense = 20;
+            NPC.defense = 24;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 28500 + numPlayers * 4550;
+                NPC.lifeMax = 30500 + numPlayers * 5550;
                 NPC.damage = 50;
-                NPC.defense = 20;
+                NPC.defense = 24;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 30000 + numPlayers * 6850;
+                NPC.lifeMax = 32000 + numPlayers * 7850;
                 NPC.damage = 50;
-                NPC.defense = 20;
+                NPC.defense = 24;
             }
 
             //if (Main.zenithWorld)
@@ -179,7 +180,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (currentSurrounding)
-                modifiers.SourceDamage -= 0.25f;
+                modifiers.SourceDamage -= 0.3f;
         }
 
         public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
@@ -188,7 +189,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 modifiers.SourceDamage += 0.15f;
 
             if (currentSurrounding)
-                modifiers.SourceDamage -= 0.25f;
+                modifiers.SourceDamage -= 0.3f;
 
             if (projectile.hostile)
                 modifiers.SourceDamage -= 0.5f;
@@ -211,7 +212,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void OnKill()
         {
-            DownedBossSystem.DownBabyIceDragon();
+            DownedBossSystem.DownThunderveinDragon();
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Main.StopRain();
@@ -230,6 +231,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 Timer = 0;
                 NPC.dontTakeDamage = true;
                 currentSurrounding = true;
+                canDrawShadows = false;
                 NPC.life = 1;
                 return false;
             }
@@ -288,7 +290,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             ResetAllOldCaches();
             Phase = 1;
-            State = (int)AIStates.LightningRaid;
+            State = (int)AIStates.onSpawnAnmi;
             if (!SkyManager.Instance["ThunderveinSky"].IsActive())//如果这个天空没激活
                 SkyManager.Instance.Activate("ThunderveinSky");
         }
@@ -319,6 +321,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     ResetStates();
                     break;
                 case (int)AIStates.onSpawnAnmi:
+                    OnSpawnAnmi();
                     break;
                 case (int)AIStates.onKillAnim:
                     OnKillAnmi();
@@ -393,6 +396,112 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
         }
 
+        public void OnSpawnAnmi()
+        {
+            switch (SonState)
+            {
+                default:
+                    ResetStates();
+                    break;
+                case 0:
+                    {
+                        NPC.TargetClosest();
+                        NPC.dontTakeDamage = true;
+                        TurnToNoRot(1);
+                        Recorder = -1;
+                        for (int i = 0; i < Main.maxProjectiles; i++)
+                        {
+                            Projectile proj = Main.projectile[i];
+                            if (proj.active && proj.type == ModContent.ProjectileType<ThunderSpawn>())
+                            {
+                                Recorder = i;
+                                break;
+                            }
+                        }
+
+                        if (Recorder == -1)
+                        {
+                            NPC.Center = Target.Center + new Vector2(0, -400);
+                        }
+                        else
+                        {
+                            NPC.Center = Main.projectile[(int)Recorder].Center + new Vector2(0, -400);
+                        }
+
+                        SonState++;
+                        selfAlpha = 0;
+                    }
+                    break;
+                case 1:
+                    {
+                        FlyingFrame();
+                        selfAlpha += 1 / 80f;
+                        Timer++;
+                        if (Timer > 80)
+                        {
+                            SonState++;
+                            Timer = 0;
+                            //生成名称
+                            NPC.NewProjectileDirectInAI<ThunderveinDragon_OnSpawnAnim>(NPC.Center, Vector2.Zero, 1, 0, NPC.target);
+                        }
+                    }
+                    break;
+                case 2://出现
+                    {
+                        FlyingFrame();
+                        Timer++;
+                        if (Timer > 30)
+                        {
+                            SonState++;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+                case 3://吼叫
+                    {
+                        UpdateAllOldCaches();
+
+                        NPC.QuickSetDirection();
+                        TurnToNoRot();
+                        NPC.velocity *= 0.9f;
+                        if (Timer==0 &&NPC.frame.Y != 4)
+                        {
+                            FlyingFrame();
+                            break;
+                        }
+
+                        if (Timer == 15)
+                        {
+                            NPC.frame.Y = 0;
+                            NPC.frame.X = 1;
+                            NPC.velocity *= 0;
+                            SoundStyle st = CoraliteSoundID.LightningOrb_Item121;
+                            st.Pitch = 0.4f;
+                            SoundEngine.PlaySound(st, NPC.Center);
+                            SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
+                        }
+                        else if (Timer > 15 && Timer < 130)
+                        {
+                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60;
+                            if ((int)Timer % 10 == 0)
+                            {
+                                var modifyer = new PunchCameraModifier(NPC.Center, Helper.NextVec2Dir(), 8, 12, 20, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
+                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.Instance.ThunderveinYellow, 0.2f);
+                            }
+                            if ((int)Timer % 20 == 0)
+                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.2f);
+                        }
+
+                        Timer++;
+                        if (Timer > 150)
+                            ResetStates();
+                    }
+                    break;
+
+            }
+        }
+
         public void OnKillAnmi()
         {
             if (Timer < 60)
@@ -439,13 +548,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             canDrawShadows = false;
             isDashing = false;
             currentSurrounding = false;
+            NPC.dontTakeDamage = false;
 
             Timer = 0;
             SonState = 0;
             Recorder = 0;
             Recorder2 = 0;
 
-            List <int> moves = new List<int>();
+            List<int> moves = new List<int>();
             int oldState = (int)State;
             float distance = Vector2.Distance(NPC.Center, Target.Center);
             int dir = Target.Center.X > NPC.Center.X ? 1 : -1;
@@ -466,7 +576,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             if (oldState != (int)AIStates.SmallDash)//如果上次招式不是小冲刺那就小冲一下
             {
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 7; i++)
                     moves.Add((int)AIStates.SmallDash);
             }
 
@@ -500,11 +610,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         if (oldState == (int)AIStates.SmallDash)
                             moves.RemoveAll(i => i == (int)StateRecorder);
                         //移除上次使用的招式
-                            moves.RemoveAll(i => i == oldState);
+                        moves.RemoveAll(i => i == oldState);
 
                         //随机一个招式出来
                         State = Main.rand.NextFromList(moves.ToArray());
-                        //State = (int)AIStates.CrossLightingBall;
+                        //State = (int)AIStates.LightningRaid;
                     }
                     break;
                 case 2:
@@ -541,7 +651,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                         //随机一个招式出来
                         State = Main.rand.NextFromList(moves.ToArray());
-                        //State = (int)AIStates.StygianThunder;
+                        //State = (int)AIStates.LightningBreath;
 
                         UseMoveCount++;
                         //如果使用了引力雷球那么重置计时
@@ -638,6 +748,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             canDrawShadows = false;
             isDashing = false;
             currentSurrounding = false;
+            NPC.dontTakeDamage = false;
 
             Timer = 0;
             SonState = 0;
@@ -706,7 +817,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         /// <summary>
         /// 根据Y方向速度设置旋转
         /// </summary>
-        public void SetRotationNormally(float rate=0.08f)
+        public void SetRotationNormally(float rate = 0.08f)
         {
             if (NPC.spriteDirection != oldSpriteDirection)
                 NPC.rotation += 3.141f;
@@ -739,7 +850,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             ThunderveinSky sky = ((ThunderveinSky)SkyManager.Instance["ThunderveinSky"]);
             if (sky.Timeleft < 100)
-                sky.Timeleft += 3;
+                sky.Timeleft += 2;
             if (sky.Timeleft > 100)
                 sky.Timeleft = 100;
         }
@@ -813,8 +924,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (canDrawShadows)
             {
                 Color shadowColor = ThunderveinYellowAlpha;
-                    shadowColor.A = 50;
-                    shadowColor *= shadowAlpha;
+                shadowColor.A = 50;
+                shadowColor *= shadowAlpha;
                 for (int i = 0; i < trailCacheLength; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i] - screenPos;

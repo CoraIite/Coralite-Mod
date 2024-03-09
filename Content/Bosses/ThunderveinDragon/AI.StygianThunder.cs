@@ -3,6 +3,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
@@ -23,8 +24,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                         FlyingFrame();
                         TurnToNoRot(1);
-                        selfAlpha += 1 / 120f;
-                        if (Timer > 120)
+                        selfAlpha += 1 / 140f;
+                        if (Timer > 140)
                             ResetStates();
                     }
                     break;
@@ -119,6 +120,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                             NPC.dontTakeDamage = false;
                             NPC.QuickSetDirection();
+                            ResetAllOldCaches();
                             TurnToNoRot(1);
                         }))
                             break;
@@ -144,17 +146,20 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             {
                                 SonState++;
                                 Timer = 0;
-                                //生成爆炸弹幕
 
                                 NPC.TargetClosest();
-                                int damage = Helper.GetProjDamage(80, 100, 120);
-
+                                int damage = Helper.GetProjDamage(300, 300, 300);
+                                //生成爆炸弹幕
                                 NPC.NewProjectileDirectInAI<EndThunder>(
                                     NPC.Center + new Vector2(0, -200)
                                     , NPC.Center + new Vector2(0, 800), damage, 0, NPC.target, 20, NPC.whoAmI, 70);
 
-                                SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
+                                SoundEngine.PlaySound(CoraliteSoundID.BubbleShield_Electric_NPCHit43, NPC.Center);
+                                SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
                                 SoundEngine.PlaySound(CoraliteSoundID.Thunder, NPC.Center);
+                                var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY * 1.4f, 26, 26, 25, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
+
                                 canDrawShadows = true;
                                 currentSurrounding = true;
                                 NPC.dontTakeDamage = false;

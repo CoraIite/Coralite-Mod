@@ -3,6 +3,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
@@ -20,7 +21,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case 0://与玩家拉近距离
                     {
-                        const int chasingTime = 60 * 4;
+                        const int chasingTime = 60 * 3;
 
                         Vector2 targetPos = Target.Center + new Vector2(0, -300);
 
@@ -37,7 +38,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.velocity.X *= 0.95f;
 
                         if (NPC.directionY < 0)
-                            FlyingUp(0.55f, 20, 0.9f);
+                            FlyingUp(0.75f, 20, 0.9f);
                         else if (yLength > 70)
                         {
                             Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 15f, 0.25f, 0.6f, 0.95f);
@@ -122,12 +123,15 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 NPC.velocity *= 0;
                                 NPC.TargetClosest();
                                 Vector2 pos = GetMousePos();
-                                int damage = Helper.GetProjDamage(80, 100, 120);
+                                int damage = Helper.GetProjDamage(70, 80, 90);
                                 NPC.NewProjectileDirectInAI<LightingBreath>(pos + Recorder.ToRotationVector2() * 1800, pos, damage, 0, NPC.target
                                     , burstTime, NPC.whoAmI, 85);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
-                                SoundEngine.PlaySound(CoraliteSoundID.BottleExplosion_Item107, NPC.Center);
+                                SoundEngine.PlaySound(CoraliteSoundID.BubbleShield_Electric_NPCHit43, NPC.Center);
+                                var modifyer = new PunchCameraModifier(NPC.Center, Recorder.ToRotationVector2(), 20, 20, 20, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
+
                                 canDrawShadows = true;
                                 SetBackgroundLight(0.3f, burstTime / 2);
 
@@ -175,7 +179,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                         FlyingFrame();
                         Timer++;
-                        if (Timer > 30)
+                        if (Timer > 25)
                             ResetStates();
                     }
                     break;
@@ -193,7 +197,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case 0://与玩家拉近距离
                     {
-                        const int chasingTime = 60 * 4;
+                        const int chasingTime = 60 * 2 + 30;
 
                         Vector2 targetPos = Target.Center + new Vector2(0, -300);
 
@@ -210,7 +214,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.velocity.X *= 0.95f;
 
                         if (NPC.directionY < 0)
-                            FlyingUp(0.55f, 20, 0.9f);
+                            FlyingUp(0.75f, 20, 0.9f);
                         else if (yLength > 70)
                         {
                             Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 15f, 0.25f, 0.6f, 0.95f);
@@ -297,12 +301,15 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 NPC.velocity *= 0;
                                 NPC.TargetClosest();
                                 Vector2 pos = GetMousePos();
-                                int damage = Helper.GetProjDamage(80, 100, 120);
+                                int damage = Helper.GetProjDamage(80, 100, 110);
                                 NPC.NewProjectileDirectInAI<ElectromagneticCannon>(pos + Recorder.ToRotationVector2() * 2000, pos, damage, 0, NPC.target
                                     , burstTime, NPC.whoAmI, 85);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
-                                SoundEngine.PlaySound(CoraliteSoundID.BottleExplosion_Item107, NPC.Center);
+                                SoundEngine.PlaySound(CoraliteSoundID.BubbleShield_Electric_NPCHit43, NPC.Center);
+                                var modifyer = new PunchCameraModifier(NPC.Center, Recorder.ToRotationVector2() * 2, 24, 20, 20, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
+
                                 canDrawShadows = true;
                                 SetBackgroundLight(0.3f, burstTime / 2);
 
@@ -319,21 +326,26 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                         GetLengthToTargetPos(Target.Center, out float xLength, out _);
 
-                        if (xLength > 50)
+                        if (xLength > 100)
                             NPC.QuickSetDirection();
                         TurnToNoRot(1);
                         FlyingFrame(true);
-                        Recorder = Recorder.AngleTowards((Target.Center - GetMousePos()).ToRotation(), 0.012f);
+                        Recorder = Recorder.AngleTowards((Target.Center - GetMousePos()).ToRotation(), 0.015f);
 
                         float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / burstTime);
                         shadowScale = Helper.Lerp(1f, 2f, factor);
                         shadowAlpha = Helper.Lerp(1f, 0f, factor);
 
+                        if (Timer > 10 && Timer % 10 == 0)
+                        {
+                            var modifyer = new PunchCameraModifier(NPC.Center, Helper.NextVec2Dir(), 7, 12, 10, 1000);
+                            Main.instance.CameraModifiers.Add(modifyer);
+                        }
                         Timer++;
                         if (Timer > burstTime)
                         {
                             Timer = 0;
-                            if (Main.rand.NextBool())
+                            if (Main.rand.NextBool(5, 7))
                             {
                                 SonState++;
                             }
@@ -355,7 +367,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                         FlyingFrame();
                         Timer++;
-                        if (Timer > 30)
+                        if (Timer > 25)
                             ResetStates();
                     }
                     break;

@@ -3,6 +3,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
@@ -122,14 +123,18 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 NPC.velocity *= 0;
                                 NPC.TargetClosest();
                                 Vector2 pos = GetMousePos();
-                                int damage = Helper.GetProjDamage(80, 100, 120);
+                                int damage = Helper.GetProjDamage(80, 100, 110);
                                 NPC.NewProjectileDirectInAI<ElectromagneticCannon>(pos + Recorder.ToRotationVector2() * 1800, pos, damage, 0, NPC.target
                                     , burstTime, NPC.whoAmI, 85);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
-                                SoundEngine.PlaySound(CoraliteSoundID.BottleExplosion_Item107, NPC.Center);
+                                SoundStyle st = CoraliteSoundID.PhantasmalDeathray_Zombie104;
+                                st.Pitch = 0.3f;
+                                SoundEngine.PlaySound(st, NPC.Center);
+                                var modifyer = new PunchCameraModifier(NPC.Center, Recorder.ToRotationVector2() * 2, 24, 20, 20, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
                                 canDrawShadows = true;
-                                SetBackgroundLight(0.3f, burstTime / 2);
+                                SetBackgroundLight(0.6f, burstTime * 3 / 4, 14);
 
                                 ResetAllOldCaches();
                             }
@@ -145,13 +150,18 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         if (xLength > 50)
                             NPC.QuickSetDirection();
                         TurnToNoRot(1);
-                        Recorder = Recorder.AngleTowards((Target.Center - GetMousePos()).ToRotation(), 0.012f);
+                        Recorder = Recorder.AngleTowards((Target.Center - GetMousePos()).ToRotation(), 0.014f);
                         FlyingFrame(true);
                         float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / burstTime);
                         shadowScale = Helper.Lerp(1f, 2f, factor);
                         shadowAlpha = Helper.Lerp(1f, 0f, factor);
 
                         Timer++;
+                        if (Timer > 0 && Timer % 20 == 0)
+                        {
+                            var modifyer = new PunchCameraModifier(NPC.Center, Helper.NextVec2Dir(), 7, 12, 20, 1000);
+                            Main.instance.CameraModifiers.Add(modifyer);
+                        }
                         if (Timer > burstTime)
                         {
                             canDrawShadows = false;
@@ -171,7 +181,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                         FlyingFrame();
                         Timer++;
-                        if (Timer > 30)
+                        if (Timer > 25)
                             ResetStates();
                     }
                     break;

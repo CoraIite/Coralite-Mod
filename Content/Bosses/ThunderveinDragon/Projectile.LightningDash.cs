@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +15,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// 使用ai0传入冲刺时间，ai1传入主人
     /// 使用ai2传入闪电每个点间的间隔
     /// </summary>
-    public class LightingDash : BaseThunderProj
+    public class LightningDash : BaseThunderProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -71,13 +72,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     thunderTrails[i].SetRange((0, 15));
                     thunderTrails[i].BasePositions = new Vector2[3]
                     {
-                    Projectile.Center,Projectile.Center,Projectile.Center
+                        Projectile.Center,Projectile.Center,Projectile.Center
                     };
                 }
             }
 
             if (Timer < DashTime)
             {
+                SpawnDusts();
                 Projectile.Center = owner.Center;
                 Vector2 pos2 = Projectile.velocity;
                 List<Vector2> pos = new List<Vector2>
@@ -127,6 +129,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
             else
             {
+                SpawnDusts();
+
                 float factor = (Timer - DashTime) / (DelayTime);
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
                 ThunderWidth = 20 + sinFactor * 30;
@@ -151,6 +155,23 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Timer++;
         }
 
+        public virtual void SpawnDusts()
+        {
+            if (Main.rand.NextBool(3))
+            {
+                Vector2 pos = Vector2.Lerp(Projectile.velocity, Projectile.Center, Main.rand.NextFloat(0.1f, 0.9f))
+                    + Main.rand.NextVector2Circular(Projectile.width / 2, Projectile.width / 2);
+                if (Main.rand.NextBool())
+                {
+                    Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.7f, 1.1f));
+                }
+                else
+                {
+                    Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>(), Vector2.Zero, newColor: ThunderveinDragon.ThunderveinYellowAlpha, Scale: Main.rand.NextFloat(0.1f, 0.3f));
+                }
+            }
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             if (thunderTrails != null)
@@ -168,8 +189,25 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// 使用ai0传入冲刺时间，ai1传入主人
     /// 使用ai2传入闪电每个点间的间隔
     /// </summary>
-    public class StrongLightingDash : LightingDash
+    public class StrongLightningDash : LightningDash
     {
+        public override void SpawnDusts()
+        {
+            if (Main.rand.NextBool(3))
+            {
+                Vector2 pos = Vector2.Lerp(Projectile.velocity, Projectile.Center, Main.rand.NextFloat(0.1f, 0.9f))
+                    + Main.rand.NextVector2Circular(Projectile.width / 2, Projectile.width / 2);
+                if (Main.rand.NextBool())
+                {
+                    Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Purple>(), Scale: Main.rand.NextFloat(0.7f, 1.1f));
+                }
+                else
+                {
+                    Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>(), Vector2.Zero, newColor: ThunderveinDragon.ThunderveinYellowAlpha, Scale: Main.rand.NextFloat(0.1f, 0.3f));
+                }
+            }
+        }
+
         public override Color ThunderColorFunc_Yellow(float factor)
         {
             return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinYellowAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;

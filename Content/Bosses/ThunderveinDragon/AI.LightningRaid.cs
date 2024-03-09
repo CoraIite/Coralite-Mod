@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.CameraModifiers;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -21,7 +22,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case 0://先飞到离玩家比较近或者计时器到点了
                     {
-                        const int chasingTime = 60 * 4;
+                        const int chasingTime = 60 * 3;
                         NPC.QuickSetDirection();
 
                         //追踪玩家
@@ -72,7 +73,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             //生成弹幕并随机速度方向
                             NPC.TargetClosest();
                             int damage = Helper.GetProjDamage(20, 30, 40);
-                            NPC.NewProjectileDirectInAI<LightingDash>(NPC.Center, Vector2.Zero, damage, 0
+                            NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI,55);
                             
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
@@ -89,7 +90,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.TargetClosest();
 
                             int damage = Helper.GetProjDamage(20,30,40);
-                            NPC.NewProjectileDirectInAI<LightingDash>(NPC.Center, Vector2.Zero, damage, 0
+                            NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI,55);
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
@@ -139,18 +140,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 SonState++;
                                 Timer = 0;
 
-                                int damage = Helper.ScaleValueForDiffMode(30, 40, 35, 30);
-                                NPC.NewProjectileDirectInAI<LightingDash>(NPC.Center, Vector2.Zero, damage, 0
+                                int damage = Helper.GetProjDamage(50, 60, 70);
+                                NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                     , NPC.target, bigDashTime, NPC.whoAmI,75);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
+
                                 DashFrame();
 
-                                NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 40;
+                                Vector2 dir = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
+                                NPC.velocity = dir * 40;
                                 NPC.rotation = NPC.velocity.ToRotation();
                                 NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
                                 isDashing = true;
                                 SetBackgroundLight(0.4f, bigDashTime-3,8);
+                                var modifyer = new PunchCameraModifier(NPC.Center, dir*2.3f, 14, 5, 20, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
                             }
                         }
                     }
@@ -200,7 +205,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case 0://先飞到离玩家比较近或者计时器到点了
                     {
-                        const int chasingTime = 60 * 4;
+                        const int chasingTime = 60 * 3;
                         NPC.QuickSetDirection();
 
                         //追踪玩家
@@ -251,7 +256,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             //生成弹幕并随机速度方向
                             NPC.TargetClosest();
                             int damage = Helper.GetProjDamage(20, 30, 40);
-                            NPC.NewProjectileDirectInAI<StrongLightingDash>(NPC.Center, Vector2.Zero, damage, 0
+                            NPC.NewProjectileDirectInAI<StrongLightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI,55);
                             
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
@@ -268,7 +273,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.TargetClosest();
 
                             int damage = Helper.GetProjDamage(20,30,40);
-                            NPC.NewProjectileDirectInAI<StrongLightingDash>(NPC.Center, Vector2.Zero, damage, 0
+                            NPC.NewProjectileDirectInAI<StrongLightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI,55);
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
@@ -309,7 +314,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         UpdateAllOldCaches();
 
                         //向后扇一下翅膀
-                        if (++NPC.frameCounter > 6)
+                        if (++NPC.frameCounter > 5)
                         {
                             NPC.frameCounter = 0;
                             NPC.frame.Y++;
@@ -318,18 +323,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 SonState++;
                                 Timer = 0;
 
-                                int damage = Helper.ScaleValueForDiffMode(30, 40, 35, 30);
-                                NPC.NewProjectileDirectInAI<StrongLightingDash>(NPC.Center, Vector2.Zero, damage, 0
+                                int damage = Helper.GetProjDamage(60, 70, 80);
+                                NPC.NewProjectileDirectInAI<StrongLightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                     , NPC.target, bigDashTime, NPC.whoAmI,75);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
+
                                 DashFrame();
 
-                                NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 40;
+                                Vector2 dir = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
+                                NPC.velocity = dir * 40;
                                 NPC.rotation = NPC.velocity.ToRotation();
                                 NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
                                 isDashing = true;
                                 SetBackgroundLight(0.4f, bigDashTime - 3, 8);
+                                var modifyer = new PunchCameraModifier(NPC.Center, dir * 2.3f, 14, 5, 20, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
                             }
                         }
                     }
@@ -342,7 +351,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             if (Timer % 9 == 0)
                             {
-                                int damage = Helper.ScaleValueForDiffMode(30, 40, 35, 30);
+                                int damage = Helper.GetProjDamage(60, 70, 80);
                                 NPC.NewProjectileDirectInAI<StrongerCrossLightingBall>(NPC.Center, Vector2.Zero, damage, 0
                                     , NPC.target, NPC.whoAmI, NPC.rotation + MathHelper.PiOver4 + Timer / 20 * MathHelper.PiOver2 + 0.001f);
                             }
@@ -366,7 +375,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             }
                         }
                         Timer++;
-                        int delayTime = 40;
+                        int delayTime = 35;
                         if (Main.getGoodWorld)
                             delayTime = 15;
                         if (Timer > bigDashTime + delayTime)
