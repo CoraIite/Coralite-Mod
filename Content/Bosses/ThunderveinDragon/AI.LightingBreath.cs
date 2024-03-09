@@ -301,7 +301,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 NPC.velocity *= 0;
                                 NPC.TargetClosest();
                                 Vector2 pos = GetMousePos();
-                                int damage = Helper.GetProjDamage(80, 100, 110);
+                                int damage = Helper.GetProjDamage(100, 130, 150);
                                 NPC.NewProjectileDirectInAI<ElectromagneticCannon>(pos + Recorder.ToRotationVector2() * 2000, pos, damage, 0, NPC.target
                                     , burstTime, NPC.whoAmI, 85);
 

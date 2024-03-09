@@ -84,9 +84,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             NPC.width = 130;
             NPC.height = 100;
-            NPC.damage = 40;
-            NPC.defense = 24;
-            NPC.lifeMax = 25500;
+            NPC.damage = 60;
+            NPC.defense = 50;
+            NPC.lifeMax = 45500;
             NPC.knockBackResist = 0f;
             NPC.scale = 1.2f;
             NPC.aiStyle = -1;
@@ -111,22 +111,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((28000 + numPlayers * 3500) / journeyScale);
-                    NPC.damage = 46;
-                    NPC.defense = 24;
+                    NPC.lifeMax = (int)((39000 + numPlayers * 15500) / journeyScale);
+                    NPC.damage = 66;
+                    NPC.defense = 50;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((30500 + numPlayers * 5550) / journeyScale);
-                    NPC.damage = 50;
-                    NPC.defense = 24;
+                    NPC.lifeMax = (int)((45500 + numPlayers * 19550) / journeyScale);
+                    NPC.damage = 72;
+                    NPC.defense = 50;
                 }
 
                 if (Main.getGoodWorld)
                 {
-                    NPC.damage = 50;
-                    NPC.defense = 24;
+                    NPC.damage = 80;
+                    NPC.defense = 50;
                 }
 
                 //if (Main.zenithWorld)
@@ -137,22 +137,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 return;
             }
 
-            NPC.lifeMax = 28000 + numPlayers * 3500;
-            NPC.damage = 46;
-            NPC.defense = 24;
+            NPC.lifeMax = 39000 + numPlayers * 15500;
+            NPC.damage = 66;
+            NPC.defense = 50;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 30500 + numPlayers * 5550;
-                NPC.damage = 50;
-                NPC.defense = 24;
+                NPC.lifeMax = 45500 + numPlayers * 19550;
+                NPC.damage = 72;
+                NPC.defense = 50;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 32000 + numPlayers * 7850;
-                NPC.damage = 50;
-                NPC.defense = 24;
+                NPC.lifeMax = 52000 + numPlayers * 25850;
+                NPC.damage = 80;
+                NPC.defense = 50;
             }
 
             //if (Main.zenithWorld)
@@ -180,7 +180,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (currentSurrounding)
-                modifiers.SourceDamage -= 0.3f;
+                modifiers.SourceDamage -= 0.33f;
         }
 
         public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
@@ -189,7 +189,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 modifiers.SourceDamage += 0.15f;
 
             if (currentSurrounding)
-                modifiers.SourceDamage -= 0.3f;
+                modifiers.SourceDamage -= 0.33f;
 
             if (projectile.hostile)
                 modifiers.SourceDamage -= 0.5f;

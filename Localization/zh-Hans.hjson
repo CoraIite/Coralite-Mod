@@ -2972,7 +2972,7 @@ Mods: {
 			SmallShadowBall.DisplayName: 小影子球
 			// Biskety.DisplayName: Biskety
 			ThunderveinDragon.DisplayName: 荒雷龙
-			// ThunderPhantom.DisplayName: Thunder Phantom
+			ThunderPhantom.DisplayName: 荒雷幻影
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -3317,30 +3317,30 @@ Mods: {
 			SandWallGuard.DisplayName: 古沙之壁
 			SandWallProj.DisplayName: 古沙之壁
 			SandWallStorm.DisplayName: 沙龙卷
-			// LightingDash.DisplayName: Lighting Dash
-			// DischargingBurst.DisplayName: Discharging Burst
-			// LightingBreath.DisplayName: Lighting Breath
-			// LightingBall.DisplayName: Lighting Ball
-			// ChainBall.DisplayName: Chain Ball
-			// CrossLightingBall.DisplayName: Cross Lighting Ball
-			// ThunderFalling.DisplayName: Thunder Falling
-			// CrossLightingBallChasable.DisplayName: Cross Lighting Ball Chasable
-			// StrongerCrossLightingBall.DisplayName: Stronger Cross Lighting Ball
-			// StrongerLightingBreath.DisplayName: Stronger Lighting Breath
-			// StrongLightingDash.DisplayName: Strong Lighting Dash
-			// ExchangePhaseAnmi.DisplayName: Exchange Phase Anmi
-			// StrongDischargingBurst.DisplayName: Strong Discharging Burst
-			// GravitationThunderBall.DisplayName: Gravitation Thunder Ball
-			// StrongThunderFalling.DisplayName: Strong Thunder Falling
-			// LightningBall.DisplayName: Lightning Ball
-			// StrongLightningBall.DisplayName: Strong Lightning Ball
-			// StrongerCrossLightingBallChasable.DisplayName: Stronger Cross Lighting Ball Chasable
-			// ElectromagneticCannon.DisplayName: Electromagnetic Cannon
-			// EndThunder.DisplayName: End Thunder
-			// ThunderveinDragon_OnSpawnAnim.DisplayName: Thundervein Dragon_ On Spawn Anim
-			// ThunderSpawn.DisplayName: Thunder Spawn
-			// LightningDash.DisplayName: Lightning Dash
-			// StrongLightningDash.DisplayName: Strong Lightning Dash
+			LightingDash.DisplayName: 闪电突袭
+			DischargingBurst.DisplayName: 放电
+			LightingBreath.DisplayName: 闪电吐息
+			LightingBall.DisplayName: 雷电球
+			ChainBall.DisplayName: 闪电链
+			CrossLightingBall.DisplayName: 十字雷球
+			ThunderFalling.DisplayName: 落雷
+			CrossLightingBallChasable.DisplayName: 十字雷球
+			StrongerCrossLightingBall.DisplayName: 十字雷球
+			StrongerLightingBreath.DisplayName: 闪电吐息
+			StrongLightingDash.DisplayName: 闪电突袭
+			ExchangePhaseAnmi.DisplayName: 荒雷龙
+			StrongDischargingBurst.DisplayName: 放电
+			GravitationThunderBall.DisplayName: 引力雷球
+			StrongThunderFalling.DisplayName: 落雷
+			LightningBall.DisplayName: 雷电球
+			StrongLightningBall.DisplayName: 雷电球
+			StrongerCrossLightingBallChasable.DisplayName: 十字雷球
+			ElectromagneticCannon.DisplayName: 电磁炮
+			EndThunder.DisplayName: 冥雷
+			ThunderveinDragon_OnSpawnAnim.DisplayName: 荒雷龙
+			ThunderSpawn.DisplayName: 荒雷龙
+			LightningDash.DisplayName: 闪电突袭
+			StrongLightningDash.DisplayName: 闪电突袭
 		}
 
 		Configs: {

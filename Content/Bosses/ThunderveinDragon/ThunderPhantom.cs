@@ -24,10 +24,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             NPC.width = 130;
             NPC.height = 100;
-            NPC.damage = 40;
+            NPC.damage = 60;
             NPC.scale = 1.1f;
-            NPC.defense = 20;
-            NPC.lifeMax = 1100;
+            NPC.defense = 30;
+            NPC.lifeMax = 2200;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 1f;
@@ -42,22 +42,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((1100 + numPlayers * 500) / journeyScale);
-                    NPC.damage = 46;
-                    NPC.defense = 20;
+                    NPC.lifeMax = (int)((2200 + numPlayers * 500) / journeyScale);
+                    NPC.damage = 66;
+                    NPC.defense = 30;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((1100 + numPlayers * 1000) / journeyScale);
-                    NPC.damage = 50;
-                    NPC.defense = 20;
+                    NPC.lifeMax = (int)((2200 + numPlayers * 1000) / journeyScale);
+                    NPC.damage = 72;
+                    NPC.defense = 30;
                 }
 
                 if (Main.getGoodWorld)
                 {
-                    NPC.damage = 50;
-                    NPC.defense = 20;
+                    NPC.damage = 80;
+                    NPC.defense = 30;
                 }
 
                 //if (Main.zenithWorld)
@@ -68,22 +68,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 return;
             }
 
-            NPC.lifeMax = 1100 + numPlayers * 500;
-            NPC.damage = 46;
-            NPC.defense = 20;
+            NPC.lifeMax = 2200 + numPlayers * 500;
+            NPC.damage = 66;
+            NPC.defense = 30;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 1100 + numPlayers * 1000;
-                NPC.damage = 50;
-                NPC.defense = 20;
+                NPC.lifeMax = 2200 + numPlayers * 1000;
+                NPC.damage = 72;
+                NPC.defense = 30;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 1500 + numPlayers * 1100;
-                NPC.damage = 50;
-                NPC.defense = 20;
+                NPC.lifeMax = 2500 + numPlayers * 1200;
+                NPC.damage = 80;
+                NPC.defense = 30;
             }
 
             //if (Main.zenithWorld)

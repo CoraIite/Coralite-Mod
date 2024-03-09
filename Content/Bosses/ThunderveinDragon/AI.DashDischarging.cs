@@ -125,7 +125,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 Timer = 0;
 
                                 NPC.TargetClosest();
-                                int damage = Helper.GetProjDamage(80, 100, 120);
+                                int damage = Helper.GetProjDamage(120, 140, 180);
                                 NPC.NewProjectileDirectInAI<StrongDischargingBurst>(NPC.Center, Vector2.Zero, damage, 0, NPC.target
                                     , burstTime, NPC.whoAmI);
 

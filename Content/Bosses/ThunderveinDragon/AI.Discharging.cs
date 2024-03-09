@@ -85,7 +85,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 //生成爆炸弹幕
 
                                 NPC.TargetClosest();
-                                int damage = Helper.GetProjDamage(80, 100, 120);
+                                int damage = Helper.GetProjDamage(100, 130, 150);
                                 if (Phase == 1)
                                     NPC.NewProjectileDirectInAI<DischargingBurst>(NPC.Center, Vector2.Zero, damage, 0, NPC.target
                                         , burstTime, NPC.whoAmI);
