@@ -2715,6 +2715,140 @@ Mods: {
 				DisplayName: 避雷针
 				Tooltip: 放置后右键召唤荒雷龙
 			}
+
+			CrystalBlossomShards: {
+				DisplayName: 晶花碎片
+				Tooltip:
+					'''
+					结晶化的樱花，已经破碎了，这些只是亮晶晶的碎片。
+					召唤一只小小的妖狐剑士。
+					'''
+			}
+
+			ThunderveinDragonBossBag: {
+				DisplayName: 荒雷龙宝藏盒
+				Tooltip: 右键单击以打开
+			}
+
+			ThunderveinDragonRelic: {
+				DisplayName: 荒雷龙圣物
+				Tooltip: ""
+			}
+
+			ThunderveinDragonTrophy: {
+				DisplayName: 荒雷龙纪念章
+				Tooltip: ""
+			}
+
+			ZapCrystal: {
+				DisplayName: 电晶
+				Tooltip: ""
+			}
+
+			ThunderBathtub: {
+				DisplayName: 雷脉浴缸
+				Tooltip: ""
+			}
+
+			ThunderBed: {
+				DisplayName: 雷脉床
+				Tooltip: ""
+			}
+
+			ThunderBigDroplight: {
+				DisplayName: 雷脉吊灯
+				Tooltip: ""
+			}
+
+			ThunderBookcase: {
+				DisplayName: 雷脉书架
+				Tooltip: ""
+			}
+
+			ThunderCandelabra: {
+				DisplayName: 雷脉烛台
+				Tooltip: ""
+			}
+
+			ThunderCandle: {
+				DisplayName: 雷脉蜡烛
+				Tooltip: ""
+			}
+
+			ThunderChair: {
+				DisplayName: 雷脉椅子
+				Tooltip: ""
+			}
+
+			ThunderChest: {
+				DisplayName: 雷脉箱
+				Tooltip: ""
+			}
+
+			ThunderClock: {
+				DisplayName: 雷脉钟
+				Tooltip: ""
+			}
+
+			ThunderDoor: {
+				DisplayName: 雷脉门
+				Tooltip: ""
+			}
+
+			ThunderDresser: {
+				DisplayName: 雷脉梳妆台
+				Tooltip: ""
+			}
+
+			ThunderDroplight: {
+				DisplayName: 雷脉灯笼
+				Tooltip: ""
+			}
+
+			ThunderFloorLamp: {
+				DisplayName: 雷脉灯柱
+				Tooltip: ""
+			}
+
+			ThunderPiano: {
+				DisplayName: 雷脉钢琴
+				Tooltip: ""
+			}
+
+			ThunderPlatform: {
+				DisplayName: 雷脉平台
+				Tooltip: ""
+			}
+
+			ThunderSink: {
+				DisplayName: 雷脉水槽
+				Tooltip: ""
+			}
+
+			ThunderSofa: {
+				DisplayName: 雷脉沙发
+				Tooltip: ""
+			}
+
+			ThunderStoneBlock: {
+				DisplayName: 雷脉石
+				Tooltip: ""
+			}
+
+			ThunderTable: {
+				DisplayName: 雷脉桌
+				Tooltip: ""
+			}
+
+			ThunderToilet: {
+				DisplayName: 雷脉马桶
+				Tooltip: ""
+			}
+
+			ThunderWorkBench: {
+				DisplayName: 雷脉工作台
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2792,6 +2926,22 @@ Mods: {
 			GelFiberDoorClosedTile.MapEntry: 凝胶纤维门
 			GelFiberDoorOpen.MapEntry: 凝胶纤维门
 			GelFiberWorkBenchTile.MapEntry: 凝胶纤维工作台
+			ThunderBathtubTile.MapEntry: 雷脉浴缸
+			ThunderBedTile.MapEntry: 雷脉床
+			ThunderBigDroplightTile.MapEntry: 雷脉吊灯
+			ThunderBookcaseTile.MapEntry: 雷脉书架
+			ThunderCandelabraTile.MapEntry: 雷脉烛台
+			ThunderCandleTile.MapEntry: 雷脉蜡烛
+			ThunderChestTile.MapEntry: 雷脉箱
+			ThunderDoorClosedTile.MapEntry: 雷脉门
+			ThunderDoorOpenTile.MapEntry: 雷脉门
+			ThunderDresserTile.MapEntry: 雷脉梳妆台
+			ThunderDroplightTile.MapEntry: 雷脉灯笼
+			ThunderFloorLampTile.MapEntry: 雷脉灯柱
+			ThunderPianoTile.MapEntry: 雷脉钢琴
+			ThunderSofaTile.MapEntry: 雷脉沙发
+			ThunderTableTile.MapEntry: 雷脉桌
+			ThunderWorkBenchTile.MapEntry: 雷脉工作台
 		}
 
 		Buffs: {
@@ -2885,6 +3035,11 @@ Mods: {
 			IvyPoison: {
 				// DisplayName: Ivy Poison
 				// Description: Mods.Coralite.Buffs.IvyPoison.Description
+			}
+
+			KitsuneBuff: {
+				DisplayName: 妖狐剑士
+				Description: 妖狐剑士陪伴着你！
 			}
 		}
 
@@ -3341,6 +3496,7 @@ Mods: {
 			ThunderSpawn.DisplayName: 荒雷龙
 			LightningDash.DisplayName: 闪电突袭
 			StrongLightningDash.DisplayName: 闪电突袭
+			Kitsune.DisplayName: 妖狐剑士
 		}
 
 		Configs: {
@@ -3674,8 +3830,8 @@ Mods: {
 				}
 
 				ThunderveinDragon: {
-					// SpawnInfo: 掌控雷电魔法的双足飞龙种，体内储存着十分庞大的电能。
-					// Despawn: 荒雷龙如闪电般离去
+					SpawnInfo: 掌控雷电魔法的双足飞龙种，体内储存着十分庞大的电能。
+					Despawn: 荒雷龙如闪电般离去
 				}
 			}
 		}

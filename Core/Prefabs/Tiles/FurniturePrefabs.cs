@@ -270,6 +270,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.newTile.Width = width;
             TileObjectData.newTile.Height = height;
             TileObjectData.newTile.CoordinateHeights = coordinateHeights;
+            TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(tile.Type);
 
             LocalizedText name = tile.CreateMapEntryName();

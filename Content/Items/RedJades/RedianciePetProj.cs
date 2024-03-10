@@ -82,8 +82,6 @@ namespace Coralite.Content.Items.RedJades
             {
                 Projectile.velocity *= 0.97f;
             }
-
         }
-
     }
 }

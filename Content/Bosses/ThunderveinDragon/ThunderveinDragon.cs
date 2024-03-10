@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -91,7 +92,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             NPC.scale = 1.2f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 10f;
-            NPC.value = Item.buyPrice(0, 6, 0, 0);
+            NPC.value = Item.buyPrice(0, 12, 0, 0);
 
             NPC.noGravity = true;
             NPC.noTileCollide = true;
@@ -163,13 +164,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<BabyIceDragonRelic>()));
-            //npcLoot.Add(ItemDropRule.BossBag(ItemType<BabyIceDragonBossBag>()));
-            //npcLoot.Add(ItemDropRule.Common(ItemType<BabyIceDragonTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ThunderveinDragonRelic>()));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<ThunderveinDragonBossBag>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThunderveinDragonTrophy>(), 10));
 
-            //LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
-            //notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<IcicleCrystal>(), 1, 3, 5));
-            //npcLoot.Add(notExpertRule);
+            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ZapCrystal>(), 1, 6, 8));
+            npcLoot.Add(notExpertRule);
         }
 
         public override bool? CanCollideWithPlayerMeleeAttack(Player player, Item item, Rectangle meleeAttackHitbox)
@@ -180,7 +181,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (currentSurrounding)
-                modifiers.SourceDamage -= 0.33f;
+                modifiers.SourceDamage -= 0.4f;
         }
 
         public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
@@ -189,7 +190,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 modifiers.SourceDamage += 0.15f;
 
             if (currentSurrounding)
-                modifiers.SourceDamage -= 0.33f;
+                modifiers.SourceDamage -= 0.4f;
 
             if (projectile.hostile)
                 modifiers.SourceDamage -= 0.5f;
@@ -198,7 +199,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public Rectangle HeadHitBox()
         {
             Vector2 pos = GetMousePos();
-            return new Rectangle((int)(pos.X - 25), (int)(pos.Y - 25), 50, 50);
+            return new Rectangle((int)(pos.X - 22), (int)(pos.Y - 22), 44, 44);
         }
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)

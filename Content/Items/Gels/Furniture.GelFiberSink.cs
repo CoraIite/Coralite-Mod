@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Gels
         {
             CreateRecipe()
                 .AddIngredient<GelFiber>(12)
-                .AddIngredient(ItemID.WaterBucket, 6)
+                .AddIngredient(ItemID.WaterBucket)
                 .AddTile(TileID.Solidifier)
                 .Register();
         }

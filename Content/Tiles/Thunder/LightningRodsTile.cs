@@ -24,8 +24,6 @@ namespace Coralite.Content.Tiles.Thunder
 
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
-            Main.tileSolidTop[Type] = true;
-            Main.tileSolid[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileTable[Type] = true;
             Main.tileLavaDeath[Type] = false;

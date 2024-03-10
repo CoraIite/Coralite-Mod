@@ -296,6 +296,79 @@ namespace Coralite.Core.Prefabs.Tiles
         }
     }
 
+    public abstract class BaseChairTile<TItem> : BaseTile where TItem : ModItem
+    {
+        private readonly int dustType;
+        private readonly Color mapColor;
+        public const int NextStyleHeight = 40;
+
+        public BaseChairTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
+        {
+            this.dustType = dustType;
+            this.mapColor = mapColor;
+        }
+
+        public override void SetStaticDefaults()
+        {
+            this.ChairPrefab(dustType, mapColor);
+        }
+
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
+        {
+            return settings.player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance); // 避免能够从远距离触发它
+        }
+
+        public override void ModifySittingTargetInfo(int i, int j, ref TileRestingInfo info)
+        {
+            // 知道这是在玩家和NPC上调用的非常重要的，所以不要使用Main.LocalPlayer，例如使用info.restingEntity。
+            Tile tile = Framing.GetTileSafely(i, j);
+
+            //info.directionOffset = info.restingEntity is Player ? 6 : 2; // Default to 6 for players, 2 for NPCs
+            //info.visualOffset = Vector2.Zero; // Defaults to (0,0)
+
+            info.TargetDirection = -1;
+            if (tile.TileFrameX != 0)
+            {
+                info.TargetDirection = 1; // 如果坐在右侧备用位置上，则朝右（之前通过 SetStaticDefaults 中的 addAlternate 添加）
+            }
+
+            // 锚点表示椅子最底部的磁贴。这用于对齐实体命中框
+            // 由于 i 和 j 可能来自椅子的任何坐标，我们需要基于此调整锚点
+            info.AnchorTilePosition.X = i; // 我们的椅子只有1宽，所以没有什么特别的要求
+            info.AnchorTilePosition.Y = j;
+
+            if (tile.TileFrameY % NextStyleHeight == 0)
+            {
+                info.AnchorTilePosition.Y++; // 在这里，由于我们的椅子只有 2 格高，我们可以检查瓷砖是否是最上面的一块，然后将其向下移动 1 块
+            }
+        }
+
+        public override bool RightClick(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+
+            if (player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance))
+            { // 避免能够从远距离触发它
+                player.GamepadEnableGrappleCooldown();
+                player.sitting.SitDown(player, i, j);
+            }
+
+            return true;
+        }
+
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            // 右键单击中的匹配条件。仅当单击交互执行某些操作时，交互才应显示
+            if (!player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance))
+                return;
+
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<TItem>();
+        }
+    }
+
     public abstract class BasePianoTile : BaseTile
     {
         private readonly int dustType;
@@ -328,6 +401,84 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.newTile.StyleHorizontal = true;
 
             TileObjectData.addTile(Type);
+        }
+    }
+
+    public abstract class BaseTableTile : BaseTile
+    {
+        private readonly int dustType;
+        private readonly Color mapColor;
+
+        public BaseTableTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
+        {
+            this.dustType = dustType;
+            this.mapColor = mapColor;
+        }
+
+        public override void SetStaticDefaults()
+        {
+            this.TablePrefab(dustType, mapColor);
+        }
+    }
+
+    public abstract class BasePlatformTile : BaseTile
+    {
+        private readonly int dustType;
+        private readonly Color mapColor;
+
+        public BasePlatformTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
+        {
+            this.dustType = dustType;
+            this.mapColor = mapColor;
+        }
+
+        public override void SetStaticDefaults()
+        {
+            Main.tileLighted[Type] = true;
+            Main.tileFrameImportant[Type] = true;
+            Main.tileSolidTop[Type] = true;
+            Main.tileSolid[Type] = true;
+            Main.tileNoAttach[Type] = true;
+            Main.tileTable[Type] = true;
+            Main.tileLavaDeath[Type] = true;
+            TileID.Sets.Platforms[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
+
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+
+            DustType = dustType;
+            AdjTiles = new int[] { TileID.Platforms };
+
+            TileObjectData.newTile.CoordinateHeights = new[] { 16 };
+            TileObjectData.newTile.CoordinateWidth = 16;
+            TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.StyleMultiplier = 27;
+            TileObjectData.newTile.StyleWrapLimit = 27;
+            TileObjectData.newTile.UsesCustomCanPlace = false;
+            TileObjectData.newTile.LavaDeath = true;
+            TileObjectData.addTile(Type);
+
+            AddMapEntry(mapColor);
+        }
+
+        public override void PostSetDefaults() => Main.tileNoSunLight[Type] = false;
+    }
+
+    public abstract class BaseBookcaseTile : BaseTile
+    {
+        private readonly int dustType;
+        private readonly Color mapColor;
+
+        public BaseBookcaseTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
+        {
+            this.dustType = dustType;
+            this.mapColor = mapColor;
+        }
+
+        public override void SetStaticDefaults()
+        {
+            this.BookcasePrefab(dustType, mapColor);
         }
     }
 
@@ -563,6 +714,7 @@ namespace Coralite.Core.Prefabs.Tiles
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.Height = height;
+            TileObjectData.newTile.Origin = new Point16(0, height-1);
             TileObjectData.newTile.CoordinateHeights = heights;
             TileObjectData.addTile(Type);
 
@@ -977,6 +1129,458 @@ namespace Coralite.Core.Prefabs.Tiles
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
             player.cursorItemIconID = ModContent.ItemType<TItem>();
+        }
+    }
+
+    public abstract class BaseBigDroplightTile<TItem> : BaseTile where TItem : ModItem
+    {
+        private readonly int dustType;
+        private readonly Color mapColor;
+
+        public BaseBigDroplightTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
+        {
+            this.dustType = dustType;
+            this.mapColor = mapColor;
+        }
+
+        public abstract void GetLight(ref float r,ref float g,ref float b);
+
+        public unsafe override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            if (Main.tile[i, j].TileFrameX < 18*3)
+            {
+                GetLight(ref r, ref g, ref b);
+                return;
+            }
+            r = 0f;
+            g = 0f;
+            b = 0f;
+        }
+
+        public override void SetStaticDefaults()
+        {
+            this.DropLight2Prefab(3, 3, new int[3] { 16, 16, 16 }, dustType, mapColor);
+            TileID.Sets.HasOutlines[Type] = true;
+        }
+
+        public override void HitWire(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+
+            int offX = tile.TileFrameX % (18 * 3) / 18;
+            int offY = tile.TileFrameY % (18 * 3) / 18;
+
+            for (int k = 0; k < 3; k++)
+                for (int m = 0; m < 3; m++)
+                {
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18 * 3))
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18 * 3;
+                    else
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX += 18 * 3;
+                }
+        }
+
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            // 右键单击中的匹配条件。仅当单击交互执行某些操作时，交互才应显示
+
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<TItem>();
+        }
+
+        public override bool RightClick(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+
+            int offX = tile.TileFrameX % (18 * 3) / 18;
+            int offY = tile.TileFrameY % (18 * 3) / 18;
+
+            for (int k = 0; k < 3; k++)
+                for (int m = 0; m < 3; m++)
+                {
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18 * 3))
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18 * 3;
+                    else
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX += 18 * 3;
+                }
+            return true;
+        }
+    }
+
+    public abstract class BaseDroplightTile<TItem> : BaseTile where TItem : ModItem
+    {
+        private readonly int dustType;
+        private readonly Color mapColor;
+
+        public BaseDroplightTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
+        {
+            this.dustType = dustType;
+            this.mapColor = mapColor;
+        }
+
+        public abstract void GetLight(ref float r, ref float g, ref float b);
+
+        public unsafe override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            if (Main.tile[i, j].TileFrameX < 18)
+            {
+                GetLight(ref r, ref g, ref b);
+                return;
+            }
+            r = 0f;
+            g = 0f;
+            b = 0f;
+        }
+
+        public override void SetStaticDefaults()
+        {
+            this.DropLight2Prefab(1, 2, new int[2] { 16, 16 }, dustType, mapColor);
+            TileID.Sets.HasOutlines[Type] = true;
+        }
+
+        public override void HitWire(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+
+            int offX = tile.TileFrameX % (18) / 18;
+            int offY = tile.TileFrameY % (18*2) / 18;
+
+            for (int k = 0; k < 1; k++)
+                for (int m = 0; m < 2; m++)
+                {
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18))
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18;
+                    else
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX += 18;
+                }
+        }
+
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            // 右键单击中的匹配条件。仅当单击交互执行某些操作时，交互才应显示
+
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<TItem>();
+        }
+
+        public override bool RightClick(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+
+            int offX = tile.TileFrameX % (18) / 18;
+            int offY = tile.TileFrameY % (18 * 2) / 18;
+
+            for (int k = 0; k < 1; k++)
+                for (int m = 0; m < 2; m++)
+                {
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18))
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18;
+                    else
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX += 18;
+                }
+            return true;
+        }
+    }
+
+    public abstract class BaseCandelabraTile<TItem> : BaseTile where TItem : ModItem
+    {
+        private readonly int dustType;
+        private readonly Color mapColor;
+
+        public BaseCandelabraTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
+        {
+            this.dustType = dustType;
+            this.mapColor = mapColor;
+        }
+
+        public abstract void GetLight(ref float r, ref float g, ref float b);
+
+        public unsafe override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            if (Main.tile[i, j].TileFrameX < 18 * 2)
+            {
+                GetLight(ref r, ref g, ref b);
+                return;
+            }
+            r = 0f;
+            g = 0f;
+            b = 0f;
+        }
+
+        public override void SetStaticDefaults()
+        {
+            Main.tileLighted[Type] = true;
+            Main.tileNoAttach[Type] = true;
+            Main.tileSolid[Type] = false;
+            Main.tileLavaDeath[Type] = true;
+            Main.tileFrameImportant[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
+
+            DustType = dustType;
+            //tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = itemDrop;
+
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.Width = 2;
+            TileObjectData.newTile.Height = 2;
+            TileObjectData.newTile.Origin = new Point16(0, 1);
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
+
+            TileObjectData.newTile.LavaDeath = true;
+            TileObjectData.addTile(Type);
+
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault(mapName);
+            AddMapEntry(mapColor, name);
+        }
+
+        public override void HitWire(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+
+            int offX = tile.TileFrameX % (18 * 2) / 18;
+            int offY = tile.TileFrameY % (18 * 2) / 18;
+
+            for (int k = 0; k < 2; k++)
+                for (int m = 0; m < 2; m++)
+                {
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18 * 2))
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18 * 2;
+                    else
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX += 18 * 2;
+                }
+        }
+
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            // 右键单击中的匹配条件。仅当单击交互执行某些操作时，交互才应显示
+
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<TItem>();
+        }
+
+        public override bool RightClick(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+
+            int offX = tile.TileFrameX % (18 * 2) / 18;
+            int offY = tile.TileFrameY % (18 * 2) / 18;
+
+            for (int k = 0; k < 2; k++)
+                for (int m = 0; m < 2; m++)
+                {
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18 * 2))
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18 * 2;
+                    else
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX += 18 * 2;
+                }
+            return true;
+        }
+    }
+
+    public abstract class BaseCandleTile<TItem> : BaseTile where TItem : ModItem
+    {
+        private readonly int dustType;
+        private readonly Color mapColor;
+
+        public BaseCandleTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
+        {
+            this.dustType = dustType;
+            this.mapColor = mapColor;
+        }
+
+        public abstract void GetLight(ref float r, ref float g, ref float b);
+
+        public unsafe override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            if (Main.tile[i, j].TileFrameX < 18)
+            {
+                GetLight(ref r, ref g, ref b);
+                return;
+            }
+            r = 0f;
+            g = 0f;
+            b = 0f;
+        }
+
+        public override void SetStaticDefaults()
+        {
+            Main.tileLighted[Type] = true;
+            Main.tileNoAttach[Type] = true;
+            Main.tileSolid[Type] = false;
+            Main.tileLavaDeath[Type] = true;
+            Main.tileFrameImportant[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
+
+            DustType = dustType;
+            //tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = itemDrop;
+
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
+            TileObjectData.newTile.StyleHorizontal = true;
+
+            TileObjectData.newTile.LavaDeath = true;
+            TileObjectData.addTile(Type);
+
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault(mapName);
+            AddMapEntry(mapColor, name);
+        }
+
+        public override void HitWire(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+
+            int offX = tile.TileFrameX % (18) / 18;
+            int offY = tile.TileFrameY % (18) / 18;
+
+            for (int k = 0; k < 1; k++)
+                for (int m = 0; m < 1; m++)
+                {
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18))
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18;
+                    else
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX += 18;
+                }
+        }
+
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            // 右键单击中的匹配条件。仅当单击交互执行某些操作时，交互才应显示
+
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<TItem>();
+        }
+
+        public override bool RightClick(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+
+            int offX = tile.TileFrameX % (18) / 18;
+            int offY = tile.TileFrameY % (18) / 18;
+
+            for (int k = 0; k < 1; k++)
+                for (int m = 0; m < 1; m++)
+                {
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18))
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18;
+                    else
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX += 18 ;
+                }
+            return true;
+        }
+    }
+
+    public abstract class BaseFloorLampTile<TItem> : BaseTile where TItem : ModItem
+    {
+        private readonly int dustType;
+        private readonly Color mapColor;
+
+        public BaseFloorLampTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
+        {
+            this.dustType = dustType;
+            this.mapColor = mapColor;
+        }
+
+        public abstract void GetLight(ref float r, ref float g, ref float b);
+
+        public unsafe override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            if (Main.tile[i, j].TileFrameX < 18)
+            {
+                GetLight(ref r, ref g, ref b);
+                return;
+            }
+            r = 0f;
+            g = 0f;
+            b = 0f;
+        }
+
+        public override void SetStaticDefaults()
+        {
+            Main.tileLighted[Type] = true;
+            Main.tileNoAttach[Type] = true;
+            Main.tileSolid[Type] = false;
+            Main.tileLavaDeath[Type] = true;
+            Main.tileFrameImportant[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
+
+            DustType = dustType;
+            //tile.ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = itemDrop;
+
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style1xX);
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.Height = 3;
+            TileObjectData.newTile.Origin = new Point16(0, 2);
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
+
+            TileObjectData.newTile.LavaDeath = true;
+            TileObjectData.addTile(Type);
+
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault(mapName);
+            AddMapEntry(mapColor, name);
+        }
+
+        public override void HitWire(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+
+            int offX = tile.TileFrameX % (18) / 18;
+            int offY = tile.TileFrameY % (18*3) / 18;
+
+            for (int k = 0; k < 1; k++)
+                for (int m = 0; m < 3; m++)
+                {
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18))
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18;
+                    else
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX += 18;
+                }
+        }
+
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            // 右键单击中的匹配条件。仅当单击交互执行某些操作时，交互才应显示
+
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<TItem>();
+        }
+
+        public override bool RightClick(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+
+            int offX = tile.TileFrameX % (18) / 18;
+            int offY = tile.TileFrameY % (18 * 3) / 18;
+
+            for (int k = 0; k < 1; k++)
+                for (int m = 0; m < 3; m++)
+                {
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18))
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18;
+                    else
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX += 18;
+                }
+            return true;
         }
     }
 }

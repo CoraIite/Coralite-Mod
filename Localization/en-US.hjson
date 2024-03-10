@@ -2679,6 +2679,136 @@ Mods: {
 				DisplayName: Lightning Rods
 				Tooltip: ""
 			}
+
+			CrystalBlossomShards: {
+				DisplayName: Crystal Blossom Shards
+				Tooltip: ""
+			}
+
+			ThunderveinDragonBossBag: {
+				DisplayName: Thundervein Dragon Boss Bag
+				Tooltip: ""
+			}
+
+			ThunderveinDragonRelic: {
+				DisplayName: Thundervein Dragon Relic
+				Tooltip: ""
+			}
+
+			ThunderveinDragonTrophy: {
+				DisplayName: Thundervein Dragon Trophy
+				Tooltip: ""
+			}
+
+			ZapCrystal: {
+				DisplayName: Zap Crystal
+				Tooltip: ""
+			}
+
+			ThunderBathtub: {
+				DisplayName: Thunder Bathtub
+				Tooltip: ""
+			}
+
+			ThunderBed: {
+				DisplayName: Thunder Bed
+				Tooltip: ""
+			}
+
+			ThunderBigDroplight: {
+				DisplayName: Thunder Big Droplight
+				Tooltip: ""
+			}
+
+			ThunderBookcase: {
+				DisplayName: Thunder Bookcase
+				Tooltip: ""
+			}
+
+			ThunderCandelabra: {
+				DisplayName: Thunder Candelabra
+				Tooltip: ""
+			}
+
+			ThunderCandle: {
+				DisplayName: Thunder Candle
+				Tooltip: ""
+			}
+
+			ThunderChair: {
+				DisplayName: Thunder Chair
+				Tooltip: ""
+			}
+
+			ThunderChest: {
+				DisplayName: Thunder Chest
+				Tooltip: ""
+			}
+
+			ThunderClock: {
+				DisplayName: Thunder Clock
+				Tooltip: ""
+			}
+
+			ThunderDoor: {
+				DisplayName: Thunder Door
+				Tooltip: ""
+			}
+
+			ThunderDresser: {
+				DisplayName: Thunder Dresser
+				Tooltip: ""
+			}
+
+			ThunderDroplight: {
+				DisplayName: Thunder Droplight
+				Tooltip: ""
+			}
+
+			ThunderFloorLamp: {
+				DisplayName: Thunder Floor Lamp
+				Tooltip: ""
+			}
+
+			ThunderPiano: {
+				DisplayName: Thunder Piano
+				Tooltip: ""
+			}
+
+			ThunderPlatform: {
+				DisplayName: Thunder Platform
+				Tooltip: ""
+			}
+
+			ThunderSink: {
+				DisplayName: Thunder Sink
+				Tooltip: ""
+			}
+
+			ThunderSofa: {
+				DisplayName: Thunder Sofa
+				Tooltip: ""
+			}
+
+			ThunderStoneBlock: {
+				DisplayName: Thunder Stone Block
+				Tooltip: ""
+			}
+
+			ThunderTable: {
+				DisplayName: Thunder Table
+				Tooltip: ""
+			}
+
+			ThunderToilet: {
+				DisplayName: Thunder Toilet
+				Tooltip: ""
+			}
+
+			ThunderWorkBench: {
+				DisplayName: Thunder Work Bench
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2756,6 +2886,22 @@ Mods: {
 			GelFiberDoorClosedTile.MapEntry: Gel Fiber Door Closed Tile
 			GelFiberDoorOpen.MapEntry: Gel Fiber Door Open
 			GelFiberWorkBenchTile.MapEntry: Gel Fiber Work Bench Tile
+			ThunderBathtubTile.MapEntry: Thunder Bathtub Tile
+			ThunderBedTile.MapEntry: Thunder Bed Tile
+			ThunderBigDroplightTile.MapEntry: Thunder Big Droplight Tile
+			ThunderBookcaseTile.MapEntry: Thunder Bookcase Tile
+			ThunderCandelabraTile.MapEntry: Thunder Candelabra Tile
+			ThunderCandleTile.MapEntry: Thunder Candle Tile
+			ThunderChestTile.MapEntry: Thunder Chest Tile
+			ThunderDoorClosedTile.MapEntry: Thunder Door Closed Tile
+			ThunderDoorOpenTile.MapEntry: Thunder Door Open Tile
+			ThunderDresserTile.MapEntry: Thunder Dresser Tile
+			ThunderDroplightTile.MapEntry: Thunder Droplight Tile
+			ThunderFloorLampTile.MapEntry: Thunder Floor Lamp Tile
+			ThunderPianoTile.MapEntry: Thunder Piano Tile
+			ThunderSofaTile.MapEntry: Thunder Sofa Tile
+			ThunderTableTile.MapEntry: Thunder Table Tile
+			ThunderWorkBenchTile.MapEntry: Thunder Work Bench Tile
 		}
 
 		Buffs: {
@@ -2849,6 +2995,11 @@ Mods: {
 			IvyPoison: {
 				DisplayName: Ivy Poison
 				Description: Mods.Coralite.Buffs.IvyPoison.Description
+			}
+
+			KitsuneBuff: {
+				DisplayName: Kitsune Buff
+				Description: Mods.Coralite.Buffs.KitsuneBuff.Description
 			}
 		}
 
@@ -3305,6 +3456,7 @@ Mods: {
 			ThunderSpawn.DisplayName: Thunder Spawn
 			LightningDash.DisplayName: Lightning Dash
 			StrongLightningDash.DisplayName: Strong Lightning Dash
+			Kitsune.DisplayName: Kitsune
 		}
 
 		Configs: {

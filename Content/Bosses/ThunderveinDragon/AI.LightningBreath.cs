@@ -326,7 +326,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                         GetLengthToTargetPos(Target.Center, out float xLength, out _);
 
-                        if (xLength > 100)
+                        if (xLength > 350)
                             NPC.QuickSetDirection();
                         TurnToNoRot(1);
                         FlyingFrame(true);
