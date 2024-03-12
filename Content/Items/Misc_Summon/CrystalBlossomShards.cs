@@ -78,6 +78,7 @@ namespace Coralite.Content.Items.Misc_Summon
             Projectile.height = 34;
             Projectile.penetrate = -1;
             Projectile.netImportant = true;
+            Projectile.friendly = true;
             Projectile.timeLeft = 100;
             Projectile.minion = true;
             //Projectile.minionSlots = 1f;
