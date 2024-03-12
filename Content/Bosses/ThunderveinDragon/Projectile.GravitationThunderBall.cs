@@ -43,7 +43,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public Color ThunderColorFunc_Fade(float factor)
         {
-            return new Color(255, 202, 101, 0) * ThunderAlpha * (1 - factor);
+            return ThunderveinDragon.ThunderveinYellowAlpha * ThunderAlpha * (1 - factor);
         }
 
         public override Color ThunderColorFunc_Yellow(float factor)

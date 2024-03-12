@@ -82,7 +82,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 //生成雷球弹幕
 
                                 NPC.TargetClosest();
-                                int damage = Helper.GetProjDamage(60, 70, 80);
+                                int damage = Helper.GetProjDamage(150, 200, 250);
                                 NPC.NewProjectileDirectInAI<GravitationThunderBall>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 2
                                     , damage, 0, NPC.target);
 

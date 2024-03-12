@@ -13,7 +13,7 @@ namespace Coralite.Content.Tiles.Thunder
 
         public override void GetLight(ref float r, ref float g, ref float b)
         {
-            r = 0.8f; g = 0.65f; b = 0.35f;
+            r = 1.2f; g = 0.85f; b = 0.35f;
         }
     }
 }

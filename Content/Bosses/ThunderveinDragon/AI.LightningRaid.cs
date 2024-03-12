@@ -72,7 +72,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             //生成弹幕并随机速度方向
                             NPC.TargetClosest();
-                            int damage = Helper.GetProjDamage(20, 30, 40);
+                            int damage = Helper.GetProjDamage(20, 30, 70);
                             NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI,55);
                             
@@ -89,7 +89,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             NPC.TargetClosest();
 
-                            int damage = Helper.GetProjDamage(20,30,40);
+                            int damage = Helper.GetProjDamage(20,30,70);
                             NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI,55);
 
@@ -140,7 +140,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 SonState++;
                                 Timer = 0;
 
-                                int damage = Helper.GetProjDamage(50, 60, 70);
+                                int damage = Helper.GetProjDamage(50, 60, 120);
                                 NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                     , NPC.target, bigDashTime, NPC.whoAmI,75);
 
@@ -255,7 +255,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             //生成弹幕并随机速度方向
                             NPC.TargetClosest();
-                            int damage = Helper.GetProjDamage(20, 30, 40);
+                            int damage = Helper.GetProjDamage(20, 30, 70);
                             NPC.NewProjectileDirectInAI<StrongLightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI,55);
                             
@@ -272,7 +272,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             NPC.TargetClosest();
 
-                            int damage = Helper.GetProjDamage(20,30,40);
+                            int damage = Helper.GetProjDamage(20,30,70);
                             NPC.NewProjectileDirectInAI<StrongLightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI,55);
 
@@ -323,7 +323,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 SonState++;
                                 Timer = 0;
 
-                                int damage = Helper.GetProjDamage(60, 70, 80);
+                                int damage = Helper.GetProjDamage(60, 70, 140);
                                 NPC.NewProjectileDirectInAI<StrongLightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                     , NPC.target, bigDashTime, NPC.whoAmI,75);
 
@@ -351,7 +351,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             if (Timer % 9 == 0)
                             {
-                                int damage = Helper.GetProjDamage(60, 70, 80);
+                                int damage = Helper.GetProjDamage(60, 70, 140);
                                 NPC.NewProjectileDirectInAI<StrongerCrossLightingBall>(NPC.Center, Vector2.Zero, damage, 0
                                     , NPC.target, NPC.whoAmI, NPC.rotation + MathHelper.PiOver4 + Timer / 20 * MathHelper.PiOver2 + 0.001f);
                             }

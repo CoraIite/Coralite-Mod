@@ -346,7 +346,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Texture2D exTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightFog").Value;
 
             Vector2 pos = Projectile.Center - Main.screenPosition;
-            Color c = new Color(255, 202, 101, (int)(ThunderAlpha * 250));
+            Color c = ThunderveinDragon.ThunderveinYellowAlpha;
+            c.A = (byte)(ThunderAlpha * 250);
             var origin = exTex.Size() / 2;
             var scale = Projectile.scale * 0.5f;
 

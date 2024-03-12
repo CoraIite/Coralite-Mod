@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public Color ThunderColorFunc_Fade(float factor)
         {
-            return new Color(255, 202, 101, 0) * ThunderAlpha * (1 - factor);
+            return ThunderveinDragon.ThunderveinYellowAlpha * ThunderAlpha * (1 - factor);
         }
 
         public override void AI()
@@ -201,7 +201,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Projectile.QuickDraw(Color.White,0f);
+            Projectile.QuickDraw(Color.White, 0f);
 
             if (circles != null)
                 foreach (var circle in circles)
@@ -218,7 +218,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Texture2D exTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightFog").Value;
 
             Vector2 pos = Projectile.Center - Main.screenPosition;
-            Color c = new Color(255, 202, 101, (int)(ThunderAlpha * 250));
+            Color c = ThunderveinDragon.ThunderveinYellowAlpha;
+            c.A = (byte)(ThunderAlpha * 250);
             var origin = exTex.Size() / 2;
             var scale = Projectile.scale * 0.5f;
 

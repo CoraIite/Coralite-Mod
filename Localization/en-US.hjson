@@ -2809,6 +2809,111 @@ Mods: {
 				DisplayName: Thunder Work Bench
 				Tooltip: ""
 			}
+
+			TheGazeOfTheThundervein: {
+				DisplayName: The Gaze Of The Thundervein
+				Tooltip: ""
+			}
+
+			ThunderveinSoulStone: {
+				DisplayName: Thundervein Soul Stone
+				Tooltip: ""
+			}
+
+			ThunderDukeVine: {
+				DisplayName: Thunder Duke Vine
+				Tooltip: ""
+			}
+
+			MercuryBathtub: {
+				DisplayName: Mercury Bathtub
+				Tooltip: ""
+			}
+
+			MercuryBed: {
+				DisplayName: Mercury Bed
+				Tooltip: ""
+			}
+
+			MercuryBigDroplight: {
+				DisplayName: Mercury Big Droplight
+				Tooltip: ""
+			}
+
+			MercuryBookcase: {
+				DisplayName: Mercury Bookcase
+				Tooltip: ""
+			}
+
+			MercuryCandelabra: {
+				DisplayName: Mercury Candelabra
+				Tooltip: ""
+			}
+
+			MercuryCandle: {
+				DisplayName: Mercury Candle
+				Tooltip: ""
+			}
+
+			MercuryChair: {
+				DisplayName: Mercury Chair
+				Tooltip: ""
+			}
+
+			MercuryClock: {
+				DisplayName: Mercury Clock
+				Tooltip: ""
+			}
+
+			MercuryDoor: {
+				DisplayName: Mercury Door
+				Tooltip: ""
+			}
+
+			MercuryDresser: {
+				DisplayName: Mercury Dresser
+				Tooltip: ""
+			}
+
+			MercuryDroplight2: {
+				DisplayName: Mercury Droplight2
+				Tooltip: ""
+			}
+
+			MercuryFloorLamp: {
+				DisplayName: Mercury Floor Lamp
+				Tooltip: ""
+			}
+
+			MercuryPiano: {
+				DisplayName: Mercury Piano
+				Tooltip: ""
+			}
+
+			MercurySink: {
+				DisplayName: Mercury Sink
+				Tooltip: ""
+			}
+
+			MercurySofa: {
+				DisplayName: Mercury Sofa
+				Tooltip: ""
+			}
+
+			MercuryTable: {
+				DisplayName: Mercury Table
+				Tooltip: ""
+			}
+
+			MercuryToilet: {
+				DisplayName: Mercury Toilet
+				Tooltip: ""
+			}
+
+			MercuryWorkBench: {
+				DisplayName: Mercury Work Bench
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -2902,6 +3007,21 @@ Mods: {
 			ThunderSofaTile.MapEntry: Thunder Sofa Tile
 			ThunderTableTile.MapEntry: Thunder Table Tile
 			ThunderWorkBenchTile.MapEntry: Thunder Work Bench Tile
+			MercuryBathtubTile.MapEntry: Mercury Bathtub Tile
+			MercuryBedTile.MapEntry: Mercury Bed Tile
+			MercuryBigDroplightTile.MapEntry: Mercury Big Droplight Tile
+			MercuryBookcaseTile.MapEntry: Mercury Bookcase Tile
+			MercuryCandelabraTile.MapEntry: Mercury Candelabra Tile
+			MercuryCandleTile.MapEntry: Mercury Candle Tile
+			MercuryDoorClosedTile.MapEntry: Mercury Door Closed Tile
+			MercuryDoorOpenTile.MapEntry: Mercury Door Open Tile
+			MercuryDresserTile.MapEntry: Mercury Dresser Tile
+			MercuryDroplight2Tile.MapEntry: Mercury Droplight2 Tile
+			MercuryFloorLampTile.MapEntry: Mercury Floor Lamp Tile
+			MercuryPianoTile.MapEntry: Mercury Piano Tile
+			MercurySofaTile.MapEntry: Mercury Sofa Tile
+			MercuryTableTile.MapEntry: Mercury Table Tile
+			MercuryWorkBenchTile.MapEntry: Mercury Work Bench Tile
 		}
 
 		Buffs: {
@@ -3000,6 +3120,11 @@ Mods: {
 			KitsuneBuff: {
 				DisplayName: Kitsune Buff
 				Description: Mods.Coralite.Buffs.KitsuneBuff.Description
+			}
+
+			ThunderveinSoulBuff: {
+				DisplayName: Thundervein Soul Buff
+				Description: Mods.Coralite.Buffs.ThunderveinSoulBuff.Description
 			}
 		}
 
@@ -3457,6 +3582,9 @@ Mods: {
 			LightningDash.DisplayName: Lightning Dash
 			StrongLightningDash.DisplayName: Strong Lightning Dash
 			Kitsune.DisplayName: Kitsune
+			ThunderveinSoul.DisplayName: Thundervein Soul
+			ThunderDukeVineHeldProj.DisplayName: Thunder Duke Vine Held Proj
+			ElectromagneticCannon_Friendly.DisplayName: Electromagnetic Cannon_ Friendly
 		}
 
 		Configs: {

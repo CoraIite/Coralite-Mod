@@ -10,7 +10,5 @@ namespace Coralite.Content.Tiles.Gel
         public GelFiberChestTile() : base(DustID.Water, new Microsoft.Xna.Framework.Color(0, 138, 122), AssetDirectory.GelTiles)
         {
         }
-
-        public override string ChestName => "凝胶纤维箱";
     }
 }

@@ -90,13 +90,18 @@ namespace Coralite.Helpers
         {
             float maxDis = maxDistance;
             target = null;
-            foreach (var npc in Main.npc.Where(n => n.active && !n.friendly && predicate(n)))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
-                float dis = Vector2.Distance(position, npc.Center);
-                if (dis < maxDis)
+                NPC n = Main.npc[i];
+                if (n.active&&!n.friendly&&predicate(n))
                 {
-                    maxDis = dis;
-                    target = npc;
+                    float dis = Vector2.Distance(position, n.Center);
+                    if (dis < maxDis)
+                    {
+                        maxDis = dis;
+                        target = n;
+                    }
+
                 }
             }
 

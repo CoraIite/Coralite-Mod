@@ -10,7 +10,5 @@ namespace Coralite.Content.Tiles.Thunder
         public ThunderChestTile() : base(DustID.YellowTorch, Coralite.Instance.ThunderveinYellow, AssetDirectory.ThunderTiles)
         {
         }
-
-        public override string ChestName => "雷电箱";
     }
 }

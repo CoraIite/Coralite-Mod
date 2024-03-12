@@ -108,7 +108,10 @@ namespace Coralite.Content.Items.Misc_Summon
                 Projectile.timeLeft = 2;
 
             Vector2 vector = player.Center;
-            vector.X -= (45 + player.width / 2) * player.direction;
+            if (player.direction>0)
+                vector.X -= (40) * player.direction;
+            else
+                vector.X -= (45 + player.width) * player.direction;
 
             Projectile.shouldFallThrough = player.position.Y + player.height - 12f > Projectile.position.Y + (float)Projectile.height;
             Projectile.friendly = false;
@@ -217,7 +220,8 @@ namespace Coralite.Content.Items.Misc_Summon
                 Projectile.rotation = 0f;
                 Projectile.friendly = true;
                 Projectile.frame = 4 + (int)(num9 - Projectile.ai[1]) / (num9 / 3);
-                if (Projectile.velocity.X != 0f)
+                //Main.NewText(Math.Abs(Projectile.velocity.X));
+                if (Math.Abs(Projectile.velocity.X) > 4.9f)
                     Projectile.frame += 4;
 
                 Projectile.velocity.Y += 0.4f;

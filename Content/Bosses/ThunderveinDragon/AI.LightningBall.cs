@@ -85,13 +85,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                                 if (Phase == 1)
                                 {
-                                    int damage = Helper.GetProjDamage(35, 45, 55);
+                                    int damage = Helper.GetProjDamage(35, 45, 95);
                                     NPC.NewProjectileDirectInAI<LightningBall>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 2
                                         , damage, 0, NPC.target);
                                 }
                                 else
                                 {
-                                    int damage = Helper.GetProjDamage(45, 55, 65);
+                                    int damage = Helper.GetProjDamage(45, 55, 125);
                                     int randomMove = Main.rand.Next(3);
 
                                     switch (randomMove)

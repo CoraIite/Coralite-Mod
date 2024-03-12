@@ -26,7 +26,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             NPC.height = 100;
             NPC.damage = 60;
             NPC.scale = 1.1f;
-            NPC.defense = 30;
+            NPC.defense = 35;
             NPC.lifeMax = 2200;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
@@ -44,54 +44,53 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 {
                     NPC.lifeMax = (int)((2200 + numPlayers * 500) / journeyScale);
                     NPC.damage = 66;
-                    NPC.defense = 30;
+                    NPC.defense = 35;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
                     NPC.lifeMax = (int)((2200 + numPlayers * 1000) / journeyScale);
                     NPC.damage = 72;
-                    NPC.defense = 30;
+                    NPC.defense = 35;
                 }
 
                 if (Main.getGoodWorld)
                 {
                     NPC.damage = 80;
-                    NPC.defense = 30;
+                    NPC.defense = 35;
                 }
 
-                //if (Main.zenithWorld)
-                //{
-                //    NPC.scale = 0.4f;
-                //}
+                if (Main.zenithWorld)
+                {
+                    NPC.scale = 0.4f;
+                }
 
                 return;
             }
 
             NPC.lifeMax = 2200 + numPlayers * 500;
             NPC.damage = 66;
-            NPC.defense = 30;
+            NPC.defense = 35;
 
             if (Main.masterMode)
             {
                 NPC.lifeMax = 2200 + numPlayers * 1000;
                 NPC.damage = 72;
-                NPC.defense = 30;
+                NPC.defense = 35;
             }
 
             if (Main.getGoodWorld)
             {
                 NPC.lifeMax = 2500 + numPlayers * 1200;
                 NPC.damage = 80;
-                NPC.defense = 30;
+                NPC.defense = 35;
             }
 
-            //if (Main.zenithWorld)
-            //{
-            //    NPC.scale = 0.4f;
-            //}
+            if (Main.zenithWorld)
+            {
+                NPC.scale = 0.4f;
+            }
         }
-
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {

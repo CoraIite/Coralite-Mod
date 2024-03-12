@@ -91,7 +91,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
                         else if (Timer > 15&&Timer<70)
                         {
-                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60;
+                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60*NPC.scale;
                             if ((int)Timer % 10 == 0)
                                 Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.Instance.ThunderveinYellow, 0.2f);
                             if ((int)Timer % 20 == 0)
@@ -348,7 +348,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
                         else if (Timer > 15 && Timer < 70)
                         {
-                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60;
+                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60*NPC.scale;
                             if ((int)Timer % 10 == 0)
                                 Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.Instance.ThunderveinYellow, 0.2f);
                             if ((int)Timer % 20 == 0)
@@ -466,7 +466,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             Timer = 0;
                             //生成闪电弹幕
                             Vector2 targetPos = new Vector2(Recorder, Recorder2);
-                            int damage = Helper.GetProjDamage(80, 100, 110);
+                            int damage = Helper.GetProjDamage(100, 130, 150);
 
                             NPC.velocity = new Vector2(0, UpLength / (float)SmashDownTime);
                             NPC.rotation = NPC.velocity.ToRotation();

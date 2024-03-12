@@ -8,6 +8,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 {
     /// <summary>
     /// 命名规则："XXX" + "HeldProj"
+    /// ai0和ai1已使用
     /// </summary>
     public abstract class BaseGunHeldProj : BaseHeldProj
     {

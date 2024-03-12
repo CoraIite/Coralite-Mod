@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.Thunder;
 using Coralite.Content.Particles;
+using Coralite.Content.UI.MagikeGuideBook.Chapter2;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.ParticleSystem;
@@ -8,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -72,6 +74,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         /// </summary>
         public bool currentSurrounding;
 
+        public bool Initialize = true;
+
         #region tmlHooks
 
         public override void SetStaticDefaults()
@@ -130,10 +134,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     NPC.defense = 50;
                 }
 
-                //if (Main.zenithWorld)
-                //{
-                //    NPC.scale = 0.4f;
-                //}
+                if (Main.zenithWorld)
+                {
+                    NPC.scale = 2.4f;
+                }
 
                 return;
             }
@@ -156,21 +160,27 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 NPC.defense = 50;
             }
 
-            //if (Main.zenithWorld)
-            //{
-            //    NPC.scale = 0.4f;
-            //}
+            if (Main.zenithWorld)
+            {
+                NPC.scale = 2.4f;
+            }
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ThunderveinDragonRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<ThunderveinSoulStone>(), 4));
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<ThunderveinDragonBossBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThunderveinDragonTrophy>(), 10));
 
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ZapCrystal>(), 1, 6, 8));
             npcLoot.Add(notExpertRule);
+        }
+
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.GreaterHealingPotion;
         }
 
         public override bool? CanCollideWithPlayerMeleeAttack(Player player, Item item, Rectangle meleeAttackHitbox)
@@ -233,6 +243,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 NPC.dontTakeDamage = true;
                 currentSurrounding = true;
                 canDrawShadows = false;
+                isDashing = false;
                 NPC.life = 1;
                 return false;
             }
@@ -309,6 +320,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     State = -1;
                     NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
                     NPC.velocity.X *= 0.98f;
+                    FlyingUp(0.3f, 20, 0.9f);
                     NPC.EncourageDespawn(30);
                     return;
                 }
@@ -316,6 +328,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             UpdateSky();
 
+            if (Initialize)
+            {
+                if (Main.zenithWorld)
+                {
+                    ThunderveinYellowAlpha = new Color(255, 171, 248, 0);
+                    ThunderveinPurpleAlpha = new Color(6, 184, 217, 0);
+                    ThunderveinOrangeAlpha = new Color(255, 157, 175, 0);
+                }
+                else
+                {
+                    ThunderveinYellowAlpha = new Color(255, 202, 101, 0);
+                    ThunderveinPurpleAlpha = new Color(135, 94, 255, 0);
+                    ThunderveinOrangeAlpha = new Color(219, 114, 22, 0);
+                }
+                Initialize = false;
+            }
             switch (State)
             {
                 default:
@@ -483,7 +511,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
                         else if (Timer > 15 && Timer < 130)
                         {
-                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60;
+                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60*NPC.Center;
                             if ((int)Timer % 10 == 0)
                             {
                                 var modifyer = new PunchCameraModifier(NPC.Center, Helper.NextVec2Dir(), 8, 12, 20, 1000);
@@ -812,7 +840,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public Vector2 GetMousePos()
         {
-            return NPC.Center + (NPC.rotation - NPC.direction * 0.1f).ToRotationVector2() * 60;
+            return NPC.Center + (NPC.rotation - NPC.direction * 0.1f).ToRotationVector2() * 60 * NPC.scale;
         }
 
         /// <summary>
@@ -913,7 +941,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             var origin = frameBox.Size() / 2;
             float rot = NPC.rotation;
 
-            //因为贴图是反过来的所以这里也反一下
             SpriteEffects effects = SpriteEffects.None;
 
             if (NPC.spriteDirection < 0)
@@ -935,8 +962,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     float factor = (float)i / trailCacheLength;
                     if (Phase == 2)
                     {
-                        shadowColor = Color.Lerp(new Color(135, 94, 255, 50)
-                            , new Color(255, 202, 101, 50), factor);
+                        Color c1 = ThunderveinYellowAlpha;
+                        c1.A = 50;
+                        Color c2 = ThunderveinPurpleAlpha;
+                        c2.A = 50;
+                        shadowColor = Color.Lerp(c2, c1, factor);
                         shadowColor *= shadowAlpha;
                     }
 
@@ -947,6 +977,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
 
             //绘制自己
+            if (Main.zenithWorld)
+                drawColor *= 0.2f;
             spriteBatch.Draw(mainTex, pos, frameBox, drawColor * selfAlpha, rot, origin, NPC.scale, effects, 0);
             //绘制glow
             spriteBatch.Draw(ModContent.Request<Texture2D>(AssetDirectory.ThunderveinDragon + "ThunderveinDragon_Glow").Value
@@ -960,10 +992,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 Vector2 exOrigin = new Vector2(exTex.Width * 6 / 10, exTex.Height / 2);
 
                 Vector2 scale = new Vector2(1.3f, 1.5f) * NPC.scale;
-                spriteBatch.Draw(exTex, pos, null, new Color(255, 202, 101, 0), rot
+                spriteBatch.Draw(exTex, pos, null, ThunderveinYellowAlpha, rot
                     , exOrigin, scale, effects, 0);
                 scale.Y *= 1.2f;
-                spriteBatch.Draw(exTex, pos - NPC.rotation.ToRotationVector2() * 50, null, new Color(255, 202, 101, 0) * 0.5f, rot
+                spriteBatch.Draw(exTex, pos - NPC.rotation.ToRotationVector2() * 50, null, ThunderveinYellowAlpha * 0.5f, rot
                     , exOrigin, scale, effects, 0);
             }
 

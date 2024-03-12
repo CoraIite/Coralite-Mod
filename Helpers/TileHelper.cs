@@ -20,7 +20,7 @@ namespace Coralite.Helpers
 
         public static bool HasSolidTile(this Tile tile)
         {
-            return tile.HasTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType];
+            return tile.HasUnactuatedTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType];
         }
 
         public static Vector2 FindTopLeft(int x, int y)

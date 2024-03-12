@@ -488,8 +488,6 @@ namespace Coralite.Core.Prefabs.Tiles
         private readonly Color mapColor;
         public const int NextStyleHeight = 40;
 
-        public abstract string ChestName { get; }
-
         public BaseChestTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
         {
             this.dustType = dustType;
@@ -499,6 +497,11 @@ namespace Coralite.Core.Prefabs.Tiles
         public override void SetStaticDefaults()
         {
             this.ChestPrefab(dustType, mapColor, MapChestName);
+        }
+
+        public override LocalizedText DefaultContainerName(int frameX, int frameY)
+        {
+            return CreateMapEntryName();
         }
 
         public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
@@ -626,12 +629,14 @@ namespace Coralite.Core.Prefabs.Tiles
                 top--;
 
             int chest = Chest.FindChest(left, top);
+            string defaultName = TileLoader.DefaultContainerName(tile.TileType, tile.TileFrameX, tile.TileFrameY); // This gets the ContainerName text for the currently selected language
+
             if (chest < 0)
                 player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
             else
             {
-                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : ChestName;
-                if (player.cursorItemIconText == ChestName)
+                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : defaultName;
+                if (player.cursorItemIconText == defaultName)
                 {
                     player.cursorItemIconID = ModContent.ItemType<TItem>();
 
@@ -1144,8 +1149,9 @@ namespace Coralite.Core.Prefabs.Tiles
         }
 
         public abstract void GetLight(ref float r,ref float g,ref float b);
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
-        public unsafe override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             if (Main.tile[i, j].TileFrameX < 18*3)
             {
@@ -1221,8 +1227,9 @@ namespace Coralite.Core.Prefabs.Tiles
         }
 
         public abstract void GetLight(ref float r, ref float g, ref float b);
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
-        public unsafe override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             if (Main.tile[i, j].TileFrameX < 18)
             {
@@ -1298,8 +1305,9 @@ namespace Coralite.Core.Prefabs.Tiles
         }
 
         public abstract void GetLight(ref float r, ref float g, ref float b);
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
-        public unsafe override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             if (Main.tile[i, j].TileFrameX < 18 * 2)
             {
@@ -1399,8 +1407,9 @@ namespace Coralite.Core.Prefabs.Tiles
         }
 
         public abstract void GetLight(ref float r, ref float g, ref float b);
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
-        public unsafe override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             if (Main.tile[i, j].TileFrameX < 18)
             {
@@ -1496,8 +1505,9 @@ namespace Coralite.Core.Prefabs.Tiles
         }
 
         public abstract void GetLight(ref float r, ref float g, ref float b);
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
-        public unsafe override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             if (Main.tile[i, j].TileFrameX < 18)
             {
