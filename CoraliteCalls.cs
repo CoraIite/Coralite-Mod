@@ -69,8 +69,8 @@ namespace Coralite
                 "梦界主世纪之花" or 
                 "梦界主·世纪之花" or 
                 "梦界主" or 
-                "NighetmarePlantera" or 
-                "Nighetmare Plantera" 
+                "NightmarePlantera" or 
+                "Nightmare Plantera" 
                     => DownedBossSystem.downedNightmarePlantera,
                 _ => false,
             };
