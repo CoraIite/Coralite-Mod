@@ -2708,7 +2708,11 @@ Mods: {
 
 			PirateKingHat: {
 				DisplayName: 海盗王的鲨鱼帽
-				Tooltip: ""
+				Tooltip:
+					'''
+					近战伤害增加8% 
+					近战攻速增加5%
+					'''
 			}
 
 			LightningRods: {
@@ -2963,6 +2967,20 @@ Mods: {
 			ThunderveinBlade: {
 				// DisplayName: Thundervein Blade
 				// Tooltip: ""
+			}
+
+			PirateKingCoat: {
+				DisplayName: 海盗王的披肩
+				Tooltip: 近战暴击率增加8%
+			}
+
+			PirateKingShoes: {
+				DisplayName: 海盗王的战靴
+				Tooltip:
+					'''
+					移动速度提高9%
+					近战攻速增加5%
+					'''
 			}
 		}
 

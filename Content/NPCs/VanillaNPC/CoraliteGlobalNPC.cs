@@ -83,15 +83,26 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 case NPCID.ZombieMerman:
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<BloodyOrb>(), 4, 1, 3));
                     break;
-                case NPCID.Mothron:
-                    npcLoot.Add(ItemDropRule.Common(ItemType<RustedShield>(), 4, 1, 1));
-                    break;
                 case NPCID.GoblinShark:
                 case NPCID.BloodEelHead:
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<BloodyOrb>(), 2, 1, 3));
                     break;
                 case NPCID.BloodNautilus:
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<BloodyOrb>(), 1, 1, 3));
+                    break;
+                case NPCID.Mothron://蛾怪掉落腐朽的盾
+                    npcLoot.Add(ItemDropRule.Common(ItemType<RustedShield>(), 4, 1, 1));
+                    break;
+                case NPCID.PirateCaptain://海盗船长掉落海盗套装
+                    {
+                        IItemDropRule[] PirateKingTypes = new IItemDropRule[]
+                        {
+                            ItemDropRule.Common(ItemType<PirateKingHat>(), 1, 1, 1),
+                            ItemDropRule.Common(ItemType<PirateKingCoat>(), 1, 1, 1),
+                            ItemDropRule.Common(ItemType<PirateKingShoes>(), 1, 1, 1),
+                        };
+                        npcLoot.Add(new FewFromRulesRule(1, 2, PirateKingTypes));
+                    }
                     break;
 
                 case NPCID.EyeofCthulhu://克眼，脑子，世吞掉落美味肉排

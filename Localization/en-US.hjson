@@ -2924,6 +2924,16 @@ Mods: {
 				DisplayName: Thundervein Blade
 				Tooltip: ""
 			}
+
+			PirateKingCoat: {
+				DisplayName: Pirate King Coat
+				Tooltip: ""
+			}
+
+			PirateKingShoes: {
+				DisplayName: Pirate King Shoes
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {

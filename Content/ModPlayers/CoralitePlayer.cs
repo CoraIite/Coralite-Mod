@@ -31,7 +31,6 @@ namespace Coralite.Content.ModPlayers
 
         public int DashDir = -1;
 
-
         public float yujianUIAlpha;
         public bool ownedYujianProj;
         public float nianli;
@@ -47,18 +46,37 @@ namespace Coralite.Content.ModPlayers
 
         public int parryTime;
 
+        #region 装备类字段
+
         /// <summary> 装备赤玉吊坠 </summary>
         public bool equippedRedJadePendant;
         /// <summary> 装备影魔镜 </summary>
         public bool equippedShadowMirror;
         /// <summary> 装备影魔镜 </summary>
         public bool equippedPhantomMirror;
+        /// <summary> 手持骨戒，是梦魇花掉落物的那个武器，不是地心护核者的那个饰品 </summary>
+        public bool equippedBoneRing;
+
+        /// <summary>
+        /// 海盗王之魂
+        /// </summary>
+        public int pirateKingSoul;
+        /// <summary>
+        /// 海盗王之魂的效果CD
+        /// </summary>
+        public int pirateKingSoulCD;
+
+        /// <summary>
+        /// 幸运星
+        /// </summary>
+        public int luckyStar;
+
+        #endregion
 
         public byte nightmareCount;
         /// <summary> 使用梦魇之花的噩梦能量 </summary>
         public int nightmareEnergy;
         public int nightmareEnergyMax;
-        public bool equippedBoneRing;
         /// <summary> 抵抗梦蚀 </summary>
         public bool resistDreamErosion;
 
@@ -98,6 +116,9 @@ namespace Coralite.Content.ModPlayers
         /// </summary>
         public float coreKeeperDodge;
 
+        /// <summary>
+        /// 使用特殊攻击
+        /// </summary>
         public bool useSpecialAttack;
 
         public override void ResetEffects()
@@ -106,6 +127,11 @@ namespace Coralite.Content.ModPlayers
             equippedShadowMirror = false;
             equippedPhantomMirror = false;
             equippedBoneRing = false;
+            pirateKingSoul = 0;
+            if (pirateKingSoulCD > 0)
+                pirateKingSoulCD--;
+            luckyStar = 0;
+
             resistDreamErosion = false;
 
             critDamageBonus = 0;
@@ -156,7 +182,6 @@ namespace Coralite.Content.ModPlayers
                 DashDir = DashLeft;
             else
                 DashDir = -1;
-
         }
 
         public override void OnRespawn()
@@ -247,6 +272,11 @@ namespace Coralite.Content.ModPlayers
         {
             if (Player.HeldItem.ModItem is IEquipHeldItem ehi)
                 ehi.UpdateEquipHeldItem(Player);
+
+            if (luckyStar > 1)//幸运星增加玩家幸运
+                Player.luck += 0.2f;
+            else if (luckyStar > 2)
+                Player.luck += 0.3f;
 
             if (ownedYujianProj)
             {
@@ -366,7 +396,64 @@ namespace Coralite.Content.ModPlayers
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.CritDamage += critDamageBonus;
+            PriateKingSoulEffect(ref modifiers);
+
+
+            void PriateKingSoulEffect(ref NPC.HitModifiers modifiers)
+            {
+                if (pirateKingSoul < 2 || pirateKingSoulCD > 0)
+                    return;
+
+                int random = 20;
+                float damageAdder = 0.5f;
+                int CD = 120;
+                if (pirateKingSoul > 2)//3件套效果强化
+                {
+                    random = 10;
+                    damageAdder = 0.75f;
+                    CD = 60;
+                }
+                if (Player.RollLuck(random) == random - 1)
+                {
+                    modifiers.SourceDamage += damageAdder;
+                    modifiers.HideCombatText();
+                    modifiers.ModifyHitInfo += PriateKingCombatText;
+
+                    for (int i = 0; i < 3; i++)//爆金币粒子
+                    {
+                        int num36 = Gore.NewGore(new EntitySource_OnHit(Player,target),new Vector2(target.position.X, target.Center.Y - 10f), Vector2.Zero, 1218);
+                        Main.gore[num36].velocity = new Vector2(Main.rand.Next(1, 10) * 0.3f * 2f * modifiers.HitDirection, 0f - (2.5f + Main.rand.Next(4) * 0.3f));
+                    }
+
+                    if (target.CanBeChasedBy() && !target.SpawnedFromStatue)//别想刷钱
+                    {
+                        int randomCoin = Main.rand.Next(0, 1000);
+                        int itemtype = ItemID.CopperCoin;//大概是89%左右的概率为铜币
+                        if (randomCoin == 0)//千分之一概率掉落铂金币
+                            itemtype = ItemID.PlatinumCoin;
+                        else if (randomCoin < 11)//百分之一概率掉落金币
+                            itemtype = ItemID.GoldCoin;
+                        else if(randomCoin < 111)//十分之一概率掉落银币
+                            itemtype = ItemID.SilverCoin;
+
+                        Item.NewItem(new EntitySource_OnHit(Player, target), target.Center, itemtype);
+                    }
+
+                    pirateKingSoulCD = CD;
+                }
+            }
+
+            void PriateKingCombatText(ref NPC.HitInfo info)
+            {
+                double num = info.Damage;
+                if (info.InstantKill)
+                    num = target.realLife > 0 ? Main.npc[target.realLife].life : target.life;
+
+                CombatText.NewText(new Rectangle((int)target.position.X, (int)target.position.Y, target.width, target.height)
+                    , Color.Gold, (int)num, true);
+            }
         }
+
 
         public override bool FreeDodge(Player.HurtInfo info)
         {

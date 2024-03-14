@@ -9,17 +9,21 @@ using Terraria.ModLoader;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class DrawPlayerHead : HookGroup
+    public class DrawPlayer : HookGroup
     {
         public override void Load()
         {
             On_PlayerDrawLayers.DrawPlayer_21_Head += On_PlayerDrawLayers_DrawPlayer_21_Head;
+            //On_PlayerDrawLayers.DrawSittingLegs += On_PlayerDrawLayers_DrawSittingLegs;
         }
 
         public override void Unload()
         {
             On_PlayerDrawLayers.DrawPlayer_21_Head -= On_PlayerDrawLayers_DrawPlayer_21_Head;
+            //On_PlayerDrawLayers.DrawSittingLegs -= On_PlayerDrawLayers_DrawSittingLegs;
         }
+
+        #region 头部
 
         public static void On_PlayerDrawLayers_DrawPlayer_21_Head(On_PlayerDrawLayers.orig_DrawPlayer_21_Head orig, ref PlayerDrawSet drawinfo)
         {
@@ -148,9 +152,93 @@ namespace Coralite.Content.CustomHooks
                 }
             }
         }
+
+        #endregion
+
+        #region 腿部
+
+        public void On_PlayerDrawLayers_DrawSittingLegs(On_PlayerDrawLayers.orig_DrawSittingLegs orig, ref PlayerDrawSet drawinfo, Texture2D textureToDraw, Color matchingColor, int shaderIndex, bool glowmask)
+        {
+            EquipTexture e = EquipLoader.GetEquipTexture(EquipType.Head, drawinfo.drawPlayer.legs);
+            if (e != null && e.Item != null && e.Item is ISpecialDrawHead && drawinfo.drawPlayer.legs > 0)
+            {
+                Vector2 legsOffset = drawinfo.legsOffset;
+
+                Rectangle legFrame = drawinfo.drawPlayer.legFrame;
+
+                int frameY2 = legFrame.Y / 56;
+                legFrame = textureToDraw.Frame(1, 20, 0, frameY2);
+
+                Vector2 vector = 
+                    new Vector2(
+                        (int)(drawinfo.Position.X 
+                        - (legFrame.Width / 2) 
+                        + (drawinfo.drawPlayer.width / 2))
+                        
+                        , (int)(drawinfo.Position.Y 
+                        + drawinfo.drawPlayer.height 
+                        - legFrame.Height 
+                        + 4f)) 
+
+                    -Main.screenPosition
+                    +drawinfo.drawPlayer.legPosition 
+                    + drawinfo.legVect;
+
+                vector.Y -= 2f;
+                vector.Y += drawinfo.seatYOffset;
+                vector += legsOffset;
+                int num = 2;
+                int num2 = 42;
+                int num3 = 2;
+                int num4 = 2;
+                int num5 = 0;
+                int num6 = 0;
+                int num7 = 0;
+                if (drawinfo.drawPlayer.wearsRobe)
+                {
+                    num = 0;
+                    num4 = 0;
+                    num2 = 6;
+                    vector.Y += 4f;
+                    legFrame.Y = legFrame.Height * 5;
+                }
+
+                for (int num8 = num3; num8 >= 0; num8--)
+                {
+                    Vector2 position = vector + new Vector2(num, 2f) * new Vector2(drawinfo.drawPlayer.direction, 1f);
+                    Rectangle value = legFrame;
+                    value.Y += num8 * 2;
+                    value.Y += num2;
+                    value.Height -= num2;
+                    value.Height -= num8 * 2;
+                    if (num8 != num3)
+                        value.Height = 2;
+
+                    position.X += drawinfo.drawPlayer.direction * num4 * num8 + num6 * drawinfo.drawPlayer.direction;
+                    if (num8 != 0)
+                        position.X += num7 * drawinfo.drawPlayer.direction;
+
+                    position.Y += num2;
+                    position.Y += num5;
+                    DrawData item = new DrawData(textureToDraw, position, value, matchingColor, drawinfo.drawPlayer.legRotation, drawinfo.legVect, 1f, drawinfo.playerEffect);
+                    item.shader = shaderIndex;
+                    drawinfo.DrawDataCache.Add(item);
+                }
+            }
+            else
+                orig.Invoke(ref drawinfo,textureToDraw,matchingColor,shaderIndex,glowmask);
+
+        }
+
+        #endregion
     }
 
     public interface ISpecialDrawHead
+    {
+
+    }
+
+    public interface ISpecialDrawLegs
     {
 
     }

@@ -84,7 +84,6 @@ namespace Coralite.Content.Items.Thunder
         {
             return true;
         }
-
     }
 
     public class ThunderveinBladeSlash : BaseSwingProj, IDrawWarp
