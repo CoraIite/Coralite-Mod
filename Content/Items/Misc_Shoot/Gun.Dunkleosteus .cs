@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void SetDefaults()
         {
-            Item.damage = 44;
+            Item.damage = 47;
             Item.useTime = 6;
             Item.useAnimation = 6;
             Item.knockBack = 3;
@@ -78,11 +78,11 @@ namespace Coralite.Content.Items.Misc_Shoot
                         break;
                     case 1:     //射出6发子弹
                         for (int i = 0; i < 2; i++)
-                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.12f, 0.12f)) * 0.95f, type, (int)(damage * 0.5f), knockback, player.whoAmI);
+                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.12f, 0.12f)) * 0.95f, type, (int)(damage * 0.65f), knockback, player.whoAmI);
                         for (int i = 0; i < 2; i++)
-                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.12f, 0.12f)), type, (int)(damage * 0.5f), knockback, player.whoAmI);
+                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.12f, 0.12f)), type, (int)(damage * 0.65f), knockback, player.whoAmI);
                         for (int i = 0; i < 2; i++)
-                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 1.1f, type, (int)(damage * 0.5f), knockback, player.whoAmI);
+                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 1.1f, type, (int)(damage * 0.65f), knockback, player.whoAmI);
 
                         break;
                 }

@@ -2,6 +2,7 @@
 using Coralite.Content.Dusts;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.ShadowCastle;
+using Coralite.Content.Items.Thunder;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.Trails;
@@ -17,6 +18,7 @@ using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Coralite.Content.Items.Misc_Shoot.HyacinthBullet;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
@@ -52,6 +54,32 @@ namespace Coralite.Content.Items.Misc_Shoot
             Projectile.netImportant = true;
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
+        }
+
+        public enum GunType
+        {
+            PainterPaintballGun = 1,
+            SuperStarCannon,
+            StarCannon,
+            OnyxBlaster,
+            VenusMagnum,
+            ChainGun,
+            Xenopopper,
+            VortexBeater,
+            SDMG,
+            ThunderDukeVine,
+            StarsBreath,
+            Snowdrop,
+            Rosemary,
+            Rosemary2,
+            Arethusa,
+            WoodWax,
+            Musket,
+            TheUndertaker,
+            PhoenixBlaster,
+            Handgun,
+            Lycoris,
+            ShadowWave
         }
 
         public override void AI()
@@ -185,55 +213,52 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             switch (value)
             {
-                default: break;
-                case 1:     //彩弹枪
+                case (int)GunType.PainterPaintballGun://彩弹枪
                     return Color.Silver;
-                case 2:     //超级星星炮
+                case (int)GunType.SuperStarCannon://超级星星炮
                     return Color.LightYellow;
-                case 3:     //星星炮
+                case (int)GunType.StarCannon://星星炮
                     return Color.Yellow;
-                case 4:     //玛瑙爆破枪
+                case (int)GunType.OnyxBlaster://玛瑙爆破枪
                     return Color.Purple;
-                case 5:     //维纳斯万能枪
+                case (int)GunType.VenusMagnum://维纳斯万能枪
                     return new Color(140, 255, 102);
-                case 6:     //链式机枪
+                case (int)GunType.ChainGun://链式机枪
                     return new Color(196, 17, 18);
-                case 7:     //外星泡泡枪
+                case (int)GunType.Xenopopper://外星泡泡枪
                     return new Color(233, 148, 248);
-                case 8:     //星旋机枪
+                case (int)GunType.VortexBeater://星旋机枪
                     return new Color(0, 242, 170);
-                case 9:     //太空海豚机枪
+                case (int)GunType.SDMG://太空海豚机枪
                     return new Color(147, 227, 236);
-                case 10:    //邓氏鲨
-                    return new Color(57, 140, 125);
-                case 11:    //巨兽鲨
-                    return new Color(147, 98, 103);
-                case 12:    //迷你鲨
-                    return new Color(195, 131, 49);
-                case 13:    //满天星
+                case (int)GunType.ThunderDukeVine:
+                    return Coralite.Instance.ThunderveinYellow;
+                case (int)GunType.StarsBreath://满天星
                     return Color.White;
-                case 14:    //雪花莲
+                case (int)GunType.Snowdrop://雪花莲
                     return new Color(152, 192, 70);
-                case 15:    //迷迭香
+                case (int)GunType.Rosemary://迷迭香
                     return new Color(235, 141, 207);
-                case 16:    //迷迭香2
+                case (int)GunType.Rosemary2://迷迭香2
                     return new Color(235, 141, 207);
-                case 17:    //幽兰
+                case (int)GunType.Arethusa://幽兰
                     return new Color(95, 120, 233);
-                case 18:    //木蜡
+                case (int)GunType.WoodWax://木蜡
                     return new Color(125, 165, 79);
-                case 19:    //火枪
+                case (int)GunType.Musket://火枪
                     return new Color(165, 165, 165);
-                case 20:    //夺命枪
+                case (int)GunType.TheUndertaker://夺命枪
                     return new Color(237, 28, 36);
-                case 21:    //凤凰爆破枪
+                case (int)GunType.PhoenixBlaster://凤凰爆破枪
                     return new Color(252, 145, 28);
-                case 22:    //手枪
+                case (int)GunType.Handgun://手枪
                     return new Color(127, 127, 127);
-                case 23:    //迷迭香
+                case (int)GunType.Lycoris://彼岸花
                     return NightmarePlantera.nightmareRed;
-                case 24:    //月影
+                case (int)GunType.ShadowWave://月影
                     return new Color(189, 109, 255);
+                default:
+                    break;
             }
 
             return Color.White;
@@ -459,53 +484,49 @@ namespace Coralite.Content.Items.Misc_Shoot
             switch (-(int)Projectile.ai[0])
             {
                 default: break;
-                case 1:
+                case (int)GunType.PainterPaintballGun://彩弹枪
                     return ItemID.PainterPaintballGun;
-                case 2:
+                case (int)GunType.SuperStarCannon://超级星星炮
                     return ItemID.SuperStarCannon;
-                case 3:
+                case (int)GunType.StarCannon://星星炮
                     return ItemID.StarCannon;
-                case 4:
+                case (int)GunType.OnyxBlaster://玛瑙爆破枪
                     return ItemID.OnyxBlaster;
-                case 5:
+                case (int)GunType.VenusMagnum://维纳斯万能枪
                     return ItemID.VenusMagnum;
-                case 6:
+                case (int)GunType.ChainGun://链式机枪
                     return ItemID.ChainGun;
-                case 7:
+                case (int)GunType.Xenopopper://外星泡泡枪
                     return ItemID.Xenopopper;
-                case 8:
+                case (int)GunType.VortexBeater://星旋机枪
                     return ItemID.VortexBeater;
-                case 9:
+                case (int)GunType.SDMG://太空海豚机枪
                     return ItemID.SDMG;
-                case 10:
-                    return ModContent.ItemType<Dunkleosteus>();
-                case 11:
-                    return ItemID.Megashark;
-                case 12:
-                    return ItemID.Minishark;
-                case 13:
+                case (int)GunType.ThunderDukeVine:
+                    return ModContent.ItemType<ThunderDukeVine>();//曾经是邓氏鱼 ，现在替换为雷公藤
+                case (int)GunType.StarsBreath://满天星
                     return ModContent.ItemType<StarsBreath>();
-                case 14:
+                case (int)GunType.Snowdrop://雪花莲
                     return ModContent.ItemType<Snowdrop>();
-                case 15:
+                case (int)GunType.Rosemary://迷迭香
                     return ModContent.ItemType<Rosemary>();
-                case 16:
+                case (int)GunType.Rosemary2://迷迭香2
                     return ModContent.ItemType<Rosemary2>();
-                case 17:
+                case (int)GunType.Arethusa://幽兰
                     return ModContent.ItemType<Arethusa>();
-                case 18:
+                case (int)GunType.WoodWax://木蜡
                     return ModContent.ItemType<WoodWax>();
-                case 19:
+                case (int)GunType.Musket://火枪
                     return ItemID.Musket;
-                case 20:
+                case (int)GunType.TheUndertaker://夺命枪
                     return ItemID.TheUndertaker;
-                case 21:
+                case (int)GunType.PhoenixBlaster://凤凰爆破枪
                     return ItemID.PhoenixBlaster;
-                case 22:
+                case (int)GunType.Handgun://手枪
                     return ItemID.Handgun;
-                case 23:
+                case (int)GunType.Lycoris://彼岸花
                     return ModContent.ItemType<Lycoris>();
-                case 24:
+                case (int)GunType.ShadowWave://月影
                     return ModContent.ItemType<ShadowWave>();
             }
 

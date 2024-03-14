@@ -7,8 +7,10 @@ using Coralite.Content.Items.RedJades;
 using Coralite.Content.Projectiles.Globals;
 using Coralite.Content.UI;
 using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -89,7 +91,7 @@ namespace Coralite.Content.ModPlayers
         /// 防御时间，
         /// </summary>
         public int FlyingShieldGuardTime;
-
+        public List<IFlyingShieldAccessory> FlyingShieldAccessories = new List<IFlyingShieldAccessory>();
 
         /// <summary>
         /// 地心护核者的闪避
@@ -120,6 +122,10 @@ namespace Coralite.Content.ModPlayers
                 if (FlyingShieldGuardTime == 0)
                     FlyingShieldDamageReduce = 0;
             }
+
+            FlyingShieldAccessories ??= new List<IFlyingShieldAccessory>();
+            if (FlyingShieldAccessories.Count != 0)
+                FlyingShieldAccessories.Clear();
 
             coreKeeperDodge = 0;
 

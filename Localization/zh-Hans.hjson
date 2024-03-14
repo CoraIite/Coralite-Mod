@@ -2954,6 +2954,16 @@ Mods: {
 				// DisplayName: Mercury Work Bench
 				// Tooltip: ""
 			}
+
+			Illureal: {
+				// DisplayName: Illureal
+				// Tooltip: ""
+			}
+
+			ThunderveinBlade: {
+				// DisplayName: Thundervein Blade
+				// Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -3625,6 +3635,7 @@ Mods: {
 			ThunderveinSoul.DisplayName: 雷脉魂魄
 			// ThunderDukeVineHeldProj.DisplayName: Thunder Duke Vine Held Proj
 			// ElectromagneticCannon_Friendly.DisplayName: Electromagnetic Cannon_ Friendly
+			// ThunderveinBladeSlash.DisplayName: Thundervein Blade Slash
 		}
 
 		Configs: {

@@ -5,6 +5,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.ComponentModel;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -31,6 +32,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
+            MagikeItemSlotPanel.visible = false;
+            UILoader.GetUIState<MagikeItemSlotPanel>().Recalculate();
+
             SoundEngine.PlaySound(CoraliteSoundID.DigStone_Tink, new Vector2(i, j) * 16);
             int x = i - frameX / 18;
             int y = j - frameY / 18;

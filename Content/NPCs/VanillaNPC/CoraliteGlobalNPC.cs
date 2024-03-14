@@ -143,60 +143,73 @@ namespace Coralite.Content.NPCs.VanillaNPC
 
         public override void ModifyShop(NPCShop shop)
         {
-            //if (shop.NpcType == NPCID.TravellingMerchant)   //游商售卖旅行手记
-            //{
-            //    shop.Add<TravelJournaling>();
-            //}
-        }
-
-        public override void ModifyActiveShop(NPC npc, string shopName, Item[] items)
-        {
-            switch (npc.type)
+            switch (shop.NpcType)
             {
                 case NPCID.ArmsDealer:
                     {
-                        if (NPC.downedPlantBoss)    //花后售卖远古核心
-                        {
-                            int i = 0;
-                            for (; i < items.Length - 1; i++)
-                            {
-                                if (items[i] == null || items[i].IsAir)
-                                    break;
-                            }
-
-                            items[i] = new Item(ItemType<AncientCore>());
-                        }
+                        shop.Add<AncientCore>(Condition.DownedPlantera);//远古核心
                         break;
                     }
                 case NPCID.TravellingMerchant://游商
                     {
-                        int i = 0;
-                        for (; i < items.Length - 1; i++)
-                        {
-                            if (items[i] == null || items[i].IsAir)
-                                break;
-                        }
-
-                        items[i] = new Item(ItemType<TravelJournaling>());
-                        i++;
-
-                        if (Main.hardMode)
-                        {
-                            items[i] = new Item(ItemID.GlowTulip);
-                            i++;
-                            items[i] = new Item(ItemType<MineShield>());
-                            i++;
-                        }
-
-                        if (NPC.downedPlantBoss)//花后获取符文羊皮纸
-                        {
-                            items[i] = new Item(ItemType<RuneParchment>());
-                            i++;
-                        }
+                        shop.Add<TravelJournaling>();//手记
+                        shop.Add(ItemID.GlowTulip, Condition.Hardmode);//发光郁金香
+                        shop.Add<MineShield>(Condition.Hardmode);//我的盾牌
+                        shop.Add<RuneParchment>(Condition.DownedPlantera);//花后获取符文羊皮纸
                     }
                     break;
                 default: break;
             }
+        }
+
+        public override void ModifyActiveShop(NPC npc, string shopName, Item[] items)
+        {
+            //switch (npc.type)
+            //{
+            //    case NPCID.ArmsDealer:
+            //        {
+            //            if (NPC.downedPlantBoss)    //花后售卖远古核心
+            //            {
+            //                int i = 0;
+            //                for (; i < items.Length - 1; i++)
+            //                {
+            //                    if (items[i] == null || items[i].IsAir)
+            //                        break;
+            //                }
+
+            //                items[i] = new Item(ItemType<AncientCore>());
+            //            }
+            //            break;
+            //        }
+            //    case NPCID.TravellingMerchant://游商
+            //        {
+            //            int i = 0;
+            //            for (; i < items.Length - 1; i++)
+            //            {
+            //                if (items[i] == null || items[i].IsAir)
+            //                    break;
+            //            }
+
+            //            items[i] = new Item(ItemType<TravelJournaling>());
+            //            i++;
+
+            //            if (Main.hardMode)
+            //            {
+            //                items[i] = new Item(ItemID.GlowTulip);
+            //                i++;
+            //                items[i] = new Item(ItemType<MineShield>());
+            //                i++;
+            //            }
+
+            //            if (NPC.downedPlantBoss)//花后获取符文羊皮纸
+            //            {
+            //                items[i] = new Item(ItemType<RuneParchment>());
+            //                i++;
+            //            }
+            //        }
+            //        break;
+            //    default: break;
+            //}
         }
 
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)

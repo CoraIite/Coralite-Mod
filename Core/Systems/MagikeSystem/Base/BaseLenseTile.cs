@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
+using System.Reflection.Emit;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -124,6 +125,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
     public abstract class BaseCostItemLensTile : BaseLensTile
     {
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        {
+            MagikeItemSlotPanel.visible = false;
+            UILoader.GetUIState<MagikeItemSlotPanel>().Recalculate();
+
+            base.KillMultiTile(i, j, frameX, frameY);
+        }
+
         public override bool RightClick(int i, int j)
         {
             if (MagikeHelper.TryGetEntity(i, j, out MagikeGenerator_FromMagItem generator))

@@ -328,64 +328,71 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public void UpdateShieldAccessory(Action<IFlyingShieldAccessory> action)
         {
-            for (int i = 3; i < 10; i++)
-            {
-                if (!Owner.IsItemSlotUnlockedAndUsable(i))
-                    continue;
-                if (!Owner.armor[i].active)
-                    continue;
-                if (Owner.armor[i].ModItem is IFlyingShieldAccessory accessory)
-                {
+            if (Owner.TryGetModPlayer(out CoralitePlayer cp))
+                foreach (var accessory in cp.FlyingShieldAccessories)
                     action(accessory);
-                }
-            }
+            //for (int i = 3; i < 10; i++)
+            //{
+            //    if (!Owner.IsItemSlotUnlockedAndUsable(i))
+            //        continue;
+            //    if (!Owner.armor[i].active)
+            //        continue;
+            //    if (Owner.armor[i].ModItem is IFlyingShieldAccessory accessory)
+            //    {
+            //        action(accessory);
+            //    }
+            //}
 
-            var loader = LoaderManager.Get<AccessorySlotLoader>();
+            //var loader = LoaderManager.Get<AccessorySlotLoader>();
 
-            ModAccessorySlotPlayer masp = Owner.GetModPlayer<ModAccessorySlotPlayer>();
-            for (int k = 0; k < masp.SlotCount; k++)
-            {
-                if (loader.ModdedIsItemSlotUnlockedAndUsable(k, Owner))
-                {
-                    Item i = loader.Get(k, Owner).FunctionalItem;
-                    if (i.active && i.ModItem is IFlyingShieldAccessory accessory)
-                    {
-                        action(accessory);
-                    }
-                }
-            }
+            //ModAccessorySlotPlayer masp = Owner.GetModPlayer<ModAccessorySlotPlayer>();
+            //for (int k = 0; k < masp.SlotCount; k++)
+            //{
+            //    if (loader.ModdedIsItemSlotUnlockedAndUsable(k, Owner))
+            //    {
+            //        Item i = loader.Get(k, Owner).FunctionalItem;
+            //        if (!i.IsAir && i.ModItem is IFlyingShieldAccessory accessory)
+            //        {
+            //            action(accessory);
+            //        }
+            //    }
+            //}
         }
 
         public void UpdateShieldAccessory(Func<IFlyingShieldAccessory, bool> action)
         {
-            for (int i = 3; i < 10; i++)
-            {
-                if (!Owner.IsItemSlotUnlockedAndUsable(i))
-                    continue;
-                if (!Owner.armor[i].active)
-                    continue;
-                if (Owner.armor[i].ModItem is IFlyingShieldAccessory accessory)
-                {
+            if (Owner.TryGetModPlayer(out CoralitePlayer cp))
+                foreach (var accessory in cp.FlyingShieldAccessories)
                     if (action(accessory))
                         return;
-                }
-            }
+            //for (int i = 3; i < 10; i++)
+            //{
+            //    if (!Owner.IsItemSlotUnlockedAndUsable(i))
+            //        continue;
+            //    if (!Owner.armor[i].active)
+            //        continue;
+            //    if (Owner.armor[i].ModItem is IFlyingShieldAccessory accessory)
+            //    {
+            //        if (action(accessory))
+            //            return;
+            //    }
+            //}
 
-            var loader = LoaderManager.Get<AccessorySlotLoader>();
+            //var loader = LoaderManager.Get<AccessorySlotLoader>();
 
-            ModAccessorySlotPlayer masp = Owner.GetModPlayer<ModAccessorySlotPlayer>();
-            for (int k = 0; k < masp.SlotCount; k++)
-            {
-                if (loader.ModdedIsItemSlotUnlockedAndUsable(k, Owner))
-                {
-                    Item i = loader.Get(k, Owner).FunctionalItem;
-                    if (i.active && i.ModItem is IFlyingShieldAccessory accessory)
-                    {
-                        if (action(accessory))
-                            return;
-                    }
-                }
-            }
+            //ModAccessorySlotPlayer masp = Owner.GetModPlayer<ModAccessorySlotPlayer>();
+            //for (int k = 0; k < masp.SlotCount; k++)
+            //{
+            //    if (loader.ModdedIsItemSlotUnlockedAndUsable(k, Owner))
+            //    {
+            //        Item i = loader.Get(k, Owner).FunctionalItem;
+            //        if (i.active && i.ModItem is IFlyingShieldAccessory accessory)
+            //        {
+            //            if (action(accessory))
+            //                return;
+            //        }
+            //    }
+            //}
         }
 
         public override bool PreDraw(ref Color lightColor)

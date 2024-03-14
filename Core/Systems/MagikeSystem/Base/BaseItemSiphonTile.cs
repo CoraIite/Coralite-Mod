@@ -19,6 +19,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
+            MagikeItemSiphonUI.visible = false;
+            UILoader.GetUIState<MagikeItemSiphonUI>().Recalculate();
+
             SoundEngine.PlaySound(CoraliteSoundID.DigStone_Tink, new Vector2(i, j) * 16);
             if (MagikeHelper.TryGetEntity(i, j, out MagikeItemSiphon siphon))
                 siphon.Kill(siphon.Position.X, siphon.Position.Y);

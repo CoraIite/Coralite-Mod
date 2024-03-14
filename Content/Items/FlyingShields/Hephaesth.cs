@@ -500,7 +500,7 @@ namespace Coralite.Content.Items.FlyingShields
                 case 0://下落
                     {
                         Lighting.AddLight(Projectile.Center, new Vector3(0.5f));
-                        if (Burning && Helper.TryFindClosestEnemy(Projectile.Center, 1000, n => n.CanBeChasedBy() && Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
+                        if (Burning && Helper.TryFindClosestEnemy(Projectile.Center, 1000, n => n.CanBeChasedBy() && Projectile.localNPCImmunity.IndexInRange(n.whoAmI) && Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
                         {
                             float selfAngle = Projectile.velocity.ToRotation();
                             float targetAngle = (target.Center - Projectile.Center).ToRotation();
@@ -750,7 +750,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void Chasing()
         {
             if (canChase)
-                if (Helper.TryFindClosestEnemy(Projectile.Center, Timer * shootSpeed + Projectile.width * 4, n => n.CanBeChasedBy() && Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
+                if (Helper.TryFindClosestEnemy(Projectile.Center, Timer * shootSpeed + Projectile.width * 4, n => n.CanBeChasedBy() && Projectile.localNPCImmunity.IndexInRange(n.whoAmI) && Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
                 {
                     float selfAngle = Projectile.velocity.ToRotation();
                     float targetAngle = (target.Center - Projectile.Center).ToRotation();

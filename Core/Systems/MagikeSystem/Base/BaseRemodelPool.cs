@@ -45,6 +45,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
+            MagikeRemodelUI.visible = false;
+            UILoader.GetUIState<MagikeRemodelUI>().Recalculate();
+
             SoundEngine.PlaySound(CoraliteSoundID.DigStone_Tink, new Vector2(i, j) * 16);
             int x = i - frameX / 18;
             int y = j - frameY / 18;

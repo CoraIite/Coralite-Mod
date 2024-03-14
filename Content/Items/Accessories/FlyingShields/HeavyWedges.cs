@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Prefabs.Items;
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -28,6 +29,10 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage(DamageClass.Melee) += 0.08f;
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.FlyingShieldAccessories?.Add(this);
+            }
         }
 
         public void OnInitialize(BaseFlyingShield projectile)

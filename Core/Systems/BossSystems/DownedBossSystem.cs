@@ -13,7 +13,6 @@ namespace Coralite.Core.Systems.BossSystems
         public static bool downedThunderveinDragon;
         public static bool downedNightmarePlantera;
 
-
         public override void PostWorldGen()
         {
             downedRediancie = false;

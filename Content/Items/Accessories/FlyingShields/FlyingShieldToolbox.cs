@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Prefabs.Items;
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Terraria;
 using Terraria.ID;
@@ -25,6 +26,14 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                 || equippedItem.type == ModContent.ItemType<HeavyWedges>())//与重型冲突
 
                 && incomingItem.type == ModContent.ItemType<FlyingShieldToolbox>());
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.FlyingShieldAccessories?.Add(this);
+            }
         }
 
         public void OnGuardInitialize(BaseFlyingShieldGuard projectile)

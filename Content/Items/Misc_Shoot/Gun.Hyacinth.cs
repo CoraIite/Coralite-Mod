@@ -1,4 +1,5 @@
 using Coralite.Content.Items.Nightmare;
+using Coralite.Content.Items.Thunder;
 using Coralite.Core;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             if (Main.myPlayer == player.whoAmI)
             {
                 List<int> textureList = new List<int>();
-                for (int i = 1; i < 25; i++)
+                for (int i = 1; i < 23; i++)
                     textureList.Add(-i);
 
                 for (int i = 0; i < 3; i++)     //生成环绕的幻影枪弹幕
@@ -73,7 +74,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             CreateRecipe()
             .AddIngredient(ItemID.PainterPaintballGun)
             .AddIngredient(ItemID.SuperStarCannon)
-            .AddIngredient<Dunkleosteus>()
+            .AddIngredient<ThunderDukeVine>()
             .AddIngredient(ItemID.OnyxBlaster)
             .AddIngredient(ItemID.VenusMagnum)
             .AddIngredient(ItemID.ChainGun)
