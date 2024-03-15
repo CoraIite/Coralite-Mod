@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.RedJades
             {
                 if (player.altFunctionUse == 2)
                 {
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<BloodJadeFrisbeeParry>(), damage, knockback, player.whoAmI);
+                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<BloodJadeFrisbeeParry>(), damage, knockback, player.whoAmI);
                     return false;
                 }
 

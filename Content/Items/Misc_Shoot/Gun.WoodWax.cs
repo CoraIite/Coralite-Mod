@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<WoodWaxHeldProj>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<WoodWaxHeldProj>(), damage, knockback, player.whoAmI);
                 if (type == ProjectileID.Bullet)
                 {
                     Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);

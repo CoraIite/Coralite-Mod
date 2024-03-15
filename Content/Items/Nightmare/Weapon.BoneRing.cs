@@ -51,8 +51,8 @@ namespace Coralite.Content.Items.Nightmare
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                PlayerNightmareEnergy.Spawn(player, source);
-                Projectile.NewProjectile(source, position, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 24, type, damage, knockback, player.whoAmI);
+                PlayerNightmareEnergy.Spawn(player, Item);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), position, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 24, type, damage, knockback, player.whoAmI);
             }
             return false;
         }

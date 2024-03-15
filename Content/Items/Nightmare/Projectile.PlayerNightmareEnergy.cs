@@ -101,12 +101,12 @@ namespace Coralite.Content.Items.Nightmare
             return false;
         }
 
-        public static void Spawn(Player player, IEntitySource source)
+        public static void Spawn(Player player, Item item)
         {
             if (Main.projectile.Any(p => p.active && p.owner == player.whoAmI && p.type == ModContent.ProjectileType<PlayerNightmareEnergy>()))
                 return;
 
-            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<PlayerNightmareEnergy>(), 1, 0, player.whoAmI);
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, item), player.Center, Vector2.Zero, ModContent.ProjectileType<PlayerNightmareEnergy>(), 1, 0, player.whoAmI);
         }
 
         public void DrawAdditive(SpriteBatch spriteBatch)

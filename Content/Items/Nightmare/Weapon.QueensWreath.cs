@@ -46,7 +46,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                PlayerNightmareEnergy.Spawn(player, source);
+                PlayerNightmareEnergy.Spawn(player, Item);
                 ClearOtherHeldProj(player);
 
                 if (Combo > 3)//射出能获得梦魇光能的箭矢
@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.Nightmare
                     Combo = 0;
                     Projectile.NewProjectile(source, position, velocity.SafeNormalize(Vector2.Zero) * 8.5f, ProjectileType<QueensWreathArrow>(), damage, knockback, player.whoAmI, ai1: 1);
 
-                    Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<QueensWreathHeldProj>(), 1, 0, player.whoAmI, 1);
+                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), position, Vector2.Zero, ProjectileType<QueensWreathHeldProj>(), 1, 0, player.whoAmI, 1);
                     SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, position);
                 }
                 else//就只是普通地射箭
@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.Nightmare
                     for (int i = 0; i < 3; i++)
                         Projectile.NewProjectile(source, position, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)), type, damage, knockback, player.whoAmI);
 
-                    Projectile.NewProjectile(source, position, Vector2.Zero, ProjectileType<QueensWreathHeldProj>(), 1, 0, player.whoAmI, 0);
+                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), position, Vector2.Zero, ProjectileType<QueensWreathHeldProj>(), 1, 0, player.whoAmI, 0);
                     SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, position);
                 }
 

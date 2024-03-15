@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                         break;
                 }
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DunkleosteusHeldProj>(), damage, knockback, player.whoAmI, shootStyle);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<DunkleosteusHeldProj>(), damage, knockback, player.whoAmI, shootStyle);
 
             }
             return false;

@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<ArethusaHeldProj>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<ArethusaHeldProj>(), damage, knockback, player.whoAmI);
                 if (shootCount > 3)
                 {
                     Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);

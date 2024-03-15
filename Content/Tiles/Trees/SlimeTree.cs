@@ -30,8 +30,8 @@ namespace Coralite.Content.Tiles.Trees
 
         public override int DropWood()
         {
-            if (Main.rand.NextBool(100))
-                return ItemID.SlimeStaff;
+            //if (Main.rand.NextBool(100))
+            //    return ItemID.SlimeStaff;
 
             if (Main.rand.NextBool(25))
                 return ItemID.PinkGel;
@@ -82,6 +82,12 @@ namespace Coralite.Content.Tiles.Trees
             if (Main.rand.NextBool(10))
             {
                 NPC.NewNPC(new EntitySource_ShakeTree(x, y), x, y, NPCID.BlueSlime);
+                return false;
+            }
+
+            if (Main.rand.NextBool(100))
+            {
+                Item.NewItem(new EntitySource_ShakeTree(x, y), new Microsoft.Xna.Framework.Vector2(x, y).ToWorldCoordinates(), ItemID.SlimeStaff);
                 return false;
             }
 

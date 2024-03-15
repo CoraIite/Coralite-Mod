@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                PlayerNightmareEnergy.Spawn(player, source);
+                PlayerNightmareEnergy.Spawn(player, Item);
 
                 int projType = ProjectileType<LycorisBullet>();
                 int heldProjType = ProjectileType<LycorisHeldProj>();
@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.Nightmare
                     Helper.PlayPitched("Misc/Zaphkiel", 1f, 0f, position);
 
                     Projectile.NewProjectile(source, position, velocity, projType, damage * 10, knockback, player.whoAmI, 1);
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, heldProjType, 1, 1, player.whoAmI);
+                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, heldProjType, 1, 1, player.whoAmI);
 
                     return false;
                 }

@@ -71,6 +71,15 @@ namespace Coralite.Content.ModPlayers
         /// </summary>
         public int luckyStar;
 
+        /// <summary>
+        /// 美杜莎之魂
+        /// </summary>
+        public int medusaSoul;
+
+        /// <summary>
+        /// 分裂
+        /// </summary>
+        public int split;
         #endregion
 
         public byte nightmareCount;
@@ -131,6 +140,8 @@ namespace Coralite.Content.ModPlayers
             if (pirateKingSoulCD > 0)
                 pirateKingSoulCD--;
             luckyStar = 0;
+            medusaSoul = 0;
+            split = 0;
 
             resistDreamErosion = false;
 
@@ -397,8 +408,9 @@ namespace Coralite.Content.ModPlayers
         {
             modifiers.CritDamage += critDamageBonus;
             PriateKingSoulEffect(ref modifiers);
+            MedusaSoulEffect(ref modifiers);
 
-
+            #region 海盗王之魂的效果
             void PriateKingSoulEffect(ref NPC.HitModifiers modifiers)
             {
                 if (pirateKingSoul < 2 || pirateKingSoulCD > 0)
@@ -452,6 +464,67 @@ namespace Coralite.Content.ModPlayers
                 CombatText.NewText(new Rectangle((int)target.position.X, (int)target.position.Y, target.width, target.height)
                     , Color.Gold, (int)num, true);
             }
+            #endregion
+
+            #region 美杜莎之魂的效果
+
+            void MedusaSoulEffect(ref NPC.HitModifiers modifiers)
+            {
+                if (medusaSoul < 2)
+                    return;
+
+                const int middleLength_Min = 20 * 16;
+                const int middleLength_Max = 30 * 16;
+                const int minLength = 5 * 16;
+                const int maxLength = 100 * 16;
+
+                float minDamage = 0.75f;
+                float maxDamage = 0.15f;
+                if (medusaSoul > 2)
+                {
+                    minDamage = 0.5f;
+                    maxDamage = 0.25f;
+                }
+
+                float distanceToTarget = Vector2.Distance(Player.Center, target.Center);
+
+                float factor;
+                Color aimColor;
+                if (distanceToTarget < middleLength_Min)//小于中间距离，减少伤害
+                {
+                    factor = 1 - MathHelper.Clamp((distanceToTarget - minLength) / (middleLength_Min - minLength), 0, 1);
+                    aimColor = Color.Gray;
+                    float damage = minDamage * factor;
+                    modifiers.SourceDamage -= damage;
+                    modifiers.HideCombatText();
+                    modifiers.ModifyHitInfo += MedusaCombatText;
+                }
+                else if (distanceToTarget > middleLength_Max)//大于中间距离，增加伤害
+                {
+                    factor = MathHelper.Clamp((distanceToTarget - middleLength_Max) / (maxLength - middleLength_Max), 0, 1);
+                    aimColor = Color.Purple;
+                    float damage = maxDamage * factor;
+                    modifiers.SourceDamage += damage;
+                    modifiers.HideCombatText();
+                    modifiers.ModifyHitInfo += MedusaCombatText;
+                }
+
+                void MedusaCombatText(ref NPC.HitInfo info)
+                {
+                    double num = info.Damage;
+                    if (info.InstantKill)
+                        num = target.realLife > 0 ? Main.npc[target.realLife].life : target.life;
+
+                    Color c = info.Crit ? CombatText.DamagedFriendlyCrit : CombatText.DamagedFriendly;
+
+                    c = Color.Lerp(c, aimColor, factor);
+
+                    CombatText.NewText(new Rectangle((int)target.position.X, (int)target.position.Y, target.width, target.height)
+                        , c, (int)num, info.Crit);
+                }
+            }
+
+            #endregion
         }
 
 

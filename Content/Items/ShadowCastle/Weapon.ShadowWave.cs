@@ -56,11 +56,11 @@ namespace Coralite.Content.Items.ShadowCastle
             if (player.altFunctionUse == 2)//右键填充弹药
             {
                 SoundEngine.PlaySound(CoraliteSoundID.AmmoBox_Item149, player.Center);
-                Projectile.NewProjectile(source, position, Vector2.Zero, ModContent.ProjectileType<ShadowWaveReLoad>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), position, Vector2.Zero, ModContent.ProjectileType<ShadowWaveReLoad>(), damage, knockback, player.whoAmI);
                 return false;
             }
 
-            Projectile.NewProjectile(source, position, Vector2.Zero, ModContent.ProjectileType<ShadowWaveHeldProj>(), 1, knockback, player.whoAmI);
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), position, Vector2.Zero, ModContent.ProjectileType<ShadowWaveHeldProj>(), 1, knockback, player.whoAmI);
 
             if (ShootCount < 1)//没弹药了射不出来
             {

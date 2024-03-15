@@ -14,7 +14,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void SetDefaults()
         {
-            Item.damage = 32;
+            Item.damage = 42;
             Item.useTime = 30;
             Item.useAnimation = 30;
             Item.knockBack = 3;
@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 Main.projectile[index2].timeLeft = timeLeft2;
 
                 Projectile.NewProjectile(source, player.Center, dir * 12, ProjectileType<SnowdropBud>(), damage, knockback, player.whoAmI);
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<SnowdropHeldProj>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<SnowdropHeldProj>(), damage, knockback, player.whoAmI);
             }
 
             return false;

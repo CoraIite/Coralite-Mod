@@ -2673,6 +2673,37 @@ Mods: {
 			PirateKingHat: {
 				DisplayName: Pirate King Hat
 				Tooltip: ""
+				NotHasPirateKingSoul: 海盗王之魂：装备至少2件套后触发效果
+				PirateKingSoul2Part:
+					'''
+					海盗王之魂：攻击敌人有时会抢夺钱币
+					[c/807b7d:(2)件套]
+					[c/69a777:5%概率触发]
+					[c/69a777:2] [c/807b7d:秒冷却时间]
+					[c/807b7d:造成] [c/9e82b5:150%] [c/807b7d:伤害]
+					'''
+				PirateKingSoul3Part:
+					'''
+					海盗王之魂：攻击敌人有时会抢夺钱币
+					[c/807b7d:(3)件套]
+					[c/69a777:10%概率触发]
+					[c/69a777:1] [c/807b7d:秒冷却时间]
+					[c/807b7d:造成] [c/9e82b5:175%] [c/807b7d:伤害]
+					'''
+				NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
+				LuckyStar2Part:
+					'''
+					幸运星：运气增加
+					[c/807b7d:(2)件套]
+					[c/807b7d:增加] [c/9e82b5:0.2]
+					'''
+				LuckyStar3Part:
+					'''
+					幸运星：运气增加
+					[c/807b7d:(3)件套]
+					[c/807b7d:增加] [c/9e82b5:0.3]
+					'''
+				PriateKingBonus: 幸运777：近战伤害，近战速度，近战暴击率各增加7%
 			}
 
 			LightningRods: {
@@ -2928,11 +2959,182 @@ Mods: {
 			PirateKingCoat: {
 				DisplayName: Pirate King Coat
 				Tooltip: ""
+				NotHasPirateKingSoul: 海盗王之魂：装备至少2件套后触发效果
+				PirateKingSoul2Part:
+					'''
+					海盗王之魂：攻击敌人有时会抢夺钱币
+					[c/807b7d:(2)件套]
+					[c/69a777:5%概率触发]
+					[c/69a777:2] [c/807b7d:秒冷却时间]
+					[c/807b7d:造成] [c/9e82b5:150%] [c/807b7d:伤害]
+					'''
+				PirateKingSoul3Part:
+					'''
+					海盗王之魂：攻击敌人有时会抢夺钱币
+					[c/807b7d:(3)件套]
+					[c/69a777:10%概率触发]
+					[c/69a777:1] [c/807b7d:秒冷却时间]
+					[c/807b7d:造成] [c/9e82b5:175%] [c/807b7d:伤害]
+					'''
+				NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
+				LuckyStar2Part:
+					'''
+					幸运星：运气增加
+					[c/807b7d:(2)件套]
+					[c/807b7d:增加] [c/9e82b5:0.2]
+					'''
+				LuckyStar3Part:
+					'''
+					幸运星：运气增加
+					[c/807b7d:(3)件套]
+					[c/807b7d:增加] [c/9e82b5:0.3]
+					'''
 			}
 
 			PirateKingShoes: {
 				DisplayName: Pirate King Shoes
 				Tooltip: ""
+				NotHasPirateKingSoul: 海盗王之魂：装备至少2件套后触发效果
+				PirateKingSoul2Part:
+					'''
+					海盗王之魂：攻击敌人有时会抢夺钱币
+					[c/807b7d:(2)件套]
+					[c/69a777:5%概率触发]
+					[c/69a777:2] [c/807b7d:秒冷却时间]
+					[c/807b7d:造成] [c/9e82b5:150%] [c/807b7d:伤害]
+					'''
+				PirateKingSoul3Part:
+					'''
+					海盗王之魂：攻击敌人有时会抢夺钱币
+					[c/807b7d:(3)件套]
+					[c/69a777:10%概率触发]
+					[c/69a777:1] [c/807b7d:秒冷却时间]
+					[c/807b7d:造成] [c/9e82b5:175%] [c/807b7d:伤害]
+					'''
+				NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
+				LuckyStar2Part:
+					'''
+					幸运星：运气增加
+					[c/807b7d:(2)件套]
+					[c/807b7d:增加] [c/9e82b5:0.2]
+					'''
+				LuckyStar3Part:
+					'''
+					幸运星：运气增加
+					[c/807b7d:(3)件套]
+					[c/807b7d:增加] [c/9e82b5:0.3]
+					'''
+			}
+
+			IcicleSoulStone: {
+				DisplayName: Icicle Soul Stone
+				Tooltip: ""
+			}
+
+			MedusaLightArmor: {
+				DisplayName: Medusa Light Armor
+				Tooltip: ""
+				NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
+				MedusaSoul2Part:
+					'''
+					美杜莎之魂：对远处的敌人造成更多伤害，
+					但对近处的敌人伤害降低
+					[c/807b7d:最多增加] [c/9e82b5:50%] [c/807b7d:伤害]
+					[c/807b7d:最多减少] [c/9e82b5:50%] [c/807b7d:伤害]
+					'''
+				MedusaSoul3Part:
+					'''
+					美杜莎之魂：对远处的敌人造成更多伤害，
+					但对近处的敌人伤害降低
+					[c/807b7d:最多增加] [c/9e82b5:75%] [c/807b7d:伤害]
+					[c/807b7d:最多减少] [c/9e82b5:30%] [c/807b7d:伤害]
+					'''
+				NotHasSplit: 分裂：装备至少2件套后触发效果
+				Split2Part:
+					'''
+					分裂：远程武器射出更多的投掷物
+					[c/807b7d:(2)件套]
+					[c/807b7d:分裂等级] [c/9e82b5:+1]
+					[c/807b7d:伤害补正] [c/9e82b5:65%]
+					'''
+				Split3Part:
+					'''
+					分裂：远程武器射出更多的投掷物
+					[c/807b7d:(3)件套]
+					[c/807b7d:分裂等级] [c/9e82b5:+2]
+					[c/807b7d:伤害补正] [c/9e82b5:50%]
+					'''
+			}
+
+			MedusaMask: {
+				DisplayName: Medusa Mask
+				Tooltip: ""
+				NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
+				MedusaSoul2Part:
+					'''
+					美杜莎之魂：对远处的敌人造成更多伤害，
+					但对近处的敌人伤害降低
+					[c/807b7d:最多增加] [c/9e82b5:50%] [c/807b7d:伤害]
+					[c/807b7d:最多减少] [c/9e82b5:50%] [c/807b7d:伤害]
+					'''
+				MedusaSoul3Part:
+					'''
+					美杜莎之魂：对远处的敌人造成更多伤害，
+					但对近处的敌人伤害降低
+					[c/807b7d:最多增加] [c/9e82b5:75%] [c/807b7d:伤害]
+					[c/807b7d:最多减少] [c/9e82b5:30%] [c/807b7d:伤害]
+					'''
+				NotHasSplit: 分裂：装备至少2件套后触发效果
+				Split2Part:
+					'''
+					分裂：远程武器射出更多的投掷物
+					[c/807b7d:(2)件套]
+					[c/807b7d:分裂等级] [c/9e82b5:+1]
+					[c/807b7d:伤害补正] [c/9e82b5:65%]
+					'''
+				Split3Part:
+					'''
+					分裂：远程武器射出更多的投掷物
+					[c/807b7d:(3)件套]
+					[c/807b7d:分裂等级] [c/9e82b5:+2]
+					[c/807b7d:伤害补正] [c/9e82b5:50%]
+					'''
+				MedusaBonus: 隐秘行动：远程伤害，远程暴击率，移动速度各增加5%
+			}
+
+			MedusaSlippers: {
+				DisplayName: Medusa Slippers
+				Tooltip: ""
+				NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
+				MedusaSoul2Part:
+					'''
+					美杜莎之魂：对远处的敌人造成更多伤害，
+					但对近处的敌人伤害降低
+					[c/807b7d:最多增加] [c/9e82b5:50%] [c/807b7d:伤害]
+					[c/807b7d:最多减少] [c/9e82b5:50%] [c/807b7d:伤害]
+					'''
+				MedusaSoul3Part:
+					'''
+					美杜莎之魂：对远处的敌人造成更多伤害，
+					但对近处的敌人伤害降低
+					[c/807b7d:最多增加] [c/9e82b5:75%] [c/807b7d:伤害]
+					[c/807b7d:最多减少] [c/9e82b5:30%] [c/807b7d:伤害]
+					'''
+				NotHasSplit: 分裂：装备至少2件套后触发效果
+				Split2Part:
+					'''
+					分裂：远程武器射出更多的投掷物
+					[c/807b7d:(2)件套]
+					[c/807b7d:分裂等级] [c/9e82b5:+1]
+					[c/807b7d:伤害补正] [c/9e82b5:65%]
+					'''
+				Split3Part:
+					'''
+					分裂：远程武器射出更多的投掷物
+					[c/807b7d:(3)件套]
+					[c/807b7d:分裂等级] [c/9e82b5:+2]
+					[c/807b7d:伤害补正] [c/9e82b5:50%]
+					'''
 			}
 		}
 
@@ -3145,6 +3347,11 @@ Mods: {
 			ThunderveinSoulBuff: {
 				DisplayName: Thundervein Soul Buff
 				Description: Mods.Coralite.Buffs.ThunderveinSoulBuff.Description
+			}
+
+			IcicleSoulBuff: {
+				DisplayName: Icicle Soul Buff
+				Description: Mods.Coralite.Buffs.IcicleSoulBuff.Description
 			}
 		}
 
@@ -3606,6 +3813,7 @@ Mods: {
 			ThunderDukeVineHeldProj.DisplayName: Thunder Duke Vine Held Proj
 			ElectromagneticCannon_Friendly.DisplayName: Electromagnetic Cannon_ Friendly
 			ThunderveinBladeSlash.DisplayName: Thundervein Blade Slash
+			IcicleSoul.DisplayName: Icicle Soul
 		}
 
 		Configs: {

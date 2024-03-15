@@ -12,6 +12,7 @@ using Coralite.Content.Items.YujianHulu;
 using Coralite.Core.Configs;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework;
+using rail;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -101,7 +102,7 @@ namespace Coralite.Content.NPCs.VanillaNPC
                             ItemDropRule.Common(ItemType<PirateKingCoat>(), 1, 1, 1),
                             ItemDropRule.Common(ItemType<PirateKingShoes>(), 1, 1, 1),
                         };
-                        npcLoot.Add(new FewFromRulesRule(1, 2, PirateKingTypes));
+                        npcLoot.Add(new FewFromRulesRule(1, 5, PirateKingTypes));
                     }
                     break;
 
@@ -142,6 +143,35 @@ namespace Coralite.Content.NPCs.VanillaNPC
                 case NPCID.AngryBonesBigMuscle:
                     npcLoot.Add(ItemDropRule.Common(ItemType<CoreBoneRing>(), 200, 1, 1));
                     npcLoot.Add(ItemDropRule.Common(ItemType<RemainsOfSamurai>(), 100, 1, 1));
+                    break;
+                case NPCID.Medusa://美杜莎掉落美杜莎套装
+                    {
+                        IItemDropRule[] PirateKingTypes = new IItemDropRule[]
+                        {
+                            ItemDropRule.Common(ItemType<MedusaMask>(), 1, 1, 1),
+                            ItemDropRule.Common(ItemType<MedusaLightArmor>(), 1, 1, 1),
+                            ItemDropRule.Common(ItemType<MedusaSlippers>(), 1, 1, 1),
+                        };
+                        LeadingConditionRule leadingConditionRule = new LeadingConditionRule(new Conditions.IsHardmode());
+
+                        leadingConditionRule.OnSuccess(new FewFromRulesRule(1, 25, PirateKingTypes));
+                        npcLoot.Add(leadingConditionRule);
+                    }
+                    break;
+                case NPCID.TheDestroyer://毁灭者在天顶世界掉落美杜莎鞋
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.ZenithSeedIsUp(),ItemType<MedusaSlippers>(), 1));
+                    break;
+                case NPCID.Retinazer://双子魔眼在天顶世界掉落美杜莎面罩
+                case NPCID.Spazmatism://双子魔眼在天顶世界掉落美杜莎面罩
+                    {
+                        LeadingConditionRule leadingConditionRule = new LeadingConditionRule(new Conditions.MissingTwin());
+                        leadingConditionRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.ZenithSeedIsUp(), ItemType<MedusaMask>(),1));
+
+                        npcLoot.Add(leadingConditionRule);
+                    }
+                    break;
+                case NPCID.SkeletronPrime://机械佝偻王在天顶世界掉落美杜莎轻甲
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.ZenithSeedIsUp(), ItemType<MedusaLightArmor>(), 1));
                     break;
                 case NPCID.MoonLordCore:
                     npcLoot.Add(ItemDropRule.Common(ItemType<ConquerorOfTheSeas>(), 9, 1, 1));

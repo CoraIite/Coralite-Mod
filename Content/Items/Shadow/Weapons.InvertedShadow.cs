@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.Shadow
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<DrawInvertedPlayerProj>(), damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<DrawInvertedPlayerProj>(), damage, knockback, player.whoAmI);
             return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }
     }

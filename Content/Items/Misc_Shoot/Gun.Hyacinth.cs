@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 {
                     float angle = shootAngle + i * MathHelper.TwoPi / 3;
                     int textureType = Main.rand.NextFromList(textureList.ToArray());
-                    Projectile.NewProjectile(source, player.Center + angle.ToRotationVector2() * 40, Vector2.Zero, ProjectileType<HyacinthPhantomGun>(), (int)(damage * 0.75f), knockback, player.whoAmI, textureType, i);
+                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center + angle.ToRotationVector2() * 40, Vector2.Zero, ProjectileType<HyacinthPhantomGun>(), (int)(damage * 0.75f), knockback, player.whoAmI, textureType, i);
                     textureList.Remove(textureType);
                 }
 
@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                 //生成手持弹幕以及红色子弹
                 Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.One) * 16, ProjectileType<HyacinthRedBullet>(), damage, knockback, player.whoAmI);
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<HyacinthHeldProj>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<HyacinthHeldProj>(), damage, knockback, player.whoAmI);
 
                 SoundStyle style = CoraliteSoundID.Gun_Item11;
                 //style.Pitch = -0.8f;

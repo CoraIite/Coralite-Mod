@@ -156,6 +156,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<IcicleSoulStone>(), 4));
+
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<BabyIceDragonRelic>()));
             npcLoot.Add(ItemDropRule.BossBag(ItemType<BabyIceDragonBossBag>()));
             npcLoot.Add(ItemDropRule.Common(ItemType<BabyIceDragonTrophy>(), 10));

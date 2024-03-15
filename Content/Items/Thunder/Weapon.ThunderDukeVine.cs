@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -61,8 +60,8 @@ namespace Coralite.Content.Items.Thunder
                 if (shootCount > 14)
                 {
                     Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
-                    Projectile.NewProjectile(source, player.Center+targetDir*1026, player.Center+targetDir*26, ProjectileType<ElectromagneticCannon_Friendly>(),
-                        (int)(damage*0.9f), knockback, player.whoAmI, 30, ai2:70);
+                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center + targetDir * 1026, player.Center + targetDir * 26, ProjectileType<ElectromagneticCannon_Friendly>(),
+                        (int)(damage * 0.9f), knockback, player.whoAmI, 30, ai2: 70);
 
                     var modifyer = new PunchCameraModifier(player.Center, targetDir * 1.8f, 10, 10, 20);
                     Main.instance.CameraModifiers.Add(modifyer);
@@ -73,8 +72,8 @@ namespace Coralite.Content.Items.Thunder
                     return false;
                 }
                 else
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<ThunderDukeVineHeldProj>(), damage, knockback, player.whoAmI, ai2: shootCount);
-                
+                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<ThunderDukeVineHeldProj>(), damage, knockback, player.whoAmI, ai2: shootCount);
+
                 SoundEngine.PlaySound(CoraliteSoundID.Gun2_Item40, player.Center);
                 return true;
             }
@@ -162,7 +161,7 @@ namespace Coralite.Content.Items.Thunder
             Projectile.friendly = true;
             Projectile.width = Projectile.height = 40;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 20;
+            Projectile.idStaticNPCHitCooldown = 15;
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Ranged;

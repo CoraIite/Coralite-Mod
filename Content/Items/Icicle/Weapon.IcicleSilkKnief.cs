@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.Icicle
                 }
 
                 //生成弹幕
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<IcicleKniefChain>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player,Item), player.Center, Vector2.Zero, ProjectileType<IcicleKniefChain>(), damage, knockback, player.whoAmI);
                 return false;
             }
 

@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                PlayerNightmareEnergy.Spawn(player, source);
+                PlayerNightmareEnergy.Spawn(player, Item);
                 if (player.altFunctionUse == 2)
                 {
                     SoundEngine.PlaySound(CoraliteSoundID.Snake_Item151, player.Center);

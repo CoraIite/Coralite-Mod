@@ -35,6 +35,11 @@ namespace Coralite.Content.Items.RedJades
 
         public override bool? CanHitNPC(NPC target)
         {
+            if (target.friendly)
+            {
+                return null;
+            }
+
             return Collision.CanHitLine(Projectile.Center, 1, 1, target.Center, 1, 1) && Vector2.Distance(Projectile.Center, target.Center) < 200;
         }
     }

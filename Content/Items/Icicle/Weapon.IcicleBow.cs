@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.One);
                 float rot = dir.ToRotation();
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<IcicleBowHeldProj>(), damage, knockback, player.whoAmI, rot, 0);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<IcicleBowHeldProj>(), damage, knockback, player.whoAmI, rot, 0);
                 Projectile.NewProjectile(source, player.Center, dir * 13, ProjectileType<IcicleArrow>(), damage, knockback, player.whoAmI);
             }
 
@@ -83,7 +83,7 @@ namespace Coralite.Content.Items.Icicle
             if (Player.whoAmI == Main.myPlayer)
             {
                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, Player.Center);
-                for (int i = 0; i < 4; i++)//生成冰晶粒子
+                for (int i = 0; i < 4; i++)//鐢熸垚鍐版櫠绮掑瓙
                 {
                     Vector2 center = Player.Center + (-1.57f + i * 1.57f).ToRotationVector2() * 64;
                     Vector2 velocity = (i * 1.57f).ToRotationVector2() * 4;
@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Icicle
                     }
                 }
 
-                //生成手持弹幕
+                //鐢熸垚鎵嬫寔寮瑰箷
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ModContent.ProjectileType<IcicleBowHeldProj>(),
                     Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, (Main.MouseWorld - Player.Center).ToRotation(), 1);
             }

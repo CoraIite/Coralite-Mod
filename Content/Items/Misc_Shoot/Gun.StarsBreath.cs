@@ -108,7 +108,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 SoundEngine.PlaySound(CoraliteSoundID.Gun2_Item40, player.Center);
 
                 Projectile.NewProjectile(source, player.Center, velocity, ProjectileType<StarsBreathBullet>(), damage, knockback, player.whoAmI, Main.rand.Next(3));
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<StarsBreathHeldProj>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<StarsBreathHeldProj>(), damage, knockback, player.whoAmI);
             }
             return false;
         }

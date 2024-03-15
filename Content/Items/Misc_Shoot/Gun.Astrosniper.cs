@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 if (player.ItemAnimationJustStarted)
                 {
                     float targetRot = (pointPosition - player.Center).ToRotation();
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<AstrosniperHeldProj>(), damage, knockback, player.whoAmI, targetRot);
+                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<AstrosniperHeldProj>(), damage, knockback, player.whoAmI, targetRot);
                     Projectile.NewProjectile(source, player.Center, targetRot.ToRotationVector2() * 20f, ProjectileID.BulletHighVelocity, 5, 0, player.whoAmI);
                 }
                 else

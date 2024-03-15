@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Gels
             Item.useTime = 26;
             Item.useAnimation = 26;
             Item.UseSound = CoraliteSoundID.WhipSwing_Item152;
-            //Item.channel = true;
+            Item.value = Item.sellPrice(0,1);
             Item.noMelee = true;
             Item.noUseGraphic = true;
         }
