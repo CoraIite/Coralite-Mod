@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.FlyingShields
 {
@@ -26,7 +25,7 @@ namespace Coralite.Content.Items.FlyingShields
             PirateKingSoul3Part = Language.GetOrRegister(this.GetLocalizationKey("PirateKingSoul3Part"),
                                                 () => "海盗王之魂：攻击敌人有时会抢夺钱币\n[c/807b7d:(3)件套]\n[c/69a777:10%概率触发]\n[c/69a777:1] [c/807b7d:秒冷却时间]\n[c/807b7d:造成] [c/9e82b5:175%] [c/807b7d:伤害]");
             NotHasLuckyStar = Language.GetOrRegister(this.GetLocalizationKey("NotHasLuckyStar"), () => "幸运星：装备至少2件套后触发效果");
-            LuckyStar2Part= Language.GetOrRegister(this.GetLocalizationKey("LuckyStar2Part"), () => "幸运星：运气增加\n[c/807b7d:(2)件套]\n[c/807b7d:增加] [c/9e82b5:0.2]");
+            LuckyStar2Part = Language.GetOrRegister(this.GetLocalizationKey("LuckyStar2Part"), () => "幸运星：运气增加\n[c/807b7d:(2)件套]\n[c/807b7d:增加] [c/9e82b5:0.2]");
             LuckyStar3Part = Language.GetOrRegister(this.GetLocalizationKey("LuckyStar3Part"), () => "幸运星：运气增加\n[c/807b7d:(3)件套]\n[c/807b7d:增加] [c/9e82b5:0.3]");
         }
 
@@ -90,9 +89,9 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return head.type==ModContent.ItemType<PirateKingHat>()&&
-                body.type==ModContent.ItemType<PirateKingCoat>()&&
-                legs.type==ModContent.ItemType<PirateKingShoes>();
+            return head.type == ModContent.ItemType<PirateKingHat>() &&
+                body.type == ModContent.ItemType<PirateKingCoat>() &&
+                legs.type == ModContent.ItemType<PirateKingShoes>();
         }
 
         public override void UpdateArmorSet(Player player)

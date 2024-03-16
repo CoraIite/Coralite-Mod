@@ -1,11 +1,10 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.Thunder
 {
-    public class TheGazeOfTheThunderveinTile:ModTile
+    public class TheGazeOfTheThunderveinTile : ModTile
     {
         public override string Texture => AssetDirectory.ThunderTiles + Name;
 

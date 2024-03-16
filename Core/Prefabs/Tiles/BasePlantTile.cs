@@ -1,6 +1,4 @@
-﻿using Terraria.ModLoader;
-
-namespace Coralite.Core.Prefabs.Tiles
+﻿namespace Coralite.Core.Prefabs.Tiles
 {
     public abstract class BasePlantTile : ModTile
     {

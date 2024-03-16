@@ -1,13 +1,11 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -178,7 +176,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             if (Timer > 30)
             {
-                Projectile.SpawnTrailDust(30f,DustID.PortalBoltTrail, Main.rand.NextFloat(0.1f, 0.4f),
+                Projectile.SpawnTrailDust(30f, DustID.PortalBoltTrail, Main.rand.NextFloat(0.1f, 0.4f),
                     newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.3f));
                 ThunderWidth = Main.rand.NextFloat(20, 30);
 
@@ -189,7 +187,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void OnKill(int timeLeft)
         {
-            Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<LightningParticle>(),Scale:2.5f);
+            Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<LightningParticle>(), Scale: 2.5f);
 
             float baseRot = Main.rand.NextFloat(6.282f);
             for (int i = 0; i < 5; i++)
@@ -228,7 +226,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         }
     }
 
-    public class StrongLightningBall: LightningBall
+    public class StrongLightningBall : LightningBall
     {
         public override Color ThunderColorFunc_Yellow(float factor)
         {

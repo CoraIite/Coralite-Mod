@@ -2,15 +2,12 @@
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.ComponentModel;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.MagikeSystem.Base
 {

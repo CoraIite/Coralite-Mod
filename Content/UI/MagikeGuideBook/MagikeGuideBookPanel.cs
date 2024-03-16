@@ -7,7 +7,6 @@ using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.UI.MagikeGuideBook
 {

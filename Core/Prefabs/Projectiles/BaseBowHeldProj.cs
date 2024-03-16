@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace Coralite.Core.Prefabs.Projectiles
+﻿namespace Coralite.Core.Prefabs.Projectiles
 {
     public abstract class BaseBowHeldProj : BaseHeldProj
     {

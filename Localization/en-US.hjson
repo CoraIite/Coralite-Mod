@@ -3814,6 +3814,7 @@ Mods: {
 			ElectromagneticCannon_Friendly.DisplayName: Electromagnetic Cannon_ Friendly
 			ThunderveinBladeSlash.DisplayName: Thundervein Blade Slash
 			IcicleSoul.DisplayName: Icicle Soul
+			ThunderveinBladeDash.DisplayName: Thundervein Blade Dash
 		}
 
 		Configs: {

@@ -1,6 +1,5 @@
 ﻿using Terraria.GameContent.Creative;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Prefabs.Items
 {

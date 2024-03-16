@@ -1,11 +1,14 @@
-﻿using Coralite.Compat.BossCheckList;
+﻿//global usings
+global using Microsoft.Xna.Framework;
+global using Terraria.ModLoader;
+//
+using Coralite.Compat.BossCheckList;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Terraria.ModLoader;
 
 namespace Coralite
 {

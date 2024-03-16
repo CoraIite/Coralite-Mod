@@ -7,11 +7,9 @@ using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.MagikeGuideBook.Introduce

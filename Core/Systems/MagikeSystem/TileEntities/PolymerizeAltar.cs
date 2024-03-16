@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.UI;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;

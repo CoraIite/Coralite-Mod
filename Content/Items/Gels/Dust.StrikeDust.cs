@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Dusts;
-using Microsoft.Xna.Framework;
 using Terraria;
 
 namespace Coralite.Content.Items.Gels

@@ -5,7 +5,6 @@ using Coralite.Core.Prefabs.Items;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike.Tools.MiniColumns
 {

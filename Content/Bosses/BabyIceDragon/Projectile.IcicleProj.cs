@@ -1,10 +1,8 @@
 ﻿using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {

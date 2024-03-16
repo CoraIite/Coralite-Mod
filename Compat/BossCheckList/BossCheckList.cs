@@ -3,7 +3,6 @@ using Coralite.Content.Items.Thunder;
 using Coralite.Core.Systems.BossSystems;
 using System.Collections.Generic;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Compat.BossCheckList

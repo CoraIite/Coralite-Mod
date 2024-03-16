@@ -1,6 +1,5 @@
 ﻿using Coralite.Core.Systems.BotanicalSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

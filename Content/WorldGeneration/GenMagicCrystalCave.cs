@@ -3,7 +3,6 @@ using Coralite.Content.Tiles.Magike;
 using Coralite.Content.Walls.Magike;
 using Coralite.Content.WorldGeneration.Generators;
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
@@ -11,7 +10,6 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 

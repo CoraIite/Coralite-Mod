@@ -1,9 +1,7 @@
 ﻿using Coralite.Content.NPCs.VanillaNPC;
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.CoreKeeper
 {

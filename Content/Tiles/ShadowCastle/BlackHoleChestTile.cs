@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Evevts.ShadowCastle;
 using Coralite.Content.Items.ShadowCastle;
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using Terraria;
@@ -10,7 +9,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.ShadowCastle

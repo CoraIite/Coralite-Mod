@@ -2,12 +2,10 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 {

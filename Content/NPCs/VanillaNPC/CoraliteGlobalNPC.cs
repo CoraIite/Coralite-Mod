@@ -11,13 +11,10 @@ using Coralite.Content.Items.Placeable;
 using Coralite.Content.Items.YujianHulu;
 using Coralite.Core.Configs;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
-using rail;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.NPCs.VanillaNPC
@@ -159,13 +156,13 @@ namespace Coralite.Content.NPCs.VanillaNPC
                     }
                     break;
                 case NPCID.TheDestroyer://毁灭者在天顶世界掉落美杜莎鞋
-                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.ZenithSeedIsUp(),ItemType<MedusaSlippers>(), 1));
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.ZenithSeedIsUp(), ItemType<MedusaSlippers>(), 1));
                     break;
                 case NPCID.Retinazer://双子魔眼在天顶世界掉落美杜莎面罩
                 case NPCID.Spazmatism://双子魔眼在天顶世界掉落美杜莎面罩
                     {
                         LeadingConditionRule leadingConditionRule = new LeadingConditionRule(new Conditions.MissingTwin());
-                        leadingConditionRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.ZenithSeedIsUp(), ItemType<MedusaMask>(),1));
+                        leadingConditionRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.ZenithSeedIsUp(), ItemType<MedusaMask>(), 1));
 
                         npcLoot.Add(leadingConditionRule);
                     }

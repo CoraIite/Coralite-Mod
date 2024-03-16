@@ -4,13 +4,11 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Utilities;
 using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.CoreKeeper.Bases
 {

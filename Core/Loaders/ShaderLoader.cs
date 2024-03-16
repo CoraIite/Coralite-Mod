@@ -4,7 +4,6 @@ using System.Reflection;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
-using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 using static Terraria.ModLoader.Core.TmodFile;
 

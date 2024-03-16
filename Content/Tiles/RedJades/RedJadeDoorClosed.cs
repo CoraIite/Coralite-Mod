@@ -4,7 +4,6 @@ using Coralite.Core.Prefabs.Tiles;
 using Terraria;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.RedJades
 {

@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
+﻿namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
 {
     public class Spire : ShadowCastleRoom
     {

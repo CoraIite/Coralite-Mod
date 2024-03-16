@@ -1,7 +1,5 @@
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {

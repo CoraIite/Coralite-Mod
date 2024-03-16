@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.ShadowCastle;
-using Coralite.Content.Items.Thunder;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
 using Terraria.ID;

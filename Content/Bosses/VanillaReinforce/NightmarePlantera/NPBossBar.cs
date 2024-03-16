@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -7,7 +6,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.Graphics.Effects;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {

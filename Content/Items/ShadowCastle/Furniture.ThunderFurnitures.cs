@@ -2,11 +2,10 @@
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.ShadowCastle
 {
-    public abstract class BaseMercuryFurniture<T> : BasePlaceableItem where T:ModTile
+    public abstract class BaseMercuryFurniture<T> : BasePlaceableItem where T : ModTile
     {
         public BaseMercuryFurniture() : base(0, ItemRarityID.Blue, ModContent.TileType<T>(), AssetDirectory.ShadowCastleItems)
         {
@@ -24,7 +23,7 @@ namespace Coralite.Content.Items.ShadowCastle
         }
     }
 
-    public class MercuryBed: BaseMercuryFurniture<MercuryBedTile>
+    public class MercuryBed : BaseMercuryFurniture<MercuryBedTile>
     {
         public override void AddRecipes()
         {
@@ -66,7 +65,7 @@ namespace Coralite.Content.Items.ShadowCastle
         {
             CreateRecipe()
                 .AddIngredient<ShadowBrick>(8)
-                .AddIngredient(ItemID.Torch,3)
+                .AddIngredient(ItemID.Torch, 3)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

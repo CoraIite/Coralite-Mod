@@ -1,10 +1,8 @@
 ﻿using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Graphics.Effects;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -61,7 +59,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                 for (int i = -4; i < 5; i++)
                 {
-                    Vector2 pos = phantom.Center + new Vector2(i * phantom.ai[3], 0)+new Vector2(0,-Math.Abs(i)*20);
+                    Vector2 pos = phantom.Center + new Vector2(i * phantom.ai[3], 0) + new Vector2(0, -Math.Abs(i) * 20);
                     spriteBatch.Draw(mainTex, pos - Main.screenPosition, null, c2, 0, origin, phantom.scale, 0, 0);
                 }
 
@@ -100,7 +98,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             float factor = Timeleft / 100f;
             if (owner.ai[0] == 1)
             {
-                Main.maxRaining = Math.Clamp(0.5f * factor,0f,1f);
+                Main.maxRaining = Math.Clamp(0.5f * factor, 0f, 1f);
                 Main.cloudAlpha = Main.maxRaining;
                 Main.windSpeedCurrent = 0;
                 Main.windSpeedTarget = 0;

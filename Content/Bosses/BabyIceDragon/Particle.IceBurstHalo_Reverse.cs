@@ -1,6 +1,5 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
-using Microsoft.Xna.Framework;
 using Terraria;
 
 namespace Coralite.Content.Bosses.BabyIceDragon

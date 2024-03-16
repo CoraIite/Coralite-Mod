@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.CoreKeeper
 {

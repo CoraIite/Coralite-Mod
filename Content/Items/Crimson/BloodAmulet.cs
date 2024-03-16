@@ -1,10 +1,8 @@
 ﻿using Coralite.Content.Items.Corruption;
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Crimson
 {

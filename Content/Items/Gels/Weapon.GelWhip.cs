@@ -1,6 +1,5 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Gels
 {
@@ -33,7 +31,7 @@ namespace Coralite.Content.Items.Gels
             Item.useTime = 26;
             Item.useAnimation = 26;
             Item.UseSound = CoraliteSoundID.WhipSwing_Item152;
-            Item.value = Item.sellPrice(0,1);
+            Item.value = Item.sellPrice(0, 1);
             Item.noMelee = true;
             Item.noUseGraphic = true;
         }

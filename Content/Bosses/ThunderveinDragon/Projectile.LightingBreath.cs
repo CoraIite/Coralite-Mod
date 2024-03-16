@@ -1,13 +1,11 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -150,7 +148,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
         }
 
-        public virtual (float ,float) GetRange(float factor)
+        public virtual (float, float) GetRange(float factor)
         {
             float sinFactor = MathF.Sin(factor * MathHelper.Pi);
 
@@ -168,7 +166,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// 使用ai2传入闪电每个点间的间隔
     /// 使用速度传入中心点的位置，位置传入末端的位置
     /// </summary>
-    public class StrongerLightingBreath: LightingBreath
+    public class StrongerLightingBreath : LightingBreath
     {
         public override Color ThunderColorFunc_Yellow(float factor)
         {

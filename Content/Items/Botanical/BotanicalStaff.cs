@@ -1,10 +1,8 @@
 ﻿using Coralite.Content.Tiles.Plants;
 using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Botanical

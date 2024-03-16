@@ -1,9 +1,8 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
 using System;
-using Terraria.Audio;
 using Terraria;
-using Microsoft.Xna.Framework;
+using Terraria.Audio;
 using Terraria.Graphics.CameraModifiers;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
@@ -22,7 +21,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case 0://先短暂远离准备冲刺
                     {
-                        if (Timer==0)
+                        if (Timer == 0)
                         {
                             NPC.frame.Y = 1;
                             Timer = 1;
@@ -63,7 +62,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case 1://开冲，直到与玩家距离小于一定值后停止
                     {
                         UpdateAllOldCaches();
-                        GetLengthToTargetPos(Target.Center, out float xLength,out _);
+                        GetLengthToTargetPos(Target.Center, out float xLength, out _);
                         if (xLength > 100)
                             NPC.QuickSetDirection();
 

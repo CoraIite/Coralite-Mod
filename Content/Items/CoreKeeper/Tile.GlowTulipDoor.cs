@@ -2,11 +2,9 @@
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Tiles;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.CoreKeeper
 {

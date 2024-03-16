@@ -1,6 +1,5 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections;
 using System.Collections.Generic;

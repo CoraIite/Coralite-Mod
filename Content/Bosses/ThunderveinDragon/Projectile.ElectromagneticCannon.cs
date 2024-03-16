@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -9,7 +8,6 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -19,7 +17,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// 使用速度传入中心点的位置，位置传入末端的位置
     /// 激光长度2000，激光旋转跟随recorder1;
     /// </summary>
-    public class ElectromagneticCannon: LightningDash
+    public class ElectromagneticCannon : LightningDash
     {
         const int DelayTime = 30;
         private float laserWidth;

@@ -1,10 +1,8 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
 using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 {

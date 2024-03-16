@@ -4,7 +4,6 @@ using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Linq;
@@ -13,7 +12,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Icicle
@@ -63,7 +61,7 @@ namespace Coralite.Content.Items.Icicle
                 }
 
                 //生成弹幕
-                Projectile.NewProjectile(new EntitySource_ItemUse(player,Item), player.Center, Vector2.Zero, ProjectileType<IcicleKniefChain>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<IcicleKniefChain>(), damage, knockback, player.whoAmI);
                 return false;
             }
 

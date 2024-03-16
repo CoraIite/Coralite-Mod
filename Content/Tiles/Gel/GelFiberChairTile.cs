@@ -6,7 +6,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.Gel
 {

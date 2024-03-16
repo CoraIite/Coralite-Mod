@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -9,7 +8,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {

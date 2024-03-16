@@ -1,7 +1,6 @@
 ﻿using System;
 using Terraria;
 using Terraria.Graphics.Effects;
-using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 
 namespace Coralite.Core.Loaders

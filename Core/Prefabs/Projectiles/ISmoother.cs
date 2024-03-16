@@ -1,5 +1,4 @@
 ﻿using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using System;
 
 namespace Coralite.Core.Prefabs.Projectiles

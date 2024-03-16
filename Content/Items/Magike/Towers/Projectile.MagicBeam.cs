@@ -1,6 +1,5 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -8,7 +7,6 @@ using Terraria.DataStructures;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike.Towers
 {

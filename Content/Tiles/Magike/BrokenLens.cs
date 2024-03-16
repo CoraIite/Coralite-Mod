@@ -3,7 +3,6 @@ using Coralite.Core;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.Magike

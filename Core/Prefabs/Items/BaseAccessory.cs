@@ -1,6 +1,4 @@
-﻿using Terraria.ModLoader;
-
-namespace Coralite.Core.Prefabs.Items
+﻿namespace Coralite.Core.Prefabs.Items
 {
     public class BaseAccessory : ModItem
     {

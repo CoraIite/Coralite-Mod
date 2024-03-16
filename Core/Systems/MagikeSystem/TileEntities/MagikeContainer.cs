@@ -1,27 +1,25 @@
-using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
     /// <summary>
-    /// Ä§ÄÜÈİÆ÷£¬¼Ì³ĞÕâ¸öÀàÒÔÊµÏÖ×î»ù´¡µÄ×÷ÎªÈİÆ÷µÄ¹¦ÄÜ
+    /// é­”èƒ½å®¹å™¨ï¼Œç»§æ‰¿è¿™ä¸ªç±»ä»¥å®ç°æœ€åŸºç¡€çš„ä½œä¸ºå®¹å™¨çš„åŠŸèƒ½
     /// </summary>
     public abstract class MagikeContainer : ModTileEntity, IMagikeContainer
     {
-        /// <summary> µ±Ç°Ä§ÄÜÁ¿ </summary>
+        /// <summary> å½“å‰é­”èƒ½é‡ </summary>
         public int magike;
-        /// <summary> Ä§ÄÜ×î´óÖµ </summary>
+        /// <summary> é­”èƒ½æœ€å¤§å€¼ </summary>
         public readonly int magikeMax;
 
-        /// <summary> µ±Ç°µÄ×°ÖÃÊÇ·ñÔÚÊ¹ÓÃ×´Ì¬ </summary>
+        /// <summary> å½“å‰çš„è£…ç½®æ˜¯å¦åœ¨ä½¿ç”¨çŠ¶æ€ </summary>
         public bool active;
 
-        /// <summary> Îï¿éÀàĞÍ </summary>
+        /// <summary> ç‰©å—ç±»å‹ </summary>
         public abstract ushort TileType { get; }
 
         public int Magike => magike;
@@ -67,18 +65,18 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             magike = tag.GetInt("Magike");
         }
 
-        //===================ÒÔÏÂÊÇ°ïÖú·½·¨========================
+        //===================ä»¥ä¸‹æ˜¯å¸®åŠ©æ–¹æ³•========================
 
-        /// <summary> ÏŞÖÆÄ§ÄÜÁ¿£¬ÈÃËü²»³¬¹ıÉÏÏŞ </summary>
+        /// <summary> é™åˆ¶é­”èƒ½é‡ï¼Œè®©å®ƒä¸è¶…è¿‡ä¸Šé™ </summary>
         public virtual void Limit()
         {
             magike = Math.Clamp(magike, 0, magikeMax);
         }
 
         /// <summary>
-        /// ¸ø¸ÄÄ§ÄÜÈİÆ÷³äÄÜµÄ·½·¨£¬ĞèÒªÏÈ»ñÈ¡µ½ÊµÀı²ÅĞĞ
+        /// ç»™æ”¹é­”èƒ½å®¹å™¨å……èƒ½çš„æ–¹æ³•ï¼Œéœ€è¦å…ˆè·å–åˆ°å®ä¾‹æ‰è¡Œ
         /// </summary>
-        /// <param name="howManyMagike">³ä¶àÉÙ</param>
+        /// <param name="howManyMagike">å……å¤šå°‘</param>
         public virtual bool Charge(int howManyMagike)
         {
             bool ChargeOrDischarge = howManyMagike >= 0;

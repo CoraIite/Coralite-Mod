@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
-using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.Graphics.CameraModifiers;

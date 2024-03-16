@@ -3,11 +3,10 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Thunder
 {
-    public abstract class BaseThunderFurniture<T> : BasePlaceableItem where T:ModTile
+    public abstract class BaseThunderFurniture<T> : BasePlaceableItem where T : ModTile
     {
         public BaseThunderFurniture() : base(0, ItemRarityID.Yellow, ModContent.TileType<T>(), AssetDirectory.ThunderItems)
         {
@@ -43,7 +42,7 @@ namespace Coralite.Content.Items.Thunder
         }
     }
 
-    public class ThunderBed: BaseThunderFurniture<ThunderBedTile>
+    public class ThunderBed : BaseThunderFurniture<ThunderBedTile>
     {
         public override void AddRecipes()
         {
@@ -85,7 +84,7 @@ namespace Coralite.Content.Items.Thunder
         {
             CreateRecipe()
                 .AddIngredient<ThunderStoneBlock>(8)
-                .AddIngredient(ItemID.Torch,3)
+                .AddIngredient(ItemID.Torch, 3)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

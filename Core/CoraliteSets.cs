@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
 using Coralite.Content.Items.RedJades;
 using Terraria.ID;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core

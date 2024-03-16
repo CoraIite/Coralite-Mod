@@ -1,11 +1,9 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Core.Systems.YujianSystem.HuluEffects;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.YujianSystem
 {

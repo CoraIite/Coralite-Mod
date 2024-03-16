@@ -1,5 +1,4 @@
 ﻿using Coralite.Core.Systems.ParticleSystem;
-using Microsoft.Xna.Framework;
 using Terraria;
 
 namespace Coralite.Content.Particles

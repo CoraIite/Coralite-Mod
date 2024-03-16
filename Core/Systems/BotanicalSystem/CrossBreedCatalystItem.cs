@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.BotanicalSystem
 {

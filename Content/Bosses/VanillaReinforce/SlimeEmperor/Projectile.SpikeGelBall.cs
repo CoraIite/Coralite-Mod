@@ -1,8 +1,6 @@
 ﻿using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {

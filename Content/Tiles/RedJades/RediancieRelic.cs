@@ -2,7 +2,6 @@
 using Coralite.Core.Prefabs.Tiles;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.RedJades
 {

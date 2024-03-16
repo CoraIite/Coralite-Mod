@@ -1,11 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.CustomHooks
 {
@@ -169,19 +167,19 @@ namespace Coralite.Content.CustomHooks
                 int frameY2 = legFrame.Y / 56;
                 legFrame = textureToDraw.Frame(1, 20, 0, frameY2);
 
-                Vector2 vector = 
+                Vector2 vector =
                     new Vector2(
-                        (int)(drawinfo.Position.X 
-                        - (legFrame.Width / 2) 
+                        (int)(drawinfo.Position.X
+                        - (legFrame.Width / 2)
                         + (drawinfo.drawPlayer.width / 2))
-                        
-                        , (int)(drawinfo.Position.Y 
-                        + drawinfo.drawPlayer.height 
-                        - legFrame.Height 
-                        + 4f)) 
 
-                    -Main.screenPosition
-                    +drawinfo.drawPlayer.legPosition 
+                        , (int)(drawinfo.Position.Y
+                        + drawinfo.drawPlayer.height
+                        - legFrame.Height
+                        + 4f))
+
+                    - Main.screenPosition
+                    + drawinfo.drawPlayer.legPosition
                     + drawinfo.legVect;
 
                 vector.Y -= 2f;
@@ -226,7 +224,7 @@ namespace Coralite.Content.CustomHooks
                 }
             }
             else
-                orig.Invoke(ref drawinfo,textureToDraw,matchingColor,shaderIndex,glowmask);
+                orig.Invoke(ref drawinfo, textureToDraw, matchingColor, shaderIndex, glowmask);
 
         }
 

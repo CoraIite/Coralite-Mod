@@ -1,12 +1,10 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Misc_Summon
 {
@@ -109,7 +107,7 @@ namespace Coralite.Content.Items.Misc_Summon
                 Projectile.timeLeft = 2;
 
             Vector2 vector = player.Center;
-            if (player.direction>0)
+            if (player.direction > 0)
                 vector.X -= (40) * player.direction;
             else
                 vector.X -= (45 + player.width) * player.direction;
@@ -196,8 +194,8 @@ namespace Coralite.Content.Items.Misc_Summon
                 Lighting.AddLight(Projectile.Center, new Vector3(0.4f, 0.3f, 0.3f));
                 if (Main.rand.NextBool())
                 {
-                    Dust d = Dust.NewDustPerfect(Projectile.Center+Main.rand.NextVector2Circular(6,6) + new Vector2(-Projectile.spriteDirection * 14, 14).RotatedBy(Projectile.rotation), DustID.Firework_Pink,
-                         -Projectile.velocity*Main.rand.NextFloat(0.3f,0.6f),50,Scale:Main.rand.NextFloat(0.7f,1f));
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(6, 6) + new Vector2(-Projectile.spriteDirection * 14, 14).RotatedBy(Projectile.rotation), DustID.Firework_Pink,
+                         -Projectile.velocity * Main.rand.NextFloat(0.3f, 0.6f), 50, Scale: Main.rand.NextFloat(0.7f, 1f));
                     d.noGravity = true;
                 }
                 Projectile.rotation = Projectile.velocity.X * 0.05f;

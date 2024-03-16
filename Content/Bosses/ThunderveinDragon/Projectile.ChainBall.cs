@@ -1,13 +1,11 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -87,9 +85,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     {
                         ballVec = (Projectile.rotation + 1.57f).ToRotationVector2() * MathF.Sin(Timer * 0.05f) * 140;
                         if (Timer > 45)
-                            for (int i = -1; i < 2; i+=2)
+                            for (int i = -1; i < 2; i += 2)
                             {
-                                Dust d = Dust.NewDustPerfect(Projectile.Center + i * ballVec + Main.rand.NextVector2Circular(24, 24), DustID.PortalBoltTrail,-Projectile.velocity*Main.rand.NextFloat(0.2f,0.5f),
+                                Dust d = Dust.NewDustPerfect(Projectile.Center + i * ballVec + Main.rand.NextVector2Circular(24, 24), DustID.PortalBoltTrail, -Projectile.velocity * Main.rand.NextFloat(0.2f, 0.5f),
                                     newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.3f));
                                 d.noGravity = true;
                             }
@@ -103,7 +101,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         if (Timer > 45)
                             for (int i = -1; i < 2; i += 2)
                             {
-                                Dust d = Dust.NewDustPerfect(Projectile.Center + i * ballVec+Main.rand.NextVector2Circular(24,24), DustID.PortalBoltTrail, (rot - i * 1.57f).ToRotationVector2() * Main.rand.NextFloat(2f, 6f),
+                                Dust d = Dust.NewDustPerfect(Projectile.Center + i * ballVec + Main.rand.NextVector2Circular(24, 24), DustID.PortalBoltTrail, (rot - i * 1.57f).ToRotationVector2() * Main.rand.NextFloat(2f, 6f),
                                     newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.3f));
                                 d.noGravity = true;
                             }

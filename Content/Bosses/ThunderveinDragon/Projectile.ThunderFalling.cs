@@ -1,14 +1,12 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -60,7 +58,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public virtual float ThunderWidthFunc(float factor)
         {
-            return ThunderWidth * factor; 
+            return ThunderWidth * factor;
         }
 
         public override void AI()
@@ -88,7 +86,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (Timer < LightingTime)
             {
                 float factor = Timer / LightingTime;
-                Vector2 targetPos = Vector2.Lerp( Projectile.Center, Projectile.velocity, factor);
+                Vector2 targetPos = Vector2.Lerp(Projectile.Center, Projectile.velocity, factor);
                 Vector2 pos2 = targetPos;
 
                 List<Vector2> pos = new List<Vector2>
@@ -142,12 +140,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 float factor = (Timer - LightingTime) / (DelayTime);
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
-                ThunderWidth = 20 + (1-factor) * 100;
+                ThunderWidth = 20 + (1 - factor) * 100;
                 ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.SetRange((0, 10 + (1-factor) * PointDistance / 2));
+                    trail.SetRange((0, 10 + (1 - factor) * PointDistance / 2));
                     trail.SetExpandWidth((1 - factor) * PointDistance / 3);
 
                     if (Timer % 6 == 0)
@@ -279,7 +277,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (Timer < LightingTime)
             {
                 float factor = Timer / LightingTime;
-                Vector2 center = Projectile.Center ;
+                Vector2 center = Projectile.Center;
                 Vector2 targetPos = Vector2.Lerp(center, Projectile.velocity, factor);
                 Vector2 pos2 = targetPos;
 

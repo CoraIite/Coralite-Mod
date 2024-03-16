@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Prefixes.YujianWeaponPrefixes
 {

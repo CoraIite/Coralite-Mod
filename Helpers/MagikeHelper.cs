@@ -1,6 +1,5 @@
 ﻿using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

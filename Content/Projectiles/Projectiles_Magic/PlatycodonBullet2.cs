@@ -1,11 +1,9 @@
 using Coralite.Core;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Projectiles.Projectiles_Magic
 {

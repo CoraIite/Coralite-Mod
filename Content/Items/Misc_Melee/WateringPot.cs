@@ -1,10 +1,8 @@
 ﻿using Coralite.Content.Items.Materials;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Misc_Melee
 {

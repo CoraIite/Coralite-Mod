@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
-using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;

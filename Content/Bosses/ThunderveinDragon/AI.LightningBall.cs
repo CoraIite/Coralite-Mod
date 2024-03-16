@@ -1,6 +1,5 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -102,7 +101,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                                 for (int i = -1; i < 2; i++)
                                                 {
                                                     NPC.NewProjectileDirectInAI<StrongLightningBall>(GetMousePos()
-                                                        , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero).RotatedBy(i * 0.35f) 
+                                                        , (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero).RotatedBy(i * 0.35f)
                                                         , damage, 0, NPC.target);
                                                 }
                                             }

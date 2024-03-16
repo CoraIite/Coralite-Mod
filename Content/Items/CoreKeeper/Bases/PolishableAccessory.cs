@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Items.CoreKeeper.Bases

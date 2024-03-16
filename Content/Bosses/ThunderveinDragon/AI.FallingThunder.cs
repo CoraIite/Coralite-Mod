@@ -2,12 +2,10 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -89,9 +87,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             SoundEngine.PlaySound(st, NPC.Center);
                             SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                         }
-                        else if (Timer > 15&&Timer<70)
+                        else if (Timer > 15 && Timer < 70)
                         {
-                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60*NPC.scale;
+                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60 * NPC.scale;
                             if ((int)Timer % 10 == 0)
                                 Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.Instance.ThunderveinYellow, 0.2f);
                             if ((int)Timer % 20 == 0)
@@ -125,7 +123,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
                         else
                         {
-                            selfAlpha = shadowAlpha =1- (Timer - 10) / 20f;
+                            selfAlpha = shadowAlpha = 1 - (Timer - 10) / 20f;
                         }
 
                         Timer++;
@@ -186,7 +184,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             Vector2 targetPos = new Vector2(Recorder, Recorder2);
                             NPC.Center = targetPos + new Vector2(0, -UpLength);
-                            float length = 30 + 60 * (Timer - ChasingTime) / (AimingTime-ChasingTime);
+                            float length = 30 + 60 * (Timer - ChasingTime) / (AimingTime - ChasingTime);
                             if (Main.rand.NextBool())
                                 ElectricParticle_Follow.Spawn(targetPos, Main.rand.NextVector2Circular(length, length),
                                 () => new Vector2(Recorder, Recorder2), Main.rand.NextFloat(0.5f, 0.75f));
@@ -209,7 +207,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             {
                                 NPC.NewProjectileDirectInAI<ThunderFalling>(
                                     NPC.Center + new Vector2(-250 + i * 500 / 3, Main.rand.Next(40, 300))
-                                    , targetPos+new Vector2(0,250), damage, 0, NPC.target, SmashDownTime + 8, NPC.whoAmI, 60);
+                                    , targetPos + new Vector2(0, 250), damage, 0, NPC.target, SmashDownTime + 8, NPC.whoAmI, 60);
                             }
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
@@ -348,7 +346,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
                         else if (Timer > 15 && Timer < 70)
                         {
-                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60*NPC.scale;
+                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60 * NPC.scale;
                             if ((int)Timer % 10 == 0)
                                 Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.Instance.ThunderveinYellow, 0.2f);
                             if ((int)Timer % 20 == 0)

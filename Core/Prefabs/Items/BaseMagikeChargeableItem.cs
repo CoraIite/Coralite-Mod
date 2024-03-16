@@ -1,5 +1,4 @@
 ﻿using Coralite.Helpers;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Prefabs.Items
 {

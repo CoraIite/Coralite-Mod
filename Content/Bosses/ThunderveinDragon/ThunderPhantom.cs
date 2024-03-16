@@ -1,11 +1,9 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -99,7 +97,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void AI()
         {
-            if (!OwnerIndex.GetNPCOwner<ThunderveinDragon>(out NPC owner,NPC.Kill))
+            if (!OwnerIndex.GetNPCOwner<ThunderveinDragon>(out NPC owner, NPC.Kill))
                 return;
 
             switch (State)

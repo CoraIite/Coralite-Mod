@@ -4,7 +4,6 @@ using Coralite.Core;
 using Coralite.Core.Loaders;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike
 {

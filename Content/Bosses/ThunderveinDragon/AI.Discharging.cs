@@ -1,6 +1,5 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -48,7 +47,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
 
                         SetRotationNormally();
-                        float edge = 400 + 220 * Math.Clamp(Timer / ReadyTime,0,1);
+                        float edge = 400 + 220 * Math.Clamp(Timer / ReadyTime, 0, 1);
                         edge /= 2;
                         for (int i = 0; i < 4; i++)
                         {
@@ -67,7 +66,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         NPC.velocity *= 0.96f;
                         NPC.QuickSetDirection();
                         TurnToNoRot();
-                        float edge = (40 + 580)/2;
+                        float edge = (40 + 580) / 2;
                         for (int i = 0; i < 4; i++)
                         {
                             SpawnDischargingDust(edge);
@@ -98,7 +97,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 canDrawShadows = true;
                                 currentSurrounding = true;
                                 SetBackgroundLight(0.5f, burstTime - 3, 8);
-                                var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY*1.4f, 26, 26, 25, 1000);
+                                var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY * 1.4f, 26, 26, 25, 1000);
                                 Main.instance.CameraModifiers.Add(modifyer);
 
                                 ResetAllOldCaches();
@@ -109,13 +108,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case 2://爆！！！！！！！！！
                     {
                         UpdateAllOldCaches();
-                        float factor = Coralite.Instance.SqrtSmoother.Smoother (Timer / burstTime);
+                        float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / burstTime);
                         shadowScale = Helper.Lerp(1f, 2.5f, factor);
                         shadowAlpha = Helper.Lerp(1f, 0f, factor);
 
                         if (NPC.frame.Y != 0)
                         {
-                            NPC.frame.X =   1;
+                            NPC.frame.X = 1;
 
                             if (++NPC.frameCounter > 1)
                             {
@@ -151,11 +150,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Vector2 pos = NPC.Center + Main.rand.NextVector2CircularEdge(edge, edge);
             Dust d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail
                 , (pos - NPC.Center).SafeNormalize(Vector2.Zero).RotatedBy(NPC.direction * MathHelper.PiOver2) * Main.rand.NextFloat(4f, 8f)
-                , newColor: Coralite.Instance.ThunderveinYellow,Scale:Main.rand.NextFloat(1f,1.5f));
+                , newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
             d.noGravity = true;
-            pos= NPC.Center + Main.rand.NextVector2Circular(edge, edge);
+            pos = NPC.Center + Main.rand.NextVector2Circular(edge, edge);
             d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail
-                , (pos - NPC.Center).SafeNormalize(Vector2.Zero)* Main.rand.NextFloat(4f, 8f)
+                , (pos - NPC.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(4f, 8f)
                 , newColor: Coralite.Instance.ThunderveinYellow);
             d.noGravity = true;
         }

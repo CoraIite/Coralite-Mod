@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.Thunder
 {

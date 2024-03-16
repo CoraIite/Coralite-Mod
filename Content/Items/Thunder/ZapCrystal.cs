@@ -7,7 +7,7 @@ namespace Coralite.Content.Items.Thunder
 {
     public class ZapCrystal : BaseMaterial
     {
-        public ZapCrystal() : base(Item.CommonMaxStack, Item.sellPrice(0,0,50,0), ItemRarityID.Yellow, AssetDirectory.ThunderItems)
+        public ZapCrystal() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 50, 0), ItemRarityID.Yellow, AssetDirectory.ThunderItems)
         {
         }
     }

@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {

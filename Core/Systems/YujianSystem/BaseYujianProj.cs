@@ -2,14 +2,12 @@
 using Coralite.Core.Systems.YujianSystem.HuluEffects;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.YujianSystem
 {

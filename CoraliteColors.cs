@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace Coralite
+﻿namespace Coralite
 {
     public partial class Coralite
     {

@@ -1,10 +1,8 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.Trees
 {

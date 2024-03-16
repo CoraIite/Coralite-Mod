@@ -2,10 +2,8 @@
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Systems.ParticleSystem;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Icicle
 {

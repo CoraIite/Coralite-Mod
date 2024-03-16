@@ -1,9 +1,7 @@
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Coralite.Content.Items.Shadow

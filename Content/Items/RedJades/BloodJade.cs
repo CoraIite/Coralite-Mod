@@ -3,7 +3,6 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.RedJades
 {

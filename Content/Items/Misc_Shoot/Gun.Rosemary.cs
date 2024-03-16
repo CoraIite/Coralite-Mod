@@ -1,11 +1,9 @@
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Shoot

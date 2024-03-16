@@ -2,7 +2,6 @@
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
@@ -384,7 +382,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             if (shadowCircle[1].selfRotation > 1)
                                 shadowCircle[1].selfRotation -= 1;
                             shadowCircle[1].Update();
-                            shadowCircle[2].xRotation +=0.01f;
+                            shadowCircle[2].xRotation += 0.01f;
                             shadowCircle[2].zRotation = 0f;
                             shadowCircle[2].selfRotation += 0.005f;
                             if (shadowCircle[2].selfRotation > 1)
@@ -751,7 +749,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Texture2D mainTex = NPC.GetTexture();
 
             var pos = NPC.Center - screenPos;
-            var frameBox = mainTex.Frame(1,9,0,NPC.frame.Y);
+            var frameBox = mainTex.Frame(1, 9, 0, NPC.frame.Y);
             var origin = frameBox.Size() / 2;
 
             for (int i = 0; i < ShadowCount / 2; i++)

@@ -1,6 +1,5 @@
 ﻿using Coralite.Core;
 using Terraria;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.CoreKeeper

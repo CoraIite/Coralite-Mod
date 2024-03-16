@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
@@ -96,20 +95,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
             spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
         }
 
-        public void DrawFrontCircle_NoEndBegin( Vector2 center, Color lightColor)
+        public void DrawFrontCircle_NoEndBegin(Vector2 center, Color lightColor)
         {
             if (xRotation.ToRotationVector2().Y > 0)
-                DrawCircle_NoEndBegin( center, lightColor, 90, vector2s.Length - 1);
+                DrawCircle_NoEndBegin(center, lightColor, 90, vector2s.Length - 1);
             else
-                DrawCircle_NoEndBegin( center, lightColor, 0, 90);
+                DrawCircle_NoEndBegin(center, lightColor, 0, 90);
         }
 
-        public void DrawBackCircle_NoEndBegin( Vector2 center, Color lightColor)
+        public void DrawBackCircle_NoEndBegin(Vector2 center, Color lightColor)
         {
             if (xRotation.ToRotationVector2().Y > 0)
-                DrawCircle_NoEndBegin( center, lightColor, 0, 90);
+                DrawCircle_NoEndBegin(center, lightColor, 0, 90);
             else
-                DrawCircle_NoEndBegin( center, lightColor, 90, vector2s.Length - 1);
+                DrawCircle_NoEndBegin(center, lightColor, 90, vector2s.Length - 1);
         }
 
         public void DrawCircle(SpriteBatch spriteBatch, Vector2 center, Color lightColor, int start, int end)
@@ -117,7 +116,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearWrap/*注意了奥*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
 
-            DrawCircle_NoEndBegin(center,lightColor,start,end);
+            DrawCircle_NoEndBegin(center, lightColor, start, end);
         }
 
         public void DrawCircle_NoEndBegin(Vector2 center, Color lightColor, int start, int end)

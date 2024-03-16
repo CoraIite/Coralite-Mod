@@ -1,10 +1,8 @@
 ﻿using Coralite.Content.Raritys;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 
 namespace Coralite.Core.Systems.MagikeSystem

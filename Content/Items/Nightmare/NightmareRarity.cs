@@ -1,8 +1,6 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
-using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Nightmare
 {

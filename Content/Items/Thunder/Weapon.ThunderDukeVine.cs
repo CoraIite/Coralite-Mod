@@ -3,7 +3,6 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -14,12 +13,11 @@ using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Thunder
 {
-    public class ThunderDukeVine:ModItem
+    public class ThunderDukeVine : ModItem
     {
         public override string Texture => AssetDirectory.ThunderItems + Name;
 
@@ -93,7 +91,7 @@ namespace Coralite.Content.Items.Thunder
 
     public class ThunderDukeVineHeldProj : BaseGunHeldProj
     {
-        public override string Texture => AssetDirectory.ThunderItems+ "ThunderDukeVineProj";
+        public override string Texture => AssetDirectory.ThunderItems + "ThunderDukeVineProj";
 
         ref float Frame => ref Projectile.ai[2];
 
@@ -174,7 +172,7 @@ namespace Coralite.Content.Items.Thunder
             Player owner = Main.player[Projectile.owner];
             owner.heldProj = Projectile.whoAmI;
             owner.itemTime = owner.itemAnimation = 2;
-            owner.direction=Main.MouseWorld.X>owner.Center.X? 1 : -1;
+            owner.direction = Main.MouseWorld.X > owner.Center.X ? 1 : -1;
             Vector2 dir = (Main.MouseWorld - owner.Center).SafeNormalize(Vector2.Zero);
             Projectile.velocity = owner.Center + dir * 26;
             Vector2 endPoint = Projectile.velocity;

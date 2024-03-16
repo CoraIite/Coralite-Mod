@@ -1,15 +1,12 @@
 ﻿using Coralite.Content.Items.Thunder;
 using Coralite.Content.Particles;
-using Coralite.Content.UI.MagikeGuideBook.Chapter2;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -17,7 +14,6 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -493,7 +489,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         NPC.QuickSetDirection();
                         TurnToNoRot();
                         NPC.velocity *= 0.9f;
-                        if (Timer==0 &&NPC.frame.Y != 4)
+                        if (Timer == 0 && NPC.frame.Y != 4)
                         {
                             FlyingFrame();
                             break;
@@ -511,7 +507,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
                         else if (Timer > 15 && Timer < 130)
                         {
-                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60*NPC.Center;
+                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60 * NPC.Center;
                             if ((int)Timer % 10 == 0)
                             {
                                 var modifyer = new PunchCameraModifier(NPC.Center, Helper.NextVec2Dir(), 8, 12, 20, 1000);

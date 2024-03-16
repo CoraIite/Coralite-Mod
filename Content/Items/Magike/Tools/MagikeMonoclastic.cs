@@ -2,7 +2,6 @@
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike.Tools
 {

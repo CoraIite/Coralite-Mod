@@ -3,7 +3,6 @@ using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.BotanicalSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;

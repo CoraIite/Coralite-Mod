@@ -5,7 +5,6 @@ using Coralite.Content.Tiles.Magike;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
-using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration

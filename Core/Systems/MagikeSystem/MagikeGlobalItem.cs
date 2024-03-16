@@ -1,10 +1,8 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem

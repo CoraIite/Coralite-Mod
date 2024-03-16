@@ -1,13 +1,10 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
-using Terraria.ModLoader.Default;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
@@ -62,8 +59,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         public float extraRotation;
         public int trailWidth;
 
-        private bool firstShoot = true;
-        private bool recordTileCollide;
+        public bool firstShoot = true;
+        public bool recordTileCollide;
 
         public enum FlyingShieldStates
         {

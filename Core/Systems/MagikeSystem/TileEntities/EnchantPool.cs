@@ -2,7 +2,6 @@
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities

@@ -1,10 +1,8 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
-using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Shadow
 {

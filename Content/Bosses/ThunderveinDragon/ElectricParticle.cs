@@ -1,9 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
-using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -31,7 +29,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         }
     }
 
-    public class ElectricParticle_Purple: ElectricParticle
+    public class ElectricParticle_Purple : ElectricParticle
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "ElectricParticle_Purple";
     }

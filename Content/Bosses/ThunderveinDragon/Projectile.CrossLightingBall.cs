@@ -1,13 +1,11 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -485,7 +483,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// <summary>
     /// ai0传入主人，ai1传入角度，如果为0的话就会随机选取一个
     /// </summary>
-    public class StrongerCrossLightingBallChasable: CrossLightingBallChasable
+    public class StrongerCrossLightingBallChasable : CrossLightingBallChasable
     {
         public override Color ThunderColorFunc_Yellow(float factor)
         {

@@ -3,7 +3,6 @@ using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;

@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.BossSummons
 {

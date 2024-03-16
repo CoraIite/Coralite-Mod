@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Tiles.Gel;
 using Coralite.Core;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Gels
 {

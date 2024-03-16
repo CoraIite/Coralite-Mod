@@ -1,14 +1,12 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ReLogic.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.NPCs.Magike
 {

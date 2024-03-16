@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.BossSystems

@@ -3,13 +3,11 @@ using Coralite.Content.ModPlayers;
 using Coralite.Content.UI;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.YujianSystem.HuluEffects;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.YujianSystem

@@ -1,11 +1,9 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -115,7 +113,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     Vector2 dir = (basePos - Projectile.Center).SafeNormalize(Vector2.Zero);
                     vec[0] = basePos;
 
-                    for (int i = 1; i <5; i++)
+                    for (int i = 1; i < 5; i++)
                     {
                         vec[i] = basePos + dir * i * (Projectile.width - length) / 10;
                     }
@@ -128,7 +126,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 {
                     light.CanDraw = true;
                     Vector2[] vec = new Vector2[10];
-                    float length = Projectile.width/2;
+                    float length = Projectile.width / 2;
                     float perLength = Main.rand.Next(40, 55);
                     Vector2 dir = (-1.57f + Main.rand.NextFloat(-0.6f, 0.6f)).ToRotationVector2();
                     Vector2 basePos = Projectile.Center + dir * (Projectile.width / 2);
@@ -136,7 +134,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                     for (int i = 1; i < 10; i++)
                     {
-                        vec[i] = basePos + dir * i *perLength;
+                        vec[i] = basePos + dir * i * perLength;
                     }
 
                     light.BasePositions = vec;

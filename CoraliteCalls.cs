@@ -44,33 +44,33 @@ namespace Coralite
             return bossName.ToLower() switch
             {
                 "赤玉灵" or
-                "Rediancie" 
+                "Rediancie"
                     => DownedBossSystem.downedRediancie,
                 "冰龙宝宝" or
-                "BabyIceDragon" 
+                "BabyIceDragon"
                     => DownedBossSystem.downedBabyIceDragon,
                 // "影子球" or "ShadowBalls" => DownedBossSystem.xxxx,
                 "荒雷龙" or
-                "ThunderveinDragon" 
+                "ThunderveinDragon"
                     => DownedBossSystem.downedThunderveinDragon,
                 "史莱姆皇帝" or
                 "至高帝史莱姆王" or
                 "至高帝·史莱姆王" or
                 "至高帝" or
-                "SlimeEmperor" 
+                "SlimeEmperor"
                     => DownedBossSystem.downedSlimeEmperor,
                 "赤血玉灵" or
                 "血咒精赤玉灵" or
                 "血咒精·赤玉灵" or
                 "血咒精" or
-                "Bloodiancie" 
+                "Bloodiancie"
                     => DownedBossSystem.downedBloodiancie,
-                "梦魇之花" or 
-                "梦界主世纪之花" or 
-                "梦界主·世纪之花" or 
-                "梦界主" or 
-                "NightmarePlantera" or 
-                "Nightmare Plantera" 
+                "梦魇之花" or
+                "梦界主世纪之花" or
+                "梦界主·世纪之花" or
+                "梦界主" or
+                "NightmarePlantera" or
+                "Nightmare Plantera"
                     => DownedBossSystem.downedNightmarePlantera,
                 _ => false,
             };

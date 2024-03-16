@@ -1,14 +1,12 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Nightmare
 {

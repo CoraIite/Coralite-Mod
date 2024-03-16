@@ -2,7 +2,6 @@ using Coralite.Content.Tiles.Icicle;
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Icicle
 {

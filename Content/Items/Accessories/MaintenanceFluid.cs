@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Core;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Accessories
 {

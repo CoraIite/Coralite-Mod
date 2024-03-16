@@ -1,14 +1,12 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -23,7 +21,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public ref float Timer => ref Projectile.localAI[0];
 
-        private float thunderRange=110;
+        private float thunderRange = 110;
         private float selfAlpha;
         private float selfScale;
         public bool canDrawThunder = true;
@@ -48,7 +46,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override Color ThunderColorFunc_Yellow(float factor)
         {
-            return Color.Lerp(ThunderveinDragon.ThunderveinYellowAlpha, ThunderveinDragon.ThunderveinPurpleAlpha,  MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
+            return Color.Lerp(ThunderveinDragon.ThunderveinYellowAlpha, ThunderveinDragon.ThunderveinPurpleAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
         }
 
         public override Color ThunderColorFunc2_Orange(float factor)
@@ -318,7 +316,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Color c = ThunderveinDragon.ThunderveinYellowAlpha;
-             c.A = (byte)(ThunderAlpha * 250);
+            c.A = (byte)(ThunderAlpha * 250);
             var origin = exTex.Size() / 2;
             var scale = Projectile.scale * 0.5f;
 

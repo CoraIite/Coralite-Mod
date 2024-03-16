@@ -2,12 +2,10 @@
 using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Misc_Summon;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.GlobalTiles
@@ -287,8 +285,8 @@ namespace Coralite.Content.GlobalTiles
                     TreeTypes tree = WorldGen.GetTreeType(bottomTile.TileType);
                     break;
                 case TileID.VanityTreeSakura:
-                        if (Main.hardMode&&Main.rand.NextBool(1,400))
-                            Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<CrystalBlossomShards>());
+                    if (Main.hardMode && Main.rand.NextBool(1, 400))
+                        Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<CrystalBlossomShards>());
                     break;
                 case TileID.Heart:
                     if (Main.rand.NextBool(15))

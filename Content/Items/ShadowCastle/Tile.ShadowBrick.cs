@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Tiles.ShadowCastle;
 using Coralite.Core;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.ShadowCastle
 {

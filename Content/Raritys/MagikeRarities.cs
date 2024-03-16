@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-
-namespace Coralite.Content.Raritys
+﻿namespace Coralite.Content.Raritys
 {
     public class MagicCrystalRarity : ModRarity
     {

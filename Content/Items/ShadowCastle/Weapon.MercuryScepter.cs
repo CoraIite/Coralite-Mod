@@ -1,10 +1,8 @@
 ﻿using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Items;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.ShadowCastle
 {

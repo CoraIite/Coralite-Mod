@@ -1,11 +1,9 @@
 ﻿using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Prefabs.NPCs;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.NPCs.OtherNPC
 {

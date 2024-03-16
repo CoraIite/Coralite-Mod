@@ -1,13 +1,11 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 {

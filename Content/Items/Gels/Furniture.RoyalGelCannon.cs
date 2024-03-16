@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -7,7 +6,6 @@ using Terraria.Enums;
 using Terraria.GameContent.Creative;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Gels

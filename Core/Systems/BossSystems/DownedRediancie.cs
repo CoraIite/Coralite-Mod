@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.Chat;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.BossSystems
 {

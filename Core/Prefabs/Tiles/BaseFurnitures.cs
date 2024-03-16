@@ -1,12 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Coralite.Core.Prefabs.Tiles
@@ -719,7 +717,7 @@ namespace Coralite.Core.Prefabs.Tiles
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.Height = height;
-            TileObjectData.newTile.Origin = new Point16(0, height-1);
+            TileObjectData.newTile.Origin = new Point16(0, height - 1);
             TileObjectData.newTile.CoordinateHeights = heights;
             TileObjectData.addTile(Type);
 
@@ -1148,12 +1146,12 @@ namespace Coralite.Core.Prefabs.Tiles
             this.mapColor = mapColor;
         }
 
-        public abstract void GetLight(ref float r,ref float g,ref float b);
+        public abstract void GetLight(ref float r, ref float g, ref float b);
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            if (Main.tile[i, j].TileFrameX < 18*3)
+            if (Main.tile[i, j].TileFrameX < 18 * 3)
             {
                 GetLight(ref r, ref g, ref b);
                 return;
@@ -1252,7 +1250,7 @@ namespace Coralite.Core.Prefabs.Tiles
             Tile tile = Framing.GetTileSafely(i, j);
 
             int offX = tile.TileFrameX % (18) / 18;
-            int offY = tile.TileFrameY % (18*2) / 18;
+            int offY = tile.TileFrameY % (18 * 2) / 18;
 
             for (int k = 0; k < 1; k++)
                 for (int m = 0; m < 2; m++)
@@ -1487,7 +1485,7 @@ namespace Coralite.Core.Prefabs.Tiles
                     if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18))
                         Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18;
                     else
-                        Main.tile[i - offX + k, j - offY + m].TileFrameX += 18 ;
+                        Main.tile[i - offX + k, j - offY + m].TileFrameX += 18;
                 }
             return true;
         }
@@ -1553,7 +1551,7 @@ namespace Coralite.Core.Prefabs.Tiles
             Tile tile = Framing.GetTileSafely(i, j);
 
             int offX = tile.TileFrameX % (18) / 18;
-            int offY = tile.TileFrameY % (18*3) / 18;
+            int offY = tile.TileFrameY % (18 * 3) / 18;
 
             for (int k = 0; k < 1; k++)
                 for (int m = 0; m < 3; m++)

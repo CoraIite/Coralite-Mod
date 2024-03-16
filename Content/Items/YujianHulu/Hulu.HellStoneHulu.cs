@@ -1,6 +1,5 @@
 ﻿using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.HuluEffects;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 

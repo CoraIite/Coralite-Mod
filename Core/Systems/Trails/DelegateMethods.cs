@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace Coralite.Core.Systems.Trails
+﻿namespace Coralite.Core.Systems.Trails
 {
     public delegate float TrailWidthFunction(float factorAlongTrail);
 

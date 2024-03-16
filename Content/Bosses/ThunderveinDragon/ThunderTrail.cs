@@ -1,11 +1,9 @@
 ﻿using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -48,7 +46,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void SetExpandWidth(float width)
         {
-            randomExpandWidth= width;
+            randomExpandWidth = width;
         }
 
         public void ExchangeTexture(Asset<Texture2D> asset)
@@ -58,12 +56,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void UpdateTrail(Vector2 velocity)
         {
-            if (RandomlyPositions==null)
+            if (RandomlyPositions == null)
                 return;
             for (int i = 0; i < RandomlyPositions.Length; i++)
             {
                 RandomlyPositions[i] += velocity;
-            }    
+            }
         }
 
         /// <summary>
@@ -88,7 +86,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 float length = Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(thunderRandomOffsetRange.Item1, thunderRandomOffsetRange.Item2);
 
                 //最后赋值
-                RandomlyPositions[i] = BasePositions[i] + normal * length+Main.rand.NextVector2Circular(randomExpandWidth,randomExpandWidth);
+                RandomlyPositions[i] = BasePositions[i] + normal * length + Main.rand.NextVector2Circular(randomExpandWidth, randomExpandWidth);
             }
 
             RandomlyPositions[^1] = BasePositions[^1];
@@ -113,7 +111,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Vector2 Center = RandomlyPositions[0] - Main.screenPosition;
 
             Vector2 normal = (RandomlyPositions[1] - RandomlyPositions[0]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
-            float tipRotaion = normal.ToRotation()+1.57f;
+            float tipRotaion = normal.ToRotation() + 1.57f;
             Color thunderColor = thunderColorFunc(0);
             float tipWidth = thunderWidthFunc(0);
             drawInTip = tipWidth > 10;
@@ -144,11 +142,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     / (RandomlyPositions[i + 1].X - RandomlyPositions[i - 1].X)
                     * (RandomlyPositions[i + 1].Y - RandomlyPositions[i - 1].Y)
                     + RandomlyPositions[i - 1].Y;
-                
+
 
                 float angle = Helpers.Helper.AngleRad(dirToBack, dirToTront);
 
-                normal = (RandomlyPositions[i - 1] - RandomlyPositions[i + 1] ).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
+                normal = (RandomlyPositions[i - 1] - RandomlyPositions[i + 1]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
 
                 if (angle > 0.5f && angle < 1.2f)
                 {
@@ -268,7 +266,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 Color c = new Color(255, 202, 101, 0);
 
                 Vector2 scale = new Vector2(thunderWidthFunc(1) / 170, thunderWidthFunc(1) / 200);
-                float rot = normal.ToRotation()+1.57f;
+                float rot = normal.ToRotation() + 1.57f;
                 Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale, 0, 0);
                 Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale * 0.75f, 0, 0);
                 //Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale * 0.5f, 0, 0);

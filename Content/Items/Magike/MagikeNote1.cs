@@ -1,12 +1,10 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Items.Magike

@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Bosses.ShadowBalls;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -9,7 +8,6 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.ShadowCastle

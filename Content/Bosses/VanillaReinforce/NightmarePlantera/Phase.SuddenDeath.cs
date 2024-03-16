@@ -1,7 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {

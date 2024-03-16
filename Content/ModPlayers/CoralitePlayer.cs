@@ -8,7 +8,6 @@ using Coralite.Content.Projectiles.Globals;
 using Coralite.Content.UI;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +16,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.ModPlayers
@@ -433,7 +431,7 @@ namespace Coralite.Content.ModPlayers
 
                     for (int i = 0; i < 3; i++)//爆金币粒子
                     {
-                        int num36 = Gore.NewGore(new EntitySource_OnHit(Player,target),new Vector2(target.position.X, target.Center.Y - 10f), Vector2.Zero, 1218);
+                        int num36 = Gore.NewGore(new EntitySource_OnHit(Player, target), new Vector2(target.position.X, target.Center.Y - 10f), Vector2.Zero, 1218);
                         Main.gore[num36].velocity = new Vector2(Main.rand.Next(1, 10) * 0.3f * 2f * modifiers.HitDirection, 0f - (2.5f + Main.rand.Next(4) * 0.3f));
                     }
 
@@ -445,7 +443,7 @@ namespace Coralite.Content.ModPlayers
                             itemtype = ItemID.PlatinumCoin;
                         else if (randomCoin < 11)//百分之一概率掉落金币
                             itemtype = ItemID.GoldCoin;
-                        else if(randomCoin < 111)//十分之一概率掉落银币
+                        else if (randomCoin < 111)//十分之一概率掉落银币
                             itemtype = ItemID.SilverCoin;
 
                         Item.NewItem(new EntitySource_OnHit(Player, target), target.Center, itemtype);

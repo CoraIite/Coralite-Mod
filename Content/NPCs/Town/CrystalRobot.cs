@@ -5,7 +5,6 @@ using Coralite.Content.Items.Magike.Towers;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -16,7 +15,6 @@ using Terraria.GameContent.Personalities;
 using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 

@@ -1,10 +1,8 @@
 ﻿using Coralite.Content.UI.UILib;
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
 {

@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -9,7 +8,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Evevts.ShadowCastle

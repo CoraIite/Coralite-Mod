@@ -2,7 +2,6 @@
 using Coralite.Helpers;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.MagikeSystem
 {

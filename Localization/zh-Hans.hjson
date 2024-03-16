@@ -2996,8 +2996,8 @@ Mods: {
 			}
 
 			ThunderveinBlade: {
-				// DisplayName: Thundervein Blade
-				// Tooltip: ""
+				DisplayName: 雷鸣刃
+				Tooltip: "双击方向键使用闪电突袭"
 			}
 
 			PirateKingCoat: {
@@ -3862,6 +3862,7 @@ Mods: {
 			ElectromagneticCannon_Friendly.DisplayName: 电磁炮
 			// ThunderveinBladeSlash.DisplayName: Thundervein Blade Slash
 			IcicleSoul.DisplayName: 冰晶魂魄
+			// ThunderveinBladeDash.DisplayName: Thundervein Blade Dash
 		}
 
 		Configs: {

@@ -1,12 +1,10 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Thunder
 {
@@ -101,7 +99,7 @@ namespace Coralite.Content.Items.Thunder
                 Vector2 center = Projectile.Center;
                 const int RollingTime = 130;
 
-                Vector2 center2 = Owner.Center + (Timer / RollingTime * MathHelper.TwoPi*2).ToRotationVector2() * 350;
+                Vector2 center2 = Owner.Center + (Timer / RollingTime * MathHelper.TwoPi * 2).ToRotationVector2() * 350;
                 Vector2 dir3 = center2 - center;
 
                 float velRot = Projectile.velocity.ToRotation();
@@ -116,7 +114,7 @@ namespace Coralite.Content.Items.Thunder
 
                 int index = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.PortalBoltTrail, newColor: Coralite.Instance.ThunderveinYellow);
                 Main.dust[index].noGravity = true;
-                Main.dust[index].velocity = Helper.NextVec2Dir(2f,6f);
+                Main.dust[index].velocity = Helper.NextVec2Dir(2f, 6f);
 
                 Timer++;
                 if (Timer > RollingTime)

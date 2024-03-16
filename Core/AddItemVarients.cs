@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Terraria.GameContent.Items;
-using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 
 namespace Coralite.Core

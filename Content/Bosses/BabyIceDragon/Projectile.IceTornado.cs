@@ -1,6 +1,4 @@
 using Coralite.Core;
-using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {

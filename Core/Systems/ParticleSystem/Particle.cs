@@ -1,6 +1,5 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.Trails;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;

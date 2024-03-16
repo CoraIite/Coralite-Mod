@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.Magike;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {

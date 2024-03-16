@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-
-namespace Coralite.Content.Items.CoreKeeper
+﻿namespace Coralite.Content.Items.CoreKeeper
 {
     public class LegendaryRarity : ModRarity
     {

@@ -1,16 +1,14 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleSoulStone:ModItem
+    public class IcicleSoulStone : ModItem
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
 
@@ -76,7 +74,7 @@ namespace Coralite.Content.Items.Icicle
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.FairyQueenPet);
-            Projectile.tileCollide= false;
+            Projectile.tileCollide = false;
             Projectile.aiStyle = -1;
         }
 
@@ -92,7 +90,7 @@ namespace Coralite.Content.Items.Icicle
 
             CheckActive(Owner);
 
-                Idle(Owner);
+            Idle(Owner);
 
             Lighting.AddLight(Projectile.Center, new Vector3(1.2f, 0.85f, 0.45f));
             if (++Projectile.frameCounter > 5)

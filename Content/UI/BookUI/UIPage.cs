@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-using Terraria.UI;
+﻿using Terraria.UI;
 
 namespace Coralite.Content.UI.UILib
 {

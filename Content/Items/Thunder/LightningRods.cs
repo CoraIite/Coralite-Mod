@@ -3,21 +3,18 @@ using Coralite.Content.Tiles.RedJades;
 using Coralite.Content.Tiles.Thunder;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
-using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Thunder
 {
     public class LightningRods : BasePlaceableItem
     {
-        public LightningRods() : base(Item.sellPrice(0,0,50), ItemRarityID.Yellow, ModContent.TileType<LightningRodsTile>(), AssetDirectory.ThunderItems)
+        public LightningRods() : base(Item.sellPrice(0, 0, 50), ItemRarityID.Yellow, ModContent.TileType<LightningRodsTile>(), AssetDirectory.ThunderItems)
         {
         }
 
@@ -39,7 +36,7 @@ namespace Coralite.Content.Items.Thunder
     /// ai0传入闪电降下的时间
     /// ai1传入主人
     /// </summary>
-    public class ThunderSpawn: ThunderFalling
+    public class ThunderSpawn : ThunderFalling
     {
         public override string Texture => AssetDirectory.Blank;
 

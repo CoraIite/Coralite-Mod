@@ -1,6 +1,4 @@
-﻿using Terraria.ModLoader;
-
-namespace Coralite.Core.Systems.BossSystems
+﻿namespace Coralite.Core.Systems.BossSystems
 {
     public partial class DownedBossSystem : ModSystem
     {

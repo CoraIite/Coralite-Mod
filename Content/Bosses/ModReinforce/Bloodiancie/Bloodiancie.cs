@@ -3,7 +3,6 @@ using Coralite.Content.Items.RedJades;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +13,6 @@ using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie

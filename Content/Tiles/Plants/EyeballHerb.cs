@@ -2,10 +2,8 @@
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Tiles.Plants
 {

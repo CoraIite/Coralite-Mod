@@ -4,7 +4,6 @@ using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.Machines

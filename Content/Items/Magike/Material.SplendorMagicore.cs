@@ -3,7 +3,6 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Helpers;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike
 {

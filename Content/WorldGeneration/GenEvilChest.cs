@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Items.Corruption;
 using Coralite.Content.Items.Crimson;
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -10,7 +9,6 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
-using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration

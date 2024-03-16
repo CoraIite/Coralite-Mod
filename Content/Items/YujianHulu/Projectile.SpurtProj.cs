@@ -1,8 +1,6 @@
 using Coralite.Core;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.YujianHulu
 {

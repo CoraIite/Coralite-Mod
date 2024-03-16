@@ -2,7 +2,6 @@
 using Coralite.Core.Systems.SlashBladeSystem;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.ShadowCastle
 {

@@ -6,7 +6,6 @@ using Coralite.Core.Systems.MagikeSystem.CraftConditions;
 using Coralite.Helpers;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.Items.Magike
 {

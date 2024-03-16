@@ -1,9 +1,7 @@
 ﻿using Coralite.Content.Items.Shadow;
 using Coralite.Content.Tiles.ShadowCastle;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
 {

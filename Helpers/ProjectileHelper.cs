@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,6 @@ using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Helpers
 {
@@ -93,7 +91,7 @@ namespace Coralite.Helpers
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC n = Main.npc[i];
-                if (n.active&&!n.friendly&&predicate(n))
+                if (n.active && !n.friendly && predicate(n))
                 {
                     float dis = Vector2.Distance(position, n.Center);
                     if (dis < maxDis)
@@ -386,7 +384,7 @@ namespace Coralite.Helpers
                 mainTex.Size() / 2, projectile.scale, 0, 0);
         }
 
-        public static void QuickDraw(this Projectile projectile,Vector2 overrideCenter, Color lightColor, float exRot)
+        public static void QuickDraw(this Projectile projectile, Vector2 overrideCenter, Color lightColor, float exRot)
         {
             Texture2D mainTex = projectile.GetTexture();
 

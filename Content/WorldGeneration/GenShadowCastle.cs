@@ -4,7 +4,6 @@ using Coralite.Content.WorldGeneration.Generators;
 using Coralite.Content.WorldGeneration.ShadowCastleRooms;
 using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ReLogic.Utilities;
@@ -17,7 +16,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.IO;
-using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 //using static Terraria.WorldGen;
 
