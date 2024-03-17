@@ -171,12 +171,13 @@ namespace Coralite.Content.ModPlayers
                 if (parryTime <= 0)
                 {
                     SoundEngine.PlaySound(CoraliteSoundID.MaxMana, Player.Center);
-                    for (int i = 0; i < 5; i++)
+                    float rot = Main.rand.NextFloat(6.282f);
+                    for (int i = 0; i < 8; i++)
                     {
-                        int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Clentaminator_Red, 0f, 0f, 255, Scale: Main.rand.Next(20, 26) * 0.1f);
-                        Main.dust[index].noLight = true;
-                        Main.dust[index].noGravity = true;
-                        Main.dust[index].velocity = Player.velocity * 0.5f;
+                        Dust dust = Dust.NewDustPerfect(Player.Center, DustID.Clentaminator_Red, (rot + i * MathHelper.TwoPi / 8).ToRotationVector2()*3,
+                            255, Scale: Main.rand.Next(20, 26) * 0.1f);
+                        dust.noLight = true;
+                        dust.noGravity = true;
                     }
                 }
             }
@@ -254,12 +255,13 @@ namespace Coralite.Content.ModPlayers
                 if (DashDelay == 0)
                 {
                     SoundEngine.PlaySound(CoraliteSoundID.MaxMana, Player.Center);
-                    for (int i = 0; i < 5; i++)
+                    float rot = Main.rand.NextFloat(6.282f);
+                    for (int i = 0; i < 8; i++)
                     {
-                        int index = Dust.NewDust(Player.position, Player.width, Player.height, DustID.YellowTorch, 0f, 0f, 255, Scale: Main.rand.Next(20, 26) * 0.15f);
-                        Main.dust[index].noLight = true;
-                        Main.dust[index].noGravity = true;
-                        Main.dust[index].velocity = Player.velocity;
+                        Dust dust = Dust.NewDustPerfect(Player.Center, DustID.YellowTorch, (rot + i * MathHelper.TwoPi / 8).ToRotationVector2()*3,
+                            255, Scale: Main.rand.Next(20, 26) * 0.15f);
+                        dust.noLight = true;
+                        dust.noGravity = true;
                     }
                 }
             }

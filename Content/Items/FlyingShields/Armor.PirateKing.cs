@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Melee) += 0.8f;
+            player.GetDamage(DamageClass.Melee) += 0.6f;
             player.GetAttackSpeed(DamageClass.Melee) += 0.05f;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
@@ -117,7 +117,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void UpdateEquip(Player player)
         {
-            player.GetCritChance(DamageClass.Melee) += 0.8f;
+            player.GetCritChance(DamageClass.Melee) += 0.6f;
 
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {

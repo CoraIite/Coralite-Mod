@@ -51,5 +51,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             SoundEngine.PlaySound(CoraliteSoundID.CrushedIce_Item27, Projectile.Center);
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            lightColor=Color.White;
+            return base.PreDraw(ref lightColor);
+        }
     }
 }

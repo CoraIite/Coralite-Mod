@@ -164,7 +164,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<GelThrone>()));
-            //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<SovereignSip>(), 4));
             npcLoot.Add(ItemDropRule.BossBag(ItemType<SlimeEmperorSoulBox>()));
             npcLoot.Add(ItemDropRule.Common(ItemType<RoyalGelCannon>(), 10));
 

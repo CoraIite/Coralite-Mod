@@ -146,11 +146,17 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, NPC.Center);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                     for (int i = -1; i < 1; i++)
-                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(i * 0.02f) * 10f, ModContent.ProjectileType<IceBreath>(), 16, 5f);
+                                    {
+                                        int damage = Helper.GetProjDamage(30, 45, 60);
+                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(i * 0.02f) * 10f, ModContent.ProjectileType<IceBreath>(), damage, 5f);
+                                    }
                             }
 
                             if (Timer % 15 == 0)
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * 12, ModContent.ProjectileType<IcicleProj_Hostile>(), 18, 8f);
+                            {
+                                int damage = Helper.GetProjDamage(40, 55, 70);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * 12, ModContent.ProjectileType<IcicleProj_Hostile>(), damage, 8f);
+                            }
 
                             break;
                         }

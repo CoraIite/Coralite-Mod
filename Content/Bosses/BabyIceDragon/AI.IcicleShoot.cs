@@ -85,7 +85,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                             if ((int)Timer % 12 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * 12, ModContent.ProjectileType<IcicleProj_Hostile>(), 18, 8f);
+                                int damage = Helper.GetProjDamage(40, 45, 70);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * 12, ModContent.ProjectileType<IcicleProj_Hostile>(), damage, 8f);
                                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                             }
                             break;
@@ -117,8 +118,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if ((int)Timer % 6 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
+                            int damage = Helper.GetProjDamage(40, 45, 50);
                             Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-100, 100), -500),
-                                Vector2.Zero, ModContent.ProjectileType<IcicleFalling_Hostile>(), 18, 8f);
+                                Vector2.Zero, ModContent.ProjectileType<IcicleFalling_Hostile>(), damage, 8f);
                             projectile.velocity = (Target.Center + Main.rand.NextVector2Circular(40, 40) - projectile.Center).SafeNormalize(Vector2.Zero) * 12;
                             projectile.netUpdate = true;
                         }

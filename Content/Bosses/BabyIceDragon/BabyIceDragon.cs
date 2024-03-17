@@ -719,7 +719,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 Vector2 position = new Vector2(position_X * 16 + 8, position_Y * 16 - 8);
                 Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, 16, 0f, Main.myPlayer, 0f, 0.4f + scaleOffset + xOffset * 1.1f / howMany);
+                int damage = Helper.GetProjDamage(40, 45, 60);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, damage, 0f, Main.myPlayer, 0f, 0.4f + scaleOffset + xOffset * 1.1f / howMany);
             }
         }
 

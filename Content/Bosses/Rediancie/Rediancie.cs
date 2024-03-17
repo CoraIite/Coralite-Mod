@@ -473,7 +473,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    int damage = NPC.GetAttackDamage_ForProjectiles(10, 15);
+                    int damage = Helper.GetProjDamage(20,25,30);
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter,
                         (Target.Center - NPC.Center + Main.rand.NextVector2CircularEdge(48, 48)).SafeNormalize(Vector2.UnitY) * 12f,
                         ProjectileType<RedPulse>(), damage, 5f, NPC.target);
@@ -523,7 +523,7 @@ namespace Coralite.Content.Bosses.Rediancie
             if (Timer % 25 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 float rot = Main.rand.NextFloat(MathHelper.TwoPi);
-                int damage = NPC.GetAttackDamage_ForProjectiles(10, 15);
+                int damage = Helper.GetProjDamage(20, 25, 30);
                 int timeleft = 16;
                 int howMany = Main.getGoodWorld ? 4 : 3;    //FTW能射出4个，其他模式只射3个
                 for (int i = 0; i < howMany; i++)
@@ -573,7 +573,9 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (Timer == 330)       //生成弹幕
             {
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
+                int damage = Helper.GetProjDamage(30, 45, 70);
+
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), damage, 8f);
                 if (Main.netMode != NetmodeID.Server)
                 {
                     var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
@@ -624,7 +626,10 @@ namespace Coralite.Content.Bosses.Rediancie
                 if (realTime < 71)//边冲边炸
                 {
                     if (realTime % 10 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_Explosion>(), 20, 5f);
+                    {
+                        int damage = Helper.GetProjDamage(20, 25, 30);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_Explosion>(), damage, 5f);
+                    }
 
                     break;
                 }
@@ -665,7 +670,8 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (Timer % 80 == 0)//生成弹幕
             {
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_Explosion>(), 30, 5f);
+                int damage = Helper.GetProjDamage(20, 25, 40);
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_Explosion>(), damage, 5f);
                 SpawnFollowers(1);
             }
             if (Timer > 250)
@@ -701,7 +707,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     int index = Main.rand.Next(followers.Count);
-                    int damage = NPC.GetAttackDamage_ForProjectiles(10, 15);
+                    int damage = Helper.GetProjDamage(20, 25, 35);
                     int shootCount = Helper.ScaleValueForDiffMode(2, 2, 3, 4);
                     for (int i = 0; i < shootCount; i++)
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[index].center, new Vector2(0, -8).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)), ProjectileType<Rediancie_Strike>(), damage, 5f, NPC.target);
@@ -757,7 +763,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    int damage = NPC.GetAttackDamage_ForProjectiles(15, 20);
+                    int damage = Helper.GetProjDamage(20, 25, 30);
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter, (Target.Center - NPC.Center + new Vector2(0, 60 * (Timer / 30) == 1 ? 1 : -1)).SafeNormalize(Vector2.UnitY) * 10f, ProjectileType<Rediancie_Beam>(), damage, 5f);
                 }
 

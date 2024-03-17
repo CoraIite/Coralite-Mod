@@ -11,47 +11,47 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
-    public class Damnation : ModItem
-    {
-        public override string Texture => AssetDirectory.Misc_Shoot + Name;
+    //public class Damnation : ModItem
+    //{
+    //    public override string Texture => AssetDirectory.Misc_Shoot + Name;
 
-        public override void SetDefaults()
-        {
-            Item.useAnimation = Item.useTime = 14;
-            Item.useStyle = ItemUseStyleID.Rapier;
-            Item.shoot = ProjectileID.PurificationPowder;
-            Item.useAmmo = AmmoID.Arrow;
-            Item.DamageType = DamageClass.Ranged;
-            Item.rare = RarityType<NightmareRarity>();
-            Item.value = Item.sellPrice(0, 30, 0, 0);
-            Item.SetWeaponValues(80, 3, 0);
-            Item.autoReuse = true;
-            Item.noUseGraphic = true;
-            Item.noMelee = true;
-            Item.useTurn = false;
-            Item.shootSpeed = 22;
-        }
+    //    public override void SetDefaults()
+    //    {
+    //        Item.useAnimation = Item.useTime = 14;
+    //        Item.useStyle = ItemUseStyleID.Rapier;
+    //        Item.shoot = ProjectileID.PurificationPowder;
+    //        Item.useAmmo = AmmoID.Arrow;
+    //        Item.DamageType = DamageClass.Ranged;
+    //        Item.rare = RarityType<NightmareRarity>();
+    //        Item.value = Item.sellPrice(0, 30, 0, 0);
+    //        Item.SetWeaponValues(80, 3, 0);
+    //        Item.autoReuse = true;
+    //        Item.noUseGraphic = true;
+    //        Item.noMelee = true;
+    //        Item.useTurn = false;
+    //        Item.shootSpeed = 22;
+    //    }
 
-        public override bool AltFunctionUse(Player player) => false;
+    //    public override bool AltFunctionUse(Player player) => false;
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            if (Main.myPlayer == player.whoAmI)
-            {
-                Vector2 pos = Main.MouseWorld + new Vector2(Main.rand.Next(-150, 150), -1200);
-                velocity = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero);
+    //    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+    //    {
+    //        if (Main.myPlayer == player.whoAmI)
+    //        {
+    //            Vector2 pos = Main.MouseWorld + new Vector2(Main.rand.Next(-150, 150), -1200);
+    //            velocity = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero);
 
-                Projectile.NewProjectile(source, player.Center,
-                    Vector2.Zero, ModContent.ProjectileType<DamnationHeldProj>(), 1, knockback, player.whoAmI);
+    //            Projectile.NewProjectile(source, player.Center,
+    //                Vector2.Zero, ModContent.ProjectileType<DamnationHeldProj>(), 1, knockback, player.whoAmI);
 
-                for (int i = 0; i < 3; i++)
-                    Projectile.NewProjectile(source, pos + Main.rand.NextVector2Circular(32, 32),
-                        velocity.RotatedBy(Main.rand.NextFloat(-0.08f, 0.08f)) * Main.rand.NextFloat(7f, 9f),
-                        type, damage, knockback, player.whoAmI, 1);
-            }
-            return false;
-        }
-    }
+    //            for (int i = 0; i < 3; i++)
+    //                Projectile.NewProjectile(source, pos + Main.rand.NextVector2Circular(32, 32),
+    //                    velocity.RotatedBy(Main.rand.NextFloat(-0.08f, 0.08f)) * Main.rand.NextFloat(7f, 9f),
+    //                    type, damage, knockback, player.whoAmI, 1);
+    //        }
+    //        return false;
+    //    }
+    //}
 
     public class DamnationHeldProj : BaseHeldProj
     {

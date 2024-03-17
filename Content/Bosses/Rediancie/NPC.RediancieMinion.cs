@@ -74,7 +74,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
                 if (Timer == 158)
                 {
-                    int damage = NPC.GetAttackDamage_ForProjectiles(10, 15);
+                    int damage = Helper.GetProjDamage(20, 25, 30);
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), damage, 5f);
                 }
 

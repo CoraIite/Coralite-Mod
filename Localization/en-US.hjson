@@ -3136,6 +3136,21 @@ Mods: {
 					[c/807b7d:伤害补正] [c/9e82b5:50%]
 					'''
 			}
+
+			Arachnopyre: {
+				DisplayName: Arachnopyre
+				Tooltip: ""
+			}
+
+			ThunderveinSpear: {
+				DisplayName: Thundervein Spear
+				Tooltip: ""
+			}
+
+			SovereignSip: {
+				DisplayName: Sovereign Sip
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -3352,6 +3367,11 @@ Mods: {
 			IcicleSoulBuff: {
 				DisplayName: Icicle Soul Buff
 				Description: Mods.Coralite.Buffs.IcicleSoulBuff.Description
+			}
+
+			SovereignSipBuff: {
+				DisplayName: Sovereign Sip Buff
+				Description: Mods.Coralite.Buffs.SovereignSipBuff.Description
 			}
 		}
 
@@ -3815,6 +3835,10 @@ Mods: {
 			ThunderveinBladeSlash.DisplayName: Thundervein Blade Slash
 			IcicleSoul.DisplayName: Icicle Soul
 			ThunderveinBladeDash.DisplayName: Thundervein Blade Dash
+			ArachnopyreGuard.DisplayName: Arachnopyre Guard
+			ArachnopyreProj.DisplayName: Arachnopyre Proj
+			ArachnopyreSpider.DisplayName: Arachnopyre Spider
+			SovereignSlime.DisplayName: Sovereign Slime
 		}
 
 		Configs: {

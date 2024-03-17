@@ -107,7 +107,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D mainTex = TextureAssets.Npc[Type].Value;
-            spriteBatch.Draw(mainTex, NPC.Center - Main.screenPosition, null, drawColor, NPC.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), NPC.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, NPC.Center - Main.screenPosition, null, Color.White, NPC.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), NPC.scale, SpriteEffects.None, 0f);
             return false;
         }
     }

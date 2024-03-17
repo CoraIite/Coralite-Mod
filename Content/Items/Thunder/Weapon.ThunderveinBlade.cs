@@ -4,6 +4,7 @@ using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.CameraSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -117,10 +118,11 @@ namespace Coralite.Content.Items.Thunder
                 }
 
                 //生成手持弹幕
+               int damage= Player.GetWeaponDamage(Player.HeldItem);
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
-                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 3);
+                    damage, Player.HeldItem.knockBack, Player.whoAmI, 3);
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
-                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 10, DashDir);
+                    damage, Player.HeldItem.knockBack, Player.whoAmI, 10, DashDir);
             }
 
             return true;
@@ -494,6 +496,11 @@ namespace Coralite.Content.Items.Thunder
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.velocity, Projectile.Center, Projectile.width, ref a);
         }
 
+        public override void OnSpawn(IEntitySource source)
+        {
+            Main.instance.CameraModifiers.Add(new MoveModifyer(25, 50));
+        }
+
         public override void AI()
         {
             if (thunderTrails == null)
@@ -575,29 +582,57 @@ namespace Coralite.Content.Items.Thunder
             }
             else
             {
-                if (DashCount < 2 && ExtraDash && Timer < DashTime + DelayTime / 2)
+                if (DashCount < 2 && ExtraDash && Timer < DashTime + DelayTime / 3)
                 {
-                    if (Owner.controlLeft && DashDir == 1)
+                    if (DashCount == 0)
                     {
-                        float count = DashCount + 1;
-                        Owner.velocity = new Vector2(-30, Owner.velocity.Y);
+                        if (Owner.controlLeft && DashDir == 1)
+                        {
+                            float count = DashCount + 1;
+                            Owner.velocity = new Vector2(-30, Owner.velocity.Y);
 
-                        Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
-                            Projectile.damage, Projectile.knockBack, Owner.whoAmI, 3);
-                        Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
-                            Projectile.damage, Projectile.knockBack, Owner.whoAmI, 10, -1, count);
-                        ExtraDash = false;
+                            Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
+                                Projectile.damage, Projectile.knockBack, Owner.whoAmI, 3);
+                            Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
+                                Projectile.damage, Projectile.knockBack, Owner.whoAmI, 10, -1, count);
+                            ExtraDash = false;
+                        }
+                        else if (Owner.controlRight && DashDir == -1)
+                        {
+                            float count = DashCount + 1;
+                            Owner.velocity = new Vector2(30, Owner.velocity.Y);
+
+                            Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
+                                Projectile.damage, Projectile.knockBack, Owner.whoAmI, 3);
+                            Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
+                                Projectile.damage, Projectile.knockBack, Owner.whoAmI, 10, 1, count);
+                            ExtraDash = false;
+                        }
                     }
-                    else if (Owner.controlRight && DashDir == -1)
+                    else
                     {
-                        float count = DashCount + 1;
-                        Owner.velocity = new Vector2(30, Owner.velocity.Y);
+                        if (Owner.controlLeft)
+                        {
+                            float count = DashCount + 1;
+                            Owner.velocity = new Vector2(-30, Owner.velocity.Y);
 
-                        Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
-                            Projectile.damage, Projectile.knockBack, Owner.whoAmI, 3);
-                        Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
-                            Projectile.damage, Projectile.knockBack, Owner.whoAmI, 10, 1, count);
-                        ExtraDash = false;
+                            Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
+                                Projectile.damage, Projectile.knockBack, Owner.whoAmI, 3);
+                            Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
+                                Projectile.damage, Projectile.knockBack, Owner.whoAmI, 10, -1, count);
+                            ExtraDash = false;
+                        }
+                        else if (Owner.controlRight)
+                        {
+                            float count = DashCount + 1;
+                            Owner.velocity = new Vector2(30, Owner.velocity.Y);
+
+                            Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
+                                Projectile.damage, Projectile.knockBack, Owner.whoAmI, 3);
+                            Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
+                                Projectile.damage, Projectile.knockBack, Owner.whoAmI, 10, 1, count);
+                            ExtraDash = false;
+                        }
                     }
                 }
                 SpawnDusts();
@@ -609,8 +644,8 @@ namespace Coralite.Content.Items.Thunder
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.SetRange((0, 17 + sinFactor * 32 / 2));
-                    trail.SetExpandWidth((1 - factor) * 32 / 3);
+                    trail.SetRange((0, 17 + sinFactor * 16 / 2));
+                    trail.SetExpandWidth((1 - factor) * 16 / 3);
 
                     if (Timer % 6 == 0)
                     {

@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.Misc_Summon
         public override void SetDefaults()
         {
             Item.DefaultToVanitypet(ModContent.ProjectileType<Kitsune>(), ModContent.BuffType<KitsuneBuff>());
-            Item.damage = 40;
+            Item.damage = 20;
             Item.width = 28;
             Item.height = 20;
             Item.rare = ItemRarityID.Pink;

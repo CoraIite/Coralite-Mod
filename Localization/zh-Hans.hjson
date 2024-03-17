@@ -1223,7 +1223,7 @@ Mods: {
 			}
 
 			MagikeSymbol: {
-				DisplayName: 魔能
+				DisplayName: ！该合成表只能通过魔能重塑进行！
 				Tooltip:
 					'''
 					合成表仅供参考，该合成表需要通过魔能重塑进行
@@ -1332,7 +1332,7 @@ Mods: {
 			}
 
 			MagikePolySymbol: {
-				DisplayName: 魔能
+				DisplayName: ！该合成表只能通过魔能聚合进行！
 				Tooltip:
 					'''
 					该合成表需要通过魔能聚合进行！
@@ -2710,7 +2710,7 @@ Mods: {
 				DisplayName: 海盗王的鲨鱼帽
 				Tooltip:
 					'''
-					近战伤害增加8% 
+					近战伤害增加6% 
 					近战攻速增加5%
 					'''
 				NotHasPirateKingSoul: 海盗王之魂：装备至少2件套后触发效果
@@ -2997,12 +2997,12 @@ Mods: {
 
 			ThunderveinBlade: {
 				DisplayName: 雷鸣刃
-				Tooltip: "双击方向键使用闪电突袭"
+				Tooltip: 双击方向键使用闪电突袭
 			}
 
 			PirateKingCoat: {
 				DisplayName: 海盗王的披肩
-				Tooltip: 近战暴击率增加8%
+				Tooltip: 近战暴击率增加6%
 				NotHasPirateKingSoul: 海盗王之魂：装备至少2件套后触发效果
 				PirateKingSoul2Part:
 					'''
@@ -3183,6 +3183,21 @@ Mods: {
 					[c/807b7d:分裂等级] [c/9e82b5:+2]
 					[c/807b7d:伤害补正] [c/9e82b5:55%]
 					'''
+			}
+
+			Arachnopyre: {
+				DisplayName: 炎爆蜘蛛盾
+				Tooltip: 在墙壁前延长飞行时间，命中时发射炎爆蜘蛛
+			}
+
+			ThunderveinSpear: {
+				// DisplayName: Thundervein Spear
+				// Tooltip: ""
+			}
+
+			SovereignSip: {
+				DisplayName: 皇室秘饮
+				Tooltip: 召唤一个小小史莱姆皇帝
 			}
 		}
 
@@ -3394,12 +3409,17 @@ Mods: {
 
 			ThunderveinSoulBuff: {
 				DisplayName: 雷脉魂魄
-				Description: 荒雷龙的魂魄与你同在
+				Description: 荒雷龙的魂魄与你同在！
 			}
 
 			IcicleSoulBuff: {
 				DisplayName: 冰晶魂魄
-				Description: 冰龙宝宝的魂魄与你同在
+				Description: 冰龙宝宝的魂魄与你同在！
+			}
+
+			SovereignSipBuff: {
+				DisplayName: 美味饮品
+				Description: 小小史莱姆皇帝在你身旁！
 			}
 		}
 
@@ -3863,6 +3883,10 @@ Mods: {
 			// ThunderveinBladeSlash.DisplayName: Thundervein Blade Slash
 			IcicleSoul.DisplayName: 冰晶魂魄
 			// ThunderveinBladeDash.DisplayName: Thundervein Blade Dash
+			// ArachnopyreGuard.DisplayName: Arachnopyre Guard
+			// ArachnopyreProj.DisplayName: Arachnopyre Proj
+			// ArachnopyreSpider.DisplayName: Arachnopyre Spider
+			// SovereignSlime.DisplayName: Sovereign Slime
 		}
 
 		Configs: {

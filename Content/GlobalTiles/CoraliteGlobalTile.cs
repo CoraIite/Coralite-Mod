@@ -174,18 +174,18 @@ namespace Coralite.Content.GlobalTiles
             #region 世界表面层
             if (j < Main.worldSurface)
             {
-                #region 木头
-                if (type == TileID.Trees)
-                {
-                    //树生树树果
-                    if (Main.rand.NextBool(30))
-                    {
-                        Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
-                        Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, ItemType<TreeJokeSeed>());
-                        return false;
-                    }
-                }
-                #endregion
+                //#region 木头
+                //if (type == TileID.Trees)
+                //{
+                //    //树生树树果
+                //    if (Main.rand.NextBool(30))
+                //    {
+                //        Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
+                //        Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, ItemType<TreeJokeSeed>());
+                //        return false;
+                //    }
+                //}
+                //#endregion
                 #region 各种宝石树
                 if (type == TileID.TreeTopaz || type == TileID.TreeAmethyst || type == TileID.TreeSapphire || type == TileID.TreeEmerald || type == TileID.TreeRuby || type == TileID.TreeDiamond || type == TileID.TreeAmber)
                 {
@@ -198,18 +198,18 @@ namespace Coralite.Content.GlobalTiles
                     }
                 }
                 #endregion
-                #region 丛林植物
-                if (type == TileID.JunglePlants || type == TileID.JunglePlants2)
-                {
-                    //西瓜
-                    if (Main.rand.NextBool(30))
-                    {
-                        Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
-                        Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, ItemType<WatermelonSeed>());
-                        return false;
-                    }
-                }
-                #endregion
+                //#region 丛林植物
+                //if (type == TileID.JunglePlants || type == TileID.JunglePlants2)
+                //{
+                //    //西瓜
+                //    if (Main.rand.NextBool(30))
+                //    {
+                //        Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
+                //        Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, ItemType<WatermelonSeed>());
+                //        return false;
+                //    }
+                //}
+                //#endregion
 
                 return true;
             }
@@ -237,18 +237,18 @@ namespace Coralite.Content.GlobalTiles
             #region 地下岩石层
             if (j < Main.maxTilesX - 200)
             {
-                #region 丛林植物
-                if (type == TileID.JunglePlants || type == TileID.JunglePlants2)
-                {
-                    //丛林芽孢
-                    if (Main.rand.NextBool(30))
-                    {
-                        Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
-                        Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, ItemType<JungleBuds>());
-                        return false;
-                    }
-                }
-                #endregion
+                //#region 丛林植物
+                //if (type == TileID.JunglePlants || type == TileID.JunglePlants2)
+                //{
+                //    //丛林芽孢
+                //    if (Main.rand.NextBool(30))
+                //    {
+                //        Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
+                //        Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, ItemType<JungleBuds>());
+                //        return false;
+                //    }
+                //}
+                //#endregion
                 #region 各种宝石树
                 if (type == TileID.TreeTopaz || type == TileID.TreeAmethyst || type == TileID.TreeSapphire || type == TileID.TreeEmerald || type == TileID.TreeRuby || type == TileID.TreeDiamond || type == TileID.TreeAmber)
                 {
@@ -279,11 +279,11 @@ namespace Coralite.Content.GlobalTiles
             {
                 default:
                     break;
-                case TileID.Trees:
-                    WorldGen.GetTreeBottom(i, j, out int x, out int y);
-                    Tile bottomTile = Framing.GetTileSafely(x, y);
-                    TreeTypes tree = WorldGen.GetTreeType(bottomTile.TileType);
-                    break;
+                //case TileID.Trees:
+                //    WorldGen.GetTreeBottom(i, j, out int x, out int y);
+                //    Tile bottomTile = Framing.GetTileSafely(x, y);
+                //    TreeTypes tree = WorldGen.GetTreeType(bottomTile.TileType);
+                //    break;
                 case TileID.VanityTreeSakura:
                     if (Main.hardMode && Main.rand.NextBool(1, 400))
                         Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<CrystalBlossomShards>());
