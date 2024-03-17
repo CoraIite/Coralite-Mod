@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Ranged) += 0.4f;
+            player.GetDamage(DamageClass.Ranged) += 0.06f;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.medusaSoul++;
@@ -114,7 +114,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void UpdateEquip(Player player)
         {
-            player.GetCritChance(DamageClass.Ranged) += 0.4f;
+            player.GetCritChance(DamageClass.Ranged) += 0.06f;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.medusaSoul++;

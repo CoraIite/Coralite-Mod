@@ -15,6 +15,11 @@ namespace Coralite.Content.Items.Materials
             PolymerizeRecipe.CreateRecipe<GlistentBar>(50)
                 .SetMainItem<LeafStone>()
                 .AddIngredient(ItemID.CrimtaneBar, 2)
+                .AddIngredient(ItemID.Diamond)
+                .Register();
+
+            PolymerizeRecipe.CreateRecipe<GlistentBar>(50)
+                .SetMainItem<LeafStone>()
                 .AddIngredient(ItemID.DemoniteBar, 2)
                 .AddIngredient(ItemID.Diamond)
                 .Register();

@@ -3839,6 +3839,8 @@ Mods: {
 			ArachnopyreProj.DisplayName: Arachnopyre Proj
 			ArachnopyreSpider.DisplayName: Arachnopyre Spider
 			SovereignSlime.DisplayName: Sovereign Slime
+			ThunderveinSpearSlash.DisplayName: Thundervein Spear Slash
+			ThunderveinSpearSpurt.DisplayName: Thundervein Spear Spurt
 		}
 
 		Configs: {

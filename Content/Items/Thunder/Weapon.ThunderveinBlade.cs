@@ -182,7 +182,7 @@ namespace Coralite.Content.Items.Thunder
 
         protected override float ControlTrailBottomWidth(float factor)
         {
-            return 56 * Projectile.scale;
+            return 66 * Projectile.scale;
         }
 
         protected override float GetStartAngle()
@@ -345,12 +345,6 @@ namespace Coralite.Content.Items.Thunder
 
                 float strength = 2;
                 float baseScale = 1;
-
-                if (Combo == 5 || Combo == 6)
-                {
-                    strength = 7;
-                    baseScale = 3;
-                }
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {

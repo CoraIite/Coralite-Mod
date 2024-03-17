@@ -25,9 +25,9 @@ namespace Coralite.Content.Items.Thunder
 
         public override void SetDefaults()
         {
-            Item.damage = 54;
-            Item.useTime = 13;
-            Item.useAnimation = 13;
+            Item.damage = 55;
+            Item.useTime = 10;
+            Item.useAnimation = 10;
             Item.knockBack = 7;
             Item.shootSpeed = 13.5f;
             Item.crit = 10;
@@ -159,7 +159,7 @@ namespace Coralite.Content.Items.Thunder
             Projectile.friendly = true;
             Projectile.width = Projectile.height = 40;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 15;
+            Projectile.idStaticNPCHitCooldown = 10;
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Ranged;

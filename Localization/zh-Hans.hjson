@@ -2307,12 +2307,20 @@ Mods: {
 
 			FlyingShieldMaintenanceGuide: {
 				DisplayName: 飞盾维护指南
-				Tooltip: 增加飞盾右键格挡能力
+				Tooltip:
+					'''
+					古代人类留在地下金箱子内的指南
+					增加飞盾右键格挡能力
+					'''
 			}
 
 			FlyingShieldVarnish: {
 				DisplayName: 飞盾光油
-				Tooltip: 增加飞盾飞行速度
+				Tooltip:
+					'''
+					古代人类留在地表木箱子内的光油
+					增加飞盾飞行速度
+					'''
 			}
 
 			RedJadeShield: {
@@ -2710,7 +2718,7 @@ Mods: {
 				DisplayName: 海盗王的鲨鱼帽
 				Tooltip:
 					'''
-					近战伤害增加6% 
+					近战伤害增加8% 
 					近战攻速增加5%
 					'''
 				NotHasPirateKingSoul: 海盗王之魂：装备至少2件套后触发效果
@@ -3081,7 +3089,7 @@ Mods: {
 
 			MedusaLightArmor: {
 				DisplayName: 美杜莎轻甲
-				Tooltip: 远程暴击率增加 4%
+				Tooltip: 远程暴击率增加 6%
 				NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
 				MedusaSoul2Part:
 					'''
@@ -3116,7 +3124,7 @@ Mods: {
 
 			MedusaMask: {
 				DisplayName: 美杜莎面罩
-				Tooltip: 远程伤害增加 4%
+				Tooltip: 远程伤害增加 6%
 				NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
 				MedusaSoul2Part:
 					'''
@@ -3191,8 +3199,8 @@ Mods: {
 			}
 
 			ThunderveinSpear: {
-				// DisplayName: Thundervein Spear
-				// Tooltip: ""
+				DisplayName: 雷荒矛
+				Tooltip: 双击方向键使用落雷
 			}
 
 			SovereignSip: {
@@ -3887,6 +3895,8 @@ Mods: {
 			// ArachnopyreProj.DisplayName: Arachnopyre Proj
 			// ArachnopyreSpider.DisplayName: Arachnopyre Spider
 			// SovereignSlime.DisplayName: Sovereign Slime
+			// ThunderveinSpearSlash.DisplayName: Thundervein Spear Slash
+			// ThunderveinSpearSpurt.DisplayName: Thundervein Spear Spurt
 		}
 
 		Configs: {
