@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
         public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
         {
-            projectile.StrongGuard += 0.1f;
+            projectile.strongGuard += 0.1f;
             projectile.damageReduce *= 1.1f;
             projectile.distanceAdder *= 1.1f;
         }

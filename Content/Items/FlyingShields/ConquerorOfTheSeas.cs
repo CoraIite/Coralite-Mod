@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             damageReduce = 0.35f;
             distanceAdder = 2.6f;
-            StrongGuard = 0.15f;
+            strongGuard = 0.15f;
             scalePercent = 1.3f;
         }
 

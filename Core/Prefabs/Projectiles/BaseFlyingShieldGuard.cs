@@ -16,42 +16,42 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public Player Owner => Main.player[Projectile.owner];
 
-        public int parryTime;
-        public float parryFactor;
-        /// <summary>
-        /// 弹反的特效颜色
-        /// </summary>
-        public Color parryColor = Color.White;
+        #region 设置类字段
 
-        /// <summary>
-        /// 伤害削减
-        /// </summary>
+        /// <summary> 完美防御时间 </summary>
+        public int parryTime;
+        /// <summary> 伤害削减 </summary>
         public float damageReduce;
-        /// <summary>
-        /// 后摇时间
-        /// </summary>
+        /// <summary> 后摇时间 </summary>
         public int delayTime = 15;
 
-        public float extraRotation;
-        /// <summary>
-        /// 到最远时候的比例......这个数越小那么防御时盾就越扁
-        /// </summary>
+        /// <summary> 削减弹幕的穿透数的概率 </summary>
+        public float strongGuard;
+        /// <summary> 决定了举盾时每帧的距离增加量，这个数越大举盾速度越快 </summary>
+        public float distanceAdder = 2;
+
+        /// <summary> 到最远时候的比例......这个数越小那么防御时盾就越扁 </summary>
         public float scalePercent = 2.8f;
+
+        /// <summary> 冲刺时间 </summary>
+        public int dashTime;
+        /// <summary> 冲刺角度 </summary>
+        public float dashDir;
+        /// <summary> 冲刺速度 </summary>
+        public float dashSpeed;
+
+        #endregion
+
+        public float extraRotation;
         public float DistanceToOwner = 0;
 
         public int[] localProjectileImmunity = new int[Main.maxProjectiles];
 
-        /// <summary>
-        /// 是否能削减弹幕的穿透数的概率
-        /// </summary>
-        public float StrongGuard;
-        /// <summary>
-        /// 决定了举盾时每帧的距离增加量，这个数越大举盾速度越快
-        /// </summary>
-        public float distanceAdder = 2;
+        public IFlyingShieldAccessory dashFunction;
 
         public enum GuardState
         {
+            Dashing,
             Parry,
             ParryDelay,
             Guarding,
@@ -64,6 +64,8 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile = 1,
             NPC = 2
         }
+
+        #region 属性设置
 
         public override bool ShouldUpdatePosition() => false;
 
@@ -80,33 +82,39 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.localNPCHitCooldown = 30;
         }
 
-        public override bool? CanDamage()
-        {
-            if (State == (int)GuardState.Delay || State == (int)GuardState.ParryDelay || DistanceToOwner < GetWidth())
-                return false;
-            return base.CanDamage();
-        }
+        /// <summary>
+        /// 在这里设置大部分属性的值<br></br>
+        /// 伤害削减量 <see cref="damageReduce"/><br></br>
+        /// 后摇时间，默认25 <see cref="delayTime"/><br></br>
+        /// 是否能削减弹幕的穿透数 <see cref="strongGuard"/><br></br>
+        /// </summary>
+        public virtual void SetOtherValues() { }
 
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            overPlayers.Add(index);
-        }
+        #endregion
+
+        #region AI
 
         public override void OnSpawn(IEntitySource source)
         {
             Projectile.scale *= Owner.GetAdjustedItemScale(Owner.HeldItem);
             Projectile.Resize((int)(Projectile.width * Projectile.scale), (int)(Projectile.height * Projectile.scale));
+            Projectile.originalDamage = Projectile.damage;//记录原本伤害，因为会受到额外加成影响
 
             SetOtherValues();
             UpdateShieldAccessory(accessory => accessory.OnGuardInitialize(this));
             if (damageReduce > 0.8f)
                 damageReduce = 0.8f;
-            if (StrongGuard > 0.75f)
-                StrongGuard = 0.75f;
+            if (strongGuard > 0.75f)
+                strongGuard = 0.75f;
 
             Timer = parryTime;
             Projectile.rotation = Projectile.velocity.ToRotation();
-            if (Timer > 0)
+            //if (dashFunction != null)//冲刺
+            //{
+            //    State = (int)GuardState.Dashing;
+            //    DistanceToOwner = GetWidth();
+            //}
+            if (Timer > 0)//完美防御
             {
                 State = (int)GuardState.Parry;
                 DistanceToOwner = GetWidth();
@@ -117,15 +125,6 @@ namespace Coralite.Core.Prefabs.Projectiles
                 State = (int)GuardState.Guarding;
         }
 
-        /// <summary>
-        /// 在这里设置大部分属性的值<br></br>
-        /// 弹反特效的颜色 <see cref="parryColor"/><br></br>
-        /// 伤害削减量 <see cref="damageReduce"/><br></br>
-        /// 后摇时间，默认25 <see cref="delayTime"/><br></br>
-        /// 是否能削减弹幕的穿透数 <see cref="StrongGuard"/><br></br>
-        /// </summary>
-        public virtual void SetOtherValues() { }
-
         public override void AI()
         {
             //Owner.heldProj = Projectile.whoAmI;
@@ -133,9 +132,30 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.velocity.X = Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
             Projectile.timeLeft = 4;
 
+            if (Owner.TryGetModPlayer(out CoralitePlayer cp))
+                cp.FlyingShieldGuardIndex = Projectile.whoAmI;
+
             switch (State)
             {
                 default: Projectile.Kill(); break;
+                case (int)GuardState.Dashing:
+                    {
+                        SetPos();
+                        OnHoldShield();
+
+                        if (dashFunction != null)
+                        {
+                            dashFunction.OnDashing(this);
+                            OnGuard_DamageReduce(damageReduce);
+                        }
+                        else
+                            OnDashOver();
+
+                        Timer--;
+                        if (Timer < 1)
+                            OnDashOver();
+                    }
+                    break;
                 case (int)GuardState.Parry:
                     {
                         if (!Main.mouseRight)
@@ -147,7 +167,6 @@ namespace Coralite.Core.Prefabs.Projectiles
                         if (CheckCollide() > 0)
                         {
                             State = (int)GuardState.Guarding;
-                            parryFactor = 0;
                             OnParry();
                             UpdateShieldAccessory(accessory => accessory.OnParry(this));
                         }
@@ -221,6 +240,9 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
         }
 
+        /// <summary>
+        /// 常规设置自身位置
+        /// </summary>
         public virtual void SetPos()
         {
             float baseAngle = Owner.direction > 0 ? 0 : MathHelper.Pi;
@@ -238,26 +260,28 @@ namespace Coralite.Core.Prefabs.Projectiles
             return Projectile.width / 2 / Projectile.scale + 8;
         }
 
+        /// <summary>
+        /// 检测与弹幕或NPC的碰撞
+        /// </summary>
+        /// <returns></returns>
         public virtual int CheckCollide()
         {
             Rectangle rect = Projectile.getRect();
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (!proj.active || proj.friendly || proj.whoAmI == Projectile.whoAmI || localProjectileImmunity[i] > 0)
+                if (!proj.active || proj.friendly || proj.minion || proj.whoAmI == Projectile.whoAmI || localProjectileImmunity[i] > 0)
                     continue;
 
                 if (proj.Colliding(proj.getRect(), rect))
                 {
                     float damageR = damageReduce;
                     if (proj.penetrate < 0)//对于无限穿透的弹幕额外减伤
-                        damageR += Main.rand.NextFloat(0, StrongGuard / 3);
+                        damageR += Main.rand.NextFloat(0, strongGuard / 3);
 
-                    damageR = Math.Clamp(damageR, 0f, 0.8f);
-                    if (Owner.TryGetModPlayer(out CoralitePlayer cp))
-                        cp.Guard(damageR);
+                    OnGuard_DamageReduce(damageR);
 
-                    float percent = MathHelper.Clamp(StrongGuard, 0, 1);
+                    float percent = MathHelper.Clamp(strongGuard, 0, 1);
                     if (Main.rand.NextBool((int)(percent * 100), 100) && proj.penetrate > 0)//削减穿透数
                     {
                         proj.penetrate--;
@@ -274,13 +298,12 @@ namespace Coralite.Core.Prefabs.Projectiles
             {
                 NPC npc = Main.npc[i];
 
-                if (!npc.active || npc.friendly || npc.immortal || Projectile.localNPCImmunity[i] > 0)
+                if (!npc.active || npc.friendly || npc.immortal || !Projectile.localNPCImmunity.IndexInRange(i) || Projectile.localNPCImmunity[i] > 0)
                     continue;
 
                 if (Projectile.Colliding(rect, npc.getRect()))
                 {
-                    if (Owner.TryGetModPlayer(out CoralitePlayer cp))
-                        cp.Guard(damageReduce);
+                    OnGuard_DamageReduce(damageReduce);
 
                     Projectile.localNPCImmunity[i] = Projectile.localNPCHitCooldown;
                     if (!npc.dontTakeDamage)
@@ -292,6 +315,8 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             return (int)GuardType.notGuard;
         }
+
+        #region 特定时期触发类方法
 
         public virtual void TurnToDelay()
         {
@@ -312,6 +337,17 @@ namespace Coralite.Core.Prefabs.Projectiles
             Helper.PlayPitched("Misc/ShieldGuard", 0.3f, 0f, Projectile.Center);
         }
 
+        /// <summary>
+        /// 格挡时的提供伤害减免
+        /// </summary>
+        /// <param name="damageR"></param>
+        public virtual void OnGuard_DamageReduce(float damageR)
+        {
+            damageR = Math.Clamp(damageR, 0f, 0.8f);
+            if (Owner.TryGetModPlayer(out CoralitePlayer cp))
+                cp.Guard(damageR);
+        }
+
         public virtual void OnGuardProjectile() { }
 
         public virtual void OnGuardNPC() { }
@@ -322,6 +358,49 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
         }
+
+        /// <summary>
+        /// 结束冲刺时触发
+        /// </summary>
+        public virtual void OnDashOver()
+        {
+            State = (int)GuardState.Guarding;
+            Projectile.damage = Projectile.originalDamage;
+
+            UpdateShieldAccessory(accessory => accessory.OnDashOver(this));
+        }
+
+        #endregion
+
+        #endregion
+
+        #region 帮助方法
+
+        public virtual bool CanDash()
+        {
+            return State == (int)GuardState.Guarding && DistanceToOwner >= GetWidth();
+        }
+
+        /// <summary>
+        /// 切换到盾冲
+        /// </summary>
+        /// <param name="dashFunction"></param>
+        public virtual void TurnToDashing(IFlyingShieldAccessory dashFunction, int dashTime, float dashDir, float dashSpeed)
+        {
+            this.dashFunction = dashFunction;
+            State = (int)GuardState.Dashing;
+            DistanceToOwner = GetWidth();
+            this.dashTime = dashTime;
+            this.dashDir = dashDir;
+            this.dashSpeed = dashSpeed;
+            UpdateShieldAccessory(accessory => accessory.OnStartDashing(this));
+
+            if (Owner.TryGetModPlayer(out CoralitePlayer cp))
+                cp.DashTimer = this.dashTime;
+            Timer = this.dashTime;
+            Owner.velocity = this.dashDir.ToRotationVector2() * this.dashSpeed;
+        }
+
 
         public void UpdateShieldAccessory(Action<IFlyingShieldAccessory> action)
         {
@@ -392,6 +471,32 @@ namespace Coralite.Core.Prefabs.Projectiles
             //}
         }
 
+        #endregion
+
+        #region 伤害
+
+        public override bool? CanDamage()
+        {
+            if (State == (int)GuardState.Delay || State == (int)GuardState.ParryDelay || DistanceToOwner < GetWidth())
+                return false;
+            return base.CanDamage();
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (State == (int)GuardState.Dashing)
+                dashFunction?.OnDashHit(this, target, ref modifiers);
+        }
+
+        #endregion
+
+        #region 绘制
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            overPlayers.Add(index);
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTexture();
@@ -431,5 +536,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Main.spriteBatch.Draw(mainTex, pos, null, lightColor, rotation
                 , origin, scale, effect, 0);
         }
+
+        #endregion
     }
 }

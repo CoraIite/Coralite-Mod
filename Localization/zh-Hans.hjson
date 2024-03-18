@@ -3207,6 +3207,40 @@ Mods: {
 				DisplayName: 皇室秘饮
 				Tooltip: 召唤一个小小史莱姆皇帝
 			}
+
+			FlamingLamps: {
+				DisplayName: 烈焰灯
+				Tooltip:
+					'''
+					[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+					[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
+					冲刺过程中无视击退
+					冲刺命中第一个敌人时产生火焰爆破
+					'''
+			}
+
+			LavaLamp: {
+				DisplayName: 狱炎灯
+				Tooltip:
+					'''
+					[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+					[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
+					冲刺过程中无视击退
+					冲刺命中第一个敌人时产生岩浆喷发
+					'''
+			}
+
+			PiezoArmorPanel: {
+				DisplayName: 压电装甲板
+				Tooltip:
+					'''
+					[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+					[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
+					冲刺过程中无视击退
+					冲刺命中第一个敌人时产生电圈，并提升冲刺速度，延长冲刺时间
+					最多产生两个电圈
+					'''
+			}
 		}
 
 		Tiles: {
@@ -3897,6 +3931,8 @@ Mods: {
 			// SovereignSlime.DisplayName: Sovereign Slime
 			// ThunderveinSpearSlash.DisplayName: Thundervein Spear Slash
 			// ThunderveinSpearSpurt.DisplayName: Thundervein Spear Spurt
+			// FlamingLampsExplosion.DisplayName: Flaming Lamps Explosion
+			// LavaDroplet.DisplayName: Lava Droplet
 		}
 
 		Configs: {

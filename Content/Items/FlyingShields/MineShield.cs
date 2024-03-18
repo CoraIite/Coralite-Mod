@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.FlyingShields
                     proj.velocity = angle.AngleLerp(Projectile.rotation, 0.5f).ToRotationVector2() * proj.velocity.Length();
 
                 over:
-                    float percent = MathHelper.Clamp(StrongGuard, 0, 1);
+                    float percent = MathHelper.Clamp(strongGuard, 0, 1);
                     if (Main.rand.NextBool((int)(percent * 100), 100) && proj.penetrate > 0)//削减穿透数
                     {
                         proj.penetrate--;

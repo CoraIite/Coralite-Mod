@@ -3151,6 +3151,21 @@ Mods: {
 				DisplayName: Sovereign Sip
 				Tooltip: ""
 			}
+
+			FlamingLamps: {
+				DisplayName: Flaming Lamps
+				Tooltip: ""
+			}
+
+			LavaLamp: {
+				DisplayName: Lava Lamp
+				Tooltip: ""
+			}
+
+			PiezoArmorPanel: {
+				DisplayName: Piezo Armor Panel
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -3841,6 +3856,8 @@ Mods: {
 			SovereignSlime.DisplayName: Sovereign Slime
 			ThunderveinSpearSlash.DisplayName: Thundervein Spear Slash
 			ThunderveinSpearSpurt.DisplayName: Thundervein Spear Spurt
+			FlamingLampsExplosion.DisplayName: Flaming Lamps Explosion
+			LavaDroplet.DisplayName: Lava Droplet
 		}
 
 		Configs: {

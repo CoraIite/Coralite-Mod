@@ -44,6 +44,8 @@ namespace Coralite.Content.ModPlayers
 
         public int parryTime;
 
+        public StatModifier DashDelayModifyer=StatModifier.Default;
+
         #region 装备类字段
 
         /// <summary> 装备赤玉吊坠 </summary>
@@ -119,6 +121,11 @@ namespace Coralite.Content.ModPlayers
         public List<IFlyingShieldAccessory> FlyingShieldAccessories = new List<IFlyingShieldAccessory>();
 
         /// <summary>
+        /// 飞盾右键防御的手持弹幕
+        /// </summary>
+        public int FlyingShieldGuardIndex;
+
+        /// <summary>
         /// 地心护核者的闪避
         /// </summary>
         public float coreKeeperDodge;
@@ -162,6 +169,12 @@ namespace Coralite.Content.ModPlayers
             if (FlyingShieldAccessories.Count != 0)
                 FlyingShieldAccessories.Clear();
 
+            if (!Main.projectile.IndexInRange(FlyingShieldGuardIndex))
+            {
+                Projectile p = Main.projectile[FlyingShieldGuardIndex];
+                if (!p.active || !p.friendly || p.ModProjectile is not BaseFlyingShieldGuard)
+                    FlyingShieldGuardIndex = -1;
+            }
             coreKeeperDodge = 0;
 
             nightmareEnergyMax = 7;
@@ -192,6 +205,8 @@ namespace Coralite.Content.ModPlayers
                 DashDir = DashLeft;
             else
                 DashDir = -1;
+
+            DashDelayModifyer = StatModifier.Default;
         }
 
         public override void OnRespawn()
@@ -241,7 +256,10 @@ namespace Coralite.Content.ModPlayers
                         if (!Player.armor[i].IsAir && Player.armor[i].ModItem is IDashable dashItem2)
                         {
                             if (dashItem2.Dash(Player, DashDir))
+                            {
+                                DashDelay = (int)(DashDelay * DashDelayModifyer.ApplyTo(1));
                                 goto checkDashOver;
+                            }
                         }
                     }
 
@@ -652,6 +670,27 @@ namespace Coralite.Content.ModPlayers
         {
             FlyingShieldGuardTime = 35;
             FlyingShieldDamageReduce = damageReduce;
+        }
+
+        /// <summary>
+        /// 尝试获得当前的飞盾防御手持弹幕
+        /// </summary>
+        /// <param name="flyingShieldGuard"></param>
+        /// <returns></returns>
+        public bool TryGetFlyingShieldGuardProj(out BaseFlyingShieldGuard flyingShieldGuard)
+        {
+            flyingShieldGuard = null;
+
+            if (!Main.projectile.IndexInRange(FlyingShieldGuardIndex))
+                return false;
+
+            if (Main.projectile[FlyingShieldGuardIndex].ModProjectile is BaseFlyingShieldGuard flyingShieldGuard1)
+            {
+                flyingShieldGuard = flyingShieldGuard1;
+                return true;
+            }
+
+            return false;
         }
     }
 }

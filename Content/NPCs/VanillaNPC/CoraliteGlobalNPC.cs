@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.Items.Accessories.FlyingShields;
 using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.FlyingShields;
@@ -169,6 +170,9 @@ namespace Coralite.Content.NPCs.VanillaNPC
                     break;
                 case NPCID.SkeletronPrime://机械佝偻王在天顶世界掉落美杜莎轻甲
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.ZenithSeedIsUp(), ItemType<MedusaLightArmor>(), 1));
+                    break;
+                case NPCID.MartianSaucerCore:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<PiezoArmorPanel>(), 4, 1, 1));
                     break;
                 case NPCID.MoonLordCore:
                     npcLoot.Add(ItemDropRule.Common(ItemType<ConquerorOfTheSeas>(), 9, 1, 1));
