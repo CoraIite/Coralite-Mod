@@ -18,8 +18,8 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.DamageType = DamageClass.Melee;
-            Item.damage = 23;
+            Item.DamageType = DamageClass.Generic;
+            Item.damage = 25;
         }
 
         public bool isDashing;
@@ -59,7 +59,8 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             if (canSpawnEXProj)
             {
                 SoundEngine.PlaySound(CoraliteSoundID.Boom_Item14, projectile.Projectile.Center);
-                projectile.Projectile.NewProjectileFromThis<FlamingLampsExplosion>(projectile.Projectile.Center, Vector2.Zero, projectile.Projectile.damage, 0);
+                projectile.Projectile.NewProjectileFromThis<FlamingLampsExplosion>(projectile.Projectile.Center, Vector2.Zero
+                    , projectile.Owner.GetWeaponDamage(Item), 0);
                 canSpawnEXProj = false;
             }
         }

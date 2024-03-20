@@ -4,7 +4,6 @@ using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
-using Microsoft.CodeAnalysis;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -20,7 +19,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.DamageType = DamageClass.Melee;
+            Item.DamageType = DamageClass.Generic;
             Item.damage = 75;
         }
 
@@ -109,15 +108,6 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             }
 
             return false;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient<FlamingLamps>()
-                .AddIngredient(ItemID.HellstoneBar, 5)
-                .AddTile(TileID.Anvils)
-                .Register();
         }
     }
 }

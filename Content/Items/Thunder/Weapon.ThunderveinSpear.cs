@@ -544,5 +544,4 @@ namespace Coralite.Content.Items.Thunder
                 ThunderveinDragon.ThunderveinYellowAlpha * (0.5f - i * 0.5f / 10), Projectile.oldRot[i] + extraRot, origin, Projectile.scale*1.1f, effect, 0);
         }
     }
-
 }

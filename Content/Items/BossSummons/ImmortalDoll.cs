@@ -44,12 +44,7 @@ namespace Coralite.Content.Items.BossSummons
             {
                 SoundEngine.PlaySound(SoundID.Roar, player.position);
 
-                int type = NPCID.WallofFlesh;
-
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.SpawnOnPlayer(player.whoAmI, type);
-                else
-                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
+                NPC.SpawnWOF(player.Center);
             }
 
             return true;

@@ -2347,6 +2347,7 @@ Mods: {
 				DisplayName: 魔界护盾符
 				Tooltip:
 					'''
+					举起盾牌的瞬间能够进行完美格挡并释放恶魔爪击
 					+10% 飞盾格挡时减少弹幕穿透数的概率
 					略微增加飞盾格挡能力
 					略微增加举盾速度
@@ -3241,6 +3242,56 @@ Mods: {
 					最多产生两个电圈
 					'''
 			}
+
+			AmberAmulet: {
+				DisplayName: 琥珀护盾符
+				Tooltip: +8% 飞盾格挡时减少弹幕穿透数的概率
+			}
+
+			JungleTurtleShell: {
+				DisplayName: 丛林龟壳
+				Tooltip:
+					'''
+					将丛林乌龟整只丢入微光液体后变成的龟壳，似乎在丛林地下的宝箱中也会出现
+					略微增加飞盾格挡能力
+					'''
+			}
+
+			SnowflakeCharm: {
+				DisplayName: 雪花护符
+				Tooltip:
+					'''
+					举起盾牌的瞬间能够进行完美格挡并释放冰雪花
+					略微增加举盾速度
+					'''
+			}
+
+			ShieldSpring: {
+				DisplayName: 盾装弹簧
+				Tooltip: 小幅度增加飞盾在进行盾冲时的冲刺速度
+			}
+
+			ForbiddenLamp: {
+				DisplayName: 忘却之灯芯
+				Tooltip:
+					'''
+					[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+					[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
+					冲刺过程中无视击退
+					冲刺命中敌人时产生灯火爆破和鎏金碎片
+					'''
+			}
+
+			SolarTwinkle: {
+				DisplayName: 太阳的闪烁【未制作完成】
+				Tooltip:
+					'''
+					[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+					[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
+					冲刺过程中无视击退
+					冲刺命中敌人时产生太阳爆破
+					'''
+			}
 		}
 
 		Tiles: {
@@ -3933,6 +3984,11 @@ Mods: {
 			// ThunderveinSpearSpurt.DisplayName: Thundervein Spear Spurt
 			// FlamingLampsExplosion.DisplayName: Flaming Lamps Explosion
 			// LavaDroplet.DisplayName: Lava Droplet
+			// Snowflake.DisplayName: Snowflake
+			// SnowflakeSpike.DisplayName: Snowflake Spike
+			// DemonsProtectionClaw.DisplayName: Demons Protection Claw
+			// ForbiddenDroplet.DisplayName: Forbidden Droplet
+			// ForbiddenLampExplosion.DisplayName: Forbidden Lamp Explosion
 		}
 
 		Configs: {

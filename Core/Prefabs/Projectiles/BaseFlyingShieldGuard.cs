@@ -49,6 +49,11 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public IFlyingShieldAccessory dashFunction;
 
+        /// <summary>
+        /// 是否完全举起盾牌
+        /// </summary>
+        public bool CompletelyHeldUpShield;
+
         public enum GuardState
         {
             Dashing,
@@ -167,6 +172,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                         if (CheckCollide() > 0)
                         {
                             State = (int)GuardState.Guarding;
+                            CompletelyHeldUpShield = true;
                             OnParry();
                             UpdateShieldAccessory(accessory => accessory.OnParry(this));
                         }
@@ -205,6 +211,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                             break;
                         }
 
+                        CompletelyHeldUpShield = true;
                         int which = CheckCollide();
                         if (which > 0)
                         {
@@ -370,17 +377,6 @@ namespace Coralite.Core.Prefabs.Projectiles
             UpdateShieldAccessory(accessory => accessory.OnDashOver(this));
         }
 
-        #endregion
-
-        #endregion
-
-        #region 帮助方法
-
-        public virtual bool CanDash()
-        {
-            return State == (int)GuardState.Guarding && DistanceToOwner >= GetWidth();
-        }
-
         /// <summary>
         /// 切换到盾冲
         /// </summary>
@@ -401,6 +397,16 @@ namespace Coralite.Core.Prefabs.Projectiles
             Owner.velocity = this.dashDir.ToRotationVector2() * this.dashSpeed;
         }
 
+        #endregion
+
+        #endregion
+
+        #region 帮助方法
+
+        public virtual bool CanDash()
+        {
+            return State == (int)GuardState.Guarding && CompletelyHeldUpShield;
+        }
 
         public void UpdateShieldAccessory(Action<IFlyingShieldAccessory> action)
         {

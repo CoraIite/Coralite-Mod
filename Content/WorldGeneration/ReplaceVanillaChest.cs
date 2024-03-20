@@ -105,6 +105,20 @@ namespace Coralite.Content.WorldGeneration
                                             }
                                 }
                                 break;
+                            case 12 * 18 * 2:  //生命木箱
+                                {
+                                    if (chest.y > Main.worldSurface)  //必须要是地下箱子才行
+                                    {
+                                        if (WorldGen.genRand.NextBool(10, 100))//放置丛林龟壳
+                                            foreach (var item in chest.item)
+                                                if (item.IsAir)
+                                                {
+                                                    item.SetDefaults(ModContent.ItemType<JungleTurtleShell>());
+                                                    break;
+                                                }
+                                    }
+                                }
+                                break;
                         }
                         break;
                     default:

@@ -12,10 +12,18 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
+    [AutoloadEquip(EquipType.Neck)]
     public class HolyCharm : BaseAccessory, IFlyingShieldAccessory
     {
         public HolyCharm() : base(ItemRarityID.Pink, Item.sellPrice(0, 2))
         { }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.damage = 67;
+            Item.DamageType = DamageClass.Generic;
+        }
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
@@ -50,7 +58,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                     Owner.immune = true;
                 }
 
-                int damage = (int)(projectile.Projectile.damage * (1.45f - 0.35f * cp.parryTime / 280f));
+                int damage = (int)(projectile.Owner.GetWeaponDamage(Item) * (1.35f - 0.35f * cp.parryTime / 280f));
 
                 SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, projectile.Projectile.Center);
                 Helper.PlayPitched("Misc/ShieldGuard", 0.4f, 0f, projectile.Projectile.Center);
@@ -101,7 +109,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             Projectile.penetrate = -1;
             Projectile.width = Projectile.height = 16;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 30;
+            Projectile.localNPCHitCooldown = 10;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

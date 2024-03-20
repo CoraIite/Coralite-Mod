@@ -3166,6 +3166,36 @@ Mods: {
 				DisplayName: Piezo Armor Panel
 				Tooltip: ""
 			}
+
+			AmberAmulet: {
+				DisplayName: Amber Amulet
+				Tooltip: ""
+			}
+
+			JungleTurtleShell: {
+				DisplayName: Jungle Turtle Shell
+				Tooltip: ""
+			}
+
+			SnowflakeCharm: {
+				DisplayName: Snowflake Charm
+				Tooltip: ""
+			}
+
+			ShieldSpring: {
+				DisplayName: Shield Spring
+				Tooltip: ""
+			}
+
+			ForbiddenLamp: {
+				DisplayName: Forbidden Lamp
+				Tooltip: ""
+			}
+
+			SolarTwinkle: {
+				DisplayName: Solar Twinkle
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -3858,6 +3888,11 @@ Mods: {
 			ThunderveinSpearSpurt.DisplayName: Thundervein Spear Spurt
 			FlamingLampsExplosion.DisplayName: Flaming Lamps Explosion
 			LavaDroplet.DisplayName: Lava Droplet
+			Snowflake.DisplayName: Snowflake
+			SnowflakeSpike.DisplayName: Snowflake Spike
+			DemonsProtectionClaw.DisplayName: Demons Protection Claw
+			ForbiddenDroplet.DisplayName: Forbidden Droplet
+			ForbiddenLampExplosion.DisplayName: Forbidden Lamp Explosion
 		}
 
 		Configs: {

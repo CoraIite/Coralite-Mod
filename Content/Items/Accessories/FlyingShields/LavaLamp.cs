@@ -18,8 +18,8 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.DamageType = DamageClass.Melee;
-            Item.damage = 35;
+            Item.DamageType = DamageClass.Generic;
+            Item.damage = 40;
         }
 
         public bool isDashing;

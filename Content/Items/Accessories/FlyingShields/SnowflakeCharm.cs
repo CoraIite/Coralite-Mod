@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.Icicle;
-using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
@@ -11,31 +10,29 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent.Drawing;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    [AutoloadEquip(EquipType.Balloon)]
-    public class Terracrest : BaseAccessory, IFlyingShieldAccessory
+    [AutoloadEquip(EquipType.Neck)]
+    public class SnowflakeCharm : BaseAccessory, IFlyingShieldAccessory
     {
-        public Terracrest() : base(ItemRarityID.Yellow, Item.sellPrice(0, 5))
+        public SnowflakeCharm() : base(ItemRarityID.Green, Item.sellPrice(0, 0,10))
         { }
 
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.damage = 100;
+            Item.damage = 20;
             Item.DamageType = DamageClass.Generic;
         }
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
-            return !((equippedItem.type == ModContent.ItemType<DemonsProtection>()//下位
-                || equippedItem.type == ModContent.ItemType<HolyCharm>())//下位
+            return !((equippedItem.type == ModContent.ItemType<DemonsProtection>())//上位
 
-                && incomingItem.type == ModContent.ItemType<Terracrest>());
+                && incomingItem.type == ModContent.ItemType<SnowflakeCharm>());
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -49,10 +46,8 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
         public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
         {
-            projectile.parryTime = 10;
-            projectile.strongGuard += 0.18f;
-            projectile.damageReduce *= 1.2f;
-            projectile.distanceAdder *= 1.2f;
+            projectile.parryTime = 6;
+            projectile.distanceAdder *= 1.1f;
         }
 
         public bool OnParry(BaseFlyingShieldGuard projectile)
@@ -63,44 +58,22 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             {
                 if (cp.parryTime < 100)
                 {
-                    Owner.immuneTime = 30;
+                    Owner.immuneTime = 20;
                     Owner.immune = true;
                 }
 
-                int damage = (int)(projectile.Owner.GetWeaponDamage(Item) * (1.35f - 0.3f * cp.parryTime / 280f));
+                int damage = (int)(projectile.Owner.GetWeaponDamage(Item) * (1.1f - 0.15f * cp.parryTime / 280f));
 
-                SoundEngine.PlaySound(CoraliteSoundID.TerraBlade_Item60, projectile.Projectile.Center);
+                SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, projectile.Projectile.Center);
                 Helper.PlayPitched("Misc/ShieldGuard", 0.4f, 0f, projectile.Projectile.Center);
 
-                Projectile p = projectile.Projectile;
-                Vector2 dir = p.rotation.ToRotationVector2();
-                p.NewProjectileFromThis<TerracrestSpike>(p.Center, dir * Main.rand.NextFloat(17f, 19f) * p.scale,
-                     damage, p.knockBack, Owner.whoAmI, ai1: 14);
+                Vector2 dir = projectile.Projectile.rotation.ToRotationVector2();
+                int index = projectile.Projectile.NewProjectileFromThis<Snowflake>(Owner.Center, dir * 4,
+                     damage, projectile.Projectile.knockBack, Owner.whoAmI);
+                Main.projectile[index].scale = projectile.Projectile.scale;
 
-                for (int i = -1; i < 2; i += 2)
-                {
-                    float exRot = Owner.direction * i * 0.3f;
-
-                    Vector2 aimDir = dir.RotatedBy(Main.rand.NextFloat(exRot - 0.25f, exRot + 0.25f));
-
-                    p.NewProjectileFromThis<TerracrestSpike>(p.Center + Owner.direction * i * (p.rotation + 1.57f).ToRotationVector2() * Main.rand.NextFloat(8, 16)
-                        , aimDir * Main.rand.NextFloat(10f, 14f) * p.scale,
-                         (int)(damage * 0.95f), p.knockBack, Owner.whoAmI, ai1: Main.rand.NextFloat(12, 14));
-                }
-
-                p.NewProjectileFromThis<TerracrestSpike>(p.Center + Main.rand.NextVector2Circular(12, 12)
-                    , dir.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(8f, 16f) * p.scale,
-                     (int)(damage * 0.95f), p.knockBack, Owner.whoAmI, ai1: Main.rand.NextFloat(8, 12));
-
-                ParticleOrchestrator.SpawnParticlesDirect(ParticleOrchestraType.TerraBlade, new ParticleOrchestraSettings()
-                {
-                    MovementVector = dir,
-                    PositionInWorld = projectile.Projectile.Center,
-                    UniqueInfoPiece = 90,
-                });
-
-                if (cp.parryTime < 250)
-                    cp.parryTime += 80;
+                if (cp.parryTime < 280)
+                    cp.parryTime += 100;
             }
             return true;
         }
@@ -108,15 +81,101 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<HolyCharm>()
-                .AddIngredient<DemonsProtection>()
-                .AddIngredient<RustedShield>()
+                .AddIngredient(ItemID.IceBlock, 20)
+                .AddIngredient(ItemID.GoldBar, 8)
+                .AddTile(TileID.TinkerersWorkbench)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.IceBlock, 20)
+                .AddIngredient(ItemID.PlatinumBar, 8)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
         }
     }
 
-    public class TerracrestSpike : ModProjectile, IDrawPrimitive, IDrawWarp
+    public class Snowflake:ModProjectile
+    {
+        public override string Texture => AssetDirectory.Accessories+Name;
+
+        ref float Timer => ref Projectile.ai[0];
+        ref float State  => ref Projectile.ai[1];
+
+        public override void SetDefaults()
+        {
+            Projectile.tileCollide = true;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.width = Projectile.height = 16;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
+        }
+
+        public override void AI()
+        {
+            switch (State)
+            {
+                default:
+                case 0://向前旋转
+                    {
+                        if (Projectile.localAI[0] == 0)
+                        {
+                            Projectile.localAI[0] = 1;
+                            Projectile.rotation = Main.rand.NextFloat(6.282f);
+                            Projectile.scale = 0.3f;
+                        }
+
+                        Projectile.rotation += (1 - Timer / 50) * 0.3f;
+                        Projectile.scale += 0.7f / 50;
+                        Projectile.velocity *= 0.98f;
+
+                        Timer++;
+                        if (Timer > 50)
+                        {
+                            Timer = 0;
+                            State++;
+                            Projectile.velocity *= 0;
+                        }
+                    }
+                    break;
+                case 1://缩小并炸开
+                    {
+                        Timer++;
+                        if (Timer < 3)
+                            break;
+
+                        Projectile.scale -= 1 / 10f;
+                        if (Timer > 10)
+                        {
+                            for (int i = 0; i < 6; i++)
+                            {
+                                Vector2 velocity = (Projectile.rotation +1.57f+ i * MathHelper.TwoPi / 6).ToRotationVector2();
+                                Projectile.NewProjectileFromThis<SnowflakeSpike>(Projectile.Center
+                                    , velocity * Main.rand.NextFloat(5, 6f),
+                                     (int)(Projectile.damage * 0.9f), Projectile.knockBack, Projectile.owner, ai1: Main.rand.NextFloat(8, 10));
+                            }
+                            Projectile.Kill();
+                        }
+                    }
+                    break;
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D tex = Projectile.GetTexture();
+            Color c = new Color(255, 255, 255, 0) * 0.1f;
+            for (int i = 0; i < 3; i++)
+            {
+                Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition + (Main.GlobalTimeWrappedHourly + i * MathHelper.TwoPi / 3).ToRotationVector2() * 3, null,
+                    c, Projectile.rotation, tex.Size() / 2, Projectile.scale * 1.05f, 0, 0);
+            }
+            Projectile.QuickDraw(lightColor, 0f);
+            return false;
+        }
+    }
+
+    public class SnowflakeSpike : ModProjectile, IDrawPrimitive, IDrawWarp
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "SpurtTrail3";
 
@@ -141,8 +200,8 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             Projectile.friendly = true;
             Projectile.netImportant = true;
 
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 45;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 35;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -167,15 +226,15 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         {
             trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new NoTip(), WidthFunction, ColorFunction);
 
-            Lighting.AddLight(Projectile.Center, Color.LimeGreen.ToVector3());
+            Lighting.AddLight(Projectile.Center, Color.CadetBlue.ToVector3());
 
             const int ShootTime = 20;
             const int DelayTime = ShootTime + 15;
 
             if (Timer < ShootTime)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(TrailWidth, TrailWidth) / 2, DustID.TerraBlade,
-                    Projectile.rotation.ToRotationVector2() * Main.rand.NextFloat(1f, 4f), Scale: Main.rand.NextFloat(0.5f, 1f));
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(TrailWidth, TrailWidth) / 2, DustID.ApprenticeStorm,
+                    Projectile.rotation.ToRotationVector2() * Main.rand.NextFloat(0.5f, 2f), Scale: Main.rand.NextFloat(1f, 1.2f));
                 if (Main.rand.NextBool())
                     dust.noGravity = true;
                 if (Timer < 14)
@@ -234,7 +293,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
-            effect.Parameters["gradientTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.Accessories + "TerracrestGradient").Value);
+            effect.Parameters["gradientTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.Accessories + "SnowflakeSpikeGradient").Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
             trail.Render(effect);
@@ -242,18 +301,15 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
         public override bool PreDraw(ref Color lightColor)
         {
-
             Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, Projectile.oldPos[12] - Main.screenPosition,
-                Color.White, Color.LimeGreen, Timer / 35, 0, 0.2f, 0.6f, 1, Projectile.rotation + 1.57f,
+                Color.White, Color.CadetBlue, Timer / 35, 0, 0.2f, 0.6f, 1, Projectile.rotation + 1.57f,
                 new Vector2(0.1f, 2.4f), Vector2.One);
-            //ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, 0, Projectile.oldPos[12] - Main.screenPosition,
-            //    Color.White, Color.LimeGreen, Timer / 35, 0, 0.2f, 0.6f, 1, Projectile.rotation+MathHelper.PiOver4,
-            //    new Vector2(0.5f, 0.5f), Vector2.One*2);
             return false;
         }
 
         public void DrawWarp()
         {
+            return;
             if (Timer < 0)
                 return;
 
