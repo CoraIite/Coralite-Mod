@@ -1141,7 +1141,7 @@ Mods: {
 				DisplayName: Iron Ring
 				Tooltip:
 					'''
-					damageReduce 8%
+					damageReduce +4%
 					moveSpeed -10%
 					'''
 			}
@@ -1151,7 +1151,7 @@ Mods: {
 				Tooltip:
 					'''
 					“Are you sure to make accessory with this metal? ”
-					damageReduce 7%
+					damageReduce +4%
 					moveSpeed -10%
 					'''
 			}
@@ -2103,7 +2103,6 @@ Mods: {
 				DisplayName: Bone Ring
 				Tooltip:
 					'''
-					+10 armor
 					+4% critical hit chance
 					[c/8e8e8e:A prehistoric, crude ring made from bone. Rings like these have been discovered in early human graves.]
 					'''
@@ -3196,6 +3195,21 @@ Mods: {
 				DisplayName: Solar Twinkle
 				Tooltip: ""
 			}
+
+			OniMask: {
+				DisplayName: Oni Mask
+				Tooltip: ""
+			}
+
+			KamonFlag: {
+				DisplayName: Kamon Flag
+				Tooltip: ""
+			}
+
+			SolarPanel: {
+				DisplayName: Solar Panel
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -3893,6 +3907,9 @@ Mods: {
 			DemonsProtectionClaw.DisplayName: Demons Protection Claw
 			ForbiddenDroplet.DisplayName: Forbidden Droplet
 			ForbiddenLampExplosion.DisplayName: Forbidden Lamp Explosion
+			SolarTwinkleSlash.DisplayName: Solar Twinkle Slash
+			ThunderveinSpearShoot.DisplayName: Thundervein Spear Shoot
+			BlackSpirit.DisplayName: Black Spirit
 		}
 
 		Configs: {

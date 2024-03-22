@@ -15,11 +15,11 @@ namespace Coralite.Content.Items.CoreKeeper
 
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = RarityType<UncommonRarity>();
+            Item.defense = 6;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statDefense += 10;
             player.GetCritChance(DamageClass.Generic) += 0.04f;
         }
     }

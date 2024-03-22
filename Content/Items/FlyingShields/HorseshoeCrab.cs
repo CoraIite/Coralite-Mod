@@ -209,7 +209,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.damage = (int)(Projectile.damage * 0.87f);
+            Projectile.damage = (int)(Projectile.damage * 0.83f);
         }
 
         public override void AI()

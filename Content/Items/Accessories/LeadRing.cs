@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.endurance += 0.08f;
+            player.endurance += 0.04f;
             player.moveSpeed -= 0.1f;
         }
     }

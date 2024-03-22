@@ -40,11 +40,11 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
         public void OnDashing(BaseFlyingShieldGuard projectile)
         {
-            projectile.Owner.noKnockback = true;
-                projectile.Projectile.SpawnTrailDust(DustID.LavaMoss, Main.rand.NextFloat(0.3f, 0.5f),
+            projectile.OnGuard_DamageReduce(projectile.damageReduce);
+            projectile.Projectile.SpawnTrailDust(DustID.LavaMoss, Main.rand.NextFloat(0.3f, 0.5f),
                     Scale: Main.rand.NextFloat(1.5f, 2f));
-                projectile.Projectile.SpawnTrailDust(DustID.Torch, Main.rand.NextFloat(0.3f, 0.5f),
-                    Scale: Main.rand.NextFloat(2f, 2.5f));
+            projectile.Projectile.SpawnTrailDust(DustID.Torch, Main.rand.NextFloat(0.3f, 0.5f),
+                Scale: Main.rand.NextFloat(2f, 2.5f));
 
             if (projectile.Timer > projectile.dashTime / 3)
             {

@@ -151,7 +151,6 @@ namespace Coralite.Core.Prefabs.Projectiles
                         if (dashFunction != null)
                         {
                             dashFunction.OnDashing(this);
-                            OnGuard_DamageReduce(damageReduce);
                         }
                         else
                             OnDashOver();
@@ -518,6 +517,12 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (State == (int)GuardState.Parry)
             {
                 float factor = Timer / parryTime;
+                lightColor.A = 0;
+                DrawSelf(mainTex, pos, rotation, lightColor * factor, scale * (1f + factor * 0.4f), effect);
+            }
+            else if (State == (int)GuardState.Dashing)
+            {
+                float factor = Timer / dashTime;
                 lightColor.A = 0;
                 DrawSelf(mainTex, pos, rotation, lightColor * factor, scale * (1f + factor * 0.4f), effect);
             }

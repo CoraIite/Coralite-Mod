@@ -522,8 +522,11 @@ namespace Coralite.Content.Items.Thunder
             {
                 SpawnDusts();
                 Projectile.Center = Owner.Center;
-                Owner.velocity = new Vector2(DashDir * 30, Owner.velocity.Y);
-                Owner.direction = (int)DashDir;
+                if (DashCount<3)
+                {
+                    Owner.velocity = new Vector2(DashDir * 30, Owner.velocity.Y);
+                    Owner.direction = (int)DashDir;
+                }
                 Owner.immuneTime = 20;
                 Owner.immune = true;
 
@@ -567,7 +570,8 @@ namespace Coralite.Content.Items.Thunder
             }
             else if ((int)Timer == (int)DashTime)
             {
-                Owner.velocity *= 0.1f;
+                if (DashCount < 3)
+                    Owner.velocity *= 0.1f;
                 foreach (var trail in thunderTrails)
                 {
                     trail.CanDraw = Main.rand.NextBool();

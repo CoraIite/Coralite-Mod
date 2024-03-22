@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.Materials
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.Bone, 150)
+                .AddIngredient(ItemID.Bone, 50)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

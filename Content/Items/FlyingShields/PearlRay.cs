@@ -10,7 +10,7 @@ namespace Coralite.Content.Items.FlyingShields
 {
     public class PearlRay : BaseFlyingShieldItem<PearlRayGuard>
     {
-        public PearlRay() : base(Item.sellPrice(0, 0, 0, 10), ItemRarityID.White, AssetDirectory.FlyingShieldItems)
+        public PearlRay() : base(Item.sellPrice(0, 0, 20), ItemRarityID.White, AssetDirectory.FlyingShieldItems)
         {
         }
 

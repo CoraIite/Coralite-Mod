@@ -237,8 +237,8 @@ namespace Coralite.Content.NPCs.Magike
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Basalt>(), 1, 0, 8));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicCrystal>(), 1, 0, 4));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Basalt>(), 1, 1, 8));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicCrystal>(), 1, 1, 4));
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

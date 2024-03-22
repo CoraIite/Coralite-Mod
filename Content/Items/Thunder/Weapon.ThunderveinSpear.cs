@@ -1,14 +1,15 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
-using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.CameraSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -19,7 +20,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Thunder
 {
-    public class ThunderveinSpear : ModItem, IDashable
+    public class ThunderveinSpear : ModItem
     {
         public override string Texture => AssetDirectory.ThunderItems + Name;
 
@@ -28,7 +29,7 @@ namespace Coralite.Content.Items.Thunder
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 55;
+            Item.damage = 65;
             Item.useTime = 24;
             Item.useAnimation = 24;
             Item.knockBack = 2f;
@@ -44,10 +45,36 @@ namespace Coralite.Content.Items.Thunder
             Item.autoReuse = true;
         }
 
+        public override bool AltFunctionUse(Player player) => true;
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (Main.myPlayer == player.whoAmI)
             {
+                if (player.altFunctionUse == 2)
+                {
+                    foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == ProjectileType<ThunderveinSpearShoot>()))
+                    {
+                        if ((int)proj.ai[2] == (int)BaseSilkKnifeSpecialProj.AIStates.onHit)
+                        {
+                            for (int i = 0; i < proj.localNPCImmunity.Length; i++)
+                                proj.localNPCImmunity[i] = 0;
+
+                            proj.ai[2] = (int)BaseSilkKnifeSpecialProj.AIStates.drag;
+                            Main.instance.CameraModifiers.Add(new MoveModifyer(10, 60));
+                            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
+                                damage / 2, knockback, player.whoAmI, 10, (proj.Center - player.Center).ToRotation(), ai2: 5);
+
+                            proj.netUpdate = true;
+                        }
+                        return false;
+                    }
+
+                    //生成弹幕
+                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<ThunderveinSpearShoot>(), (int)(damage * 0.8f), knockback, player.whoAmI);
+                    return false;
+                }
+
                 if (useCount > 6)
                     useCount = 0;
 
@@ -81,56 +108,10 @@ namespace Coralite.Content.Items.Thunder
 
         public override void AddRecipes()
         {
-            //CreateRecipe()
-            //    .AddIngredient<ZapCrystal>(2)
-            //    .AddTile(TileID.MythrilAnvil)
-            //    .Register();
-        }
-
-        public bool Dash(Player Player, int DashDir)
-        {
-            switch (DashDir)
-            {
-                case CoralitePlayer.DashLeft:
-                case CoralitePlayer.DashRight:
-                    {
-                        float dashDirection = DashDir == CoralitePlayer.DashRight ? 1 : -1;
-                        DashDir = (int)dashDirection;
-                        break;
-                    }
-                default:
-                    return false;
-            }
-
-            Player.GetModPlayer<CoralitePlayer>().DashDelay = 80;
-            Player.GetModPlayer<CoralitePlayer>().DashTimer = 20;
-            Player.immuneTime = 20;
-            Player.immune = true;
-            Player.velocity = new Vector2(DashDir * 30, Player.velocity.Y);
-            Player.direction = DashDir;
-            if (Player.whoAmI == Main.myPlayer)
-            {
-                SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, Player.Center);
-
-                for (int i = 0; i < 1000; i++)
-                {
-                    Projectile proj = Main.projectile[i];
-                    if (proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.ModProjectile is ThunderveinBladeSlash)
-                    {
-                        proj.Kill();
-                        break;
-                    }
-                }
-
-                //生成手持弹幕
-                int damage = Player.GetWeaponDamage(Player.HeldItem);
-                //Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
-                //    damage, Player.HeldItem.knockBack, Player.whoAmI, 3);
-                //Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
-                //    damage, Player.HeldItem.knockBack, Player.whoAmI, 10, DashDir);
-            }
-
-            return true;
+            CreateRecipe()
+                .AddIngredient<ZapCrystal>(2)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 
@@ -487,9 +468,9 @@ namespace Coralite.Content.Items.Thunder
             }
 
             if (factor < 0.5f)
-                distanceToOwner = -68 + 80 * Smoother.Smoother(factor * 2);
+                distanceToOwner = -68 + 100 * Smoother.Smoother(factor * 2);
             else
-                distanceToOwner = -68 + 80 * Smoother.Smoother((1 - factor) * 2);
+                distanceToOwner = -68 + 100 * Smoother.Smoother((1 - factor) * 2);
 
             base.OnSlash();
         }
@@ -542,6 +523,133 @@ namespace Coralite.Content.Items.Thunder
             for (int i = 1; i < 10; i += 1)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
                 ThunderveinDragon.ThunderveinYellowAlpha * (0.5f - i * 0.5f / 10), Projectile.oldRot[i] + extraRot, origin, Projectile.scale*1.1f, effect, 0);
+        }
+    }
+
+    public class ThunderveinSpearShoot : BaseSilkKnifeSpecialProj
+    {
+        public override string Texture => AssetDirectory.ThunderItems + "ThunderveinSpearProj";
+
+        public ThunderveinSpearShoot() : base(16 * 40, 40, 12, 50)
+        {
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.width = Projectile.height = 32;
+            Projectile.friendly = true;
+            Projectile.usesLocalNPCImmunity = false;
+            Projectile.localNPCHitCooldown = 20;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.tileCollide = false;
+            Projectile.aiStyle = -1;
+            Projectile.extraUpdates = 2;
+        }
+
+        public override void RollingInHand()
+        {
+            Vector2 dir = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero);
+            Projectile.Center = Owner.Center + dir * 64;
+            Projectile.velocity = dir * shootSpeed;
+            Projectile.rotation = dir.ToRotation() ;
+            HookState = (int)AIStates.shoot;
+            Projectile.tileCollide = true;
+            Projectile.netUpdate = true;
+        }
+
+        public override void Shoot()
+        {
+            if (Timer > shootTime)
+            {
+                Timer = 0;
+                HookState = (int)AIStates.back;
+                Projectile.tileCollide = false;
+                Projectile.netUpdate = true;
+            }
+
+            Projectile.rotation = (Projectile.Center - Owner.Center).ToRotation();
+            Timer++;
+
+            Projectile.SpawnTrailDust(DustID.PortalBoltTrail, Main.rand.NextFloat(0.2f, 0.5f), newColor: ThunderveinDragon.ThunderveinYellowAlpha,
+                Scale: Main.rand.NextFloat(1f, 1.5f));
+        }
+
+        public override void Dragging()
+        {
+            if ((int)Timer == 0)
+            {
+                Owner.immuneTime = 30;
+                Owner.immune = true;
+            }
+
+            if ((int)Timer < 6 * 3)
+            {
+                Owner.velocity *= 0;
+                Owner.Center = Vector2.Lerp(Owner.Center, Projectile.Center, 0.35f);
+                if (Timer == 5 * 3)
+                {
+                    canDamage = true;
+                }
+            }
+            else
+            {
+                //将玩家回弹
+                SoundEngine.PlaySound(CoraliteSoundID.Thunder, Projectile.Center);
+                SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, Projectile.Center);
+                Vector2 dir = (Projectile.Center - Owner.Center).SafeNormalize(Vector2.Zero);
+                var modifier = new PunchCameraModifier(Owner.position, dir, 14, 8f, 6, 1000f);
+                Main.instance.CameraModifiers.Add(modifier);
+                Owner.velocity = new Vector2(Math.Sign(Owner.Center.X - Projectile.Center.X) * 4, -3);
+                int index = Projectile.NewProjectileFromThis<ThunderFalling>(Projectile.Center + new Vector2(0, -500), Projectile.Center + new Vector2(0, 50),
+                    Projectile.damage, Projectile.knockBack, 20, ai2: 60);
+                Main.projectile[index].friendly = true;
+                Main.projectile[index].hostile = false;
+                Projectile.Kill();
+            }
+
+            Timer++;
+        }
+
+        public override void OnHookedToNPC()
+        {
+            if (Target < 0 || Target > Main.maxNPCs)
+            {
+                Projectile.Kill();
+            }
+            NPC npc = Main.npc[(int)Target];
+            if (!npc.active || npc.dontTakeDamage || npc.Distance(Owner.Center) > onHookedLength || !Collision.CanHitLine(Owner.Center, 1, 1, npc.Center, 1, 1))
+            {
+                Projectile.Kill();
+            }
+
+            Projectile.Center = npc.Center + offset;
+            Timer = 0;
+        }
+
+        public override void BackToOwner()
+        {
+            Projectile.Kill();
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            if (Main.netMode != NetmodeID.Server && (int)HookState!=(int)AIStates.drag)
+            {
+                SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, Projectile.Center);
+                for (int i = 0; i < 5; i++)
+                {
+                    Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(50, 50), Vector2.Zero,
+                        CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.4f, 0.6f));
+                }  
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Projectile.QuickDraw(lightColor, MathHelper.PiOver4);
+            return false;
         }
     }
 }

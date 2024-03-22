@@ -574,8 +574,8 @@ namespace Coralite.Content.ModPlayers
             {
                 if (attempt.common)
                 {
-                    if (Main.rand.NextBool(15))
-                        itemDrop = ItemType<NacliteSeedling>();
+                    //if (Main.rand.NextBool(15))
+                    //    itemDrop = ItemType<NacliteSeedling>();
                 }
                 else if (attempt.uncommon)
                 {
@@ -583,10 +583,10 @@ namespace Coralite.Content.ModPlayers
                     {
                         if (Main.rand.NextBool(6))
                             itemDrop = ItemType<BubblePearlNecklace>();
-                        if (Main.rand.NextBool(3))
+                        if (Main.rand.NextBool(6))
                             itemDrop = ItemType<Items.FlyingShields.HorseshoeCrab>();
                     }
-                    if (Main.rand.NextBool(3))
+                    if (Main.rand.NextBool(6))
                         itemDrop = ItemType<Items.FlyingShields.PearlRay>();
                 }
                 else if (attempt.legendary)

@@ -65,6 +65,8 @@ namespace Coralite.Content.WorldGeneration
                     Point position = pos.ToPoint();
 
                     Dictionary<ushort, int> tileDictionary = new Dictionary<ushort, int>();
+                    if (!WorldGen.InWorld(position.X - 25, position.Y - 25) || WorldGen.InWorld(position.X - 25 + 58, position.Y - 25 + 67))
+                        continue;
                     WorldUtils.Gen(
                         new Point(position.X - 25, position.Y - 25),
                         new Shapes.Rectangle(58, 67),

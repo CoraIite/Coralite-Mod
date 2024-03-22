@@ -72,18 +72,18 @@ namespace Coralite.Core
             bool forceSameDown = false;
             bool forceSameLeft = false;
             bool forceSameRight = false;
-            Tile north = Main.tile[x, y - 1];
-            Tile south = Main.tile[x, y + 1];
-            Tile west = Main.tile[x - 1, y];
-            Tile east = Main.tile[x + 1, y];
+            Tile north = Framing.GetTileSafely(x, y - 1);
+            Tile south = Framing.GetTileSafely(x, y + 1);
+            Tile west = Framing.GetTileSafely(x - 1, y);
+            Tile east = Framing.GetTileSafely(x + 1, y);
 
-            if (north != null && north.HasTile && tileMergeTypes[myType][north.TileType])
+            if (north != default(Tile) && north.HasTile && tileMergeTypes[myType][north.TileType])
                 CustomMergeFrameExplicit(x, y - 1, north.TileType, myType, out _, out _, out _, out forceSameUp, false, false, false, false, false, mergeTypeBrimFrame, true);
-            if (west != null && west.HasTile && tileMergeTypes[myType][west.TileType])
+            if (west != default(Tile) && west.HasTile && tileMergeTypes[myType][west.TileType])
                 CustomMergeFrameExplicit(x - 1, y, west.TileType, myType, out _, out _, out forceSameLeft, out _, false, false, false, false, false, mergeTypeBrimFrame, true);
-            if (east != null && east.HasTile && tileMergeTypes[myType][east.TileType])
+            if (east != default(Tile) && east.HasTile && tileMergeTypes[myType][east.TileType])
                 CustomMergeFrameExplicit(x + 1, y, east.TileType, myType, out _, out forceSameRight, out _, out _, false, false, false, false, false, mergeTypeBrimFrame, true);
-            if (south != null && south.HasTile && tileMergeTypes[myType][south.TileType])
+            if (south != default(Tile) && south.HasTile && tileMergeTypes[myType][south.TileType])
                 CustomMergeFrameExplicit(x, y + 1, south.TileType, myType, out forceSameDown, out _, out _, out _, false, false, false, false, false, mergeTypeBrimFrame, false);
 
             CustomMergeFrameExplicit(x, y, myType, mergeType, out _, out _, out _, out _, forceSameDown, forceSameUp, forceSameLeft, forceSameRight, true, myTypeBrimFrame, overrideBrimStates);

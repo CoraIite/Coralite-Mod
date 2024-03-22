@@ -69,6 +69,13 @@ namespace Coralite.Core.Prefabs.Projectiles
             Backing
         }
 
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            width = Projectile.width / 2;
+            height = Projectile.height / 2;
+            return true;
+        }
+
         public override void SetDefaults()
         {
             Projectile.DamageType = DamageClass.Melee;
@@ -137,10 +144,10 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void Shooting()
         {
             Chasing();
-            if (firstShoot && Timer >= flyingTime - 6)
+            if (firstShoot && Timer >= flyingTime - 2)
             {
                 Projectile.tileCollide = false;
-                if (Timer == flyingTime - 6)
+                if (Timer == flyingTime - 2)
                 {
                     firstShoot = false;
                     Projectile.tileCollide = recordTileCollide;
@@ -229,7 +236,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             State = (int)FlyingShieldStates.JustHited;
-            //Projectile.velocity = oldVelocity;
+            Projectile.velocity = -Projectile.velocity;
             UpdateShieldAccessory(accessory => accessory.OnTileCollide(this));
             return false;
         }

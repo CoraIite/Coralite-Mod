@@ -13,14 +13,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// <summary>
     /// 使用速度传入目标点位
     /// ai0传入闪电降下的时间
-    /// ai1传入主人
     /// </summary>
     public class ThunderFalling : BaseThunderProj
     {
         public override string Texture => AssetDirectory.Blank;
 
         public ref float LightingTime => ref Projectile.ai[0];
-        public ref float OwnerIndex => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.localAI[0];
 
         protected ThunderTrail[] thunderTrails;
@@ -195,7 +193,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     /// <summary>
     /// 使用速度传入目标点位
     /// ai0传入闪电降下的时间
-    /// ai1传入主人
     /// </summary>
     public class StrongThunderFalling : ThunderFalling
     {
@@ -218,6 +215,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     public class EndThunder : StrongThunderFalling
     {
         const int DelayTime = 50;
+
+        public ref float OwnerIndex => ref Projectile.ai[1];
 
         public override void SetDefaults()
         {

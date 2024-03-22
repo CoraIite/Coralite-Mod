@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Accessories
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.defense = 7;
+            Item.defense = 4;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

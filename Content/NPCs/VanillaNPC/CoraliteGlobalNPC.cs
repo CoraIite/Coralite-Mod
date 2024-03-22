@@ -168,11 +168,15 @@ namespace Coralite.Content.NPCs.VanillaNPC
                         npcLoot.Add(leadingConditionRule);
                     }
                     break;
+                case NPCID.BoneLee:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<KamonFlag>(), 12, 1, 1));
+                    break;
                 case NPCID.SkeletronPrime://机械佝偻王在天顶世界掉落美杜莎轻甲
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.ZenithSeedIsUp(), ItemType<MedusaLightArmor>(), 1));
                     break;
-                case NPCID.MartianSaucerCore:
+                case NPCID.MartianSaucerCore://火星飞碟掉落盾冲饰品
                     npcLoot.Add(ItemDropRule.Common(ItemType<PiezoArmorPanel>(), 4, 1, 1));
+                    npcLoot.Add(ItemDropRule.Common(ItemType<SolarPanel>(), 4, 1, 1));
                     break;
                 case NPCID.MoonLordCore:
                     npcLoot.Add(ItemDropRule.Common(ItemType<ConquerorOfTheSeas>(), 9, 1, 1));
@@ -192,66 +196,46 @@ namespace Coralite.Content.NPCs.VanillaNPC
                         shop.Add<AncientCore>(Condition.DownedPlantera);//远古核心
                         break;
                     }
-                case NPCID.TravellingMerchant://游商
-                    {
-                        shop.Add<TravelJournaling>();//手记
-                        shop.Add(ItemID.GlowTulip, Condition.Hardmode);//发光郁金香
-                        shop.Add<MineShield>(Condition.Hardmode);//我的盾牌
-                        shop.Add<RuneParchment>(Condition.DownedPlantera);//花后获取符文羊皮纸
-                    }
-                    break;
+                //case NPCID.TravellingMerchant://游商
+                //    {
+                //        shop.Add<TravelJournaling>();//手记
+                //        shop.Add(ItemID.GlowTulip, Condition.Hardmode);//发光郁金香
+                //        shop.Add<MineShield>(Condition.Hardmode);//我的盾牌
+                //        shop.Add<RuneParchment>(Condition.DownedPlantera);//花后获取符文羊皮纸
+                //    }
+                //    break;
                 default: break;
             }
         }
 
         public override void ModifyActiveShop(NPC npc, string shopName, Item[] items)
         {
-            //switch (npc.type)
-            //{
-            //    case NPCID.ArmsDealer:
-            //        {
-            //            if (NPC.downedPlantBoss)    //花后售卖远古核心
-            //            {
-            //                int i = 0;
-            //                for (; i < items.Length - 1; i++)
-            //                {
-            //                    if (items[i] == null || items[i].IsAir)
-            //                        break;
-            //                }
+            if (npc.type == NPCID.TravellingMerchant)//游商
+            {
+                int i = 0;
+                for (; i < items.Length - 1; i++)
+                {
+                    if (items[i] == null || items[i].IsAir)
+                        break;
+                }
 
-            //                items[i] = new Item(ItemType<AncientCore>());
-            //            }
-            //            break;
-            //        }
-            //    case NPCID.TravellingMerchant://游商
-            //        {
-            //            int i = 0;
-            //            for (; i < items.Length - 1; i++)
-            //            {
-            //                if (items[i] == null || items[i].IsAir)
-            //                    break;
-            //            }
+                items[i] = new Item(ItemType<TravelJournaling>());
+                i++;
 
-            //            items[i] = new Item(ItemType<TravelJournaling>());
-            //            i++;
+                if (Main.hardMode)
+                {
+                    items[i] = new Item(ItemID.GlowTulip);
+                    i++;
+                    items[i] = new Item(ItemType<MineShield>());
+                    i++;
+                }
 
-            //            if (Main.hardMode)
-            //            {
-            //                items[i] = new Item(ItemID.GlowTulip);
-            //                i++;
-            //                items[i] = new Item(ItemType<MineShield>());
-            //                i++;
-            //            }
-
-            //            if (NPC.downedPlantBoss)//花后获取符文羊皮纸
-            //            {
-            //                items[i] = new Item(ItemType<RuneParchment>());
-            //                i++;
-            //            }
-            //        }
-            //        break;
-            //    default: break;
-            //}
+                if (NPC.downedPlantBoss)//花后获取符文羊皮纸
+                {
+                    items[i] = new Item(ItemType<RuneParchment>());
+                    i++;
+                }
+            }
         }
 
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)

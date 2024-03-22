@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
         public void OnDashing(BaseFlyingShieldGuard projectile)
         {
-            projectile.Owner.noKnockback = true;
+            projectile.OnGuard_DamageReduce(projectile.damageReduce);
             for (int i = 0; i < 2; i++)
             {
                 projectile.Projectile.SpawnTrailDust(DustID.Wraith, Main.rand.NextFloat(0.3f, 0.5f),
