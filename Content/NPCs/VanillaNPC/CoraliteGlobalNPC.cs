@@ -9,6 +9,7 @@ using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Misc;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Placeable;
+using Coralite.Content.Items.Thunder;
 using Coralite.Content.Items.YujianHulu;
 using Coralite.Core.Configs;
 using Coralite.Helpers;
@@ -246,6 +247,8 @@ namespace Coralite.Content.NPCs.VanillaNPC
             var projTagMultiplier = ProjectileID.Sets.SummonTagDamageMultiplier[projectile.type];
             if (npc.HasBuff<GelWhipDebuff>())
                 modifiers.FlatBonusDamage += GelWhipDebuff.TagDamage * projTagMultiplier;
+            if (npc.HasBuff<ThunderWhipDebuff>())
+                modifiers.FlatBonusDamage += ThunderWhipDebuff.TagDamage * projTagMultiplier;
 
             if (npc.HasBuff<EdenDebuff>())
             {

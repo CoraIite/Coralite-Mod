@@ -137,6 +137,9 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.velocity.X = Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
             Projectile.timeLeft = 4;
 
+            if (!Owner.active || Owner.dead)
+                Projectile.Kill();
+
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                 cp.FlyingShieldGuardIndex = Projectile.whoAmI;
 

@@ -3339,6 +3339,44 @@ Mods: {
 					冲刺途中生成带电爆破弹
 					'''
 			}
+
+			ThunderFishingRod: {
+				DisplayName: 雷脉钓竿
+				Tooltip: 其实并不带电
+			}
+
+			OldClockwork: {
+				DisplayName: 旧发条
+				Tooltip:
+					'''
+					[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+					[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌防御效果]
+					[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
+					冲刺命中后给予“拧紧发条”BUFF
+					“博士，这个什么时候才能拿掉呢？”
+					'''
+			}
+
+			ChronoHeart: {
+				DisplayName: 时轮之心
+				Tooltip:
+					'''
+					[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+					[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌防御效果]
+					[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
+					冲刺时生成时针
+					“你听得到时间的心跳”
+					'''
+			}
+
+			ThunderWhip: {
+				DisplayName: 闪电鞭
+				Tooltip:
+					'''
+					12点召唤标记伤害
+					一次挥舞能甩出3根鞭子
+					'''
+			}
 		}
 
 		Tiles: {
@@ -3560,6 +3598,16 @@ Mods: {
 			SovereignSipBuff: {
 				DisplayName: 美味饮品
 				Description: 小小史莱姆皇帝在你身旁！
+			}
+
+			TightenTheClockwork: {
+				DisplayName: 拧紧发条！
+				Description: 你充满了能量，近战攻击和移动速度各提高10%
+			}
+
+			ThunderWhipDebuff: {
+				// DisplayName: Thunder Whip Debuff
+				// Description: Mods.Coralite.Buffs.ThunderWhipDebuff.Description
 			}
 		}
 
@@ -4039,6 +4087,9 @@ Mods: {
 			// SolarTwinkleSlash.DisplayName: Solar Twinkle Slash
 			// ThunderveinSpearShoot.DisplayName: Thundervein Spear Shoot
 			// BlackSpirit.DisplayName: Black Spirit
+			// ThunderBobber.DisplayName: Thunder Bobber
+			// ChronoHeartSlash.DisplayName: Chrono Heart Slash
+			// ThunderWhipProj.DisplayName: Thunder Whip Proj
 		}
 
 		Configs: {

@@ -3210,6 +3210,26 @@ Mods: {
 				DisplayName: Solar Panel
 				Tooltip: ""
 			}
+
+			ThunderFishingRod: {
+				DisplayName: Thunder Fishing Rod
+				Tooltip: ""
+			}
+
+			OldClockwork: {
+				DisplayName: Old Clockwork
+				Tooltip: ""
+			}
+
+			ChronoHeart: {
+				DisplayName: Chrono Heart
+				Tooltip: ""
+			}
+
+			ThunderWhip: {
+				DisplayName: Thunder Whip
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -3431,6 +3451,16 @@ Mods: {
 			SovereignSipBuff: {
 				DisplayName: Sovereign Sip Buff
 				Description: Mods.Coralite.Buffs.SovereignSipBuff.Description
+			}
+
+			TightenTheClockwork: {
+				DisplayName: Tighten The Clockwork
+				Description: Mods.Coralite.Buffs.TightenTheClockwork.Description
+			}
+
+			ThunderWhipDebuff: {
+				DisplayName: Thunder Whip Debuff
+				Description: Mods.Coralite.Buffs.ThunderWhipDebuff.Description
 			}
 		}
 
@@ -3910,6 +3940,9 @@ Mods: {
 			SolarTwinkleSlash.DisplayName: Solar Twinkle Slash
 			ThunderveinSpearShoot.DisplayName: Thundervein Spear Shoot
 			BlackSpirit.DisplayName: Black Spirit
+			ThunderBobber.DisplayName: Thunder Bobber
+			ChronoHeartSlash.DisplayName: Chrono Heart Slash
+			ThunderWhipProj.DisplayName: Thunder Whip Proj
 		}
 
 		Configs: {

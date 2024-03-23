@@ -11,7 +11,7 @@ namespace Coralite.Core
 
         public Color GetColor(float factor)
         {
-            factor = Math.Clamp(factor, 0f, 1f);
+            factor = Math.Clamp(factor, 0f, 1f); 
             return Color.White;
         }
     }
