@@ -397,6 +397,8 @@ namespace Coralite.Core.Prefabs.Projectiles
                 cp.DashTimer = this.dashTime;
             Timer = this.dashTime;
             Owner.velocity = this.dashDir.ToRotationVector2() * this.dashSpeed;
+            if (Owner.velocity.Y == 0)
+                Owner.velocity.Y = -0.00001f;
         }
 
         #endregion

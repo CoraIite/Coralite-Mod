@@ -1,5 +1,6 @@
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Thunder;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using System.Collections.Generic;
 using Terraria;
@@ -49,7 +50,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                 {
                     float angle = shootAngle + i * MathHelper.TwoPi / 3;
                     int textureType = Main.rand.NextFromList(textureList.ToArray());
-                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center + angle.ToRotationVector2() * 40, Vector2.Zero, ProjectileType<HyacinthPhantomGun>(), (int)(damage * 0.75f), knockback, player.whoAmI, textureType, i);
+                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center + angle.ToRotationVector2() * 40, Vector2.Zero, ProjectileType<HyacinthPhantomGun>()
+                        , (int)(damage * 0.75f), knockback, player.whoAmI, CoraliteWorld.chaosWorld ? Main.rand.Next(ItemLoader.ItemCount) : textureType, i);
                     textureList.Remove(textureType);
                 }
 

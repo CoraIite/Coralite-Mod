@@ -12,6 +12,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     {
         public void OnSpawnAnmi()
         {
+            UpdateFrameNormally();
             switch (State)
             {
                 default:

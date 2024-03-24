@@ -2571,7 +2571,7 @@ Mods: {
 
 			SandWall: {
 				DisplayName: Sand Wall
-				Tooltip: ""
+				Tooltip: Sharon volumes are generated when defending
 			}
 
 			GelFiberTable: {
@@ -2672,14 +2672,14 @@ Mods: {
 			PirateKingHat: {
 				DisplayName: Pirate King Hat
 				Tooltip: ""
-				NotHasPirateKingSoul: 海盗王之魂：装备至少2件套后触发效果
+				NotHasPirateKingSoul: Soul of the Pirate King: Triggers when at least 2 sets are equipped
 				PirateKingSoul2Part:
 					'''
-					海盗王之魂：攻击敌人有时会抢夺钱币
-					[c/807b7d:(2)件套]
-					[c/69a777:5%概率触发]
-					[c/69a777:2] [c/807b7d:秒冷却时间]
-					[c/807b7d:造成] [c/9e82b5:150%] [c/807b7d:伤害]
+					Soul of the Pirate King: Attacking enemies can sometimes loot coins
+					[c/807b7d:(2) Piece set]
+					[c/69a777:5% chance to trigger]
+					[c/69a777:2] [c/807b7d:second cooldown]
+					[c/807b7d:Deal] [c/9e82b5:150%] [c/807b7d:damage]
 					'''
 				PirateKingSoul3Part:
 					'''
@@ -2707,12 +2707,16 @@ Mods: {
 
 			LightningRods: {
 				DisplayName: Lightning Rods
-				Tooltip: ""
+				Tooltip: Right-click to summon the Desolate Thunder Dragon
 			}
 
 			CrystalBlossomShards: {
 				DisplayName: Crystal Blossom Shards
-				Tooltip: ""
+				Tooltip:
+					'''
+					The crystallized cherry blossoms, already shattered, these are just shiny fragments.
+					Summon a small demon fox swordsman.
+					'''
 			}
 
 			ThunderveinDragonBossBag: {
@@ -3218,17 +3222,35 @@ Mods: {
 
 			OldClockwork: {
 				DisplayName: Old Clockwork
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+					[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
+					[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
+					Upon dash hit, the "Tighten Clockwork" buff is granted
+					"Doctor, when will this be removed?"
+					'''
 			}
 
 			ChronoHeart: {
 				DisplayName: Chrono Heart
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+					[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
+					[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
+					The clockwise is generated at sprint
+					"You can hear the heartbeat of time"
+					'''
 			}
 
 			ThunderWhip: {
 				DisplayName: Thunder Whip
-				Tooltip: ""
+				Tooltip:
+					'''
+					12 summon tag damage
+					A single swing can throw 3 whips
+					'''
 			}
 		}
 
@@ -3549,6 +3571,7 @@ Mods: {
 			Biskety.DisplayName: Biskety
 			ThunderveinDragon.DisplayName: Thundervein Dragon
 			ThunderPhantom.DisplayName: Thunder Phantom
+			ShadowVilliger.DisplayName: Shadow Villiger
 		}
 
 		Prefixes.支配.DisplayName: 支配

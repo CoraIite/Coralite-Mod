@@ -49,7 +49,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
             if (projectile.Timer > projectile.dashTime / 3)
             {
-                projectile.Owner.velocity = projectile.dashDir.ToRotationVector2() * projectile.dashSpeed;
+                projectile.Owner.velocity.X = (projectile.dashDir.ToRotationVector2() * projectile.dashSpeed).X;
             }
         }
 

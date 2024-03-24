@@ -56,7 +56,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     targetPos = NPC.Center
                 },
             };
-            UpdateFrame_P2();
+            UpdateFrameNormally();
 
             if (useDreamMove)
                 switch ((int)State)
@@ -166,7 +166,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 }
         }
 
-        public void UpdateFrame_P2()
+        public void UpdateFrameNormally()
         {
             if (++NPC.frameCounter > 7)
             {

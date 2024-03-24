@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.UI;
+using Coralite.Content.WorldGeneration;
 using Terraria;
 using Terraria.GameContent.UI.States;
 using Terraria.UI;
@@ -7,19 +8,21 @@ namespace Coralite.Content.CustomHooks
 {
     public class WorldSettings : HookGroup
     {
-        //public override void Load()
-        //{
-        //    On_UIWorldSelect.NewWorldClick += On_UIWorldSelect_NewWorldClick;
-        //    On_UIWorldCreation.Click_GoBack += On_UIWorldCreation_Click_GoBack;
-        //    On_UIWorldCreation.Click_NamingAndCreating += On_UIWorldCreation_Click_NamingAndCreating;
-        //}
+        public override void Load()
+        {
+            On_UIWorldCreation.ProcessSpecialWorldSeeds += On_UIWorldCreation_ProcessSpecialWorldSeeds;
+            //On_UIWorldSelect.NewWorldClick += On_UIWorldSelect_NewWorldClick;
+            //On_UIWorldCreation.Click_GoBack += On_UIWorldCreation_Click_GoBack;
+            //On_UIWorldCreation.Click_NamingAndCreating += On_UIWorldCreation_Click_NamingAndCreating;
+        }
 
-        //public override void Unload()
-        //{
-        //    On_UIWorldSelect.NewWorldClick -= On_UIWorldSelect_NewWorldClick;
-        //    On_UIWorldCreation.Click_GoBack -= On_UIWorldCreation_Click_GoBack;
-        //    On_UIWorldCreation.Click_NamingAndCreating -= On_UIWorldCreation_Click_NamingAndCreating;
-        //}
+        public override void Unload()
+        {
+            On_UIWorldCreation.ProcessSpecialWorldSeeds -= On_UIWorldCreation_ProcessSpecialWorldSeeds;
+            //On_UIWorldSelect.NewWorldClick -= On_UIWorldSelect_NewWorldClick;
+            //On_UIWorldCreation.Click_GoBack -= On_UIWorldCreation_Click_GoBack;
+            //On_UIWorldCreation.Click_NamingAndCreating -= On_UIWorldCreation_Click_NamingAndCreating;
+        }
 
         /// <summary>
         /// 创建世界
@@ -65,6 +68,16 @@ namespace Coralite.Content.CustomHooks
 
             UIState state = Main.MenuUI.CurrentState;
             CoraliteWorldSettings.OnInitialize(state);
+        }
+
+        private void On_UIWorldCreation_ProcessSpecialWorldSeeds(On_UIWorldCreation.orig_ProcessSpecialWorldSeeds orig, string processedSeed)
+        {
+            orig.Invoke(processedSeed);
+
+            CoraliteWorld.chaosWorld = false;
+
+            if (processedSeed.ToLower() == "the chaos" || processedSeed.ToLower() == "thechaos")
+                CoraliteWorld.chaosWorld = true;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Bosses.ShadowBalls;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.ModPlayers;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
@@ -175,6 +176,9 @@ namespace Coralite.Content.Items.FlyingShields
             }
             Vector2 dir = Projectile.rotation.ToRotationVector2().RotateByRandom(-0.3f, 0.3f);
             int type = -Main.rand.Next(1, 17);
+            if (CoraliteWorld.chaosWorld)
+                type = Main.rand.Next(ItemLoader.ItemCount);
+
             int index = Projectile.NewProjectileFromThis<HephaesthSmeltingResults>(Projectile.Center, dir * speed,
                   (int)(Projectile.damage * 1.2f), Projectile.knockBack, ai2: type);//Main.rand.Next(1, ItemLoader.ItemCount));
             if (Burning)

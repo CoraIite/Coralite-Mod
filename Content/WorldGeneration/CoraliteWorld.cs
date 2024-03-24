@@ -9,6 +9,13 @@ namespace Coralite.Content.WorldGeneration
     {
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
+            if (chaosWorld)
+            {
+                GenChaosWorld(tasks);
+                return;
+            }
+
+
             int ShiniesIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
             int DesertIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
             int IceBiomeIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Generate Ice Biome"));
@@ -62,6 +69,7 @@ namespace Coralite.Content.WorldGeneration
 
             tag.Add("shadowBallsFightAreaX", shadowBallsFightArea.X);
             tag.Add("shadowBallsFightAreaY", shadowBallsFightArea.Y);
+            tag.Add("chaosWorld", chaosWorld);
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -70,9 +78,11 @@ namespace Coralite.Content.WorldGeneration
             NestCenter.Y = tag.Get<int>("IceNestCenterY");
 
 
-            shadowBallsFightArea = new Microsoft.Xna.Framework.Rectangle(
+            shadowBallsFightArea = new Rectangle(
                 tag.Get<int>("shadowBallsFightAreaX"),
                 tag.Get<int>("shadowBallsFightAreaY"), 74 * 16, 59 * 16);
+
+            chaosWorld= tag.Get<bool>("chaosWorld");
         }
     }
 }

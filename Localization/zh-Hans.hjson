@@ -852,7 +852,7 @@ Mods: {
 
 			MagikeActivator: {
 				DisplayName: 魔能激活杖
-				Tooltip: 激活鼠标位置的魔能机器
+				Tooltip: 激活鼠标位置的魔能机器，电路也能够激活他们
 			}
 
 			SunlightLens: {
@@ -3696,6 +3696,7 @@ Mods: {
 			// Biskety.DisplayName: Biskety
 			ThunderveinDragon.DisplayName: 荒雷龙
 			ThunderPhantom.DisplayName: 荒雷幻影
+			// ShadowVilliger.DisplayName: Shadow Villiger
 		}
 
 		Prefixes.支配.DisplayName: 支配
@@ -4068,28 +4069,28 @@ Mods: {
 			ThunderveinSoul.DisplayName: 雷脉魂魄
 			ThunderDukeVineHeldProj.DisplayName: 雷公藤
 			ElectromagneticCannon_Friendly.DisplayName: 电磁炮
-			// ThunderveinBladeSlash.DisplayName: Thundervein Blade Slash
+			ThunderveinBladeSlash.DisplayName: 雷鸣刃
 			IcicleSoul.DisplayName: 冰晶魂魄
-			// ThunderveinBladeDash.DisplayName: Thundervein Blade Dash
-			// ArachnopyreGuard.DisplayName: Arachnopyre Guard
-			// ArachnopyreProj.DisplayName: Arachnopyre Proj
-			// ArachnopyreSpider.DisplayName: Arachnopyre Spider
-			// SovereignSlime.DisplayName: Sovereign Slime
-			// ThunderveinSpearSlash.DisplayName: Thundervein Spear Slash
-			// ThunderveinSpearSpurt.DisplayName: Thundervein Spear Spurt
-			// FlamingLampsExplosion.DisplayName: Flaming Lamps Explosion
-			// LavaDroplet.DisplayName: Lava Droplet
-			// Snowflake.DisplayName: Snowflake
-			// SnowflakeSpike.DisplayName: Snowflake Spike
-			// DemonsProtectionClaw.DisplayName: Demons Protection Claw
-			// ForbiddenDroplet.DisplayName: Forbidden Droplet
-			// ForbiddenLampExplosion.DisplayName: Forbidden Lamp Explosion
-			// SolarTwinkleSlash.DisplayName: Solar Twinkle Slash
-			// ThunderveinSpearShoot.DisplayName: Thundervein Spear Shoot
-			// BlackSpirit.DisplayName: Black Spirit
-			// ThunderBobber.DisplayName: Thunder Bobber
-			// ChronoHeartSlash.DisplayName: Chrono Heart Slash
-			// ThunderWhipProj.DisplayName: Thunder Whip Proj
+			ThunderveinBladeDash.DisplayName: 闪电突袭
+			ArachnopyreGuard.DisplayName: 炎爆蜘蛛盾
+			ArachnopyreProj.DisplayName: 炎爆蜘蛛盾
+			ArachnopyreSpider.DisplayName: 炎爆蜘蛛
+			SovereignSlime.DisplayName: 小小史莱姆皇帝
+			ThunderveinSpearSlash.DisplayName: 雷荒矛
+			ThunderveinSpearSpurt.DisplayName: 雷荒矛
+			FlamingLampsExplosion.DisplayName: 烈焰灯
+			LavaDroplet.DisplayName: 岩浆滴
+			Snowflake.DisplayName: 雪花
+			SnowflakeSpike.DisplayName: 雪花绽放
+			DemonsProtectionClaw.DisplayName: 恶魔爪击
+			ForbiddenDroplet.DisplayName: 鎏金碎片
+			ForbiddenLampExplosion.DisplayName: 鎏金爆破
+			SolarTwinkleSlash.DisplayName: 日耀光剑
+			ThunderveinSpearShoot.DisplayName: 雷荒矛
+			BlackSpirit.DisplayName: 黑暗魂魄
+			ThunderBobber.DisplayName: 闪电浮标
+			ChronoHeartSlash.DisplayName: 时轮指针
+			ThunderWhipProj.DisplayName: 闪电鞭
 		}
 
 		Configs: {

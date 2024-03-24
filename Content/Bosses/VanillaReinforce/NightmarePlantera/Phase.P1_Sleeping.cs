@@ -20,6 +20,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
 
             Phase1_Movement();
+            UpdateFrameNormally();
             switch ((int)State)
             {
                 default:
