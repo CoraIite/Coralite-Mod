@@ -2601,7 +2601,11 @@ Mods: {
 
 			EekShield: {
 				DisplayName: 伊柯之盾
-				Tooltip: “兄弟，你飞来吧”
+				Tooltip:
+					'''
+					“兄弟，你飞来吧”
+					[c/d63928:来自eek的世界]
+					'''
 			}
 
 			AncientFurnace: {
@@ -2774,6 +2778,7 @@ Mods: {
 					'''
 					结晶化的樱花，已经破碎了，这些只是亮晶晶的碎片。
 					召唤一只小小的妖狐剑士。
+					[c/ff98d2:来自云酱的世界]
 					'''
 			}
 
@@ -3264,7 +3269,7 @@ Mods: {
 				DisplayName: 丛林龟壳
 				Tooltip:
 					'''
-					将丛林乌龟整只丢入微光液体后变成的龟壳，似乎在丛林地下的宝箱中也会出现
+					将物品状态下的丛林乌龟整只丢入微光液体后变成的龟壳，似乎在丛林地下的宝箱中也会出现
 					略微增加飞盾格挡能力
 					'''
 			}
@@ -3376,6 +3381,36 @@ Mods: {
 					12点召唤标记伤害
 					一次挥舞能甩出3根鞭子
 					'''
+			}
+
+			ThunderShield: {
+				DisplayName: 猛雷鼓
+				Tooltip: 飞行速度极快的盾，首次命中时生成电圈
+			}
+
+			ThunderveinNecklace: {
+				DisplayName: 雷爪项链
+				Tooltip:
+					'''
+					+7 护甲穿透
+					命中时附加雷鸣减益，敌怪移动速度越快伤害越高
+					自身免疫雷鸣
+					'''
+			}
+
+			RedJadeArrow: {
+				DisplayName: 赤玉箭
+				Tooltip: 命中后偶尔产生爆炸
+			}
+
+			RedJadeBullet: {
+				DisplayName: 赤玉弹
+				Tooltip: 命中后偶尔产生爆炸
+			}
+
+			ReverseFlash: {
+				// DisplayName: Reverse Flash
+				// Tooltip: ""
 			}
 		}
 
@@ -3608,6 +3643,11 @@ Mods: {
 			ThunderWhipDebuff: {
 				// DisplayName: Thunder Whip Debuff
 				// Description: Mods.Coralite.Buffs.ThunderWhipDebuff.Description
+			}
+
+			ThunderElectrified: {
+				DisplayName: 雷鸣
+				Description: 动的越快就越疼！
 			}
 		}
 
@@ -4091,6 +4131,12 @@ Mods: {
 			ThunderBobber.DisplayName: 闪电浮标
 			ChronoHeartSlash.DisplayName: 时轮指针
 			ThunderWhipProj.DisplayName: 闪电鞭
+			// ThunderShieldGuard.DisplayName: Thunder Shield Guard
+			// ThunderShieldProj.DisplayName: Thunder Shield Proj
+			// ThunderShieldExProj.DisplayName: Thunder Shield Ex Proj
+			// RedJadeArrowProj.DisplayName: Red Jade Arrow Proj
+			// RedJadeBulletProj.DisplayName: Red Jade Bullet Proj
+			// ReverseFlashProj.DisplayName: Reverse Flash Proj
 		}
 
 		Configs: {

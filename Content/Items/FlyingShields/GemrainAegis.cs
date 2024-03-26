@@ -21,8 +21,8 @@ namespace Coralite.Content.Items.FlyingShields
             Item.useTime = Item.useAnimation = 15;
             Item.shoot = ModContent.ProjectileType<GemrainAegisProj>();
             Item.knockBack = 2;
-            Item.shootSpeed = 12;
-            Item.damage = 55;
+            Item.shootSpeed = 14;
+            Item.damage = 59;
         }
 
         public override void AddRecipes()
@@ -52,10 +52,10 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            flyingTime = 15;
+            flyingTime = 20;
             backTime = 12;
-            backSpeed = 12;
-            trailCachesLength = 6;
+            backSpeed = 15.5f;
+            trailCachesLength = 8;
             trailWidth = 18 / 2;
         }
 
@@ -78,6 +78,7 @@ namespace Coralite.Content.Items.FlyingShields
             base.SetDefaults();
             Projectile.width = 38;
             Projectile.height = 42;
+            Projectile.scale = 1.2f;
         }
 
         public override void SetOtherValues()

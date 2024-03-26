@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.Icicle
         public override void SetDefaults()
         {
             Item.ammo = AmmoID.Arrow;
-            Item.damage = 7;
+            Item.damage = 10;
             Item.knockBack = 3f;
             Item.maxStack = Item.CommonMaxStack;
             Item.shootSpeed = 4;

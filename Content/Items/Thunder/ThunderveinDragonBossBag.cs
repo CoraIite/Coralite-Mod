@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            //itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<IcicleCoccyx>()));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<ThunderveinNecklace>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ZapCrystal>(), 1, 8, 12));
             itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<ThunderveinDragon>()));
         }

@@ -1,16 +1,22 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Loaders;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.UI.Chat;
 
 namespace Coralite.Content.Items.Misc_Summon
 {
     public class CrystalBlossomShards : ModItem
     {
         public override string Texture => AssetDirectory.Misc_Summon + Name;
+
+        private static ParticleGroup group;
 
         public override void SetStaticDefaults()
         {
@@ -23,7 +29,7 @@ namespace Coralite.Content.Items.Misc_Summon
             Item.damage = 20;
             Item.width = 28;
             Item.height = 20;
-            Item.rare = ItemRarityID.Pink;
+            Item.rare = ModContent.RarityType<CrystalBlossomShardsRarity>();
             Item.value = Item.sellPrice(0, 50);
         }
 
@@ -33,6 +39,99 @@ namespace Coralite.Content.Items.Misc_Summon
             {
                 player.AddBuff(Item.buffType, 15, true, false);
             }
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            group?.UpdateParticles();
+        }
+
+        public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
+        {
+            if (line.Mod == "Terraria" && line.Name == "ItemName")
+            {
+                Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "HorizontalLight").Value;
+
+                Vector2 origin = new Vector2(0, mainTex.Height / 2);
+                Color c = Color.Pink;
+                c.A = 0;
+                c *= (0.25f + MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.2f);
+
+                for (int i = 0; i < 5; i++)
+                {
+                    Main.spriteBatch.Draw(mainTex, new Vector2(line.X - 10, line.Y), null, c,
+                        i * 0.22f, origin, 0.7f - i * 0.17f, 0, 0);
+                }
+            }
+
+            return true;
+        }
+
+        public override void PostDrawTooltipLine(DrawableTooltipLine line)
+        {
+            if (line.Mod == "Terraria" && line.Name == "ItemName")
+            {
+                group ??= new ParticleGroup();
+                if (group != null)
+                {
+                    if (!Main.gamePaused && Main.GameUpdateCount % 20 == 0)
+                    {
+                        Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
+                        group.NewParticle(new Vector2(line.X, line.Y) + new Vector2(Main.rand.NextFloat(0, size.X), Main.rand.Next(-8, 0)),
+                            Main.rand.NextFloat(0.585f - 0.3f, 0.585f + 0.3f).ToRotationVector2() * Main.rand.NextFloat(0.2f, 0.5f), CoraliteContent.ParticleType<Petal>()
+                            , Color.Pink, Main.rand.NextFloat(0.8f, 1f));
+                    }
+                }
+                group?.DrawParticlesInUI(Main.spriteBatch);
+            }
+        }
+    }
+
+    public class CrystalBlossomShardsRarity : ModRarity
+    {
+        public override Color RarityColor => Color.Lerp(new Color(255, 152, 210), Color.Pink, Math.Abs(MathF.Sin(Main.GlobalTimeWrappedHourly * 3)));
+    }
+
+    public class Petal : ModParticle
+    {
+        public override string Texture => AssetDirectory.NightmarePlantera + "NightmarePetal";
+
+        public override void OnSpawn(Particle dust)
+        {
+            dust.frame = new Rectangle(0, Main.rand.Next(8) * 14, 10, 14);
+            dust.shouldKilledOutScreen = false;
+        }
+
+        public override void Update(Particle dust)
+        {
+            dust.center += dust.velocity;
+            dust.rotation += Main.rand.NextFloat(0.13f, 0.18f);
+            dust.velocity *= 0.99f;
+            if (dust.fadeIn > 45)
+                dust.color *= 0.88f;
+            if (dust.fadeIn % 8 == 0)
+            {
+                dust.frame.Y += 14;
+                if (dust.frame.Y > 98)
+                    dust.frame.Y = 0;
+            }
+
+            dust.fadeIn++;
+            if (dust.fadeIn > 60)
+                dust.active = false;
+        }
+
+        public override void DrawInUI(SpriteBatch spriteBatch, Particle particle)
+        {
+            ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
+            Rectangle frame = particle.frame;
+            Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
+            Color c = particle.color;
+            if (particle.fadeIn < 6)
+            {
+                c *= (particle.fadeIn / 6);
+            }
+            spriteBatch.Draw(modParticle.Texture2D.Value, particle.center, frame, c, particle.rotation, origin, particle.scale, SpriteEffects.None, 0f);
         }
     }
 

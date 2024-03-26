@@ -1,9 +1,9 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
-using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.RedJades;
+using Coralite.Content.Items.Thunder;
 using Coralite.Content.Projectiles.Globals;
 using Coralite.Content.UI;
 using Coralite.Core;
@@ -56,6 +56,8 @@ namespace Coralite.Content.ModPlayers
         public bool equippedPhantomMirror;
         /// <summary> 手持骨戒，是梦魇花掉落物的那个武器，不是地心护核者的那个饰品 </summary>
         public bool equippedBoneRing;
+        /// <summary> 手持骨戒，是梦魇花掉落物的那个武器，不是地心护核者的那个饰品 </summary>
+        public bool equippedThunderveinNecklace;
 
         /// <summary>
         /// 海盗王之魂
@@ -81,6 +83,8 @@ namespace Coralite.Content.ModPlayers
         /// </summary>
         public int split;
         #endregion
+
+        public bool thunderElectrified;
 
         public byte nightmareCount;
         /// <summary> 使用梦魇之花的噩梦能量 </summary>
@@ -141,6 +145,7 @@ namespace Coralite.Content.ModPlayers
             equippedShadowMirror = false;
             equippedPhantomMirror = false;
             equippedBoneRing = false;
+            equippedThunderveinNecklace = false;
             pirateKingSoul = 0;
             if (pirateKingSoulCD > 0)
                 pirateKingSoulCD--;
@@ -148,6 +153,7 @@ namespace Coralite.Content.ModPlayers
             medusaSoul = 0;
             split = 0;
 
+            thunderElectrified = false;
             resistDreamErosion = false;
 
             critDamageBonus = 0;
@@ -348,6 +354,23 @@ namespace Coralite.Content.ModPlayers
             Player.lifeRegen = (int)(Player.lifeRegen * (1 + lifeReganBonus));
         }
 
+        public override void UpdateBadLifeRegen()
+        {
+            if (thunderElectrified)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+
+                Player.lifeRegenTime = 0;
+                int damage = (int)(3 + Player.velocity.Length() * 1.5f);
+
+                if (damage > 15)
+                    damage = 15;
+
+                Player.lifeRegen -= damage * 2;
+            }
+        }
+
         public override void PostUpdate()
         {
             equippedRedJadePendant = false;
@@ -427,6 +450,11 @@ namespace Coralite.Content.ModPlayers
             modifiers.CritDamage += critDamageBonus;
             PriateKingSoulEffect(ref modifiers);
             MedusaSoulEffect(ref modifiers);
+
+            if (equippedThunderveinNecklace)
+            {
+                target.AddBuff(BuffType<ThunderElectrified>(), 8 * 60);
+            }
 
             #region 海盗王之魂的效果
             void PriateKingSoulEffect(ref NPC.HitModifiers modifiers)

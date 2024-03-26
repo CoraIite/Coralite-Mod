@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Coralite.Content.Items.Thunder;
+using System;
+using Terraria;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -27,5 +29,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             return ThunderveinDragon.ThunderveinOrangeAlpha * ThunderAlpha;
         }
 
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+            target.AddBuff(ModContent.BuffType<ThunderElectrified>(), Main.rand.Next(2, 4) * 60);
+        }
     }
 }

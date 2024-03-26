@@ -419,7 +419,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override float GetWidth()
         {
-            return Projectile.width / 2 / Projectile.scale;
+            return Projectile.width *0.45f / Projectile.scale;
         }
     }
 

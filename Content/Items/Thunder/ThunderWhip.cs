@@ -7,7 +7,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
-using static Humanizer.In;
 
 namespace Coralite.Content.Items.Thunder
 {

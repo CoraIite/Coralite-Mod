@@ -68,15 +68,16 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
                 Vector2 position = Position.ToWorldCoordinates(24, -8);
 
-                Item item = chooseRecipe.resultItem.Clone();
-                if (item.TryGetGlobalItem(out MagikeItem magikeItem))   //把不必要的东西删掉
-                {
-                    magikeItem.magike_CraftRequired = -1;
-                    magikeItem.stack_CraftRequired = 0;
-                    magikeItem.condition = null;
-                }
+                //Item item = chooseRecipe.resultItem.Clone();
+                //if (item.TryGetGlobalItem(out MagikeItem magikeItem))   //把不必要的东西删掉
+                //{
+                //    magikeItem.magike_CraftRequired = -1;
+                //    magikeItem.stack_CraftRequired = 0;
+                //    magikeItem.condition = null;
+                //}
 
-                int index = Item.NewItem(new EntitySource_TileEntity(this), position, item);    //生成掉落物
+                int index = Item.NewItem(new EntitySource_TileEntity(this), position, chooseRecipe.resultItem.type,
+                    chooseRecipe.resultItem.stack);    //生成掉落物
                 chooseRecipe.onRemodel?.Invoke(containsItem, Main.item[index]); //触发OnRemodel
 
                 containsItem.stack -= chooseRecipe.selfRequiredNumber;  //消耗原物品

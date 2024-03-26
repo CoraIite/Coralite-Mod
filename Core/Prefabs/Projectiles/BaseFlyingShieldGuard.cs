@@ -28,7 +28,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <summary> 削减弹幕的穿透数的概率 </summary>
         public float strongGuard;
         /// <summary> 决定了举盾时每帧的距离增加量，这个数越大举盾速度越快 </summary>
-        public float distanceAdder = 2;
+        public float distanceAdder = 1.5f;
 
         /// <summary> 到最远时候的比例......这个数越小那么防御时盾就越扁 </summary>
         public float scalePercent = 2.8f;
@@ -266,7 +266,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <returns></returns>
         public virtual float GetWidth()
         {
-            return Projectile.width / 2 / Projectile.scale + 8;
+            return Projectile.width *0.6f / Projectile.scale;
         }
 
         /// <summary>

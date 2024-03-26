@@ -24,6 +24,8 @@ namespace Coralite.Content.NPCs.VanillaNPC
     public class CoraliteGlobalNPC : GlobalNPC
     {
         public bool IvyPosion;
+        public bool EuphorbiaPoison;
+        public bool ThunderElectrified;
 
         public override bool InstancePerEntity => true;
 
@@ -32,11 +34,36 @@ namespace Coralite.Content.NPCs.VanillaNPC
             if (IvyPosion)
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = (int)(0.25f * npc.lifeRegen);
+
+            if (EuphorbiaPoison)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= 4 * 100;
+                if (damage < 100 / 2)
+                    damage = 100 / 2;
+            }
+
+            if (ThunderElectrified)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                int damageCount = (int)(10 + npc.velocity.Length() * 1.5f);
+                if (damageCount > 30)
+                    damageCount = 30;
+                npc.lifeRegen -= damageCount * 8;
+                if (damage < damageCount)
+                    damage = damageCount;
+            }
         }
 
         public override void ResetEffects(NPC npc)
         {
             IvyPosion = false;
+            EuphorbiaPoison = false;
+            ThunderElectrified = false;
         }
 
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)

@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetDefaults2()
         {
-            Item.useTime = Item.useAnimation = 32;
+            Item.useTime = Item.useAnimation = 30;
             Item.shoot = ModContent.ProjectileType<MechRioterProj>();
             Item.knockBack = 4;
             Item.shootSpeed = 16;
@@ -96,9 +96,9 @@ namespace Coralite.Content.Items.FlyingShields
                 int width = (int)(38 * Projectile.scale);
                 Projectile.Resize(width, width);
 
-                Projectile.NewProjectileFromThis<SmallMechRioter>(target.Center, Helper.NextVec2Dir() * 12, Projectile.damage, Projectile.knockBack);
+                Projectile.NewProjectileFromThis<SmallMechRioter>(target.Center, Helper.NextVec2Dir() * 12, (int)(Projectile.damage*0.93f), Projectile.knockBack);
                 Vector2 offset = Helper.NextVec2Dir();
-                Projectile.NewProjectileFromThis<SmallMechRioter>(target.Center + offset * 16, offset * 2, Projectile.damage, Projectile.knockBack, 1);
+                Projectile.NewProjectileFromThis<SmallMechRioter>(target.Center + offset * 16, offset * 2, (int)(Projectile.damage * 0.93f), Projectile.knockBack, 1);
                 hited = true;
             }
 
@@ -285,7 +285,7 @@ namespace Coralite.Content.Items.FlyingShields
                                     {
                                         int index = Projectile.NewProjectileFromThis(Projectile.Center + (Projectile.rotation + 1.57f * i).ToRotationVector2() * 12
                                             , (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 12,
-                                            ProjectileID.EyeLaser, Projectile.damage, Projectile.knockBack, ai1: i + 1);
+                                            ProjectileID.EyeLaser, (int)(Projectile.damage*0.8f), Projectile.knockBack, ai1: i + 1);
                                         Main.projectile[index].hostile = false;
                                         Main.projectile[index].friendly = true;
                                         Main.projectile[index].penetrate = 1;

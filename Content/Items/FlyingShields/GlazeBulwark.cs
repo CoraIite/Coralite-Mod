@@ -21,8 +21,8 @@ namespace Coralite.Content.Items.FlyingShields
             Item.useTime = Item.useAnimation = 15;
             Item.shoot = ModContent.ProjectileType<GlazeBulwarkProj>();
             Item.knockBack = 2;
-            Item.shootSpeed = 12;
-            Item.damage = 24;
+            Item.shootSpeed = 13.5f;
+            Item.damage = 30;
         }
 
         public override void AddRecipes()
@@ -47,9 +47,9 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            flyingTime = 15;
-            backTime = 4;
-            backSpeed = 12;
+            flyingTime = 19;
+            backTime = 6;
+            backSpeed = 13.5f;
             trailCachesLength = 6;
         }
     }
@@ -63,6 +63,7 @@ namespace Coralite.Content.Items.FlyingShields
             base.SetDefaults();
             Projectile.width = 38;
             Projectile.height = 38;
+            Projectile.scale = 1.1f;
         }
 
         public override void SetOtherValues()

@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.Thunder
                 .AddIngredient(ItemID.RainCloud, 5)
                 .AddIngredient(ItemID.SoulofMight)
                 .AddIngredient(ItemID.SoulofSight)
-                .AddIngredient(ItemID.SoulofFlight)
+                .AddIngredient(ItemID.SoulofFright)
                 .AddTile<MagicCraftStation>()
                 .Register();
         }

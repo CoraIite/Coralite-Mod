@@ -23,13 +23,17 @@ namespace Coralite.Content.WorldGeneration
             progress.Message = "正在制作冰龙巢穴";
             progress.Set(0);
             //随机选择雪原上的某个地方
-            int nestCenter_x = GenVars.snowOriginLeft + WorldGen.genRand.Next(GenVars.snowOriginRight - GenVars.snowOriginLeft);
+            int nestCenter_x = (GenVars.snowOriginRight + GenVars.snowOriginLeft) / 2
+                + WorldGen.genRand.Next(GenVars.snowOriginRight - GenVars.snowOriginLeft) / 3;
             int nestCenter_y = (int)(Main.worldSurface * 0.4f);
 
             for (; nestCenter_y < Main.worldSurface; nestCenter_y++)
             {
                 Tile tile = Framing.GetTileSafely(nestCenter_x, nestCenter_y);
-                if (tile.HasTile)
+                if (tile.HasTile && tile.TileType != TileID.Cloud
+                    && tile.TileType != TileID.RainCloud && tile.TileType != TileID.Sunplate 
+                    && tile.TileType != TileID.Containers&&tile.TileType!=TileID.Dirt
+                    &&tile.TileType!=TileID.Grass)
                     break;
             }
 

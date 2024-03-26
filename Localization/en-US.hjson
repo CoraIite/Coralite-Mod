@@ -2846,17 +2846,17 @@ Mods: {
 
 			TheGazeOfTheThundervein: {
 				DisplayName: The Gaze Of The Thundervein
-				Tooltip: ""
+				Tooltip: The Thundervein Dragon, which is watching its prey in the dark, is said to be more vulnerable to damage to its head
 			}
 
 			ThunderveinSoulStone: {
 				DisplayName: Thundervein Soul Stone
-				Tooltip: ""
+				Tooltip: The spirit of the Thundervein Dragon is with you
 			}
 
 			ThunderDukeVine: {
 				DisplayName: Thunder Duke Vine
-				Tooltip: ""
+				Tooltip: After accumulating electricity, the electromagnetic cannon is fired
 			}
 
 			MercuryBathtub: {
@@ -2956,7 +2956,7 @@ Mods: {
 
 			ThunderveinBlade: {
 				DisplayName: Thundervein Blade
-				Tooltip: ""
+				Tooltip: Double-tap the arrow keys to use the lightning raid
 			}
 
 			PirateKingCoat: {
@@ -3055,17 +3055,17 @@ Mods: {
 				NotHasSplit: 分裂：装备至少2件套后触发效果
 				Split2Part:
 					'''
-					分裂：远程武器射出更多的投掷物
-					[c/807b7d:(2)件套]
-					[c/807b7d:分裂等级] [c/9e82b5:+1]
-					[c/807b7d:伤害补正] [c/9e82b5:65%]
+					Split: Ranged weapons shoot more projectiles
+					[c/807b7d:(2)Piece set]
+					[c/807b7d:Split Rank] [c/9e82b5:+1]
+					[c/807b7d:Damage Correction] [c/9e82b5:65%]
 					'''
 				Split3Part:
 					'''
-					分裂：远程武器射出更多的投掷物
-					[c/807b7d:(3)件套]
-					[c/807b7d:分裂等级] [c/9e82b5:+2]
-					[c/807b7d:伤害补正] [c/9e82b5:50%]
+					Split: Ranged weapons shoot more projectiles
+					[c/807b7d:(3) Piece set]
+					[c/807b7d:Split Rank] [c/9e82b5:+2]
+					[c/807b7d:Damage Correction] [c/9e82b5:50%]
 					'''
 			}
 
@@ -3090,19 +3090,19 @@ Mods: {
 				NotHasSplit: 分裂：装备至少2件套后触发效果
 				Split2Part:
 					'''
-					分裂：远程武器射出更多的投掷物
-					[c/807b7d:(2)件套]
-					[c/807b7d:分裂等级] [c/9e82b5:+1]
-					[c/807b7d:伤害补正] [c/9e82b5:65%]
+					Split: Ranged weapons shoot more projectiles
+					[c/807b7d:(2)Piece set]
+					[c/807b7d:Split Rank] [c/9e82b5:+1]
+					[c/807b7d:Damage Correction] [c/9e82b5:65%]
 					'''
 				Split3Part:
 					'''
-					分裂：远程武器射出更多的投掷物
-					[c/807b7d:(3)件套]
-					[c/807b7d:分裂等级] [c/9e82b5:+2]
-					[c/807b7d:伤害补正] [c/9e82b5:50%]
+					Split: Ranged weapons shoot more projectiles
+					[c/807b7d:(3) Piece set]
+					[c/807b7d:Split Rank] [c/9e82b5:+2]
+					[c/807b7d:Damage Correction] [c/9e82b5:50%]
 					'''
-				MedusaBonus: 隐秘行动：远程伤害，远程暴击率，移动速度各增加5%
+				MedusaBonus: 隐秘行动：远程暴击率，移动速度各增加5%
 			}
 
 			MedusaSlippers: {
@@ -3123,101 +3123,169 @@ Mods: {
 					[c/807b7d:最多增加] [c/9e82b5:75%] [c/807b7d:伤害]
 					[c/807b7d:最多减少] [c/9e82b5:30%] [c/807b7d:伤害]
 					'''
-				NotHasSplit: 分裂：装备至少2件套后触发效果
+				NotHasSplit: Split: Triggers when at least 2 sets are equipped
 				Split2Part:
 					'''
-					分裂：远程武器射出更多的投掷物
-					[c/807b7d:(2)件套]
-					[c/807b7d:分裂等级] [c/9e82b5:+1]
-					[c/807b7d:伤害补正] [c/9e82b5:65%]
+					Split: Ranged weapons shoot more projectiles
+					[c/807b7d:(2)Piece set]
+					[c/807b7d:Split Rank] [c/9e82b5:+1]
+					[c/807b7d:Damage Correction] [c/9e82b5:65%]
 					'''
 				Split3Part:
 					'''
-					分裂：远程武器射出更多的投掷物
-					[c/807b7d:(3)件套]
-					[c/807b7d:分裂等级] [c/9e82b5:+2]
-					[c/807b7d:伤害补正] [c/9e82b5:50%]
+					Split: Ranged weapons shoot more projectiles
+					[c/807b7d:(3) Piece set]
+					[c/807b7d:Split Rank] [c/9e82b5:+2]
+					[c/807b7d:Damage Correction] [c/9e82b5:50%]
 					'''
 			}
 
 			Arachnopyre: {
 				DisplayName: Arachnopyre
-				Tooltip: ""
+				Tooltip: Extends the flight time in front of a wall and fires a Flame Bomb Spider on hit
 			}
 
 			ThunderveinSpear: {
 				DisplayName: Thundervein Spear
-				Tooltip: ""
+				Tooltip:
+					'''
+					Right-click to throw a spear, hit an enemy and stab it at them
+					Right-clicking again will pull the player towards the spear and spawn a lightning strike
+					'''
 			}
 
 			SovereignSip: {
 				DisplayName: Sovereign Sip
-				Tooltip: ""
+				Tooltip: Summons a little Slime Emperor
 			}
 
 			FlamingLamps: {
 				DisplayName: Flaming Lamps
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+					[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
+					Ignore knockback during the dash
+					Dash hits an enemy with a solar blast
+					Creates a fire blast when the first enemy is hit by a dash
+					'''
 			}
 
 			LavaLamp: {
 				DisplayName: Lava Lamp
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+					[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
+					Ignore knockback during the dash
+					Dash hits an enemy with a solar blast
+					Dash hits the first enemy and creates a lava eruption
+					'''
 			}
 
 			PiezoArmorPanel: {
 				DisplayName: Piezo Armor Panel
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+					[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
+					Ignore knockback during the dash
+					Dash hits an enemy with a solar blast
+					Creates an electric circle when the first enemy is hit, and increases sprint speed and duration
+					A maximum of two electric circles are generated
+					'''
 			}
 
 			AmberAmulet: {
 				DisplayName: Amber Amulet
-				Tooltip: ""
+				Tooltip: +8% Chance to reduce the number of projectile penetration when blocking a flying shield
 			}
 
 			JungleTurtleShell: {
 				DisplayName: Jungle Turtle Shell
-				Tooltip: ""
+				Tooltip:
+					'''
+					The shell of a Jungle Turtle in its item state when dropped into the Shimmer Liquid 
+					also appears in chests underneath the Jungle
+					Slightly increased shield blocking ability
+					'''
 			}
 
 			SnowflakeCharm: {
 				DisplayName: Snowflake Charm
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/8aebff:The moment the shield is raised, it can perfectly block and release Ice Blossoms]
+					Slightly increases shield raising speed
+					'''
 			}
 
 			ShieldSpring: {
 				DisplayName: Shield Spring
-				Tooltip: ""
+				Tooltip: Slightly increases the dash speed of the shield when performing a shield charge
 			}
 
 			ForbiddenLamp: {
 				DisplayName: Forbidden Lamp
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+					[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
+					Ignore knockback during the dash
+					Dash hits an enemy with a solar blast
+					Dash hits enemies with a burst of lights and gilded shards
+					'''
 			}
 
 			SolarTwinkle: {
 				DisplayName: Solar Twinkle
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+					[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
+					Ignore knockback during the dash
+					Dash hits an enemy with a solar blast
+					Slash with Solar Energy while sprinting
+					'''
 			}
 
 			OniMask: {
 				DisplayName: Oni Mask
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+					[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
+					[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
+					Throw bones at the start of the Dash
+					"Maybe you can wear it and become a regular series"
+					'''
 			}
 
 			KamonFlag: {
 				DisplayName: Kamon Flag
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+					[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
+					[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
+					Spawns a grey and black soul at the start of the dash
+					'''
 			}
 
 			SolarPanel: {
 				DisplayName: Solar Panel
-				Tooltip: ""
+				Tooltip:
+					'''
+					[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+					[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
+					[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
+					Spawns charged blasters during the dash
+					'''
 			}
 
 			ThunderFishingRod: {
 				DisplayName: Thunder Fishing Rod
-				Tooltip: ""
+				Tooltip: Actually, it is not electrified
 			}
 
 			OldClockwork: {
@@ -3251,6 +3319,35 @@ Mods: {
 					12 summon tag damage
 					A single swing can throw 3 whips
 					'''
+			}
+
+			ThunderShield: {
+				DisplayName: Thunder Shield
+				Tooltip:
+					'''
+					+7 Armor penetration
+					Inflicts an Charged debuff on hit, and the faster the enemy moves, the higher the damage
+					'''
+			}
+
+			ThunderveinNecklace: {
+				DisplayName: Thundervein Necklace
+				Tooltip: ""
+			}
+
+			RedJadeArrow: {
+				DisplayName: Red Jade Arrow
+				Tooltip: Occasional explosions occur upon hit
+			}
+
+			RedJadeBullet: {
+				DisplayName: Red Jade Bullet
+				Tooltip: Occasional explosions occur upon hit
+			}
+
+			ReverseFlash: {
+				DisplayName: Reverse Flash
+				Tooltip: ""
 			}
 		}
 
@@ -3483,6 +3580,11 @@ Mods: {
 			ThunderWhipDebuff: {
 				DisplayName: Thunder Whip Debuff
 				Description: Mods.Coralite.Buffs.ThunderWhipDebuff.Description
+			}
+
+			ThunderElectrified: {
+				DisplayName: Thunder Electrified
+				Description: Mods.Coralite.Buffs.ThunderElectrified.Description
 			}
 		}
 
@@ -3966,6 +4068,12 @@ Mods: {
 			ThunderBobber.DisplayName: Thunder Bobber
 			ChronoHeartSlash.DisplayName: Chrono Heart Slash
 			ThunderWhipProj.DisplayName: Thunder Whip Proj
+			ThunderShieldGuard.DisplayName: Thunder Shield Guard
+			ThunderShieldProj.DisplayName: Thunder Shield Proj
+			ThunderShieldExProj.DisplayName: Thunder Shield Ex Proj
+			RedJadeArrowProj.DisplayName: Red Jade Arrow Proj
+			RedJadeBulletProj.DisplayName: Red Jade Bullet Proj
+			ReverseFlashProj.DisplayName: Reverse Flash Proj
 		}
 
 		Configs: {

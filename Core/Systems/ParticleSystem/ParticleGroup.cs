@@ -54,10 +54,6 @@ namespace Coralite.Core.Systems.ParticleSystem
             ParticleLoader.SetupParticle(particle);
 
             _particles.Add(particle);
-            int result = -1;
-
-            if (result == -1)
-                return null;
 
             return particle;
         }

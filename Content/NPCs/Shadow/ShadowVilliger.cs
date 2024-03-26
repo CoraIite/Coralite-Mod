@@ -170,7 +170,7 @@ namespace Coralite.Content.NPCs.Shadow
             Vector2 origin = frameBox.Size() / 2;
             SpriteEffects effects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Vector2 pos = NPC.Center - screenPos;
+            Vector2 pos = NPC.Center - screenPos+new Vector2(0,-2);
             Color c = Color.Purple;
             c.A = 0;
             c *= 0.5f;

@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Items.Icicle;
 using Coralite.Content.ModPlayers;
+using Coralite.Content.NPCs.VanillaNPC;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
@@ -1557,7 +1558,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            if (npc.TryGetGlobalNPC(out EuphorbiaGlobalNPC gnpc))
+            if (npc.TryGetGlobalNPC(out CoraliteGlobalNPC gnpc))
             {
                 gnpc.EuphorbiaPoison = true;
             }
@@ -1569,31 +1570,6 @@ namespace Coralite.Content.Items.Nightmare
             if (Main.rand.NextBool(4))
             {
                 dust6.scale *= 0.5f;
-            }
-        }
-    }
-
-    public class EuphorbiaGlobalNPC : GlobalNPC
-    {
-        public override bool InstancePerEntity => true;
-
-        public bool EuphorbiaPoison;
-
-        public override void ResetEffects(NPC npc)
-        {
-            EuphorbiaPoison = false;
-        }
-
-        public override void UpdateLifeRegen(NPC npc, ref int damage)
-        {
-            if (EuphorbiaPoison)
-            {
-                if (npc.lifeRegen > 0)
-                    npc.lifeRegen = 0;
-
-                npc.lifeRegen -= 4 * 100;
-                if (damage < 100 / 2)
-                    damage = 100 / 2;
             }
         }
     }
