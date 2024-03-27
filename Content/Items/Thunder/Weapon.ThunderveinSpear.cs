@@ -33,6 +33,7 @@ namespace Coralite.Content.Items.Thunder
             Item.useTime = 24;
             Item.useAnimation = 24;
             Item.knockBack = 2f;
+            Item.crit = 10;
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Melee;

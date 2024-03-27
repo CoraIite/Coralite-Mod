@@ -3409,8 +3409,118 @@ Mods: {
 			}
 
 			ReverseFlash: {
-				// DisplayName: Reverse Flash
+				DisplayName: 逆闪电
+				Tooltip: 射击时从远处朝玩家生成一道电光
+			}
+
+			TenkoFigurine: {
+				DisplayName: 天狐雕像
 				// Tooltip: ""
+			}
+
+			IcicleBathtub: {
+				DisplayName: 冰晶浴缸
+				Tooltip: ""
+			}
+
+			IcicleBed: {
+				DisplayName: 冰晶床
+				Tooltip: ""
+			}
+
+			IcicleBigDroplight: {
+				DisplayName: 冰晶大吊灯
+				Tooltip: ""
+			}
+
+			IcicleBookcase: {
+				DisplayName: 冰晶书架
+				Tooltip: ""
+			}
+
+			IcicleCandelabra: {
+				DisplayName: 冰晶烛台
+				Tooltip: ""
+			}
+
+			IcicleCandle: {
+				DisplayName: 冰晶蜡烛
+				Tooltip: ""
+			}
+
+			IcicleChair: {
+				DisplayName: 冰晶椅
+				Tooltip: ""
+			}
+
+			IcicleChest: {
+				DisplayName: 冰晶箱
+				Tooltip: ""
+			}
+
+			IcicleClock: {
+				DisplayName: 冰晶钟
+				Tooltip: ""
+			}
+
+			IcicleDoor: {
+				DisplayName: 冰晶门
+				Tooltip: ""
+			}
+
+			IcicleDresser: {
+				DisplayName: 冰晶梳妆台
+				Tooltip: ""
+			}
+
+			IcicleDroplight: {
+				DisplayName: 冰晶吊灯
+				Tooltip: ""
+			}
+
+			IcicleFloorLamp: {
+				DisplayName: 冰晶柱灯
+				Tooltip: ""
+			}
+
+			IciclePiano: {
+				DisplayName: 冰晶钢琴
+				Tooltip: ""
+			}
+
+			IciclePlatform: {
+				DisplayName: 冰晶平台
+				Tooltip: ""
+			}
+
+			IcicleSink: {
+				DisplayName: 冰晶水槽
+				Tooltip: ""
+			}
+
+			IcicleSofa: {
+				DisplayName: 冰晶沙发
+				Tooltip: ""
+			}
+
+			IcicleStoneBlock: {
+				DisplayName: 冰晶石
+				Tooltip: ""
+			}
+
+			IcicleTable: {
+				DisplayName: 冰晶桌
+				Tooltip: ""
+			}
+
+			IcicleToilet: {
+				DisplayName: 冰晶马桶
+				Tooltip: ""
+			}
+
+			IcicleWorkBench: {
+				DisplayName: 冰晶工作台
+				Tooltip: ""
 			}
 		}
 
@@ -3519,7 +3629,23 @@ Mods: {
 			// MercuryPianoTile.MapEntry: Mercury Piano Tile
 			// MercurySofaTile.MapEntry: Mercury Sofa Tile
 			// MercuryTableTile.MapEntry: Mercury Table Tile
-			// MercuryWorkBenchTile.MapEntry: Mercury Work Bench Tile
+			MercuryWorkBenchTile.MapEntry: Mercury Work Bench Tile
+			IcicleBathtubTile.MapEntry: 冰晶浴缸
+			IcicleBedTile.MapEntry: 冰晶床
+			IcicleBigDroplightTile.MapEntry: 冰晶大吊灯
+			IcicleBookcaseTile.MapEntry: 冰晶书架
+			IcicleCandelabraTile.MapEntry: 冰晶烛台
+			IcicleCandleTile.MapEntry: 冰晶蜡烛
+			IcicleChestTile.MapEntry: 冰晶箱
+			IcicleDoorClosedTile.MapEntry: 冰晶门
+			IcicleDoorOpenTile.MapEntry: 冰晶门
+			IcicleDresserTile.MapEntry: 冰晶梳妆台
+			IcicleDroplightTile.MapEntry: 冰晶吊灯
+			IcicleFloorLampTile.MapEntry: 冰晶柱灯
+			IciclePianoTile.MapEntry: 冰晶钢琴
+			IcicleSofaTile.MapEntry: 冰晶沙发
+			IcicleTableTile.MapEntry: 冰晶桌
+			IcicleWorkBenchTile.MapEntry: 冰晶工作台
 		}
 
 		Buffs: {
@@ -3648,6 +3774,11 @@ Mods: {
 			ThunderElectrified: {
 				DisplayName: 雷鸣
 				Description: 动的越快就越疼！
+			}
+
+			TenkoBuff: {
+				// DisplayName: Tenko Buff
+				// Description: Mods.Coralite.Buffs.TenkoBuff.Description
 			}
 		}
 
@@ -4137,6 +4268,7 @@ Mods: {
 			// RedJadeArrowProj.DisplayName: Red Jade Arrow Proj
 			// RedJadeBulletProj.DisplayName: Red Jade Bullet Proj
 			// ReverseFlashProj.DisplayName: Reverse Flash Proj
+			// Tenko.DisplayName: Tenko
 		}
 
 		Configs: {

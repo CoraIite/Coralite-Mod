@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Items.BossSummons;
 using Coralite.Content.Items.Botanical.Seeds;
 using Coralite.Content.Items.CoreKeeper;
-using Coralite.Content.Items.Misc_Summon;
+using Coralite.Content.Items.Pets;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

@@ -10,11 +10,11 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.UI.Chat;
 
-namespace Coralite.Content.Items.Misc_Summon
+namespace Coralite.Content.Items.Pets
 {
     public class CrystalBlossomShards : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Summon + Name;
+        public override string Texture => AssetDirectory.PetItems + Name;
 
         private static ParticleGroup group;
 
@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.Misc_Summon
                 Vector2 origin = new Vector2(0, mainTex.Height / 2);
                 Color c = Color.Pink;
                 c.A = 0;
-                c *= (0.25f + MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.2f);
+                c *= 0.25f + MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.2f;
 
                 for (int i = 0; i < 5; i++)
                 {
@@ -129,7 +129,7 @@ namespace Coralite.Content.Items.Misc_Summon
             Color c = particle.color;
             if (particle.fadeIn < 6)
             {
-                c *= (particle.fadeIn / 6);
+                c *= particle.fadeIn / 6;
             }
             spriteBatch.Draw(modParticle.Texture2D.Value, particle.center, frame, c, particle.rotation, origin, particle.scale, SpriteEffects.None, 0f);
         }
@@ -137,7 +137,7 @@ namespace Coralite.Content.Items.Misc_Summon
 
     public class KitsuneBuff : ModBuff
     {
-        public override string Texture => AssetDirectory.Misc_Summon + Name;
+        public override string Texture => AssetDirectory.PetItems + Name;
 
         public override void SetStaticDefaults()
         {
@@ -161,7 +161,7 @@ namespace Coralite.Content.Items.Misc_Summon
 
     public class Kitsune : ModProjectile
     {
-        public override string Texture => AssetDirectory.Misc_Summon + Name;
+        public override string Texture => AssetDirectory.PetItems + Name;
 
         public override void SetStaticDefaults()
         {
@@ -207,11 +207,11 @@ namespace Coralite.Content.Items.Misc_Summon
 
             Vector2 vector = player.Center;
             if (player.direction > 0)
-                vector.X -= (40) * player.direction;
+                vector.X -= 40 * player.direction;
             else
                 vector.X -= (45 + player.width) * player.direction;
 
-            Projectile.shouldFallThrough = player.position.Y + player.height - 12f > Projectile.position.Y + (float)Projectile.height;
+            Projectile.shouldFallThrough = player.position.Y + player.height - 12f > Projectile.position.Y + Projectile.height;
             Projectile.friendly = false;
             int num8 = 0;
             int num9 = 20;
@@ -287,7 +287,7 @@ namespace Coralite.Content.Items.Misc_Summon
                     Projectile.frameCounter = 0;
                 }
 
-                if ((Projectile.frame < 12) | (Projectile.frame > 13))
+                if (Projectile.frame < 12 | Projectile.frame > 13)
                     Projectile.frame = 12;
 
                 Lighting.AddLight(Projectile.Center, new Vector3(0.4f, 0.3f, 0.3f));
@@ -376,7 +376,7 @@ namespace Coralite.Content.Items.Misc_Summon
                         Projectile.ai[0] = 2f;
                         Projectile.ai[1] = num9;
                         Projectile.netUpdate = true;
-                        Projectile.direction = ((center.X - Projectile.Center.X > 0f) ? 1 : (-1));
+                        Projectile.direction = center.X - Projectile.Center.X > 0f ? 1 : -1;
                     }
                 }
             }
@@ -500,10 +500,10 @@ namespace Coralite.Content.Items.Misc_Summon
                         Projectile.velocity.X = 0f;
                 }
 
-                bool flag15 = Math.Abs(vector13.X) >= 64f || (vector13.Y <= -48f && Math.Abs(vector13.X) >= 8f);
+                bool flag15 = Math.Abs(vector13.X) >= 64f || vector13.Y <= -48f && Math.Abs(vector13.X) >= 8f;
                 if (num39 != 0 && flag15)
                 {
-                    int num41 = (int)(Projectile.position.X + (Projectile.width / 2)) / 16;
+                    int num41 = (int)(Projectile.position.X + Projectile.width / 2) / 16;
                     int num42 = (int)Projectile.position.Y / 16;
                     num41 += num39;
                     num41 += (int)Projectile.velocity.X;
@@ -522,7 +522,7 @@ namespace Coralite.Content.Items.Misc_Summon
                     {
                         for (int k = 0; k < 3; k++)
                         {
-                            int num44 = (int)(Projectile.position.X + (Projectile.width / 2)) / 16;
+                            int num44 = (int)(Projectile.position.X + Projectile.width / 2) / 16;
                             if (k == 0)
                                 num44 = (int)Projectile.position.X / 16;
 
@@ -530,13 +530,13 @@ namespace Coralite.Content.Items.Misc_Summon
                                 num44 = (int)(Projectile.position.X + Projectile.width) / 16;
 
                             int num45 = (int)(Projectile.position.Y + Projectile.height) / 16;
-                            if (!WorldGen.SolidTile(num44, num45) && !Main.tile[num44, num45].IsHalfBlock && Main.tile[num44, num45].Slope <= 0 && (!TileID.Sets.Platforms[Main.tile[num44, num45].TileType]))
+                            if (!WorldGen.SolidTile(num44, num45) && !Main.tile[num44, num45].IsHalfBlock && Main.tile[num44, num45].Slope <= 0 && !TileID.Sets.Platforms[Main.tile[num44, num45].TileType])
                                 continue;
 
                             try
                             {
-                                num44 = (int)(Projectile.position.X + (Projectile.width / 2)) / 16;
-                                num45 = (int)(Projectile.position.Y + (Projectile.height / 2)) / 16;
+                                num44 = (int)(Projectile.position.X + Projectile.width / 2) / 16;
+                                num45 = (int)(Projectile.position.Y + Projectile.height / 2) / 16;
                                 num44 += num39;
                                 num44 += (int)Projectile.velocity.X;
                                 if (!WorldGen.SolidTile(num44, num45 - 1) && !WorldGen.SolidTile(num44, num45 - 2))
@@ -602,7 +602,7 @@ namespace Coralite.Content.Items.Misc_Summon
                     Projectile.direction = 1;
 
                 if (Projectile.velocity.X == 0f)
-                    Projectile.direction = ((player.Center.X > Projectile.Center.X) ? 1 : (-1));
+                    Projectile.direction = player.Center.X > Projectile.Center.X ? 1 : -1;
 
                 if (Projectile.velocity.X > num34 && num39 == 1)
                     Projectile.direction = 1;

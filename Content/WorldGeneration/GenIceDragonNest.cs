@@ -1,4 +1,5 @@
-﻿using Coralite.Content.WorldGeneration.Generators;
+﻿using Coralite.Content.Tiles.Icicle;
+using Coralite.Content.WorldGeneration.Generators;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -59,6 +60,7 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(215, 123, 186)] = TileID.IceBrick,
                 [new Color(99, 155, 255)] = TileID.SnowBlock,
                 [new Color(63, 63, 116)] = TileID.BreakableIce,
+                [new Color(65, 36, 255)] = ModContent.TileType<IcicleStoneTile>(),
                 [Color.Black] = -1
             };
 

@@ -3349,6 +3349,116 @@ Mods: {
 				DisplayName: Reverse Flash
 				Tooltip: ""
 			}
+
+			TenkoFigurine: {
+				DisplayName: Tenko Figurine
+				Tooltip: ""
+			}
+
+			IcicleBathtub: {
+				DisplayName: Icicle Bathtub
+				Tooltip: ""
+			}
+
+			IcicleBed: {
+				DisplayName: Icicle Bed
+				Tooltip: ""
+			}
+
+			IcicleBigDroplight: {
+				DisplayName: Icicle Big Droplight
+				Tooltip: ""
+			}
+
+			IcicleBookcase: {
+				DisplayName: Icicle Bookcase
+				Tooltip: ""
+			}
+
+			IcicleCandelabra: {
+				DisplayName: Icicle Candelabra
+				Tooltip: ""
+			}
+
+			IcicleCandle: {
+				DisplayName: Icicle Candle
+				Tooltip: ""
+			}
+
+			IcicleChair: {
+				DisplayName: Icicle Chair
+				Tooltip: ""
+			}
+
+			IcicleChest: {
+				DisplayName: Icicle Chest
+				Tooltip: ""
+			}
+
+			IcicleClock: {
+				DisplayName: Icicle Clock
+				Tooltip: ""
+			}
+
+			IcicleDoor: {
+				DisplayName: Icicle Door
+				Tooltip: ""
+			}
+
+			IcicleDresser: {
+				DisplayName: Icicle Dresser
+				Tooltip: ""
+			}
+
+			IcicleDroplight: {
+				DisplayName: Icicle Droplight
+				Tooltip: ""
+			}
+
+			IcicleFloorLamp: {
+				DisplayName: Icicle Floor Lamp
+				Tooltip: ""
+			}
+
+			IciclePiano: {
+				DisplayName: Icicle Piano
+				Tooltip: ""
+			}
+
+			IciclePlatform: {
+				DisplayName: Icicle Platform
+				Tooltip: ""
+			}
+
+			IcicleSink: {
+				DisplayName: Icicle Sink
+				Tooltip: ""
+			}
+
+			IcicleSofa: {
+				DisplayName: Icicle Sofa
+				Tooltip: ""
+			}
+
+			IcicleStoneBlock: {
+				DisplayName: Icicle Stone Block
+				Tooltip: ""
+			}
+
+			IcicleTable: {
+				DisplayName: Icicle Table
+				Tooltip: ""
+			}
+
+			IcicleToilet: {
+				DisplayName: Icicle Toilet
+				Tooltip: ""
+			}
+
+			IcicleWorkBench: {
+				DisplayName: Icicle Work Bench
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -3457,6 +3567,22 @@ Mods: {
 			MercurySofaTile.MapEntry: Mercury Sofa Tile
 			MercuryTableTile.MapEntry: Mercury Table Tile
 			MercuryWorkBenchTile.MapEntry: Mercury Work Bench Tile
+			IcicleBathtubTile.MapEntry: Icicle Bathtub Tile
+			IcicleBedTile.MapEntry: Icicle Bed Tile
+			IcicleBigDroplightTile.MapEntry: Icicle Big Droplight Tile
+			IcicleBookcaseTile.MapEntry: Icicle Bookcase Tile
+			IcicleCandelabraTile.MapEntry: Icicle Candelabra Tile
+			IcicleCandleTile.MapEntry: Icicle Candle Tile
+			IcicleChestTile.MapEntry: Icicle Chest Tile
+			IcicleDoorClosedTile.MapEntry: Icicle Door Closed Tile
+			IcicleDoorOpenTile.MapEntry: Icicle Door Open Tile
+			IcicleDresserTile.MapEntry: Icicle Dresser Tile
+			IcicleDroplightTile.MapEntry: Icicle Droplight Tile
+			IcicleFloorLampTile.MapEntry: Icicle Floor Lamp Tile
+			IciclePianoTile.MapEntry: Icicle Piano Tile
+			IcicleSofaTile.MapEntry: Icicle Sofa Tile
+			IcicleTableTile.MapEntry: Icicle Table Tile
+			IcicleWorkBenchTile.MapEntry: Icicle Work Bench Tile
 		}
 
 		Buffs: {
@@ -3585,6 +3711,11 @@ Mods: {
 			ThunderElectrified: {
 				DisplayName: Thunder Electrified
 				Description: Mods.Coralite.Buffs.ThunderElectrified.Description
+			}
+
+			TenkoBuff: {
+				DisplayName: Tenko Buff
+				Description: Mods.Coralite.Buffs.TenkoBuff.Description
 			}
 		}
 
@@ -4074,6 +4205,7 @@ Mods: {
 			RedJadeArrowProj.DisplayName: Red Jade Arrow Proj
 			RedJadeBulletProj.DisplayName: Red Jade Bullet Proj
 			ReverseFlashProj.DisplayName: Reverse Flash Proj
+			Tenko.DisplayName: Tenko
 		}
 
 		Configs: {

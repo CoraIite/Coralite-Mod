@@ -81,6 +81,7 @@ namespace Coralite.Core
         public const string Misc_Magic = Items + "Misc_Magic/";
         public const string Misc_Summon = Items + "Misc_Summon/";
         public const string Misc_Shoot = Items + "Misc_Shoot/";
+        public const string PetItems = Items + "Pets/";
         public const string YujianHulu = Items + "YujianHulu/";
 
         public const string MachineItems = Items + "Machines/";
