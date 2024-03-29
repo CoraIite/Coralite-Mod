@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
     [AutoloadEquip(EquipType.Neck)]
     public class SnowflakeCharm : BaseAccessory, IFlyingShieldAccessory
     {
-        public SnowflakeCharm() : base(ItemRarityID.Green, Item.sellPrice(0, 0,10))
+        public SnowflakeCharm() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 10))
         { }
 
         public override void SetDefaults()
@@ -94,12 +94,12 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         }
     }
 
-    public class Snowflake:ModProjectile
+    public class Snowflake : ModProjectile
     {
-        public override string Texture => AssetDirectory.Accessories+Name;
+        public override string Texture => AssetDirectory.Accessories + Name;
 
         ref float Timer => ref Projectile.ai[0];
-        ref float State  => ref Projectile.ai[1];
+        ref float State => ref Projectile.ai[1];
 
         public override void SetDefaults()
         {
@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                         {
                             for (int i = 0; i < 6; i++)
                             {
-                                Vector2 velocity = (Projectile.rotation +1.57f+ i * MathHelper.TwoPi / 6).ToRotationVector2();
+                                Vector2 velocity = (Projectile.rotation + 1.57f + i * MathHelper.TwoPi / 6).ToRotationVector2();
                                 Projectile.NewProjectileFromThis<SnowflakeSpike>(Projectile.Center
                                     , velocity * Main.rand.NextFloat(5, 6f),
                                      (int)(Projectile.damage * 0.9f), Projectile.knockBack, Projectile.owner, ai1: Main.rand.NextFloat(8, 10));

@@ -4,9 +4,17 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.ShadowCastle
 {
+    [AutoloadEquip(EquipType.Face)]
     public class ShadowMask : ModItem
     {
         public override string Texture => AssetDirectory.ShadowCastleItems + Name;
+
+        public override void SetStaticDefaults()
+        {
+            int slot = EquipLoader.GetEquipSlot(Mod, "ShadowMask", EquipType.Face);
+            ArmorIDs.Face.Sets.PreventHairDraw[slot] = true;
+            ArmorIDs.Face.Sets.OverrideHelmet[slot] = true;
+        }
 
         public override void SetDefaults()
         {

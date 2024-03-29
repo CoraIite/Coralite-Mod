@@ -68,7 +68,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             break;
                         }
 
-                        int damage = 20;
+                        int damage = Helper.GetProjDamage(20, 25, 30);
                         float scale = 1f;
                         float howMany = 3f;
                         float speed = 10f;

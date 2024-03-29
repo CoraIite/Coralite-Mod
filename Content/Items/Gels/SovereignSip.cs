@@ -331,7 +331,7 @@ namespace Coralite.Content.Items.Gels
                                 Projectile.frame = 5;
                             }
                             else
-                                Projectile.frame = 9 ;
+                                Projectile.frame = 9;
                         }
                         else if (Math.Abs(Projectile.velocity.X) < 2)
                         {
@@ -374,7 +374,7 @@ namespace Coralite.Content.Items.Gels
                             if (++Projectile.frameCounter > 14)
                             {
                                 Projectile.frame++;
-                                if (Projectile.frame>10)
+                                if (Projectile.frame > 10)
                                 {
                                     Projectile.frame = 5;
                                 }

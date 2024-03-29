@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Magike.Tools
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.useAnimation = Item.useTime = 45;
             Item.useTurn = true;
-            Item.mana = 200;
+            Item.mana = 180;
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 0, 10, 0);
             Item.UseSound = CoraliteSoundID.ManaCrystal_Item29;

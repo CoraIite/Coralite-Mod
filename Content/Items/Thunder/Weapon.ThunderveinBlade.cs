@@ -119,7 +119,7 @@ namespace Coralite.Content.Items.Thunder
                 }
 
                 //生成手持弹幕
-               int damage= Player.GetWeaponDamage(Player.HeldItem);
+                int damage = Player.GetWeaponDamage(Player.HeldItem);
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
                     damage, Player.HeldItem.knockBack, Player.whoAmI, 3);
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
@@ -523,7 +523,7 @@ namespace Coralite.Content.Items.Thunder
             {
                 SpawnDusts();
                 Projectile.Center = Owner.Center;
-                if (DashCount<3)
+                if (DashCount < 3)
                 {
                     Owner.velocity = new Vector2(DashDir * 30, Owner.velocity.Y);
                     Owner.direction = (int)DashDir;

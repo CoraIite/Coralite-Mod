@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.Audio;
 
@@ -21,8 +22,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     {
                         SonState++;
                         //召唤飞翼史莱姆
-                        int howMany = Helpers.Helper.ScaleValueForDiffMode(1, 1, 2, 2);
-                        int damage = Helpers.Helper.ScaleValueForDiffMode(20, 15, 18, 20);
+                        int howMany = Helper.ScaleValueForDiffMode(1, 1, 2, 2);
+                        int damage = Helper.GetProjDamage(30, 45, 55);
                         for (int i = 0; i < howMany; i++)
                             NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<GelFlippy>(), Target: NPC.target);
                         SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);

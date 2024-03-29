@@ -4,7 +4,9 @@ using Terraria.Audio;
 namespace Coralite.Core.Prefabs.Projectiles
 {
     /// <summary>
-    /// ai1用于判断当前勾到的敌人
+    /// ai1用于判断当前勾到的敌人<br></br>
+    /// ai2用于决定状态<br></br>
+    /// localAI0用于计时
     /// </summary>
     public abstract class BaseSilkKnifeSpecialProj : BaseHeldProj
     {

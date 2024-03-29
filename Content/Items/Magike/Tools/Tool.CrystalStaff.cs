@@ -22,7 +22,8 @@ namespace Coralite.Content.Items.Magike.Tools
         public override void SetDefs()
         {
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.useTime = Item.useAnimation = 20;
+            Item.useTime = 5;
+            Item.useAnimation = 20;
             Item.UseSound = CoraliteSoundID.MagicStaff_Item8;
             Item.createTile = ModContent.TileType<CrystalFrame>();
             Item.autoReuse = true;

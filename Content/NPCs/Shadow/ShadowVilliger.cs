@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.NPCs.Shadow
 {
-    public class ShadowVilliger:ModNPC
+    public class ShadowVilliger : ModNPC
     {
         public override string Texture => AssetDirectory.ShadowNPCs + Name;
 
@@ -55,9 +55,9 @@ namespace Coralite.Content.NPCs.Shadow
                 case 0f://寻找玩家
                     JumpCount -= 2f;
                     NPC.TargetClosest(true);
-                        FrameX = 0;
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                            TargetTimer = Main.rand.Next(200, 330);
+                    FrameX = 0;
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        TargetTimer = Main.rand.Next(200, 330);
 
                     NPC.direction = (Target.position.X - NPC.position.X) > 0 ? 1 : -1;
                     NPC.frameCounter = 0;
@@ -170,7 +170,7 @@ namespace Coralite.Content.NPCs.Shadow
             Vector2 origin = frameBox.Size() / 2;
             SpriteEffects effects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Vector2 pos = NPC.Center - screenPos+new Vector2(0,-2);
+            Vector2 pos = NPC.Center - screenPos + new Vector2(0, -2);
             Color c = Color.Purple;
             c.A = 0;
             c *= 0.5f;

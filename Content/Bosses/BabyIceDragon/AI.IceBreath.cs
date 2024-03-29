@@ -91,7 +91,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                     for (int i = -1; i < 1; i++)
                                     {
-                                        int damage = Helper.GetProjDamage(40, 45, 60);
+                                        int damage = Helper.GetProjDamage(40, 65, 90);
                                         Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(i * 0.05f) * 10f, ModContent.ProjectileType<IceBreath>(), damage, 5f);
                                     }
                             }

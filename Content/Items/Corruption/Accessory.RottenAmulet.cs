@@ -6,6 +6,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.Items.Corruption
 {
+    [AutoloadEquip(EquipType.Neck)]
     public class RottenAmulet : ModItem
     {
         public override string Texture => AssetDirectory.CorruptionItems + Name;

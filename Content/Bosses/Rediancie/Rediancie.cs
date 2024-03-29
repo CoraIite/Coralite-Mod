@@ -473,7 +473,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    int damage = Helper.GetProjDamage(20,25,30);
+                    int damage = Helper.GetProjDamage(20, 25, 30);
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter,
                         (Target.Center - NPC.Center + Main.rand.NextVector2CircularEdge(48, 48)).SafeNormalize(Vector2.UnitY) * 12f,
                         ProjectileType<RedPulse>(), damage, 5f, NPC.target);

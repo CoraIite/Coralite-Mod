@@ -358,7 +358,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         virtual void OnGuard(BaseFlyingShieldGuard projectile) { }
         virtual void OnStartDashing(BaseFlyingShieldGuard projectile) { }
         virtual void OnDashing(BaseFlyingShieldGuard projectile) { }
-        virtual void OnDashHit(BaseFlyingShieldGuard projectile,NPC target,ref NPC.HitModifiers modifiers) { }
+        virtual void OnDashHit(BaseFlyingShieldGuard projectile, NPC target, ref NPC.HitModifiers modifiers) { }
         virtual void OnDashOver(BaseFlyingShieldGuard projectile) { }
 
         virtual void OnHitNPC(BaseFlyingShield projectile, NPC target, NPC.HitInfo hit, int damageDone) { }

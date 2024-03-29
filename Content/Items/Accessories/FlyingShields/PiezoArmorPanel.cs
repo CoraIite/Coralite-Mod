@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                 if (SpawnEXProjCount == 0)
                 {
                     projectile.dashSpeed *= 1.2f;
-                    projectile.Timer += projectile.dashTime/3;
+                    projectile.Timer += projectile.dashTime / 3;
                 }
                 SoundEngine.PlaySound(CoraliteSoundID.ElectricExplosion_Item94, projectile.Projectile.Center);
                 int i = projectile.Projectile.NewProjectileFromThis(projectile.Projectile.Center

@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             Projectile.tileCollide = true;
             Projectile.width = Projectile.height = 16;
             Projectile.penetrate = 3;
-            Projectile.timeLeft =60;
+            Projectile.timeLeft = 60;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 10;
         }
@@ -137,7 +137,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                 Projectile.velocity.Y += 0.4f;
             }
 
-                Projectile.SpawnTrailDust(DustID.Torch, Main.rand.NextFloat(0.1f, 0.5f), Scale: Main.rand.NextFloat(1.4f, 2.4f));
+            Projectile.SpawnTrailDust(DustID.Torch, Main.rand.NextFloat(0.1f, 0.5f), Scale: Main.rand.NextFloat(1.4f, 2.4f));
             for (int i = 0; i < 2; i++)
                 Projectile.SpawnTrailDust(DustID.LavaMoss, Main.rand.NextFloat(0.1f, 0.5f), Scale: Main.rand.NextFloat(1f, 1.3f));
         }

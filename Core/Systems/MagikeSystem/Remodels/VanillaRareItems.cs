@@ -96,6 +96,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.SkywareChest, 25, ItemID.LoveisintheTrashSlot, selfStack: 2);
             AddRemodelRecipe(ItemID.SkywareChest, 25, ItemID.SunOrnament, selfStack: 2);
 
+            //常春藤箱
+            AddRemodelRecipe(ItemID.IvyChest, 150, ItemID.FeralClaws, selfStack: 3);
+            AddRemodelRecipe(ItemID.IvyChest, 150, ItemID.AnkletoftheWind, selfStack: 3);
+            AddRemodelRecipe(ItemID.IvyChest, 150, ItemID.StaffofRegrowth, selfStack: 3);
+            AddRemodelRecipe(ItemID.IvyChest, 150, ItemID.Boomstick, selfStack: 3);
+            AddRemodelRecipe(ItemID.IvyChest, 150, ItemID.FlowerBoots, selfStack: 5);
+            AddRemodelRecipe(ItemID.IvyChest, 150, ItemID.FiberglassFishingPole, selfStack: 5);
+            AddRemodelRecipe(ItemID.IvyChest, 200, ItemID.Seaweed, selfStack: 10);
+            AddRemodelRecipe(ItemID.IvyChest, 150, ItemID.BeeMinecart, selfStack: 3);
+            AddRemodelRecipe(ItemID.IvyChest, 150, ItemID.HoneyDispenser, selfStack: 3);
+            AddRemodelRecipe(ItemID.IvyChest, 50, ItemID.LivingMahoganyWand, selfStack: 1);
+            AddRemodelRecipe(ItemID.IvyChest, 50, ItemID.LivingMahoganyLeafWand, selfStack: 1);
+
             //魔力磁铁
             AddRemodelRecipe(ItemID.TreasureMagnet, 100, ItemID.CelestialMagnet);
 

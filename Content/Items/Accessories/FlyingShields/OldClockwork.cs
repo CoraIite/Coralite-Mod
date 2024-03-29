@@ -121,9 +121,9 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         }
     }
 
-    public class TightenTheClockwork:ModBuff
+    public class TightenTheClockwork : ModBuff
     {
-        public override string Texture => AssetDirectory.Accessories+Name;
+        public override string Texture => AssetDirectory.Accessories + Name;
 
         public override void Update(Player player, ref int buffIndex)
         {

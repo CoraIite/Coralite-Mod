@@ -200,12 +200,12 @@ namespace Coralite.Content.Items.FlyingShields
                         scale.X = Projectile.scale + 0.3f * MathF.Sin(factor);
                         scale.Y = Projectile.scale + 0.3f * MathF.Cos(factor);
                         Timer--;
-                        if (Helper.TryFindClosestEnemy(Projectile.Center,800, n => n.CanBeChasedBy() && Projectile.localNPCImmunity.IndexInRange(n.whoAmI) && Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
+                        if (Helper.TryFindClosestEnemy(Projectile.Center, 800, n => n.CanBeChasedBy() && Projectile.localNPCImmunity.IndexInRange(n.whoAmI) && Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
                         {
                             float selfAngle = Projectile.velocity.ToRotation();
                             float targetAngle = (target.Center - Projectile.Center).ToRotation();
 
-                            Projectile.velocity = selfAngle.AngleLerp(targetAngle, 1- Timer / 120).ToRotationVector2() * Projectile.velocity.Length();
+                            Projectile.velocity = selfAngle.AngleLerp(targetAngle, 1 - Timer / 120).ToRotationVector2() * Projectile.velocity.Length();
                         }
 
                         Projectile.rotation = Projectile.velocity.ToRotation();
@@ -220,7 +220,7 @@ namespace Coralite.Content.Items.FlyingShields
                 case 3:
                     {
                         float factor = Timer / 8;
-                        scale = new Vector2(Projectile.scale + MathF.Sin(factor * MathHelper.Pi)*0.2f);
+                        scale = new Vector2(Projectile.scale + MathF.Sin(factor * MathHelper.Pi) * 0.2f);
                         exAlpha = 1 - factor;
                         Timer++;
                         if (Timer > 8)
@@ -279,7 +279,7 @@ namespace Coralite.Content.Items.FlyingShields
             }
             for (int i = 0; i < 5; i++)
             {
-                Dust.NewDustPerfect(Projectile.Center, DustID.Torch, Helper.NextVec2Dir(0.5f, 2.5f),Scale:Main.rand.NextFloat(1f,1.4f));
+                Dust.NewDustPerfect(Projectile.Center, DustID.Torch, Helper.NextVec2Dir(0.5f, 2.5f), Scale: Main.rand.NextFloat(1f, 1.4f));
             }
 
             for (int i = 0; i < 26; i++)
@@ -291,7 +291,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (State==0)
+            if (State == 0)
             {
                 ExchangeToExplosion();
             }

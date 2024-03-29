@@ -1,15 +1,10 @@
-﻿using Coralite.Content.Biomes;
-using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
-using Coralite.Content.Items.CoreKeeper;
-using Coralite.Content.Items.Magike;
+﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.Projectiles.Globals;
 using Coralite.Content.UI;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -20,31 +15,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.ModPlayers
 {
-    public partial class CoralitePlayer : ModPlayer
+    public partial class CoralitePlayer : ModPlayer, ILocalizedModType
     {
-        public const int DashDown = 0;
-        public const int DashUp = 1;
-        public const int DashRight = 2;
-        public const int DashLeft = 3;
-
-        public int DashDir = -1;
-
-        public float yujianUIAlpha;
-        public bool ownedYujianProj;
-        public float nianli;
-        public const float BaseNianliMax = 300f;
-        public float nianliMax = BaseNianliMax;
-        public const float BaseNianliRegain = 0.5f;
-        public float nianliRegain = BaseNianliRegain;
+        public string LocalizationCategory => "Players";
 
         public short rightClickReuseDelay = 0;
-
-        public int DashDelay = 0;
-        public int DashTimer = 0;
-
         public int parryTime;
-
-        public StatModifier DashDelayModifyer=StatModifier.Default;
 
         #region 装备类字段
 
@@ -84,6 +60,9 @@ namespace Coralite.Content.ModPlayers
         public int split;
         #endregion
 
+        /// <summary>
+        /// 雷鸣Debuff，会有持续扣血
+        /// </summary>
         public bool thunderElectrified;
 
         public byte nightmareCount;
@@ -107,29 +86,6 @@ namespace Coralite.Content.ModPlayers
         public float bossDamageReduce;
 
         /// <summary>
-        /// 同时存在的飞盾弹幕数量
-        /// </summary>
-        public int MaxFlyingShield;
-        /// <summary>
-        /// 是否能够同时使用左右键
-        /// </summary>
-        public bool FlyingShieldLRMeantime;
-        /// <summary>
-        /// 飞盾格挡后获得的伤害减免
-        /// </summary>
-        public float FlyingShieldDamageReduce;
-        /// <summary>
-        /// 防御时间，
-        /// </summary>
-        public int FlyingShieldGuardTime;
-        public List<IFlyingShieldAccessory> FlyingShieldAccessories = new List<IFlyingShieldAccessory>();
-
-        /// <summary>
-        /// 飞盾右键防御的手持弹幕
-        /// </summary>
-        public int FlyingShieldGuardIndex;
-
-        /// <summary>
         /// 地心护核者的闪避
         /// </summary>
         public float coreKeeperDodge;
@@ -138,6 +94,16 @@ namespace Coralite.Content.ModPlayers
         /// 使用特殊攻击
         /// </summary>
         public bool useSpecialAttack;
+
+        public override void Load()
+        {
+            LoadDeathReasons();
+        }
+
+        public override void Unload()
+        {
+            UnloadDeathReasons();
+        }
 
         public override void ResetEffects()
         {
@@ -160,27 +126,8 @@ namespace Coralite.Content.ModPlayers
             lifeReganBonus = 0;
             bossDamageReduce = 0;
 
-            MaxFlyingShield = 1;
-            FlyingShieldLRMeantime = false;
-            if (FlyingShieldGuardTime > 0)
-            {
-                FlyingShieldGuardTime--;
-                if (FlyingShieldGuardTime <= 25)
-                    FlyingShieldDamageReduce -= FlyingShieldDamageReduce / FlyingShieldGuardTime;
-                if (FlyingShieldGuardTime == 0)
-                    FlyingShieldDamageReduce = 0;
-            }
+            ResetFlyingShieldSets();
 
-            FlyingShieldAccessories ??= new List<IFlyingShieldAccessory>();
-            if (FlyingShieldAccessories.Count != 0)
-                FlyingShieldAccessories.Clear();
-
-            if (!Main.projectile.IndexInRange(FlyingShieldGuardIndex))
-            {
-                Projectile p = Main.projectile[FlyingShieldGuardIndex];
-                if (!p.active || !p.friendly || p.ModProjectile is not BaseFlyingShieldGuard)
-                    FlyingShieldGuardIndex = -1;
-            }
             coreKeeperDodge = 0;
 
             nightmareEnergyMax = 7;
@@ -193,7 +140,7 @@ namespace Coralite.Content.ModPlayers
                     float rot = Main.rand.NextFloat(6.282f);
                     for (int i = 0; i < 8; i++)
                     {
-                        Dust dust = Dust.NewDustPerfect(Player.Center, DustID.Clentaminator_Red, (rot + i * MathHelper.TwoPi / 8).ToRotationVector2()*3,
+                        Dust dust = Dust.NewDustPerfect(Player.Center, DustID.Clentaminator_Red, (rot + i * MathHelper.TwoPi / 8).ToRotationVector2() * 3,
                             255, Scale: Main.rand.Next(20, 26) * 0.1f);
                         dust.noLight = true;
                         dust.noGravity = true;
@@ -201,18 +148,7 @@ namespace Coralite.Content.ModPlayers
                 }
             }
 
-            if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15)
-                DashDir = DashDown;
-            else if (Player.controlUp && Player.releaseUp && Player.doubleTapCardinalTimer[DashUp] < 15)
-                DashDir = DashUp;
-            else if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15)
-                DashDir = DashRight;
-            else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15)
-                DashDir = DashLeft;
-            else
-                DashDir = -1;
-
-            DashDelayModifyer = StatModifier.Default;
+            ResetDahsSets();
         }
 
         public override void OnRespawn()
@@ -247,54 +183,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void PreUpdateMovement()
         {
-            if (DashDelay == 0 && DashDir != -1 && Player.grappling[0] == -1 && !Player.tongued)
-                do
-                {
-                    if (UsingVanillaDash())
-                        break;
-
-                    if (Player.HeldItem.ModItem is IDashable dashItem)
-                        if (dashItem.Dash(Player, DashDir))
-                            break;
-
-                    for (int i = 3; i < 10; i++)
-                    {
-                        if (!Player.armor[i].IsAir && Player.armor[i].ModItem is IDashable dashItem2)
-                        {
-                            if (dashItem2.Dash(Player, DashDir))
-                            {
-                                DashDelay = (int)(DashDelay * DashDelayModifyer.ApplyTo(1));
-                                goto checkDashOver;
-                            }
-                        }
-                    }
-
-                } while (false);
-
-            checkDashOver:
-
-            if (DashDelay > 0)
-            {
-                DashDelay--;
-                if (DashDelay == 0)
-                {
-                    SoundEngine.PlaySound(CoraliteSoundID.MaxMana, Player.Center);
-                    float rot = Main.rand.NextFloat(6.282f);
-                    for (int i = 0; i < 8; i++)
-                    {
-                        Dust dust = Dust.NewDustPerfect(Player.Center, DustID.YellowTorch, (rot + i * MathHelper.TwoPi / 8).ToRotationVector2()*3,
-                            255, Scale: Main.rand.Next(20, 26) * 0.15f);
-                        dust.noLight = true;
-                        dust.noGravity = true;
-                    }
-                }
-            }
-
-            if (DashTimer > 0)
-            {
-                Player.armorEffectDrawShadowEOCShield = true;
-                DashTimer--;
-            }
+            UpdateDash();
         }
 
         public override void PreUpdateBuffs()
@@ -468,7 +357,7 @@ namespace Coralite.Content.ModPlayers
                 if (pirateKingSoul > 2)//3件套效果强化
                 {
                     random = 10;
-                    damageAdder = 0.75f;
+                    damageAdder = 1f;
                     CD = 60;
                 }
                 if (Player.RollLuck(random) == random - 1)
@@ -522,7 +411,7 @@ namespace Coralite.Content.ModPlayers
                 const int middleLength_Min = 20 * 16;
                 const int middleLength_Max = 30 * 16;
                 const int minLength = 5 * 16;
-                const int maxLength = 100 * 16;
+                const int maxLength = 80 * 16;
 
                 float minDamage = 0.75f;
                 float maxDamage = 0.15f;
@@ -573,7 +462,6 @@ namespace Coralite.Content.ModPlayers
             #endregion
         }
 
-
         public override bool FreeDodge(Player.HurtInfo info)
         {
             if (coreKeeperDodge > 0.9f)
@@ -592,66 +480,6 @@ namespace Coralite.Content.ModPlayers
 
         #endregion
 
-        #region 钓鱼系统
-
-        public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
-        {
-            bool inWater = !attempt.inLava && !attempt.inHoney;
-
-            if (inWater && Player.ZoneBeach && !attempt.crate)
-            {
-                if (attempt.common)
-                {
-                    //if (Main.rand.NextBool(15))
-                    //    itemDrop = ItemType<NacliteSeedling>();
-                }
-                else if (attempt.uncommon)
-                {
-                    if (Main.hardMode)
-                    {
-                        if (Main.rand.NextBool(6))
-                            itemDrop = ItemType<BubblePearlNecklace>();
-                        if (Main.rand.NextBool(6))
-                            itemDrop = ItemType<Items.FlyingShields.HorseshoeCrab>();
-                    }
-                    if (Main.rand.NextBool(6))
-                        itemDrop = ItemType<Items.FlyingShields.PearlRay>();
-                }
-                else if (attempt.legendary)
-                {
-                    if (NPC.downedFishron && Main.rand.NextBool(5))
-                        itemDrop = ItemType<OceanheartNecklace>();
-                }
-
-            }
-
-            if (attempt.crate)
-            {
-                if (inWater)
-                {
-                    if (Player.InModBiome<MagicCrystalCave>())
-                    {
-                        // 如果钓到了的是匣子，就替换为自己的匣子
-
-                        // 为了不替换掉最高级的匣子，所以做点限制
-                        // Their drop conditions are "veryrare" or "legendary"
-                        // (After that come biome crates ("rare"), then iron/mythril ("uncommon"), then wood/pearl (none of the previous))
-                        // Let's replace biome crates 50% of the time (player could be in multiple (modded) biomes, we should respect that)
-                        //增加50%的概率替换掉其他匣子，因为玩家有时候可能在多个重叠的环境中
-                        if (!attempt.veryrare && !attempt.legendary && attempt.rare && Main.rand.NextBool())
-                        {
-                            itemDrop = ItemType<CrystalCrate>();
-                            return; // This is important so your code after this that rolls items will not run
-                        }
-
-                    }
-                }
-            }
-
-        }
-
-        #endregion
-
         #region 绘制部分
 
         public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
@@ -661,6 +489,19 @@ namespace Coralite.Content.ModPlayers
         }
 
         #endregion
+
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource)
+        {
+            if (damageSource.SourceItem == null
+                && damageSource.SourceNPCIndex == -1
+                && damageSource.SourcePlayerIndex == -1
+                && damageSource.SourceProjectileLocalIndex == -1
+                && damageSource.SourceOtherIndex == 8)//燃烧Debuff
+            {
+                ThunderElectrifiedDeathReason(ref damageSource);
+            }
+            return true;
+        }
 
         public void GetNightmareEnergy(int howMany)
         {
@@ -690,35 +531,6 @@ namespace Coralite.Content.ModPlayers
             }
 
             useSpecialAttack = Core.Loaders.KeybindLoader.SpecialAttack.Current;
-        }
-
-        public bool UsingVanillaDash() => Player.dashType != 0 || Player.setSolar || Player.mount.Active;
-
-        public void Guard(float damageReduce)
-        {
-            FlyingShieldGuardTime = 35;
-            FlyingShieldDamageReduce = damageReduce;
-        }
-
-        /// <summary>
-        /// 尝试获得当前的飞盾防御手持弹幕
-        /// </summary>
-        /// <param name="flyingShieldGuard"></param>
-        /// <returns></returns>
-        public bool TryGetFlyingShieldGuardProj(out BaseFlyingShieldGuard flyingShieldGuard)
-        {
-            flyingShieldGuard = null;
-
-            if (!Main.projectile.IndexInRange(FlyingShieldGuardIndex))
-                return false;
-
-            if (Main.projectile[FlyingShieldGuardIndex].ModProjectile is BaseFlyingShieldGuard flyingShieldGuard1)
-            {
-                flyingShieldGuard = flyingShieldGuard1;
-                return true;
-            }
-
-            return false;
         }
     }
 }

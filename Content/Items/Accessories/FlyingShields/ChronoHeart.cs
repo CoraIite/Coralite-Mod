@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                 ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
                 {
                     PositionInWorld = pos + (projectile.Projectile.rotation + i * 1.57f).ToRotationVector2() * 17,
-                    MovementVector = velocity.RotatedBy(-i * direction*projectile.Owner.direction * 0.2f) * 6,
+                    MovementVector = velocity.RotatedBy(-i * direction * projectile.Owner.direction * 0.2f) * 6,
                     UniqueInfoPiece = hue
                 });
             }
@@ -139,7 +139,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                 Projectile.NewProjectile(Player.GetSource_FromAI(), Player.Center, Vector2.Zero,
                     ProjectileType<ChronoHeartSlash>(), damage, 4, Player.whoAmI, startAngle, 1, DashDir);
 
-                Main.time-=50;
+                Main.time -= 50;
                 Player.GetModPlayer<CoralitePlayer>().DashDelay = 75;
                 hit = false;
                 isDashing = true;
@@ -154,7 +154,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             CreateRecipe()
                 .AddIngredient<OldClockwork>()
                 .AddIngredient<SolarPanel>()
-                .AddIngredient(ItemID.LunarBar,5)
+                .AddIngredient(ItemID.LunarBar, 5)
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
         }

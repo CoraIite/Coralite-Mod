@@ -138,7 +138,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override float GetWidth()
         {
-            return Projectile.width *0.4f/Projectile.scale;
+            return Projectile.width * 0.4f / Projectile.scale;
         }
 
         public override void DrawSelf(Texture2D mainTex, Vector2 pos, float rotation, Color lightColor, Vector2 scale, SpriteEffects effect)

@@ -3459,6 +3459,21 @@ Mods: {
 				DisplayName: Icicle Work Bench
 				Tooltip: ""
 			}
+
+			CyberwyrmRehab: {
+				DisplayName: Cyberwyrm Rehab
+				Tooltip: ""
+			}
+
+			CancerFlail: {
+				DisplayName: Cancer Flail
+				Tooltip: ""
+			}
+
+			ThunderDagger: {
+				DisplayName: Thunder Dagger
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -4206,6 +4221,10 @@ Mods: {
 			RedJadeBulletProj.DisplayName: Red Jade Bullet Proj
 			ReverseFlashProj.DisplayName: Reverse Flash Proj
 			Tenko.DisplayName: Tenko
+			CyberwyrmRehabProj.DisplayName: Cyberwyrm Rehab Proj
+			CancerFlailProj.DisplayName: Cancer Flail Proj
+			LightningBall_Friendly.DisplayName: Lightning Ball_ Friendly
+			ThunderDaggerSlash.DisplayName: Thunder Dagger Slash
 		}
 
 		Configs: {

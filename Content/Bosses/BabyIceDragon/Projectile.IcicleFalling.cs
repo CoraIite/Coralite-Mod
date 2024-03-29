@@ -53,7 +53,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override bool PreDraw(ref Color lightColor)
         {
-            lightColor=Color.White;
+            lightColor = Color.White;
             return base.PreDraw(ref lightColor);
         }
     }

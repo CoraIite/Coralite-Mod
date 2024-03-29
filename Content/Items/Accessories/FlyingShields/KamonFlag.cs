@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Materials;
-using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
@@ -107,8 +106,8 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                 int damage = Player.GetWeaponDamage(Item);
                 for (int i = -1; i < 2; i++)
                 {
-                    Projectile.NewProjectile(Player.GetSource_ItemUse(Item), Player.Center, 
-                        (dashDirection + i * 0.4f).ToRotationVector2().RotateByRandom(-0.2f,0.2f) * 4,
+                    Projectile.NewProjectile(Player.GetSource_ItemUse(Item), Player.Center,
+                        (dashDirection + i * 0.4f).ToRotationVector2().RotateByRandom(-0.2f, 0.2f) * 4,
                          ModContent.ProjectileType<BlackSpirit>(), damage, 0, Player.whoAmI);
                 }
 
@@ -155,7 +154,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                 }
             }
 
-            Projectile.SpawnTrailDust(DustID.Smoke, Main.rand.NextFloat(0.2f, 0.6f), 50,newColor:Color.Black, Scale: Main.rand.NextFloat(1f, 1.5f));
+            Projectile.SpawnTrailDust(DustID.Smoke, Main.rand.NextFloat(0.2f, 0.6f), 50, newColor: Color.Black, Scale: Main.rand.NextFloat(1f, 1.5f));
             if (Main.rand.NextBool())
             {
                 Projectile.SpawnTrailDust(DustID.SilverFlame, Main.rand.NextFloat(0.2f, 0.6f)
@@ -198,15 +197,15 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             Vector2 direction = -Vector2.UnitY;
             for (int i = 0; i < 10; i++)
                 Dust.NewDustPerfect(Projectile.Center, DustID.Smoke, direction.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(2f, 4f),
-                   Alpha:75, newColor: Color.Black, Scale: Main.rand.NextFloat(1f, 2f));
+                   Alpha: 75, newColor: Color.Black, Scale: Main.rand.NextFloat(1f, 2f));
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTexture();
             var frameBox = mainTex.Frame(1, 3, 0, Projectile.frame);
-            Projectile.DrawShadowTrails(new Color(200, 200, 200, 60), 1, 
-                1 / 6f, 0, 6, 1, Projectile.scale,frameBox, -1.57f);
+            Projectile.DrawShadowTrails(new Color(200, 200, 200, 60), 1,
+                1 / 6f, 0, 6, 1, Projectile.scale, frameBox, -1.57f);
 
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor, Projectile.rotation - 1.57f, frameBox.Size() / 2, Projectile.scale, 0, 0); ;
 

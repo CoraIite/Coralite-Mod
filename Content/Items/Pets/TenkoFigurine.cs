@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Pets
             Item.damage = 20;
             Item.width = 28;
             Item.height = 20;
-            Item.rare = ModContent.RarityType<CrystalBlossomShardsRarity>();
+            Item.rare = ModContent.RarityType<TenkoFigurineRarity>();
             Item.value = Item.sellPrice(0, 50);
         }
 
@@ -52,7 +52,7 @@ namespace Coralite.Content.Items.Pets
                 Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "HorizontalLight").Value;
 
                 Vector2 origin = new Vector2(0, mainTex.Height / 2);
-                Color c = Color.Pink;
+                Color c = Color.SkyBlue;
                 c.A = 0;
                 c *= 0.25f + MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.2f;
 
@@ -86,6 +86,11 @@ namespace Coralite.Content.Items.Pets
         }
     }
 
+    public class TenkoFigurineRarity : ModRarity
+    {
+        public override Color RarityColor => Color.Lerp(new Color(228, 254, 255), new Color(152, 176, 255), Math.Abs(MathF.Sin(Main.GlobalTimeWrappedHourly * 3)));
+    }
+
     public class TenkoBuff : ModBuff
     {
         public override string Texture => AssetDirectory.PetItems + Name;
@@ -113,6 +118,10 @@ namespace Coralite.Content.Items.Pets
     public class Tenko : ModProjectile
     {
         public override string Texture => AssetDirectory.PetItems + Name;
+
+        public ref float State => ref Projectile.ai[0];
+        public ref float Recorder => ref Projectile.ai[1];
+        public ref float Timer => ref Projectile.ai[2];
 
         public override void SetStaticDefaults()
         {
@@ -145,7 +154,7 @@ namespace Coralite.Content.Items.Pets
                 Projectile.active = false;
                 return;
             }
-            
+
             float num2 = 500f;
             float num3 = 300f;
 
@@ -164,19 +173,17 @@ namespace Coralite.Content.Items.Pets
             Projectile.shouldFallThrough = player.position.Y + player.height - 12f > Projectile.position.Y + (float)Projectile.height;
             Projectile.friendly = false;
 
-            switch (Projectile.ai[0])
+            switch (State)
             {
                 default:
                 case 0:
                     {
                         Vector2 vector7 = player.Center - Projectile.Center;
                         if (vector7.Length() > 2000f)
-                        {
                             Projectile.position = player.Center - new Vector2(Projectile.width, Projectile.height) / 2f;
-                        }
                         else if (vector7.Length() > num2 || Math.Abs(vector7.Y) > num3)
                         {
-                            Projectile.ai[0] = 1f;
+                            State = 1f;
                             Projectile.netUpdate = true;
                             if (Projectile.velocity.Y > 0f && vector7.Y < 0f)
                                 Projectile.velocity.Y = 0f;
@@ -226,14 +233,15 @@ namespace Coralite.Content.Items.Pets
                         }
 
                         Projectile.tileCollide = true;
+                        Projectile.rotation = 0;
                         float num34 = 0.5f;
                         float num35 = 4f;
-                        float num36 = 4f;
+                        float speedX = 4f;
                         float num37 = 0.1f;
 
-                        if (num36 < Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y))
+                        if (speedX < Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y))
                         {
-                            num36 = Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y);
+                            speedX = Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y);
                             num34 = 0.7f;
                         }
 
@@ -283,90 +291,78 @@ namespace Coralite.Content.Items.Pets
 
                         Collision.StepUp(ref Projectile.position, ref Projectile.velocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
                         float num43 = Utils.GetLerpValue(0f, 100f, vector13.Y, clamped: true) * Utils.GetLerpValue(-2f, -6f, Projectile.velocity.Y, clamped: true);
-                        if (Projectile.velocity.Y == 0f)
+                        if (Projectile.velocity.Y == 0f && flag13)
                         {
-                            if (flag13)
+                            for (int k = 0; k < 3; k++)
                             {
-                                for (int k = 0; k < 3; k++)
+                                int num44 = (int)(Projectile.position.X + (Projectile.width / 2)) / 16;
+                                if (k == 0)
+                                    num44 = (int)Projectile.position.X / 16;
+
+                                if (k == 2)
+                                    num44 = (int)(Projectile.position.X + Projectile.width) / 16;
+
+                                int num45 = (int)(Projectile.position.Y + Projectile.height) / 16;
+                                if (!WorldGen.SolidTile(num44, num45) && !Main.tile[num44, num45].IsHalfBlock && Main.tile[num44, num45].Slope <= 0 && (!TileID.Sets.Platforms[Main.tile[num44, num45].TileType]))
+                                    continue;
+
+                                try
                                 {
-                                    int num44 = (int)(Projectile.position.X + (Projectile.width / 2)) / 16;
-                                    if (k == 0)
-                                        num44 = (int)Projectile.position.X / 16;
-
-                                    if (k == 2)
-                                        num44 = (int)(Projectile.position.X + Projectile.width) / 16;
-
-                                    int num45 = (int)(Projectile.position.Y + Projectile.height) / 16;
-                                    if (!WorldGen.SolidTile(num44, num45) && !Main.tile[num44, num45].IsHalfBlock && Main.tile[num44, num45].Slope <= 0 && (!TileID.Sets.Platforms[Main.tile[num44, num45].TileType]))
-                                        continue;
-
-                                    try
-                                    {
-                                        num44 = (int)(Projectile.position.X + (Projectile.width / 2)) / 16;
-                                        num45 = (int)(Projectile.position.Y + (Projectile.height / 2)) / 16;
-                                        num44 += num39;
-                                        num44 += (int)Projectile.velocity.X;
-                                        if (!WorldGen.SolidTile(num44, num45 - 1) && !WorldGen.SolidTile(num44, num45 - 2))
-                                            Projectile.velocity.Y = -5.1f;
-                                        else if (!WorldGen.SolidTile(num44, num45 - 2))
-                                            Projectile.velocity.Y = -7.1f;
-                                        else if (WorldGen.SolidTile(num44, num45 - 5))
-                                            Projectile.velocity.Y = -11.1f;
-                                        else if (WorldGen.SolidTile(num44, num45 - 4))
-                                            Projectile.velocity.Y = -10.1f;
-                                        else
-                                            Projectile.velocity.Y = -9.1f;
-                                    }
-                                    catch
-                                    {
-                                        Projectile.velocity.Y = -9.1f;
-                                    }
-                                }
-
-                                if (vector.Y - Projectile.Center.Y < -48f)
-                                {
-                                    float num46 = vector.Y - Projectile.Center.Y;
-                                    num46 *= -1f;
-                                    if (num46 < 60f)
-                                        Projectile.velocity.Y = -6f;
-                                    else if (num46 < 80f)
-                                        Projectile.velocity.Y = -7f;
-                                    else if (num46 < 100f)
-                                        Projectile.velocity.Y = -8f;
-                                    else if (num46 < 120f)
-                                        Projectile.velocity.Y = -9f;
-                                    else if (num46 < 140f)
-                                        Projectile.velocity.Y = -10f;
-                                    else if (num46 < 160f)
-                                        Projectile.velocity.Y = -11f;
-                                    else if (num46 < 190f)
-                                        Projectile.velocity.Y = -12f;
-                                    else if (num46 < 210f)
-                                        Projectile.velocity.Y = -13f;
-                                    else if (num46 < 270f)
-                                        Projectile.velocity.Y = -14f;
-                                    else if (num46 < 310f)
-                                        Projectile.velocity.Y = -15f;
+                                    num44 = (int)(Projectile.position.X + (Projectile.width / 2)) / 16;
+                                    num45 = (int)(Projectile.position.Y + (Projectile.height / 2)) / 16;
+                                    num44 += num39;
+                                    num44 += (int)Projectile.velocity.X;
+                                    if (!WorldGen.SolidTile(num44, num45 - 1) && !WorldGen.SolidTile(num44, num45 - 2))
+                                        Projectile.velocity.Y = -5.1f;
+                                    else if (!WorldGen.SolidTile(num44, num45 - 2))
+                                        Projectile.velocity.Y = -7.1f;
+                                    else if (WorldGen.SolidTile(num44, num45 - 5))
+                                        Projectile.velocity.Y = -11.1f;
+                                    else if (WorldGen.SolidTile(num44, num45 - 4))
+                                        Projectile.velocity.Y = -10.1f;
                                     else
-                                        Projectile.velocity.Y = -16f;
+                                        Projectile.velocity.Y = -9.1f;
                                 }
-
-                                if (Projectile.wet && num43 == 0f)
-                                    Projectile.velocity.Y *= 2f;
+                                catch
+                                {
+                                    Projectile.velocity.Y = -9.1f;
+                                }
                             }
+
+                            if (vector.Y - Projectile.Center.Y < -48f)
+                            {
+                                float num46 = vector.Y - Projectile.Center.Y;
+                                num46 *= -1f;
+                                if (num46 < 60f)
+                                    Projectile.velocity.Y = -6f;
+                                else if (num46 < 80f)
+                                    Projectile.velocity.Y = -7f;
+                                else if (num46 < 100f)
+                                    Projectile.velocity.Y = -8f;
+                                else if (num46 < 120f)
+                                    Projectile.velocity.Y = -9f;
+                                else if (num46 < 140f)
+                                    Projectile.velocity.Y = -10f;
+                                else if (num46 < 160f)
+                                    Projectile.velocity.Y = -11f;
+                                else if (num46 < 190f)
+                                    Projectile.velocity.Y = -12f;
+                                else if (num46 < 210f)
+                                    Projectile.velocity.Y = -13f;
+                                else if (num46 < 270f)
+                                    Projectile.velocity.Y = -14f;
+                                else if (num46 < 310f)
+                                    Projectile.velocity.Y = -15f;
+                                else
+                                    Projectile.velocity.Y = -16f;
+                            }
+
+                            if (Projectile.wet && num43 == 0f)
+                                Projectile.velocity.Y *= 2f;
                         }
 
-                        if (Projectile.velocity.X > num36)
-                            Projectile.velocity.X = num36;
-
-                        if (Projectile.velocity.X < 0f - num36)
-                            Projectile.velocity.X = 0f - num36;
-
-                        if (Projectile.velocity.X < 0f)
-                            Projectile.direction = -1;
-
-                        if (Projectile.velocity.X > 0f)
-                            Projectile.direction = 1;
+                        Projectile.velocity.X = Math.Clamp(Projectile.velocity.X, -speedX, speedX);
+                        Projectile.direction = MathF.Sign(Projectile.velocity.X);
 
                         if (Projectile.velocity.X == 0f)
                             Projectile.direction = ((player.Center.X > Projectile.Center.X) ? 1 : (-1));
@@ -387,12 +383,12 @@ namespace Coralite.Content.Items.Pets
 
                             if (Projectile.frameCounter > 7)
                             {
-                                if (++Projectile.frame > 3)
-                                {
-                                    Projectile.frame = 0;
-                                }
+                                Projectile.frame++;
                                 Projectile.frameCounter = 0;
                             }
+
+                            if (Projectile.frame > 3)
+                                Projectile.frame = 0;
                         }
                         else
                         {
@@ -421,7 +417,7 @@ namespace Coralite.Content.Items.Pets
 
                         if (num20 < num19 && player.velocity.Y == 0f && Projectile.position.Y + Projectile.height <= player.position.Y + player.height && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                         {
-                            Projectile.ai[0] = 0f;
+                            State = 0f;
                             Projectile.netUpdate = true;
                             if (Projectile.velocity.Y < -6f)
                                 Projectile.velocity.Y = -6f;
@@ -470,15 +466,51 @@ namespace Coralite.Content.Items.Pets
                             Projectile.frameCounter = 0;
                         }
 
-                        if (Projectile.frame > 11)
+                        if (Projectile.frame > 11 || Projectile.frame < 10)
                             Projectile.frame = 10;
 
                         Projectile.rotation = Projectile.velocity.X * 0.05f;
                     }
                     break;
-                case 2:
+                case 2://攻击
                     {
+                        Timer++;
+                        Projectile.velocity.X *= 0.9f;
 
+                        if (Recorder == 0)//普通状态下
+                        {
+                            Vector2 vector13 = vector - Projectile.Center;
+
+                            float num43 = Utils.GetLerpValue(0f, 100f, vector13.Y, clamped: true) * Utils.GetLerpValue(-2f, -6f, Projectile.velocity.Y, clamped: true);
+
+                            Projectile.velocity.Y += 0.4f + num43 * 1f;
+                            if (Projectile.velocity.Y > 10f)
+                                Projectile.velocity.Y = 10f;
+
+
+
+
+                            if (++Projectile.frameCounter > 5)
+                            {
+                                Projectile.frameCounter = 0;
+                                Projectile.frame++;
+                            }
+                            if (Projectile.frame > 9)
+                                Projectile.frame = 4;
+                        }
+                        else//飞行状态
+                        {
+                            if (++Projectile.frameCounter > 8)
+                            {
+                                Projectile.frameCounter = 0;
+                                Projectile.frame++;
+                            }
+                            if (Projectile.frame > 13)
+                                Projectile.frame = 12;
+                        }
+
+                        if (Timer > 60 * 5)
+                            State = Recorder;
                     }
                     break;
 
@@ -499,5 +531,4 @@ namespace Coralite.Content.Items.Pets
             return false;
         }
     }
-
 }

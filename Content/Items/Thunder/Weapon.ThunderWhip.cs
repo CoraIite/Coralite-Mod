@@ -124,7 +124,7 @@ namespace Coralite.Content.Items.Thunder
                 dust.position = points[pointIndex];
                 Vector2 spinningpoint = points[pointIndex] - points[pointIndex - 1];
                 dust.velocity *= 0.5f;
-                dust.noGravity =true;
+                dust.noGravity = true;
                 // This math causes these dust to spawn with a velocity perpendicular to the direction of the whip segments, giving the impression of the dust flying off like sparks.
                 dust.velocity += spinningpoint.RotatedBy(owner.direction * ((float)Math.PI / 2f));
                 dust.velocity *= 0.2f;
@@ -174,7 +174,7 @@ namespace Coralite.Content.Items.Thunder
 
             Vector2 pos = list[0];
 
-            for (int i = 0; i < list.Count-1; i++)
+            for (int i = 0; i < list.Count - 1; i++)
             {
                 Rectangle frame = new Rectangle(0, 0, 16, 36); // 鞭子把手的大小
                 float scale = 1;

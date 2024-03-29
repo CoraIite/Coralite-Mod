@@ -14,7 +14,7 @@ namespace Coralite.Content.Tiles.Icicle
         {
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
-            //TileID.Sets.Ices[Type] = true;
+            TileID.Sets.Ices[Type] = true;
             Main.tileMerge[TileID.IceBlock][Type] = true;
             Main.tileMerge[TileID.IceBrick][Type] = true;
 

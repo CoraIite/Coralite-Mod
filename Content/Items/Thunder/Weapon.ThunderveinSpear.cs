@@ -88,7 +88,7 @@ namespace Coralite.Content.Items.Thunder
                     case 1:
                     case 2:
                     case 3:
-                    case 4 ://戳
+                    case 4://戳
                         Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<ThunderveinSpearSpurt>(), damage, knockback, player.whoAmI);
                         break;
                     case 5://挥舞
@@ -289,7 +289,7 @@ namespace Coralite.Content.Items.Thunder
                     break;
                 case 2:
                     Projectile.scale = scale * 1.3f;
-                    distanceToOwner = -68 + 40*Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime);
+                    distanceToOwner = -68 + 40 * Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime);
                     break;
             }
             alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 100) + 150;
@@ -523,7 +523,7 @@ namespace Coralite.Content.Items.Thunder
             SpriteEffects effect = CheckEffect();
             for (int i = 1; i < 10; i += 1)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                ThunderveinDragon.ThunderveinYellowAlpha * (0.5f - i * 0.5f / 10), Projectile.oldRot[i] + extraRot, origin, Projectile.scale*1.1f, effect, 0);
+                ThunderveinDragon.ThunderveinYellowAlpha * (0.5f - i * 0.5f / 10), Projectile.oldRot[i] + extraRot, origin, Projectile.scale * 1.1f, effect, 0);
         }
     }
 
@@ -554,7 +554,7 @@ namespace Coralite.Content.Items.Thunder
             Vector2 dir = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero);
             Projectile.Center = Owner.Center + dir * 64;
             Projectile.velocity = dir * shootSpeed;
-            Projectile.rotation = dir.ToRotation() ;
+            Projectile.rotation = dir.ToRotation();
             HookState = (int)AIStates.shoot;
             Projectile.tileCollide = true;
             Projectile.netUpdate = true;
@@ -636,14 +636,14 @@ namespace Coralite.Content.Items.Thunder
 
         public override void OnKill(int timeLeft)
         {
-            if (Main.netMode != NetmodeID.Server && (int)HookState!=(int)AIStates.drag)
+            if (Main.netMode != NetmodeID.Server && (int)HookState != (int)AIStates.drag)
             {
                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, Projectile.Center);
                 for (int i = 0; i < 5; i++)
                 {
                     Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(50, 50), Vector2.Zero,
                         CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.4f, 0.6f));
-                }  
+                }
             }
         }
 

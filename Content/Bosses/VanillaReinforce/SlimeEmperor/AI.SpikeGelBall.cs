@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coralite.Helpers;
+using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
@@ -17,8 +18,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     {
                         SonState++;
                         //射刺球弹幕
-                        int howMany = Helpers.Helper.ScaleValueForDiffMode(2, 2, 3, 5);
-                        int damage = Helpers.Helper.ScaleValueForDiffMode(20, 15, 18, 20);
+                        int howMany = Helper.ScaleValueForDiffMode(2, 2, 3, 5);
+                        int damage = Helper.GetProjDamage(30, 45, 55);
 
                         for (int i = 0; i < howMany; i++)
                         {

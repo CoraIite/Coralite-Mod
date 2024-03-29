@@ -266,7 +266,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <returns></returns>
         public virtual float GetWidth()
         {
-            return Projectile.width *0.6f / Projectile.scale;
+            return Projectile.width * 0.6f / Projectile.scale;
         }
 
         /// <summary>

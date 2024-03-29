@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Helpers;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -24,7 +25,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             {
                                 int sign = Math.Sign(NPC.Center.X - Target.Center.X);
                                 int directlyHowMany = Helpers.Helper.ScaleValueForDiffMode(1, 1, 3, 4);
-                                int damage = Helpers.Helper.ScaleValueForDiffMode(20, 15, 18, 20);
+                                int damage = Helper.GetProjDamage(30, 45, 55);
                                 SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
                                 for (int i = 0; i < directlyHowMany; i++)
                                 {

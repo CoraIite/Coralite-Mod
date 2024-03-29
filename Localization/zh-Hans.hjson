@@ -2749,7 +2749,7 @@ Mods: {
 					[c/807b7d:(3)件套]
 					[c/69a777:10%概率触发]
 					[c/69a777:1] [c/807b7d:秒冷却时间]
-					[c/807b7d:造成] [c/9e82b5:175%] [c/807b7d:伤害]
+					[c/807b7d:造成] [c/9e82b5:200%] [c/807b7d:伤害]
 					'''
 				NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
 				LuckyStar2Part:
@@ -3040,7 +3040,7 @@ Mods: {
 					[c/807b7d:(3)件套]
 					[c/69a777:10%概率触发]
 					[c/69a777:1] [c/807b7d:秒冷却时间]
-					[c/807b7d:造成] [c/9e82b5:175%] [c/807b7d:伤害]
+					[c/807b7d:造成] [c/9e82b5:200%] [c/807b7d:伤害]
 					'''
 				NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
 				LuckyStar2Part:
@@ -3079,7 +3079,7 @@ Mods: {
 					[c/807b7d:(3)件套]
 					[c/69a777:10%概率触发]
 					[c/69a777:1] [c/807b7d:秒冷却时间]
-					[c/807b7d:造成] [c/9e82b5:175%] [c/807b7d:伤害]
+					[c/807b7d:造成] [c/9e82b5:200%] [c/807b7d:伤害]
 					'''
 				NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
 				LuckyStar2Part:
@@ -3415,7 +3415,12 @@ Mods: {
 
 			TenkoFigurine: {
 				DisplayName: 天狐雕像
-				// Tooltip: ""
+				Tooltip:
+					'''
+					用晶体雕刻的简单狐狸雕像，上面捆着草绳。
+					召唤一只小小的天狐大人。
+					[c/98b0ff:来自云酱的世界]
+					'''
 			}
 
 			IcicleBathtub: {
@@ -3521,6 +3526,21 @@ Mods: {
 			IcicleWorkBench: {
 				DisplayName: 冰晶工作台
 				Tooltip: ""
+			}
+
+			CyberwyrmRehab: {
+				DisplayName: 网瘾少龙
+				Tooltip: 向附近最多3个敌人电击
+			}
+
+			CancerFlail: {
+				DisplayName: 十二星-巨蟹座
+				Tooltip: 挥动双钳
+			}
+
+			ThunderDagger: {
+				DisplayName: 荒雷魔剑
+				Tooltip: 充满电能的短剑，挥动时能够射出电球
 			}
 		}
 
@@ -3777,8 +3797,8 @@ Mods: {
 			}
 
 			TenkoBuff: {
-				// DisplayName: Tenko Buff
-				// Description: Mods.Coralite.Buffs.TenkoBuff.Description
+				DisplayName: 天狐
+				Description: 降临在身边的天狐大人也变得小小的了
 			}
 		}
 
@@ -4269,6 +4289,10 @@ Mods: {
 			// RedJadeBulletProj.DisplayName: Red Jade Bullet Proj
 			// ReverseFlashProj.DisplayName: Reverse Flash Proj
 			// Tenko.DisplayName: Tenko
+			// CyberwyrmRehabProj.DisplayName: Cyberwyrm Rehab Proj
+			// CancerFlailProj.DisplayName: Cancer Flail Proj
+			// LightningBall_Friendly.DisplayName: Lightning Ball_ Friendly
+			// ThunderDaggerSlash.DisplayName: Thunder Dagger Slash
 		}
 
 		Configs: {

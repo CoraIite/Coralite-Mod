@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.Thunder
             if (!Main.dedServ)
             {
                 // Create some light based on the color of the line.
-                Lighting.AddLight(Projectile.Center, Coralite.Instance.ThunderveinYellow.ToVector3()*1.5f);
+                Lighting.AddLight(Projectile.Center, Coralite.Instance.ThunderveinYellow.ToVector3() * 1.5f);
             }
         }
 

@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         public void OnDashOver(BaseFlyingShieldGuard projectile)
         {
             if (!hit)
-            projectile.Owner.velocity *= 0.7f;
+                projectile.Owner.velocity *= 0.7f;
             isDashing = false;
         }
 
@@ -121,7 +121,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<RemainsOfSamurai>( )
+                .AddIngredient<RemainsOfSamurai>()
                 .AddIngredient(ItemID.Topaz, 5)
                 .AddTile(TileID.Anvils)
                 .Register();

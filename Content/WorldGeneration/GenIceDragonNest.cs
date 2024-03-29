@@ -32,9 +32,9 @@ namespace Coralite.Content.WorldGeneration
             {
                 Tile tile = Framing.GetTileSafely(nestCenter_x, nestCenter_y);
                 if (tile.HasTile && tile.TileType != TileID.Cloud
-                    && tile.TileType != TileID.RainCloud && tile.TileType != TileID.Sunplate 
-                    && tile.TileType != TileID.Containers&&tile.TileType!=TileID.Dirt
-                    &&tile.TileType!=TileID.Grass)
+                    && tile.TileType != TileID.RainCloud && tile.TileType != TileID.Sunplate
+                    && tile.TileType != TileID.Containers && tile.TileType != TileID.Dirt
+                    && tile.TileType != TileID.Grass)
                     break;
             }
 

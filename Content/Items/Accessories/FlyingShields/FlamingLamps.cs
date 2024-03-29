@@ -138,7 +138,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             for (int i = 0; i < 3; i++)
             {
                 Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(Projectile.width / 3, Projectile.height / 3);
-                Dust d = Dust.NewDustPerfect(pos,DustID.Torch, (pos - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 3),
+                Dust d = Dust.NewDustPerfect(pos, DustID.Torch, (pos - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 3),
                     Scale: Main.rand.NextFloat(2, 3f));
                 d.noGravity = true;
             }

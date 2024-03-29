@@ -40,7 +40,6 @@
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />
     <Folder Include="Content\UI\MagikeGuideBook\Chapter5\" />
     <Folder Include="Core\Systems\AstronomySystem\" />
-    <Folder Include="Core\Systems\MagikeSystem\Polymerizes\" />
     <Folder Include="Sounds\Shadows\" />
   </ItemGroup>
 </Project>

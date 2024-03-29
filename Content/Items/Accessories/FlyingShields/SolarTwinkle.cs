@@ -113,13 +113,13 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                     _ => 1.6f,
                 };
 
-                if (DashDir<0)
+                if (DashDir < 0)
                     startAngle += MathHelper.Pi;
 
                 flyingShieldGuard.TurnToDashing(this, 22, dashDirection, 15f);
 
                 Projectile.NewProjectile(Player.GetSource_FromAI(), Player.Center, Vector2.Zero,
-                    ProjectileType<SolarTwinkleSlash>(), damage, 4, Player.whoAmI, startAngle, combo,DashDir);
+                    ProjectileType<SolarTwinkleSlash>(), damage, 4, Player.whoAmI, startAngle, combo, DashDir);
                 Player.GetModPlayer<CoralitePlayer>().DashDelay = 75;
                 SpawnEXProjCount = 0;
                 isDashing = true;
@@ -143,7 +143,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
     /// <summary>
     /// ai0输入初始角度
     /// </summary>
-    public class SolarTwinkleSlash : BaseSwingProj, IDrawWarp, IDrawAdditive,IDrawNonPremultiplied
+    public class SolarTwinkleSlash : BaseSwingProj, IDrawWarp, IDrawAdditive, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "HorizontalLight";
 
@@ -186,7 +186,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
         public override bool? CanDamage()
         {
-            if (Timer>maxTime)
+            if (Timer > maxTime)
             {
                 return false;
             }
@@ -307,7 +307,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (Timer>maxTime)
+            if (Timer > maxTime)
                 return;
             if (onHitTimer == 0)
             {

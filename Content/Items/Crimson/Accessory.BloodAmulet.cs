@@ -6,6 +6,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.Items.Crimson
 {
+    [AutoloadEquip(EquipType.Neck)]
     public class BloodAmulet : ModItem
     {
         public override string Texture => AssetDirectory.CrimsonItems + Name;

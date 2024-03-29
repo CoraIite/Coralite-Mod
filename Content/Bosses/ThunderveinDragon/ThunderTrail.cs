@@ -110,7 +110,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             //先添加0的
             Vector2 Center = RandomlyPositions[0] - Main.screenPosition;
 
-            Vector2 normal = (RandomlyPositions[1] - RandomlyPositions[0]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
+            Vector2 normal = (RandomlyPositions[0] - RandomlyPositions[1]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
             float tipRotaion = normal.ToRotation() + 1.57f;
             Color thunderColor = thunderColorFunc(0);
             float tipWidth = thunderWidthFunc(0);

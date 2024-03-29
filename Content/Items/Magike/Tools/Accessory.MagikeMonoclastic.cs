@@ -5,6 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.Magike.Tools
 {
+    [AutoloadEquip(EquipType.Face)]
     public class MagikeMonoclastic : ModItem
     {
         public override string Texture => AssetDirectory.MagikeTools + Name;

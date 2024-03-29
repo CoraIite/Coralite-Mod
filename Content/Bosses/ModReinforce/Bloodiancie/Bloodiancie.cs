@@ -211,13 +211,6 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             return true;
         }
 
-        public override bool CheckActive()
-        {
-            //SkyManager.Instance.Deactivate("BloodJadeSky");
-
-            return base.CheckActive();
-        }
-
         #endregion
 
         #region NetWork

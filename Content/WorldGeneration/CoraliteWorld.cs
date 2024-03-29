@@ -82,7 +82,7 @@ namespace Coralite.Content.WorldGeneration
                 tag.Get<int>("shadowBallsFightAreaX"),
                 tag.Get<int>("shadowBallsFightAreaY"), 74 * 16, 59 * 16);
 
-            chaosWorld= tag.Get<bool>("chaosWorld");
+            chaosWorld = tag.Get<bool>("chaosWorld");
         }
     }
 }

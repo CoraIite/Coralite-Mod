@@ -72,12 +72,12 @@ namespace Coralite.Content.Items.Thunder
 
         public void SpawnDusts()
         {
-            if (Timer%4==0)
-            for (int i = 0; i < 2; i++)
-            {
-                Projectile.SpawnTrailDust((float)(Projectile.width / 2), DustID.PortalBoltTrail, Main.rand.NextFloat(0.2f, 0.5f),
-                    newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.4f));
-            }
+            if (Timer % 4 == 0)
+                for (int i = 0; i < 2; i++)
+                {
+                    Projectile.SpawnTrailDust((float)(Projectile.width / 2), DustID.PortalBoltTrail, Main.rand.NextFloat(0.2f, 0.5f),
+                        newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.4f));
+                }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.Thunder
                 {
                     SoundEngine.PlaySound(CoraliteSoundID.Thunder, Projectile.Center);
                 }
-                Projectile.NewProjectileFromThis<ThunderShieldExProj>(Vector2.Lerp(Projectile.Center,target.Center,Main.rand.NextFloat(0,1f))+Main.rand.NextVector2Circular(Projectile.width,Projectile.height), Vector2.Zero,
+                Projectile.NewProjectileFromThis<ThunderShieldExProj>(Vector2.Lerp(Projectile.Center, target.Center, Main.rand.NextFloat(0, 1f)) + Main.rand.NextVector2Circular(Projectile.width, Projectile.height), Vector2.Zero,
                     Projectile.damage, Projectile.knockBack, 20);
             }
         }
@@ -164,14 +164,14 @@ namespace Coralite.Content.Items.Thunder
 
         public override bool? CanDamage()
         {
-            if (Timer> LightingTime+DelayTime/2)
+            if (Timer > LightingTime + DelayTime / 2)
                 return false;
             return base.CanDamage();
         }
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (Collision.CanHit(Projectile.Center,1,1,target.position,target.width,target.height))
+            if (Collision.CanHit(Projectile.Center, 1, 1, target.position, target.width, target.height))
             {
                 return null;
             }

@@ -75,15 +75,15 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                 {
                     projectile.Projectile.NewProjectileFromThis<ForbiddenDroplet>(projectile.Projectile.Center
                         , (-1.57f + Main.rand.NextFloat(-0.3f, 0.3f)).ToRotationVector2() * Main.rand.NextFloat(10, 13)
-                        , damage2, 0,35);
+                        , damage2, 0, 35);
                     if (Main.rand.NextBool())
                         projectile.Projectile.NewProjectileFromThis<ForbiddenDroplet>(projectile.Projectile.Center
                             , (-1.57f + Main.rand.NextFloat(-0.2f, 0.2f)).ToRotationVector2() * Main.rand.NextFloat(10, 13)
-                            , damage2, 0,45);
+                            , damage2, 0, 45);
                     if (Main.rand.NextBool(4))
                         projectile.Projectile.NewProjectileFromThis<ForbiddenDroplet>(projectile.Projectile.Center
                             , (-1.57f + Main.rand.NextFloat(-0.2f, 0.2f)).ToRotationVector2() * Main.rand.NextFloat(10, 13)
-                            , damage2, 0,55);
+                            , damage2, 0, 55);
                 }
 
                 SpawnEXProjCount++;
@@ -159,8 +159,8 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             for (int i = 0; i < 3; i++)
             {
                 Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(Projectile.width / 3, Projectile.height / 3);
-                 Dust.NewDustPerfect(pos, DustID.Wraith, (pos - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 3),
-                    Scale: Main.rand.NextFloat(1, 1.3f));
+                Dust.NewDustPerfect(pos, DustID.Wraith, (pos - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 3),
+                   Scale: Main.rand.NextFloat(1, 1.3f));
             }
 
             for (int i = 0; i < 3; i++)
@@ -178,11 +178,11 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                 d.noGravity = true;
             }
 
-            for (int i = 0; i <3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(Projectile.width / 3, Projectile.height / 3);
-               Dust.NewDustPerfect(pos, DustID.GoldFlame, (pos - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 3),
-                    Scale: Main.rand.NextFloat(1, 2f));
+                Dust.NewDustPerfect(pos, DustID.GoldFlame, (pos - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 3),
+                     Scale: Main.rand.NextFloat(1, 2f));
             }
         }
 
@@ -238,7 +238,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                 else
                     Projectile.velocity = new Vector2(0, 14);
             }
-            else if (Projectile.ai[1]>80)
+            else if (Projectile.ai[1] > 80)
             {
                 if (Projectile.velocity.Y < 12)
                     Projectile.velocity.Y += 0.15f;
@@ -292,7 +292,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
                     baseColor * (0.5f - i * 0.5f / 10), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale, 0, 0);
 
             //额外星星
-            Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, center,Color.Orange, Color.OrangeRed, 0.5f, 0, 0.5f, 0.5f, 1, Projectile.rotation, new Vector2(0.6f, 1.2f), Vector2.One);
+            Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, center, Color.Orange, Color.OrangeRed, 0.5f, 0, 0.5f, 0.5f, 1, Projectile.rotation, new Vector2(0.6f, 1.2f), Vector2.One);
 
             //主帖图
             Main.EntitySpriteDraw(extraTex, center, null, baseColor, Projectile.rotation, extraOrigin, Projectile.scale * 0.9f, 0);

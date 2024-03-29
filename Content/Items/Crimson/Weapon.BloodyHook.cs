@@ -85,11 +85,17 @@ namespace Coralite.Content.Items.Crimson
 
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
+
             ChainTex = Request<Texture2D>(AssetDirectory.CrimsonItems + "BloodyChain");
         }
 
         public override void Unload()
         {
+            if (Main.dedServ)
+                return;
+
             ChainTex = null;
         }
 
@@ -265,12 +271,18 @@ namespace Coralite.Content.Items.Crimson
 
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
+
             ChainTex = Request<Texture2D>(AssetDirectory.CrimsonItems + "BloodyChain");
             //GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.CrimsonItems + "BloodyHookProj");
         }
 
         public override void Unload()
         {
+            if (Main.dedServ)
+                return;
+
             ChainTex = null;
         }
 

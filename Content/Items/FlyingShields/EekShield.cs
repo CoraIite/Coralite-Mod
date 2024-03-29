@@ -4,7 +4,6 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -65,9 +64,9 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class EEKRarity:ModRarity
+    public class EEKRarity : ModRarity
     {
-        public override Color RarityColor => Color.Lerp(new Color(214,57,40), Color.Red, Math.Abs(MathF.Sin(Main.GlobalTimeWrappedHourly*3)));
+        public override Color RarityColor => Color.Lerp(new Color(214, 57, 40), Color.Red, Math.Abs(MathF.Sin(Main.GlobalTimeWrappedHourly * 3)));
     }
 
     public class EekShieldProj : BaseFlyingShield
