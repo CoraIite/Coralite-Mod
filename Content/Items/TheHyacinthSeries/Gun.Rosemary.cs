@@ -6,11 +6,11 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Misc_Shoot
+namespace Coralite.Content.Items.TheHyacinthSeries
 {
     public class Rosemary : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Shoot + Name;
+        public override string Texture => AssetDirectory.TheHyacinthSeriesItems + Name;
 
         public override void SetStaticDefaults()
         {

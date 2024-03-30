@@ -265,6 +265,11 @@ namespace Coralite.Content.NPCs.Town
                 shopCustomPrice = 8,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
+            npcShop.Add(new Item(ModContent.ItemType<WarpMirror>())//充能球
+            {
+                shopCustomPrice = 10,
+                shopSpecialCurrency = magicCrystalCurrencyID
+            });
 
             npcShop.Add(new Item(ModContent.ItemType<CrystalSword>())//水晶剑
             {

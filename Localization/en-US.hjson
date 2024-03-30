@@ -3474,6 +3474,26 @@ Mods: {
 				DisplayName: Thunder Dagger
 				Tooltip: ""
 			}
+
+			RegrowthTentacle: {
+				DisplayName: Regrowth Tentacle
+				Tooltip: ""
+			}
+
+			EternalBloom: {
+				DisplayName: Eternal Bloom
+				Tooltip: ""
+			}
+
+			Floette: {
+				DisplayName: Floette
+				Tooltip: ""
+			}
+
+			WarpMirror: {
+				DisplayName: Warp Mirror
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -4225,6 +4245,11 @@ Mods: {
 			CancerFlailProj.DisplayName: Cancer Flail Proj
 			LightningBall_Friendly.DisplayName: Lightning Ball_ Friendly
 			ThunderDaggerSlash.DisplayName: Thunder Dagger Slash
+			EternalBloomHeldProj.DisplayName: Eternal Bloom Held Proj
+			FloetteHeldProj.DisplayName: Floette Held Proj
+			PosionedSeedPlantera.DisplayName: Posioned Seed Plantera
+			SeedPlantera.DisplayName: Seed Plantera
+			ThornBall.DisplayName: Thorn Ball
 		}
 
 		Configs: {
@@ -4573,5 +4598,7 @@ Mods: {
 				HeatanBonus: 灼：攻击时生成灼火球
 			}
 		}
+
+		Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
 	}
 }

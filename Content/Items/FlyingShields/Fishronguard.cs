@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.Misc;
+﻿using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;

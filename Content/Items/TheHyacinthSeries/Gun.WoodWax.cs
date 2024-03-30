@@ -4,11 +4,11 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Misc_Shoot
+namespace Coralite.Content.Items.TheHyacinthSeries
 {
     public class WoodWax : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Shoot + Name;
+        public override string Texture => AssetDirectory.TheHyacinthSeriesItems + Name;
 
         public override void SetDefaults()
         {
@@ -16,6 +16,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             Item.useTime = 26;
             Item.useAnimation = 26;
             Item.knockBack = 4;
+            Item.shootSpeed = 10;
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Ranged;
@@ -39,7 +40,9 @@ namespace Coralite.Content.Items.Misc_Shoot
                 if (type == ProjectileID.Bullet)
                 {
                     Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
-                    for (int i = 0; i < 3; i++)
+                    Projectile.NewProjectile(source, player.Center, targetDir * Main.rand.NextFloat(6f, 8f), ProjectileType<WoodWaxBullet>(), (int)(damage * (5 / 12f)), knockback / 2, player.whoAmI);
+
+                    for (int i = 0; i < 2; i++)
                         Projectile.NewProjectile(source, player.Center, targetDir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(6f, 8f), ProjectileType<WoodWaxBullet>(), (int)(damage * (5 / 12f)), knockback / 2, player.whoAmI);
 
                     return false;

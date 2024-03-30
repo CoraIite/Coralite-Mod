@@ -10,11 +10,11 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Misc_Shoot
+namespace Coralite.Content.Items.TheHyacinthSeries
 {
     public class SnowdropHeldProj : BaseGunHeldProj
     {
-        public SnowdropHeldProj() : base(1f, 18, -10, AssetDirectory.Misc_Shoot) { }
+        public SnowdropHeldProj() : base(1f, 18, -10, AssetDirectory.TheHyacinthSeriesItems) { }
 
         public override float Ease()
         {
@@ -134,7 +134,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
             if (timer == 6 || timer == 26 || timer == 46)
             {
-                if (Main.myPlayer == Projectile.owner && Helpers.Helper.FindClosestEnemy(Projectile.Center, 600, npc => npc.active && !npc.friendly && npc.CanBeChasedBy()) is not null)
+                if (Main.myPlayer == Projectile.owner && Helper.FindClosestEnemy(Projectile.Center, 600, npc => npc.active && !npc.friendly && npc.CanBeChasedBy()) is not null)
                 {
                     Vector2 center = Projectile.Top + (Projectile.rotation + 1.57f).ToRotationVector2() * 40;
                     Vector2 dir = (center - Projectile.Top).SafeNormalize(Vector2.Zero);

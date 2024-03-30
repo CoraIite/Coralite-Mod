@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Accessories;
 using Coralite.Content.Items.Accessories.FlyingShields;
 using Coralite.Content.Items.Magike;
+using Coralite.Content.Items.Magike.Tools;
 using Coralite.Content.Tiles.Magike;
 using Terraria;
 using Terraria.ID;
@@ -145,6 +146,16 @@ namespace Coralite.Content.WorldGeneration
                                     }
                                 if (WorldGen.genRand.NextBool(1, 3))
                                     break;
+                            }
+
+                            if (WorldGen.genRand.NextBool(3))
+                            {
+                                foreach (var item in chest.item)
+                                    if (item.IsAir)
+                                    {
+                                        item.SetDefaults(ModContent.ItemType<WarpMirror>());
+                                        break;
+                                    }
                             }
                         }
                         break;

@@ -10,11 +10,11 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Misc_Shoot
+namespace Coralite.Content.Items.TheHyacinthSeries
 {
     public class RosemaryHeldProj : BaseGunHeldProj
     {
-        public RosemaryHeldProj() : base(0.05f, 14, -2, AssetDirectory.Misc_Shoot) { }
+        public RosemaryHeldProj() : base(0.05f, 14, -2, AssetDirectory.TheHyacinthSeriesItems) { }
 
         public override void Initialize()
         {
@@ -44,7 +44,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
     public class RosemaryHeldProj2 : BaseGunHeldProj
     {
-        public RosemaryHeldProj2() : base(0.05f, 16, -2, AssetDirectory.Misc_Shoot) { }
+        public RosemaryHeldProj2() : base(0.05f, 16, -2, AssetDirectory.TheHyacinthSeriesItems) { }
 
         public override void Initialize()
         {
@@ -226,7 +226,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 {
                     if (Timer % 6 == 0 && Main.myPlayer == Projectile.owner)
                     {
-                        NPC target = Helpers.Helper.FindClosestEnemy(Projectile.Center, 440,
+                        NPC target = Helper.FindClosestEnemy(Projectile.Center, 440,
                             npc => npc.active && !npc.friendly && npc.CanBeChasedBy() && Collision.CanHitLine(Projectile.Center, 1, 1, npc.Center, 1, 1));
 
                         if (target is not null)

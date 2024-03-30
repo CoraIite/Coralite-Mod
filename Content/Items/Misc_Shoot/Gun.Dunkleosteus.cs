@@ -1,4 +1,4 @@
-using Coralite.Content.Items.Misc;
+using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;

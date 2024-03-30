@@ -1,4 +1,4 @@
-﻿using Coralite.Content.NPCs.VanillaNPC;
+﻿using Coralite.Content.NPCs.GlobalNPC;
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;

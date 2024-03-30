@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Items.Icicle;
 using Coralite.Content.ModPlayers;
-using Coralite.Content.NPCs.VanillaNPC;
+using Coralite.Content.NPCs.GlobalNPC;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;

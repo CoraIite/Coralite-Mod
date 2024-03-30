@@ -1,9 +1,9 @@
 using Coralite.Core;
 using Terraria;
 
-namespace Coralite.Content.Items.Misc_Shoot
+namespace Coralite.Content.Items.TheHyacinthSeries
 {
-    public class ArethusaPetal : ModDust
+    public class SnowdropPetal : ModDust
     {
         public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
 
@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override bool Update(Dust dust)
         {
-            Lighting.AddLight(dust.position, new Vector3(0.2f, 0.2f, 0.6f));
+            Lighting.AddLight(dust.position, new Vector3(0.2f, 0.2f, 0.2f));
             dust.position += dust.velocity;
             dust.rotation += 0.2f;
             dust.velocity *= 0.99f;

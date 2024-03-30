@@ -375,7 +375,6 @@ namespace Coralite.Content.WorldGeneration
                 await GenShrine(clearTex, shrineTex, wallTex, clearDic, mainDic, wallDic, genOrigin_x, genOrigin_y);
             }).Wait();
 
-
             //放置灯
             int brokenLensType = ModContent.TileType<BrokenLens>();
             TileObjectData data = TileObjectData.GetTileData(brokenLensType, 0);

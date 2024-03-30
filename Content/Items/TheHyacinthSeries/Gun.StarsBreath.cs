@@ -1,4 +1,4 @@
-using Coralite.Content.Items.Misc;
+using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
@@ -6,11 +6,11 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Misc_Shoot
+namespace Coralite.Content.Items.TheHyacinthSeries
 {
     public class StarsBreath : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Shoot + Name;
+        public override string Texture => AssetDirectory.TheHyacinthSeriesItems + Name;
 
         /*         public int shootStyle;
                 public int shootCount; */

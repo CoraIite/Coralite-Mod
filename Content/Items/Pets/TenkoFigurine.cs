@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Creative;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.UI.Chat;
 
@@ -19,6 +20,7 @@ namespace Coralite.Content.Items.Pets
 
         public override void SetStaticDefaults()
         {
+            ItemID.Sets.ShimmerTransformToItem[Type]=ModContent.ItemType<CrystalBlossomShards>();
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -148,6 +150,8 @@ namespace Coralite.Content.Items.Pets
 
         public override void AI()
         {
+            const int AttackLength = 170;
+
             Player player = Main.player[Projectile.owner];
             if (!player.active)
             {
@@ -361,6 +365,17 @@ namespace Coralite.Content.Items.Pets
                                 Projectile.velocity.Y *= 2f;
                         }
 
+                        Timer++;
+                        if (Timer>120)
+                        {
+                            Timer = 0;
+                            if (Helper.TryFindClosestEnemy(Projectile.Center, AttackLength, n=>n.CanBeChasedBy(),out _))
+                            {
+                                State = 2;
+                                Recorder = 0;
+                            }
+                        }
+
                         Projectile.velocity.X = Math.Clamp(Projectile.velocity.X, -speedX, speedX);
                         Projectile.direction = MathF.Sign(Projectile.velocity.X);
 
@@ -459,6 +474,17 @@ namespace Coralite.Content.Items.Pets
                         if (Projectile.velocity.X != 0f)
                             Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
 
+                        Timer++;
+                        if (Timer > 120)
+                        {
+                            Timer = 0;
+                            if (Helper.TryFindClosestEnemy(Projectile.Center, AttackLength, n => n.CanBeChasedBy(), out _))
+                            {
+                                State = 2;
+                                Recorder = 1;
+                            }
+                        }
+
                         Projectile.frameCounter++;
                         if (Projectile.frameCounter > 4)
                         {
@@ -469,6 +495,14 @@ namespace Coralite.Content.Items.Pets
                         if (Projectile.frame > 11 || Projectile.frame < 10)
                             Projectile.frame = 10;
 
+                        Lighting.AddLight(Projectile.Center, new Vector3(0.3f, 0.3f, 0.5f));
+                        if (Main.rand.NextBool())
+                        {
+                            Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(6, 6) + new Vector2(-Projectile.spriteDirection * 14, 14).RotatedBy(Projectile.rotation), DustID.FireworkFountain_Blue,
+                                 -Projectile.velocity * Main.rand.NextFloat(0.3f, 0.6f), 50, Scale: Main.rand.NextFloat(0.7f, 1f));
+                            d.noGravity = true;
+                        }
+
                         Projectile.rotation = Projectile.velocity.X * 0.05f;
                     }
                     break;
@@ -476,6 +510,78 @@ namespace Coralite.Content.Items.Pets
                     {
                         Timer++;
                         Projectile.velocity.X *= 0.9f;
+
+                        Vector2 dustPos = Projectile.Center + Helper.NextVec2Dir(30, 45);
+                        Dust d;
+                        if (Main.rand.NextBool())
+                            d = Dust.NewDustPerfect(dustPos, DustID.Electric,
+                             (dustPos - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.5f, 6f),Scale:Main.rand.NextFloat(0.5f,0.7f));
+                        else
+                            d = Dust.NewDustPerfect(dustPos, DustID.Electric,
+                             (  Projectile.Center- dustPos).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.5f, 2f));
+                        d.noGravity = true;
+
+                        if (Timer % 60 == 0)
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                Vector2 baseDir = (Timer * 0.02f + i * MathHelper.TwoPi / 5).ToRotationVector2();
+
+                                for (int j = -1; j < 2; j+=2)
+                                {
+                                    Vector2 velocity = baseDir.RotatedBy(j * 0.6f);
+                                    Vector2 pos = Projectile.Center + baseDir * 32;
+                                    for (int k = 0; k < 5; k++)
+                                    {
+                                        ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
+                                        {
+                                            PositionInWorld = pos,
+                                            MovementVector = velocity *2,
+                                            UniqueInfoPiece = (int)((0.75f-0.2f/5*k) * 255)
+                                        });
+
+                                        pos += velocity*16;
+                                        velocity = velocity.RotatedBy(-j * 0.075f);
+                                    }
+                                }
+
+                                for (int l = -1; l < 2; l += 2)
+                                {
+                                    Vector2 velocity = baseDir.RotatedBy(l * 0.95f);
+                                    ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
+                                    {
+                                        PositionInWorld = Projectile.Center + baseDir * (32 + 16 * 4 + 6) + velocity * 16,
+                                        MovementVector = velocity * 3,
+                                        UniqueInfoPiece = (int)(0.55f * 255)
+                                    });
+                                }
+                            }
+
+                            for (int i = 0; i < Main.maxNPCs; i++)
+                            {
+                                NPC n = Main.npc[i];
+                                if (n.active && n.CanBeChasedBy() && !n.friendly&&Vector2.Distance(n.Center,Projectile.Center)< AttackLength)
+                                    n.SimpleStrikeNPC(20, Math.Sign(n.Center.X - Projectile.Center.X));
+                            }
+
+                            player.Heal(1);
+                        }
+
+                        if (Timer % 7 == 0)
+                        {
+                            float rot = Timer * 0.02f;
+                            for (int i = 0; i < 9; i++)
+                            {
+                                Vector2 pos = Projectile.Center + (rot + i * MathHelper.TwoPi / 9).ToRotationVector2() * AttackLength;
+                                Vector2 vel = (rot + 1.57f + i * MathHelper.TwoPi / 9).ToRotationVector2();
+                                ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
+                                {
+                                    PositionInWorld = pos,
+                                    MovementVector = vel * 2,
+                                    UniqueInfoPiece = (int)(0.55f * 255)
+                                });
+                            }
+                        }
 
                         if (Recorder == 0)//普通状态下
                         {
@@ -486,10 +592,6 @@ namespace Coralite.Content.Items.Pets
                             Projectile.velocity.Y += 0.4f + num43 * 1f;
                             if (Projectile.velocity.Y > 10f)
                                 Projectile.velocity.Y = 10f;
-
-
-
-
                             if (++Projectile.frameCounter > 5)
                             {
                                 Projectile.frameCounter = 0;
@@ -507,13 +609,15 @@ namespace Coralite.Content.Items.Pets
                             }
                             if (Projectile.frame > 13)
                                 Projectile.frame = 12;
+
+                            Projectile.velocity *= 0.98f;
+                            Projectile.rotation = Projectile.rotation.AngleLerp(0, 0.1f);
                         }
 
                         if (Timer > 60 * 5)
                             State = Recorder;
                     }
                     break;
-
             }
         }
 

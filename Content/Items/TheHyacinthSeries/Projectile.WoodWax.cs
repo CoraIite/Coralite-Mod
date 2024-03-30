@@ -6,11 +6,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Misc_Shoot
+namespace Coralite.Content.Items.TheHyacinthSeries
 {
     public class WoodWaxHeldProj : BaseGunHeldProj
     {
-        public WoodWaxHeldProj() : base(0.6f, 10, -8, AssetDirectory.Misc_Shoot) { }
+        public WoodWaxHeldProj() : base(0.6f, 10, -8, AssetDirectory.TheHyacinthSeriesItems) { }
 
         public override void ModifyAI(float factor)
         {

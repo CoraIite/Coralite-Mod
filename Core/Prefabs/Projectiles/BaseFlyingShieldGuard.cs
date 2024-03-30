@@ -279,7 +279,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (!proj.active || proj.friendly || proj.minion || proj.whoAmI == Projectile.whoAmI || localProjectileImmunity[i] > 0)
+                if (!proj.active || !proj.hostile || localProjectileImmunity[i] > 0)
                     continue;
 
                 if (proj.Colliding(proj.getRect(), rect))

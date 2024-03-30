@@ -9,11 +9,11 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Misc_Shoot
+namespace Coralite.Content.Items.TheHyacinthSeries
 {
     public class ArethusaHeldProj : BaseGunHeldProj
     {
-        public ArethusaHeldProj() : base(0.4f, 6, -6, AssetDirectory.Misc_Shoot) { }
+        public ArethusaHeldProj() : base(0.4f, 6, -6, AssetDirectory.TheHyacinthSeriesItems) { }
     }
 
     public class ArethusaBullet : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied

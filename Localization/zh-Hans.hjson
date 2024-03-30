@@ -2346,7 +2346,7 @@ Mods: {
 				DisplayName: 重型楔石
 				Tooltip:
 					'''
-					在地表木箱子中出现
+					在地下金箱子中出现
 					减慢飞盾飞行速度，提升飞盾大小和近战伤害
 					'''
 			}
@@ -3542,6 +3542,30 @@ Mods: {
 				DisplayName: 荒雷魔剑
 				Tooltip: 充满电能的短剑，挥动时能够射出电球
 			}
+
+			RegrowthTentacle: {
+				DisplayName: 再生触手
+				Tooltip: 还会不断地扭动
+			}
+
+			EternalBloom: {
+				DisplayName: 永恒绽放
+				Tooltip:
+					'''
+					将火枪子弹转化为花种子，偶尔射出花刺球
+					“生生不息”
+					'''
+			}
+
+			Floette: {
+				DisplayName: 花叶蒂
+				Tooltip: 将火枪子弹转化为种子弹
+			}
+
+			WarpMirror: {
+				DisplayName: 扭曲镜
+				Tooltip: 消耗50魔能来进行随机传送
+			}
 		}
 
 		Tiles: {
@@ -4293,6 +4317,11 @@ Mods: {
 			// CancerFlailProj.DisplayName: Cancer Flail Proj
 			// LightningBall_Friendly.DisplayName: Lightning Ball_ Friendly
 			// ThunderDaggerSlash.DisplayName: Thunder Dagger Slash
+			// EternalBloomHeldProj.DisplayName: Eternal Bloom Held Proj
+			// FloetteHeldProj.DisplayName: Floette Held Proj
+			// PosionedSeedPlantera.DisplayName: Posioned Seed Plantera
+			// SeedPlantera.DisplayName: Seed Plantera
+			// ThornBall.DisplayName: Thorn Ball
 		}
 
 		Configs: {
@@ -4645,5 +4674,7 @@ Mods: {
 				HeatanBonus: 灼：攻击时生成灼火球
 			}
 		}
+
+		// Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
 	}
 }

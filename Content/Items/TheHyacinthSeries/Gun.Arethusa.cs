@@ -6,7 +6,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Misc_Shoot
+namespace Coralite.Content.Items.TheHyacinthSeries
 {
     /// <summary>
     /// Arethusa：兰花的意思，但是也是希腊神话中阿瑞塞莎的名字，具体神话传说建议百度，另外这个我是在机翻时偶然发现的。
@@ -14,7 +14,7 @@ namespace Coralite.Content.Items.Misc_Shoot
     /// </summary>
     public class Arethusa : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Shoot + Name;
+        public override string Texture => AssetDirectory.TheHyacinthSeriesItems + Name;
 
         public int shootCount;
 

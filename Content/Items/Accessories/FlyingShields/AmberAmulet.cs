@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Amber, 3)
-                .AddIngredient(ItemID.FossilOre, 20)
+                .AddIngredient(ItemID.FossilOre, 12)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
         }

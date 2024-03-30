@@ -20,7 +20,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.PalmWood, 5, ItemID.Coal, selfStack: 20);
 
             //煤
-            AddRemodelRecipe(ItemID.Coal, 200, ItemID.Diamond, selfStack: 20);
+            AddRemodelRecipe(ItemID.Coal, 150, ItemID.Diamond, selfStack: 20);
 
             //沙漠化石
             AddRemodelRecipe(ItemID.DesertFossil, 1, ItemID.Amber, selfStack: 10);

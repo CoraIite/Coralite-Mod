@@ -6,7 +6,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.GlobalTiles
+namespace Coralite.Content.Tiles.GlobalTiles
 {
     public class CoraliteGlobalTile : GlobalTile
     {

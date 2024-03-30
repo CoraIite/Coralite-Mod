@@ -16,13 +16,13 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using static Coralite.Content.Items.Misc_Shoot.HyacinthBullet;
+using static Coralite.Content.Items.TheHyacinthSeries.HyacinthBullet;
 
-namespace Coralite.Content.Items.Misc_Shoot
+namespace Coralite.Content.Items.TheHyacinthSeries
 {
     public class HyacinthHeldProj : BaseGunHeldProj
     {
-        public HyacinthHeldProj() : base(0.2f, 16, -4, AssetDirectory.Misc_Shoot) { }
+        public HyacinthHeldProj() : base(0.2f, 16, -4, AssetDirectory.TheHyacinthSeriesItems) { }
 
         public override void OnSpawn(IEntitySource source)
         {
@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             SuperStarCannon,
             StarCannon,
             OnyxBlaster,
-            VenusMagnum,
+            //VenusMagnum,
             ChainGun,
             Xenopopper,
             VortexBeater,
@@ -77,7 +77,9 @@ namespace Coralite.Content.Items.Misc_Shoot
             PhoenixBlaster,
             Handgun,
             Lycoris,
-            ShadowWave
+            ShadowWave,
+            Floette,
+            EternalBloom
         }
 
         public override void AI()
@@ -219,8 +221,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                     return Color.Yellow;
                 case (int)GunType.OnyxBlaster://玛瑙爆破枪
                     return Color.Purple;
-                case (int)GunType.VenusMagnum://维纳斯万能枪
-                    return new Color(140, 255, 102);
+                //case (int)GunType.VenusMagnum://维纳斯万能枪
+                //    return new Color(140, 255, 102);
                 case (int)GunType.ChainGun://链式机枪
                     return new Color(196, 17, 18);
                 case (int)GunType.Xenopopper://外星泡泡枪
@@ -255,6 +257,10 @@ namespace Coralite.Content.Items.Misc_Shoot
                     return NightmarePlantera.nightmareRed;
                 case (int)GunType.ShadowWave://月影
                     return new Color(189, 109, 255);
+                case (int)GunType.Floette://月影
+                    return Color.Lime;
+                case (int)GunType.EternalBloom://月影
+                    return Color.Pink;
                 default:
                     break;
             }
@@ -299,7 +305,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             if (Projectile.alpha > 160)
                 return Color.Transparent;
 
-            Color color = Color.Lerp(Color.Red, HyacinthBullet.GetColor((int)-Projectile.ai[0]), Projectile.alpha / 160f);
+            Color color = Color.Lerp(Color.Red, GetColor((int)-Projectile.ai[0]), Projectile.alpha / 160f);
 
             color.A = 100;
             return color;
@@ -471,7 +477,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             if (Timer < 30)
             {
                 float factor = Timer / 30;
-                Color shineColor = HyacinthBullet.GetColor((int)-Projectile.ai[0]) * 0.8f;
+                Color shineColor = GetColor((int)-Projectile.ai[0]) * 0.8f;
                 Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + Projectile.rotation.ToRotationVector2() * 8, new Color(204, 204, 204, 0), shineColor * 0.8f, factor, 0f, 0.5f, 0.5f, 1f, Timer * 0.04f, new Vector2(3f, 3f), Vector2.One);
             }
             return false;
@@ -490,8 +496,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                     return ItemID.StarCannon;
                 case (int)GunType.OnyxBlaster://玛瑙爆破枪
                     return ItemID.OnyxBlaster;
-                case (int)GunType.VenusMagnum://维纳斯万能枪
-                    return ItemID.VenusMagnum;
+                //case (int)GunType.VenusMagnum://维纳斯万能枪
+                //    return ItemID.VenusMagnum;
                 case (int)GunType.ChainGun://链式机枪
                     return ItemID.ChainGun;
                 case (int)GunType.Xenopopper://外星泡泡枪
@@ -526,6 +532,10 @@ namespace Coralite.Content.Items.Misc_Shoot
                     return ModContent.ItemType<Lycoris>();
                 case (int)GunType.ShadowWave://月影
                     return ModContent.ItemType<ShadowWave>();
+                case (int)GunType.Floette://月影
+                    return ModContent.ItemType<Floette>();
+                case (int)GunType.EternalBloom://月影
+                    return ModContent.ItemType<EternalBloom>();
             }
 
             return (int)Projectile.ai[0];

@@ -9,11 +9,11 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Misc_Shoot
+namespace Coralite.Content.Items.TheHyacinthSeries
 {
     public class Hyacinth : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Shoot + Name;
+        public override string Texture => AssetDirectory.TheHyacinthSeriesItems + Name;
 
         public float shootAngle;
 
@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Ranged;
-            Item.value = Item.sellPrice(0, 50, 0, 0);
+            Item.value = Item.sellPrice(0, 40, 0, 0);
             Item.rare = ItemRarityID.Red;
             Item.shoot = ProjectileID.PurificationPowder;
             Item.useAmmo = AmmoID.Bullet;
@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             if (Main.myPlayer == player.whoAmI)
             {
                 List<int> textureList = new List<int>();
-                for (int i = 1; i < 23; i++)
+                for (int i = 1; i < 24; i++)
                     textureList.Add(-i);
 
                 for (int i = 0; i < 3; i++)     //生成环绕的幻影枪弹幕
@@ -76,7 +76,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             .AddIngredient(ItemID.SuperStarCannon)
             .AddIngredient<ThunderDukeVine>()
             .AddIngredient(ItemID.OnyxBlaster)
-            .AddIngredient(ItemID.VenusMagnum)
+            .AddIngredient<EternalBloom>()
             .AddIngredient(ItemID.ChainGun)
             .AddIngredient(ItemID.Xenopopper)
             .AddIngredient(ItemID.VortexBeater)

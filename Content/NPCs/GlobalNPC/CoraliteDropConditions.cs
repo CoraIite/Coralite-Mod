@@ -1,7 +1,7 @@
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 
-namespace Coralite.Content.NPCs.VanillaNPC
+namespace Coralite.Content.NPCs.GlobalNPC
 {
     public class DownedGolemCondition : IItemDropRuleCondition, IProvideItemConditionDescription
     {
