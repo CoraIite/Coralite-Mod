@@ -3,6 +3,7 @@ using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Pets;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -277,11 +278,51 @@ namespace Coralite.Content.Tiles.GlobalTiles
             {
                 default:
                     break;
-                //case TileID.Trees:
-                //    WorldGen.GetTreeBottom(i, j, out int x, out int y);
-                //    Tile bottomTile = Framing.GetTileSafely(x, y);
-                //    TreeTypes tree = WorldGen.GetTreeType(bottomTile.TileType);
-                //    break;
+                case TileID.Trees:
+                    WorldGen.GetTreeBottom(i, j, out int x, out int y);
+                    Tile bottomTile = Framing.GetTileSafely(x, y);
+                    TreeTypes tree = WorldGen.GetTreeType(bottomTile.TileType);
+
+                    switch (tree)
+                    {
+                        case TreeTypes.None:
+                            break;
+                        case TreeTypes.Forest:
+                            break;
+                        case TreeTypes.Corrupt:
+                            break;
+                        case TreeTypes.Mushroom:
+                            break;
+                        case TreeTypes.Crimson:
+                            break;
+                        case TreeTypes.Jungle:
+                            break;
+                        case TreeTypes.Snow:
+                            break;
+                        case TreeTypes.Hallowed:
+                            break;
+                        case TreeTypes.Palm:
+                            break;
+                        case TreeTypes.PalmCrimson:
+                            break;
+                        case TreeTypes.PalmCorrupt:
+                            break;
+                        case TreeTypes.PalmHallowed:
+                            break;
+                        case TreeTypes.Ash:
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case TileID.PalmTree:
+                    {
+                        if (Main.rand.NextBool(8))
+                            Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemID.GillsPotion);
+                        if (Main.rand.NextBool(4))
+                            Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemID.CoralTorch, Main.rand.Next(1, 5));
+                    }
+                    break;
                 case TileID.VanityTreeSakura:
                     if (Main.hardMode && Main.rand.NextBool(1, 400))
                         Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<CrystalBlossomShards>());

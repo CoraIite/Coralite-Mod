@@ -15,7 +15,6 @@ namespace Coralite.Content.WorldGeneration
                 return;
             }
 
-
             int ShiniesIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
             int DesertIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
             int IceBiomeIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Generate Ice Biome"));
@@ -60,6 +59,17 @@ namespace Coralite.Content.WorldGeneration
                     tasks.Insert(FinalCleanup + 2, new PassLegacy("Coralite Shadow Castle", GenShadowCastle));
                 }
             }
+
+            if (coralCatWorld)
+            {
+                int SettleLiquids = tasks.FindIndex(genpass => genpass.Name.Equals("Settle Liquids Again"));
+                int FinalCleanup2 = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+
+                if (SettleLiquids != -1)
+                    tasks.Insert(SettleLiquids - 1, new PassLegacy("Coralite CoralCat World", CoralCatWorldGen));
+                if (SettleLiquids != -1)
+                    tasks.Insert(FinalCleanup2 +1, new PassLegacy("Coralite CoralCat World Spawn", CoralCatWorldSpawn));
+            }
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -70,6 +80,7 @@ namespace Coralite.Content.WorldGeneration
             tag.Add("shadowBallsFightAreaX", shadowBallsFightArea.X);
             tag.Add("shadowBallsFightAreaY", shadowBallsFightArea.Y);
             tag.Add("chaosWorld", chaosWorld);
+            tag.Add("coralCat", coralCatWorld);
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -83,6 +94,7 @@ namespace Coralite.Content.WorldGeneration
                 tag.Get<int>("shadowBallsFightAreaY"), 74 * 16, 59 * 16);
 
             chaosWorld = tag.Get<bool>("chaosWorld");
+            coralCatWorld = tag.Get<bool>("coralCat");
         }
     }
 }

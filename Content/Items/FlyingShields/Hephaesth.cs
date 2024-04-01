@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.FlyingShields
 {
     public class Hephaesth : BaseFlyingShieldItem<HephaesthGuard>
     {
-        public Hephaesth() : base(Item.sellPrice(0, 0, 50), ItemRarityID.Red, AssetDirectory.FlyingShieldItems)
+        public Hephaesth() : base(Item.sellPrice(0, 40), ItemRarityID.Red, AssetDirectory.FlyingShieldItems)
         { }
 
         /// <summary>

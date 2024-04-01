@@ -3494,6 +3494,21 @@ Mods: {
 				DisplayName: Warp Mirror
 				Tooltip: ""
 			}
+
+			Virgo: {
+				DisplayName: Virgo
+				Tooltip: ""
+			}
+
+			GigantesShoes: {
+				DisplayName: Gigantes Shoes
+				Tooltip: ""
+			}
+
+			ThunderveinStaff: {
+				DisplayName: Thundervein Staff
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -4250,6 +4265,10 @@ Mods: {
 			PosionedSeedPlantera.DisplayName: Posioned Seed Plantera
 			SeedPlantera.DisplayName: Seed Plantera
 			ThornBall.DisplayName: Thorn Ball
+			VirgoBullet.DisplayName: Virgo Bullet
+			VirgoFeather.DisplayName: Virgo Feather
+			VirgoHeldProj.DisplayName: Virgo Held Proj
+			ThunderMinion.DisplayName: Thunder Minion
 		}
 
 		Configs: {
@@ -4600,5 +4619,14 @@ Mods: {
 		}
 
 		Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
+
+		ClobalItems: {
+			CoraliteGlobalItem: {
+				CopperCoralCat: 铜质猫猫币
+				RubyCoralCat: 红玉猫猫币
+				TerraCoralCat: 泰拉猫猫币
+				RainBowCoralCat: 彩虹猫猫币
+			}
+		}
 	}
 }

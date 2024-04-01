@@ -222,7 +222,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         if (Main.masterMode)
                         {
                             int directlyHowMany = Helper.ScaleValueForDiffMode(1, 1, 3, 4);
-                            int damage = Helper.GetProjDamage(30, 45, 55);
+                            int damage = Helper.GetProjDamage(50, 60, 90);
 
                             for (int i = 0; i < directlyHowMany; i++)
                             {

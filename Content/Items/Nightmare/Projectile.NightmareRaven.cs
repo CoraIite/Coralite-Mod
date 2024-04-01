@@ -399,7 +399,6 @@ namespace Coralite.Content.Items.Nightmare
             return center;
         }
 
-
         /// <summary>
         /// 获取自身是第几个召唤物弹幕
         /// 非常好的东西，建议稍微改改变成静态帮助方法

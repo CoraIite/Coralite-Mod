@@ -261,7 +261,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    int damage = Helper.GetProjDamage(30, 50, 100);
+                    int damage = Helper.GetProjDamage(60, 80, 120);
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter,
                         (Target.Center - NPC.Center + Main.rand.NextVector2CircularEdge(48, 48)).SafeNormalize(Vector2.UnitY) * 12f,
                         ProjectileType<RedPulse>(), damage, 5f, NPC.target);
@@ -355,7 +355,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             if (Timer % 25 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 float rot = Main.rand.NextFloat(MathHelper.TwoPi);
-                int damage = Helper.GetProjDamage(30, 50, 60);
+                int damage = Helper.GetProjDamage(60, 80, 120);
                 int timeleft = 16;
                 int howMany = Main.rand.Next(3, 6);
                 for (int i = 0; i < howMany; i++)
@@ -619,7 +619,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     int index = Main.rand.Next(followers.Count);
-                    int damage = Helper.GetProjDamage(30, 50, 90);
+                    int damage = Helper.GetProjDamage(60, 80, 120);
                     int shootCount = Helper.ScaleValueForDiffMode(2, 3, 3, 4);
                     for (int i = 0; i < shootCount; i++)
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[index].center, new Vector2(0, -10).RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)), ProjectileType<Rediancie_Strike>(), damage, 5f, NPC.target);
@@ -732,7 +732,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    int damage = Helper.GetProjDamage(40, 70, 120);
+                    int damage = Helper.GetProjDamage(60, 80, 120);
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), targetCenter, (Target.Center - NPC.Center + new Vector2(0, 30 * (Timer / 30) == 1 ? 1 : -1)).SafeNormalize(Vector2.UnitY) * 14f, ProjectileType<BloodiancieBeam>(), damage, 5f);
                 }
 

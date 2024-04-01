@@ -66,5 +66,4 @@ namespace Coralite.Content.Biomes
             BasaltTileCount = tileCounts[ModContent.TileType<BasaltTile>()];
         }
     }
-
 }

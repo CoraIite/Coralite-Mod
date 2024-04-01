@@ -32,6 +32,11 @@ namespace Coralite.Content.Items.TheHyacinthSeries
             Item.autoReuse = true;
         }
 
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            position += new Vector2(0, -10);
+        }
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (Main.myPlayer == player.whoAmI)
@@ -39,7 +44,7 @@ namespace Coralite.Content.Items.TheHyacinthSeries
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<FloetteHeldProj>(), 0, knockback, player.whoAmI);
                 if (type == ProjectileID.Bullet)
                 {
-                    int index = Projectile.NewProjectile(source, player.Center, velocity 
+                    int index = Projectile.NewProjectile(source, position, velocity 
                          , ProjectileType<PosionedSeedPlantera>(), damage, knockback, player.whoAmI);
                     Main.projectile[index].friendly = true;
                     Main.projectile[index].hostile = false;

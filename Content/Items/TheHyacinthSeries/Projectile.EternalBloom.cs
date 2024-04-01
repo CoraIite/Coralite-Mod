@@ -108,9 +108,9 @@ namespace Coralite.Content.Items.TheHyacinthSeries
             float oldVelX = Math.Abs(oldVelocity.X);
             float oldVelY = Math.Abs(oldVelocity.Y);
             if (oldVelX > newVelX)
-                Projectile.velocity.X = -oldVelX ;
+                Projectile.velocity.X = -Math.Sign(oldVelocity.X) * oldVelX*0.8f ;
             if (oldVelY > newVelY)
-                Projectile.velocity.Y = -Math.Sign(oldVelocity.Y)*oldVelY ;
+                Projectile.velocity.Y = -Math.Sign(oldVelocity.Y)*oldVelY *0.8f;
 
             Projectile.rotation = Projectile.velocity.ToRotation();
             Projectile.position -= oldVelocity;

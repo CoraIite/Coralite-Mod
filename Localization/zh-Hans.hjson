@@ -3566,6 +3566,25 @@ Mods: {
 				DisplayName: 扭曲镜
 				Tooltip: 消耗50魔能来进行随机传送
 			}
+
+			Virgo: {
+				DisplayName: 十二星-处女座
+				Tooltip: 将火枪子弹转化为羽毛弹
+			}
+
+			GigantesShoes: {
+				DisplayName: 癸干忒斯之靴
+				Tooltip:
+					'''
+					减少50%摔落伤害
+					空中按下键以增加下降速度，落地后击退周围敌怪
+					'''
+			}
+
+			ThunderveinStaff: {
+				// DisplayName: Thundervein Staff
+				// Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -4322,6 +4341,10 @@ Mods: {
 			// PosionedSeedPlantera.DisplayName: Posioned Seed Plantera
 			// SeedPlantera.DisplayName: Seed Plantera
 			// ThornBall.DisplayName: Thorn Ball
+			// VirgoBullet.DisplayName: Virgo Bullet
+			// VirgoFeather.DisplayName: Virgo Feather
+			// VirgoHeldProj.DisplayName: Virgo Held Proj
+			// ThunderMinion.DisplayName: Thunder Minion
 		}
 
 		Configs: {
@@ -4676,5 +4699,14 @@ Mods: {
 		}
 
 		// Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
+
+		ClobalItems: {
+			CoraliteGlobalItem: {
+				CopperCoralCat: 铜质猫猫币
+				RubyCoralCat: 红玉猫猫币
+				TerraCoralCat: 泰拉猫猫币
+				RainBowCoralCat: 彩虹猫猫币
+			}
+		}
 	}
 }

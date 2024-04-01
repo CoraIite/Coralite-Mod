@@ -3,6 +3,7 @@ using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.Projectiles.Globals;
 using Coralite.Content.UI;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using System;
 using System.Linq;
@@ -91,9 +92,17 @@ namespace Coralite.Content.ModPlayers
         public float coreKeeperDodge;
 
         /// <summary>
+        /// 摔落伤害倍率
+        /// </summary>
+        public StatModifier fallDamageModifyer = default;
+
+        /// <summary>
         /// 使用特殊攻击
         /// </summary>
         public bool useSpecialAttack;
+
+        public Vector2 oldOldVelocity;
+        public Vector2 oldVelocity;
 
         public override void Load()
         {
@@ -125,6 +134,8 @@ namespace Coralite.Content.ModPlayers
             critDamageBonus = 0;
             lifeReganBonus = 0;
             bossDamageReduce = 0;
+
+            fallDamageModifyer = new StatModifier();
 
             ResetFlyingShieldSets();
 
@@ -267,6 +278,8 @@ namespace Coralite.Content.ModPlayers
                 rightClickReuseDelay--;
 
             nianli = Math.Clamp(nianli, 0f, nianliMax);  //只是防止意外发生
+            oldOldVelocity = oldVelocity;
+            oldVelocity = Player.velocity;
         }
 
         public override void UpdateDead()
@@ -531,6 +544,14 @@ namespace Coralite.Content.ModPlayers
             }
 
             useSpecialAttack = Core.Loaders.KeybindLoader.SpecialAttack.Current;
+        }
+
+        public override void OnEnterWorld()
+        {
+            if (CoraliteWorld.coralCatWorld)
+            {
+                Player.QuickSpawnItem(Player.GetSource_FromThis(), ItemID.Meowmere);
+            }
         }
     }
 }

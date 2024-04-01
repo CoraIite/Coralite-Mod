@@ -112,9 +112,9 @@ namespace Coralite.Content.Items.Nightmare
             if (whoAmI_Y == 2)
                 info.AnchorTilePosition.Y -= 2;
 
-            info.VisualOffset.Y -= 16f; // 将玩家向下移动一个档次，因为床没有普通床高
+            info.VisualOffset.Y -= 24f; // 将玩家向下移动一个档次，因为床没有普通床高
                                         //info.VisualOffset.X += info.TargetDirection * 32f;
-            Point faa = info.AnchorTilePosition;
+            //Point faa = info.AnchorTilePosition;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

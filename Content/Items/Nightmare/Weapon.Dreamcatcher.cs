@@ -105,6 +105,5 @@ namespace Coralite.Content.Items.Nightmare
 
             return true;
         }
-
     }
 }

@@ -75,9 +75,13 @@ namespace Coralite.Content.CustomHooks
             orig.Invoke(processedSeed);
 
             CoraliteWorld.chaosWorld = false;
+            CoraliteWorld.coralCatWorld = false;
 
             if (processedSeed.ToLower() == "the chaos" || processedSeed.ToLower() == "thechaos")
                 CoraliteWorld.chaosWorld = true;
+
+            if (processedSeed.ToLower() == "coral cat" || processedSeed.ToLower() == "coralcat")
+                CoraliteWorld.coralCatWorld = true;
         }
     }
 }

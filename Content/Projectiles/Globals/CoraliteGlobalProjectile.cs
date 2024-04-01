@@ -1,6 +1,8 @@
 ﻿using Coralite.Content.ModPlayers;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -46,6 +48,31 @@ namespace Coralite.Content.Projectiles.Globals
                     }
                 }
             }
+        }
+
+        public override bool PreDraw(Projectile projectile, ref Color lightColor)
+        {
+            if (CoraliteWorld.coralCatWorld)
+            {
+                switch (projectile.type)
+                {
+                    default:
+                        break;
+                    case ProjectileID.Boulder:
+                        {
+                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "CatBoulder").Value;
+                            Main.EntitySpriteDraw(mainTex, projectile.Center - Main.screenPosition, null, lightColor, projectile.rotation, mainTex.Size()/2, projectile.scale, 0, 0);
+                        }
+                        return false;
+                    case ProjectileID.BouncyBoulder:
+                        {
+                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "RainbowCatBoulder").Value;
+                            Main.EntitySpriteDraw(mainTex, projectile.Center - Main.screenPosition, null, lightColor, projectile.rotation, mainTex.Size() / 2, projectile.scale, 0, 0);
+                        }
+                        return false;
+                }
+            }
+            return base.PreDraw(projectile, ref lightColor);
         }
     }
 }

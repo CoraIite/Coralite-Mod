@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Biomes;
+using Coralite.Content.Items.Accessories;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.Magike.OtherPlaceables;
 using Coralite.Core;
@@ -239,6 +240,7 @@ namespace Coralite.Content.NPCs.Magike
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Basalt>(), 1, 1, 8));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicCrystal>(), 1, 1, 4));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GigantesShoes>(), 5));
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

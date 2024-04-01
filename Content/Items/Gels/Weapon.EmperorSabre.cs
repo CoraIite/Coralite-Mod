@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Gels
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 30;
+            Item.damage = 34;
             Item.useTime = 24;
             Item.useAnimation = 24;
             Item.knockBack = 2f;
