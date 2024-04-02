@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Iced.Intel;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -37,17 +38,17 @@ namespace Coralite.Content.WorldGeneration
                 }
             }
 
-            for (int i = 42; i < Main.maxTilesX-42; i++)
+            for (int i = 42; i < Main.maxTilesX - 42; i++)
                 for (int j = OceanHeight; j < maxDepth; j++)
                 {
                     Tile tile = Main.tile[i, j];
 
-                    Tile top=Main.tile[i, j-1];
-                    Tile bottom=Main.tile[i, j+1];
-                    Tile left=Main.tile[i-1, j];
-                    Tile right=Main.tile[i+1, j];
+                    Tile top = Main.tile[i, j - 1];
+                    Tile bottom = Main.tile[i, j + 1];
+                    Tile left = Main.tile[i - 1, j];
+                    Tile right = Main.tile[i + 1, j];
 
-                    if ((top.LiquidType != 0 && top.LiquidAmount != 0)||
+                    if ((top.LiquidType != 0 && top.LiquidAmount != 0) ||
                         (bottom.LiquidType != 0 && bottom.LiquidAmount != 0) ||
                         (left.LiquidType != 0 && left.LiquidAmount != 0) ||
                         (right.LiquidType != 0 && right.LiquidAmount != 0))
@@ -61,23 +62,57 @@ namespace Coralite.Content.WorldGeneration
                     WorldGen.PlaceLiquid(i, j, (byte)LiquidID.Water, 255);//没水就放水
                 }
 
+            int shimmerLeft;
+            int shimmerRight;
+
+            if (GenVars.dungeonSide > 0)
+            {
+                shimmerLeft = Main.maxTilesX / 2 + Main.maxTilesX / 6;
+                shimmerRight = Main.maxTilesX - 42;
+            }
+            else
+            {
+                shimmerLeft = 42;
+                shimmerRight = Main.maxTilesX / 2 - Main.maxTilesX / 6;
+            }
+
+
             for (int i = 0; i < Main.maxTilesX; i++)
-                for (int j = OceanHeight; j < maxDepth; j++)
+                for (int j = OceanHeight; j < maxDepth + 4; j++)
                 {
                     Tile selfTile = Main.tile[i, j];
                     Tile bottomTile = Main.tile[i, j + 1];
 
-                    if (selfTile.HasTile )
+                    if (selfTile.HasTile)
                     {
+                        if (j > maxDepth && WorldGen.genRand.NextBool())
+                            continue;
                         switch (selfTile.TileType)
                         {
                             default:
                                 break;
                             case TileID.Trees:
-                            if (bottomTile.HasTile)//树替换为沙子
-                                    Main.tile[i, j].ResetToType(TileID.Sand);
+                                if (bottomTile.HasTile)//树替换为沙子
+                                    Main.tile[i, j].ResetToType(TileID.ShellPile);
                                 else
-                                    Main.tile[i, j].ResetToType(TileID.Sandstone);
+                                    Main.tile[i, j].ResetToType(TileID.ReefBlock);
+                                break;
+                            case TileID.ClayBlock:
+                            case TileID.Cloud:
+                            case TileID.Mud:
+                                Main.tile[i, j].ResetToType(TileID.ReefBlock);
+                                break;
+                            case TileID.Dirt:
+                                Main.tile[i, j].ResetToType(TileID.Coralstone);
+                                break;
+                            case TileID.Grass:
+                                Main.tile[i, j].ResetToType(TileID.BambooBlock);
+                                break;
+                            case TileID.SnowBlock:
+                                Main.tile[i, j].ResetToType(TileID.SnowBrick);
+                                break;
+                            case TileID.IceBlock:
+                                Main.tile[i, j].ResetToType(TileID.Waterfall);
                                 break;
                             case TileID.Copper:
                                 Main.tile[i, j].ResetToType(TileID.CopperBrick);
@@ -118,6 +153,8 @@ namespace Coralite.Content.WorldGeneration
                                         );
                                     Main.tile[i, j].ResetToType(tileType);
                                 }
+                                else
+                                    Main.tile[i, j].ResetToType(TileID.HardenedSand);
                                 break;
                         }
                     }
@@ -128,33 +165,105 @@ namespace Coralite.Content.WorldGeneration
                     Tile selfTile = Main.tile[i, j];
                     Tile bottomTile = Main.tile[i, j + 1];
 
-                    if (selfTile.HasTile )
+                    if (selfTile.HasTile)
                     {
                         switch (selfTile.TileType)
                         {
                             default:
                                 break;
                             case TileID.TreeAsh:
-                                    Main.tile[i, j].ResetToType(TileID.Ash);
+                                Main.tile[i, j].ResetToType(TileID.Ash);
                                 break;
                             case TileID.Ash:
-                                Main.tile[i, j].ResetToType(TileID.ShimmerBrick);
+                                if (i < shimmerRight + WorldGen.genRand.Next(-4, 4)
+                                    && i > shimmerLeft + WorldGen.genRand.Next(-4, 4))
+                                {
+                                    if (j > Main.maxTilesY - 80 + WorldGen.genRand.Next(-4, 4))
+                                        Main.tile[i, j].ResetToType(TileID.ShimmerBlock);
+                                    else
+                                        Main.tile[i, j].ResetToType(TileID.ShimmerBrick);
+                                }
+                                else
+                                    Main.tile[i, j].ResetToType(TileID.Dirt);
+                                break;
+                            case TileID.AshGrass:
+                                {
+                                    if (i < shimmerRight + WorldGen.genRand.Next(-4, 4)
+                                         && i > shimmerLeft + WorldGen.genRand.Next(-4, 4))
+                                    {
+                                        Main.tile[i, j].ResetToType(TileID.RainbowMoss);
+                                    }
+                                    else
+                                        Main.tile[i, j].ResetToType(TileID.Grass);
+                                }
+                                break;
+                            case TileID.Sandstone:
+                                {
+                                    if (WorldGen.genRand.NextBool(8))
+                                    {
+                                        ushort tileType = WorldGen.genRand.NextFromList(
+                                            TileID.Hive,
+                                            TileID.HoneyBlock,
+                                            TileID.CrispyHoneyBlock,
+                                            TileID.PumpkinBlock,
+                                            TileID.HayBlock
+                                            );
+                                        Main.tile[i, j].ResetToType(tileType);
+                                    }
+                                }
+                                break;
+                            case TileID.ObsidianBrick:
+                                Main.tile[i, j].ResetToType(TileID.PineTree);
+                                break;
+                            case TileID.HellstoneBrick:
+                                Main.tile[i, j].ResetToType(TileID.LivingMahoganyLeaves);
                                 break;
                             case TileID.Hellstone:
                                 {
-                                    ushort tileType = WorldGen.genRand.NextFromList(
+                                    if (i < shimmerRight + WorldGen.genRand.Next(-4, 4)
+                                        && i > shimmerLeft + WorldGen.genRand.Next(-4, 4))
+                                    {
+                                        ushort tileType = WorldGen.genRand.NextFromList(
                                         TileID.LivingFire,
                                         TileID.LivingCursedFire,
                                         TileID.LivingDemonFire,
                                         TileID.LivingFrostFire,
                                         TileID.LivingUltrabrightFire
                                         );
-                                    Main.tile[i, j].ResetToType(tileType);
+                                        Main.tile[i, j].ResetToType(tileType);
+                                    }
+                                    else
+                                        Main.tile[i, j].ResetToType(TileID.Stone);
                                 }
+                                break;
+                            case TileID.Copper:
+                                Main.tile[i, j].ResetToType(TileID.Glass);
+                                break;
+                            case TileID.Tin:
+                                Main.tile[i, j].ResetToType(TileID.Glass);
+                                break;
+                            case TileID.Iron:
+                                Main.tile[i, j].ResetToType(TileID.Cloud);
+                                break;
+                            case TileID.Lead:
+                                Main.tile[i, j].ResetToType(TileID.Cloud);
+                                break;
+                            case TileID.Silver:
+                                Main.tile[i, j].ResetToType(TileID.RainCloud);
+                                break;
+                            case TileID.Tungsten:
+                                Main.tile[i, j].ResetToType(TileID.RainCloud);
+                                break;
+                            case TileID.Gold:
+                                Main.tile[i, j].ResetToType(TileID.Spikes);
+                                break;
+                            case TileID.Platinum:
+                                Main.tile[i, j].ResetToType(TileID.Spikes);
                                 break;
                             case TileID.Stone:
                                 {
-                                    if (WorldGen.genRand.NextBool(20))
+                                    if (i < Main.maxTilesX / 4 + WorldGen.genRand.Next(-4, 4)
+                                        || i > Main.maxTilesX * 3 / 4 + WorldGen.genRand.Next(-4, 4))
                                     {
                                         Main.tile[i, j].ResetToType(TileID.Coralstone);
                                     }
@@ -219,18 +328,53 @@ namespace Coralite.Content.WorldGeneration
                                 break;
                         }
                     }
+
+                    if (selfTile.LiquidType == LiquidID.Lava && selfTile.LiquidAmount != 0)
+                    {
+                        Main.tile[i, j].Clear(Terraria.DataStructures.TileDataType.Liquid);
+                        if (i < shimmerRight + WorldGen.genRand.Next(-4, 4)
+                             && i > shimmerLeft + WorldGen.genRand.Next(-4, 4)
+                                && j > Main.maxTilesY - 200 + WorldGen.genRand.Next(-4, 4))
+                        {
+                            Main.tile[i, j].ResetToType(TileID.Lavafall);
+                        }
+                        else if (j > Main.maxTilesY - 200 + WorldGen.genRand.Next(-4, 4))
+                            Main.tile[i, j].ResetToType(TileID.Waterfall);
+                        else
+                            Main.tile[i, j].ResetToType(TileID.Lavafall);
+                    }
                 }
 
-            //for (int i = 0; i < Main.maxTilesX; i++)
+            for (int i = 42; i < Main.maxTilesX - 42; i++)
+                for (int j = Main.maxTilesY - 200; j < Main.maxTilesY; j++)
+                {
+                    Tile tile = Main.tile[i, j];
+                    if (!tile.HasTile || tile.TileType != TileID.Dirt)
+                        continue;
+                    Tile up = Main.tile[i, j - 1];
+                    Tile bottom = Main.tile[i, j + 1];
+                    Tile left = Main.tile[i - 1, j];
+                    Tile right = Main.tile[i + 1, j];
+
+                    if (!up.HasTile || !bottom.HasTile || !left.HasTile || !right.HasTile ||
+                      !Main.tileSolid[up.TileType] || !Main.tileSolid[bottom.TileType]
+                      || !Main.tileSolid[left.TileType] || !Main.tileSolid[right.TileType])
+                        Main.tile[i, j].ResetToType(TileID.Grass);
+                }
+            //for (int i = 42; i < Main.maxTilesX-42; i++)
             //    for (int j = Main.maxTilesY - 200; j < Main.maxTilesY; j++)
             //    {
             //        Tile tile = Main.tile[i, j];
             //        if (tile.LiquidType == LiquidID.Lava && tile.LiquidAmount != 0)
-            //        {
-            //            int amount = tile.LiquidAmount;
             //            Main.tile[i, j].Clear(Terraria.DataStructures.TileDataType.Liquid);
-            //            WorldGen.PlaceLiquid(i, j, (byte)LiquidID.Shimmer, (byte)amount);
-            //        }
+            //    }
+
+            //for (int i = 42; i < Main.maxTilesX - 42; i++)
+            //    for (int j = Main.maxTilesY - 100; j < Main.maxTilesY-10; j++)
+            //    {
+            //        Tile tile = Main.tile[i, j];
+            //        if (!tile.HasTile)
+            //            WorldGen.PlaceLiquid(i, j, (byte)LiquidID.Shimmer, byte.MaxValue);
             //    }
 
             int count = WorldGen.genRand.Next(5, 8);
@@ -244,7 +388,7 @@ namespace Coralite.Content.WorldGeneration
 
                         if (WorldGen.genRand.NextBool(1, k))
                             continue;
-                        if (!selfTile.HasTile || !Main.tileSolid[selfTile.TileType]||TileID.Sets.IsAContainer[selfTile.TileType])
+                        if (!selfTile.HasTile || !Main.tileSolid[selfTile.TileType] || TileID.Sets.IsAContainer[selfTile.TileType])
                             continue;
                         if (tile.HasTile && (Main.tileSolid[tile.TileType] || TileID.Sets.IsAContainer[tile.TileType]))
                             continue;
@@ -270,7 +414,7 @@ namespace Coralite.Content.WorldGeneration
                 if (Main.tile[x, y].HasTile || Main.tile[x, y].LiquidAmount == 0)
                     continue;
 
-                Point origin= new Point(x, y);
+                Point origin = new Point(x, y);
                 int width = WorldGen.genRand.Next(2, 12);
 
                 ShapeData circleData = new ShapeData();
@@ -288,7 +432,7 @@ namespace Coralite.Content.WorldGeneration
                     new ModShapes.OuterOutline(circleData),  //使用刚刚生成出来的形状，该形状的取外边缘
                     Actions.Chain(
                                 new Actions.SetTile(TileID.Bubble)    //放置物块
-                       )); 
+                       ));
             }
 
             for (int i = 2; i < 100; i++)
@@ -350,7 +494,7 @@ namespace Coralite.Content.WorldGeneration
                         ItemID.CatPants,
                         ItemID.CatShirt,
                         ItemID.CatSword
-                        ),Style:5);
+                        ), Style: 5);
             }
 
         }
@@ -360,7 +504,7 @@ namespace Coralite.Content.WorldGeneration
             progress.Message = "CoralCatCoralCatCoralCatCoralCatCoralCatCoralCatCoralCatCoralCatCoralCatCoralCatCoralCatCoralCatCoralCatCoralCatCoralCatCoralCat";
 
             int spawnY = 0;
-            for (; spawnY <Main.worldSurface; spawnY++)
+            for (; spawnY < Main.worldSurface; spawnY++)
             {
                 Tile tile = Main.tile[Main.spawnTileX, spawnY];
                 if (tile.HasTile || tile.LiquidAmount != 0)

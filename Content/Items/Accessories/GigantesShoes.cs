@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Accessories
                 cp.fallDamageModifyer -= 0.5f;
             }
 
-            if (player.controlDown)
+            if (!player.mount.Active&&player.controlDown)
             {
                 Vector2 oldVelocity = player.GetModPlayer<CoralitePlayer>().oldOldVelocity;
                 if (oldVelocity.Y != 0 && player.velocity.Y == 0)

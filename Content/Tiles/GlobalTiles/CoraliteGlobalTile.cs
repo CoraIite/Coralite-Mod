@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.BossSummons;
 using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Pets;
+using Coralite.Content.WorldGeneration;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -317,10 +318,13 @@ namespace Coralite.Content.Tiles.GlobalTiles
                     break;
                 case TileID.PalmTree:
                     {
-                        if (Main.rand.NextBool(8))
-                            Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemID.GillsPotion);
-                        if (Main.rand.NextBool(4))
-                            Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemID.CoralTorch, Main.rand.Next(1, 5));
+                        if (CoraliteWorld.coralCatWorld)
+                        {
+                            if (Main.rand.NextBool(8))
+                                Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemID.GillsPotion);
+                            if (Main.rand.NextBool(4))
+                                Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemID.CoralTorch, Main.rand.Next(1, 5));
+                        }
                     }
                     break;
                 case TileID.VanityTreeSakura:

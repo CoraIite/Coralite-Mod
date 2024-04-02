@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
-using Coralite.Content.Items.Nightmare;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,13 +11,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Thunder
 {
-    public class ThunderveinStaff:ModItem
+    public class ThunderveinStaff : ModItem
     {
         public override string Texture => AssetDirectory.ThunderItems + Name;
 
         public override void SetDefaults()
         {
-            Item.damage = 60;
+            Item.damage = 57;
             Item.useTime = 24;
             Item.useAnimation = 24;
             Item.knockBack = 4f;
@@ -30,10 +29,10 @@ namespace Coralite.Content.Items.Thunder
             Item.noUseGraphic = false;
             Item.autoReuse = false;
 
-            Item.shoot = ModContent.ProjectileType<ThunderMinion>();
+            Item.shoot = ProjectileType<ThunderMinion>();
             Item.UseSound = CoraliteSoundID.SummonStaff_Item44;
             Item.value = Item.sellPrice(0, 1, 50, 0);
-            Item.rare = ItemRarityID.Orange;
+            Item.rare = ItemRarityID.Yellow;
             Item.DamageType = DamageClass.Summon;
             Item.useStyle = ItemUseStyleID.Swing;
         }
@@ -58,7 +57,7 @@ namespace Coralite.Content.Items.Thunder
         }
     }
 
-    public class ThunderveinStaffBuff:ModBuff
+    public class ThunderveinStaffBuff : ModBuff
     {
         public override string Texture => AssetDirectory.ThunderItems + Name;
 
@@ -90,7 +89,7 @@ namespace Coralite.Content.Items.Thunder
 
     }
 
-    public class ThunderMinion:BaseThunderProj
+    public class ThunderMinion : BaseThunderProj
     {
         public override string Texture => AssetDirectory.ThunderItems + "ThunderProj";
 
@@ -102,6 +101,12 @@ namespace Coralite.Content.Items.Thunder
         public ref float Recorder => ref Projectile.localAI[0];
 
         private Player Owner => Main.player[Projectile.owner];
+
+        public Vector2 BasePos;
+
+        public bool CanDrawTrail;
+        public float alpha = 1;
+        public bool Init = true;
 
         public override void SetDefaults()
         {
@@ -126,46 +131,195 @@ namespace Coralite.Content.Items.Thunder
         public override void AI()
         {
             //发现敌人时先直接朝敌人冲刺，之后如果能够攻击到敌人那么就直接瞬移到目标头顶再向下戳
-            Player player = Main.player[Projectile.owner];
             if (!CheckActive(Owner))
                 return;
 
-            Owner.AddBuff(BuffType<ThunderveinStaffBuff>(), 2);
+            if (Init)
+            {
+                Projectile.InitOldPosCache(10);
+                Init = false;
+            }
 
+            Owner.AddBuff(BuffType<ThunderveinStaffBuff>(), 2);
 
             switch (State)
             {
                 default:
                 case -1://回到玩家头顶
                     {
-                        if (Timer == -1f)
+                        AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index, out var totalIndexesInGroup);
+
+                        Vector2 idleSpot = CircleMovement(32 + totalIndexesInGroup * 4, 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index * MathHelper.TwoPi / totalIndexesInGroup);
+                        if (Projectile.Distance(idleSpot) < 8f)
                         {
-                            AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index, out var totalIndexesInGroup);
-
-                            Vector2 idleSpot = CircleMovement(48 + totalIndexesInGroup * 4, 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index * MathHelper.TwoPi / totalIndexesInGroup);
-                            if (Projectile.Distance(idleSpot) < 2f)
-                            {
-                                Timer = 0f;
-                                Projectile.netUpdate = true;
-                            }
-
-                            return;
+                            Timer = 0f;
+                            State = 0;
+                            Projectile.netUpdate = true;
+                            CanDrawTrail = false;
                         }
+
+                        Projectile.rotation = Projectile.velocity.ToRotation();
                     }
                     break;
                 case 0://在玩家头顶盘旋
                     {
+                        AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out var totalIndexesInGroup2);
+                        CircleMovement(32 + totalIndexesInGroup2 * 4, 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index2 * MathHelper.TwoPi / totalIndexesInGroup2);
+                        Projectile.rotation = (Owner.Center - Projectile.Center).ToRotation();
 
+                        if (Main.rand.NextBool(20))
+                        {
+                            int num6 = AI_156_TryAttackingNPCs(Projectile);
+                            if (num6 != -1)
+                            {
+                                Projectile.StartAttack();
+                                Projectile.InitOldPosCache(10);
+                                State = 1;
+                                Timer = 0;
+                                Target = num6;
+                                Projectile.netUpdate = true;
+                                CanDrawTrail = false;
+                                return;
+                            }
+                        }
                     }
                     break;
                 case 1://发现目标并初次展开攻击，向目标戳刺
                     {
+                        if (!Target.GetNPCOwner(out NPC target))
+                        {
+                            Timer = 0;
+                            State = -1;
+                            CanDrawTrail = false;
+                            break;
+                        }
 
+                        const int AttackTime = 30;
+                        float lerpValue2 = Timer / AttackTime;
+
+                        if (Timer == 0)
+                            BasePos = Projectile.Center;
+
+                        if (Timer == AttackTime / 2)
+                        {
+                            InitCaches();
+                            ResetCaches();
+                            CanDrawTrail = true;
+                        }
+                        else if (Timer > AttackTime / 2)
+                        {
+                            for (int i = 0; i < Projectile.oldPos.Length - 1; i++)
+                                Projectile.oldPos[i] = Vector2.Lerp(Projectile.Center, BasePos, i / (float)Projectile.oldPos.Length);
+                            UpdateCaches();
+                            Projectile.SpawnTrailDust(DustID.PortalBoltTrail, Main.rand.NextFloat(0.2f, 0.5f), newColor: Coralite.Instance.ThunderveinYellow);
+                            alpha -= 1f / (AttackTime / 2);
+                        }
+
+                        Vector2 originCenter = BasePos;
+                        originCenter += new Vector2(0f, Utils.GetLerpValue(0f, 0.4f, lerpValue2, clamped: true) * -100f);
+                        Vector2 v = target.Center - originCenter;
+                        Vector2 vector6 = v.SafeNormalize(Vector2.Zero) * MathHelper.Clamp(v.Length(), 60f, 150f);
+                        Vector2 value = target.Center + vector6;
+                        float lerpValue3 = Utils.GetLerpValue(0.4f, 0.6f, lerpValue2, clamped: true);
+                        float lerpValue4 = Utils.GetLerpValue(0.6f, 1f, lerpValue2, clamped: true);
+                        float targetAngle = v.SafeNormalize(Vector2.Zero).ToRotation();
+                        Projectile.rotation = Projectile.rotation.AngleTowards(targetAngle, (float)Math.PI / 5f);
+                        Projectile.Center = Vector2.Lerp(originCenter, target.Center, lerpValue3);
+                        if (lerpValue4 > 0f)
+                            Projectile.Center = Vector2.Lerp(target.Center, value, lerpValue4);
+
+                        Timer++;
+                        if (Timer > AttackTime)
+                        {
+                            int num6 = AI_156_TryAttackingNPCs(Projectile);
+                            if (num6 != -1)
+                            {
+                                State = 2;
+                                Timer = 0;
+                                Target = num6;
+                                Recorder = -1.57f + Main.rand.NextFloat(-0.7f, 0.7f);
+                                CanDrawTrail = false;
+                                alpha = 1;
+                                Projectile.Center = target.Center + Recorder.ToRotationVector2() * target.height;
+                            }
+                            else
+                            {
+                                State = -1;
+                                Timer = 0;
+                            }
+                        }
                     }
                     break;
                 case 2://在目标头顶向下戳刺
                     {
+                        const int ReadyTime = 25;
+                        const int AttackTime = 10;
+                        const int DelayTime = 8;
 
+                        if (!Target.GetNPCOwner(out NPC target))
+                        {
+                            Timer = 0;
+                            State = -1;
+                            CanDrawTrail = false;
+                            break;
+                        }
+
+                        if (Timer == 2)
+                            Projectile.InitOldPosCache(10);
+                        if (Timer < ReadyTime)
+                        {
+                            Projectile.velocity = Vector2.Zero;
+                            Projectile.Center = target.Center + Recorder.ToRotationVector2() * (Timer * 4 + target.height);
+                            Projectile.rotation = (target.Center - Projectile.Center).ToRotation();
+                        }
+                        else if (Timer == ReadyTime)
+                        {
+                            CanDrawTrail = true;
+                            BasePos = Projectile.Center;
+                            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * (Timer * 4 + target.height) / AttackTime;
+                            InitCaches();
+                            ResetCaches();
+                        }
+                        else if (Timer < ReadyTime + AttackTime)
+                        {
+                            for (int i = 0; i < Projectile.oldPos.Length - 1; i++)
+                                Projectile.oldPos[i] = Vector2.Lerp(Projectile.Center, BasePos, i / (float)Projectile.oldPos.Length);
+
+                            UpdateCaches();
+
+                            Projectile.SpawnTrailDust(DustID.PortalBoltTrail, Main.rand.NextFloat(0.2f, 0.5f), newColor: Coralite.Instance.ThunderveinYellow);
+                        }
+                        else if (Timer < ReadyTime + AttackTime + DelayTime)
+                        {
+                            Projectile.velocity *= 0.95f;
+                            alpha -= 1f / DelayTime;
+                            for (int i = 0; i < Projectile.oldPos.Length - 1; i++)
+                                Projectile.oldPos[i] = Vector2.Lerp(Projectile.Center, BasePos, i / (float)Projectile.oldPos.Length);
+
+                            UpdateCaches();
+                        }
+                        else
+                        {
+                            CanDrawTrail = false;
+                            alpha = 1;
+
+                            int num6 = AI_156_TryAttackingNPCs(Projectile);
+                            if (num6 != -1)
+                            {
+                                State = 2;
+                                Timer = 0;
+                                Target = num6;
+                                Recorder = -1.57f + Main.rand.NextFloat(-0.7f, 0.7f);
+                                Projectile.Center = target.Center + Recorder.ToRotationVector2() *  target.height;
+                            }
+                            else
+                            {
+                                State = -1;
+                                Timer = 0;
+                            }
+                        }
+
+                        Timer++;
                     }
                     break;
             }
@@ -187,7 +341,7 @@ namespace Coralite.Content.Items.Thunder
 
         public float ThunderWidthFunc2(float factor)
         {
-            return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth * 1.2f;
+            return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth;
         }
 
         public Color ThunderColorFunc_Fade(float factor)
@@ -209,27 +363,35 @@ namespace Coralite.Content.Items.Thunder
                     trails[i].SetExpandWidth(4);
                 }
 
-                float cacheLength = Projectile.velocity.Length() / 2;
                 foreach (var trail in trails)
                 {
-                    if (cacheLength < 3)
-                        trail.CanDraw = false;
-                    else
-                    {
-                        Vector2[] vec = new Vector2[(int)cacheLength];
-                        Vector2 basePos = Projectile.Center + Helper.NextVec2Dir() * 5;
-                        Vector2 dir = -Projectile.velocity;
-                        vec[0] = basePos;
-
-                        for (int i = 1; i < (int)cacheLength; i++)
-                        {
-                            vec[i] = basePos + dir * i;
-                        }
-
-                        trail.BasePositions = vec;
-                        trail.RandomThunder();
-                    }
+                    trail.BasePositions = Projectile.oldPos;
+                    trail.RandomThunder();
                 }
+            }
+        }
+
+        public void UpdateCaches()
+        {
+            ThunderWidth = 12;
+            ThunderAlpha = alpha;
+            foreach (var trail in trails)
+            {
+                trail.CanDraw = Main.rand.NextBool();
+                if (trail.CanDraw)
+                {
+                    trail.BasePositions = Projectile.oldPos;
+                    trail.RandomThunder();
+                }
+            }
+        }
+
+        public void ResetCaches()
+        {
+            foreach (var trail in trails)
+            {
+                trail.BasePositions = Projectile.oldPos;
+                trail.RandomThunder();
             }
         }
 
@@ -257,11 +419,57 @@ namespace Coralite.Content.Items.Thunder
             }
         }
 
-        public Vector2 CircleMovement(float distance, float speedMax, float accelFactor = 0.25f, float rollingFactor = 5f, float angleFactor = 0.08f, float baseRot = 0f)
+        /// <summary>
+        /// 获取目标NPC的索引
+        /// </summary>
+        /// <param name="Projectile"></param>
+        /// <param name="skipBodyCheck"></param>
+        /// <returns></returns>
+        public int AI_156_TryAttackingNPCs(Projectile Projectile, bool skipBodyCheck = false)
+        {
+            Vector2 ownerCenter = Main.player[Projectile.owner].Center;
+            int result = -1;
+            float num = -1f;
+            //如果有锁定的NPC那么就用锁定的，没有或不符合条件在从所有NPC里寻找
+            NPC ownerMinionAttackTargetNPC = Projectile.OwnerMinionAttackTargetNPC;
+            if (ownerMinionAttackTargetNPC != null && ownerMinionAttackTargetNPC.CanBeChasedBy(this))
+            {
+                bool flag = true;
+                if (!ownerMinionAttackTargetNPC.boss)
+                    flag = false;
+
+                if (ownerMinionAttackTargetNPC.Distance(ownerCenter) > 1000f)
+                    flag = false;
+
+                if (!skipBodyCheck && !Projectile.CanHitWithOwnBody(ownerMinionAttackTargetNPC))
+                    flag = false;
+
+                if (flag)
+                    return ownerMinionAttackTargetNPC.whoAmI;
+            }
+
+            for (int i = 0; i < 200; i++)
+            {
+                NPC nPC = Main.npc[i];
+                if (nPC.CanBeChasedBy(Projectile))
+                {
+                    float npcDistance2Owner = nPC.Distance(ownerCenter);
+                    if (npcDistance2Owner <= 1000f && (npcDistance2Owner <= num || num == -1f) && (skipBodyCheck || Projectile.CanHitWithOwnBody(nPC)))
+                    {
+                        num = npcDistance2Owner;
+                        result = i;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public Vector2 CircleMovement(float distance, float speedMax, float accelFactor = 0.25f, float rollingFactor = 5f, float angleFactor = 0.4f, float baseRot = 0f)
         {
             Vector2 offset = (baseRot + Main.GlobalTimeWrappedHourly / rollingFactor * MathHelper.TwoPi).ToRotationVector2() * distance;
-            offset.Y /= 3;
-            Vector2 center = Owner.Center+new Vector2(0,-48) + offset;
+            offset.Y /= 4;
+            Vector2 center = Owner.Center + new Vector2(0, -48) + offset;
             Vector2 dir = center - Projectile.Center;
 
             float velRot = Projectile.velocity.ToRotation();
@@ -274,5 +482,19 @@ namespace Coralite.Content.Items.Thunder
             return center;
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (CanDrawTrail)
+            {
+                foreach (var trail in trails)
+                    if (trail.CanDraw)
+                        trail.DrawThunder(Main.instance.GraphicsDevice);
+            }
+
+            Projectile.QuickDraw(Color.White * alpha, Projectile.scale * 1.1f, 1.57f);
+            Projectile.QuickDraw(lightColor * alpha, 1.57f);
+
+            return false;
+        }
     }
 }

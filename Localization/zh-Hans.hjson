@@ -3582,8 +3582,23 @@ Mods: {
 			}
 
 			ThunderveinStaff: {
-				// DisplayName: Thundervein Staff
-				// Tooltip: ""
+				DisplayName: 引雷杖
+				Tooltip: 召唤闪电环绕你，它们会对敌人降下落雷
+			}
+
+			FlaskOfRedJade: {
+				DisplayName: 碎玉瓶
+				Tooltip: 你的武器在命中时可能产生爆炸
+			}
+
+			FlaskOfThunder: {
+				DisplayName: 轰鸣瓶
+				Tooltip: 你的武器命中时施加雷鸣减益
+			}
+
+			MagicCrystalMusicBox: {
+				DisplayName: 八音盒（魔力水晶洞）
+				Tooltip: ""
 			}
 		}
 
@@ -3709,6 +3724,7 @@ Mods: {
 			IcicleSofaTile.MapEntry: 冰晶沙发
 			IcicleTableTile.MapEntry: 冰晶桌
 			IcicleWorkBenchTile.MapEntry: 冰晶工作台
+			MagicCrystalMusicBoxTile.MapEntry: 八音盒（魔力水晶洞）
 		}
 
 		Buffs: {
@@ -3842,6 +3858,21 @@ Mods: {
 			TenkoBuff: {
 				DisplayName: 天狐
 				Description: 降临在身边的天狐大人也变得小小的了
+			}
+
+			ThunderveinStaffBuff: {
+				DisplayName: 闪电
+				Description: 你浑身带电！
+			}
+
+			FlaskOfRedJadeBuff: {
+				DisplayName: 武器灌注：雷鸣
+				Description: 近战武器命中时附加雷鸣减益
+			}
+
+			FlaskOfThunderBuff: {
+				DisplayName: 武器灌注：碎玉
+				Description: 近战武器命中时偶尔产生爆炸
 			}
 		}
 

@@ -33,7 +33,7 @@ namespace Coralite.Content.ModPlayers
         public bool equippedPhantomMirror;
         /// <summary> 手持骨戒，是梦魇花掉落物的那个武器，不是地心护核者的那个饰品 </summary>
         public bool equippedBoneRing;
-        /// <summary> 手持骨戒，是梦魇花掉落物的那个武器，不是地心护核者的那个饰品 </summary>
+        /// <summary> 能够引发雷鸣debuff </summary>
         public bool equippedThunderveinNecklace;
 
         /// <summary>
@@ -60,6 +60,16 @@ namespace Coralite.Content.ModPlayers
         /// </summary>
         public int split;
         #endregion
+
+        /// <summary>
+        /// 雷鸣灌注
+        /// </summary>
+        public bool flaskOfThunder;
+
+        /// <summary>
+        /// 赤玉灌注
+        /// </summary>
+        public bool flaskOfRedJade;
 
         /// <summary>
         /// 雷鸣Debuff，会有持续扣血
@@ -135,6 +145,7 @@ namespace Coralite.Content.ModPlayers
             lifeReganBonus = 0;
             bossDamageReduce = 0;
 
+            flaskOfThunder = false;
             fallDamageModifyer = new StatModifier();
 
             ResetFlyingShieldSets();
@@ -354,9 +365,7 @@ namespace Coralite.Content.ModPlayers
             MedusaSoulEffect(ref modifiers);
 
             if (equippedThunderveinNecklace)
-            {
-                target.AddBuff(BuffType<ThunderElectrified>(), 8 * 60);
-            }
+                target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
 
             #region 海盗王之魂的效果
             void PriateKingSoulEffect(ref NPC.HitModifiers modifiers)
@@ -473,6 +482,24 @@ namespace Coralite.Content.ModPlayers
             }
 
             #endregion
+        }
+
+        public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (flaskOfThunder && item.DamageType == DamageClass.Melee)
+                target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
+            if (flaskOfRedJade && item.DamageType == DamageClass.Melee && Main.rand.NextBool(4))
+                Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
+                    ProjectileType<RedJadeBoom>(), (int)(item.damage*0.75f), 0, Player.whoAmI);
+        }
+
+        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (flaskOfThunder && proj.DamageType == DamageClass.Melee)
+                target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
+            if (flaskOfRedJade && proj.DamageType == DamageClass.Melee && Main.rand.NextBool(4))
+                Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
+                    ProjectileType<RedJadeBoom>(), (int)(proj.damage*0.75f), 0, Player.whoAmI);
         }
 
         public override bool FreeDodge(Player.HurtInfo info)

@@ -3509,6 +3509,21 @@ Mods: {
 				DisplayName: Thundervein Staff
 				Tooltip: ""
 			}
+
+			FlaskOfRedJade: {
+				DisplayName: Flask Of Red Jade
+				Tooltip: ""
+			}
+
+			FlaskOfThunder: {
+				DisplayName: Flask Of Thunder
+				Tooltip: ""
+			}
+
+			MagicCrystalMusicBox: {
+				DisplayName: Magic Crystal Music Box
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -3633,6 +3648,7 @@ Mods: {
 			IcicleSofaTile.MapEntry: Icicle Sofa Tile
 			IcicleTableTile.MapEntry: Icicle Table Tile
 			IcicleWorkBenchTile.MapEntry: Icicle Work Bench Tile
+			MagicCrystalMusicBoxTile.MapEntry: Magic Crystal Music Box Tile
 		}
 
 		Buffs: {
@@ -3766,6 +3782,21 @@ Mods: {
 			TenkoBuff: {
 				DisplayName: Tenko Buff
 				Description: Mods.Coralite.Buffs.TenkoBuff.Description
+			}
+
+			ThunderveinStaffBuff: {
+				DisplayName: Thundervein Staff Buff
+				Description: Mods.Coralite.Buffs.ThunderveinStaffBuff.Description
+			}
+
+			FlaskOfRedJadeBuff: {
+				DisplayName: Flask Of Red Jade Buff
+				Description: Mods.Coralite.Buffs.FlaskOfRedJadeBuff.Description
+			}
+
+			FlaskOfThunderBuff: {
+				DisplayName: Flask Of Thunder Buff
+				Description: Mods.Coralite.Buffs.FlaskOfThunderBuff.Description
 			}
 		}
 

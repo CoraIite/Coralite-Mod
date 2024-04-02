@@ -304,7 +304,10 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (target.noTileCollide || target.friendly || Projectile.hostile)
                 return null;
 
-            return Collision.CanHit(Owner, target);
+            if (Collision.CanHit(Owner, target))
+                return null;
+
+            return false;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

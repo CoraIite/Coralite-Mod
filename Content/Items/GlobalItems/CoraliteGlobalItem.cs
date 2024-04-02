@@ -72,8 +72,8 @@ namespace Coralite.Content.Items.GlobalItems
                         item.value = Item.sellPrice(0, 99);
                         item.rare = ItemRarityID.Red;
                         item.damage = 256;
-                        item.useAnimation = 14;
-                        item.useTime = 14;
+                        item.useAnimation = 10;
+                        item.useTime = 10;
                         item.useStyle = ItemUseStyleID.Swing;
                         item.shoot = ProjectileID.Meowmere;
                         item.shootSpeed = 14;
@@ -81,7 +81,22 @@ namespace Coralite.Content.Items.GlobalItems
                         item.DamageType = DamageClass.Melee;
                         item.UseSound = CoraliteSoundID.Swing_Item1;
                     }
-
+                    break;
+                case ItemID.TerraFartMinecart:
+                    if (item.Variant == ItemVariants.StrongerVariant)
+                    {
+                        item.value = Item.sellPrice(0, 20);
+                        item.rare = ItemRarityID.Yellow;
+                        item.damage = 120;
+                        item.useAnimation = 15;
+                        item.useTime = 15;
+                        item.useStyle = ItemUseStyleID.Swing;
+                        item.shoot = ProjectileID.TerraBeam;
+                        item.shootSpeed = 14;
+                        item.autoReuse = true;
+                        item.DamageType = DamageClass.Melee;
+                        item.UseSound = CoraliteSoundID.TerraBlade_Item60;
+                    }
                     break;
             }
         }
@@ -205,6 +220,7 @@ namespace Coralite.Content.Items.GlobalItems
         {
             ItemVariants.AddVariant(ItemID.Meowmere, ItemVariants.WeakerVariant, CoraliteConditions.CoraliteConditions.CoralCatCondition);
             ItemVariants.AddVariant(ItemID.MeowmereMinecart, ItemVariants.StrongerVariant, CoraliteConditions.CoraliteConditions.CoralCatCondition);
+            ItemVariants.AddVariant(ItemID.TerraFartMinecart, ItemVariants.StrongerVariant, CoraliteConditions.CoraliteConditions.CoralCatCondition);
         }
     }
 }

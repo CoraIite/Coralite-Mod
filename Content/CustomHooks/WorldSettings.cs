@@ -1,5 +1,7 @@
 ﻿using Coralite.Content.UI;
 using Coralite.Content.WorldGeneration;
+using System;
+using System.Reflection;
 using Terraria;
 using Terraria.GameContent.UI.States;
 using Terraria.UI;
@@ -11,6 +13,7 @@ namespace Coralite.Content.CustomHooks
         public override void Load()
         {
             On_UIWorldCreation.ProcessSpecialWorldSeeds += On_UIWorldCreation_ProcessSpecialWorldSeeds;
+            On_UIWorldCreation.ProcessSeed += On_UIWorldCreation_ProcessSeed;
             //On_UIWorldSelect.NewWorldClick += On_UIWorldSelect_NewWorldClick;
             //On_UIWorldCreation.Click_GoBack += On_UIWorldCreation_Click_GoBack;
             //On_UIWorldCreation.Click_NamingAndCreating += On_UIWorldCreation_Click_NamingAndCreating;
@@ -19,6 +22,7 @@ namespace Coralite.Content.CustomHooks
         public override void Unload()
         {
             On_UIWorldCreation.ProcessSpecialWorldSeeds -= On_UIWorldCreation_ProcessSpecialWorldSeeds;
+            On_UIWorldCreation.ProcessSeed -= On_UIWorldCreation_ProcessSeed;
             //On_UIWorldSelect.NewWorldClick -= On_UIWorldSelect_NewWorldClick;
             //On_UIWorldCreation.Click_GoBack -= On_UIWorldCreation_Click_GoBack;
             //On_UIWorldCreation.Click_NamingAndCreating -= On_UIWorldCreation_Click_NamingAndCreating;
@@ -81,7 +85,26 @@ namespace Coralite.Content.CustomHooks
                 CoraliteWorld.chaosWorld = true;
 
             if (processedSeed.ToLower() == "coral cat" || processedSeed.ToLower() == "coralcat")
+            {
                 CoraliteWorld.coralCatWorld = true;
+
+                //if (Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
+                //{
+                //    FieldInfo info = worldCreation.GetType().GetField("_optionSeed", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
+                //    info?.SetValue(worldCreation, Main.rand.Next().ToString());
+                //}
+            }
         }
+
+        private void On_UIWorldCreation_ProcessSeed(On_UIWorldCreation.orig_ProcessSeed orig, UIWorldCreation self, out string processedSeed)
+        {
+            orig.Invoke(self, out processedSeed);
+
+            if (CoraliteWorld.coralCatWorld&& Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
+            {
+                processedSeed = Main.rand.Next().ToString();
+            }
+        }
+
     }
 }

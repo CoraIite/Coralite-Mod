@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -260,6 +261,20 @@ namespace Coralite.Helpers
         {
             return GetNPCOwner<T>((float)index, out owner, notExistAction);
         }
+
+        /// <summary>
+        /// 说是开始攻击，然鹅实际上是清空自身所有的本地NPC无敌帧
+        /// </summary>
+        /// <param name="Projectile"></param>
+        public static void StartAttack(this Projectile Projectile)
+        {
+            for (int i = 0; i < Projectile.localNPCImmunity.Length; i++)
+            {
+                Projectile.localNPCImmunity[i] = 0;
+            }
+        }
+
+
 
         /// <summary>
         /// 快速设置拖尾相关数据
