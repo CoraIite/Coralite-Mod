@@ -1,0 +1,146 @@
+SnowDebuff: {
+	DisplayName: 白雪
+	Description: 被雪花包围了
+}
+
+IcicleThornBuff: {
+	DisplayName: 冰魔刺
+	Description: 冰魔刺为你战斗
+}
+
+MushroomDragonBuff: {
+	DisplayName: 蘑菇龙
+	Description: 蘑菇龙为你战斗
+}
+
+RedBinkBuff: {
+	DisplayName: 小赤玉
+	Description: 小小的也很可爱
+}
+
+RedianciePetBuff: {
+	DisplayName: 小赤玉灵
+	Description: 小赤玉灵环绕在你身边
+}
+
+ShadowCircleBuff: {
+	DisplayName: a
+	// Description: Mods.Coralite.Buffs.ShadowCircleBuff.Description
+}
+
+BloodyHookDebuff: {
+	DisplayName: 鲜血斩击
+	Description: 你在流血！
+}
+
+DreamErosion: {
+	DisplayName: 梦蚀
+	Description: 梦魇在侵蚀你的意志
+}
+
+GelWhipDebuff: {
+	DisplayName: 皇家凝胶鞭
+	Description: 黏糊糊的！
+}
+
+EuphorbiaPoison: {
+	DisplayName: 纯白毒液
+	Description: 被刺梅扎伤了！
+}
+
+NightmareRavenBuff: {
+	DisplayName: 梦魇渡鸦
+	Description: 噩梦中出现的这些小家伙们将为你而战！
+}
+
+EdenDebuff: {
+	DisplayName: 伊甸
+	Description: 伊甸
+}
+
+PurpleToeBuff: {
+	DisplayName: 噩梦捕食者
+	Description: 它们很喜欢你做的梦！
+}
+
+Bloodthirsty: {
+	DisplayName: 嗜血
+	Description: 你渴望鲜血！
+	Current: 当前层数：
+}
+
+LimbRebirth: {
+	DisplayName: 肢体再生
+	Description: 我需要治疗！
+	Current: 当前层数：
+}
+
+MetallionBuff: {
+	DisplayName: 刚之魔能
+	Description: 伤害减免 +8%
+}
+
+BloodJadeBuff: {
+	DisplayName: 爆破能量
+	Description: 你手中赤血玉武器的不稳定性提升了
+}
+
+IvyPoison: {
+	// DisplayName: Ivy Poison
+	// Description: Mods.Coralite.Buffs.IvyPoison.Description
+}
+
+KitsuneBuff: {
+	DisplayName: 妖狐剑士
+	Description: 妖狐剑士陪伴着你！
+}
+
+ThunderveinSoulBuff: {
+	DisplayName: 雷脉魂魄
+	Description: 荒雷龙的魂魄与你同在！
+}
+
+IcicleSoulBuff: {
+	DisplayName: 冰晶魂魄
+	Description: 冰龙宝宝的魂魄与你同在！
+}
+
+SovereignSipBuff: {
+	DisplayName: 美味饮品
+	Description: 小小史莱姆皇帝在你身旁！
+}
+
+TightenTheClockwork: {
+	DisplayName: 拧紧发条！
+	Description: 你充满了能量，近战攻击和移动速度各提高10%
+}
+
+ThunderWhipDebuff: {
+	// DisplayName: Thunder Whip Debuff
+	// Description: Mods.Coralite.Buffs.ThunderWhipDebuff.Description
+}
+
+ThunderElectrified: {
+	DisplayName: 雷鸣
+	Description: 动的越快就越疼！
+}
+
+TenkoBuff: {
+	DisplayName: 天狐
+	Description: 降临在身边的天狐大人也变得小小的了
+}
+
+ThunderveinStaffBuff: {
+	DisplayName: 闪电
+	Description: 你浑身带电！
+}
+
+FlaskOfRedJadeBuff: {
+	DisplayName: 武器灌注：雷鸣
+	Description: 近战武器命中时附加雷鸣减益
+}
+
+FlaskOfThunderBuff: {
+	DisplayName: 武器灌注：碎玉
+	Description: 近战武器命中时偶尔产生爆炸
+}

@@ -1,0 +1,122 @@
+RedJadeWorkBench.MapEntry: 赤玉工作台
+RedJadeTile.MapEntry: 赤玉
+RedJadeTable.MapEntry: 赤玉桌
+RedJadeDroplight.MapEntry: 赤玉吊灯
+RedJadeDoorOpen.MapEntry: 赤玉门
+RedJadeDoorClosed.MapEntry: 赤玉门
+RedJadeChest.MapEntry: 赤玉箱
+RedJadeCandle.MapEntry: 赤玉台灯
+RedJadeBed.MapEntry: 赤玉床
+MagicCraftStation.MapEntry: 魔导台
+WatermelonTile.MapEntry: 西瓜
+WaterDrinker.MapEntry: 饮水棘
+TreeJoke.MapEntry: 树生树树果
+SnoowFlower.MapEntry: 雪融花
+PileaNotata.MapEntry: 冷水花
+NacliteMoss.MapEntry: 盐晶苔藓
+GloomMushroom.MapEntry: 吸光蘑菇
+EyeballHerb.MapEntry: 眼球草
+EgenolfiaSandy.MapEntry: 刺蕨
+Dandelion.MapEntry: 蒲公英
+CoraliteWaterleaf.MapEntry: 幌菊
+CoraliteShiverthorn.MapEntry: 寒颤棘
+CoraliteMoonglow.MapEntry: 月光草
+CoraliteJungleSpores.MapEntry: 丛林芽孢
+CoraliteFireblossom.MapEntry: 火焰花
+CoraliteDeathweed.MapEntry: 死亡草
+CoraliteDaybloom.MapEntry: 太阳花
+CoraliteBlinkroot.MapEntry: 闪耀根
+AgropyronFrozen.MapEntry: 寒霜冰草
+BasaltChestTile.MapEntry: 玄武岩箱
+CrystalCrateTile.MapEntry: 魔力晶体匣
+
+RottenChestTile: {
+	MapEntry0: 尸骨箱
+	MapEntry1: 上锁尸骨箱
+	TryUnlock: 需要使用强大的腐化生物的素材制成钥匙以解锁
+}
+
+NightmareBedTile.MapEntry: 梦魇温床
+
+VertebraeChestTile: {
+	MapEntry0: 脊柱箱
+	MapEntry1: 上锁脊柱箱
+	TryUnlock: 需要使用强大的猩红生物的素材制成钥匙以解锁
+}
+
+BloodJadeTile.MapEntry: 赤血玉
+AncientChestTile.MapEntry: 上古宝箱
+GlowTulipDoorClosed.MapEntry: 远古郁金香门
+GlowTulipDoorOpen.MapEntry: 远古郁金香门
+BlackHoleChestTile.MapEntry: 地心黑曜石
+
+MercuryChestTile: {
+	// MapEntry0: Mods.Coralite.Tiles.MercuryChestTile.MapEntry0
+	// MapEntry1: Mods.Coralite.Tiles.MercuryChestTile.MapEntry1
+}
+
+RedJadeFountain.MapEntry: 赤玉喷泉
+GelFiberTableTile.MapEntry: 凝胶纤维桌子
+GeiFiberDroplightTile.MapEntry: 凝胶纤维吊灯
+GelFiberCandleTile.MapEntry: 凝胶纤维蜡烛
+GelFiberFloorLampTile.MapEntry: 凝胶纤维灯球
+GelFiberTallFloorLampTile.MapEntry: 凝胶纤维火炬
+GelFiberBedTile.MapEntry: 凝胶纤维床
+GelFiberBigDroplightTile.MapEntry: 凝胶纤维大吊灯
+GelFiberBookcaseTile.MapEntry: 凝胶纤维书架
+GelFiberPianoTile.MapEntry: 凝胶纤维钢琴
+GelFiberSofaTile.MapEntry: 凝胶纤维沙发
+GelFiberBathtubTile.MapEntry: 凝胶纤维浴缸
+GelFiberChestTile.MapEntry: 凝胶纤维箱子
+GelFiberDresserTile.MapEntry: 凝胶纤维梳妆台
+GelFiberDoorClosedTile.MapEntry: 凝胶纤维门
+GelFiberDoorOpen.MapEntry: 凝胶纤维门
+GelFiberWorkBenchTile.MapEntry: 凝胶纤维工作台
+ThunderBathtubTile.MapEntry: 雷脉浴缸
+ThunderBedTile.MapEntry: 雷脉床
+ThunderBigDroplightTile.MapEntry: 雷脉吊灯
+ThunderBookcaseTile.MapEntry: 雷脉书架
+ThunderCandelabraTile.MapEntry: 雷脉烛台
+ThunderCandleTile.MapEntry: 雷脉蜡烛
+ThunderChestTile.MapEntry: 雷脉箱
+ThunderDoorClosedTile.MapEntry: 雷脉门
+ThunderDoorOpenTile.MapEntry: 雷脉门
+ThunderDresserTile.MapEntry: 雷脉梳妆台
+ThunderDroplightTile.MapEntry: 雷脉灯笼
+ThunderFloorLampTile.MapEntry: 雷脉灯柱
+ThunderPianoTile.MapEntry: 雷脉钢琴
+ThunderSofaTile.MapEntry: 雷脉沙发
+ThunderTableTile.MapEntry: 雷脉桌
+ThunderWorkBenchTile.MapEntry: 雷脉工作台
+// MercuryBathtubTile.MapEntry: Mercury Bathtub Tile
+// MercuryBedTile.MapEntry: Mercury Bed Tile
+// MercuryBigDroplightTile.MapEntry: Mercury Big Droplight Tile
+// MercuryBookcaseTile.MapEntry: Mercury Bookcase Tile
+// MercuryCandelabraTile.MapEntry: Mercury Candelabra Tile
+// MercuryCandleTile.MapEntry: Mercury Candle Tile
+// MercuryDoorClosedTile.MapEntry: Mercury Door Closed Tile
+// MercuryDoorOpenTile.MapEntry: Mercury Door Open Tile
+// MercuryDresserTile.MapEntry: Mercury Dresser Tile
+// MercuryDroplight2Tile.MapEntry: Mercury Droplight2 Tile
+// MercuryFloorLampTile.MapEntry: Mercury Floor Lamp Tile
+// MercuryPianoTile.MapEntry: Mercury Piano Tile
+// MercurySofaTile.MapEntry: Mercury Sofa Tile
+// MercuryTableTile.MapEntry: Mercury Table Tile
+MercuryWorkBenchTile.MapEntry: Mercury Work Bench Tile
+IcicleBathtubTile.MapEntry: 冰晶浴缸
+IcicleBedTile.MapEntry: 冰晶床
+IcicleBigDroplightTile.MapEntry: 冰晶大吊灯
+IcicleBookcaseTile.MapEntry: 冰晶书架
+IcicleCandelabraTile.MapEntry: 冰晶烛台
+IcicleCandleTile.MapEntry: 冰晶蜡烛
+IcicleChestTile.MapEntry: 冰晶箱
+IcicleDoorClosedTile.MapEntry: 冰晶门
+IcicleDoorOpenTile.MapEntry: 冰晶门
+IcicleDresserTile.MapEntry: 冰晶梳妆台
+IcicleDroplightTile.MapEntry: 冰晶吊灯
+IcicleFloorLampTile.MapEntry: 冰晶柱灯
+IciclePianoTile.MapEntry: 冰晶钢琴
+IcicleSofaTile.MapEntry: 冰晶沙发
+IcicleTableTile.MapEntry: 冰晶桌
+IcicleWorkBenchTile.MapEntry: 冰晶工作台
+MagicCrystalMusicBoxTile.MapEntry: 八音盒（魔力水晶洞）

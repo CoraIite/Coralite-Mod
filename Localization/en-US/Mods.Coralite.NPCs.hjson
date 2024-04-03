@@ -1,0 +1,85 @@
+BabyIceDragon: {
+	DisplayName: Baby Ice Dragon
+
+	BossChecklistIntegration: {
+		SpawnInfo: 刚刚破壳而出的小冰龙，还不能完全掌握冰魔法的力量
+		DespawnMessage: 冰龙宝宝逃走了
+	}
+}
+
+IceCube.DisplayName: Ice Cube
+IceDragonEgg.DisplayName: Ice Dragon Egg
+IceThornsTrap.DisplayName: Ice Thorns Trap
+
+Rediancie: {
+	DisplayName: Rediancie
+
+	BossChecklistIntegration: {
+		SpawnInfo: 一块奇异的巨石，通过不稳定的红色能量来驱动自身。
+		DespawnMessage: 赤玉灵回归了地底
+	}
+}
+
+RediancieMinion.DisplayName: Rediancie Minion
+IcicleSpirit.DisplayName: Icicle Spirit
+MaragonBody.DisplayName: Maragon Body
+MaragonHead.DisplayName: Maragon Head
+MaragonTrail.DisplayName: Maragon Trail
+ShadowGolem.DisplayName: Shadow Golem
+ShadowGuard.DisplayName: Shadow Guard
+CrystalFairy.DisplayName: Crystal Fairy
+CrystalSpirit.DisplayName: Crystal Spirit
+CrystalGolem.DisplayName: Crystal Golem
+CrystalEye.DisplayName: Crystal Eye
+SlimeEmperor.DisplayName: Slime Emperor
+ElasticGelBall.DisplayName: Elastic Gel Ball
+SlimeAvatar.DisplayName: Slime Avatar
+GelFlippy.DisplayName: Gel Flippy
+HealGelBall.DisplayName: Heal Gel Ball
+AosSi.DisplayName: Aos Si
+AosSiBodyFront.DisplayName: Aos Si Body Front
+AosSiBodyLast.DisplayName: Aos Si Body Last
+AosSiBodyMiddle.DisplayName: Aos Si Body Middle
+AosSiHands.DisplayName: Aos Si Hands
+AosSiLegs.DisplayName: Aos Si Legs
+AosSiTailFront.DisplayName: Aos Si Tail Front
+AosSiTailLast.DisplayName: Aos Si Tail Last
+AosSiTailMiddle.DisplayName: Aos Si Tail Middle
+AosSiTailSecdonary.DisplayName: Aos Si Tail Secdonary
+NightmarePlantera.DisplayName: Nightmare Plantera
+NightmareHook.DisplayName: Nightmare Hook
+NightmareCatcher.DisplayName: Nightmare Catcher
+FantasySparkle.DisplayName: Fantasy Sparkle
+FantasyGod.DisplayName: Fantasy God
+Turmoil.DisplayName: Turmoil
+
+CrystalRobot: {
+	DisplayName: Crystal Robot
+
+	TownNPCMood: {
+		Content: I'm satisfied.
+		NoHome: Wild, dangerous, I need a home.
+		FarFromHome: Far from home, too far.
+		LoveSpace: 我非常喜欢有这么大的空间。
+		DislikeCrowded: 我不喜欢这么拥挤。
+		HateCrowded: 我讨厌这么拥挤。
+		LoveBiome: 我非常喜欢{BiomeName}。
+		LikeBiome: 我喜欢{BiomeName}。
+		DislikeBiome: 我不喜欢{BiomeName}。
+		LoveNPC: 我非常喜欢{NPCName}。
+		LikeNPC: 我喜欢{NPCName}。
+		DislikeNPC: 我不喜欢{NPCName}。
+		HateNPC: 我讨厌{NPCName}。
+		LikeNPC_Princess: I like {NPCName}.
+		Princess_LovesNPC: I like {NPCName}.
+	}
+}
+
+Bloodiancie.DisplayName: Bloodiancie
+BloodiancieMinion.DisplayName: Bloodiancie Minion
+ShadowBall.DisplayName: Shadow Ball
+SmallShadowBall.DisplayName: Small Shadow Ball
+Biskety.DisplayName: Biskety
+ThunderveinDragon.DisplayName: Thundervein Dragon
+ThunderPhantom.DisplayName: Thunder Phantom
+ShadowVilliger.DisplayName: Shadow Villiger
