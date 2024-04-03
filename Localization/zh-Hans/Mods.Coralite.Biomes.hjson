@@ -1,0 +1,9 @@
+MagicCrystalCave: {
+	DisplayName: 魔力水晶洞
+	TownNPCDialogueName: 魔力水晶洞
+}
+
+ShadowCastleBiome: {
+	// DisplayName: Shadow Castle Biome
+	// TownNPCDialogueName: the Shadow Castle Biome
+}

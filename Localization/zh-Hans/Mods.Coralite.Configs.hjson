@@ -1,0 +1,90 @@
+NianliUIConfig: {
+	DisplayName: 念力UI设置
+
+	nianliUI_X: {
+		Label: 念力UI显示位置X坐标
+		Tooltip: ""
+	}
+
+	nianliUI_Y: {
+		Label: 念力UI显示位置Y坐标
+		Tooltip: ""
+	}
+}
+
+MagikeUIConfig: {
+	DisplayName: 魔能UI设置
+
+	UIScale: {
+		Label: UI Scale
+		Tooltip: ""
+	}
+}
+
+VisualEffectConfig: {
+	DisplayName: 视觉效果设置
+
+	HitEffect_Dusts: {
+		Label: 命中时的粒子效果
+		Tooltip: 在武器命中时产生的粒子效果，如各种原版粒子
+	}
+
+	HitEffect_ScreenShaking: {
+		Label: 命中时的屏幕震动效果
+		Tooltip: 在武器命中时产生的屏幕震动效果
+	}
+
+	HitEffect_Lightning: {
+		Label: 命中时的光效
+		Tooltip: 在武器命中时产生的各类高亮光效，如斩击效果
+	}
+
+	HitEffect_SpecialParticles: {
+		Label: 命中时的其他粒子特效
+		Tooltip: 在武器命中时产生的特殊粒子效果，如光圈等
+	}
+
+	DrawKniefLight: {
+		Label: 刀光
+		Tooltip:
+			'''
+			是否会绘制近战武器的刀光
+			注：关闭刀光可能会让部分武器的效果变得奇怪
+			'''
+	}
+
+	DrawWarp: {
+		Label: 扭曲
+		Tooltip: 是否绘制各类扭曲效果
+	}
+
+	Headers: {
+		HitEffects: 命中效果
+		OtherVisualEffects: 其他视觉效果
+		NightmarePlantera: 梦魇之花视觉效果
+	}
+
+	HitEffect_HitFreeze: {
+		Label: 命中时的卡肉效果
+		Tooltip: 武器在命中时短暂地停滞效果
+	}
+
+	DrawTrail: {
+		Label: 拖尾
+		Tooltip:
+			'''
+			大部分弹幕，武器产生的拖尾效果
+			注：原版拖尾不包含在内（例：彩虹魔杖）
+			'''
+	}
+
+	UseNightmareSky: {
+		Label: 绘制特殊的天空
+		Tooltip: 是否开启梦魇之花的特殊流动效果天空
+	}
+
+	UseNightmareBossBar: {
+		Label: 绘制特殊的血条
+		Tooltip: 是否开启梦魇之花特殊的流动效果血条
+	}
+}

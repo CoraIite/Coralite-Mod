@@ -1,0 +1,29 @@
+Rediancie: {
+	SpawnInfo: 一块奇异的巨石，通过不稳定的红色能量来驱动自身。
+	Despawn: 赤玉灵回归了地底
+}
+
+BabyIceDragon: {
+	SpawnInfo: 刚刚破壳而出的小冰龙，还不能完全掌握冰魔法的力量。在击败邪恶BOSS后冰龙蛋将会出现在冰龙巢的中心位置。
+	Despawn: 冰龙宝宝逃走了
+}
+
+SlimeEmperor: {
+	SpawnInfo: 一位伟大的凝胶领袖，在史莱姆中有着极高的地位，在记载中每100只史莱姆王中才会诞生一位皇帝，或许可以叫它“至高帝·史莱姆王”。
+	Despawn: 史莱姆皇帝回归了它的王国
+}
+
+NightmarePlantera: {
+	SpawnInfo: 噩梦占据了曾经被击败的世纪之花的躯体，变成了强大的梦魇之神，或者也可以叫她“梦界主·世纪之花”。
+	Despawn: 梦境消散了
+}
+
+Bloodiancie: {
+	SpawnInfo: 吸收血月能量后能产生更大范围爆炸的赤玉灵，或者也可以叫它“血咒精·赤玉灵”。
+	Despawn: 赤血玉灵回归了地底
+}
+
+ThunderveinDragon: {
+	SpawnInfo: 掌控雷电魔法的双足飞龙种，体内储存着十分庞大的电能。
+	Despawn: 荒雷龙如闪电般离去
+}

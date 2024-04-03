@@ -1,0 +1,3599 @@
+EmeraldRosary: {
+	DisplayName: 翡翠念珠
+	Tooltip:
+		'''
+		念力回复速度微量增加
+		念力伤害 +3
+		'''
+}
+
+MaintenanceFluid: {
+	DisplayName: 护剑精油
+	Tooltip:
+		'''
+		给你的剑定期保养一下吧！
+		念力伤害 +2
+		'''
+}
+
+CallForDestruction: {
+	DisplayName: 毁灭的呼唤
+	Tooltip:
+		'''
+		它能招来破坏的化身，但是是用打电话的方式
+		在夜晚召唤毁灭者，不消耗
+		'''
+}
+
+CannedLarva: {
+	DisplayName: 罐装的幼虫
+	Tooltip:
+		'''
+		装在罐子中的蜜蜂幼虫，这样就不会轻易地被戳破了
+		在丛林地形召唤蜂后，不消耗
+		'''
+}
+
+ChainedEye: {
+	DisplayName: 拴住的眼球
+	Tooltip:
+		'''
+		哈哈，这下跑不掉了吧
+		在夜晚召唤克苏鲁之眼，不消耗
+		'''
+}
+
+CrystallineGel: {
+	DisplayName: 结晶的明胶
+	Tooltip:
+		'''
+		史莱姆皇后的核心部位，尝起来很美味但是有点硬
+		在神圣地形召唤史莱姆皇后，不消耗
+		'''
+}
+
+EndlessDeliciousness: {
+	DisplayName: 无尽的美味
+	Tooltip:
+		'''
+		注入了魔法的腐烂食物，重要的是，它可以无限吃！
+		在腐化地形召唤世界吞噬怪，不消耗
+		'''
+}
+
+EternalFlower: {
+	DisplayName: 永恒的花朵
+	Tooltip:
+		'''
+		象征着永恒的花朵，无论过去多少个世纪它都不会凋零
+		在地下丛林召唤世纪之花，不消耗
+		'''
+}
+
+HolyLacewing: {
+	DisplayName: 圣洁的光蛉
+	Tooltip:
+		'''
+		它光彩夺目，可得轻拿轻放
+		在神圣地形召唤光之女皇，不消耗
+		'''
+}
+
+ImmortalDoll: {
+	DisplayName: 不灭的娃娃
+	Tooltip:
+		'''
+		黑曜石制成的向导巫毒娃娃，现在可以不怕岩浆了
+		在地狱召唤血肉墙，不消耗
+		'''
+}
+
+MachinerySoars: {
+	DisplayName: 飞升的头骨
+	Tooltip:
+		'''
+		血肉苦楚，机械飞升
+		在夜晚召唤机械骷髅王，不消耗
+		'''
+}
+
+PerpetualCore: {
+	DisplayName: 永动的核心
+	Tooltip:
+		'''
+		来自丛林神庙的黑科技，无穷无尽地向外释放着能量
+		在丛林祭坛附近召唤石巨人，不消耗
+		'''
+}
+
+RedBerry: {
+	DisplayName: 赤色果实
+	Tooltip:
+		'''
+		偶尔生长在水晶树上，能吸引一块奇异的赤色石头
+		召唤赤玉灵
+		砍倒宝石树概率掉落
+		'''
+}
+
+RegeneratedSpine: {
+	DisplayName: 再生的脊椎
+	Tooltip:
+		'''
+		它充满了生命力，似乎可以不断地再生
+		在猩红地形召唤克苏鲁之脑，不消耗
+		'''
+}
+
+SymbolOfRoyal: {
+	DisplayName: 王权的象征
+	Tooltip:
+		'''
+		这史莱姆族群中象征着王位，拥有它就拥有了无上的荣耀
+		召唤史莱姆王，不消耗
+		'''
+}
+
+TheTwinsBond: {
+	DisplayName: 双子的牵绊
+	Tooltip:
+		'''
+		机械的双子，它们形影不离
+		在夜晚召唤双子魔眼，不消耗
+		'''
+}
+
+TwistedBone: {
+	DisplayName: 扭曲的骨头
+	Tooltip:
+		'''
+		形态扭曲的骨头，似乎能直接招来诅咒，但并不是诅咒的根源
+		在夜晚召唤骷髅王，不消耗
+		'''
+}
+
+BotanicalStaff: {
+	DisplayName: 植物法杖
+	Tooltip: ！测试用物品！
+}
+
+IdentifyLoupe: {
+	DisplayName: 鉴定镜
+	Tooltip:
+		'''
+		消耗20魔力
+		放在背包中时可以通过右键未鉴定的植物以查看它们的基因
+		'''
+}
+
+AgropyronFreezer: {
+	DisplayName: 寒霜冰草
+	Tooltip: 尝起来冰冰的，很新鲜
+}
+
+GloomMushrooms: {
+	DisplayName: 吸光蘑菇
+	Tooltip: 它周围一片黑暗
+}
+
+PileaNotatata: {
+	DisplayName: 冷水花
+	Tooltip: ""
+}
+
+WoodStick: {
+	DisplayName: 木棍
+	Tooltip: 就只是木棍而已
+}
+
+AgropyronSeed: {
+	DisplayName: 寒霜冰草种子
+	Tooltip: 成熟后收获寒霜冰草
+}
+
+DandelionSeed: {
+	DisplayName: 蒲公英种子
+	Tooltip: 世纪小花
+}
+
+EgenolfiaBuds: {
+	DisplayName: 刺蕨孢子
+	Tooltip: 含有微弱的沙漠魔力
+}
+
+EyeballSeed: {
+	DisplayName: 眼球草种子
+	Tooltip: ""
+}
+
+GloomSpores: {
+	DisplayName: 吸光蘑菇孢子
+	Tooltip: 成熟后收获吸光蘑菇
+}
+
+JungleBuds: {
+	DisplayName: 丛林芽孢
+	Tooltip: 成熟后能释放出丛林孢子
+}
+
+NacliteSeedling: {
+	DisplayName: 盐晶苔藓幼体
+	Tooltip: NaClTiXe
+}
+
+Naclite: {
+	DisplayName: 盐晶
+	Tooltip: 氯化钠晶体，尝起来咸咸的
+}
+
+PileaNotataSeedling: {
+	DisplayName: 冷水花幼苗
+	Tooltip: 成熟后收获冷水花
+}
+
+SnoowSeed: {
+	DisplayName: 雪融花种子
+	Tooltip: 成熟后能掉出雪块
+}
+
+TreeJokeSeed: {
+	DisplayName: 树生树树果
+	Tooltip: “你没搞错吧？”
+}
+
+WaterDrinkerSeed: {
+	DisplayName: 饮水棘种子
+	Tooltip:
+		'''
+		它强大的根茎甚至能在沙漠中汲取水分
+		不是饮水机
+		'''
+}
+
+WatermelonSeed: {
+	DisplayName: 西瓜种子
+	Tooltip: ""
+}
+
+Watermelon: {
+	DisplayName: 西瓜
+	Tooltip: 用切瓜小刀丢向它来切成西瓜片
+}
+
+BabyIceDragonBossBag: {
+	DisplayName: 宝藏袋（冰龙宝宝）
+	Tooltip: 右键单击以打开
+}
+
+BabyIceDragonRelic: {
+	DisplayName: 冰龙宝宝圣物
+	Tooltip: ""
+}
+
+BabyIceDragonTrophy: {
+	DisplayName: 冰龙宝宝纪念章
+	Tooltip: ""
+}
+
+IcicleBow: {
+	DisplayName: 冰晶弓
+	Tooltip:
+		'''
+		将箭矢转化为冰晶箭
+		双击A/D进行滑步
+		滑步时按住鼠标左键汇聚冰魔法，之后松开左键射出冰光箭
+		'''
+}
+
+IcicleCrystal: {
+	DisplayName: 冰晶
+	Tooltip: 蕴含冰之魔力
+}
+
+IcicleStaff: {
+	DisplayName: 霜华杖
+	Tooltip: 射出冰光球
+}
+
+IcicleSword: {
+	DisplayName: 冰晶剑
+	Tooltip:
+		'''
+		挥动时释放冰晶波
+		挥舞3次后戳刺并射出冰块
+		'''
+}
+
+IcicleThornStaff: {
+	DisplayName: 冰魔杖
+	Tooltip:
+		'''
+		召唤冰刺球
+		[c/00bbff:消耗1召唤栏]
+		'''
+}
+
+IcicleYujian: {
+	DisplayName: 霜晶刃
+	Tooltip: ""
+}
+
+CrossBreedMachine_G1Item: {
+	DisplayName: 植物杂交机1型
+	Tooltip:
+		'''
+		放置后右键打开面板
+		左侧和右侧的物品格中放入父植物和母植物，中间物品格可放入催化剂
+		点击按钮并消耗一定的魔能进行杂交
+		杂交消耗父植物和母植物并在下方的物品格中输出子代植物
+		部分植物杂交时概率产生突变
+		'''
+}
+
+IceyPowder: {
+	DisplayName: 冰魔粉
+	Tooltip: 含有微弱的冰魔力
+}
+
+MaglitePowder: {
+	// DisplayName: Maglite Powder
+	// Tooltip: Contains a faint magic power
+}
+
+SandlitePowder: {
+	DisplayName: 沙魔粉
+	Tooltip: 含有微弱的沙漠魔力
+}
+
+ShlimmerMushrooms: {
+	DisplayName: 微光蘑菇
+	Tooltip: 能发出微小的光
+}
+
+WatermelonSlices: {
+	DisplayName: 西瓜片
+	Tooltip: ""
+}
+
+MushroomPlatform: {
+	DisplayName: 蘑菇平台
+	Tooltip: ""
+}
+
+MushroomStaff: {
+	DisplayName: 蘑菇共生杖
+	Tooltip:
+		'''
+		召唤蘑菇龙
+		[c/00bbff:消耗1召唤栏]
+		'''
+}
+
+SlimeSapling: {
+	DisplayName: 史莱姆树苗
+	Tooltip: 只能种在凝胶块上
+}
+
+MagicCraftStation: {
+	DisplayName: 魔导台
+	Tooltip: ""
+}
+
+RediancieBossBag: {
+	DisplayName: 宝藏袋（赤玉灵）
+	Tooltip: 右键单击以打开
+}
+
+RedianciePet: {
+	DisplayName: 小赤玉灵
+	Tooltip: 召唤一个发出微弱光亮的小赤玉灵
+}
+
+RediancieRelic: {
+	DisplayName: 赤玉灵圣物
+	Tooltip: ""
+}
+
+RediancieTrophy: {
+	DisplayName: 赤玉灵纪念章
+	Tooltip: ""
+}
+
+RedJade: {
+	DisplayName: 赤玉
+	Tooltip: ""
+}
+
+RedJadeBed: {
+	DisplayName: 赤玉床
+	Tooltip: ""
+}
+
+RedJadeBlade: {
+	DisplayName: 赤玉刃
+	Tooltip:
+		'''
+		射出偶尔会产生爆炸的赤玉碎片
+		挥舞一定次数后产生大爆炸
+		'''
+}
+
+RedJadeCandle: {
+	DisplayName: 赤玉台灯
+	Tooltip: ""
+}
+
+RedJadeChair: {
+	DisplayName: 赤玉椅
+	Tooltip: ""
+}
+
+RedJadeChest: {
+	DisplayName: 赤玉箱
+	Tooltip: ""
+}
+
+RedJadeDoor: {
+	DisplayName: 赤玉门
+	Tooltip: ""
+}
+
+RedJadeDroplight: {
+	DisplayName: 赤玉吊灯
+	Tooltip: ""
+}
+
+RedJadeHulu: {
+	DisplayName: 赤玉葫芦
+	Tooltip: 召唤出的剑在命中时偶尔产生爆炸
+}
+
+RedJadePendant: {
+	DisplayName: 赤玉吊坠
+	Tooltip: 受伤时偶尔产生爆炸
+}
+
+RedJadeShrine: {
+	DisplayName: 赤玉祭坛
+	Tooltip:
+		'''
+		召唤小赤玉
+		[c/00bbff:消耗1召唤栏]
+		'''
+}
+
+RedJadeStaff: {
+	DisplayName: 赤岩杖
+	Tooltip:
+		'''
+		射出会产生爆炸的赤色光束
+		射击一定次数后射出大光束并产生大爆炸
+		'''
+}
+
+RedJadeTable: {
+	DisplayName: 赤玉桌
+	Tooltip: ""
+}
+
+RedJadeToilet: {
+	DisplayName: 赤玉马桶
+	Tooltip: ""
+}
+
+RedJadeWorkBench: {
+	DisplayName: 赤玉工作台
+	Tooltip: ""
+}
+
+RedJadeYujian: {
+	DisplayName: 赤玉御剑
+	Tooltip: ""
+}
+
+InvertedShadow: {
+	DisplayName: 倒影
+	Tooltip: 你的影子与你同在
+}
+
+ShadowBreastplate: {
+	DisplayName: 影子胸甲
+	Tooltip:
+		'''
+		伤害 +10%
+		暴击率 +6%
+		'''
+}
+
+ShadowCrystal: {
+	DisplayName: 影水晶
+	Tooltip: 影子能量的结晶
+}
+
+ShadowEnergy: {
+	DisplayName: 影子能量
+	Tooltip: 它是无形的【暂时无法正常获得，只能使用骨头微光转换获得】
+}
+
+ShadowHammer: {
+	DisplayName: 影子锤
+	Tooltip: ""
+}
+
+ShadowHead: {
+	DisplayName: 影子兜帽
+	Tooltip:
+		'''
+		最大魔力值 +60
+		魔力消耗 -10%
+		'''
+}
+
+ShadowLegs: {
+	DisplayName: 影子护腿
+	Tooltip:
+		'''
+		攻速 +8%
+		击退 +6%
+		'''
+}
+
+ShadowPickaxe: {
+	DisplayName: 影子镐
+	Tooltip: ""
+}
+
+ShadowSickle: {
+	DisplayName: 影子镰刀
+	Tooltip: 长按蓄力，蓄力一定时间后松手释放斩击
+}
+
+ShadowSword: {
+	DisplayName: 潜伏
+	Tooltip: 挥动时召唤出它的分身攻击敌人
+}
+
+StarBook: {
+	DisplayName: 星之书
+	Tooltip:
+		'''
+		汇聚群星的能量
+		蓄力吸取星之符文，完成后释放星光球
+		取消蓄力释放追踪的星之符文
+		'''
+}
+
+CosmosFracture: {
+	DisplayName: 异界裂隙
+	Tooltip: 划破空间，来自异界的武器将撕裂你的敌人
+}
+
+MagicalAshes: {
+	DisplayName: 蕴魔灰烬
+	Tooltip: 它尝起来是甜的
+}
+
+AncientCore: {
+	DisplayName: 远古核心
+	Tooltip: 军火商压箱底的宝贝，来自远古文明的能量核心
+}
+
+Arethusa: {
+	DisplayName: 幽兰
+	Tooltip: 迟来的爱
+}
+
+ArethusaNormalMode: {
+	DisplayName: 幽兰
+	Tooltip: 迟来的爱
+}
+
+Astrosniper: {
+	DisplayName: 天文狙击枪
+	Tooltip: 去狙击那颗垂死的星星吧！
+}
+
+BarrageMic: {
+	// DisplayName: Barrage Mic
+	// Tooltip: ""
+}
+
+DukeFishronSkin: {
+	DisplayName: 巨型鲨鱼皮
+	Tooltip:
+		'''
+		巨型鲨鱼的粗糙韧皮，摸起来感觉不错
+		只有击败神庙中的石巨人后才会掉落
+		'''
+}
+
+Dunkleosteus: {
+	DisplayName: 邓氏鲨
+	Tooltip: 远古巨鲨，极致的火力压制
+}
+
+Hyacinth: {
+	DisplayName: 风信子
+	Tooltip: "[c/ff3333:你的爱充满我心中]"
+}
+
+Rosemary: {
+	DisplayName: 迷迭香
+	Tooltip: 留住美好的回忆
+}
+
+Rosemary2: {
+	DisplayName: 迷迭香
+	Tooltip: 留住美好的回忆
+}
+
+Snowdrop: {
+	DisplayName: 雪花莲
+	Tooltip: 怀抱希望
+}
+
+StarsBreath: {
+	DisplayName: 满天星
+	Tooltip: 一切美好的祝愿
+}
+
+WoodWax: {
+	DisplayName: 木蜡
+	Tooltip: 孢子喷发
+}
+
+CatClaws: {
+	DisplayName: 猫猫爪
+	Tooltip:
+		'''
+		猫猫最爱的武器
+		喵~喵喵喵~
+		'''
+}
+
+WateringPot: {
+	DisplayName: 洒水壶
+	Tooltip: 注入魔法后不太稳定的洒水壶，并不能为你的花草浇水
+}
+
+WatermelonKnife: {
+	DisplayName: 切瓜小刀
+	Tooltip: 丢中西瓜就可以将它切成西瓜片
+}
+
+WoodenHulu: {
+	DisplayName: 木葫芦
+	Tooltip: ""
+}
+
+AncientCrimtaneYujian: {
+	DisplayName: 远古血腥御剑
+	Tooltip: ""
+}
+
+AncientDemoniteYujian: {
+	DisplayName: 远古腐化御剑
+	Tooltip: ""
+}
+
+CrimtaneYujian: {
+	DisplayName: 血腥御剑
+	Tooltip: ""
+}
+
+DemoniteYujian: {
+	DisplayName: 魔化御剑
+	Tooltip: ""
+}
+
+GoldYujian: {
+	DisplayName: 金御剑
+	Tooltip: ""
+}
+
+HellStoneHulu: {
+	DisplayName: 狱岩葫芦
+	Tooltip: ""
+}
+
+HellStoneYujian: {
+	DisplayName: 狱岩长剑
+	Tooltip: ""
+}
+
+IronHulu: {
+	DisplayName: 铁葫芦
+	Tooltip: ""
+}
+
+IronYujian: {
+	DisplayName: 铁御剑
+	Tooltip: ""
+}
+
+PlatinumYujian: {
+	DisplayName: 铂金御剑
+	Tooltip: ""
+}
+
+ShadowYujian: {
+	DisplayName: 影咒刃
+	Tooltip: ""
+}
+
+SilverYujian: {
+	DisplayName: 银御剑
+	Tooltip: ""
+}
+
+WoodenYujian: {
+	DisplayName: 木御剑
+	Tooltip: ""
+}
+
+IcicleCoccyx: {
+	DisplayName: 冰寒刺骨
+	Tooltip:
+		'''
+		左键挥动一定次数后获得充能
+		充能完成后双击A/D键冲刺
+		充能完成后右键释放冰晶龙卷风
+		'''
+}
+
+CrystalLens: {
+	DisplayName: 水晶透镜
+	Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
+}
+
+DebugStick: {
+	DisplayName: 无限晶簇魔杖
+	Tooltip:
+		'''
+		右键切换模式
+		充能模式：点击魔能存储器将其魔能充满
+		清空模式：点击魔能存储器将其魔能清空
+		'''
+}
+
+MagConnectStaff: {
+	DisplayName: 魔能连接仪
+	Tooltip:
+		'''
+		左键点击选中魔能发送器，之后打开UI，可查看连接情况
+		左键点击按钮后可开始连接
+		右键点击按钮清空当前的连接
+		'''
+}
+
+MagicCrystal: {
+	DisplayName: 魔力晶体
+	Tooltip: 蕴含微弱的魔能
+	MoreDescription: “去地下寻找水晶洞穴把，其中藏有如何使用魔能的知识”
+}
+
+CrimtaneLens: {
+	DisplayName: 猩红透镜
+	Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
+}
+
+DemoniteLens: {
+	DisplayName: 魔化透镜
+	Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
+}
+
+BrilliantLens: {
+	DisplayName: 璀璨透镜
+	Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
+}
+
+CrystallineMagike: {
+	DisplayName: 蕴魔水晶
+	Tooltip: 蕴含充沛的魔能
+}
+
+CrystalRefractor: {
+	DisplayName: 水晶广角镜
+	Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
+}
+
+BrilliantRefractor: {
+	DisplayName: 璀璨广角镜
+	Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
+}
+
+CrimtaneRefractor: {
+	DisplayName: 猩红广角镜
+	Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
+}
+
+DemoniteRefractor: {
+	DisplayName: 魔化广角镜
+	Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
+}
+
+BrilliantColumn: {
+	DisplayName: 璀璨水晶柱
+	Tooltip: 能够容纳很多魔能
+}
+
+CrimtaneColumn: {
+	DisplayName: 猩红水晶柱
+	Tooltip: 能够容纳很多魔能
+}
+
+CrystalColumn: {
+	DisplayName: 水晶柱
+	Tooltip: 能够容纳很多魔能
+}
+
+DemoniteColumn: {
+	DisplayName: 魔化水晶柱
+	Tooltip: 能够容纳很多魔能
+}
+
+Diprism: {
+	DisplayName: 二相镜
+	Tooltip: ""
+}
+
+BrilliantRemodelPool: {
+	DisplayName: 璀璨重塑池
+	Tooltip: 右键打开UI，放入物品并选择指定合成表后激活以进行物品重塑
+}
+
+CondensedCrystalBall: {
+	DisplayName: 凝聚态水晶球
+	Tooltip: 为鼠标位置的魔能容器充能
+}
+
+MagikeActivator: {
+	DisplayName: 魔能激活杖
+	Tooltip: 激活鼠标位置的魔能机器，电路也能够激活他们
+}
+
+SunlightLens: {
+	DisplayName: 日光透镜
+	Tooltip: 在白天缓慢生产魔能
+}
+
+CrystalRemodelPool: {
+	DisplayName: 水晶重塑池
+	Tooltip: 右键打开UI，放入物品并选择指定合成表后激活以进行物品重塑
+}
+
+EvilRemodelPool: {
+	DisplayName: 邪化重塑池
+	Tooltip: 右键打开UI，放入物品并选择指定合成表后激活以进行物品重塑
+}
+
+MoonlightLens: {
+	DisplayName: 月光透镜
+	Tooltip: 在夜晚缓慢生产魔能
+}
+
+FeatheredLens: {
+	DisplayName: 羽蛇透镜
+	Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
+}
+
+HolylightLens: {
+	DisplayName: 圣光透镜
+	Tooltip: 在白天生产魔能
+}
+
+BloodMoonLens: {
+	DisplayName: 红月透镜
+	Tooltip: 在夜晚生产魔能
+}
+
+IcicleHeart: {
+	DisplayName: 冰龙心
+	Tooltip:
+		'''
+		它仿佛还在跳动
+		在雪地召唤冰龙宝宝，不消耗
+		'''
+}
+
+RedJadeCore: {
+	DisplayName: 赤晶核
+	Tooltip:
+		'''
+		产生“爆竹能量”的核心部位
+		召唤赤玉灵，不消耗
+		'''
+}
+
+WaterflowLens: {
+	DisplayName: 水流透镜
+	Tooltip: 底座淹没在水中时缓慢生产魔能
+}
+
+RedJadeLens: {
+	DisplayName: 赤玉透镜
+	Tooltip: 受到爆炸时生产魔能
+}
+
+RedJadeColumn: {
+	DisplayName: 赤玉晶柱
+	Tooltip: 不会被爆炸摧毁
+}
+
+RedJadeRefractor: {
+	DisplayName: 赤玉广角镜
+	Tooltip: 不会被爆炸摧毁
+}
+
+RedJadeCluster: {
+	DisplayName: 赤晶簇
+	Tooltip:
+		'''
+		激活后产生大爆炸
+		魔能消耗量：50
+		'''
+}
+
+LavaLens: {
+	DisplayName: 熔岩透镜
+	Tooltip: 底座淹没在岩浆中时生产魔能
+}
+
+SweetLens: {
+	DisplayName: 甜蜜透镜
+	Tooltip: 底座淹没在蜂蜜中时生产魔能
+}
+
+CrystalSpotlighter: {
+	DisplayName: 晶体炮
+	Tooltip:
+		'''
+		激活后发射光束
+		魔能消耗量：25
+		'''
+}
+
+OceanLens: {
+	DisplayName: 海洋透镜
+	Tooltip: 在海洋环境中生产魔能
+}
+
+BrilliantQuadprism: {
+	DisplayName: 璀璨四棱镜
+	Tooltip: ""
+}
+
+CrimtaneTriprism: {
+	DisplayName: 猩红三棱镜
+	Tooltip: ""
+}
+
+DemoniteTriprism: {
+	DisplayName: 魔化三棱镜
+	Tooltip: ""
+}
+
+RedJadeDiprism: {
+	DisplayName: 赤玉二相镜
+	Tooltip: ""
+}
+
+Basalt: {
+	DisplayName: 玄武岩
+	Tooltip: ""
+}
+
+MagikeCrystalBlock: {
+	DisplayName: 魔力晶体块
+	Tooltip: ""
+}
+
+CrystalBasalt: {
+	DisplayName: 水晶玄武岩
+	Tooltip: ""
+}
+
+WorldGenTester: {
+	DisplayName: 世界生成测试器
+	Tooltip: ！测试用物品！
+}
+
+BoneLens: {
+	DisplayName: 骸骨透镜
+	Tooltip: 在地牢生产魔能
+}
+
+ForestLens: {
+	DisplayName: 森林透镜
+	Tooltip: 在森林生产魔能
+}
+
+GlowingMushroomLens: {
+	DisplayName: 夜光蘑菇透镜
+	Tooltip: 在夜光蘑菇环境生产魔能
+}
+
+BrightnessLens: {
+	DisplayName: 光明透镜
+	Tooltip: 在明亮的地方生产魔能
+}
+
+DarknessLens: {
+	DisplayName: 黑暗透镜
+	Tooltip: 在黑暗的地方生产魔能
+}
+
+BasaltChest: {
+	DisplayName: 玄武岩箱
+	Tooltip: ""
+}
+
+MagicCrystalBlock: {
+	DisplayName: 魔力水晶块
+	Tooltip: ""
+}
+
+MagicCrystalBrick: {
+	DisplayName: 魔力水晶砖
+	Tooltip: ""
+}
+
+Page_MagikeBase: {
+	DisplayName: 书页：魔能基础
+	Tooltip:
+		'''
+		左键使用以学习魔能的基础知识
+		在地下的魔力水晶洞中心处可以找到
+		“水晶生命体售卖的魔能辞典会为你解释与魔能相关的事情”
+		'''
+}
+
+HardBasalt: {
+	DisplayName: 硬化玄武岩
+	Tooltip: ""
+}
+
+HellLens: {
+	DisplayName: 地狱透镜
+	Tooltip: 在地狱生产魔能
+}
+
+BreezeLens: {
+	DisplayName: 微风透镜
+	Tooltip: 根据风速生产魔能
+}
+
+DrizzleLens: {
+	DisplayName: 细雨透镜
+	Tooltip: 下雨时生产魔能
+}
+
+HardBasaltWall: {
+	DisplayName: 硬化玄武岩墙
+	Tooltip: ""
+}
+
+GraniteLens: {
+	DisplayName: 花岗岩透镜
+	Tooltip: 在花岗岩地形生产魔能
+}
+
+MarbleLens: {
+	DisplayName: 大理石透镜
+	Tooltip: 在大理石环境产生魔能
+}
+
+HoneypotLens: {
+	DisplayName: 甘甜透镜
+	Tooltip: 底座淹没在蜂蜜中时生产魔能
+}
+
+BloodyHook: {
+	DisplayName: 血骨钩
+	Tooltip:
+		'''
+		右键甩动钩子
+		钩中后再次右键将玩家拉向钩子
+		'''
+}
+
+ChlorophyteLens: {
+	DisplayName: 叶绿透镜
+	Tooltip: 在丛林生产魔能
+}
+
+ParadiseLens: {
+	DisplayName: 天堂透镜
+	Tooltip: 在天空生产魔能
+}
+
+DemoniteEnchantPool: {
+	DisplayName: 魔化注魔池
+	Tooltip: 为你的装备带来额外的强化
+}
+
+ScorchingLens: {
+	DisplayName: 灼岩透镜
+	Tooltip: 底座淹没在岩浆中时生产魔能
+}
+
+CopperRing: {
+	DisplayName: 铜戒指
+	Tooltip: 攻击 -6%
+}
+
+TinRing: {
+	DisplayName: 锡戒指
+	Tooltip: 攻击 -6%
+}
+
+CogLens: {
+	DisplayName: 齿轮透镜
+	Tooltip: 自动生产魔能
+}
+
+IronRing: {
+	DisplayName: 铁戒指
+	Tooltip:
+		'''
+		伤害减免 +4%
+		移动速度 -10%
+		'''
+}
+
+LeadRing: {
+	DisplayName: 铅戒指
+	Tooltip:
+		'''
+		“你确定要用这种金属做首饰？”
+		伤害减免 +4%
+		移动速度 -10%
+		'''
+}
+
+SoulRemodelPool: {
+	DisplayName: 灵魂重塑池
+	Tooltip: 右键打开UI，放入物品并选择指定合成表后激活以进行物品重塑
+}
+
+RainstormLens: {
+	DisplayName: 骤雨透镜
+	Tooltip: 下雨时生产魔能
+}
+
+SplendorMagicore: {
+	DisplayName: 辉界晶核
+	Tooltip: 蕴含浓厚的魔能
+}
+
+CorruptJavelin: {
+	DisplayName: 腐烂标枪
+	Tooltip:
+		'''
+		召唤标枪射向目标位置
+		右键召回所有标枪并将它们拆分成小标枪后射出
+		'''
+}
+
+BrilliantEnchantPool: {
+	DisplayName: 璀璨注魔池
+	Tooltip: 为你的装备带来额外的强化
+}
+
+CrimtaneEnchantPool: {
+	DisplayName: 猩红注魔池
+	Tooltip: 为你的装备带来额外的强化
+}
+
+CrystalEnchantPool: {
+	DisplayName: 水晶注魔池
+	Tooltip: 为你的装备带来额外的强化
+}
+
+SoulEnchantPool: {
+	DisplayName: 灵魂注魔池
+	Tooltip: 为你的装备带来额外的强化
+}
+
+SoulOfDeveloper: {
+	DisplayName: 开发者之魂
+	Tooltip: “很适合用来冒充开发者！”
+}
+
+SplendorRemodelPool: {
+	DisplayName: 光辉重塑池
+	Tooltip: 右键打开UI，放入物品并选择指定合成表后激活以进行物品重塑
+}
+
+GelInvitation: {
+	DisplayName: 粘滑邀请函
+	Tooltip:
+		'''
+		摸上去黏黏的邀请函，一位伟大的君主正等着你出席它的粘滑宴会...
+		召唤史莱姆皇帝，不消耗
+		'''
+}
+
+EmperorSabre: {
+	DisplayName: 帝王佩刀
+	Tooltip: 至高无上的领袖之佩刀
+}
+
+MagicCrystalHook: {
+	DisplayName: 魔力晶体钩
+	Tooltip: ""
+}
+
+MagikeSymbol: {
+	DisplayName: ！该合成表只能通过魔能重塑进行！
+	Tooltip:
+		'''
+		合成表仅供参考，该合成表需要通过魔能重塑进行
+		使用任意的魔能重塑池放入物品后选择重塑表，之后激活以合成
+		需要足够的魔能和物品数量才能成功激活
+		'''
+}
+
+GelThrone: {
+	DisplayName: 史莱姆王座
+	Tooltip: 右键坐上去
+}
+
+GOWTester: {
+	DisplayName: 极风神测试物品
+	Tooltip: 警告！该物品仅为测试时使用！
+}
+
+FrostCrystal: {
+	DisplayName: 霜冻冰晶
+	Tooltip: 蕴含丰富的冰之魔能
+}
+
+FrostySword: {
+	DisplayName: 霜冻剑
+	Tooltip:
+		'''
+		左键命中敌怪后积蓄冰之魔力
+		右键射出霜冻弹，拥有充沛的冰之魔力时霜冻弹能够爆发出冰花
+		'''
+}
+
+TravelJournaling: {
+	DisplayName: 旅行手记
+	Tooltip: 记载着旅商在旅行中的见闻，使用魔能重塑能将上面记载的内容复现出来
+}
+
+SlimeEmperorSoulBox: {
+	DisplayName: 皇家秘宝
+	Tooltip: 右键点击以打开
+}
+
+ANewBirthOfIce: {
+	DisplayName: 冰雪的新生
+	Tooltip: 击败世界中的邪恶BOSS后，一个小小生命在冰龙巢中出现了
+}
+
+HiddenRed: {
+	DisplayName: 隐藏的赤色
+	Tooltip: 宝石树中或许会有稀有的红色果实，它能吸引一个赤色的大家伙
+}
+
+GelFiber: {
+	DisplayName: 凝胶纤维
+	Tooltip: 砍倒史莱姆树时掉落，史莱姆树苗由史莱姆掉落
+}
+
+NightmareHarp: {
+	DisplayName: 噩梦竖琴
+	Tooltip:
+		'''
+		在夜晚召唤梦魇之花，不消耗
+			可以在视觉效果配置中开启或关闭特殊的天空和特殊血条
+		'''
+}
+
+CrystalStoneMaker: {
+	DisplayName: 晶体造石机
+	Tooltip: 消耗魔能生产石块
+}
+
+CrystalAltar: {
+	DisplayName: 晶体聚合坛
+	Tooltip:
+		'''
+		右键打开UI放入物品并选择聚合配方
+		使用魔能连接仪连接到台座上
+		在台座内放入聚合配方中的次要物品
+		激活后开始聚合
+		'''
+}
+
+CrystalPedestal: {
+	DisplayName: 晶体台座
+	Tooltip: 右键打开UI，可放入物品
+}
+
+EmpyrosPowder: {
+	DisplayName: 火魔粉
+	Tooltip: 含有微弱的火魔力
+}
+
+GlistentBar: {
+	DisplayName: 晶莹锭
+	Tooltip: 散发出迷人的莹光
+}
+
+LeafStone: {
+	DisplayName: 叶石
+	Tooltip: 含有微弱的植生魔能
+}
+
+MagicalPowder: {
+	DisplayName: 魔粉
+	Tooltip: 含有微弱的魔力
+}
+
+MagikePolySymbol: {
+	DisplayName: ！该合成表只能通过魔能聚合进行！
+	Tooltip:
+		'''
+		该合成表需要通过魔能聚合进行！
+		除魔能外的第一个物品为主要物品，需要放置在聚合坛中
+		其余物品为次要物品，需要放置在台座中
+		之后激活聚合坛以进行合成，需要足够的物品数量和魔能量才能成功激活
+		'''
+}
+
+CrystalCrate: {
+	DisplayName: 魔力晶体匣
+	Tooltip: 右键单击以打开
+}
+
+FragmentsOfLight: {
+	DisplayName: 圣光残片
+	Tooltip: 拥有能够净化心灵的光之力
+}
+
+SlimeEruption: {
+	DisplayName: 凝胶喷发器
+	Tooltip:
+		'''
+		射出一堆凝胶
+		66%概率不消耗弹药
+		'''
+}
+
+GelWhip: {
+	DisplayName: 皇家凝胶鞭
+	Tooltip:
+		'''
+		6 召唤标记伤害
+		让敌人变得黏糊糊的
+		'''
+}
+
+VoidCrystal: {
+	DisplayName: 虚空水晶
+	Tooltip:
+		'''
+		激活后将附近物品吸入自身
+		可作为物品发送器连接到其他物品容器
+		'''
+}
+
+VoidStaff: {
+	DisplayName: 虚空连接杖
+	Tooltip:
+		'''
+		提取模式：第一次左键选择物品提取器，再次左键选择物品容器
+		发送模式：第一次左键选择物品发送器，再次左键选择物品容器
+		'''
+}
+
+RoyalGelCannon: {
+	DisplayName: 皇家凝胶炮
+	Tooltip: 迅速发射凝胶球
+}
+
+RoyalClassics: {
+	DisplayName: 皇室宝典
+	Tooltip:
+		'''
+		“记载着史莱姆王国的发展”
+		射出一堆不同的凝胶球
+		'''
+}
+
+FreosanInABottle: {
+	DisplayName: 瓶中冻
+	Tooltip: 装着名为“冻”的魔能
+}
+
+TemperedBottle: {
+	DisplayName: 钢化瓶
+	Tooltip: ""
+}
+
+ConcileInABottle: {
+	DisplayName: 瓶中调和
+	Tooltip: 装着名为“调和”的魔能
+}
+
+MetallonInABottle: {
+	DisplayName: 瓶中刚
+	Tooltip: 装着名为“刚”的魔能
+}
+
+TalantosInABottle: {
+	DisplayName: 瓶中包容
+	Tooltip: 装着名为“包容”的魔能
+}
+
+HeatanInABottle: {
+	DisplayName: 瓶中灼
+	Tooltip: 装着名为“灼”的魔能
+}
+
+SteelBar: {
+	DisplayName: 钢锭
+	Tooltip: 来硬的！
+}
+
+DeorcInABottle: {
+	DisplayName: 瓶中阴
+	Tooltip: 装着名为“阴”的魔能
+}
+
+LeohtInABottle: {
+	DisplayName: 瓶中光
+	Tooltip: 装着名为“光”的魔能
+}
+
+BloodyOrb: {
+	DisplayName: 血红宝珠
+	Tooltip: 凝聚了血月的精华
+}
+
+MutatusInABottle: {
+	DisplayName: 瓶中异变
+	Tooltip: 装着名为“异变”的魔能
+}
+
+LostSevensideHook: {
+	DisplayName: 迷失七棱钩
+	Tooltip:
+		'''
+		[c/f73535:红取风霜实，青看雨露柯。]
+			右键甩出钩子，命中后再次右键将玩家向钩子位置拖拽并获得2个[c/fa0064:梦魇光能]
+			拥有[c/fa0064:梦魇光能]时左键消耗1个[c/fa0064:梦魇光能]射出荆棘刺
+		'''
+}
+
+DreamShears: {
+	DisplayName: 碎梦剪
+	Tooltip:
+		'''
+		[c/be0065:猩红的刀刃会将你的梦境剪得粉碎]
+			使用左键攻击时获得1个[c/fa0064:梦魇光能]，挥舞攻击只有命中时才会获得1个[c/fa0064:梦魇光能]
+			右键消耗7个[c/fa0064:梦魇光能]释放噩梦之咬
+		'''
+}
+
+EuphorbiaMilii: {
+	DisplayName: 刺梅
+	Tooltip:
+		'''
+		[c/dacde8:美丽又危险]
+			使用左键攻击最后一击或右键满蓄力后释放的突刺命中敌人后获得2个[c/fa0064:梦魇光能]
+			右键可蓄力，如果可以则消耗7个[c/fa0064:梦魇光能]瞬移到鼠标位置
+		'''
+}
+
+GriefSeed: {
+	DisplayName: 悲叹之种
+	Tooltip:
+		'''
+		[c/f73535:绝望是你的终点]
+		右键点击可打开
+		'''
+}
+
+Dreamcatcher: {
+	DisplayName: 捕梦网
+	Tooltip:
+		'''
+		[c/8d004b:现在你或许可以做个好梦了...]
+			召唤梦魇渡鸦，占用1个召唤栏位
+			使用鞭子武器“伊甸”强化后会增强梦魇渡鸦的攻击性
+		'''
+}
+
+BarrenThornsStaff: {
+	DisplayName: 荒芜荆棘杖
+	Tooltip:
+		'''
+		[c/4f46a4:荆棘的花园]
+			射出花雾，不断攻击附近敌人，攻击3次后加强下一次攻击。初次强化后攻击会获得1个[c/fa0064:梦魇光能]
+			花雾在攻击时会消耗7点魔力
+			右键消耗7个[c/fa0064:梦魇光能]射出荒芜花雾
+		'''
+}
+
+DevilsClaw: {
+	DisplayName: 喙檐
+	Tooltip:
+		'''
+		[c/ccaaf2:恶魔之爪]
+			射出黑暗飞叶，每7次攻击射出一个红色飞叶，命中后获得1个[c/fa0064:梦魇光能]
+			右键消耗2个[c/fa0064:梦魇光能]射出一团红色飞叶
+		'''
+}
+
+Eden: {
+	DisplayName: 伊甸
+	Tooltip:
+		'''
+		[c/9d9d9d:禁忌之果]
+		26点召唤标记伤害
+		14%召唤标记暴击率
+			左键甩出蛇鞭，每4次攻击命中后获得1个[c/fa0064:梦魇光能]
+			右键咬出，消耗所有[c/fa0064:梦魇光能]强化噩梦召唤物
+		'''
+}
+
+Lycoris: {
+	DisplayName: 彼岸花
+	Tooltip:
+		'''
+		[c/be0065:另一边的花朵]
+			射出彼岸花弹，命中目标后获得1个[c/fa0064:梦魇光能]，未命中则产生彼岸花瓣
+			当[c/fa0064:梦魇光能]数量到达上限时射出强化彼岸花弹
+		'''
+}
+
+Lullaby: {
+	DisplayName: 入梦曲
+	Tooltip:
+		'''
+		[c/fefcc2:睡吧...]
+			射出追踪美梦光弹
+		'''
+}
+
+PurpleToeStaff: {
+	DisplayName: 噩梦捕食杖
+	Tooltip:
+		'''
+		[c/4f46a4:饥饿的捕食者们将吞噬你的梦境]
+			召唤噩梦捕食者，占用1.5个召唤栏位
+			使用鞭子武器“伊甸”强化后会增强噩梦捕食者的攻击性
+		'''
+}
+
+BoneRing: {
+	DisplayName: 骨戒
+	Tooltip:
+		'''
+		[c/be0065:被它抓住的人永远无法醒来]
+			射出梦魇爪，可以抓住敌人并持续发动爪击，每5次爪击获得1个[c/fa0064:梦魇光能]
+			右键消耗5个[c/fa0064:梦魇光能]在身前撕开裂隙，从中射出一堆小梦魇爪
+		'''
+}
+
+QueensWreath: {
+	DisplayName: 珊瑚藤
+	Tooltip:
+		'''
+		[c/ffd1fc:爱的锁链]
+		每3次射击射出一个锁链花瓣箭，命中后获得1个[c/fa0064:梦魇光能]
+		射箭时右键消耗1个[c/fa0064:梦魇光能]进行二次射击
+
+		双击A或D进行横向冲刺，冲刺途中如果与弹幕或敌怪碰撞则能够射出3个花瓣箭，之后下一次普通射击直接射出锁链花瓣箭
+		未发生碰撞则射出1个花瓣箭
+		双击S消耗2个[c/fa0064:梦魇光能]瞄准下方的敌人向下冲刺，冲刺途中与弹幕或敌怪发生碰撞则向上弹起之后射出一些箭矢
+		双击W消耗1个[c/fa0064:梦魇光能]向上冲刺，之射出3个从天上坠落的花瓣箭
+		'''
+}
+
+NightmareHeart: {
+	DisplayName: 梦魇花药袋
+	Tooltip:
+		'''
+		[c/be0065:永不停息地跳动着]
+		[c/fa0064:梦魇光能]上限增加到10个，每个[c/fa0064:梦魇光能]会提供1.5%伤害加成
+		抵抗梦蚀Debuff
+		小幅度增加防御力，生命回复，移动速度，近战攻速，伤害减免，暴击率
+		'''
+}
+
+RottenChest: {
+	DisplayName: 尸骨箱
+	Tooltip: ""
+}
+
+NightmareBed: {
+	DisplayName: 梦魇温床
+	Tooltip: ""
+}
+
+RottenKey: {
+	DisplayName: 尸骨钥匙
+	Tooltip: 用来解锁腐化之地的尸骨箱
+}
+
+CadaverousDragonHead: {
+	DisplayName: 尸化龙头骨
+	Tooltip: 朝敌人喷射瘴气
+}
+
+VertebraeKey: {
+	DisplayName: 脊柱钥匙
+	Tooltip: 用来解锁猩红之地的脊柱箱
+}
+
+VertebraeChest: {
+	DisplayName: 脊柱箱
+	Tooltip: ""
+}
+
+BloodAmulet: {
+	DisplayName: 鲜血护符
+	Tooltip:
+		'''
+		击杀敌人获得嗜血BUFF，可叠加5层
+		每一层嗜血 +2% 伤害，+2% 移动速度
+		'''
+}
+
+VertebraeBlade: {
+	DisplayName: 椎骨刃
+	Tooltip: 射出椎骨碎片，数量足够多时聚合成椎骨刃砸向敌人
+}
+
+RottenAmulet: {
+	DisplayName: 尸骨护符
+	Tooltip:
+		'''
+		受击后获得肢体再生debuff，可叠加层数，根据层数增加生命回复
+		层数到达6后消耗所有层数回复25血量
+		该效果有5秒CD
+		'''
+}
+
+IcicleSilkKnief: {
+	DisplayName: 冰晶匕首
+	Tooltip:
+		'''
+		长按右键甩动匕首，释放后向前投掷出
+		命中敌人后插在敌人身上，此时左键攻击命中该敌人将为匕首叠加印记
+		印记大于3后右键收回匕首并造成爆炸
+		'''
+}
+
+IronSilkKnief: {
+	DisplayName: 铁丝钩
+	Tooltip:
+		'''
+		长按右键甩动钩子，释放后向前投掷出
+		命中敌人后钩在敌人身上，此时再次右键将敌人向自身拖拽
+		'''
+}
+
+ShadowMirror: {
+	DisplayName: 影魔镜
+	Tooltip: 照出你的影子，你的影子会向你3秒之前的位置移动
+}
+
+SlimeSceptre: {
+	DisplayName: 凝胶手杖
+	Tooltip:
+		'''
+		使用时射出弹力凝胶球
+		装备后 +4% 伤害，+8% 移动速度
+		手持或装备时双击任意方向键召唤弹力凝胶球将自身弹出
+		'''
+}
+
+MagikeMonoclastic: {
+	DisplayName: 魔能单片镜
+	Tooltip: 佩戴并打开饰品可见性时可以直观地观察到魔能的流动
+}
+
+Reel_MagikeAdvance: {
+	DisplayName: 卷轴：强化魔能提炼
+	Tooltip: 现在你懂得如何再次强化你的魔能器械了
+}
+
+PhantomMirror: {
+	DisplayName: 镜中魅影
+	Tooltip: 照出你的魅影们，它们将沿着你的运动轨迹行动
+}
+
+SplendorLens: {
+	DisplayName: 光辉透镜
+	Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
+}
+
+SoulColumn: {
+	DisplayName: 灵魂水晶柱
+	Tooltip: 能够容纳很多魔能
+}
+
+FeatheredRefractor: {
+	DisplayName: 羽蛇广角镜
+	Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
+}
+
+FlyingSnakeFeather: {
+	DisplayName: 羽蛇神之羽
+	Tooltip: ""
+}
+
+CrystalRefinery: {
+	DisplayName: 晶体炼化器
+	Tooltip: 消耗魔能生成魔力晶体
+}
+
+BrilliantRefiner: {
+	DisplayName: 璀璨炼化器
+	Tooltip: 消耗魔能生成魔力晶体
+}
+
+SplendorRefiner: {
+	DisplayName: 光辉炼化器
+	Tooltip: 消耗魔能生成魔力晶体
+}
+
+SplendorColumn: {
+	DisplayName: 光辉水晶柱
+	Tooltip: 能够容纳很多魔能
+}
+
+SplendorPentaprism: {
+	DisplayName: 光辉五棱镜
+	Tooltip: ""
+}
+
+BrilliantRefinery: {
+	DisplayName: 璀璨炼化器
+	Tooltip: 消耗魔能生成魔力晶体
+}
+
+SplendorRefinery: {
+	DisplayName: 光辉炼化器
+	Tooltip: 消耗魔能生成魔力晶体
+}
+
+SplendorRefractor: {
+	DisplayName: 光辉广角镜
+	Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
+}
+
+MiniBrilliantColumn: {
+	DisplayName: 微型璀璨水晶柱
+	Tooltip: 便携式水晶柱，能为你身上消耗魔能的设备供能
+}
+
+MiniCrimtaneColumn: {
+	DisplayName: 微型猩红水晶柱
+	Tooltip: 便携式水晶柱，能为你身上消耗魔能的设备供能
+}
+
+MiniCrystalColumn: {
+	DisplayName: 微型水晶柱
+	Tooltip: 便携式水晶柱，能为你身上消耗魔能的设备供能
+}
+
+MiniDemoniteColumn: {
+	DisplayName: 微型魔化水晶柱
+	Tooltip: 便携式水晶柱，能为你身上消耗魔能的设备供能
+}
+
+MiniSoulColumn: {
+	DisplayName: 微型灵魂水晶柱
+	Tooltip: 便携式水晶柱，能为你身上消耗魔能的设备供能
+}
+
+MiniSplendorColumn: {
+	DisplayName: 微型光辉水晶柱
+	Tooltip: 便携式水晶柱，能为你身上消耗魔能的设备供能
+}
+
+CrystalSword: {
+	DisplayName: 魔力水晶剑
+	Tooltip: 消耗 5 魔能射出光束
+}
+
+BrilliantCharger: {
+	DisplayName: 璀璨充能站
+	Tooltip: 右键打开UI，放入可容纳魔能的物品后激活为该物品充能
+}
+
+CrystalCharger: {
+	DisplayName: 水晶充能站
+	Tooltip: 右键打开UI，放入可容纳魔能的物品后激活为该物品充能
+}
+
+GlistentCharger: {
+	DisplayName: 晶莹充能站
+	Tooltip: 右键打开UI，放入可容纳魔能的物品后激活为该物品充能
+}
+
+SplendorCharger: {
+	DisplayName: 光辉充能站
+	Tooltip: 右键打开UI，放入可容纳魔能的物品后激活为该物品充能
+}
+
+CrystalStaff: {
+	DisplayName: 魔力晶体杖
+	Tooltip: 消耗 1 魔能放置晶体框架
+}
+
+Damnation: {
+	DisplayName: 灾星
+	// Tooltip: ""
+}
+
+BloodJadeCore: {
+	DisplayName: 赤血玉核心
+	Tooltip:
+		'''
+		流淌的鲜血让赤玉变得更红了
+		召唤赤血玉灵，不消耗
+		'''
+}
+
+BloodJade: {
+	DisplayName: 赤血玉
+	Tooltip: ""
+}
+
+BloodJadeMagicWeapon: {
+	DisplayName: 赤琰圭
+	Tooltip: 未完成物品，请勿使用
+}
+
+BloodJadeMeleeWeapon: {
+	DisplayName: 赤璋
+	Tooltip: 右键格挡攻击，成功格挡后获得BUFF，拥有BUFF时普通攻击可以产生爆破
+}
+
+BloodiancieBossBag: {
+	DisplayName: 赤星匣
+	Tooltip: 右键点击以打开
+}
+
+BrilliantAltar: {
+	DisplayName: 璀璨聚合坛
+	Tooltip:
+		'''
+		右键打开UI放入物品并选择聚合配方
+		使用魔能连接仪连接到台座上
+		在台座内放入聚合配方中的次要物品
+		激活后开始聚合
+		'''
+}
+
+GlistentAltar: {
+	DisplayName: 晶莹聚合坛
+	Tooltip:
+		'''
+		右键打开UI放入物品并选择聚合配方
+		使用魔能连接仪连接到台座上
+		在台座内放入聚合配方中的次要物品
+		激活后开始聚合
+		'''
+}
+
+ShadowAltar: {
+	DisplayName: 影子聚合坛
+	Tooltip:
+		'''
+		右键打开UI放入物品并选择聚合配方
+		使用魔能连接仪连接到台座上
+		在台座内放入聚合配方中的次要物品
+		激活后开始聚合
+		'''
+}
+
+BloodiancieRelic: {
+	DisplayName: 赤尖碑
+	Tooltip: 赤血玉灵的灵魂寄宿在其中。摆放它时你感受到了一个掌控现实的强大生物正在某处注视着你。
+}
+
+Whistle: {
+	DisplayName: 赤玉窜天猴
+	Tooltip: 和窜天猴一起上天吧
+}
+
+BloodJadeRangesWeapon: {
+	DisplayName: 赫天凶璧
+	Tooltip: 右键格挡攻击，成功格挡后获得BUFF，拥有BUFF时普通攻击可以产生爆破
+}
+
+MagikeGuideBook: {
+	DisplayName: 魔能辞典
+	Tooltip: 记载着魔能的知识，物品栏内右键使用，使用鼠标滚轮翻页
+}
+
+MagikeNote1: {
+	DisplayName: 古代研究员笔记
+	Tooltip: ""
+}
+
+ShadowChain: {
+	DisplayName: 影之链
+	Tooltip:
+		'''
+		右键甩动链条，松手后射出，命中后会戳在目标身上
+		如果有链条戳在目标身上，左键会产生影子进行攻击
+		'''
+}
+
+RuneSong: {
+	DisplayName: 符文之歌
+	Tooltip:
+		'''
+		+62 点生命值上限
+		近战攻击命中时 +3 生命值
+		[c/01fe06:若你击中的目标生命值比你低，则有 +15% 的几率一击必杀]
+		[c/8e8e8e:一把传奇级的宝剑，划过空气时会发出哼唱般的鸣响。]
+		[c/8e8e8e:这把剑采用非同寻常的技艺打造而成，其超高的耐久度便是明证。只需要一击便足以击败敌人。]
+		'''
+}
+
+AncientGemstone: {
+	DisplayName: 上古宝石
+	Tooltip: "[c/8e8e8e:奇怪的蓝色宝石，散发着能量波。]"
+	// ShlimmerTranslation: 此为微光转化合成表
+}
+
+BrokenHandle: {
+	DisplayName: 断裂的剑柄
+	Tooltip:
+		'''
+		+31 点生命值上限
+		[c/8e8e8e:某件上古武器的一部分。虽然只是剑柄，握在掌心时却依然能给你带来一种神秘的平衡感。]
+		'''
+}
+
+ChippedBlade: {
+	DisplayName: 有缺口的剑刃
+	Tooltip:
+		'''
+		独一无二的制作用部件。
+		[c/8e8e8e:某件上古武器的一部分。玻璃似的外观让它显得仿佛一触即碎，但它其实比你见过的任何材料都要坚硬。]
+		'''
+}
+
+ClearGemstone: {
+	DisplayName: 透明宝石
+	Tooltip:
+		'''
+		独一无二的制作用部件。
+		[c/8e8e8e:某件上古武器的一部分。虽然与普通的上古宝石材质相同，但这一颗让人感觉异常透明，里面还被注入了奇特的能量。]
+		'''
+}
+
+RuneParchment: {
+	DisplayName: 符文羊皮纸
+	Tooltip:
+		'''
+		[c/8e8e8e:一张上古时代遗留下来的纸，被保存得异常完好。]
+		[c/8e8e8e:你无法解读上面的符文，但从那些小小的符号可以看出，这应该是打造某件奇特武器用的配方。]
+			击败世纪之花后由旅商售卖
+		'''
+}
+
+CraftLock: {
+	DisplayName: ！该物品无法合成！
+	Tooltip: 请左键使用合成表中的第一个物品以进行合成
+}
+
+HartcoreObsidian: {
+	DisplayName: 地心黑曜石
+	Tooltip:
+		'''
+		[c/8e8e8e:一块坚不可摧的墙壁......等一下！]
+		[c/8e8e8e:这东西本来不应该出现在你身上的！]
+		'''
+}
+
+PhantomSpark: {
+	DisplayName: 幻影星火
+	Tooltip:
+		'''
+		+12%暴击率
+		+27%暴击伤害
+		[c/01fe06:击杀任何敌人后有 +20%的几率召唤出一位穴居者的鬼魂]
+		[c/8e8e8e:一张传奇的弓，制作工艺相当精湛，能射出纯净的能量箭。]
+		[c/8e8e8e:这种能量箭有时甚至能刺穿时空帷幕，召唤出古时候的魂灵。]
+		'''
+}
+
+PoisonousSickle: {
+	DisplayName: 带毒镰刀
+	Tooltip:
+		'''
+		+18%暴击伤害
+		命中时有+28%的几率施加毒性，并使敌人受到的治疗效果降低75%
+		[c/8e8e8e:原本是一把农具，为了屠杀某个威胁性极强的劲敌而被改造成了武器。]
+		'''
+}
+
+AncientChest: {
+	DisplayName: 上古箱子
+	Tooltip: "[c/8e8e8e:这个宝箱似乎已经有几千年的历史了。]"
+}
+
+GlowTulipDoor: {
+	DisplayName: 发光郁金香遗迹门
+	Tooltip: "[c/8e8e8e:这东西本来不应该出现在你身上的！]"
+}
+
+GlowTulipRing: {
+	DisplayName: 光耀郁金香戒指
+	Tooltip:
+		'''
+		+3亮光
+		[c/8e8e8e:一只会发光的戒指，蕴含着光耀郁金香的精华。]
+		'''
+	Polished: "经过抛光的 "
+	PolishedToolTip:
+		'''
+		+4亮光
+		每秒+1.0点生命值
+		'''
+}
+
+AncientGemNecklace: {
+	DisplayName: 上古宝石项链
+	Tooltip:
+		'''
+		+5.6%近战攻击速度
+		[c/8e8e8e:一条完全采用上古宝石制作而成的项链，坠子则是一块超级稀有的白色上古宝石。]
+		'''
+	AncientGemSet: 2件套：将背包内物品的最高镐力的+7%加到攻击伤害上
+	AncientGemSetTips: 装备上古宝石戒指以获得套装效果
+}
+
+AncientGemRing: {
+	DisplayName: 上古宝石戒指
+	Tooltip:
+		'''
+		+15%暴击伤害
+		[c/8e8e8e:这只神秘的戒指完全采用上古宝石制作而成，上面更镶嵌着一块超级稀有的白色上古宝石。]
+		'''
+	AncientGemSet: 2件套：将背包内物品的最高镐力的+7%加到攻击伤害上
+	AncientGemSetTips: 装备上古宝石项链以获得套装效果
+}
+
+GoldCrystalNecklace: {
+	DisplayName: 黄金水晶项链
+	Tooltip:
+		'''
+		+9.0%近战伤害
+		+9.4%远程伤害
+		[c/8e8e8e:将最为贵重的几种材料结合起来打造而成的饰物，闪闪发亮。]
+		'''
+	Polished: "经过抛光的 "
+	PolishedToolTip:
+		'''
+		+12.3%近战伤害
+		+12.5%远程伤害
+		'''
+}
+
+GoldCrystalRing: {
+	DisplayName: 黄金水晶戒指
+	Tooltip:
+		'''
+		+6.3%远程伤害
+		[c/8e8e8e:一枚珍奇的戒指，上面镶着一枚上古宝石。]
+		'''
+	Polished: "经过抛光的 "
+	PolishedToolTip:
+		'''
+		+8.9%远程伤害
+		+4%远程攻击速度
+		'''
+}
+
+OctarineBar: {
+	DisplayName: 幻光金属锭
+	Tooltip: ""
+}
+
+OctarineOre: {
+	DisplayName: 幻光金属矿石
+	Tooltip: ""
+}
+
+SkyRing: {
+	DisplayName: 天空戒指
+	Tooltip:
+		'''
+		+7%暴击几率
+		+8.5%近战伤害
+		[c/8e8e8e:这枚戒指让你想起了广袤无垠的天空。]
+		'''
+}
+
+CoreBoneRing: {
+	DisplayName: 骨制戒指
+	Tooltip:
+		'''
+		+4%暴击几率
+		[c/8e8e8e:一枚用骨头制成的史前时代的戒指，做工粗糙。]
+		[c/8e8e8e:以前也有人在早期人类的墓穴中发现过类似的戒指。]
+		'''
+}
+
+OceanheartNecklace: {
+	DisplayName: 海洋之心项链
+	Tooltip:
+		'''
+		+42点生命值上限
+		随时间逐渐恢复的生命值治疗效果提高 +21%
+		[c/8e8e8e:一件非同寻常的珍宝，上面那颗大大的蓝宝石尤为显眼。]
+		[c/8e8e8e:将它捧在胸前，会让你有一种被爱的感觉。]
+		'''
+}
+
+HeartBerryNecklace: {
+	DisplayName: 心形莓果项链
+	Tooltip:
+		'''
+		每秒+0.5点生命值
+		[c/8e8e8e:挂在脖子上的一颗心形莓果，随时随地都能拿来当零食吃！]
+		'''
+}
+
+BubblePearlNecklace: {
+	DisplayName: 气泡珍珠项链
+	Tooltip:
+		'''
+		+12点生命值上限
+		+7护甲
+		+5闪避几率
+		[c/8e8e8e:自然生成的首饰，用稀有的气泡珍珠打造而成。]
+		'''
+}
+
+AncientGuardianRing: {
+	DisplayName: 上古守护者戒指
+	Tooltip:
+		'''
+		+18点生命值上限
+		被头目攻击时受到的伤害降低5%
+		[c/8e8e8e:一件遗物，制作方式与上古守护者项链相同，专门用来抵御那些最为凶悍的敌人。]
+		'''
+}
+
+AncientGuardianNecklace: {
+	DisplayName: 上古守护者项链
+	Tooltip:
+		'''
+		被头目攻击时受到的伤害降低10%
+		[c/8e8e8e:古人留下的遗物，蕴含着极强的法力，专门用来抵御那些最为凶悍的敌人。]
+		'''
+}
+
+IceDragonNestReplacer: {
+	DisplayName: 蓝色珊瑚石[冰封]
+	Tooltip:
+		'''
+		“你不该使用这个物品，除非这是一个没有冰龙巢穴的老旧世界。”
+		左键将冰龙巢穴的位置设置到自身中心
+		右键查看当前世界的冰龙巢穴位置
+		'''
+}
+
+ShadowBrick: {
+	DisplayName: 影之城砖
+	Tooltip: ""
+}
+
+ShadowQuadrel: {
+	DisplayName: 影方砖
+	Tooltip: ""
+}
+
+ShadowImaginaryBrick: {
+	DisplayName: 影虚砖
+	Tooltip: ""
+}
+
+ShadowBrickWall: {
+	DisplayName: 影砖墙
+	Tooltip: ""
+}
+
+MercuryPlatform: {
+	DisplayName: 水银平台
+	Tooltip: ""
+}
+
+MercuryDroplight: {
+	DisplayName: 水银吊灯
+	Tooltip: 看上去似乎只能摆在地上？
+}
+
+BlackHoleChest: {
+	DisplayName: 黑洞箱
+	Tooltip: 从理想的世界中诞生的微型黑洞，能够分成两半，里面可以存放一些物品。
+}
+
+Cosmophore: {
+	DisplayName: 宙切
+	Tooltip: 以理想的天体为原型制作的近战武器
+}
+
+Shadura: {
+	DisplayName: 影煌 「虚理为真」
+	Tooltip: 曾经仅存在于刀匠理想中的太刀现在正被你握在手中
+}
+
+MercuryChest: {
+	DisplayName: 水银箱
+	Tooltip: ""
+}
+
+ShadowMagneticCard: {
+	DisplayName: 影磁卡
+	Tooltip: 用于解锁影之城中的水银箱
+}
+
+ShadowWave: {
+	DisplayName: 月影
+	Tooltip:
+		'''
+		右键以填充弹药，填充后可以一口气将大部分弹药发射出去
+		曾经是枪械商的得意设计，可惜由于图纸丢失而无法制造出来
+		'''
+}
+
+MercuryStaff: {
+	// DisplayName: Mercury Staff
+	// Tooltip: ""
+}
+
+MercuryScepter: {
+	DisplayName: 水银权杖
+	Tooltip: 无毒无害！
+}
+
+ShadowMask: {
+	DisplayName: 影面
+	Tooltip:
+		'''
+		+3% 移速
+		免疫击退
+		'''
+}
+
+Shadurion: {
+	DisplayName: 极影刀 「虚理为真」
+	// Tooltip: ""
+}
+
+ShadowCandelabra: {
+	DisplayName: 灯之影
+	Tooltip: 照出你的影子
+}
+
+GlassShield: {
+	DisplayName: 玻璃盾
+	Tooltip: 一块玻璃制成的盾牌，或许防御时就会碎成碎片
+}
+
+BisketyHead: {
+	DisplayName: Biskety的头
+	Tooltip:
+		'''
+		生成一个可爱的Biskety！
+		等等，你要对它做什么？
+		'''
+}
+
+StretchGlue: {
+	DisplayName: 弹力胶
+	Tooltip: 让飞盾能够在敌人间弹射一次
+}
+
+TrashCanLid: {
+	DisplayName: 垃圾桶盖
+	Tooltip: 在没有武器的时候可以使用的简易盾牌
+}
+
+FlyingShieldMaintenanceGuide: {
+	DisplayName: 飞盾维护指南
+	Tooltip:
+		'''
+		古代人类留在地下金箱子内的指南
+		增加飞盾右键格挡能力
+		'''
+}
+
+FlyingShieldVarnish: {
+	DisplayName: 飞盾光油
+	Tooltip:
+		'''
+		古代人类留在地表木箱子内的光油
+		增加飞盾飞行速度
+		'''
+}
+
+RedJadeShield: {
+	DisplayName: 赤玉飞盾
+	Tooltip: 格挡攻击时有概率产生爆炸
+}
+
+FlyingShieldToolbox: {
+	DisplayName: 飞盾工具箱
+	Tooltip:
+		'''
+		让飞盾能够在敌人间弹射一次
+		增加飞盾飞行速度
+		增加飞盾右键格挡能力
+		'''
+}
+
+HeavyWedges: {
+	DisplayName: 重型楔石
+	Tooltip:
+		'''
+		在地下金箱子中出现
+		减慢飞盾飞行速度，提升飞盾大小和近战伤害
+		'''
+}
+
+DemonsProtection: {
+	DisplayName: 魔界护盾符
+	Tooltip:
+		'''
+		[c/8aebff:举起盾牌的瞬间能够进行完美格挡并释放恶魔爪击]
+		+10% 飞盾格挡时减少弹幕穿透数的概率
+		略微增加飞盾格挡能力
+		略微增加举盾速度
+		'''
+}
+
+FlyingShieldToolboxProMax: {
+	DisplayName: 飞盾工具箱-豪华版
+	Tooltip:
+		'''
+		让飞盾能够在敌人间弹射一次
+		增加飞盾飞行速度
+		增加飞盾右键格挡能力
+		飞盾未回归时也可以使用右键格挡
+		'''
+}
+
+LevitationBlossom: {
+	DisplayName: 悬浮花
+	Tooltip: 增加飞盾飞行时间
+}
+
+DeliciousSteak: {
+	DisplayName: 美味肉排
+	Tooltip: 一块很大的牛排，看起来很美味，但这只是看起来而已……
+}
+
+ChlorophyteMedal: {
+	DisplayName: 叶绿徽章
+	Tooltip: 让飞盾拥有追踪能力
+}
+
+SilverAngel: {
+	DisplayName: 银天使
+	Tooltip: 命中敌人时降下制裁之剑
+}
+
+FloralHarmonyMedallion: {
+	DisplayName: 花韵之勋
+	Tooltip:
+		'''
+		大幅增加飞盾飞行时间
+		让飞盾拥有追踪能力
+		'''
+}
+
+PearlRay: {
+	DisplayName: 白玉鳐
+	Tooltip: 飞盾命中或成功防御后下一次攻击伤害增加
+}
+
+FlyingShieldCore: {
+	DisplayName: 飞盾核心
+	Tooltip:
+		'''
+		减慢飞盾飞行速度，提升飞盾大小
+		可以在飞盾未回归时使用右键格挡
+		+12% 近战伤害
+		'''
+}
+
+TortoiseshellFortress: {
+	DisplayName: 乌龟壳重盾
+	Tooltip:
+		'''
+		一块相当重的盾牌，可以很好地保护你
+		双击方向键以成为丛林之王
+		'''
+}
+
+ShieldbearersBand: {
+	DisplayName: 额外背带
+	Tooltip: +1 同时存在的飞盾数量
+}
+
+RustedShield: {
+	DisplayName: 腐朽的盾
+	Tooltip: 据说很久以前，英雄就是拿着这面盾驱走了灾厄。而现在早已变得锈迹斑斑。
+}
+
+BeetleLimbStrap: {
+	DisplayName: 甲虫附肢
+	Tooltip:
+		'''
+		+3 同时存在的飞盾数量
+		很多昆虫都能举起几倍与自身体重的物品，这个附肢也是如此
+		'''
+}
+
+PowerliftExoskeleton: {
+	DisplayName: 外骨骼
+	Tooltip:
+		'''
+		+2 同时存在的飞盾数量
+		一个强有力的机械臂，能够让你多携带几块盾牌
+		'''
+}
+
+HolyCharm: {
+	DisplayName: 神圣荣耀
+	Tooltip:
+		'''
+		[c/8aebff:举起盾牌的瞬间能够进行完美格挡并释放神圣盾冲]
+		飞盾未回归时也可以使用右键格挡
+		'''
+}
+
+Terracrest: {
+	DisplayName: 泰拉荣耀
+	Tooltip:
+		'''
+		[c/8aebff:举起盾牌的瞬间能够进行完美格挡并释放泰拉魔刺]
+		飞盾未回归时也可以使用右键格挡
+		+18% 飞盾格挡时减少弹幕穿透数的概率
+		增加飞盾格挡能力
+		增加举盾速度
+		'''
+}
+
+Fishronguard: {
+	DisplayName: 亘古爵王
+	Tooltip:
+		'''
+		在空中划过的样子宛如真正的猪鲨飞过
+		飞行时喷出追踪泡泡
+		'''
+}
+
+MechRioter: {
+	DisplayName: 机械暴徒
+	Tooltip: 扔出3个一组的机械暴徒，它们将在命中敌人后散开
+}
+
+BatfangShield: {
+	DisplayName: 血鄂
+	Tooltip: 有概率产生吸血效果
+}
+
+VampiresFang: {
+	DisplayName: 血饶之牙
+	Tooltip:
+		'''
+		+1 同时存在的飞盾数量
+		扔出嗜血的盾牌
+		'''
+}
+
+GlazeBulwark: {
+	DisplayName: 琉璃重盾
+	Tooltip: 在防御时会变成碎片
+}
+
+GemrainAegis: {
+	DisplayName: 七彩宝石盾
+	Tooltip: 防御时变成七彩碎片
+}
+
+Leonids: {
+	DisplayName: 十二星-狮子座
+	Tooltip: 射出流星雨
+}
+
+Solleonis: {
+	DisplayName: 狮煌 破日
+	Tooltip: “释放吞噬太阳的巨狮”
+}
+
+RoyalAngel: {
+	DisplayName: 圣光天使
+	Tooltip: 命中敌人后降下圣光羽剑
+}
+
+Noctiflair: {
+	DisplayName: 极夜之诗
+	Tooltip: 天使张开双翼，唤来灭世的苍星
+}
+
+FlyingShieldTerminalChip: {
+	DisplayName: 飞盾终端芯片
+	Tooltip:
+		'''
+		减慢飞盾飞行速度，提升飞盾大小
+		可以在飞盾未回归时使用右键格挡
+		增加飞盾回归速度
+		+15% 近战伤害
+		+7% 近战攻速
+		'''
+}
+
+NanoAmplifier: {
+	DisplayName: 纳米增幅器
+	Tooltip:
+		'''
+		+2 飞盾在敌人间弹射次数
+		大幅增加飞盾飞行速度
+		增加飞盾右键格挡能力
+		飞盾未回归时也可以使用右键格挡
+		'''
+}
+
+ConquerorOfTheSeas: {
+	DisplayName: 海洋征服者
+	Tooltip: 一块巨型盾牌，会赐予你海神的祝福
+}
+
+GoldenSamurai: {
+	DisplayName: 金武士
+	Tooltip: +1 同时存在的飞盾数量
+}
+
+RemainsOfSamurai: {
+	DisplayName: 武士的遗容
+	Tooltip: 一位武士的亡魂
+}
+
+HorseshoeCrab: {
+	DisplayName: 冥凯鲎
+	Tooltip:
+		'''
+		飞盾命中或成功防御后下一次攻击伤害增加
+		命中敌人时呼唤同伴一同攻击
+		'''
+}
+
+MineShield: {
+	DisplayName: 我的盾牌
+	Tooltip:
+		'''
+		“不吃这套，谢谢”
+		能够将弹幕弹回去
+		'''
+}
+
+ShanHai: {
+	DisplayName: 山海无极
+	Tooltip: ""
+}
+
+IcicleArrowItem: {
+	DisplayName: 冰晶箭
+	Tooltip: 命中后生成冰锥
+}
+
+EekShield: {
+	DisplayName: 伊柯之盾
+	Tooltip:
+		'''
+		“兄弟，你飞来吧”
+		[c/d63928:来自eek的世界]
+		'''
+}
+
+AncientFurnace: {
+	DisplayName: 远古锻造炉
+	Tooltip:
+		'''
+		可作为熔炉和远古操纵机
+		“来自远古时代的锻造炉，似乎还未发挥出它所有的能力”
+		'''
+}
+
+Hephaesth: {
+	DisplayName: 炼心城
+	Tooltip: 传说中远古时期所有的盾牌均由这个锻造炉打造而出
+}
+
+RedJadeFountain: {
+	DisplayName: 赤玉喷泉
+	Tooltip: 被电路激活时释放红色喷泉
+}
+
+SandWall: {
+	DisplayName: 古沙之壁
+	Tooltip: 防御时生成沙龙卷
+}
+
+GelFiberTable: {
+	DisplayName: 凝胶纤维桌
+	Tooltip: ""
+}
+
+GeiFiberDroplight: {
+	DisplayName: 凝胶纤维挂灯
+	Tooltip: ""
+}
+
+GelFiberChair: {
+	DisplayName: 凝胶纤维椅
+	Tooltip: ""
+}
+
+GelFiberBookcase: {
+	DisplayName: 凝胶纤维书架
+	Tooltip: ""
+}
+
+GelFiberCandle: {
+	DisplayName: 凝胶纤维蜡烛
+	Tooltip: ""
+}
+
+GelFiberFloorLamp: {
+	DisplayName: 凝胶纤维灯球
+	Tooltip: ""
+}
+
+GelFiberTallFloorLamp: {
+	DisplayName: 凝胶纤维火炬
+	Tooltip: ""
+}
+
+GelFiberBed: {
+	DisplayName: 凝胶纤维床
+	Tooltip: ""
+}
+
+GelFiberBigDroplight: {
+	DisplayName: 凝胶纤维大吊灯
+	Tooltip: ""
+}
+
+GelFiberPiano: {
+	DisplayName: 凝胶纤维钢琴
+	Tooltip: ""
+}
+
+GelFiberSofa: {
+	DisplayName: 凝胶纤维沙发
+	Tooltip: ""
+}
+
+GelFiberToilet: {
+	DisplayName: 凝胶纤维马桶
+	Tooltip: ""
+}
+
+GelFiberBathtub: {
+	DisplayName: 凝胶纤维浴缸
+	Tooltip: ""
+}
+
+GelFiberChest: {
+	DisplayName: 凝胶纤维箱
+	Tooltip: ""
+}
+
+GelFiberClock: {
+	DisplayName: 凝胶纤维钟
+	Tooltip: ""
+}
+
+GelFiberDresser: {
+	DisplayName: 凝胶纤维梳妆台
+	Tooltip: ""
+}
+
+GelFiberSink: {
+	DisplayName: 凝胶纤维水槽
+	Tooltip: ""
+}
+
+GelFiberDoor: {
+	DisplayName: 凝胶纤维门
+	Tooltip: ""
+}
+
+GelFiberWorkBench: {
+	DisplayName: 凝胶纤维工作台
+	Tooltip: ""
+}
+
+PirateKingHat: {
+	DisplayName: 海盗王的鲨鱼帽
+	Tooltip:
+		'''
+		近战伤害增加8% 
+		近战攻速增加5%
+		'''
+	NotHasPirateKingSoul: 海盗王之魂：装备至少2件套后触发效果
+	PirateKingSoul2Part:
+		'''
+		海盗王之魂：攻击敌人有时会抢夺钱币
+		[c/807b7d:(2)件套]
+		[c/69a777:5%概率触发]
+		[c/69a777:2] [c/807b7d:秒冷却时间]
+		[c/807b7d:造成] [c/9e82b5:150%] [c/807b7d:伤害]
+		'''
+	PirateKingSoul3Part:
+		'''
+		海盗王之魂：攻击敌人有时会抢夺钱币
+		[c/807b7d:(3)件套]
+		[c/69a777:10%概率触发]
+		[c/69a777:1] [c/807b7d:秒冷却时间]
+		[c/807b7d:造成] [c/9e82b5:200%] [c/807b7d:伤害]
+		'''
+	NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
+	LuckyStar2Part:
+		'''
+		幸运星：运气增加
+		[c/807b7d:(2)件套]
+		[c/807b7d:增加] [c/9e82b5:0.2]
+		'''
+	LuckyStar3Part:
+		'''
+		幸运星：运气增加
+		[c/807b7d:(3)件套]
+		[c/807b7d:增加] [c/9e82b5:0.3]
+		'''
+	PriateKingBonus: 幸运777：近战伤害，近战速度，近战暴击率各增加7%
+}
+
+LightningRods: {
+	DisplayName: 避雷针
+	Tooltip: 放置后右键召唤荒雷龙
+}
+
+CrystalBlossomShards: {
+	DisplayName: 晶花碎片
+	Tooltip:
+		'''
+		结晶化的樱花，已经破碎了，这些只是亮晶晶的碎片。
+		召唤一只小小的妖狐剑士。
+		[c/ff98d2:来自云酱的世界]
+		'''
+}
+
+ThunderveinDragonBossBag: {
+	DisplayName: 荒雷龙宝藏盒
+	Tooltip: 右键单击以打开
+}
+
+ThunderveinDragonRelic: {
+	DisplayName: 荒雷龙圣物
+	Tooltip: ""
+}
+
+ThunderveinDragonTrophy: {
+	DisplayName: 荒雷龙纪念章
+	Tooltip: ""
+}
+
+ZapCrystal: {
+	DisplayName: 电晶
+	Tooltip: ""
+}
+
+ThunderBathtub: {
+	DisplayName: 雷脉浴缸
+	Tooltip: ""
+}
+
+ThunderBed: {
+	DisplayName: 雷脉床
+	Tooltip: ""
+}
+
+ThunderBigDroplight: {
+	DisplayName: 雷脉吊灯
+	Tooltip: ""
+}
+
+ThunderBookcase: {
+	DisplayName: 雷脉书架
+	Tooltip: ""
+}
+
+ThunderCandelabra: {
+	DisplayName: 雷脉烛台
+	Tooltip: ""
+}
+
+ThunderCandle: {
+	DisplayName: 雷脉蜡烛
+	Tooltip: ""
+}
+
+ThunderChair: {
+	DisplayName: 雷脉椅子
+	Tooltip: ""
+}
+
+ThunderChest: {
+	DisplayName: 雷脉箱
+	Tooltip: ""
+}
+
+ThunderClock: {
+	DisplayName: 雷脉钟
+	Tooltip: ""
+}
+
+ThunderDoor: {
+	DisplayName: 雷脉门
+	Tooltip: ""
+}
+
+ThunderDresser: {
+	DisplayName: 雷脉梳妆台
+	Tooltip: ""
+}
+
+ThunderDroplight: {
+	DisplayName: 雷脉灯笼
+	Tooltip: ""
+}
+
+ThunderFloorLamp: {
+	DisplayName: 雷脉灯柱
+	Tooltip: ""
+}
+
+ThunderPiano: {
+	DisplayName: 雷脉钢琴
+	Tooltip: ""
+}
+
+ThunderPlatform: {
+	DisplayName: 雷脉平台
+	Tooltip: ""
+}
+
+ThunderSink: {
+	DisplayName: 雷脉水槽
+	Tooltip: ""
+}
+
+ThunderSofa: {
+	DisplayName: 雷脉沙发
+	Tooltip: ""
+}
+
+ThunderStoneBlock: {
+	DisplayName: 雷脉石
+	Tooltip: ""
+}
+
+ThunderTable: {
+	DisplayName: 雷脉桌
+	Tooltip: ""
+}
+
+ThunderToilet: {
+	DisplayName: 雷脉马桶
+	Tooltip: ""
+}
+
+ThunderWorkBench: {
+	DisplayName: 雷脉工作台
+	Tooltip: ""
+}
+
+TheGazeOfTheThundervein: {
+	DisplayName: 荒雷的凝视
+	Tooltip: 黑夜中正在注视着猎物的荒雷龙，据说它的头部更容易受到伤害
+}
+
+ThunderveinSoulStone: {
+	DisplayName: 雷脉魂石
+	Tooltip: 荒雷龙的魂魄与你同在
+}
+
+ThunderDukeVine: {
+	DisplayName: 雷公藤
+	Tooltip: 积蓄电能后射出电磁炮
+}
+
+MercuryBathtub: {
+	// DisplayName: Mercury Bathtub
+	// Tooltip: ""
+}
+
+MercuryBed: {
+	// DisplayName: Mercury Bed
+	// Tooltip: ""
+}
+
+MercuryBigDroplight: {
+	// DisplayName: Mercury Big Droplight
+	// Tooltip: ""
+}
+
+MercuryBookcase: {
+	// DisplayName: Mercury Bookcase
+	// Tooltip: ""
+}
+
+MercuryCandelabra: {
+	// DisplayName: Mercury Candelabra
+	// Tooltip: ""
+}
+
+MercuryCandle: {
+	// DisplayName: Mercury Candle
+	// Tooltip: ""
+}
+
+MercuryChair: {
+	// DisplayName: Mercury Chair
+	// Tooltip: ""
+}
+
+MercuryClock: {
+	// DisplayName: Mercury Clock
+	// Tooltip: ""
+}
+
+MercuryDoor: {
+	// DisplayName: Mercury Door
+	// Tooltip: ""
+}
+
+MercuryDresser: {
+	// DisplayName: Mercury Dresser
+	// Tooltip: ""
+}
+
+MercuryDroplight2: {
+	// DisplayName: Mercury Droplight2
+	// Tooltip: ""
+}
+
+MercuryFloorLamp: {
+	// DisplayName: Mercury Floor Lamp
+	// Tooltip: ""
+}
+
+MercuryPiano: {
+	// DisplayName: Mercury Piano
+	// Tooltip: ""
+}
+
+MercurySink: {
+	// DisplayName: Mercury Sink
+	// Tooltip: ""
+}
+
+MercurySofa: {
+	// DisplayName: Mercury Sofa
+	// Tooltip: ""
+}
+
+MercuryTable: {
+	// DisplayName: Mercury Table
+	// Tooltip: ""
+}
+
+MercuryToilet: {
+	// DisplayName: Mercury Toilet
+	// Tooltip: ""
+}
+
+MercuryWorkBench: {
+	// DisplayName: Mercury Work Bench
+	// Tooltip: ""
+}
+
+Illureal: {
+	// DisplayName: Illureal
+	// Tooltip: ""
+}
+
+ThunderveinBlade: {
+	DisplayName: 雷鸣刃
+	Tooltip: 双击方向键使用闪电突袭
+}
+
+PirateKingCoat: {
+	DisplayName: 海盗王的披肩
+	Tooltip: 近战暴击率增加6%
+	NotHasPirateKingSoul: 海盗王之魂：装备至少2件套后触发效果
+	PirateKingSoul2Part:
+		'''
+		海盗王之魂：攻击敌人有时会抢夺钱币
+		[c/807b7d:(2)件套]
+		[c/69a777:5%概率触发]
+		[c/69a777:2] [c/807b7d:秒冷却时间]
+		[c/807b7d:造成] [c/9e82b5:150%] [c/807b7d:伤害]
+		'''
+	PirateKingSoul3Part:
+		'''
+		海盗王之魂：攻击敌人有时会抢夺钱币
+		[c/807b7d:(3)件套]
+		[c/69a777:10%概率触发]
+		[c/69a777:1] [c/807b7d:秒冷却时间]
+		[c/807b7d:造成] [c/9e82b5:200%] [c/807b7d:伤害]
+		'''
+	NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
+	LuckyStar2Part:
+		'''
+		幸运星：运气增加
+		[c/807b7d:(2)件套]
+		[c/807b7d:增加] [c/9e82b5:0.2]
+		'''
+	LuckyStar3Part:
+		'''
+		幸运星：运气增加
+		[c/807b7d:(3)件套]
+		[c/807b7d:增加] [c/9e82b5:0.3]
+		'''
+}
+
+PirateKingShoes: {
+	DisplayName: 海盗王的战靴
+	Tooltip:
+		'''
+		移动速度提高9%
+		近战攻速增加5%
+		'''
+	NotHasPirateKingSoul: 海盗王之魂：装备至少2件套后触发效果
+	PirateKingSoul2Part:
+		'''
+		海盗王之魂：攻击敌人有时会抢夺钱币
+		[c/807b7d:(2)件套]
+		[c/69a777:5%概率触发]
+		[c/69a777:2] [c/807b7d:秒冷却时间]
+		[c/807b7d:造成] [c/9e82b5:150%] [c/807b7d:伤害]
+		'''
+	PirateKingSoul3Part:
+		'''
+		海盗王之魂：攻击敌人有时会抢夺钱币
+		[c/807b7d:(3)件套]
+		[c/69a777:10%概率触发]
+		[c/69a777:1] [c/807b7d:秒冷却时间]
+		[c/807b7d:造成] [c/9e82b5:200%] [c/807b7d:伤害]
+		'''
+	NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
+	LuckyStar2Part:
+		'''
+		幸运星：运气增加
+		[c/807b7d:(2)件套]
+		[c/807b7d:增加] [c/9e82b5:0.2]
+		'''
+	LuckyStar3Part:
+		'''
+		幸运星：运气增加
+		[c/807b7d:(3)件套]
+		[c/807b7d:增加] [c/9e82b5:0.3]
+		'''
+}
+
+IcicleSoulStone: {
+	DisplayName: 冰晶魂石
+	Tooltip: 冰龙宝宝的魂魄与你同在
+}
+
+MedusaLightArmor: {
+	DisplayName: 美杜莎轻甲
+	Tooltip: 远程暴击率增加 6%
+	NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
+	MedusaSoul2Part:
+		'''
+		美杜莎之魂：对远处的敌人造成更多伤害，
+		但对近处的敌人伤害降低
+		[c/807b7d:最多增加] [c/9e82b5:15%] [c/807b7d:伤害]
+		[c/807b7d:最多减少] [c/9e82b5:75%] [c/807b7d:伤害]
+		'''
+	MedusaSoul3Part:
+		'''
+		美杜莎之魂：对远处的敌人造成更多伤害，
+		但对近处的敌人伤害降低
+		[c/807b7d:最多增加] [c/9e82b5:25%] [c/807b7d:伤害]
+		[c/807b7d:最多减少] [c/9e82b5:50%] [c/807b7d:伤害]
+		'''
+	NotHasSplit: 分裂：装备至少2件套后触发效果
+	Split2Part:
+		'''
+		分裂：远程武器射出更多的投掷物
+		[c/807b7d:(2)件套]
+		[c/807b7d:分裂等级] [c/9e82b5:+1]
+		[c/807b7d:伤害补正] [c/9e82b5:65%]
+		'''
+	Split3Part:
+		'''
+		分裂：远程武器射出更多的投掷物
+		[c/807b7d:(3)件套]
+		[c/807b7d:分裂等级] [c/9e82b5:+2]
+		[c/807b7d:伤害补正] [c/9e82b5:55%]
+		'''
+}
+
+MedusaMask: {
+	DisplayName: 美杜莎面罩
+	Tooltip: 远程伤害增加 6%
+	NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
+	MedusaSoul2Part:
+		'''
+		美杜莎之魂：对远处的敌人造成更多伤害，
+		但对近处的敌人伤害降低
+		[c/807b7d:最多增加] [c/9e82b5:15%] [c/807b7d:伤害]
+		[c/807b7d:最多减少] [c/9e82b5:75%] [c/807b7d:伤害]
+		'''
+	MedusaSoul3Part:
+		'''
+		美杜莎之魂：对远处的敌人造成更多伤害，
+		但对近处的敌人伤害降低
+		[c/807b7d:最多增加] [c/9e82b5:25%] [c/807b7d:伤害]
+		[c/807b7d:最多减少] [c/9e82b5:50%] [c/807b7d:伤害]
+		'''
+	NotHasSplit: 分裂：装备至少2件套后触发效果
+	Split2Part:
+		'''
+		分裂：远程武器射出更多的投掷物
+		[c/807b7d:(2)件套]
+		[c/807b7d:分裂等级] [c/9e82b5:+1]
+		[c/807b7d:伤害补正] [c/9e82b5:65%]
+		'''
+	Split3Part:
+		'''
+		分裂：远程武器射出更多的投掷物
+		[c/807b7d:(3)件套]
+		[c/807b7d:分裂等级] [c/9e82b5:+2]
+		[c/807b7d:伤害补正] [c/9e82b5:55%]
+		'''
+	MedusaBonus: 隐秘行动：远程暴击率，移动速度各增加5%
+}
+
+MedusaSlippers: {
+	DisplayName: 美杜莎便鞋
+	Tooltip: 移动速度增加10%
+	NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
+	MedusaSoul2Part:
+		'''
+		美杜莎之魂：对远处的敌人造成更多伤害，
+		但对近处的敌人伤害降低
+		[c/807b7d:最多增加] [c/9e82b5:15%] [c/807b7d:伤害]
+		[c/807b7d:最多减少] [c/9e82b5:75%] [c/807b7d:伤害]
+		'''
+	MedusaSoul3Part:
+		'''
+		美杜莎之魂：对远处的敌人造成更多伤害，
+		但对近处的敌人伤害降低
+		[c/807b7d:最多增加] [c/9e82b5:25%] [c/807b7d:伤害]
+		[c/807b7d:最多减少] [c/9e82b5:50%] [c/807b7d:伤害]
+		'''
+	NotHasSplit: 分裂：装备至少2件套后触发效果
+	Split2Part:
+		'''
+		分裂：远程武器射出更多的投掷物
+		[c/807b7d:(2)件套]
+		[c/807b7d:分裂等级] [c/9e82b5:+1]
+		[c/807b7d:伤害补正] [c/9e82b5:65%]
+		'''
+	Split3Part:
+		'''
+		分裂：远程武器射出更多的投掷物
+		[c/807b7d:(3)件套]
+		[c/807b7d:分裂等级] [c/9e82b5:+2]
+		[c/807b7d:伤害补正] [c/9e82b5:55%]
+		'''
+}
+
+Arachnopyre: {
+	DisplayName: 炎爆蜘蛛盾
+	Tooltip: 在墙壁前延长飞行时间，命中时发射炎爆蜘蛛
+}
+
+ThunderveinSpear: {
+	DisplayName: 雷荒矛
+	Tooltip:
+		'''
+		右键丢出长矛，命中敌人后戳在敌人身上
+		之后再次右键将玩家拉向长矛位置并生成落雷
+		'''
+}
+
+SovereignSip: {
+	DisplayName: 皇室秘饮
+	Tooltip: 召唤一个小小史莱姆皇帝
+}
+
+FlamingLamps: {
+	DisplayName: 烈焰灯
+	Tooltip:
+		'''
+		[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+		[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
+		冲刺过程中无视击退
+		冲刺命中第一个敌人时产生火焰爆破
+		'''
+}
+
+LavaLamp: {
+	DisplayName: 狱炎灯
+	Tooltip:
+		'''
+		[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+		[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
+		冲刺过程中无视击退
+		冲刺命中第一个敌人时产生岩浆喷发
+		'''
+}
+
+PiezoArmorPanel: {
+	DisplayName: 压电装甲板
+	Tooltip:
+		'''
+		[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+		[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
+		冲刺过程中无视击退
+		冲刺命中第一个敌人时产生电圈，并提升冲刺速度，延长冲刺时间
+		最多产生两个电圈
+		'''
+}
+
+AmberAmulet: {
+	DisplayName: 琥珀护盾符
+	Tooltip: +8% 飞盾格挡时减少弹幕穿透数的概率
+}
+
+JungleTurtleShell: {
+	DisplayName: 丛林龟壳
+	Tooltip:
+		'''
+		将物品状态下的丛林乌龟整只丢入微光液体后变成的龟壳，似乎在丛林地下的宝箱中也会出现
+		略微增加飞盾格挡能力
+		'''
+}
+
+SnowflakeCharm: {
+	DisplayName: 雪花护符
+	Tooltip:
+		'''
+		[c/8aebff:举起盾牌的瞬间能够进行完美格挡并释放冰雪花]
+		略微增加举盾速度
+		'''
+}
+
+ShieldSpring: {
+	DisplayName: 盾装弹簧
+	Tooltip: 小幅度增加飞盾在进行盾冲时的冲刺速度
+}
+
+ForbiddenLamp: {
+	DisplayName: 忘却之灯芯
+	Tooltip:
+		'''
+		[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+		[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
+		冲刺过程中无视击退
+		冲刺命中敌人时产生灯火爆破和鎏金碎片
+		'''
+}
+
+SolarTwinkle: {
+	DisplayName: 太阳的闪烁
+	Tooltip:
+		'''
+		[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+		[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
+		冲刺过程中无视击退
+		冲刺命中敌人时产生太阳爆破
+		冲刺时使用日耀能量进行斩击
+		'''
+}
+
+OniMask: {
+	DisplayName: 骸骨面具
+	Tooltip:
+		'''
+		[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌防御效果]
+		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
+		冲刺开始时丢出骨头
+		“或许戴上后能够变为一般系”
+		'''
+}
+
+KamonFlag: {
+	DisplayName: 忍者氏族旗
+	Tooltip:
+		'''
+		[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌防御效果]
+		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
+		冲刺开始时生成灰黑冤魂
+		'''
+}
+
+SolarPanel: {
+	DisplayName: 太阳能护板
+	Tooltip:
+		'''
+		[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌防御效果]
+		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
+		冲刺途中生成带电爆破弹
+		'''
+}
+
+ThunderFishingRod: {
+	DisplayName: 雷脉钓竿
+	Tooltip: 其实并不带电
+}
+
+OldClockwork: {
+	DisplayName: 旧发条
+	Tooltip:
+		'''
+		[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌防御效果]
+		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
+		冲刺命中后给予“拧紧发条”BUFF
+		“博士，这个什么时候才能拿掉呢？”
+		'''
+}
+
+ChronoHeart: {
+	DisplayName: 时轮之心
+	Tooltip:
+		'''
+		[c/8aebff:手持飞盾并完全举起盾牌时双击方向键可进行盾冲]
+		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌防御效果]
+		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
+		冲刺时生成时针
+		“你听得到时间的心跳”
+		'''
+}
+
+ThunderWhip: {
+	DisplayName: 闪电鞭
+	Tooltip:
+		'''
+		12点召唤标记伤害
+		一次挥舞能甩出3根鞭子
+		'''
+}
+
+ThunderShield: {
+	DisplayName: 猛雷鼓
+	Tooltip: 飞行速度极快的盾，首次命中时生成电圈
+}
+
+ThunderveinNecklace: {
+	DisplayName: 雷爪项链
+	Tooltip:
+		'''
+		+7 护甲穿透
+		命中时附加雷鸣减益，敌怪移动速度越快伤害越高
+		自身免疫雷鸣
+		'''
+}
+
+RedJadeArrow: {
+	DisplayName: 赤玉箭
+	Tooltip: 命中后偶尔产生爆炸
+}
+
+RedJadeBullet: {
+	DisplayName: 赤玉弹
+	Tooltip: 命中后偶尔产生爆炸
+}
+
+ReverseFlash: {
+	DisplayName: 逆闪电
+	Tooltip: 射击时从远处朝玩家生成一道电光
+}
+
+TenkoFigurine: {
+	DisplayName: 天狐雕像
+	Tooltip:
+		'''
+		用晶体雕刻的简单狐狸雕像，上面捆着草绳。
+		召唤一只小小的天狐大人。
+		[c/98b0ff:来自云酱的世界]
+		'''
+}
+
+IcicleBathtub: {
+	DisplayName: 冰晶浴缸
+	Tooltip: ""
+}
+
+IcicleBed: {
+	DisplayName: 冰晶床
+	Tooltip: ""
+}
+
+IcicleBigDroplight: {
+	DisplayName: 冰晶大吊灯
+	Tooltip: ""
+}
+
+IcicleBookcase: {
+	DisplayName: 冰晶书架
+	Tooltip: ""
+}
+
+IcicleCandelabra: {
+	DisplayName: 冰晶烛台
+	Tooltip: ""
+}
+
+IcicleCandle: {
+	DisplayName: 冰晶蜡烛
+	Tooltip: ""
+}
+
+IcicleChair: {
+	DisplayName: 冰晶椅
+	Tooltip: ""
+}
+
+IcicleChest: {
+	DisplayName: 冰晶箱
+	Tooltip: ""
+}
+
+IcicleClock: {
+	DisplayName: 冰晶钟
+	Tooltip: ""
+}
+
+IcicleDoor: {
+	DisplayName: 冰晶门
+	Tooltip: ""
+}
+
+IcicleDresser: {
+	DisplayName: 冰晶梳妆台
+	Tooltip: ""
+}
+
+IcicleDroplight: {
+	DisplayName: 冰晶吊灯
+	Tooltip: ""
+}
+
+IcicleFloorLamp: {
+	DisplayName: 冰晶柱灯
+	Tooltip: ""
+}
+
+IciclePiano: {
+	DisplayName: 冰晶钢琴
+	Tooltip: ""
+}
+
+IciclePlatform: {
+	DisplayName: 冰晶平台
+	Tooltip: ""
+}
+
+IcicleSink: {
+	DisplayName: 冰晶水槽
+	Tooltip: ""
+}
+
+IcicleSofa: {
+	DisplayName: 冰晶沙发
+	Tooltip: ""
+}
+
+IcicleStoneBlock: {
+	DisplayName: 冰晶石
+	Tooltip: ""
+}
+
+IcicleTable: {
+	DisplayName: 冰晶桌
+	Tooltip: ""
+}
+
+IcicleToilet: {
+	DisplayName: 冰晶马桶
+	Tooltip: ""
+}
+
+IcicleWorkBench: {
+	DisplayName: 冰晶工作台
+	Tooltip: ""
+}
+
+CyberwyrmRehab: {
+	DisplayName: 网瘾少龙
+	Tooltip: 向附近最多3个敌人电击
+}
+
+CancerFlail: {
+	DisplayName: 十二星-巨蟹座
+	Tooltip: 挥动双钳
+}
+
+ThunderDagger: {
+	DisplayName: 荒雷魔剑
+	Tooltip: 充满电能的短剑，挥动时能够射出电球
+}
+
+RegrowthTentacle: {
+	DisplayName: 再生触手
+	Tooltip: 还会不断地扭动
+}
+
+EternalBloom: {
+	DisplayName: 永恒绽放
+	Tooltip:
+		'''
+		将火枪子弹转化为花种子，偶尔射出花刺球
+		“生生不息”
+		'''
+}
+
+Floette: {
+	DisplayName: 花叶蒂
+	Tooltip: 将火枪子弹转化为种子弹
+}
+
+WarpMirror: {
+	DisplayName: 扭曲镜
+	Tooltip: 消耗50魔能来进行随机传送
+}
+
+Virgo: {
+	DisplayName: 十二星-处女座
+	Tooltip: 将火枪子弹转化为羽毛弹
+}
+
+GigantesShoes: {
+	DisplayName: 癸干忒斯之靴
+	Tooltip:
+		'''
+		减少50%摔落伤害
+		空中按下键以增加下降速度，落地后击退周围敌怪
+		'''
+}
+
+ThunderveinStaff: {
+	DisplayName: 引雷杖
+	Tooltip: 召唤闪电环绕你，它们会对敌人降下落雷
+}
+
+FlaskOfRedJade: {
+	DisplayName: 碎玉瓶
+	Tooltip: 你的武器在命中时可能产生爆炸
+}
+
+FlaskOfThunder: {
+	DisplayName: 轰鸣瓶
+	Tooltip: 你的武器命中时施加雷鸣减益
+}
+
+MagicCrystalMusicBox: {
+	DisplayName: 八音盒（魔力水晶洞）
+	Tooltip: ""
+}

@@ -1,0 +1,85 @@
+BabyIceDragon: {
+	DisplayName: 冰龙宝宝
+
+	BossChecklistIntegration: {
+		// SpawnInfo: 刚刚破壳而出的小冰龙，还不能完全掌握冰魔法的力量
+		// DespawnMessage: 冰龙宝宝逃走了
+	}
+}
+
+IceCube.DisplayName: 冰块
+IceDragonEgg.DisplayName: 冰龙蛋
+IceThornsTrap.DisplayName: 冰刺陷阱
+
+Rediancie: {
+	DisplayName: 赤玉灵
+
+	BossChecklistIntegration: {
+		// SpawnInfo: 一块奇异的巨石，通过不稳定的红色能量来驱动自身。
+		// DespawnMessage: 赤玉灵回归了地底
+	}
+}
+
+RediancieMinion.DisplayName: 小赤玉灵
+IcicleSpirit.DisplayName: 霜灵
+MaragonBody.DisplayName: 魔龙身体
+MaragonHead.DisplayName: 魔龙头
+MaragonTrail.DisplayName: 魔龙尾
+ShadowGolem.DisplayName: 影子巨像
+ShadowGuard.DisplayName: 影子守卫
+CrystalFairy.DisplayName: 晶体仙灵
+CrystalSpirit.DisplayName: 晶体妖精
+CrystalGolem.DisplayName: 晶体巨人
+CrystalEye.DisplayName: 晶体眼球
+SlimeEmperor.DisplayName: 史莱姆皇帝
+ElasticGelBall.DisplayName: 弹力凝胶球
+SlimeAvatar.DisplayName: 史莱姆分身
+GelFlippy.DisplayName: 飞翼史莱姆
+HealGelBall.DisplayName: 治愈凝胶球
+// AosSi.DisplayName: Aos Si
+// AosSiBodyFront.DisplayName: Aos Si Body Front
+// AosSiBodyLast.DisplayName: Aos Si Body Last
+// AosSiBodyMiddle.DisplayName: Aos Si Body Middle
+// AosSiHands.DisplayName: Aos Si Hands
+// AosSiLegs.DisplayName: Aos Si Legs
+// AosSiTailFront.DisplayName: Aos Si Tail Front
+// AosSiTailLast.DisplayName: Aos Si Tail Last
+// AosSiTailMiddle.DisplayName: Aos Si Tail Middle
+// AosSiTailSecdonary.DisplayName: Aos Si Tail Secdonary
+NightmarePlantera.DisplayName: 梦魇之花
+NightmareHook.DisplayName: 梦魇之爪
+NightmareCatcher.DisplayName: 梦魇捕食者
+FantasySparkle.DisplayName: 美梦光
+FantasyGod.DisplayName: 美梦之神
+Turmoil.DisplayName: 动乱祸源
+
+CrystalRobot: {
+	DisplayName: 水晶生命体
+
+	TownNPCMood: {
+		Content: 我很满足。
+		NoHome: 野外，危险，我需要一个家。
+		FarFromHome: 离家，太远。
+		LoveSpace: 空间，很大。
+		DislikeCrowded: 检测到过多生命体。
+		HateCrowded: 周围生命体超过上限！
+		LoveBiome: 喜欢{BiomeName}，冰凉，安心。
+		LikeBiome: 喜欢{BiomeName}，判定为宜居地。
+		DislikeBiome: 讨厌{BiomeName}，判定为不宜居。
+		LoveNPC: 这是{NPCName}，很喜欢。
+		LikeNPC: 这是{NPCName}，喜欢。
+		DislikeNPC: 这是{NPCName}，不喜欢。
+		HateNPC: 这是{NPCName}，讨厌。
+		LikeNPC_Princess: 这是{NPCName}，尊敬的公主。
+		Princess_LovesNPC: 哇，{NPCName}，一个无机生命体！这个世界果然充满奇妙的事情。
+	}
+}
+
+Bloodiancie.DisplayName: 赤血玉灵
+BloodiancieMinion.DisplayName: 小赤血玉灵
+ShadowBall.DisplayName: 影子球
+SmallShadowBall.DisplayName: 小影子球
+// Biskety.DisplayName: Biskety
+ThunderveinDragon.DisplayName: 荒雷龙
+ThunderPhantom.DisplayName: 荒雷幻影
+// ShadowVilliger.DisplayName: Shadow Villiger

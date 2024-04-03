@@ -1,0 +1,11 @@
+YujianSystem: {
+	YujianDescription: 需要放置在葫芦中以使用【老旧内容，有待重置，不推荐游玩】
+	HuluDescription: 右键单击打开UI面板，将御剑放进栏位后可召唤出御剑【老旧内容，有待重置，不推荐游玩】
+}
+
+MagikeSystem: {
+	BotanicusBonus: 植生：攻击时生成叶刃环绕自身
+	MetallonBonus: 刚：攻击时获得防御加成Buff
+	FreosanBonus: 冻：攻击时生成冰块
+	HeatanBonus: 灼：攻击时生成灼火球
+}
