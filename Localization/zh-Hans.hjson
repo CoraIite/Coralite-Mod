@@ -3600,6 +3600,12 @@ Mods: {
 				DisplayName: 八音盒（魔力水晶洞）
 				Tooltip: ""
 			}
+
+			Meowmeo: {
+				CraftCondition: 在CoralCat的世界中合成
+				DisplayName: 彩虹猫短剑
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -4376,6 +4382,7 @@ Mods: {
 			// VirgoFeather.DisplayName: Virgo Feather
 			// VirgoHeldProj.DisplayName: Virgo Held Proj
 			// ThunderMinion.DisplayName: Thunder Minion
+			// MeowmeoProj.DisplayName: Meowmeo Proj
 		}
 
 		Configs: {
@@ -4729,7 +4736,7 @@ Mods: {
 			}
 		}
 
-		// Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
+		Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
 
 		ClobalItems: {
 			CoraliteGlobalItem: {

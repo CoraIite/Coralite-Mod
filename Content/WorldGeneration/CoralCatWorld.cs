@@ -76,7 +76,7 @@ namespace Coralite.Content.WorldGeneration
                 shimmerRight = Main.maxTilesX / 2 - Main.maxTilesX / 6;
             }
 
-
+            //修改物块类型
             for (int i = 0; i < Main.maxTilesX; i++)
                 for (int j = OceanHeight; j < maxDepth + 4; j++)
                 {
@@ -361,23 +361,9 @@ namespace Coralite.Content.WorldGeneration
                       || !Main.tileSolid[left.TileType] || !Main.tileSolid[right.TileType])
                         Main.tile[i, j].ResetToType(TileID.Grass);
                 }
-            //for (int i = 42; i < Main.maxTilesX-42; i++)
-            //    for (int j = Main.maxTilesY - 200; j < Main.maxTilesY; j++)
-            //    {
-            //        Tile tile = Main.tile[i, j];
-            //        if (tile.LiquidType == LiquidID.Lava && tile.LiquidAmount != 0)
-            //            Main.tile[i, j].Clear(Terraria.DataStructures.TileDataType.Liquid);
-            //    }
 
-            //for (int i = 42; i < Main.maxTilesX - 42; i++)
-            //    for (int j = Main.maxTilesY - 100; j < Main.maxTilesY-10; j++)
-            //    {
-            //        Tile tile = Main.tile[i, j];
-            //        if (!tile.HasTile)
-            //            WorldGen.PlaceLiquid(i, j, (byte)LiquidID.Shimmer, byte.MaxValue);
-            //    }
-
-            int count = WorldGen.genRand.Next(5, 8);
+            //地表沙滩化
+            int count = WorldGen.genRand.Next(7, 9);
             for (int k = 1; k < count; k++)
             {
                 for (int i = 0; i < Main.maxTilesX; i++)
@@ -402,9 +388,31 @@ namespace Coralite.Content.WorldGeneration
                             Main.tile[i, j].ResetToType(TileID.Sandstone);//有水就放沙子
                     }
             }
+            //放置彩虹
+            for (int i = 40; i < Main.maxTilesX - 40; i++)
+            {
+                int y = Main.maxTilesY - 240 + (int)(MathF.Sin(i * 0.05f) * 10);
+
+                for (int j = 0; j < 14; j++)
+                {
+                    int y2 = y + j;
+                    ushort tileType = (j / 2) switch
+                    {
+                        0 => TileID.RubyGemspark,
+                        1 => TileID.AmberGemspark,
+                        2 => TileID.TopazGemspark,
+                        3 => TileID.EmeraldGemspark,
+                        4 => TileID.XenonMossBlock,
+                        5 => TileID.SapphireGemspark,
+                        _ => TileID.AmethystGemspark,
+                    };
+                    Main.tile[i, y2].ClearEverything();
+                    Main.tile[i, y2].ResetToType(tileType);
+                    WorldGen.paintCoatTile(i, y2, PaintCoatingID.Glow);
+                }
+            }
 
             //生成泡泡
-
             for (int i = 2; i < 120; i++)
             {
                 int x = i * (Main.maxTilesX - 200) / 120;
@@ -434,7 +442,7 @@ namespace Coralite.Content.WorldGeneration
                                 new Actions.SetTile(TileID.Bubble)    //放置物块
                        ));
             }
-
+            //生成水下小遗迹
             for (int i = 2; i < 100; i++)
             {
                 int x = i * (Main.maxTilesX - 200) / 100;
@@ -496,7 +504,6 @@ namespace Coralite.Content.WorldGeneration
                         ItemID.CatSword
                         ), Style: 5);
             }
-
         }
 
         public void CoralCatWorldSpawn(GenerationProgress progress, GameConfiguration configuration)

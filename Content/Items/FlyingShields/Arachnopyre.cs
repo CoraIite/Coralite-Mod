@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<ArachnopyreProj>();
             Item.knockBack = 6;
             Item.shootSpeed = 13.5f;
-            Item.damage = 45;
+            Item.damage = 43;
         }
 
         public override void AddRecipes()
@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 canShootSpider = false;
                 Projectile.NewProjectileFromThis<ArachnopyreSpider>(Owner.Center
-                    , (target.Center - Owner.Center).SafeNormalize(Vector2.Zero).RotateByRandom(-0.5f, 0.5f) * 6, (int)(Projectile.damage * 0.85f)
+                    , (target.Center - Owner.Center).SafeNormalize(Vector2.Zero).RotateByRandom(-0.5f, 0.5f) * 6, (int)(Projectile.damage * 0.8f)
                     , Projectile.knockBack, ai2: Main.rand.Next(0, 6) * 20 + 10);
 
             }
@@ -241,7 +241,7 @@ namespace Coralite.Content.Items.FlyingShields
                                         for (int i = 0; i < 3; i++)
                                         {
                                             Projectile.NewProjectileFromThis<ArachnopyreSpider>(Projectile.Center
-                                                , (angle + i * MathHelper.TwoPi / 3).ToRotationVector2() * 6, Projectile.damage / 2, Projectile.knockBack / 4, 1, ai2: 120);
+                                                , (angle + i * MathHelper.TwoPi / 3).ToRotationVector2() * 6, (int)(Projectile.damage *0.4f), Projectile.knockBack / 4, 1, ai2: 120);
                                         }
                                     }
                                     SoundEngine.PlaySound(CoraliteSoundID.Boom_Item14, Projectile.Center);

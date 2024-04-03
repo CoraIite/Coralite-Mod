@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.Icicle
                 }
 
                 var projectile = Projectile.NewProjectileDirect(source, Main.MouseWorld, velocity, type, damage, knockback, Main.myPlayer);
-                projectile.originalDamage = damage;
+                projectile.originalDamage = Item.damage;
             }
 
             return false;

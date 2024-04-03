@@ -77,8 +77,8 @@ namespace Coralite.Content.CustomHooks
 
                             Tile tile2 = Framing.GetTileSafely(sender.receiverPoints[i]);
                             TileObjectData data2 = TileObjectData.GetTileData(tile2);
-                            int x2 = data2 == null ? 8 : data.Width * 16 / 2;
-                            int y2 = data2 == null ? 8 : data.Height * 16 / 2;
+                            int x2 = data2 == null ? 8 : data2.Width * 16 / 2;
+                            int y2 = data2 == null ? 8 : data2.Height * 16 / 2;
                             Vector2 aimPos = sender.receiverPoints[i].ToWorldCoordinates(x2, y2);
 
                             if (!Helper.OnScreen(aimPos - Main.screenPosition))
@@ -86,8 +86,8 @@ namespace Coralite.Content.CustomHooks
 
                             int width = (int)(selfPos - aimPos).Length();   //这个就是激光长度
 
-                            var laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, 10);
-                            var laserSource = new Rectangle((int)(Main.GlobalTimeWrappedHourly * laserTex.Width), 0, laserTex.Width, laserTex.Height);
+                            var laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, laserTex.Height);
+                            var laserSource = new Rectangle((int)(-Main.GlobalTimeWrappedHourly * laserTex.Width), 0, width, laserTex.Height);
 
                             Main.spriteBatch.Draw(laserTex, laserTarget, laserSource, drawColor, (aimPos - selfPos).ToRotation(), origin, 0, 0);
                         }

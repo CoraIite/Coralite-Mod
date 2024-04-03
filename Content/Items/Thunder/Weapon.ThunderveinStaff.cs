@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.Thunder
             if (Main.myPlayer == player.whoAmI)
             {
                 var projectile = Projectile.NewProjectileDirect(source, Main.MouseWorld, velocity, type, damage, knockback, Main.myPlayer);
-                projectile.originalDamage = damage;
+                projectile.originalDamage = Item.damage;
             }
 
             return false;
@@ -126,6 +126,11 @@ namespace Coralite.Content.Items.Thunder
             Projectile.usesLocalNPCImmunity = true;
 
             Projectile.DamageType = DamageClass.Summon;
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            base.ModifyHitNPC(target, ref modifiers);
         }
 
         public override void AI()

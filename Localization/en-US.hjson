@@ -3524,6 +3524,12 @@ Mods: {
 				DisplayName: Magic Crystal Music Box
 				Tooltip: ""
 			}
+
+			Meowmeo: {
+				CraftCondition: 在CoralCat的世界中合成
+				DisplayName: Meowmeo
+				Tooltip: ""
+			}
 		}
 
 		Tiles: {
@@ -4300,6 +4306,7 @@ Mods: {
 			VirgoFeather.DisplayName: Virgo Feather
 			VirgoHeldProj.DisplayName: Virgo Held Proj
 			ThunderMinion.DisplayName: Thunder Minion
+			MeowmeoProj.DisplayName: Meowmeo Proj
 		}
 
 		Configs: {

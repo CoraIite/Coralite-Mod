@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.Accessories
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC n = Main.npc[i];
-                        if (n.CanBeChasedBy() && n.Distance(player.Center) < 100 && Collision.CanHit(player, n))
+                        if (n.CanBeChasedBy() && n.Distance(player.Center) < 120 && Collision.CanHit(player, n))
                         {
                             int dir = Math.Sign(n.Center.X - player.Center.X);
                             n.velocity += new Vector2(dir * 8, -3) * n.knockBackResist;
@@ -52,8 +52,8 @@ namespace Coralite.Content.Items.Accessories
 
                 if (player.velocity.Y != 0)
                 {
-                    player.maxFallSpeed = 20;
-                    player.velocity.Y += player.gravDir*2f;
+                    player.maxFallSpeed = 17;
+                    player.velocity.Y += player.gravDir*1.7f;
                 }
             }
         }
