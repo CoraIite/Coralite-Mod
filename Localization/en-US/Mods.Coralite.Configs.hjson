@@ -1,0 +1,86 @@
+NianliUIConfig: {
+	DisplayName: Nianli UI Config
+
+	nianliUI_X: {
+		Label: Willpower UI Position X
+		Tooltip: ""
+	}
+
+	nianliUI_Y: {
+		Label: Willpower UI Position Y
+		Tooltip: ""
+	}
+}
+
+MagikeUIConfig: {
+	DisplayName: Magike UI Config
+
+	UIScale: {
+		Label: UI Scale
+		Tooltip: ""
+	}
+}
+
+VisualEffectConfig: {
+	DisplayName: Visual Effect Config
+
+	HitEffect_Dusts: {
+		Label: Hit Effect: Dusts
+		Tooltip: Dust effects that occur when a weapon hits, such as various vanilla dusts
+	}
+
+	HitEffect_ScreenShaking: {
+		Label: Hit Effect: Screen Shaking
+		Tooltip: Screen vibration effect when the weapon hits
+	}
+
+	HitEffect_Lightning: {
+		Label: Hit Effect: Lightning
+		Tooltip: Various highlight effects produced when a weapon hits, such as the slash effect
+	}
+
+	HitEffect_SpecialParticles: {
+		Label: Hit Effect: Special Particles
+		Tooltip: Special particle effects that occur when a weapon hits, such as an aperture
+	}
+
+	DrawKniefLight: {
+		Label: Knief Light
+		Tooltip:
+			'''
+			Whether the sword light of melee weapons will be drawn
+			Note: Turning off the sword light may make some weapons strange
+			'''
+	}
+
+	DrawWarp: {
+		Label: Warp
+		Tooltip: Whether to draw various warp effects
+	}
+
+	Headers: {
+		HitEffects: Hit Effects
+		OtherVisualEffects: Other Visual Effects
+		NightmarePlantera: Nightmare Plantera Header
+	}
+
+	HitEffect_HitFreeze: {
+		Label: Hit Effect: Hit Freeze
+		Tooltip: The weapon briefly stalls the effect on hit
+	}
+
+	DrawTrail: {
+		Label: Draw Trail
+		Tooltip: Most projectile's and particle's trail
+	}
+
+	UseNightmareSky: {
+		Label: Use Nightmare Sky
+		Tooltip: ""
+	}
+
+	UseNightmareBossBar: {
+		Label: Use Nightmare Boss Bar
+		Tooltip: ""
+	}
+}

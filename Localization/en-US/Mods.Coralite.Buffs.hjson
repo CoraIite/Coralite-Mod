@@ -1,0 +1,146 @@
+SnowDebuff: {
+	DisplayName: Snow
+	Description: Surrounded by snowflakes
+}
+
+IcicleThornBuff: {
+	DisplayName: Icicle Thorn
+	Description: Icicle Thorn Fight for you
+}
+
+MushroomDragonBuff: {
+	DisplayName: Mushroom Dragon
+	Description: Mushroom Dragon Fight for you
+}
+
+RedBinkBuff: {
+	DisplayName: Red Bink
+	Description: The little one is also very cute
+}
+
+RedianciePetBuff: {
+	DisplayName: Little Rediancie
+	Description: Little Rediancie surrounds you
+}
+
+ShadowCircleBuff: {
+	DisplayName: Shadow Circle Buff
+	Description: Mods.Coralite.Buffs.ShadowCircleBuff.Description
+}
+
+BloodyHookDebuff: {
+	DisplayName: Bloody Hook Debuff
+	Description: You are bloody!
+}
+
+DreamErosion: {
+	DisplayName: Dream Erosion
+	Description: Mods.Coralite.Buffs.DreamErosion.Description
+}
+
+GelWhipDebuff: {
+	DisplayName: Gel Whip Debuff
+	Description: Mods.Coralite.Buffs.GelWhipDebuff.Description
+}
+
+EuphorbiaPoison: {
+	DisplayName: Euphorbia Poison
+	Description: Mods.Coralite.Buffs.EuphorbiaPoison.Description
+}
+
+NightmareRavenBuff: {
+	DisplayName: Nightmare Raven
+	Description: These little ones from the nightmare will fight for you!
+}
+
+EdenDebuff: {
+	DisplayName: Eden
+	Description: Eden
+}
+
+PurpleToeBuff: {
+	DisplayName: Purple Toe
+	Description: They love your dreams!
+}
+
+Bloodthirsty: {
+	DisplayName: Bloodthirsty
+	Description: You crave blood!
+	Current: Number of layers:
+}
+
+LimbRebirth: {
+	DisplayName: Limb Rebirth
+	Description: I need Healing！
+	Current: Number of layers:
+}
+
+MetallionBuff: {
+	DisplayName: Metallion Buff
+	Description: Mods.Coralite.Buffs.MetallionBuff.Description
+}
+
+BloodJadeBuff: {
+	DisplayName: Blood Jade Buff
+	Description: Mods.Coralite.Buffs.BloodJadeBuff.Description
+}
+
+IvyPoison: {
+	DisplayName: Ivy Poison
+	Description: Mods.Coralite.Buffs.IvyPoison.Description
+}
+
+KitsuneBuff: {
+	DisplayName: Kitsune Buff
+	Description: Mods.Coralite.Buffs.KitsuneBuff.Description
+}
+
+ThunderveinSoulBuff: {
+	DisplayName: Thundervein Soul Buff
+	Description: Mods.Coralite.Buffs.ThunderveinSoulBuff.Description
+}
+
+IcicleSoulBuff: {
+	DisplayName: Icicle Soul Buff
+	Description: Mods.Coralite.Buffs.IcicleSoulBuff.Description
+}
+
+SovereignSipBuff: {
+	DisplayName: Sovereign Sip Buff
+	Description: Mods.Coralite.Buffs.SovereignSipBuff.Description
+}
+
+TightenTheClockwork: {
+	DisplayName: Tighten The Clockwork
+	Description: Mods.Coralite.Buffs.TightenTheClockwork.Description
+}
+
+ThunderWhipDebuff: {
+	DisplayName: Thunder Whip Debuff
+	Description: Mods.Coralite.Buffs.ThunderWhipDebuff.Description
+}
+
+ThunderElectrified: {
+	DisplayName: Thunder Electrified
+	Description: Mods.Coralite.Buffs.ThunderElectrified.Description
+}
+
+TenkoBuff: {
+	DisplayName: Tenko Buff
+	Description: Mods.Coralite.Buffs.TenkoBuff.Description
+}
+
+ThunderveinStaffBuff: {
+	DisplayName: Thundervein Staff Buff
+	Description: Mods.Coralite.Buffs.ThunderveinStaffBuff.Description
+}
+
+FlaskOfRedJadeBuff: {
+	DisplayName: Flask Of Red Jade Buff
+	Description: Mods.Coralite.Buffs.FlaskOfRedJadeBuff.Description
+}
+
+FlaskOfThunderBuff: {
+	DisplayName: Flask Of Thunder Buff
+	Description: Mods.Coralite.Buffs.FlaskOfThunderBuff.Description
+}

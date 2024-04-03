@@ -1,0 +1,122 @@
+RedJadeWorkBench.MapEntry: Red Jade Work Bench
+RedJadeTile.MapEntry: Red Jade
+RedJadeTable.MapEntry: Red Jade Table
+RedJadeDroplight.MapEntry: Red Jade Droplight
+RedJadeDoorOpen.MapEntry: Red Jade Door
+RedJadeDoorClosed.MapEntry: Red Jade Door
+RedJadeChest.MapEntry: Red Jade Chest
+RedJadeCandle.MapEntry: Red Jade Candle
+RedJadeBed.MapEntry: Red Jade Bed
+MagicCraftStation.MapEntry: Magic Craft Station
+WatermelonTile.MapEntry: Watermelon
+WaterDrinker.MapEntry: Water Drinker
+TreeJoke.MapEntry: Tree Joke
+SnoowFlower.MapEntry: Snoow Flower
+PileaNotata.MapEntry: Pilea Notata
+NacliteMoss.MapEntry: Naclite Moss
+GloomMushroom.MapEntry: Gloom Mushroom
+EyeballHerb.MapEntry: Eyeball Herb
+EgenolfiaSandy.MapEntry: Egenolfia Sandy
+Dandelion.MapEntry: Dandelion
+CoraliteWaterleaf.MapEntry: Waterleaf
+CoraliteShiverthorn.MapEntry: Shiverthorn
+CoraliteMoonglow.MapEntry: Moonglow
+CoraliteJungleSpores.MapEntry: Jungle Spores
+CoraliteFireblossom.MapEntry: Fireblossom
+CoraliteDeathweed.MapEntry: Deathweed
+CoraliteDaybloom.MapEntry: Daybloom
+CoraliteBlinkroot.MapEntry: Blinkroot
+AgropyronFrozen.MapEntry: Agropyron Frozen
+BasaltChestTile.MapEntry: Basalt Chest Tile
+CrystalCrateTile.MapEntry: Crystal Crate Tile
+
+RottenChestTile: {
+	MapEntry0: Rotten Chest
+	MapEntry1: Locked Rotten Chest
+	TryUnlock: Requires a key to be unlocked using the materials of powerful corrupt creatures
+}
+
+NightmareBedTile.MapEntry: Nightmare Bed Tile
+
+VertebraeChestTile: {
+	MapEntry0: Vertebrae Chest
+	MapEntry1: Locked Vertebrae Chest
+	TryUnlock: Requires a key to be unlocked using the materials of powerful crimson creatures
+}
+
+BloodJadeTile.MapEntry: Blood Jade Tile
+AncientChestTile.MapEntry: Ancient Chest Tile
+GlowTulipDoorClosed.MapEntry: Glow Tulip Door Closed
+GlowTulipDoorOpen.MapEntry: Glow Tulip Door Open
+BlackHoleChestTile.MapEntry: Black Hole Chest Tile
+
+MercuryChestTile: {
+	MapEntry0: Mods.Coralite.Tiles.MercuryChestTile.MapEntry0
+	MapEntry1: Mods.Coralite.Tiles.MercuryChestTile.MapEntry1
+}
+
+RedJadeFountain.MapEntry: Red Jade Fountain
+GelFiberTableTile.MapEntry: Gel Fiber Table Tile
+GeiFiberDroplightTile.MapEntry: Gei Fiber Droplight Tile
+GelFiberCandleTile.MapEntry: Gel Fiber Candle Tile
+GelFiberFloorLampTile.MapEntry: Gel Fiber Floor Lamp Tile
+GelFiberTallFloorLampTile.MapEntry: Gel Fiber Tall Floor Lamp Tile
+GelFiberBedTile.MapEntry: Gel Fiber Bed Tile
+GelFiberBigDroplightTile.MapEntry: Gel Fiber Big Droplight Tile
+GelFiberBookcaseTile.MapEntry: Gel Fiber Bookcase Tile
+GelFiberPianoTile.MapEntry: Gel Fiber Piano Tile
+GelFiberSofaTile.MapEntry: Gel Fiber Sofa Tile
+GelFiberBathtubTile.MapEntry: Gel Fiber Bathtub Tile
+GelFiberChestTile.MapEntry: Gel Fiber Chest Tile
+GelFiberDresserTile.MapEntry: Gel Fiber Dresser Tile
+GelFiberDoorClosedTile.MapEntry: Gel Fiber Door Closed Tile
+GelFiberDoorOpen.MapEntry: Gel Fiber Door Open
+GelFiberWorkBenchTile.MapEntry: Gel Fiber Work Bench Tile
+ThunderBathtubTile.MapEntry: Thunder Bathtub Tile
+ThunderBedTile.MapEntry: Thunder Bed Tile
+ThunderBigDroplightTile.MapEntry: Thunder Big Droplight Tile
+ThunderBookcaseTile.MapEntry: Thunder Bookcase Tile
+ThunderCandelabraTile.MapEntry: Thunder Candelabra Tile
+ThunderCandleTile.MapEntry: Thunder Candle Tile
+ThunderChestTile.MapEntry: Thunder Chest Tile
+ThunderDoorClosedTile.MapEntry: Thunder Door Closed Tile
+ThunderDoorOpenTile.MapEntry: Thunder Door Open Tile
+ThunderDresserTile.MapEntry: Thunder Dresser Tile
+ThunderDroplightTile.MapEntry: Thunder Droplight Tile
+ThunderFloorLampTile.MapEntry: Thunder Floor Lamp Tile
+ThunderPianoTile.MapEntry: Thunder Piano Tile
+ThunderSofaTile.MapEntry: Thunder Sofa Tile
+ThunderTableTile.MapEntry: Thunder Table Tile
+ThunderWorkBenchTile.MapEntry: Thunder Work Bench Tile
+MercuryBathtubTile.MapEntry: Mercury Bathtub Tile
+MercuryBedTile.MapEntry: Mercury Bed Tile
+MercuryBigDroplightTile.MapEntry: Mercury Big Droplight Tile
+MercuryBookcaseTile.MapEntry: Mercury Bookcase Tile
+MercuryCandelabraTile.MapEntry: Mercury Candelabra Tile
+MercuryCandleTile.MapEntry: Mercury Candle Tile
+MercuryDoorClosedTile.MapEntry: Mercury Door Closed Tile
+MercuryDoorOpenTile.MapEntry: Mercury Door Open Tile
+MercuryDresserTile.MapEntry: Mercury Dresser Tile
+MercuryDroplight2Tile.MapEntry: Mercury Droplight2 Tile
+MercuryFloorLampTile.MapEntry: Mercury Floor Lamp Tile
+MercuryPianoTile.MapEntry: Mercury Piano Tile
+MercurySofaTile.MapEntry: Mercury Sofa Tile
+MercuryTableTile.MapEntry: Mercury Table Tile
+MercuryWorkBenchTile.MapEntry: Mercury Work Bench Tile
+IcicleBathtubTile.MapEntry: Icicle Bathtub Tile
+IcicleBedTile.MapEntry: Icicle Bed Tile
+IcicleBigDroplightTile.MapEntry: Icicle Big Droplight Tile
+IcicleBookcaseTile.MapEntry: Icicle Bookcase Tile
+IcicleCandelabraTile.MapEntry: Icicle Candelabra Tile
+IcicleCandleTile.MapEntry: Icicle Candle Tile
+IcicleChestTile.MapEntry: Icicle Chest Tile
+IcicleDoorClosedTile.MapEntry: Icicle Door Closed Tile
+IcicleDoorOpenTile.MapEntry: Icicle Door Open Tile
+IcicleDresserTile.MapEntry: Icicle Dresser Tile
+IcicleDroplightTile.MapEntry: Icicle Droplight Tile
+IcicleFloorLampTile.MapEntry: Icicle Floor Lamp Tile
+IciclePianoTile.MapEntry: Icicle Piano Tile
+IcicleSofaTile.MapEntry: Icicle Sofa Tile
+IcicleTableTile.MapEntry: Icicle Table Tile
+IcicleWorkBenchTile.MapEntry: Icicle Work Bench Tile
+MagicCrystalMusicBoxTile.MapEntry: Magic Crystal Music Box Tile
