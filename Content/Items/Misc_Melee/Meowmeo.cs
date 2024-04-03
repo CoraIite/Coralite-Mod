@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 .AddIngredient(ItemID.ChlorophyteSaber)//绿：叶绿短剑
                 .AddIngredient(ItemID.BeamSword)//青：光束剑
                 .AddIngredient(ItemID.IceBlade)//蓝：冰雪刃
-                .AddIngredient(ItemID.DD2SquireDemonSword)//紫：地狱烙印
+                .AddIngredient(ItemID.ShadowFlameKnife)//紫：暗影焰刀
                 .AddTile(TileID.RainbowBrick)
                 .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
                 .Register();

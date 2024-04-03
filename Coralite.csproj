@@ -40,8 +40,6 @@
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />
     <Folder Include="Content\UI\MagikeGuideBook\Chapter5\" />
     <Folder Include="Core\Systems\AstronomySystem\" />
-    <Folder Include="Localization\en-US\" />
-    <Folder Include="Localization\zh-Hans\" />
     <Folder Include="Sounds\Shadows\" />
   </ItemGroup>
 </Project>

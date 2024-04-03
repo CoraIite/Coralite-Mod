@@ -3521,3 +3521,9 @@ MagicCrystalMusicBox: {
 	DisplayName: Magic Crystal Music Box
 	Tooltip: ""
 }
+
+Meowmeo: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Meowmeo
+	Tooltip: ""
+}

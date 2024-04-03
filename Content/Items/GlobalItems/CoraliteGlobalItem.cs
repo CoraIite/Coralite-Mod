@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.GlobalItems
         public static LocalizedText TerraCoralCat;
         public static LocalizedText RainBowCoralCat;
 
-        public string LocalizationCategory =>"ClobalItems";
+        public string LocalizationCategory =>"GlobalItems";
 
         public override void Load()
         {

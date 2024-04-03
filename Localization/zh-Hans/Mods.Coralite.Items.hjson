@@ -3597,3 +3597,9 @@ MagicCrystalMusicBox: {
 	DisplayName: 八音盒（魔力水晶洞）
 	Tooltip: ""
 }
+
+Meowmeo: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 彩虹猫短剑
+	Tooltip: ""
+}
