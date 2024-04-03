@@ -17,11 +17,16 @@ namespace Coralite.Content.ModPlayers
             ThunderElectrifiedDeath = null;
         }
 
+        public PlayerDeathReason DeathByLocalization(string key)
+        {
+            return PlayerDeathReason.ByCustomReason(Language.GetTextValue($"Mods.Coralite.DeathMessage.{key}", Player.name));
+        }
 
         public void ThunderElectrifiedDeathReason(ref PlayerDeathReason damageSource)
         {
             if (thunderElectrified)
-                damageSource.SourceCustomReason = Player.name + ThunderElectrifiedDeath.Value;
+                //damageSource.SourceCustomReason = Player.name + ThunderElectrifiedDeath.Value;
+                damageSource = DeathByLocalization("ThunderElectrifiedDeath");
         }
     }
 }
