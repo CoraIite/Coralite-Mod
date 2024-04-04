@@ -3600,6 +3600,124 @@ MagicCrystalMusicBox: {
 
 Meowmeo: {
 	CraftCondition: 在CoralCat的世界中合成
-	DisplayName: 彩虹猫短剑
-	Tooltip: ""
+	DisplayName: 彩虹猫圣剑
+	Tooltip: ~喵喵喵~喵喵喵~喵喵喵~
+}
+
+HylianShield: {
+	DisplayName: 海利亚盾
+	Tooltip:
+		'''
+		手持时增加20防御
+		举起盾牌后双击方向键使用盾滑
+		“伴随着持有它的勇者的传说，自古从海拉鲁王族流传下来的盾。”
+		“以其他盾无法企及的压倒性的防御力和耐久性为傲。”
+		'''
+}
+
+Nuranasa: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 妖刀·小村正
+	Tooltip: 小小的也很可爱
+}
+
+SmallVolcano: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 火柴
+	Tooltip: 小土坡也是山
+}
+
+TerraShortSword: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 泰拉水果刀
+	Tooltip: 非常适合用来给水果削皮
+}
+
+TomatoButcherer: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 番茄屠夫
+	Tooltip: 这些是番茄酱而不是血，对吧？
+}
+
+TrueNightsCage: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 真·夜之囚笼
+	Tooltip: 让你在黑夜中穿梭自如
+}
+
+BrokenHeroShortSword: {
+	DisplayName: 英雄水果刀
+	Tooltip: 古代英雄所使用的......水果刀？
+}
+
+BladeOfCatnip: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 猫薄荷剑
+	Tooltip: 令瓶中猫猫爱不释手的武器
+}
+
+Excatbar: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 超级猫条
+	Tooltip: 这是圣剑？
+}
+
+NightsCage: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 夜之囚笼
+	Tooltip: 我看你是不想睡觉了
+}
+
+ShadowsBane: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 暗之驱逐
+	Tooltip: 好像也不会发光
+}
+
+TrueExcatbar: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 真·超级猫猫条
+	Tooltip: 尝起来是草莓与蓝莓的混合口味
+}
+
+BeamShortSword: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 光束小刀
+	Tooltip: 虽然很短但是也能够射出激光
+}
+
+Cattongue: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 猫舌剑
+	Tooltip: 它很怕烫！
+}
+
+CatTreeSword: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 猫爬架剑
+	Tooltip: 猫猫很喜欢在上面玩耍
+}
+
+FlyingDragonBaby: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 飞龙宝宝
+	Tooltip: 小飞龙出生时就已经能够吐出光波了
+}
+
+IceShortSword: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 冰雪匕首
+	Tooltip: 据说这是用古剑豹幼崽换牙时掉落的
+}
+
+SmallBee: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 小蜜蜂
+	Tooltip: 嗡嗡嗡嗡嗡
+}
+
+TheCatMansBlade: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 猫猫骑士团之剑
+	Tooltip: 黑猫团长的佩剑
 }

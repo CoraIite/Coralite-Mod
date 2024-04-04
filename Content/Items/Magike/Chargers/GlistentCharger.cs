@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike.Chargers
         {
             CreateRecipe()
                 .AddIngredient<CrystalCharger>()
-                .AddIngredient<GlistentBar>(4)
+                .AddIngredient<GlistentBar>(2)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

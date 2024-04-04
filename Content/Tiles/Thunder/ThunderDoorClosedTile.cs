@@ -5,7 +5,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Tiles.Thunder
 {
-    public class ThunderDoorClosedTile : BaseDoorClosedTile<ThunderBigDroplight, ThunderDoorOpenTile>
+    public class ThunderDoorClosedTile : BaseDoorClosedTile<ThunderDoor, ThunderDoorOpenTile>
     {
         public ThunderDoorClosedTile() : base(DustID.YellowTorch, Coralite.Instance.ThunderveinYellow, AssetDirectory.ThunderTiles)
         {

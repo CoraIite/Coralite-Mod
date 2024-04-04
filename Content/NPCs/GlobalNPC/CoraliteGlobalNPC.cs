@@ -6,6 +6,7 @@ using Coralite.Content.Items.Gels;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Thunder;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core.Configs;
 using Coralite.Helpers;
 using System.Collections.Generic;
@@ -150,5 +151,14 @@ namespace Coralite.Content.NPCs.GlobalNPC
                 pool[0] = 0f;
         }
 
+        public override bool PreKill(NPC npc)
+        {
+            if (npc.type == NPCID.RainbowSlime && CoraliteWorld.coralCatWorld)
+            {
+                return false;
+            }
+
+            return base.PreKill(npc);
+        }
     }
 }

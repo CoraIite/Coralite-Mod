@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Magike.Altars
         {
             CreateRecipe()
                 .AddIngredient<CrystalAltar>()
-                .AddIngredient<GlistentBar>(5)
+                .AddIngredient<GlistentBar>(3)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

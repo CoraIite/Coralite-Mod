@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System.Collections.Generic;
+using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -1106,6 +1107,11 @@ namespace Coralite.Core.Prefabs.Tiles
             player.cursorItemIconEnabled = true;
             player.cursorItemIconID = ModContent.ItemType<TItem>();
         }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            return new Item[] { new Item(ModContent.ItemType<TItem>()) };
+        }
     }
 
     public abstract class BaseDoorClosedTile<TItem, TOpen> : BaseTile where TItem : ModItem where TOpen : ModTile
@@ -1132,6 +1138,11 @@ namespace Coralite.Core.Prefabs.Tiles
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
             player.cursorItemIconID = ModContent.ItemType<TItem>();
+        }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            return new Item[] { new Item(ModContent.ItemType<TItem>()) };
         }
     }
 

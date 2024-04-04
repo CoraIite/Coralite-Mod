@@ -32,8 +32,8 @@ namespace Coralite.Content.Items.Magike.MultPrisms
         {
             PolymerizeRecipe.CreateRecipe<DemoniteTriprism>(50)
                 .SetMainItem<Diprism>()
-                .AddIngredient<GlistentBar>(4)
-                .AddIngredient(ItemID.ShadowScale, 10)
+                .AddIngredient<GlistentBar>()
+                .AddIngredient(ItemID.ShadowScale, 8)
                 .Register();
         }
     }

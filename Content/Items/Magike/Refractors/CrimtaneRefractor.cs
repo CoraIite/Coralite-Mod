@@ -29,8 +29,8 @@ namespace Coralite.Content.Items.Magike.Refractors
         {
             PolymerizeRecipe.CreateRecipe<CrimtaneRefractor>(50)
                 .SetMainItem<CrystalRefractor>()
-                .AddIngredient<GlistentBar>(4)
-                .AddIngredient(ItemID.TissueSample, 10)
+                .AddIngredient<GlistentBar>(2)
+                .AddIngredient(ItemID.TissueSample, 8)
                 .Register();
         }
     }

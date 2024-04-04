@@ -3527,3 +3527,115 @@ Meowmeo: {
 	DisplayName: Meowmeo
 	Tooltip: ""
 }
+
+HylianShield: {
+	DisplayName: Hylian Shield
+	Tooltip: ""
+}
+
+Nuranasa: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Nuranasa
+	Tooltip: ""
+}
+
+SmallVolcano: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Small Volcano
+	Tooltip: ""
+}
+
+TerraShortSword: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Terra Short Sword
+	Tooltip: ""
+}
+
+TomatoButcherer: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Tomato Butcherer
+	Tooltip: ""
+}
+
+TrueNightsCage: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: True Nights Cage
+	Tooltip: ""
+}
+
+BrokenHeroShortSword: {
+	DisplayName: Broken Hero Short Sword
+	Tooltip: ""
+}
+
+BladeOfCatnip: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Blade Of Catnip
+	Tooltip: ""
+}
+
+Excatbar: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Excatbar
+	Tooltip: ""
+}
+
+NightsCage: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Nights Cage
+	Tooltip: ""
+}
+
+ShadowsBane: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Shadows Bane
+	Tooltip: ""
+}
+
+TrueExcatbar: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: True Excatbar
+	Tooltip: ""
+}
+
+BeamShortSword: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Beam Short Sword
+	Tooltip: ""
+}
+
+Cattongue: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Cattongue
+	Tooltip: ""
+}
+
+CatTreeSword: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Cat Tree Sword
+	Tooltip: ""
+}
+
+FlyingDragonBaby: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Flying Dragon Baby
+	Tooltip: ""
+}
+
+IceShortSword: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Ice Short Sword
+	Tooltip: ""
+}
+
+SmallBee: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Small Bee
+	Tooltip: ""
+}
+
+TheCatMansBlade: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: The Cat Mans Blade
+	Tooltip: ""
+}

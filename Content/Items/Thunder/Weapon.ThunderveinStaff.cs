@@ -154,8 +154,8 @@ namespace Coralite.Content.Items.Thunder
                     {
                         AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index, out var totalIndexesInGroup);
 
-                        Vector2 idleSpot = CircleMovement(32 + totalIndexesInGroup * 4, 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index * MathHelper.TwoPi / totalIndexesInGroup);
-                        if (Projectile.Distance(idleSpot) < 8f)
+                        Vector2 idleSpot = CircleMovement(32 + totalIndexesInGroup * 4, 36, accelFactor: 0.6f, angleFactor: 0.9f, baseRot: index * MathHelper.TwoPi / totalIndexesInGroup);
+                        if (Projectile.Distance(idleSpot) < 32f)
                         {
                             Timer = 0f;
                             State = 0;
@@ -169,7 +169,7 @@ namespace Coralite.Content.Items.Thunder
                 case 0://在玩家头顶盘旋
                     {
                         AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out var totalIndexesInGroup2);
-                        CircleMovement(32 + totalIndexesInGroup2 * 4, 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index2 * MathHelper.TwoPi / totalIndexesInGroup2);
+                        CircleMovement(32 + totalIndexesInGroup2 * 4, 28, accelFactor: 0.4f, angleFactor: 0.9f, baseRot: index2 * MathHelper.TwoPi / totalIndexesInGroup2);
                         Projectile.rotation = (Owner.Center - Projectile.Center).ToRotation();
 
                         if (Main.rand.NextBool(20))
@@ -196,6 +196,7 @@ namespace Coralite.Content.Items.Thunder
                             Timer = 0;
                             State = -1;
                             CanDrawTrail = false;
+                            alpha = 1;
                             break;
                         }
 
@@ -236,6 +237,8 @@ namespace Coralite.Content.Items.Thunder
                         Timer++;
                         if (Timer > AttackTime)
                         {
+                            alpha = 1;
+
                             int num6 = AI_156_TryAttackingNPCs(Projectile);
                             if (num6 != -1)
                             {
@@ -244,7 +247,6 @@ namespace Coralite.Content.Items.Thunder
                                 Target = num6;
                                 Recorder = -1.57f + Main.rand.NextFloat(-0.7f, 0.7f);
                                 CanDrawTrail = false;
-                                alpha = 1;
                                 Projectile.Center = target.Center + Recorder.ToRotationVector2() * target.height;
                             }
                             else
@@ -266,6 +268,8 @@ namespace Coralite.Content.Items.Thunder
                             Timer = 0;
                             State = -1;
                             CanDrawTrail = false;
+                            alpha = 1;
+
                             break;
                         }
 
@@ -470,18 +474,21 @@ namespace Coralite.Content.Items.Thunder
             return result;
         }
 
-        public Vector2 CircleMovement(float distance, float speedMax, float accelFactor = 0.25f, float rollingFactor = 5f, float angleFactor = 0.4f, float baseRot = 0f)
+        public Vector2 CircleMovement(float distance, float speedMax, float accelFactor = 0.25f, float rollingFactor = 5f, float angleFactor = 0.9f, float baseRot = 0f)
         {
             Vector2 offset = (baseRot + Main.GlobalTimeWrappedHourly / rollingFactor * MathHelper.TwoPi).ToRotationVector2() * distance;
             offset.Y /= 4;
             Vector2 center = Owner.Center + new Vector2(0, -48) + offset;
             Vector2 dir = center - Projectile.Center;
 
+            if (dir.Length()>2000)
+                Projectile.Center = center;
+
             float velRot = Projectile.velocity.ToRotation();
             float targetRot = dir.ToRotation();
 
             float speed = Projectile.velocity.Length();
-            float aimSpeed = Math.Clamp(dir.Length() / 200f, 0, 1) * speedMax;
+            float aimSpeed = Math.Clamp(dir.Length() / 100f, 0, 1) * speedMax;
 
             Projectile.velocity = velRot.AngleTowards(targetRot, angleFactor).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, accelFactor);
             return center;

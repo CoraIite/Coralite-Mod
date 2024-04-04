@@ -32,8 +32,8 @@ namespace Coralite.Content.Items.Magike.MultPrisms
         {
             PolymerizeRecipe.CreateRecipe<CrimtaneTriprism>(50)
                 .SetMainItem<Diprism>()
-                .AddIngredient<GlistentBar>(4)
-                .AddIngredient(ItemID.TissueSample, 10)
+                .AddIngredient<GlistentBar>()
+                .AddIngredient(ItemID.TissueSample, 8)
                 .Register();
         }
     }

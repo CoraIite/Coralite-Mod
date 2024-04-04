@@ -41,24 +41,47 @@ namespace Coralite.Content.Items.Thunder
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            int shootCount = 0;
-
-            for (int i = 0; i < Main.maxNPCs; i++)
+            int i1 = -1;
+            if (Helper.TryFindClosestEnemy(Main.MouseWorld, 700, n => Collision.CanHit(player, n), out NPC target))
             {
-                NPC n = Main.npc[i];
-                if (n.active && n.CanBeChasedBy() && Vector2.Distance(player.Center, n.Center) < 700 && Collision.CanHit(player, n))
-                {
-                    Projectile.NewProjectile(source, position, n.Center, type,
-                        damage, knockback, player.whoAmI, player.itemTimeMax * 0.6f, i);
-                    shootCount++;
-                    if (shootCount > 2)
-                    {
-                        break;
-                    }
-                }
+                i1 = target.whoAmI;
+                Projectile.NewProjectile(source, position, target.Center, type,
+                    damage, knockback, player.whoAmI, player.itemTimeMax * 0.6f, target.whoAmI);
             }
 
-            if (shootCount > 0)
+            if (i1 != -1)
+            {
+                int i2 = -1;
+                if (Helper.TryFindClosestEnemy(Main.MouseWorld, 700, n => Collision.CanHit(player, n) && n.whoAmI != i1, out NPC target1))
+                {
+                    i2 = target1.whoAmI;
+
+                    Projectile.NewProjectile(source, position, target1.Center, type,
+                        damage, knockback, player.whoAmI, player.itemTimeMax * 0.6f, target1.whoAmI);
+                }
+
+                if (i2 != -1 && Helper.TryFindClosestEnemy(Main.MouseWorld, 700, n => Collision.CanHit(player, n) && n.whoAmI != i1 && n.whoAmI != i2, out NPC target2))
+                {
+                    Projectile.NewProjectile(source, position, target2.Center, type,
+                        damage, knockback, player.whoAmI, player.itemTimeMax * 0.6f, target2.whoAmI);
+                }
+            }
+            //for (int i = 0; i < Main.maxNPCs; i++)
+            //{
+            //    NPC n = Main.npc[i];
+            //    if (n.active && n.CanBeChasedBy() && Vector2.Distance(player.Center, n.Center) < 700 && Collision.CanHit(player, n))
+            //    {
+            //        Projectile.NewProjectile(source, position, n.Center, type,
+            //            damage, knockback, player.whoAmI, player.itemTimeMax * 0.6f, i);
+            //        shootCount++;
+            //        if (shootCount > 2)
+            //        {
+            //            break;
+            //        }
+            //    }
+            //}
+
+            if (i1!=-1)
             {
                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, player.Center);
             }

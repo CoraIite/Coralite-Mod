@@ -19,9 +19,11 @@ namespace Coralite.Content.WorldGeneration
             SoundEngine.PlaySound(CoraliteSoundID.Mio_Mewo_Miao_Item57);
 
             int OceanHeight = WorldGen.genRand.Next((int)(Main.worldSurface * 0.1f), (int)(Main.worldSurface * 0.35f));
+            if (OceanHeight < 80)
+                OceanHeight = 80;
             int maxDepth = (int)(Main.rockLayer);
 
-            for (int i = 0; i < 42; i++)
+            for (int i = 0; i < 41; i++)
             {
                 for (int j = OceanHeight; j < Main.maxTilesY; j++)
                 {
@@ -37,7 +39,7 @@ namespace Coralite.Content.WorldGeneration
                 }
             }
 
-            for (int i = 42; i < Main.maxTilesX - 42; i++)
+            for (int i = 41; i < Main.maxTilesX - 42; i++)
                 for (int j = OceanHeight; j < maxDepth; j++)
                 {
                     Tile tile = Main.tile[i, j];
@@ -71,7 +73,7 @@ namespace Coralite.Content.WorldGeneration
             }
             else
             {
-                shimmerLeft = 42;
+                shimmerLeft = 41;
                 shimmerRight = Main.maxTilesX / 2 - Main.maxTilesX / 6;
             }
 
@@ -344,7 +346,7 @@ namespace Coralite.Content.WorldGeneration
                     }
                 }
 
-            for (int i = 42; i < Main.maxTilesX - 42; i++)
+            for (int i = 41; i < Main.maxTilesX - 42; i++)
                 for (int j = Main.maxTilesY - 200; j < Main.maxTilesY; j++)
                 {
                     Tile tile = Main.tile[i, j];
@@ -354,10 +356,17 @@ namespace Coralite.Content.WorldGeneration
                     Tile bottom = Main.tile[i, j + 1];
                     Tile left = Main.tile[i - 1, j];
                     Tile right = Main.tile[i + 1, j];
+                    Tile upLeft = Main.tile[i - 1, j - 1];
+                    Tile upRight = Main.tile[i + 1, j - 1];
+                    Tile bottomLeft = Main.tile[i - 1, j + 1];
+                    Tile bottomRight = Main.tile[i + 1, j + 1];
 
                     if (!up.HasTile || !bottom.HasTile || !left.HasTile || !right.HasTile ||
+                        !upLeft.HasTile || !upRight.HasTile || !bottomLeft.HasTile || !bottomRight.HasTile ||
                       !Main.tileSolid[up.TileType] || !Main.tileSolid[bottom.TileType]
-                      || !Main.tileSolid[left.TileType] || !Main.tileSolid[right.TileType])
+                      || !Main.tileSolid[left.TileType] || !Main.tileSolid[right.TileType]||
+                      !Main.tileSolid[upLeft.TileType] || !Main.tileSolid[upRight.TileType]
+                      || !Main.tileSolid[bottomLeft.TileType] || !Main.tileSolid[bottomRight.TileType])
                         Main.tile[i, j].ResetToType(TileID.Grass);
                 }
 
@@ -390,7 +399,7 @@ namespace Coralite.Content.WorldGeneration
             //放置彩虹
             for (int i = 40; i < Main.maxTilesX - 40; i++)
             {
-                int y = Main.maxTilesY - 240 + (int)(MathF.Sin(i * 0.05f) * 10);
+                int y = Main.maxTilesY - 240 + (int)(MathF.Sin(i * 0.05f) * 5);
 
                 for (int j = 0; j < 14; j++)
                 {
@@ -407,6 +416,24 @@ namespace Coralite.Content.WorldGeneration
                     };
                     Main.tile[i, y2].ClearEverything();
                     Main.tile[i, y2].ResetToType(tileType);
+                    WorldGen.paintCoatTile(i, y2, PaintCoatingID.Glow);
+                }
+            }
+            for (int i = 40; i < Main.maxTilesX - 40; i++)
+            {
+                int y = maxDepth + (int)(MathF.Sin(i * 0.05f) * 3);
+
+                Tile tile = Main.tile[i, y];
+                if (tile.HasTile && Main.tileDungeon[tile.TileType])
+                    continue;
+                if (tile.LiquidType == LiquidID.Shimmer && tile.LiquidAmount > 0)
+                    continue;
+
+                for (int j = 0; j < 7; j++)
+                {
+                    int y2 = y + j;
+                    Main.tile[i, y2].ClearEverything();
+                    Main.tile[i, y2].ResetToType(TileID.Bubble);
                     WorldGen.paintCoatTile(i, y2, PaintCoatingID.Glow);
                 }
             }
@@ -478,7 +505,7 @@ namespace Coralite.Content.WorldGeneration
 
                 WorldGen.AddBuriedChest(new Point(x + WorldGen.genRand.Next(0, roomHeight), y - 1),
                     WorldGen.genRand.NextFromList(
-                        ItemID.RainbowBrick,
+                        //ItemID.RainbowBrick,
                         ItemID.JojaCola,
                         ItemID.LicenseBunny,
                         ItemID.LicenseCat,

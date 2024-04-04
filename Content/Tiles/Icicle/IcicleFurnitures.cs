@@ -107,14 +107,14 @@ namespace Coralite.Content.Tiles.Icicle
         }
     }
 
-    public class IcicleDoorClosedTile : BaseDoorClosedTile<IcicleBigDroplight, IcicleDoorOpenTile>
+    public class IcicleDoorClosedTile : BaseDoorClosedTile<IcicleDoor, IcicleDoorOpenTile>
     {
         public IcicleDoorClosedTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
-    public class IcicleDoorOpenTile : BaseDoorOpenTile<IcicleBigDroplight, IcicleDoorClosedTile>
+    public class IcicleDoorOpenTile : BaseDoorOpenTile<IcicleDoor, IcicleDoorClosedTile>
     {
         public IcicleDoorOpenTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
         {

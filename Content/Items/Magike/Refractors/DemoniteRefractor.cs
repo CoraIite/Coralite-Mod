@@ -29,8 +29,8 @@ namespace Coralite.Content.Items.Magike.Refractors
         {
             PolymerizeRecipe.CreateRecipe<DemoniteRefractor>(50)
                 .SetMainItem<CrystalRefractor>()
-                .AddIngredient<GlistentBar>(4)
-                .AddIngredient(ItemID.ShadowScale, 10)
+                .AddIngredient<GlistentBar>(2)
+                .AddIngredient(ItemID.ShadowScale, 8)
                 .Register();
         }
     }

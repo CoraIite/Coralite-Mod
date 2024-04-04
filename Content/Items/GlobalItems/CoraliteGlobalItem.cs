@@ -1,9 +1,12 @@
 using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.Items.Materials;
+using Coralite.Content.Items.Misc_Melee;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Items;
 using Terraria.ID;
@@ -214,6 +217,83 @@ namespace Coralite.Content.Items.GlobalItems
                             return;
                     }
             }
+        }
+
+        public override void UpdateInventory(Item item, Player player)
+        {
+            CoralCatWorldTransForm( item);
+        }
+
+        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
+        {
+            CoralCatWorldTransForm(item);
+        }
+
+        public static void CoralCatWorldTransForm(Item item)
+        {
+            if (!CoraliteWorld.coralCatWorld)
+                return;
+
+            switch (item.type)
+            {
+                default: return;
+                case ItemID.BrokenHeroSword:
+                    item.SetDefaults(ModContent.ItemType<BrokenHeroShortSword>());
+                    break;
+                case ItemID.TerraBlade:
+                    item.SetDefaults(ModContent.ItemType<TerraShortSword>());
+                    break;
+                case ItemID.TrueNightsEdge:
+                    item.SetDefaults(ModContent.ItemType<TrueNightsCage>());
+                    break;
+                case ItemID.TrueExcalibur:
+                    item.SetDefaults(ModContent.ItemType<TrueExcatbar>());
+                    break;
+                case ItemID.Excalibur:
+                    item.SetDefaults(ModContent.ItemType<Excatbar>());
+                    break;
+                case ItemID.NightsEdge:
+                    item.SetDefaults(ModContent.ItemType<NightsCage>());
+                    break;
+                case ItemID.LightsBane:
+                    item.SetDefaults(ModContent.ItemType<ShadowsBane>());
+                    break;
+                case ItemID.BloodButcherer:
+                    item.SetDefaults(ModContent.ItemType<TomatoButcherer>());
+                    break;
+                case ItemID.Muramasa:
+                    item.SetDefaults(ModContent.ItemType<Nuranasa>());
+                    break;
+                case ItemID.FieryGreatsword:
+                    item.SetDefaults(ModContent.ItemType<SmallVolcano>());
+                    break;
+                case ItemID.BladeofGrass:
+                    item.SetDefaults(ModContent.ItemType<BladeOfCatnip>());
+                    break;
+                case ItemID.BeeKeeper:
+                    item.SetDefaults(ModContent.ItemType<SmallBee>());
+                    break;
+                case ItemID.Bladetongue:
+                    item.SetDefaults(ModContent.ItemType<Cattongue>());
+                    break;
+                case ItemID.ChristmasTreeSword:
+                    item.SetDefaults(ModContent.ItemType<CatTreeSword>());
+                    break;
+                case ItemID.BeamSword:
+                    item.SetDefaults(ModContent.ItemType<BeamShortSword>());
+                    break;
+                case ItemID.TheHorsemansBlade:
+                    item.SetDefaults(ModContent.ItemType<TheCatMansBlade>());
+                    break;
+                case ItemID.DD2SquireBetsySword:
+                    item.SetDefaults(ModContent.ItemType<FlyingDragonBaby>());
+                    break;
+                case ItemID.IceBlade:
+                    item.SetDefaults(ModContent.ItemType<IceShortSword>());
+                    break;
+            }
+
+            SoundEngine.PlaySound(CoraliteSoundID.Meowmere);
         }
 
         public void AddVarient()

@@ -31,8 +31,8 @@ namespace Coralite.Content.Items.Magike.BasicLens
         {
             PolymerizeRecipe.CreateRecipe<CrimtaneLens>(75)
                 .SetMainItem<CrystalLens>()
-                .AddIngredient<GlistentBar>(4)
-                .AddIngredient(ItemID.TissueSample, 6)
+                .AddIngredient<GlistentBar>(2)
+                .AddIngredient(ItemID.TissueSample, 4)
                 .Register();
         }
     }

@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.Magike.Tools.MiniColumns
             CreateRecipe()
                 .AddIngredient<MiniCrystalColumn>()
                 .AddIngredient<GlistentBar>(2)
-                .AddIngredient(ItemID.ShadowScale, 5)
+                .AddIngredient(ItemID.ShadowScale, 2)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

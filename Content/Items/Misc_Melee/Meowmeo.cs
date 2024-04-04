@@ -1,8 +1,12 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 
@@ -27,25 +31,35 @@ namespace Coralite.Content.Items.Misc_Melee
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.Meowmere);
-            Item.damage = 200;
+            Item.damage = 220;
             Item.knockBack = 4f;
             Item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
-            Item.useAnimation = 12;
-            Item.useTime = 12;
-            Item.UseSound = SoundID.Item1;
-            Item.DamageType = DamageClass.MeleeNoSpeed;
+            Item.useAnimation = 11;
+            Item.useTime = 11;
+            Item.UseSound = CoraliteSoundID.Zenith_Item169;
             Item.autoReuse = true;
             Item.noUseGraphic = true; // The sword is actually a "projectile", so the item should not be visible when used
             Item.noMelee = true; // The projectile will do the damage and not the item
 
             Item.shoot = ModContent.ProjectileType<MeowmeoProj>(); // The projectile is what makes a shortsword work
-            Item.shootSpeed = 4f; // This value bleeds into the behavior of the projectile as velocity, keep that in mind when tweaking values
+            Item.shootSpeed = 3.3f; // This value bleeds into the behavior of the projectile as velocity, keep that in mind when tweaking values
             Item.rare = ItemRarityID.Red;
-            Item.value = Item.sellPrice(0, 20);
+            Item.value = Item.sellPrice(0, 40);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            for (int i = -1; i < 2; i += 2)
+            {
+                int texType = -Main.rand.Next(1, 22);
+
+                if (CoraliteWorld.chaosWorld)
+                    texType = Main.rand.Next(1, ItemLoader.ItemCount);
+
+                Projectile.NewProjectile(source, position, velocity.RotatedBy(i * 0.25f + Main.rand.NextFloat(-0.1f, 0.1f)).SafeNormalize(Vector2.Zero) * 14, ModContent.ProjectileType<MeowmeoSpecialProj>(),
+                    damage, knockback, player.whoAmI, ai2: texType);
+            }
+
             Projectile.NewProjectile(source, position, velocity.SafeNormalize(Vector2.Zero) * 16, ProjectileID.Meowmere,
                 damage, knockback, player.whoAmI);
             return true;
@@ -55,14 +69,25 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Meowmere)
-                .AddIngredient(ItemID.AdamantiteSword)//红：精金剑
-                .AddIngredient(ItemID.AntlionClaw)//橙：蚁狮颌骨剑
+                .AddIngredient<Cattongue>()//红：猫舌头
+                .AddIngredient<FlyingDragonBaby>()
+                .AddIngredient<TheCatMansBlade>()//橙：南瓜剑
                 .AddIngredient(ItemID.GoldShortsword)//黄:金短剑
+                .AddIngredient<TerraShortSword>()
                 .AddIngredient(ItemID.ChlorophyteSaber)//绿：叶绿短剑
-                .AddIngredient(ItemID.BeamSword)//青：光束剑
-                .AddIngredient(ItemID.IceBlade)//蓝：冰雪刃
+                .AddIngredient<CatTreeSword>()
+                .AddIngredient<BeamShortSword>()//青：光束剑
+                .AddIngredient(ItemID.PiercingStarlight)
+                .AddIngredient<IceShortSword>()//蓝：冰雪刃
                 .AddIngredient(ItemID.ShadowFlameKnife)//紫：暗影焰刀
+                .AddIngredient<SmallBee>()
                 .AddTile(TileID.RainbowBrick)
+                .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
+                .Register();
+
+            Recipe.Create(ItemID.RainbowBrick)
+                .AddIngredient(ItemID.LunarBar, 4)
+                .AddTile(TileID.LunarCraftingStation)
                 .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
                 .Register();
         }
@@ -72,8 +97,8 @@ namespace Coralite.Content.Items.Misc_Melee
     {
         public override string Texture => AssetDirectory.Misc_Melee + "Meowmeo";
 
-        public const int FadeInDuration = 7;
-        public const int FadeOutDuration = 4;
+        public const int FadeInDuration = 6;
+        public const int FadeOutDuration = 3;
 
         public const int TotalDuration = 16;
 
@@ -141,8 +166,8 @@ namespace Coralite.Content.Items.Misc_Melee
         private void SetVisualOffsets()
         {
             // 32 is the sprite size (here both width and height equal)
-            const int HalfSpriteWidth = 32 / 2;
-            const int HalfSpriteHeight = 32 / 2;
+            const int HalfSpriteWidth = 36 / 2;
+            const int HalfSpriteHeight = 44 / 2;
 
             int HalfProjWidth = Projectile.width / 2;
             int HalfProjHeight = Projectile.height / 2;
@@ -188,6 +213,228 @@ namespace Coralite.Content.Items.Misc_Melee
             Vector2 end = start + Projectile.velocity * 6f;
             float collisionPoint = 0f; // Don't need that variable, but required as parameter
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, CollisionWidth, ref collisionPoint);
+        }
+    }
+
+    public class MeowmeoSpecialProj:ModProjectile
+    {
+        public override string Texture => AssetDirectory.Blank;
+
+        public enum ShortSwordType
+        {
+            BladeOfCatnip=1,
+            Excatbar,
+            NightsCage,
+            Nuranasa,
+            ShadowsBane,
+            SmallVolcano,
+            TerraShortSword,
+            TomatoButcherer,
+            TrueExcatbar,
+            TrueNightsCage,
+            SmallBee,
+            Cattongue,
+            CatTreeSword,
+            BeamShortSword,
+            TheCatMansBlade,
+            FlyingDragonBaby,
+            IceShortSword,
+
+            GoldShortsword,
+            ChlorophyteSaber,
+            PiercingStarlight,
+            ShadowFlameKnife,
+        }
+
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailingMode[Type] = 0;
+            ProjectileID.Sets.TrailCacheLength[Type] = 16;
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.aiStyle = 8;
+            AIType = ProjectileID.Meowmere;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.penetrate = 5;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Projectile.ai[0] += 1f;
+            if (Projectile.ai[0]==1)
+                SoundEngine.PlaySound(CoraliteSoundID.Meowmere, Projectile.Center);
+            if (Projectile.ai[0] >= 5f)
+            {
+                Projectile.position += Projectile.velocity;
+                Projectile.Kill();
+            }
+            else
+            {
+                if (Projectile.velocity.Y != oldVelocity.Y)
+                    Projectile.velocity.Y = 0f - oldVelocity.Y;
+
+                if (Projectile.velocity.X != oldVelocity.X)
+                    Projectile.velocity.X = 0f - oldVelocity.X;
+            }
+
+            Vector2 spinningpoint = new Vector2(0f, -3f - Projectile.ai[0] * 0.7f).RotatedByRandom(3.1415927410125732);
+            float num21 = 10f + Projectile.ai[0] * 3f;
+            Vector2 vector19 = new Vector2(1.05f, 1f);
+            for (float i = 0f; i < num21; i += 1f)
+            {
+                int num23 = Dust.NewDust(Projectile.Center, 0, 0, DustID.RainbowTorch, 0f, 0f, 0, Color.Transparent);
+                Main.dust[num23].position = Projectile.Center;
+                Main.dust[num23].velocity = spinningpoint.RotatedBy((float)Math.PI * 2f * i / num21) * vector19 * (0.6f + Main.rand.NextFloat() * 0.3f);
+                Main.dust[num23].color = Main.hslToRgb(i / num21, 1f, 0.5f);
+                Main.dust[num23].noGravity = true;
+                Main.dust[num23].scale = 1f + Projectile.ai[0] / 4f;
+            }
+
+            if (Main.myPlayer == Projectile.owner)
+            {
+                int num24 = Projectile.width;
+                int num25 = Projectile.height;
+                int num26 = Projectile.penetrate;
+                Projectile.position = Projectile.Center;
+                Projectile.width = (Projectile.height = 40 + 8 * (int)Projectile.ai[0]);
+                Projectile.Center = Projectile.position;
+                Projectile.penetrate = -1;
+                Projectile.Damage();
+                Projectile.penetrate = num26;
+                Projectile.position = Projectile.Center;
+                Projectile.width = num24;
+                Projectile.height = num25;
+                Projectile.Center = Projectile.position;
+            }
+
+            return false;
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            Vector2 vector44 = new Vector2(Projectile.width, Projectile.height) / 2f;
+            for (int num401 = 0; num401 < Projectile.oldPos.Length; num401++)
+            {
+                if (!(Projectile.oldPos[num401] == Vector2.Zero))
+                {
+                    int num402 = Dust.NewDust(Projectile.oldPos[num401] + vector44, 0, 0, DustID.RainbowTorch, 0f, 0f, 150, Color.Transparent, 0.7f);
+                    Main.dust[num402].color = Main.hslToRgb(Main.rand.NextFloat(), 1f, 0.5f);
+                    Main.dust[num402].noGravity = true;
+                }
+            }
+        }
+
+        public static int? GetTexture(int type,out float ExRot)
+        {
+            ExRot = 0f;
+            if (type > 0)
+                return type;
+
+            ExRot = 0.785f;
+            switch (-type)
+            {
+                default: return null;
+                case (int)ShortSwordType.BladeOfCatnip:
+                    return ModContent.ItemType<BladeOfCatnip>();
+                case (int)ShortSwordType.Excatbar:
+                    return ModContent.ItemType<Excatbar>();
+                case (int)ShortSwordType.NightsCage:
+                    return ModContent.ItemType<NightsCage>();
+                case (int)ShortSwordType.Nuranasa:
+                    return ModContent.ItemType<Nuranasa>();
+                case (int)ShortSwordType.ShadowsBane:
+                    return ModContent.ItemType<ShadowsBane>();
+                case (int)ShortSwordType.SmallVolcano:
+                    return ModContent.ItemType<SmallVolcano>();
+                case (int)ShortSwordType.TerraShortSword:
+                    return ModContent.ItemType<TerraShortSword>();
+                case (int)ShortSwordType.TomatoButcherer:
+                    return ModContent.ItemType<TomatoButcherer>();
+                case (int)ShortSwordType.TrueExcatbar:
+                    return ModContent.ItemType<TrueExcatbar>();
+                case (int)ShortSwordType.TrueNightsCage:
+                    return ModContent.ItemType<TrueNightsCage>();
+                case (int)ShortSwordType.SmallBee:
+                    return ModContent.ItemType<SmallBee>();
+                case (int)ShortSwordType.Cattongue:
+                    return ModContent.ItemType<Cattongue>();
+                case (int)ShortSwordType.CatTreeSword:
+                    return ModContent.ItemType<CatTreeSword>();
+                case (int)ShortSwordType.BeamShortSword:
+                    return ModContent.ItemType<BeamShortSword>();
+                case (int)ShortSwordType.TheCatMansBlade:
+                    return ModContent.ItemType<TheCatMansBlade>();
+                case (int)ShortSwordType.FlyingDragonBaby:
+                    return ModContent.ItemType<FlyingDragonBaby>();
+                case (int)ShortSwordType.IceShortSword:
+                    return ModContent.ItemType<IceShortSword>();
+                case (int)ShortSwordType.GoldShortsword:
+                    return ItemID.GoldShortsword;
+                case (int)ShortSwordType.ChlorophyteSaber:
+                    return ItemID.ChlorophyteSaber;
+                case (int)ShortSwordType.PiercingStarlight:
+                    return ItemID.PiercingStarlight;
+                case (int)ShortSwordType.ShadowFlameKnife:
+                    ExRot = 0;
+                    return ItemID.ShadowFlameKnife;
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            SpriteEffects dir = SpriteEffects.None;
+            if (Projectile.spriteDirection == -1)
+                dir = SpriteEffects.FlipHorizontally;
+
+            Vector2 center = Projectile.Center + Vector2.UnitY * Projectile.gfxOffY - Main.screenPosition;
+
+            Texture2D selfTex;
+
+            int? projTexType = GetTexture((int)Projectile.ai[2],out float exRot);
+            if (projTexType.HasValue)
+            {
+                Main.instance.LoadItem(projTexType.Value);
+                selfTex = TextureAssets.Item[projTexType.Value].Value;
+            }
+            else
+            {
+                Main.instance.LoadProjectile(ProjectileID.Meowmere);
+                selfTex = TextureAssets.Projectile[ProjectileID.Meowmere].Value;
+            }
+
+            Vector2 origin = selfTex.Size() / 2f;
+            float rotation = Projectile.rotation - Projectile.spriteDirection * exRot;
+            Vector2 scale = Vector2.One * Projectile.scale;
+
+            Main.instance.LoadProjectile(250);
+            Texture2D value84 = TextureAssets.Projectile[250].Value;
+            Vector2 origin22 = new Vector2(value84.Width / 2, 0f);
+            Vector2 vector75 = new Vector2(Projectile.width, Projectile.height) / 2f;
+            Color white3 = Color.White;
+            white3.A = 127;
+            for (int num316 = Projectile.oldPos.Length - 1; num316 > 0; num316--)
+            {
+                Vector2 vector76 = Projectile.oldPos[num316] + vector75;
+                if (!(vector76 == vector75))
+                {
+                    Vector2 vector77 = Projectile.oldPos[num316 - 1] + vector75;
+                    float rotation27 = (vector77 - vector76).ToRotation() - (float)Math.PI / 2f;
+                    Vector2 scale7 = new Vector2(1f, Vector2.Distance(vector76, vector77) / value84.Height);
+                    Color color82 = white3 * (1f - num316 / (float)Projectile.oldPos.Length);
+                    Main.EntitySpriteDraw(value84, vector76 - Main.screenPosition, null, color82, rotation27, origin22, scale7, dir);
+                }
+            }
+
+            Main.EntitySpriteDraw(selfTex, center, null, lightColor, rotation, origin, scale, dir);
+
+            return false;
         }
     }
 }

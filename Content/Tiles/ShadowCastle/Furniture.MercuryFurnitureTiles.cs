@@ -76,14 +76,14 @@ namespace Coralite.Content.Tiles.ShadowCastle
         }
     }
 
-    public class MercuryDoorClosedTile : BaseDoorClosedTile<MercuryBigDroplight, MercuryDoorOpenTile>
+    public class MercuryDoorClosedTile : BaseDoorClosedTile<MercuryDoor, MercuryDoorOpenTile>
     {
         public MercuryDoorClosedTile() : base(DustID.Shadowflame, Coralite.Instance.ThunderveinYellow, AssetDirectory.ShadowCastleTiles)
         {
         }
     }
 
-    public class MercuryDoorOpenTile : BaseDoorOpenTile<MercuryBigDroplight, MercuryDoorClosedTile>
+    public class MercuryDoorOpenTile : BaseDoorOpenTile<MercuryDoor, MercuryDoorClosedTile>
     {
         public MercuryDoorOpenTile() : base(DustID.Shadowflame, Coralite.Instance.ThunderveinYellow, AssetDirectory.ShadowCastleTiles)
         {
