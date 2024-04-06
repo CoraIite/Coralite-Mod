@@ -8,6 +8,7 @@ using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using static Coralite.Core.Systems.YujianSystem.BaseYujian;
 
 namespace Coralite.Core.Systems.YujianSystem
 {
@@ -26,18 +27,22 @@ namespace Coralite.Core.Systems.YujianSystem
         private readonly float PowerfulAttackCost;
         public readonly bool TileCollide;
         public bool AimMouse;
-        public bool canChannel;
         public int targetIndex;
-        public int channelTime;
+        public int atkTime;
         private int attackLength;
         public Vector2 aimCenter;
         public IHuluEffect huluEffect;
         public YujianAI[] yujianAIs;
-        public YujianAI specialAI;
+        /// <summary>
+        /// 御剑消耗念力的攻击状态
+        /// </summary>
         public YujianAI powerfulAI;
+        /// <summary>
+        /// 御剑生成源
+        /// </summary>
+        public BaseYujian SourceYujian;
 
-        public const float SpecialMoveState = 0.1f;
-        public const float PowerfulMoveState = 0.2f;
+        public const float PowerfulMoveState = 0.1f;
 
         public int AttackLength { get => attackLength; set => attackLength = value; }
         public ref float State => ref Projectile.ai[0];
@@ -48,13 +53,12 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name.Replace("Proj", ""));
 
-        public BaseYujianProj(YujianAI[] yujianAIs, YujianAI specialAI, YujianAI powerfulAI, float PowerfulAttackCost, int attackLength, int width, int height, Color color1, Color color2, int trailCacheLength = 30, bool tileCollide = true, string texturePath = AssetDirectory.YujianHulu, bool pathHasName = false)
+        public BaseYujianProj(YujianAI[] yujianAIs, YujianAI powerfulAI, float PowerfulAttackCost, int attackLength, int width, int height, Color color1, Color color2, int trailCacheLength = 30, bool tileCollide = true, string texturePath = AssetDirectory.YujianHulu, bool pathHasName = false)
         {
             if (yujianAIs is null || powerfulAI is null)
                 throw new Exception("普通攻击或强化攻击不能为null ! ! ! ! ! ! ! ! ! ! ! !");
 
             this.yujianAIs = yujianAIs;
-            this.specialAI = specialAI;
             this.powerfulAI = powerfulAI;
             this.PowerfulAttackCost = PowerfulAttackCost;
             AttackLength = attackLength;
@@ -102,6 +106,10 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public override void OnSpawn(IEntitySource source)
         {
+            if(source is YujianSource yujianSource)
+            {
+                SourceYujian = yujianSource.Yujian;
+            }
             Projectile.oldPos = new Vector2[trailCacheLength];
             Projectile.oldRot = new float[trailCacheLength];
 
@@ -110,31 +118,10 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public sealed override void AI()
         {
-            //如果玩家输入了左键，那么将开始计时，在完成一整个攻击动作后检测计时器状态，时间短的话那么将命令御剑瞄准鼠标位置进行攻击
-            //时间长的话就执行特殊攻击动作（如果有的话）
-            if (canChannel)
+            if(Owner.HeldItem.ModItem is not BaseHulu && !SourceYujian.MainYujian) // 如果手上不是葫芦并且不是主御剑，则清除自己
             {
-                if (Owner.channel)
-                {
-                    channelTime++;
-                    Owner.itemTime = Owner.itemAnimation = 18;
-                    if (channelTime == 30 && specialAI is not null)
-                    {
-                        State = SpecialMoveState;
-                        AimMouse = false;
-                        specialAI.OnStart(this);
-                    }
-                }
-                else
-                {
-                    //判断按住的时长，并根据时长去调整攻击动作
-                    if (channelTime > 3)
-                        AimMouse = true;
-
-                    channelTime = 0;
-                    if (State == SpecialMoveState)
-                        ChangeState();
-                }
+                Projectile.Kill();
+                return;
             }
 
             if (!AIBefore())
@@ -160,16 +147,19 @@ namespace Coralite.Core.Systems.YujianSystem
             if (player.dead)
                 cp.ownedYujianProj = false;
 
-            if (cp.ownedYujianProj)
-                Projectile.timeLeft = 2;
-
+            Projectile.timeLeft = 2;
+            if (Owner.HeldItem.ModItem is BaseHulu && Owner.controlUseItem)
+            {
+                Owner.itemTime = Owner.itemAnimation = 6;
+                Vector2 vector2 = Main.MouseWorld - Owner.Center;
+                Owner.itemRotation = MathF.Atan2(vector2.Y * Owner.direction, vector2.X * Owner.direction);
+            }
             if (player.active && Vector2.Distance(player.Center, Projectile.Center) > 2000f)
             {
-                State = 0f;
+                State = -1f;
                 Timer = 0f;
                 Projectile.netUpdate = true;
             }
-
             switch (State)
             {
                 default:
@@ -181,37 +171,61 @@ namespace Coralite.Core.Systems.YujianSystem
                     Projectile.Center = Projectile.Center.MoveTowards(idleSpot, 10f);
                     Projectile.rotation = Projectile.rotation.AngleLerp(idleRotation, 0.08f);
                     Projectile.tileCollide = false;
+                    Timer = 0;
+                    targetIndex = -1;
                     if (Projectile.Distance(idleSpot) < 2f)
                     {
-                        State = 0f;
+                        State = -0.5f;
                         Projectile.netUpdate = true;
                     }
 
                     return false;
-                case 0f:        //尝试开始攻击
+                case -0.5f:     //尝试开始攻击
                     Helper.GetMyProjIndexWithModProj<BaseYujianProj>(Projectile, out var index2, out var totalIndexesInGroup2);
                     GetIdlePosition(index2, totalIndexesInGroup2, out var idleSpot2, out var idleRotation2);
-                    Projectile.velocity = Vector2.Zero;
-                    Projectile.Center = Vector2.SmoothStep(Projectile.Center, idleSpot2, 0.18f);
-                    Projectile.rotation = Projectile.rotation.AngleLerp(idleRotation2, 0.18f);
+                    Projectile.velocity = Vector2.UnitY.RotatedBy((MathHelper.PiOver2 * 1.5f * Owner.direction) + (0.2 * index2 * totalIndexesInGroup2 * Owner.direction));
+                    Projectile.Center = idleSpot2 + Projectile.velocity * 10;
+                    Projectile.rotation = idleRotation2;
                     Projectile.tileCollide = false;
 
-                    if (ChangeState(cp))
-                        break;
-
-                    if (Main.rand.NextBool(20))
+                    if ((Owner.HeldItem.ModItem is BaseHulu && Owner.controlUseItem) || (Owner.HeldItem.ModItem is not BaseHulu && Main.rand.NextBool(20))) // 手持葫芦则左键攻击,否则自动攻击
                     {
                         int targetNPCIndex = TryAttackingNPCs(Projectile);
                         if (targetNPCIndex != -1)
                         {
                             //随机一个攻击状态，或进行指定攻击状态
                             targetIndex = targetNPCIndex;
-                            State = Main.rand.Next(1, yujianAIs.Length);
-                            yujianAIs[(int)State - 1].OnStart(this);
-                            break;
+                            State = 0;
+                            //State = Main.rand.Next(1, yujianAIs.Length);
+                            //yujianAIs[(int)State - 1].OnStart(this);
+                            return false;
                         }
                     }
 
+                    return false;
+                case 0f:        //拔刀
+                    int targetNPCIndex1 = TryAttackingNPCs(Projectile);
+                    if (targetNPCIndex1 == -1)
+                    {
+                        Timer = 0;
+                        targetIndex = -1;
+                        State = -1;
+                    }
+                    else
+                    {
+                        if (Timer++ > 60)   //30帧后切换AI，否则处于拔刀AI
+                        {
+                            Timer = 0;  //重置计时器
+                            targetIndex = targetNPCIndex1;
+                            State = Main.rand.Next(1, yujianAIs.Length);
+                            yujianAIs[(int)State - 1].OnStart(this);
+
+                        }
+                        else
+                        {
+                            Projectile.Center = Owner.Center + Projectile.velocity * (MathHelper.SmoothStep(1,100,Timer / 60f) + 10);
+                        }
+                    }
                     return false;
             }
 
@@ -226,7 +240,7 @@ namespace Coralite.Core.Systems.YujianSystem
                 return;
 
             int targetNPCIndex = TryAttackingNPCs(Projectile);
-            if (targetNPCIndex != -1)
+            if ((AimMouse && Owner.controlUseItem) || (!AimMouse && targetNPCIndex != -1))
             {
                 //随机一个攻击状态，或进行指定攻击状态
                 targetIndex = targetNPCIndex;
@@ -243,22 +257,30 @@ namespace Coralite.Core.Systems.YujianSystem
 
         private bool ChangeState(CoralitePlayer cp)
         {
-            bool CanAttack = AimMouse && Vector2.Distance(GetTargetCenter(true), Owner.Center) < AttackLength;
-            if (CanAttack && cp.nianli > PowerfulAttackCost)
+            bool CanAttack = Vector2.Distance(GetTargetCenter(true), Owner.Center) < AttackLength;
+            AimMouse = Owner.HeldItem.ModItem is BaseHulu; // 如果手持葫芦则瞄准鼠标，不是则瞄准敌人
+            if (AimMouse)
+            {
+                CanAttack = CanAttack && Owner.controlUseItem;
+            }
+            else
+                CanAttack = CanAttack && State > 0;
+            if (SourceYujian.MainYujian && AimMouse && cp.useSpecialAttack && Vector2.Distance(GetTargetCenter(true), Owner.Center) < AttackLength && cp.nianli > PowerfulAttackCost)
             {
                 State = PowerfulMoveState;
                 powerfulAI.OnStart(this);
                 cp.nianli -= PowerfulAttackCost;
+                atkTime++;
                 return true;
             }
             else if (CanAttack)
             {
                 State = Main.rand.Next(1, yujianAIs.Length + 1);
                 yujianAIs[(int)State - 1].OnStart(this);
+                atkTime++;
                 return true;
             }
 
-            AimMouse = false;
             return false;
         }
 
@@ -274,6 +296,8 @@ namespace Coralite.Core.Systems.YujianSystem
 
                 return aimCenter;
             }
+            if (targetIndex == -1)
+                return Owner.Center;
 
             return Main.npc[targetIndex].Center;
         }
@@ -288,10 +312,12 @@ namespace Coralite.Core.Systems.YujianSystem
         /// <param name="idleRotation"></param>
         public void GetIdlePosition(int stackedIndex, int totalIndexes, out Vector2 idleSpot, out float idleRotation)
         {
-            idleRotation = (float)Math.PI + Owner.direction * 0.3f;
-            float num2 = (totalIndexes - 1f) / 2f;
-            idleSpot = Owner.Center - Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 33f - new Vector2(Owner.direction * 16, 8);
-            idleSpot += Main.GlobalTimeWrappedHourly.ToRotationVector2() * 8;
+            idleRotation = (float)MathHelper.PiOver2 * 1.5f * Owner.direction + Owner.direction * 0.2f * totalIndexes * stackedIndex;
+            //idleRotation = (-Vector2.UnitX).RotatedBy(stackedIndex * 0.1f * totalIndexes * Owner.direction).ToRotation();
+            //float num2 = (totalIndexes - 1f) / 2f;
+            //idleSpot = Owner.Center - Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 33f - new Vector2(Owner.direction * 16, 8);
+            //idleSpot += Main.GlobalTimeWrappedHourly.ToRotationVector2() * 8;
+            idleSpot = Owner.Center;
         }
 
         public virtual void AIEffect() { }
@@ -333,8 +359,6 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public YujianAI GetCurrentAI()
         {
-            if (State == SpecialMoveState)
-                return specialAI;
             if (State == PowerfulMoveState)
                 return powerfulAI;
 
@@ -408,7 +432,11 @@ namespace Coralite.Core.Systems.YujianSystem
 
             return false;
         }
-
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (Owner.HeldItem.ModItem is not BaseHulu)  
+                modifiers.SourceDamage *= 0.5f;
+        }
         public sealed override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             HitEffect(target, hit.Damage, hit.Knockback, hit.Crit);
@@ -427,7 +455,6 @@ namespace Coralite.Core.Systems.YujianSystem
         public override void OnKill(int timeLeft)
         {
             yujianAIs = null;
-            specialAI = null;
             powerfulAI = null;
         }
 

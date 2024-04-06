@@ -149,7 +149,7 @@ namespace Coralite.Content.UI
             }
 
             SoundEngine.PlaySound(SoundID.Grab);
-            YujianHuluBackpack.huluItem.SetCanChannel(slotIndex);
+            //YujianHuluBackpack.huluItem.SetCanChannel(slotIndex);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -159,15 +159,16 @@ namespace Coralite.Content.UI
             //如果能放置就进行对应的绘制，不行的话就绘制个小锁头
             if (YujianHuluBackpack.huluItem.CanUseSlot(slotIndex))
             {
-                if (YujianHuluBackpack.huluItem.CanChannel[slotIndex])      //绘制特效
-                {
-                    Texture2D canChannelAnim = ModContent.Request<Texture2D>(AssetDirectory.UI + "CanChannelAnim").Value;
+                Texture2D canChannelAnim = ModContent.Request<Texture2D>(AssetDirectory.UI + "CanChannelAnim").Value;
 
-                    int frame = (int)(Main.timeForVisualEffects % 36) / 3;
-                    Rectangle source = new Rectangle(frame * 30, 0, 30, 72);        //贴图长宽这里就直接写了
+                int frame = (int)(Main.timeForVisualEffects % 36) / 3;
+                Rectangle source = new Rectangle(frame * 30, 0, 30, 72);        //贴图长宽这里就直接写了
 
-                    spriteBatch.Draw(canChannelAnim, position, source, Color.White);
-                }
+                spriteBatch.Draw(canChannelAnim, position, source, Color.White);
+                //if (YujianHuluBackpack.huluItem.CanChannel[slotIndex])      //绘制特效
+                //{
+
+                //}
 
                 Texture2D mainTex;
                 if (YujianHuluBackpack.huluItem.Yujians[slotIndex].IsAir)
@@ -223,7 +224,7 @@ namespace Coralite.Content.UI
     {
         public override void OnInitialize()
         {
-            Width.Set(318, 0f);
+            Width.Set(108, 0f);
             Height.Set(94, 0f);
         }
 
@@ -235,7 +236,7 @@ namespace Coralite.Content.UI
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.UI + "YujianHuluBackpack").Value;
+            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.UI + "YujianHuluBackpack1").Value;
             spriteBatch.Draw(mainTex, GetDimensions().Position(), Color.White);
         }
     }

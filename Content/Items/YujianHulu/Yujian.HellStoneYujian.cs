@@ -31,7 +31,6 @@ namespace Coralite.Content.Items.YujianHulu
                  new YujianAI_BetterSpurt(70, 16, 20, 160, 0.94f),
                  new YujianAI_HellStoneDoubleSlash(),
             },
-            null,
             new YujianAI_PreciseSlash(startTime: 135,
                slashWidth: 55,
                slashTime: 125,

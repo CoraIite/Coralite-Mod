@@ -48,7 +48,6 @@ namespace Coralite.Content.Items.YujianHulu
                     halfLongAxis: 3f,
                     Coralite.Instance.NoSmootherInstance),
         },
-        null,
         new YujianAI_CrimtaneHeavySash(),
         PowerfulAttackCost: 150,
         attackLength: 430,

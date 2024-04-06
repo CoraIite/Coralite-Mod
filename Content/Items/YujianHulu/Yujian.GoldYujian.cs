@@ -46,7 +46,6 @@ namespace Coralite.Content.Items.YujianHulu
                     halfLongAxis: 1.5f,
                     Coralite.Instance.HeavySmootherInstance),
             },
-            null,
             new YujianAI_GlodenSpurt(50, 12, 25, 180, 0.92f),
             PowerfulAttackCost: 150,
             attackLength: 390,
