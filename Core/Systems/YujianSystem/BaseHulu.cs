@@ -20,17 +20,16 @@ namespace Coralite.Core.Systems.YujianSystem
         private readonly int Value;
         private readonly int Damage;
         private readonly float Knockback;
-        public readonly int slotCount;
+        public const int slotCount = 3;
 
         public Item[] Yujians;
-        public bool[] CanChannel;
         private bool rightClick;
 
         public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
         public override bool CanRightClick() => true;
         public override bool AltFunctionUse(Player player) => true;
 
-        public BaseHulu(int slotCount, int rare, int value, int damage, float knockback, string texturePath = AssetDirectory.YujianHulu, bool pathHasName = false)
+        public BaseHulu(int rare, int value, int damage, float knockback, string texturePath = AssetDirectory.YujianHulu, bool pathHasName = false)
         {
             TexturePath = texturePath;
             PathHasName = pathHasName;
@@ -38,18 +37,11 @@ namespace Coralite.Core.Systems.YujianSystem
             Value = value;
             Damage = damage;
             Knockback = knockback;
-            this.slotCount = slotCount;
-            if (slotCount <= 0)
-                throw new System.Exception("至少要有一个御剑槽位！");
-            if (slotCount > Coralite.YujianHuluContainsMax)
-                throw new System.Exception("最多只能有10个！");
 
             Yujians = new Item[slotCount];
-            CanChannel = new bool[slotCount];
             for (int i = 0; i < slotCount; i++)
             {
                 Yujians[i] = new Item();
-                CanChannel[i] = true;
             }
 
         }
@@ -83,10 +75,6 @@ namespace Coralite.Core.Systems.YujianSystem
             {
                 tag.Add("Yujian" + i.ToString(), Yujians[i]);
             }
-            for (int i = 0; i < slotCount; i++)
-            {
-                tag.Add("CanChannel" + i.ToString(), CanChannel[i]);
-            }
         }
 
         public override void LoadData(TagCompound tag)
@@ -94,10 +82,6 @@ namespace Coralite.Core.Systems.YujianSystem
             for (int i = 0; i < slotCount; i++)
             {
                 Yujians[i] = tag.Get<Item>("Yujian" + i.ToString());
-            }
-            for (int i = 0; i < slotCount; i++)
-            {
-                CanChannel[i] = tag.GetBool("CanChannel" + i.ToString());
             }
         }
 
@@ -114,10 +98,17 @@ namespace Coralite.Core.Systems.YujianSystem
         public override bool? UseItem(Player player)
         {
             if (player.altFunctionUse == 2)
+            {
+                Item.noUseGraphic = false;
+                Item.useStyle = ItemUseStyleID.HoldUp;
                 rightClick = true;
+            }
             else
+            {
+                Item.noUseGraphic = true;
+                Item.useStyle = ItemUseStyleID.Rapier;
                 rightClick = false;
-
+            }
             return true;
         }
 
@@ -140,7 +131,7 @@ namespace Coralite.Core.Systems.YujianSystem
                     //虽说不是御剑物品根本放不进来，但是这里还是判断一下以防止出现意想不到的意外状况
                     if (Yujians[i].ModItem is BaseYujian yujianItem)
                     {
-                        yujianItem.ShootYujian(player, source, damage, SetHuluEffect(), CanChannel[i]);
+                        yujianItem.ShootYujian(player, source, damage, SetHuluEffect());
                     }
 
                 }
@@ -148,7 +139,20 @@ namespace Coralite.Core.Systems.YujianSystem
 
             return false;
         }
-
+        public override void UpdateInventory(Player player)
+        {
+            for (int i = 0; i < slotCount; i++)
+            {
+                BaseYujian item = Yujians[i].ModItem as BaseYujian;
+                if (item == null) continue;
+                if (i == 1)
+                {
+                    item.MainYujian = true;
+                }
+                else 
+                    item.MainYujian = false;
+            }
+        }
         public virtual IHuluEffect SetHuluEffect()
         {
             return new Hulu_NoEffect();
@@ -160,7 +164,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public override void RightClick(Player player)
         {
-            YujianHuluBackpack.visible = true;
+            YujianHuluBackpack.visible = !YujianHuluBackpack.visible;
             YujianHuluBackpack.huluItem = this;
             UILoader.GetUIState<YujianHuluBackpack>().Recalculate();
         }
@@ -199,14 +203,14 @@ namespace Coralite.Core.Systems.YujianSystem
             return Yujians[index];
         }
 
-        /// <summary>
-        /// 设置对应槽位的是否可蓄力
-        /// </summary>
-        /// <param name="index"></param>
-        public void SetCanChannel(int index)
-        {
-            CanChannel[index] = !CanChannel[index];
-        }
+        ///// <summary>
+        ///// 设置对应槽位的是否可蓄力
+        ///// </summary>
+        ///// <param name="index"></param>
+        //public void SetCanChannel(int index)
+        //{
+        //    CanChannel[index] = !CanChannel[index];
+        //}
 
         #endregion
     }

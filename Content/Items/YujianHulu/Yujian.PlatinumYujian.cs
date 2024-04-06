@@ -48,7 +48,6 @@ namespace Coralite.Content.Items.YujianHulu
                         halfLongAxis: 1.5f,
                         Coralite.Instance.HeavySmootherInstance),
             },
-            null,
             new YujianAI_PlatinumSlash(startTime: 100,
                     slashWidth: 80,
                     slashTime: 70,
