@@ -30,7 +30,6 @@ namespace Coralite.Content.Items.YujianHulu
             {
                 new YujianAI_BetterSpurt(70,22,25,130,0.93f),
             },
-            null,
             new YujianAI_IronDoubleSlash(),
             PowerfulAttackCost: 150,
             attackLength: 340,

@@ -45,7 +45,6 @@ namespace Coralite.Content.Items.Icicle
                     Coralite.Instance.NoSmootherInstance),
                  new YujianAI_IcicleDoubleSlash()
             },
-            null,
             new YujianAI_IcicleSmashDown(70, 16, 25, 180, 0.93f),
             PowerfulAttackCost: 200,
             attackLength: 450,

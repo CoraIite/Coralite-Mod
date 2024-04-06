@@ -55,7 +55,6 @@ namespace Coralite.Content.Items.RedJades
                     halfLongAxis: 3f,
                     Coralite.Instance.NoSmootherInstance),
             },
-            null,
             new YujianAI_RedDash(75, 35, 30, 180, 0.96f),
             PowerfulAttackCost: 150,
             attackLength: 430,

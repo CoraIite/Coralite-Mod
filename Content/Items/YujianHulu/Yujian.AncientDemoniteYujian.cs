@@ -30,7 +30,6 @@ namespace Coralite.Content.Items.YujianHulu
                  Coralite.Instance.HeavySmootherInstance),
                 new YujianAI_BetterSpurt(75,20,35,180,0.95f),
         },
-        null,
         new YujianAI_DemoniteSpurt(50, 12, 25, 180, 0.92f),
         PowerfulAttackCost: 150,
         attackLength: 400,
