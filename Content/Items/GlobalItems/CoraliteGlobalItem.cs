@@ -291,6 +291,9 @@ namespace Coralite.Content.Items.GlobalItems
                 case ItemID.IceBlade:
                     item.SetDefaults(ModContent.ItemType<IceShortSword>());
                     break;
+                case ItemID.Seedler:
+                    item.SetDefaults(ModContent.ItemType<Treeler>());
+                    break;
             }
 
             SoundEngine.PlaySound(CoraliteSoundID.Meowmere);

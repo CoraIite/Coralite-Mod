@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
@@ -60,6 +61,29 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
             player.cursorItemIconID = ModContent.ItemType<MagicCrystalMusicBox>();
+        }
+
+        public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+        {
+            if (Main.gamePaused)
+                return;
+            
+            Tile t = Framing.GetTileSafely(i, j);
+            if (t.TileFrameX == 36 && t.TileFrameY % 36 == 0 && (int)Main.timeForVisualEffects % 7 == 0 && Main.rand.NextBool(3))
+            {
+                int num6 = Main.rand.Next(570, 573);
+                Vector2 position4 = new Vector2(i * 16 + 8, j * 16 - 8);
+                Vector2 velocity4 = new Vector2(Main.WindForVisuals * 2f, -0.5f);
+                velocity4.X *= 1f + Main.rand.Next(-50, 51) * 0.01f;
+                velocity4.Y *= 1f + Main.rand.Next(-50, 51) * 0.01f;
+                if (num6 == 572)
+                    position4.X -= 8f;
+
+                if (num6 == 571)
+                    position4.X -= 4f;
+
+                Gore.NewGore(new EntitySource_TileUpdate(i,j),position4, velocity4, num6, 0.8f);
+            }
         }
     }
 }

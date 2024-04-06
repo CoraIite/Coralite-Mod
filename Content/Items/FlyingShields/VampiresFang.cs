@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
-using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.FlyingShieldSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;

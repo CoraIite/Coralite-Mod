@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 .AddIngredient<TheCatMansBlade>()//橙：南瓜剑
                 .AddIngredient(ItemID.GoldShortsword)//黄:金短剑
                 .AddIngredient<TerraShortSword>()
-                .AddIngredient(ItemID.ChlorophyteSaber)//绿：叶绿短剑
+                .AddIngredient<Treeler>()//绿：种子弯刀
                 .AddIngredient<CatTreeSword>()
                 .AddIngredient<BeamShortSword>()//青：光束剑
                 .AddIngredient(ItemID.PiercingStarlight)

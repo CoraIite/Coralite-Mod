@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 
-namespace Coralite.Core.Prefabs.Projectiles
+namespace Coralite.Core.Systems.FlyingShieldSystem
 {
     /// <summary>
     /// 规则：<br></br>
@@ -166,12 +166,15 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void Chasing()
         {
             if (canChase)
-                if (Helper.TryFindClosestEnemy(Projectile.Center, Timer * shootSpeed + Projectile.width * 4, n => n.CanBeChasedBy() && Projectile.localNPCImmunity.IndexInRange(n.whoAmI) && Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
+                if (Helper.TryFindClosestEnemy(Projectile.Center, Timer * shootSpeed + Projectile.width * 4,
+                    n => n.CanBeChasedBy() && Projectile.localNPCImmunity.IndexInRange(n.whoAmI)
+                        && Projectile.localNPCImmunity[n.whoAmI] == 0
+                        && Collision.CanHit(Projectile, n), out NPC target))
                 {
                     float selfAngle = Projectile.velocity.ToRotation();
                     float targetAngle = (target.Center - Projectile.Center).ToRotation();
 
-                    Projectile.velocity = selfAngle.AngleLerp(targetAngle, (1 - Timer / flyingTime)).ToRotationVector2() * shootSpeed;
+                    Projectile.velocity = selfAngle.AngleLerp(targetAngle, 1 - Timer / flyingTime).ToRotationVector2() * shootSpeed;
                 }
         }
 
@@ -191,7 +194,10 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public virtual void JumpInNpcs()
         {
-            if (Helper.TryFindClosestEnemy(Projectile.Center, flyingTime * shootSpeed, n => n.CanBeChasedBy() && Projectile.localNPCImmunity.IndexInRange(n.whoAmI) && Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
+            if (Helper.TryFindClosestEnemy(Projectile.Center, flyingTime * shootSpeed,
+                n => n.CanBeChasedBy() && Projectile.localNPCImmunity.IndexInRange(n.whoAmI)
+                    && Projectile.localNPCImmunity[n.whoAmI] == 0
+                    && Collision.CanHit(Projectile, n), out NPC target))
             {
                 Vector2 dir = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
                 Projectile.velocity = dir * shootSpeed;
@@ -342,25 +348,5 @@ namespace Coralite.Core.Prefabs.Projectiles
         }
 
         #endregion
-    }
-
-    public interface IFlyingShieldAccessory
-    {
-        virtual void OnInitialize(BaseFlyingShield projectile) { }
-        virtual void PostInitialize(BaseFlyingShield projectile) { }
-        virtual void OnGuardInitialize(BaseFlyingShieldGuard projectile) { }
-
-        virtual void OnTileCollide(BaseFlyingShield projectile) { }
-
-        virtual void OnJustHited(BaseFlyingShield projectile) { }
-
-        virtual bool OnParry(BaseFlyingShieldGuard projectile) => false;
-        virtual void OnGuard(BaseFlyingShieldGuard projectile) { }
-        virtual void OnStartDashing(BaseFlyingShieldGuard projectile) { }
-        virtual void OnDashing(BaseFlyingShieldGuard projectile) { }
-        virtual void OnDashHit(BaseFlyingShieldGuard projectile, NPC target, ref NPC.HitModifiers modifiers) { }
-        virtual void OnDashOver(BaseFlyingShieldGuard projectile) { }
-
-        virtual void OnHitNPC(BaseFlyingShield projectile, NPC target, NPC.HitInfo hit, int damageDone) { }
     }
 }

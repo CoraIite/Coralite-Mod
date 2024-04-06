@@ -29,7 +29,6 @@ namespace Coralite.Content.Items.Misc_Shoot
             Item.useAmmo = AmmoID.Bullet;
             Item.UseSound = CoraliteSoundID.Gun2_Item40;
 
-
             Item.useTurn = true;
             Item.noMelee = true;
             Item.noUseGraphic = true;
@@ -97,6 +96,5 @@ namespace Coralite.Content.Items.Misc_Shoot
             .AddTile(TileID.Anvils)
             .Register();
         }
-
     }
 }

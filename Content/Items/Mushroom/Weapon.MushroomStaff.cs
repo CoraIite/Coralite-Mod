@@ -72,7 +72,6 @@ namespace Coralite.Content.Items.Mushroom
         {
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.Mushroom, 10);
-            recipe.AddTile(TileID.MushroomPlants);
             recipe.Register();
         }
     }

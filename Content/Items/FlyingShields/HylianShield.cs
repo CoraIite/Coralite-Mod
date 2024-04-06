@@ -1,12 +1,11 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
-using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.FlyingShieldSystem;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields
@@ -258,20 +257,20 @@ namespace Coralite.Content.Items.FlyingShields
             if (Projectile.velocity.X != 0)
             {
                 Tile tile = Framing.GetTileSafely(Projectile.Center + new Vector2(0, 18));
-                if (Main.tileBouncy[tile.TileType])
+                if (Main.tileBouncy[tile.TileType] || TileID.Sets.Platforms[tile.TileType])
                 {
                     if (Math.Abs(Projectile.velocity.X) < 3)
-                        Projectile.velocity.X *= 0.7f;
+                        Projectile.velocity.X *= 0.75f;
                     else
-                        Projectile.velocity.X *= 0.95f;
+                        Projectile.velocity.X *= 0.98f;
                 }
-               else if (TileID.Sets.Grass[tile.TileType] || TileID.Sets.Snow[tile.TileType]
-                    || TileID.Sets.Platforms[tile.TileType]|| TileID.Sets.isDesertBiomeSand[tile.TileType])
+                else if (TileID.Sets.Grass[tile.TileType] || TileID.Sets.Snow[tile.TileType]
+                      || TileID.Sets.isDesertBiomeSand[tile.TileType])
                 {
-                    if (Math.Abs(Projectile.velocity.X)<3)
-                        Projectile.velocity.X *= 0.7f;
+                    if (Math.Abs(Projectile.velocity.X) < 3)
+                        Projectile.velocity.X *= 0.75f;
                     else
-                    Projectile.velocity.X *= 0.99f;
+                        Projectile.velocity.X *= 0.993f;
                 }
                 else if (TileID.Sets.Ices[tile.TileType] || tile.TileType == TileID.BreakableIce)
                 {
@@ -354,14 +353,18 @@ namespace Coralite.Content.Items.FlyingShields
 
             if (Math.Abs(Projectile.velocity.X) > 9)
                 Projectile.velocity.X = Math.Sign(Projectile.velocity.X) * Math.Abs(Projectile.velocity.X);
-            
+
             Owner.Center = Projectile.Center + new Vector2(0, -30) + Projectile.velocity;
             Vector2 pos = Projectile.Center + new Vector2(-16, -8);
-            float speed = 0.4f;
-            Collision.StepUp(ref pos,ref Projectile.velocity, 32, 16, ref speed, ref Projectile.gfxOffY);
+            float speed = 8f;
+            Collision.StepUp(ref pos, ref Projectile.velocity, 32, 16, ref speed, ref Projectile.gfxOffY);
+            if (speed!=8)
+            {
+                Projectile.velocity *= 1.1f;
+            }
             Projectile.Center = pos + new Vector2(16, 8);
-            
-            if (Main.rand.NextBool(3))
+
+            if (Main.rand.NextBool(5))
                 Collision.HitTiles(pos, Projectile.velocity, 32, 16);
         }
 
@@ -431,6 +434,24 @@ namespace Coralite.Content.Items.FlyingShields
         public override float GetWidth()
         {
             return Projectile.width / 2 / Projectile.scale;
+        }
+    }
+
+    public class ExpandLightParticle:ModParticle
+    {
+        public override string Texture => AssetDirectory.OtherProjectiles+ "HorizontalLight";
+
+        public override void OnSpawn(Particle particle)
+        {
+
+        }
+
+        public override void Update(Particle particle)
+        {
+            if (particle.velocity.Y<4)
+            {
+                particle.velocity.Y += 0.3f;
+            }
         }
     }
 }

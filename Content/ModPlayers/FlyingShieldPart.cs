@@ -1,4 +1,4 @@
-﻿using Coralite.Core.Prefabs.Projectiles;
+﻿using Coralite.Core.Systems.FlyingShieldSystem;
 using System.Collections.Generic;
 using Terraria;
 

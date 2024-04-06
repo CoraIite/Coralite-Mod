@@ -3707,7 +3707,7 @@ FlyingDragonBaby: {
 IceShortSword: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 冰雪匕首
-	Tooltip: 据说这是用古剑豹幼崽换牙时掉落的
+	Tooltip: 据说这是古剑豹幼崽换牙时掉落的
 }
 
 SmallBee: {
@@ -3720,4 +3720,10 @@ TheCatMansBlade: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 猫猫骑士团之剑
 	Tooltip: 黑猫团长的佩剑
+}
+
+Treeler: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: 大树弯刀
+	Tooltip: 从种子长成了一棵树
 }

@@ -37,7 +37,8 @@ namespace Coralite.Content.Items.RedJades
             CreateRecipe()
                 .AddIngredient<RedJade>(5)
                 .AddIngredient(ItemID.BottledWater)
-                .AddTile(TileID.ImbuingStation);
+                .AddTile(TileID.ImbuingStation)
+                .Register();
         }
     }
 
@@ -47,6 +48,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void SetStaticDefaults()
         {
+            Main.meleeBuff[Type] = true;
             BuffID.Sets.IsAFlaskBuff[Type] = true;
         }
 

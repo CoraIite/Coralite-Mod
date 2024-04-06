@@ -711,6 +711,7 @@ namespace Coralite.Core.Prefabs.Tiles
             Main.tileNoAttach[Type] = true;
             Main.tileLavaDeath[Type] = true;
             TileID.Sets.Clock[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
 
             DustType = dustType;
             AdjTiles = new int[] { TileID.GrandfatherClocks };
@@ -725,6 +726,8 @@ namespace Coralite.Core.Prefabs.Tiles
             // Etc
             AddMapEntry(mapColor, Language.GetText("ItemName.GrandfatherClock"));
         }
+
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
         public override bool RightClick(int x, int y)
         {

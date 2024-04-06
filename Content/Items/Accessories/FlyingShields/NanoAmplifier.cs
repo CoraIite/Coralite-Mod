@@ -1,6 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core.Prefabs.Items;
-using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.FlyingShieldSystem;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

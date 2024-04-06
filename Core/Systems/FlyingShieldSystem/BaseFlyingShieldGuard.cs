@@ -7,7 +7,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 
-namespace Coralite.Core.Prefabs.Projectiles
+namespace Coralite.Core.Systems.FlyingShieldSystem
 {
     public abstract class BaseFlyingShieldGuard : ModProjectile
     {

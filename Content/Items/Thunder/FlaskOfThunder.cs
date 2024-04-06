@@ -37,7 +37,8 @@ namespace Coralite.Content.Items.Thunder
             CreateRecipe(3)
                 .AddIngredient<ZapCrystal>()
                 .AddIngredient(ItemID.BottledWater, 3)
-                .AddTile(TileID.ImbuingStation);
+                .AddTile(TileID.ImbuingStation)
+                .Register();
         }
     }
 
@@ -47,6 +48,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override void SetStaticDefaults()
         {
+            Main.meleeBuff[Type] = true;
             BuffID.Sets.IsAFlaskBuff[Type] = true;
         }
 

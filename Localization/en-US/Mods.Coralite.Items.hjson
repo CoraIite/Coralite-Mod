@@ -3639,3 +3639,9 @@ TheCatMansBlade: {
 	DisplayName: The Cat Mans Blade
 	Tooltip: ""
 }
+
+Treeler: {
+	CraftCondition: 在CoralCat的世界中合成
+	DisplayName: Treeler
+	Tooltip: ""
+}
