@@ -42,6 +42,11 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                 float factor = (yujianProj.Timer - firstPhaseTime) / (float)(StartTime - firstPhaseTime);
 
                 targetCenter = yujianProj.GetTargetCenter(IsAimingMouse);
+                if (targetCenter == yujianProj.Owner.Center)
+                {
+                    yujianProj.State = -1;
+                    return;
+                }
                 Vector2 targetVector = targetCenter - Projectile.Center;
                 Vector2 targetDirection = targetVector.SafeNormalize(Vector2.Zero);
                 float targetAngle = targetDirection.ToRotation();
@@ -56,7 +61,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                 else
                     Projectile.velocity *= slowdownFactor;
 
-                Projectile.velocity += targetDirection.RotatedBy(1.57f) * factor * 0.2f;
+                Projectile.velocity += targetDirection.RotatedBy(0.5f) * factor * 0.2f;
                 return;
             }
 
@@ -65,9 +70,20 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                 targetCenter = yujianProj.GetTargetCenter(IsAimingMouse);
                 int spurtTime = firstPhaseTime - SecondPhaseTime;
                 float speed = (Vector2.Distance(targetCenter, Projectile.Center) + distanceToKeep * 0.3f) / spurtTime;
-                Projectile.velocity = (targetCenter - Projectile.Center).SafeNormalize(Vector2.One) * speed;
-                Projectile.rotation = (targetCenter - Projectile.Center).ToRotation() + 1.57f;
-                Projectile.tileCollide = false;
+                for (float i = 0; i < speed * spurtTime; i += 8)
+                {
+                    float factor = i / (speed * spurtTime);
+                    Vector2 center = Vector2.Lerp(targetCenter,Projectile.Center, factor);
+                    if (Collision.CanHit(Projectile.Center, 1, 1, center, 1, 1))
+                    {
+                        targetCenter = center;
+                        break;
+                    }
+                }
+                Vector2 vel = (targetCenter - Projectile.Center).SafeNormalize(Vector2.One);
+                speed = (Vector2.Distance(targetCenter, Projectile.Center) + distanceToKeep * 0.3f) / spurtTime;
+                Projectile.velocity = vel * speed;
+                Projectile.rotation = vel.ToRotation() + 1.57f;
 
                 yujianProj.InitTrailCaches();
 

@@ -28,14 +28,20 @@ namespace Coralite.Content.Items.YujianHulu
                  halfShortAxis: 1f,
                  halfLongAxis: 1.5f,
                  Coralite.Instance.HeavySmootherInstance),
-                new YujianAI_BetterSpurt(75,20,35,180,0.95f),
+            new YujianAI_BetterSpurt(75,20,35,180,0.95f),
         },
         new YujianAI_DemoniteSpurt(50, 12, 25, 180, 0.92f),
         PowerfulAttackCost: 150,
         attackLength: 400,
         width: 30, height: 60,
           new Color(35, 24, 24), new Color(131, 112, 86),
-        trailCacheLength: 16
+        trailCacheLength: 16,
+        yujianAIsRandom: new int[]
+        {
+            2,
+            3,
+            2
+        }
         )
         { }
     }
