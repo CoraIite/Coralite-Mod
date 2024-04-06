@@ -33,7 +33,6 @@ namespace Coralite.Content.Items.RedJades
             new YujianAI[]
             {
                 new YujianAI_BetterSpurt(70,18,25,180,0.93f),
-                new YujianAI_BetterSpurt(70,18,25,180,0.93f),
                  new YujianAI_Slash(startTime: 76,
                     slashWidth: 55,
                     slashTime: 36,
@@ -61,7 +60,13 @@ namespace Coralite.Content.Items.RedJades
             width: 30, height: 60,
             new Color(43, 43, 51), Coralite.Instance.RedJadeRed,
             trailCacheLength: 24,
-            texturePath: AssetDirectory.RedJadeItems
+            texturePath: AssetDirectory.RedJadeItems,
+            yujianAIsRandom:new int[]
+            {
+                4,
+                2,
+                1
+            }
             )
         { }
 

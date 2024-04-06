@@ -43,7 +43,11 @@ namespace Coralite.Content.Items.YujianHulu
             attackLength: 440,
             width: 30, height: 60,
             Color.MediumPurple, Color.Purple,
-            trailCacheLength: 18
+            trailCacheLength: 18,
+            yujianAIsRandom: new int[]
+            {
+                5,2
+            }
             )
         { }
 

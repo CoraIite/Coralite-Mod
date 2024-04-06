@@ -63,7 +63,7 @@ namespace Coralite.Core.Systems.YujianSystem
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                int index = Projectile.NewProjectile(new YujianSource(player, Item), Main.MouseWorld, Vector2.Zero, ProjType, damage + Item.damage, Item.knockBack, player.whoAmI) ;
+                int index = Projectile.NewProjectile(new YujianSource(player, Item), Main.MouseWorld, Vector2.Zero, ProjType, damage + Item.damage, Item.knockBack, player.whoAmI,-1);
                 (Main.projectile[index].ModProjectile as BaseYujianProj).huluEffect = effect;
             }
 
