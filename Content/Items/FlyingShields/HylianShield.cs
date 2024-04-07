@@ -7,9 +7,9 @@ using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using XPT.Core.Audio.MP3Sharp.Decoding.Decoders.LayerIII;
 
 namespace Coralite.Content.Items.FlyingShields
 {
@@ -257,7 +257,28 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnParry()
         {
             Helper.PlayPitched("TheLegendOfZelda/Shield_JustGird", 0.4f, 0, Projectile.Center);
-            LightCiecleParticle.Spawn(Projectile.Center, Color.SkyBlue , 0.01f, Projectile.rotation, new Vector2(0.5f, 0.8f));
+            LightCiecleParticle.Spawn(Projectile.Center, Color.SkyBlue, 0.2f, Projectile.rotation, new Vector2(0.45f+Main.rand.NextFloat(-0.1f,0.1f), 0.8f));
+
+            float rot = Projectile.rotation+Main.rand.NextFloat(-0.6f,0.6f);
+            LightShotParticle.Spawn(Projectile.Center, Color.SkyBlue, rot
+                , new Vector2(0.7f, 0.03f));
+
+            Color c = new Color(0,100,255,150);
+            for (int i = 0; i < 7; i++)
+            {
+                rot = Main.rand.NextFloat(6.282f);
+                LightShotParticle.Spawn(Projectile.Center, c, rot + Projectile.rotation
+                    , new Vector2(Main.rand.NextFloat(0.4f, 0.6f) * Helper.EllipticalEase(rot, 1,0.4f)
+                    , 0.03f));
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                 rot = Main.rand.NextFloat(6.282f);
+                LightShotParticle.Spawn(Projectile.Center, Color.SkyBlue, rot + Projectile.rotation
+                    , new Vector2(Main.rand.NextFloat(0.6f, 0.7f) * Helper.EllipticalEase(rot, 1, 0.4f)
+                    , 0.03f));
+            }
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
@@ -521,7 +542,7 @@ namespace Coralite.Content.Items.FlyingShields
             }
             else
             {
-                particle.scale += 0.03f;
+                particle.scale += 0.025f;
             }
 
             if (particle.color.A < 2)
@@ -534,7 +555,7 @@ namespace Coralite.Content.Items.FlyingShields
                   , newcolor, baseScale);
 
             p.rotation = rotation;
-            p.oldCenter = new Vector2[1] { circleScale };
+            p.oldCenter = [circleScale];
             return p;
         }
 
@@ -547,9 +568,9 @@ namespace Coralite.Content.Items.FlyingShields
             Color c = particle.color;
 
             spriteBatch.Draw(modParticle.Texture2D.Value, pos
-                , null, c, particle.rotation, origin,scale , SpriteEffects.None, 0f);
+                , null, c, particle.rotation, origin, scale, SpriteEffects.None, 0f);
             spriteBatch.Draw(modParticle.Texture2D.Value, pos
-                , null, c , particle.rotation, origin, scale, SpriteEffects.None, 0f);
+                , null, c, particle.rotation, origin, scale, SpriteEffects.None, 0f);
 
             Texture2D exTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "Circle2").Value;
             origin = exTex.Size() / 2;
@@ -558,9 +579,121 @@ namespace Coralite.Content.Items.FlyingShields
             spriteBatch.Draw(exTex, pos
                 , null, c, particle.rotation, origin, scale, SpriteEffects.None, 0f);
             spriteBatch.Draw(exTex, pos
-                , null, c , particle.rotation, origin, scale*0.95f, SpriteEffects.None, 0f);
+                , null, c, particle.rotation, origin, scale * 0.95f, SpriteEffects.None, 0f);
             spriteBatch.Draw(exTex, pos
-                , null, c , particle.rotation, origin, scale*1.05f, SpriteEffects.None, 0f);
+                , null, c, particle.rotation, origin, scale * 1.05f, SpriteEffects.None, 0f);
+        }
+    }
+
+    public class LightShotParticle : ModParticle
+    {
+        public override string Texture => AssetDirectory.OtherProjectiles + "LightGlow";
+        public override bool ShouldUpdateCenter(Particle particle) => false;
+
+        public override void OnSpawn(Particle particle)
+        {
+        }
+
+        public override void Update(Particle particle)
+        {
+            particle.fadeIn++;
+            if (particle.fadeIn > 15)
+            {
+                particle.color = Color.Lerp(particle.color,new Color(0,60,200,0), 0.15f);
+                particle.velocity.X *= 0.86f;
+            }
+            else if (particle.fadeIn < 4)
+            {
+                particle.velocity *= 1.2f;
+            }
+            else
+            {
+                particle.velocity.X *= 0.98f;
+            }
+
+            if (particle.color.A < 2)
+                particle.active = false;
+        }
+
+        /// <summary>
+        /// 使用速度来充当缩放，虽然不太好但先就这样
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="newcolor"></param>
+        /// <param name="rotation"></param>
+        /// <param name="circleScale"></param>
+        /// <returns></returns>
+        public static Particle Spawn(Vector2 center, Color newcolor, float rotation, Vector2 circleScale)
+        {
+            Particle p = Particle.NewParticleDirect(center, Vector2.Zero, CoraliteContent.ParticleType<LightShotParticle>()
+                  , newcolor, 1);
+
+            p.rotation = rotation;
+            p.velocity =circleScale;
+            return p;
+        }
+
+        public override void Draw(SpriteBatch spriteBatch, Particle particle)
+        {
+            ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
+            Texture2D mainTex = modParticle.Texture2D.Value;
+            Vector2 pos = particle.center - Main.screenPosition;
+            Vector2 origin = new Vector2(0, mainTex.Height / 2);
+            Vector2 scale = particle.velocity*0.3f;
+            Color c = particle.color;
+
+            //spriteBatch.Draw(mainTex, pos
+            //    , null, c, particle.rotation, origin, scale, SpriteEffects.None, 0f);
+            //c = Color.White * (c.A / 255f);
+
+            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
+            //List<CustomVertexInfo> bar2 = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bar3 = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bar4 = new List<CustomVertexInfo>();
+
+            Vector2 dir = particle.rotation.ToRotationVector2();
+            Vector2 normal = dir.RotatedBy(1.57f);
+            float width = mainTex.Width * scale.X / 30;
+            float height = mainTex.Height * scale.Y;
+
+            for (int i = 0; i < 30; i++)
+            {
+                float factor = i / 30f;
+                Vector2 Center = particle.center + i * dir * width;
+                Vector2 Top = Center - Main.screenPosition + normal * height * (1 - factor);
+                Vector2 Bottom = Center - Main.screenPosition - normal * height * (1 - factor);
+
+                Vector2 Top2 = Center - Main.screenPosition + normal * height * 6 * (1 - factor);
+                Vector2 Bottom2 = Center - Main.screenPosition - normal * height * 6 * (1 - factor);
+
+                var Color2 = Color.Lerp(particle.color, Color.DarkBlue, factor);
+                bars.Add(new(Top, Color2, new Vector3(factor, 0, 1)));
+                bars.Add(new(Bottom, Color2, new Vector3(factor, 1, 1)));
+                //Color2.A = (byte)(c.A * 0.2f);
+                //bar2.Add(new(Top, Color2, new Vector3(factor, 0, 1)));
+                //bar2.Add(new(Bottom, Color2, new Vector3(factor, 1, 1)));
+                Color2 = Color.White * (c.A / 255f);
+                Color2.A = (byte)(c.A * 0.4f);
+                bar3.Add(new(Bottom2, Color.Transparent, new Vector3(factor, 1, 1)));
+                bar3.Add(new(Center-Main.screenPosition, Color2, new Vector3(factor, 0.5f, 1)));
+                bar4.Add(new(Center-Main.screenPosition, Color2, new Vector3(factor, 0.5f, 1)));
+                bar4.Add(new(Top2, Color.Transparent, new Vector3(factor, 0, 1)));
+            }
+
+            spriteBatch.GraphicsDevice.BlendState = BlendState.Additive;
+            spriteBatch.GraphicsDevice.Textures[0] = mainTex;
+            spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+            //spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar2.ToArray(), 0, bar2.Count - 2);
+            spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar3.ToArray(), 0, bar3.Count - 2);
+            spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar4.ToArray(), 0, bar3.Count - 2);
+            spriteBatch.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+
+
+            //spriteBatch.Draw(modParticle.Texture2D.Value, pos
+            //    , null,c, particle.rotation, origin, scale, SpriteEffects.None, 0f);
+            //scale.Y *= 2f;
+            //spriteBatch.Draw(modParticle.Texture2D.Value, pos
+            //    , null, c*0.5f, particle.rotation, origin, scale, SpriteEffects.None, 0f);
         }
     }
 }
