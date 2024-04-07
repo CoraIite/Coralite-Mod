@@ -171,7 +171,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                         SetPos();
                         OnHoldShield();
 
-                        if (CheckCollide() > 0)
+                        if (CheckCollide(out _) > 0)
                         {
                             State = (int)GuardState.Guarding;
                             CompletelyHeldUpShield = true;
@@ -214,15 +214,15 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                         }
 
                         CompletelyHeldUpShield = true;
-                        int which = CheckCollide();
+                        int which = CheckCollide(out int index);
                         if (which > 0)
                         {
                             UpdateShieldAccessory(accessory => accessory.OnGuard(this));
                             OnGuard();
                             if (which == (int)GuardType.Projectile)
-                                OnGuardProjectile();
+                                OnGuardProjectile(index);
                             else if (which == (int)GuardType.NPC)
-                                OnGuardNPC();
+                                OnGuardNPC(index);
                         }
                     }
                     break;
@@ -273,7 +273,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// 检测与弹幕或NPC的碰撞
         /// </summary>
         /// <returns></returns>
-        public virtual int CheckCollide()
+        public virtual int CheckCollide(out int index)
         {
             Rectangle rect = Projectile.getRect();
             for (int i = 0; i < Main.maxProjectiles; i++)
@@ -299,6 +299,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                         OnStrongGuard();
                     }
                     localProjectileImmunity[i] = Projectile.localNPCHitCooldown;
+                    index= i;
                     return (int)GuardType.Projectile;
                 }
             }
@@ -318,10 +319,12 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     if (!npc.dontTakeDamage)
                         npc.SimpleStrikeNPC(Projectile.damage, Projectile.direction, knockBack: Projectile.knockBack, damageType: DamageClass.Melee);
 
+                    index= i;
                     return (int)GuardType.NPC;
                 }
             }
 
+            index = -1;
             return (int)GuardType.notGuard;
         }
 
@@ -357,9 +360,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 cp.Guard(damageR);
         }
 
-        public virtual void OnGuardProjectile() { }
+        public virtual void OnGuardProjectile(int projIndex) { }
 
-        public virtual void OnGuardNPC() { }
+        public virtual void OnGuardNPC(int npcIndex) { }
 
         public virtual void OnHoldShield() { }
 

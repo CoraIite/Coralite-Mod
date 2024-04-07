@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.FlyingShields
             distanceAdder = 3f;
         }
 
-        public override int CheckCollide()
+        public override int CheckCollide(out int index)
         {
             Rectangle rect = Projectile.getRect();
             for (int i = 0; i < Main.maxProjectiles; i++)
@@ -101,6 +101,7 @@ namespace Coralite.Content.Items.FlyingShields
                         OnStrongGuard();
                     }
                     localProjectileImmunity[i] = Projectile.localNPCHitCooldown;
+                    index = i;
                     return (int)GuardType.Projectile;
                 }
             }
@@ -120,11 +121,13 @@ namespace Coralite.Content.Items.FlyingShields
                     Projectile.localNPCImmunity[i] = Projectile.localNPCHitCooldown;
                     if (!npc.dontTakeDamage)
                         npc.SimpleStrikeNPC(Projectile.damage, Projectile.direction, knockBack: Projectile.knockBack, damageType: DamageClass.Melee);
-
+                    
+                    index = i;
                     return (int)GuardType.NPC;
                 }
             }
 
+            index = -1;
             return (int)GuardType.notGuard;
         }
 

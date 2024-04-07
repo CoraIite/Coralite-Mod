@@ -573,10 +573,10 @@ namespace Coralite.Core
         /// <summary> 猪鲨的受击音效 </summary>
         public static SoundStyle DukeFishron_NPCHit14 => SoundID.NPCHit14;
 
-        /// <summary>傀儡 a.k.a 训练假人的受击音效 </summary>
+        /// <summary> 傀儡 a.k.a 训练假人的受击音效 </summary>
         public static SoundStyle TargetDummy_NPCHit15 => SoundID.NPCHit15;
 
-        /// <summary>傀儡 a.k.a 训练假人的受击音效</summary>
+        /// <summary> 傀儡 a.k.a 训练假人的受击音效</summary>
         public static SoundStyle TargetDummy2_NPCHit16 => SoundID.NPCHit16;
 
         /// <summary> 傀儡 a.k.a 训练假人的受击音效</summary>
@@ -621,7 +621,7 @@ namespace Coralite.Core
         /// <summary> 愤怒雨云的受击音效 </summary>
         public static SoundStyle AngryNimbus_NPCHit30 => SoundID.NPCHit30;
 
-        /// <summary>各种蚁狮的受击音效（除了蚁狮蜂）</summary>
+        /// <summary> 各种蚁狮的受击音效（除了蚁狮蜂）</summary>
         public static SoundStyle JuicyBug_NPCHit31 => SoundID.NPCHit31;
 
         /// <summary> 蚁狮蜂的受击音效</summary>
@@ -633,7 +633,7 @@ namespace Coralite.Core
         /// <summary> 地牢幽魂/灵魂/鬼魂的受击音效/ </summary>
         public static SoundStyle DungeonSpirit_NPCHit36 => SoundID.NPCHit36;
 
-        /// <summary>各种食尸鬼的受击音效（肉后地底沙漠的那个） </summary>
+        /// <summary> 各种食尸鬼的受击音效（肉后地底沙漠的那个） </summary>
         public static SoundStyle Ghouls_NPCHit37 => SoundID.NPCHit37;
 
         /// <summary> 巨型卷壳怪的受击音效 </summary>
@@ -648,16 +648,16 @@ namespace Coralite.Core
         /// <summary> 蘑菇瓢虫的受击音效 </summary>
         public static SoundStyle MushiLadybug_NPCHit45 => SoundID.NPCHit45;
 
-        /// <summary>鹦鹉的受击音效</summary>
+        /// <summary> 鹦鹉的受击音效</summary>
         public static SoundStyle Parrot_NPCHit46 => SoundID.NPCHit46;
 
         /// <summary> 蝾螈 a.k.a 鸭鸭怪的受击音效</summary>
         public static SoundStyle Salamander_NPCHit50 => SoundID.NPCHit50;
 
-        /// <summary>暗影焰幻鬼的受击音效（哥布林巫师/召唤师召唤出来的）</summary>
+        /// <summary> 暗影焰幻鬼的受击音效（哥布林巫师/召唤师召唤出来的）</summary>
         public static SoundStyle ShadowflameApparition_NPCHit52 => SoundID.NPCHit52;
 
-        /// <summary>幻灵/幽灵的受击音效（砸恶魔祭坛出一堆的那个）</summary>
+        /// <summary> 幻灵/幽灵的受击音效（砸恶魔祭坛出一堆的那个）</summary>
         public static SoundStyle Wraith_NPCHit54 => SoundID.NPCHit54;
 
         #endregion

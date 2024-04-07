@@ -1,12 +1,15 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
+using XPT.Core.Audio.MP3Sharp.Decoding.Decoders.LayerIII;
 
 namespace Coralite.Content.Items.FlyingShields
 {
@@ -56,9 +59,15 @@ namespace Coralite.Content.Items.FlyingShields
             Item.knockBack = 2;
             Item.shootSpeed = 15;
             Item.damage = 200;
+            Item.accessory = true;
         }
 
         public void UpdateEquipHeldItem(Player player)
+        {
+            player.statDefense += 20;
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statDefense += 20;
         }
@@ -106,12 +115,13 @@ namespace Coralite.Content.Items.FlyingShields
         public override void SetOtherValues()
         {
             scalePercent = 1.4f;
-            damageReduce = 0.8f;
+            damageReduce = 0.6f;
+            parryTime = 9;
         }
 
         public override bool ShouldUpdatePosition()
         {
-            return State==5;
+            return State == 5;
         }
 
         public override bool? CanDamage()
@@ -164,12 +174,11 @@ namespace Coralite.Content.Items.FlyingShields
                         SetPos();
                         OnHoldShield();
 
-                        if (CheckCollide() > 0)
+                        if (CheckCollide(out _) > 0)
                         {
                             State = (int)GuardState.Guarding;
                             CompletelyHeldUpShield = true;
                             OnParry();
-                            UpdateShieldAccessory(accessory => accessory.OnParry(this));
                         }
 
                         Timer--;
@@ -207,15 +216,15 @@ namespace Coralite.Content.Items.FlyingShields
                         }
 
                         CompletelyHeldUpShield = true;
-                        int which = CheckCollide();
+                        int which = CheckCollide(out int index);
                         if (which > 0)
                         {
                             UpdateShieldAccessory(accessory => accessory.OnGuard(this));
                             OnGuard();
                             if (which == (int)GuardType.Projectile)
-                                OnGuardProjectile();
+                                OnGuardProjectile(index);
                             else if (which == (int)GuardType.NPC)
-                                OnGuardNPC();
+                                OnGuardNPC(index);
                         }
                     }
                     break;
@@ -243,6 +252,12 @@ namespace Coralite.Content.Items.FlyingShields
                         localProjectileImmunity[i] = 0;
                 }
             }
+        }
+
+        public override void OnParry()
+        {
+            Helper.PlayPitched("TheLegendOfZelda/Shield_JustGird", 0.4f, 0, Projectile.Center);
+            LightCiecleParticle.Spawn(Projectile.Center, Color.SkyBlue , 0.01f, Projectile.rotation, new Vector2(0.5f, 0.8f));
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
@@ -325,15 +340,20 @@ namespace Coralite.Content.Items.FlyingShields
                 Projectile.velocity.Y += 0.4f;
 
             //判定敌怪
-            int which = CheckCollide();
+            int which = CheckCollide(out int index);
             if (which > 0)
             {
                 if (which == 3)
+                {
                     Projectile.velocity.Y = -12;
+                    OnGuardProjectile(index);
+                }
                 else if (which == 4)
                 {
                     Owner.AddImmuneTime(ImmunityCooldownID.General, 10);
                     Projectile.velocity.Y = -12;
+                    OnGuard();
+                    OnGuardNPC(index);
                 }
             }
 
@@ -358,7 +378,7 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 pos = Projectile.Center + new Vector2(-16, -8);
             float speed = 8f;
             Collision.StepUp(ref pos, ref Projectile.velocity, 32, 16, ref speed, ref Projectile.gfxOffY);
-            if (speed!=8)
+            if (speed != 8)
             {
                 Projectile.velocity *= 1.1f;
             }
@@ -368,16 +388,17 @@ namespace Coralite.Content.Items.FlyingShields
                 Collision.HitTiles(pos, Projectile.velocity, 32, 16);
         }
 
-        public override int CheckCollide()
+        public override int CheckCollide(out int index)
         {
             Rectangle rect = Projectile.getRect();
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
                 //检测脚下是否有炸弹
-                if (proj.active && State == 5 && CoraliteSets.ProjectileExplosible[proj.type]&&proj.Colliding(proj.getRect(), rect))
+                if (proj.active && State == 5 && CoraliteSets.ProjectileExplosible[proj.type] && proj.Colliding(proj.getRect(), rect))
                 {
                     proj.timeLeft = 2;
+                    index = i;
                     return 3;
                 }
 
@@ -393,6 +414,23 @@ namespace Coralite.Content.Items.FlyingShields
 
                     OnGuard_DamageReduce(damageR);
 
+                    //如果不应该瞎JB乱该这东西的速度那就跳过
+                    if (proj.aiStyle == 4 || proj.aiStyle == 38 || proj.aiStyle == 84 || proj.aiStyle == 148 ||
+                        (proj.aiStyle == 7 && proj.ai[0] == 2f) || ((proj.type == 440 || proj.type == 449 ||
+                        proj.type == 606) && proj.ai[1] == 1f) || (proj.aiStyle == 93 && proj.ai[0] < 0f) ||
+                        proj.type == 540 || proj.type == 756 || proj.type == 818 || proj.type == 856 ||
+                        proj.type == 961 || proj.type == 933 || ProjectileID.Sets.IsAGolfBall[proj.type])
+                        goto over;
+
+                    if (!ProjectileLoader.ShouldUpdatePosition(proj))
+                        goto over;
+
+                    //修改速度
+                    proj.velocity *= -1;
+                    float angle = proj.velocity.ToRotation();
+                    proj.velocity = angle.AngleLerp(Projectile.rotation, 0.5f).ToRotationVector2() * proj.velocity.Length();
+
+                over:
                     float percent = MathHelper.Clamp(strongGuard, 0, 1);
                     if (Main.rand.NextBool((int)(percent * 100), 100) && proj.penetrate > 0)//削减穿透数
                     {
@@ -402,6 +440,7 @@ namespace Coralite.Content.Items.FlyingShields
                         OnStrongGuard();
                     }
                     localProjectileImmunity[i] = Projectile.localNPCHitCooldown;
+                    index = i;
                     return (int)GuardType.Projectile;
                 }
             }
@@ -421,14 +460,40 @@ namespace Coralite.Content.Items.FlyingShields
                     if (!npc.dontTakeDamage)
                         npc.SimpleStrikeNPC(Projectile.damage, Projectile.direction, knockBack: Projectile.knockBack, damageType: DamageClass.Melee);
 
-                    if ( State == 5 &&npc.Top.Y>Projectile.Top.Y)
+                    if (State == 5 && npc.Top.Y > Projectile.Top.Y)
+                    {
+                        index = i;
                         return 4;
+                    }
 
+                    index = i;
                     return (int)GuardType.NPC;
                 }
             }
 
+            index = -1;
             return (int)GuardType.notGuard;
+        }
+
+        public override void OnGuard()
+        {
+            DistanceToOwner /= 3;
+        }
+
+        public override void OnGuardNPC(int npcIndex)
+        {
+            NPC n = Main.npc[npcIndex];
+            if (n.HitSound == CoraliteSoundID.Metal_NPCHit4)
+                Helper.PlayPitched($"TheLegendOfZelda/Guard_Metal_Metal_{Main.rand.Next(4)}", 0.4f, 0, Projectile.Center);
+            else if (n.HitSound == CoraliteSoundID.Bone_NPCHit2)
+                Helper.PlayPitched($"TheLegendOfZelda/Guard_Bone_Metal_{Main.rand.Next(4)}", 0.4f, 0, Projectile.Center);
+            else
+                Helper.PlayPitched($"TheLegendOfZelda/Guard_Wood_Metal_{Main.rand.Next(4)}", 0.4f, 0, Projectile.Center);
+        }
+
+        public override void OnGuardProjectile(int projIndex)
+        {
+            Helper.PlayPitched($"TheLegendOfZelda/Guard_Metal_Metal_{Main.rand.Next(4)}", 0.4f, 0, Projectile.Center);
         }
 
         public override float GetWidth()
@@ -437,9 +502,9 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class ExpandLightParticle:ModParticle
+    public class LightCiecleParticle : ModParticle
     {
-        public override string Texture => AssetDirectory.OtherProjectiles+ "HorizontalLight";
+        public override string Texture => AssetDirectory.OtherProjectiles + "Circle3";
 
         public override void OnSpawn(Particle particle)
         {
@@ -448,10 +513,54 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void Update(Particle particle)
         {
-            if (particle.velocity.Y<4)
+            particle.fadeIn++;
+            if (particle.fadeIn > 15)
             {
-                particle.velocity.Y += 0.3f;
+                particle.color = Color.Lerp(particle.color, new Color(0, 100, 250, 0), 0.35f);
+                particle.scale += 0.07f;
             }
+            else
+            {
+                particle.scale += 0.03f;
+            }
+
+            if (particle.color.A < 2)
+                particle.active = false;
+        }
+
+        public static Particle Spawn(Vector2 center, Color newcolor, float baseScale, float rotation, Vector2 circleScale)
+        {
+            Particle p = Particle.NewParticleDirect(center, Vector2.Zero, CoraliteContent.ParticleType<LightCiecleParticle>()
+                  , newcolor, baseScale);
+
+            p.rotation = rotation;
+            p.oldCenter = new Vector2[1] { circleScale };
+            return p;
+        }
+
+        public override void Draw(SpriteBatch spriteBatch, Particle particle)
+        {
+            ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
+            Vector2 pos = particle.center - Main.screenPosition;
+            Vector2 origin = modParticle.Texture2D.Size() / 2;
+            Vector2 scale = particle.oldCenter[0] * particle.scale;
+            Color c = particle.color;
+
+            spriteBatch.Draw(modParticle.Texture2D.Value, pos
+                , null, c, particle.rotation, origin,scale , SpriteEffects.None, 0f);
+            spriteBatch.Draw(modParticle.Texture2D.Value, pos
+                , null, c , particle.rotation, origin, scale, SpriteEffects.None, 0f);
+
+            Texture2D exTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "Circle2").Value;
+            origin = exTex.Size() / 2;
+            scale *= 0.6f;
+
+            spriteBatch.Draw(exTex, pos
+                , null, c, particle.rotation, origin, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(exTex, pos
+                , null, c , particle.rotation, origin, scale*0.95f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(exTex, pos
+                , null, c , particle.rotation, origin, scale*1.05f, SpriteEffects.None, 0f);
         }
     }
 }

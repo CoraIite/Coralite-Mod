@@ -77,13 +77,13 @@ namespace Coralite.Content.Items.Thunder
             }
         }
 
-        public override void ModifyFishingLine(ref Vector2 lineOriginOffset, ref Color lineColor)
-        {
-            // Change these two values in order to change the origin of where the line is being drawn.
-            // This will make it draw 47 pixels right and 31 pixels up from the player's center, while they are looking right and in normal gravity.
-            lineOriginOffset = new Vector2(30, -31);
-            // Sets the fishing line's color. Note that this will be overridden by the colored string accessories.
-            lineColor = Coralite.Instance.ThunderveinYellow;
-        }
+        //public override void ModifyFishingLine(ref Vector2 lineOriginOffset, ref Color lineColor)
+        //{
+        //    // Change these two values in order to change the origin of where the line is being drawn.
+        //    // This will make it draw 47 pixels right and 31 pixels up from the player's center, while they are looking right and in normal gravity.
+        //    lineOriginOffset = new Vector2(30, -31);
+        //    // Sets the fishing line's color. Note that this will be overridden by the colored string accessories.
+        //    lineColor = Coralite.Instance.ThunderveinYellow;
+        //}
     }
 }

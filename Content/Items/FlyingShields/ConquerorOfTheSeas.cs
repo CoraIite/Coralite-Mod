@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.frameCounter = 3 * 4 * Main.rand.Next(8, 12);
         }
 
-        public override void OnGuardNPC()
+        public override void OnGuardNPC(int npcIndex)
         {
             Projectile.NewProjectileFromThis<ConquerorSlash>(Owner.Center, Vector2.Zero, Projectile.damage, Projectile.knockBack,
                 Main.rand.Next(3), Projectile.rotation);
@@ -112,7 +112,7 @@ namespace Coralite.Content.Items.FlyingShields
                 TentacleDust();
         }
 
-        public override void OnGuardProjectile()
+        public override void OnGuardProjectile(int projIndex)
         {
             Projectile.NewProjectileFromThis<ConquerorFlyProj>(Owner.Center, Projectile.rotation.ToRotationVector2() * 12,
                 (int)(Projectile.damage * 0.85f), Projectile.knockBack);

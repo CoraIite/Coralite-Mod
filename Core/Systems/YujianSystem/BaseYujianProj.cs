@@ -8,7 +8,6 @@ using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using static Coralite.Core.Systems.YujianSystem.BaseYujian;
 
 namespace Coralite.Core.Systems.YujianSystem
 {
@@ -181,6 +180,7 @@ namespace Coralite.Core.Systems.YujianSystem
                 Timer = 0f;
                 Projectile.netUpdate = true;
             }
+
             switch (State)
             {
                 default:
@@ -255,8 +255,8 @@ namespace Coralite.Core.Systems.YujianSystem
                                 State = -1;
                             }
                         }
-                        GetYujianRandomState();
 
+                        GetYujianRandomState();
                     }
                     else
                     {

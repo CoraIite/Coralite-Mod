@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
             {
                 projectile.OnGuard_DamageReduce(projectile.damageReduce);
                 projectile.OnGuard();
-                projectile.OnGuardNPC();
+                projectile.OnGuardNPC(target.whoAmI);
             }
 
             projectile.Timer = 0;
