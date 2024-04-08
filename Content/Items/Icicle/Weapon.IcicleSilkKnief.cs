@@ -168,7 +168,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.usesLocalNPCImmunity = false;
             Projectile.localNPCHitCooldown = 20;
             Projectile.width = Projectile.height = 32;
-            Projectile.DamageType = DamageClass.Melee;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = -1;
             Projectile.friendly = true;
             Projectile.tileCollide = false;

@@ -3,6 +3,7 @@ using Coralite.Core.Systems.Trails;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using UtfUnknown.Core.Probers.MultiByte.Korean;
 
 namespace Coralite.Core.Systems.ParticleSystem
 {
@@ -137,7 +138,7 @@ namespace Coralite.Core.Systems.ParticleSystem
         /// 普普通通地更新记录点
         /// </summary>
         /// <param name="length"></param>
-        public void UpdateCachesNormally(int length)
+        public void UpdatePosCachesNormally(int length)
         {
             if (oldCenter is null || length > oldCenter.Length)
                 return;
@@ -146,6 +147,17 @@ namespace Coralite.Core.Systems.ParticleSystem
                 oldCenter[i] = oldCenter[i + 1];
 
             oldCenter[length - 1] = center;
+        }
+
+        public void UpdateRotCachesNormally(int length)
+        {
+            if (oldRot is null || length > oldRot.Length)
+                return;
+
+            for (int i = 0; i < length - 1; i++)
+                oldRot[i] = oldRot[i + 1];
+
+            oldRot[length - 1] = rotation;
         }
 
     }

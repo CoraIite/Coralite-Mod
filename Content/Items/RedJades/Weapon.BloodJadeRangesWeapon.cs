@@ -351,7 +351,7 @@ namespace Coralite.Content.Items.RedJades
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
                         Projectile proj = Main.projectile[i];
-                        if (!proj.active || proj.friendly || proj.whoAmI == Projectile.whoAmI)
+                        if (!proj.IsActiveAndHostile() || proj.whoAmI == Projectile.whoAmI)
                             continue;
 
                         if (proj.Colliding(proj.getRect(), rect))

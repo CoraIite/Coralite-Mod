@@ -14,18 +14,18 @@ namespace Coralite.Content.CustomHooks
         {
             On_UIWorldCreation.ProcessSpecialWorldSeeds += On_UIWorldCreation_ProcessSpecialWorldSeeds;
             On_UIWorldCreation.ProcessSeed += On_UIWorldCreation_ProcessSeed;
-            //On_UIWorldSelect.NewWorldClick += On_UIWorldSelect_NewWorldClick;
-            //On_UIWorldCreation.Click_GoBack += On_UIWorldCreation_Click_GoBack;
-            //On_UIWorldCreation.Click_NamingAndCreating += On_UIWorldCreation_Click_NamingAndCreating;
+            On_UIWorldSelect.NewWorldClick += On_UIWorldSelect_NewWorldClick;
+            On_UIWorldCreation.Click_GoBack += On_UIWorldCreation_Click_GoBack;
+            On_UIWorldCreation.Click_NamingAndCreating += On_UIWorldCreation_Click_NamingAndCreating;
         }
 
         public override void Unload()
         {
             On_UIWorldCreation.ProcessSpecialWorldSeeds -= On_UIWorldCreation_ProcessSpecialWorldSeeds;
             On_UIWorldCreation.ProcessSeed -= On_UIWorldCreation_ProcessSeed;
-            //On_UIWorldSelect.NewWorldClick -= On_UIWorldSelect_NewWorldClick;
-            //On_UIWorldCreation.Click_GoBack -= On_UIWorldCreation_Click_GoBack;
-            //On_UIWorldCreation.Click_NamingAndCreating -= On_UIWorldCreation_Click_NamingAndCreating;
+            On_UIWorldSelect.NewWorldClick -= On_UIWorldSelect_NewWorldClick;
+            On_UIWorldCreation.Click_GoBack -= On_UIWorldCreation_Click_GoBack;
+            On_UIWorldCreation.Click_NamingAndCreating -= On_UIWorldCreation_Click_NamingAndCreating;
         }
 
         /// <summary>

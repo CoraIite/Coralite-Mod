@@ -62,6 +62,7 @@ VisualEffectConfig: {
 		HitEffects: Hit Effects
 		OtherVisualEffects: Other Visual Effects
 		NightmarePlantera: Nightmare Plantera Header
+		SpecialWeapons: Special Weapons Header
 	}
 
 	HitEffect_HitFreeze: {
@@ -81,6 +82,11 @@ VisualEffectConfig: {
 
 	UseNightmareBossBar: {
 		Label: Use Nightmare Boss Bar
+		Tooltip: ""
+	}
+
+	HylianShieldScreenHighlight: {
+		Label: Hylian Shield Screen Highlight
 		Tooltip: ""
 	}
 }

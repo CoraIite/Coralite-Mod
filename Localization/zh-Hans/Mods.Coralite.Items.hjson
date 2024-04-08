@@ -769,7 +769,7 @@ MagConnectStaff: {
 MagicCrystal: {
 	DisplayName: 魔力晶体
 	Tooltip: 蕴含微弱的魔能
-	MoreDescription: “去地下寻找水晶洞穴把，其中藏有如何使用魔能的知识”
+	MoreDescription: “去地下寻找水晶洞穴吧，其中藏有如何使用魔能的知识”
 }
 
 CrimtaneLens: {
@@ -3608,10 +3608,12 @@ HylianShield: {
 	DisplayName: 海利亚盾
 	Tooltip:
 		'''
-		手持时增加20防御
+		手持时增加25防御
 		举起盾牌后双击方向键使用盾滑
+		举盾瞬间可进行盾反，防御时能够将弹幕弹回去
 		“伴随着持有它的勇者的传说，自古从海拉鲁王族流传下来的盾。”
 		“以其他盾无法企及的压倒性的防御力和耐久性为傲。”
+		[c/00ff00:盾反时产生的高亮效果可以在模组配置中关闭]
 		'''
 }
 

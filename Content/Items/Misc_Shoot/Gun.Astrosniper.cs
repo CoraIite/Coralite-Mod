@@ -80,7 +80,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                     while (vec.Y > pointPosition.Y && WorldGen.SolidTile(vec.ToTileCoordinates()))
                         vec += vector60 * 16f;
 
-                    Projectile.NewProjectile(source, pointPosition, new Vector2(num2, num3), ProjectileID.Starfury, damage, 0, player.whoAmI, 0f, vec.Y);
+                   int index= Projectile.NewProjectile(source, pointPosition, new Vector2(num2, num3), ProjectileID.Starfury, damage, 0, player.whoAmI, 0f, vec.Y);
+                    Main.projectile[index].DamageType = DamageClass.Ranged;
                 }
             }
 

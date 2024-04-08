@@ -14,13 +14,6 @@ namespace Coralite.Content.Items.RedJades
         /// <summary> 使用多少次后进行强化大爆炸的射击 </summary>
         public int useBigBoom = 8;
 
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("赤岩杖");
-
-            // Tooltip.SetDefault("射出赤玉光束");
-        }
-
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;

@@ -55,9 +55,9 @@ namespace Coralite.Content.Items.RedJades
             if (Main.myPlayer == Projectile.owner)
             {
                 if (Projectile.ai[0] == 1)
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBigBoom>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBigBoom>(), Projectile.damage * 2, 0, Projectile.owner);
                 else
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), Projectile.damage / 2, 0, Projectile.owner);
             }
 
             //SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);

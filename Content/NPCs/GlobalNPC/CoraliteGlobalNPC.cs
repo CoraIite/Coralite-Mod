@@ -24,6 +24,45 @@ namespace Coralite.Content.NPCs.GlobalNPC
 
         public override bool InstancePerEntity => true;
 
+        public override void SetDefaults(NPC entity)
+        {
+            switch (entity.type)
+            {
+                default:
+                    break;
+                case NPCID.Shark:
+                case NPCID.SandShark:
+                case NPCID.SandsharkCorrupt:
+                case NPCID.SandsharkCrimson:
+                case NPCID.SandsharkHallow:
+                    {
+                        if (CoraliteWorld.coralCatWorld)
+                        {
+                            entity.scale = Main.rand.NextFloat(2, 3.5f);
+                            entity.lifeMax = (int)(entity.lifeMax * Main.rand.NextFloat(3, 5));
+                        }
+                    }
+                    break;
+            }
+        }
+
+        public override void ApplyDifficultyAndPlayerScaling(NPC npc, int numPlayers, float balance, float bossAdjustment)
+        {
+            switch (npc.type)
+            {
+                default:
+                    break;
+                case NPCID.Shark:
+                case NPCID.SandShark:
+                case NPCID.SandsharkCorrupt:
+                case NPCID.SandsharkCrimson:
+                case NPCID.SandsharkHallow:
+                    {
+                    }
+                    break;
+            }
+        }
+
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
             if (IvyPosion)
@@ -61,6 +100,10 @@ namespace Coralite.Content.NPCs.GlobalNPC
             ThunderElectrified = false;
         }
 
+        public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
+        {
+            base.EditSpawnRate(player, ref spawnRate, ref maxSpawns);
+        }
 
         public override void ModifyShop(NPCShop shop)
         {
@@ -149,6 +192,11 @@ namespace Coralite.Content.NPCs.GlobalNPC
 
             if (spawnInfo.Player.InModBiome<ShadowCastleBiome>())
                 pool[0] = 0f;
+
+            if (CoraliteWorld.coralCatWorld && spawnInfo.Player.wet && spawnInfo.Player.position.Y < Main.worldSurface*16)
+            {
+                pool.Add(NPCID.Shark, 1);
+            }
         }
 
         public override bool PreKill(NPC npc)

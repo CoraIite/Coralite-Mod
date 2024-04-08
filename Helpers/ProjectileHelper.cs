@@ -275,6 +275,9 @@ namespace Coralite.Helpers
         }
 
 
+        public static bool IsActiveAndHostile(this Projectile projectile) => projectile.active && projectile.hostile;
+
+
 
         /// <summary>
         /// 快速设置拖尾相关数据

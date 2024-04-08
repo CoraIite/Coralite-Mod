@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.Icicle
                 Kill(particle);
 
             particle.center += particle.velocity;
-            particle.UpdateCachesNormally(8);
+            particle.UpdatePosCachesNormally(8);
             particle.trail.Positions = particle.oldCenter;
         }
 

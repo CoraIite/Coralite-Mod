@@ -62,6 +62,7 @@ VisualEffectConfig: {
 		HitEffects: 命中效果
 		OtherVisualEffects: 其他视觉效果
 		NightmarePlantera: 梦魇之花视觉效果
+		SpecialWeapons: 特殊武器的效果
 	}
 
 	HitEffect_HitFreeze: {
@@ -86,5 +87,10 @@ VisualEffectConfig: {
 	UseNightmareBossBar: {
 		Label: 绘制特殊的血条
 		Tooltip: 是否开启梦魇之花特殊的流动效果血条
+	}
+
+	HylianShieldScreenHighlight: {
+		Label: 海利亚盾的盾反屏幕亮光
+		Tooltip: 海利亚盾在盾反时是否产生大范围亮光
 	}
 }

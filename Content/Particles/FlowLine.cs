@@ -38,7 +38,7 @@ namespace Coralite.Content.Particles
                 else
                     particle.velocity = particle.velocity.RotatedBy(-rotate);
 
-                particle.UpdateCachesNormally(spawnTime);
+                particle.UpdatePosCachesNormally(spawnTime);
                 particle.trail.Positions = particle.oldCenter;
             }
 

@@ -37,9 +37,15 @@ namespace Coralite.Core.Configs
 
         [Header("NightmarePlantera")]
         [DefaultValue(true)]
+
         public bool UseNightmareSky;
 
         public bool UseNightmareBossBar;
+
+        [Header("SpecialWeapons")]
+        [SeparatePage]
+        [DefaultValue(true)]
+        public bool HylianShieldScreenHighlight;
 
         public override void OnChanged()
         {
@@ -63,6 +69,7 @@ namespace Coralite.Core.Configs
             VisualEffectSystem.DrawTrail = DrawTrail;
             VisualEffectSystem.UseNightmareSky = UseNightmareSky;
             VisualEffectSystem.UseNightmareBossBar = UseNightmareBossBar;
+            VisualEffectSystem.HylianShieldScreenHighlight = HylianShieldScreenHighlight;
         }
     }
 
@@ -81,5 +88,6 @@ namespace Coralite.Core.Configs
         public static bool UseNightmareSky;
         public static bool UseNightmareBossBar;
 
+        public static bool HylianShieldScreenHighlight = true;
     }
 }
