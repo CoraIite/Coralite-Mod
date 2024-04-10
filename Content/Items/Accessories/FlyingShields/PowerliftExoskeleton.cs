@@ -5,6 +5,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
+    [AutoloadEquip(EquipType.Back)]
     public class PowerliftExoskeleton : BaseAccessory
     {
         public PowerliftExoskeleton() : base(ItemRarityID.Pink, Item.sellPrice(0, 1, 30))

@@ -199,7 +199,7 @@ namespace Coralite.Content.Items.Misc_Melee
             if (Main.rand.NextBool(2))
                 target.AddBuff(24, 180);
 
-            if (hited&&Main.myPlayer == Projectile.owner && target.HittableForOnHitRewards())
+            if (hited && Main.myPlayer == Projectile.owner && target.HittableForOnHitRewards())
             {
                 Vector2 center = target.Center;
                 int num = 2;

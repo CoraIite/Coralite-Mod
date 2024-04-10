@@ -1,11 +1,13 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CustomHooks;
+using Coralite.Content.ModPlayers;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class BeetleLimbStrap : BaseAccessory
+    [AutoloadEquip(EquipType.Back)]
+    public class BeetleLimbStrap : BaseAccessory,ISpecialDrawBackPacks
     {
         public BeetleLimbStrap() : base(ItemRarityID.Yellow, Item.sellPrice(0, 5))
         { }

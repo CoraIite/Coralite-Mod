@@ -53,8 +53,8 @@ namespace Coralite.Content.WorldGeneration
             GenVars.numDDoors = 0;
             GenVars.numDungeonPlatforms = 0;
 
-            int limit = 180;
-            int roomCount = 40;
+            int limit = 250;
+            int roomCount = 35;
             if (Main.maxTilesX > 6000)
             {
                 limit += 80;
@@ -68,6 +68,7 @@ namespace Coralite.Content.WorldGeneration
 
             for (int i = 0; i < 20000; i++)
             {
+                progress.Value = i / 40000f;
                 int dungeonLocation = GenVars.dungeonLocation;
                 int num756 = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + Main.rand.Next(-20, 100);
                 int dungeonHeight = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + WorldGen.genRand.Next(-200, 200);
@@ -91,47 +92,71 @@ namespace Coralite.Content.WorldGeneration
                 NormalRoom root = new NormalRoom(new Point(dungeonLocation, dungeonHeight));
                 root.InitializeType();
 
-                if (root.shadowCastleRooms.Count < roomCount)
+                if (root.shadowCastleRooms.Count < roomCount && i < 19998)
                     continue;
 
+                progress.Value = 0.5f;
                 List<ShadowCastleRoom> rooms = root.shadowCastleRooms;
 
                 int rand = WorldGen.genRand.Next(0, rooms.Count);
 
                 #region 生成黑洞房间
+                {
+                    BlackHoleRoom blackHole = new BlackHoleRoom(rooms[rand].roomRect.Center);
+                    ShadowCastleRoom.Exchange(rooms[rand], blackHole);
+                    rooms[rand] = blackHole;
+                }
+                #endregion
 
-                BlackHoleRoom blackHole = new BlackHoleRoom(rooms[rand].roomRect.Center);
-                ShadowCastleRoom.Exchange(rooms[rand], blackHole);
-                rooms[rand] = blackHole;
+                #region 生成书房
+                {
+                    bool gened = false;
+                    while (!gened)
+                    {
+                        rand = WorldGen.genRand.Next(0, rooms.Count);
 
+                        if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
+                            continue;
+
+                        BookRoom bookRoom = new BookRoom(rooms[rand].roomRect.Center);
+                        ShadowCastleRoom.Exchange(rooms[rand], bookRoom);
+                        rooms[rand] = bookRoom;
+
+                        gened = true;
+                    }
+                }
                 #endregion
 
                 #region 生成宝箱房间
-
-                int[] tresures = new int[]
                 {
+                    int[] tresures = new int[]
+                    {
                     ItemID.ShadowKey,
                     ModContent.ItemType<Shadura>(),
                     ModContent.ItemType<ShadowWave>(),
                     Main.remixWorld ? ItemID.BubbleGun : ModContent.ItemType<MercuryScepter>(),
                     ModContent.ItemType<ShadowMask>(),
-                };
+                    };
 
-                int chestRoomCount = 0;
-                while (chestRoomCount < tresures.Length)
-                {
-                    rand = WorldGen.genRand.Next(0, rooms.Count);
+                    int chestRoomCount = 0;
+                    int tryCount = 0;
+                    while (chestRoomCount < tresures.Length)
+                    {
+                        rand = WorldGen.genRand.Next(0, rooms.Count);
 
-                    if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
-                        continue;
+                        if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
+                            continue;
 
-                    ChestRoom chestRoom = new ChestRoom(rooms[rand].roomRect.Center, tresures[chestRoomCount]);
-                    ShadowCastleRoom.Exchange(rooms[rand], chestRoom);
-                    rooms[rand] = chestRoom;
+                        ChestRoom chestRoom = new ChestRoom(rooms[rand].roomRect.Center, tresures[chestRoomCount]);
+                        ShadowCastleRoom.Exchange(rooms[rand], chestRoom);
+                        rooms[rand] = chestRoom;
 
-                    chestRoomCount++;
+                        chestRoomCount++;
+                        tryCount++;
+                        if (tryCount > 50000)
+                            break;
+                    }
                 }
-
                 #endregion
 
                 //各类替换
@@ -154,9 +179,14 @@ namespace Coralite.Content.WorldGeneration
 
                 }
 
+                progress.Value = 0.6f;
+
+
                 //生成地下的主要地形
                 root.Generate();
                 root.CreateCorridor();
+
+                progress.Value = 0.9f;
 
                 #region 生成影子球BOSS房间
 
@@ -4541,7 +4571,7 @@ namespace Coralite.Content.WorldGeneration
                             //当前的y位置
                             int currentY = startPoint.Y + y * dir;
                             int baseX = (int)Math.Round(Helper.Lerp(startPoint.X, endPoint.X, y / (float)(count - 1)));
-                            for (int x = 0; x < CorridorHeight + WallWidth * 2; x++)
+                            for (int x = 0; x < CorridorHeight + WallWidth * 2+1; x++)
                             {
                                 int currentX = baseX + x;
 
@@ -4587,7 +4617,7 @@ namespace Coralite.Content.WorldGeneration
                             int currentX = startPoint.X + x * dir;
                             int baseY = (int)Math.Round(Helper.Lerp(startPoint.Y, endPoint.Y, x / (float)(count - 1)));
 
-                            for (int y = 0; y < CorridorHeight + WallWidth * 2; y++)
+                            for (int y = 0; y < CorridorHeight + WallWidth * 2+1; y++)
                             {
                                 int currentY = baseY + y;
 
@@ -4626,14 +4656,14 @@ namespace Coralite.Content.WorldGeneration
             ShadowCastleRoom parentRoom = room.parentRoom;
             List<ShadowCastleRoom> childrens = room.childrenRooms;
 
-            parentRoom.childrenRooms?.Remove(room);
+            parentRoom?.childrenRooms?.Remove(room);
 
             newRoom.parentDirection = room.parentDirection;
             newRoom.depth = room.depth;
             newRoom.parentRoom = parentRoom;
             newRoom.childrenRooms = childrens;
 
-            parentRoom.childrenRooms?.Add(newRoom);
+            parentRoom?.childrenRooms?.Add(newRoom);
         }
 
         public void ResetCenter(Point center)

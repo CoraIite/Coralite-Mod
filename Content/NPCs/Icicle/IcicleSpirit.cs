@@ -36,10 +36,12 @@ namespace Coralite.Content.NPCs.Icicle
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
             NPC.value = Item.buyPrice(0, 1);
-            NPCID.Sets.TrailCacheLength[Type] = 1;
+            //NPCID.Sets.TrailCacheLength[Type] = 1;
+            NPC.rarity = 3;
 
             NPC.noGravity = true;
             NPC.noTileCollide = false;
+            NPC.HitSound = CoraliteSoundID.DigIce;
         }
 
         public override bool? CanFallThroughPlatforms() => true;
@@ -47,13 +49,13 @@ namespace Coralite.Content.NPCs.Icicle
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (spawnInfo.Player.ZoneSnow && spawnInfo.Player.ZoneRockLayerHeight && DownedBossSystem.downedBabyIceDragon)
-                return 0.08f;
+                return 0.1f;
             return 0f;
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IcicleCrystal>(), 2, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IcicleCrystal>(), 2, 1, 2));
         }
 
         public override void AI()

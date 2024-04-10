@@ -136,11 +136,11 @@ ThunderveinStaffBuff: {
 }
 
 FlaskOfRedJadeBuff: {
-	DisplayName: 武器灌注：雷鸣
-	Description: 近战武器命中时附加雷鸣减益
+	DisplayName: 武器灌注：碎玉
+	Description: 近战武器命中时偶尔产生爆炸
 }
 
 FlaskOfThunderBuff: {
-	DisplayName: 武器灌注：碎玉
-	Description: 近战武器命中时偶尔产生爆炸
+	DisplayName: 武器灌注：雷鸣
+	Description: 近战武器命中时附加雷鸣减益
 }

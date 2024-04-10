@@ -12,12 +12,17 @@ namespace Coralite.Content.CustomHooks
         public override void Load()
         {
             On_PlayerDrawLayers.DrawPlayer_21_Head += On_PlayerDrawLayers_DrawPlayer_21_Head;
+            //On_PlayerDrawLayers.DrawPlayer_08_Backpacks += On_PlayerDrawLayers_DrawPlayer_08_Backpacks; 
+            On_PlayerDrawLayers.DrawPlayer_10_BackAcc += On_PlayerDrawLayers_DrawPlayer_10_BackAcc; ; 
             //On_PlayerDrawLayers.DrawSittingLegs += On_PlayerDrawLayers_DrawSittingLegs;
         }
 
         public override void Unload()
         {
             On_PlayerDrawLayers.DrawPlayer_21_Head -= On_PlayerDrawLayers_DrawPlayer_21_Head;
+            //On_PlayerDrawLayers.DrawPlayer_08_Backpacks -= On_PlayerDrawLayers_DrawPlayer_08_Backpacks; 
+            On_PlayerDrawLayers.DrawPlayer_10_BackAcc -= On_PlayerDrawLayers_DrawPlayer_10_BackAcc; ;
+
             //On_PlayerDrawLayers.DrawSittingLegs -= On_PlayerDrawLayers_DrawSittingLegs;
         }
 
@@ -153,6 +158,71 @@ namespace Coralite.Content.CustomHooks
 
         #endregion
 
+        #region 背包
+
+        private void On_PlayerDrawLayers_DrawPlayer_10_BackAcc(On_PlayerDrawLayers.orig_DrawPlayer_10_BackAcc orig, ref PlayerDrawSet drawinfo)
+        {
+            EquipTexture e = EquipLoader.GetEquipTexture(EquipType.Back, drawinfo.drawPlayer.back);
+            if (e != null && e.Item != null && e.Item is ISpecialDrawBackPacks && drawinfo.drawPlayer.back > 0)
+            {
+                //if (drawinfo.drawPlayer.mount.Active)
+                //    return;
+
+                int shader;
+                int num2 = drawinfo.drawPlayer.back;
+                float num3 = -4f;
+                float num4 = -8f;
+
+                Vector2 vector3 = new Vector2(0f, 8f);
+                Vector2 vec5 = drawinfo.Position - Main.screenPosition + drawinfo.drawPlayer.bodyPosition + new Vector2(drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - drawinfo.drawPlayer.bodyFrame.Height / 2) + new Vector2(0f, -4f) + vector3;
+                vec5 = vec5.Floor();
+                Vector2 vec6 = drawinfo.Position - Main.screenPosition + new Vector2(drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - drawinfo.drawPlayer.bodyFrame.Height / 2) + new Vector2((-9f + num3) * (float)drawinfo.drawPlayer.direction, (2f + num4) * drawinfo.drawPlayer.gravDir) + vector3;
+                vec6 = vec6.Floor();
+
+                shader = drawinfo.cBody;
+                DrawData item = new DrawData(TextureAssets.AccBack[num2].Value, vec5
+                    , new Rectangle(0, drawinfo.drawPlayer.bodyFrame.Y, TextureAssets.AccBack[num2].Width(), drawinfo.drawPlayer.bodyFrame.Height),
+                    drawinfo.colorArmorBody, drawinfo.drawPlayer.bodyRotation, new Vector2(TextureAssets.AccBack[num2].Width() / 2, drawinfo.bodyVect.Y), 1f, drawinfo.playerEffect);
+                item.shader = shader;
+                drawinfo.DrawDataCache.Add(item);
+            }
+            else
+                orig.Invoke(ref drawinfo);
+        }
+
+        //private void On_PlayerDrawLayers_DrawPlayer_08_Backpacks(On_PlayerDrawLayers.orig_DrawPlayer_08_Backpacks orig, ref PlayerDrawSet drawinfo)
+        //{
+        //    EquipTexture e = EquipLoader.GetEquipTexture(EquipType.Back, drawinfo.drawPlayer.back);
+        //    if (e != null && e.Item != null && e.Item is ISpecialDrawBackPacks && drawinfo.drawPlayer.back > 0)
+        //    {
+        //        if (drawinfo.drawPlayer.mount.Active)
+        //            return;
+                
+        //        int shader;
+        //        int num2 = drawinfo.drawPlayer.back;
+        //        float num3 = -4f;
+        //        float num4 = -8f;
+
+        //        Vector2 vector3 = new Vector2(0f, 8f);
+        //        Vector2 vec5 = drawinfo.Position - Main.screenPosition + drawinfo.drawPlayer.bodyPosition + new Vector2(drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - drawinfo.drawPlayer.bodyFrame.Height / 2) + new Vector2(0f, -4f) + vector3;
+        //        vec5 = vec5.Floor();
+        //        Vector2 vec6 = drawinfo.Position - Main.screenPosition + new Vector2(drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - drawinfo.drawPlayer.bodyFrame.Height / 2) + new Vector2((-9f + num3) * (float)drawinfo.drawPlayer.direction, (2f + num4) * drawinfo.drawPlayer.gravDir) + vector3;
+        //        vec6 = vec6.Floor();
+
+        //        shader = drawinfo.cBody;
+        //        DrawData item = new DrawData(TextureAssets.AccBack[num2].Value, vec5
+        //            , new Rectangle(0, drawinfo.drawPlayer.bodyFrame.Y, TextureAssets.AccBack[num2].Width(), drawinfo.drawPlayer.bodyFrame.Height),
+        //            drawinfo.colorArmorBody, drawinfo.drawPlayer.bodyRotation, new Vector2(TextureAssets.AccBack[num2].Width()/2, drawinfo.bodyVect.Y), 1f, drawinfo.playerEffect);
+        //        item.shader = shader;
+        //        drawinfo.DrawDataCache.Add(item);
+        //    }
+        //    else
+        //        orig.Invoke(ref  drawinfo);
+        //}
+
+        #endregion
+
+
         #region 腿部
 
         public void On_PlayerDrawLayers_DrawSittingLegs(On_PlayerDrawLayers.orig_DrawSittingLegs orig, ref PlayerDrawSet drawinfo, Texture2D textureToDraw, Color matchingColor, int shaderIndex, bool glowmask)
@@ -237,6 +307,11 @@ namespace Coralite.Content.CustomHooks
     }
 
     public interface ISpecialDrawLegs
+    {
+
+    }
+
+    public interface ISpecialDrawBackPacks
     {
 
     }

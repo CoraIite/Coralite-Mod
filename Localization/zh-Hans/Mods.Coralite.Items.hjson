@@ -3729,3 +3729,8 @@ Treeler: {
 	DisplayName: 大树弯刀
 	Tooltip: 从种子长成了一棵树
 }
+
+ShadowDart: {
+	// DisplayName: Shadow Dart
+	// Tooltip: ""
+}

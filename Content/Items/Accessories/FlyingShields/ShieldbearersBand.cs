@@ -5,6 +5,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
+    [AutoloadEquip(EquipType.Waist)]
     public class ShieldbearersBand : BaseAccessory
     {
         public ShieldbearersBand() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 20))

@@ -3645,3 +3645,8 @@ Treeler: {
 	DisplayName: Treeler
 	Tooltip: ""
 }
+
+ShadowDart: {
+	DisplayName: Shadow Dart
+	Tooltip: ""
+}

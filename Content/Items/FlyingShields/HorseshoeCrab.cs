@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.FlyingShields
 {
     public class HorseshoeCrab : BaseFlyingShieldItem<HorseshoeCrabGuard>
     {
-        public HorseshoeCrab() : base(Item.sellPrice(0, 2), ItemRarityID.LightRed, AssetDirectory.FlyingShieldItems)
+        public HorseshoeCrab() : base(Item.sellPrice(0, 5), ItemRarityID.LightRed, AssetDirectory.FlyingShieldItems)
         {
         }
 
@@ -209,7 +209,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.damage = (int)(Projectile.damage * 0.8f);
+            Projectile.damage = (int)(Projectile.damage * 0.85f);
         }
 
         public override void AI()
