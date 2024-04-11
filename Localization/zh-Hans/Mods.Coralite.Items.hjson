@@ -3731,6 +3731,15 @@ Treeler: {
 }
 
 ShadowDart: {
-	// DisplayName: Shadow Dart
-	// Tooltip: ""
+	DisplayName: 影镖
+	Tooltip: 射出能够黏在方块上的影镖
+}
+
+VampireEarl: {
+	DisplayName: 鲜血晚宴
+	Tooltip:
+		'''
+		血月时获得极大幅度强化
+		嗜血蝙蝠
+		'''
 }

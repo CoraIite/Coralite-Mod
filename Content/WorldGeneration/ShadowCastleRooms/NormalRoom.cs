@@ -67,11 +67,11 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                     {
                         Point d = GetDir(direction);
                         NormalRoom childRoom = new NormalRoom(roomRect.Center);
-                        int length = (roomRect.Width / 2) + (childRoom.Width / 2) + WorldGen.genRand.Next(-4, childRoom.Width / 4);
-                        int height = (roomRect.Height / 2) + (childRoom.Height / 2) + WorldGen.genRand.Next(-4, childRoom.Height / 4);
+                        int length = (roomRect.Width / 2) + (childRoom.Width / 2) +1/*+ WorldGen.genRand.Next(-4, 0)*/;
+                        int height = (roomRect.Height / 2) + (childRoom.Height / 2) +1/*+ WorldGen.genRand.Next(-4, 0)*/;
 
                         Point newCenter = roomRect.Center + new Point(d.X * length, d.Y * height)
-                            + new Point(WorldGen.genRand.Next(-2, 2), WorldGen.genRand.Next(-2, 2));
+                            /*+ new Point(WorldGen.genRand.Next(0, 2), WorldGen.genRand.Next(0, 2))*/;
 
                         if (!CoraliteWorld.shadowCastleRestraint.Contains(newCenter.X, newCenter.Y))
                             continue;
@@ -81,10 +81,10 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                         WorldUtils.Gen(
                             new Point(newCenter.X - 32, newCenter.Y - 32),
                             new Shapes.Rectangle(58, 67),
-                            new Actions.TileScanner(TileID.Sand, TileID.LihzahrdBrick).Output(tileDictionary));
+                            new Actions.TileScanner(/*TileID.Sand,*/ TileID.LihzahrdBrick).Output(tileDictionary));
                         //放置创了海沟
-                        if (tileDictionary[TileID.Sand] > 20 * 20)
-                            continue;
+                        //if (tileDictionary[TileID.Sand] > 20 * 20)
+                        //    continue;
                         //防止创了神庙
                         if (tileDictionary[TileID.LihzahrdBrick] > 2)
                             continue;

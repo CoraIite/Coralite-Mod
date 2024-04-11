@@ -66,9 +66,9 @@ namespace Coralite.Content.WorldGeneration
                 roomCount = 60;
             }
 
-            for (int i = 0; i < 20000; i++)
+            for (int i = 0; i < 200000; i++)
             {
-                progress.Value = i / 40000f;
+                progress.Value = i / 400000f;
                 int dungeonLocation = GenVars.dungeonLocation;
                 int num756 = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + Main.rand.Next(-20, 100);
                 int dungeonHeight = (int)((Main.worldSurface + Main.rockLayer) / 2.0) + WorldGen.genRand.Next(-200, 200);
@@ -92,7 +92,7 @@ namespace Coralite.Content.WorldGeneration
                 NormalRoom root = new NormalRoom(new Point(dungeonLocation, dungeonHeight));
                 root.InitializeType();
 
-                if (root.shadowCastleRooms.Count < roomCount && i < 19998)
+                if (root.shadowCastleRooms.Count < roomCount && i < 199998)
                     continue;
 
                 progress.Value = 0.5f;

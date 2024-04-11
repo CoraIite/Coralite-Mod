@@ -3650,3 +3650,8 @@ ShadowDart: {
 	DisplayName: Shadow Dart
 	Tooltip: ""
 }
+
+VampireEarl: {
+	DisplayName: Vampire Earl
+	Tooltip: ""
+}
