@@ -118,6 +118,25 @@ namespace Coralite.Content.WorldGeneration
                         if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
                             continue;
 
+                        DungeonArtifactRoom dungeonChestRoom = new DungeonArtifactRoom(rooms[rand].roomRect.Center);
+                        ShadowCastleRoom.Exchange(rooms[rand], dungeonChestRoom);
+                        rooms[rand] = dungeonChestRoom;
+
+                        gened = true;
+                    }
+                }
+                #endregion
+
+                #region 生成地牢神器房
+                {
+                    bool gened = false;
+                    while (!gened)
+                    {
+                        rand = WorldGen.genRand.Next(0, rooms.Count);
+
+                        if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
+                            continue;
+
                         BookRoom bookRoom = new BookRoom(rooms[rand].roomRect.Center);
                         ShadowCastleRoom.Exchange(rooms[rand], bookRoom);
                         rooms[rand] = bookRoom;

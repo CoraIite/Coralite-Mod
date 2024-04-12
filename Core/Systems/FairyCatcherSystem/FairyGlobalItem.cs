@@ -4,7 +4,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
-    public class FairyItem : GlobalItem
+    public class FairyGlobalItem : GlobalItem
     {
         public override bool InstancePerEntity => true;
 
@@ -23,51 +23,26 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 仙灵弹幕的基础大小，默认1
         /// </summary>
-        private float baseScale = 1;
+        public float baseScale = 1;
         /// <summary>
         /// 仙灵弹幕的基础伤害<br></br>
         /// 默认0
         /// </summary>
-        private float baseDamage;
+        public float baseDamage;
 
         /// <summary>
         /// 仙灵弹幕的默认防御，1防御能够抵挡1伤害<br></br>
         /// 默认0
         /// </summary>
-        private int baseDefence;
+        public int baseDefence;
 
         /// <summary>
         /// 仙灵弹幕的基础血量，默认10
         /// </summary>
-        private int baseLifeMax = 10;
-
-        /// <summary>
-        /// 仙灵的个体数据，用于存放各类增幅
-        /// </summary>
-        public FairyData fairyData;
+        public int baseLifeMax = 10;
 
         #endregion
 
-        /// <summary>
-        /// 受到个体值加成过的仙灵自身的伤害
-        /// </summary>
-        public float FairyDamage => fairyData.damageBonus.ApplyTo(baseDamage);
-        /// <summary>
-        /// 受到个体值加成过的仙灵自身的大小
-        /// </summary>
-        public float FairyScale => fairyData.scaleBonus.ApplyTo(baseScale);
-        /// <summary>
-        /// 受到个体值加成过的仙灵自身的防御
-        /// </summary>
-        public float FairyDefence => fairyData.defecceBonus.ApplyTo(baseDefence);
-        /// <summary>
-        /// 受到个体值加成过的仙灵自身的生命值上限
-        /// </summary>
-        public float FairyLifeMax => fairyData.lifeBonus.ApplyTo(baseLifeMax);
-
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
-        {
-        }
 
         #region HelperMethods
 
@@ -95,7 +70,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="aseScale"></param>
         public static void FairyItemSets(Item item, int fairyProjType, int baseDamage, int baseDefence, int baseLifeMax, float baseScale)
         {
-            if (item.TryGetGlobalItem(out FairyItem fi))
+            if (item.TryGetGlobalItem(out FairyGlobalItem fi))
             {
                 fi.IsFairy = true;
                 fi.fairyProjType = fairyProjType;

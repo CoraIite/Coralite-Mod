@@ -40,16 +40,6 @@ namespace Coralite.Content.WorldGeneration
             NetMessage.SendObjectPlacement(-1, x, y, TileType, style, 0, -1, direction);
         }
 
-        public static void ObjectPlaceInBottomLeft(int x, int y, int TileType, int style = 0, int direction = -1)
-        {
-            TileObjectData data = TileObjectData.GetTileData(TileType, style);
-            int width = data == null ? 0 : data.Origin.X;
-            int height = data == null ? 0 : data.Origin.Y - data.Height;
-
-            WorldGen.PlaceObject(x + width, y + height, TileType, true, style, 0, -1, direction);
-            NetMessage.SendObjectPlacement(-1, x, y, TileType, style, 0, -1, direction);
-        }
-
         /// <summary>
         /// 平滑边缘，使边缘变成斜坡，前提是这个物块要能变成斜坡的才行
         /// </summary>
@@ -151,39 +141,16 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="tileType">物块种类</param>
         /// <param name="random">决定是否生成的随机数，越大越难生成</param>
         /// <param name="bottomTileType">底部物块种类，如有需要的话</param>
-        public static void PlaceOnGroundDecorations_OnBottomLeft(int origin_x, int origin_y, int startX, int startY, int endX, int endY, ushort tileType, int random = 10, int style = 0, int bottomTileType = -1)
+        public static void PlaceOnGroundDecorations_NoCheck(int origin_x, int origin_y, int startX, int startY, int endX, int endY, ushort tileType,Func<int> direction, int random = 10, int style = 0)
         {
             TileObjectData data = TileObjectData.GetTileData(tileType, style);
-            int width = data == null ? 1 : data.Width;
-            int height = data == null ? 1 : data.Height;
             int randomTile = data == null ? 1 : data.RandomStyleRange;
 
             for (int i = startX; i < endX; i++)
                 for (int j = startY; j < endY; j++)
                 {
-                    Tile tile;
                     int current_x = origin_x + i;
                     int current_y = origin_y + j;
-                    //判断底部一条是不是都有方块,且方块类型是不是指定的
-                    //for (int m = 0; m < width; m++)
-                    //{
-                    //    tile = Framing.GetTileSafely(current_x + m, current_y + 1);
-                    //    if (!tile.HasTile || tile.Slope is SlopeType.SlopeDownLeft or SlopeType.SlopeDownRight || tile.IsHalfBlock)
-                    //        goto over1;
-
-                    //    if (bottomTileType != -1)
-                    //        if (tile.TileType != bottomTileType)
-                    //            goto over1;
-                    //}
-
-                    //for (int m = 0; m < width; m++)
-                    //    for (int n = 0; n < height; n++)
-                    //    {
-                    //        tile = Framing.GetTileSafely(current_x + m, current_y - n);
-                    //        if (tile.HasTile)
-                    //            goto over1;
-                    //    }
-
                     //添加一些随机性
                     if (WorldGen.genRand.NextBool(random))
                     {
@@ -192,10 +159,9 @@ namespace Coralite.Content.WorldGeneration
                             currentStyle = 0;
                         else
                             currentStyle = WorldGen.genRand.Next(0, randomTile);
-                        ObjectPlaceInBottomLeft(current_x, current_y, tileType, currentStyle);
+                        ObjectPlace(current_x, current_y, tileType, currentStyle,direction());
                     }
 
-                over1: continue;             //<--因为不知道有没有什么办法直接跳出2层for，索性写了个goto
                 }
         }
 

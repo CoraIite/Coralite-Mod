@@ -3736,10 +3736,10 @@ ShadowDart: {
 }
 
 VampireEarl: {
-	DisplayName: 鲜血晚宴
+	DisplayName: 朱红盛宴
 	Tooltip:
 		'''
-		血月时获得极大幅度强化
+		血月时获得强化
 		嗜血蝙蝠
 		'''
 }

@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Icicle
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 24;
+            Item.damage = 27;
             Item.useTime = 17;
             Item.useAnimation = 17;
             Item.knockBack = 2f;
@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.Icicle
                 if (rotate > 0.785f && rotate < 2.355f)
                     rotate = player.direction > 0 ? 0.785f : 2.355f;
 
-                Projectile.NewProjectile(source, player.Center, rotate.ToRotationVector2() * 8, type, damage, knockback, player.whoAmI, player.direction, (int)(18 * (1f + factor)));
+                Projectile.NewProjectile(source, player.Center, rotate.ToRotationVector2() * 9, type, damage, knockback, player.whoAmI, player.direction, (int)(20 * (1f + factor)));
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<IcicleSwordHeldProj>(), damage, knockback, player.whoAmI, useCount);
                 SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, player.Center);
             }

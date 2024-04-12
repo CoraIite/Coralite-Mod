@@ -68,7 +68,7 @@ namespace Coralite.Content.WorldGeneration
                 if (SettleLiquids != -1)
                     tasks.Insert(SettleLiquids - 1, new PassLegacy("Coralite CoralCat World", CoralCatWorldGen));
                 if (SettleLiquids != -1)
-                    tasks.Insert(FinalCleanup2 +1, new PassLegacy("Coralite CoralCat World Spawn", CoralCatWorldSpawn));
+                    tasks.Insert(FinalCleanup2 -1, new PassLegacy("Coralite CoralCat World Spawn", CoralCatWorldSpawn));
             }
         }
 
