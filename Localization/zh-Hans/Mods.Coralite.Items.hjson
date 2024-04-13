@@ -3740,6 +3740,11 @@ VampireEarl: {
 	Tooltip:
 		'''
 		血月时获得强化
-		嗜血蝙蝠
+		飞行时放出嗜血蝙蝠
 		'''
+}
+
+CrystalFins: {
+	DisplayName: 晶鳍鱼
+	Tooltip: "身上长着水晶状的鱼鳍"
 }

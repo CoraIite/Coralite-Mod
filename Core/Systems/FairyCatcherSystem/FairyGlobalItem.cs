@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
@@ -45,19 +44,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
 
         #region HelperMethods
-
-        /// <summary>
-        /// 用于获取仙灵的实际伤害
-        /// </summary>
-        /// <returns></returns>
-        public int GetFairyDamage(Player owner)
-        {
-            //由仙灵的基础伤害再用个体值增幅一下
-            float bonusedDamage = FairyDamage;
-            if (owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                bonusedDamage = fcp.FairyDamageBonus(bonusedDamage);
-            return (int)bonusedDamage;
-        }
 
         /// <summary>
         /// 将物品标记为仙灵物品，之后可以将仙灵放入仙灵瓶或者射出

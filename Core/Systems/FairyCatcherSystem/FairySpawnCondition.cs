@@ -11,7 +11,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public int fairyType = fairyType;
 
         public List<Condition> conditions;
-        public List<(LocalizedText, Func<bool>)> extraConditions;
+        public List<(LocalizedText, Func<FairyAttempt,bool>)> extraConditions;
 
         public Fairy SpawnFairy() => FairyLoader.GetFairy(fairyType).NewInstance();
 
@@ -19,26 +19,30 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 检测所有的Condition，如果有一个返回false那么就直接返回
         /// </summary>
         /// <returns></returns>
-        public bool CheckCondition()
+        public bool CheckCondition(FairyAttempt attempt)
         {
-            if (conditions!=null)
+            if (conditions != null)
             {
                 foreach (var condition in conditions)
                     if (!condition.Predicate())
                         return false;
             }
 
-            if (extraConditions!=null)
+            if (extraConditions != null)
             {
                 foreach (var condition in extraConditions)
-                    if (!condition.Item2())
+                    if (!condition.Item2(attempt))
                         return false;
             }
 
             return true;
         }
 
-
+        /// <summary>
+        /// 创建
+        /// </summary>
+        /// <param name="fairyType"></param>
+        /// <returns></returns>
         public static FairySpawnCondition CreateCondition(int fairyType)
         {
             return new FairySpawnCondition(fairyType);
@@ -76,12 +80,26 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="description"></param>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public FairySpawnCondition AddCondition(LocalizedText description, Func<bool> condition)
+        public FairySpawnCondition AddCondition(LocalizedText description, Func<FairyAttempt,bool> condition)
         {
-            extraConditions ??= new  List<(LocalizedText, Func<bool>)>();
-            extraConditions.Add((description,condition));
+            extraConditions ??= new List<(LocalizedText, Func<FairyAttempt,bool>)>();
+            extraConditions.Add((description, condition));
 
             return this;
+        }
+
+        /// <summary>
+        /// 注册到指定的墙壁
+        /// </summary>
+        /// <param name="wallType"></param>
+        public void RegisterToWall(int wallType = -1)
+        {
+            if (FairySystem.fairySpawnConditions == null)
+                return;
+
+            FairySystem.fairySpawnConditions[wallType] ??= new List<FairySpawnCondition>();
+            FairySystem.fairySpawnConditions[wallType].Add(this);
+            FairySystem.fairySpawnConditions_InEncyclopedia[fairyType] = this;
         }
     }
 }

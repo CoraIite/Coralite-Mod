@@ -3655,3 +3655,8 @@ VampireEarl: {
 	DisplayName: Vampire Earl
 	Tooltip: ""
 }
+
+CrystalFins: {
+	DisplayName: Crystal Fins
+	Tooltip: ""
+}

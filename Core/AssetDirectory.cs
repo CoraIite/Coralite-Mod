@@ -84,6 +84,8 @@ namespace Coralite.Core
         public const string Misc_Shoot = Items + "Misc_Shoot/";
         public const string PetItems = Items + "Pets/";
         public const string YujianHulu = Items + "YujianHulu/";
+        public const string FairyItems = Items + "Fairy/";
+        public const string FairyCatcherItems = Items + "FairyCatcher/";
 
         public const string MachineItems = Items + "Machines/";
         public const string BotanicalItems = Items + "Botanical/";

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
@@ -42,6 +43,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public float FairyLifeMax => fairyData.lifeBonus.ApplyTo(Item.GetGlobalItem<FairyGlobalItem>().baseLifeMax);
 
+        ///// <summary>
+        ///// 用于获取仙灵的实际伤害
+        ///// </summary>
+        ///// <returns></returns>
+        //public int GetFairyDamage(Player owner)
+        //{
+        //    //由仙灵的基础伤害再用个体值增幅一下
+        //    float bonusedDamage = FairyDamage;
+        //    if (owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
+        //        bonusedDamage = fcp.FairyDamageBonus(bonusedDamage);
+        //    return (int)bonusedDamage;
+        //}
+
         public virtual void Hurt()
         {
 
@@ -75,7 +89,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public sealed override void Load()
         {
-            //
+            //加载描述
             LoadOthers();
         }
 

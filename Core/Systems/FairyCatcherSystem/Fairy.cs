@@ -12,7 +12,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
     {
         public int Type { get; internal set; }
 
-        public override string Texture => AssetDirectory.Particles + Name;
+        public override string Texture => AssetDirectory.FairyItems + Name;
 
         /// <summary>
         /// 是否存活，在捕捉器内使用
@@ -23,6 +23,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 0-1的捕获进度，到达1则表示捉到
         /// </summary>
         public float catchProgress;
+
+        public Vector2 position;
+        public Vector2 velocity;
+        public int width;
+        public int height;
+
+        /// <summary>
+        /// 自身的稀有度，请与出现条件中的相对应
+        /// <br>默认<see cref=" FairyAttempt.Rarity.C"/></br>
+        /// </summary>
+        public virtual FairyAttempt.Rarity Rarity => FairyAttempt.Rarity.C;
+
+        public Vector2 Center => position + new Vector2(width, height);
 
         protected sealed override void Register()
         {
@@ -43,9 +56,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 在捕捉器内的行为
         /// </summary>
-        public void UpdateInCatcher()
+        public void UpdateInCatcher(BaseFairyCatcherProj catcher)
         {
-            AI_InCatcher();
+            AI_InCatcher(catcher.GetCursor());
 
         }
 
@@ -84,7 +97,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 在捕捉器内的AI
         /// </summary>
-        public virtual void AI_InCatcher()
+        public virtual void AI_InCatcher(Rectangle cursor)
         {
 
         }
