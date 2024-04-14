@@ -89,6 +89,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 .AddIngredient(ItemID.LunarBar, 4)
                 .AddTile(TileID.LunarCraftingStation)
                 .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
+                .AddDecraftCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
                 .Register();
         }
     }

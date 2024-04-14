@@ -26,14 +26,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public readonly Item Catcher => Player.HeldItem;
 
-
+        /// <summary>
+        /// 玩家目前所使用的鱼饵物品
+        /// </summary>
+        public Item baitItem;
 
 
 
 
         public enum Rarity
         {
-            /// <summary> 常见的 </summary>
+            /// <summary> 常见的， </summary>
             C,
             /// <summary> 不常见 </summary>
             U,

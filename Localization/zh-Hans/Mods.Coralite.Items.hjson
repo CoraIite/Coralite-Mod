@@ -331,7 +331,7 @@ CrossBreedMachine_G1Item: {
 }
 
 IceyPowder: {
-	DisplayName: 冰魔粉
+	DisplayName: 冰魔尘
 	Tooltip: 含有微弱的冰魔力
 }
 
@@ -341,7 +341,7 @@ MaglitePowder: {
 }
 
 SandlitePowder: {
-	DisplayName: 沙魔粉
+	DisplayName: 沙魔尘
 	Tooltip: 含有微弱的沙漠魔力
 }
 
@@ -1314,7 +1314,7 @@ CrystalPedestal: {
 }
 
 EmpyrosPowder: {
-	DisplayName: 火魔粉
+	DisplayName: 火魔尘
 	Tooltip: 含有微弱的火魔力
 }
 
@@ -1329,7 +1329,7 @@ LeafStone: {
 }
 
 MagicalPowder: {
-	DisplayName: 魔粉
+	DisplayName: 魔尘
 	Tooltip: 含有微弱的魔力
 }
 
