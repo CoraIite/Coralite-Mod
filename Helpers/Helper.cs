@@ -1,4 +1,5 @@
-﻿using ReLogic.Utilities;
+﻿using Coralite.Core.Systems.FairyCatcherSystem;
+using ReLogic.Utilities;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -327,6 +328,12 @@ namespace Coralite.Helpers
                 value = FTWModeValue;
 
             return value;
+        }
+
+
+        public static EntitySource_FairyCatch GetSource_FairyCatch(this Player player, Fairy catchedFairy)
+        {
+            return new EntitySource_FairyCatch() { player = player, fairy = catchedFairy };
         }
     }
 }

@@ -13,7 +13,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public List<Condition> conditions;
         public List<(LocalizedText, Func<FairyAttempt,bool>)> extraConditions;
 
-        public Fairy SpawnFairy() => FairyLoader.GetFairy(fairyType).NewInstance();
+        public Fairy SpawnFairy() {
+           Fairy fairy= FairyLoader.GetFairy(fairyType).NewInstance();
+            fairy.OnSpawn();
+            return fairy;
+        }
+
+        public enum WallGroupType
+        {
+
+        }
 
         /// <summary>
         /// 检测所有的Condition，如果有一个返回false那么就直接返回
@@ -92,7 +101,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 注册到指定的墙壁
         /// </summary>
         /// <param name="wallType"></param>
-        public void RegisterToWall(int wallType = -1)
+        public void RegisterToWall(int wallType = 0)
         {
             if (FairySystem.fairySpawnConditions == null)
                 return;
@@ -100,6 +109,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             FairySystem.fairySpawnConditions[wallType] ??= new List<FairySpawnCondition>();
             FairySystem.fairySpawnConditions[wallType].Add(this);
             FairySystem.fairySpawnConditions_InEncyclopedia[fairyType] = this;
+        }
+
+        public void RegisterToWallGroup(WallGroupType group)
+        {
+
         }
     }
 }

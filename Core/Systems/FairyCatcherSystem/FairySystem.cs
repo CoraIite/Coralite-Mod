@@ -1,12 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader.Core;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
-    public  class FairySystem:ModSystem
+    public class FairySystem : ModSystem, ILocalizedModType
     {
+        //-----------------------------------
+        //         个体值评级的本地化
+        //-----------------------------------
+        public static LocalizedText WeakLevel;
+        public static LocalizedText VeryCommonLevel;
+        public static LocalizedText CommonLevel;
+        public static LocalizedText UncommonLevel;
+        public static LocalizedText RareLevel;
+        public static LocalizedText SpecialLevel;
+        public static LocalizedText UniqueLevel;
+        public static LocalizedText TimelessLevel;
+
+        //-----------------------------------
+        //         个体描述的本地化
+        //-----------------------------------
+        public static LocalizedText fairyLifeMax;
+        public static LocalizedText fairyDamage;
+        public static LocalizedText fairyDefence;
+        public static LocalizedText fairyScale;
+
+
         /// <summary>
         /// 键值是墙壁的type，-1表示没有墙壁
         /// </summary>
@@ -16,10 +38,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public static Dictionary<int, FairySpawnCondition> fairySpawnConditions_InEncyclopedia;
 
+        public string LocalizationCategory => "Systems";
+
         public override void Load()
         {
             Mod Mod = Coralite.Instance;
-            
+
             fairySpawnConditions = new Dictionary<int, List<FairySpawnCondition>>();
             fairySpawnConditions_InEncyclopedia = new Dictionary<int, FairySpawnCondition>();
 

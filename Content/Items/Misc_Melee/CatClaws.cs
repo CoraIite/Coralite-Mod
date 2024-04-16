@@ -203,6 +203,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public override void SetDefs()
         {
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 30;
             Projectile.width = 22;
             Projectile.height = 62;

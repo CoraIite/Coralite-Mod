@@ -8,6 +8,7 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
@@ -141,6 +142,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override void SetDefs()
         {
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 60;
             Projectile.width = 40;
             Projectile.height = 55;

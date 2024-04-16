@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields
@@ -21,7 +22,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<VampireEarlProj>();
             Item.knockBack = 6.5f;
             Item.shootSpeed = 20/2;
-            Item.damage = 120;
+            Item.damage = 115;
         }
 
         public override void AddRecipes()
@@ -38,6 +39,8 @@ namespace Coralite.Content.Items.FlyingShields
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + "VampireEarl";
 
+        private int shootDelay;
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -47,7 +50,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            flyingTime = 25 * 2;
+            flyingTime = 22 * 2;
             backTime = 22 * 2;
             backSpeed = 30 / 2;
             trailCachesLength = 16;
@@ -60,21 +63,26 @@ namespace Coralite.Content.Items.FlyingShields
             }
         }
 
+        public override void OnSpawn(IEntitySource source)
+        {
+            base.OnSpawn(source);
+            shootDelay = flyingTime / Main.rand.Next(2, 5);
+            if (Main.bloodMoon)
+                shootDelay = flyingTime / Main.rand.Next(3, 6);
+        }
+
         public override void OnShootDusts()
         {
             Lighting.AddLight(Projectile.Center, Color.Red.ToVector3()/2);
             Projectile.SpawnTrailDust(20f, DustID.CrimsonTorch, -Main.rand.NextFloat(0.1f, 0.4f), Scale: Main.rand.NextFloat(1, 1.5f));
 
-            int delay = flyingTime / 4;
-            if (Main.bloodMoon)
-                delay= flyingTime / 5;
-            if (Timer > flyingTime * 0.3f && Timer % delay == 0)
+            if (Timer != 0 && Timer % shootDelay == 0)
             {
                 //射蝙蝠
                 if (Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy(), out _))
                     Projectile.NewProjectileFromThis<VampireEarlBat>(Projectile.Center
-                    , Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(3.141f+Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(3f, 12f),
-                    (int)(Projectile.damage * 0.75f), Projectile.knockBack);
+                    , Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(3.141f + Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(3f, 12f),
+                    (int)(Projectile.damage * 0.8f), Projectile.knockBack);
             }
         }
 
@@ -133,6 +141,8 @@ namespace Coralite.Content.Items.FlyingShields
             if (!Owner.moonLeech)
             {
                 float num = Projectile.damage * 0.025f;
+                if (num > 5)
+                    num = 5;
                 if ((int)num != 0 && !(Owner.lifeSteal <= 0f))
                 {
                     Owner.lifeSteal -= num * 1.5f;
@@ -314,7 +324,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (!Owner.moonLeech && !target.immortal && Main.rand.NextBool(3))
+            if (!Owner.moonLeech && !target.immortal && Main.rand.NextBool(2,10))
             {
                 float num = damageDone * 0.025f;
                 if ((int)num != 0 && !(Owner.lifeSteal <= 0f))

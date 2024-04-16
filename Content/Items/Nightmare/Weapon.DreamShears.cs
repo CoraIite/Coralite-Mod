@@ -137,6 +137,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void SetDefs()
         {
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
             Projectile.height = 90;

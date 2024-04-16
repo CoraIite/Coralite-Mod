@@ -2,12 +2,12 @@
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
-    public struct FairyAttempt(int wallType)
+    public struct FairyAttempt
     {
         /// <summary>
         /// 墙壁类型
         /// </summary>
-        public int wallType = wallType;
+        public int wallType;
         /// <summary>
         /// 稀有度
         /// </summary>
@@ -31,23 +31,41 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public Item baitItem;
 
-
+        /// <summary>
+        /// 随机生成仙灵点位的X坐标，是物块坐标
+        /// </summary>
+        public int X;
+        /// <summary>
+        /// 随机生成仙灵点位的Y坐标，是物块坐标
+        /// </summary>
+        public int Y;
 
 
         public enum Rarity
         {
-            /// <summary> 常见的， </summary>
+            /// <summary> 常见的，淡黄色 </summary>
             C,
-            /// <summary> 不常见 </summary>
+            /// <summary> 不常见，青绿色 </summary>
             U,
-            /// <summary> 稀有 </summary>
+            /// <summary> 稀有，天蓝色 </summary>
             R,
-            /// <summary> 双倍稀有 </summary>
+            /// <summary> 双倍稀有，蓝色 </summary>
             RR,
-            /// <summary> 超级稀有 </summary>
+            /// <summary> 超级稀有，红色 </summary>
             SR,
-            /// <summary> 究极稀有 </summary>
-            UR
+            /// <summary> 究极稀有，橙色 </summary>
+            UR,
+
+            //-----------------------------------------------------------------------
+            //                  以下为只有使用特殊鱼饵才能够出现的稀有度
+            //-----------------------------------------------------------------------
+
+            /// <summary> 三倍稀有，蓝紫色 </summary>
+            RRR,
+            /// <summary> 异类稀有，粉色 </summary>
+            AR,
+            /// <summary> 秘宝，金色 </summary>
+            MR,
         }
     }
 }

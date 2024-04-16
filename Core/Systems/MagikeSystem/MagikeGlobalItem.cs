@@ -295,8 +295,8 @@ namespace Coralite.Core.Systems.MagikeSystem
                 Enchant.Level.One => Color.White,
                 Enchant.Level.Two => Color.CornflowerBlue,
                 Enchant.Level.Three => Color.LightSeaGreen,
-                Enchant.Level.Four => Color.Pink,
-                Enchant.Level.Five => Color.Yellow,
+                Enchant.Level.Four => Color.Yellow,
+                Enchant.Level.Five => Color.Pink,
                 _ => Color.Orange
             };
         }

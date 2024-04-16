@@ -14,6 +14,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields
 {
+    [AutoloadEquip(EquipType.Shield)]
     public class HylianShield : BaseFlyingShieldItem<HylianShieldGuard>, IEquipHeldItem, IDashable
     {
         public HylianShield() : base(Item.sellPrice(0, 20), ItemRarityID.Red, AssetDirectory.FlyingShieldItems)
@@ -67,6 +68,11 @@ namespace Coralite.Content.Items.FlyingShields
         public void UpdateEquipHeldItem(Player player)
         {
             player.statDefense += 25;
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                if (player.ItemTimeIsZero && player.ownedProjectileCounts[Item.shoot] == 0)
+                    cp.heldHylianShield = true;
+            }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

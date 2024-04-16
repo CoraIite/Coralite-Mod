@@ -35,6 +35,8 @@ namespace Coralite.Content.ModPlayers
         public bool equippedBoneRing;
         /// <summary> 能够引发雷鸣debuff </summary>
         public bool equippedThunderveinNecklace;
+        /// <summary> 手持海利亚盾 </summary>
+        public bool heldHylianShield;
 
         /// <summary>
         /// 海盗王之魂
@@ -130,6 +132,7 @@ namespace Coralite.Content.ModPlayers
             equippedShadowMirror = false;
             equippedPhantomMirror = false;
             equippedBoneRing = false;
+            heldHylianShield = false;
             equippedThunderveinNecklace = false;
             pirateKingSoul = 0;
             if (pirateKingSoulCD > 0)
@@ -526,6 +529,8 @@ namespace Coralite.Content.ModPlayers
         {
             if (equippedBoneRing)
                 drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "BoneRing", EquipType.HandsOn);
+            if (heldHylianShield)
+                drawInfo.drawPlayer.shield = EquipLoader.GetEquipSlot(Mod, "HylianShield", EquipType.Shield);
         }
 
         #endregion

@@ -146,6 +146,7 @@ namespace Coralite.Content.Items.ShadowCastle
 
         public override void SetDefs()
         {
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 64;
             Projectile.width = 40;
             Projectile.height = 80;

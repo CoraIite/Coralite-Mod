@@ -123,6 +123,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetDefs()
         {
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
             Projectile.height = 100;
@@ -435,6 +436,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetDefs()
         {
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 36;
             Projectile.width = 40;
             Projectile.height = 100;
@@ -605,6 +607,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetDefs()
         {
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
             Projectile.height = 100;

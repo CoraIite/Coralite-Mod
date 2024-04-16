@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<FishronguardProj>();
             Item.knockBack = 4.5f;
             Item.shootSpeed = 15;
-            Item.damage = 77;
+            Item.damage = 75;
         }
 
         public override void AddRecipes()
@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnShootDusts()
         {
-            if (Timer % 9 == 0)
+            if (Timer % 10 == 0)
             {
                 Projectile.NewProjectileFromThis(Projectile.Center, Helper.NextVec2Dir(1, 4), ProjectileID.FlaironBubble,
                     Projectile.damage, Projectile.knockBack, -10);

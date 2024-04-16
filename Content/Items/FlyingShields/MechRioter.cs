@@ -96,9 +96,9 @@ namespace Coralite.Content.Items.FlyingShields
                 int width = (int)(38 * Projectile.scale);
                 Projectile.Resize(width, width);
 
-                Projectile.NewProjectileFromThis<SmallMechRioter>(target.Center, Helper.NextVec2Dir() * 12, (int)(Projectile.damage * 0.93f), Projectile.knockBack);
+                Projectile.NewProjectileFromThis<SmallMechRioter>(target.Center, Helper.NextVec2Dir() * 12, (int)(Projectile.damage * 0.9f), Projectile.knockBack);
                 Vector2 offset = Helper.NextVec2Dir();
-                Projectile.NewProjectileFromThis<SmallMechRioter>(target.Center + offset * 16, offset * 2, (int)(Projectile.damage * 0.93f), Projectile.knockBack, 1);
+                Projectile.NewProjectileFromThis<SmallMechRioter>(target.Center + offset * 16, offset * 2, (int)(Projectile.damage * 0.9f), Projectile.knockBack, 1);
                 hited = true;
             }
 

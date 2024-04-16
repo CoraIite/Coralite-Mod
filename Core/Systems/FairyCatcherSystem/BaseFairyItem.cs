@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     public abstract class BaseFairyItem : ModItem
     {
-        public static LocalizedText fairyLifeMax;
-        public static LocalizedText fairyDamage;
-        public static LocalizedText fairyDefence;
-        public static LocalizedText fairyScale;
-
         /// <summary>
         /// 仙灵的个体数据，用于存放各类增幅
         /// </summary>
@@ -33,7 +27,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 受到个体值加成过的仙灵自身的大小
         /// </summary>
-        public float FairyScale => fairyData.scaleBonus.ApplyTo(Item.GetGlobalItem<FairyGlobalItem>().baseScale);
+        public float FairyScale
+        {
+            get
+            {
+                float scale = fairyData.scaleBonus * Item.GetGlobalItem<FairyGlobalItem>().baseScale;
+                scale = Math.Clamp(scale, 0.5f, 2.5f);
+                return scale;
+            }
+        }
         /// <summary>
         /// 受到个体值加成过的仙灵自身的防御
         /// </summary>
@@ -86,21 +88,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             return true;
         }
-
-        public sealed override void Load()
-        {
-            //加载描述
-            LoadOthers();
-        }
-
-        public sealed override void Unload()
-        {
-            //
-            UnloadOthers();
-        }
-
-        public virtual void LoadOthers() { }
-        public virtual void UnloadOthers() { }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {

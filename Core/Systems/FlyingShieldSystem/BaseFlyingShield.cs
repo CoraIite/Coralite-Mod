@@ -254,7 +254,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             UpdateShieldAccessory(accessory => accessory.OnHitNPC(this, target, hit, damageDone));
         }
 
-        public void UpdateShieldAccessory(Action<IFlyingShieldAccessory> action)
+        public void UpdateShieldAccessory(Action<IFlyingShieldAccessory_Fly> action)
         {
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                 foreach (var accessory in cp.FlyingShieldAccessories)
