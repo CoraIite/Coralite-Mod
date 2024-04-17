@@ -130,6 +130,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
         public override void PostGenerateSelf()
         {
             GenerateObject();
+            RandomPlaceBanner(30);
         }
 
         //public override void GenerateSelf()

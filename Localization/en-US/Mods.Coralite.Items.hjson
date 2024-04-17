@@ -3660,3 +3660,23 @@ CrystalFins: {
 	DisplayName: Crystal Fins
 	Tooltip: ""
 }
+
+GalacticVortexBanner: {
+	DisplayName: Galactic Vortex Banner
+	Tooltip: ""
+}
+
+LunarEclipseBanner: {
+	DisplayName: Lunar Eclipse Banner
+	Tooltip: ""
+}
+
+StarlightBanner: {
+	DisplayName: Starlight Banner
+	Tooltip: ""
+}
+
+StarRuneBanner: {
+	DisplayName: Star Rune Banner
+	Tooltip: ""
+}

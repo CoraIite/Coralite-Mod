@@ -11,10 +11,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public int fairyType = fairyType;
 
         public List<Condition> conditions;
-        public List<(LocalizedText, Func<FairyAttempt,bool>)> extraConditions;
+        public List<(LocalizedText, Func<FairyAttempt, bool>)> extraConditions;
 
-        public Fairy SpawnFairy() {
-           Fairy fairy= FairyLoader.GetFairy(fairyType).NewInstance();
+        public Fairy SpawnFairy()
+        {
+            Fairy fairy = FairyLoader.GetFairy(fairyType).NewInstance();
             fairy.OnSpawn();
             return fairy;
         }

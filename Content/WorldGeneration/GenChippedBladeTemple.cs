@@ -67,7 +67,7 @@ namespace Coralite.Content.WorldGeneration
                     Point position = pos.ToPoint();
 
                     Dictionary<ushort, int> tileDictionary = new Dictionary<ushort, int>();
-                    if (!WorldGen.InWorld(position.X - 25, position.Y - 25) || WorldGen.InWorld(position.X - 25 + 50, position.Y - 25 + 50))
+                    if (!WorldGen.InWorld(position.X - 25, position.Y - 25) || !WorldGen.InWorld(position.X - 25 + 50, position.Y - 25 + 50))
                         continue;
 
                     WorldUtils.Gen(
@@ -75,7 +75,7 @@ namespace Coralite.Content.WorldGeneration
                         new Shapes.Rectangle(50, 50),
                         new Actions.TileScanner(TileID.Dirt, TileID.Mud, TileID.JungleGrass).Output(tileDictionary));
 
-                    if (tileDictionary[TileID.Dirt] + tileDictionary[TileID.Mud] + tileDictionary[TileID.JungleGrass] < 750)
+                    if (tileDictionary[TileID.Dirt] + tileDictionary[TileID.Mud] + tileDictionary[TileID.JungleGrass] < 550)
                         continue; //如果不是，则返回false，这将导致调用方法尝试一个不同的origin。
 
                     Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.WorldGen + "CoreKeeper/ChippedBladeTemple", AssetRequestMode.ImmediateLoad).Value;

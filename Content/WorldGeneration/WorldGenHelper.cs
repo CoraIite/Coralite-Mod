@@ -377,7 +377,11 @@ namespace Coralite.Content.WorldGeneration
                                     KillChestAndItems(x2, y2);
                                 Main.tile[x, y].TileType = 0;
                                 if (!silent)
+                                {
                                     WorldGen.KillTile(x, y, false, true, true);
+                                    Main.tile[x, y].Clear(TileDataType.Tile);
+                                    Main.tile[x, y].Clear(TileDataType.Slope);
+                                }
                                 if (removeLiquid)
                                     GenerateLiquid(x2, y2, 0, true, 0, false);
                             }
@@ -391,7 +395,11 @@ namespace Coralite.Content.WorldGeneration
                             }
                     }
                     else if (!silent)
+                    {
                         WorldGen.KillTile(x, y, false, true, true);
+                        Main.tile[x, y].Clear(TileDataType.Tile);
+                        Main.tile[x, y].Clear(TileDataType.Slope);
+                    }
                     WorldGen.destroyObject = false;
                     if (active)
                     {
@@ -408,7 +416,11 @@ namespace Coralite.Content.WorldGeneration
                             {
                                 for (int x1 = 0; x1 < tileWidth; x1++)
                                     for (int y1 = 0; y1 < tileHeight; y1++)
+                                    {
                                         WorldGen.KillTile(x + x1, y + y1, false, true, true);
+                                        Main.tile[x + x1, y + y1].Clear(TileDataType.Tile);
+                                        Main.tile[x + x1, y + y1].Clear(TileDataType.Slope);
+                                    }
                             }
                             WorldGen.destroyObject = false;
                             int genX = x;
@@ -435,7 +447,6 @@ namespace Coralite.Content.WorldGeneration
             {
                 DEBUGHelper.LogFancy("Coralite:TILEGEN ERROR:", e);
             }
-
         }
 
         public static void Texture2WallGenerate(int x, int y, int wall)

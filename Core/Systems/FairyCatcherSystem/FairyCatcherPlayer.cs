@@ -35,15 +35,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public FairyIVRandomModifyer damageRamdom;
         public FairyIVRandomModifyer defenceRamdom;
         public FairyIVRandomModifyer lifeMaxRamdom;
+        public (float, float) ScaleRange;
+
+        public Color CatcherCircleColor;
+        public Color CatcherBackColor;
 
         /// <summary>
-        /// 伤害加成
+        /// 仙灵伤害加成，使用仙灵捕获力增强幅度来增幅伤害
         /// </summary>
         /// <param name="damage"></param>
         /// <returns></returns>
         public float FairyDamageBonus(float damage)
         {
-            return damage;
+            return fairyCatchPowerBonus.ApplyTo(damage);
         }
 
         public override void ResetEffects()
@@ -72,10 +76,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 additive_Max = 1.3f
             };
 
+            //默认大小区间0.9-1.1
+            ScaleRange = (0.9f, 1.1f);
+
             spawnFairyCount = 1;
             fairyCatcherRadius = 7 * 16;
+
+            CatcherCircleColor = Color.White;
+            CatcherBackColor = Color.DarkBlue * 0.5f;
         }
 
+        /// <summary>
+        /// 遍历玩家背包获取仙灵饵料
+        /// </summary>
+        /// <param name="bait"></param>
         public void FairyCatch_GetBait(out Item bait)
         {
             bait = null;
@@ -101,6 +115,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
         }
 
+        /// <summary>
+        /// 获取仙灵捕捉力，默认使用玩家手持物品进行计算，如果手持物品不是仙灵捕手则返回一个增幅倍率
+        /// </summary>
+        /// <returns></returns>
         public int FairyCatch_GetCatchPower()
         {
             int basePower = 1;
@@ -110,8 +128,36 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             return (int)fairyCatchPowerBonus.ApplyTo(basePower);
         }
 
+        /// <summary>
+        /// 随机仙灵的个体值
+        /// </summary>
+        /// <param name="faityItem"></param>
+        /// <returns></returns>
         public FairyData RollFairyIndividualValues(BaseFairyItem faityItem)
         {
+            FairyData data = new FairyData();
+
+            data.damageBonus = new StatModifier(
+                Main.rand.NextFloat(damageRamdom.additive_Min, damageRamdom.additive_Max),
+                Main.rand.NextFloat(damageRamdom.multiplicative_Min, damageRamdom.multiplicative_Max),
+                Main.rand.NextFloat(damageRamdom.additive_Min, damageRamdom.additive_Max),
+                Main.rand.NextFloat(damageRamdom.additive_Min, damageRamdom.additive_Max)
+                );
+            data.defenceBonus = new StatModifier(
+                Main.rand.NextFloat(defenceRamdom.additive_Min, defenceRamdom.additive_Max),
+                Main.rand.NextFloat(defenceRamdom.multiplicative_Min, defenceRamdom.multiplicative_Max),
+                Main.rand.NextFloat(defenceRamdom.additive_Min, defenceRamdom.additive_Max),
+                Main.rand.NextFloat(defenceRamdom.additive_Min, defenceRamdom.additive_Max)
+                );
+            data.lifeMaxBonus = new StatModifier(
+                Main.rand.NextFloat(lifeMaxRamdom.additive_Min, lifeMaxRamdom.additive_Max),
+                Main.rand.NextFloat(lifeMaxRamdom.multiplicative_Min, lifeMaxRamdom.multiplicative_Max),
+                Main.rand.NextFloat(lifeMaxRamdom.additive_Min, lifeMaxRamdom.additive_Max),
+                Main.rand.NextFloat(lifeMaxRamdom.additive_Min, lifeMaxRamdom.additive_Max)
+                );
+
+            data.scaleBonus=Main.rand.NextFloat(ScaleRange.Item1,ScaleRange.Item2);
+
             return default;
         }
     }

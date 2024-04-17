@@ -17,6 +17,30 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         private Rectangle cursorRect;
         public Rectangle CursorBox => cursorRect;
 
+        public static Asset<Texture2D> CircleTexture;
+        public static Asset<Texture2D> BackCircleTexture;
+        public static Asset<Texture2D> TileTexture;
+
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+
+            CircleTexture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "FairyCatcherCircle");
+            BackCircleTexture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "FairyCatcherBackCircle");
+            TileTexture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "White32x32");
+        }
+
+        public override void Unload()
+        {
+            if (Main.dedServ)
+                return;
+
+            CircleTexture = null;
+            BackCircleTexture = null;
+            TileTexture = null;
+        }
+
         #region 字段
 
         public List<Fairy> fairys;
@@ -385,11 +409,30 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override bool PreDraw(ref Color lightColor)
         {
-            //绘制圆圈
+            if (state!=(int)AIStates.Shooting)
+            {
+                Vector2 circlePos = webCenter.ToWorldCoordinates() - Main.screenPosition;
 
-            //绘制背景
+                Color circleColor = Color.White;
+                Color backColor = Color.White;
+                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                {
+                    circleColor = fcp.CatcherCircleColor;
+                    backColor = fcp.CatcherBackColor;
+                }
 
-            //绘制标红的物块
+                //绘制背景
+                DrawBack(circlePos, backColor);
+                //绘制标红的物块
+                DrawBlockedTile(circlePos);
+                //绘制圆圈
+                DrawCircle(circlePos, circleColor);
+
+                //绘制仙灵
+                if (fairys != null)
+                    foreach (var fairy in fairys)
+                        fairy.Draw_InCatcher();
+            }
 
             Vector2 handlePos = GetHandlePos();
 
@@ -400,7 +443,48 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             //绘制手持
             DrawHandle();
 
-            return base.PreDraw(ref lightColor);
+            return false;
+        }
+
+        public virtual void DrawBack(Vector2 pos, Color backColor)
+        {
+            Texture2D backTex = BackCircleTexture.Value;
+
+            float scale = webRadius / (backTex.Width / 2);
+            Main.spriteBatch.Draw(backTex, pos, null, backColor, 0, backTex.Size() / 2, scale, 0, 0);
+        }
+
+        public virtual void DrawBlockedTile(Vector2 center)
+        {
+            int howMany = (int)(webRadius*2 / 16);
+
+            int baseX = webCenter.X - howMany / 2;
+            int baseY = webCenter.Y - howMany / 2;
+
+            Texture2D tex = TileTexture.Value;
+            Color c = Color.IndianRed * 0.3f;
+
+            for (int i = 0; i < howMany; i++)
+                for (int j = 0; j < howMany; j++)
+                {
+                    Tile tile = Framing.GetTileSafely(baseX + i, baseY + j);
+
+                    if (!tile.HasUnactuatedTile)
+                        continue;
+                    Vector2 worldPos = new Vector2(baseX + i, baseY + j) * 16 - Main.screenPosition;
+                    if (Vector2.Distance(worldPos, center) > webRadius)
+                        continue;
+
+                    Main.spriteBatch.Draw(tex, worldPos, null, c, 0, Vector2.Zero, 0.5f, 0, 0);
+                }
+        }
+
+        public virtual void DrawCircle(Vector2 pos, Color circleColor)
+        {
+            Texture2D circleTex = CircleTexture.Value;
+
+            float scale = webRadius / (circleTex.Width / 2);
+            Main.spriteBatch.Draw(circleTex, pos, null, circleColor, 0, circleTex.Size() / 2, scale, 0, 0);
         }
 
         #endregion

@@ -4,8 +4,8 @@
     {
         public float scaleBonus = 1f;
         public StatModifier damageBonus = new StatModifier();
-        public StatModifier lifeBonus = new StatModifier();
-        public StatModifier defecceBonus = new StatModifier();
+        public StatModifier lifeMaxBonus = new StatModifier();
+        public StatModifier defenceBonus = new StatModifier();
 
         public FairyData()
         {

@@ -27,6 +27,7 @@
         public override void PostGenerateSelf()
         {
             GenerateObject();
+            RandomPlaceBanner(30);
         }
     }
 }

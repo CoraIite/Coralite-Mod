@@ -44,7 +44,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             //自身受伤
-
+            SelfItem?.Hurt();
         }
     }
 }

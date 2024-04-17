@@ -39,11 +39,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 受到个体值加成过的仙灵自身的防御
         /// </summary>
-        public float FairyDefence => fairyData.defecceBonus.ApplyTo(Item.GetGlobalItem<FairyGlobalItem>().baseDefence);
+        public float FairyDefence => fairyData.defenceBonus.ApplyTo(Item.GetGlobalItem<FairyGlobalItem>().baseDefence);
         /// <summary>
         /// 受到个体值加成过的仙灵自身的生命值上限
         /// </summary>
-        public float FairyLifeMax => fairyData.lifeBonus.ApplyTo(Item.GetGlobalItem<FairyGlobalItem>().baseLifeMax);
+        public float FairyLifeMax => fairyData.lifeMaxBonus.ApplyTo(Item.GetGlobalItem<FairyGlobalItem>().baseLifeMax);
 
         ///// <summary>
         ///// 用于获取仙灵的实际伤害

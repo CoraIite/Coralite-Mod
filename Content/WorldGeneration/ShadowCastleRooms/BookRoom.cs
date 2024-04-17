@@ -73,6 +73,8 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                 , (ushort)ModContent.TileType<MercuryDroplight2Tile>(), 20);
             WorldGenHelper.PlaceOnTopDecorations(roomRect.Left, roomRect.Top, 5, 14, Width - 5, Height - 14
                 , (ushort)ModContent.TileType<MercuryBigDroplightTile>(), 20);
+
+            RandomPlaceBanner(30);
         }
     }
 }

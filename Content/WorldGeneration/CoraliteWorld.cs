@@ -55,9 +55,7 @@ namespace Coralite.Content.WorldGeneration
             {
                 tasks.Insert(FinalCleanup + 1, new PassLegacy("Coralite Replase Vanilla Chest", ReplaceVanillaChest));
                 if (shadowCastle)
-                {
-                    tasks.Insert(FinalCleanup + 2, new PassLegacy("Coralite Shadow Castle", GenShadowCastle));
-                }
+                    tasks.Insert(FinalCleanup - 1, new PassLegacy("Coralite Shadow Castle", GenShadowCastle));
             }
 
             if (coralCatWorld)

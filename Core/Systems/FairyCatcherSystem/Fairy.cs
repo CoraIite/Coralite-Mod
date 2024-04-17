@@ -36,6 +36,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public int width;
         public int height;
         public float scale;
+        public float alpha = 1;
+
+        /// <summary>
+        /// 为false时就不会能被捉，进度不会涨
+        /// </summary>
+        public bool canBeCaught;
 
         /// <summary>
         /// 未进入捕捉状态而自由移动的时间，大于一定值后直接消失
@@ -71,11 +77,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             Type = FairyLoader.ReserveParticleID();
         }
 
+        public abstract int GetFairyItemType();
+
         public virtual Fairy NewInstance()
         {
             var inst = (Fairy)Activator.CreateInstance(GetType(), true);
             return inst;
         }
+
+        /// <summary>
+        /// 用于注册生成方式，详细参考<see cref="FairySystem"/>
+        /// </summary>
+        public virtual void RegisterSpawn() { }
+        #region 捕获器中的AI
 
         /// <summary>
         /// 在捕捉器内的行为
@@ -84,15 +98,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             AI_InCatcher(catcher.GetCursorBox());
 
+            if (ShouldUpdatePosition())
+                position += velocity;
+
             if (catcher.CursorBox.Intersects(HitBox))//鼠标接触到了
             {
                 if (Main.mouseLeft)
                 {
                     catching = true;
-                    float progressAdder = ProgressAdder;
-                    if (catcher.Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                        progressAdder = fcp.fairyCatchPowerBonus.ApplyTo(progressAdder);
-                    catchProgress += progressAdder;
+                    if (canBeCaught)
+                    {
+                        float progressAdder = ProgressAdder;
+                        if (catcher.Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                            progressAdder = fcp.fairyCatchPowerBonus.ApplyTo(progressAdder);
+                        catchProgress += progressAdder;
+                    }
                 }
             }
             else if (catching)//鼠标没碰到，并且正在捕捉中，那么减少条
@@ -114,15 +134,25 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 Catch(catcher.Owner);
         }
 
-        public abstract int GetFairyItemType();
+        public virtual void OnSpawn() { }
 
         /// <summary>
-        /// 用于注册生成方式，详细参考<see cref="fas"/>
+        /// 在捕捉器内的AI
         /// </summary>
-        public virtual void RegisterSpawn()
-        {
+        public virtual void AI_InCatcher(Rectangle cursor) { }
 
+        public virtual bool ShouldUpdatePosition() => true;
+
+        /// <summary>
+        /// 正在捕捉的时候并且玩家未左键或者指针没接触，这是和减少捕捉进度
+        /// </summary>
+        public virtual void ReduceProgress()
+        {
+            catchProgress -= 100f / (60 * 20f);
         }
+
+        #endregion
+
 
         /// <summary>
         /// 被捕获时执行
@@ -158,24 +188,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         /// <param name="player"></param>
         public virtual void OnCatch(Player player, Item fairyItem) { }
-
-        public virtual void OnSpawn()
-        {
-
-        }
-
-        public virtual void ReduceProgress()
-        {
-            catchProgress -= 100f / (60 * 20f);
-        }
-
-        /// <summary>
-        /// 在捕捉器内的AI
-        /// </summary>
-        public virtual void AI_InCatcher(Rectangle cursor)
-        {
-
-        }
 
         /// <summary>
         /// 在仙灵瓶物块中的AI

@@ -169,6 +169,7 @@ namespace Coralite.Core
 
         public const string ShadowNPCs = NPCs + "Shadow/";
         public const string IcicleNPCs = NPCs + "Icicle/";
+        public const string ElementalNPCs = NPCs + "Elemental/";
         public const string MagikeNPCs = NPCs + "Magike/";
         public const string OtherNPC = NPCs + "OtherNPC/";
 
