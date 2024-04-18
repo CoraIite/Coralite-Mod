@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Terraria;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -115,6 +116,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
         }
 
+        public void FairyShoot_GetFairyBottle(out Item bait)
+        {
+            bait = null;
+
+            for (int j = 0; j < 50; j++)
+            {
+                if (Player.inventory[j].stack > 0 && Player.inventory[j].bait > 0)
+                {
+                    bait = Player.inventory[j];
+                    break;
+                }
+            }
+        }
+
         /// <summary>
         /// 获取仙灵捕捉力，默认使用玩家手持物品进行计算，如果手持物品不是仙灵捕手则返回一个增幅倍率
         /// </summary>
@@ -126,6 +141,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 basePower = catcher.catchPower;
 
             return (int)fairyCatchPowerBonus.ApplyTo(basePower);
+        }
+
+        public override bool OnPickup(Item item)
+        {
+
+
+            return base.OnPickup(item);
         }
 
         /// <summary>

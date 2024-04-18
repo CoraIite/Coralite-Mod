@@ -49,7 +49,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
             Item.AllowReforgeForStackableItem = false;
 
-            Item.DamageType = ModContent.GetInstance<YujianDamage>();
+            Item.DamageType = DamageClass.Summon;//ModContent.GetInstance<YujianDamage>();
         }
 
         /// <summary>

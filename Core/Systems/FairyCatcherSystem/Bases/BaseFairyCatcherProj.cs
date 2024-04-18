@@ -1,21 +1,26 @@
 ﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 
-namespace Coralite.Core.Systems.FairyCatcherSystem
+namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
     public abstract class BaseFairyCatcherProj : ModProjectile
     {
         public Player Owner => Main.player[Projectile.owner];
 
         public abstract string CursorTexture { get; }
+        public virtual string HandleTexture => AssetDirectory.FairyCatcherItems + Name;
 
         public ref float SpawnTimer => ref Projectile.localAI[0];
 
         private Rectangle cursorRect;
         public Rectangle CursorBox => cursorRect;
+        public int CursorWidth = 8;
+        public int CursorHeight = 8;
 
         public static Asset<Texture2D> CircleTexture;
         public static Asset<Texture2D> BackCircleTexture;
@@ -43,7 +48,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         #region 字段
 
-        public List<Fairy> fairys;
+        public List<Fairy> Fairies;
         public FairyCursor cursorMovement;
 
         public bool init = true;
@@ -68,7 +73,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 指针的位置
         /// </summary>
-        public Vector2 curserCenter;
+        public Vector2 cursorCenter;
+        public Vector2 cursorVelocity;
+        public float cursorRotation;
+        /// <summary>
+        /// 指针是否和仙灵重叠
+        /// </summary>
+        public bool cursorIntersects;
+        public float cursorScale=1f;
 
         #endregion
 
@@ -102,8 +114,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override void AI()
         {
+            if (Owner.dead || !Owner.active)
+                Projectile.Kill();
             Owner.heldProj = Projectile.whoAmI;
             Owner.itemTime = Owner.itemAnimation = 2;
+            SetOwnerItemLocation();
 
             if (init)
             {
@@ -142,11 +157,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                         Vector2 aimPos = webCenter.ToWorldCoordinates();
                         float speed = Projectile.velocity.Length();
                         //指针射向初始位置
-                        Projectile.velocity = (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero) *speed;
+                        Projectile.velocity = (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero) * speed;
 
-                        curserCenter = Projectile.Center;
+                        cursorCenter = Projectile.Center;
+                        cursorRotation = (cursorCenter - Owner.Center).ToRotation();
 
-                        if (Vector2.Distance(Projectile.Center,aimPos)<speed*2)
+                        if (Vector2.Distance(Projectile.Center, aimPos) < speed * 2)
                             TurnToCatching();
 
                         //玩家距离过远进入回收阶段
@@ -156,7 +172,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     break;
                 case (int)AIStates.Catching:
                     {
-                        fairys ??= new List<Fairy>();
+                        Fairies ??= new List<Fairy>();
 
                         //更新圆环的透明度和大小
                         UpdateWebVisualEffect_Catching();
@@ -164,12 +180,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                         UpdateCurser();
 
                         //更新仙灵的活动
-                        for (int i = fairys.Count - 1; i >= 0; i--)
+                        for (int i = Fairies.Count - 1; i >= 0; i--)
                         {
-                            Fairy fairy = fairys[i];
+                            Fairy fairy = Fairies[i];
                             fairy.UpdateInCatcher(this);
                             if (!fairy.active)
-                                fairys.Remove(fairy);
+                                Fairies.Remove(fairy);
                         }
 
                         //随机刷新仙灵
@@ -188,8 +204,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                         UpdateWebVisualEffect_Backing();
 
                         //直接向玩家lerp
-                        Projectile.Center = Vector2.Lerp(Projectile.Center, Owner.Center, 0.1f);
-                        curserCenter = Vector2.Lerp(curserCenter, Projectile.Center, 0.1f);
+                        Projectile.Center = Vector2.Lerp(Projectile.Center, Owner.Center, 0.15f);
+                        cursorCenter = Vector2.Lerp(cursorCenter, Projectile.Center, 0.15f);
+                        cursorRotation = (cursorCenter - Owner.Center).ToRotation();
 
                         if (Vector2.Distance(Projectile.Center, Owner.Center) < 48)
                         {
@@ -220,7 +237,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public virtual void UpdateFairySpawn()
         {
-            if (fairys.Count > webRadius / 16)
+            if (Fairies.Count > webRadius / 16)
                 return;
 
             SpawnTimer += Main.rand.Next(1, 3);
@@ -270,7 +287,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
                 if (FairySystem.SpawnFairy(attempt, out Fairy fairy))
                 {
-                    fairys.Add(fairy);
+                    Fairies.Add(fairy);
                 }
             }
         }
@@ -278,8 +295,30 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public void UpdateCurser()
         {
             CurserAI();
+            cursorIntersects = false;
+
+            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                cursorScale = fcp.cursorSizeBonus.ApplyTo(cursorScale);
 
             cursorRect = GetCursorBox();//避免一大堆仙灵然后疯狂调用贴图
+        }
+
+        /// <summary>
+        /// 设置玩家的手持位置
+        /// </summary>
+        public virtual void SetOwnerItemLocation() { }
+
+        public void UpdateWebVisualEffect_Catching()
+        {
+            WebAlpha = MathHelper.Lerp(WebAlpha, 1, 0.05f);
+            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                webRadius = MathHelper.Lerp(webRadius, fcp.fairyCatcherRadius, 0.1f);
+        }
+
+        public void UpdateWebVisualEffect_Backing()
+        {
+            WebAlpha = MathHelper.Lerp(WebAlpha, 0, 0.05f);
+            webRadius = MathHelper.Lerp(webRadius, 0, 0.05f);
         }
 
         #endregion
@@ -304,15 +343,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <returns></returns>
         public Rectangle GetCursorBox()
         {
-            int cursorWidth = 8;
-            int cursorHeight = 8;
-
-            Asset<Texture2D> cursorTex = ModContent.Request<Texture2D>(CursorTexture);
-            if (cursorTex.IsLoaded)
-            {
-                cursorWidth = cursorTex.Width();
-                cursorHeight = cursorTex.Height();
-            }
+            int cursorWidth = CursorWidth;
+            int cursorHeight = CursorHeight;
 
             if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
             {
@@ -320,20 +352,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 cursorHeight = (int)fcp.cursorSizeBonus.ApplyTo(cursorHeight);
             }
 
-            return new Rectangle((int)curserCenter.X - cursorWidth / 2, (int)curserCenter.Y - cursorHeight / 2, cursorWidth, cursorHeight);
-        }
-
-        public void UpdateWebVisualEffect_Catching()
-        {
-            WebAlpha = MathHelper.Lerp(WebAlpha, 1, 0.05f);
-            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                webRadius = MathHelper.Lerp(webRadius, fcp.fairyCatcherRadius, 0.1f);
-        }
-
-        public void UpdateWebVisualEffect_Backing()
-        {
-            WebAlpha = MathHelper.Lerp(WebAlpha, 0, 0.05f);
-                webRadius = MathHelper.Lerp(webRadius, 0, 0.05f);
+            return new Rectangle((int)cursorCenter.X - cursorWidth / 2, (int)cursorCenter.Y - cursorHeight / 2, cursorWidth, cursorHeight);
         }
 
         #region 子类可用方法
@@ -372,44 +391,168 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         #region 子类绘制
 
-        public virtual Vector2 GetHandlePos()
+        /// <summary>
+        /// 手柄的与线段连接的位置
+        /// </summary>
+        /// <returns></returns>
+        public virtual Vector2 GetHandlePos(Texture2D handleTex)
         {
-            return Vector2.Zero;
+            return Owner.itemLocation + new Vector2(DrawOriginOffsetX, DrawOriginOffsetY);
+        }
+
+        /// <summary>
+        /// 获取线的末端的位置
+        /// </summary>
+        /// <returns></returns>
+        public virtual Vector2 GetStringTipPos(Texture2D cursorTex)
+        {
+            return cursorCenter;
         }
 
         /// <summary>
         /// 绘制指针与手持物品间的连线
         /// </summary>
-        public virtual void DrawLine(Vector2 handlePos)
+        public virtual void DrawLine(Vector2 handlePos, Vector2 stringTipPos)
         {
+            bool flag = true;
+            handlePos.Y += Owner.gfxOffY;
 
+            float distanceX = stringTipPos.X - handlePos.X;
+            float distanceY = stringTipPos.Y - handlePos.Y;
+            bool flag2 = true;
+            float rot = (float)Math.Atan2(distanceY, distanceX) - 1.57f;
+
+            Texture2D stringTex = GetStringTex();
+
+            float halfWidth = stringTex.Width / 2;
+            float halfHeight = stringTex.Height / 2;
+            Vector2 origin = new Vector2(halfWidth, 0f);
+
+            if (distanceX == 0f && distanceY == 0f)
+            {
+                flag = false;
+            }
+            else
+            {
+                float distance = (float)Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+                distance = stringTex.Height / distance;
+                distanceX *= distance;
+                distanceY *= distance;
+                handlePos.X -= distanceX * 0.1f;
+                handlePos.Y -= distanceY * 0.1f;
+                distanceX = stringTipPos.X - handlePos.X;
+                distanceY = stringTipPos.Y - handlePos.Y;
+            }
+
+            while (flag)
+            {
+                float sourceHeight = stringTex.Height;
+                float distance1 = (float)Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+                float distance2 = distance1;
+                if (float.IsNaN(distance1) || float.IsNaN(distance2))
+                {
+                    flag = false;
+                    continue;
+                }
+
+                if (distance1 < stringTex.Height + 8)
+                {
+                    sourceHeight = distance1 - 8f;
+                    flag = false;
+                }
+
+                distance1 = stringTex.Height / distance1;
+                distanceX *= distance1;
+                distanceY *= distance1;
+                if (flag2)
+                {
+                    flag2 = false;
+                }
+                else
+                {
+                    handlePos.X += distanceX;
+                    handlePos.Y += distanceY;
+                }
+
+                distanceX = stringTipPos.X - handlePos.X;
+                distanceY = stringTipPos.Y - handlePos.Y;
+                if (distance2 > stringTex.Height)
+                {
+                    float num9 = 0.3f;
+                    float num10 = Math.Abs(cursorVelocity.X) + Math.Abs(cursorVelocity.Y);
+                    if (num10 > 16f)
+                        num10 = 16f;
+
+                    num10 = 1f - num10 / 16f;
+                    num9 *= num10;
+                    num10 = distance2 / 80f;
+                    if (num10 > 1f)
+                        num10 = 1f;
+
+                    num9 *= num10;
+                    if (num9 < 0f)
+                        num9 = 0f;
+
+                    num9 *= num10;
+                    num9 *= 0.5f;
+                    if (distanceY > 0f)
+                    {
+                        distanceY *= 1f + num9;
+                        distanceX *= 1f - num9;
+                    }
+                    else
+                    {
+                        num10 = Math.Abs(Projectile.velocity.X) / 3f;
+                        if (num10 > 1f)
+                            num10 = 1f;
+
+                        num10 -= 0.5f;
+                        num9 *= num10;
+                        if (num9 > 0f)
+                            num9 *= 2f;
+
+                        distanceY *= 1f + num9;
+                        distanceX *= 1f - num9;
+                    }
+                }
+
+                rot = (float)Math.Atan2(distanceY, distanceX) - 1.57f;
+                Color c = GetStringColor(handlePos);
+
+                Main.EntitySpriteDraw(
+                    color: c, texture: stringTex,
+                    position: handlePos - Main.screenPosition + new Vector2(0, halfHeight), sourceRectangle: new Rectangle(0, 0, stringTex.Width, (int)sourceHeight), rotation: rot, origin: origin, scale: 1f, effects: SpriteEffects.None);
+            }
         }
 
-        public virtual void DrawCursor()
+        public virtual void DrawCursor(Texture2D cursorTex)
         {
-
+            Main.spriteBatch.Draw(cursorTex, cursorCenter - Main.screenPosition, null,
+                cursorIntersects ? Color.White * 0.5f : Color.White, cursorRotation, cursorTex.Size() / 2, cursorScale, 0, 0);
         }
 
-        public virtual void DrawHandle()
+        public virtual void DrawHandle(Texture2D HandleTex)
         {
-
+            Main.spriteBatch.Draw(HandleTex, Owner.itemLocation - Main.screenPosition, null,
+                Lighting.GetColor(Owner.Center.ToTileCoordinates()), cursorRotation, HandleTex.Size() / 2, 1f, 0, 0);
         }
 
-        /// <summary>
-        /// 获取线的点的列表
-        /// </summary>
-        /// <param name="handlePos"></param>
-        /// <returns></returns>
-        public virtual List<Vector2> GetLinePointList(Vector2 handlePos)
+        public virtual Color GetStringColor(Vector2 pos)
         {
-            return null;
+            Color c = Color.White;
+            c.A = (byte)(c.A * 0.4f);
+            c = Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f), c);
+            c *= 0.5f;
+            return c;
         }
+
+        public virtual Texture2D GetStringTex() => TextureAssets.FishingLine.Value;
 
         #endregion
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (state!=(int)AIStates.Shooting)
+            if (state != (int)AIStates.Shooting)
             {
                 Vector2 circlePos = webCenter.ToWorldCoordinates() - Main.screenPosition;
 
@@ -429,19 +572,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 DrawCircle(circlePos, circleColor);
 
                 //绘制仙灵
-                if (fairys != null)
-                    foreach (var fairy in fairys)
+                if (Fairies != null)
+                    foreach (var fairy in Fairies)
                         fairy.Draw_InCatcher();
             }
 
-            Vector2 handlePos = GetHandlePos();
+            Texture2D handleTex = ModContent.Request<Texture2D>(HandleTexture).Value;
+            Texture2D cursorTex = ModContent.Request<Texture2D>(CursorTexture).Value;
 
             //绘制连线
-            DrawLine(handlePos);
+            DrawLine(GetHandlePos(handleTex), GetStringTipPos(handleTex));
             //绘制指针
-            DrawCursor();
+            DrawCursor(cursorTex);
             //绘制手持
-            DrawHandle();
+            DrawHandle(handleTex);
 
             return false;
         }
@@ -456,7 +600,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public virtual void DrawBlockedTile(Vector2 center)
         {
-            int howMany = (int)(webRadius*2 / 16);
+            int howMany = (int)(webRadius * 2 / 16);
 
             int baseX = webCenter.X - howMany / 2;
             int baseY = webCenter.Y - howMany / 2;

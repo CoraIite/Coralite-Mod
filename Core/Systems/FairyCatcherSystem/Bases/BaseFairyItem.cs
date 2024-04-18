@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Terraria;
 
-namespace Coralite.Core.Systems.FairyCatcherSystem
+namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
     public abstract class BaseFairyItem : ModItem
     {
@@ -19,6 +19,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 仙灵是否存活
         /// </summary>
         public bool dead;
+
+        public abstract int GetFairyType();
 
         /// <summary>
         /// 受到个体值加成过的仙灵自身的伤害
@@ -45,19 +47,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public float FairyLifeMax => fairyData.lifeMaxBonus.ApplyTo(Item.GetGlobalItem<FairyGlobalItem>().baseLifeMax);
 
-        ///// <summary>
-        ///// 用于获取仙灵的实际伤害
-        ///// </summary>
-        ///// <returns></returns>
-        //public int GetFairyDamage(Player owner)
-        //{
-        //    //由仙灵的基础伤害再用个体值增幅一下
-        //    float bonusedDamage = FairyDamage;
-        //    if (owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
-        //        bonusedDamage = fcp.FairyDamageBonus(bonusedDamage);
-        //    return (int)bonusedDamage;
-        //}
-
         public virtual void Hurt()
         {
 
@@ -71,16 +60,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             life = Math.Clamp(life, 0, (int)FairyLifeMax);
         }
 
-        public abstract Fairy GetFairy();
-
         /// <summary>
         /// 将仙灵发射出去
         /// </summary>
         /// <returns></returns>
-        public virtual bool ShootFairy(Vector2 position,Vector2 velocity)
+        public virtual bool ShootFairy(Vector2 position, Vector2 velocity)
         {
             if (dead)
-                return false;   
+                return false;
 
             //生成仙灵弹幕
 

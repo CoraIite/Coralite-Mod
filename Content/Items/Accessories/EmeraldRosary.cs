@@ -30,18 +30,18 @@ namespace Coralite.Content.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<CoralitePlayer>().nianliRegain += 0.15f;
-            player.GetDamage<YujianDamage>().Flat += 3f;
+            //player.GetDamage<YujianDamage>().Flat += 3f;
         }
 
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient(ItemID.Emerald, 3)
-                .AddIngredient(ItemID.Bone, 10)
-                .AddIngredient<MagicalPowder>(10)
-                .AddIngredient(ItemID.Vine, 3)
-                .AddIngredient(ItemID.JungleSpores, 5)
-                .Register();
+            //CreateRecipe()
+            //    .AddIngredient(ItemID.Emerald, 3)
+            //    .AddIngredient(ItemID.Bone, 10)
+            //    .AddIngredient<MagicalPowder>(10)
+            //    .AddIngredient(ItemID.Vine, 3)
+            //    .AddIngredient(ItemID.JungleSpores, 5)
+            //    .Register();
         }
     }
 }

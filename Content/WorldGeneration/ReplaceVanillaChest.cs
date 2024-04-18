@@ -37,13 +37,13 @@ namespace Coralite.Content.WorldGeneration
                                                                    or WallID.BlueDungeonSlabUnsafe or WallID.GreenDungeonSlabUnsafe or WallID.PinkDungeonSlabUnsafe
                                                                    or WallID.BlueDungeonTileUnsafe or WallID.GreenDungeonTileUnsafe or WallID.PinkDungeonTileUnsafe)
                                     {
-                                        if (WorldGen.genRand.NextBool(10, 100))
-                                            foreach (var item in chest.item)
-                                                if (item.IsAir)
-                                                {
-                                                    item.SetDefaults(ModContent.ItemType<MaintenanceFluid>());
-                                                    break;
-                                                }
+                                        //if (WorldGen.genRand.NextBool(10, 100))
+                                        //    foreach (var item in chest.item)
+                                        //        if (item.IsAir)
+                                        //        {
+                                        //            item.SetDefaults(ModContent.ItemType<MaintenanceFluid>());
+                                        //            break;
+                                        //        }
                                         if (WorldGen.genRand.NextBool(10, 100))
                                             foreach (var item in chest.item)
                                                 if (item.IsAir)
@@ -51,7 +51,8 @@ namespace Coralite.Content.WorldGeneration
                                                     item.SetDefaults(ModContent.ItemType<FlyingShieldVarnish>());
                                                     break;
                                                 }
-                                        if (WorldGen.genRand.NextBool(10, 100))
+                                        if (WorldGen.genRand.NextBool(10, 100)
+                                            && chest.y < Main.worldSurface)
                                             foreach (var item in chest.item)
                                                 if (item.IsAir)
                                                 {
@@ -59,7 +60,6 @@ namespace Coralite.Content.WorldGeneration
                                                     break;
                                                 }
                                     }
-
                                 }
                                 break;
                             case 1 * 18 * 2://金箱子

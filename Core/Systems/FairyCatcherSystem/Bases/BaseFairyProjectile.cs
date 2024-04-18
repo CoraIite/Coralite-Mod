@@ -1,6 +1,6 @@
 ﻿using Terraria;
 
-namespace Coralite.Core.Systems.FairyCatcherSystem
+namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
     public abstract class BaseFairyProjectile : ModProjectile
     {

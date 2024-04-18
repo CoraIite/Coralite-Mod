@@ -60,7 +60,7 @@ namespace Coralite.Core.Systems.YujianSystem
             Item.damage = Damage;
             Item.knockBack = Knockback;
 
-            Item.DamageType = ModContent.GetInstance<YujianDamage>();
+            Item.DamageType = DamageClass.Summon;//ModContent.GetInstance<YujianDamage>();
             Item.useStyle = ItemUseStyleID.HoldUp;
 
             Item.noMelee = true;

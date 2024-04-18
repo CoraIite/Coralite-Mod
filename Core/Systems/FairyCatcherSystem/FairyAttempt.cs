@@ -40,32 +40,33 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public int Y;
 
-
         public enum Rarity
         {
             /// <summary> 常见的，淡黄色 </summary>
-            C,
+            C = 0,
             /// <summary> 不常见，青绿色 </summary>
-            U,
+            U = 10,
             /// <summary> 稀有，天蓝色 </summary>
-            R,
+            R = 20,
             /// <summary> 双倍稀有，蓝色 </summary>
-            RR,
+            RR = 30,
             /// <summary> 超级稀有，红色 </summary>
-            SR,
+            SR = 40,
             /// <summary> 究极稀有，橙色 </summary>
-            UR,
+            UR = 50,
 
             //-----------------------------------------------------------------------
             //                  以下为只有使用特殊鱼饵才能够出现的稀有度
             //-----------------------------------------------------------------------
 
             /// <summary> 三倍稀有，蓝紫色 </summary>
-            RRR,
+            RRR = 35,
+            /// <summary> Hyper稀有，紫色 </summary>
+            HR = 60,
             /// <summary> 异类稀有，粉色 </summary>
-            AR,
+            AR = 25,
             /// <summary> 秘宝，金色 </summary>
-            MR,
+            MR = 100,
         }
     }
 }

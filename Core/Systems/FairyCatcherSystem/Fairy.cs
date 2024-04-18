@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Loaders;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -103,6 +104,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             if (catcher.CursorBox.Intersects(HitBox))//鼠标接触到了
             {
+                catcher.cursorIntersects = true;
                 if (Main.mouseLeft)
                 {
                     catching = true;
