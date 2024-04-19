@@ -23,7 +23,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             Item.DamageType = ModContent.GetInstance<FairyDamage>();
 
-
+            SetOtherDefaults();
         }
 
         public virtual void SetOtherDefaults() { }
@@ -32,24 +32,28 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (player.altFunctionUse==2)
+            if (player.altFunctionUse == 2)
             {
                 ShootCatcherProjectile(player, source, position, velocity, type);
                 return false;
             }
 
+            ModifyFairyStats(player,ref position,ref velocity);
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
-            {
                 if (fcp.FairyShoot_GetFairyBottle(out IFairyBottle bottle))
-                {
-                    ShootFairy(bottle, source, position, velocity);
-                    return false;
-                }
-
-                return false;
-            }
+                    ShootFairy(bottle, player, source, position, velocity, (int)fcp.fairyCatchPowerBonus.ApplyTo(damage), knockback);
 
             return false;
+        }
+
+        /// <summary>
+        /// 自定义仙灵生成的位置
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="player"></param>
+        public virtual void ModifyFairyStats(Player player, ref Vector2 position,ref Vector2 velocity)
+        {
+
         }
 
         /// <summary>
@@ -66,22 +70,23 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         }
 
         /// <summary>
-        /// 左键使用时依次发射
+        /// 左键使用时依次发射在仙灵瓶内的仙灵
         /// </summary>
         /// <param name="bottle"></param>
         /// <param name="source"></param>
         /// <param name="position"></param>
         /// <param name="velocity"></param>
-        public virtual void ShootFairy(IFairyBottle bottle, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity)
+        public virtual void ShootFairy(IFairyBottle bottle, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockback)
         {
-            Item[] fairies= bottle.Fairies;
+            Item[] fairies = bottle.Fairies;
 
             for (int i = 0; i < fairies.Length; i++)
             {
                 Item item = fairies[currentFairyIndex];
-                if (item.ModItem is IFairyItem)
+                if (item.ModItem is IFairyItem fairyItem)
                 {
-
+                    if (fairyItem.ShootFairy(player, source, position, velocity, damage, knockback))
+                        break;
                 }
 
                 currentFairyIndex++;
@@ -90,16 +95,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     currentFairyIndex = 0;
                 }
             }
-        }
-
-        public override void SaveData(TagCompound tag)
-        {
-            base.SaveData(tag);
-        }
-
-        public override void Load()
-        {
-            base.Load();
         }
     }
 }

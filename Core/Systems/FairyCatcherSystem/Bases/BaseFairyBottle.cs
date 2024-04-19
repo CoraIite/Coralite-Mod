@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
@@ -23,7 +24,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 fairies[i] = new Item();
         }
 
+        public override void SaveData(TagCompound tag)
+        {
+            base.SaveData(tag);
+        }
 
+        public override void LoadData(TagCompound tag)
+        {
+            base.LoadData(tag);
+        }
     }
 
     public interface IFairyBottle

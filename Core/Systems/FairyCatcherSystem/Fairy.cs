@@ -168,7 +168,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             //为物品的字段赋值，如果这个物品不是一个仙灵那么就跳过
             if (i.ModItem is BaseFairyItem fairyitem && player.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                fairyitem.fairyData = fcp.RollFairyIndividualValues(fairyitem);
+                fairyitem.IV = fcp.RollFairyIndividualValues(fairyitem);
 
             //调用onCatch
             OnCatch(player, i);

@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Coralite.Content.DamageClasses;
+using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
@@ -11,14 +14,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         protected FairyData fairyData;
 
-        /// <summary>
-        /// 仙灵的实际血量
-        /// </summary>
-        public int life;
-        /// <summary>
-        /// 仙灵是否存活
-        /// </summary>
-        public bool dead;
+        /// <summary> 仙灵的实际血量 </summary>
+        protected int life;
+        /// <summary> 仙灵是否存活 </summary>
+        protected bool dead;
 
         public abstract int GetFairyType();
 
@@ -49,6 +48,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public FairyData IV  { get => fairyData; set => fairyData = value; }
         public bool IsDead => dead;
+        public int Life { get => life; set => life = value; }
 
         public virtual void Hurt()
         {
@@ -67,15 +67,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 将仙灵发射出去
         /// </summary>
         /// <returns></returns>
-        public virtual bool ShootFairy(Vector2 position, Vector2 velocity)
+        public virtual bool ShootFairy(Player player,EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int catcherDamage, float knockBack)
         {
             if (dead)
                 return false;
 
+            catcherDamage += (int)player.GetTotalDamage<FairyDamage>().ApplyTo(Item.damage);
+
             //生成仙灵弹幕
-
+            Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, Item.shoot, catcherDamage, knockBack, player.whoAmI);
             //将弹幕的item赋值为自身
+            if (proj.ModProjectile is IFairyProjectile fairyProjectile)
 
+                fairyProjectile.FairyItem = this;
             return true;
         }
 
@@ -83,23 +87,24 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
         }
 
-        public void GetCurrentLife()
+        public override void SaveData(TagCompound tag)
         {
+
         }
 
-        public virtual void ShootFairy()
+        public override void LoadData(TagCompound tag)
         {
+
         }
     }
 
     public interface IFairyItem
     {
         public bool IsDead { get; }
-        public void GetCurrentLife();
-        public void Hurt();
-
         public FairyData IV { get; set; }
+        public int Life { get; set; }
 
-        public void ShootFairy();
+        public void Hurt();
+        public bool ShootFairy(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int catcherDamage, float knockBack);
     }
 }

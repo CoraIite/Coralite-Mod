@@ -2,9 +2,11 @@
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
-    public abstract class BaseFairyProjectile : ModProjectile
+    public abstract class BaseFairyProjectile : ModProjectile, IFairyProjectile
     {
-        public BaseFairyItem SelfItem;
+        protected IFairyItem selfItem;
+
+        public IFairyItem FairyItem { get => selfItem; set => selfItem = value; }
 
         public enum AIStates
         {
@@ -32,7 +34,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public bool CheckSelfItem()
         {
-            if (SelfItem is null)
+            if (FairyItem is null)
             {
                 Projectile.Kill();
                 return false;
@@ -44,7 +46,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             //自身受伤
-            SelfItem?.Hurt();
+            FairyItem?.Hurt();
         }
+    }
+
+    public interface IFairyProjectile
+    {
+        public IFairyItem FairyItem { get; set; }
     }
 }
