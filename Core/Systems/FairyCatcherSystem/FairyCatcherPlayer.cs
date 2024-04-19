@@ -116,18 +116,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
         }
 
-        public void FairyShoot_GetFairyBottle(out Item bait)
+        public bool FairyShoot_GetFairyBottle(out IFairyBottle bait)
         {
             bait = null;
 
             for (int j = 0; j < 50; j++)
             {
-                if (Player.inventory[j].stack > 0 && Player.inventory[j].bait > 0)
+                if (Player.inventory[j].stack > 0 && Player.inventory[j].ModItem is IFairyBottle fairyBottle)
                 {
-                    bait = Player.inventory[j];
-                    break;
+                    bait = fairyBottle;
+                    return true;
                 }
             }
+
+            return false;
         }
 
         /// <summary>

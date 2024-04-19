@@ -2,25 +2,34 @@
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
-    public abstract class BaseFairyBottle:ModItem
+    public abstract class BaseFairyBottle : ModItem,IFairyBottle
     {
         /// <summary>
         /// 仙灵物品数组
         /// </summary>
-        public readonly Item[] Fairies;
+        private readonly Item[] fairies;
 
         /// <summary>
         /// 仙灵瓶的容量，默认10
         /// </summary>
         public virtual int Capacity => 10;
 
+        public Item[] Fairies => fairies;
+
         public BaseFairyBottle()
         {
-            Fairies = new Item[Capacity];
+            fairies = new Item[Capacity];
             for (int i = 0; i < Capacity; i++)
-                Fairies[i] = new Item();
+                fairies[i] = new Item();
         }
 
 
+    }
+
+    public interface IFairyBottle
+    {
+        int Capacity { get; }
+
+        public Item[] Fairies { get; }
     }
 }

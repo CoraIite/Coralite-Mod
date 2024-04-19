@@ -4,12 +4,12 @@ using Terraria;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
-    public abstract class BaseFairyItem : ModItem
+    public abstract class BaseFairyItem : ModItem, IFairyItem
     {
         /// <summary>
         /// 仙灵的个体数据，用于存放各类增幅
         /// </summary>
-        public FairyData fairyData;
+        protected FairyData fairyData;
 
         /// <summary>
         /// 仙灵的实际血量
@@ -47,6 +47,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public float FairyLifeMax => fairyData.lifeMaxBonus.ApplyTo(Item.GetGlobalItem<FairyGlobalItem>().baseLifeMax);
 
+        public FairyData IV  { get => fairyData; set => fairyData = value; }
+        public bool IsDead => dead;
+
         public virtual void Hurt()
         {
 
@@ -78,7 +81,25 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            base.ModifyTooltips(tooltips);
         }
+
+        public void GetCurrentLife()
+        {
+        }
+
+        public virtual void ShootFairy()
+        {
+        }
+    }
+
+    public interface IFairyItem
+    {
+        public bool IsDead { get; }
+        public void GetCurrentLife();
+        public void Hurt();
+
+        public FairyData IV { get; set; }
+
+        public void ShootFairy();
     }
 }

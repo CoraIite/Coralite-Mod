@@ -96,7 +96,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void UpdateArmorSet(Player player)
         {
             //player.GetDamage(DamageClass.Ranged) += 0.05f;
-            player.GetCritChance(DamageClass.Melee) += 0.05f;
+            player.GetCritChance(DamageClass.Ranged) += 5f;
             player.moveSpeed += 0.05f;
             player.setBonus = MedusaBonus.Value;
         }
@@ -114,7 +114,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void UpdateEquip(Player player)
         {
-            player.GetCritChance(DamageClass.Ranged) += 0.06f;
+            player.GetCritChance(DamageClass.Ranged) += 6f;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.medusaSoul++;
