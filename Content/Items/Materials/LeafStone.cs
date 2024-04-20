@@ -6,13 +6,31 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Materials
 {
-    public class LeafStone : BaseMaterial, IMagikeRemodelable
+    public class LeafStone : BaseMaterial  //, IMagikeRemodelable
     {
         public LeafStone() : base(9999, Item.sellPrice(0, 0, 0, 50), ItemRarityID.Green, AssetDirectory.Materials) { }
 
-        public void AddMagikeRemodelRecipe()
+        public override void AddRecipes()
         {
-            MagikeSystem.AddRemodelRecipe<LeafStone>(0f, ItemID.Wood, 20, selfStack: 15);
+            CreateRecipe()
+                .AddRecipeGroup(RecipeGroupID.Wood, 5)
+                .AddTile(TileID.Furnaces)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.Vine)
+                .AddTile(TileID.Furnaces)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.VineRope, 5)
+                .AddTile(TileID.Furnaces)
+                .Register();
         }
+
+        //public void AddMagikeRemodelRecipe()
+        //{
+        //    MagikeSystem.AddRemodelRecipe<LeafStone>(0f, ItemID.Wood, 20, selfStack: 15);
+        //}
     }
 }

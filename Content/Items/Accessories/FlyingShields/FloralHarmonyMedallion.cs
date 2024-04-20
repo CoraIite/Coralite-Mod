@@ -6,7 +6,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class FloralHarmonyMedallion : BaseAccessory, IFlyingShieldAccessory
+    public class FloralHarmonyMedallion : BaseFlyingShieldAccessory, IFlyingShieldAccessory
     {
         public FloralHarmonyMedallion() : base(ItemRarityID.Yellow, Item.sellPrice(0, 2, 0))
         { }

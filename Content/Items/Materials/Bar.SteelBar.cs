@@ -1,25 +1,22 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
-using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core.Systems.MagikeSystem.CraftConditions;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Materials
 {
-    public class SteelBar : BaseMaterial, IMagikePolymerizable
+    public class SteelBar : BaseMaterial  //, IMagikePolymerizable
     {
-        public SteelBar() : base(9999, Item.sellPrice(0, 0, 10), ItemRarityID.LightRed, AssetDirectory.Materials) { }
+        public SteelBar() : base(9999, Item.sellPrice(0, 0, 20), ItemRarityID.LightRed, AssetDirectory.Materials) { }
 
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 25;
             ItemID.Sets.SortingPriorityMaterials[Item.type] = 59;
 
-            ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 5, ItemID.ChlorophyteBar, 2);
+            //ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 5, ItemID.ChlorophyteBar, 2);
         }
 
         public override void SetDefaults()
@@ -28,15 +25,23 @@ namespace Coralite.Content.Items.Materials
             Item.DefaultToPlaceableTile(ModContent.TileType<SteelBarTile>());
         }
 
-        public void AddMagikePolymerizeRecipe()
+        public override void AddRecipes()
         {
-            PolymerizeRecipe.CreateRecipe<SteelBar>(300)
-                .SetMainItem(ItemID.IronBar, 12)
-                .AddIngredient(ItemID.Coal, 6)
-                .AddIngredient<HeatanInABottle>()
-                .AddCondition(HardModeCondition.Instance)
+            CreateRecipe()
+                .AddIngredient(ItemID.IronBar, 3)
+                .AddTile(TileID.AdamantiteForge)
                 .Register();
         }
+
+        //public void AddMagikePolymerizeRecipe()
+        //{
+        //    PolymerizeRecipe.CreateRecipe<SteelBar>(300)
+        //        .SetMainItem(ItemID.IronBar, 12)
+        //        .AddIngredient(ItemID.Coal, 6)
+        //        .AddIngredient<HeatanInABottle>()
+        //        .AddCondition(HardModeCondition.Instance)
+        //        .Register();
+        //}
     }
 
     public class SteelBarTile : ModTile

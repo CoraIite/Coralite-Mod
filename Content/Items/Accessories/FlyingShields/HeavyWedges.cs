@@ -6,7 +6,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class HeavyWedges : BaseAccessory, IFlyingShieldAccessory
+    public class HeavyWedges : BaseFlyingShieldAccessory, IFlyingShieldAccessory
     {
         public HeavyWedges() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 0, 50))
         { }

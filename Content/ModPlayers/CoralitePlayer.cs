@@ -35,9 +35,13 @@ namespace Coralite.Content.ModPlayers
         public bool equippedBoneRing;
         /// <summary> 能够引发雷鸣debuff </summary>
         public bool equippedThunderveinNecklace;
+        /// <summary> 装备生命勋章 </summary>
+        public bool equippedMedalOfLife;
+        /// <summary> 装备生命脉冲装置 </summary>
+        public bool equippedLifePulseDevice;
+
         /// <summary> 手持海利亚盾 </summary>
         public bool heldHylianShield;
-
         /// <summary>
         /// 海盗王之魂
         /// </summary>
@@ -132,8 +136,11 @@ namespace Coralite.Content.ModPlayers
             equippedShadowMirror = false;
             equippedPhantomMirror = false;
             equippedBoneRing = false;
-            heldHylianShield = false;
             equippedThunderveinNecklace = false;
+            equippedMedalOfLife = false;
+            equippedLifePulseDevice = false;
+
+            heldHylianShield = false;
             pirateKingSoul = 0;
             if (pirateKingSoulCD > 0)
                 pirateKingSoulCD--;
@@ -240,6 +247,7 @@ namespace Coralite.Content.ModPlayers
 
             if (nightmareEnergy > nightmareEnergyMax)
                 nightmareEnergy = nightmareEnergyMax;
+
         }
 
         public override void PostUpdateMiscEffects()
@@ -260,6 +268,33 @@ namespace Coralite.Content.ModPlayers
                 yujianUIAlpha = MathHelper.Clamp(yujianUIAlpha, 0f, 1f);
                 if (yujianUIAlpha <= 0f)
                     NianliChargingBar.visible = false;
+            }
+
+            if (equippedMedalOfLife && Player.statLifeMax2 - Player.statLife < 20)
+            {
+                if (Main.rand.NextBool(15))
+                {
+                    Gore.NewGore(Player.GetSource_FromThis(),
+                        Player.MountedCenter + Main.rand.NextVector2Circular(16, 24), -Vector2.UnitY
+                        , 331);
+                }
+
+                Player.GetDamage(DamageClass.Generic) += 0.1f;
+                Player.GetAttackSpeed(DamageClass.Generic) += 0.5f;
+                Player.moveSpeed += 0.05f;
+            }
+
+            if (equippedLifePulseDevice && Player.statLife <= 40)
+            {
+                Player.GetDamage(DamageClass.Generic) *= 1.15f;
+                Player.GetCritChance(DamageClass.Generic) += 5f;
+
+                if (Main.rand.NextBool(3))
+                {
+                    Dust d = Dust.NewDustPerfect(Player.MountedCenter + Main.rand.NextVector2Circular(16, 24)
+                        , DustID.Smoke, -Vector2.UnitY * Main.rand.NextFloat(1, 2), newColor: Color.Black, Scale: Main.rand.NextFloat(1, 1.75f));
+                    d.noGravity = true;
+                }
             }
         }
 
@@ -282,6 +317,17 @@ namespace Coralite.Content.ModPlayers
                     damage = 15;
 
                 Player.lifeRegen -= damage * 2;
+            }
+
+            if (equippedLifePulseDevice)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+
+                if (Player.statLife > 38)
+                {
+                    Player.lifeRegen -= 10 * 2;
+                }
             }
         }
 

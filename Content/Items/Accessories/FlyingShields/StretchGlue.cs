@@ -6,7 +6,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class StretchGlue : BaseAccessory, IFlyingShieldAccessory
+    public class StretchGlue : BaseFlyingShieldAccessory, IFlyingShieldAccessory
     {
         public StretchGlue() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 10))
         { }

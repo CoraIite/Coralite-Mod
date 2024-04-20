@@ -6,7 +6,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class FlyingShieldToolbox : BaseAccessory, IFlyingShieldAccessory
+    public class FlyingShieldToolbox : BaseFlyingShieldAccessory, IFlyingShieldAccessory
     {
         public FlyingShieldToolbox() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 20))
         { }

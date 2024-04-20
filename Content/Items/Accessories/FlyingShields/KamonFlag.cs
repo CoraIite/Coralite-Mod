@@ -12,7 +12,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
     [AutoloadEquip(EquipType.Back)]
-    public class KamonFlag : BaseAccessory, IFlyingShieldAccessory, IDashable
+    public class KamonFlag : BaseFlyingShieldAccessory, IFlyingShieldAccessory, IDashable
     {
         public KamonFlag() : base(ItemRarityID.Lime, Item.sellPrice(0, 4, 50, 0))
         {
@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
     public class BlackSpirit : ModProjectile
     {
-        public override string Texture => AssetDirectory.Accessories + Name;
+        public override string Texture => AssetDirectory.FlyingShieldAccessories + Name;
 
         ref float Timer => ref Projectile.ai[1];
 

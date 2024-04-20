@@ -19,7 +19,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class SolarTwinkle : BaseAccessory, IFlyingShieldAccessory, IDashable
+    public class SolarTwinkle : BaseFlyingShieldAccessory, IFlyingShieldAccessory, IDashable
     {
         public SolarTwinkle() : base(ItemRarityID.Cyan, Item.sellPrice(0, 4, 50, 0))
         {
@@ -170,7 +170,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
             trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "SpurtTrail");
             WarpTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "WarpTex");
-            GradientTexture = Request<Texture2D>(AssetDirectory.Accessories + "SolarTwinkleGradient");
+            GradientTexture = Request<Texture2D>(AssetDirectory.FlyingShieldAccessories + "SolarTwinkleGradient");
         }
 
         public override void SetDefs()

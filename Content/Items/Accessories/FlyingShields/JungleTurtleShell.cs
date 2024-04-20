@@ -6,7 +6,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class JungleTurtleShell : BaseAccessory, IFlyingShieldAccessory
+    public class JungleTurtleShell : BaseFlyingShieldAccessory, IFlyingShieldAccessory
     {
         public JungleTurtleShell() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 10))
         { }

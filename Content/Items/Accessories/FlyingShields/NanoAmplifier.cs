@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class NanoAmplifier : BaseAccessory, IFlyingShieldAccessory
+    public class NanoAmplifier : BaseFlyingShieldAccessory, IFlyingShieldAccessory
     {
         public override void SetStaticDefaults()
         {

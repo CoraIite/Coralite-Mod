@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class PiezoArmorPanel : BaseAccessory, IFlyingShieldAccessory, IDashable
+    public class PiezoArmorPanel : BaseFlyingShieldAccessory, IFlyingShieldAccessory, IDashable
     {
         public PiezoArmorPanel() : base(ItemRarityID.Yellow, Item.sellPrice(0, 2, 50, 0))
         {

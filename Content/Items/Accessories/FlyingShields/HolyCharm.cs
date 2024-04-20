@@ -13,7 +13,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
     [AutoloadEquip(EquipType.Neck)]
-    public class HolyCharm : BaseAccessory, IFlyingShieldAccessory
+    public class HolyCharm : BaseFlyingShieldAccessory, IFlyingShieldAccessory
     {
         public HolyCharm() : base(ItemRarityID.Pink, Item.sellPrice(0, 2))
         { }
@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
     public class HolyCharmProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.Accessories + "HallowedShield";
+        public override string Texture => AssetDirectory.FlyingShieldAccessories + "HallowedShield";
 
         ref float Timer => ref Projectile.ai[0];
         ref float Timer2 => ref Projectile.ai[1];

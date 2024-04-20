@@ -29,14 +29,14 @@ namespace Coralite.Content.Items.Magike.RemodelPools
         {
             PolymerizeRecipe.CreateRecipe<EvilRemodelPool>(150)
                 .SetMainItem<CrystalRemodelPool>()
-                .AddIngredient<GlistentBar>(6)
-                .AddIngredient(ItemID.ShadowScale, 8)
+                .AddIngredient<GlistentBar>(4)
+                .AddIngredient(ItemID.ShadowScale, 4)
                 .Register();
 
             PolymerizeRecipe.CreateRecipe<EvilRemodelPool>(150)
                 .SetMainItem<CrystalRemodelPool>()
-                .AddIngredient<GlistentBar>(6)
-                .AddIngredient(ItemID.TissueSample, 8)
+                .AddIngredient<GlistentBar>(4)
+                .AddIngredient(ItemID.TissueSample, 4)
                 .Register();
         }
     }

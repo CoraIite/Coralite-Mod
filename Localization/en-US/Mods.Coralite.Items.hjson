@@ -3680,3 +3680,13 @@ StarRuneBanner: {
 	DisplayName: Star Rune Banner
 	Tooltip: ""
 }
+
+MedalOfLife: {
+	DisplayName: Medal Of Life
+	Tooltip: ""
+}
+
+LifePulseDevice: {
+	DisplayName: Life Pulse Device
+	Tooltip: ""
+}

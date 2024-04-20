@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class OniMask : BaseAccessory, IFlyingShieldAccessory, IDashable
+    public class OniMask : BaseFlyingShieldAccessory, IFlyingShieldAccessory, IDashable
     {
         public OniMask() : base(ItemRarityID.Orange, Item.sellPrice(0, 0, 80, 0))
         {

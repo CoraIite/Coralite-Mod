@@ -9,7 +9,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class LavaLamp : BaseAccessory, IFlyingShieldAccessory, IDashable
+    public class LavaLamp : BaseFlyingShieldAccessory, IFlyingShieldAccessory, IDashable
     {
         public LavaLamp() : base(ItemRarityID.Orange, Item.sellPrice(0, 0, 80, 0))
         {

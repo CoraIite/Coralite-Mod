@@ -16,7 +16,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
     [AutoloadEquip(EquipType.Neck)]
-    public class SnowflakeCharm : BaseAccessory, IFlyingShieldAccessory
+    public class SnowflakeCharm : BaseFlyingShieldAccessory, IFlyingShieldAccessory
     {
         public SnowflakeCharm() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 10))
         { }
@@ -96,7 +96,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
     public class Snowflake : ModProjectile
     {
-        public override string Texture => AssetDirectory.Accessories + Name;
+        public override string Texture => AssetDirectory.FlyingShieldAccessories + Name;
 
         ref float Timer => ref Projectile.ai[0];
         ref float State => ref Projectile.ai[1];
@@ -293,7 +293,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
-            effect.Parameters["gradientTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.Accessories + "SnowflakeSpikeGradient").Value);
+            effect.Parameters["gradientTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.FlyingShieldAccessories + "SnowflakeSpikeGradient").Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
             trail.Render(effect);

@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Items.Shadow;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +13,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class DemonsProtection : BaseAccessory, IFlyingShieldAccessory
+    public class DemonsProtection : BaseFlyingShieldAccessory, IFlyingShieldAccessory
     {
         public DemonsProtection() : base(ItemRarityID.Orange, Item.sellPrice(0, 0, 80))
         { }

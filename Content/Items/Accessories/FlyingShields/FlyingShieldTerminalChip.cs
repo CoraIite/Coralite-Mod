@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class FlyingShieldTerminalChip : BaseAccessory, IFlyingShieldAccessory
+    public class FlyingShieldTerminalChip : BaseFlyingShieldAccessory, IFlyingShieldAccessory
     {
         public override void SetStaticDefaults()
         {

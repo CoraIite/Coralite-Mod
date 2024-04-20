@@ -3769,3 +3769,22 @@ StarRuneBanner: {
 	DisplayName: 星辰符文旗
 	Tooltip: ""
 }
+
+MedalOfLife: {
+	DisplayName: 生命勋章
+	Tooltip:
+		'''
+		接近满血时获得增加10%伤害，5%攻击速度，5%移动速度
+		生命值上限与生命值相差小于20点时生效
+		'''
+}
+
+LifePulseDevice: {
+	DisplayName: 生命脉冲装置
+	Tooltip:
+		'''
+		生命值大于40时持续减少血量
+		生命值小于40时增加15%伤害和5%暴击率
+		伤害增幅为乘算
+		'''
+}

@@ -18,7 +18,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
     [AutoloadEquip(EquipType.Balloon)]
-    public class Terracrest : BaseAccessory, IFlyingShieldAccessory
+    public class Terracrest : BaseFlyingShieldAccessory, IFlyingShieldAccessory
     {
         public Terracrest() : base(ItemRarityID.Yellow, Item.sellPrice(0, 5))
         { }
@@ -234,7 +234,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
-            effect.Parameters["gradientTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.Accessories + "TerracrestGradient").Value);
+            effect.Parameters["gradientTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.FlyingShieldAccessories + "TerracrestGradient").Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
             trail.Render(effect);

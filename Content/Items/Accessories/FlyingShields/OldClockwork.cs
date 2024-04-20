@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using System;
 using Terraria;
@@ -10,7 +9,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
     [AutoloadEquip(EquipType.Back)]
-    public class OldClockwork : BaseAccessory, IFlyingShieldAccessory, IDashable
+    public class OldClockwork : BaseFlyingShieldAccessory, IFlyingShieldAccessory, IDashable
     {
         public OldClockwork() : base(ItemRarityID.LightRed, Item.sellPrice(0, 2, 50, 0))
         {
@@ -123,7 +122,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
     public class TightenTheClockwork : ModBuff
     {
-        public override string Texture => AssetDirectory.Accessories + Name;
+        public override string Texture => AssetDirectory.FlyingShieldAccessories + Name;
 
         public override void Update(Player player, ref int buffIndex)
         {

@@ -7,7 +7,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
     [AutoloadEquip(EquipType.Back)]
-    public class BeetleLimbStrap : BaseAccessory,ISpecialDrawBackPacks
+    public class BeetleLimbStrap : BaseFlyingShieldAccessory, ISpecialDrawBackPacks
     {
         public BeetleLimbStrap() : base(ItemRarityID.Yellow, Item.sellPrice(0, 5))
         { }

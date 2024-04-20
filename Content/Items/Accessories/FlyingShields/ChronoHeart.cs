@@ -20,7 +20,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Accessories.FlyingShields
 {
-    public class ChronoHeart : BaseAccessory, IFlyingShieldAccessory, IDashable
+    public class ChronoHeart : BaseFlyingShieldAccessory, IFlyingShieldAccessory, IDashable
     {
         public ChronoHeart() : base(ItemRarityID.Red, Item.sellPrice(0, 10, 0, 0))
         {
@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.Accessories.FlyingShields
 
             trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "SpurtTrail");
             WarpTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "WarpTex");
-            GradientTexture = Request<Texture2D>(AssetDirectory.Accessories + "ChronoHeartGradient");
+            GradientTexture = Request<Texture2D>(AssetDirectory.FlyingShieldAccessories + "ChronoHeartGradient");
         }
 
         public override void SetDefs()
