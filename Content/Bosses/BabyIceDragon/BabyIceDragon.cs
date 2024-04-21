@@ -55,6 +55,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         internal ref float GlowAlpha => ref NPC.localAI[0];
         internal ref float DoubleDashAngle => ref NPC.localAI[1];
         internal ref float DoubleDashLength => ref NPC.localAI[2];
+        internal ref float DropScaleCount => ref NPC.localAI[3];
 
         public int movePhase;
         public bool canDrawShadows;
@@ -104,20 +105,20 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 {
                     NPC.lifeMax = (int)((3820 + numPlayers * 1750) / journeyScale);
                     NPC.damage = 55;
-                    NPC.defense = 12;
+                    NPC.defense = 15;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
                     NPC.lifeMax = (int)((4720 + numPlayers * 2100) / journeyScale);
                     NPC.damage = 60;
-                    NPC.defense = 15;
+                    NPC.defense = 18;
                 }
 
                 if (Main.getGoodWorld)
                 {
                     NPC.damage = 70;
-                    NPC.defense = 15;
+                    NPC.defense = 20;
                 }
 
                 if (Main.zenithWorld)
@@ -130,20 +131,20 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
             NPC.lifeMax = 3820 + numPlayers * 1750;
             NPC.damage = 55;
-            NPC.defense = 12;
+            NPC.defense = 15;
 
             if (Main.masterMode)
             {
                 NPC.lifeMax = 4720 + numPlayers * 2100;
                 NPC.damage = 60;
-                NPC.defense = 15;
+                NPC.defense = 18;
             }
 
             if (Main.getGoodWorld)
             {
                 NPC.lifeMax = 5320 + numPlayers * 2200;
                 NPC.damage = 70;
-                NPC.defense = 15;
+                NPC.defense = 20;
             }
 
             if (Main.zenithWorld)
@@ -162,6 +163,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<IcicleCrystal>(), 1, 3, 5));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<IcicleScale>(), 1, 2, 4));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<IcicleBreath>(), 1, 4, 7));
             npcLoot.Add(notExpertRule);
         }
 
@@ -170,7 +173,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (Main.dedServ)
                 return;
 
-            GlowTex = ModContent.Request<Texture2D>(AssetDirectory.BabyIceDragon + Name + "_Glow");
+            GlowTex = Request<Texture2D>(AssetDirectory.BabyIceDragon + Name + "_Glow");
             //for (int i = 0; i < 5; i++)
             //    GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.BossGores + "Rediancie_Gore" + i);
         }
@@ -186,6 +189,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override void HitEffect(NPC.HitInfo hit)
         {
             SoundEngine.PlaySound(CoraliteSoundID.DigIce, NPC.Center);
+            if (NPC.life < NPC.lifeMax / 4 && hit.Crit && DropScaleCount < 8)
+            {
+                DropScaleCount++;
+                Item.NewItem(NPC.GetSource_DropAsItem(), NPC.getRect(), ItemType<IcicleScale>());
+            }
         }
 
         public override void OnKill()

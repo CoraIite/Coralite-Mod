@@ -65,7 +65,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public abstract int ItemType { get; }
 
-        public Vector2 Center => position + new Vector2(width, height);
+        public Vector2 Center
+        {
+            get => position + new Vector2(width / 2, height / 2);
+            set => position = value - new Vector2(height / 2, width / 2);
+        }
+
         public Rectangle HitBox => new Rectangle((int)position.X, (int)position.Y, width, height);
 
         protected sealed override void Register()
@@ -101,6 +106,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             if (ShouldUpdatePosition())
                 position += velocity;
+
+            //限制不能出圈
+            Vector2 webCenter = catcher.webCenter.ToWorldCoordinates();
+            if (Vector2.Distance(Center, webCenter) > catcher.webRadius)
+                Center = (Center - webCenter).SafeNormalize(Vector2.Zero) * catcher.webRadius;
 
             if (catcher.CursorBox.Intersects(HitBox))//鼠标接触到了
             {

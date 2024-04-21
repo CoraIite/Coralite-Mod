@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
@@ -7,6 +8,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         protected IFairyItem selfItem;
 
         public IFairyItem FairyItem { get => selfItem; set => selfItem = value; }
+        public Player Owner => Main.player[Projectile.owner];
+
+        public int State;
+        public int Timer;
+        protected int lifeMax;
+        protected int life;
+
+        private bool init=true;
 
         public enum AIStates
         {
@@ -29,6 +38,52 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (!CheckSelfItem())
                 return;
 
+            if (init)
+Initilize();
+
+            switch (State)
+            {
+                default:
+                    Projectile.Kill(); break;
+                case (int)AIStates.Shooting:
+                    {
+                        Shooting();
+                    }
+                    break;
+                case (int)AIStates.Action:
+                    {
+                        Action();
+                    }
+                    break;
+                case (int)AIStates.Backing:
+                    {
+                        Backing();
+                    }
+                    break;
+            }
+        }
+
+        public void Initilize()
+        {
+            init = false;
+
+            OnInitialize();
+        }
+
+        public virtual void OnInitialize() { }
+
+        public virtual void Shooting()
+        {
+
+        }
+
+        public virtual void Action()
+        {
+
+        }
+
+        public virtual void Backing()
+        {
 
         }
 
@@ -39,6 +94,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Projectile.Kill();
                 return false;
             }
+            else
+            {
+                lifeMax = (int)FairyItem.FairyLifeMax;
+                life = FairyItem.Life;
+            }
 
             return true;
         }
@@ -46,7 +106,33 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             //自身受伤
-            FairyItem?.Hurt();
+            if (FairyItem != null)
+                if (FairyItem.Hurt(Owner, target, hit, damageDone))
+                {
+                    Projectile.Kill();
+                    return;
+                }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawSelf(Main.spriteBatch, Main.screenPosition, lightColor);
+
+            DrawHealthBar();
+            return false;
+        }
+
+        /// <summary>
+        /// 绘制自己
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="screenPos"></param>
+        /// <param name="lightColor"></param>
+        public virtual void DrawSelf(SpriteBatch spriteBatch,Vector2 screenPos,Color lightColor) { }
+
+        public virtual void DrawHealthBar()
+        {
+            Main.instance.DrawHealthBar(Projectile.Bottom.X, Projectile.Bottom.Y + 12, life, lifeMax, 1, 1);
         }
     }
 

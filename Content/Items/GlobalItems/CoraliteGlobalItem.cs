@@ -192,6 +192,12 @@ namespace Coralite.Content.Items.GlobalItems
 
             return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
         }
+        
+        public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)
+        {
+            
+            base.PickAmmo(weapon, ammo, player, ref type, ref speed, ref damage, ref knockback);
+        }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {

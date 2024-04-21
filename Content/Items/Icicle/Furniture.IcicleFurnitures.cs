@@ -23,8 +23,8 @@ namespace Coralite.Content.Items.Icicle
 
         public override void AddRecipes()
         {
-            CreateRecipe(200)
-                .AddIngredient<IcicleCrystal>()
+            CreateRecipe(150)
+                .AddIngredient<IcicleBreath>()
                 .AddIngredient(ItemID.StoneBlock, 100)
                 .AddTile(TileID.IceMachine)
                 .Register();

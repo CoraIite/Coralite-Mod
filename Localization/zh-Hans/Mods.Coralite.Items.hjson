@@ -1270,7 +1270,7 @@ SlimeEmperorSoulBox: {
 
 ANewBirthOfIce: {
 	DisplayName: 冰雪的新生
-	Tooltip: 击败世界中的邪恶BOSS后，一个小小生命在冰龙巢中出现了
+	Tooltip: 击败克苏鲁之眼后，一个小小生命在冰龙巢中出现了
 }
 
 HiddenRed: {
@@ -3787,4 +3787,19 @@ LifePulseDevice: {
 		生命值小于40时增加15%伤害和5%暴击率
 		伤害增幅为乘算
 		'''
+}
+
+IcicleBreath: {
+	DisplayName: 冰晶龙息
+	Tooltip: 充满着冰之魔力，冰龙宝宝用它来将水变成具有杀伤力的吐息
+}
+
+IcicleScale: {
+	DisplayName: 冰晶鳞片
+	Tooltip: 冰龙宝宝的鳞片，尚未完全生长但已经拥有足够的防御力
+}
+
+IcicleAxe: {
+	DisplayName: 破冰镐
+	Tooltip: 挖掘冰块时效率增加
 }

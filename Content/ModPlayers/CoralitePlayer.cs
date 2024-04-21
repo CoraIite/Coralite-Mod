@@ -67,19 +67,13 @@ namespace Coralite.Content.ModPlayers
         public int split;
         #endregion
 
-        /// <summary>
-        /// 雷鸣灌注
-        /// </summary>
+        /// <summary> 雷鸣灌注 </summary>
         public bool flaskOfThunder;
 
-        /// <summary>
-        /// 赤玉灌注
-        /// </summary>
+        /// <summary> 赤玉灌注 </summary>
         public bool flaskOfRedJade;
 
-        /// <summary>
-        /// 雷鸣Debuff，会有持续扣血
-        /// </summary>
+        /// <summary> 雷鸣Debuff，会有持续扣血 </summary>
         public bool thunderElectrified;
 
         public byte nightmareCount;

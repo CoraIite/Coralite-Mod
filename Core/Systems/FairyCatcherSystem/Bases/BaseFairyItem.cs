@@ -50,9 +50,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public bool IsDead => dead;
         public int Life { get => life; set => life = value; }
 
-        public virtual void Hurt()
+        public virtual bool Hurt(Player owner,NPC target,NPC.HitInfo hit, int damageDon)
         {
+            int damage = target.damage;
 
+            damage -= (int)FairyDefence;
+
+            if (damage < 1)
+                damage = 1;
+
+            life -= damage;
+            if (life <= 0)
+                dead = true;
+            LimitLife();
+
+            return dead;
         }
 
         /// <summary>
@@ -103,8 +115,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public bool IsDead { get; }
         public FairyData IV { get; set; }
         public int Life { get; set; }
-
-        public void Hurt();
+        public float FairyLifeMax { get; }
+        /// <summary>
+        /// 返回值是仙灵是否死亡
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="hit"></param>
+        /// <param name="damageDon"></param>
+        /// <returns></returns>
+        public bool Hurt(Player owner, NPC target, NPC.HitInfo hit, int damageDon);
         public bool ShootFairy(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int catcherDamage, float knockBack);
     }
 }

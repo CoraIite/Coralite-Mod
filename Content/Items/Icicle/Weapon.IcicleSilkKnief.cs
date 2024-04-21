@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Icicle
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Ranged;
             Item.value = Item.sellPrice(0, 5, 0, 0);
-            Item.rare = ItemRarityID.Orange;
+            Item.rare = ItemRarityID.Green;
             Item.shoot = ProjectileType<IcicleKnief>();
             Item.shootSpeed = 14;
 
@@ -74,7 +74,8 @@ namespace Coralite.Content.Items.Icicle
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<IcicleCrystal>(2)
+                .AddIngredient<IcicleCrystal>()
+                .AddIngredient<IcicleScale>(2)
                 .AddIngredient(ItemID.WhiteString)
                 .AddTile(TileID.IceMachine)
                 .Register();

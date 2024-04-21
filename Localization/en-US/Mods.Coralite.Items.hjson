@@ -1267,7 +1267,7 @@ SlimeEmperorSoulBox: {
 
 ANewBirthOfIce: {
 	DisplayName: A New Birth of Ice
-	Tooltip: After defeating the evil boss in the world, a tiny life appears in the Ice Dragon's Nest
+	Tooltip: After defeating the Eye of Cthulhu, a tiny life appears in the Ice Dragon's Nest
 }
 
 HiddenRed: {
@@ -3688,5 +3688,20 @@ MedalOfLife: {
 
 LifePulseDevice: {
 	DisplayName: Life Pulse Device
+	Tooltip: ""
+}
+
+IcicleBreath: {
+	DisplayName: Icicle Breath
+	Tooltip: ""
+}
+
+IcicleScale: {
+	DisplayName: Icicle Scale
+	Tooltip: ""
+}
+
+IcicleAxe: {
+	DisplayName: Icicle Axe
 	Tooltip: ""
 }

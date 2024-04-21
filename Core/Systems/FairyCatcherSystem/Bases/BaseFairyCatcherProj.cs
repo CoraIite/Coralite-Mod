@@ -301,6 +301,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 cursorScale = fcp.cursorSizeBonus.ApplyTo(cursorScale);
 
             cursorRect = GetCursorBox();//避免一大堆仙灵然后疯狂调用贴图
+
+            //限制指针不能出圈
+            Vector2 webCenter = this.webCenter.ToWorldCoordinates();
+            if (Vector2.Distance(cursorCenter, webCenter) > webRadius)
+                cursorCenter = (cursorCenter - webCenter).SafeNormalize(Vector2.Zero) * webRadius;
         }
 
         /// <summary>

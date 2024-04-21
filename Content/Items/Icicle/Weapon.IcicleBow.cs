@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Icicle
             Item.DamageType = DamageClass.Ranged;
             Item.useAmmo = AmmoID.Arrow;
             Item.value = Item.sellPrice(0, 1, 0, 0);
-            Item.rare = ItemRarityID.Orange;
+            Item.rare = ItemRarityID.Green;
             Item.shoot = ProjectileType<IcicleBowHeldProj>();
             Item.UseSound = CoraliteSoundID.Bow_Item5;
 
@@ -52,6 +52,7 @@ namespace Coralite.Content.Items.Icicle
         {
             CreateRecipe()
             .AddIngredient<IcicleCrystal>(2)
+            .AddIngredient<IcicleScale>(2)
             .AddTile(TileID.IceMachine)
             .Register();
         }
