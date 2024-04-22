@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
@@ -53,7 +55,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="baseDamage"></param>
         /// <param name="baseDefence"></param>
         /// <param name="baseLifeMax"></param>
-        /// <param name="aseScale"></param>
+        /// <param name="baseScale"></param>
         public static void FairyItemSets(Item item, int fairyProjType, int baseDamage, int baseDefence, int baseLifeMax, float baseScale)
         {
             if (item.TryGetGlobalItem(out FairyGlobalItem fi))
@@ -68,6 +70,27 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         #endregion
+
+        public override bool CanPickup(Item item, Player player)
+        {
+            //自身是仙灵物品并且身上有空的仙灵瓶
+            if (item.TryGetGlobalItem(out FairyGlobalItem fgi) && fgi.IsFairy)
+            {
+                if (player.TryGetModPlayer(out FairyCatcherPlayer fcp)
+                    &&fcp.FairyCatch_GetEmptyFairyBottle(out IFairyBottle bottle,out int emptySlot))
+                {
+                    bottle.Fairies[emptySlot]= item.Clone();
+                    item.TurnToAir();
+                    SoundEngine.PlaySound(CoraliteSoundID.Grab, player.Center);
+
+                    PopupText.NewText(PopupTextContext.RegularItemPickup, item, item.stack, noStack: true, true);
+
+                    return false;
+                }
+            }
+
+            return base.CanPickup(item, player);
+        }
 
         #region IO
 

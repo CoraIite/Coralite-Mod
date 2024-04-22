@@ -39,7 +39,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 return;
 
             if (init)
-Initilize();
+                Initilize();
 
             switch (State)
             {

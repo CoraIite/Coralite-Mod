@@ -116,15 +116,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
         }
 
-        public bool FairyShoot_GetFairyBottle(out IFairyBottle bait)
+        public bool FairyShoot_GetFairyBottle(out IFairyBottle bottle)
         {
-            bait = null;
+            bottle = null;
 
             for (int j = 0; j < 50; j++)
             {
                 if (Player.inventory[j].stack > 0 && Player.inventory[j].ModItem is IFairyBottle fairyBottle)
                 {
-                    bait = fairyBottle;
+                    bottle = fairyBottle;
                     return true;
                 }
             }
@@ -145,11 +145,30 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             return (int)fairyCatchPowerBonus.ApplyTo(basePower);
         }
 
-        public override bool OnPickup(Item item)
+        public bool FairyCatch_GetEmptyFairyBottle(out IFairyBottle fairyBottle,out int emptySlot)
         {
+            fairyBottle = null;
+            emptySlot = -1;
 
+            for (int j = 0; j < 50; j++)
+            {
+                if (Player.inventory[j].stack > 0 && Player.inventory[j].ModItem is IFairyBottle)
+                {
+                    fairyBottle = Player.inventory[j].ModItem as IFairyBottle;
 
-            return base.OnPickup(item);
+                    for (int i = 0; i < fairyBottle.Fairies.Length; i++)
+                    {
+                        Item item = fairyBottle.Fairies[i];
+                        if (item.IsAir)
+                        {
+                            emptySlot = i;
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
 
         /// <summary>

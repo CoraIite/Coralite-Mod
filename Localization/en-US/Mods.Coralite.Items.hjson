@@ -3705,3 +3705,8 @@ IcicleAxe: {
 	DisplayName: Icicle Axe
 	Tooltip: ""
 }
+
+VineLasso: {
+	DisplayName: Vine Lasso
+	Tooltip: ""
+}

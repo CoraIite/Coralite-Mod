@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.DamageClasses;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
@@ -21,14 +20,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public sealed override void SetDefaults()
         {
-            Item.DamageType = ModContent.GetInstance<FairyDamage>();
+            Item.DamageType = FairyDamage.Instance;
 
             SetOtherDefaults();
         }
 
         public virtual void SetOtherDefaults() { }
 
-        public override bool CanRightClick() => true;
+        public override bool AltFunctionUse(Player player) => true;
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {

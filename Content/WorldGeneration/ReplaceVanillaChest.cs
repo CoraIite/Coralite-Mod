@@ -1,5 +1,5 @@
 ﻿using Coralite.Content.Items.Accessories;
-using Coralite.Content.Items.Accessories.FlyingShields;
+using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.Magike.Tools;
 using Coralite.Content.Tiles.Magike;

@@ -12,8 +12,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
     {
         public Player Owner => Main.player[Projectile.owner];
 
-        public abstract string CursorTexture { get; }
-        public virtual string HandleTexture => AssetDirectory.FairyCatcherItems + Name;
+        public override string Texture => AssetDirectory.FairyCatcherItems+Name;
+        public virtual string HandleTexture => Texture + "Handle";
 
         public ref float SpawnTimer => ref Projectile.localAI[0];
 
@@ -92,6 +92,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             SetOtherDefaults();
         }
 
+        /// <summary>
+        /// 请务必设置<see cref="cursorMovement"/><br></br>
+        /// </summary>
         public virtual void SetOtherDefaults() { }
 
         #region AI
@@ -192,7 +195,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                         UpdateFairySpawn();
 
                         //右键一下就结束捕捉
-                        if (Main.mouseRight && Main.mouseRightRelease)
+                        if (Main.mouseRight)
                             TrunToBacking();
                         //玩家距离过远进入回收阶段
                         if (Vector2.Distance(Owner.Center, Projectile.Center) > 1000)
@@ -204,8 +207,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                         UpdateWebVisualEffect_Backing();
 
                         //直接向玩家lerp
-                        Projectile.Center = Vector2.Lerp(Projectile.Center, Owner.Center, 0.15f);
-                        cursorCenter = Vector2.Lerp(cursorCenter, Projectile.Center, 0.15f);
+                        Projectile.Center = Vector2.Lerp(Projectile.Center, Owner.Center, 0.3f);
+                        cursorCenter = Vector2.Lerp(cursorCenter, Projectile.Center, 0.8f);
                         cursorRotation = (cursorCenter - Owner.Center).ToRotation();
 
                         if (Vector2.Distance(Projectile.Center, Owner.Center) < 48)
@@ -230,7 +233,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public void TrunToBacking()
         {
-            state = (int)AIStates.Catching;
+            state = (int)AIStates.Backing;
 
             Projectile.timeLeft = 60 * 10;
         }
@@ -281,9 +284,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 attempt.rarity = SetFairyAttemptRarity();
 
                 fcp.FairyCatch_GetBait(out Item bait);
-                attempt.baitItem = bait;
-                if (bait.ModItem is IFairyBait fairybait)
-                    fairybait.EditFiashingAttempt(attempt);
+                if (bait!=null)
+                {
+                    attempt.baitItem = bait;
+                    if (bait.ModItem is IFairyBait fairybait)
+                        fairybait.EditFiashingAttempt(attempt);
+                }
 
                 if (FairySystem.SpawnFairy(attempt, out Fairy fairy))
                 {
@@ -305,7 +311,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             //限制指针不能出圈
             Vector2 webCenter = this.webCenter.ToWorldCoordinates();
             if (Vector2.Distance(cursorCenter, webCenter) > webRadius)
-                cursorCenter = (cursorCenter - webCenter).SafeNormalize(Vector2.Zero) * webRadius;
+                cursorCenter = webCenter + (cursorCenter - webCenter).SafeNormalize(Vector2.Zero) * webRadius;
         }
 
         /// <summary>
@@ -367,6 +373,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual void CurserAI()
         {
             cursorMovement?.HandleMovement(this);
+
+            cursorCenter += cursorVelocity;
+
+            //限制不能出圈
+            Vector2 webCenter = this.webCenter.ToWorldCoordinates();
+            if (Vector2.Distance(cursorCenter, webCenter) > webRadius)
+                cursorCenter = webCenter+(cursorCenter - webCenter).SafeNormalize(Vector2.Zero) * webRadius;
         }
 
         public virtual FairyAttempt.Rarity SetFairyAttemptRarity()
@@ -402,7 +415,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <returns></returns>
         public virtual Vector2 GetHandlePos(Texture2D handleTex)
         {
-            return Owner.itemLocation + new Vector2(DrawOriginOffsetX, DrawOriginOffsetY);
+            return Owner.itemLocation + new Vector2(Owner.direction * Owner.gravDir * DrawOriginOffsetX, DrawOriginOffsetY);
         }
 
         /// <summary>
@@ -583,7 +596,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
 
             Texture2D handleTex = ModContent.Request<Texture2D>(HandleTexture).Value;
-            Texture2D cursorTex = ModContent.Request<Texture2D>(CursorTexture).Value;
+            Texture2D cursorTex = Projectile.GetTexture();
 
             //绘制连线
             DrawLine(GetHandlePos(handleTex), GetStringTipPos(handleTex));

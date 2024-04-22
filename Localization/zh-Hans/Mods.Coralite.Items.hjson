@@ -3803,3 +3803,8 @@ IcicleAxe: {
 	DisplayName: 破冰镐
 	Tooltip: 挖掘冰块时效率增加
 }
+
+VineLasso: {
+	// DisplayName: Vine Lasso
+	// Tooltip: ""
+}

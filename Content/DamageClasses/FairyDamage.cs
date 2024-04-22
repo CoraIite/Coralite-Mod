@@ -4,6 +4,18 @@ namespace Coralite.Content.DamageClasses
 {
     public class FairyDamage : DamageClass
     {
+        public static FairyDamage Instance;
+
+        public override void Load()
+        {
+            Instance = this;
+        }
+
+        public override void Unload()
+        {
+            Instance = null;
+        }
+
         public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)
         {
             if (damageClass == Generic)

@@ -110,7 +110,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             //限制不能出圈
             Vector2 webCenter = catcher.webCenter.ToWorldCoordinates();
             if (Vector2.Distance(Center, webCenter) > catcher.webRadius)
-                Center = (Center - webCenter).SafeNormalize(Vector2.Zero) * catcher.webRadius;
+                Center = webCenter + (Center - webCenter).SafeNormalize(Vector2.Zero) * catcher.webRadius;
 
             if (catcher.CursorBox.Intersects(HitBox))//鼠标接触到了
             {

@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.Accessories.FlyingShields;
+﻿using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Core.Systems.MagikeSystem.CraftConditions;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;

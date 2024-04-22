@@ -43,7 +43,7 @@ namespace Coralite.Content.CustomHooks
                 Texture2D mainTex = TextureAssets.ArmorHead[drawinfo.drawPlayer.head].Value;
                 bodyFrame3 = mainTex.Frame(1, 20, 0, frameY2);
                 Vector2 headVect2 = new Vector2(bodyFrame3.Width / 2, bodyFrame3.Height / 2); // bodyFrame3.Size() / 2;
-                if (bodyFrame3.Width%2!=0&&drawinfo.drawPlayer.direction<0)
+                if (bodyFrame3.Width % 2 != 0 && drawinfo.drawPlayer.direction < 0)
                 {
                     helmetOffset.X -= 1;
                 }
@@ -169,7 +169,7 @@ namespace Coralite.Content.CustomHooks
         private void On_PlayerDrawLayers_DrawPlayer_10_BackAcc(On_PlayerDrawLayers.orig_DrawPlayer_10_BackAcc orig, ref PlayerDrawSet drawinfo)
         {
             EquipTexture e = EquipLoader.GetEquipTexture(EquipType.Back, drawinfo.drawPlayer.back);
-            if (e != null && e.Item != null && e.Item is ISpecialDrawBackPacks && drawinfo.drawPlayer.back > 0)
+            if (e != null && e.Item != null && e.Item is ISpecialDrawBackpacks specialBackpack && drawinfo.drawPlayer.back > 0)
             {
                 //if (drawinfo.drawPlayer.mount.Active)
                 //    return;
@@ -178,27 +178,34 @@ namespace Coralite.Content.CustomHooks
                 int num2 = drawinfo.drawPlayer.back;
                 //float num3 = -4f;
                 //float num4 = -8f;
-                Rectangle frame = new Rectangle(0, drawinfo.drawPlayer.bodyFrame.Y, TextureAssets.AccBack[num2].Width(), drawinfo.drawPlayer.bodyFrame.Height);
+
+                Texture2D tex = TextureAssets.AccBack[num2].Value;
+
+                int yFrame = drawinfo.drawPlayer.bodyFrame.Y / 56;
+
+                Rectangle frame = tex.Frame(1, 20, 0, yFrame);//  new Rectangle(0, drawinfo.drawPlayer.bodyFrame.Y,tex.Width, drawinfo.drawPlayer.bodyFrame.Height);
                 Vector2 vector3 = new Vector2(0f, 8f);
                 if (frame.Width / 2 % 2 != 0)
                 {
                     vector3.X -= drawinfo.drawPlayer.direction;
                 }
 
+                Vector2 exOffset = specialBackpack.ExtraOffset;
+                exOffset.X*= drawinfo.drawPlayer.direction;
                 Vector2 vec5 = 
                     drawinfo.Position 
-                    - Main.screenPosition + 
-                    drawinfo.drawPlayer.bodyPosition 
-                    + new Vector2(drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - drawinfo.drawPlayer.bodyFrame.Height / 2) 
-                    + new Vector2(0f, -4f) 
-                    + vector3;
+                    - Main.screenPosition +
+                    drawinfo.drawPlayer.bodyPosition
+                    + new Vector2(drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - frame.Height / 2)
+                    + new Vector2(0f, -4f)
+                    + vector3
+                    + exOffset;
                 vec5 = vec5.Floor();
                 //Vector2 vec6 = drawinfo.Position - Main.screenPosition + new Vector2(drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - drawinfo.drawPlayer.bodyFrame.Height / 2) + new Vector2((-9f + num3) * (float)drawinfo.drawPlayer.direction, (2f + num4) * drawinfo.drawPlayer.gravDir) + vector3;
                 //vec6 = vec6.Floor();
-
                 shader = drawinfo.cBack;
                 DrawData item = new DrawData(TextureAssets.AccBack[num2].Value, vec5 , frame,
-                    drawinfo.colorArmorBody, drawinfo.drawPlayer.bodyRotation, new Vector2(TextureAssets.AccBack[num2].Width() / 2, drawinfo.bodyVect.Y), 1f, drawinfo.playerEffect);
+                    drawinfo.colorArmorBody, drawinfo.drawPlayer.bodyRotation, new Vector2(frame.Width / 2, frame.Height / 2), 1f, drawinfo.playerEffect);
                 item.shader = shader;
                 drawinfo.DrawDataCache.Add(item);
             }
@@ -327,8 +334,8 @@ namespace Coralite.Content.CustomHooks
 
     }
 
-    public interface ISpecialDrawBackPacks
+    public interface ISpecialDrawBackpacks
     {
-
+       public virtual Vector2 ExtraOffset => Vector2.Zero;
     }
 }

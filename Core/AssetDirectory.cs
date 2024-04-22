@@ -65,6 +65,7 @@ namespace Coralite.Core
         public const string PhantomItems = Items + "Phantom/";
         public const string RedJadeItems = Items + "RedJades/";
         public const string IcicleItems = Items + "Icicle/";
+        public const string SteelItems = Items + "Steel/";
         public const string ThunderItems = Items + "Thunder/";
         public const string StarsItems = Items + "Stars/";
         public const string DisturbanceItems = Items + "Disturbance/";
@@ -72,10 +73,10 @@ namespace Coralite.Core
         public const string NightmareItems = Items + "Nightmare/";
         public const string CoreKeeperItems = Items + "CoreKeeper/";
         public const string FlyingShieldItems = Items + "FlyingShields/";
+        public const string FlyingShieldAccessories = FlyingShieldItems + "Accessories/";
         public const string TheHyacinthSeriesItems = Items + "TheHyacinthSeries/";
 
         public const string Accessories = Items + "Accessories/";
-        public const string FlyingShieldAccessories = Accessories + "FlyingShield/";
 
         public const string Materials = Items + "Materials/";
         public const string Placeable = Items + "Placeable/";
