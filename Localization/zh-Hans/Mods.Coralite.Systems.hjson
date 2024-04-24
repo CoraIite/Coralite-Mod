@@ -9,3 +9,21 @@ MagikeSystem: {
 	FreosanBonus: 冻：攻击时生成冰块
 	HeatanBonus: 灼：攻击时生成灼火球
 }
+
+FairySystem: {
+	ZoneForest: 在地表森林捕获
+	// WeakLevel: 软弱：{0}（基础 {1}）
+	// VeryCommonLevel: 普通：{0}（基础 {1}）
+	// CommonLevel: 普通：{0}（基础 {1}）
+	// UncommonLevel: 少见：{0}（基础 {1}）
+	// RareLevel: 稀有：{0}（基础 {1}）
+	// SpecialLevel: 独特：{0}（基础 {1}）
+	// UniqueLevel: 唯一：{0}（基础 {1}）
+	// TimelessLevel: 永恒：{0}（基础 {1}）
+	// FairyLifeMax: "血量 "
+	// FairyDamage: "伤害 "
+	// FairyDefence: "防御 "
+	// FairyScale: "大小 "
+	// CurrentLife: 当前生命值：{0} / {1}
+	// ResurrectionTime: 复活时间：{0}
+}

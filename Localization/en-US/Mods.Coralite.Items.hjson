@@ -3710,3 +3710,8 @@ VineLasso: {
 	DisplayName: Vine Lasso
 	Tooltip: ""
 }
+
+GreenFairyItem: {
+	DisplayName: Green Fairy Item
+	Tooltip: ""
+}

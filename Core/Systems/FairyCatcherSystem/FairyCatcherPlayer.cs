@@ -60,21 +60,27 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             damageRamdom = new FairyIVRandomModifyer()
             {
                 additive_Min = 0.8f,
-                additive_Max = 1.2f
+                additive_Max = 1.2f,
+                multiplicative_Min = 1,
+                multiplicative_Max = 1.01f,
             };
 
             //默认防御区间为0.8-1.15
             defenceRamdom = new FairyIVRandomModifyer()
             {
                 additive_Min = 0.9f,
-                additive_Max = 1.15f
+                additive_Max = 1.15f,
+                multiplicative_Min = 1,
+                multiplicative_Max = 1.01f,
             };
 
             //默认血量区间为0.8-1.3
             lifeMaxRamdom = new FairyIVRandomModifyer()
             {
                 additive_Min = 0.8f,
-                additive_Max = 1.3f
+                additive_Max = 1.3f,
+                multiplicative_Min = 1,
+                multiplicative_Max = 1.01f,
             };
 
             //默认大小区间0.9-1.1
@@ -183,25 +189,26 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             data.damageBonus = new StatModifier(
                 Main.rand.NextFloat(damageRamdom.additive_Min, damageRamdom.additive_Max),
                 Main.rand.NextFloat(damageRamdom.multiplicative_Min, damageRamdom.multiplicative_Max),
-                Main.rand.NextFloat(damageRamdom.additive_Min, damageRamdom.additive_Max),
-                Main.rand.NextFloat(damageRamdom.additive_Min, damageRamdom.additive_Max)
+                Main.rand.NextFloat(damageRamdom.Flat_Min, damageRamdom.Flat_Max),
+                Main.rand.NextFloat(damageRamdom.base_Min, damageRamdom.base_Max)
+                
                 );
             data.defenceBonus = new StatModifier(
                 Main.rand.NextFloat(defenceRamdom.additive_Min, defenceRamdom.additive_Max),
                 Main.rand.NextFloat(defenceRamdom.multiplicative_Min, defenceRamdom.multiplicative_Max),
-                Main.rand.NextFloat(defenceRamdom.additive_Min, defenceRamdom.additive_Max),
-                Main.rand.NextFloat(defenceRamdom.additive_Min, defenceRamdom.additive_Max)
+                Main.rand.NextFloat(defenceRamdom.Flat_Min, defenceRamdom.Flat_Max),
+                Main.rand.NextFloat(defenceRamdom.base_Min, defenceRamdom.base_Max)
                 );
             data.lifeMaxBonus = new StatModifier(
                 Main.rand.NextFloat(lifeMaxRamdom.additive_Min, lifeMaxRamdom.additive_Max),
                 Main.rand.NextFloat(lifeMaxRamdom.multiplicative_Min, lifeMaxRamdom.multiplicative_Max),
-                Main.rand.NextFloat(lifeMaxRamdom.additive_Min, lifeMaxRamdom.additive_Max),
-                Main.rand.NextFloat(lifeMaxRamdom.additive_Min, lifeMaxRamdom.additive_Max)
+                Main.rand.NextFloat(lifeMaxRamdom.Flat_Min, lifeMaxRamdom.Flat_Max),
+                Main.rand.NextFloat(lifeMaxRamdom.base_Min, lifeMaxRamdom.base_Max)
                 );
 
-            data.scaleBonus=Main.rand.NextFloat(ScaleRange.Item1,ScaleRange.Item2);
+            data.scaleBonus = Main.rand.NextFloat(ScaleRange.Item1, ScaleRange.Item2);
 
-            return default;
+            return data;
         }
     }
 }

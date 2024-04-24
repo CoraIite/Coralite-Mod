@@ -18,6 +18,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override string Texture => AssetDirectory.FairyItems + Name;
 
+        public virtual int HorizontalFrames { get => 1; }
+        public virtual int VerticalFrames { get => 1; }
+
         /// <summary>
         /// 是否存活，在捕捉器内使用
         /// </summary>
@@ -34,10 +37,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public Vector2 position;
         public Vector2 velocity;
+        public float rotation;
         public int width;
         public int height;
         public float scale;
         public float alpha = 1;
+
+        public int frameCounter;
+        public Rectangle frame;
+        public int spriteDirection;
 
         /// <summary>
         /// 为false时就不会能被捉，进度不会涨
@@ -53,7 +61,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 当被捕捉时的进度增加量，默认从0加到100需要20秒
         /// </summary>
-        public virtual float ProgressAdder { get => 100f / (60 * 20f); }
+        public virtual float ProgressAdder { get => 10;/*100f / (60 * 15f);*/ }
 
         /// <summary>
         /// 自身的稀有度，请与出现条件中的相对应
@@ -71,6 +79,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             set => position = value - new Vector2(height / 2, width / 2);
         }
 
+        public Vector2 Bottom
+        {
+            get => position + new Vector2(width / 2, height);
+            set => position = value - new Vector2(height / 2, width);
+        }
+
         public Rectangle HitBox => new Rectangle((int)position.X, (int)position.Y, width, height);
 
         protected sealed override void Register()
@@ -83,8 +97,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             Type = FairyLoader.ReserveParticleID();
         }
 
-        public abstract int GetFairyItemType();
-
         public virtual Fairy NewInstance()
         {
             var inst = (Fairy)Activator.CreateInstance(GetType(), true);
@@ -95,6 +107,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 用于注册生成方式，详细参考<see cref="FairySystem"/>
         /// </summary>
         public virtual void RegisterSpawn() { }
+
         #region 捕获器中的AI
 
         /// <summary>
@@ -102,7 +115,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public void UpdateInCatcher(BaseFairyCatcherProj catcher)
         {
-            AI_InCatcher(catcher.GetCursorBox());
+            AI_InCatcher(catcher.GetCursorBox(), catcher);
 
             if (ShouldUpdatePosition())
                 position += velocity;
@@ -139,6 +152,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 }
             }
 
+            Main.NewText(catchProgress);
             //如果减小到0就消失
             if (catchProgress <= 0)
                 Despawn();
@@ -146,12 +160,24 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 Catch(catcher.Owner);
         }
 
+        public void Spawn(FairyAttempt attempt)
+        {
+            active = true;
+            canBeCaught = true;
+            scale = 1;
+            width = 8;
+            height = 8;
+            position = new Vector2(attempt.X, attempt.Y) * 16;
+
+            OnSpawn();
+        }
+
         public virtual void OnSpawn() { }
 
         /// <summary>
         /// 在捕捉器内的AI
         /// </summary>
-        public virtual void AI_InCatcher(Rectangle cursor) { }
+        public virtual void AI_InCatcher(Rectangle cursor,BaseFairyCatcherProj catcher) { }
 
         public virtual bool ShouldUpdatePosition() => true;
 
@@ -160,11 +186,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public virtual void ReduceProgress()
         {
-            catchProgress -= 100f / (60 * 20f);
+            catchProgress -= 100f / (60 * 40f);
         }
 
         #endregion
-
 
         /// <summary>
         /// 被捕获时执行
@@ -178,7 +203,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             //为物品的字段赋值，如果这个物品不是一个仙灵那么就跳过
             if (i.ModItem is BaseFairyItem fairyitem && player.TryGetModPlayer(out FairyCatcherPlayer fcp))
+            {
                 fairyitem.IV = fcp.RollFairyIndividualValues(fairyitem);
+                fairyitem.Life = (int)fairyitem.FairyLifeMax;
+            }
 
             //调用onCatch
             OnCatch(player, i);
@@ -226,7 +254,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public virtual void Draw_InCatcher()
         {
+            Texture2D mainTex = ModContent.Request<Texture2D>(Texture).Value;
+            var frame = mainTex.Frame(HorizontalFrames, VerticalFrames, this.frame.X, this.frame.Y);
 
+            Main.spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, Color.White, rotation, frame.Size() / 2, scale, spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+
+            DrawProgressBar();
+        }
+
+        public virtual void DrawProgressBar()
+        {
+            Main.instance.DrawHealthBar(Bottom.X, Bottom.Y + 12, (int)catchProgress, 100, 1, 1);
         }
 
         /// <summary>

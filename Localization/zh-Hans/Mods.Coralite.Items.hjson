@@ -3805,6 +3805,11 @@ IcicleAxe: {
 }
 
 VineLasso: {
-	// DisplayName: Vine Lasso
-	// Tooltip: ""
+	DisplayName: 藤蔓套索
+	Tooltip: ""
+}
+
+GreenFairyItem: {
+	DisplayName: 绿仙灵
+	Tooltip: ""
 }

@@ -14,6 +14,9 @@
     <None Remove="Content\Items\AstronomyItems\**" />
   </ItemGroup>
   <ItemGroup>
+    <AdditionalFiles Remove="Localization\zh-Hans\Mods.Coralite.DamageClasses.hjson" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Effects\AlphaGradientTrail.fx" />
     <None Remove="Effects\AlphaNoHLGradientTrail.fx" />
     <None Remove="effects\Fire.fx" />
@@ -37,7 +40,6 @@
     <Folder Include="Content\Items\Magike\Armors\" />
     <Folder Include="Content\Items\Magike\Accessorys\" />
     <Folder Include="Content\Items\Misc_Summon\" />
-    <Folder Include="Content\Items\Fairy\" />
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />
     <Folder Include="Content\UI\MagikeGuideBook\Chapter5\" />
     <Folder Include="Core\Systems\AstronomySystem\" />

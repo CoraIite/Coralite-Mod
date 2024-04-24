@@ -12,7 +12,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
     {
         public Player Owner => Main.player[Projectile.owner];
 
-        public override string Texture => AssetDirectory.FairyCatcherItems+Name;
+        public override string Texture => AssetDirectory.FairyCatcherItems + Name;
         public virtual string HandleTexture => Texture + "Handle";
 
         public ref float SpawnTimer => ref Projectile.localAI[0];
@@ -80,7 +80,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 指针是否和仙灵重叠
         /// </summary>
         public bool cursorIntersects;
-        public float cursorScale=1f;
+        public float cursorScale = 1f;
 
         #endregion
 
@@ -132,22 +132,23 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Vector2 selfPos = Projectile.Center;
                 Vector2 dir = (targetPos - selfPos).SafeNormalize(Vector2.Zero);
                 float checkCount = Vector2.Distance(selfPos, targetPos) / 8;
+                Vector2 currentPos = selfPos;
 
                 for (int i = 0; i < checkCount; i++)
                 {
-                    Vector2 currentPos = selfPos + dir * i * 8;
+                    currentPos = selfPos + dir * i * 8;
                     if (!WorldGen.InWorld((int)currentPos.X / 16, (int)currentPos.Y / 16))
                     {
                         TrunToBacking();
                         break;
                     }
+
                     Tile t = Framing.GetTileSafely(currentPos);
                     if (t.HasUnactuatedTile)
-                    {
-                        webCenter = currentPos.ToTileCoordinates();
                         break;
-                    }
                 }
+
+                webCenter = currentPos.ToTileCoordinates();
 
                 OnInitialize();
             }
@@ -176,7 +177,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 case (int)AIStates.Catching:
                     {
                         Fairies ??= new List<Fairy>();
+                        cursorRotation = (cursorCenter - Owner.Center).ToRotation();
 
+                        Projectile.timeLeft = 100;
                         //更新圆环的透明度和大小
                         UpdateWebVisualEffect_Catching();
                         //更新指针
@@ -276,7 +279,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     continue;
 
                 FairyAttempt attempt = new();
-                attempt.wallType = spawnTile.TileType;
+                attempt.wallType = spawnTile.WallType;
                 attempt.X = (int)spawnPos.X / 16;
                 attempt.Y = (int)spawnPos.Y / 16;
                 attempt.Player = Owner;
@@ -284,7 +287,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 attempt.rarity = SetFairyAttemptRarity();
 
                 fcp.FairyCatch_GetBait(out Item bait);
-                if (bait!=null)
+                if (bait != null)
                 {
                     attempt.baitItem = bait;
                     if (bait.ModItem is IFairyBait fairybait)
@@ -328,8 +331,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public void UpdateWebVisualEffect_Backing()
         {
-            WebAlpha = MathHelper.Lerp(WebAlpha, 0, 0.05f);
-            webRadius = MathHelper.Lerp(webRadius, 0, 0.05f);
+            WebAlpha = MathHelper.Lerp(WebAlpha, 0, 0.2f);
+            webRadius = MathHelper.Lerp(webRadius, 0, 0.2f);
         }
 
         #endregion
@@ -379,7 +382,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             //限制不能出圈
             Vector2 webCenter = this.webCenter.ToWorldCoordinates();
             if (Vector2.Distance(cursorCenter, webCenter) > webRadius)
-                cursorCenter = webCenter+(cursorCenter - webCenter).SafeNormalize(Vector2.Zero) * webRadius;
+                cursorCenter = webCenter + (cursorCenter - webCenter).SafeNormalize(Vector2.Zero) * webRadius;
         }
 
         public virtual FairyAttempt.Rarity SetFairyAttemptRarity()

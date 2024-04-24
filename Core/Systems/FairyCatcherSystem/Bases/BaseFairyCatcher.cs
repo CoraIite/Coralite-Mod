@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.DamageClasses;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
@@ -21,6 +22,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public sealed override void SetDefaults()
         {
             Item.DamageType = FairyDamage.Instance;
+            Item.noMelee= true;
+            Item.noUseGraphic = true;
 
             SetOtherDefaults();
         }
@@ -28,6 +31,27 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual void SetOtherDefaults() { }
 
         public override bool AltFunctionUse(Player player) => true;
+
+        public override bool CanUseItem(Player player)
+        {
+            if (player.altFunctionUse == 2)
+            {
+                Item.noUseGraphic = true;
+                Item.useStyle = ItemUseStyleID.Swing;
+            }
+            else
+                ModifyShootFairyStyle();
+            
+            return true;
+        }
+
+        /// <summary>
+        /// 左键使用时触发，可以在此修改物品的<see cref="Item.useStyle"/>等
+        /// </summary>
+        public virtual void ModifyShootFairyStyle()
+        {
+
+        }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -50,7 +74,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         /// <param name="position"></param>
         /// <param name="player"></param>
-        public virtual void ModifyFairyStats(Player player, ref Vector2 position,ref Vector2 velocity)
+        public virtual void ModifyFairyStats(Player player, ref Vector2 position, ref Vector2 velocity)
         {
 
         }
