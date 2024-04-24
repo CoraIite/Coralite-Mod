@@ -30,6 +30,11 @@ namespace Coralite.Content.Items.FairyCatcher
             cursorMovement = new NormalCursor(3, 0.2f, 0.25f, 0.8f);
         }
 
+        public override void SetOwnerItemLocation()
+        {
+            Owner.itemLocation = Owner.Center+new Vector2(Owner.direction * 15, 0);
+        }
+
         public override Color GetStringColor(Vector2 pos)
         {
             Color c = Color.Green;
@@ -41,7 +46,7 @@ namespace Coralite.Content.Items.FairyCatcher
 
         public override Vector2 GetStringTipPos(Texture2D cursorTex)
         {
-            return cursorCenter + new Vector2(cursorScale * cursorTex.Width / 2, 0).RotatedBy(cursorRotation);
+            return cursorCenter - new Vector2(cursorScale * cursorTex.Width / 2, 0).RotatedBy(cursorRotation);
         }
     }
 }

@@ -5,7 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Drawing;
+using Terraria.UI;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -61,7 +63,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 当被捕捉时的进度增加量，默认从0加到100需要20秒
         /// </summary>
-        public virtual float ProgressAdder { get => 10;/*100f / (60 * 15f);*/ }
+        public virtual float ProgressAdder { get => 100f / (60 * 15f); }
 
         /// <summary>
         /// 自身的稀有度，请与出现条件中的相对应
@@ -152,7 +154,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 }
             }
 
-            Main.NewText(catchProgress);
+            //Main.NewText(catchProgress);
             //如果减小到0就消失
             if (catchProgress <= 0)
                 Despawn();
@@ -213,14 +215,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             //在玩家处生成物品
             player.QuickSpawnItem(player.GetSource_FairyCatch(this), i);
+            Chest.VisualizeChestTransfer(Center, player.Center, i, 1);
+            Helper.PlayPitched("Fairy/CatchFairy", 0.4f, 0);
 
-            ParticleOrchestrator.RequestParticleSpawn(true, ParticleOrchestraType.ItemTransfer,
-                new ParticleOrchestraSettings()
-                {
-                    PositionInWorld = position,
-                    MovementVector = player.Center,
-                    UniqueInfoPiece = i.type
-                });
+            //ParticleOrchestrator.RequestParticleSpawn(true, ParticleOrchestraType.ItemTransfer,
+            //    new ParticleOrchestraSettings()
+            //    {
+            //        PositionInWorld = position,
+            //        MovementVector = player.Center,
+            //        UniqueInfoPiece = i.type
+            //    });
         }
 
         /// <summary>
@@ -264,7 +268,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public virtual void DrawProgressBar()
         {
-            Main.instance.DrawHealthBar(Bottom.X, Bottom.Y + 12, (int)catchProgress, 100, 1, 1);
+            if (catching)
+                Main.instance.DrawHealthBar(Bottom.X, Bottom.Y + 12, (int)catchProgress, 100, 1, 1);
         }
 
         /// <summary>

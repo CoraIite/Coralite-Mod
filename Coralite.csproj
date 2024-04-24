@@ -44,5 +44,6 @@
     <Folder Include="Content\UI\MagikeGuideBook\Chapter5\" />
     <Folder Include="Core\Systems\AstronomySystem\" />
     <Folder Include="Sounds\Shadows\" />
+    <Folder Include="Sounds\Fairy\" />
   </ItemGroup>
 </Project>

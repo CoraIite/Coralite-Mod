@@ -2,6 +2,7 @@
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
+using System;
 using Terraria;
 using Terraria.ID;
 
@@ -40,6 +41,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override void AI_InCatcher(Rectangle cursor,BaseFairyCatcherProj catcher)
         {
+            spriteDirection = Math.Sign(velocity.X);
             if (++frameCounter > 6)
             {
                 frameCounter = 0;
@@ -54,6 +56,8 @@ namespace Coralite.Content.Items.Fairies
                 Timer++;
                 if (Timer > 60)
                 {
+                    if (Main.rand.NextBool(3))
+                        Helper.PlayPitched("Fairy/FairyMove" + Main.rand.Next(2), 0.3f, 0, position);
                     Timer = 0;
                     Vector2 webCenter = catcher.webCenter.ToWorldCoordinates();
                     if (Vector2.Distance(Center, webCenter) > catcher.webRadius / 2)

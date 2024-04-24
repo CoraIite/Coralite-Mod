@@ -121,6 +121,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Projectile.Kill();
             Owner.heldProj = Projectile.whoAmI;
             Owner.itemTime = Owner.itemAnimation = 2;
+            Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+
             SetOwnerItemLocation();
 
             if (init)
@@ -232,6 +234,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             Projectile.tileCollide = false;
             Projectile.velocity *= 0;
+
+            Helper.PlayPitched("Fairy/CursorExpand", 0.4f, 0);
         }
 
         public void TrunToBacking()
@@ -239,6 +243,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             state = (int)AIStates.Backing;
 
             Projectile.timeLeft = 60 * 10;
+
+            Helper.PlayPitched("Fairy/CursorBack", 0.4f, 0);
         }
 
         public virtual void UpdateFairySpawn()
@@ -251,7 +257,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (Main.rand.NextBool(60))
                 SpawnTimer += 60;
 
-            if (SpawnTimer > 660)
+            if (SpawnTimer > 860)
             {
                 SpawnTimer = 0;
                 SpawnFairy();

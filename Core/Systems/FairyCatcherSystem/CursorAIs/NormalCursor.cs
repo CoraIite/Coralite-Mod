@@ -62,7 +62,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.CursorAIs
             if (yLength > 16)
                 Helper.Movement_SimpleOneLine(ref catcher.cursorVelocity.Y, directionY, maxSpeedY, accY, turnAccY, 0.95f);
             else
-                catcher.cursorVelocity.X *= slowDownFactorY;
+                catcher.cursorVelocity.Y *= slowDownFactorY;
         }
 
         public void SetDirection(Vector2 cursorCenter)
