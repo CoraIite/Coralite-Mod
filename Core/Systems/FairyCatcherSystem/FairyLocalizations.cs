@@ -25,6 +25,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText FairyScale;
 
         //-----------------------------------
+        //         仙灵稀有度的本地化
+        //-----------------------------------
+        public static LocalizedText Rarity_C;
+        public static LocalizedText Rarity_U;
+        public static LocalizedText Rarity_R;
+        public static LocalizedText Rarity_RR;
+        public static LocalizedText Rarity_SR;
+        public static LocalizedText Rarity_UR;
+        public static LocalizedText Rarity_RRR;
+        public static LocalizedText Rarity_HR;
+        public static LocalizedText Rarity_AR;
+        public static LocalizedText Rarity_MR;
+        public static LocalizedText Rarity_SP;
+
+        //-----------------------------------
         //         生成条件的本地化
         //-----------------------------------
         public static LocalizedText ZoneForestDescription;
@@ -51,6 +66,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             FairyDamage = this.GetLocalization("FairyDamage", () => "伤害 ");
             FairyDefence = this.GetLocalization("FairyDefence", () => "防御 ");
             FairyScale = this.GetLocalization("FairyScale", () => "大小 ");
+
+            Rarity_C= this.GetLocalization("RarityC", () => "常见");
+            Rarity_U = this.GetLocalization("RarityU", () => "不常见");
+            Rarity_R= this.GetLocalization("RarityR", () => "稀有");
+            Rarity_RR= this.GetLocalization("RarityRR", () => "双倍稀有");
+            Rarity_SR= this.GetLocalization("RaritySR", () => "史诗");
+            Rarity_UR= this.GetLocalization("RarityUR", () => "神话");
+            Rarity_RRR= this.GetLocalization("RarityRRR", () => "三倍稀有");
+            Rarity_HR= this.GetLocalization("RarityHR", () => "传说");
+            Rarity_AR= this.GetLocalization("RarityAR", () => "异类");
+            Rarity_MR= this.GetLocalization("RarityMR", () => "秘宝");
+            Rarity_SP= this.GetLocalization("RaritySP", () => "特殊");
 
             ZoneForestDescription = this.GetLocalization("ZoneForest", () => "在地表森林捕获");
 

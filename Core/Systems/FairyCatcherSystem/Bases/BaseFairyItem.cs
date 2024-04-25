@@ -27,6 +27,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         protected int resurrectionTime;
 
         public abstract int FairyType { get; }
+        public abstract FairyAttempt.Rarity Rarity { get; }
+        public FairyData IV { get => fairyData; set => fairyData = value; }
+        public bool IsDead => dead;
+        public int Life { get => life; set => life = value; }
+        public virtual int MaxResurrectionTime => 60 * 60 * 3;
 
         /// <summary>
         /// 受到个体值加成过的仙灵自身的伤害
@@ -52,10 +57,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 受到个体值加成过的仙灵自身的生命值上限
         /// </summary>
         public float FairyLifeMax => fairyData.lifeMaxBonus.ApplyTo(Item.GetGlobalItem<FairyGlobalItem>().baseLifeMax);
-
-        public FairyData IV  { get => fairyData; set => fairyData = value; }
-        public bool IsDead => dead;
-        public int Life { get => life; set => life = value; }
 
         public sealed override void SetDefaults()
         {
@@ -83,7 +84,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override ModItem Clone(Item newEntity)
         {
             ModItem modItem = base.Clone(newEntity);
-            if (modItem!=null)
+            if (modItem != null)
             {
                 (modItem as IFairyItem).IV = IV;
             }
@@ -125,8 +126,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual void OnDead(Player owner, NPC target) { }
 
-        public virtual int MaxResurrectionTime => 60 * 60 * 3;
-
         /// <summary>
         /// 将生命值限制在0-最大值之间
         /// </summary>
@@ -139,7 +138,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 将仙灵发射出去
         /// </summary>
         /// <returns></returns>
-        public virtual bool ShootFairy(Player player,EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int catcherDamage, float knockBack)
+        public virtual bool ShootFairy(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int catcherDamage, float knockBack)
         {
             if (dead)
                 return false;
@@ -155,8 +154,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             return true;
         }
 
+        #region 描述相关
+
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
+            //稀有度
+            tooltips.Add(RarityDescription());
             //当前血量
             tooltips.Add(SurvivalStatus());
 
@@ -165,6 +168,68 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             tooltips.Add(DamageBonusDescription());
             tooltips.Add(DefenceBonusDescription());
             tooltips.Add(ScaleBonusDescription());
+        }
+
+        public TooltipLine RarityDescription()
+        {
+            string description;
+            Color color;
+
+            switch (Rarity)
+            {
+                case FairyAttempt.Rarity.C:
+                    color = FairySystem.RarityC_LiteYellow;
+                    description = FairySystem.Rarity_C.Value;
+                    break;
+                case FairyAttempt.Rarity.U:
+                    color = FairySystem.RarityU_LawnGreen;
+                    description = FairySystem.Rarity_U.Value;
+                    break;
+                case FairyAttempt.Rarity.R:
+                    color = FairySystem.RarityR_SkyBlue;
+                    description = FairySystem.Rarity_R.Value;
+                    break;
+                case FairyAttempt.Rarity.RR:
+                    color = FairySystem.RarityRR_Blue;
+                    description = FairySystem.Rarity_RR.Value;
+                    break;
+                case FairyAttempt.Rarity.SR:
+                    color = FairySystem.RaritySR_Red;
+                    description = FairySystem.Rarity_SR.Value;
+                    break;
+                case FairyAttempt.Rarity.UR:
+                    color = FairySystem.RarityUR_Orange;
+                    description = FairySystem.Rarity_UR.Value;
+                    break;
+                case FairyAttempt.Rarity.RRR:
+                    color = FairySystem.RarityRRR_BluePurple;
+                    description = FairySystem.Rarity_RRR.Value;
+                    break;
+                case FairyAttempt.Rarity.HR:
+                    color = FairySystem.RarityHR_Pink;
+                    description = FairySystem.Rarity_HR.Value;
+                    break;
+                case FairyAttempt.Rarity.AR:
+                    color = FairySystem.RarityAR_Orchid;
+                    description = FairySystem.Rarity_AR.Value;
+                    break;
+                case FairyAttempt.Rarity.MR:
+                    color = FairySystem.RarityMR_Gold;
+                    description = FairySystem.Rarity_MR.Value;
+                    break;
+                default:
+                    {
+                        //特殊
+                        color = Color.MediumVioletRed;
+                        description = FairySystem.Rarity_SP.Value;
+                    }
+                    break;
+            }
+
+            TooltipLine line = new TooltipLine(Mod, "FairyRarity", description);
+            line.OverrideColor = color;
+
+            return line;
         }
 
         public TooltipLine SurvivalStatus()
@@ -178,11 +243,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
             else
             {
-                newColor = Color.Green;
+                newColor = Color.LightGreen;
                 status = FairySystem.CurrentLife.Format(life, (int)FairyLifeMax);
             }
 
-            TooltipLine line = new TooltipLine(Mod, "SurvivalStatus" , status);
+            TooltipLine line = new TooltipLine(Mod, "SurvivalStatus", status);
             line.OverrideColor = newColor;
 
             return line;
@@ -207,7 +272,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             (Color, LocalizedText) group = FairyIVAppraise.FairyDamageAppraise.GetAppraiseResult(@base, bonused);
 
             TooltipLine line = new TooltipLine(Mod, "DamageBonus"
-                , FairySystem.FormatIVDescription(FairySystem.FairyDamage,group.Item2,@base,(int)bonused));
+                , FairySystem.FormatIVDescription(FairySystem.FairyDamage, group.Item2, @base, (int)bonused));
             line.OverrideColor = group.Item1;
             return line;
         }
@@ -219,7 +284,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             (Color, LocalizedText) group = FairyIVAppraise.FairyDefenceAppraise.GetAppraiseResult(@base, bonused);
 
             TooltipLine line = new TooltipLine(Mod, "DefenceBonus"
-                , FairySystem.FormatIVDescription(FairySystem.FairyDefence,group.Item2,@base, (int)bonused));
+                , FairySystem.FormatIVDescription(FairySystem.FairyDefence, group.Item2, @base, (int)bonused));
             line.OverrideColor = group.Item1;
             return line;
         }
@@ -227,22 +292,33 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual TooltipLine ScaleBonusDescription()
         {
             float @base = Item.GetGlobalItem<FairyGlobalItem>().baseScale;
-            float bonused = FairyScale;
+            float bonused = MathF.Round(FairyScale, 2);
 
             TooltipLine line = new TooltipLine(Mod, "ScaleBonus"
-                , FairySystem.FairyScale.Value + $"{@base} ({bonused})");
+                , FairySystem.FairyScale.Value + $"{bonused} ({@base})");
             return line;
         }
+
+        #endregion
 
         public override void SaveData(TagCompound tag)
         {
             fairyData.SaveData(tag);
+            tag.Add("Life", life);
+            if (dead)
+                tag.Add("ResurrectionTime", resurrectionTime);
         }
 
         public override void LoadData(TagCompound tag)
         {
             fairyData = new FairyData();
             fairyData.LoadData(tag);
+            life = tag.GetInt("Life");
+            if (tag.TryGet("ResurrectionTime", out int time))
+            {
+                dead = true;
+                resurrectionTime = time;
+            }
         }
     }
 
@@ -253,6 +329,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public int Life { get; set; }
         public float FairyLifeMax { get; }
         public int FairyType { get; }
+        public FairyAttempt.Rarity Rarity { get; }
 
         /// <summary>
         /// 返回值是仙灵是否死亡

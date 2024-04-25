@@ -11,6 +11,7 @@ namespace Coralite.Content.Items.Fairies
     public class GreenFairyItem : BaseFairyItem
     {
         public override int FairyType => CoraliteContent.FairyType<GreenFairy>();
+        public override FairyAttempt.Rarity Rarity => FairyAttempt.Rarity.C;
 
         public override void SetOtherDefaults()
         {
@@ -53,6 +54,9 @@ namespace Coralite.Content.Items.Fairies
 
             if (catching)
             {
+                if (cursorIntersects)
+                    this.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.05f, 0.5f),200);
+
                 Timer++;
                 if (Timer > 60)
                 {

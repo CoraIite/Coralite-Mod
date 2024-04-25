@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.FairyCatcher
         {
             CursorWidth = 16;
             CursorHeight = 16;
-            cursorMovement = new NormalCursor(3, 0.2f, 0.25f, 0.8f);
+            cursorMovement = new NormalCursor(3, 0.15f, 0.2f, 0.85f, 20);
         }
 
         public override void SetOwnerItemLocation()

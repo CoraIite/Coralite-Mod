@@ -18,12 +18,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.CursorAIs
         private readonly float turnAccY;
         private readonly float slowDownFactorX;
         private readonly float slowDownFactorY;
+        private readonly float slowDownLeengthX;
+        private readonly float slowDownLeengthY;
 
         private int directionX;
         private int directionY;
 
         public NormalCursor(float maxSpeedX, float maxSpeedY, float accX, float accY
-            ,float turnAccX, float turnAccY, float slowDownFactorX, float slowDownFactorY)
+            ,float turnAccX, float turnAccY, float slowDownFactorX, float slowDownFactorY, float slowDownLeengthX, float slowDownLeengthY)
         {
             this.maxSpeedX = maxSpeedX;
             this.maxSpeedY = maxSpeedY;
@@ -33,9 +35,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.CursorAIs
             this.turnAccY = turnAccY;
             this.slowDownFactorX = slowDownFactorX;
             this.slowDownFactorY = slowDownFactorY;
+            this.slowDownLeengthX = slowDownLeengthX;
+            this.slowDownLeengthY = slowDownLeengthY;
         }
 
-        public NormalCursor(float maxSpeed, float acc, float turnAcc, float slowDownFactor)
+        public NormalCursor(float maxSpeed, float acc, float turnAcc, float slowDownFactor,float slowDownLeength)
         {
             maxSpeedX = maxSpeed;
             maxSpeedY = maxSpeed;
@@ -45,6 +49,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.CursorAIs
             turnAccY = turnAcc;
             slowDownFactorX = slowDownFactor;
             slowDownFactorY = slowDownFactor;
+            slowDownLeengthX = slowDownLeength;
+            slowDownLeengthY = slowDownLeength;
         }
 
         public override void HandleMovement(BaseFairyCatcherProj catcher)
@@ -54,12 +60,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.CursorAIs
             //追踪玩家
             GetLengthToTargetPos(Main.MouseWorld,catcher.cursorCenter, out float xLength, out float yLength);
 
-            if (xLength > 16)
+            if (xLength > slowDownLeengthX)
                 Helper.Movement_SimpleOneLine(ref catcher.cursorVelocity.X, directionX, maxSpeedX, accX,turnAccX, 0.95f);
             else
                 catcher.cursorVelocity.X *= slowDownFactorX;
 
-            if (yLength > 16)
+            if (yLength > slowDownLeengthY)
                 Helper.Movement_SimpleOneLine(ref catcher.cursorVelocity.Y, directionY, maxSpeedY, accY, turnAccY, 0.95f);
             else
                 catcher.cursorVelocity.Y *= slowDownFactorY;

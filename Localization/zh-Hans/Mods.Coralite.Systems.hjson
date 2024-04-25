@@ -26,4 +26,15 @@ FairySystem: {
 	// FairyScale: "大小 "
 	// CurrentLife: 当前生命值：{0} / {1}
 	// ResurrectionTime: 复活时间：{0}
+	// RarityC: 常见
+	// RarityU: 不常见
+	// RarityR: 稀有
+	// RarityRR: 双倍稀有
+	// RaritySR: 史诗
+	// RarityUR: 神话
+	// RarityRRR: 三倍稀有
+	// RarityHR: 传说
+	// RarityAR: 异类
+	// RarityMR: 秘宝
+	// RaritySP: 特殊
 }

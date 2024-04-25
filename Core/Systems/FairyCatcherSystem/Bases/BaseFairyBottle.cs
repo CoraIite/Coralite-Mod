@@ -3,7 +3,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
-    public abstract class BaseFairyBottle : ModItem,IFairyBottle
+    public abstract class BaseFairyBottle : ModItem, IFairyBottle
     {
         /// <summary>
         /// 仙灵物品数组
@@ -26,12 +26,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void SaveData(TagCompound tag)
         {
-            base.SaveData(tag);
+            for (int i = 0; i < Capacity; i++)
+                tag.Add("Fairies" + i, fairies[i]);
         }
 
         public override void LoadData(TagCompound tag)
         {
-            base.LoadData(tag);
+            for (int i = 0; i < Capacity; i++)
+            {
+                if (tag.TryGet("Fairies" + i, out Item fairy))
+                    fairies[i] = fairy;
+                else
+                    fairies[i] = new Item();
+            }
         }
     }
 

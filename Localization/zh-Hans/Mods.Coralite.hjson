@@ -9,3 +9,5 @@ ClobalItems: {
 		// RainBowCoralCat: 彩虹猫猫币
 	}
 }
+
+DamageClasses.FairyDamage.DisplayName: 妖精伤害

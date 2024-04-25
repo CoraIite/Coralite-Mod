@@ -50,9 +50,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             R = 20,
             /// <summary> 双倍稀有，蓝色 </summary>
             RR = 30,
-            /// <summary> 超级稀有，红色 </summary>
+            /// <summary> 史诗，超级稀有，红色 </summary>
             SR = 40,
-            /// <summary> 究极稀有，橙色 </summary>
+            /// <summary> 神话，究极稀有，橙色 </summary>
             UR = 50,
 
             //-----------------------------------------------------------------------
@@ -61,7 +61,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             /// <summary> 三倍稀有，蓝紫色 </summary>
             RRR = 35,
-            /// <summary> Hyper稀有，紫色 </summary>
+            /// <summary> 传说，Hyper稀有，粉色 </summary>
             HR = 60,
             /// <summary> 异类稀有，粉色 </summary>
             AR = 25,

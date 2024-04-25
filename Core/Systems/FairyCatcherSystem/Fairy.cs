@@ -29,9 +29,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public bool active;
         /// <summary>
         /// 是否在捕捉，当指针接触且玩家鼠标左键后设为true<br></br>
-        /// 之后将开始
+        /// 之后将开始捕捉
         /// </summary>
         public bool catching;
+
+        /// <summary>
+        /// 和鼠标接触
+        /// </summary>
+        public bool cursorIntersects;
+
         /// <summary>
         /// 0-100的捕获进度，到达100则表示捉到，初始值为10
         /// </summary>
@@ -130,9 +136,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             if (catcher.CursorBox.Intersects(HitBox))//鼠标接触到了
             {
                 catcher.cursorIntersects = true;
+                cursorIntersects = false;
+
                 if (Main.mouseLeft)
                 {
                     catching = true;
+                    cursorIntersects = true;
                     if (canBeCaught)
                     {
                         float progressAdder = ProgressAdder;
@@ -143,7 +152,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 }
             }
             else if (catching)//鼠标没碰到，并且正在捕捉中，那么减少条
+            {
+                cursorIntersects = false;
                 ReduceProgress();
+            }
             else//没开始捕捉的时候，到点就消失
             {
                 freeMoveTimer++;

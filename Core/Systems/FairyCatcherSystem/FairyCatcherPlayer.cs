@@ -3,7 +3,7 @@ using Terraria;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
-    public class FairyCatcherPlayer:ModPlayer
+    public class FairyCatcherPlayer : ModPlayer
     {
         public struct FairyIVRandomModifyer
         {
@@ -151,7 +151,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             return (int)fairyCatchPowerBonus.ApplyTo(basePower);
         }
 
-        public bool FairyCatch_GetEmptyFairyBottle(out IFairyBottle fairyBottle,out int emptySlot)
+        public bool FairyCatch_GetEmptyFairyBottle(out IFairyBottle fairyBottle, out int emptySlot)
         {
             fairyBottle = null;
             emptySlot = -1;
@@ -191,7 +191,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 Main.rand.NextFloat(damageRamdom.multiplicative_Min, damageRamdom.multiplicative_Max),
                 Main.rand.NextFloat(damageRamdom.Flat_Min, damageRamdom.Flat_Max),
                 Main.rand.NextFloat(damageRamdom.base_Min, damageRamdom.base_Max)
-                
                 );
             data.defenceBonus = new StatModifier(
                 Main.rand.NextFloat(defenceRamdom.additive_Min, defenceRamdom.additive_Max),
