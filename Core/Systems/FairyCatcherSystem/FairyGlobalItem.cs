@@ -1,4 +1,6 @@
-﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+﻿using Coralite.Content.UI;
+using Coralite.Core.Loaders;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader.IO;
@@ -80,10 +82,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     &&fcp.FairyCatch_GetEmptyFairyBottle(out IFairyBottle bottle,out int emptySlot))
                 {
                     bottle.Fairies[emptySlot]= item.Clone();
+
+                    PopupText.NewText(PopupTextContext.RegularItemPickup, item, item.stack, noStack: true, longText:false);
+
                     item.TurnToAir();
                     SoundEngine.PlaySound(CoraliteSoundID.Grab, player.Center);
 
-                    PopupText.NewText(PopupTextContext.RegularItemPickup, item, item.stack, noStack: true, true);
+                    //if (UILoader.GetUIState<FairyBottleUI>().visible)
+                    //{
+                        //UILoader.GetUIState<FairyBottleUI>().Recalculate();
+                    //}
 
                     return false;
                 }

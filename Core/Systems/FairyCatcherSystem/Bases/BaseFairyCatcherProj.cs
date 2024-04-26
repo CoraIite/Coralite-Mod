@@ -69,6 +69,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public float webRadius;
 
         public float WebAlpha;
+        protected float extraHandleRotation = 0.785f;
 
         /// <summary>
         /// 指针的位置
@@ -554,14 +555,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual void DrawCursor(Texture2D cursorTex)
         {
-            Main.spriteBatch.Draw(cursorTex, cursorCenter - Main.screenPosition, null,
-                cursorIntersects ? Color.White * 0.5f : Color.White, cursorRotation, cursorTex.Size() / 2, cursorScale, 0, 0);
+            var pos = cursorCenter - Main.screenPosition;
+            var origin = cursorTex.Size() / 2;
+            if (cursorIntersects && Main.mouseLeft)
+                Main.spriteBatch.Draw(cursorTex, pos, null,
+                    Color.White * 0.3f, cursorRotation, origin, cursorScale * 1.05f, 0, 0);
+            Main.spriteBatch.Draw(cursorTex, pos, null,
+                cursorIntersects ? Color.White * 0.5f : Color.White, cursorRotation, origin, cursorScale, 0, 0);
         }
 
         public virtual void DrawHandle(Texture2D HandleTex)
         {
             Main.spriteBatch.Draw(HandleTex, Owner.itemLocation - Main.screenPosition, null,
-                Lighting.GetColor(Owner.Center.ToTileCoordinates()), cursorRotation, HandleTex.Size() / 2, 1f, 0, 0);
+                Lighting.GetColor(Owner.Center.ToTileCoordinates()), cursorRotation + extraHandleRotation, HandleTex.Size() / 2, 1f, 0, 0);
         }
 
         public virtual Color GetStringColor(Vector2 pos)

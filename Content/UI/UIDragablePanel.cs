@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
@@ -17,6 +19,8 @@ namespace Coralite.Content.UI
 		private bool resizeableY;
 		private bool Resizeable => resizeableX || resizeableY;
 		private bool resizeing;
+
+		public event Action OnResizing;
 
 		//private int minX, minY, maxX, maxY;
 		private List<UIElement> additionalDragTargets;
@@ -70,8 +74,8 @@ namespace Coralite.Content.UI
 				{
 					offset = new Vector2(evt.MousePosition.X - innerDimensions.X - innerDimensions.Width - 6, evt.MousePosition.Y - innerDimensions.Y - innerDimensions.Height - 6);
 					resizeing = true;
-				}
-				else if (dragable)
+                }
+                else if (dragable)
 				{
 					offset = new Vector2(evt.MousePosition.X - Left.Pixels, evt.MousePosition.Y - Top.Pixels);
 					dragging = true;
@@ -127,19 +131,20 @@ namespace Coralite.Content.UI
 					Width.Pixels = Main.MouseScreen.X - dimensions.X - offset.X;
 				}
 
-				if (resizeableY)
+                if (resizeableY)
 				{
 					//Height.Pixels = Utils.Clamp(Main.MouseScreen.Y - dimensions.Y - offset.Y, minY, maxY);
 					Height.Pixels = Main.MouseScreen.Y - dimensions.Y - offset.Y;
 				}
 
-				Recalculate();
-			}
+                Recalculate();
+                OnResizing?.Invoke();
+            }
 
-			base.DrawSelf(spriteBatch);
+            base.DrawSelf(spriteBatch);
 
 			if (Resizeable)
-				DrawDragAnchor(spriteBatch, dragTexture.Value, BorderColor);
+				DrawDragAnchor(spriteBatch, TextureAssets.Cursors[16].Value /*dragTexture.Value*/, BorderColor);
 		}
 
 		private void DrawDragAnchor(SpriteBatch spriteBatch, Texture2D texture, Color color)
@@ -150,11 +155,14 @@ namespace Coralite.Content.UI
 			//	Main.spriteBatch.Draw(Main.magicPixel, hitbox, Color.LightBlue * 0.6f);
 
 			Point point = new Point((int)(dimensions.X + dimensions.Width - 12), (int)(dimensions.Y + dimensions.Height - 12));
-            var source = new Rectangle(12 + 4, 12 + 4, 12, 12);
+			var source = texture.Frame();//new Rectangle(12 + 4, 12 + 4, 12, 12);
 
-            spriteBatch.Draw(texture, new Rectangle(point.X - 2, point.Y - 2, 12 - 2, 12 - 2), source, color);
-            spriteBatch.Draw(texture, new Rectangle(point.X - 4, point.Y - 4, 12 - 4, 12 - 4), source, color);
-            spriteBatch.Draw(texture, new Rectangle(point.X - 6, point.Y - 6, 12 - 6, 12 - 6), source, color);
+            //spriteBatch.Draw(texture, new Rectangle(point.X - 2, point.Y - 2, 12 - 2, 12 - 2), source, color);
+            //spriteBatch.Draw(texture, new Rectangle(point.X - 4, point.Y - 4, 12 - 4, 12 - 4), source, color);
+            spriteBatch.Draw(texture, new Rectangle(point.X - 6, point.Y - 6, 12 , 12), source, color);
+			texture = TextureAssets.Cursors[15].Value;
+            source = texture.Frame();
+            spriteBatch.Draw(texture, new Rectangle(point.X - 6, point.Y - 6, 12 , 12), source, Color.White);
         }
     }
 }

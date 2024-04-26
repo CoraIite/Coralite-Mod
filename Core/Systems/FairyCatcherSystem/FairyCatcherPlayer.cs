@@ -90,7 +90,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             fairyCatcherRadius = 7 * 16;
 
             CatcherCircleColor = Color.White;
-            CatcherBackColor = Color.DarkBlue * 0.5f;
+            CatcherBackColor = Color.DarkSlateBlue * 0.5f;
         }
 
         /// <summary>

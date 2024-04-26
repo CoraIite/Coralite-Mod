@@ -44,6 +44,12 @@ namespace Coralite.Content.Items.FairyCatcher
             return c;
         }
 
+        public override void DrawHandle(Texture2D HandleTex)
+        {
+            Main.spriteBatch.Draw(HandleTex, Owner.itemLocation - Main.screenPosition, null,
+                Lighting.GetColor(Owner.Center.ToTileCoordinates()), 0, HandleTex.Size() / 2, 1f, 0, 0);
+        }
+
         public override Vector2 GetStringTipPos(Texture2D cursorTex)
         {
             return cursorCenter - new Vector2(cursorScale * cursorTex.Width / 2, 0).RotatedBy(cursorRotation);

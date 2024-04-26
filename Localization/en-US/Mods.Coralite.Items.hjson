@@ -3715,3 +3715,8 @@ GreenFairyItem: {
 	DisplayName: Green Fairy Item
 	Tooltip: ""
 }
+
+StarlightBottle: {
+	DisplayName: Starlight Bottle
+	Tooltip: ""
+}

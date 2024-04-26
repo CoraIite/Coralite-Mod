@@ -55,7 +55,15 @@ namespace Coralite.Content.Items.Fairies
             if (catching)
             {
                 if (cursorIntersects)
-                    this.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.05f, 0.5f),200);
+                {
+                    if (Main.rand.NextBool(3))
+                    {
+                        Dust d = Dust.NewDustPerfect(Center, DustID.GreenFairy, Helper.NextVec2Dir(0.5f, 1.5f), 200);
+                        d.noGravity = true;
+                    }
+                    else
+                        this.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.05f, 0.5f), 200);
+                }
 
                 Timer++;
                 if (Timer > 60)
