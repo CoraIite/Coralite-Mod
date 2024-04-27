@@ -222,8 +222,8 @@ namespace Coralite.Content.UI
 
                 if (!Item.IsAir && invSlot != -1)
                 {
-                    Main.LocalPlayer.GetItem(Main.myPlayer, Item.Clone(), GetItemSettings.InventoryUIToInventorySettings);
-                    Item.TurnToAir();
+                    Main.LocalPlayer.GetItem(Main.myPlayer, Item, GetItemSettings.InventoryUIToInventorySettings);
+                    items[index]=new Item();
                     Helper.PlayPitched("Fairy/FairyBottleClick", 0.4f, 0);
                 }
 
@@ -232,16 +232,16 @@ namespace Coralite.Content.UI
 
             if (Main.mouseItem.IsAir && !Item.IsAir) //鼠标物品为空且UI内有物品，直接取出
             {
-                Main.mouseItem = Item.Clone();
-                Item.TurnToAir();
+                Main.mouseItem = Item;
+                items[index] = new Item();
                 Helper.PlayPitched("Fairy/FairyBottleClick", 0.4f, 0);
                 goto baseClick;
             }
 
             if (!Main.mouseItem.IsAir && Item.IsAir && canInsert) //鼠标有物品并且UI内为空，放入
             {
-                FairyBottleUI.bottle.Fairies[index] = Main.mouseItem.Clone();
-                Main.mouseItem.TurnToAir();
+                FairyBottleUI.bottle.Fairies[index] = Main.mouseItem;
+                Main.mouseItem = new Item();
                 Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 1f);
                 goto baseClick;
             }
@@ -249,7 +249,7 @@ namespace Coralite.Content.UI
             if (!Main.mouseItem.IsAir && !Item.IsAir && canInsert) //都有物品，进行交换
             {
                 var temp = Item;
-                FairyBottleUI.bottle.Fairies[index] = Main.mouseItem.Clone();
+                items[index] = Main.mouseItem;
                 Main.mouseItem = temp;
                 Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 1f);
                 goto baseClick;
@@ -270,16 +270,21 @@ namespace Coralite.Content.UI
             Vector2 position = GetDimensions().Position();
             Vector2 center = GetDimensions().Center();
 
+            Item Item = FairyBottleUI.bottle.Fairies[index];
+
             Texture2D backTex = TextureAssets.InventoryBack15.Value;
             if (Main.LocalPlayer.HeldItem.ModItem is BaseFairyCatcher catcher
                 && catcher.currentFairyIndex == index)
             {
                 backTex = TextureAssets.InventoryBack14.Value;
             }
+            else if(Item.ModItem is IFairyItem fairyItem&&fairyItem.IsDead)
+            {
+                backTex = TextureAssets.InventoryBack11.Value;
+            }
 
             spriteBatch.Draw(backTex, center, null, Color.White, 0, backTex.Size() / 2, MagikeItemSlotPanel.scale, SpriteEffects.None, 0);
 
-            Item Item = FairyBottleUI.bottle.Fairies[index];
             if (Item is not null && !Item.IsAir)
             {
                 Main.instance.LoadItem(Item.type);

@@ -9,11 +9,11 @@ namespace Coralite.Content.Items.FairyCatcher
 {
     public class VineLasso : BaseFairyCatcher
     {
-        public override string Texture => AssetDirectory.FairyCatcherItems+Name;
+        public override string Texture => AssetDirectory.FairyCatcherItems + Name;
 
         public override void SetOtherDefaults()
         {
-            Item.damage = 20;
+            Item.damage = 8;
             Item.shoot = ModContent.ProjectileType<VineLassoCatcher>();
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.useTime = Item.useAnimation = 24;
@@ -28,11 +28,13 @@ namespace Coralite.Content.Items.FairyCatcher
             CursorWidth = 16;
             CursorHeight = 16;
             cursorMovement = new NormalCursor(3, 0.15f, 0.2f, 0.85f, 20);
+            DrawOriginOffsetX = 8;
+            DrawOriginOffsetY = -8;
         }
 
         public override void SetOwnerItemLocation()
         {
-            Owner.itemLocation = Owner.Center+new Vector2(Owner.direction * 15, 0);
+            Owner.itemLocation = Owner.Center + new Vector2(Owner.direction * 15, 0);
         }
 
         public override Color GetStringColor(Vector2 pos)
@@ -47,7 +49,7 @@ namespace Coralite.Content.Items.FairyCatcher
         public override void DrawHandle(Texture2D HandleTex)
         {
             Main.spriteBatch.Draw(HandleTex, Owner.itemLocation - Main.screenPosition, null,
-                Lighting.GetColor(Owner.Center.ToTileCoordinates()), 0, HandleTex.Size() / 2, 1f, 0, 0);
+                Lighting.GetColor(Owner.Center.ToTileCoordinates()), 0, HandleTex.Size() / 2, 1f, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
         }
 
         public override Vector2 GetStringTipPos(Texture2D cursorTex)

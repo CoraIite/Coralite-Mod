@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Misc
 {
     public class BisketyHead : ModItem
     {
-        public override string Texture => AssetDirectory.Misc + Name;
+        public override string Texture => AssetDirectory.MiscItems + Name;
 
         public override void SetDefaults()
         {
@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.Misc
 
     public class Biskety : ModNPC
     {
-        public override string Texture => AssetDirectory.Misc + Name;
+        public override string Texture => AssetDirectory.MiscItems + Name;
 
         ref float Timer => ref NPC.ai[0];
         ref float TotalTime => ref NPC.ai[1];

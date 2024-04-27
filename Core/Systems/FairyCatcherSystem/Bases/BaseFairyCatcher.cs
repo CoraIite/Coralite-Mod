@@ -105,17 +105,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             for (int i = 0; i < fairies.Length; i++)
             {
-                Item item = fairies[currentFairyIndex];
-                if (item.ModItem is IFairyItem fairyItem)
-                {
-                    if (fairyItem.ShootFairy(player, source, position, velocity, damage, knockback))
-                        break;
-                }
-
                 currentFairyIndex++;
                 if (currentFairyIndex > fairies.Length - 1)
                 {
                     currentFairyIndex = 0;
+                }
+
+                Item item = fairies[currentFairyIndex];
+                if (item.ModItem is IFairyItem fairyItem && !fairyItem.IsOut)
+                {
+                    if (fairyItem.ShootFairy(player, source, position, velocity, damage + (int)fairyItem.FairyDamage, knockback))
+                        break;
                 }
             }
         }

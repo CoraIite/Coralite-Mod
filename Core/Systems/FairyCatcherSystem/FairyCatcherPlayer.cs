@@ -26,6 +26,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 仙灵捕捉器的捕捉力增幅
         /// </summary>
         public StatModifier fairyCatchPowerBonus;
+        /// <summary>
+        /// 仙灵复活时间的增幅（应该减少数值）
+        /// </summary>
+        public StatModifier fairyResurrectionTimeBous;
         public float fairyCatcherRadius;
 
         /// <summary>
@@ -55,6 +59,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             cursorSizeBonus = new StatModifier();
             fairyCatchPowerBonus = new StatModifier();
+            fairyResurrectionTimeBous = new StatModifier();
 
             //默认伤害区间为0.8-1.2
             damageRamdom = new FairyIVRandomModifyer()

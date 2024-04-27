@@ -559,7 +559,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             var origin = cursorTex.Size() / 2;
             if (cursorIntersects && Main.mouseLeft)
                 Main.spriteBatch.Draw(cursorTex, pos, null,
-                    Color.White * 0.3f, cursorRotation, origin, cursorScale * 1.05f, 0, 0);
+                    new Color(150, 150, 150, 0), cursorRotation, origin, cursorScale * 1.05f, 0, 0);
             Main.spriteBatch.Draw(cursorTex, pos, null,
                 cursorIntersects ? Color.White * 0.5f : Color.White, cursorRotation, origin, cursorScale, 0, 0);
         }

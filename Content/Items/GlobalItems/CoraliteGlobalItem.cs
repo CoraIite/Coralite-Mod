@@ -126,25 +126,25 @@ namespace Coralite.Content.Items.GlobalItems
                         break;
                     case ItemID.CopperCoin:
                         {
-                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.Misc + "CopperCoralCat").Value;
+                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "CopperCoralCat").Value;
                             spriteBatch.Draw(mainTex, position, null, drawColor, 0, mainTex.Size() / 2, scale, 0, 0);
                         }
                         return false;
                     case ItemID.SilverCoin:
                         {
-                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.Misc + "RubyCoralCat").Value;
+                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "RubyCoralCat").Value;
                             spriteBatch.Draw(mainTex, position, null, drawColor, 0, mainTex.Size() / 2, scale, 0, 0);
                         }
                         return false;
                     case ItemID.GoldCoin:
                         {
-                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.Misc + "TerraCoralCat").Value;
+                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "TerraCoralCat").Value;
                             spriteBatch.Draw(mainTex, position, null, drawColor, 0, mainTex.Size() / 2, scale, 0, 0);
                         }
                         return false;
                     case ItemID.PlatinumCoin:
                         {
-                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.Misc + "RainBowCoralCat").Value;
+                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "RainBowCoralCat").Value;
                             spriteBatch.Draw(mainTex, position, null, drawColor, 0, mainTex.Size() / 2, scale, 0, 0);
                         }
                         return false;
@@ -165,25 +165,25 @@ namespace Coralite.Content.Items.GlobalItems
                         break;
                     case ItemID.CopperCoin:
                         {
-                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.Misc + "CopperCoralCat").Value;
+                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "CopperCoralCat").Value;
                             spriteBatch.Draw(mainTex, center, null, lightColor, 0, mainTex.Size() / 2, scale, 0, 0);
                         }
                         return false;
                     case ItemID.SilverCoin:
                         {
-                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.Misc + "RubyCoralCat").Value;
+                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "RubyCoralCat").Value;
                             spriteBatch.Draw(mainTex, center, null, lightColor, 0, mainTex.Size() / 2, scale, 0, 0);
                         }
                         return false;
                     case ItemID.GoldCoin:
                         {
-                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.Misc + "TerraCoralCat").Value;
+                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "TerraCoralCat").Value;
                             spriteBatch.Draw(mainTex, center, null, lightColor, 0, mainTex.Size() / 2, scale, 0, 0);
                         }
                         return false;
                     case ItemID.PlatinumCoin:
                         {
-                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.Misc + "RainBowCoralCat").Value;
+                            Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "RainBowCoralCat").Value;
                             spriteBatch.Draw(mainTex, center, null, lightColor, 0, mainTex.Size() / 2, scale, 0, 0);
                         }
                         return false;

@@ -63,6 +63,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         public readonly (Color, LocalizedText) GetAppraiseResult(float baseValue, float scaledValue)
-            => GetAppraiseResult(scaledValue / baseValue);
+        {
+            if (baseValue == 0)
+                return (Color.White, FairySystem.NotHaveLevel);
+            return GetAppraiseResult(scaledValue / baseValue);
+        }
     }
 }

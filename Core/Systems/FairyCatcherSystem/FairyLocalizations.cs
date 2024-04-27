@@ -16,6 +16,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText UniqueLevel;
         public static LocalizedText TimelessLevel;
 
+        public static LocalizedText NotHaveLevel;
+
         //-----------------------------------
         //         个体描述的本地化
         //-----------------------------------
@@ -49,7 +51,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         //-----------------------------------
         public static LocalizedText CurrentLife;
         public static LocalizedText ResurrectionTime;
-
+        public static LocalizedText BottleCapacity;
 
         public void LoadLocalization()
         {
@@ -61,6 +63,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             SpecialLevel = this.GetLocalization("SpecialLevel", () => "独特：{0}（基础 {1}）");
             UniqueLevel = this.GetLocalization("UniqueLevel", () => "唯一：{0}（基础 {1}）");
             TimelessLevel = this.GetLocalization("TimelessLevel", () => "永恒：{0}（基础 {1}）");
+
+            NotHaveLevel = this.GetLocalization("NotHaveLevel", () => "无：{0}（基础 {1}）");
 
             FairyLifeMax = this.GetLocalization("FairyLifeMax", () => "血量 ");
             FairyDamage = this.GetLocalization("FairyDamage", () => "伤害 ");
@@ -83,6 +87,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             CurrentLife = this.GetLocalization("CurrentLife", () => "当前生命值：{0} / {1}");
             ResurrectionTime = this.GetLocalization("ResurrectionTime", () => "复活时间：{0}");
+            BottleCapacity = this.GetLocalization("BottleCapacity", () => "容量 {0} / {1}");
         }
 
         public static void UnloadLocalization()

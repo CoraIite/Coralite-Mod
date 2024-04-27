@@ -1,13 +1,17 @@
-﻿using System;
+﻿using Coralite.Core.Loaders;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Localization;
 using Terraria.ModLoader.Core;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     public partial class FairySystem : ModSystem, ILocalizedModType
     {
+        public static Asset<Texture2D> ProgressBarOuter;
+        public static Asset<Texture2D> ProgressBarInner;
 
         /// <summary>
         /// 键值是墙壁的type，-1表示没有墙壁
@@ -27,25 +31,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             fairySpawnConditions = new Dictionary<int, List<FairySpawnController>>();
             fairySpawnConditions_InEncyclopedia = new Dictionary<int, FairySpawnController>();
 
-            foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))  //添加生成条件
-            {
-                if (!t.IsAbstract && t.IsSubclassOf(typeof(Fairy)))
-                {
-                    Fairy fairy = Activator.CreateInstance(t) as Fairy;
-                    fairy.RegisterSpawn();
-                }
-            }
+            foreach (var fairy in FairyLoader.fairys)  //添加生成条件
+                fairy.RegisterSpawn();
 
-            foreach (var mod in ModLoader.Mods)
-                if (mod is ICoralite)
-                    foreach (Type t in AssemblyManager.GetLoadableTypes(mod.Code))  //添加生成条件
-                    {
-                        if (!t.IsAbstract && t.IsSubclassOf(typeof(Fairy)))
-                        {
-                            Fairy fairy = Activator.CreateInstance(t) as Fairy;
-                            fairy.RegisterSpawn();
-                        }
-                    }
+            ProgressBarOuter = ModContent.Request<Texture2D>(AssetDirectory.Misc + "ProgressBarOuter");
+            ProgressBarInner = ModContent.Request<Texture2D>(AssetDirectory.Misc + "ProgressBarInner");
 
             LoadLocalization();
         }
@@ -53,6 +43,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public override void Unload()
         {
             fairySpawnConditions = null;
+            ProgressBarOuter = null;
+            ProgressBarInner = null;
             UnloadLocalization();
         }
 

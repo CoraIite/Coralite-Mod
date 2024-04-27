@@ -37,4 +37,6 @@ FairySystem: {
 	RarityAR: 异类
 	RarityMR: 秘宝
 	RaritySP: 特殊
+	BottleCapacity: 容量 {0} / {1}
+	NotHaveLevel: 无：{0}（基础 {1}）
 }

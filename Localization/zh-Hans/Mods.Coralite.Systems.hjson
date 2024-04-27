@@ -12,29 +12,31 @@ MagikeSystem: {
 
 FairySystem: {
 	ZoneForest: 在地表森林捕获
-	// WeakLevel: 软弱：{0}（基础 {1}）
-	// VeryCommonLevel: 普通：{0}（基础 {1}）
-	// CommonLevel: 普通：{0}（基础 {1}）
-	// UncommonLevel: 少见：{0}（基础 {1}）
-	// RareLevel: 稀有：{0}（基础 {1}）
-	// SpecialLevel: 独特：{0}（基础 {1}）
-	// UniqueLevel: 唯一：{0}（基础 {1}）
-	// TimelessLevel: 永恒：{0}（基础 {1}）
-	// FairyLifeMax: "血量 "
-	// FairyDamage: "伤害 "
-	// FairyDefence: "防御 "
-	// FairyScale: "大小 "
-	// CurrentLife: 当前生命值：{0} / {1}
-	// ResurrectionTime: 复活时间：{0}
-	// RarityC: 常见
-	// RarityU: 不常见
-	// RarityR: 稀有
-	// RarityRR: 双倍稀有
-	// RaritySR: 史诗
-	// RarityUR: 神话
-	// RarityRRR: 三倍稀有
-	// RarityHR: 传说
-	// RarityAR: 异类
-	// RarityMR: 秘宝
-	// RaritySP: 特殊
+	WeakLevel: 软弱：{0}（基础 {1}）
+	VeryCommonLevel: 普通：{0}（基础 {1}）
+	CommonLevel: 普通：{0}（基础 {1}）
+	UncommonLevel: 少见：{0}（基础 {1}）
+	RareLevel: 稀有：{0}（基础 {1}）
+	SpecialLevel: 独特：{0}（基础 {1}）
+	UniqueLevel: 唯一：{0}（基础 {1}）
+	TimelessLevel: 永恒：{0}（基础 {1}）
+	FairyLifeMax: "[i:58]血量 "
+	FairyDamage: "[i:3507]伤害 "
+	FairyDefence: "[i:3811]防御 "
+	FairyScale: "[i:486]大小 "
+	CurrentLife: 当前生命值：{0} / {1}
+	ResurrectionTime: 复活时间：{0}
+	RarityC: 常见
+	RarityU: 不常见
+	RarityR: 稀有
+	RarityRR: 双倍稀有
+	RaritySR: 史诗
+	RarityUR: 神话
+	RarityRRR: 三倍稀有
+	RarityHR: 传说
+	RarityAR: 异类
+	RarityMR: 秘宝
+	RaritySP: 特殊
+	BottleCapacity: 容量 {0} / {1}
+	NotHaveLevel: 无：{0}（基础 {1}）
 }

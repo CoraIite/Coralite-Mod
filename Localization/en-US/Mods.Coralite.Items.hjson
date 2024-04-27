@@ -3720,3 +3720,8 @@ StarlightBottle: {
 	DisplayName: Starlight Bottle
 	Tooltip: ""
 }
+
+BreezeFairyItem: {
+	DisplayName: Breeze Fairy Item
+	Tooltip: ""
+}

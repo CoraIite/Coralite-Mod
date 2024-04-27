@@ -80,7 +80,7 @@ namespace Coralite.Core
 
         public const string Materials = Items + "Materials/";
         public const string Placeable = Items + "Placeable/";
-        public const string Misc = Items + "Misc/";
+        public const string MiscItems = Items + "Misc/";
         public const string Misc_Melee = Items + "Misc_Melee/";
         public const string Misc_Magic = Items + "Misc_Magic/";
         public const string Misc_Summon = Items + "Misc_Summon/";
@@ -198,6 +198,8 @@ namespace Coralite.Core
         #endregion
 
         public const string Backgrounds = Assets + "Backgrounds/";
+
+        public const string Misc = Assets + "Misc/";
 
 
         public const string WorldGen = Assets + "WorldGeneration/";

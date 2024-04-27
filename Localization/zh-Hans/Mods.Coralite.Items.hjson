@@ -3811,10 +3811,15 @@ VineLasso: {
 
 GreenFairyItem: {
 	DisplayName: 绿仙灵
-	Tooltip: "最为常见的仙灵之一，攻击会直接冲向敌人"
+	Tooltip: 最为常见的仙灵之一，会对敌人使用撞击
 }
 
 StarlightBottle: {
 	DisplayName: 星光瓶
+	Tooltip: ""
+}
+
+BreezeFairyItem: {
+	DisplayName: 微风灵
 	Tooltip: ""
 }

@@ -20,7 +20,7 @@ namespace Coralite.Core.Loaders
         /// 设置ID
         /// </summary>
         /// <returns></returns>
-        public static int ReserveParticleID() => FairyCount++;
+        public static int ReserveFairyID() => FairyCount++;
 
         internal static void Unload()
         {

@@ -31,6 +31,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public FairyData IV { get => fairyData; set => fairyData = value; }
         public bool IsDead => dead;
         public int Life { get => life; set => life = value; }
+        /// <summary>
+        /// 复活时间，默认3分钟（3*60*60）
+        /// </summary>
         public virtual int MaxResurrectionTime => 60 * 60 * 3;
 
         /// <summary>
@@ -57,6 +60,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 受到个体值加成过的仙灵自身的生命值上限
         /// </summary>
         public float FairyLifeMax => fairyData.lifeMaxBonus.ApplyTo(Item.GetGlobalItem<FairyGlobalItem>().baseLifeMax);
+
+        public bool IsOut { get; set; }
 
         public sealed override void SetDefaults()
         {
@@ -85,9 +90,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             ModItem modItem = base.Clone(newEntity);
             if (modItem != null)
-            {
                 (modItem as IFairyItem).IV = IV;
-            }
 
             return modItem;
         }
@@ -115,9 +118,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             int time = MaxResurrectionTime;
             if (owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
-            {
-
-            }
+                fcp.fairyResurrectionTimeBous.ApplyTo(time);
 
             resurrectionTime = time;
 
@@ -149,9 +150,39 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, Item.shoot, catcherDamage, knockBack, player.whoAmI);
             //将弹幕的item赋值为自身
             if (proj.ModProjectile is IFairyProjectile fairyProjectile)
-
+            {
                 fairyProjectile.FairyItem = this;
+                proj.scale = FairyScale;
+            }
+
+            IsOut = true;
             return true;
+        }
+
+        /// <summary>
+        /// 回血或者执行复活
+        /// </summary>
+        /// <param name="lifeRegan"></param>
+        public virtual void LifeRegan(int lifeRegan, int resurrectionTimeReduce = 1)
+        {
+            if (dead)
+            {
+                resurrectionTime -= resurrectionTimeReduce;
+                if (resurrectionTime <= 0)
+                    Resurrection();
+
+                return;
+            }
+
+            life += lifeRegan;
+            LimitLife();
+        }
+
+        public virtual void Resurrection()
+        {
+            dead = false;
+            life = (int)FairyLifeMax;
+            resurrectionTime = 0;
         }
 
         #region 描述相关
@@ -239,7 +270,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (dead)
             {
                 newColor = Color.OrangeRed;
-                status = FairySystem.ResurrectionTime.Format($"{resurrectionTime / (60 * 60)}:{resurrectionTime / 60}");
+                status = FairySystem.ResurrectionTime.Format($"{resurrectionTime / (60 * 60)}:{resurrectionTime / 60 %60}");
             }
             else
             {
@@ -325,10 +356,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
     public interface IFairyItem
     {
         public bool IsDead { get; }
+        public bool IsOut { get; set; }
         public FairyData IV { get; set; }
         public int Life { get; set; }
         public float FairyLifeMax { get; }
         public int FairyType { get; }
+        public float FairyDamage { get; }
         public FairyAttempt.Rarity Rarity { get; }
 
         /// <summary>

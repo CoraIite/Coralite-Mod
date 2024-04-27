@@ -36,7 +36,7 @@ namespace Coralite.Content.WorldGeneration
 
         public static void ObjectPlace(int x, int y, int TileType, int style = 0, int direction = -1)
         {
-            WorldGen.PlaceObject(x, y, TileType, true, style, 0, -1, direction);
+            WorldGen.PlaceObject(x, y, TileType, false, style, 0, -1, direction);
             NetMessage.SendObjectPlacement(-1, x, y, TileType, style, 0, -1, direction);
         }
 

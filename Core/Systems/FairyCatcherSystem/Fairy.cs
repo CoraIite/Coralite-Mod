@@ -5,9 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.Drawing;
-using Terraria.UI;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -39,9 +36,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public bool cursorIntersects;
 
         /// <summary>
-        /// 0-100的捕获进度，到达100则表示捉到，初始值为10
+        /// 0-100的捕获进度，到达100则表示捉到，初始值为20
         /// </summary>
-        public float catchProgress = 10f;
+        public float catchProgress = 20f;
 
         public Vector2 position;
         public Vector2 velocity;
@@ -55,6 +52,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public Rectangle frame;
         public int spriteDirection;
 
+        public int Timer;
+
         /// <summary>
         /// 为false时就不会能被捉，进度不会涨
         /// </summary>
@@ -67,7 +66,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public int despawnTime = 60 * 20;
 
         /// <summary>
-        /// 当被捕捉时的进度增加量，默认从0加到100需要20秒
+        /// 当被捕捉时的进度增加量，默认从0加到100需要15秒
         /// </summary>
         public virtual float ProgressAdder { get => 100f / (60 * 15f); }
 
@@ -102,12 +101,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             FairyLoader.fairys ??= new List<Fairy>();
             FairyLoader.fairys.Add(this);
 
-            Type = FairyLoader.ReserveParticleID();
+            Type = FairyLoader.ReserveFairyID();
         }
 
         public virtual Fairy NewInstance()
         {
             var inst = (Fairy)Activator.CreateInstance(GetType(), true);
+            inst.Type = Type;
             return inst;
         }
 
@@ -196,11 +196,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public virtual bool ShouldUpdatePosition() => true;
 
         /// <summary>
-        /// 正在捕捉的时候并且玩家未左键或者指针没接触，这是和减少捕捉进度
+        /// 正在捕捉的时候并且玩家未左键或者指针没接触，这是和减少捕捉进度<br></br>
+        /// 默认25秒从100减到0
         /// </summary>
         public virtual void ReduceProgress()
         {
-            catchProgress -= 100f / (60 * 40f);
+            catchProgress -= 100f / (60 * 25f);
         }
 
         #endregion
@@ -281,7 +282,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public virtual void DrawProgressBar()
         {
             if (catching)
-                Main.instance.DrawHealthBar(Bottom.X, Bottom.Y + 12, (int)catchProgress, 100, 1, 1);
+                DrawFairyProgressBar(Bottom.X, Bottom.Y + 14, (int)catchProgress, 100, 0.9f, 0.75f);
         }
 
         /// <summary>
@@ -293,5 +294,42 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         public Texture2D GetTexture() => ModContent.Request<Texture2D>(Texture).Value;
+
+        public static void DrawFairyProgressBar(float X, float Y, int Health, int MaxHealth, float alpha, float scale = 1f)
+        {
+            if (Health <= 0)
+                return;
+
+            float factor = Health / (float)MaxHealth;
+            if (factor > 1f)
+                factor = 1f;
+
+            Color backColor = Color.DarkGreen;
+            Color barColor = Color.LawnGreen;
+
+            //if (Main.LocalPlayer.TryGetModPlayer(out FairyCatcherPlayer fcp))
+            //{
+            //    backColor = fcp.CatcherBackColor * 0.8f;
+            //    backColor.A = 255;
+            //    barColor = fcp.CatcherBackColor * 1.5f;
+            //}
+
+            backColor *= alpha;
+            barColor *= alpha;
+
+            Vector2 center = new Vector2(X, Y) - Main.screenPosition;
+
+            //绘制条的背景
+            Main.spriteBatch.Draw(FairySystem.ProgressBarOuter.Value, center, null, backColor,
+                0f, FairySystem.ProgressBarOuter.Size() / 2, scale, SpriteEffects.None, 0f);
+
+            Texture2D innerTex = FairySystem.ProgressBarInner.Value;
+            var topLeft = new Vector2(center.X - innerTex.Width * scale / 2, center.Y - innerTex.Height * scale / 2);
+
+            var source = new Rectangle(0, 0, (int)(innerTex.Width * factor), innerTex.Height);
+
+            Main.spriteBatch.Draw(innerTex, topLeft, source, barColor,
+                0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+        }
     }
 }

@@ -1,5 +1,9 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Coralite.Content.Items.Fairies;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
+using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
@@ -12,10 +16,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public int State;
         public int Timer;
-        protected int lifeMax;
-        protected int life;
+        protected int LifeMax => (int)FairyItem.FairyLifeMax;
+        protected int Life => FairyItem.Life;
+        protected virtual string SkillName => "";
+        protected virtual int FrameX => 1;
+        protected virtual int FrameY => 1;
 
-        private bool init=true;
+        private bool init = true;
+        protected bool canDamage;
+
+        public LocalizedText SkillText;
+
+        public override void Load()
+        {
+            SkillText = this.GetLocalization("SkillText", () => SkillName);
+        }
 
         public enum AIStates
         {
@@ -67,6 +82,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             init = false;
 
+            Projectile.width = (int)(Projectile.width * Projectile.scale);
+            Projectile.height = (int)(Projectile.height * Projectile.scale);
+
             OnInitialize();
         }
 
@@ -87,6 +105,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         }
 
+        public virtual void SpawnSkillText(Color color)
+        {
+            CombatText.NewText(Projectile.getRect(), color,
+                (ModContent.GetModProjectile(Projectile.type) as GreenFairyProj).SkillText.Value);
+        }
+
         public bool CheckSelfItem()
         {
             if (FairyItem is null)
@@ -94,13 +118,31 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Projectile.Kill();
                 return false;
             }
-            else
-            {
-                lifeMax = (int)FairyItem.FairyLifeMax;
-                life = FairyItem.Life;
-            }
 
             return true;
+        }
+
+        public void UpdateFrameY(int spacing)
+        {
+            if (++Projectile.frameCounter > spacing)
+            {
+                Projectile.frameCounter = 0;
+                if (++Projectile.frame >= FrameY)
+                    Projectile.frame = 0;
+            }
+        }
+
+        public void SetDirectionNormally()
+        {
+            Projectile.direction = Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
+        }
+
+        public override bool? CanDamage()
+        {
+            if (canDamage)
+                return null;
+
+            return false;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -110,15 +152,28 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 if (FairyItem.Hurt(Owner, target, hit, damageDone))
                 {
                     Projectile.Kill();
+                    OnKillByNPC(target);
                     return;
                 }
         }
+
+        public override void OnKill(int timeLeft)
+        {
+            FairyItem.IsOut = false;
+        }
+
+        /// <summary>
+        /// 在仙灵血量减为0后执行，用于生成死亡效果
+        /// </summary>
+        /// <param name="target"></param>
+        public virtual void OnKillByNPC(NPC target) { }
 
         public override bool PreDraw(ref Color lightColor)
         {
             DrawSelf(Main.spriteBatch, Main.screenPosition, lightColor);
 
-            DrawHealthBar();
+            if (canDamage)
+                DrawHealthBar();
             return false;
         }
 
@@ -128,11 +183,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="spriteBatch"></param>
         /// <param name="screenPos"></param>
         /// <param name="lightColor"></param>
-        public virtual void DrawSelf(SpriteBatch spriteBatch,Vector2 screenPos,Color lightColor) { }
+        public virtual void DrawSelf(SpriteBatch spriteBatch, Vector2 screenPos, Color lightColor)
+        {
+            Texture2D mainTex = Projectile.GetTexture();
+            var frame = mainTex.Frame(FrameX, FrameY, 0, Projectile.frame);
+
+            spriteBatch.Draw(mainTex, Projectile.Center - screenPos, frame, lightColor, Projectile.rotation, frame.Size() / 2,
+                Projectile.scale, Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+        }
 
         public virtual void DrawHealthBar()
         {
-            Main.instance.DrawHealthBar(Projectile.Bottom.X, Projectile.Bottom.Y + 12, life, lifeMax, 1, 1);
+            Main.instance.DrawHealthBar(Projectile.Bottom.X, Projectile.Bottom.Y + 12, Life, LifeMax, 1, 1);
         }
     }
 
