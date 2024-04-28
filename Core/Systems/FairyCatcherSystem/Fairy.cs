@@ -24,11 +24,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 是否存活，在捕捉器内使用
         /// </summary>
         public bool active;
-        /// <summary>
-        /// 是否在捕捉，当指针接触且玩家鼠标左键后设为true<br></br>
-        /// 之后将开始捕捉
-        /// </summary>
-        public bool catching;
 
         /// <summary>
         /// 和鼠标接触
@@ -53,6 +48,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public int spriteDirection;
 
         public int Timer;
+        private AIState State;
+
+        private enum AIState
+        {
+            Spawning,
+            FreeMoving,
+            Catching,
+            Fading
+        }
 
         /// <summary>
         /// 为false时就不会能被捉，进度不会涨
@@ -118,6 +122,29 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         #region 捕获器中的AI
 
+        public void Spawn(FairyAttempt attempt)
+        {
+            active = true;
+            canBeCaught = true;
+            scale = 1;
+            width = 8;
+            height = 8;
+            position = new Vector2(attempt.X, attempt.Y) * 16;
+            alpha = 0;
+            Timer = 60;
+
+            OnSpawn();
+        }
+
+        /// <summary>
+        /// 设置初始值<br></br>
+        /// 默认<see cref="width"/><see cref="height "/>为8<br></br>
+        /// 默认<see cref="Timer"/>为60，会逐渐减小
+        /// </summary>
+        public virtual void OnSpawn()
+        {
+        }
+
         /// <summary>
         /// 在捕捉器内的行为
         /// </summary>
@@ -133,65 +160,152 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             if (Vector2.Distance(Center, webCenter) > catcher.webRadius)
                 Center = webCenter + (Center - webCenter).SafeNormalize(Vector2.Zero) * catcher.webRadius;
 
-            if (catcher.CursorBox.Intersects(HitBox))//鼠标接触到了
+            switch (State)
             {
-                catcher.cursorIntersects = true;
-                cursorIntersects = false;
+                case AIState.Spawning:
+                case AIState.Fading:
+                default:
+                    break;
 
-                if (Main.mouseLeft)
-                {
-                    catching = true;
-                    cursorIntersects = true;
-                    if (canBeCaught)
+                case AIState.FreeMoving://没开始捕捉的时候，到点就消失
                     {
-                        float progressAdder = ProgressAdder;
-                        if (catcher.Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                            progressAdder = fcp.fairyCatchPowerBonus.ApplyTo(progressAdder);
-                        catchProgress += progressAdder;
+                        freeMoveTimer++;
+                        if (freeMoveTimer > despawnTime)
+                        {
+                            TurnToFading();
+                            return;
+                        }
+
+                        if (catcher.CursorBox.Intersects(HitBox) && Main.mouseLeft)//开始捕捉
+                        {
+                            State = AIState.Catching;
+                            alpha = 1;
+                        }
                     }
-                }
-            }
-            else if (catching)//鼠标没碰到，并且正在捕捉中，那么减少条
-            {
-                cursorIntersects = false;
-                ReduceProgress();
-            }
-            else//没开始捕捉的时候，到点就消失
-            {
-                freeMoveTimer++;
-                if (freeMoveTimer > despawnTime)
-                {
-                    Despawn();
-                    return;
-                }
-            }
+                    break;
+                case AIState.Catching:
+                    {
+                        if (catcher.CursorBox.Intersects(HitBox))//鼠标接触到了
+                        {
+                            catcher.cursorIntersects = true;
+                            cursorIntersects = false;
 
-            //Main.NewText(catchProgress);
-            //如果减小到0就消失
-            if (catchProgress <= 0)
-                Despawn();
-            else if (catchProgress > 100)//捕捉
-                Catch(catcher.Owner);
+                            if (Main.mouseLeft)
+                            {
+                                cursorIntersects = true;
+                                if (canBeCaught)
+                                {
+                                    float progressAdder = ProgressAdder;
+                                    if (catcher.Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                                        progressAdder = fcp.fairyCatchPowerBonus.ApplyTo(progressAdder);
+                                    catchProgress += progressAdder;
+                                }
+                            }
+                        }
+                        else//鼠标没碰到，并且正在捕捉中，那么减少条
+                        {
+                            cursorIntersects = false;
+                            ReduceProgress();
+                        }
+
+                        //如果减小到0就消失
+                        if (catchProgress <= 0)
+                            TurnToFading();
+                        else if (catchProgress > 100)//捕捉
+                            Catch(catcher.Owner);
+
+                    }
+                    break;
+            }
         }
-
-        public void Spawn(FairyAttempt attempt)
-        {
-            active = true;
-            canBeCaught = true;
-            scale = 1;
-            width = 8;
-            height = 8;
-            position = new Vector2(attempt.X, attempt.Y) * 16;
-
-            OnSpawn();
-        }
-
-        public virtual void OnSpawn() { }
 
         /// <summary>
         /// 在捕捉器内的AI
         /// </summary>
-        public virtual void AI_InCatcher(Rectangle cursor,BaseFairyCatcherProj catcher) { }
+        public virtual void AI_InCatcher(Rectangle cursor, BaseFairyCatcherProj catcher)
+        {
+            PreAI_InCatcher();
+
+            switch (State)
+            {
+                case AIState.Spawning:
+                    Spawning();
+                    break;
+                case AIState.FreeMoving:
+                    FreeMoving();
+                    break;
+                case AIState.Catching:
+                    {
+                        if (cursorIntersects)
+                            OnCursorIntersects(cursor,catcher);
+
+                        Catching(cursor ,catcher);
+                    }
+                    break;
+                default:
+                case AIState.Fading:
+                        Fading();
+                    break;
+            }
+
+            PostAI_InCatcher();
+        }
+
+        /// <summary>
+        /// 可以在这里更新贴图等
+        /// </summary>
+        public virtual void PreAI_InCatcher() { }
+        public virtual void PostAI_InCatcher() { }
+
+        public virtual void Spawning()
+        {
+            Timer--;
+
+            if (Timer < 1)
+                State = AIState.FreeMoving;
+
+            alpha = 1 - Timer / 60f;
+        }
+
+        /// <summary>
+        /// 在被捕捉时调用
+        /// </summary>
+        public virtual void Catching(Rectangle cursor, BaseFairyCatcherProj catcher) { }
+        /// <summary>
+        /// 在捕捉时并且鼠标接触的时候调用
+        /// </summary>
+        public virtual void OnCursorIntersects(Rectangle cursor, BaseFairyCatcherProj catcher) { }
+        /// <summary>
+        /// 在没被捕捉的时候调用
+        /// </summary>
+        public virtual void FreeMoving() { }
+        /// <summary>
+        /// 在消失时调用
+        /// </summary>
+        public virtual void Fading()
+        {
+            Timer++;
+            alpha -= 1 / 60f;
+            if (Timer > 60)
+                Despawn();
+        }
+
+        public virtual void TurnToFading()
+        {
+            State = AIState.Fading;
+            Timer = 0;
+        }
+
+        public void Despawn()
+        {
+            active = false;
+            OnDespawn();
+        }
+
+        /// <summary>
+        /// 在消失时调用
+        /// </summary>
+        public virtual void OnDespawn() { }
 
         public virtual bool ShouldUpdatePosition() => true;
 
@@ -203,8 +317,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             catchProgress -= 100f / (60 * 25f);
         }
-
-        #endregion
 
         /// <summary>
         /// 被捕获时执行
@@ -230,14 +342,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             player.QuickSpawnItem(player.GetSource_FairyCatch(this), i);
             Chest.VisualizeChestTransfer(Center, player.Center, i, 1);
             Helper.PlayPitched("Fairy/CatchFairy", 0.4f, 0);
-
-            //ParticleOrchestrator.RequestParticleSpawn(true, ParticleOrchestraType.ItemTransfer,
-            //    new ParticleOrchestraSettings()
-            //    {
-            //        PositionInWorld = position,
-            //        MovementVector = player.Center,
-            //        UniqueInfoPiece = i.type
-            //    });
         }
 
         /// <summary>
@@ -245,6 +349,29 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         /// <param name="player"></param>
         public virtual void OnCatch(Player player, Item fairyItem) { }
+
+        #endregion
+
+        #region 帮助方法
+
+        public void SetDirectionNormally()
+        {
+            spriteDirection = Math.Sign(velocity.X);
+        }
+
+        public void UpdateFrameY(int spacing)
+        {
+            if (++frameCounter > spacing)
+            {
+                frameCounter = 0;
+                if (++frame.Y >= VerticalFrames)
+                {
+                    frame.Y = 0;
+                }
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// 在仙灵瓶物块中的AI
@@ -255,16 +382,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         }
 
-        public void Despawn()
-        {
-            active = false;
-            OnDespawn();
-        }
-
-        /// <summary>
-        /// 在消失时调用
-        /// </summary>
-        public virtual void OnDespawn() { }
+        #region 绘制
 
         /// <summary>
         /// 在捕捉器内的绘制
@@ -274,14 +392,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             Texture2D mainTex = ModContent.Request<Texture2D>(Texture).Value;
             var frame = mainTex.Frame(HorizontalFrames, VerticalFrames, this.frame.X, this.frame.Y);
 
-            Main.spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, Color.White, rotation, frame.Size() / 2, scale, spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            Main.spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, Color.White * alpha, rotation, frame.Size() / 2, scale, spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
             DrawProgressBar();
         }
 
         public virtual void DrawProgressBar()
         {
-            if (catching)
+            if (State==AIState.Catching)
                 DrawFairyProgressBar(Bottom.X, Bottom.Y + 14, (int)catchProgress, 100, 0.9f, 0.75f);
         }
 
@@ -290,7 +408,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public virtual void Draw_InBottle()
         {
+            Texture2D mainTex = ModContent.Request<Texture2D>(Texture).Value;
+            var frame = mainTex.Frame(HorizontalFrames, VerticalFrames, this.frame.X, this.frame.Y);
 
+            Main.spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, Color.White, rotation, frame.Size() / 2, scale, spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
         }
 
         public Texture2D GetTexture() => ModContent.Request<Texture2D>(Texture).Value;
@@ -306,13 +427,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             Color backColor = Color.DarkGreen;
             Color barColor = Color.LawnGreen;
-
-            //if (Main.LocalPlayer.TryGetModPlayer(out FairyCatcherPlayer fcp))
-            //{
-            //    backColor = fcp.CatcherBackColor * 0.8f;
-            //    backColor.A = 255;
-            //    barColor = fcp.CatcherBackColor * 1.5f;
-            //}
 
             backColor *= alpha;
             barColor *= alpha;
@@ -331,5 +445,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             Main.spriteBatch.Draw(innerTex, topLeft, source, barColor,
                 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
+
+        #endregion
     }
 }

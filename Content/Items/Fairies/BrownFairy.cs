@@ -9,37 +9,37 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Fairies
 {
-    public class GreenFairyItem : BaseFairyItem
+    public class BrownFairyItem : BaseFairyItem
     {
-        public override int FairyType => CoraliteContent.FairyType<GreenFairy>();
+        public override int FairyType => CoraliteContent.FairyType<BrownFairy>();
         public override FairyAttempt.Rarity Rarity => FairyAttempt.Rarity.C;
 
         public override int MaxResurrectionTime => 60 * 60;
 
         public override void SetOtherDefaults()
         {
-            Item.rare = ItemRarityID.White;
-            Item.value = Item.sellPrice(0, 0, 3);
-            Item.shoot = ModContent.ProjectileType<GreenFairyProj>();
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(0, 0, 5);
+            Item.shoot = ModContent.ProjectileType<BrownFairyProj>();
         }
 
         public override void SetFairyDefault(FairyGlobalItem fairyItem)
         {
             fairyItem.baseDamage = 6;
-            fairyItem.baseDefence = 6;
+            fairyItem.baseDefence = 8;
             fairyItem.baseLifeMax = 300;
         }
     }
 
-    public class GreenFairy : Fairy
+    public class BrownFairy : Fairy
     {
-        public override int ItemType => ModContent.ItemType<GreenFairyItem>();
+        public override int ItemType => ModContent.ItemType<BrownFairyItem>();
         public override int VerticalFrames => 4;
 
         public override void RegisterSpawn()
         {
             FairySpawnController.Create(Type)
-                .AddCondition(FairySpawnCondition.ZoneForest)
+                .AddCondition(FairySpawnCondition.ZoneRockLayerHeight)
                 .RegisterToWall();
         }
 
@@ -68,11 +68,11 @@ namespace Coralite.Content.Items.Fairies
         {
             if (Main.rand.NextBool(3))
             {
-                Dust d = Dust.NewDustPerfect(Center, DustID.GreenFairy, Helper.NextVec2Dir(0.5f, 1.5f), 200);
+                Dust d = Dust.NewDustPerfect(Center, DustID.BrownMoss, Helper.NextVec2Dir(0.5f, 1.5f), 150);
                 d.noGravity = true;
             }
             else if (Main.rand.NextBool())
-                this.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.05f, 0.5f), 200);
+                this.SpawnTrailDust(DustID.BrownMoss, Main.rand.NextFloat(0.05f, 0.5f), 150);
         }
 
         public override void FreeMoving()
@@ -92,9 +92,9 @@ namespace Coralite.Content.Items.Fairies
         }
     }
 
-    public class GreenFairyProj : BaseFairyProjectile
+    public class BrownFairyProj : BaseFairyProjectile
     {
-        public override string Texture => AssetDirectory.FairyItems + "GreenFairy";
+        public override string Texture => AssetDirectory.FairyItems + "BrownFairy";
         protected override int FrameY => 4;
 
         protected override string SkillName => "撞击！";
@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.Fairies
             Projectile.timeLeft = 20;
             Projectile.velocity *= 0.98f;
             if (Main.rand.NextBool(3))
-                Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                Projectile.SpawnTrailDust(DustID.BrownMoss, Main.rand.NextFloat(0.1f, 0.5f), 200);
 
             if (Timer < 1)
                 ExchangeToAction();
@@ -135,7 +135,7 @@ namespace Coralite.Content.Items.Fairies
         public override void Action()
         {
             Projectile.timeLeft = 20;
-            Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
+            Projectile.SpawnTrailDust(DustID.BrownMoss, Main.rand.NextFloat(0.1f, 0.5f), 200);
             Lighting.AddLight(Projectile.Center, 0, 0.2f, 0);
 
             Timer++;
@@ -156,27 +156,28 @@ namespace Coralite.Content.Items.Fairies
             }
             else if (Timer < 40 + 120)
             {
-                Projectile.velocity = Projectile.velocity.RotateByRandom(0.05f,0.17f);
+                if (Timer % 15 == 0)
+                    Projectile.velocity = Helper.NextVec2Dir(2,4);
                 if (Main.rand.NextBool())
-                    Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                    Projectile.SpawnTrailDust(DustID.BrownMoss, Main.rand.NextFloat(0.1f, 0.5f), 200);
             }
             else
             {
                 Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
                 Projectile.Center = Vector2.Lerp(Projectile.Center, Owner.Center, 0.07f);
                 if (Main.rand.NextBool())
-                    Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                    Projectile.SpawnTrailDust(DustID.BrownMoss, Main.rand.NextFloat(0.1f, 0.5f), 200);
 
                 if (Vector2.Distance(Projectile.Center, Owner.Center) < 24)
                     Projectile.Kill();
             }
 
-            Lighting.AddLight(Projectile.Center, 0, 0.2f, 0);
+            Lighting.AddLight(Projectile.Center, 0.2f, 0.2f, 0);
         }
 
         public override void OnExchangeToAction(NPC target)
         {
-            SpawnSkillText<GreenFairyProj>(Color.LawnGreen);
+            SpawnSkillText<BrownFairyProj>(Color.SandyBrown);
             SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
 
             Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 10;

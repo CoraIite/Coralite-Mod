@@ -439,3 +439,13 @@ GreenFairyProj: {
 	SkillText: 撞击！
 	DisplayName: Green Fairy Proj
 }
+
+BlueFairyProj: {
+	SkillText: ""
+	DisplayName: Blue Fairy Proj
+}
+
+BrownFairyProj: {
+	SkillText: ""
+	DisplayName: Brown Fairy Proj
+}

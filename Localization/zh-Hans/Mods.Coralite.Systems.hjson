@@ -39,4 +39,7 @@ FairySystem: {
 	RaritySP: 特殊
 	BottleCapacity: 容量 {0} / {1}
 	NotHaveLevel: 无：{0}（基础 {1}）
+	// SeeMore: 按上键以查看雷达图（游戏暂停时无法使用）
+	// ZoneRockLayer: 在洞穴中出现
+	// ZoneBeach: 在海边出现
 }

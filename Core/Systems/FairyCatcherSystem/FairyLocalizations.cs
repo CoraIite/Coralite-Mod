@@ -44,7 +44,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         //-----------------------------------
         //         生成条件的本地化
         //-----------------------------------
-        public static LocalizedText ZoneForestDescription;
+        public static LocalizedText[] SpawnDescriptions;
+
+        public class DescriptionID
+        {
+            public const int ZoneForest = 0;
+            public const int ZoneRockLayer = 1;
+            public const int ZoneBeach = 2;
+
+            public const int DescriptionCount = 3;
+        } 
+        
+        //public static LocalizedText ZoneForestDescription;
+        //public static LocalizedText ZoneRockLayerDescription;
+        //public static LocalizedText ZoneBeachDescription;
 
         //-----------------------------------
         //       仙灵物品其他文本的本地化
@@ -52,6 +65,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText CurrentLife;
         public static LocalizedText ResurrectionTime;
         public static LocalizedText BottleCapacity;
+        public static LocalizedText SeeMore;
 
         public void LoadLocalization()
         {
@@ -83,11 +97,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             Rarity_MR= this.GetLocalization("RarityMR", () => "秘宝");
             Rarity_SP= this.GetLocalization("RaritySP", () => "特殊");
 
-            ZoneForestDescription = this.GetLocalization("ZoneForest", () => "在地表森林捕获");
+            SpawnDescriptions = new LocalizedText[DescriptionID.DescriptionCount];
+
+            SpawnDescriptions[DescriptionID.ZoneForest] = this.GetLocalization(nameof(DescriptionID.ZoneForest)
+                , () => "在地表森林出现");
+            SpawnDescriptions[DescriptionID.ZoneRockLayer] = this.GetLocalization(nameof(DescriptionID.ZoneRockLayer)
+                , () => "在洞穴中出现");
+            SpawnDescriptions[DescriptionID.ZoneBeach] = this.GetLocalization(nameof(DescriptionID.ZoneBeach)
+                , () => "在海边出现");
 
             CurrentLife = this.GetLocalization("CurrentLife", () => "当前生命值：{0} / {1}");
             ResurrectionTime = this.GetLocalization("ResurrectionTime", () => "复活时间：{0}");
             BottleCapacity = this.GetLocalization("BottleCapacity", () => "容量 {0} / {1}");
+            SeeMore = this.GetLocalization("SeeMore", () => "按上键以查看雷达图（游戏暂停时无法使用）");
         }
 
         public static void UnloadLocalization()
@@ -101,12 +123,31 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             UniqueLevel = null;
             TimelessLevel = null;
 
+            NotHaveLevel = null;
+
             FairyLifeMax = null;
             FairyDamage = null;
             FairyDefence=null;
             FairyScale = null;
-            
-            ZoneForestDescription = null;
+
+            Rarity_C = null;
+            Rarity_U = null;
+            Rarity_R = null;
+            Rarity_RR = null;
+            Rarity_SR = null;
+            Rarity_UR = null;
+            Rarity_RRR = null;
+            Rarity_HR = null;
+            Rarity_AR = null;
+            Rarity_MR = null;
+            Rarity_SP = null;
+
+            SpawnDescriptions = null;
+
+            CurrentLife = null;
+            ResurrectionTime = null;
+            BottleCapacity = null;
+            SeeMore = null;
         }
 
         public static string FormatIVDescription(LocalizedText pre, LocalizedText levelText, float @base, float bonused)

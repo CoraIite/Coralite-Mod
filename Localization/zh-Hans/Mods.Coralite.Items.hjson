@@ -3823,3 +3823,18 @@ BreezeFairyItem: {
 	DisplayName: 微风灵
 	Tooltip: ""
 }
+
+BlueFairyItem: {
+	DisplayName: 蓝仙灵
+	Tooltip: ""
+}
+
+BrownFairyItem: {
+	DisplayName: 棕仙灵
+	Tooltip: ""
+}
+
+PinkFairyItem: {
+	DisplayName: 粉仙灵
+	Tooltip: ""
+}

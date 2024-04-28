@@ -7,34 +7,34 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Fairies
 {
-    public class BreezeFairyItem : BaseFairyItem
+    public class PinkFairyItem : BaseFairyItem
     {
-        public override int FairyType => CoraliteContent.FairyType<BreezeFairy>();
-        public override FairyAttempt.Rarity Rarity => FairyAttempt.Rarity.U;
+        public override int FairyType => CoraliteContent.FairyType<PinkFairy>();
+        public override FairyAttempt.Rarity Rarity => FairyAttempt.Rarity.R;
 
-        public override int MaxResurrectionTime => 90 * 60;
+        public override int MaxResurrectionTime => 60 * 60;
 
         public override void SetOtherDefaults()
         {
-            Item.rare = ItemRarityID.Blue;
-            Item.value = Item.sellPrice(0, 0, 5);
-            //Item.shoot = ModContent.ProjectileType<GreenFairyProj>();
+            Item.rare = ItemRarityID.White;
+            Item.value = Item.sellPrice(0, 0, 3);
+            //Item.shoot = ModContent.ProjectileType<PinkFairyProj>();
         }
 
         public override void SetFairyDefault(FairyGlobalItem fairyItem)
         {
-            fairyItem.baseDamage = 2;
-            fairyItem.baseDefence = 6;
-            fairyItem.baseLifeMax = 200;
+            fairyItem.baseDamage = 9;
+            fairyItem.baseDefence = 8;
+            fairyItem.baseLifeMax = 400;
         }
     }
 
-    public class BreezeFairy : Fairy
+    public class PinkFairy : Fairy
     {
-        public override int ItemType => ModContent.ItemType<BreezeFairyItem>();
+        public override int ItemType => ModContent.ItemType<PinkFairyItem>();
         public override int VerticalFrames => 4;
 
-        public override FairyAttempt.Rarity Rarity => FairyAttempt.Rarity.U;
+        public override FairyAttempt.Rarity Rarity => FairyAttempt.Rarity.R;
 
         public override void RegisterSpawn()
         {
@@ -46,10 +46,12 @@ namespace Coralite.Content.Items.Fairies
         public override void Catching(Rectangle cursor, BaseFairyCatcherProj catcher)
         {
             Timer--;
-            velocity = velocity.RotateByRandom(-0.08f, 0.04f);
-            if (Timer <= 0)
+            if (Timer % 40 == 0)
+                velocity = velocity.RotateByRandom(-MathHelper.PiOver4 / 2, MathHelper.PiOver4 / 2);
+
+            if (Timer < 1)
             {
-                Timer = Main.rand.Next(60, 100);
+                Timer = Main.rand.Next(60, 90);
                 if (Main.rand.NextBool(3))
                     Helper.PlayPitched("Fairy/FairyMove" + Main.rand.Next(2), 0.3f, 0, position);
                 Vector2 webCenter = catcher.webCenter.ToWorldCoordinates();
@@ -61,7 +63,7 @@ namespace Coralite.Content.Items.Fairies
                     dir = (Center - cursor.Center.ToVector2())
                             .SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f);
 
-                velocity = dir * Main.rand.NextFloat(0.4f, 0.9f);
+                velocity = dir * Main.rand.NextFloat(0.6f, 1.2f);
             }
         }
 
@@ -69,21 +71,20 @@ namespace Coralite.Content.Items.Fairies
         {
             if (Main.rand.NextBool(3))
             {
-                Dust d = Dust.NewDustPerfect(Center, DustID.Cloud, Helper.NextVec2Dir(0.5f, 1.5f), 50);
+                Dust d = Dust.NewDustPerfect(Center, DustID.PinkFairy, Helper.NextVec2Dir(0.5f, 1.5f), 200);
                 d.noGravity = true;
             }
             else if (Main.rand.NextBool())
-                this.SpawnTrailDust(DustID.Cloud, Main.rand.NextFloat(0.05f, 0.5f), 50);
+                this.SpawnTrailDust(DustID.PinkFairy, Main.rand.NextFloat(0.05f, 0.5f), 200);
         }
 
         public override void FreeMoving()
         {
             Timer--;
-            velocity = velocity.RotateByRandom(-0.02f, 0.01f);
             if (Timer < 1)
             {
-                velocity = Helper.NextVec2Dir(0.2f, 1f);
-                Timer = Main.rand.Next(60, 80);
+                velocity = Helper.NextVec2Dir(0.5f, 1f);
+                Timer = Main.rand.Next(70, 110);
             }
         }
 

@@ -3725,3 +3725,18 @@ BreezeFairyItem: {
 	DisplayName: Breeze Fairy Item
 	Tooltip: ""
 }
+
+BlueFairyItem: {
+	DisplayName: Blue Fairy Item
+	Tooltip: ""
+}
+
+BrownFairyItem: {
+	DisplayName: Brown Fairy Item
+	Tooltip: ""
+}
+
+PinkFairyItem: {
+	DisplayName: Pink Fairy Item
+	Tooltip: ""
+}

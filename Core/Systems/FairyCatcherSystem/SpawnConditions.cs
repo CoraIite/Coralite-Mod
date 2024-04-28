@@ -3,11 +3,19 @@ using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
-    public sealed record FairySpawnCondition(LocalizedText Descripetion, Func<FairyAttempt, bool> Predicate)
+    public sealed record FairySpawnCondition(Func<LocalizedText> Descripetion, Func<FairyAttempt, bool> Predicate)
     {
-        public static FairySpawnCondition ZoneForest = new(FairySystem.ZoneForestDescription, attempt => attempt.Player.ZoneForest);
+        public static FairySpawnCondition ZoneForest =
+            new(()=>FairySystem.SpawnDescriptions[FairySystem.DescriptionID.ZoneForest]
+                , attempt => attempt.Player.ZoneForest);
 
-        //public readonly LocalizedText Descripetion = Descripetion;
-        //public readonly Func<FairyAttempt, bool> Condition = Condition;
+        public static FairySpawnCondition ZoneRockLayerHeight = 
+            new(()=>FairySystem.SpawnDescriptions[FairySystem.DescriptionID.ZoneRockLayer]
+                , attempt => attempt.Player.ZoneRockLayerHeight);
+
+        public static FairySpawnCondition ZoneBeach = 
+            new(() => FairySystem.SpawnDescriptions[FairySystem.DescriptionID.ZoneBeach]
+                , attempt => attempt.Player.ZoneBeach);
+
     }
 }

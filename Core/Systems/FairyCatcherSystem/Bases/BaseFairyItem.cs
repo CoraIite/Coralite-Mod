@@ -1,10 +1,12 @@
 ﻿using Coralite.Content.DamageClasses;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
+using Terraria.UI.Chat;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
@@ -25,6 +27,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 复活时间
         /// </summary>
         protected int resurrectionTime;
+
+        private static int showRadarCount;
 
         public abstract int FairyType { get; }
         public abstract FairyAttempt.Rarity Rarity { get; }
@@ -194,11 +198,31 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             //当前血量
             tooltips.Add(SurvivalStatus());
 
-            //各种增幅数值
-            tooltips.Add(LifeMaxeBonusDescription());
-            tooltips.Add(DamageBonusDescription());
-            tooltips.Add(DefenceBonusDescription());
-            tooltips.Add(ScaleBonusDescription());
+            if (showRadarCount > 0)
+            {
+                if (Main.LocalPlayer.controlUp)
+                    showRadarCount += 2;
+
+                tooltips.Add(new TooltipLine(Mod, "RaderChart"
+                    , "                        \n\n\n\n\n"));
+
+                showRadarCount--;
+
+                if (showRadarCount > 15)
+                    showRadarCount = 15;
+            }
+            else
+            {
+                if (Main.LocalPlayer.controlUp)
+                    showRadarCount = 2;
+
+                //各种增幅数值
+                tooltips.Add(LifeMaxeBonusDescription());
+                tooltips.Add(DamageBonusDescription());
+                tooltips.Add(DefenceBonusDescription());
+                tooltips.Add(ScaleBonusDescription());
+                tooltips.Add(new TooltipLine(Mod,"SeeMore",FairySystem.SeeMore.Value));
+            }
         }
 
         public TooltipLine RarityDescription()
@@ -328,6 +352,126 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             TooltipLine line = new TooltipLine(Mod, "ScaleBonus"
                 , FairySystem.FairyScale.Value + $"{bonused} ({@base})");
             return line;
+        }
+
+        public override void PostDrawTooltipLine(DrawableTooltipLine line)
+        {
+            if (showRadarCount > 0 && line.Name == "RaderChart")
+            {
+                Vector2 topLeft = new Vector2(line.OriginalX, line.OriginalY);
+                float factor = showRadarCount / 15f;
+
+                Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
+
+                Texture2D backgroundTex = ModContent.Request<Texture2D>(AssetDirectory.Misc + "FairyRaderBack").Value;
+
+                Vector2 center = topLeft + size / 2;
+                //绘制底层
+                DrawRaderBack(center, factor, backgroundTex);
+                //绘制雷达图
+                DrawRaderChart(center, factor, backgroundTex.Width / 2);
+
+                //绘制上层图标
+                //生命值
+                DrawRaderIcon(center, center + new Vector2(0, -backgroundTex.Height / 2 - 12), factor, "[i:58]");
+                //攻击力
+                DrawRaderIcon(center, center + new Vector2(-backgroundTex.Width / 2 - 12, 0), factor, "[i:3507]");
+                //防御
+                DrawRaderIcon(center, center + new Vector2(backgroundTex.Width / 2 + 12, 0), factor, "[i:3811]");
+                //大小
+                DrawRaderIcon(center, center + new Vector2(0, backgroundTex.Height / 2 + 12), factor, "[i:486]");
+            }
+        }
+
+        public static void DrawRaderBack(Vector2 center,float factor,Texture2D backgroundTex)
+        {
+            factor = Coralite.Instance.SqrtSmoother.Smoother(factor);
+
+            Main.spriteBatch.Draw(backgroundTex, center, null, Color.White * factor, 0, backgroundTex.Size() / 2, factor, 0, 0);
+        }
+
+        public void DrawRaderChart(Vector2 center,float factor,float baseLength)
+        {
+            float damageFactor = FairyDamage / Item.GetGlobalItem<FairyGlobalItem>().baseDamage;
+            float defenceFactor =FairyDefence / Item.GetGlobalItem<FairyGlobalItem>().baseDefence;
+            float lifeMaxFactor = FairyLifeMax / Item.GetGlobalItem<FairyGlobalItem>().baseLifeMax;
+            float scaleFactor = FairyScale;
+
+            GetScaledFactor(ref damageFactor, FairyIVAppraise.FairyDamageAppraise.AppraiseLevels[^2].Item1);
+            GetScaledFactor(ref defenceFactor, FairyIVAppraise.FairyDefenceAppraise.AppraiseLevels[^2].Item1);
+            GetScaledFactor(ref lifeMaxFactor, FairyIVAppraise.FairyLifeMaxAppraise.AppraiseLevels[^2].Item1);
+
+            //缩放比较特别，因为它固定0.5-2.5
+            scaleFactor = (scaleFactor - 0.5f) / (2.5f - 0.5f);
+
+            damageFactor *= factor;
+            defenceFactor *= factor;
+            lifeMaxFactor *= factor;
+            scaleFactor *= factor;
+
+            Texture2D Texture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "White32x32").Value;
+
+            CustomVertexInfo[] bars = new CustomVertexInfo[4];
+
+            bars[0] = new(center + new Vector2(0, -baseLength * lifeMaxFactor),
+                GetScaledColor(lifeMaxFactor, factor), new Vector3(0, 0, 1));
+            bars[1] = new(center + new Vector2(baseLength * defenceFactor, 0),
+                GetScaledColor(defenceFactor, factor), new Vector3(0, 1, 1));
+
+            bars[2] = new(center + new Vector2(-baseLength * damageFactor, 0),
+                GetScaledColor(damageFactor, factor), new Vector3(1, 0, 1));
+            bars[3] = new(center + new Vector2(0, baseLength * scaleFactor),
+                GetScaledColor(scaleFactor, factor), new Vector3(1, 1, 1));
+
+            SpriteBatch spriteBatch = Main.spriteBatch;
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, spriteBatch.GraphicsDevice.BlendState, spriteBatch.GraphicsDevice.SamplerStates[0],
+                            spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+
+            Main.spriteBatch.GraphicsDevice.Textures[0] = Texture;
+            Main.spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars, 0, 2);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, spriteBatch.GraphicsDevice.BlendState, spriteBatch.GraphicsDevice.SamplerStates[0],
+                            spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+        }
+
+        public static void GetScaledFactor(ref float baseValue, float maxValue)
+        {
+            if (baseValue < 1)//小于1的时候给它变成0-0.3
+            {
+                baseValue /= 3;
+                return;
+            }
+
+            /*
+             * 当基础值为1时为0.3
+             * 当基础值为1到最大值时为0.3-1
+             * 当基础值大于最大值时为1以上
+             */
+            baseValue = 0.3f + 0.7f * (baseValue - 1) / (maxValue - 1);
+        }
+
+        public static Color GetScaledColor(float factor, float alphaFactor)
+        {
+            Color green = new Color(108, 234, 255);
+            Color pink = new Color(238, 206, 231);
+            Color c;
+            if (factor < 0.3f)
+                c = Color.Lerp(Color.Gray, pink, factor / 0.3f);
+            else
+                c = Color.Lerp(pink, green, (factor - 0.3f) / 0.7f);
+
+            c *= alphaFactor*0.7f;
+            return c;
+        }
+
+        public static void DrawRaderIcon(Vector2 originPos, Vector2 aimPos, float factor, string text)
+        {
+            Vector2 currentPos = Vector2.SmoothStep(originPos, aimPos, factor);
+            currentPos += new Vector2(-12);
+            Utils.DrawBorderString(Main.spriteBatch, text, currentPos, Color.White, 1);
         }
 
         #endregion

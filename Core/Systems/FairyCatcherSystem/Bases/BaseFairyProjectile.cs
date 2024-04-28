@@ -3,6 +3,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
@@ -105,10 +106,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         }
 
-        public virtual void SpawnSkillText(Color color)
+        public virtual void SpawnSkillText<T>(Color color)where T : BaseFairyProjectile
         {
             CombatText.NewText(Projectile.getRect(), color,
-                (ModContent.GetModProjectile(Projectile.type) as GreenFairyProj).SkillText.Value);
+                (ModContent.GetModProjectile(Projectile.type) as T).SkillText.Value);
         }
 
         public bool CheckSelfItem()
@@ -155,6 +156,37 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     OnKillByNPC(target);
                     return;
                 }
+        }
+
+        public virtual void ExchangeToBack()
+        {
+            Timer = 0;
+            State = (int)AIStates.Backing;
+            canDamage = false;
+            Projectile.timeLeft = 1200;
+            Projectile.tileCollide = false;
+        }
+
+        public virtual void ExchangeToAction()
+        {
+            if (Helper.TryFindClosestEnemy(Projectile.Center, 400, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
+            {
+                State = (int)AIStates.Action;
+                OnExchangeToAction(target);
+                Timer = 0;
+                canDamage = true;
+            }
+            else
+                ExchangeToBack();
+        }
+
+        public virtual void OnExchangeToAction(NPC target) { }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (State == (int)AIStates.Shooting)
+                ExchangeToAction();
+            return false;
         }
 
         public override void OnKill(int timeLeft)

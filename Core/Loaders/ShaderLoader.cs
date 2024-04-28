@@ -43,7 +43,7 @@ namespace Coralite.Core.Loaders
         /// <param name="path"></param>
         public static void LoadShader(string name, string path)
         {
-            var screenRef = new Ref<Effect>(Coralite.Instance.Assets.Request<Effect>(path, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
+            var screenRef = Coralite.Instance.Assets.Request<Effect>(path, ReLogic.Content.AssetRequestMode.ImmediateLoad);
             Filters.Scene[name] = new Filter(new ScreenShaderData(screenRef, name + "Pass"), EffectPriority.High);
             Filters.Scene[name].Load();
         }

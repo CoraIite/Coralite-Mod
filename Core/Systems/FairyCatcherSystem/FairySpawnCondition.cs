@@ -81,10 +81,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="description"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public FairySpawnController AddCondition(LocalizedText description, Func<FairyAttempt,bool> predicate)
+        public FairySpawnController AddCondition(LocalizedText description, Func<FairyAttempt, bool> predicate)
         {
             Conditions ??= new List<FairySpawnCondition>();
-            Conditions.Add(new FairySpawnCondition(description, predicate));
+            Conditions.Add(new FairySpawnCondition(() => description, predicate));
 
             return this;
         }

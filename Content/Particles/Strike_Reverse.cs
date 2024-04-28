@@ -10,7 +10,7 @@ namespace Coralite.Content.Particles
         public override void OnSpawn(Particle particle)
         {
             particle.color = Color.White;
-            particle.shader = new Terraria.Graphics.Shaders.ArmorShaderData(new Ref<Effect>(Coralite.Instance.Assets.Request<Effect>("Effects/JustTexture", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "JustTexturePass");
+            particle.shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/JustTexture", ReLogic.Content.AssetRequestMode.ImmediateLoad), "JustTexturePass");
             particle.frame = new Rectangle(0, 0, 128, 128);
         }
 

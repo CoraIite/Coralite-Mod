@@ -439,3 +439,13 @@ GreenFairyProj: {
 	SkillText: 撞击！
 	DisplayName: 绿仙灵
 }
+
+BlueFairyProj: {
+	SkillText: 撞击！
+	DisplayName: 蓝仙灵
+}
+
+BrownFairyProj: {
+	SkillText: 撞击！
+	DisplayName: 棕仙灵
+}

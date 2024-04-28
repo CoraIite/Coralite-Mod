@@ -175,7 +175,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         }
     }
 
-    public class SnowflakeSpike : ModProjectile, IDrawPrimitive, IDrawWarp
+    public class SnowflakeSpike : ModProjectile, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "SpurtTrail3";
 
@@ -305,50 +305,6 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 Color.White, Color.CadetBlue, Timer / 35, 0, 0.2f, 0.6f, 1, Projectile.rotation + 1.57f,
                 new Vector2(0.1f, 2.4f), Vector2.One);
             return false;
-        }
-
-        public void DrawWarp()
-        {
-            return;
-            if (Timer < 0)
-                return;
-
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
-
-            float w = 1f;
-            Vector2 up = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
-            Vector2 down = (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2();
-            for (int i = 0; i < Projectile.oldPos.Length; i++)
-            {
-                float factor = 1f - i / 15f;
-                Vector2 Center = Projectile.oldPos[i];
-                float r = Projectile.rotation % 6.18f;
-                float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
-                float width = WidthFunction(factor) * 0.75f;
-                Vector2 Top = Center + up * width;
-                Vector2 Bottom = Center + down * width;
-
-                bars.Add(new CustomVertexInfo(Top, new Color(dir, w, 0f, 1f), new Vector3(factor, 0f, w)));
-                bars.Add(new CustomVertexInfo(Bottom, new Color(dir, w, 0f, 1f), new Vector3(factor, 1f, w)));
-            }
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone);
-
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0f, Main.screenWidth, Main.screenHeight, 0f, 0f, 1f);
-            Matrix model = Matrix.CreateTranslation(new Vector3(-Main.screenPosition.X, -Main.screenPosition.Y, 0f)) * Main.GameViewMatrix.TransformationMatrix;
-
-            Effect effect = Filters.Scene["KEx"].GetShader().Shader;
-
-            effect.Parameters["uTransform"].SetValue(model * projection);
-            Main.graphics.GraphicsDevice.Textures[0] = FrostySwordSlash.WarpTexture.Value;
-            Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
-            effect.CurrentTechnique.Passes[0].Apply();
-            if (bars.Count >= 3)
-                Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         }
     }
 }
