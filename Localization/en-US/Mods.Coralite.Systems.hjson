@@ -42,4 +42,6 @@ FairySystem: {
 	SeeMore: 按上键以查看雷达图（游戏暂停时无法使用）
 	ZoneRockLayer: 在洞穴中出现
 	ZoneBeach: 在海边出现
+	CatchPowerMult: "{0} 捕捉力"
+	EternalLevel: 永恒：{0}（基础 {1}）
 }

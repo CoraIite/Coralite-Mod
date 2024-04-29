@@ -17,7 +17,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     (1.45f,Color.DodgerBlue,FairySystem.RareLevel),
                     (1.6f,Color.Yellow,FairySystem.SpecialLevel),
                     (1.75f,Color.HotPink,FairySystem.UniqueLevel),
-                    (float.MaxValue,Color.Orange,FairySystem.TimelessLevel),
+                    (float.MaxValue,Color.Orange,FairySystem.EternalLevel),
                 }
             );
 
@@ -32,7 +32,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     (1.3f,Color.DodgerBlue,FairySystem.RareLevel),
                     (1.4f,Color.Yellow,FairySystem.SpecialLevel),
                     (1.5f,Color.HotPink,FairySystem.UniqueLevel),
-                    (float.MaxValue,Color.Orange,FairySystem.TimelessLevel),
+                    (float.MaxValue,Color.Orange,FairySystem.EternalLevel),
                 }
             );
 
@@ -47,7 +47,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     (1.75f,Color.DodgerBlue,FairySystem.RareLevel),
                     (2f,Color.Yellow,FairySystem.SpecialLevel),
                     (2.25f,Color.HotPink,FairySystem.UniqueLevel),
-                    (float.MaxValue,Color.Orange,FairySystem.TimelessLevel),
+                    (float.MaxValue,Color.Orange,FairySystem.EternalLevel),
                 }
             );
 

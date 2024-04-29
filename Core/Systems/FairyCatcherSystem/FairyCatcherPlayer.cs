@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Terraria;
+using Terraria.WorldBuilding;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -44,16 +45,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public Color CatcherCircleColor;
         public Color CatcherBackColor;
-
-        /// <summary>
-        /// 仙灵伤害加成，使用仙灵捕获力增强幅度来增幅伤害
-        /// </summary>
-        /// <param name="damage"></param>
-        /// <returns></returns>
-        public float FairyDamageBonus(float damage)
-        {
-            return fairyCatchPowerBonus.ApplyTo(damage);
-        }
 
         public override void ResetEffects()
         {
@@ -150,10 +141,63 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public int FairyCatch_GetCatchPower()
         {
             int basePower = 1;
-            if (Player.HeldItem.ModItem is BaseFairyCatcher catcher)
-                basePower = catcher.catchPower;
+            float exBonus = 0f;
+            if (Player.HeldItem.TryGetGlobalItem(out FairyGlobalItem fgi))
+            {
+                basePower = fgi.CatchPower;
+                exBonus = fgi.CatchPowerMult - 1f;
+            }
+            StatModifier modifyer = fairyCatchPowerBonus;
 
-            return (int)fairyCatchPowerBonus.ApplyTo(basePower);
+            modifyer += exBonus;
+
+            return (int)modifyer.ApplyTo(basePower);
+        }
+
+        public int GetBonusedCatchPower(int baseCatchPower, float mult = 1)
+        {
+            StatModifier modifyer = fairyCatchPowerBonus;
+
+            modifyer += mult - 1;
+
+            return (int)modifyer.ApplyTo(baseCatchPower);
+        }
+
+        /// <summary>
+        /// 获取总的捕捉力加成幅度，物品为带有捕捉器前缀的物品
+        /// </summary>
+        /// <param name="base"></param>
+        /// <param name="catcherItem"></param>
+        /// <returns></returns>
+        public void TotalCatchPowerBonus(ref float @base,Item catcherItem)
+        {
+            StatModifier modifyer = fairyCatchPowerBonus;
+            float exBonus = 0f;
+
+            if (catcherItem.TryGetGlobalItem(out FairyGlobalItem fgi))
+                exBonus = fgi.CatchPowerMult - 1f;
+
+            modifyer += exBonus;
+
+            @base= modifyer.ApplyTo(@base);
+        }
+
+        /// <summary>
+        /// 仙灵伤害加成，使用仙灵捕获力增强幅度来增幅伤害
+        /// </summary>
+        /// <param name="damage"></param>
+        /// <returns></returns>
+        public float FairyDamageBonus(Item item, float damage)
+        {
+            StatModifier modifyer = fairyCatchPowerBonus;
+            float exBonus = 0f;
+
+            if (item.TryGetGlobalItem(out FairyGlobalItem fgi))
+                exBonus = fgi.CatchPowerMult - 1f;
+
+            modifyer += exBonus;
+
+            return modifyer.ApplyTo(damage);
         }
 
         public bool FairyCatch_GetEmptyFairyBottle(out IFairyBottle fairyBottle, out int emptySlot)

@@ -141,9 +141,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 默认<see cref="width"/><see cref="height "/>为8<br></br>
         /// 默认<see cref="Timer"/>为60，会逐渐减小
         /// </summary>
-        public virtual void OnSpawn()
-        {
-        }
+        public virtual void OnSpawn() { }
 
         /// <summary>
         /// 在捕捉器内的行为
@@ -197,7 +195,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                                 {
                                     float progressAdder = ProgressAdder;
                                     if (catcher.Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                                        progressAdder = fcp.fairyCatchPowerBonus.ApplyTo(progressAdder);
+                                        fcp.TotalCatchPowerBonus(ref progressAdder, catcher.Owner.HeldItem);
                                     catchProgress += progressAdder;
                                 }
                             }

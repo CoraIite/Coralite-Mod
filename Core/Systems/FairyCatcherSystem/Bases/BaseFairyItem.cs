@@ -148,7 +148,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (dead)
                 return false;
 
-            catcherDamage += (int)player.GetTotalDamage<FairyDamage>().ApplyTo(Item.damage);
+            catcherDamage += (int)FairyDamage;
 
             //生成仙灵弹幕
             Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, Item.shoot, catcherDamage, knockBack, player.whoAmI);

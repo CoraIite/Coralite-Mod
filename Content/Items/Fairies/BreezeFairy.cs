@@ -23,9 +23,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override void SetFairyDefault(FairyGlobalItem fairyItem)
         {
-            fairyItem.baseDamage = 2;
-            fairyItem.baseDefence = 6;
-            fairyItem.baseLifeMax = 200;
+            fairyItem.FairyItemSets(2, 6, 200);
         }
     }
 

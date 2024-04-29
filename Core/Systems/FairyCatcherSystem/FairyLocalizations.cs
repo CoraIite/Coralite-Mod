@@ -14,7 +14,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText RareLevel;
         public static LocalizedText SpecialLevel;
         public static LocalizedText UniqueLevel;
-        public static LocalizedText TimelessLevel;
+        public static LocalizedText EternalLevel;
 
         public static LocalizedText NotHaveLevel;
 
@@ -55,10 +55,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             public const int DescriptionCount = 3;
         } 
         
-        //public static LocalizedText ZoneForestDescription;
-        //public static LocalizedText ZoneRockLayerDescription;
-        //public static LocalizedText ZoneBeachDescription;
-
         //-----------------------------------
         //       仙灵物品其他文本的本地化
         //-----------------------------------
@@ -66,6 +62,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText ResurrectionTime;
         public static LocalizedText BottleCapacity;
         public static LocalizedText SeeMore;
+        public static LocalizedText CatchPowerMult;
 
         public void LoadLocalization()
         {
@@ -76,7 +73,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             RareLevel = this.GetLocalization("RareLevel", () => "稀有：{0}（基础 {1}）");
             SpecialLevel = this.GetLocalization("SpecialLevel", () => "独特：{0}（基础 {1}）");
             UniqueLevel = this.GetLocalization("UniqueLevel", () => "唯一：{0}（基础 {1}）");
-            TimelessLevel = this.GetLocalization("TimelessLevel", () => "永恒：{0}（基础 {1}）");
+            EternalLevel = this.GetLocalization("EternalLevel", () => "永恒：{0}（基础 {1}）");
 
             NotHaveLevel = this.GetLocalization("NotHaveLevel", () => "无：{0}（基础 {1}）");
 
@@ -110,6 +107,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             ResurrectionTime = this.GetLocalization("ResurrectionTime", () => "复活时间：{0}");
             BottleCapacity = this.GetLocalization("BottleCapacity", () => "容量 {0} / {1}");
             SeeMore = this.GetLocalization("SeeMore", () => "按上键以查看雷达图（游戏暂停时无法使用）");
+            CatchPowerMult = this.GetLocalization("CatchPowerMult", () => "{0} 捕捉力");
         }
 
         public static void UnloadLocalization()
@@ -121,7 +119,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             RareLevel = null;
             SpecialLevel = null;
             UniqueLevel = null;
-            TimelessLevel = null;
+            EternalLevel = null;
 
             NotHaveLevel = null;
 

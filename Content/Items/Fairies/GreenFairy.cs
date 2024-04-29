@@ -25,9 +25,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override void SetFairyDefault(FairyGlobalItem fairyItem)
         {
-            fairyItem.baseDamage = 6;
-            fairyItem.baseDefence = 6;
-            fairyItem.baseLifeMax = 300;
+            fairyItem.FairyItemSets(6, 6, 300);
         }
     }
 
@@ -104,7 +102,7 @@ namespace Coralite.Content.Items.Fairies
             Projectile.tileCollide = true;
             Projectile.width = Projectile.height = 16;
             Projectile.friendly = true;
-            Projectile.DamageType = ModContent.GetInstance<FairyDamage>();
+            Projectile.DamageType = FairyDamage.Instance;
             Projectile.penetrate = -1;
         }
 

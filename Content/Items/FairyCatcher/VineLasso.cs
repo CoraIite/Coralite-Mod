@@ -1,8 +1,10 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.CursorAIs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Enums;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher
@@ -12,12 +14,20 @@ namespace Coralite.Content.Items.FairyCatcher
         public override string Texture => AssetDirectory.FairyCatcherItems + Name;
 
         public override void SetOtherDefaults()
-        {
-            Item.damage = 8;
+        { 
             Item.shoot = ModContent.ProjectileType<VineLassoCatcher>();
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.useTime = Item.useAnimation = 24;
             Item.shootSpeed = 12;
+            Item.SetWeaponValues(8, 3);
+            Item.SetShopValues(ItemRarityColor.White0, Item.sellPrice(0, 0, 20));
+            Item.GetGlobalItem<FairyGlobalItem>().CatchPower = 10;
+        }
+
+        public override void ModifyShootFairyStyle(Player player)
+        {
+            Item.noUseGraphic = false;
+            Item.useStyle = ItemUseStyleID.Swing;
         }
     }
 

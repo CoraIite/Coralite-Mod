@@ -10,19 +10,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override string Texture => AssetDirectory.FairyCatcherItems + Name;
 
         /// <summary>
-        /// 捕捉力
-        /// </summary>
-        public int catchPower;
-
-        /// <summary>
         /// 上一次射出的仙灵的index
         /// </summary>
         public int currentFairyIndex;
 
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.CanGetPrefixes[Type] = true;
+        }
+
         public sealed override void SetDefaults()
         {
             Item.DamageType = FairyDamage.Instance;
-            Item.noMelee= true;
+            Item.noMelee = true;
             Item.noUseGraphic = true;
 
             SetOtherDefaults();
@@ -37,10 +37,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (player.altFunctionUse == 2)
             {
                 Item.noUseGraphic = true;
-                Item.useStyle = ItemUseStyleID.Swing;
+                Item.useStyle = ItemUseStyleID.Shoot;
             }
             else
-                ModifyShootFairyStyle();
+                ModifyShootFairyStyle(player);
             
             return true;
         }
@@ -48,10 +48,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 左键使用时触发，可以在此修改物品的<see cref="Item.useStyle"/>等
         /// </summary>
-        public virtual void ModifyShootFairyStyle()
-        {
-
-        }
+        public virtual void ModifyShootFairyStyle(Player player) { }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -61,10 +58,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 return false;
             }
 
-            ModifyFairyStats(player,ref position,ref velocity);
+            ModifyFairyStats(player, ref position, ref velocity);
+
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 if (fcp.FairyShoot_GetFairyBottle(out IFairyBottle bottle))
-                    ShootFairy(bottle, player, source, position, velocity, (int)fcp.fairyCatchPowerBonus.ApplyTo(damage), knockback);
+                {
+                    float damage2 = damage;
+                    fcp.TotalCatchPowerBonus(ref damage2, Item);
+                    ShootFairy(bottle, player, source, position, velocity, (int)damage2, knockback);
+                }
 
             return false;
         }

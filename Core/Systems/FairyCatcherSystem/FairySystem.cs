@@ -57,7 +57,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 List<FairySpawnController> currentCondition = new List<FairySpawnController>();
                 List<FairySpawnController> totalCondition = fairySpawnConditions[attempt.wallType];
                 foreach (var condition in totalCondition)
-                    if (condition.CheckCondition(attempt))
+                    if (condition.CheckCondition(attempt) //稀有度是额外判定的
+                        && attempt.rarity == FairyLoader.GetFairy(condition.fairyType).Rarity)
                         currentCondition.Add(condition);
 
                 if (currentCondition.Count == 0)
