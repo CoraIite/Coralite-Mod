@@ -1,34 +1,3 @@
-Prefixes: {
-	支配.DisplayName: 支配
-	Immortal.DisplayName: Immortal
-	Primal.DisplayName: Primal
-	Resonance.DisplayName: Resonance
-	Attractive.DisplayName: Attractive
-	Bewitched.DisplayName: Bewitched
-	Chaos.DisplayName: Chaos
-	Dazzling.DisplayName: Dazzling
-	Dim.DisplayName: Dim
-	Entangled.DisplayName: Entangled
-	Eternal.DisplayName: Eternal
-	Fragile.DisplayName: Fragile
-	Hollow.DisplayName: Hollow
-	Insight.DisplayName: Insight
-	Insincere.DisplayName: Insincere
-	Psychic.DisplayName: Psychic
-	Pure.DisplayName: Pure
-	Swift.DisplayName: Swift
-	Trivial.DisplayName: Trivial
-	Whisper.DisplayName: Whisper
-	Ancient.DisplayName: Ancient
-	Clingy.DisplayName: Clingy
-	Expedition.DisplayName: Expedition
-	Furious.DisplayName: Furious
-	Greedy.DisplayName: Greedy
-	Majestic.DisplayName: Majestic
-	Nocturnal.DisplayName: Nocturnal
-	Powerless.DisplayName: Powerless
-}
-
 Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
 
 ClobalItems: {
