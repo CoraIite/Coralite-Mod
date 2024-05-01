@@ -37,7 +37,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Owner.itemTime = Owner.itemAnimation = time;
         }
 
-        public void SetHeldPorj()
+        public void SetHeldProj()
         {
             Owner.heldProj = Projectile.whoAmI;
         }
