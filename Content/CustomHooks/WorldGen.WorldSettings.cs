@@ -15,8 +15,8 @@ namespace Coralite.Content.CustomHooks
             On_UIWorldCreation.ProcessSpecialWorldSeeds += On_UIWorldCreation_ProcessSpecialWorldSeeds;
             On_UIWorldCreation.ProcessSeed += On_UIWorldCreation_ProcessSeed;
             On_UIWorldSelect.NewWorldClick += On_UIWorldSelect_NewWorldClick;
-            On_UIWorldCreation.Click_GoBack += On_UIWorldCreation_Click_GoBack;
-            On_UIWorldCreation.Click_NamingAndCreating += On_UIWorldCreation_Click_NamingAndCreating;
+            //On_UIWorldCreation.Click_GoBack += On_UIWorldCreation_Click_GoBack;
+            //On_UIWorldCreation.Click_NamingAndCreating += On_UIWorldCreation_Click_NamingAndCreating;
         }
 
         public override void Unload()
@@ -24,8 +24,8 @@ namespace Coralite.Content.CustomHooks
             On_UIWorldCreation.ProcessSpecialWorldSeeds -= On_UIWorldCreation_ProcessSpecialWorldSeeds;
             On_UIWorldCreation.ProcessSeed -= On_UIWorldCreation_ProcessSeed;
             On_UIWorldSelect.NewWorldClick -= On_UIWorldSelect_NewWorldClick;
-            On_UIWorldCreation.Click_GoBack -= On_UIWorldCreation_Click_GoBack;
-            On_UIWorldCreation.Click_NamingAndCreating -= On_UIWorldCreation_Click_NamingAndCreating;
+            //On_UIWorldCreation.Click_GoBack -= On_UIWorldCreation_Click_GoBack;
+            //On_UIWorldCreation.Click_NamingAndCreating -= On_UIWorldCreation_Click_NamingAndCreating;
         }
 
         /// <summary>
@@ -35,13 +35,13 @@ namespace Coralite.Content.CustomHooks
         /// <param name="self"></param>
         /// <param name="evt"></param>
         /// <param name="listeningElement"></param>
-        private void On_UIWorldCreation_Click_NamingAndCreating(On_UIWorldCreation.orig_Click_NamingAndCreating orig, UIWorldCreation self, Terraria.UI.UIMouseEvent evt, Terraria.UI.UIElement listeningElement)
-        {
-            //CoraliteWorldSettings.visible = false;
-            //UILoader.GetUIState<CoraliteWorldSettings>().Recalculate();
+        //private void On_UIWorldCreation_Click_NamingAndCreating(On_UIWorldCreation.orig_Click_NamingAndCreating orig, UIWorldCreation self, Terraria.UI.UIMouseEvent evt, Terraria.UI.UIElement listeningElement)
+        //{
+        //    //CoraliteWorldSettings.visible = false;
+        //    //UILoader.GetUIState<CoraliteWorldSettings>().Recalculate();
 
-            orig.Invoke(self, evt, listeningElement);
-        }
+        //    orig.Invoke(self, evt, listeningElement);
+        //}
 
         /// <summary>
         /// 返回选择页面
@@ -50,12 +50,12 @@ namespace Coralite.Content.CustomHooks
         /// <param name="self"></param>
         /// <param name="evt"></param>
         /// <param name="listeningElement"></param>
-        private void On_UIWorldCreation_Click_GoBack(On_UIWorldCreation.orig_Click_GoBack orig, UIWorldCreation self, Terraria.UI.UIMouseEvent evt, Terraria.UI.UIElement listeningElement)
-        {
-            //CoraliteWorldSettings.visible = false;
-            //UILoader.GetUIState<CoraliteWorldSettings>().Recalculate();
-            orig.Invoke(self, evt, listeningElement);
-        }
+        //private void On_UIWorldCreation_Click_GoBack(On_UIWorldCreation.orig_Click_GoBack orig, UIWorldCreation self, Terraria.UI.UIMouseEvent evt, Terraria.UI.UIElement listeningElement)
+        //{
+        //    //CoraliteWorldSettings.visible = false;
+        //    //UILoader.GetUIState<CoraliteWorldSettings>().Recalculate();
+        //    orig.Invoke(self, evt, listeningElement);
+        //}
 
         /// <summary>
         /// 选择世界页面的点击新建世界按钮

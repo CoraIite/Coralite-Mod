@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Icicle
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 25;
+            Item.damage = 28;
             Item.useTime = 14;
             Item.useAnimation = 14;
             Item.knockBack = 3f;
@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Icicle
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Magic;
             Item.value = Item.sellPrice(0, 1, 0, 0);
-            Item.rare = ItemRarityID.Orange;
+            Item.rare = ItemRarityID.Green;
             Item.shoot = ProjectileType<IcicleStaffHeldProj>();
 
             Item.useTurn = false;
@@ -46,7 +46,8 @@ namespace Coralite.Content.Items.Icicle
         public override void AddRecipes()
         {
             CreateRecipe()
-            .AddIngredient<IcicleCrystal>(2)
+            .AddIngredient<IcicleCrystal>()
+            .AddIngredient<IcicleBreath>(3)
             .AddTile(TileID.IceMachine)
             .Register();
         }

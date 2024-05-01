@@ -432,3 +432,20 @@ ThunderWhipProj.DisplayName: 闪电鞭
 // ShadowDartProj.DisplayName: Shadow Dart Proj
 // VampireEarlGuard.DisplayName: Vampire Earl Guard
 // VampireEarlProj.DisplayName: Vampire Earl Proj
+// VampireEarlBat.DisplayName: Vampire Earl Bat
+// VineLassoCatcher.DisplayName: Vine Lasso Catcher
+
+GreenFairyProj: {
+	SkillText: 撞击！
+	DisplayName: 绿仙灵
+}
+
+BlueFairyProj: {
+	SkillText: 撞击！
+	DisplayName: 蓝仙灵
+}
+
+BrownFairyProj: {
+	SkillText: 撞击！
+	DisplayName: 棕仙灵
+}

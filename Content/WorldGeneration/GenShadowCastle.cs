@@ -5,6 +5,7 @@ using Coralite.Content.WorldGeneration.Generators;
 using Coralite.Content.WorldGeneration.ShadowCastleRooms;
 using Coralite.Core;
 using Coralite.Helpers;
+using Iced.Intel;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ReLogic.Utilities;
@@ -17,6 +18,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 //using static Terraria.WorldGen;
 
@@ -35,6 +37,7 @@ namespace Coralite.Content.WorldGeneration
         {
             get
             {
+                //return false;
                 return CoraliteWorldSettings.DungeonType switch
                 {
                     CoraliteWorldSettings.WorldDungeonID.Random => Main.rand.NextBool(),
@@ -109,6 +112,25 @@ namespace Coralite.Content.WorldGeneration
                 #endregion
 
                 #region 生成书房
+                {
+                    bool gened = false;
+                    while (!gened)
+                    {
+                        rand = WorldGen.genRand.Next(0, rooms.Count);
+
+                        if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
+                            continue;
+
+                        DungeonArtifactRoom dungeonChestRoom = new DungeonArtifactRoom(rooms[rand].roomRect.Center);
+                        ShadowCastleRoom.Exchange(rooms[rand], dungeonChestRoom);
+                        rooms[rand] = dungeonChestRoom;
+
+                        gened = true;
+                    }
+                }
+                #endregion
+
+                #region 生成地牢神器房
                 {
                     bool gened = false;
                     while (!gened)
@@ -209,9 +231,62 @@ namespace Coralite.Content.WorldGeneration
                 bossRoom.PostGenerateSelf();
 
                 #endregion
+
+                PlacePot();
                 break;
             }
         }
+
+        public static void PlacePot()
+        {
+            int tileType = ModContent.TileType<PorcelainPot>();
+
+            TileObjectData data = TileObjectData.GetTileData(tileType, 0);
+            int width = data == null ? 1 : data.Width;
+            int height = data == null ? 1 : data.Height;
+
+            int origin_x = shadowCastleRestraint.X;
+            int origin_y = shadowCastleRestraint.Y;
+
+            for (int i = 0; i < shadowCastleRestraint.Width; i++)
+                for (int j = 0; j < shadowCastleRestraint.Height; j++)
+                {
+                    Tile tile;
+                    int current_x = origin_x + i;
+                    int current_y = origin_y + j;
+                    //for (int m = 0; m < width; m++)
+                    //{
+                    //    tile = Framing.GetTileSafely(current_x + m, current_y + 1);
+                    //    if (!tile.HasTile || tile.Slope is SlopeType.SlopeUpLeft or SlopeType.SlopeUpRight)
+                    //        goto over1;
+
+                    //    if (!CoraliteSets.TileShadowCastle[tile.TileType])
+                    //        goto over1;
+                    //}
+
+                    tile = Framing.GetTileSafely(current_x, current_y);
+                    if (tile.HasTile || !CoraliteSets.WallShadowCastle[tile.WallType])
+                        goto over1;
+
+                    //for (int m = 0; m < width; m++)
+                    //    for (int n = 0; n < height; n++)
+                    //    {
+                    //        tile = Framing.GetTileSafely(current_x + m, current_y + n);
+                    //        if (tile.HasTile || !CoraliteSets.WallShadowCastle[tile.WallType])
+                    //            goto over1;
+                    //    }
+
+                    //添加一些随机性
+                    if (WorldGen.genRand.NextBool(30))
+                    {
+                        int currentStyle = WorldGen.genRand.Next(9);
+                        WorldGenHelper.ObjectPlace(current_x, current_y, tileType, currentStyle);
+                    }
+
+                    over1: continue;             //<--因为不知道有没有什么办法直接跳出2层for，索性写了个goto
+                }
+        }
+
 
         #region 原版地牢
         public static void MakeDungeon(int x, int y)
@@ -4722,6 +4797,52 @@ namespace Coralite.Content.WorldGeneration
             GenObject(objectTex, ObjectDic, roomRect.X, roomRect.Y);
         }
 
+        public void RandomPlaceBanner(int random)
+        {
+            int tileType = ModContent.TileType<ShadowCastleBannerTile>();
+
+            TileObjectData data = TileObjectData.GetTileData(tileType, 0);
+            int width = data == null ? 1 : data.Width;
+            int height = data == null ? 1 : data.Height;
+
+            int origin_x = roomRect.X;
+            int origin_y = roomRect.Y;
+
+            for (int i = 0; i < roomRect.Width; i++)
+                for (int j = 0; j < roomRect.Height; j++)
+                {
+                    Tile tile;
+                    int current_x = origin_x + i;
+                    int current_y = origin_y + j;
+                    //判断顶部一条是不是都有方块,且方块类型是不是指定的
+                    for (int m = 0; m < width; m++)
+                    {
+                        tile = Framing.GetTileSafely(current_x + m, current_y - 1);
+                        if (!tile.HasTile || tile.Slope is SlopeType.SlopeUpLeft or SlopeType.SlopeUpRight)
+                            goto over1;
+
+                        if (!CoraliteSets.TileShadowCastle[tile.TileType])
+                            goto over1;
+                    }
+
+                    for (int m = 0; m < width; m++)
+                        for (int n = 0; n < height; n++)
+                        {
+                            tile = Framing.GetTileSafely(current_x + m, current_y + n);
+                            if (tile.HasTile || !CoraliteSets.WallShadowCastle[tile.WallType])
+                                goto over1;
+                        }
+
+                    //添加一些随机性
+                    if (WorldGen.genRand.NextBool(random))
+                    {
+                        int currentStyle = WorldGen.genRand.Next( 4);
+                        WorldGenHelper.ObjectPlace(current_x, current_y, tileType, currentStyle);
+                    }
+
+                over1: continue;             //<--因为不知道有没有什么办法直接跳出2层for，索性写了个goto
+                }
+        }
 
         #endregion
     }

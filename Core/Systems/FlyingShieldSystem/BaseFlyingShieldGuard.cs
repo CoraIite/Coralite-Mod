@@ -47,7 +47,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public int[] localProjectileImmunity = new int[Main.maxProjectiles];
 
-        public IFlyingShieldAccessory dashFunction;
+        public IFlyingShieldAccessory_Guard dashFunction;
 
         /// <summary>
         /// 是否完全举起盾牌
@@ -415,7 +415,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             return State == (int)GuardState.Guarding && CompletelyHeldUpShield;
         }
 
-        public void UpdateShieldAccessory(Action<IFlyingShieldAccessory> action)
+        public void UpdateShieldAccessory(Action<IFlyingShieldAccessory_Guard> action)
         {
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                 foreach (var accessory in cp.FlyingShieldAccessories)
@@ -448,7 +448,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             //}
         }
 
-        public void UpdateShieldAccessory(Func<IFlyingShieldAccessory, bool> action)
+        public void UpdateShieldAccessory(Func<IFlyingShieldAccessory_Guard, bool> action)
         {
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                 foreach (var accessory in cp.FlyingShieldAccessories)

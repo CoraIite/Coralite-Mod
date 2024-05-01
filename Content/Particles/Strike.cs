@@ -10,7 +10,7 @@ namespace Coralite.Content.Particles
         public override void OnSpawn(Particle particle)
         {
             particle.frame = new Rectangle(0, 0, 128, 128);
-            particle.shader = new Terraria.Graphics.Shaders.ArmorShaderData(new Ref<Effect>(Coralite.Instance.Assets.Request<Effect>("Effects/StarsDust", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "StarsDustPass");
+            particle.shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/StarsDust", ReLogic.Content.AssetRequestMode.ImmediateLoad), "StarsDustPass");
             particle.shader.UseSecondaryColor(Color.White);
         }
 

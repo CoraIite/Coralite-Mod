@@ -1267,7 +1267,7 @@ SlimeEmperorSoulBox: {
 
 ANewBirthOfIce: {
 	DisplayName: A New Birth of Ice
-	Tooltip: After defeating the evil boss in the world, a tiny life appears in the Ice Dragon's Nest
+	Tooltip: After defeating the Eye of Cthulhu, a tiny life appears in the Ice Dragon's Nest
 }
 
 HiddenRed: {
@@ -3653,5 +3653,95 @@ ShadowDart: {
 
 VampireEarl: {
 	DisplayName: Vampire Earl
+	Tooltip: ""
+}
+
+CrystalFins: {
+	DisplayName: Crystal Fins
+	Tooltip: ""
+}
+
+GalacticVortexBanner: {
+	DisplayName: Galactic Vortex Banner
+	Tooltip: ""
+}
+
+LunarEclipseBanner: {
+	DisplayName: Lunar Eclipse Banner
+	Tooltip: ""
+}
+
+StarlightBanner: {
+	DisplayName: Starlight Banner
+	Tooltip: ""
+}
+
+StarRuneBanner: {
+	DisplayName: Star Rune Banner
+	Tooltip: ""
+}
+
+MedalOfLife: {
+	DisplayName: Medal Of Life
+	Tooltip: ""
+}
+
+LifePulseDevice: {
+	DisplayName: Life Pulse Device
+	Tooltip: ""
+}
+
+IcicleBreath: {
+	DisplayName: Icicle Breath
+	Tooltip: ""
+}
+
+IcicleScale: {
+	DisplayName: Icicle Scale
+	Tooltip: ""
+}
+
+IcicleAxe: {
+	DisplayName: Icicle Axe
+	Tooltip: ""
+}
+
+VineLasso: {
+	DisplayName: Vine Lasso
+	Tooltip: ""
+}
+
+GreenFairyItem: {
+	DisplayName: Green Fairy Item
+	Tooltip: ""
+}
+
+StarlightBottle: {
+	DisplayName: Starlight Bottle
+	Tooltip: ""
+}
+
+BreezeFairyItem: {
+	DisplayName: Breeze Fairy Item
+	Tooltip: ""
+}
+
+BlueFairyItem: {
+	DisplayName: Blue Fairy Item
+	Tooltip: ""
+}
+
+BrownFairyItem: {
+	DisplayName: Brown Fairy Item
+	Tooltip: ""
+}
+
+PinkFairyItem: {
+	DisplayName: Pink Fairy Item
+	Tooltip: ""
+}
+
+CandyFairyItem: {
+	DisplayName: Candy Fairy Item
 	Tooltip: ""
 }

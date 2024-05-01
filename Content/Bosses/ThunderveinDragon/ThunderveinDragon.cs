@@ -313,7 +313,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 4500)//没有玩家存活时离开
                 {
                     NPC.dontTakeDamage = false;
+                    canDrawShadows = false;
+                    isDashing = false;
                     State = -1;
+                    NPC.spriteDirection = 1;
                     NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
                     NPC.velocity.X *= 0.98f;
                     FlyingUp(0.3f, 20, 0.9f);

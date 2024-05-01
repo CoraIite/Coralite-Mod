@@ -121,6 +121,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 return;
             }
 
+            //联机同步必炸，以后得改
+            int stack = Main.rand.Next(4, 6);
+            for (int i = 0; i < stack; i++)
+            {
+                Item.NewItem(NPC.GetSource_DropAsItem(), new Rectangle((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height), ModContent.ItemType<IcicleBreath>());
+            }
+
             //寻找到冰龙宝宝并让它眩晕，把爆炸音效给停了
             if (ExtendCount >= 14)
                 if (SoundEngine.TryGetActiveSound(soundSlotID, out ActiveSound result))

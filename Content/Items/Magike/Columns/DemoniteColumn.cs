@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Magike.Columns
             PolymerizeRecipe.CreateRecipe<DemoniteColumn>(75)
                 .SetMainItem<CrystalColumn>()
                 .AddIngredient<GlistentBar>(2)
-                .AddIngredient(ItemID.ShadowScale, 6)
+                .AddIngredient(ItemID.ShadowScale, 3)
                 .Register();
         }
     }

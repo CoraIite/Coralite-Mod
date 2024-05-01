@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetCritChance(DamageClass.Generic) += 0.07f;
+            player.GetCritChance(DamageClass.Generic) += 7f;
             player.GetDamage(DamageClass.Melee) += 0.085f;
         }
     }

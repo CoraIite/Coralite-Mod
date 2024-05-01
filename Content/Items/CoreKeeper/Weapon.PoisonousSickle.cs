@@ -171,6 +171,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override void SetDefs()
         {
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 60;
             Projectile.width = 40;
             Projectile.height = 70;

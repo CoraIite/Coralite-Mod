@@ -432,3 +432,20 @@ TreelerProj.DisplayName: Treeler Proj
 ShadowDartProj.DisplayName: Shadow Dart Proj
 VampireEarlGuard.DisplayName: Vampire Earl Guard
 VampireEarlProj.DisplayName: Vampire Earl Proj
+VampireEarlBat.DisplayName: Vampire Earl Bat
+VineLassoCatcher.DisplayName: Vine Lasso Catcher
+
+GreenFairyProj: {
+	SkillText: 撞击！
+	DisplayName: Green Fairy Proj
+}
+
+BlueFairyProj: {
+	SkillText: ""
+	DisplayName: Blue Fairy Proj
+}
+
+BrownFairyProj: {
+	SkillText: ""
+	DisplayName: Brown Fairy Proj
+}

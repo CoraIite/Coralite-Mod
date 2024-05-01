@@ -1,6 +1,6 @@
-﻿using Coralite.Content.Items.Accessories.FlyingShields;
-using Coralite.Content.Items.CoreKeeper;
+﻿using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Placeable;
 using Coralite.Content.Items.YujianHulu;

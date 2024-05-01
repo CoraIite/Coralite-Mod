@@ -8,13 +8,6 @@ namespace Coralite.Content.Items.Accessories
     {
         public override string Texture => AssetDirectory.Accessories + Name;
 
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("护剑精油");
-            /* Tooltip.SetDefault("给你的剑定期保养一下吧！\n" +
-                "念力伤害 +2"); */
-        }
-
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
@@ -25,7 +18,7 @@ namespace Coralite.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetDamage<YujianDamage>().Flat += 2f;
+            //player.GetDamage<YujianDamage>().Flat += 2f;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<RoyalAngelProj>();
             Item.knockBack = 3;
             Item.shootSpeed = 16;
-            Item.damage = 93;
+            Item.damage = 90;
         }
 
         public override void AddRecipes()

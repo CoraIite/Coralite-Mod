@@ -37,7 +37,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             if (containsItem is not null && !containsItem.IsAir &&
                 (containsItem.damage > 0 ||
-                ((containsItem.accessory || containsItem.defense > 0) && containsItem.TryGetGlobalItem(out MagikeItem mi) && mi.accessoryOrArmorCanEnchant)) &&
+                ((containsItem.accessory || containsItem.defense > 0 || containsItem.ammo != AmmoID.None) && containsItem.TryGetGlobalItem(out MagikeItem mi) && mi.accessoryOrArmorCanEnchant)) &&
                 magike >= GetMagikeCost(containsItem))
             {
                 return base.StartWork();

@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Misc_Melee
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.Meowmere);
-            Item.damage = 220;
+            Item.damage = 320;
             Item.knockBack = 4f;
             Item.useStyle = ItemUseStyleID.Rapier; // Makes the player do the proper arm motion
             Item.useAnimation = 11;
@@ -89,7 +89,17 @@ namespace Coralite.Content.Items.Misc_Melee
                 .AddIngredient(ItemID.LunarBar, 4)
                 .AddTile(TileID.LunarCraftingStation)
                 .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
+                .AddDecraftCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
                 .Register();
+        }
+
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            Texture2D rotTex = ModContent.Request<Texture2D>(AssetDirectory.Misc_Melee + "MeowmeoRotation").Value;
+            var frame = rotTex.Frame(1, 30, 0, (int)(Main.GlobalTimeWrappedHourly * 35 % 30));
+
+            spriteBatch.Draw(rotTex, Item.Bottom - Main.screenPosition, frame, lightColor.MultiplyRGBA(alphaColor), rotation, new Vector2(frame.Width/2,frame.Height*0.9f), scale, 0, 0);
+            return false;
         }
     }
 

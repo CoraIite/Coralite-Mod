@@ -139,19 +139,39 @@ namespace Coralite.Content.NPCs.GlobalNPC
 
                 items[i] = new Item(ItemType<TravelJournaling>());
                 i++;
+                if (i >= items.Length)
+                    return;
 
                 if (Main.hardMode)
                 {
                     items[i] = new Item(ItemID.GlowTulip);
                     i++;
+                    if (i >= items.Length)
+                        return;
+
                     items[i] = new Item(ItemType<MineShield>());
                     i++;
+                    if (i >= items.Length)
+                        return;
+
                 }
 
                 if (NPC.downedPlantBoss)//花后获取符文羊皮纸
                 {
                     items[i] = new Item(ItemType<RuneParchment>());
                     i++;
+                    if (i >= items.Length)
+                        return;
+
+                }
+
+                if (NPC.downedMoonlord)//月后卖海盾
+                {
+                    items[i] = new Item(ItemType<HylianShield>());
+                    i++;
+                    if (i >= items.Length)
+                        return;
+
                 }
             }
         }

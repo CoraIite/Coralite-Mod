@@ -30,8 +30,9 @@ namespace Coralite.Content.Prefixes.YujianWeaponPrefixes
 
         public override bool CanRoll(Item item)
         {
-            return item.CountsAsClass<YujianDamage>() && item.maxStack == 1 || item.AllowReforgeForStackableItem/* tModPorter Note: Removed. Use `maxStack == 1 || Item.AllowReforgeForStackableItem` or `Item.Prefix(-3)` to check whether an item is reforgeable */ &&
-                GetType() != typeof(BaseYujianPrefix);
+            return false;
+            //return item.CountsAsClass<YujianDamage>() && item.maxStack == 1 || item.AllowReforgeForStackableItem/* tModPorter Note: Removed. Use `maxStack == 1 || Item.AllowReforgeForStackableItem` or `Item.Prefix(-3)` to check whether an item is reforgeable */ &&
+            //    GetType() != typeof(BaseYujianPrefix);
         }
 
         public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus)

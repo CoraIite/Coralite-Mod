@@ -88,21 +88,21 @@ ThunderPianoTile.MapEntry: 雷脉钢琴
 ThunderSofaTile.MapEntry: 雷脉沙发
 ThunderTableTile.MapEntry: 雷脉桌
 ThunderWorkBenchTile.MapEntry: 雷脉工作台
-// MercuryBathtubTile.MapEntry: Mercury Bathtub Tile
-// MercuryBedTile.MapEntry: Mercury Bed Tile
-// MercuryBigDroplightTile.MapEntry: Mercury Big Droplight Tile
-// MercuryBookcaseTile.MapEntry: Mercury Bookcase Tile
-// MercuryCandelabraTile.MapEntry: Mercury Candelabra Tile
-// MercuryCandleTile.MapEntry: Mercury Candle Tile
-// MercuryDoorClosedTile.MapEntry: Mercury Door Closed Tile
-// MercuryDoorOpenTile.MapEntry: Mercury Door Open Tile
-// MercuryDresserTile.MapEntry: Mercury Dresser Tile
-// MercuryDroplight2Tile.MapEntry: Mercury Droplight2 Tile
-// MercuryFloorLampTile.MapEntry: Mercury Floor Lamp Tile
-// MercuryPianoTile.MapEntry: Mercury Piano Tile
-// MercurySofaTile.MapEntry: Mercury Sofa Tile
-// MercuryTableTile.MapEntry: Mercury Table Tile
-MercuryWorkBenchTile.MapEntry: Mercury Work Bench Tile
+MercuryBathtubTile.MapEntry: 水银浴缸
+MercuryBedTile.MapEntry: 水银床
+MercuryBigDroplightTile.MapEntry: 水银大吊灯
+MercuryBookcaseTile.MapEntry: 水银书架
+MercuryCandelabraTile.MapEntry: 水银烛台
+MercuryCandleTile.MapEntry: 水银蜡烛
+MercuryDoorClosedTile.MapEntry: 水银门
+MercuryDoorOpenTile.MapEntry: 水银门
+MercuryDresserTile.MapEntry: 水银梳妆台
+MercuryDroplight2Tile.MapEntry: 水银吊灯
+MercuryFloorLampTile.MapEntry: 水银灯柱
+MercuryPianoTile.MapEntry: 水银钢琴
+MercurySofaTile.MapEntry: 水银沙发
+MercuryTableTile.MapEntry: 水银桌
+MercuryWorkBenchTile.MapEntry: 水银工作台
 IcicleBathtubTile.MapEntry: 冰晶浴缸
 IcicleBedTile.MapEntry: 冰晶床
 IcicleBigDroplightTile.MapEntry: 冰晶大吊灯

@@ -111,7 +111,7 @@ namespace Coralite.Content.WorldGeneration
 
     public class IceDragonNestReplacer : ModItem
     {
-        public override string Texture => AssetDirectory.Misc + "WorldGenCoralite";
+        public override string Texture => AssetDirectory.MiscItems + "IcicleCoralite";
 
         public override void SetDefaults()
         {

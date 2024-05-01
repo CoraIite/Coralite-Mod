@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Magike.BasicLens
             PolymerizeRecipe.CreateRecipe<DemoniteLens>(75)
                 .SetMainItem<CrystalLens>()
                 .AddIngredient<GlistentBar>(2)
-                .AddIngredient(ItemID.ShadowScale, 4)
+                .AddIngredient(ItemID.ShadowScale, 2)
                 .Register();
         }
     }

@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.RedJades
             particle.frame = new Rectangle(0, 0, 256, 256);
             particle.rotation = Main.rand.NextFloat(6.282f);
             particle.scale = 0.01f;
-            particle.shader = new Terraria.Graphics.Shaders.ArmorShaderData(new Ref<Effect>(Coralite.Instance.Assets.Request<Effect>("Effects/GlowingDust", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "GlowingDustPass");
+            particle.shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/GlowingDust", ReLogic.Content.AssetRequestMode.ImmediateLoad), "GlowingDustPass");
             particle.shader.UseOpacity(1);
         }
 

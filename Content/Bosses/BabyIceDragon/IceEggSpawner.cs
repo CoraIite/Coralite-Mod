@@ -7,10 +7,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 {
     public class IceEggSpawner : ModSystem
     {
-        public const int delayStart = 86400;
-        public const int respawnDelay = 43200;
-        private const int timePerEgg = 3600;
-        private const int recheckStart = 600;
+        public const int delayStart = 60 * 60 * 8;
+        public const int respawnDelay = 60 * 60 * 5;
+        private const int timePerEgg = 60 * 60;
+        private const int recheckStart = 60 * 10;
 
         public static double delay;
         public static double recheck;
@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 if (NPC.AnyDanger())
                     recheck *= 6;
                 else
-                    TrySpawning((int)CoraliteWorld.NestCenter.X, (int)CoraliteWorld.NestCenter.Y);
+                    TrySpawning(CoraliteWorld.NestCenter.X, CoraliteWorld.NestCenter.Y);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         private static bool CheckEgg(int x, int y)
         {
-            if (delay != 0 || !NPC.downedBoss2)
+            if (delay != 0 || !NPC.downedBoss1)
                 return false;
 
             if (y < 7 || WorldGen.SolidTile(Main.tile[x, y - 7]))

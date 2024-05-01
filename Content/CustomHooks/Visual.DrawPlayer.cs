@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -13,7 +14,7 @@ namespace Coralite.Content.CustomHooks
         {
             On_PlayerDrawLayers.DrawPlayer_21_Head += On_PlayerDrawLayers_DrawPlayer_21_Head;
             //On_PlayerDrawLayers.DrawPlayer_08_Backpacks += On_PlayerDrawLayers_DrawPlayer_08_Backpacks; 
-            On_PlayerDrawLayers.DrawPlayer_10_BackAcc += On_PlayerDrawLayers_DrawPlayer_10_BackAcc; ; 
+            On_PlayerDrawLayers.DrawPlayer_10_BackAcc += On_PlayerDrawLayers_DrawPlayer_10_BackAcc;
             //On_PlayerDrawLayers.DrawSittingLegs += On_PlayerDrawLayers_DrawSittingLegs;
         }
 
@@ -21,7 +22,7 @@ namespace Coralite.Content.CustomHooks
         {
             On_PlayerDrawLayers.DrawPlayer_21_Head -= On_PlayerDrawLayers_DrawPlayer_21_Head;
             //On_PlayerDrawLayers.DrawPlayer_08_Backpacks -= On_PlayerDrawLayers_DrawPlayer_08_Backpacks; 
-            On_PlayerDrawLayers.DrawPlayer_10_BackAcc -= On_PlayerDrawLayers_DrawPlayer_10_BackAcc; ;
+            On_PlayerDrawLayers.DrawPlayer_10_BackAcc -= On_PlayerDrawLayers_DrawPlayer_10_BackAcc;
 
             //On_PlayerDrawLayers.DrawSittingLegs -= On_PlayerDrawLayers_DrawSittingLegs;
         }
@@ -41,8 +42,11 @@ namespace Coralite.Content.CustomHooks
 
                 Texture2D mainTex = TextureAssets.ArmorHead[drawinfo.drawPlayer.head].Value;
                 bodyFrame3 = mainTex.Frame(1, 20, 0, frameY2);
-                Vector2 headVect2 = bodyFrame3.Size() / 2;
-
+                Vector2 headVect2 = new Vector2(bodyFrame3.Width / 2, bodyFrame3.Height / 2); // bodyFrame3.Size() / 2;
+                if (bodyFrame3.Width % 2 != 0 && drawinfo.drawPlayer.direction < 0)
+                {
+                    helmetOffset.X -= 1;
+                }
                 if (drawinfo.drawPlayer.gravDir == 1f)
                 {
                     bodyFrame3.Height -= 4;
@@ -51,6 +55,7 @@ namespace Coralite.Content.CustomHooks
                 {
                     headVect2.Y -= 4f;
                     bodyFrame3.Height -= 4;
+                    helmetOffset.Y += bodyFrame3.Height - 56;
                 }
 
                 Color color3 = drawinfo.colorArmorHead;
@@ -71,6 +76,7 @@ namespace Coralite.Content.CustomHooks
                     - Main.screenPosition
                     + drawinfo.drawPlayer.headPosition
                     + headVect2;
+
                 DrawData item = new DrawData(TextureAssets.ArmorHead[drawinfo.drawPlayer.head].Value, drawPos
                     , bodyFrame3, color3, drawinfo.drawPlayer.headRotation, headVect2, 1f, drawinfo.playerEffect);
                 item.shader = shader3;
@@ -132,7 +138,7 @@ namespace Coralite.Content.CustomHooks
                     Vector2 vector = Main.OffsetsPlayerHeadgear[drawinfo.drawPlayer.bodyFrame.Y / drawinfo.drawPlayer.bodyFrame.Height];
                     vector.Y -= 2f;
                     vector *= (float)(-drawinfo.playerEffect.HasFlag(SpriteEffects.FlipVertically).ToDirectionInt());
-                    Rectangle value = asset.Frame(1, 3, 0, drawinfo.drawPlayer.eyeHelper.EyeFrameToShow);
+                    Rectangle value = asset.Frame(1, 3, 0, (int)drawinfo.drawPlayer.eyeHelper.CurrentEyeFrame);
                     drawData = new DrawData(asset.Value, new Vector2((int)(drawinfo.Position.X - Main.screenPosition.X - (float)(drawinfo.drawPlayer.bodyFrame.Width / 2) + (float)(drawinfo.drawPlayer.width / 2)), (int)(drawinfo.Position.Y - Main.screenPosition.Y + (float)drawinfo.drawPlayer.height - (float)drawinfo.drawPlayer.bodyFrame.Height + 4f)) + drawinfo.drawPlayer.headPosition + drawinfo.headVect + vector, value, drawinfo.colorHead, drawinfo.drawPlayer.headRotation, drawinfo.headVect, 1f, drawinfo.playerEffect);
                     drawData.shader = drawinfo.skinDyePacked;
                     item = drawData;
@@ -163,26 +169,43 @@ namespace Coralite.Content.CustomHooks
         private void On_PlayerDrawLayers_DrawPlayer_10_BackAcc(On_PlayerDrawLayers.orig_DrawPlayer_10_BackAcc orig, ref PlayerDrawSet drawinfo)
         {
             EquipTexture e = EquipLoader.GetEquipTexture(EquipType.Back, drawinfo.drawPlayer.back);
-            if (e != null && e.Item != null && e.Item is ISpecialDrawBackPacks && drawinfo.drawPlayer.back > 0)
+            if (e != null && e.Item != null && e.Item is ISpecialDrawBackpacks specialBackpack && drawinfo.drawPlayer.back > 0)
             {
                 //if (drawinfo.drawPlayer.mount.Active)
                 //    return;
 
                 int shader;
                 int num2 = drawinfo.drawPlayer.back;
-                float num3 = -4f;
-                float num4 = -8f;
+                //float num3 = -4f;
+                //float num4 = -8f;
 
+                Texture2D tex = TextureAssets.AccBack[num2].Value;
+
+                int yFrame = drawinfo.drawPlayer.bodyFrame.Y / 56;
+
+                Rectangle frame = tex.Frame(1, 20, 0, yFrame);//  new Rectangle(0, drawinfo.drawPlayer.bodyFrame.Y,tex.Width, drawinfo.drawPlayer.bodyFrame.Height);
                 Vector2 vector3 = new Vector2(0f, 8f);
-                Vector2 vec5 = drawinfo.Position - Main.screenPosition + drawinfo.drawPlayer.bodyPosition + new Vector2(drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - drawinfo.drawPlayer.bodyFrame.Height / 2) + new Vector2(0f, -4f) + vector3;
-                vec5 = vec5.Floor();
-                Vector2 vec6 = drawinfo.Position - Main.screenPosition + new Vector2(drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - drawinfo.drawPlayer.bodyFrame.Height / 2) + new Vector2((-9f + num3) * (float)drawinfo.drawPlayer.direction, (2f + num4) * drawinfo.drawPlayer.gravDir) + vector3;
-                vec6 = vec6.Floor();
+                if (frame.Width / 2 % 2 != 0)
+                {
+                    vector3.X -= drawinfo.drawPlayer.direction;
+                }
 
-                shader = drawinfo.cBody;
-                DrawData item = new DrawData(TextureAssets.AccBack[num2].Value, vec5
-                    , new Rectangle(0, drawinfo.drawPlayer.bodyFrame.Y, TextureAssets.AccBack[num2].Width(), drawinfo.drawPlayer.bodyFrame.Height),
-                    drawinfo.colorArmorBody, drawinfo.drawPlayer.bodyRotation, new Vector2(TextureAssets.AccBack[num2].Width() / 2, drawinfo.bodyVect.Y), 1f, drawinfo.playerEffect);
+                Vector2 exOffset = specialBackpack.ExtraOffset;
+                exOffset.X*= drawinfo.drawPlayer.direction;
+                Vector2 vec5 = 
+                    drawinfo.Position 
+                    - Main.screenPosition +
+                    drawinfo.drawPlayer.bodyPosition
+                    + new Vector2(drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - frame.Height / 2)
+                    + new Vector2(0f, -4f)
+                    + vector3
+                    + exOffset;
+                vec5 = vec5.Floor();
+                //Vector2 vec6 = drawinfo.Position - Main.screenPosition + new Vector2(drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - drawinfo.drawPlayer.bodyFrame.Height / 2) + new Vector2((-9f + num3) * (float)drawinfo.drawPlayer.direction, (2f + num4) * drawinfo.drawPlayer.gravDir) + vector3;
+                //vec6 = vec6.Floor();
+                shader = drawinfo.cBack;
+                DrawData item = new DrawData(TextureAssets.AccBack[num2].Value, vec5 , frame,
+                    drawinfo.colorArmorBody, drawinfo.drawPlayer.bodyRotation, new Vector2(frame.Width / 2, frame.Height / 2), 1f, drawinfo.playerEffect);
                 item.shader = shader;
                 drawinfo.DrawDataCache.Add(item);
             }
@@ -311,8 +334,8 @@ namespace Coralite.Content.CustomHooks
 
     }
 
-    public interface ISpecialDrawBackPacks
+    public interface ISpecialDrawBackpacks
     {
-
+       public virtual Vector2 ExtraOffset => Vector2.Zero;
     }
 }

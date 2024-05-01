@@ -48,6 +48,5 @@ namespace Coralite.Core.Loaders
             modParticles = null;
             ParticleCount = 0;
         }
-
     }
 }

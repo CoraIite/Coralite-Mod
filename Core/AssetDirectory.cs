@@ -65,6 +65,7 @@ namespace Coralite.Core
         public const string PhantomItems = Items + "Phantom/";
         public const string RedJadeItems = Items + "RedJades/";
         public const string IcicleItems = Items + "Icicle/";
+        public const string SteelItems = Items + "Steel/";
         public const string ThunderItems = Items + "Thunder/";
         public const string StarsItems = Items + "Stars/";
         public const string DisturbanceItems = Items + "Disturbance/";
@@ -72,18 +73,23 @@ namespace Coralite.Core
         public const string NightmareItems = Items + "Nightmare/";
         public const string CoreKeeperItems = Items + "CoreKeeper/";
         public const string FlyingShieldItems = Items + "FlyingShields/";
+        public const string FlyingShieldAccessories = FlyingShieldItems + "Accessories/";
         public const string TheHyacinthSeriesItems = Items + "TheHyacinthSeries/";
 
-        public const string Materials = Items + "Materials/";
         public const string Accessories = Items + "Accessories/";
+
+        public const string Materials = Items + "Materials/";
         public const string Placeable = Items + "Placeable/";
-        public const string Misc = Items + "Misc/";
+        public const string MiscItems = Items + "Misc/";
         public const string Misc_Melee = Items + "Misc_Melee/";
         public const string Misc_Magic = Items + "Misc_Magic/";
         public const string Misc_Summon = Items + "Misc_Summon/";
         public const string Misc_Shoot = Items + "Misc_Shoot/";
         public const string PetItems = Items + "Pets/";
         public const string YujianHulu = Items + "YujianHulu/";
+        public const string FairyItems = Items + "Fairy/";
+        public const string FairyCatcherItems = Items + "FairyCatcher/";
+        public const string FairyBottleItems = Items + "FairyBottle/";
 
         public const string MachineItems = Items + "Machines/";
         public const string BotanicalItems = Items + "Botanical/";
@@ -167,6 +173,7 @@ namespace Coralite.Core
 
         public const string ShadowNPCs = NPCs + "Shadow/";
         public const string IcicleNPCs = NPCs + "Icicle/";
+        public const string ElementalNPCs = NPCs + "Elemental/";
         public const string MagikeNPCs = NPCs + "Magike/";
         public const string OtherNPC = NPCs + "OtherNPC/";
 
@@ -191,6 +198,8 @@ namespace Coralite.Core
         #endregion
 
         public const string Backgrounds = Assets + "Backgrounds/";
+
+        public const string Misc = Assets + "Misc/";
 
 
         public const string WorldGen = Assets + "WorldGeneration/";

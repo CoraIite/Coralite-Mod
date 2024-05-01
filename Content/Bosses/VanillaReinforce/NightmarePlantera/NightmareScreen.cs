@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Graphics.Effects;
@@ -14,8 +15,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override void Load()
         {
             Filters.Scene["NightmareScreen"] = new Filter(new NightmareScreenShader
-                (new Ref<Effect>(ModContent.Request<Effect>("Coralite/Effects/GlowingMarblingBlack",
-                ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "Marbling"), EffectPriority.VeryHigh);
+                (ModContent.Request<Effect>("Coralite/Effects/GlowingMarblingBlack",
+                AssetRequestMode.ImmediateLoad), "Marbling"), EffectPriority.VeryHigh);
             base.Load();
         }
 
@@ -65,7 +66,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         }
 
-        public NightmareScreenShader(Ref<Effect> shader, string passName) : base(shader, passName)
+        public NightmareScreenShader(Asset<Effect> shader, string passName) : base(shader, passName)
         {
 
         }

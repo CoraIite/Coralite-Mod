@@ -130,6 +130,7 @@ namespace Coralite.Content.Items.Gels
 
         public override void SetDefs()
         {
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
             Projectile.height = 80;
@@ -409,6 +410,7 @@ namespace Coralite.Content.Items.Gels
 
         public override void SetDefs()
         {
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 36;
             Projectile.width = 60;
             Projectile.height = 80;
@@ -641,6 +643,7 @@ namespace Coralite.Content.Items.Gels
 
         public override void SetDefs()
         {
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 22;
             Projectile.width = 40;
             Projectile.height = 80;

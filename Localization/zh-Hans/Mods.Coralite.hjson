@@ -1,4 +1,34 @@
-Prefixes.支配.DisplayName: 支配
+Prefixes: {
+	支配.DisplayName: 支配
+	Immortal.DisplayName: 不朽
+	Primal.DisplayName: 原初
+	Resonance.DisplayName: 谐振
+	Attractive.DisplayName: 引力
+	Bewitched.DisplayName: 蕴魔
+	Chaos.DisplayName: 混沌
+	Dazzling.DisplayName: 绚丽
+	Dim.DisplayName: 黯淡
+	Entangled.DisplayName: 纠缠
+	Eternal.DisplayName: 永恒
+	Fragile.DisplayName: 脆弱
+	Hollow.DisplayName: 空洞
+	Insight.DisplayName: 灵光
+	Insincere.DisplayName: 虚伪
+	Psychic.DisplayName: 通灵
+	Pure.DisplayName: 纯粹
+	Swift.DisplayName: 迅疾
+	Trivial.DisplayName: 渺小
+	Whisper.DisplayName: 私语
+	Ancient.DisplayName: 古稀
+	Clingy.DisplayName: 粘人
+	Expedition.DisplayName: 远征
+	Furious.DisplayName: 暴怒
+	Greedy.DisplayName: 贪婪
+	Majestic.DisplayName: 巍然
+	Nocturnal.DisplayName: 夜魅
+	Powerless.DisplayName: 无力
+}
+
 // Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
 
 ClobalItems: {
@@ -9,3 +39,5 @@ ClobalItems: {
 		// RainBowCoralCat: 彩虹猫猫币
 	}
 }
+
+DamageClasses.FairyDamage.DisplayName: 妖精伤害

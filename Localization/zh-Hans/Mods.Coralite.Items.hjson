@@ -331,17 +331,17 @@ CrossBreedMachine_G1Item: {
 }
 
 IceyPowder: {
-	DisplayName: 冰魔粉
+	DisplayName: 冰魔尘
 	Tooltip: 含有微弱的冰魔力
 }
 
 MaglitePowder: {
-	// DisplayName: Maglite Powder
-	// Tooltip: Contains a faint magic power
+	DisplayName: Maglite Powder
+	Tooltip: Contains a faint magic power
 }
 
 SandlitePowder: {
-	DisplayName: 沙魔粉
+	DisplayName: 沙魔尘
 	Tooltip: 含有微弱的沙漠魔力
 }
 
@@ -594,8 +594,8 @@ Astrosniper: {
 }
 
 BarrageMic: {
-	// DisplayName: Barrage Mic
-	// Tooltip: ""
+	DisplayName: Barrage Mic
+	Tooltip: ""
 }
 
 DukeFishronSkin: {
@@ -1270,7 +1270,7 @@ SlimeEmperorSoulBox: {
 
 ANewBirthOfIce: {
 	DisplayName: 冰雪的新生
-	Tooltip: 击败世界中的邪恶BOSS后，一个小小生命在冰龙巢中出现了
+	Tooltip: 击败克苏鲁之眼后，一个小小生命在冰龙巢中出现了
 }
 
 HiddenRed: {
@@ -1314,7 +1314,7 @@ CrystalPedestal: {
 }
 
 EmpyrosPowder: {
-	DisplayName: 火魔粉
+	DisplayName: 火魔尘
 	Tooltip: 含有微弱的火魔力
 }
 
@@ -1329,7 +1329,7 @@ LeafStone: {
 }
 
 MagicalPowder: {
-	DisplayName: 魔粉
+	DisplayName: 魔尘
 	Tooltip: 含有微弱的魔力
 }
 
@@ -1831,7 +1831,7 @@ CrystalStaff: {
 
 Damnation: {
 	DisplayName: 灾星
-	// Tooltip: ""
+	Tooltip: ""
 }
 
 BloodJadeCore: {
@@ -1945,7 +1945,7 @@ RuneSong: {
 AncientGemstone: {
 	DisplayName: 上古宝石
 	Tooltip: "[c/8e8e8e:奇怪的蓝色宝石，散发着能量波。]"
-	// ShlimmerTranslation: 此为微光转化合成表
+	ShlimmerTranslation: 此为微光转化合成表
 }
 
 BrokenHandle: {
@@ -2254,8 +2254,8 @@ ShadowWave: {
 }
 
 MercuryStaff: {
-	// DisplayName: Mercury Staff
-	// Tooltip: ""
+	DisplayName: Mercury Staff
+	Tooltip: ""
 }
 
 MercuryScepter: {
@@ -2274,7 +2274,7 @@ ShadowMask: {
 
 Shadurion: {
 	DisplayName: 极影刀 「虚理为真」
-	// Tooltip: ""
+	Tooltip: ""
 }
 
 ShadowCandelabra: {
@@ -2920,98 +2920,98 @@ ThunderDukeVine: {
 }
 
 MercuryBathtub: {
-	// DisplayName: Mercury Bathtub
-	// Tooltip: ""
+	DisplayName: 水银浴缸
+	Tooltip: ""
 }
 
 MercuryBed: {
-	// DisplayName: Mercury Bed
-	// Tooltip: ""
+	DisplayName: 水银床
+	Tooltip: ""
 }
 
 MercuryBigDroplight: {
-	// DisplayName: Mercury Big Droplight
-	// Tooltip: ""
+	DisplayName: 水银大吊灯
+	Tooltip: ""
 }
 
 MercuryBookcase: {
-	// DisplayName: Mercury Bookcase
-	// Tooltip: ""
+	DisplayName: 水银书架
+	Tooltip: ""
 }
 
 MercuryCandelabra: {
-	// DisplayName: Mercury Candelabra
-	// Tooltip: ""
+	DisplayName: 水银烛台
+	Tooltip: ""
 }
 
 MercuryCandle: {
-	// DisplayName: Mercury Candle
-	// Tooltip: ""
+	DisplayName: 水银蜡烛
+	Tooltip: ""
 }
 
 MercuryChair: {
-	// DisplayName: Mercury Chair
-	// Tooltip: ""
+	DisplayName: 水银椅
+	Tooltip: ""
 }
 
 MercuryClock: {
-	// DisplayName: Mercury Clock
-	// Tooltip: ""
+	DisplayName: 水银钟
+	Tooltip: ""
 }
 
 MercuryDoor: {
-	// DisplayName: Mercury Door
-	// Tooltip: ""
+	DisplayName: 水银门
+	Tooltip: ""
 }
 
 MercuryDresser: {
-	// DisplayName: Mercury Dresser
-	// Tooltip: ""
+	DisplayName: 水银梳妆台
+	Tooltip: ""
 }
 
 MercuryDroplight2: {
-	// DisplayName: Mercury Droplight2
-	// Tooltip: ""
+	DisplayName: 水银吊灯
+	Tooltip: ""
 }
 
 MercuryFloorLamp: {
-	// DisplayName: Mercury Floor Lamp
-	// Tooltip: ""
+	DisplayName: 水银灯柱
+	Tooltip: ""
 }
 
 MercuryPiano: {
-	// DisplayName: Mercury Piano
-	// Tooltip: ""
+	DisplayName: 水银钢琴
+	Tooltip: ""
 }
 
 MercurySink: {
-	// DisplayName: Mercury Sink
-	// Tooltip: ""
+	DisplayName: 水银水槽
+	Tooltip: ""
 }
 
 MercurySofa: {
-	// DisplayName: Mercury Sofa
-	// Tooltip: ""
+	DisplayName: 水银沙发
+	Tooltip: ""
 }
 
 MercuryTable: {
-	// DisplayName: Mercury Table
-	// Tooltip: ""
+	DisplayName: 水银桌
+	Tooltip: ""
 }
 
 MercuryToilet: {
-	// DisplayName: Mercury Toilet
-	// Tooltip: ""
+	DisplayName: 水银马桶
+	Tooltip: ""
 }
 
 MercuryWorkBench: {
-	// DisplayName: Mercury Work Bench
-	// Tooltip: ""
+	DisplayName: 水银工作台
+	Tooltip: ""
 }
 
 Illureal: {
-	// DisplayName: Illureal
-	// Tooltip: ""
+	DisplayName: 幻实流影
+	Tooltip: ""
 }
 
 ThunderveinBlade: {
@@ -3215,6 +3215,7 @@ ThunderveinSpear: {
 		'''
 		右键丢出长矛，命中敌人后戳在敌人身上
 		之后再次右键将玩家拉向长矛位置并生成落雷
+		“你想把其他的长矛也丢出去？试试《ThrownSpears 投掷长矛》!”
 		'''
 }
 
@@ -3736,10 +3737,109 @@ ShadowDart: {
 }
 
 VampireEarl: {
-	DisplayName: 鲜血晚宴
+	DisplayName: 朱红盛宴
 	Tooltip:
 		'''
-		血月时获得极大幅度强化
-		嗜血蝙蝠
+		血月时获得强化
+		飞行时放出嗜血蝙蝠
 		'''
+}
+
+CrystalFins: {
+	DisplayName: 晶鳍鱼
+	Tooltip: 身上长着水晶状的鱼鳍
+}
+
+GalacticVortexBanner: {
+	DisplayName: 银河漩涡旗
+	Tooltip: ""
+}
+
+LunarEclipseBanner: {
+	DisplayName: 月食旗
+	Tooltip: ""
+}
+
+StarlightBanner: {
+	DisplayName: 星光旗
+	Tooltip: ""
+}
+
+StarRuneBanner: {
+	DisplayName: 星辰符文旗
+	Tooltip: ""
+}
+
+MedalOfLife: {
+	DisplayName: 生命勋章
+	Tooltip:
+		'''
+		接近满血时获得增加10%伤害，5%攻击速度，5%移动速度
+		生命值上限与生命值相差小于20点时生效
+		'''
+}
+
+LifePulseDevice: {
+	DisplayName: 生命脉冲装置
+	Tooltip:
+		'''
+		生命值大于40时持续减少血量
+		生命值小于40时增加15%伤害和5%暴击率
+		伤害增幅为乘算
+		'''
+}
+
+IcicleBreath: {
+	DisplayName: 冰晶龙息
+	Tooltip: 充满着冰之魔力，冰龙宝宝用它来将水变成具有杀伤力的吐息
+}
+
+IcicleScale: {
+	DisplayName: 冰晶鳞片
+	Tooltip: 冰龙宝宝的鳞片，尚未完全生长但已经拥有足够的防御力
+}
+
+IcicleAxe: {
+	DisplayName: 破冰镐
+	Tooltip: 挖掘冰块时效率增加
+}
+
+VineLasso: {
+	DisplayName: 藤蔓套索
+	Tooltip: ""
+}
+
+GreenFairyItem: {
+	DisplayName: 绿仙灵
+	Tooltip: 最为常见的仙灵之一，会对敌人使用撞击
+}
+
+StarlightBottle: {
+	DisplayName: 星光瓶
+	Tooltip: ""
+}
+
+BreezeFairyItem: {
+	DisplayName: 微风灵
+	Tooltip: ""
+}
+
+BlueFairyItem: {
+	DisplayName: 蓝仙灵
+	Tooltip: ""
+}
+
+BrownFairyItem: {
+	DisplayName: 棕仙灵
+	Tooltip: ""
+}
+
+PinkFairyItem: {
+	DisplayName: 粉仙灵
+	Tooltip: ""
+}
+
+CandyFairyItem: {
+	DisplayName: 糖果棒灵
+	Tooltip: ""
 }

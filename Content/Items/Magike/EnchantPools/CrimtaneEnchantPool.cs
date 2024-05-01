@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike.EnchantPools
             PolymerizeRecipe.CreateRecipe<CrimtaneEnchantPool>(150)
                 .SetMainItem<CrystalEnchantPool>()
                 .AddIngredient<GlistentBar>(4)
-                .AddIngredient(ItemID.TissueSample, 8)
+                .AddIngredient(ItemID.TissueSample, 4)
                 .Register();
         }
     }

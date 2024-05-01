@@ -50,13 +50,13 @@ namespace Coralite.Content.UI
 
             for (int i = 0; i < ShowFlags.Length; i++)
             {
-                BisketyButton uIImageButton = new BisketyButton(ModContent.Request<Texture2D>(AssetDirectory.Misc + "Biskety", AssetRequestMode.ImmediateLoad), i);
+                BisketyButton uIImageButton = new BisketyButton(ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "Biskety", AssetRequestMode.ImmediateLoad), i);
                 list.Add(uIImageButton);
             }
 
             panel.Append(list);
 
-            UIImageButton close = new UIImageButton(ModContent.Request<Texture2D>(AssetDirectory.Misc + "BisketyHead", AssetRequestMode.ImmediateLoad));
+            UIImageButton close = new UIImageButton(ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "BisketyHead", AssetRequestMode.ImmediateLoad));
             close.OnLeftClick += Close_OnLeftClick;
             panel.Append(close);
         }

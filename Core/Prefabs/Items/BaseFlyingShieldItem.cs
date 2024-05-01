@@ -118,7 +118,7 @@ namespace Coralite.Core.Prefabs.Items
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            if (Main.LocalPlayer.controlUp)
+            if (Main.LocalPlayer.controlUp)//TODO: 增加本地化
             {
                 string text = "左键以丢出盾牌，右键进行防御，成功防御时会根据盾牌属性以及饰品加成获得短暂伤害减免";
                 TooltipLine line = new TooltipLine(Mod, "Coralite FlyingShield Description", text);
