@@ -37,6 +37,7 @@ namespace Coralite.Content.WorldGeneration
         {
             get
             {
+                //return false;
                 return CoraliteWorldSettings.DungeonType switch
                 {
                     CoraliteWorldSettings.WorldDungeonID.Random => Main.rand.NextBool(),

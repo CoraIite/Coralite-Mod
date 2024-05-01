@@ -1,6 +1,7 @@
 ﻿using Coralite.Core.Loaders;
 using System;
 using System.Collections.Generic;
+using Terraria.ID;
 using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
@@ -20,7 +21,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public enum WallGroupType
         {
-
+            /// <summary>
+            /// 宝石晶格墙
+            /// </summary>
+            Gemspark,
+            /// <summary>
+            /// 宝石石墙，是会自然生成的宝石洞的墙壁
+            /// </summary>
+            Gem,
         }
 
         /// <summary>
@@ -120,7 +128,42 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public void RegisterToWallGroup(WallGroupType group)
         {
+            switch (group)
+            {
+                case WallGroupType.Gemspark:
+                    RegisterToWall(WallID.AmberGemspark);
+                    RegisterToWall(WallID.AmethystGemspark);
+                    RegisterToWall(WallID.DiamondGemspark);
+                    RegisterToWall(WallID.EmeraldGemspark);
+                    RegisterToWall(WallID.AmberGemsparkOff);
+                    RegisterToWall(WallID.AmethystGemsparkOff);
+                    RegisterToWall(WallID.DiamondGemsparkOff);
+                    RegisterToWall(WallID.EmeraldGemsparkOff);
+                    RegisterToWall(WallID.RubyGemsparkOff);
+                    RegisterToWall(WallID.SapphireGemsparkOff);
+                    RegisterToWall(WallID.TopazGemsparkOff);
+                    RegisterToWall(WallID.RubyGemspark);
+                    RegisterToWall(WallID.SapphireGemspark);
+                    RegisterToWall(WallID.TopazGemspark);
+                    break;
+                case WallGroupType.Gem:
+                    RegisterToWall(WallID.AmethystUnsafe);
+                    RegisterToWall(WallID.TopazUnsafe);
+                    RegisterToWall(WallID.SapphireUnsafe);
+                    RegisterToWall(WallID.EmeraldUnsafe);
+                    RegisterToWall(WallID.RubyUnsafe);
+                    RegisterToWall(WallID.DiamondUnsafe);
 
+                    RegisterToWall(WallID.AmethystEcho);
+                    RegisterToWall(WallID.TopazEcho);
+                    RegisterToWall(WallID.SapphireEcho);
+                    RegisterToWall(WallID.EmeraldEcho);
+                    RegisterToWall(WallID.RubyEcho);
+                    RegisterToWall(WallID.DiamondEcho);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

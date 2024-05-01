@@ -3740,3 +3740,8 @@ PinkFairyItem: {
 	DisplayName: Pink Fairy Item
 	Tooltip: ""
 }
+
+CandyFairyItem: {
+	DisplayName: Candy Fairy Item
+	Tooltip: ""
+}

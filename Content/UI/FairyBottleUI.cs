@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.UI.FairyEncyclopedia;
+using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;

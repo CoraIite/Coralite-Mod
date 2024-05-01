@@ -3838,3 +3838,8 @@ PinkFairyItem: {
 	DisplayName: 粉仙灵
 	Tooltip: ""
 }
+
+CandyFairyItem: {
+	DisplayName: 糖果棒灵
+	Tooltip: ""
+}

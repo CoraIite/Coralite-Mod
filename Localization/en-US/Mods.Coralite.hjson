@@ -19,6 +19,14 @@ Prefixes: {
 	Swift.DisplayName: Swift
 	Trivial.DisplayName: Trivial
 	Whisper.DisplayName: Whisper
+	Ancient.DisplayName: Ancient
+	Clingy.DisplayName: Clingy
+	Expedition.DisplayName: Expedition
+	Furious.DisplayName: Furious
+	Greedy.DisplayName: Greedy
+	Majestic.DisplayName: Majestic
+	Nocturnal.DisplayName: Nocturnal
+	Powerless.DisplayName: Powerless
 }
 
 Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
