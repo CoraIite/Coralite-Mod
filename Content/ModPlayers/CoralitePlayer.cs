@@ -274,7 +274,7 @@ namespace Coralite.Content.ModPlayers
                 }
 
                 Player.GetDamage(DamageClass.Generic) += 0.1f;
-                Player.GetAttackSpeed(DamageClass.Generic) += 0.5f;
+                Player.GetAttackSpeed(DamageClass.Generic) += 0.05f;
                 Player.moveSpeed += 0.05f;
             }
 
@@ -321,6 +321,7 @@ namespace Coralite.Content.ModPlayers
                 if (Player.statLife > 38)
                 {
                     Player.lifeRegen -= 10 * 2;
+                    Player.lifeRegenTime = 0;
                 }
             }
         }
