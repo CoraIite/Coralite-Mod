@@ -124,7 +124,7 @@ namespace Coralite.Content.Items.ShadowCastle
         public override void AI()
         {
             LockOwnerItemTime();
-            SetHeldPorj();
+            SetHeldProj();
             Owner.itemRotation = MouseTargetAngle + (OwnerDirection > 0 ? 0f : MathHelper.Pi) + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + OwnerDirection * 0.3f;
             Projectile.Center = Owner.Center + MouseTargetVector2 * 20;
             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
