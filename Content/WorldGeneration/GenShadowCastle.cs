@@ -1,11 +1,9 @@
 ﻿using Coralite.Content.Items.ShadowCastle;
 using Coralite.Content.Tiles.ShadowCastle;
-using Coralite.Content.UI;
 using Coralite.Content.WorldGeneration.Generators;
 using Coralite.Content.WorldGeneration.ShadowCastleRooms;
 using Coralite.Core;
 using Coralite.Helpers;
-using Iced.Intel;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ReLogic.Utilities;
@@ -37,13 +35,13 @@ namespace Coralite.Content.WorldGeneration
         {
             get
             {
-                //return false;
-                return CoraliteWorldSettings.DungeonType switch
-                {
-                    CoraliteWorldSettings.WorldDungeonID.Random => Main.rand.NextBool(),
-                    CoraliteWorldSettings.WorldDungeonID.ShadowCastle => true,
-                    _ => false,
-                };
+                return false;
+                //return CoraliteWorldSettings.DungeonType switch
+                //{
+                //    CoraliteWorldSettings.WorldDungeonID.Random => Main.rand.NextBool(),
+                //    CoraliteWorldSettings.WorldDungeonID.ShadowCastle => true,
+                //    _ => false,
+                //};
             }
         }
 

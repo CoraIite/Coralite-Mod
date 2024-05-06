@@ -42,29 +42,25 @@ namespace Coralite.Content.ModPlayers
 
         /// <summary> 手持海利亚盾 </summary>
         public bool heldHylianShield;
-        /// <summary>
-        /// 海盗王之魂
-        /// </summary>
+        /// <summary> 海盗王之魂 </summary>
         public int pirateKingSoul;
-        /// <summary>
-        /// 海盗王之魂的效果CD
-        /// </summary>
+        /// <summary> 海盗王之魂的效果CD </summary>
         public int pirateKingSoulCD;
 
-        /// <summary>
-        /// 幸运星
-        /// </summary>
+        /// <summary> 幸运星 </summary>
         public int luckyStar;
 
-        /// <summary>
-        /// 美杜莎之魂
-        /// </summary>
+        /// <summary> 美杜莎之魂 </summary>
         public int medusaSoul;
-
-        /// <summary>
-        /// 分裂
-        /// </summary>
+        /// <summary> 分裂 </summary>
         public int split;
+
+        /// <summary> 大田螺之魂 </summary>
+        public int GreatRiverSnailSoul;//凉屋这命名也是挺直白的，虽说代码里甚至用的拼音
+        /// <summary> 大田螺之魂的效果CD </summary>
+        public int GreatRiverSnailSoulCD;
+        /// <summary> 绝对专注 </summary>
+        public int Concertration;
         #endregion
 
         /// <summary> 雷鸣灌注 </summary>
@@ -141,6 +137,10 @@ namespace Coralite.Content.ModPlayers
             luckyStar = 0;
             medusaSoul = 0;
             split = 0;
+            GreatRiverSnailSoul = 0;
+            if (GreatRiverSnailSoulCD > 0)
+                GreatRiverSnailSoulCD--;
+            Concertration = 0;
 
             thunderElectrified = false;
             resistDreamErosion = false;
@@ -560,6 +560,22 @@ namespace Coralite.Content.ModPlayers
                 return true;
             }
             return base.FreeDodge(info);
+        }
+
+        public override bool ConsumableDodge(Player.HurtInfo info)
+        {
+            if (GreatRiverSnailSoul > 0 && GreatRiverSnailSoulCD == 0)
+            {
+                SpawnGreatRiverSnailSpike();
+                return true;
+            }
+
+            return base.ConsumableDodge(info);
+
+            void SpawnGreatRiverSnailSpike()
+            {
+
+            }
         }
 
         #endregion

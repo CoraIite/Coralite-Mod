@@ -45,7 +45,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public int frameCounter;
         public Rectangle frame;
-        public int spriteDirection;
+        public int spriteDirection = 1;
 
         public int Timer;
         private AIState State;
@@ -340,6 +340,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             player.QuickSpawnItem(player.GetSource_FairyCatch(this), i);
             Chest.VisualizeChestTransfer(Center, player.Center, i, 1);
             Helper.PlayPitched("Fairy/CatchFairy", 0.4f, 0);
+            FairySystem.SetFairyCaught(this);
         }
 
         /// <summary>
@@ -387,17 +388,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public virtual void Draw_InCatcher()
         {
-            Texture2D mainTex = ModContent.Request<Texture2D>(Texture).Value;
-            var frame = mainTex.Frame(HorizontalFrames, VerticalFrames, this.frame.X, this.frame.Y);
+            this.QuickDraw(Color.White * alpha, 0);
 
-            Main.spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, Color.White * alpha, rotation, frame.Size() / 2, scale, spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            //Texture2D mainTex = ModContent.Request<Texture2D>(Texture).Value;
+            //var frame = mainTex.Frame(HorizontalFrames, VerticalFrames, this.frame.X, this.frame.Y);
+
+            //Main.spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, Color.White * alpha, rotation, frame.Size() / 2, scale, spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
             DrawProgressBar();
         }
 
         public virtual void DrawProgressBar()
         {
-            if (State==AIState.Catching)
+            if (State == AIState.Catching)
                 DrawFairyProgressBar(Bottom.X, Bottom.Y + 14, (int)catchProgress, 100, 0.9f, 0.75f);
         }
 

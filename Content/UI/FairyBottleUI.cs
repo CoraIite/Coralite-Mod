@@ -1,5 +1,4 @@
-﻿using Coralite.Content.UI.FairyEncyclopedia;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,6 +21,8 @@ namespace Coralite.Content.UI
         public static UIDragablePanel panel;
         public static UIGrid itemSlotGrid;
         public static IFairyBottle bottle;
+
+        public static CloseButton closeButton = new CloseButton();
 
         public State state;
 
@@ -56,6 +57,16 @@ namespace Coralite.Content.UI
             panel.Append(itemSlotGrid);
 
             panel.OnResizing += Panel_OnResizing;
+
+            closeButton.Top.Set(12, 0);
+            closeButton.Left.Set(12, 0);
+            closeButton.OnLeftClick += CloseUI;
+            panel.Append(closeButton);
+        }
+
+        public void CloseUI(UIMouseEvent evt, UIElement listeningElement)
+        {
+            TurnToFadeOut();
         }
 
         private void Panel_OnResizing()
@@ -125,6 +136,9 @@ namespace Coralite.Content.UI
 
         public override void Recalculate()
         {
+            closeButton.Top.Set(8, 0);
+            closeButton.Left.Set(8, 0);
+
             itemSlotGrid?.Clear();
             if (bottle != null)
             {
