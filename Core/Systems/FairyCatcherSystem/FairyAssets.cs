@@ -1,17 +1,16 @@
 ﻿using Coralite.Core.Loaders;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     public partial class FairySystem
     {
         public static Asset<Texture2D>[] FairyAssets;
+
+        public static Asset<Texture2D> FairySlotBorder;
+        public static Asset<Texture2D> FairySlotHoverBorder;
+        public static Asset<Texture2D> FairySlotBackground;
 
         public void LoadFairyTexture()
         {
@@ -22,6 +21,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 if (fairy != null)
                     FairyAssets[i] = ModContent.Request<Texture2D>(fairy.Texture);
             }
+
+            FairySlotBorder = ModContent.Request<Texture2D>(AssetDirectory.UI + "FairySlotBorder");
+            FairySlotHoverBorder = ModContent.Request<Texture2D>(AssetDirectory.UI + "FairySlotHoverBorder");
+            FairySlotBackground = ModContent.Request<Texture2D>(AssetDirectory.UI + "FairySlotBackground");
         }
 
         public void UnloadFairyTexture()

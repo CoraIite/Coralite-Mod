@@ -38,9 +38,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public Vector2 position;
         public Vector2 velocity;
         public float rotation;
-        public int width;
-        public int height;
-        public float scale;
+        public int width = 8;
+        public int height = 8;
+        public float scale = 1;
         public float alpha = 1;
 
         public int frameCounter;
@@ -415,7 +415,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             Main.spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, Color.White, rotation, frame.Size() / 2, scale, spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
         }
 
-        public Texture2D GetTexture() => ModContent.Request<Texture2D>(Texture).Value;
+        //public Texture2D GetTexture() => ModContent.Request<Texture2D>(Texture).Value;
 
         public static void DrawFairyProgressBar(float X, float Y, int Health, int MaxHealth, float alpha, float scale = 1f)
         {

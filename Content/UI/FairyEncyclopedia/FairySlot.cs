@@ -14,29 +14,16 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         private int _cornerSize = 12;
         private int _barSize = 4;
         private Asset<Texture2D> _borderTexture;
+        private Asset<Texture2D> _borderHoverTexture;
         private Asset<Texture2D> _backgroundTexture;
         public Color BorderColor = Color.Black;
-        public Color BackgroundColor = new Color(63, 82, 151) * 0.7f;
+        public Color BackgroundColor = new Color(63, 82, 151) * 0.85f;
 
-        public const int XCount = 8;
-        public const int YCount = 5;
+        public const int XCount = 12;
+        public const int YCount = 6;
 
         private Fairy _fairy;
-
-        public FairySlot(int fairyType)
-        {
-            _borderTexture ??= Main.Assets.Request<Texture2D>("Images/UI/PanelBorder");
-            _backgroundTexture ??= Main.Assets.Request<Texture2D>("Images/UI/PanelBackground");
-
-            _fairy=FairyLoader.GetFairy(fairyType).NewInstance();
-        }
-
-        public void SetSize()
-        {
-            Width.Set(Parent.Width.Pixels / XCount - 6, 0);
-            Height.Set(Parent.Height.Pixels / YCount - 6, 0);
-        }
-
+        private Item _fairyItem;
         /// <summary>
         /// 自身在UIGrid里的索引
         /// </summary>
@@ -44,36 +31,99 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         private float alpha;
         private float offset;
 
+        public FairySlot(int fairyType,int index)
+        {
+            this.index = index;
+            offset = 60;
+            _borderTexture ??= FairySystem.FairySlotBorder;  //Main.Assets.Request<Texture2D>("Images/UI/PanelBorder");
+            _borderHoverTexture ??= FairySystem.FairySlotHoverBorder;
+            _backgroundTexture ??= FairySystem.FairySlotBackground;//Main.Assets.Request<Texture2D>("Images/UI/PanelBackground");
+
+            _fairy =FairyLoader.GetFairy(fairyType).NewInstance();
+            _fairyItem = new Item(_fairy.ItemType);
+        }
+
+        public void SetSize(UIElement parent)
+        {
+            Width.Set(parent.Width.Pixels / XCount - 6, 0);
+            Height.Set(parent.Height.Pixels / YCount - 6, 0);
+        }
+
         public override void Update(GameTime gameTime)
         {
+            if (alpha < 1)//滑动效果
+            {
+                if (FairyEncyclopedia.Timer >= index)
+                {
+                    alpha = FairyEncyclopedia.Timer - index;
+                    offset = 60 - alpha * 60;
+                }
+
+                if (alpha > 1)
+                {
+                    alpha = 1;
+                    offset = 0;
+                    Recalculate();
+                }
+            }
+
+            UpdateFairy();
+
             if (IsMouseHovering)//鼠标在上面，开始更新自身的样子
             {
-                UpdateFairy();
             }
             else
             {
-                
             }
+
             base.Update(gameTime);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
+            bool hovering = IsMouseHovering;
             if (_backgroundTexture != null)
-                DrawPanel(spriteBatch, offset, _backgroundTexture.Value, BackgroundColor * alpha);
+                DrawBorder(spriteBatch, offset, _backgroundTexture.Value, Color.White * alpha);
 
             if (_borderTexture != null)
-                DrawPanel(spriteBatch, offset, _borderTexture.Value, BorderColor * alpha);
+            {
+                if (hovering)
+                    DrawBorder(spriteBatch, offset, _borderHoverTexture.Value, Color.White * alpha);
+                else
+                    DrawBorder(spriteBatch, offset, _borderTexture.Value, Color.White * alpha);
+            }
 
+            //绘制仙灵本体
             var style = GetDimensions();
-            Color c = FairySystem.FairyCaught[_fairy.Type]?Color.White:Color.Black;
+            Color c = FairySystem.FairyCaught[_fairy.Type] ? Color.White : Color.Black;
+            c *= alpha;
 
-            _fairy.position = style.Center() + (IsMouseHovering ? new Vector2(0, style.Height / 10 * MathF.Sin(Main.GlobalTimeWrappedHourly * 3)) : Vector2.Zero);
+            _fairy.Center = style.Center() + Main.screenPosition;
+
+            if (hovering)
+            {
+                if (FairySystem.FairyCaught[_fairy.Type])
+                {
+                    Main.HoverItem = _fairyItem.Clone();
+                    Main.hoverItemName = "CoraliteFairyEncyclopedia";
+                }
+                else
+                {
+                    Main.instance.MouseText(FairySystem.UncaughtMouseText.Value);
+                }
+
+                _fairy.scale = 1.4f;
+                _fairy.Center += new Vector2(0, style.Height / 8 * MathF.Sin(Main.GlobalTimeWrappedHourly * 3));
+            }
+            else
+            {
+                _fairy.scale = 1f;
+            }
+
             _fairy.QuickDraw(c, 0);
-
         }
 
-        private void DrawPanel(SpriteBatch spriteBatch,float offset, Texture2D texture, Color color)
+        private void DrawBorder(SpriteBatch spriteBatch, float offset, Texture2D texture, Color color)
         {
             CalculatedStyle dimensions = GetDimensions();
             Point point = new Point((int)dimensions.X, (int)dimensions.Y + (int)offset);
@@ -105,10 +155,10 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         {
             if (_fairy == null)
                 return;
-            if (++_fairy.frameCounter > 6)
+            if (++_fairy.frameCounter > 7)
             {
                 _fairy.frameCounter = 0;
-                if (++_fairy.frame.Y > _fairy.VerticalFrames)
+                if (++_fairy.frame.Y >= _fairy.VerticalFrames)
                     _fairy.frame.Y = 0;
             }
         }

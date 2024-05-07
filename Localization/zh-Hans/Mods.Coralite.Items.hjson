@@ -3843,3 +3843,8 @@ CandyFairyItem: {
 	DisplayName: 糖果棒灵
 	Tooltip: ""
 }
+
+FairyEncyclopediaItem: {
+	// DisplayName: Fairy Encyclopedia Item
+	// Tooltip: ""
+}

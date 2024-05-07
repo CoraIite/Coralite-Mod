@@ -44,4 +44,9 @@ FairySystem: {
 	ZoneBeach: 在海边出现
 	CatchPowerMult: "{0} 捕捉力"
 	EternalLevel: 永恒：{0}（基础 {1}）
+	UncaughtMouseText:
+		'''
+		???
+		点击以查看捕获条件
+		'''
 }

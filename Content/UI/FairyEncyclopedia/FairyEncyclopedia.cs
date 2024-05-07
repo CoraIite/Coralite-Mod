@@ -13,7 +13,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
     {
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
-        public bool visible;
+        public static bool visible;
         public override bool Visible => visible;
 
         public static UIPanel BackGround;
@@ -56,18 +56,21 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public override void OnInitialize()
         {
             BackGround = new UIPanel();
+            BackGround.BackgroundColor = new Color(63, 82, 151) * 0.85f;
 
             //设置到屏幕中心
             BackGround.HAlign = 0.5f;
             BackGround.VAlign = 0.5f;
-            BackGround.Width.Set(1200,0);
-            BackGround.Height.Set(800,0);
+            BackGround.Width.Set(Main.screenWidth*0.66f,0);
+            BackGround.Height.Set(Main.screenHeight*0.7f,0);
 
             FairyGrid ??= new UIGrid();
 
             FairyGrid.Top.Set(40, 0);
             FairyGrid.Width.Set(BackGround.Width.Pixels - 18, 0);
             FairyGrid.Height.Set(BackGround.Height.Pixels - 70, 0);
+
+            Append(BackGround);
         }
 
         public override void Update(GameTime gameTime)
@@ -100,6 +103,12 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         public override void Recalculate()
         {
+            if (BackGround != null)
+            {
+                BackGround.Width.Set(Main.screenWidth * 0.66f, 0);
+                BackGround.Height.Set(Main.screenHeight * 0.7f, 0);
+            }
+
             Main.playerInventory = false;
             PageIndex = 0;
             base.Recalculate();
@@ -110,6 +119,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             BackGround.RemoveAllChildren();
             BackGround.Append(FairyGrid);
 
+            SetShowGrid(0);
 
             State = UpdateState.ShowAll;
             Recalculate();
@@ -128,14 +138,13 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             Timer = 0;
             for (int i = 0; i < FairySlot.XCount * FairySlot.YCount; i++)
             {
-                int type = PageIndex + FairySlot.XCount * FairySlot.YCount + i;
+                int type = PageIndex * FairySlot.XCount * FairySlot.YCount + i;
 
-                if (type <= FairyLoader.FairyCount)
+                if (type < FairyLoader.FairyCount)
                 {
-                    FairySlot slot = new FairySlot(type);
-
-                    FairyGrid.Append(slot);
-                    slot.SetSize();
+                    FairySlot slot = new FairySlot(type, i);
+                    slot.SetSize(FairyGrid);
+                    FairyGrid.Add(slot);
                 }
                 else
                     break;

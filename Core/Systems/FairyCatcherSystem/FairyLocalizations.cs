@@ -63,6 +63,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText BottleCapacity;
         public static LocalizedText SeeMore;
         public static LocalizedText CatchPowerMult;
+        public static LocalizedText UncaughtMouseText;
 
         public void LoadLocalization()
         {
@@ -108,6 +109,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             BottleCapacity = this.GetLocalization("BottleCapacity", () => "容量 {0} / {1}");
             SeeMore = this.GetLocalization("SeeMore", () => "按上键以查看雷达图（游戏暂停时无法使用）");
             CatchPowerMult = this.GetLocalization("CatchPowerMult", () => "{0} 捕捉力");
+            UncaughtMouseText = this.GetLocalization("UncaughtMouseText", () => "???\n点击以查看捕获条件");
         }
 
         public static void UnloadLocalization()

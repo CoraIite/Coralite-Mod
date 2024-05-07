@@ -3745,3 +3745,8 @@ CandyFairyItem: {
 	DisplayName: Candy Fairy Item
 	Tooltip: ""
 }
+
+FairyEncyclopediaItem: {
+	DisplayName: Fairy Encyclopedia Item
+	Tooltip: ""
+}
