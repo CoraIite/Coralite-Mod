@@ -3845,6 +3845,11 @@ CandyFairyItem: {
 }
 
 FairyEncyclopediaItem: {
-	// DisplayName: Fairy Encyclopedia Item
-	// Tooltip: ""
+	DisplayName: 风石碑牌
+	Tooltip: ""
+}
+
+RedJadeSpear: {
+	DisplayName: 赤玉矛
+	Tooltip: 偶尔会引发爆炸
 }

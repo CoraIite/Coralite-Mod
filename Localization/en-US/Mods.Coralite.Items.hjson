@@ -3750,3 +3750,8 @@ FairyEncyclopediaItem: {
 	DisplayName: Fairy Encyclopedia Item
 	Tooltip: ""
 }
+
+RedJadeSpear: {
+	DisplayName: Red Jade Spear
+	Tooltip: ""
+}

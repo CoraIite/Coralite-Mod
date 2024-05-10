@@ -4,6 +4,8 @@ using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.IO;
+using static Coralite.Core.Systems.FairyCatcherSystem.FairyAttempt;
+using static Coralite.Core.Systems.FairyCatcherSystem.FairySystem;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -111,6 +113,42 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void SetFairyCaught(Fairy fairy)
         {
             FairyCaught[fairy.Type] = true;
+        }
+
+        public static string GetRarityDescription(Rarity rarity)
+        {
+            return rarity switch
+            {
+                Rarity.C => Rarity_C.Value,
+                Rarity.U => Rarity_U.Value,
+                Rarity.R => Rarity_R.Value,
+                Rarity.RR => Rarity_RR.Value,
+                Rarity.SR => Rarity_SR.Value,
+                Rarity.UR => Rarity_UR.Value,
+                Rarity.RRR => Rarity_RRR.Value,
+                Rarity.HR => Rarity_HR.Value,
+                Rarity.AR => Rarity_AR.Value,
+                Rarity.MR => Rarity_MR.Value,
+                _ => Rarity_SP.Value,//特殊
+            };
+        }
+
+        public static Color GetRarityColor(Rarity rarity)
+        {
+            return rarity switch
+            {
+                Rarity.C => RarityC_LiteYellow,
+                Rarity.U => RarityU_LawnGreen,
+                Rarity.R => RarityR_SkyBlue,
+                Rarity.RR => RarityRR_Blue,
+                Rarity.SR => RaritySR_Red,
+                Rarity.UR => RarityUR_Orange,
+                Rarity.RRR => RarityRRR_BluePurple,
+                Rarity.HR => RarityHR_Pink,
+                Rarity.AR => RarityAR_Orchid,
+                Rarity.MR => RarityMR_Gold,
+                _ => Color.MediumVioletRed,//特殊
+            };
         }
     }
 }

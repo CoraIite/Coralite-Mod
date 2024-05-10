@@ -64,6 +64,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText SeeMore;
         public static LocalizedText CatchPowerMult;
         public static LocalizedText UncaughtMouseText;
+        public static LocalizedText SelectButtonMouseText;
 
         public void LoadLocalization()
         {
@@ -110,6 +111,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             SeeMore = this.GetLocalization("SeeMore", () => "按上键以查看雷达图（游戏暂停时无法使用）");
             CatchPowerMult = this.GetLocalization("CatchPowerMult", () => "{0} 捕捉力");
             UncaughtMouseText = this.GetLocalization("UncaughtMouseText", () => "???\n点击以查看捕获条件");
+            SelectButtonMouseText = this.GetLocalization("SelectButtonMouseText", () => "左键单击以筛选指定稀有度的仙灵\n右键恢复为显示全部");
         }
 
         public static void UnloadLocalization()

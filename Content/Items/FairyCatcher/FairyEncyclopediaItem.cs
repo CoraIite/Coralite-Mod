@@ -7,7 +7,7 @@ namespace Coralite.Content.Items.FairyCatcher
 {
     public class FairyEncyclopediaItem:ModItem
     {
-        public override string Texture => AssetDirectory.DefaultItem;
+        public override string Texture => AssetDirectory.FairyCatcherItems+Name;
 
         public override bool CanRightClick() => true;
         public override bool ConsumeItem(Player player) => false;

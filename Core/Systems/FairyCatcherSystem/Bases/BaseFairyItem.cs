@@ -221,65 +221,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 tooltips.Add(DamageBonusDescription());
                 tooltips.Add(DefenceBonusDescription());
                 tooltips.Add(ScaleBonusDescription());
-                tooltips.Add(new TooltipLine(Mod,"SeeMore",FairySystem.SeeMore.Value));
+                tooltips.Add(new TooltipLine(Mod, "SeeMore", FairySystem.SeeMore.Value));
             }
         }
 
         public TooltipLine RarityDescription()
         {
-            string description;
-            Color color;
-
-            switch (Rarity)
-            {
-                case FairyAttempt.Rarity.C:
-                    color = FairySystem.RarityC_LiteYellow;
-                    description = FairySystem.Rarity_C.Value;
-                    break;
-                case FairyAttempt.Rarity.U:
-                    color = FairySystem.RarityU_LawnGreen;
-                    description = FairySystem.Rarity_U.Value;
-                    break;
-                case FairyAttempt.Rarity.R:
-                    color = FairySystem.RarityR_SkyBlue;
-                    description = FairySystem.Rarity_R.Value;
-                    break;
-                case FairyAttempt.Rarity.RR:
-                    color = FairySystem.RarityRR_Blue;
-                    description = FairySystem.Rarity_RR.Value;
-                    break;
-                case FairyAttempt.Rarity.SR:
-                    color = FairySystem.RaritySR_Red;
-                    description = FairySystem.Rarity_SR.Value;
-                    break;
-                case FairyAttempt.Rarity.UR:
-                    color = FairySystem.RarityUR_Orange;
-                    description = FairySystem.Rarity_UR.Value;
-                    break;
-                case FairyAttempt.Rarity.RRR:
-                    color = FairySystem.RarityRRR_BluePurple;
-                    description = FairySystem.Rarity_RRR.Value;
-                    break;
-                case FairyAttempt.Rarity.HR:
-                    color = FairySystem.RarityHR_Pink;
-                    description = FairySystem.Rarity_HR.Value;
-                    break;
-                case FairyAttempt.Rarity.AR:
-                    color = FairySystem.RarityAR_Orchid;
-                    description = FairySystem.Rarity_AR.Value;
-                    break;
-                case FairyAttempt.Rarity.MR:
-                    color = FairySystem.RarityMR_Gold;
-                    description = FairySystem.Rarity_MR.Value;
-                    break;
-                default:
-                    {
-                        //特殊
-                        color = Color.MediumVioletRed;
-                        description = FairySystem.Rarity_SP.Value;
-                    }
-                    break;
-            }
+            string description = FairySystem.GetRarityDescription(Rarity);
+            Color color = FairySystem.GetRarityColor(Rarity);
 
             TooltipLine line = new TooltipLine(Mod, "FairyRarity", description);
             line.OverrideColor = color;
