@@ -1,4 +1,6 @@
-﻿using Terraria.Localization;
+﻿using System.Collections.Generic;
+using Terraria.Localization;
+using FairyRarity = Coralite.Core.Systems.FairyCatcherSystem.FairyAttempt.Rarity;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -29,16 +31,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         //-----------------------------------
         //         仙灵稀有度的本地化
         //-----------------------------------
-        public static LocalizedText Rarity_C;
-        public static LocalizedText Rarity_U;
-        public static LocalizedText Rarity_R;
-        public static LocalizedText Rarity_RR;
-        public static LocalizedText Rarity_SR;
-        public static LocalizedText Rarity_UR;
-        public static LocalizedText Rarity_RRR;
-        public static LocalizedText Rarity_HR;
-        public static LocalizedText Rarity_AR;
-        public static LocalizedText Rarity_MR;
+        public static Dictionary<FairyRarity, LocalizedText> RarityText;
         public static LocalizedText Rarity_SP;
 
         //-----------------------------------
@@ -65,6 +58,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText CatchPowerMult;
         public static LocalizedText UncaughtMouseText;
         public static LocalizedText SelectButtonMouseText;
+        public static LocalizedText SortButtonMouseText;
+
+        public static LocalizedText SortByTypeText;
+        public static LocalizedText SortByRarityText;
+        public static LocalizedText SortByCaughtText;
 
         public void LoadLocalization()
         {
@@ -84,16 +82,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             FairyDefence = this.GetLocalization("FairyDefence", () => "防御 ");
             FairyScale = this.GetLocalization("FairyScale", () => "大小 ");
 
-            Rarity_C= this.GetLocalization("RarityC", () => "常见");
-            Rarity_U = this.GetLocalization("RarityU", () => "不常见");
-            Rarity_R= this.GetLocalization("RarityR", () => "稀有");
-            Rarity_RR= this.GetLocalization("RarityRR", () => "双倍稀有");
-            Rarity_SR= this.GetLocalization("RaritySR", () => "史诗");
-            Rarity_UR= this.GetLocalization("RarityUR", () => "神话");
-            Rarity_RRR= this.GetLocalization("RarityRRR", () => "三倍稀有");
-            Rarity_HR= this.GetLocalization("RarityHR", () => "传说");
-            Rarity_AR= this.GetLocalization("RarityAR", () => "异类");
-            Rarity_MR= this.GetLocalization("RarityMR", () => "秘宝");
+            RarityText = new Dictionary<FairyRarity, LocalizedText>
+            {
+                { FairyRarity.C, this.GetLocalization("RarityC", () => "常见") },
+                { FairyRarity.U, this.GetLocalization("RarityU", () => "不常见") },
+                { FairyRarity.R, this.GetLocalization("RarityR", () => "稀有") },
+                { FairyRarity.RR, this.GetLocalization("RarityRR", () => "双倍稀有") },
+                { FairyRarity.SR, this.GetLocalization("RaritySR", () => "史诗") },
+                { FairyRarity.UR, this.GetLocalization("RarityUR", () => "神话") },
+                { FairyRarity.RRR, this.GetLocalization("RarityRRR", () => "三倍稀有") },
+                { FairyRarity.HR, this.GetLocalization("RarityHR", () => "传说") },
+                { FairyRarity.AR, this.GetLocalization("RarityAR", () => "异类") },
+                { FairyRarity.MR, this.GetLocalization("RarityMR", () => "秘宝") },
+            };
+
             Rarity_SP= this.GetLocalization("RaritySP", () => "特殊");
 
             SpawnDescriptions = new LocalizedText[DescriptionID.DescriptionCount];
@@ -112,6 +114,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             CatchPowerMult = this.GetLocalization("CatchPowerMult", () => "{0} 捕捉力");
             UncaughtMouseText = this.GetLocalization("UncaughtMouseText", () => "???\n点击以查看捕获条件");
             SelectButtonMouseText = this.GetLocalization("SelectButtonMouseText", () => "左键单击以筛选指定稀有度的仙灵\n右键恢复为显示全部");
+            SortButtonMouseText = this.GetLocalization("SortButtonMouseText", () => "左键单击以按指定规则排序\n右键恢复为默认按内部ID排序");
+            
+            SortByTypeText = this.GetLocalization("SortByTypeText", () => "按内部ID排序");
+            SortByRarityText = this.GetLocalization("SortByRarityText", () => "按稀有度排序");
+            SortByCaughtText = this.GetLocalization("SortByCaughtText", () => "按是否捕获排序");
         }
 
         public static void UnloadLocalization()
@@ -132,16 +139,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             FairyDefence=null;
             FairyScale = null;
 
-            Rarity_C = null;
-            Rarity_U = null;
-            Rarity_R = null;
-            Rarity_RR = null;
-            Rarity_SR = null;
-            Rarity_UR = null;
-            Rarity_RRR = null;
-            Rarity_HR = null;
-            Rarity_AR = null;
-            Rarity_MR = null;
+            RarityText = null;
+
             Rarity_SP = null;
 
             SpawnDescriptions = null;
@@ -150,6 +149,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             ResurrectionTime = null;
             BottleCapacity = null;
             SeeMore = null;
+            CatchPowerMult = null;
+            UncaughtMouseText = null;
+            SelectButtonMouseText = null;
+            SortButtonMouseText = null;
+
+            SortByTypeText = null;
+            SortByRarityText = null;
+            SortByCaughtText = null;
         }
 
         public static string FormatIVDescription(LocalizedText pre, LocalizedText levelText, float @base, float bonused)

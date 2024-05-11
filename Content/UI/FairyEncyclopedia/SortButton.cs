@@ -1,57 +1,46 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Core.Loaders;
+using Coralite.Core.Systems.FairyCatcherSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using Terraria;
+using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
-    public class SortButton:UIElement
+    public class SortButton(FairyEncyclopedia.SortStyle sortStyle, Func<LocalizedText> description) : UIPanel
     {
-        private readonly Asset<Texture2D> ButtonTex;
-        public readonly FairyEncyclopedia.SortStyle sortStyle;
-
-        private readonly LocalizedText description; 
-
-        private float _visibilityActive = 1f;
-
-        private float _visibilityInactive = 0.4f;
-
-        public SortButton(Asset<Texture2D> ButtonTex, FairyEncyclopedia.SortStyle sortStyle,LocalizedText description)
-        {
-            this.ButtonTex = ButtonTex;
-            this.sortStyle = sortStyle;
-            this.description = description;
-            Width.Set(ButtonTex.Width(), 0f);
-            Height.Set(ButtonTex.Height(), 0f);
-        }
+        public readonly FairyEncyclopedia.SortStyle sortStyle = sortStyle;
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
+            base.DrawSelf(spriteBatch);
             CalculatedStyle dimensions = GetDimensions();
-            spriteBatch.Draw(ButtonTex.Value, dimensions.Position(), Color.White * (IsMouseHovering ? _visibilityActive : _visibilityInactive));
+
+            LocalizedText text = description();
+            if (text != null)
+                Utils.DrawBorderString(spriteBatch, text.Value, dimensions.Center() + new Vector2(0, 4),
+                    FairyEncyclopedia.CurrentSortStyle == sortStyle ? Color.White : Color.White * 0.5f, anchorx: 0.5f, anchory: 0.5f);
+
             if (IsMouseHovering)
             {
-                Main.instance.MouseText(description == null ? "" : description.Value);
+                Main.instance.MouseText(FairySystem.SortButtonMouseText.Value);
             }
         }
 
-        public override void MouseOver(UIMouseEvent evt)
+        public override void LeftClick(UIMouseEvent evt)
         {
-            base.MouseOver(evt);
-            Helper.PlayPitched("Fairy/ButtonTick", 0.2f, 0);
+            base.LeftClick(evt);
+            UILoader.GetUIState<FairyEncyclopedia>().Sort(sortStyle);
         }
 
-        public override void MouseOut(UIMouseEvent evt)
+        public override void RightClick(UIMouseEvent evt)
         {
-            base.MouseOut(evt);
-        }
-
-        public void SetVisibility(float whenActive, float whenInactive)
-        {
-            _visibilityActive = MathHelper.Clamp(whenActive, 0f, 1f);
-            _visibilityInactive = MathHelper.Clamp(whenInactive, 0f, 1f);
+            base.RightClick(evt);
+            UILoader.GetUIState<FairyEncyclopedia>().Sort(FairyEncyclopedia.SortStyle.ByType);
         }
     }
 }

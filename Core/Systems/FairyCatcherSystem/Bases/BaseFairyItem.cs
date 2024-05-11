@@ -74,6 +74,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             {
                 fairyItem.IsFairy = true;
                 SetFairyDefault(fairyItem);
+                life = fairyItem.baseLifeMax;
             }
         }
 
@@ -443,6 +444,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 dead = true;
                 resurrectionTime = time;
             }
+
+            IsOut = false;
         }
     }
 

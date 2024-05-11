@@ -54,4 +54,12 @@ FairySystem: {
 		左键单击以筛选指定稀有度的仙灵
 		右键恢复为显示全部
 		'''
+	SortButtonMouseText:
+		'''
+		左键单击以按指定规则排序
+		右键恢复为默认按内部ID排序
+		'''
+	SortByTypeText: 按内部ID排序
+	SortByRarityText: 按稀有度排序
+	SortByCaughtText: 按是否捕获排序
 }

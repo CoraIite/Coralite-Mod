@@ -451,3 +451,8 @@ BrownFairyProj: {
 }
 
 // RedJadeSpearSpurt.DisplayName: Red Jade Spear Spurt
+
+BreezeFairyProj: {
+	// SkillText: 吹散！
+	// DisplayName: Breeze Fairy Proj
+}

@@ -136,6 +136,9 @@ namespace Coralite.Content.Items.Fairies
             Projectile.SpawnTrailDust(DustID.BrownMoss, Main.rand.NextFloat(0.1f, 0.5f), 200);
             Lighting.AddLight(Projectile.Center, 0, 0.2f, 0);
 
+            if (Projectile.velocity.Length() < 10)
+                Projectile.velocity = (Projectile.velocity.Length() + 0.4f) * Projectile.velocity.SafeNormalize(Vector2.Zero);
+
             Timer++;
             if (Timer > 50)
                 ExchangeToBack();
@@ -159,6 +162,8 @@ namespace Coralite.Content.Items.Fairies
                 if (Main.rand.NextBool())
                     Projectile.SpawnTrailDust(DustID.BrownMoss, Main.rand.NextFloat(0.1f, 0.5f), 200);
             }
+            else if (Timer == 40 + 120)
+                RestartAction();
             else
             {
                 Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
@@ -178,7 +183,7 @@ namespace Coralite.Content.Items.Fairies
             SpawnSkillText<BrownFairyProj>(Color.SandyBrown);
             SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
 
-            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 10;
+            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

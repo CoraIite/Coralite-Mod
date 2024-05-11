@@ -10,18 +10,12 @@ using Terraria.ObjectData;
 
 namespace Coralite.Core.Prefabs.Tiles
 {
-    public abstract class BaseTile : ModTile
+    public abstract class BaseTile(string texturePath, bool pathHasName = false) : ModTile
     {
         public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
 
-        private readonly string TexturePath;
-        private readonly bool PathHasName;
-
-        public BaseTile(string texturePath, bool pathHasName = false)
-        {
-            TexturePath = texturePath;
-            PathHasName = pathHasName;
-        }
+        private readonly string TexturePath = texturePath;
+        private readonly bool PathHasName = pathHasName;
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -29,17 +23,11 @@ namespace Coralite.Core.Prefabs.Tiles
         }
     }
 
-    public abstract class BaseToiletTile<TItem> : BaseTile where TItem : ModItem
+    public abstract class BaseToiletTile<TItem>(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : BaseTile(texturePath, pathHasName) where TItem : ModItem
     {
-        private readonly int dustType;
-        private readonly Color mapColor;
+        private readonly int dustType = dustType;
+        private readonly Color mapColor = mapColor;
         public const int NextStyleHeight = 40;
-
-        public BaseToiletTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
-        {
-            this.dustType = dustType;
-            this.mapColor = mapColor;
-        }
 
         public override void SetStaticDefaults()
         {

@@ -50,6 +50,12 @@ namespace Coralite.Content.WorldGeneration
             //{
             //}
 
+            int PlaceFallenLog = tasks.FindIndex(genpass => genpass.Name.Equals("Place Fallen Log"));
+            if (PlaceFallenLog != -1)
+            {
+                tasks.Insert(PlaceFallenLog + 1, new PassLegacy("Coralite Wind Stone Tablet", GenWindStoneTablet));
+            }
+
             int FinalCleanup = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
             if (FinalCleanup != -1)
             {

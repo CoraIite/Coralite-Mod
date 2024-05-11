@@ -22,6 +22,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         protected virtual string SkillName => "";
         protected virtual int FrameX => 1;
         protected virtual int FrameY => 1;
+        /// <summary>
+        /// 能够开始攻击的距离
+        /// </summary>
+        protected float AttackDistance=400;
+
 
         private bool init = true;
         protected bool canDamage;
@@ -108,8 +113,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual void SpawnSkillText<T>(Color color)where T : BaseFairyProjectile
         {
+            ModProjectile m = ModContent.GetModProjectile(Projectile.type);
             CombatText.NewText(Projectile.getRect(), color,
-                (ModContent.GetModProjectile(Projectile.type) as T).SkillText.Value);
+                (m as T).SkillText.Value);
         }
 
         public bool CheckSelfItem()
@@ -169,7 +175,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual void ExchangeToAction()
         {
-            if (Helper.TryFindClosestEnemy(Projectile.Center, 400, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
+            if (Helper.TryFindClosestEnemy(Projectile.Center, AttackDistance, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
             {
                 State = (int)AIStates.Action;
                 OnExchangeToAction(target);
@@ -178,6 +184,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
             else
                 ExchangeToBack();
+        }
+
+        public virtual void RestartAction()
+        {
+            if (Helper.TryFindClosestEnemy(Projectile.Center, AttackDistance, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
+            {
+                State = (int)AIStates.Action;
+                OnExchangeToAction(target);
+                Timer = 0;
+                canDamage = true;
+            }
         }
 
         public virtual void OnExchangeToAction(NPC target) { }

@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -14,6 +15,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
+using static Coralite.Core.Systems.FairyCatcherSystem.FairyAttempt;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
@@ -34,8 +36,35 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public UIGrid FairyGrid;
         public static float Timer;
 
-        public UIImageButton SelectButton;
+        public SelectPanelButton SelectButton;
         public UIPanel SelectButtonsPanel;
+
+        public UIImageButton SortButton;
+        public UIPanel SortButtonsPanel;
+
+        public class SelectPanelButton(Asset<Texture2D> texture) : UIImageButton(texture)
+        {
+            protected override void DrawSelf(SpriteBatch spriteBatch)
+            {
+                base.DrawSelf(spriteBatch);
+
+                Vector2 pos = GetDimensions().Position() + new Vector2(74, 18);
+
+                if (selectType.HasValue)
+                {
+                    Color c = FairySystem.GetRarityColor(selectType.Value);
+                    string text = Enum.IsDefined(selectType.Value) ? Enum.GetName(selectType.Value) : "SP";
+
+                    Utils.DrawBorderString(spriteBatch, text, pos, c,
+                        anchorx: 0.5f, anchory: 0.5f);
+                }
+                else
+                {
+                    Utils.DrawBorderString(spriteBatch, "All", pos, Color.White,
+                        anchorx: 0.5f, anchory: 0.5f);
+                }
+            }
+        }
 
         /// <summary>
         /// 当前所在的页数
@@ -46,7 +75,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public static UpdateState State;
         public static SortStyle CurrentSortStyle;
 
-        public static FairyAttempt.Rarity? selectType = null;
+        public static Rarity? selectType = null;
 
         private List<Fairy> fairies;
 
@@ -80,51 +109,35 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             InitBackground();
             InitPageText();
             InitFairyGrid();
-            SelectButtonsPanel = new UIPanel();
+            InitSelectPanel();
+            InitSortPanel();
 
             MakeExitButton(this);
-
-            SelectButton = new UIImageButton(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Filtering"));
-            SelectButton.SetHoverImage(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Filtering"));
-            SelectButton.Left.Set(PageText.Width.Pixels + 10, 0);
-
-            SelectButton.OnLeftClick += SelectButton_OnLeftClick;
-
-            //SelectButtonsPanel.VAlign = 1;
-            SelectButtonsPanel.Top.Set(40, 0);
-            SelectButtonsPanel.Left.Set(SelectButton.Left.Pixels, 0);
-            SelectButtonsPanel.Width.Set(BackGround.Width.Pixels / 4, 0);
-            SelectButtonsPanel.Height.Set(BackGround.Height.Pixels / 3, 0);
-
-            UIGrid buttonsGrid= new UIGrid();
-            buttonsGrid.Width.Set(SelectButtonsPanel.Width.Pixels, 0);
-            buttonsGrid.Height.Set(SelectButtonsPanel.Height.Pixels, 0);
-            Asset<Texture2D> circleButtonTex = TextureAssets.WireUi[0];
-            Asset<Texture2D> circleButtonHoverTex = TextureAssets.WireUi[1];
-
-            SelectButton AllButton = new SelectButton(circleButtonTex, null);
-            AllButton.SetHoverImage(circleButtonHoverTex);
-            buttonsGrid.Add(AllButton);
-            SelectButton SPButton = new SelectButton(circleButtonTex, (FairyAttempt.Rarity)(-1));
-            SPButton.SetHoverImage(circleButtonHoverTex);
-            buttonsGrid.Add(SPButton);
-
-            FairyAttempt.Rarity[] rarities = Enum.GetValues<FairyAttempt.Rarity>();
-
-            foreach (var rairty in rarities)
-            {
-                SelectButton rarityButton = new SelectButton(circleButtonTex, rairty);
-                rarityButton.SetHoverImage(circleButtonHoverTex);
-                buttonsGrid.Add(rarityButton);
-            }
-
-            SelectButtonsPanel.Append(buttonsGrid);
 
             Append(BackGround);
         }
 
+        private void SortButton_OnLeftClick(UIMouseEvent evt, UIElement listeningElement)
+        {
+            if (BackGround.HasChild(SelectButtonsPanel))//关闭选择界面
+                BackGround.RemoveChild(SelectButtonsPanel);
+
+            if (BackGround.HasChild(SortButtonsPanel))//有就关闭
+            {
+                BackGround.RemoveChild(SortButtonsPanel);
+            }
+            else//没有就打开
+            {
+                BackGround.Append(SortButtonsPanel);
+                Recalculate();
+            }
+        }
+
         private void SelectButton_OnLeftClick(UIMouseEvent evt, UIElement listeningElement)
         {
+            if (BackGround.HasChild(SortButtonsPanel))//关闭排序界面
+                BackGround.RemoveChild(SortButtonsPanel);
+
             if (BackGround.HasChild(SelectButtonsPanel))//有就关闭
             {
                 BackGround.RemoveChild(SelectButtonsPanel);
@@ -132,6 +145,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             else//没有就打开
             {
                 BackGround.Append(SelectButtonsPanel);
+                Recalculate();
             }
         }
 
@@ -181,6 +195,71 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 fairies.Add(FairyLoader.fairys[i]);
         }
 
+        private void InitSelectPanel()
+        {
+            SelectButtonsPanel = new UIPanel();
+
+            Asset<Texture2D> circleButtonTex = TextureAssets.WireUi[0];
+            Asset<Texture2D> circleButtonHoverTex = TextureAssets.WireUi[1];
+            SelectButton = new SelectPanelButton(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Filtering", AssetRequestMode.ImmediateLoad));
+            SelectButton.SetHoverImage(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Wide_Border"));
+            SelectButton.Left.Set(PageText.Width.Pixels + 10, 0);
+
+            SelectButton.OnLeftClick += SelectButton_OnLeftClick;
+
+            //SelectButtonsPanel.VAlign = 1;
+            SelectButtonsPanel.Top.Set(40, 0);
+            SelectButtonsPanel.Left.Set(SelectButton.Left.Pixels, 0);
+            SelectButtonsPanel.Width.Set(circleButtonTex.Width() * 6 + 10, 0);
+            SelectButtonsPanel.Height.Set(BackGround.Height.Pixels / 3, 0);
+
+            UIGrid buttonsGrid = new UIGrid();
+            buttonsGrid.Width.Set(SelectButtonsPanel.Width.Pixels, 0);
+            buttonsGrid.Height.Set(SelectButtonsPanel.Height.Pixels, 0);
+
+            SelectButton AllButton = new SelectButton(circleButtonTex, null);//生成默认按钮
+            AllButton.SetHoverImage(circleButtonHoverTex);
+            buttonsGrid.Add(AllButton);
+            SelectButton SPButton = new SelectButton(circleButtonTex, (Rarity)(-1));
+            SPButton.SetHoverImage(circleButtonHoverTex);
+            buttonsGrid.Add(SPButton);
+
+            Rarity[] rarities = Enum.GetValues<Rarity>();//生成所有的稀有度按钮
+
+            foreach (var rairty in rarities)
+            {
+                SelectButton rarityButton = new SelectButton(circleButtonTex, rairty);
+                rarityButton.SetHoverImage(circleButtonHoverTex);
+                buttonsGrid.Add(rarityButton);
+            }
+
+            SelectButtonsPanel.Append(buttonsGrid);
+        }
+
+        private void InitSortPanel()
+        {
+            SortButton = new UIImageButton(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Sorting"));
+            SortButton.SetHoverImage(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Wide_Border"));
+            SortButton.Left.Set(SelectButton.Left.Pixels + SelectButton.Width.Pixels + 10, 0);
+            SortButton.OnLeftClick += SortButton_OnLeftClick;
+
+            SortButtonsPanel = new UIPanel();
+            SortButtonsPanel.Top.Set(40, 0);
+            SortButtonsPanel.Left.Set(SortButton.Left.Pixels, 0);
+            SortButtonsPanel.Width.Set(BackGround.Width.Pixels / 4, 0);
+            SortButtonsPanel.Height.Set(BackGround.Height.Pixels / 3, 0);
+
+            UIGrid buttonsGrid = new UIGrid();
+            buttonsGrid.Width.Set(SelectButtonsPanel.Width.Pixels, 0);
+            buttonsGrid.Height.Set(SelectButtonsPanel.Height.Pixels, 0);
+
+            MakeSortButton(SortStyle.ByType, () => FairySystem.SortByTypeText, buttonsGrid);
+            MakeSortButton(SortStyle.ByRarity, () => FairySystem.SortByRarityText, buttonsGrid);
+            MakeSortButton(SortStyle.ShowCaught, () => FairySystem.SortByCaughtText, buttonsGrid);
+
+            SortButtonsPanel.Append(buttonsGrid);
+        }
+
         private void MakeExitButton(UIElement outerContainer)
         {
             UITextPanel<LocalizedText> uITextPanel = new UITextPanel<LocalizedText>(Language.GetText("UI.Back"), 0.7f, large: true)
@@ -199,9 +278,21 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             outerContainer.Append(uITextPanel);
         }
 
+        private void MakeSortButton(SortStyle sortStyle,Func<LocalizedText> description,UIGrid grid)
+        {
+            SortButton sortButton = new SortButton(sortStyle, description);
+
+            sortButton.OnMouseOver += FadedMouseOver;
+            sortButton.OnMouseOut += FadedMouseOut;
+            sortButton.Width.Set(SortButtonsPanel.Width.Pixels, 0);
+            sortButton.Height.Set(32, 0);
+
+            grid.Add(sortButton);
+        }
+
         private void FadedMouseOver(UIMouseEvent evt, UIElement listeningElement)
         {
-            SoundEngine.PlaySound(CoraliteSoundID.MenuTick);
+            Helper.PlayPitched("Fairy/ButtonTick", 0.2f, 0);
             ((UIPanel)evt.Target).BackgroundColor = new Color(73, 94, 171);
             ((UIPanel)evt.Target).BorderColor = Colors.FancyUIFatButtonMouseOver;
         }
@@ -219,7 +310,6 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         }
 
         #endregion
-
 
         private void LeftButton_OnLeftClick(UIMouseEvent evt, UIElement listeningElement)
         {
@@ -263,6 +353,12 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 default:
                     break;
             }
+
+            if (BackGround.Width.Pixels != Main.screenWidth * 0.66f)
+            {
+                Recalculate();
+            }
+
             base.Update(gameTime);
         }
 
@@ -270,8 +366,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         {
             if (BackGround != null)
             {
-                BackGround.Width.Set(Main.screenWidth * 0.66f, 0);
-                BackGround.Height.Set(Main.screenHeight * 0.7f, 0);
+                BackGround.Width.Set(Main.ScreenSize.X * 0.66f, 0);
+                BackGround.Height.Set(Main.ScreenSize.Y * 0.7f, 0);
 
                 FairyGrid.Top.Set(40, 0);
                 FairyGrid.Width.Set(BackGround.Width.Pixels - 18, 0);
@@ -289,6 +385,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             BackGround.Append(FairyGrid);
             BackGround.Append(PageText);
             BackGround.Append(SelectButton);
+            BackGround.Append(SortButton);
 
             SetShowGrid(0);
 
@@ -296,6 +393,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             selectType = null;
             Recalculate();
             Recalculate();
+
         }
 
         /// <summary>
@@ -360,12 +458,11 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             CheckOver:
 
             Sort(CurrentSortStyle);
-            SetShowGrid(0);
-            Recalculate();
         }
 
         public void Sort(SortStyle sortStyle)
         {
+            CurrentSortStyle = sortStyle;
             Timer = 0;
 
             switch (sortStyle)
@@ -378,9 +475,12 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                     fairies.Sort((f1, f2) => f1.Rarity.CompareTo(f2.Rarity));
                     break;
                 case SortStyle.ShowCaught:
-                    fairies = [.. fairies.OrderBy(f => FairySystem.FairyCaught[f.Type])];
+                    fairies = [.. fairies.OrderBy(f => !FairySystem.FairyCaught[f.Type])];
                     break;
             }
+
+            SetShowGrid(0);
+            Recalculate();
         }
     }
 }
