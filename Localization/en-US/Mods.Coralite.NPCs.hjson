@@ -84,3 +84,43 @@ ThunderveinDragon.DisplayName: Thundervein Dragon
 ThunderPhantom.DisplayName: Thunder Phantom
 ShadowVilliger.DisplayName: Shadow Villiger
 MagicElemental.DisplayName: Magic Elemental
+
+ElfRanger: {
+	Name1: 埃芙
+	Name2: 伊塔
+	Name3: 弥斯代尔
+	Name4: 达卢玛尔
+	Name5: 柯里薇
+	Name6: 塞尔达
+	DisplayName: Elf Ranger
+
+	TownNPCMood: {
+		Content: 我很满足。
+		NoHome: 我讨厌没有家。
+		FarFromHome: 我离家太远了。
+		LoveSpace: 我非常喜欢有这么大的空间。
+		DislikeCrowded: 我不喜欢这么拥挤。
+		HateCrowded: 我讨厌这么拥挤。
+		LoveBiome: 我非常喜欢{BiomeName}。
+		LikeBiome: 我喜欢{BiomeName}。
+		DislikeBiome: 我不喜欢{BiomeName}。
+		LoveNPC: 我非常喜欢{NPCName}。
+		LikeNPC: 我喜欢{NPCName}。
+		DislikeNPC: 我不喜欢{NPCName}。
+		HateNPC: 我讨厌{NPCName}。
+		LikeNPC_Princess: I like {NPCName}.
+		Princess_LovesNPC: I like {NPCName}.
+	}
+
+	Name7: 菲尔希
+	Chat1: 观察这些小家伙们非常有趣，我经常一看一整天。
+	Chat2: 仙灵们有各自喜欢的墙壁，在这些墙壁前你才能见到他们
+	Chat3: 你知道魔尘吗？仙灵很喜欢这种带有魔力的粉尘。
+	Chat4: 如果你想捕捉仙灵的话，制作一个藤蔓套索吧！
+	Chat5: 捕捉仙灵并饲养它们是很常见的行为，但不要过度捕捉哦！
+	Chat6: 你有见过珊瑚吗，是她将我带到这里来的。
+	Chat7: 或许有一天你能见到空间妖精，并完成它的试炼。
+	DryadChat1: 那是树妖吗，我想我已经很久没有见过她了。
+	DryadChat2: 树妖曾经在这里对抗克苏鲁，而我在另一个世界里...真是令人怀念的时光。
+	DryadChat3: 树妖身上散发着森林的清香，我很喜欢这股味道。
+}

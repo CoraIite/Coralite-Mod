@@ -26,17 +26,17 @@ FairySystem: {
 	FairyScale: "大小 "
 	CurrentLife: 当前生命值：{0} / {1}
 	ResurrectionTime: 复活时间：{0}
-	RarityC: 常见
-	RarityU: 不常见
-	RarityR: 稀有
-	RarityRR: 双倍稀有
-	RaritySR: 史诗
-	RarityUR: 神话
-	RarityRRR: 三倍稀有
-	RarityHR: 传说
-	RarityAR: 异类
+	RarityC: Common
+	RarityU: Uncommon
+	RarityR: Rare
+	RarityRR: Double Rare
+	RaritySR: Epic
+	RarityUR: UR
+	RarityRRR: RRR
+	RarityHR: Legend
+	RarityAR: Another Rare
 	RarityMR: 秘宝
-	RaritySP: 特殊
+	RaritySP: Special
 	BottleCapacity: 容量 {0} / {1}
 	NotHaveLevel: 无：{0}（基础 {1}）
 	SeeMore: 按上键以查看雷达图（游戏暂停时无法使用）

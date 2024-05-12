@@ -21,6 +21,7 @@ namespace Coralite.Content.NPCs.GlobalNPC
         public bool IvyPosion;
         public bool EuphorbiaPoison;
         public bool ThunderElectrified;
+        public bool PollenFire;
 
         public override bool InstancePerEntity => true;
 
@@ -79,6 +80,17 @@ namespace Coralite.Content.NPCs.GlobalNPC
                     damage = 100 / 2;
             }
 
+            if (PollenFire)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                int damageCount = 2;
+                npc.lifeRegen -= damageCount * 8;
+                if (damage < damageCount)
+                    damage = damageCount;
+            }
+
             if (ThunderElectrified)
             {
                 if (npc.lifeRegen > 0)
@@ -98,6 +110,7 @@ namespace Coralite.Content.NPCs.GlobalNPC
             IvyPosion = false;
             EuphorbiaPoison = false;
             ThunderElectrified = false;
+            PollenFire = false;
         }
 
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)

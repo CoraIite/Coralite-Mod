@@ -3853,3 +3853,12 @@ RedJadeSpear: {
 	DisplayName: 赤玉矛
 	Tooltip: 偶尔会引发爆炸
 }
+
+PollenGunpowder: {
+	DisplayName: 花粉火药
+	Tooltip:
+		'''
+		远程伤害增加5%
+		枪在射击时额外射出星点火花，该效果有1秒CD
+		'''
+}

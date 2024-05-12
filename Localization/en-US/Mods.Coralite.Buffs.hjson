@@ -144,3 +144,8 @@ FlaskOfThunderBuff: {
 	DisplayName: Flask Of Thunder Buff
 	Description: Mods.Coralite.Buffs.FlaskOfThunderBuff.Description
 }
+
+PollenFire: {
+	DisplayName: Pollen Fire
+	Description: Mods.Coralite.Buffs.PollenFire.Description
+}

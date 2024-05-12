@@ -1,10 +1,12 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Items.RedJades;
+using Coralite.Content.Items.TheHyacinthSeries;
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.Projectiles.Globals;
 using Coralite.Content.UI;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Helpers;
 using System;
 using System.Linq;
 using Terraria;
@@ -39,6 +41,8 @@ namespace Coralite.Content.ModPlayers
         public bool equippedMedalOfLife;
         /// <summary> 装备生命脉冲装置 </summary>
         public bool equippedLifePulseDevice;
+        /// <summary> 花粉火药计时器 </summary>
+        public int PollenGunpowderEffect = 60;
 
         /// <summary> 手持海利亚盾 </summary>
         public bool heldHylianShield;
@@ -347,6 +351,20 @@ namespace Coralite.Content.ModPlayers
 
             rightClickReuseDelay = 0;
             equippedRedJadePendant = false;
+        }
+
+        public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            if (source.Item.useAmmo == AmmoID.Bullet)
+            {
+                if (PollenGunpowderEffect == 0)
+                {
+                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.1f, 0.1f), ProjectileType<PollenGunpowderProj>(), damage, knockback, Player.whoAmI);
+                    PollenGunpowderEffect = 60;
+                }
+            }
+
+            return base.Shoot(item, source, position, velocity, type, damage, knockback);
         }
 
         #endregion
