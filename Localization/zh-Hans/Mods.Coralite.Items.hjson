@@ -3858,7 +3858,7 @@ PollenGunpowder: {
 	DisplayName: 花粉火药
 	Tooltip:
 		'''
-		远程伤害增加5%
+		子弹伤害增加5%
 		枪在射击时额外射出星点火花，该效果有1秒CD
 		'''
 }

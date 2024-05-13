@@ -92,7 +92,6 @@ ElfRanger: {
 	Name4: 达卢玛尔
 	Name5: 柯里薇
 	Name6: 塞尔达
-	Name7: 菲尔希
 	DisplayName: 妖精护灵员
 
 	TownNPCMood: {
@@ -113,6 +112,7 @@ ElfRanger: {
 		Princess_LovesNPC: I like {NPCName}.
 	}
 
+	Name7: 菲尔希
 	Chat1: 观察这些小家伙们非常有趣，我经常一看一整天。
 	Chat2: 仙灵们有各自喜欢的墙壁，在这些墙壁前你才能见到他们
 	Chat3: 你知道魔尘吗？仙灵很喜欢这种带有魔力的粉尘。

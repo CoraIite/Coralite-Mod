@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.TheHyacinthSeries
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetDamage(DamageClass.Ranged) += 0.05f;
+            player.bulletDamage += 0.05f;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 if (cp.PollenGunpowderEffect > 0)
@@ -51,6 +51,8 @@ namespace Coralite.Content.Items.TheHyacinthSeries
             Projectile.width = Projectile.height = 22;
             Projectile.friendly = true;
             Projectile.timeLeft = 50;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override void AI()
@@ -90,8 +92,8 @@ namespace Coralite.Content.Items.TheHyacinthSeries
             for (int i = 0; i < 8; i++)
                 Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.PinkTorch, Helper.NextVec2Dir(1, 2));
 
-            for (int i = 0; i < 4; i++)
-                Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.UnusedWhiteBluePurple, Helper.NextVec2Dir(0.3f, 1.5f));
+            for (int i = 0; i < 12; i++)
+                Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.UnusedWhiteBluePurple, Helper.NextVec2Dir(0.3f, 1.5f),Scale:Main.rand.NextFloat(1.5f,2f));
 
             for (int i = 0; i < 4; i++)
                 Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.Torch, Helper.NextVec2Dir(1, 1.5f), Scale: Main.rand.NextFloat(1, 2f));

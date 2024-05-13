@@ -43,6 +43,8 @@ namespace Coralite.Content.ModPlayers
         public bool equippedLifePulseDevice;
         /// <summary> 花粉火药计时器 </summary>
         public int PollenGunpowderEffect = 60;
+        /// <summary> 玫瑰火药计时器 </summary>
+        public int RoseGunpowderEffect = 90;
 
         /// <summary> 手持海利亚盾 </summary>
         public bool heldHylianShield;
@@ -361,6 +363,12 @@ namespace Coralite.Content.ModPlayers
                 {
                     Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.1f, 0.1f), ProjectileType<PollenGunpowderProj>(), damage, knockback, Player.whoAmI);
                     PollenGunpowderEffect = 60;
+                }
+
+                if (RoseGunpowderEffect == 0)
+                {
+                    //Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.1f, 0.1f), ProjectileType<PollenGunpowderProj>(), damage, knockback, Player.whoAmI);
+                    PollenGunpowderEffect = 90;
                 }
             }
 
