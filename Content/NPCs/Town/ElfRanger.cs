@@ -137,7 +137,7 @@ namespace Coralite.Content.NPCs.Town
 
         public override bool CanTownNPCSpawn(int numTownNPCs)
         {
-            return true;
+            return false;
         }
 
         public override ITownNPCProfile TownNPCProfile()

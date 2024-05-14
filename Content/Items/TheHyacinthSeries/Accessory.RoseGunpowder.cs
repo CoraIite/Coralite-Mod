@@ -127,7 +127,7 @@ namespace Coralite.Content.Items.TheHyacinthSeries
             Projectile.tileCollide = true;
             Projectile.width = Projectile.height = 22;
             Projectile.friendly = true;
-            Projectile.timeLeft = Main.rand.Next(8,16);
+            Projectile.timeLeft = 12;
             Projectile.penetrate = 3;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
@@ -135,7 +135,7 @@ namespace Coralite.Content.Items.TheHyacinthSeries
 
         public override void AI()
         {
-            if (Main.rand.NextBool())
+            if (Projectile.timeLeft > 6)
                 LightTrailParticle.Spawn(Projectile.Center, Projectile.velocity.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(0.3f, 0.5f),
                     Color.DarkRed, Main.rand.NextFloat(0.2f, 0.4f));
         }
