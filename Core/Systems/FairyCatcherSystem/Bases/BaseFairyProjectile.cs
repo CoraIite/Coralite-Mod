@@ -27,7 +27,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         protected float AttackDistance=400;
 
-
         private bool init = true;
         protected bool canDamage;
 
@@ -111,11 +110,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         }
 
-        public virtual void SpawnSkillText<T>(Color color)where T : BaseFairyProjectile
+        public virtual void Backing_LerpToOwner()
+        {
+            Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
+            Projectile.Center = Vector2.Lerp(Projectile.Center, Owner.Center, Timer * 0.0005f);
+
+            if (Vector2.Distance(Projectile.Center, Owner.Center) < 24)
+                Projectile.Kill();
+        }
+
+        public virtual void SpawnSkillText(Color color)
         {
             ModProjectile m = ModContent.GetModProjectile(Projectile.type);
             CombatText.NewText(Projectile.getRect(), color,
-                (m as T).SkillText.Value);
+                (m as BaseFairyProjectile).SkillText.Value);
         }
 
         public bool CheckSelfItem()

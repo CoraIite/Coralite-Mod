@@ -3760,3 +3760,8 @@ PollenGunpowder: {
 	DisplayName: Pollen Gunpowder
 	Tooltip: ""
 }
+
+RoseGunpowder: {
+	DisplayName: Rose Gunpowder
+	Tooltip: ""
+}

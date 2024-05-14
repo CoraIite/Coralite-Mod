@@ -17,6 +17,7 @@ namespace Coralite.Content.Items.RedJades
             Item.knockBack = 3f;
             Item.maxStack = Item.CommonMaxStack;
             Item.shootSpeed = 3.5f;
+            Item.consumable = true;
 
             Item.DamageType = DamageClass.Ranged;
             Item.value = Item.sellPrice(0, 0, 0, 5);

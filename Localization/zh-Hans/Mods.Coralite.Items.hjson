@@ -3858,7 +3858,17 @@ PollenGunpowder: {
 	DisplayName: 花粉火药
 	Tooltip:
 		'''
-		子弹伤害增加5%
+		枪类伤害增加5%
 		枪在射击时额外射出星点火花，该效果有1秒CD
 		'''
+}
+
+RoseGunpowder: {
+	DisplayName: 玫瑰火药
+	Tooltip: 
+	'''
+	枪类伤害增加10%
+	远程击退增加10%
+	枪在射击时额外射出玫瑰火花，该效果有1.5秒CD
+	'''
 }

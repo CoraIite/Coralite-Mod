@@ -367,8 +367,8 @@ namespace Coralite.Content.ModPlayers
 
                 if (RoseGunpowderEffect == 0)
                 {
-                    //Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.1f, 0.1f), ProjectileType<PollenGunpowderProj>(), damage, knockback, Player.whoAmI);
-                    PollenGunpowderEffect = 90;
+                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.05f, 0.05f), ProjectileType<RoseGunpowderProj>(), (int)(damage*1.35f), knockback, Player.whoAmI);
+                    RoseGunpowderEffect = 90;
                 }
             }
 

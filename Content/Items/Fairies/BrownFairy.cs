@@ -166,13 +166,9 @@ namespace Coralite.Content.Items.Fairies
                 RestartAction();
             else
             {
-                Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
-                Projectile.Center = Vector2.Lerp(Projectile.Center, Owner.Center, 0.07f);
+                Backing_LerpToOwner();
                 if (Main.rand.NextBool())
                     Projectile.SpawnTrailDust(DustID.BrownMoss, Main.rand.NextFloat(0.1f, 0.5f), 200);
-
-                if (Vector2.Distance(Projectile.Center, Owner.Center) < 24)
-                    Projectile.Kill();
             }
 
             Lighting.AddLight(Projectile.Center, 0.2f, 0.2f, 0);
@@ -180,7 +176,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override void OnExchangeToAction(NPC target)
         {
-            SpawnSkillText<BrownFairyProj>(Color.SandyBrown);
+            SpawnSkillText(Color.SandyBrown);
             SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
 
             Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
