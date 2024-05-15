@@ -73,7 +73,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                 for (float i = 0; i < speed * spurtTime; i += 8)
                 {
                     float factor = i / (speed * spurtTime);
-                    Vector2 center = Vector2.Lerp(targetCenter,Projectile.Center, factor);
+                    Vector2 center = Vector2.Lerp(targetCenter, Projectile.Center, factor);
                     if (Collision.CanHit(Projectile.Center, 1, 1, center, 1, 1))
                     {
                         targetCenter = center;

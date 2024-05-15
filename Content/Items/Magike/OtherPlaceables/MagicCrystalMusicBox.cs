@@ -67,7 +67,7 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
         {
             if (Main.gamePaused)
                 return;
-            
+
             Tile t = Framing.GetTileSafely(i, j);
             if (t.TileFrameX == 36 && t.TileFrameY % 36 == 0 && (int)Main.timeForVisualEffects % 7 == 0 && Main.rand.NextBool(3))
             {
@@ -82,7 +82,7 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
                 if (num6 == 571)
                     position4.X -= 4f;
 
-                Gore.NewGore(new EntitySource_TileUpdate(i,j),position4, velocity4, num6, 0.8f);
+                Gore.NewGore(new EntitySource_TileUpdate(i, j), position4, velocity4, num6, 0.8f);
             }
         }
     }

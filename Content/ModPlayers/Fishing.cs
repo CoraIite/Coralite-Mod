@@ -67,7 +67,7 @@ namespace Coralite.Content.ModPlayers
                     if (Main.rand.NextBool(3))//普通的晶鳍鱼
                     {
                         itemDrop = ItemType<CrystalFins>();
-                        return; 
+                        return;
                     }
                 }
             }

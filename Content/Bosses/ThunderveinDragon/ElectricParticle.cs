@@ -5,26 +5,26 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
-    public class ElectricParticle : ModParticle
+    public class ElectricParticle : Particle
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "ElectricParticle";
 
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
-            particle.rotation = Main.rand.NextFloat(6.282f);
-            particle.frame = Texture2D.Frame(7, 5, 0, Main.rand.Next(5));
-            particle.color = Color.White;
+            Rotation = Main.rand.NextFloat(6.282f);
+            Frame = GetTexture().Frame(7, 5, 0, Main.rand.Next(5));
+            color = Color.White;
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            particle.fadeIn++;
-            particle.center += particle.velocity;
-            if (particle.fadeIn > 1 && particle.fadeIn % 4 == 0)
+            fadeIn++;
+            Center += Velocity;
+            if (fadeIn > 1 && fadeIn % 4 == 0)
             {
-                particle.frame.X += 80;
-                if (particle.frame.X > 80 * 6)
-                    particle.active = false;
+                Frame.X += 80;
+                if (Frame.X > 80 * 6)
+                    active = false;
             }
         }
     }
@@ -36,68 +36,67 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
     public class ElectricParticle_Follow : ElectricParticle
     {
-        public override bool ShouldUpdateCenter(Particle particle) => false;
+        public override bool ShouldUpdateCenter() => false;
 
-        public override void Update(Particle particle)
+        private Func<Vector2> GetParentCenter;
+
+        public override void Update()
         {
-            if (!GetCenter(particle, out Vector2 parentCenter))
+            if (!GetCenter(out Vector2 parentCenter))
                 return;
 
-            particle.center = parentCenter + particle.velocity;
-            particle.fadeIn++;
-            if (particle.fadeIn > 1 && particle.fadeIn % 4 == 0)
+            Center = parentCenter + Velocity;
+            fadeIn++;
+            if (fadeIn > 1 && fadeIn % 4 == 0)
             {
-                particle.frame.X += 80;
-                if (particle.frame.X > 80 * 6)
-                    particle.active = false;
+                Frame.X += 80;
+                if (Frame.X > 80 * 6)
+                    active = false;
             }
         }
 
-        public static bool GetCenter(Particle particle, out Vector2 parentCenter)
+        public bool GetCenter(out Vector2 parentCenter)
         {
-            if (particle.datas != null && particle.datas[0] is Func<Vector2> func)
+            if (GetParentCenter != null)
             {
-                parentCenter = func();
+                parentCenter = GetParentCenter();
                 return true;
             }
 
             parentCenter = Vector2.Zero;
-            particle.active = false;
+            active = false;
             return false;
         }
 
         public static Particle Spawn(Vector2 parentCenter, Vector2 offset, Func<Vector2> GetParentCenter, float scale = 1f)
         {
-            Particle p = Particle.NewParticleDirect(parentCenter + offset, offset, CoraliteContent.ParticleType<ElectricParticle_Follow>(), Scale: scale);
-            p.datas = new object[1]
-            {
-                GetParentCenter,
-            };
+            ElectricParticle_Follow p = NewParticle<ElectricParticle_Follow>(parentCenter + offset, offset, Scale: scale);
+            p.GetParentCenter = GetParentCenter;
 
             return p;
         }
     }
 
-    public class LightningParticle : ModParticle
+    public class LightningParticle : Particle
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + Name;
 
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
-            particle.rotation = Main.rand.NextFloat(6.282f);
-            particle.frame = Texture2D.Frame(4, 4, 0, Main.rand.Next(4));
-            particle.color = Color.White;
+            Rotation = Main.rand.NextFloat(6.282f);
+            Frame = GetTexture().Frame(4, 4, 0, Main.rand.Next(4));
+            color = Color.White;
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            particle.fadeIn++;
-            particle.center += particle.velocity;
-            if (particle.fadeIn > 1 && particle.fadeIn % 5 == 0)
+            fadeIn++;
+            Center += Velocity;
+            if (fadeIn > 1 && fadeIn % 5 == 0)
             {
-                particle.frame.X += 32;
-                if (particle.frame.X > 32 * 3)
-                    particle.active = false;
+                Frame.X += 32;
+                if (Frame.X > 32 * 3)
+                    active = false;
             }
         }
     }

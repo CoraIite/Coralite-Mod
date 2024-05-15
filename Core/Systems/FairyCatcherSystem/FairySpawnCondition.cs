@@ -121,7 +121,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             if (!FairySystem.fairySpawnConditions.ContainsKey(wallType))
                 FairySystem.fairySpawnConditions.Add(wallType, new List<FairySpawnController>());
-            
+
             FairySystem.fairySpawnConditions[wallType].Add(this);
             FairySystem.fairySpawnConditions_InEncyclopedia[fairyType] = this;
         }

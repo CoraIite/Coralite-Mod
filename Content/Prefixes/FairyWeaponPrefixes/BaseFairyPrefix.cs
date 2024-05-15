@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.Prefixes.FairyWeaponPrefixes
 {
-    public abstract class BaseFairyPrefix(float damageMult =1f, float knockbackMult = 1f, int critBonus = 0, float catchPowerMult = 1f
+    public abstract class BaseFairyPrefix(float damageMult = 1f, float knockbackMult = 1f, int critBonus = 0, float catchPowerMult = 1f
             , float useSpeedMult = 1f, float shootSpeedMult = 1f, float valueMult = 1f) : ModPrefix
     {
         internal float damageMult = damageMult;

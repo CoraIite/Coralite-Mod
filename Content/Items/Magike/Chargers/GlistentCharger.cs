@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Magike.BasicLens;
-using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.Items.Materials;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
@@ -15,7 +14,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Chargers
 {
-    public class GlistentCharger : BaseMagikePlaceableItem, IMagikeFactoryItem,IMagikePolymerizable
+    public class GlistentCharger : BaseMagikePlaceableItem, IMagikeFactoryItem, IMagikePolymerizable
     {
         public GlistentCharger() : base(TileType<GlistentChargerTile>(), Item.sellPrice(0, 0, 10, 0)
             , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeFactories)

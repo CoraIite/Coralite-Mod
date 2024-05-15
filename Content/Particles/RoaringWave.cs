@@ -4,28 +4,28 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class RoaringWave : ModParticle
+    public class RoaringWave : Particle
     {
-        public override bool ShouldUpdateCenter(Particle particle) => false;
+        public override bool ShouldUpdateCenter() => false;
 
         public override string Texture => AssetDirectory.Particles + "Roaring";
 
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
-            particle.frame = new Microsoft.Xna.Framework.Rectangle(0, 128, 128, 128);
-            particle.rotation = Main.rand.NextFloat(6.282f);
+            Frame = new Rectangle(0, 128, 128, 128);
+            Rotation = Main.rand.NextFloat(6.282f);
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            particle.scale *= 1.1f;
+            Scale *= 1.1f;
 
-            if (particle.fadeIn > 15)
-                particle.color *= 0.9f;
+            if (fadeIn > 15)
+                color *= 0.9f;
 
-            particle.fadeIn++;
-            if (particle.color.A < 20)
-                particle.active = false;
+            fadeIn++;
+            if (color.A < 20)
+                active = false;
         }
     }
 }

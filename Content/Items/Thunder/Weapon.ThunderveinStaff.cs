@@ -319,7 +319,7 @@ namespace Coralite.Content.Items.Thunder
                                 Timer = 0;
                                 Target = num6;
                                 Recorder = -1.57f + Main.rand.NextFloat(-0.7f, 0.7f);
-                                Projectile.Center = target.Center + Recorder.ToRotationVector2() *  target.height;
+                                Projectile.Center = target.Center + Recorder.ToRotationVector2() * target.height;
                             }
                             else
                             {
@@ -481,7 +481,7 @@ namespace Coralite.Content.Items.Thunder
             Vector2 center = Owner.Center + new Vector2(0, -48) + offset;
             Vector2 dir = center - Projectile.Center;
 
-            if (dir.Length()>2000)
+            if (dir.Length() > 2000)
                 Projectile.Center = center;
 
             float velRot = Projectile.velocity.ToRotation();

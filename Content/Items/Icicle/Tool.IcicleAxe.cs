@@ -7,7 +7,7 @@ namespace Coralite.Content.Items.Icicle
 {
     public class IcicleAxe : ModItem, ISpecialPickaxe
     {
-        public override string Texture => AssetDirectory.IcicleItems+Name;
+        public override string Texture => AssetDirectory.IcicleItems + Name;
 
         public bool ModifyPickaxeDamage(ref int damage, Player player, int x, int y, int pickPower, int hitBufferIndex, Tile tileTarget)
         {

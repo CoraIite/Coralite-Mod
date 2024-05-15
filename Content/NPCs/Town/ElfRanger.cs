@@ -14,7 +14,7 @@ using Terraria.Utilities;
 namespace Coralite.Content.NPCs.Town
 {
     [AutoloadHead]
-    public class ElfRanger:ModNPC
+    public class ElfRanger : ModNPC
     {
         public override string Texture => AssetDirectory.TownNPC + Name;
 

@@ -1,55 +1,47 @@
-﻿using Coralite.Core.Loaders;
-using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class SpeedLine : ModParticle
+    public class SpeedLine : Particle
     {
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
-            particle.frame = new Rectangle(0, 0, 64, 128);
-            particle.rotation = particle.velocity.ToRotation() + 1.57f;
-            //particle.shader = new Terraria.Graphics.Shaders.ArmorShaderData(new Ref<Effect>(Coralite.Instance.Assets.Request<Effect>("Effects/StarsDust", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "StarsDustPass");
-            //particle.shader.UseSecondaryColor(Color.White * 0.75f);
-            particle.oldCenter = new Vector2[1]
-            {
-                new Vector2(particle.scale,particle.scale*Main.rand.NextFloat(1,2))
-            };
+            Frame = new Rectangle(0, 0, 64, 128);
+            Rotation = Velocity.ToRotation() + 1.57f;
+            oldCenter =
+            [
+                new Vector2(Scale,Scale*Main.rand.NextFloat(1,2))
+            ];
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            particle.fadeIn++;
-            //particle.shader.UseColor(particle.color);
-            //particle.shader.UseOpacity(0.65f);
-            //particle.shader.UseSaturation(2.1f);
-            Lighting.AddLight(particle.center, particle.color.ToVector3() * 0.3f);
+            fadeIn++;
+            Lighting.AddLight(Center, color.ToVector3() * 0.3f);
 
-            if (particle.fadeIn > 8)
+            if (fadeIn > 8)
             {
-                float factor = 1 - (particle.fadeIn - 6) / 6;
-                particle.velocity *= 0.96f;
-                particle.color *= 0.8f;
-                //particle.shader.UseSecondaryColor(Color.White * 0.75f * factor);
+                Velocity *= 0.96f;
+                color *= 0.8f;
             }
 
-            if (particle.fadeIn > 14)
-                particle.active = false;
+            if (fadeIn > 14)
+                active = false;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Particle particle)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
-            Rectangle frame = particle.frame;
+            Texture2D mainTex = GetTexture().Value;
+            Rectangle frame = Frame;
             Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
-            var pos = particle.center - Main.screenPosition;
-            Color c = particle.color * 0.5f;
-            if (particle.oldCenter != null)
+            var pos = Center - Main.screenPosition;
+            Color c = color * 0.5f;
+            if (oldCenter != null)
             {
-                spriteBatch.Draw(modParticle.Texture2D.Value, pos, frame, particle.color, particle.rotation, origin, particle.oldCenter[0], SpriteEffects.None, 0f);
-                spriteBatch.Draw(modParticle.Texture2D.Value, pos, frame, c, particle.rotation, origin, particle.oldCenter[0] * 0.5f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, pos, frame, color, Rotation, origin, oldCenter[0], SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, pos, frame, c, Rotation, origin, oldCenter[0] * 0.5f, SpriteEffects.None, 0f);
             }
         }
     }

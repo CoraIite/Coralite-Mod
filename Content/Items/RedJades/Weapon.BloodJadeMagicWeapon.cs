@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.RedJades
         {
             Item.useAnimation = Item.useTime = 6;
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.shoot = 1;
+            Item.shoot = ProjectileID.PurificationPowder;
             Item.DamageType = DamageClass.Magic;
             Item.rare = ItemRarityID.LightRed;
             Item.value = Item.sellPrice(0, 1, 0, 0);

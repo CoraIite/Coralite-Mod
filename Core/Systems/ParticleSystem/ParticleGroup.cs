@@ -18,44 +18,51 @@ namespace Coralite.Core.Systems.ParticleSystem
             _particles = new List<Particle>();
         }
 
-        public IEnumerator<Particle> GetEnumerator()
-        {
-            return _particles.GetEnumerator();
-        }
+        public IEnumerator<Particle> GetEnumerator() => _particles.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => _particles.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _particles.GetEnumerator();
-        }
-
-        public void Clear()
-        {
-            _particles.Clear();
-        }
+        public void Clear() => _particles.Clear();
 
         public Particle this[int i] => _particles[i];
+
+        public T NewParticle<T>(Vector2 center, Vector2 velocity, Color newColor = default, float Scale = 1f) where T : Particle
+        {
+            if (Main.netMode == NetmodeID.Server)
+                return null;
+
+            T p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<T>()).NewInstance() as T;
+
+            //设置各种初始值
+            p.active = true;
+            p.color = newColor;
+            p.Center = center;
+            p.Velocity = velocity;
+            p.Scale = Scale;
+            p.OnSpawn();
+
+            _particles.Add(p);
+
+            return p;
+        }
 
         public Particle NewParticle(Vector2 center, Vector2 velocity, int type, Color newColor = default, float Scale = 1f)
         {
             if (Main.netMode == NetmodeID.Server)
                 return null;
 
-            Particle particle = new Particle();
-            particle.fadeIn = 0f;
-            particle.active = true;
-            particle.type = type;
-            particle.color = newColor;
-            particle.center = center;
-            particle.velocity = velocity;
-            particle.shader = null;
-            particle.rotation = 0f;
-            particle.scale = Scale;
+            Particle p = ParticleLoader.GetParticle(type).NewInstance();
 
-            ParticleLoader.SetupParticle(particle);
+            //设置各种初始值
+            p.active = true;
+            p.color = newColor;
+            p.Center = center;
+            p.Velocity = velocity;
+            p.Scale = Scale;
+            p.OnSpawn();
 
-            _particles.Add(particle);
+            _particles.Add(p);
 
-            return particle;
+            return p;
         }
 
         public void Add(Particle particle)
@@ -68,36 +75,34 @@ namespace Coralite.Core.Systems.ParticleSystem
             if (Main.netMode == NetmodeID.Server)//不在服务器上运行
                 return;
 
-            for (int i = 0; i < _particles.Count; i++)
+            foreach (var particle in _particles)
             {
-                Particle particle = _particles[i];
-                if (!particle.active)
+                if (particle == null)
                     continue;
 
-                ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
-                modParticle.Update(particle);
-                if (modParticle.ShouldUpdateCenter(particle))
-                    particle.center += particle.velocity;
+                particle.Update();
+                if (particle.ShouldUpdateCenter())
+                    particle.Center += particle.Velocity;
 
                 //在粒子不活跃时把一些东西释放掉
                 if (!particle.active)
                 {
-                    particle.shader = null;
                     particle.oldCenter = null;
                     particle.oldRot = null;
-                    particle.trail = null;
-                    particle.datas = null;
                 }
 
                 //一些防止粒子持续时间过长的措施，额...还是建议在update里手动设置active比较好
-                if (particle.shouldKilledOutScreen && !Helper.OnScreen(particle.center - Main.screenPosition))
+                if (particle.shouldKilledOutScreen && !Helper.OnScreen(particle.Center - Main.screenPosition))
                     particle.active = false;
 
-                if (particle.scale < 0.01f)
+                if (particle.Scale < 0.001f)
                     particle.active = false;
 
                 if (particle.fadeIn > 1000)
                     particle.active = false;
+
+                if (!particle.active)
+                    _particles.Remove(particle);
             }
 
             _particles.RemoveAll(p => p is null || !p.active);
@@ -106,13 +111,12 @@ namespace Coralite.Core.Systems.ParticleSystem
         public void DrawParticles(SpriteBatch spriteBatch)
         {
             ArmorShaderData armorShaderData = null;
-            for (int i = 0; i < _particles.Count; i++)
+            foreach (var particle in _particles)
             {
-                Particle particle = _particles[i];
                 if (!particle.active)
                     continue;
 
-                if (!Helper.OnScreen(particle.center - Main.screenPosition))
+                if (!Helper.OnScreen(particle.Center - Main.screenPosition))
                     continue;
 
                 if (particle.shader != armorShaderData)
@@ -128,7 +132,7 @@ namespace Coralite.Core.Systems.ParticleSystem
                     }
                 }
 
-                ParticleLoader.GetParticle(particle.type).Draw(spriteBatch, particle);
+                particle.Draw(spriteBatch);
             }
 
             if (armorShaderData != null)
@@ -141,13 +145,12 @@ namespace Coralite.Core.Systems.ParticleSystem
         public void DrawParticlesInUI(SpriteBatch spriteBatch)
         {
             ArmorShaderData armorShaderData = null;
-            for (int i = 0; i < _particles.Count; i++)
+            foreach (var particle in _particles)
             {
-                Particle particle = _particles[i];
                 if (!particle.active)
                     continue;
 
-                if (!Helper.OnScreen(particle.center))
+                if (!Helper.OnScreen(particle.Center))
                     continue;
 
                 if (particle.shader != armorShaderData)
@@ -163,7 +166,7 @@ namespace Coralite.Core.Systems.ParticleSystem
                     }
                 }
 
-                ParticleLoader.GetParticle(particle.type).DrawInUI(spriteBatch, particle);
+                particle.DrawInUI(spriteBatch);
             }
 
             if (armorShaderData != null)
@@ -171,18 +174,13 @@ namespace Coralite.Core.Systems.ParticleSystem
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.UIScaleMatrix);
             }
-
         }
 
         public void DrawParticlesPrimitive()
         {
-            for (int k = 0; k < _particles.Count; k++) // Particles.
-                if (_particles[k].active)
-                {
-                    ModParticle modParticle = ParticleLoader.GetParticle(_particles[k].type);
-                    if (modParticle is IDrawParticlePrimitive p)
-                        p.DrawPrimitives(_particles[k]);
-                }
+            foreach (var particle in _particles)
+                if (particle.active && particle is IDrawParticlePrimitive p)
+                    p.DrawPrimitives();
         }
     }
 }

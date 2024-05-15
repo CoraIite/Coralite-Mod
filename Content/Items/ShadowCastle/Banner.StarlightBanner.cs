@@ -3,7 +3,7 @@ using Coralite.Core;
 
 namespace Coralite.Content.Items.ShadowCastle
 {
-    public class StarlightBanner:ModItem
+    public class StarlightBanner : ModItem
     {
         public override string Texture => AssetDirectory.ShadowCastleItems + Name;
 

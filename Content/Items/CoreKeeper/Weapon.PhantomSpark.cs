@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public int useCount;
         public int oldCombo;
-        private int holdItemCount;
+        //private int holdItemCount;
 
         public override void SetDefaults()
         {

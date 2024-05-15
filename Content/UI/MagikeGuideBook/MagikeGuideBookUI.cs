@@ -1,16 +1,13 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.Graphics.Effects;
 using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 
@@ -171,9 +168,8 @@ namespace Coralite.Content.UI.MagikeGuideBook
                 //绘制特效
                 foreach (var particle in particles)
                 {
-                    ModParticle mp = ParticleLoader.GetParticle(particle.type);
-                    if (mp is IDrawParticlePrimitive idpp)
-                        idpp.DrawPrimitives(particle);
+                    if (particle is IDrawParticlePrimitive idpp)
+                        idpp.DrawPrimitives();
                 }
 
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
@@ -372,98 +368,92 @@ namespace Coralite.Content.UI.MagikeGuideBook
         }
     }
 
-    public class FlashLine : ModParticle, IDrawParticlePrimitive
-    {
-        public override string Texture => AssetDirectory.OtherProjectiles + "FlashLine";
+    //public class FlashLine : TrailParticle
+    //{
+    //    public override string Texture => AssetDirectory.OtherProjectiles + "FlashLine";
 
-        public const int maxPointCount = 10;
-        public readonly float maxLength;
-        public float alpha = 1;
+    //    public const int maxPointCount = 10;
 
-        public override void OnSpawn(Particle particle)
-        {
-            particle.oldCenter = new Vector2[maxPointCount];
-        }
+    //    private float length;
+    //    private float alpha;
+    //    private float maxLength;
 
-        public override void Update(Particle particle)
-        {
-            float length = (float)particle.datas[0];
-            float alpha = (float)particle.datas[1];
-            float maxLength = (float)particle.datas[2];
+    //    public override void OnSpawn()
+    //    {
+    //        oldCenter = new Vector2[maxPointCount];
+    //    }
 
-            particle.trail ??= new Trail(Main.instance.GraphicsDevice, maxPointCount, new NoTip(), factor => particle.rotation,
-                factor => new Color(235, 130, 255, (byte)(alpha * 255)) * (MathF.Cos(factor.Y * 6.282f) * 0.5f + 0.5f));
+    //    public override void Update()
+    //    {
+    //        trail ??= new Trail(Main.instance.GraphicsDevice, maxPointCount, new NoTip(), factor => Rotation,
+    //            factor => new Color(235, 130, 255, (byte)(alpha * 255)) * (MathF.Cos(factor.Y * 6.282f) * 0.5f + 0.5f));
 
-            if (length < maxLength)
-            {
-                length += particle.velocity.X;   //应该是abs的，但我懒得写了
-                if (length > maxLength)
-                    length = maxLength;
-                //控制顶点
-                int j = -maxPointCount / 2;
-                for (int i = 0; i < maxPointCount; i++)
-                {
-                    particle.oldCenter[i] = particle.center + new Vector2(j * 25, 0);
-                    j++;
-                }
-            }
-            else
-            {
-                alpha -= 0.1f;
-                if (alpha < 0.01f)
-                    particle.active = false;
-            }
+    //        if (length < maxLength)
+    //        {
+    //            length += Velocity.X;   //应该是abs的，但我懒得写了
+    //            if (length > maxLength)
+    //                length = maxLength;
+    //            //控制顶点
+    //            int j = -maxPointCount / 2;
+    //            for (int i = 0; i < maxPointCount; i++)
+    //            {
+    //                oldCenter[i] = Center + new Vector2(j * 25, 0);
+    //                j++;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            alpha -= 0.1f;
+    //            if (alpha < 0.01f)
+    //                active = false;
+    //        }
 
-            particle.trail.Positions = particle.oldCenter;
+    //        trail.Positions = oldCenter;
+    //    }
 
-            particle.datas[0] = length;
-            particle.datas[1] = alpha;
-            particle.datas[2] = maxLength;
-        }
+    //    public override void Draw(SpriteBatch spriteBatch) { }
 
-        public override void Draw(SpriteBatch spriteBatch, Particle particle) { }
+    //    public static FlashLine Spawn(Vector2 center, Vector2 velocity, float maxLength, float width)
+    //    {
+    //        FlashLine p = ;
+    //        p.type = CoraliteContent.ParticleType<FlashLine>();
+    //        p.Center = center;
+    //        p.Velocity = velocity;
+    //        p.Rotation = width;
+    //        p.active = true;
+    //        p.shouldKilledOutScreen = false;
+    //        p.Scale = 1;
+    //        ParticleLoader.SetupParticle(p);
+    //        p.datas = new object[3]
+    //        {
+    //            0f,
+    //            1f,
+    //            maxLength
+    //        };
 
-        public static Particle Spawn(Vector2 center, Vector2 velocity, float maxLength, float width)
-        {
-            Particle p = new Particle();
-            p.type = CoraliteContent.ParticleType<FlashLine>();
-            p.center = center;
-            p.velocity = velocity;
-            p.rotation = width;
-            p.active = true;
-            p.shouldKilledOutScreen = false;
-            p.scale = 1;
-            ParticleLoader.SetupParticle(p);
-            p.datas = new object[3]
-            {
-                0f,
-                1f,
-                maxLength
-            };
+    //        return p;
+    //    }
 
-            return p;
-        }
+    //    public override void DrawPrimitives()
+    //    {
+    //        Effect effect = Filters.Scene["Flow"].GetShader().Shader;
 
-        public void DrawPrimitives(Particle particle)
-        {
-            Effect effect = Filters.Scene["Flow"].GetShader().Shader;
+    //        //Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+    //        Matrix view = Main.GameViewMatrix.ZoomMatrix;
+    //        Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-            //Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.ZoomMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+    //        Main.instance.GraphicsDevice.Textures[0] = Texture2D.Value;
 
-            Main.instance.GraphicsDevice.Textures[0] = Texture2D.Value;
+    //        effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 0.2f);
+    //        effect.Parameters["transformMatrix"].SetValue(/*world **/ view * projection);
+    //        effect.Parameters["uTextImage"].SetValue(Texture2D.Value);
 
-            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 0.2f);
-            effect.Parameters["transformMatrix"].SetValue(/*world **/ view * projection);
-            effect.Parameters["uTextImage"].SetValue(Texture2D.Value);
+    //        trail?.Render(effect);
 
-            particle.trail?.Render(effect);
-
-            //画两遍
-            effect.Parameters["uTime"].SetValue(-Main.GlobalTimeWrappedHourly * 0.2f);
-            particle.trail?.Render(effect);
-        }
-    }
+    //        //画两遍
+    //        effect.Parameters["uTime"].SetValue(-Main.GlobalTimeWrappedHourly * 0.2f);
+    //        trail?.Render(effect);
+    //    }
+    //}
 }
 

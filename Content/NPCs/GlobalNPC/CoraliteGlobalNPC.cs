@@ -226,7 +226,7 @@ namespace Coralite.Content.NPCs.GlobalNPC
             if (spawnInfo.Player.InModBiome<ShadowCastleBiome>())
                 pool[0] = 0f;
 
-            if (CoraliteWorld.coralCatWorld && spawnInfo.Player.wet && spawnInfo.Player.position.Y < Main.worldSurface*16)
+            if (CoraliteWorld.coralCatWorld && spawnInfo.Player.wet && spawnInfo.Player.position.Y < Main.worldSurface * 16)
             {
                 pool.Add(NPCID.Shark, 1);
             }

@@ -50,9 +50,9 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             CreateRecipe()
                 .AddIngredient<NightsCage>()
-                .AddIngredient(ItemID.SoulofFright,20)
-                .AddIngredient(ItemID.SoulofMight,20)
-                .AddIngredient(ItemID.SoulofSight,20)
+                .AddIngredient(ItemID.SoulofFright, 20)
+                .AddIngredient(ItemID.SoulofMight, 20)
+                .AddIngredient(ItemID.SoulofSight, 20)
                 .AddTile(TileID.MythrilAnvil)
                 .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
                 .Register();

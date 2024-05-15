@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.Pets
 
         public override void SetStaticDefaults()
         {
-            ItemID.Sets.ShimmerTransformToItem[Type]=ModContent.ItemType<CrystalBlossomShards>();
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<CrystalBlossomShards>();
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -366,10 +366,10 @@ namespace Coralite.Content.Items.Pets
                         }
 
                         Timer++;
-                        if (Timer>120)
+                        if (Timer > 120)
                         {
                             Timer = 0;
-                            if (Helper.TryFindClosestEnemy(Projectile.Center, AttackLength, n=>n.CanBeChasedBy(),out _))
+                            if (Helper.TryFindClosestEnemy(Projectile.Center, AttackLength, n => n.CanBeChasedBy(), out _))
                             {
                                 State = 2;
                                 Recorder = 0;
@@ -515,10 +515,10 @@ namespace Coralite.Content.Items.Pets
                         Dust d;
                         if (Main.rand.NextBool())
                             d = Dust.NewDustPerfect(dustPos, DustID.Electric,
-                             (dustPos - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.5f, 6f),Scale:Main.rand.NextFloat(0.5f,0.7f));
+                             (dustPos - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.5f, 6f), Scale: Main.rand.NextFloat(0.5f, 0.7f));
                         else
                             d = Dust.NewDustPerfect(dustPos, DustID.Electric,
-                             (  Projectile.Center- dustPos).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.5f, 2f));
+                             (Projectile.Center - dustPos).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.5f, 2f));
                         d.noGravity = true;
 
                         if (Timer % 60 == 0)
@@ -527,7 +527,7 @@ namespace Coralite.Content.Items.Pets
                             {
                                 Vector2 baseDir = (Timer * 0.02f + i * MathHelper.TwoPi / 5).ToRotationVector2();
 
-                                for (int j = -1; j < 2; j+=2)
+                                for (int j = -1; j < 2; j += 2)
                                 {
                                     Vector2 velocity = baseDir.RotatedBy(j * 0.6f);
                                     Vector2 pos = Projectile.Center + baseDir * 32;
@@ -536,11 +536,11 @@ namespace Coralite.Content.Items.Pets
                                         ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
                                         {
                                             PositionInWorld = pos,
-                                            MovementVector = velocity *2,
-                                            UniqueInfoPiece = (int)((0.75f-0.2f/5*k) * 255)
+                                            MovementVector = velocity * 2,
+                                            UniqueInfoPiece = (int)((0.75f - 0.2f / 5 * k) * 255)
                                         });
 
-                                        pos += velocity*16;
+                                        pos += velocity * 16;
                                         velocity = velocity.RotatedBy(-j * 0.075f);
                                     }
                                 }
@@ -560,7 +560,7 @@ namespace Coralite.Content.Items.Pets
                             for (int i = 0; i < Main.maxNPCs; i++)
                             {
                                 NPC n = Main.npc[i];
-                                if (n.active && n.CanBeChasedBy() && !n.friendly&&Vector2.Distance(n.Center,Projectile.Center)< AttackLength)
+                                if (n.active && n.CanBeChasedBy() && !n.friendly && Vector2.Distance(n.Center, Projectile.Center) < AttackLength)
                                     n.SimpleStrikeNPC(20, Math.Sign(n.Center.X - Projectile.Center.X));
                             }
 

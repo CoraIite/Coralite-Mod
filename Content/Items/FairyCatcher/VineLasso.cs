@@ -14,7 +14,7 @@ namespace Coralite.Content.Items.FairyCatcher
         public override string Texture => AssetDirectory.FairyCatcherItems + Name;
 
         public override void SetOtherDefaults()
-        { 
+        {
             Item.shoot = ModContent.ProjectileType<VineLassoCatcher>();
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.useTime = Item.useAnimation = 24;

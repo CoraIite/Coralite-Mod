@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.CustomHooks;
 using Coralite.Content.ModPlayers;
-using Coralite.Core.Prefabs.Items;
 using Terraria;
 using Terraria.ID;
 

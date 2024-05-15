@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.TheHyacinthSeries
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<EternalBloomHeldProj>(), 0, knockback, player.whoAmI);
                 if (type == ProjectileID.Bullet)
                 {
-                    type = Main.rand.NextBool(4) ? ProjectileType<ThornBall>(): ProjectileType<SeedPlantera>();
+                    type = Main.rand.NextBool(4) ? ProjectileType<ThornBall>() : ProjectileType<SeedPlantera>();
 
                     Projectile.NewProjectile(source, position, velocity
                          , type, damage, knockback, player.whoAmI);
@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.TheHyacinthSeries
         {
             CreateRecipe()
             .AddIngredient<Floette>()
-            .AddIngredient<RegrowthTentacle>( 5)
+            .AddIngredient<RegrowthTentacle>(5)
             .AddTile(TileID.MythrilAnvil)
             .Register();
         }

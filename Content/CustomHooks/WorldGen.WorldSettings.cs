@@ -1,7 +1,5 @@
 ﻿using Coralite.Content.UI;
 using Coralite.Content.WorldGeneration;
-using System;
-using System.Reflection;
 using Terraria;
 using Terraria.GameContent.UI.States;
 using Terraria.UI;
@@ -100,7 +98,7 @@ namespace Coralite.Content.CustomHooks
         {
             orig.Invoke(self, out processedSeed);
 
-            if (CoraliteWorld.coralCatWorld&& Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
+            if (CoraliteWorld.coralCatWorld && Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
             {
                 processedSeed = Main.rand.Next().ToString();
             }

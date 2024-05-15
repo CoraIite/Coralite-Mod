@@ -1,8 +1,6 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
-using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.GameContent.UI.Elements;

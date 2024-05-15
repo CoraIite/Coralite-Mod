@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -191,9 +190,9 @@ namespace Coralite.Content.CustomHooks
                 }
 
                 Vector2 exOffset = specialBackpack.ExtraOffset;
-                exOffset.X*= drawinfo.drawPlayer.direction;
-                Vector2 vec5 = 
-                    drawinfo.Position 
+                exOffset.X *= drawinfo.drawPlayer.direction;
+                Vector2 vec5 =
+                    drawinfo.Position
                     - Main.screenPosition +
                     drawinfo.drawPlayer.bodyPosition
                     + new Vector2(drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - frame.Height / 2)
@@ -204,7 +203,7 @@ namespace Coralite.Content.CustomHooks
                 //Vector2 vec6 = drawinfo.Position - Main.screenPosition + new Vector2(drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - drawinfo.drawPlayer.bodyFrame.Height / 2) + new Vector2((-9f + num3) * (float)drawinfo.drawPlayer.direction, (2f + num4) * drawinfo.drawPlayer.gravDir) + vector3;
                 //vec6 = vec6.Floor();
                 shader = drawinfo.cBack;
-                DrawData item = new DrawData(TextureAssets.AccBack[num2].Value, vec5 , frame,
+                DrawData item = new DrawData(TextureAssets.AccBack[num2].Value, vec5, frame,
                     drawinfo.colorArmorBody, drawinfo.drawPlayer.bodyRotation, new Vector2(frame.Width / 2, frame.Height / 2), 1f, drawinfo.playerEffect);
                 item.shader = shader;
                 drawinfo.DrawDataCache.Add(item);
@@ -220,7 +219,7 @@ namespace Coralite.Content.CustomHooks
         //    {
         //        if (drawinfo.drawPlayer.mount.Active)
         //            return;
-                
+
         //        int shader;
         //        int num2 = drawinfo.drawPlayer.back;
         //        float num3 = -4f;
@@ -336,6 +335,6 @@ namespace Coralite.Content.CustomHooks
 
     public interface ISpecialDrawBackpacks
     {
-       public virtual Vector2 ExtraOffset => Vector2.Zero;
+        public virtual Vector2 ExtraOffset => Vector2.Zero;
     }
 }

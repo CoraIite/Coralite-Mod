@@ -82,7 +82,7 @@ namespace Coralite.Content.Items.TheHyacinthSeries
             for (int i = 0; i < 3; i++)
             {
                 Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4, 4) - Projectile.velocity / 3 * i
-                    , DustID.RedTorch, Vector2.Zero,Scale:Main.rand.NextFloat(0.6f,0.8f));
+                    , DustID.RedTorch, Vector2.Zero, Scale: Main.rand.NextFloat(0.6f, 0.8f));
                 dust.noGravity = Main.rand.NextBool(5);
                 dust.velocity = -Projectile.velocity * Main.rand.NextFloat(-0.05f, 0.05f);
             }
@@ -117,7 +117,7 @@ namespace Coralite.Content.Items.TheHyacinthSeries
         public override bool PreDraw(ref Color lightColor) => false;
     }
 
-    public class RoseGunpowderProj2:ModProjectile
+    public class RoseGunpowderProj2 : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 

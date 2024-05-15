@@ -367,7 +367,7 @@ namespace Coralite.Content.ModPlayers
 
                 if (RoseGunpowderEffect == 0)
                 {
-                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.05f, 0.05f), ProjectileType<RoseGunpowderProj>(), (int)(damage*1.35f), knockback, Player.whoAmI);
+                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.05f, 0.05f), ProjectileType<RoseGunpowderProj>(), (int)(damage * 1.35f), knockback, Player.whoAmI);
                     RoseGunpowderEffect = 90;
                 }
             }
@@ -560,7 +560,7 @@ namespace Coralite.Content.ModPlayers
                 target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
             if (flaskOfRedJade && item.DamageType == DamageClass.Melee && Main.rand.NextBool(4))
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
-                    ProjectileType<RedJadeBoom>(), (int)(item.damage*0.75f), 0, Player.whoAmI);
+                    ProjectileType<RedJadeBoom>(), (int)(item.damage * 0.75f), 0, Player.whoAmI);
         }
 
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
@@ -569,7 +569,7 @@ namespace Coralite.Content.ModPlayers
                 target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
             if (flaskOfRedJade && proj.DamageType == DamageClass.Melee && Main.rand.NextBool(4))
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
-                    ProjectileType<RedJadeBoom>(), (int)(proj.damage*0.75f), 0, Player.whoAmI);
+                    ProjectileType<RedJadeBoom>(), (int)(proj.damage * 0.75f), 0, Player.whoAmI);
         }
 
         public override bool FreeDodge(Player.HurtInfo info)

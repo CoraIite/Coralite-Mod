@@ -7,9 +7,9 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.ShadowCastle
 {
-    public class ShadowDartTile:ModTile
+    public class ShadowDartTile : ModTile
     {
-        public override string Texture => AssetDirectory.ShadowCastleTiles+Name;
+        public override string Texture => AssetDirectory.ShadowCastleTiles + Name;
 
         public override void SetStaticDefaults()
         {
@@ -44,7 +44,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-            return new Item[] {new Item(ModContent.ItemType<ShadowDart>()) } ;
+            return new Item[] { new Item(ModContent.ItemType<ShadowDart>()) };
         }
     }
 }

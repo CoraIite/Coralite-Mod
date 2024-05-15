@@ -12,11 +12,13 @@ namespace Coralite.Content.Particles
 {
     public delegate Vector2 GetCenter();
 
-    public class DizzyStar : ModParticle, IDrawParticlePrimitive
+    public class DizzyStar : TrailParticle
     {
         public override string Texture => AssetDirectory.DefaultItem;
 
-        BasicEffect effect;
+        private static BasicEffect effect;
+        private GetCenter centerFunc;
+        private float length;
 
         public DizzyStar()
         {
@@ -27,63 +29,63 @@ namespace Coralite.Content.Particles
             });
         }
 
-        public override bool ShouldUpdateCenter(Particle particle) => false;
+        public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
             //使用oldRot充当改变帧图的 frameCounter
-            particle.frame = new Rectangle(0, 0, 22, 26);
-            particle.scale = 1f;
-            particle.InitOldCaches(12);
-            particle.trail = new Trail(Main.instance.GraphicsDevice, 12, new NoTip(), factor => 2, factor => Color.Lerp(new Color(0, 0, 0, 0), Color.Yellow, factor.X));
+            Frame = new Rectangle(0, 0, 22, 26);
+            Scale = 1f;
+            InitOldCaches(12);
+            trail = new Trail(Main.instance.GraphicsDevice, 12, new NoTip(), factor => 2, factor => Color.Lerp(new Color(0, 0, 0, 0), Color.Yellow, factor.X));
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            if (GetDatas(particle, out float length, out GetCenter function))
+            if (centerFunc != null)
             {
-                Vector2 center = function.Invoke();
-                particle.center = center + particle.rotation.ToRotationVector2() * length * Helper.EllipticalEase(particle.rotation, 1, 2.4f);
-                particle.rotation += 0.12f;
-                particle.scale = 0.6f + MathF.Sin(particle.rotation) * 0.2f;
+                Vector2 center = centerFunc.Invoke();
+                center = center + Rotation.ToRotationVector2() * length * Helper.EllipticalEase(Rotation, 1, 2.4f);
+                Rotation += 0.12f;
+                Scale = 0.6f + MathF.Sin(Rotation) * 0.2f;
 
                 //更新拖尾数组
                 for (int i = 0; i < 11; i++)
-                    particle.oldRot[i] = particle.oldRot[i + 1];
+                    oldRot[i] = oldRot[i + 1];
 
-                particle.oldRot[11] = particle.rotation;
+                oldRot[11] = Rotation;
                 for (int i = 0; i < 12; i++)
-                    particle.oldCenter[i] = center + particle.oldRot[i].ToRotationVector2() * length * Helper.EllipticalEase(particle.oldRot[i], 1, 2.4f);
-                particle.trail.Positions = particle.oldCenter;
+                    oldCenter[i] = center + oldRot[i].ToRotationVector2() * length * Helper.EllipticalEase(oldRot[i], 1, 2.4f);
+                trail.Positions = oldCenter;
 
                 //使用oldRot充当改变帧图的 frameCounter
-                particle.velocity.X += 1f;
-                if (particle.velocity.X > 3f)
+                Velocity.X += 1f;
+                if (Velocity.X > 3f)
                 {
-                    particle.velocity.X = 0f;
-                    particle.frame.Y += 26;
-                    if (particle.frame.Y > 181)
-                        particle.frame.Y = 0;
+                    Velocity.X = 0f;
+                    Frame.Y += 26;
+                    if (Frame.Y > 181)
+                        Frame.Y = 0;
                 }
 
-                particle.fadeIn -= 1f;
-                if (particle.fadeIn < 0f)
-                    particle.active = false;
+                fadeIn -= 1f;
+                if (fadeIn < 0f)
+                    active = false;
 
                 return;
             }
 
-            particle.active = false;
+            active = false;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Particle particle)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = TextureAssets.Item[ItemID.FallenStar].Value;
 
-            spriteBatch.Draw(mainTex, particle.center - Main.screenPosition, particle.frame, Color.White, 0f, new Vector2(11, 13), particle.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Center - Main.screenPosition, Frame, Color.White, 0f, new Vector2(11, 13), Scale, SpriteEffects.None, 0f);
         }
 
-        public void DrawPrimitives(Particle particle)
+        public override void DrawPrimitives()
         {
             if (effect == null)
                 return;
@@ -96,36 +98,18 @@ namespace Coralite.Content.Particles
             effect.View = view;
             effect.Projection = projection;
 
-            particle.trail?.Render(effect);
+            trail?.Render(effect);
         }
 
-
-        public static Particle Spawn(Vector2 center, float rotation, float dizzyTime, float length, GetCenter function)
+        public static DizzyStar Spawn(Vector2 center, float rotation, float dizzyTime, float length, GetCenter function)
         {
-            Particle particle = Particle.NewParticleDirect(center, Vector2.Zero, CoraliteContent.ParticleType<DizzyStar>());
-            particle.rotation = rotation;
+            DizzyStar particle = NewParticle<DizzyStar>(center, Vector2.Zero);
+            particle.Rotation = rotation;
             particle.fadeIn = dizzyTime;
-            particle.datas = new object[2]
-            {
-                length,
-                function
-            };
+            particle.length = length;
+            particle.centerFunc = function;
 
             return particle;
-        }
-
-        public static bool GetDatas(Particle particle, out float length, out GetCenter function)
-        {
-            if (particle.datas is null || particle.datas[0] is not float || particle.datas[1] is not GetCenter)
-            {
-                length = 0;
-                function = null;
-                return false;
-            }
-
-            length = (float)particle.datas[0];
-            function = (GetCenter)particle.datas[1];
-            return true;
         }
     }
 }

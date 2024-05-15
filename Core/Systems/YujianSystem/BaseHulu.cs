@@ -1,5 +1,4 @@
-﻿using Coralite.Content.DamageClasses;
-using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.UI;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.YujianSystem.HuluEffects;
@@ -149,7 +148,7 @@ namespace Coralite.Core.Systems.YujianSystem
                 {
                     item.MainYujian = true;
                 }
-                else 
+                else
                     item.MainYujian = false;
             }
         }

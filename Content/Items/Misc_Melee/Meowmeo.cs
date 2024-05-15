@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.Misc_Melee
             Texture2D rotTex = ModContent.Request<Texture2D>(AssetDirectory.Misc_Melee + "MeowmeoRotation").Value;
             var frame = rotTex.Frame(1, 30, 0, (int)(Main.GlobalTimeWrappedHourly * 35 % 30));
 
-            spriteBatch.Draw(rotTex, Item.Bottom - Main.screenPosition, frame, lightColor.MultiplyRGBA(alphaColor), rotation, new Vector2(frame.Width/2,frame.Height*0.9f), scale, 0, 0);
+            spriteBatch.Draw(rotTex, Item.Bottom - Main.screenPosition, frame, lightColor.MultiplyRGBA(alphaColor), rotation, new Vector2(frame.Width / 2, frame.Height * 0.9f), scale, 0, 0);
             return false;
         }
     }
@@ -226,13 +226,13 @@ namespace Coralite.Content.Items.Misc_Melee
         }
     }
 
-    public class MeowmeoSpecialProj:ModProjectile
+    public class MeowmeoSpecialProj : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
         public enum ShortSwordType
         {
-            BladeOfCatnip=1,
+            BladeOfCatnip = 1,
             Excatbar,
             NightsCage,
             Nuranasa,
@@ -278,7 +278,7 @@ namespace Coralite.Content.Items.Misc_Melee
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Projectile.ai[0] += 1f;
-            if (Projectile.ai[0]==1)
+            if (Projectile.ai[0] == 1)
                 SoundEngine.PlaySound(CoraliteSoundID.Meowmere, Projectile.Center);
             if (Projectile.ai[0] >= 5f)
             {
@@ -341,7 +341,7 @@ namespace Coralite.Content.Items.Misc_Melee
             }
         }
 
-        public static int? GetTexture(int type,out float ExRot)
+        public static int? GetTexture(int type, out float ExRot)
         {
             ExRot = 0f;
             if (type > 0)
@@ -407,7 +407,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
             Texture2D selfTex;
 
-            int? projTexType = GetTexture((int)Projectile.ai[2],out float exRot);
+            int? projTexType = GetTexture((int)Projectile.ai[2], out float exRot);
             if (projTexType.HasValue)
             {
                 Main.instance.LoadItem(projTexType.Value);

@@ -158,7 +158,7 @@ namespace Coralite.Content.Items.Fairies
             else if (Timer < 40 + 120)
             {
                 if (Timer % 15 == 0)
-                    Projectile.velocity = Helper.NextVec2Dir(2,4);
+                    Projectile.velocity = Helper.NextVec2Dir(2, 4);
                 if (Main.rand.NextBool())
                     Projectile.SpawnTrailDust(DustID.BrownMoss, Main.rand.NextFloat(0.1f, 0.5f), 200);
             }

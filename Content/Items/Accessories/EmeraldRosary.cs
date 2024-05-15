@@ -1,6 +1,4 @@
-﻿using Coralite.Content.DamageClasses;
-using Coralite.Content.Items.Materials;
-using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;

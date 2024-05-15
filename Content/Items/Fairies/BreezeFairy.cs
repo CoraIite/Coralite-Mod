@@ -158,7 +158,7 @@ namespace Coralite.Content.Items.Fairies
                 //c.A = 50;
                 //RedJades.RedExplosionParticle.Spawn(Projectile.Center, 1.2f, c); 
                 c.A = 200;
-                RedJades.RedGlowParticle.Spawn(Projectile.Center, 1.2f,c , 0.3f);
+                RedJades.RedGlowParticle.Spawn(Projectile.Center, 1.2f, c, 0.3f);
             }
             else if (Timer < 20 + 10)
             {
@@ -172,7 +172,7 @@ namespace Coralite.Content.Items.Fairies
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC n = Main.npc[i];
-                    if (n.CanBeChasedBy()&&Vector2.Distance(n.Center,Projectile.Center)<120)
+                    if (n.CanBeChasedBy() && Vector2.Distance(n.Center, Projectile.Center) < 120)
                     {
                         n.velocity += (n.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2 * n.knockBackResist;
                         if (Timer == 23)

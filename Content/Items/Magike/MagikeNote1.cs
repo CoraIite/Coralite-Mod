@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike
             Item.useTime = Item.useAnimation = 25;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.UseSound = CoraliteSoundID.MagicStaff_Item8;
-            Item.shoot = 10;
+            Item.shoot = ProjectileID.PurificationPowder;
             Item.consumable = true;
         }
 

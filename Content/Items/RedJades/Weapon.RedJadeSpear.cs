@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.RedJades
 
                 distanceToOwner = MathHelper.Lerp(-20, -47, factor);
                 Slasher();
-                if (Timer==minTime-1)
+                if (Timer == minTime - 1)
                     SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
             }
 
@@ -139,14 +139,14 @@ namespace Coralite.Content.Items.RedJades
 
         protected override void OnSlash()
         {
-            float factor = (Timer-minTime) / (maxTime-minTime);
+            float factor = (Timer - minTime) / (maxTime - minTime);
             if (Timer % 3 == 0)
             {
                 Vector2 pos = Projectile.Center + RotateVec2 * Main.rand.NextFloat(20, 70) * Projectile.scale
-                    +Main.rand.NextVector2Circular(16,16);
+                    + Main.rand.NextVector2Circular(16, 16);
                 if (Main.rand.NextBool())
                 {
-                   Dust d= Dust.NewDustPerfect(pos, DustID.RedTorch, RotateVec2 * Main.rand.NextFloat(1f, 3f));
+                    Dust d = Dust.NewDustPerfect(pos, DustID.RedTorch, RotateVec2 * Main.rand.NextFloat(1f, 3f));
                     d.noGravity = true;
                 }
             }
@@ -209,14 +209,14 @@ namespace Coralite.Content.Items.RedJades
 
         protected override void DrawShadowTrail(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
-            if (Timer<6)
+            if (Timer < 6)
                 return;
 
             SpriteEffects effect = CheckEffect();
             for (int i = 1; i < 6; i += 1)
             {
                 Vector2 Center = GetCenter(i);
-                Center += oldRotate[i].ToRotationVector2() * (oldLength[i]/2 + oldDistanceToOwner[i]);
+                Center += oldRotate[i].ToRotationVector2() * (oldLength[i] / 2 + oldDistanceToOwner[i]);
                 Main.spriteBatch.Draw(mainTex, Center - Main.screenPosition, null,
                     Coralite.Instance.RedJadeRed * (0.3f - i * 0.3f / 6), oldRotate[i] + extraRot, origin, Projectile.scale, effect, 0);
             }

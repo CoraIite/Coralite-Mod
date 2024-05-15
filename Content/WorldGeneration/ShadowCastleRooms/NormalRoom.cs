@@ -67,8 +67,8 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                     {
                         Point d = GetDir(direction);
                         NormalRoom childRoom = new NormalRoom(roomRect.Center);
-                        int length = (roomRect.Width / 2) + (childRoom.Width / 2) +1/*+ WorldGen.genRand.Next(-4, 0)*/;
-                        int height = (roomRect.Height / 2) + (childRoom.Height / 2) +1/*+ WorldGen.genRand.Next(-4, 0)*/;
+                        int length = (roomRect.Width / 2) + (childRoom.Width / 2) + 1/*+ WorldGen.genRand.Next(-4, 0)*/;
+                        int height = (roomRect.Height / 2) + (childRoom.Height / 2) + 1/*+ WorldGen.genRand.Next(-4, 0)*/;
 
                         Point newCenter = roomRect.Center + new Point(d.X * length, d.Y * height)
                             /*+ new Point(WorldGen.genRand.Next(0, 2), WorldGen.genRand.Next(0, 2))*/;

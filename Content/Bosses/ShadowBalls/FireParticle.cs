@@ -1,54 +1,50 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
-    public class FireParticle : ModParticle
+    public class FireParticle : Particle
     {
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
-        public override void OnSpawn(Particle particle)
+        private SpriteEffects effect;
+
+        public override void OnSpawn()
         {
-            //particle.color.A = 0;
+            //color.A = 0;
 
-            particle.frame = new Rectangle(0, Main.rand.Next(3), 1, 1);
-
-            particle.oldRot = new float[1]
-            {
-                Main.rand.Next(2)
-            };
-
-            particle.rotation = particle.velocity.ToRotation() - MathHelper.PiOver2;
+            Frame = new Rectangle(0, Main.rand.Next(3), 1, 1);
+            effect = Main.rand.NextBool() ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Rotation = Velocity.ToRotation() - MathHelper.PiOver2;
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            particle.fadeIn++;
+            fadeIn++;
 
-            if (particle.fadeIn % 5 == 0)
+            if (fadeIn % 5 == 0)
             {
-                particle.frame.Y++;
-                if (particle.frame.Y > 15)
-                    particle.active = false;
+                Frame.Y++;
+                if (Frame.Y > 15)
+                    active = false;
             }
 
-            particle.velocity *= 0.95f;
-            particle.color *= 0.96f;
+            Velocity *= 0.95f;
+            color *= 0.96f;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Particle particle)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
-            Rectangle frame = modParticle.Texture2D.Frame(1, 16, 0, particle.frame.Y);
+            Texture2D mainTex = GetTexture().Value;
+            Rectangle frame = mainTex.Frame(1, 16, 0, this.Frame.Y);
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(modParticle.Texture2D.Value, particle.center - Main.screenPosition, frame, particle.color, particle.rotation, origin, particle.scale
-                , particle.oldRot[0] == 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
-            spriteBatch.Draw(modParticle.Texture2D.Value, particle.center - Main.screenPosition, frame, particle.color * 0.5f, particle.rotation, origin, particle.scale
-                , particle.oldRot[0] == 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, color, Rotation, origin, Scale
+                , effect, 0f);
+            spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, color * 0.5f, Rotation, origin, Scale
+                , effect, 0f);
         }
     }
 }

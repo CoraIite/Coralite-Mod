@@ -44,7 +44,7 @@ namespace Coralite.Content.Items.TheHyacinthSeries
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<FloetteHeldProj>(), 0, knockback, player.whoAmI);
                 if (type == ProjectileID.Bullet)
                 {
-                    int index = Projectile.NewProjectile(source, position, velocity 
+                    int index = Projectile.NewProjectile(source, position, velocity
                          , ProjectileType<PosionedSeedPlantera>(), damage, knockback, player.whoAmI);
                     Main.projectile[index].friendly = true;
                     Main.projectile[index].hostile = false;

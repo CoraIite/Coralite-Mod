@@ -435,53 +435,53 @@ namespace Coralite.Content.Items.BossSummons
     /// <summary>
     /// 使用速度的X传入拥有者
     /// </summary>
-    public class NightmareHarpParticle : ModParticle
+    public class NightmareHarpParticle : Particle
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "Flow";
 
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
-            particle.rotation = Main.rand.NextFloat(6.282f);
+            Rotation = Main.rand.NextFloat(6.282f);
         }
 
-        public override bool ShouldUpdateCenter(Particle particle) => false;
+        public override bool ShouldUpdateCenter() => false;
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            int ownerIndex = (int)particle.velocity.X;
+            int ownerIndex = (int)Velocity.X;
             if (Main.player.IndexInRange(ownerIndex))
             {
-                particle.center = Main.player[ownerIndex].Center;
+                Center = Main.player[ownerIndex].Center;
             }
 
-            particle.rotation += 0.05f;
-            particle.fadeIn++;
+            Rotation += 0.05f;
+            fadeIn++;
 
-            if (particle.fadeIn < 15)
+            if (fadeIn < 15)
             {
-                particle.scale *= 1.08f;
+                Scale *= 1.08f;
             }
-            else if (particle.fadeIn < 20)
+            else if (fadeIn < 20)
             {
-                particle.scale *= 0.94f;
+                Scale *= 0.94f;
             }
             else
             {
-                particle.scale *= 1.02f;
-                if (particle.fadeIn > 30)
-                    particle.color.A = (byte)(particle.color.A * 0.82f);
+                Scale *= 1.02f;
+                if (fadeIn > 30)
+                    color.A = (byte)(color.A * 0.82f);
             }
 
-            if (particle.color.A < 10)
-                particle.active = false;
+            if (color.A < 10)
+                active = false;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Particle particle)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = Texture2D.Value;
+            Texture2D mainTex = GetTexture().Value;
             Vector2 origin = mainTex.Size() / 2;
 
-            spriteBatch.Draw(mainTex, particle.center - Main.screenPosition, null, particle.color, particle.rotation, origin, particle.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
     }
 }

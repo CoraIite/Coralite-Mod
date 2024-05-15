@@ -383,26 +383,26 @@ namespace Coralite.Content.Items.Nightmare
         }
     }
 
-    public class BarrenFogParticle : ModParticle
+    public class BarrenFogParticle : Particle
     {
         public override string Texture => AssetDirectory.Particles + "Fog";
 
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
-            particle.rotation = Main.rand.NextFloat(6.282f);
-            particle.frame = new Rectangle(0, Main.rand.Next(4) * 64, 64, 64);
+            Rotation = Main.rand.NextFloat(6.282f);
+            Frame = new Rectangle(0, Main.rand.Next(4) * 64, 64, 64);
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            particle.velocity *= 0.96f;
-            particle.rotation += 0.01f;
-            particle.scale *= 0.997f;
-            particle.color.A = (byte)(particle.color.A * 0.92f);
+            Velocity *= 0.96f;
+            Rotation += 0.01f;
+            Scale *= 0.997f;
+            color.A = (byte)(color.A * 0.92f);
 
-            particle.fadeIn++;
-            if (particle.fadeIn > 40 || particle.color.A < 10)
-                particle.active = false;
+            fadeIn++;
+            if (fadeIn > 40 || color.A < 10)
+                active = false;
         }
     }
 }

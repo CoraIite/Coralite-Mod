@@ -14,14 +14,14 @@ using Terraria.Localization;
 
 namespace Coralite.Content.Items.GlobalItems
 {
-    public class CoraliteGlobalItem : GlobalItem,ILocalizedModType, IVariantItem
+    public class CoraliteGlobalItem : GlobalItem, ILocalizedModType, IVariantItem
     {
         public static LocalizedText CopperCoralCat;
         public static LocalizedText RubyCoralCat;
         public static LocalizedText TerraCoralCat;
         public static LocalizedText RainBowCoralCat;
 
-        public string LocalizationCategory =>"GlobalItems";
+        public string LocalizationCategory => "GlobalItems";
 
         public override void Load()
         {
@@ -192,10 +192,10 @@ namespace Coralite.Content.Items.GlobalItems
 
             return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
         }
-        
+
         public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)
         {
-            
+
             base.PickAmmo(weapon, ammo, player, ref type, ref speed, ref damage, ref knockback);
         }
 
@@ -227,7 +227,7 @@ namespace Coralite.Content.Items.GlobalItems
 
         public override void UpdateInventory(Item item, Player player)
         {
-            CoralCatWorldTransForm( item);
+            CoralCatWorldTransForm(item);
         }
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)

@@ -25,7 +25,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.CursorAIs
         private int directionY;
 
         public NormalCursor(float maxSpeedX, float maxSpeedY, float accX, float accY
-            ,float turnAccX, float turnAccY, float slowDownFactorX, float slowDownFactorY, float slowDownLeengthX, float slowDownLeengthY)
+            , float turnAccX, float turnAccY, float slowDownFactorX, float slowDownFactorY, float slowDownLeengthX, float slowDownLeengthY)
         {
             this.maxSpeedX = maxSpeedX;
             this.maxSpeedY = maxSpeedY;
@@ -39,7 +39,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.CursorAIs
             this.slowDownLeengthY = slowDownLeengthY;
         }
 
-        public NormalCursor(float maxSpeed, float acc, float turnAcc, float slowDownFactor,float slowDownLeength)
+        public NormalCursor(float maxSpeed, float acc, float turnAcc, float slowDownFactor, float slowDownLeength)
         {
             maxSpeedX = maxSpeed;
             maxSpeedY = maxSpeed;
@@ -58,10 +58,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.CursorAIs
             SetDirection(catcher.cursorCenter);
 
             //追踪玩家
-            GetLengthToTargetPos(Main.MouseWorld,catcher.cursorCenter, out float xLength, out float yLength);
+            GetLengthToTargetPos(Main.MouseWorld, catcher.cursorCenter, out float xLength, out float yLength);
 
             if (xLength > slowDownLeengthX)
-                Helper.Movement_SimpleOneLine(ref catcher.cursorVelocity.X, directionX, maxSpeedX, accX,turnAccX, 0.95f);
+                Helper.Movement_SimpleOneLine(ref catcher.cursorVelocity.X, directionX, maxSpeedX, accX, turnAccX, 0.95f);
             else
                 catcher.cursorVelocity.X *= slowDownFactorX;
 
@@ -73,7 +73,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.CursorAIs
 
         public void SetDirection(Vector2 cursorCenter)
         {
-            directionX  = Main.MouseWorld.X > cursorCenter.X ? 1 : -1;
+            directionX = Main.MouseWorld.X > cursorCenter.X ? 1 : -1;
             directionY = Main.MouseWorld.Y > cursorCenter.Y ? 1 : -1;
         }
 

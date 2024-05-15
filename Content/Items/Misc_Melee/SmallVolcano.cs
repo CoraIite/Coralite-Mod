@@ -44,7 +44,7 @@ namespace Coralite.Content.Items.Misc_Melee
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.HellstoneBar,20)
+                .AddIngredient(ItemID.HellstoneBar, 20)
                 .AddTile(TileID.Anvils)
                 .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
                 .Register();

@@ -278,7 +278,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             outerContainer.Append(uITextPanel);
         }
 
-        private void MakeSortButton(SortStyle sortStyle,Func<LocalizedText> description,UIGrid grid)
+        private void MakeSortButton(SortStyle sortStyle, Func<LocalizedText> description, UIGrid grid)
         {
             SortButton sortButton = new SortButton(sortStyle, description);
 
@@ -432,7 +432,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         /// <param name="targetRarity"></param>
         public void Select(FairyAttempt.Rarity? targetRarity)
         {
-            selectType= targetRarity;
+            selectType = targetRarity;
             fairies.Clear();
 
             if (!targetRarity.HasValue)
@@ -455,7 +455,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 if (FairyLoader.fairys[i].Rarity == targetRarity)
                     fairies.Add(FairyLoader.fairys[i]);
 
-            CheckOver:
+                CheckOver:
 
             Sort(CurrentSortStyle);
         }

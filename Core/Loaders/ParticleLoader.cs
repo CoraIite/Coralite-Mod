@@ -8,7 +8,7 @@ namespace Coralite.Core.Loaders
     /// </summary>
     public class ParticleLoader
     {
-        internal static IList<ModParticle> modParticles;
+        internal static IList<Particle> Particles;
         internal static int ParticleCount { get; private set; } = 0;
 
         /// <summary>
@@ -16,8 +16,8 @@ namespace Coralite.Core.Loaders
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static ModParticle GetParticle(int type)
-                 => type < ParticleCount ? modParticles[type] : null;
+        public static Particle GetParticle(int type)
+                 => type < ParticleCount ? Particles[type] : null;
 
         /// <summary>
         /// 设置ID
@@ -25,27 +25,15 @@ namespace Coralite.Core.Loaders
         /// <returns></returns>
         public static int ReserveParticleID() => ParticleCount++;
 
-        /// <summary>
-        /// 粒子生成时执行
-        /// </summary>
-        /// <param name="particle"></param>
-        internal static void SetupParticle(Particle particle)
-        {
-            ModParticle modParticle = GetParticle(particle.type);
-
-            if (modParticle != null)
-                modParticle.OnSpawn(particle);
-        }
-
         internal static void Unload()
         {
-            foreach (var item in modParticles)
+            foreach (var item in Particles)
             {
                 item.Unload();
             }
 
-            modParticles.Clear();
-            modParticles = null;
+            Particles.Clear();
+            Particles = null;
             ParticleCount = 0;
         }
     }

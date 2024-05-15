@@ -35,14 +35,14 @@ namespace Coralite.Content.WorldGeneration
                             break;
                     }
 
-                    Tile tile2= Framing.GetTileSafely(tabletCenter_x, tabletCenter_y);
+                    Tile tile2 = Framing.GetTileSafely(tabletCenter_x, tabletCenter_y);
                     if (!TileID.Sets.Grass[tile2.TileType] && !TileID.Sets.Dirt[tile2.TileType])
                         continue;
 
-                    Point position = new Point(tabletCenter_x,tabletCenter_y);
+                    Point position = new Point(tabletCenter_x, tabletCenter_y);
 
                     Dictionary<ushort, int> tileDictionary = new Dictionary<ushort, int>();
-                    if (!WorldGen.InWorld(position.X - 30, position.Y - 15) || !WorldGen.InWorld(position.X +30, position.Y + 15 ))
+                    if (!WorldGen.InWorld(position.X - 30, position.Y - 15) || !WorldGen.InWorld(position.X + 30, position.Y + 15))
                         continue;
                     WorldUtils.Gen(
                         new Point(position.X - 30, position.Y - 15),
@@ -60,7 +60,7 @@ namespace Coralite.Content.WorldGeneration
                 }
 
                 bool spawned = true;
-                while(spawned)
+                while (spawned)
                 {
                     int tabletCenter_x = Main.maxTilesX / 2 + WorldGen.genRand.NextFromList(-1, 1) * Main.maxTilesX / 3;
                     tabletCenter_x += WorldGen.genRand.Next(-Main.maxTilesX / 7, Main.maxTilesX / 7);

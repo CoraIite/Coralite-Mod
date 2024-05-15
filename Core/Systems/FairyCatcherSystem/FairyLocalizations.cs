@@ -46,8 +46,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             public const int ZoneBeach = 2;
 
             public const int DescriptionCount = 3;
-        } 
-        
+        }
+
         //-----------------------------------
         //       仙灵物品其他文本的本地化
         //-----------------------------------
@@ -96,7 +96,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 { FairyRarity.MR, this.GetLocalization("RarityMR", () => "秘宝") },
             };
 
-            Rarity_SP= this.GetLocalization("RaritySP", () => "特殊");
+            Rarity_SP = this.GetLocalization("RaritySP", () => "特殊");
 
             SpawnDescriptions = new LocalizedText[DescriptionID.DescriptionCount];
 
@@ -115,7 +115,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             UncaughtMouseText = this.GetLocalization("UncaughtMouseText", () => "???\n点击以查看捕获条件");
             SelectButtonMouseText = this.GetLocalization("SelectButtonMouseText", () => "左键单击以筛选指定稀有度的仙灵\n右键恢复为显示全部");
             SortButtonMouseText = this.GetLocalization("SortButtonMouseText", () => "左键单击以按指定规则排序\n右键恢复为默认按内部ID排序");
-            
+
             SortByTypeText = this.GetLocalization("SortByTypeText", () => "按内部ID排序");
             SortByRarityText = this.GetLocalization("SortByRarityText", () => "按稀有度排序");
             SortByCaughtText = this.GetLocalization("SortByCaughtText", () => "按是否捕获排序");
@@ -136,7 +136,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             FairyLifeMax = null;
             FairyDamage = null;
-            FairyDefence=null;
+            FairyDefence = null;
             FairyScale = null;
 
             RarityText = null;
@@ -161,7 +161,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public static string FormatIVDescription(LocalizedText pre, LocalizedText levelText, float @base, float bonused)
         {
-            return pre.Value + levelText.Format( bonused,@base);
+            return pre.Value + levelText.Format(bonused, @base);
         }
     }
 }

@@ -3,27 +3,27 @@ using Coralite.Core.Systems.ParticleSystem;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public class IceBurstParticle : ModParticle
+    public class IceBurstParticle : Particle
     {
         public override string Texture => AssetDirectory.BabyIceDragon + "IceBurst";
 
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
-            particle.color = Color.White;
-            particle.rotation = 0f;
-            particle.frame = new Rectangle(0, 0, 128, 128);
-            particle.shouldKilledOutScreen = false;
+            color = Color.White;
+            Rotation = 0f;
+            Frame = new Rectangle(0, 0, 128, 128);
+            shouldKilledOutScreen = false;
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            if (particle.fadeIn % 2 == 0)
-                particle.frame.Y = (int)(particle.fadeIn / 2) * 128;
+            if (fadeIn % 2 == 0)
+                Frame.Y = (int)(fadeIn / 2) * 128;
 
-            particle.fadeIn++;
+            fadeIn++;
 
-            if (particle.fadeIn > 16)
-                particle.active = false;
+            if (fadeIn > 16)
+                active = false;
         }
     }
 }

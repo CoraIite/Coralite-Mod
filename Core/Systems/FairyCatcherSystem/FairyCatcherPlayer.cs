@@ -1,6 +1,5 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Terraria;
-using Terraria.WorldBuilding;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -169,7 +168,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="base"></param>
         /// <param name="catcherItem"></param>
         /// <returns></returns>
-        public void TotalCatchPowerBonus(ref float @base,Item catcherItem)
+        public void TotalCatchPowerBonus(ref float @base, Item catcherItem)
         {
             StatModifier modifyer = fairyCatchPowerBonus;
             float exBonus = 0f;
@@ -179,7 +178,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             modifyer += exBonus;
 
-            @base= modifyer.ApplyTo(@base);
+            @base = modifyer.ApplyTo(@base);
         }
 
         /// <summary>

@@ -241,7 +241,7 @@ namespace Coralite.Content.Items.FlyingShields
                                         for (int i = 0; i < 3; i++)
                                         {
                                             Projectile.NewProjectileFromThis<ArachnopyreSpider>(Projectile.Center
-                                                , (angle + i * MathHelper.TwoPi / 3).ToRotationVector2() * 6, (int)(Projectile.damage *0.4f), Projectile.knockBack / 4, 1, ai2: 120);
+                                                , (angle + i * MathHelper.TwoPi / 3).ToRotationVector2() * 6, (int)(Projectile.damage * 0.4f), Projectile.knockBack / 4, 1, ai2: 120);
                                         }
                                     }
                                     SoundEngine.PlaySound(CoraliteSoundID.Boom_Item14, Projectile.Center);

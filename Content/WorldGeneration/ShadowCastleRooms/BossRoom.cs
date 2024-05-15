@@ -128,7 +128,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                                 else if (placePlatformChance > 2)
                                     placePlatformChance--;
 
-                                for (int x = 0; x < CorridorHeight + WallWidth * 2+1; x++)
+                                for (int x = 0; x < CorridorHeight + WallWidth * 2 + 1; x++)
                                 {
                                     int currentX = baseX + x;
 

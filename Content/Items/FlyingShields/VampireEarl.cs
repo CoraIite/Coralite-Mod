@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.useTime = Item.useAnimation = 14;
             Item.shoot = ModContent.ProjectileType<VampireEarlProj>();
             Item.knockBack = 6.5f;
-            Item.shootSpeed = 20/2;
+            Item.shootSpeed = 20 / 2;
             Item.damage = 115;
         }
 
@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnShootDusts()
         {
-            Lighting.AddLight(Projectile.Center, Color.Red.ToVector3()/2);
+            Lighting.AddLight(Projectile.Center, Color.Red.ToVector3() / 2);
             Projectile.SpawnTrailDust(20f, DustID.CrimsonTorch, -Main.rand.NextFloat(0.1f, 0.4f), Scale: Main.rand.NextFloat(1, 1.5f));
 
             if (Timer != 0 && Timer % shootDelay == 0)
@@ -88,7 +88,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnBackDusts()
         {
-            Lighting.AddLight(Projectile.Center, Color.Red.ToVector3()/2);
+            Lighting.AddLight(Projectile.Center, Color.Red.ToVector3() / 2);
             Projectile.SpawnTrailDust(20f, DustID.CrimsonTorch, -Main.rand.NextFloat(0.1f, 0.4f), Scale: Main.rand.NextFloat(1f, 1.5f));
         }
 
@@ -108,7 +108,7 @@ namespace Coralite.Content.Items.FlyingShields
 
             for (int i = trailCachesLength - 1; i > 10; i--)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, null,
-                c * 0.5f * ((trailCachesLength-i) * 1f / (trailCachesLength-10)), Projectile.oldRot[i] - 1.57f + extraRotation, origin, Projectile.scale * ( i * 1f/trailCachesLength), 0, 0);
+                c * 0.5f * ((trailCachesLength - i) * 1f / (trailCachesLength - 10)), Projectile.oldRot[i] - 1.57f + extraRotation, origin, Projectile.scale * (i * 1f / trailCachesLength), 0, 0);
 
             Main.spriteBatch.Draw(mainTex, pos, null, c * 0.3f, Projectile.rotation - 1.57f + extraRotation, origin, Projectile.scale * 1.15f, 0, 0);
             Main.spriteBatch.Draw(mainTex, pos, null, lightColor, Projectile.rotation - 1.57f + extraRotation, origin, Projectile.scale, 0, 0);
@@ -324,7 +324,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (!Owner.moonLeech && !target.immortal && Main.rand.NextBool(2,10))
+            if (!Owner.moonLeech && !target.immortal && Main.rand.NextBool(2, 10))
             {
                 float num = damageDone * 0.025f;
                 if ((int)num != 0 && !(Owner.lifeSteal <= 0f))
@@ -342,7 +342,7 @@ namespace Coralite.Content.Items.FlyingShields
                 for (int j = 0; j < 4; j++)
                 {
                     Dust d = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(2, 2), DustID.VampireHeal,
-                         Helper.NextVec2Dir(0.1f,0.5f), Scale: Main.rand.NextFloat(1f, 1.5f));
+                         Helper.NextVec2Dir(0.1f, 0.5f), Scale: Main.rand.NextFloat(1f, 1.5f));
                     d.noGravity = true;
                 }
             }
@@ -359,7 +359,7 @@ namespace Coralite.Content.Items.FlyingShields
             float oldVelY = Math.Abs(oldVelocity.Y);
 
             if (oldVelX > newVelX)
-                Projectile.velocity.X = -Math.Sign(oldVelocity.X) * Math.Clamp(oldVelX * 1.5f,0,8);
+                Projectile.velocity.X = -Math.Sign(oldVelocity.X) * Math.Clamp(oldVelX * 1.5f, 0, 8);
             if (oldVelY > newVelY)
                 Projectile.velocity.Y = -Math.Sign(oldVelocity.Y) * Math.Clamp(oldVelY * 1.5f, 0, 8);
 
@@ -386,7 +386,7 @@ namespace Coralite.Content.Items.FlyingShields
             }
 
             const int trailCacheLength = 6;
-            Color shadowColor = Color.Red ;
+            Color shadowColor = Color.Red;
             shadowColor.A = 50;
             shadowColor *= (Projectile.alpha / 255f);
             if (oldFrame != null && oldDirection != null)

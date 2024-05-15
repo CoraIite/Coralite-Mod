@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.RedJades
             new Color(43, 43, 51), Coralite.Instance.RedJadeRed,
             trailCacheLength: 24,
             texturePath: AssetDirectory.RedJadeItems,
-            yujianAIsRandom:new int[]
+            yujianAIsRandom: new int[]
             {
                 4,
                 2,

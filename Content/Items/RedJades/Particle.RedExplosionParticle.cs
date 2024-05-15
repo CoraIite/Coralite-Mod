@@ -5,88 +5,85 @@ using Terraria;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedExplosionParticle : ModParticle
+    public class RedExplosionParticle : Particle
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "LightFog";
 
-        public override bool ShouldUpdateCenter(Particle particle) => false;
+        private float scaleAdder;
 
-        public override void OnSpawn(Particle particle)
+        public override bool ShouldUpdateCenter() => false;
+
+        public override void OnSpawn()
         {
-            particle.frame = new Rectangle(0, 0, 256, 256);
-            particle.rotation = Main.rand.NextFloat(6.282f);
-            particle.scale = 0.01f;
-            particle.shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/GlowingDust", ReLogic.Content.AssetRequestMode.ImmediateLoad), "GlowingDustPass");
-            particle.shader.UseOpacity(1);
+            Frame = new Rectangle(0, 0, 256, 256);
+            Rotation = Main.rand.NextFloat(6.282f);
+            Scale = 0.01f;
+            shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/GlowingDust", ReLogic.Content.AssetRequestMode.ImmediateLoad), "GlowingDustPass");
+            shader.UseOpacity(1);
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            particle.shader.UseColor(particle.color);
-            particle.scale += particle.oldRot[0];
+            shader.UseColor(color);
+            Scale += scaleAdder;
 
-            if (particle.fadeIn > 8)
+            if (fadeIn > 8)
             {
-                particle.shader.UseOpacity((12f - particle.fadeIn) / 4);
-                particle.oldRot[0] *= 0.2f;
+                shader.UseOpacity((12f - fadeIn) / 4);
+                scaleAdder *= 0.2f;
             }
 
-            particle.fadeIn++;
-            if (particle.fadeIn > 12)
-                particle.active = false;
+            fadeIn++;
+            if (fadeIn > 12)
+                active = false;
         }
 
         public static void Spawn(Vector2 center, float maxScale, Color newColor = default)
         {
-            Particle particle = Particle.NewParticleDirect(center, Vector2.Zero, CoraliteContent.ParticleType<RedExplosionParticle>(), newColor, 0);
-            particle.oldRot = new float[1]
-            {
-                maxScale/8
-            };
+            RedExplosionParticle particle = NewParticle<RedExplosionParticle>(center, Vector2.Zero, newColor, 0);
+            particle.scaleAdder = maxScale / 8;
         }
     }
 
-    public class RedGlowParticle : ModParticle
+    public class RedGlowParticle : Particle
     {
         public override string Texture => AssetDirectory.Rediancie + "RedShield_Flow";
 
-        public override bool ShouldUpdateCenter(Particle particle) => false;
+        private float scaleAdder;
 
-        public override void OnSpawn(Particle particle)
+        public override bool ShouldUpdateCenter() => false;
+
+        public override void OnSpawn()
         {
-            particle.frame = new Rectangle(0, 0, 256, 256);
-            particle.rotation = Main.rand.NextFloat(6.282f);
-            //particle.shader = new Terraria.Graphics.Shaders.ArmorShaderData(new Ref<Effect>(Coralite.Instance.Assets.Request<Effect>("Effects/GlowingDust", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "GlowingDustPass");
-            //particle.shader.UseOpacity(1);
+            Frame = new Rectangle(0, 0, 256, 256);
+            Rotation = Main.rand.NextFloat(6.282f);
+            //shader = new Terraria.Graphics.Shaders.ArmorShaderData(new Ref<Effect>(Coralite.Instance.Assets.Request<Effect>("Effects/GlowingDust", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "GlowingDustPass");
+            //shader.UseOpacity(1);
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            //particle.shader.UseColor(particle.color);
-            particle.rotation += 0.2f;
-            particle.scale += particle.oldRot[0];
-            if (particle.fadeIn > 6)
+            //shader.UseColor(color);
+            Rotation += 0.2f;
+            Scale += scaleAdder;
+            if (fadeIn > 6)
             {
-                //particle.shader.UseOpacity((12f - particle.fadeIn) / 6);
-                particle.oldRot[0] *= 0.2f;
+                //shader.UseOpacity((12f - fadeIn) / 6);
+                scaleAdder *= 0.2f;
             }
 
-            if (particle.fadeIn > 8)
-                particle.color *= 0.84f;
+            if (fadeIn > 8)
+                color *= 0.84f;
 
-            particle.fadeIn++;
-            if (particle.fadeIn > 14)
-                particle.active = false;
+            fadeIn++;
+            if (fadeIn > 14)
+                active = false;
         }
 
         public static void Spawn(Vector2 center, float maxScale, Color newColor = default, float scale = 1)
         {
-            Particle particle = Particle.NewParticleDirect(center, Vector2.Zero, CoraliteContent.ParticleType<RedGlowParticle>(), newColor, scale);
-            particle.oldRot = new float[1]
-            {
-                (maxScale-scale)/6
-            };
+            RedGlowParticle particle = NewParticle<RedGlowParticle>(center, Vector2.Zero, newColor, scale);
+            particle.scaleAdder = (maxScale - scale) / 6;
         }
-
     }
 }

@@ -13,6 +13,8 @@ namespace Coralite.Content.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CrystalCave");
 
+        public override string BestiaryIcon => AssetDirectory.Biomes + "MagicCrystalCaveIcon";
+
         public override bool IsBiomeActive(Player player)
         {
             bool b1 = ModContent.GetInstance<MagicCrystalCaveTileCount>().BasaltTileCount >= 120;

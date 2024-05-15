@@ -364,7 +364,7 @@ namespace Coralite.Content.WorldGeneration
                     if (!up.HasTile || !bottom.HasTile || !left.HasTile || !right.HasTile ||
                         !upLeft.HasTile || !upRight.HasTile || !bottomLeft.HasTile || !bottomRight.HasTile ||
                       !Main.tileSolid[up.TileType] || !Main.tileSolid[bottom.TileType]
-                      || !Main.tileSolid[left.TileType] || !Main.tileSolid[right.TileType]||
+                      || !Main.tileSolid[left.TileType] || !Main.tileSolid[right.TileType] ||
                       !Main.tileSolid[upLeft.TileType] || !Main.tileSolid[upRight.TileType]
                       || !Main.tileSolid[bottomLeft.TileType] || !Main.tileSolid[bottomRight.TileType])
                         Main.tile[i, j].ResetToType(TileID.Grass);

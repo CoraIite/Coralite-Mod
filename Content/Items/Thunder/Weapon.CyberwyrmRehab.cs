@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.Thunder
             //    }
             //}
 
-            if (i1!=-1)
+            if (i1 != -1)
             {
                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, player.Center);
             }

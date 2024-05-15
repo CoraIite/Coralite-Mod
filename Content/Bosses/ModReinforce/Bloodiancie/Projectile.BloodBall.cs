@@ -51,8 +51,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 {
                     for (int i = 0; i < 2; i++)
                     {
-                        particles.NewParticle(Projectile.Center, Helper.NextVec2Dir(2, 4),
-                            CoraliteContent.ParticleType<Fog>(), Color.DarkRed, Main.rand.NextFloat(1f, 1.5f));
+                        particles.NewParticle<Fog>(Projectile.Center, Helper.NextVec2Dir(2, 4),
+                             Color.DarkRed, Main.rand.NextFloat(1f, 1.5f));
                     }
 
                     Vector2 targetCenter = Owner.Center + new Vector2(0, -450);
@@ -68,7 +68,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 {
                     Projectile.velocity *= 0;
                     shootDir = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
-                    particles.NewParticle(Projectile.Center + shootDir * 20, shootDir * 8, CoraliteContent.ParticleType<RedArrow>(),
+                    particles.NewParticle<RedArrow>(Projectile.Center + shootDir * 20, shootDir * 8,
                         Scale: 2f);
 
                     SoundEngine.PlaySound(CoraliteSoundID.AngryNimbus_NPCDeath33, Projectile.Center);
@@ -78,8 +78,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 {
                     for (int i = 0; i < 2; i++)
                     {
-                        particles.NewParticle(Projectile.Center, Helper.NextVec2Dir(2, 4),
-                            CoraliteContent.ParticleType<Fog>(), Color.DarkRed, Main.rand.NextFloat(1f, 1.5f));
+                        particles.NewParticle<Fog>(Projectile.Center, Helper.NextVec2Dir(2, 4),
+                             Color.DarkRed, Main.rand.NextFloat(1f, 1.5f));
                     }
                     break;
                 }
@@ -88,8 +88,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 {
                     for (int i = 0; i < 2; i++)
                     {
-                        particles.NewParticle(Projectile.Center, Helper.NextVec2Dir(2, 4),
-                            CoraliteContent.ParticleType<Fog>(), Color.DarkRed, Main.rand.NextFloat(1f, 1.5f));
+                        particles.NewParticle<Fog>(Projectile.Center, Helper.NextVec2Dir(2, 4),
+                             Color.DarkRed, Main.rand.NextFloat(1f, 1.5f));
                     }
 
                     if (Timer % 7 == 0)
@@ -180,29 +180,29 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         }
     }
 
-    public class RedArrow : ModParticle
+    public class RedArrow : Particle
     {
         public override string Texture => AssetDirectory.Bloodiancie + Name;
 
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
-            particle.color = Color.White;
-            particle.frame = Texture2D.Frame();
-            particle.rotation = particle.velocity.ToRotation();
+            color = Color.White;
+            Frame = GetTexture().Frame();
+            Rotation = Velocity.ToRotation();
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            particle.fadeIn++;
+            fadeIn++;
 
-            if (particle.fadeIn > 30)
+            if (fadeIn > 30)
             {
-                particle.color.A = (byte)(particle.color.A * 0.7f);
+                color.A = (byte)(color.A * 0.7f);
             }
 
-            if (particle.color.A < 10)
+            if (color.A < 10)
             {
-                particle.active = false;
+                active = false;
             }
         }
     }

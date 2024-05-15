@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
             Projectile.NewProjectile(source, player.MountedCenter
                 , velocity.SafeNormalize(Vector2.Zero) * 4f, ProjectileID.NightsEdge
-                , damage / 2, knockback, player.whoAmI, player.direction * player.gravDir*0.1f, 30f, adjustedItemScale4);
+                , damage / 2, knockback, player.whoAmI, player.direction * player.gravDir * 0.1f, 30f, adjustedItemScale4);
             return true;
         }
 

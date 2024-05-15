@@ -212,7 +212,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
             int num7 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height
                 , DustID.JunglePlants, Projectile.velocity.X * 0.2f + (float)(Main.player[Projectile.owner].direction * 3),
-                Projectile   .velocity.Y * 0.2f, 0, default(Color), 1.2f);
+                Projectile.velocity.Y * 0.2f, 0, default(Color), 1.2f);
             Main.dust[num7].noGravity = true;
 
             // The code in this method is important to align the sprite with the hitbox how we want it to

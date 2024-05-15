@@ -16,7 +16,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public readonly void SaveData(TagCompound tag)
         {
-            tag.Add( "scaleBonus", scaleBonus);
+            tag.Add("scaleBonus", scaleBonus);
             SaveStatModifyer(nameof(damageBonus), damageBonus, tag);
             SaveStatModifyer(nameof(lifeMaxBonus), lifeMaxBonus, tag);
             SaveStatModifyer(nameof(defenceBonus), defenceBonus, tag);
@@ -24,14 +24,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public void LoadData(TagCompound tag)
         {
-            if(tag.ContainsKey("scaleBonus"))
+            if (tag.ContainsKey("scaleBonus"))
                 scaleBonus = tag.GetFloat("scaleBonus");
             LoadStatModifyer(nameof(damageBonus), ref damageBonus, tag);
             LoadStatModifyer(nameof(lifeMaxBonus), ref lifeMaxBonus, tag);
             LoadStatModifyer(nameof(defenceBonus), ref defenceBonus, tag);
         }
 
-        public static void SaveStatModifyer(string name,StatModifier modifyer, TagCompound tag)
+        public static void SaveStatModifyer(string name, StatModifier modifyer, TagCompound tag)
         {
             tag.Add(name + "Base", modifyer.Base);
             tag.Add(name + "Flat", modifyer.Flat);

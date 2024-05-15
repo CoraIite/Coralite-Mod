@@ -14,7 +14,7 @@
 //        {
 //            if (damageClass == Generic)
 //                return StatInheritanceData.Full;
-            
+
 //            if (damageClass == Summon)
 //                return new StatInheritanceData(
 //                    damageInheritance: 0.5f,

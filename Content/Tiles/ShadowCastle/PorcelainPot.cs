@@ -1,9 +1,9 @@
-﻿using Coralite.Core;
-using Terraria.Audio;
+﻿using Coralite.Content.Items.ShadowCastle;
+using Coralite.Core;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Coralite.Content.Items.ShadowCastle;
 using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.ShadowCastle

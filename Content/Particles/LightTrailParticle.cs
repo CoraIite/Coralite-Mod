@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -7,62 +6,65 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class LightTrailParticle : ModParticle
+    public class LightTrailParticle : Particle
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "HorizontalLight";
 
-        public override void OnSpawn(Particle particle)
+        private Color targetColor;
+
+        public override void OnSpawn()
         {
-            particle.rotation = particle.velocity.ToRotation();
-            particle.InitOldCaches(10);
+            Rotation = Velocity.ToRotation();
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            particle.fadeIn++;
-            if (particle.fadeIn > 13)
+            fadeIn++;
+            if (fadeIn > 13)
             {
-                particle.color = Color.Lerp(particle.color, new Color(0, 60, 250, 0), 0.1f);
+                color = Color.Lerp(color, targetColor, 0.1f);
 
-                if (particle.velocity.Y < 7)
+                if (Velocity.Y < 7)
                 {
-                    particle.velocity.Y += 0.1f;
+                    Velocity.Y += 0.1f;
                 }
 
-                particle.velocity.X *= 0.98f;
+                Velocity.X *= 0.98f;
             }
 
-            if (particle.color.A < 2)
-                particle.active = false;
+            if (color.A < 2)
+                active = false;
 
-            particle.UpdatePosCachesNormally(10);
+            UpdatePosCachesNormally(oldCenter.Length);
         }
 
-        public static Particle Spawn(Vector2 center, Vector2 velocity, Color newcolor, float scale)
+        public static LightTrailParticle Spawn(Vector2 center, Vector2 velocity, Color newcolor, float scale, Color targetColor = default, int trailCacheCount = 10)
         {
-            Particle p = Particle.NewParticleDirect(center, velocity, CoraliteContent.ParticleType<LightTrailParticle>()
-                  , newcolor, scale);
+            LightTrailParticle p = NewParticle<LightTrailParticle>(center, velocity, newcolor, scale);
+            p.targetColor = targetColor == default ? new Color(0, 60, 250, 0) : targetColor;
+            p.InitOldCaches(trailCacheCount);
+
             return p;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Particle particle)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
-            Texture2D mainTex = modParticle.Texture2D.Value;
-            float scale = particle.scale;
-            Color c = particle.color;
+            Texture2D mainTex = GetTexture().Value;
+            float scale = Scale;
+            Color c = color;
 
             List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
             List<CustomVertexInfo> bar3 = new List<CustomVertexInfo>();
             List<CustomVertexInfo> bar4 = new List<CustomVertexInfo>();
 
             float height = mainTex.Height * scale;
+            int cacheCount = oldCenter.Length;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < cacheCount; i++)
             {
-                float factor = i / 10f;
-                Vector2 Center = particle.oldCenter[i];
-                Vector2 normal = (particle.oldRot[i] + 1.57f).ToRotationVector2();
+                float factor = (float)i / cacheCount;
+                Vector2 Center = oldCenter[i];
+                Vector2 normal = (oldRot[i] + 1.57f).ToRotationVector2();
 
                 Vector2 Top = Center - Main.screenPosition + normal * height;
                 Vector2 Bottom = Center - Main.screenPosition - normal * height;
@@ -70,7 +72,7 @@ namespace Coralite.Content.Particles
                 Vector2 Top2 = Center - Main.screenPosition + normal * height * 1.5f;
                 Vector2 Bottom2 = Center - Main.screenPosition - normal * height * 1.5f;
 
-                var Color2 = particle.color;//Color.Lerp(particle.color, Color.DarkBlue, factor);
+                var Color2 = color;//Color.Lerp(color, Color.DarkBlue, factor);
                 bars.Add(new(Top, Color2, new Vector3(factor, 0, 1)));
                 bars.Add(new(Bottom, Color2, new Vector3(factor, 1, 1)));
                 Color2 = Color.White * (c.A / 255f);

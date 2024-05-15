@@ -7,107 +7,97 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.Rediancie
 {
-    public class RedShield : ModParticle
+    public class RedShield : Particle
     {
         public override string Texture => AssetDirectory.Rediancie + "RedShield";
         public static Asset<Texture2D> flowTex;
+
+        private Entity rediancie;
+        private bool toFadeOut = false;
+        private bool Init = true;
 
         public override void Load()
         {
             flowTex = ModContent.Request<Texture2D>(AssetDirectory.Rediancie + "RedShield_Flow");
         }
 
-        public override bool ShouldUpdateCenter(Particle particle) => false;
-
-        public override void OnSpawn(Particle particle)
+        public override void Unload()
         {
-            particle.color = Coralite.Instance.RedJadeRed;
-            particle.color.A = 0;
-            particle.rotation = Main.rand.NextFloat(6.282f);
-            particle.oldRot = new float[2];
-            particle.scale = 0f;
-            particle.shouldKilledOutScreen = false;
+            flowTex = null;
         }
 
-        public override void Update(Particle particle)
-        {
-            particle.rotation += 0.06f;
+        public override bool ShouldUpdateCenter() => false;
 
-            if (particle.oldRot[0] == 0f)
+        public override void OnSpawn()
+        {
+            color = Coralite.Instance.RedJadeRed;
+            color.A = 0;
+            Rotation = Main.rand.NextFloat(6.282f);
+            Scale = 0f;
+            shouldKilledOutScreen = false;
+        }
+
+        public override void Update()
+        {
+            Rotation += 0.06f;
+
+            if (Init)
             {
-                particle.scale += 0.05f;
-                particle.color.A += 255 / 16;
-                if (particle.scale > 0.8f)
+                Scale += 0.05f;
+                color.A += 255 / 16;
+                if (Scale > 0.8f)
                 {
-                    particle.scale = 0.8f;
-                    particle.color.A = 255;
-                    particle.oldRot[0] = 1;
+                    Scale = 0.8f;
+                    color.A = 255;
+                    Init = false;
                 }
             }
 
-            if (GetDatas(particle, out Entity rediancie))
+            if (rediancie != null)
+                Center = rediancie.Center;
+
+            fadeIn--;
+
+            if (fadeIn < 0)
+                toFadeOut = true;
+
+            if (toFadeOut)
             {
-                particle.center = rediancie.Center;
-            }
-
-            particle.fadeIn--;
-
-            if (particle.fadeIn < 0)
-                particle.oldRot[1] = 1;
-
-            if (particle.oldRot[1] == 1)
-            {
-                particle.color.A -= 255 / 16;
-                if (particle.color.A < 10)
-                    particle.active = false;
+                color.A -= 255 / 16;
+                if (color.A < 10)
+                    active = false;
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Particle particle)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            Vector2 center = particle.center - Main.screenPosition;
-            spriteBatch.Draw(Texture2D.Value, center, null, particle.color, particle.rotation, Texture2D.Size() / 2, particle.scale, SpriteEffects.None, 0);
+            Vector2 center = this.Center - Main.screenPosition;
+            Texture2D mainTex = GetTexture().Value;
+            spriteBatch.Draw(mainTex, center, null, color, Rotation, mainTex.Size() / 2, Scale, SpriteEffects.None, 0);
 
-            float extraRot1 = particle.rotation + particle.fadeIn * 0.1f;
-            float extraRot2 = particle.rotation + particle.fadeIn * 0.05f;
+            float extraRot1 = Rotation + fadeIn * 0.1f;
+            float extraRot2 = Rotation + fadeIn * 0.05f;
             Vector2 flowOrigin = flowTex.Size() / 2;
 
-            spriteBatch.Draw(flowTex.Value, center, null, particle.color, extraRot1, flowOrigin, particle.scale - 0.1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(flowTex.Value, center, null, new Color(255, 255, 255, particle.color.A * 3 / 4), extraRot1 + extraRot2, flowOrigin, particle.scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
-            spriteBatch.Draw(flowTex.Value, center, null, particle.color, extraRot2 + 3.141f, flowOrigin, particle.scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(flowTex.Value, center, null, color, extraRot1, flowOrigin, Scale - 0.1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(flowTex.Value, center, null, new Color(255, 255, 255, color.A * 3 / 4), extraRot1 + extraRot2, flowOrigin, Scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(flowTex.Value, center, null, color, extraRot2 + 3.141f, flowOrigin, Scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
         }
-
-
 
         public static void Spawn(Entity rediancie, int maxTime)
         {
-            Particle particle = Particle.NewParticleDirect(rediancie.Center, Vector2.Zero, CoraliteContent.ParticleType<RedShield>());
-            particle.datas = new object[1]
-            {
-                rediancie
-            };
+            RedShield particle = NewParticle<RedShield>(rediancie.Center, Vector2.Zero);
+            particle.rediancie = rediancie;
             particle.fadeIn = maxTime;
         }
 
         public static void Kill()
         {
             int type = CoraliteContent.ParticleType<RedShield>();
-            foreach (var particle in ParticleSystem.Particles.Where(p => p.active && p.type == type))
+            foreach (var particle in ParticleSystem.Particles.Where(p => p.active && p.Type == type))
             {
                 particle.fadeIn = -1;
             }
-        }
-
-        private bool GetDatas(Particle particle, out Entity rediancie)
-        {
-            if (particle.datas == null || particle.datas[0] is not Entity)
-            {
-                rediancie = null;
-                return false;
-            }
-
-            rediancie = (Entity)particle.datas[0];
-            return true;
         }
     }
 }

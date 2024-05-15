@@ -35,7 +35,7 @@ namespace Coralite.Content.UI
 
         public override void OnInitialize()
         {
-            panel = new UIDragablePanel(true,true,true);
+            panel = new UIDragablePanel(true, true, true);
 
             panel.SetPadding(6);
             //panel.Left.Set(-310f, 0f);
@@ -75,7 +75,7 @@ namespace Coralite.Content.UI
                 MathHelper.Clamp(panel.Width.Pixels - 18, panel.MinWidth.Pixels, panel.MaxWidth.Pixels)
                 , 0);
             itemSlotGrid.Height.Set(
-                MathHelper.Clamp(panel.Height.Pixels - 70, panel.MinHeight.Pixels-66, panel.MaxHeight.Pixels - 80)
+                MathHelper.Clamp(panel.Height.Pixels - 70, panel.MinHeight.Pixels - 66, panel.MaxHeight.Pixels - 80)
                 , 0);
         }
 
@@ -176,7 +176,7 @@ namespace Coralite.Content.UI
             state = State.Normal;
             panel.BackgroundColor = new Color(63, 82, 151) * 0.7f;
             panel.Width.Set(305, 0f);
-            panel.Height.Set( 350, 0f);
+            panel.Height.Set(350, 0f);
             //panel.Recalculate();
         }
 
@@ -194,7 +194,7 @@ namespace Coralite.Content.UI
         protected override void DrawChildren(SpriteBatch spriteBatch)
         {
             //if (state == State.Normal)
-                base.DrawChildren(spriteBatch);
+            base.DrawChildren(spriteBatch);
         }
     }
 
@@ -238,7 +238,7 @@ namespace Coralite.Content.UI
                 if (!Item.IsAir && invSlot != -1)
                 {
                     Main.LocalPlayer.GetItem(Main.myPlayer, Item, GetItemSettings.InventoryUIToInventorySettings);
-                    items[index]=new Item();
+                    items[index] = new Item();
                     Helper.PlayPitched("Fairy/FairyBottleClick", 0.4f, 0);
                 }
 
@@ -293,7 +293,7 @@ namespace Coralite.Content.UI
             {
                 backTex = TextureAssets.InventoryBack14.Value;
             }
-            else if(Item.ModItem is IFairyItem fairyItem&&fairyItem.IsDead)
+            else if (Item.ModItem is IFairyItem fairyItem && fairyItem.IsDead)
             {
                 backTex = TextureAssets.InventoryBack11.Value;
             }

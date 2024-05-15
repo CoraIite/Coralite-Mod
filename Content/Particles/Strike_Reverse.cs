@@ -1,36 +1,34 @@
-﻿using Coralite.Core.Loaders;
-using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    internal class Strike_Reverse : ModParticle
+    internal class Strike_Reverse : Particle
     {
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
-            particle.color = Color.White;
-            particle.shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/JustTexture", ReLogic.Content.AssetRequestMode.ImmediateLoad), "JustTexturePass");
-            particle.frame = new Rectangle(0, 0, 128, 128);
+            color = Color.White;
+            shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/JustTexture", ReLogic.Content.AssetRequestMode.ImmediateLoad), "JustTexturePass");
+            Frame = new Rectangle(0, 0, 128, 128);
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            if (particle.fadeIn % 2 == 0)
-                particle.frame.Y = (int)(particle.fadeIn / 2) * 128;
+            if (fadeIn % 2 == 0)
+                Frame.Y = (int)(fadeIn / 2) * 128;
 
-            particle.fadeIn++;
+            fadeIn++;
 
-            if (particle.fadeIn > 16)
-                particle.active = false;
+            if (fadeIn > 16)
+                active = false;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Particle particle)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
             Vector2 origin = new Vector2(96, 96);
 
-            spriteBatch.Draw(modParticle.Texture2D.Value, particle.center - Main.screenPosition, particle.frame, particle.color, particle.rotation, origin, particle.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, Frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
     }
 }

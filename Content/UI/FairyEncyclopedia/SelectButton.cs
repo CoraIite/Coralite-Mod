@@ -36,8 +36,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 if (FairyEncyclopedia.selectType.HasValue && FairyEncyclopedia.selectType.Value != _rarity)
                     c *= 0.5f;
 
-                    Utils.DrawBorderString(spriteBatch, text, GetDimensions().Center()+new Vector2(0,4), c,
-                        anchorx: 0.5f, anchory: 0.5f);
+                Utils.DrawBorderString(spriteBatch, text, GetDimensions().Center() + new Vector2(0, 4), c,
+                    anchorx: 0.5f, anchory: 0.5f);
             }
             else
             {

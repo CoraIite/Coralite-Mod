@@ -79,10 +79,10 @@ namespace Coralite.Core.Systems.YujianSystem
             TileCollide = tileCollide;
             TexturePath = texturePath;
             PathHasName = pathHasName;
-            if(yujianAIsRandom == null)
+            if (yujianAIsRandom == null)
             {
                 yujianAIsRandom = new int[yujianAIs.Length];
-                for(int i = 0; i < yujianAIsRandom.Length; i++)
+                for (int i = 0; i < yujianAIsRandom.Length; i++)
                 {
                     yujianAIsRandom[i] = 1;
                 }
@@ -126,7 +126,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public override void OnSpawn(IEntitySource source)
         {
-            if(source is YujianSource yujianSource)
+            if (source is YujianSource yujianSource)
             {
                 SourceYujian = yujianSource.Yujian;
             }
@@ -138,7 +138,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public sealed override void AI()
         {
-            if(Owner.HeldItem.ModItem is not BaseHulu && !SourceYujian.MainYujian) // 如果手上不是葫芦并且不是主御剑，则清除自己
+            if (Owner.HeldItem.ModItem is not BaseHulu && !SourceYujian.MainYujian) // 如果手上不是葫芦并且不是主御剑，则清除自己
             {
                 Projectile.Kill();
                 return;
@@ -378,7 +378,7 @@ namespace Coralite.Core.Systems.YujianSystem
             for (int j = 0; j < yujianAIs.Length; j++)
             {
                 rand -= yujianAIsRandom[j];
-                if(rand <= 0)
+                if (rand <= 0)
                 {
                     State = j + 1;
                     yujianAIs[(int)State - 1].OnStart(this);
@@ -500,7 +500,7 @@ namespace Coralite.Core.Systems.YujianSystem
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (Owner.HeldItem.ModItem is not BaseHulu)  
+            if (Owner.HeldItem.ModItem is not BaseHulu)
                 modifiers.SourceDamage *= 0.5f;
         }
         public sealed override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

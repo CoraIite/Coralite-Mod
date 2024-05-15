@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.Misc_Melee
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.DemoniteBar,10)
+                .AddIngredient(ItemID.DemoniteBar, 10)
                 .AddTile(TileID.Anvils)
                 .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
                 .Register();

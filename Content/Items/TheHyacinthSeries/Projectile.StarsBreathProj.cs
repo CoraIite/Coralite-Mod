@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.TheHyacinthSeries
 {
     public class StarsBreathHeldProj : BaseGunHeldProj
     {
-        public override string Texture => AssetDirectory.TheHyacinthSeriesItems+Name;
+        public override string Texture => AssetDirectory.TheHyacinthSeriesItems + Name;
 
         public StarsBreathHeldProj() : base(0.3f, 22, -6, AssetDirectory.TheHyacinthSeriesItems) { }
 
@@ -137,12 +137,12 @@ namespace Coralite.Content.Items.TheHyacinthSeries
             Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center
                 , new Color(255, 255, 255, 0) * 0.7f, shineColor,
                 0.5f, 0f, 0.5f, 0.5f, 1f,
-                Projectile.rotation, new Vector2(3.3f, 1f), Vector2.One*1.7f);
-            Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + (Projectile.rotation + 1.57f+0.785f).ToRotationVector2() * 8
+                Projectile.rotation, new Vector2(3.3f, 1f), Vector2.One * 1.7f);
+            Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + (Projectile.rotation + 1.57f + 0.785f).ToRotationVector2() * 8
                 , new Color(255, 255, 255, 0) * 0.7f, shineColor,
                 0.5f, 0f, 0.5f, 0.5f, 1f,
                 Projectile.rotation, new Vector2(1f, 0.3f), Vector2.One);
-            Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center - (Projectile.rotation + 1.57f+0.785f).ToRotationVector2() * 8
+            Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center - (Projectile.rotation + 1.57f + 0.785f).ToRotationVector2() * 8
                 , new Color(255, 255, 255, 0) * 0.7f, shineColor,
                 0.5f, 0f, 0.5f, 0.5f, 1f,
                 Projectile.rotation, new Vector2(1f, 0.3f), Vector2.One);

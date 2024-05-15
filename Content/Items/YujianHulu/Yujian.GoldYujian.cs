@@ -211,8 +211,8 @@ namespace Coralite.Content.Items.YujianHulu
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    Particle particle = Particle.NewParticleDirect(Projectile.Center + Main.rand.NextVector2CircularEdge(16, 16) + i * Projectile.velocity, Vector2.Zero, CoraliteContent.ParticleType<HorizontalStar>(), Color.Gold, Main.rand.NextFloat(0.1f, 0.15f));
-                    particle.rotation = 1.57f;
+                    Particle particle = Particle.NewParticle(Projectile.Center + Main.rand.NextVector2CircularEdge(16, 16) + i * Projectile.velocity, Vector2.Zero, CoraliteContent.ParticleType<HorizontalStar>(), Color.Gold, Main.rand.NextFloat(0.1f, 0.15f));
+                    particle.Rotation = 1.57f;
                 }
             }
 

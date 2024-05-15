@@ -2,7 +2,7 @@
 
 namespace Coralite.Core.Systems.FlyingShieldSystem
 {
-    public interface IFlyingShieldAccessory: IFlyingShieldAccessory_Fly, IFlyingShieldAccessory_Guard
+    public interface IFlyingShieldAccessory : IFlyingShieldAccessory_Fly, IFlyingShieldAccessory_Guard
     {
 
     }

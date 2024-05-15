@@ -14,7 +14,7 @@ namespace Coralite.Content.WorldGeneration
         {
             Item.useTime = Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.shoot = 1;
+            //Item.shoot = 1;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

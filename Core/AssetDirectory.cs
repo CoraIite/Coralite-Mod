@@ -214,5 +214,7 @@ namespace Coralite.Core
 
         public const string ShadowCastleEvents = Events + "ShadowCastle/";
 
+        public const string Biomes = Assets + "Biomes/";
+
     }
 }

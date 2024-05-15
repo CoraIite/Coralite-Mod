@@ -34,8 +34,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             float rotation = Main.rand.NextFloat(6.282f);
             for (int i = 0; i < 3; i++)
             {
-                Particle particle = Particle.NewParticleDirect(Projectile.Center + rotation.ToRotationVector2() * 64, Vector2.Zero, CoraliteContent.ParticleType<Strike_Reverse>(), Scale: 1f);
-                particle.rotation = rotation + 2.2f;
+                Particle particle = Particle.NewParticle(Projectile.Center + rotation.ToRotationVector2() * 64, Vector2.Zero, CoraliteContent.ParticleType<Strike_Reverse>(), Scale: 1f);
+                particle.Rotation = rotation + 2.2f;
                 rotation += 2.094f;   //2/3 Pi
             }
 
@@ -55,10 +55,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     float rotation = Main.rand.NextFloat(6.282f);
                     for (int i = 0; i < 3; i++)
                     {
-                        Particle particle2 = Particle.NewParticleDirect(Projectile.Center + (rotation + 0.2f).ToRotationVector2() * 96, Vector2.Zero, CoraliteContent.ParticleType<Strike_Reverse>(), Scale: 1.4f);
-                        particle2.rotation = rotation + 2.2f;
-                        Particle particle = Particle.NewParticleDirect(Projectile.Center + rotation.ToRotationVector2() * 96, Vector2.Zero, CoraliteContent.ParticleType<Strike>(), Coralite.Instance.IcicleCyan, 1.8f);
-                        particle.rotation = rotation + 2.2f;
+                        Particle particle2 = Particle.NewParticle(Projectile.Center + (rotation + 0.2f).ToRotationVector2() * 96, Vector2.Zero, CoraliteContent.ParticleType<Strike_Reverse>(), Scale: 1.4f);
+                        particle2.Rotation = rotation + 2.2f;
+                        Particle particle = Particle.NewParticle(Projectile.Center + rotation.ToRotationVector2() * 96, Vector2.Zero, CoraliteContent.ParticleType<Strike>(), Coralite.Instance.IcicleCyan, 1.8f);
+                        particle.Rotation = rotation + 2.2f;
                         rotation += 2.094f;   //2/3 Pi
                     }
                 }

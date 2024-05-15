@@ -1,5 +1,4 @@
-﻿using Coralite.Content.DamageClasses;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -244,7 +243,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (dead)
             {
                 newColor = Color.OrangeRed;
-                status = FairySystem.ResurrectionTime.Format($"{resurrectionTime / (60 * 60)}:{resurrectionTime / 60 %60}");
+                status = FairySystem.ResurrectionTime.Format($"{resurrectionTime / (60 * 60)}:{resurrectionTime / 60 % 60}");
             }
             else
             {
@@ -333,17 +332,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
         }
 
-        public static void DrawRaderBack(Vector2 center,float factor,Texture2D backgroundTex)
+        public static void DrawRaderBack(Vector2 center, float factor, Texture2D backgroundTex)
         {
             factor = Coralite.Instance.SqrtSmoother.Smoother(factor);
 
             Main.spriteBatch.Draw(backgroundTex, center, null, Color.White * factor, 0, backgroundTex.Size() / 2, factor, 0, 0);
         }
 
-        public void DrawRaderChart(Vector2 center,float factor,float baseLength)
+        public void DrawRaderChart(Vector2 center, float factor, float baseLength)
         {
             float damageFactor = FairyDamage / Item.GetGlobalItem<FairyGlobalItem>().baseDamage;
-            float defenceFactor =FairyDefence / Item.GetGlobalItem<FairyGlobalItem>().baseDefence;
+            float defenceFactor = FairyDefence / Item.GetGlobalItem<FairyGlobalItem>().baseDefence;
             float lifeMaxFactor = FairyLifeMax / Item.GetGlobalItem<FairyGlobalItem>().baseLifeMax;
             float scaleFactor = FairyScale;
 
@@ -413,7 +412,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             else
                 c = Color.Lerp(pink, green, (factor - 0.3f) / 0.7f);
 
-            c *= alphaFactor*0.7f;
+            c *= alphaFactor * 0.7f;
             return c;
         }
 

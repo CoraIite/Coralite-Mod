@@ -281,7 +281,7 @@ namespace Coralite.Content.WorldGeneration
                         WorldGenHelper.ObjectPlace(current_x, current_y, tileType, currentStyle);
                     }
 
-                    over1: continue;             //<--因为不知道有没有什么办法直接跳出2层for，索性写了个goto
+                over1: continue;             //<--因为不知道有没有什么办法直接跳出2层for，索性写了个goto
                 }
         }
 
@@ -4644,7 +4644,7 @@ namespace Coralite.Content.WorldGeneration
                             //当前的y位置
                             int currentY = startPoint.Y + y * dir;
                             int baseX = (int)Math.Round(Helper.Lerp(startPoint.X, endPoint.X, y / (float)(count - 1)));
-                            for (int x = 0; x < CorridorHeight + WallWidth * 2+1; x++)
+                            for (int x = 0; x < CorridorHeight + WallWidth * 2 + 1; x++)
                             {
                                 int currentX = baseX + x;
 
@@ -4690,7 +4690,7 @@ namespace Coralite.Content.WorldGeneration
                             int currentX = startPoint.X + x * dir;
                             int baseY = (int)Math.Round(Helper.Lerp(startPoint.Y, endPoint.Y, x / (float)(count - 1)));
 
-                            for (int y = 0; y < CorridorHeight + WallWidth * 2+1; y++)
+                            for (int y = 0; y < CorridorHeight + WallWidth * 2 + 1; y++)
                             {
                                 int currentY = baseY + y;
 
@@ -4834,7 +4834,7 @@ namespace Coralite.Content.WorldGeneration
                     //添加一些随机性
                     if (WorldGen.genRand.NextBool(random))
                     {
-                        int currentStyle = WorldGen.genRand.Next( 4);
+                        int currentStyle = WorldGen.genRand.Next(4);
                         WorldGenHelper.ObjectPlace(current_x, current_y, tileType, currentStyle);
                     }
 

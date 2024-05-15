@@ -1,9 +1,7 @@
-﻿using Coralite.Content.Items.Fairies;
-using Coralite.Helpers;
+﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
@@ -25,7 +23,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 能够开始攻击的距离
         /// </summary>
-        protected float AttackDistance=400;
+        protected float AttackDistance = 400;
 
         private bool init = true;
         protected bool canDamage;

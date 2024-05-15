@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Misc_Magic;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.DataStructures;
@@ -39,9 +38,9 @@ namespace Coralite.Content.Items.ShadowCastle
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             Vector2 aimPos = Main.MouseWorld;
-            velocity = velocity.RotatedBy(Main.rand.NextFromList(-1f, 1,3.141f,0f) + Main.rand.NextFloat(-0.5f, 0.5f));
+            velocity = velocity.RotatedBy(Main.rand.NextFromList(-1f, 1, 3.141f, 0f) + Main.rand.NextFloat(-0.5f, 0.5f));
 
-            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, aimPos.X, aimPos.Y); 
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, aimPos.X, aimPos.Y);
 
             return false;
         }
@@ -69,7 +68,7 @@ namespace Coralite.Content.Items.ShadowCastle
             {
                 if (Projectile.localAI[1] < 21)
                 {
-                    if (Vector2.Distance(Projectile.Center,TargetPos)<40)
+                    if (Vector2.Distance(Projectile.Center, TargetPos) < 40)
                     {
                         Projectile.localAI[1] = 22;
                     }

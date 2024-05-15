@@ -10,11 +10,11 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Accessories
 {
     [AutoloadEquip(EquipType.Shoes)]
-    public class GigantesShoes: BaseAccessory
+    public class GigantesShoes : BaseAccessory
     {
         public GigantesShoes() : base(ItemRarityID.Blue, Item.sellPrice(0, 2)) { }
 
-       public  Vector2 oldVelocity;
+        public Vector2 oldVelocity;
 
         public override void SetDefaults()
         {
@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Accessories
                 cp.fallDamageModifyer -= 0.5f;
             }
 
-            if (!player.mount.Active&&player.controlDown)
+            if (!player.mount.Active && player.controlDown)
             {
                 Vector2 oldVelocity = player.GetModPlayer<CoralitePlayer>().oldOldVelocity;
                 if (oldVelocity.Y != 0 && player.velocity.Y == 0)
@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.Accessories
                 if (player.velocity.Y != 0)
                 {
                     player.maxFallSpeed = 17;
-                    player.velocity.Y += player.gravDir*1.7f;
+                    player.velocity.Y += player.gravDir * 1.7f;
                 }
             }
         }

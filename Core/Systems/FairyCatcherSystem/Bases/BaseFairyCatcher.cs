@@ -41,7 +41,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
             else
                 ModifyShootFairyStyle(player);
-            
+
             return true;
         }
 

@@ -1,13 +1,8 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.Audio;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Materials

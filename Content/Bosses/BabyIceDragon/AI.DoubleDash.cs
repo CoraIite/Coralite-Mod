@@ -128,8 +128,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 {
                                     return NPC.Center + (NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30;
                                 }, 16);
-                            Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
-                            Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
+                            Particle.NewParticle<IceBurstHalo_Reverse>(mouseCenter2, Vector2.Zero, Scale: 0.8f);
+                            Particle.NewParticle<IceBurstHalo_Reverse>(mouseCenter2, Vector2.Zero, Scale: 1.2f);
                         }
 
                         if (Timer < 30)

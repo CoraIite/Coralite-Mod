@@ -8,16 +8,16 @@
 
 //namespace Coralite.Content.Particles
 //{
-//    public class CrossLight : ModParticle
+//    public class CrossLight : Particle
 //    {
 //        public override string Texture => AssetDirectory.Blank;
 
-//        public override void OnSpawn(Particle particle)
+//        public override void OnSpawn()
 //        {
 //            base.OnSpawn(particle);
 //        }
 
-//        public override void Update(Particle particle)
+//        public override void Update()
 //        {
 //            particle.fadeIn--;
 //            if (particle.fadeIn < 0)
@@ -26,7 +26,7 @@
 //            }
 //        }
 
-//        public override void Draw(SpriteBatch spriteBatch, Particle particle)
+//        public override void Draw(SpriteBatch spriteBatch)
 //        {
 //            float factor = 1 - (particle.fadeIn / particle.oldRot[0]);
 //            //float num3 = Utils.Remap(factor, 0f, 0.6f, 0f, 1f) * Utils.Remap(factor, 0.6f, 1f, 1f, 0f);

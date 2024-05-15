@@ -1,43 +1,41 @@
-﻿using Coralite.Core.Loaders;
-using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class Strike : ModParticle
+    public class Strike : Particle
     {
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
-            particle.frame = new Rectangle(0, 0, 128, 128);
-            particle.shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/StarsDust", ReLogic.Content.AssetRequestMode.ImmediateLoad), "StarsDustPass");
-            particle.shader.UseSecondaryColor(Color.White);
+            Frame = new Rectangle(0, 0, 128, 128);
+            shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/StarsDust", ReLogic.Content.AssetRequestMode.ImmediateLoad), "StarsDustPass");
+            shader.UseSecondaryColor(Color.White);
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            particle.shader.UseColor(particle.color);
+            shader.UseColor(color);
 
-            if (particle.fadeIn % 2 == 0)
-                particle.frame.Y = (int)(particle.fadeIn / 2) * 128;
+            if (fadeIn % 2 == 0)
+                Frame.Y = (int)(fadeIn / 2) * 128;
 
-            float factor = particle.fadeIn / 14;
+            float factor = fadeIn / 14;
 
-            particle.shader.UseOpacity(0.5f + factor * 0.4f);
-            particle.shader.UseSaturation(2.3f - factor * 0.8f);
+            shader.UseOpacity(0.5f + factor * 0.4f);
+            shader.UseSaturation(2.3f - factor * 0.8f);
 
-            particle.fadeIn++;
+            fadeIn++;
 
-            if (particle.fadeIn > 16)
-                particle.active = false;
+            if (fadeIn > 16)
+                active = false;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Particle particle)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
             Vector2 origin = new Vector2(96, 96);
 
-            spriteBatch.Draw(modParticle.Texture2D.Value, particle.center - Main.screenPosition, particle.frame, particle.color, particle.rotation, origin, particle.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, Frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
 
         }
     }

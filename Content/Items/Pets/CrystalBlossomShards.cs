@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -78,8 +77,8 @@ namespace Coralite.Content.Items.Pets
                     if (!Main.gamePaused && Main.GameUpdateCount % 20 == 0)
                     {
                         Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
-                        group.NewParticle(new Vector2(line.X, line.Y) + new Vector2(Main.rand.NextFloat(0, size.X), Main.rand.Next(-8, 0)),
-                            Main.rand.NextFloat(0.585f - 0.3f, 0.585f + 0.3f).ToRotationVector2() * Main.rand.NextFloat(0.2f, 0.5f), CoraliteContent.ParticleType<Petal>()
+                        group.NewParticle<Petal>(new Vector2(line.X, line.Y) + new Vector2(Main.rand.NextFloat(0, size.X), Main.rand.Next(-8, 0)),
+                            Main.rand.NextFloat(0.585f - 0.3f, 0.585f + 0.3f).ToRotationVector2() * Main.rand.NextFloat(0.2f, 0.5f)
                             , Color.Pink, Main.rand.NextFloat(0.8f, 1f));
                     }
                 }
@@ -93,46 +92,45 @@ namespace Coralite.Content.Items.Pets
         public override Color RarityColor => Color.Lerp(new Color(255, 152, 210), Color.Pink, Math.Abs(MathF.Sin(Main.GlobalTimeWrappedHourly * 3)));
     }
 
-    public class Petal : ModParticle
+    public class Petal : Particle
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "NightmarePetal";
 
-        public override void OnSpawn(Particle dust)
+        public override void OnSpawn()
         {
-            dust.frame = new Rectangle(0, Main.rand.Next(8) * 14, 10, 14);
-            dust.shouldKilledOutScreen = false;
+            Frame = new Rectangle(0, Main.rand.Next(8) * 14, 10, 14);
+            shouldKilledOutScreen = false;
         }
 
-        public override void Update(Particle dust)
+        public override void Update()
         {
-            dust.center += dust.velocity;
-            dust.rotation += Main.rand.NextFloat(0.13f, 0.18f);
-            dust.velocity *= 0.99f;
-            if (dust.fadeIn > 45)
-                dust.color *= 0.88f;
-            if (dust.fadeIn % 8 == 0)
+            Center += Velocity;
+            Rotation += Main.rand.NextFloat(0.13f, 0.18f);
+            Velocity *= 0.99f;
+            if (fadeIn > 45)
+                color *= 0.88f;
+            if (fadeIn % 8 == 0)
             {
-                dust.frame.Y += 14;
-                if (dust.frame.Y > 98)
-                    dust.frame.Y = 0;
+                Frame.Y += 14;
+                if (Frame.Y > 98)
+                    Frame.Y = 0;
             }
 
-            dust.fadeIn++;
-            if (dust.fadeIn > 60)
-                dust.active = false;
+            fadeIn++;
+            if (fadeIn > 60)
+                active = false;
         }
 
-        public override void DrawInUI(SpriteBatch spriteBatch, Particle particle)
+        public override void DrawInUI(SpriteBatch spriteBatch)
         {
-            ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
-            Rectangle frame = particle.frame;
+            Rectangle frame = Frame;
             Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
-            Color c = particle.color;
-            if (particle.fadeIn < 6)
+            Color c = color;
+            if (fadeIn < 6)
             {
-                c *= particle.fadeIn / 6;
+                c *= fadeIn / 6;
             }
-            spriteBatch.Draw(modParticle.Texture2D.Value, particle.center, frame, c, particle.rotation, origin, particle.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(GetTexture().Value, Center, frame, c, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
     }
 

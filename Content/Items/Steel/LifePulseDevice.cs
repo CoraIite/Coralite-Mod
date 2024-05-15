@@ -1,15 +1,15 @@
 ﻿using Coralite.Content.ModPlayers;
-using Coralite.Core.Prefabs.Items;
-using Terraria.ID;
-using Terraria;
 using Coralite.Core;
+using Coralite.Core.Prefabs.Items;
+using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Content.Items.Steel
 {
     [AutoloadEquip(EquipType.HandsOn)]
     public class LifePulseDevice : BaseAccessory
     {
-        public override string Texture => AssetDirectory.SteelItems+Name;
+        public override string Texture => AssetDirectory.SteelItems + Name;
 
         public LifePulseDevice() : base(ItemRarityID.LightRed, Item.sellPrice(0, 2, 0, 0))
         {

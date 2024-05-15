@@ -235,14 +235,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 case AIState.Catching:
                     {
                         if (cursorIntersects)
-                            OnCursorIntersects(cursor,catcher);
+                            OnCursorIntersects(cursor, catcher);
 
-                        Catching(cursor ,catcher);
+                        Catching(cursor, catcher);
                     }
                     break;
                 default:
                 case AIState.Fading:
-                        Fading();
+                    Fading();
                     break;
             }
 

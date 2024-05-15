@@ -48,7 +48,7 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             CreateRecipe()
                 .AddIngredient<Excatbar>()
-                .AddIngredient(ItemID.ChlorophyteBar,24)
+                .AddIngredient(ItemID.ChlorophyteBar, 24)
                 .AddTile(TileID.MythrilAnvil)
                 .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
                 .Register();

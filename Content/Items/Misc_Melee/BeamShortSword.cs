@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Materials;
-using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
@@ -43,9 +42,9 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             //Main.NewText(player.itemAnimation);
             //if (player.itemAnimation % 4 == 0)
-                Projectile.NewProjectile(source, player.MountedCenter
-                , velocity.SafeNormalize(Vector2.Zero) * 10.5f, ProjectileID.SwordBeam
-                , damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(source, player.MountedCenter
+            , velocity.SafeNormalize(Vector2.Zero) * 10.5f, ProjectileID.SwordBeam
+            , damage, knockback, player.whoAmI);
             return true;
         }
 
@@ -107,7 +106,7 @@ namespace Coralite.Content.Items.Misc_Melee
             const int TotalDuration = 16;
 
             Timer += 1;
-            if (Timer==2)
+            if (Timer == 2)
             {
                 player.direction = Main.MouseWorld.X > player.Center.X ? 1 : -1;
             }

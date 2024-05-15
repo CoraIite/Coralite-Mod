@@ -3,23 +3,23 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class BigFog : ModParticle
+    public class BigFog : Particle
     {
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
-            particle.frame = new Microsoft.Xna.Framework.Rectangle(0, 256 * Main.rand.Next(4), 256, 256);
+            Frame = new Rectangle(0, 256 * Main.rand.Next(4), 256, 256);
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            particle.velocity *= 0.98f;
-            particle.rotation += 0.01f;
-            particle.scale *= 0.997f;
-            particle.color *= 0.94f;
+            Velocity *= 0.98f;
+            Rotation += 0.01f;
+            Scale *= 0.997f;
+            color *= 0.94f;
 
-            particle.fadeIn++;
-            if (particle.fadeIn > 60 || particle.color.A < 10)
-                particle.active = false;
+            fadeIn++;
+            if (fadeIn > 60 || color.A < 10)
+                active = false;
         }
 
     }

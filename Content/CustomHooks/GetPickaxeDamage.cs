@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class GetPickaxeDamage:HookGroup
+    public class GetPickaxeDamage : HookGroup
     {
         public override void Load()
         {
@@ -34,6 +29,6 @@ namespace Coralite.Content.CustomHooks
 
     public interface ISpecialPickaxe
     {
-        bool ModifyPickaxeDamage(ref int damage,Player player, int x, int y, int pickPower, int hitBufferIndex, Tile tileTarget);
+        bool ModifyPickaxeDamage(ref int damage, Player player, int x, int y, int pickPower, int hitBufferIndex, Tile tileTarget);
     }
 }

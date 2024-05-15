@@ -36,7 +36,7 @@ namespace Coralite.Content.CustomHooks
 
             cursor.EmitDelegate(GetFallDamageReduce);//计算伤害减免
 
-            cursor.Emit(OpCodes.Stloc,63);//赋值
+            cursor.Emit(OpCodes.Stloc, 63);//赋值
             //cursor.EmitStloc(63);//赋值
         }
 
@@ -44,7 +44,7 @@ namespace Coralite.Content.CustomHooks
         {
             if (p.TryGetModPlayer(out CoralitePlayer cp))
             {
-                int finalDamage = (int)(cp.fallDamageModifyer.ApplyTo(1)*baseDamage);
+                int finalDamage = (int)(cp.fallDamageModifyer.ApplyTo(1) * baseDamage);
                 if (finalDamage < 1)
                     finalDamage = 1;
                 return finalDamage;

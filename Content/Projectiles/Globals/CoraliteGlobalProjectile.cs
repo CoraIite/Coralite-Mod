@@ -61,7 +61,7 @@ namespace Coralite.Content.Projectiles.Globals
                     case ProjectileID.Boulder:
                         {
                             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "CatBoulder").Value;
-                            Main.EntitySpriteDraw(mainTex, projectile.Center - Main.screenPosition, null, lightColor, projectile.rotation, mainTex.Size()/2, projectile.scale, 0, 0);
+                            Main.EntitySpriteDraw(mainTex, projectile.Center - Main.screenPosition, null, lightColor, projectile.rotation, mainTex.Size() / 2, projectile.scale, 0, 0);
                         }
                         return false;
                     case ProjectileID.BouncyBoulder:

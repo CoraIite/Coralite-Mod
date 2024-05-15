@@ -1,6 +1,5 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -58,13 +57,11 @@ namespace Coralite.Content.CustomHooks
                     if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawPrimitive)
                         (Main.npc[k].ModNPC as IDrawPrimitive).DrawPrimitives();
 
-                for (int k = 0; k < Coralite.MaxParticleCount - 1; k++) // Particles.
-                    if (ParticleSystem.Particles[k].active)
-                    {
-                        ModParticle modParticle = ParticleLoader.GetParticle(ParticleSystem.Particles[k].type);
-                        if (modParticle is IDrawParticlePrimitive)
-                            (modParticle as IDrawParticlePrimitive).DrawPrimitives(ParticleSystem.Particles[k]);
-                    }
+                foreach (var particle in ParticleSystem.Particles)
+                {
+                    if (particle != null && particle.active && particle is IDrawParticlePrimitive p)
+                        p.DrawPrimitives();
+                }
             }
 
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
@@ -109,13 +106,12 @@ namespace Coralite.Content.CustomHooks
 
             //绘制自己的粒子
             ArmorShaderData armorShaderData = null;
-            for (int i = 0; i < Coralite.MaxParticleCount; i++)
+            foreach (var particle in ParticleSystem.Particles)
             {
-                Particle particle = ParticleSystem.Particles[i];
                 if (!particle.active)
                     continue;
 
-                if (!Helper.OnScreen(particle.center - Main.screenPosition))
+                if (!Helper.OnScreen(particle.Center - Main.screenPosition))
                     continue;
 
                 if (particle.shader != armorShaderData)
@@ -131,7 +127,7 @@ namespace Coralite.Content.CustomHooks
                     }
                 }
 
-                ParticleLoader.GetParticle(ParticleSystem.Particles[i].type).Draw(spriteBatch, particle);
+                particle.Draw(spriteBatch);
             }
 
             spriteBatch.End();

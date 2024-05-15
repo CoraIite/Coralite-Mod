@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
@@ -10,11 +9,13 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IceStarLight : ModParticle, IDrawParticlePrimitive
+    public class IceStarLight : TrailParticle
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;
 
-        BasicEffect effect;
+        private static BasicEffect effect;
+        private GetCenter centerFunc;
+        private float velocityLimit;
 
         public IceStarLight()
         {
@@ -25,55 +26,55 @@ namespace Coralite.Content.Items.Icicle
             });
         }
 
-        public override bool ShouldUpdateCenter(Particle particle) => false;
+        public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
-            particle.color = Color.White;
-            particle.frame = new Rectangle(0, 0, 18, 18);
-            particle.trail = new Trail(Main.instance.GraphicsDevice, 8, new NoTip(), factor => 2 * particle.scale, factor => Color.Lerp(new Color(0, 0, 0, 0), Coralite.Instance.IcicleCyan, factor.X));
-            particle.InitOldCenters(8);
+            color = Color.White;
+            Frame = new Rectangle(0, 0, 18, 18);
+            trail = new Trail(Main.instance.GraphicsDevice, 8, new NoTip(), factor => 2 * Scale, factor => Color.Lerp(new Color(0, 0, 0, 0), Coralite.Instance.IcicleCyan, factor.X));
+            InitOldCenters(8);
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            GetData(particle, out Vector2 targetCenter, out float velocityLimit);
+            GetData(out Vector2 targetCenter);
             if (targetCenter == Vector2.Zero)
             {
-                particle.active = false;
+                active = false;
                 return;
             }
 
             //非常简单的追击
-            float distance = Vector2.Distance(targetCenter, particle.center);
+            float distance = Vector2.Distance(targetCenter, Center);
             if (distance < 20)
-                Kill(particle);
+                Kill();
             else if (distance < 100)
-                particle.velocity += Vector2.Normalize(targetCenter - particle.center) * 8;
+                Velocity += Vector2.Normalize(targetCenter - Center) * 8;
             else if (distance < 200)
-                particle.velocity += Vector2.Normalize(targetCenter - particle.center) * 4;
+                Velocity += Vector2.Normalize(targetCenter - Center) * 4;
             else
-                particle.velocity += Vector2.Normalize(targetCenter - particle.center);
+                Velocity += Vector2.Normalize(targetCenter - Center);
 
-            if (particle.velocity.Length() > velocityLimit)
-                particle.velocity = Vector2.Normalize(particle.velocity) * velocityLimit;
+            if (Velocity.Length() > velocityLimit)
+                Velocity = Vector2.Normalize(Velocity) * velocityLimit;
 
-            if (particle.fadeIn % 2 == 0)
+            if (fadeIn % 2 == 0)
             {
-                Dust dust = Dust.NewDustPerfect(particle.center + Main.rand.NextVector2CircularEdge(8, 8), DustID.FrostStaff, -particle.velocity * 0.2f);
+                Dust dust = Dust.NewDustPerfect(Center + Main.rand.NextVector2CircularEdge(8, 8), DustID.FrostStaff, -Velocity * 0.2f);
                 dust.noGravity = true;
             }
 
-            particle.fadeIn++;
-            if (particle.fadeIn > 120)
-                Kill(particle);
+            fadeIn++;
+            if (fadeIn > 120)
+                Kill();
 
-            particle.center += particle.velocity;
-            particle.UpdatePosCachesNormally(8);
-            particle.trail.Positions = particle.oldCenter;
+            Center += Velocity;
+            UpdatePosCachesNormally(8);
+            trail.Positions = oldCenter;
         }
 
-        public void DrawPrimitives(Particle particle)
+        public override void DrawPrimitives()
         {
             if (effect == null)
                 return;
@@ -87,47 +88,42 @@ namespace Coralite.Content.Items.Icicle
             effect.View = view;
             effect.Projection = projection;
 
-            particle.trail?.Render(effect);
+            trail?.Render(effect);
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Particle particle)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            ModParticle modParticle = ParticleLoader.GetParticle(particle.type);
-            Rectangle frame = particle.frame;
+            Rectangle frame = Frame;
             Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
 
-            spriteBatch.Draw(modParticle.Texture2D.Value, particle.center - Main.screenPosition, frame, particle.color, particle.rotation, origin, 1.2f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, frame, color, Rotation, origin, 1.2f, SpriteEffects.None, 0f);
         }
 
         public static Particle Spawn(Vector2 center, Vector2 velocity, float scale, GetCenter function, float velocityLimit)
         {
-            Particle particle = Particle.NewParticleDirect(center, velocity, CoraliteContent.ParticleType<IceStarLight>(), Color.White, scale);
-            particle.datas = new object[2]
-            {
-                function,
-                velocityLimit
-            };
+            IceStarLight particle = NewParticle<IceStarLight>(center, velocity, Color.White, scale);
+            particle.centerFunc = function;
+            particle.velocityLimit = velocityLimit;
 
             return particle;
         }
 
-        public static void GetData(Particle particle, out Vector2 center, out float velocityLimit)
+        public void GetData(out Vector2 center)
         {
-            if (particle.datas is null || particle.datas[0] is not GetCenter || particle.datas[1] is not float)
+            if (centerFunc == null)
             {
                 center = Vector2.Zero;
                 velocityLimit = 100;
                 return;
             }
 
-            center = (particle.datas[0] as GetCenter).Invoke();
-            velocityLimit = (float)particle.datas[1];
+            center = centerFunc.Invoke();
         }
 
-        public static void Kill(Particle particle)
+        public void Kill()
         {
-            particle.active = false;
-            Particle.NewParticle(particle.center, Vector2.Zero, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.Instance.IcicleCyan, 0.2f);
+            active = false;
+            NewParticle<HorizontalStar>(Center, Vector2.Zero, Coralite.Instance.IcicleCyan, 0.2f);
         }
     }
 }

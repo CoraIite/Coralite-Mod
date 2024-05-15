@@ -33,7 +33,7 @@ namespace Coralite.Content.DamageClasses
         {
 
         }
-        
+
         public override bool UseStandardCritCalcs => true;
 
         public override bool ShowStatTooltipLine(Player player, string lineName)

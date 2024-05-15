@@ -1,5 +1,4 @@
-﻿using Coralite.Content.ModPlayers;
-using Terraria;
+﻿using Terraria;
 
 namespace Coralite.Core.Systems.YujianSystem
 {

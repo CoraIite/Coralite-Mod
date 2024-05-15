@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.TheHyacinthSeries
             var frameBox = mainTex.Frame(1, 2, 0, Projectile.frame);
             var origin = frameBox.Size() / 2;
 
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, new Color(255,200,100,0), Projectile.rotation + 1.57f,
+            Main.spriteBatch.Draw(mainTex, pos, frameBox, new Color(255, 200, 100, 0), Projectile.rotation + 1.57f,
                 origin, Projectile.scale * 1.3f, 0, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, Projectile.rotation + 1.57f,
                 origin, Projectile.scale, 0, 0);
@@ -119,7 +119,7 @@ namespace Coralite.Content.Items.TheHyacinthSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Projectile.QuickDraw(new Color(255,200,100,0), Projectile.scale * 1.2f, 0);
+            Projectile.QuickDraw(new Color(255, 200, 100, 0), Projectile.scale * 1.2f, 0);
             Projectile.QuickDraw(lightColor, 0);
             return false;
         }

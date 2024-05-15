@@ -6,28 +6,28 @@ namespace Coralite.Content.Items.Icicle
     /// <summary>
     /// 冰冻光环
     /// </summary>
-    public class IceHalo : ModParticle
+    public class IceHalo : Particle
     {
-        public override bool ShouldUpdateCenter(Particle particle) => false;
+        public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn(Particle particle)
+        public override void OnSpawn()
         {
-            particle.color = Color.White;
-            particle.rotation = Main.rand.NextFloat(6.282f);
-            particle.frame = new Rectangle(0, 0, 128, 128);
+            color = Color.White;
+            Rotation = Main.rand.NextFloat(6.282f);
+            Frame = new Rectangle(0, 0, 128, 128);
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            particle.rotation += 0.05f;
-            if (particle.fadeIn > 8)
-                particle.color *= 0.92f;
+            Rotation += 0.05f;
+            if (fadeIn > 8)
+                color *= 0.92f;
 
-            particle.scale *= 1.07f;
+            Scale *= 1.07f;
 
-            particle.fadeIn++;
-            if (particle.fadeIn > 18)
-                particle.active = false;
+            fadeIn++;
+            if (fadeIn > 18)
+                active = false;
         }
     }
 }

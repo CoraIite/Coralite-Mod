@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             Item.DamageType = DamageClass.Ranged;
             Item.value = Item.sellPrice(0, 3, 0, 0);
             Item.rare = ItemRarityID.Yellow;
-            Item.shoot = 10;
+            Item.shoot = ProjectileID.PurificationPowder;
             Item.useAmmo = AmmoID.Bullet;
 
             Item.useTurn = false;

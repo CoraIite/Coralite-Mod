@@ -4,57 +4,49 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class Tornado : ModParticle
+    public class Tornado : Particle
     {
         public override string Texture => AssetDirectory.Particles + "Tornado2";
-        //public override bool ShouldUpdateCenter(Particle particle) => false;
+        //public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn(Particle particle)
+        private float time;
+
+        public override void OnSpawn()
         {
-            particle.frame = new Rectangle(0, Main.rand.Next(8) * 64, 128, 64);
+            Frame = new Rectangle(0, Main.rand.Next(8) * 64, 128, 64);
         }
 
-        public override void Update(Particle particle)
+        public override void Update()
         {
-            if (particle.fadeIn % 4 == 0)
+            if (fadeIn % 4 == 0)
             {
-                particle.frame.Y += 64;
-                if (particle.frame.Y > 448)
-                    particle.frame.Y = 0;
+                Frame.Y += 64;
+                if (Frame.Y > 448)
+                    Frame.Y = 0;
             }
 
-            if (particle.fadeIn > GetData(particle))
-                particle.scale *= 1.09f;
+            if (fadeIn > time)
+                Scale *= 1.09f;
             else
-                particle.scale *= 0.975f;
+                Scale *= 0.975f;
 
-            if (particle.fadeIn < 20)
-                particle.color *= 0.92f;
+            if (fadeIn < 20)
+                color *= 0.92f;
 
-            particle.fadeIn--;
-            if (particle.fadeIn < 0)
-                particle.active = false;
+            fadeIn--;
+            if (fadeIn < 0)
+                active = false;
         }
 
 
         public static Particle Spawn(Vector2 center, Vector2 velocity, Color color, float fadeIn, float rotation, float scale = 1f)
         {
-            Particle particle = Particle.NewParticleDirect(center, velocity, CoraliteContent.ParticleType<Tornado>(), color, scale);
+            Tornado particle = NewParticle<Tornado>(center, velocity, color, scale);
             particle.fadeIn = fadeIn;
-            particle.rotation = rotation + 1.57f;
-            particle.datas = new object[1]
-            {
-                particle.fadeIn-10f,
-            };
+            particle.Rotation = rotation + 1.57f;
+            particle.time = fadeIn - 10f;
+
             return particle;
-        }
-
-        public float GetData(Particle particle)
-        {
-            if (particle.datas is null || particle.datas[0] is not float)
-                return -1;
-
-            return (float)particle.datas[0];
         }
     }
 }

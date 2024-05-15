@@ -10,7 +10,7 @@ namespace Coralite.Content.Items.Icicle
 {
     public class IcicleBreath : BaseMaterial
     {
-        public IcicleBreath() : base(Item.CommonMaxStack, Item.sellPrice(0,0,30), ItemRarityID.Green, AssetDirectory.IcicleItems)
+        public IcicleBreath() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 30), ItemRarityID.Green, AssetDirectory.IcicleItems)
         {
         }
 
@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Icicle
             Texture2D texture = TextureAssets.Item[Item.type].Value;
 
             Vector2 frameOrigin = frame.Size() / 2f;
-            Vector2 drawPos = position  ;
+            Vector2 drawPos = position;
 
             float time = Main.GlobalTimeWrappedHourly;
             float timer = Item.timeSinceItemSpawned / 240f + time * 0.04f;

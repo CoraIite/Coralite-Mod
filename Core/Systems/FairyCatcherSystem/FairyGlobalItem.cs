@@ -94,18 +94,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             if (item.TryGetGlobalItem(out FairyGlobalItem fgi) && fgi.IsFairy)
             {
                 if (player.TryGetModPlayer(out FairyCatcherPlayer fcp)
-                    &&fcp.FairyCatch_GetEmptyFairyBottle(out IFairyBottle bottle,out int emptySlot))
+                    && fcp.FairyCatch_GetEmptyFairyBottle(out IFairyBottle bottle, out int emptySlot))
                 {
-                    bottle.Fairies[emptySlot]= item.Clone();
+                    bottle.Fairies[emptySlot] = item.Clone();
 
-                    PopupText.NewText(PopupTextContext.RegularItemPickup, item, item.stack, noStack: true, longText:false);
+                    PopupText.NewText(PopupTextContext.RegularItemPickup, item, item.stack, noStack: true, longText: false);
 
                     item.TurnToAir();
                     SoundEngine.PlaySound(CoraliteSoundID.Grab, player.Center);
 
                     //if (UILoader.GetUIState<FairyBottleUI>().visible)
                     //{
-                        //UILoader.GetUIState<FairyBottleUI>().Recalculate();
+                    //UILoader.GetUIState<FairyBottleUI>().Recalculate();
                     //}
 
                     return false;

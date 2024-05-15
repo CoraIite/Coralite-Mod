@@ -48,7 +48,7 @@ namespace Coralite.Helpers
             Texture2D mainTex = fairy.GetTexture();
             var frame = mainTex.Frame(fairy.HorizontalFrames, fairy.VerticalFrames, fairy.frame.X, fairy.frame.Y);
 
-            Main.spriteBatch.Draw(mainTex, overrideCenter - Main.screenPosition,frame, lightColor, fairy.rotation + exRot,
+            Main.spriteBatch.Draw(mainTex, overrideCenter - Main.screenPosition, frame, lightColor, fairy.rotation + exRot,
                 frame.Size() / 2, fairy.scale, fairy.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
         }
 

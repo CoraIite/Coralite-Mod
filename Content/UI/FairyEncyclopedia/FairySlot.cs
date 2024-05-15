@@ -31,7 +31,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         private float alpha;
         private float offset;
 
-        public FairySlot(int fairyType,int index)
+        public FairySlot(int fairyType, int index)
         {
             this.index = index;
             offset = 60;
@@ -39,7 +39,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             _borderHoverTexture ??= FairySystem.FairySlotHoverBorder;
             _backgroundTexture ??= FairySystem.FairySlotBackground;//Main.Assets.Request<Texture2D>("Images/UI/PanelBackground");
 
-            _fairy =FairyLoader.GetFairy(fairyType).NewInstance();
+            _fairy = FairyLoader.GetFairy(fairyType).NewInstance();
             _fairyItem = new Item(_fairy.ItemType);
         }
 

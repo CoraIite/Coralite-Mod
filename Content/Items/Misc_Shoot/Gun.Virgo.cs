@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             ProjectileID.Sets.TrailingMode[Type] = 2;
             ProjectileID.Sets.TrailCacheLength[Type] = 8;
         }
-        
+
         public override void SetDefaults()
         {
             Projectile.DamageType = DamageClass.Ranged;

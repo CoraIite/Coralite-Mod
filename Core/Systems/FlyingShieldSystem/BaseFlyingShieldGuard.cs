@@ -299,7 +299,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                         OnStrongGuard();
                     }
                     localProjectileImmunity[i] = Projectile.localNPCHitCooldown;
-                    index= i;
+                    index = i;
                     return (int)GuardType.Projectile;
                 }
             }
@@ -319,7 +319,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     if (!npc.dontTakeDamage)
                         npc.SimpleStrikeNPC(Projectile.damage, Projectile.direction, knockBack: Projectile.knockBack, damageType: DamageClass.Melee);
 
-                    index= i;
+                    index = i;
                     return (int)GuardType.NPC;
                 }
             }
