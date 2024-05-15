@@ -168,6 +168,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<ThunderveinSoulStone>(), 4));
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<ThunderveinDragonBossBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThunderveinDragonTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThunderveinDragonMask>(), 7));
 
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ZapCrystal>(), 1, 6, 8));

@@ -3765,3 +3765,28 @@ RoseGunpowder: {
 	DisplayName: Rose Gunpowder
 	Tooltip: ""
 }
+
+SlimeEmperorMask: {
+	DisplayName: Slime Emperor Mask
+	Tooltip: ""
+}
+
+RediancieMask: {
+	DisplayName: Rediancie Mask
+	Tooltip: ""
+}
+
+BabyIceDragonMask: {
+	DisplayName: Baby Ice Dragon Mask
+	Tooltip: ""
+}
+
+NightmarePlanteraMask: {
+	DisplayName: Nightmare Plantera Mask
+	Tooltip: ""
+}
+
+ThunderveinDragonMask: {
+	DisplayName: Thundervein Dragon Mask
+	Tooltip: ""
+}

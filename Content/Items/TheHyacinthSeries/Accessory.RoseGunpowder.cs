@@ -75,7 +75,6 @@ namespace Coralite.Content.Items.TheHyacinthSeries
                 };
                 Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), ModContent.DustType<GlowBall>(),
                     Helper.NextVec2Dir(1, 2), 0, c, 0.25f);
-
             }
 
             Projectile.SpawnTrailDust(DustID.PurpleTorch, Main.rand.NextFloat(-0.1f, 0.1f), noGravity: !Main.rand.NextBool(3));

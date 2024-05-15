@@ -20,6 +20,8 @@ namespace Coralite.Core.Systems.ParticleSystem
             if (Main.dedServ)
                 return;
 
+            ParticleAssets = new Asset<Texture2D>[ParticleLoader.ParticleCount];
+
             for (int i = 0; i < ParticleLoader.ParticleCount; i++)
             {
                 Particle particle = ParticleLoader.GetParticle(i);

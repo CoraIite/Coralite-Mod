@@ -63,6 +63,7 @@ VisualEffectConfig: {
 		OtherVisualEffects: Other Visual Effects
 		NightmarePlantera: Nightmare Plantera Header
 		SpecialWeapons: Special Weapons Header
+		Particles: Particles Header
 	}
 
 	HitEffect_HitFreeze: {
@@ -87,6 +88,11 @@ VisualEffectConfig: {
 
 	HylianShieldScreenHighlight: {
 		Label: Hylian Shield Screen Highlight
+		Tooltip: ""
+	}
+
+	ParticleCount: {
+		Label: Particle Count
 		Tooltip: ""
 	}
 }

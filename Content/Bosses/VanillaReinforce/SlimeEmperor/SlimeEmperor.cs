@@ -167,6 +167,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<SovereignSip>(), 4));
             npcLoot.Add(ItemDropRule.BossBag(ItemType<SlimeEmperorSoulBox>()));
             npcLoot.Add(ItemDropRule.Common(ItemType<RoyalGelCannon>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ItemType<SlimeEmperorMask>(), 7));
 
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 

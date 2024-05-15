@@ -150,6 +150,7 @@ namespace Coralite.Content.Bosses.Rediancie
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<RedianciePet>(), 4));
             npcLoot.Add(ItemDropRule.BossBag(ItemType<RediancieBossBag>()));
             npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ItemType<RediancieMask>(), 7));
 
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<RedJade>(), 1, 20, 24));

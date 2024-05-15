@@ -160,6 +160,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<BabyIceDragonRelic>()));
             npcLoot.Add(ItemDropRule.BossBag(ItemType<BabyIceDragonBossBag>()));
             npcLoot.Add(ItemDropRule.Common(ItemType<BabyIceDragonTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ItemType<BabyIceDragonMask>(), 7));
 
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<IcicleCrystal>(), 1, 3, 5));

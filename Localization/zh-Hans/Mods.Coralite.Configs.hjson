@@ -63,6 +63,7 @@ VisualEffectConfig: {
 		OtherVisualEffects: 其他视觉效果
 		NightmarePlantera: 梦魇之花视觉效果
 		SpecialWeapons: 特殊武器的效果
+		Particles: 特殊粒子效果
 	}
 
 	HitEffect_HitFreeze: {
@@ -92,5 +93,14 @@ VisualEffectConfig: {
 	HylianShieldScreenHighlight: {
 		Label: 海利亚盾的盾反屏幕亮光
 		Tooltip: 海利亚盾在盾反时是否产生大范围亮光
+	}
+
+	ParticleCount: {
+		Label: 粒子数量上限
+		Tooltip:
+			'''
+			上限越高越容易造成卡顿，请视电脑性能自行调整，最少100，最多3000
+			依附于其他实体而存在的粒子不受该设置影响
+			'''
 	}
 }

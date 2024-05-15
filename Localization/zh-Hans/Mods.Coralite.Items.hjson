@@ -3872,3 +3872,28 @@ RoseGunpowder: {
 		枪在射击时额外射出玫瑰火花，该效果有1.5秒CD
 		'''
 }
+
+SlimeEmperorMask: {
+	DisplayName: 至高帝面具
+	Tooltip: ""
+}
+
+RediancieMask: {
+	DisplayName: 赤玉灵面具
+	Tooltip: ""
+}
+
+BabyIceDragonMask: {
+	DisplayName: 冰龙宝宝面具
+	Tooltip: ""
+}
+
+NightmarePlanteraMask: {
+	DisplayName: 梦界主面具
+	Tooltip: ""
+}
+
+ThunderveinDragonMask: {
+	DisplayName: 荒雷龙面具
+	Tooltip: ""
+}
