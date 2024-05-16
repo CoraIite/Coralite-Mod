@@ -11,8 +11,8 @@ namespace Coralite.Core
         public static double sunflowerWindCounter;
         public static bool shouldShowInvisibleBlocks;
 
-        private MethodInfo DrawMultiTileVinesInWind_Info;
-        private Action<TileDrawing, Vector2, Vector2, int, int, int, int> DrawMultiTileVinesInWind;
+        public static MethodInfo DrawMultiTileVinesInWind_Info;
+        public static Action<TileDrawing, Vector2, Vector2, int, int, int, int> DrawMultiTileVinesInWind;
         public static MethodInfo GetHighestWindGridPushComplex_Info;
         public static Func<TileDrawing, int, int, int, int, int, float, int, bool, float> GetHighestWindGridPushComplex;
 
@@ -116,7 +116,6 @@ namespace Coralite.Core
                     }
                 }
             }
-
         }
 
         public override void PostUpdateEverything()

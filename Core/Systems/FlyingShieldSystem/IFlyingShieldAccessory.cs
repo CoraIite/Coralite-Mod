@@ -24,6 +24,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         virtual void OnGuardInitialize(BaseFlyingShieldGuard projectile) { }
 
         virtual bool OnParry(BaseFlyingShieldGuard projectile) => false;
+        virtual void OnParryEffect(BaseFlyingShieldGuard projectile) { }
         virtual void OnGuard(BaseFlyingShieldGuard projectile) { }
         virtual void OnStartDashing(BaseFlyingShieldGuard projectile) { }
         virtual void OnDashing(BaseFlyingShieldGuard projectile) { }

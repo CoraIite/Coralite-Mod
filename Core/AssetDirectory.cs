@@ -109,6 +109,7 @@ namespace Coralite.Core
         public const string Plants = BotanicalItems + "Plants/";
 
         public const string BossSummons = Items + "BossSummons/";
+        public const string Banner = Items + "Banner/";
 
         #endregion
 

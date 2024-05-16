@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ObjectData;
 
 namespace Coralite.Helpers
@@ -110,6 +111,5 @@ namespace Coralite.Helpers
                 }
             }
         }
-
     }
 }

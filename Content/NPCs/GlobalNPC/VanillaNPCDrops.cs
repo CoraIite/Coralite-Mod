@@ -162,6 +162,12 @@ namespace Coralite.Content.NPCs.GlobalNPC
                 case NPCID.MoonLordCore:
                     npcLoot.Add(ItemDropRule.Common(ItemType<ConquerorOfTheSeas>(), 9, 1, 1));
                     break;
+                case NPCID.DD2OgreT2://二级食人魔
+                    npcLoot.Add(ItemDropRule.Common(ItemType<EtheriaLegacy>(), 10));
+                    break;
+                case NPCID.DD2OgreT3://三级食人魔
+                    npcLoot.Add(ItemDropRule.Common(ItemType<EtheriaLegacy>(), 20));
+                    break;
             }
 
             if (Main.slimeRainNPC[npc.type])

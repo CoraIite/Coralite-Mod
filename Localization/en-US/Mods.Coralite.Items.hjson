@@ -3790,3 +3790,13 @@ ThunderveinDragonMask: {
 	DisplayName: Thundervein Dragon Mask
 	Tooltip: ""
 }
+
+EtheriaLegacy: {
+	DisplayName: Etheria Legacy
+	Tooltip: ""
+}
+
+CrystalEyeBannerItem: {
+	DisplayName: Crystal Eye Banner Item
+	Tooltip: ""
+}

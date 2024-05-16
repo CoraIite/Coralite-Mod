@@ -177,6 +177,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                             CompletelyHeldUpShield = true;
                             OnParry();
                             UpdateShieldAccessory(accessory => accessory.OnParry(this));
+                            UpdateShieldAccessory(accessory => accessory.OnParryEffect(this));
                         }
 
                         Timer--;

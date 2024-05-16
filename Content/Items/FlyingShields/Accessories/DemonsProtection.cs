@@ -123,6 +123,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public override void SetDefaults()
         {
             Projectile.ArmorPenetration = 5; // Added by TML
+            Projectile.DamageType = DamageClass.Melee;
 
             Projectile.width = 20;
             Projectile.height = 20;

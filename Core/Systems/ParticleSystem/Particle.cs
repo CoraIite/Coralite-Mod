@@ -138,7 +138,7 @@ namespace Coralite.Core.Systems.ParticleSystem
         }
 
         public Asset<Texture2D> GetTexture() => ParticleSystem.ParticleAssets[Type];
-
+        
         /// <summary>
         /// 初始化中心数组
         /// </summary>

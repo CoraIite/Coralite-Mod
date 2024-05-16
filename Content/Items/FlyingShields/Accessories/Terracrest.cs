@@ -131,6 +131,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override void SetDefaults()
         {
+            Projectile.DamageType = DamageClass.Melee;
+
             Projectile.width = Projectile.height = 32;
             Projectile.timeLeft = 200;
             Projectile.aiStyle = -1;

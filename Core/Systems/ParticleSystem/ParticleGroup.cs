@@ -75,8 +75,10 @@ namespace Coralite.Core.Systems.ParticleSystem
             if (Main.netMode == NetmodeID.Server)//不在服务器上运行
                 return;
 
-            foreach (var particle in _particles)
+            for (int i = 0; i < _particles.Count; i++)
             {
+                var particle = _particles[i];
+
                 if (particle == null)
                     continue;
 

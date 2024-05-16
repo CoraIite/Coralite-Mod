@@ -3897,3 +3897,13 @@ ThunderveinDragonMask: {
 	DisplayName: 荒雷龙面具
 	Tooltip: ""
 }
+
+EtheriaLegacy: {
+	DisplayName: 埃特尼亚之遗
+	Tooltip: 飞盾在完美防御时获得惊人一刻效果
+}
+
+CrystalEyeBannerItem: {
+	DisplayName: 晶体眼球旗
+	Tooltip: ""
+}
