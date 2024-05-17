@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Biomes;
+using Coralite.Content.Items.Banner;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.Magike.OtherPlaceables;
 using Coralite.Core;
@@ -19,6 +20,9 @@ namespace Coralite.Content.NPCs.Magike
 
         public override void SetDefaults()
         {
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<CrystalSpiritBannerItem>();
+
             NPC.width = 20;
             NPC.height = 36;
             NPC.damage = 12;

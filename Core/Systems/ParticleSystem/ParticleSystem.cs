@@ -15,7 +15,7 @@ namespace Coralite.Core.Systems.ParticleSystem
 
         public static Asset<Texture2D>[] ParticleAssets;
 
-        public override void OnModLoad()
+        public override void PostAddRecipes()
         {
             if (Main.dedServ)
                 return;

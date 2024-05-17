@@ -3907,3 +3907,13 @@ CrystalEyeBannerItem: {
 	DisplayName: 晶体眼球旗
 	Tooltip: ""
 }
+
+CrystalGolemBannerItem: {
+	DisplayName: 晶体巨人旗
+	Tooltip: ""
+}
+
+CrystalSpiritBannerItem: {
+	DisplayName: 晶体妖精旗
+	Tooltip: ""
+}

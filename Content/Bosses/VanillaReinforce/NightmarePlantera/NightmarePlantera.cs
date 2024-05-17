@@ -187,7 +187,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 
-            IItemDropRule[] weaponTypes = new IItemDropRule[] {
+            IItemDropRule[] weaponTypes = [
                 ItemDropRule.Common(ModContent.ItemType<LostSevensideHook>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<DreamShears>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<EuphorbiaMilii>(), 1, 1, 1),
@@ -203,7 +203,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 ItemDropRule.Common(ModContent.ItemType<PurpleToeStaff>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<Dreamcatcher>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<Eden>(), 1, 1, 1),
-            };
+            ];
 
             notExpertRule.OnSuccess(new FewFromRulesRule(2, 1, weaponTypes));
 

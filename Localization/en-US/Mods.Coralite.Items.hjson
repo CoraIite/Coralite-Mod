@@ -3800,3 +3800,13 @@ CrystalEyeBannerItem: {
 	DisplayName: Crystal Eye Banner Item
 	Tooltip: ""
 }
+
+CrystalGolemBannerItem: {
+	DisplayName: Crystal Golem Banner Item
+	Tooltip: ""
+}
+
+CrystalSpiritBannerItem: {
+	DisplayName: Crystal Spirit Banner Item
+	Tooltip: ""
+}

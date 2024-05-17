@@ -238,7 +238,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <summary>
         /// 由_Rotation计算方向向量，并改变弹幕中心和角度
         /// </summary>
-        protected void Slasher()
+        protected virtual void Slasher()
         {
             RotateVec2 = _Rotation.ToRotationVector2();
             Projectile.Center = OwnerCenter() + RotateVec2 * (Projectile.scale * Projectile.height / 2 + distanceToOwner);
