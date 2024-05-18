@@ -3,6 +3,7 @@ using Coralite.Core.Loaders;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
@@ -87,6 +88,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     fairies[i] = new Item();
             }
         }
+
+        public bool ShootFairy(int index, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockback)
+        {
+            return (fairies[index].ModItem as IFairyItem).ShootFairy(player,source,position,velocity,damage,knockback);
+        }
     }
 
     public interface IFairyBottle
@@ -94,5 +100,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         int Capacity { get; }
 
         public Item[] Fairies { get; }
+
+        public virtual bool CanShootFairy(int index, out IFairyItem fairyItem)
+        {
+            if (Fairies[index].ModItem is IFairyItem fairyItem2 && !fairyItem2.IsOut)
+            {
+                fairyItem = fairyItem2;
+                return true;
+            }
+
+            fairyItem = null;
+            return false;
+        }
+
+        bool ShootFairy(int index, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockback);
     }
 }

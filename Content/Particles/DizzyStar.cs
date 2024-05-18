@@ -45,7 +45,7 @@ namespace Coralite.Content.Particles
             if (centerFunc != null)
             {
                 Vector2 center = centerFunc.Invoke();
-                center = center + Rotation.ToRotationVector2() * length * Helper.EllipticalEase(Rotation, 1, 2.4f);
+                Center = center + Rotation.ToRotationVector2() * length * Helper.EllipticalEase(Rotation, 1, 2.4f);
                 Rotation += 0.12f;
                 Scale = 0.6f + MathF.Sin(Rotation) * 0.2f;
 
@@ -80,6 +80,7 @@ namespace Coralite.Content.Particles
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            Main.instance.LoadItem(ItemID.FallenStar);
             Texture2D mainTex = TextureAssets.Item[ItemID.FallenStar].Value;
 
             spriteBatch.Draw(mainTex, Center - Main.screenPosition, Frame, Color.White, 0f, new Vector2(11, 13), Scale, SpriteEffects.None, 0f);

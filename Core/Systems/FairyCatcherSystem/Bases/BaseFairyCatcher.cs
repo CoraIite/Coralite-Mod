@@ -109,14 +109,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             {
                 currentFairyIndex++;
                 if (currentFairyIndex > fairies.Length - 1)
-                {
                     currentFairyIndex = 0;
-                }
 
-                Item item = fairies[currentFairyIndex];
-                if (item.ModItem is IFairyItem fairyItem && !fairyItem.IsOut)
+                if (bottle.CanShootFairy(currentFairyIndex, out IFairyItem fairyItem))
                 {
-                    if (fairyItem.ShootFairy(player, source, position, velocity, damage + (int)fairyItem.FairyDamage, knockback))
+                    if (bottle.ShootFairy(currentFairyIndex, player, source, position, velocity, damage + (int)fairyItem.FairyDamage, knockback))
                         break;
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -30,12 +31,26 @@ namespace Coralite.Content.Particles
                 }
 
                 Velocity.X *= 0.98f;
+                Rotation=Velocity.ToRotation();
             }
 
             if (color.A < 2)
                 active = false;
 
-            UpdatePosCachesNormally(oldCenter.Length);
+            if (fadeIn<oldCenter.Length)
+            {
+                int length=oldCenter.Length;
+                for (int i = 0; i < length; i++)
+                {
+                    oldCenter[i] = Vector2.Lerp(oldCenter[0], Center, i / (float)(length - 1));
+                    oldRot[i] = Helper.Lerp(oldRot[0], Rotation, i / (float)(length - 1));
+                }
+            }
+            else
+            {
+                UpdatePosCachesNormally(oldCenter.Length);
+                UpdateRotCachesNormally(oldRot.Length);
+            }
         }
 
         public static LightTrailParticle Spawn(Vector2 center, Vector2 velocity, Color newcolor, float scale, Color targetColor = default, int trailCacheCount = 10)

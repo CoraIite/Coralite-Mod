@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Icicle;
+﻿using Coralite.Content.Bosses.ThunderveinDragon;
+using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
@@ -91,6 +92,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.boss = true;
 
             NPC.BossBar = GetInstance<BabyIceDragonBossBar>();
+            GetInstance<BabyIceDragonBossBar>().Reset(NPC);
 
             //BGM：冰结寒流
             if (!Main.dedServ)

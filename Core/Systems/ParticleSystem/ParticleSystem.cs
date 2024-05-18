@@ -53,8 +53,10 @@ namespace Coralite.Core.Systems.ParticleSystem
             if (Main.gameInactive)//不在游戏暂停时运行
                 return;
 
-            foreach (var particle in Particles)
+            for (int i = 0; i < Particles.Count; i++)
             {
+                Particle particle = Particles[i];
+
                 if (particle == null)
                     continue;
 

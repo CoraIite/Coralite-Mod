@@ -1,12 +1,16 @@
 ﻿using Coralite.Content.DamageClasses;
+using Coralite.Core.Systems.FairyCatcherSystem;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
-    public class BaseLassoSwing : BaseSwingProj
+    public abstract class BaseLassoSwing(short TrailLength) : BaseSwingProj(trailLength:TrailLength)
     {
         public virtual string HandleTexture => Texture + "Handle";
 
@@ -18,23 +22,30 @@ namespace Coralite.Core.Prefabs.Projectiles
         public Vector2 CursorCenter => Projectile.Center;
         public float cursorRotation;
 
+        /// <summary>
+        /// 甩动时距离玩家的距离
+        /// </summary>
+        public float minDistance=48;
+        /// <summary>
+        /// 投出时距离玩家的距离
+        /// </summary>
+        public float maxDistance = 100;
+
+        public int delayTime = 8;
+        public int shootTime = 12;
+
         public override void SetDefs()
         {
             Projectile.DamageType = FairyDamage.Instance;
-            Projectile.localNPCHitCooldown = 48;
-            Projectile.width = 30;
-            Projectile.height = 30;
-            trailTopWidth = 2;
-            distanceToOwner = 8;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.width = 24;
+            Projectile.height = 24;
+            distanceToOwner = minDistance;
             minTime = 0;
             useShadowTrail = true;
             onHitFreeze = 0;
+            
         }
-
-        /// <summary>
-        /// 用于额外调整弹幕大小等
-        /// </summary>
-        public virtual void PostSetDefs() { }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => null;
 
@@ -44,9 +55,8 @@ namespace Coralite.Core.Prefabs.Projectiles
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             startAngle = 1.57f;
-            onHitFreeze = 8;
             minTime = Owner.itemTimeMax;
-            maxTime = minTime + 8;
+            maxTime = minTime + shootTime;
             Smoother = Coralite.Instance.NoSmootherInstance;
 
             Projectile.velocity *= 0f;
@@ -55,7 +65,6 @@ namespace Coralite.Core.Prefabs.Projectiles
                 _Rotation = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
             }
 
-            Slasher();
             Smoother.ReCalculate(maxTime - minTime);
 
             if (useShadowTrail || useSlashTrail)
@@ -66,8 +75,18 @@ namespace Coralite.Core.Prefabs.Projectiles
                 InitializeCaches();
             }
 
+            Slasher();
+
             onStart = false;
             Projectile.netUpdate = true;
+        }
+
+        protected override void AIAfter()
+        {
+            Owner.itemRotation = _Rotation + (Owner.direction > 0 ? 0 : MathHelper.Pi);
+
+            if (useShadowTrail || useSlashTrail)
+                UpdateCaches();
         }
 
         protected override float GetStartAngle()
@@ -77,27 +96,97 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected override void BeforeSlash()
         {
-            _Rotation = GetStartAngle() - OwnerDirection * (startAngle + MathF.Sin(Timer * 0.1f) * 0.25f);
+            //Projectile.Kill();
+            _Rotation = GetStartAngle() - OwnerDirection * (startAngle + MathF.Sin(Timer / minTime * 2.5f * MathHelper.Pi) * 0.55f);
             Slasher();
 
             if ((int)Timer == minTime)
             {
+                startAngle = _Rotation;
                 totalAngle = (Main.MouseWorld - Owner.Center).ToRotation();
-
-                InitializeCaches();
             }
         }
 
         protected override void OnSlash()
         {
-            base.OnSlash();
+            float factor = (Timer - minTime) / shootTime;
+            factor = Coralite.Instance.X2Smoother.Smoother(factor);
+            _Rotation = startAngle.AngleLerp(totalAngle, factor);
+            distanceToOwner = Helper.Lerp(minDistance, maxDistance, factor);
+            Slasher();
+        }
+
+        protected override void AfterSlash()
+        {
+            float factor = (Timer - maxTime) / delayTime;
+            distanceToOwner = Helper.Lerp(maxDistance, 0, Coralite.Instance.SqrtSmoother.Smoother(factor));
+            _Rotation += OwnerDirection * 0.05f;
+
+            if ((int)Timer == maxTime + trailLength+1)
+                ShootFairy();
+
+            Slasher();
+            if (Timer > maxTime + delayTime)
+                Projectile.Kill();
         }
 
         protected override void Slasher()
         {
             RotateVec2 = _Rotation.ToRotationVector2();
-            Projectile.Center = OwnerCenter() + oldRotate[^1].ToRotationVector2() * (Projectile.scale * Projectile.height / 2 + oldDistanceToOwner[^1]);
+            Projectile.Center = OwnerCenter() + oldRotate[^1].ToRotationVector2() * oldDistanceToOwner[^1];
             Projectile.rotation = _Rotation;
+            cursorRotation = oldRotate[^1];
+            Owner.itemLocation = Owner.Center + RotateVec2 * 15;
+        }
+
+        protected virtual void ShootFairy()
+        {
+            if (ItemType < 1)
+                return;
+
+            Item heldItem = Owner.HeldItem;
+            if (heldItem.ModItem is BaseFairyCatcher catcher)
+            {
+                float speed = heldItem.shootSpeed/2;
+                Vector2 velocity = oldRotate[^1].ToRotationVector2() * speed;
+                Vector2 center = Projectile.Center;
+                catcher.ModifyFairyStats(Owner, ref center, ref velocity);
+
+                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyShoot_GetFairyBottle(out IFairyBottle bottle))
+                {
+                    float damage = Owner.GetWeaponDamage(heldItem);
+                    fcp.TotalCatchPowerBonus(ref damage, heldItem);
+                    Item[] fairies = bottle.Fairies;
+
+                    for (int i = 0; i < fairies.Length; i++)
+                    {
+                        catcher.currentFairyIndex++;
+                        if (catcher.currentFairyIndex > fairies.Length - 1)
+                            catcher.currentFairyIndex = 0;
+
+                        if (bottle.CanShootFairy(catcher.currentFairyIndex, out IFairyItem fairyItem))
+                        {
+                            if (bottle.ShootFairy(catcher.currentFairyIndex, Owner, new EntitySource_ItemUse_WithAmmo(Owner, heldItem, 0)
+                                , center, velocity, (int)damage + (int)fairyItem.FairyDamage, Owner.GetWeaponKnockback(heldItem)))
+                                break;
+                        }
+                    }
+
+                    OnShootFairy();
+                }
+            }
+        }
+
+        public virtual void OnShootFairy() { }
+
+        protected override void InitializeCaches()
+        {
+            for (int j = trailLength - 1; j >= 0; j--)
+            {
+                oldRotate[j] = _Rotation;
+                oldDistanceToOwner[j] = distanceToOwner;
+                oldLength[j] = Projectile.height * Projectile.scale;
+            }
         }
 
         #region 绘制部分
@@ -108,7 +197,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <returns></returns>
         public virtual Vector2 GetHandlePos(Texture2D handleTex)
         {
-            return Owner.itemLocation + new Vector2(Owner.direction * Owner.gravDir * DrawOriginOffsetX, DrawOriginOffsetY);
+            return Owner.itemLocation + RotateVec2 * DrawOriginOffsetX;
         }
 
         /// <summary>
@@ -247,7 +336,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void DrawHandle(Texture2D HandleTex)
         {
             Main.spriteBatch.Draw(HandleTex, Owner.itemLocation - Main.screenPosition, null,
-                Lighting.GetColor(Owner.Center.ToTileCoordinates()), cursorRotation + spriteRotation, HandleTex.Size() / 2, 1f, 0, 0);
+                Lighting.GetColor(Owner.Center.ToTileCoordinates()), _Rotation + OwnerDirection * spriteRotation, HandleTex.Size() / 2, 1f, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
         }
 
         public virtual Color GetStringColor(Vector2 pos)
@@ -261,6 +350,26 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public virtual Texture2D GetStringTex() => TextureAssets.FishingLine.Value;
 
+        public virtual void DrawFairyItem()
+        {
+            Vector2 center = CursorCenter-Main.screenPosition;
+
+            int itemType = (int)ItemType;
+            Main.instance.LoadItem(itemType);
+            Texture2D mainTex = TextureAssets.Item[itemType].Value;
+            Rectangle rectangle2;
+            Color c = Lighting.GetColor(CursorCenter.ToTileCoordinates());
+
+            if (Main.itemAnimations[itemType] != null)
+                rectangle2 = Main.itemAnimations[itemType].GetFrame(mainTex, -1);
+            else
+                rectangle2 = mainTex.Frame();
+
+            float itemScale = 1f;
+
+            Main.spriteBatch.Draw(mainTex, center, new Rectangle?(rectangle2), c, 0f, rectangle2.Size() / 2, itemScale, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+        }
+
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
             Texture2D handleTex = ModContent.Request<Texture2D>(HandleTexture).Value;
@@ -268,12 +377,13 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             //绘制连线
             DrawLine(GetHandlePos(handleTex), GetStringTipPos(handleTex));
+
             //绘制指针
             DrawCursor(cursorTex);
+
             //绘制仙灵物品
-
-
-
+            if (Timer < maxTime&&ItemType>0)
+                DrawFairyItem();
             //绘制手持
             DrawHandle(handleTex);
 

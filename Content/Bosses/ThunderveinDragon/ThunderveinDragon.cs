@@ -99,6 +99,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             NPC.boss = true;
 
             NPC.BossBar = ModContent.GetInstance<ThunderveinDragonBossBar>();
+            ModContent.GetInstance<ThunderveinDragonBossBar>().Reset(NPC);
 
             //BGM：暂无
             //if (!Main.dedServ)

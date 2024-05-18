@@ -57,8 +57,9 @@ namespace Coralite.Content.CustomHooks
                     if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawPrimitive)
                         (Main.npc[k].ModNPC as IDrawPrimitive).DrawPrimitives();
 
-                foreach (var particle in ParticleSystem.Particles)
+                for (int i = 0; i < ParticleSystem.Particles.Count; i++)
                 {
+                    Particle particle = ParticleSystem.Particles[i];
                     if (particle != null && particle.active && particle is IDrawParticlePrimitive p)
                         p.DrawPrimitives();
                 }
@@ -106,9 +107,10 @@ namespace Coralite.Content.CustomHooks
 
             //绘制自己的粒子
             ArmorShaderData armorShaderData = null;
-            foreach (var particle in ParticleSystem.Particles)
+            for (int i = 0; i < ParticleSystem.Particles.Count; i++)
             {
-                if (!particle.active)
+                Particle particle = ParticleSystem.Particles[i];
+                if (particle == null || !particle.active)
                     continue;
 
                 if (!Helper.OnScreen(particle.Center - Main.screenPosition))
@@ -119,7 +121,12 @@ namespace Coralite.Content.CustomHooks
                     spriteBatch.End();
                     armorShaderData = particle.shader;
                     if (armorShaderData == null)
+                    {
+                        spriteBatch.Begin();
+                        spriteBatch.End();
+
                         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+                    }
                     else
                     {
                         spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);

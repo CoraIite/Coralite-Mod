@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Loaders;
+﻿using Coralite.Content.Items.Nightmare;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -69,13 +70,6 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
             UpdateFairy();
 
-            if (IsMouseHovering)//鼠标在上面，开始更新自身的样子
-            {
-            }
-            else
-            {
-            }
-
             base.Update(gameTime);
         }
 
@@ -94,11 +88,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             }
 
             //绘制仙灵本体
-            var style = GetDimensions();
             Color c = FairySystem.FairyCaught[_fairy.Type] ? Color.White : Color.Black;
             c *= alpha;
-
-            _fairy.Center = style.Center() + Main.screenPosition;
 
             if (hovering)
             {
@@ -108,16 +99,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                     Main.hoverItemName = "CoraliteFairyEncyclopedia";
                 }
                 else
-                {
                     Main.instance.MouseText(FairySystem.UncaughtMouseText.Value);
-                }
-
-                _fairy.scale = 1.4f;
-                _fairy.Center += new Vector2(0, style.Height / 8 * MathF.Sin(Main.GlobalTimeWrappedHourly * 3));
-            }
-            else
-            {
-                _fairy.scale = 1f;
             }
 
             _fairy.QuickDraw(c, 0);
@@ -161,6 +143,19 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 if (++_fairy.frame.Y >= _fairy.VerticalFrames)
                     _fairy.frame.Y = 0;
             }
+
+            var style = GetDimensions();
+            _fairy.Center = style.Center() + Main.screenPosition;
+            if (IsMouseHovering)
+            {
+                _fairy.scale = 1.4f;
+                _fairy.Center += new Vector2(0, style.Height / 8 * MathF.Sin(Main.GlobalTimeWrappedHourly * 3));
+            }
+            else
+            {
+                _fairy.scale = 1f;
+            }
+
         }
     }
 }

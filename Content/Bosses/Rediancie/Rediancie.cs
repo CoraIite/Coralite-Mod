@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.RedJades;
+﻿using Coralite.Content.Bosses.BabyIceDragon;
+using Coralite.Content.Items.RedJades;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
@@ -94,6 +95,7 @@ namespace Coralite.Content.Bosses.Rediancie
             NPC.boss = true;
 
             NPC.BossBar = GetInstance<RediancieBossBar>();
+            GetInstance<RediancieBossBar>().Reset(NPC);
 
             //BGM：赤色激流
             if (!Main.dedServ)

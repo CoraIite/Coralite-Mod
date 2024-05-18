@@ -567,7 +567,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual void DrawHandle(Texture2D HandleTex)
         {
             Main.spriteBatch.Draw(HandleTex, Owner.itemLocation - Main.screenPosition, null,
-                Lighting.GetColor(Owner.Center.ToTileCoordinates()), cursorRotation + extraHandleRotation, HandleTex.Size() / 2, 1f, 0, 0);
+                Lighting.GetColor(Owner.Center.ToTileCoordinates()), 0, HandleTex.Size() / 2, 1f, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
         }
 
         public virtual Color GetStringColor(Vector2 pos)

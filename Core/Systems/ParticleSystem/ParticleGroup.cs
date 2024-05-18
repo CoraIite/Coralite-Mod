@@ -113,9 +113,10 @@ namespace Coralite.Core.Systems.ParticleSystem
         public void DrawParticles(SpriteBatch spriteBatch)
         {
             ArmorShaderData armorShaderData = null;
-            foreach (var particle in _particles)
+            for (int i = 0; i < _particles.Count; i++)
             {
-                if (!particle.active)
+                var particle = _particles[i];
+                if (particle == null || !particle.active)
                     continue;
 
                 if (!Helper.OnScreen(particle.Center - Main.screenPosition))

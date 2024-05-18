@@ -63,3 +63,5 @@ FairySystem: {
 	// SortByRarityText: 按稀有度排序
 	// SortByCaughtText: 按是否捕获排序
 }
+
+// BossBarSystem.DontTakeDamage: 不可攻击！
