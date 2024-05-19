@@ -5,6 +5,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 
@@ -40,11 +41,18 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.localNPCHitCooldown = -1;
             Projectile.width = 24;
             Projectile.height = 24;
-            distanceToOwner = minDistance;
+            distanceToOwner = minDistance / 2;
             minTime = 0;
             useShadowTrail = true;
             onHitFreeze = 0;
-            
+        }
+
+        public override bool? CanDamage()
+        {
+            if (Timer > minTime)
+                return base.CanDamage();
+
+            return false;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => null;
@@ -54,8 +62,11 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (Main.myPlayer == Projectile.owner)
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
+            Projectile.extraUpdates = 2;
+            delayTime *= (Projectile.extraUpdates + 1);
+            shootTime *= (Projectile.extraUpdates + 1);
             startAngle = 1.57f;
-            minTime = Owner.itemTimeMax;
+            minTime = Owner.itemTimeMax * (Projectile.extraUpdates + 1);
             maxTime = minTime + shootTime;
             Smoother = Coralite.Instance.NoSmootherInstance;
 
@@ -98,6 +109,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             //Projectile.Kill();
             _Rotation = GetStartAngle() - OwnerDirection * (startAngle + MathF.Sin(Timer / minTime * 2.5f * MathHelper.Pi) * 0.55f);
+            distanceToOwner = Helper.Lerp(minDistance / 2, minDistance, Timer / minTime);
             Slasher();
 
             if ((int)Timer == minTime)
@@ -177,7 +189,10 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
         }
 
-        public virtual void OnShootFairy() { }
+        public virtual void OnShootFairy()
+        {
+            SoundEngine.PlaySound(CoraliteSoundID.WhipSwing_Item152, Projectile.Center);
+        }
 
         protected override void InitializeCaches()
         {
@@ -302,7 +317,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                     }
                     else
                     {
-                        num10 = Math.Abs(Projectile.velocity.X) / 3f;
+                        num10 = Math.Abs(Owner.velocity.X) / 3f;
                         if (num10 > 1f)
                             num10 = 1f;
 

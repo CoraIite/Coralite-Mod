@@ -453,11 +453,13 @@ BrownFairyProj: {
 // RedJadeSpearSpurt.DisplayName: Red Jade Spear Spurt
 
 BreezeFairyProj: {
-	// SkillText: 吹散！
-	// DisplayName: Breeze Fairy Proj
+	SkillText: 吹散！
+	DisplayName: 微风灵
 }
 
 // PollenGunpowderProj.DisplayName: Pollen Gunpowder Proj
 // RoseGunpowderProj.DisplayName: Rose Gunpowder Proj
 // RoseGunpowderProj2.DisplayName: Rose Gunpowder Proj2
 // VineLassoSwing.DisplayName: Vine Lasso Swing
+// DevilsYokeCatcher.DisplayName: Devils Yoke Catcher
+// DevilsYokeSwing.DisplayName: Devils Yoke Swing

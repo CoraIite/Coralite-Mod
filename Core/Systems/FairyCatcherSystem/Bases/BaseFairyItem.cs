@@ -68,6 +68,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public sealed override void SetDefaults()
         {
+            IsOut = false;
+
             SetOtherDefaults();
             if (Item.TryGetGlobalItem(out FairyGlobalItem fairyItem))
             {
@@ -431,6 +433,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             tag.Add("Life", life);
             if (dead)
                 tag.Add("ResurrectionTime", resurrectionTime);
+
+            IsOut = false;
         }
 
         public override void LoadData(TagCompound tag)

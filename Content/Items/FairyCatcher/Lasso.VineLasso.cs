@@ -5,57 +5,26 @@ using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.CursorAIs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher
 {
-    public class VineLasso : BaseFairyCatcher
+    public class VineLasso : BaseLassoItem
     {
         public override string Texture => AssetDirectory.FairyCatcherItems + Name;
+
+        public override int LassoProjType => ModContent.ProjectileType<VineLassoSwing>();
 
         public override void SetOtherDefaults()
         {
             Item.shoot = ModContent.ProjectileType<VineLassoCatcher>();
-            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 24;
             Item.shootSpeed = 12;
             Item.SetWeaponValues(8, 3);
             Item.SetShopValues(ItemRarityColor.White0, Item.sellPrice(0, 0, 20));
-            Item.GetGlobalItem<FairyGlobalItem>().CatchPower = 10;
-        }
-
-        public override void ModifyShootFairyStyle(Player player)
-        {
-            Item.noUseGraphic = true;
-            Item.useStyle = ItemUseStyleID.Rapier;
-        }
-
-        public override void ShootFairy(IFairyBottle bottle, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockback)
-        {
-            Item[] fairies = bottle.Fairies;
-            bool shooted = false;
-            for (int i = 0; i < fairies.Length; i++)
-            {
-                currentFairyIndex++;
-                if (currentFairyIndex > fairies.Length - 1)
-                    currentFairyIndex = 0;
-
-                if (bottle.CanShootFairy(currentFairyIndex, out IFairyItem fairyItem))
-                {
-                    shooted = true;
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<VineLassoSwing>(),
-                        damage, knockback, player.whoAmI, fairies[currentFairyIndex].type);
-                    break;
-                }
-            }
-
-            if (!shooted)
-            {
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<VineLassoSwing>(),
-                    damage, knockback, player.whoAmI);
-            }
+            Item.GetGlobalItem<FairyGlobalItem>().CatchPower = 5;
         }
 
         public override void AddRecipes()
@@ -75,7 +44,6 @@ namespace Coralite.Content.Items.FairyCatcher
         {
             base.SetDefs();
             DrawOriginOffsetX = 8;
-            DrawOriginOffsetY = -8;
         }
 
         public override Color GetStringColor(Vector2 pos)

@@ -95,7 +95,7 @@ namespace Coralite.Helpers
             int y = frameY / 18;
             Point16 position = new Point16(i - x, j - y);
 
-            if (TileEntity.ByPosition.ContainsKey(position) && TileEntity.ByPosition[position] is T tEntity)
+            if (TileEntity.ByPosition.TryGetValue(position, out TileEntity value) && value is T tEntity)
             {
                 entity = tEntity;
                 return true;
@@ -109,7 +109,7 @@ namespace Coralite.Helpers
         {
             Point16 position = new Point16(top, left);
 
-            if (TileEntity.ByPosition.ContainsKey(position) && TileEntity.ByPosition[position] is T tEntity)
+            if (TileEntity.ByPosition.TryGetValue(position, out TileEntity value) && value is T tEntity)
             {
                 entity = tEntity;
                 return true;

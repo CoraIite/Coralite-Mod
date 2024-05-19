@@ -146,6 +146,11 @@ FlaskOfThunderBuff: {
 }
 
 PollenFire: {
-	// DisplayName: Pollen Fire
-	// Description: Mods.Coralite.Buffs.PollenFire.Description
+	DisplayName: 花火
+	Description: 着火了！很香！
+}
+
+OpalBuff: {
+	DisplayName: 猫眼
+	Description: 能使你直观地观察到魔能的流动
 }

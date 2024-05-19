@@ -149,3 +149,8 @@ PollenFire: {
 	DisplayName: Pollen Fire
 	Description: Mods.Coralite.Buffs.PollenFire.Description
 }
+
+OpalBuff: {
+	DisplayName: Opal Buff
+	Description: Mods.Coralite.Buffs.OpalBuff.Description
+}

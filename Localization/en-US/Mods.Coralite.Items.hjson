@@ -3810,3 +3810,18 @@ CrystalSpiritBannerItem: {
 	DisplayName: Crystal Spirit Banner Item
 	Tooltip: ""
 }
+
+DevilsYoke: {
+	DisplayName: Devils Yoke
+	Tooltip: ""
+}
+
+OpalTower: {
+	DisplayName: Opal Tower
+	Tooltip: ""
+}
+
+ElfEmblem: {
+	DisplayName: Elf Emblem
+	Tooltip: ""
+}

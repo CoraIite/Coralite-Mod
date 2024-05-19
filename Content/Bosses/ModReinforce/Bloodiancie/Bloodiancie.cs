@@ -69,6 +69,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             NPC.boss = true;
 
             NPC.BossBar = GetInstance<RediancieBossBar>();
+            GetInstance<RediancieBossBar>().Reset(NPC);
 
             //BGM：赤色激流
             if (!Main.dedServ)

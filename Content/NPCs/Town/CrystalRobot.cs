@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Items.Magike;
+using Coralite.Content.Items.Magike.OtherPlaceables;
 using Coralite.Content.Items.Magike.Tools;
 using Coralite.Content.Items.Magike.Towers;
 using Coralite.Core;
@@ -240,7 +241,7 @@ namespace Coralite.Content.NPCs.Town
         {
             var npcShop = new NPCShop(Type, ShopName);
             int magicCrystalCurrencyID = CurrencyLoader.GetCurrencyID<MagicCrystalCurrency>();
-            npcShop.Add(new Item(ModContent.ItemType<MagikeGuideBook>())//单片镜
+            npcShop.Add(new Item(ModContent.ItemType<MagikeGuideBook>())//魔能辞典
             {
                 shopCustomPrice = 15,
                 shopSpecialCurrency = magicCrystalCurrencyID
@@ -248,6 +249,11 @@ namespace Coralite.Content.NPCs.Town
             npcShop.Add(new Item(ModContent.ItemType<MagikeMonoclastic>())//单片镜
             {
                 shopCustomPrice = 10,
+                shopSpecialCurrency = magicCrystalCurrencyID
+            });
+            npcShop.Add(new Item(ModContent.ItemType<OpalTower>())//单片镜
+            {
+                shopCustomPrice = 25,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
             npcShop.Add(new Item(ModContent.ItemType<MagConnectStaff>())//连接杖

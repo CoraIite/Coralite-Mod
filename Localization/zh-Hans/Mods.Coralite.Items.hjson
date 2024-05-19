@@ -3917,3 +3917,18 @@ CrystalSpiritBannerItem: {
 	DisplayName: 晶体妖精旗
 	Tooltip: ""
 }
+
+DevilsYoke: {
+	DisplayName: 魔鬼枷锁
+	Tooltip: ""
+}
+
+OpalTower: {
+	DisplayName: 猫眼镜
+	Tooltip: 放置后右键打开，可使附近的玩家获得猫眼Buff来直观地观察魔能的流动
+}
+
+ElfEmblem: {
+	DisplayName: 妖精徽章
+	Tooltip: 捕捉力增加15%
+}
