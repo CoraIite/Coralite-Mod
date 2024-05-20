@@ -39,6 +39,7 @@ namespace Coralite.Core.Systems.CameraSystem
             {
                 FreezeTime--;
                 cameraPosition.CameraPosition = originPos;
+                return;
             }
 
             if (Timer > 0)

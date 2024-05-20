@@ -494,7 +494,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override void OnSpawn(IEntitySource source)
         {
-            Main.instance.CameraModifiers.Add(new MoveModifyer(25, 50));
+            Main.instance.CameraModifiers.Add(new MoveModifyer(5, 50));
         }
 
         public override void AI()

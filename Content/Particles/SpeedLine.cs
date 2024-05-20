@@ -37,7 +37,7 @@ namespace Coralite.Content.Particles
             Rectangle frame = Frame;
             Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
             var pos = Center - Main.screenPosition;
-            Color c = color * 0.5f;
+            Color c = Color.White * 0.5f;
             if (oldCenter != null)
             {
                 spriteBatch.Draw(mainTex, pos, frame, color, Rotation, origin, oldCenter[0], SpriteEffects.None, 0f);

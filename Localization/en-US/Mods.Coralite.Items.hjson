@@ -3825,3 +3825,18 @@ ElfEmblem: {
 	DisplayName: Elf Emblem
 	Tooltip: ""
 }
+
+DryIce: {
+	DisplayName: Dry Ice
+	Tooltip: ""
+}
+
+TwinRocketLauncher: {
+	DisplayName: Twin Rocket Launcher
+	Tooltip: ""
+}
+
+SteelBreaker: {
+	DisplayName: Steel Breaker
+	Tooltip: ""
+}

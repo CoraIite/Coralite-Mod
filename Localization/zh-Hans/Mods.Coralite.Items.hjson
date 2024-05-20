@@ -3932,3 +3932,26 @@ ElfEmblem: {
 	DisplayName: 妖精徽章
 	Tooltip: 捕捉力增加15%
 }
+
+DryIce: {
+	DisplayName: 干冰
+	Tooltip:
+		'''
+		使用后开始降雨
+		“就这一小块就能引发降雨？”
+		'''
+}
+
+TwinRocketLauncher: {
+	DisplayName: 双子火箭炮
+	Tooltip: 将一级和二级火箭转化为扩散弹
+}
+
+SteelBreaker: {
+	DisplayName: 破魔旋刃
+	Tooltip: 
+	'''
+	命中后释放灵体旋刃
+	灵体旋刃会斩杀血量低于4倍弹幕伤害的敌怪
+	'''
+}

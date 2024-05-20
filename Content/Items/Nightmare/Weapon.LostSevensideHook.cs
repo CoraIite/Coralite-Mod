@@ -6,6 +6,7 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.CameraSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
@@ -60,6 +61,7 @@ namespace Coralite.Content.Items.Nightmare
 
                             proj.ai[2] = (int)BaseSilkKnifeSpecialProj.AIStates.drag;
                             proj.netUpdate = true;
+                            Main.instance.CameraModifiers.Add(new MoveModifyer(10, 50));
                         }
                         return false;
                     }
