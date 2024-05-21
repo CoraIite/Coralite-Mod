@@ -50,6 +50,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             FairyCaught = new bool[FairyLoader.FairyCount];
         }
 
+        public override void PostAddRecipes()
+        {
+            RegisterElfTrade();
+        }
+
         public override void Unload()
         {
             fairySpawnConditions = null;
@@ -58,6 +63,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             UnloadLocalization();
             UnloadFairyTexture();
             FairyLoader.Unload();
+            ElfPortalTrades = null;
         }
 
         public override void SaveWorldData(TagCompound tag)

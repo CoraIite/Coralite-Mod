@@ -179,9 +179,9 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <returns></returns>
         public static bool TryGetRemodelRecipes(int selfType, out List<RemodelRecipe> recipes)
         {
-            if (remodelRecipes != null && remodelRecipes.ContainsKey(selfType))
+            if (remodelRecipes != null && remodelRecipes.TryGetValue(selfType, out List<RemodelRecipe> value))
             {
-                recipes = remodelRecipes[selfType];
+                recipes = value;
                 return true;
             }
 

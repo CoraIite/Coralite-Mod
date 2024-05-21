@@ -63,6 +63,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText SortByTypeText;
         public static LocalizedText SortByRarityText;
         public static LocalizedText SortByCaughtText;
+        public static LocalizedText FairyTradeCondition;
 
         public void LoadLocalization()
         {
@@ -119,6 +120,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             SortByTypeText = this.GetLocalization("SortByTypeText", () => "按内部ID排序");
             SortByRarityText = this.GetLocalization("SortByRarityText", () => "按稀有度排序");
             SortByCaughtText = this.GetLocalization("SortByCaughtText", () => "按是否捕获排序");
+            FairyTradeCondition = this.GetLocalization("FairyTradeCondition", () => "使用妖精传送门进行交易");
         }
 
         public static void UnloadLocalization()
@@ -157,6 +159,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             SortByTypeText = null;
             SortByRarityText = null;
             SortByCaughtText = null;
+            FairyTradeCondition = null;
         }
 
         public static string FormatIVDescription(LocalizedText pre, LocalizedText levelText, float @base, float bonused)

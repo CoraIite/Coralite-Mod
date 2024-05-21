@@ -26,7 +26,7 @@ namespace Coralite.Content.Tiles.Magike
             AddMapEntry(Coralite.Instance.MagicCrystalPink);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
-            TileObjectData.newTile.Origin = new Point16(0, 1);
+            TileObjectData.newTile.Origin = new Point16(0, 2);
             TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.CoordinateHeights = [16, 16, 16];

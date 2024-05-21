@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.CoreKeeper
             player.statLifeMax2 += 18;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.bossDamageReduce += 0.5f;
+                cp.bossDamageReduce += 0.05f;
             }
         }
     }
