@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Phantom
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.equippedPhantomMirror = true;
+                cp.AddEffect(nameof(PhantomMirror));
 
                 if (player.ownedProjectileCounts[ModContent.ProjectileType<PhantomMirrorProj>()] == 0)
                 {
@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.Phantom
                 Projectile.localAI[0] = 1;
             }
 
-            if (owner.TryGetModPlayer(out CoralitePlayer cp) && cp.equippedPhantomMirror)
+            if (owner.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(PhantomMirror)))
                 Projectile.timeLeft = 2;
             else
             {

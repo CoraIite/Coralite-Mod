@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.Magike.Tools;
+using Coralite.Content.ModPlayers;
 using Coralite.Content.Raritys;
 using Coralite.Content.Tiles.Magike;
 using Coralite.Core;
@@ -30,9 +31,8 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
 
         public override void Update(Player player, ref int buffIndex)
         {
-           int a= player.buffTime[buffIndex];
-            if (player.TryGetModPlayer(out MagikePlayer cp))
-                cp.equippedMagikeMonoclastic = true;
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+                cp.AddEffect(nameof(MagikeMonoclastic));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Terraria.DataStructures;
+﻿using Coralite.Content.Items.Thunder;
+using Terraria.DataStructures;
 using Terraria.Localization;
 
 namespace Coralite.Content.ModPlayers
@@ -24,7 +25,7 @@ namespace Coralite.Content.ModPlayers
 
         public void ThunderElectrifiedDeathReason(ref PlayerDeathReason damageSource)
         {
-            if (thunderElectrified)
+            if (HasEffect(nameof(ThunderElectrified)))
                 //damageSource.SourceCustomReason = Player.name + ThunderElectrifiedDeath.Value;
                 damageSource = DeathByLocalization("ThunderElectrifiedDeath");
         }

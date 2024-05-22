@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;
@@ -55,7 +56,7 @@ namespace Coralite.Content.Items.Thunder
         public override void Update(Player player, ref int buffIndex)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-                cp.flaskOfThunder = true;
+                cp.AddEffect(nameof(FlaskOfThunderBuff));
         }
     }
 }

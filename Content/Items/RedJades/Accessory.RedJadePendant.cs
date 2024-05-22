@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Terraria;
 
@@ -9,15 +10,8 @@ namespace Coralite.Content.Items.RedJades
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
 
-        public override void SetStaticDefaults()
-        {
-            // Tooltip.SetDefault("受到攻击时有概率产生爆炸");
-        }
-
         public override void SetDefaults()
         {
-            Item.width = 26;
-            Item.height = 32;
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 1);
             Item.accessory = true;
@@ -26,7 +20,8 @@ namespace Coralite.Content.Items.RedJades
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<CoralitePlayer>().equippedRedJadePendant = true;
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+                cp.AddEffect(nameof(RedJadePendant));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Terraria;
@@ -25,7 +26,7 @@ namespace Coralite.Content.Items.Shadow
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.equippedShadowMirror = true;
+                cp.AddEffect(nameof(ShadowMirror));
 
                 if (player.ownedProjectileCounts[ModContent.ProjectileType<ShadowMirrorProj>()] < 1)
                 {
@@ -91,7 +92,7 @@ namespace Coralite.Content.Items.Shadow
         public override void AI()
         {
             Player owner = Main.player[Projectile.owner];
-            if (owner.TryGetModPlayer(out CoralitePlayer cp) && cp.equippedShadowMirror)
+            if (owner.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(ShadowMirror)))
                 Projectile.timeLeft = 2;
             else
             {

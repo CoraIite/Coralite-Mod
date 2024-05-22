@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
@@ -31,7 +32,7 @@ namespace Coralite.Content.Items.Nightmare
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.nightmareEnergyMax = 10;
-                cp.resistDreamErosion = true;
+                cp.AddEffect(nameof(NightmareHeart));
                 player.GetDamage(DamageClass.Generic) += cp.nightmareEnergy * 0.015f;
             }
 

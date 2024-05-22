@@ -13,9 +13,7 @@ namespace Coralite.Content.Items.Thunder
         public override void Update(Player player, ref int buffIndex)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-            {
-                cp.thunderElectrified = true;
-            }
+                cp.AddEffect(nameof(ThunderElectrified));
         }
 
         public override void Update(NPC npc, ref int buffIndex)

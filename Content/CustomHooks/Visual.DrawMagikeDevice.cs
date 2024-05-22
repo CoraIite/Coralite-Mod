@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.Magike.Tools;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -29,7 +30,7 @@ namespace Coralite.Content.CustomHooks
             if (Main.gameMenu)
                 return;
 
-            if (Main.LocalPlayer.TryGetModPlayer(out MagikePlayer mp) && mp.equippedMagikeMonoclastic)
+            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(MagikeMonoclastic)))
             {
                 Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
                 Texture2D laserTex = ModContent.Request<Texture2D>(AssetDirectory.OtherItems + "MagikeArrow").Value;

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
@@ -18,7 +19,7 @@ namespace Coralite.Content.Items.Steel
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-                cp.equippedLifePulseDevice = true;
+                cp.AddEffect(nameof(LifePulseDevice));
         }
 
         public override void AddRecipes()

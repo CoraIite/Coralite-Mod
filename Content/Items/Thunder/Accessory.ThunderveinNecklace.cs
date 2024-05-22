@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;
@@ -23,9 +24,7 @@ namespace Coralite.Content.Items.Thunder
             player.buffImmune[ModContent.BuffType<ThunderElectrified>()] = true;
             player.GetArmorPenetration(DamageClass.Generic) += 7;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-            {
-                cp.equippedThunderveinNecklace = true;
-            }
+                cp.AddEffect(nameof(ThunderveinNecklace));
         }
     }
 }

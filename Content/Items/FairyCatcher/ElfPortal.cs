@@ -80,11 +80,18 @@ namespace Coralite.Content.Items.FairyCatcher
                 if (item == null || item.IsAir || item.timeSinceItemSpawned < 60)
                     continue;
 
+                Vector2 pos = new Vector2(i, j) * 16 + new Vector2(16 * 3 / 2);
+
+                if (Vector2.Distance(pos, item.Center) > 16 * 10)
+                    continue;
+                
                 if (FairySystem.TryGetElfPortalTrades(item.type, out _))
                 {
-                    Vector2 pos = new Vector2(i, j) * 16 + new Vector2(16 * 3 / 2);
-                    Projectile.NewProjectile(new EntitySource_TileUpdate(i, j), pos, Vector2.Zero, ModContent.ProjectileType<ElfTradeProj>()
-                        , 0, 0, ai0: k);
+                   int p= Projectile.NewProjectile(new EntitySource_TileUpdate(i, j), pos, Vector2.Zero, ModContent.ProjectileType<ElfTradeProj>()
+                        , 0, 0, ai0: item.type,ai1:item.stack);
+
+                    (Main.projectile[p].ModProjectile as ElfTradeProj).itemCenter = item.Center;
+                    Main.item[k].TurnToAir();
                 }
             }
         }
@@ -94,13 +101,15 @@ namespace Coralite.Content.Items.FairyCatcher
     {
         public override string Texture => AssetDirectory.Blank;
 
-        public ref float ItemIndex => ref Projectile.ai[0];
+        public ref float ItemType => ref Projectile.ai[0];
+        public ref float ItemStack => ref Projectile.ai[1];
 
-        private Item item;
-        private Vector2 itemPos;
+        public Vector2 itemCenter;
+        private float alpha = 1;
 
         public override void SetStaticDefaults()
         {
+
         }
 
         public override void SetDefaults()
@@ -111,7 +120,7 @@ namespace Coralite.Content.Items.FairyCatcher
         {
             if (Projectile.localAI[0] == 0)
             {
-                item = Main.item[(int)ItemIndex];
+
                 Projectile.localAI[0] = 1;
             }
         }
@@ -121,6 +130,11 @@ namespace Coralite.Content.Items.FairyCatcher
             //绘制自己
             //绘制物品
             return false;
+        }
+
+        public void DrawItem()
+        {
+
         }
     }
 }

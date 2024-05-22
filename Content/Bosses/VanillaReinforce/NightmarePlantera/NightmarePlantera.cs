@@ -649,7 +649,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 if (cp.nightmareCount < 28)
                 {
                     byte howMany = (byte)Helper.ScaleValueForDiffMode(1, 2, 4, 5);
-                    if (cp.resistDreamErosion)
+                    if (cp.HasEffect(nameof(NightmareHeart)))
                     {
                         howMany -= 1;
                         if (howMany < 1)

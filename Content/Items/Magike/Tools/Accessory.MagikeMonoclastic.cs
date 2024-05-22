@@ -22,13 +22,10 @@ namespace Coralite.Content.Items.Magike.Tools
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (hideVisual)
-            {
                 return;
-            }
-            if (player.TryGetModPlayer(out MagikePlayer mp))
-            {
-                mp.equippedMagikeMonoclastic = true;
-            }
+
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+                cp.AddEffect(nameof(MagikeMonoclastic));
         }
     }
 }

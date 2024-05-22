@@ -1,6 +1,8 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.RedJades;
-using Coralite.Content.Items.TheHyacinthSeries;
+using Coralite.Content.Items.Steel;
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.Projectiles.Globals;
 using Coralite.Content.UI;
@@ -8,6 +10,7 @@ using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -22,32 +25,21 @@ namespace Coralite.Content.ModPlayers
     {
         public string LocalizationCategory => "Players";
 
-        public short rightClickReuseDelay = 0;
+        public int rightClickReuseDelay = 0;
         public int parryTime;
+
+        /// <summary>
+        /// 各种效果
+        /// </summary>
+        public HashSet<string> Effects = new HashSet<string>();
 
         #region 装备类字段
 
-        /// <summary> 装备赤玉吊坠 </summary>
-        public bool equippedRedJadePendant;
-        /// <summary> 装备影魔镜 </summary>
-        public bool equippedShadowMirror;
-        /// <summary> 装备影魔镜 </summary>
-        public bool equippedPhantomMirror;
-        /// <summary> 手持骨戒，是梦魇花掉落物的那个武器，不是地心护核者的那个饰品 </summary>
-        public bool equippedBoneRing;
-        /// <summary> 能够引发雷鸣debuff </summary>
-        public bool equippedThunderveinNecklace;
-        /// <summary> 装备生命勋章 </summary>
-        public bool equippedMedalOfLife;
-        /// <summary> 装备生命脉冲装置 </summary>
-        public bool equippedLifePulseDevice;
         /// <summary> 花粉火药计时器 </summary>
         public int PollenGunpowderEffect = 60;
         /// <summary> 玫瑰火药计时器 </summary>
         public int RoseGunpowderEffect = 90;
 
-        /// <summary> 手持海利亚盾 </summary>
-        public bool heldHylianShield;
         /// <summary> 海盗王之魂 </summary>
         public int pirateKingSoul;
         /// <summary> 海盗王之魂的效果CD </summary>
@@ -69,21 +61,10 @@ namespace Coralite.Content.ModPlayers
         public int Concertration;
         #endregion
 
-        /// <summary> 雷鸣灌注 </summary>
-        public bool flaskOfThunder;
-
-        /// <summary> 赤玉灌注 </summary>
-        public bool flaskOfRedJade;
-
-        /// <summary> 雷鸣Debuff，会有持续扣血 </summary>
-        public bool thunderElectrified;
-
-        public byte nightmareCount;
+        public int nightmareCount;
         /// <summary> 使用梦魇之花的噩梦能量 </summary>
         public int nightmareEnergy;
         public int nightmareEnergyMax;
-        /// <summary> 抵抗梦蚀 </summary>
-        public bool resistDreamErosion;
 
         /// <summary>
         /// 爆伤加成
@@ -128,15 +109,9 @@ namespace Coralite.Content.ModPlayers
 
         public override void ResetEffects()
         {
-            equippedRedJadePendant = false;
-            equippedShadowMirror = false;
-            equippedPhantomMirror = false;
-            equippedBoneRing = false;
-            equippedThunderveinNecklace = false;
-            equippedMedalOfLife = false;
-            equippedLifePulseDevice = false;
+            Effects ??= new HashSet<string>();
+            Effects.Clear();
 
-            heldHylianShield = false;
             pirateKingSoul = 0;
             if (pirateKingSoulCD > 0)
                 pirateKingSoulCD--;
@@ -148,14 +123,10 @@ namespace Coralite.Content.ModPlayers
                 GreatRiverSnailSoulCD--;
             Concertration = 0;
 
-            thunderElectrified = false;
-            resistDreamErosion = false;
-
             critDamageBonus = 0;
             lifeReganBonus = 0;
             bossDamageReduce = 0;
 
-            flaskOfThunder = false;
             fallDamageModifyer = new StatModifier();
 
             ResetFlyingShieldSets();
@@ -163,6 +134,7 @@ namespace Coralite.Content.ModPlayers
             coreKeeperDodge = 0;
 
             nightmareEnergyMax = 7;
+
             if (parryTime > 0)
             {
                 parryTime--;
@@ -270,21 +242,19 @@ namespace Coralite.Content.ModPlayers
                     NianliChargingBar.visible = false;
             }
 
-            if (equippedMedalOfLife && Player.statLifeMax2 - Player.statLife < 20)
+            if (Effects.Contains(nameof(MedalOfLife)) && Player.statLifeMax2 - Player.statLife < 20)
             {
                 if (Main.rand.NextBool(15))
-                {
                     Gore.NewGore(Player.GetSource_FromThis(),
                         Player.MountedCenter + Main.rand.NextVector2Circular(16, 24), -Vector2.UnitY
                         , 331);
-                }
 
                 Player.GetDamage(DamageClass.Generic) += 0.1f;
                 Player.GetAttackSpeed(DamageClass.Generic) += 0.05f;
                 Player.moveSpeed += 0.05f;
             }
 
-            if (equippedLifePulseDevice && Player.statLife <= 40)
+            if (Effects.Contains(nameof(LifePulseDevice)) && Player.statLife <= 40)
             {
                 Player.GetDamage(DamageClass.Generic) *= 1.15f;
                 Player.GetCritChance(DamageClass.Generic) += 5f;
@@ -305,7 +275,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void UpdateBadLifeRegen()
         {
-            if (thunderElectrified)
+            if (Effects.Contains(nameof(ThunderElectrified)))
             {
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
@@ -319,7 +289,7 @@ namespace Coralite.Content.ModPlayers
                 Player.lifeRegen -= damage * 2;
             }
 
-            if (equippedLifePulseDevice)
+            if (Effects.Contains(nameof(LifePulseDevice)))
             {
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
@@ -334,7 +304,6 @@ namespace Coralite.Content.ModPlayers
 
         public override void PostUpdate()
         {
-            equippedRedJadePendant = false;
             if (rightClickReuseDelay > 0)
                 rightClickReuseDelay--;
 
@@ -352,7 +321,6 @@ namespace Coralite.Content.ModPlayers
             }
 
             rightClickReuseDelay = 0;
-            equippedRedJadePendant = false;
         }
 
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -361,13 +329,15 @@ namespace Coralite.Content.ModPlayers
             {
                 if (PollenGunpowderEffect == 0)
                 {
-                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.1f, 0.1f), ProjectileType<PollenGunpowderProj>(), damage, knockback, Player.whoAmI);
+                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.1f, 0.1f), 
+                        ProjectileType<Items.TheHyacinthSeries.PollenGunpowderProj>(), damage, knockback, Player.whoAmI);
                     PollenGunpowderEffect = 60;
                 }
 
                 if (RoseGunpowderEffect == 0)
                 {
-                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.05f, 0.05f), ProjectileType<RoseGunpowderProj>(), (int)(damage * 1.35f), knockback, Player.whoAmI);
+                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.05f, 0.05f), 
+                        ProjectileType<Items.TheHyacinthSeries.RoseGunpowderProj>(), (int)(damage * 1.35f), knockback, Player.whoAmI);
                     RoseGunpowderEffect = 90;
                 }
             }
@@ -382,27 +352,19 @@ namespace Coralite.Content.ModPlayers
         public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
         {
             if (proj.TryGetGlobalProjectile(out CoraliteGlobalProjectile cgp) && cgp.isBossProjectile)
-            {
                 modifiers.SourceDamage -= bossDamageReduce;
-            }
 
             if (FlyingShieldGuardTime > 0)
-            {
                 modifiers.ModifyHurtInfo += FlyingShield_DamageReduce;
-            }
         }
 
         public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
             if (npc.boss)
-            {
                 modifiers.SourceDamage -= bossDamageReduce;
-            }
 
             if (FlyingShieldGuardTime > 0)
-            {
                 modifiers.ModifyHurtInfo += FlyingShield_DamageReduce;
-            }
         }
 
         private void FlyingShield_DamageReduce(ref Player.HurtInfo info)
@@ -412,20 +374,18 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
         {
-            if (equippedRedJadePendant && Main.myPlayer == Player.whoAmI && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
-            {
-                Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<RedJadePendant>())),
-                    Player.Center + (proj.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<RedJadeBoom>(), 80, 8f, Player.whoAmI);
-            }
+            if (Effects.Contains(nameof(Items.RedJades.RedJadePendant)) && Main.myPlayer == Player.whoAmI 
+                && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
+                Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<Items.RedJades.RedJadePendant>())),
+                    Player.Center + (proj.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<Items.RedJades.RedJadeBoom>(), 80, 8f, Player.whoAmI);
         }
 
         public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
         {
-            if (equippedRedJadePendant && Main.myPlayer == Player.whoAmI && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
-            {
-                Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<RedJadePendant>())),
-                    Player.Center + (npc.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<RedJadeBoom>(), 80, 8f, Player.whoAmI);
-            }
+            if (Effects.Contains(nameof(Items.RedJades.RedJadePendant)) && Main.myPlayer == Player.whoAmI 
+                && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
+                Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<Items.RedJades.RedJadePendant>())),
+                    Player.Center + (npc.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<Items.RedJades.RedJadeBoom>(), 80, 8f, Player.whoAmI);
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
@@ -434,7 +394,7 @@ namespace Coralite.Content.ModPlayers
             PriateKingSoulEffect(ref modifiers);
             MedusaSoulEffect(ref modifiers);
 
-            if (equippedThunderveinNecklace)
+            if (Effects.Contains(nameof(ThunderveinNecklace)))
                 target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
 
             #region 海盗王之魂的效果
@@ -556,27 +516,27 @@ namespace Coralite.Content.ModPlayers
 
         public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (flaskOfThunder && item.DamageType == DamageClass.Melee)
-                target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
-            if (flaskOfRedJade && item.DamageType == DamageClass.Melee && Main.rand.NextBool(4))
+            if (HasEffect(nameof(FlaskOfThunderBuff)) && item.DamageType == DamageClass.Melee)
+                target.AddBuff(BuffType<Items.Thunder.ThunderElectrified>(), 6 * 60);
+            if (HasEffect(nameof(FlaskOfRedJadeBuff)) && item.DamageType == DamageClass.Melee && Main.rand.NextBool(4))
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
-                    ProjectileType<RedJadeBoom>(), (int)(item.damage * 0.75f), 0, Player.whoAmI);
+                    ProjectileType<Items.RedJades.RedJadeBoom>(), (int)(item.damage * 0.75f), 0, Player.whoAmI);
         }
 
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (flaskOfThunder && proj.DamageType == DamageClass.Melee)
-                target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
-            if (flaskOfRedJade && proj.DamageType == DamageClass.Melee && Main.rand.NextBool(4))
+            if (HasEffect(nameof(FlaskOfThunderBuff)) && proj.DamageType == DamageClass.Melee)
+                target.AddBuff(BuffType<Items.Thunder.ThunderElectrified>(), 6 * 60);
+            if (HasEffect(nameof(FlaskOfRedJadeBuff)) && proj.DamageType == DamageClass.Melee && Main.rand.NextBool(4))
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
-                    ProjectileType<RedJadeBoom>(), (int)(proj.damage * 0.75f), 0, Player.whoAmI);
+                    ProjectileType<Items.RedJades.RedJadeBoom>(), (int)(proj.damage * 0.75f), 0, Player.whoAmI);
         }
 
         public override bool FreeDodge(Player.HurtInfo info)
         {
             if (coreKeeperDodge > 0.9f)
                 coreKeeperDodge = 0.9f;
-            //coreKeeperDodge = 1f;
+
             if (info.Dodgeable && Main.rand.NextBool((int)(coreKeeperDodge * 100), 100))
             {
                 CombatText.NewText(new Rectangle((int)Player.Top.X, (int)Player.Top.Y, 1, 1)
@@ -585,6 +545,7 @@ namespace Coralite.Content.ModPlayers
                 Player.immune = true;
                 return true;
             }
+
             return base.FreeDodge(info);
         }
 
@@ -610,9 +571,9 @@ namespace Coralite.Content.ModPlayers
 
         public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
         {
-            if (equippedBoneRing)
+            if (Effects.Contains(nameof(BoneRing)))
                 drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "BoneRing", EquipType.HandsOn);
-            if (heldHylianShield)
+            if (Effects.Contains(nameof(HylianShield)))
                 drawInfo.drawPlayer.shield = EquipLoader.GetEquipSlot(Mod, "HylianShield", EquipType.Shield);
         }
 
@@ -641,10 +602,23 @@ namespace Coralite.Content.ModPlayers
             }
         }
 
+        /// <summary>
+        /// 玩家是否有某个效果，建议使用<see cref="nameof"/>来获取字符串
+        /// </summary>
+        /// <param name="effectName"></param>
+        /// <returns></returns>
+        public bool HasEffect(string effectName) => Effects.Contains(effectName);
+
+        /// <summary>
+        /// 为玩家添加某个效果，建议使用<see cref="nameof"/>来获取字符串
+        /// </summary>
+        /// <param name="effectName"></param>
+        /// <returns></returns>
+        public bool AddEffect(string effectName) => Effects.Add(effectName);
+
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
             if (Core.Loaders.KeybindLoader.ArmorBonus.JustPressed && Main.myPlayer == Player.whoAmI)
-            {
                 for (int i = 0; i < 3; i++)
                 {
                     if (Player.armor[i].ModItem is null)
@@ -656,7 +630,6 @@ namespace Coralite.Content.ModPlayers
                         break;
                     }
                 }
-            }
 
             useSpecialAttack = Core.Loaders.KeybindLoader.SpecialAttack.Current;
         }
@@ -664,9 +637,7 @@ namespace Coralite.Content.ModPlayers
         public override void OnEnterWorld()
         {
             if (CoraliteWorld.coralCatWorld)
-            {
                 Player.QuickSpawnItem(Player.GetSource_FromThis(), ItemID.Meowmere);
-            }
         }
     }
 }

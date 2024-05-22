@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.Nightmare;
+using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
@@ -71,7 +72,7 @@ namespace Coralite.Content.Items.FlyingShields
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 if (player.ItemTimeIsZero && player.ownedProjectileCounts[Item.shoot] == 0)
-                    cp.heldHylianShield = true;
+                    cp.AddEffect(nameof(HylianShield));
             }
         }
 

@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.Nightmare
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
             {
                 howMany = cp.nightmareEnergy;
-                nightmareHeart = cp.resistDreamErosion;
+                nightmareHeart = cp.HasEffect(nameof(NightmareHeart));
             }
 
             Vector2 pos = Projectile.Center - Main.screenPosition;
