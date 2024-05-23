@@ -21,9 +21,12 @@ namespace Coralite.Content.WorldGeneration
 
             if (ShiniesIndex != -1)
             {
+                tasks.Insert(ShiniesIndex - 1, new PassLegacy("Coralite Basalt Small Biome", GenBasaltSmallBiome));
+                ShiniesIndex++;
                 tasks.Insert(ShiniesIndex - 1, new PassLegacy("Coralite Magic Crystal Cave", GenMagicCrystalCave));
-                tasks.Insert(ShiniesIndex + 2, new PassLegacy("CoreKeeper Clear Gemstone Maze", GenClearGemstoneMaze));
-                tasks.Insert(ShiniesIndex + 3, new PassLegacy("CoreKeeper Chipped Blade Temple", GenChippedBladeTemple));
+                ShiniesIndex++;
+                tasks.Insert(ShiniesIndex + 1, new PassLegacy("CoreKeeper Clear Gemstone Maze", GenClearGemstoneMaze));
+                tasks.Insert(ShiniesIndex + 2, new PassLegacy("CoreKeeper Chipped Blade Temple", GenChippedBladeTemple));
             }
 
             int EvilBiome = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));

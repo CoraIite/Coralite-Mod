@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.FairyCatcher
             Item.shoot = ModContent.ProjectileType<DevilsYokeCatcher>();
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 22;
-            Item.shootSpeed = 13;
+            Item.shootSpeed = 9;
             Item.SetWeaponValues(25, 3);
             Item.SetShopValues(ItemRarityColor.Orange3, Item.sellPrice(0, 1));
             Item.GetGlobalItem<FairyGlobalItem>().CatchPower = 30;

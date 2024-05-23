@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.CoreKeeper
         {
             if (polished)
             {
-                player.GetDamage(DamageClass.Ranged) += 0.89f;
+                player.GetDamage(DamageClass.Ranged) += 0.089f;
                 player.GetAttackSpeed(DamageClass.Ranged) += 0.04f;
             }
             else

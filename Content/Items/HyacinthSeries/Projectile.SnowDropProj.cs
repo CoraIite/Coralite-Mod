@@ -10,11 +10,11 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.TheHyacinthSeries
+namespace Coralite.Content.Items.HyacinthSeries
 {
     public class SnowdropHeldProj : BaseGunHeldProj
     {
-        public SnowdropHeldProj() : base(1f, 18, -10, AssetDirectory.TheHyacinthSeriesItems) { }
+        public SnowdropHeldProj() : base(1f, 18, -10, AssetDirectory.HyacinthSeriesItems) { }
 
         public override float Ease()
         {

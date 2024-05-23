@@ -1,7 +1,7 @@
 using Coralite.Core;
 using Terraria;
 
-namespace Coralite.Content.Items.TheHyacinthSeries
+namespace Coralite.Content.Items.HyacinthSeries
 {
     public class SnowdropPetal : ModDust
     {

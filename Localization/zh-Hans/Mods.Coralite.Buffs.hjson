@@ -154,3 +154,8 @@ OpalBuff: {
 	DisplayName: 猫眼
 	Description: 能使你直观地观察到魔能的流动
 }
+
+ElfBless: {
+	DisplayName: 妖精祝福
+	Description: 捕捉力增加5%
+}

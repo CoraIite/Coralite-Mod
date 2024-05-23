@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.FairyCatcher
             Item.shoot = ModContent.ProjectileType<VineLassoCatcher>();
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 24;
-            Item.shootSpeed = 12;
+            Item.shootSpeed = 8;
             Item.SetWeaponValues(8, 3);
             Item.SetShopValues(ItemRarityColor.White0, Item.sellPrice(0, 0, 20));
             Item.GetGlobalItem<FairyGlobalItem>().CatchPower = 5;

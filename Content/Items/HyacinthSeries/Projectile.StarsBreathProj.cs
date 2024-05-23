@@ -9,13 +9,13 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 
-namespace Coralite.Content.Items.TheHyacinthSeries
+namespace Coralite.Content.Items.HyacinthSeries
 {
     public class StarsBreathHeldProj : BaseGunHeldProj
     {
-        public override string Texture => AssetDirectory.TheHyacinthSeriesItems + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
-        public StarsBreathHeldProj() : base(0.3f, 22, -6, AssetDirectory.TheHyacinthSeriesItems) { }
+        public StarsBreathHeldProj() : base(0.3f, 22, -6, AssetDirectory.HyacinthSeriesItems) { }
 
         public override void OnSpawn(IEntitySource source)
         {

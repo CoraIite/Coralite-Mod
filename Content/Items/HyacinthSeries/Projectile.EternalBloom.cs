@@ -7,11 +7,11 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.TheHyacinthSeries
+namespace Coralite.Content.Items.HyacinthSeries
 {
     public class EternalBloomHeldProj : BaseGunHeldProj
     {
-        public EternalBloomHeldProj() : base(0.2f, 16, -8, AssetDirectory.TheHyacinthSeriesItems) { }
+        public EternalBloomHeldProj() : base(0.2f, 16, -8, AssetDirectory.HyacinthSeriesItems) { }
 
         public override void ModifyAI(float factor)
         {

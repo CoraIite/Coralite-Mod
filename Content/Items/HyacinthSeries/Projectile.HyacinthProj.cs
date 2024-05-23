@@ -16,13 +16,13 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using static Coralite.Content.Items.TheHyacinthSeries.HyacinthBullet;
+using static Coralite.Content.Items.HyacinthSeries.HyacinthBullet;
 
-namespace Coralite.Content.Items.TheHyacinthSeries
+namespace Coralite.Content.Items.HyacinthSeries
 {
     public class HyacinthHeldProj : BaseGunHeldProj
     {
-        public HyacinthHeldProj() : base(0.2f, 16, -4, AssetDirectory.TheHyacinthSeriesItems) { }
+        public HyacinthHeldProj() : base(0.2f, 16, -4, AssetDirectory.HyacinthSeriesItems) { }
 
         public override void OnSpawn(IEntitySource source)
         {

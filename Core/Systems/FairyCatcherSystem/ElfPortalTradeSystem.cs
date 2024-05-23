@@ -48,7 +48,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
         }
 
-        public static void AddRemodelRecipe(int selfType, int resultType, int selfStack = 1, int resultStack = 1, params Condition[] conditions)
+        public static void AddElfTrade(int selfType, int resultType, int selfStack = 1, int resultStack = 1, params Condition[] conditions)
         {
             ElfPortalTrade trade = new ElfPortalTrade(selfType, resultType, selfStack, resultStack, conditions);
 
@@ -61,11 +61,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 ElfPortalTrades.Add(selfType, trade);
         }
 
-        public static void AddRemodelRecipe<TSelf, TResult>(int resultStack = 1, int selfStack = 1, params Condition[] conditions)
+        public static void AddElfTrade<TSelf, TResult>(int resultStack = 1, int selfStack = 1, params Condition[] conditions)
             where TSelf : ModItem
             where TResult : ModItem
         {
-            AddRemodelRecipe(ModContent.ItemType<TSelf>(), ModContent.ItemType<TResult>(), selfStack, resultStack, conditions);
+            AddElfTrade(ModContent.ItemType<TSelf>(), ModContent.ItemType<TResult>(), selfStack, resultStack, conditions);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         /// <param name="trade"></param>
         /// <exception cref="Exception"></exception>
-        public static void AddRemodelRecipe(ElfPortalTrade trade)
+        public static void AddElfTrade(ElfPortalTrade trade)
         {
             if (ElfPortalTrades == null)
                 throw new Exception("合成表为null!");
@@ -100,6 +100,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             trade = null;
             return false;
+        }
+
+        public static void ElfTrade(int selfItemType, int selfItemStack, Vector2 center)
+        {
+            if (!TryGetElfPortalTrades(selfItemType, out ElfPortalTrade trade))
+                return;
+
+            for (; selfItemStack >= trade.selfStack; selfItemStack -= trade.selfStack)
+                Item.NewItem(new EntitySource_ElfTrade(selfItemType, trade), center + Main.rand.NextVector2Circular(24, 24)
+                    , new Item(trade.resultType, trade.resultStack));
+
+            if (selfItemStack > 0)
+                Item.NewItem(new EntitySource_ElfTrade(selfItemType, trade), center
+                    , new Item(selfItemType, selfItemStack));
         }
     }
 
@@ -196,7 +210,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public void Register()
         {
-            FairySystem.AddRemodelRecipe(this);
+            FairySystem.AddElfTrade(this);
         }
     }
 

@@ -17,8 +17,8 @@ namespace Coralite.Content.Items.Steel
 
         public override void SetDefaults()
         {
-            Item.damage = 40;
-            Item.useTime = Item.useAnimation = 37;
+            Item.damage = 46;
+            Item.useTime = Item.useAnimation = 36;
             Item.knockBack = 4;
             Item.shootSpeed = 5.5f;
 
@@ -74,7 +74,8 @@ namespace Coralite.Content.Items.Steel
         {
             CreateRecipe()
                 .AddIngredient<SteelBar>(12)
-                .AddIngredient(ItemID.SoulofSight, 3)
+                .AddIngredient(ItemID.SoulofSight)
+                .AddIngredient(ItemID.Ectoplasm, 3)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

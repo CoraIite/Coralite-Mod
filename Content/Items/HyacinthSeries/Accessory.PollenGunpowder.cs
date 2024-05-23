@@ -10,11 +10,11 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.TheHyacinthSeries
+namespace Coralite.Content.Items.HyacinthSeries
 {
     public class PollenGunpowder : BaseAccessory
     {
-        public override string Texture => AssetDirectory.TheHyacinthSeriesItems + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         public PollenGunpowder() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 2))
         {

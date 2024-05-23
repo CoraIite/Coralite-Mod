@@ -3840,3 +3840,13 @@ SteelBreaker: {
 	DisplayName: Steel Breaker
 	Tooltip: ""
 }
+
+ElfPortal: {
+	DisplayName: Elf Portal
+	Tooltip: ""
+}
+
+BotanicusPowder: {
+	DisplayName: Botanicus Powder
+	Tooltip: ""
+}

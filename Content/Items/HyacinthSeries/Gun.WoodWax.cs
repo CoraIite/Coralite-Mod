@@ -4,11 +4,11 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.TheHyacinthSeries
+namespace Coralite.Content.Items.HyacinthSeries
 {
     public class WoodWax : ModItem
     {
-        public override string Texture => AssetDirectory.TheHyacinthSeriesItems + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         public override void SetDefaults()
         {

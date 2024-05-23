@@ -330,14 +330,14 @@ namespace Coralite.Content.ModPlayers
                 if (PollenGunpowderEffect == 0)
                 {
                     Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.1f, 0.1f), 
-                        ProjectileType<Items.TheHyacinthSeries.PollenGunpowderProj>(), damage, knockback, Player.whoAmI);
+                        ProjectileType<Items.HyacinthSeries.PollenGunpowderProj>(), damage, knockback, Player.whoAmI);
                     PollenGunpowderEffect = 60;
                 }
 
                 if (RoseGunpowderEffect == 0)
                 {
                     Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.05f, 0.05f), 
-                        ProjectileType<Items.TheHyacinthSeries.RoseGunpowderProj>(), (int)(damage * 1.35f), knockback, Player.whoAmI);
+                        ProjectileType<Items.HyacinthSeries.RoseGunpowderProj>(), (int)(damage * 1.35f), knockback, Player.whoAmI);
                     RoseGunpowderEffect = 90;
                 }
             }

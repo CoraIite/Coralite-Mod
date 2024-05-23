@@ -74,7 +74,9 @@ namespace Coralite.Core
         public const string CoreKeeperItems = Items + "CoreKeeper/";
         public const string FlyingShieldItems = Items + "FlyingShields/";
         public const string FlyingShieldAccessories = FlyingShieldItems + "Accessories/";
-        public const string TheHyacinthSeriesItems = Items + "TheHyacinthSeries/";
+
+        public const string HyacinthSeriesItems = Items + "HyacinthSeries/";
+        public const string LandOfTheLustrousSeriesItems = Items + "LandOfTheLustrousSeries/";
 
         public const string Accessories = Items + "Accessories/";
 

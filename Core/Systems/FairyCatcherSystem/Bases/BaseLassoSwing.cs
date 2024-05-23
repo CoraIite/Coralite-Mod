@@ -132,7 +132,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             float factor = (Timer - maxTime) / delayTime;
             distanceToOwner = Helper.Lerp(maxDistance, 0, Coralite.Instance.SqrtSmoother.Smoother(factor));
-            _Rotation += OwnerDirection * 0.05f;
+            _Rotation += OwnerDirection * 0.02f;
 
             if ((int)Timer == maxTime + trailLength+1)
                 ShootFairy();
@@ -153,13 +153,15 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual void ShootFairy()
         {
+            OnShootFairy();
+
             if (ItemType < 1)
                 return;
 
             Item heldItem = Owner.HeldItem;
             if (heldItem.ModItem is BaseFairyCatcher catcher)
             {
-                float speed = heldItem.shootSpeed/2;
+                float speed = heldItem.shootSpeed;
                 Vector2 velocity = oldRotate[^1].ToRotationVector2() * speed;
                 Vector2 center = Projectile.Center;
                 catcher.ModifyFairyStats(Owner, ref center, ref velocity);
@@ -183,8 +185,6 @@ namespace Coralite.Core.Prefabs.Projectiles
                                 break;
                         }
                     }
-
-                    OnShootFairy();
                 }
             }
         }

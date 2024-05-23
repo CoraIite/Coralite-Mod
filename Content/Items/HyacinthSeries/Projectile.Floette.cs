@@ -3,11 +3,11 @@ using Coralite.Core.Prefabs.Projectiles;
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.TheHyacinthSeries
+namespace Coralite.Content.Items.HyacinthSeries
 {
     public class FloetteHeldProj : BaseGunHeldProj
     {
-        public FloetteHeldProj() : base(0.3f, 14, -8, AssetDirectory.TheHyacinthSeriesItems) { }
+        public FloetteHeldProj() : base(0.3f, 14, -8, AssetDirectory.HyacinthSeriesItems) { }
 
         public override void ModifyAI(float factor)
         {

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.Items.FairyCatcher;
+using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -137,7 +138,7 @@ namespace Coralite.Content.NPCs.Town
 
         public override bool CanTownNPCSpawn(int numTownNPCs)
         {
-            return false;
+            return Main.LocalPlayer.HasBuff<ElfBless>();
         }
 
         public override ITownNPCProfile TownNPCProfile()

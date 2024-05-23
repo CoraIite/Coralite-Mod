@@ -154,3 +154,8 @@ OpalBuff: {
 	DisplayName: Opal Buff
 	Description: Mods.Coralite.Buffs.OpalBuff.Description
 }
+
+ElfBless: {
+	DisplayName: Elf Bless
+	Description: Mods.Coralite.Buffs.ElfBless.Description
+}

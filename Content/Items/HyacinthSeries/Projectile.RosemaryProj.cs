@@ -10,11 +10,11 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.TheHyacinthSeries
+namespace Coralite.Content.Items.HyacinthSeries
 {
     public class RosemaryHeldProj : BaseGunHeldProj
     {
-        public RosemaryHeldProj() : base(0.05f, 14, -2, AssetDirectory.TheHyacinthSeriesItems) { }
+        public RosemaryHeldProj() : base(0.05f, 14, -2, AssetDirectory.HyacinthSeriesItems) { }
 
         public override void Initialize()
         {
@@ -44,7 +44,7 @@ namespace Coralite.Content.Items.TheHyacinthSeries
 
     public class RosemaryHeldProj2 : BaseGunHeldProj
     {
-        public RosemaryHeldProj2() : base(0.05f, 16, -2, AssetDirectory.TheHyacinthSeriesItems) { }
+        public RosemaryHeldProj2() : base(0.05f, 16, -2, AssetDirectory.HyacinthSeriesItems) { }
 
         public override void Initialize()
         {

@@ -3949,9 +3949,24 @@ TwinRocketLauncher: {
 
 SteelBreaker: {
 	DisplayName: 破魔旋刃
-	Tooltip: 
-	'''
-	命中后释放灵体旋刃
-	灵体旋刃会斩杀血量低于4倍弹幕伤害的敌怪
-	'''
+	Tooltip:
+		'''
+		命中后释放灵体旋刃
+		灵体旋刃会斩杀血量低于4倍弹幕伤害的敌怪
+		'''
+}
+
+ElfPortal: {
+	DisplayName: 妖精传送门
+	Tooltip:
+		'''
+		放置后给予玩家妖精祝福BUFF
+		将合适的物品丢到附近就会从传送门中出现仙灵将其带走
+		之后会给予一些物品作为交换
+		'''
+}
+
+BotanicusPowder: {
+	DisplayName: 植生魔尘
+	Tooltip: ""
 }
