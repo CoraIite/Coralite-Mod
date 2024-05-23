@@ -3850,3 +3850,13 @@ BotanicusPowder: {
 	DisplayName: Botanicus Powder
 	Tooltip: ""
 }
+
+Pyrope: {
+	DisplayName: Pyrope
+	Tooltip: ""
+}
+
+PyropeCrown: {
+	DisplayName: Pyrope Crown
+	Tooltip: ""
+}

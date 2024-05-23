@@ -13,6 +13,29 @@ namespace Coralite.Helpers
         /// <summary> 角度转弧度系数 </summary>
         public const float Deg2Rad = 0.0174532924f;
 
+        public static Vector3 RGBtoHSV(Color c)
+        {
+            const float Epsilon = 1e-10F;
+
+            Vector3 rgb = c.ToVector3();
+            Vector3 HCV =RGBtoHCV(c);
+            float S = HCV.Y / (HCV.Z + Epsilon);
+            return new Vector3(HCV.X, S, HCV.Z);
+        }
+
+        public static Vector3 RGBtoHCV(Color c)
+        {
+            const float Epsilon = 1e-10F;
+
+            Vector3 rgb = c.ToVector3();
+            Vector4 P = (rgb.Y < rgb.Z) ? new Vector4(rgb.Z, rgb.Y, -1.0f, 2 / 3f) : new Vector4(rgb.Y, rgb.Z, 0f, -1 / 3f);
+            Vector4 Q = (rgb.X < P.X) ? new Vector4(P.X, P.Y, P.W, rgb.X) : new Vector4(rgb.X, P.Y, P.Z, P.X);
+            float C = Q.X - Math.Min(Q.W, Q.Y);
+            float H = Math.Abs((Q.W - Q.Y) / (6 * C + Epsilon + Q.Z));
+
+            return new Vector3(H, C, Q.X);
+        }
+
         public static Vector3 Vec3(this Vector2 vector) => new Vector3(vector.X, vector.Y, 0);
 
         public static float SignedAngle(Vector2 from, Vector2 to)

@@ -3970,3 +3970,13 @@ BotanicusPowder: {
 	DisplayName: 植生魔尘
 	Tooltip: ""
 }
+
+Pyrope: {
+	// DisplayName: Pyrope
+	// Tooltip: ""
+}
+
+PyropeCrown: {
+	// DisplayName: Pyrope Crown
+	// Tooltip: ""
+}
