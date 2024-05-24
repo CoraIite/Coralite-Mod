@@ -142,14 +142,7 @@ namespace Coralite.Content.Items.Nightmare
                 init = false;
             }
 
-            Projectile.frameCounter++;
-            if (Projectile.frameCounter > 3)
-            {
-                Projectile.frameCounter = 0;
-                Projectile.frame++;
-                if (Projectile.frame > 6)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(3, 6);
 
             if (Main.rand.NextBool(4))
             {

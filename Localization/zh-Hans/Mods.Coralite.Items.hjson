@@ -3972,11 +3972,14 @@ BotanicusPowder: {
 }
 
 Pyrope: {
-	// DisplayName: Pyrope
-	// Tooltip: ""
+	DisplayName: 红榴石
+	Tooltip: ""
 }
 
 PyropeCrown: {
-	// DisplayName: Pyrope Crown
-	// Tooltip: ""
+	DisplayName: 红榴之冠
+	Tooltip: 
+	'''
+	初次使用生成红榴之冠，再次使用时从红榴之冠中射出红榴石
+	'''
 }

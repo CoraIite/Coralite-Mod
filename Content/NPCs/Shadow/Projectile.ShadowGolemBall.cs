@@ -28,15 +28,7 @@ namespace Coralite.Content.NPCs.Shadow
         public override void AI()
         {
             Projectile.rotation += 0.03f;
-            Projectile.frameCounter++;
-
-            if (Projectile.frameCounter % 3 == 0)
-            {
-                Projectile.frame++;
-                if (Projectile.frame >= 3)
-                    Projectile.frame = 0;
-                Projectile.frameCounter = 0;
-            }
+            Projectile.UpdateFrameNormally(3, 4);
         }
 
         public override bool PreDraw(ref Color lightColor)

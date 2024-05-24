@@ -42,14 +42,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void AI()
         {
-            Projectile.frameCounter++;
-            if (Projectile.frameCounter > 5)
-            {
-                Projectile.frameCounter = 0;
-                Projectile.frame++;
-                if (Projectile.frame > 5)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(5, 5);
 
             if (Projectile.localAI[0] == 0)
             {

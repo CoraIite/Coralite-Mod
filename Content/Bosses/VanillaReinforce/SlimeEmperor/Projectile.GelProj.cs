@@ -42,14 +42,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             dust.noGravity = true;
             dust.velocity = -Projectile.velocity * Main.rand.NextFloat(0.1f, 0.3f);
 
-            Projectile.frameCounter++;
-            if (Projectile.frameCounter > 4)
-            {
-                Projectile.frameCounter = 0;
-                Projectile.frame++;
-                if (Projectile.frame > 4)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(4, 4);
         }
 
         public override bool PreDraw(ref Color lightColor)

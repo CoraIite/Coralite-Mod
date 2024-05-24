@@ -10,9 +10,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void Load()
         {
-            CrystalNoises = new Asset<Texture2D>[10];
+            CrystalNoises = new Asset<Texture2D>[20];
 
-            for (int i = 1; i < 11; i++)
+            for (int i = 1; i < 21; i++)
                 CrystalNoises[i - 1] = ModContent.Request<Texture2D>(AssetDirectory.Misc + "CrystalNoise" + i);
         }
 

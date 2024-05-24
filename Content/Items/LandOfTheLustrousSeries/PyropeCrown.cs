@@ -1,8 +1,9 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
@@ -20,7 +21,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Item.mana = 10;
 
             Item.shoot = ModContent.ProjectileType<PyropeCrownProj>();
-
+            Item.shootSpeed = 12;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noUseGraphic = true;
         }
@@ -30,8 +31,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (Main.myPlayer != player.whoAmI)
                 return false;
 
-            Projectile.NewProjectile(source, position, Vector2.Zero, ModContent.ProjectileType<PyropeProj>(), damage, knockback, player.whoAmI);
-
+            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<PyropeProj>(), damage, knockback, player.whoAmI);
 
             return false;
             if (player.ownedProjectileCounts[type] < 1)
@@ -58,36 +58,72 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         }
     }
 
-    public class PyropeProj : ModProjectile
+    public class PyropeProj : ModProjectile,IDrawPrimitive,IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "EquilateralHexagonProj1";
 
         public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);
 
+        private Trail trail;
+
+        private static Color highlightC = new Color(255, 230, 230);
+        private static Color brightC = new Color(251, 100, 152);
+        private static Color darkC = new Color(48, 7, 42);
+
+        public bool init = true;
+
         public override void SetDefaults()
         {
-            Projectile.tileCollide = false;
             Projectile.width = Projectile.height = 20;
             Projectile.friendly = true;
-            Projectile.timeLeft = 600;
+            Projectile.timeLeft = 6000;
         }
 
         public override void AI()
         {
-            if (++Projectile.frameCounter>6)
-            {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame > 9)
-                {
-                    Projectile.frame = 0;
-                }
+            const int trailCount = 14;
+            trail ??= new Trail(Main.graphics.GraphicsDevice, trailCount, new NoTip(), factor => Helper.Lerp(0, 12, factor),
+                 factor =>
+                 {
+                     return Color.Lerp(Color.Transparent, brightC*0.5f, factor.X);
+                 });
 
+            if (init)
+            {
+                Projectile.InitOldPosCache(trailCount);
+                Projectile.InitOldRotCache(trailCount);
+                init = false;
             }
+
+            rand.X += 0.3f;
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            Projectile.UpdateFrameNormally(8, 19);
+            Projectile.UpdateOldPosCache(addVelocity: false);
+            Projectile.UpdateOldRotCache();
+            trail.Positions = Projectile.oldPos;
+
+            Lighting.AddLight(Projectile.Center, new Vector3(0.3f, 0.05f, 0.1f));
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(ref Color lightColor) => false;
+
+        public void DrawPrimitives()
         {
-            SpriteBatch spriteBatch = Main.spriteBatch;
+            Effect effect = Filters.Scene["Flow2"].GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["uTextImage"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleEvents + "Trail").Value);
+
+            trail?.Render(effect);
+        }
+
+        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
             Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
@@ -97,51 +133,26 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Texture2D noiseTex = GemTextures.CrystalNoises[Projectile.frame].Value;
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["basePos"].SetValue(Projectile.Center-Main.screenPosition+rand);
-            //effect.Parameters["noiseTexture"].SetValue(noiseTex);
-            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly/10f);
-            effect.Parameters["lightRange"].SetValue(0.1f);
-            effect.Parameters["lightLimit"].SetValue(0.45f);
-            effect.Parameters["addC"].SetValue(0.7f);
-            effect.Parameters["highlightC"].SetValue(new Color(255, 230, 230).ToVector4());
-            effect.Parameters["brightC"].SetValue(new Color(251, 100, 152).ToVector4());
-            effect.Parameters["darkC"].SetValue(new Color(48, 7, 42).ToVector4());
+            effect.Parameters["basePos"].SetValue((Projectile.Center - Main.screenPosition + rand) * Main.GameZoomTarget);
+            effect.Parameters["scale"].SetValue(new Vector2(1 / Main.GameZoomTarget));
+            effect.Parameters["uTime"].SetValue(MathF.Sin((float)Main.timeForVisualEffects * 0.02f) / 2 + 0.5f);
+            effect.Parameters["lightRange"].SetValue(0.2f);
+            effect.Parameters["lightLimit"].SetValue(0.35f);
+            effect.Parameters["addC"].SetValue(0.75f);
+            effect.Parameters["highlightC"].SetValue(highlightC.ToVector4());
+            effect.Parameters["brightC"].SetValue(brightC.ToVector4());
+            effect.Parameters["darkC"].SetValue(darkC.ToVector4());
 
             Texture2D mainTex = Projectile.GetTexture();
 
-            //Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, Color.White);
-
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.GameViewMatrix.ZoomMatrix);
 
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
-
-            Vector2 center = Projectile.Center;
-            Vector2 dir = Projectile.rotation.ToRotationVector2();
-            Vector2 normal = dir.RotatedBy(1.57f);
-            var frame = mainTex.Frame();
-            float halfWidth = frame.Width / 2;
-            float halfHeight = frame.Height / 2;
-
-            bars.Add(new VertexPositionColorTexture((center + dir * halfWidth - normal * halfHeight).Vec3(), Color.White, new Vector2((frame.X + frame.Width) / mainTex.Width, frame.Y / mainTex.Height)));
-            bars.Add(new VertexPositionColorTexture((center + dir * halfWidth + normal * halfHeight).Vec3(), Color.White, new Vector2((frame.X + frame.Width) / mainTex.Width, (frame.Y + frame.Height) / mainTex.Height)));
-            bars.Add(new VertexPositionColorTexture((center - dir * halfWidth - normal * halfHeight).Vec3(), Color.White, new Vector2(frame.X / mainTex.Width, frame.Y / mainTex.Height)));
-            bars.Add(new VertexPositionColorTexture((center - dir * halfWidth + normal * halfHeight).Vec3(), Color.White, new Vector2(frame.X / mainTex.Width, (frame.Y + frame.Height) / mainTex.Height)));
-
-            Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
-            Main.graphics.GraphicsDevice.Textures[0] = mainTex;
             Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
-            foreach (var pass in effect.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, 2);
-            }
-
+            Main.spriteBatch.Draw(mainTex, Projectile.Center, null, Color.White, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, 0, 0);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-
-            return false;
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         }
     }
 }

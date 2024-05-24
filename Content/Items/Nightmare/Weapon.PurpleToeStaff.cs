@@ -151,7 +151,7 @@ namespace Coralite.Content.Items.Nightmare
                 if (Projectile.velocity.Length() > num4)
                     Projectile.velocity *= num4 / Projectile.velocity.Length();
 
-                UpdateFrameNormally(12);
+                Projectile.UpdateFrameNormally(12, Main.projFrames[Projectile.type] - 1);
 
                 float targetAngle = Projectile.velocity.SafeNormalize(Vector2.UnitY).ToRotation();
                 if (vector4.Length() < 40f)
@@ -185,7 +185,7 @@ namespace Coralite.Content.Items.Nightmare
                     Projectile.velocity += Main.rand.NextVector2CircularEdge(4f, 4f);
                 }
 
-                UpdateFrameNormally(4);
+                Projectile.UpdateFrameNormally(4, Main.projFrames[Projectile.type] - 1);
                 Target += 1f;
                 Projectile.rotation += Projectile.velocity.X * 0.1f + Projectile.velocity.Y * 0.05f;
                 Projectile.velocity *= 0.92f;
@@ -361,16 +361,6 @@ namespace Coralite.Content.Items.Nightmare
                 Projectile.timeLeft = 2;
 
             return true;
-        }
-
-        public void UpdateFrameNormally(int interval)
-        {
-            if (++Projectile.frameCounter > interval)
-            {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame > Main.projFrames[Type] - 1)
-                    Projectile.frame = 0;
-            }
         }
 
         public override bool PreDraw(ref Color lightColor)

@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -184,6 +183,23 @@ namespace Coralite.Helpers
                 }
             }
         }
+
+        /// <summary>
+        /// 非常正常的更新弹幕的帧，从0到最大之间循环
+        /// </summary>
+        /// <param name="proj"></param>
+        /// <param name="frameCountMax"></param>
+        /// <param name="frameMax"></param>
+        public static void UpdateFrameNormally(this Projectile proj, int frameCountMax, int frameMax)
+        {
+            if (++proj.frameCounter > frameCountMax)
+            {
+                proj.frameCounter = 0;
+                if (++proj.frame > frameMax)
+                    proj.frame = 0;
+            }
+        }
+
 
         /// <summary>
         /// 使用一个变量来获取对应npc数组中的NPC

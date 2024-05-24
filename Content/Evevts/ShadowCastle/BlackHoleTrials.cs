@@ -513,7 +513,6 @@ namespace Coralite.Content.Evevts.ShadowCastle
             c2.A = (byte)(c2.A * alpha);
             spriteBatch.Draw(flowTex, pos, null, c2, Main.GlobalTimeWrappedHourly * 2.2f, flowTex.Size() / 2, scale * 1f, 0, 0);
             spriteBatch.Draw(flowTex, pos, null, c, Main.GlobalTimeWrappedHourly + 0.8f, flowTex.Size() / 2, scale * 0.88f, 0, 0);
-
         }
     }
 }

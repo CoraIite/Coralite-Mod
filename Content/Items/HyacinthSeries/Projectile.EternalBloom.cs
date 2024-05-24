@@ -41,12 +41,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
 
             Projectile.rotation = Projectile.velocity.ToRotation();
-            if (++Projectile.frameCounter > 3)
-            {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame > 1)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(3, 1);
         }
 
         public override void OnKill(int timeLeft)

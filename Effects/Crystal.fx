@@ -3,6 +3,7 @@ sampler uImage1 : register(s1);
 //缩放矩阵
 matrix transformMatrix;
 float2 basePos;
+float2 scale;
 //texture noiseTexture;
 float uTime;
 float lightRange;
@@ -82,7 +83,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     //return tc;
 
     //获取灰度图中的灰度
-    float2 nCoords = (input.Position.xy - basePos) % float2(256.0, 256.0) / float2(256.0, 256.0);
+    float2 nCoords = (input.Position.xy - basePos) * scale % float2(256.0, 256.0) / float2(256.0, 256.0);
     float4 c2 = tex2D(uImage1, nCoords);
     
     float gray = c2.r;

@@ -93,12 +93,7 @@ namespace Coralite.Content.Items.Icicle
             Idle(Owner);
 
             Lighting.AddLight(Projectile.Center, new Vector3(1.2f, 0.85f, 0.45f));
-            if (++Projectile.frameCounter > 5)
-            {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame > 3)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(5, 3);
         }
 
         private void CheckActive(Player player)

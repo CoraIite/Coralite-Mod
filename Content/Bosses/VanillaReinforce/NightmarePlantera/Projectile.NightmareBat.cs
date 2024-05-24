@@ -45,14 +45,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             Initialize();
 
-            Projectile.frameCounter++;
-            if (Projectile.frameCounter > 8)
-            {
-                Projectile.frameCounter = 0;
-                Projectile.frame++;
-                if (Projectile.frame > 3)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(8,3);
 
             switch ((int)State)
             {
@@ -139,14 +132,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             Initialize();
 
-            Projectile.frameCounter++;
-            if (Projectile.frameCounter > 8)
-            {
-                Projectile.frameCounter = 0;
-                Projectile.frame++;
-                if (Projectile.frame > 3)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(8, 3);
 
             Projectile.velocity = Projectile.velocity.RotatedBy(RotateDir);
             Projectile.direction = Math.Sign(Projectile.velocity.X);

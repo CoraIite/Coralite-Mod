@@ -82,12 +82,7 @@ namespace Coralite.Content.Items.Nightmare
 
             Owner.AddBuff(BuffType<NightmareRavenBuff>(), 2);
 
-            if (++Projectile.frameCounter >= 6)
-            {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame >= Main.projFrames[Projectile.type] - 1)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(6, Main.projFrames[Projectile.type] - 1);
 
             int num2 = player.direction;
             if (Projectile.velocity.X != 0f)

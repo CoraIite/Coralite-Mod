@@ -622,14 +622,7 @@ namespace Coralite.Content.Items.Pets
                     else if (Math.Abs(Projectile.velocity.X) >= 0.5f)
                     {
                         Projectile.frameCounter += (int)Math.Abs(Projectile.velocity.X);
-                        if (++Projectile.frameCounter > 10)
-                        {
-                            Projectile.frame++;
-                            Projectile.frameCounter = 0;
-                        }
-
-                        if (Projectile.frame >= 4)
-                            Projectile.frame = 0;
+                        Projectile.UpdateFrameNormally(10, 3);
                     }
                     else
                     {

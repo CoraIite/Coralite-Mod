@@ -4,6 +4,7 @@ using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.FairyCatcherSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -135,12 +136,7 @@ namespace Coralite.Content.Items.FairyCatcher
                 Projectile.localAI[0] = 1;
             }
 
-            if (++Projectile.frameCounter>5)
-            {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame > 4)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(5, 4);
 
             if (State == 0)
             {

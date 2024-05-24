@@ -241,15 +241,11 @@ namespace Coralite.Content.Items.FlyingShields
 
             float targetRot = Projectile.velocity.Length() * 0.01f * Projectile.spriteDirection;
             Projectile.rotation = Projectile.rotation.AngleLerp(targetRot, 0.1f);
-            if (++Projectile.frameCounter > 6)
-            {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame > 3)
-                    Projectile.frame = 0;
-            }
 
+            Projectile.UpdateFrameNormally(6, 3);
             Projectile.UpdateOldPosCache();
             Projectile.UpdateOldRotCache();
+
             for (int i = 0; i < oldFrame.Length - 1; i++)
                 oldFrame[i] = oldFrame[i + 1];
             oldFrame[^1] = Projectile.frame;

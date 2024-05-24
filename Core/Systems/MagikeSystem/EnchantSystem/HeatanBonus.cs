@@ -62,12 +62,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
             Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.ai[1] * MathF.Sin(factor * MathHelper.Pi));
             Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
-            if (++Projectile.frameCounter > 4)
-            {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame > 5)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(4, 5);
 
             Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height,
                 DustID.Torch, Scale: Main.rand.NextFloat(1, 2));

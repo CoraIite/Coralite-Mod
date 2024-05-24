@@ -137,12 +137,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public void UpdateFrameY(int spacing)
         {
-            if (++Projectile.frameCounter > spacing)
-            {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame >= FrameY)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(spacing, FrameY);
         }
 
         public void SetDirectionNormally()

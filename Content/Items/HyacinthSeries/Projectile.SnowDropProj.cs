@@ -188,17 +188,9 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void AI()
         {
-            Projectile.frameCounter++;
-            if (Projectile.frameCounter > 6)
-            {
-                Projectile.frame++;
-                Projectile.frameCounter = 0;
-                if (Projectile.frame > 6)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(6, 6);
 
             Lighting.AddLight(Projectile.Center, new Vector3(0.3f, 0.6f, 0.3f));
-
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

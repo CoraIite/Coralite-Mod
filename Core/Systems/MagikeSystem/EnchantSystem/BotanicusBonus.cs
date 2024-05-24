@@ -66,13 +66,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
             Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height,
                 Main.rand.NextBool() ? DustID.Grass : DustID.JungleGrass);
             d.noGravity = true;
-
-            if (++Projectile.frameCounter > 4)
-            {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame > 4)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(4, 4);
         }
 
         public override void OnKill(int timeLeft)

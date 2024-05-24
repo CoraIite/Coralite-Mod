@@ -79,14 +79,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 default:
                 case 0: //跟踪玩家
                     {
-                        Projectile.frameCounter++;
-                        if (Projectile.frameCounter > 10)
-                        {
-                            Projectile.frameCounter = 0;
-                            Projectile.frame++;
-                            if (Projectile.frame > 3)
-                                Projectile.frame = 0;
-                        }
+                        Projectile.UpdateFrameNormally(10, 3);
 
                         float angle = Angle + 0.2f * MathF.Sin(Timer * 0.0314f);
                         Vector2 center = Owner.Center + angle.ToRotationVector2() * 600;

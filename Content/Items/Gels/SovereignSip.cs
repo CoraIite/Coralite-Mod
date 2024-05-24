@@ -447,15 +447,7 @@ namespace Coralite.Content.Items.Gels
                         if (Projectile.velocity.X != 0f)
                             Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
 
-                        Projectile.frameCounter++;
-                        if (Projectile.frameCounter > 4)
-                        {
-                            Projectile.frame++;
-                            Projectile.frameCounter = 0;
-                        }
-
-                        if (Projectile.frame > 4)
-                            Projectile.frame = 0;
+                        Projectile.UpdateFrameNormally(4, 4);
 
                         Projectile.rotation = Projectile.velocity.X * 0.05f;
                     }

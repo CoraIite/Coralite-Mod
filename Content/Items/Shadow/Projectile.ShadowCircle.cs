@@ -57,14 +57,7 @@ namespace Coralite.Content.Items.Shadow
                 && Owner.armor[0].ModItem.IsArmorSet(Owner.armor[0], Owner.armor[1], Owner.armor[2]))
                 Projectile.timeLeft = 2;
 
-            Projectile.frameCounter++;
-            if (Projectile.frameCounter > 4)
-            {
-                Projectile.frameCounter = 0;
-                Projectile.frame++;
-                if (Projectile.frame > 2)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(4, 2);
 
             if (Main.myPlayer == Projectile.owner && (int)State == (int)AIState.idle && Owner.ItemAnimationJustStarted)//只有不在攻击的时候才能加能量
             {
@@ -694,14 +687,7 @@ namespace Coralite.Content.Items.Shadow
         {
             Player player = Main.player[Projectile.owner];
 
-            Projectile.frameCounter++;
-            if (Projectile.frameCounter > 4)
-            {
-                Projectile.frameCounter = 0;
-                Projectile.frame++;
-                if (Projectile.frame > 6)
-                    Projectile.frame = 0;
-            }
+            Projectile.UpdateFrameNormally(4, 6);
 
             int halfTime = 40;
             int startTime = halfTime * 2;

@@ -156,6 +156,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             Projectile.scale = Projectile.ai[0];
             Projectile.localAI[0] += 1f;
+
             if (++Projectile.frameCounter >= 3)
             {
                 Projectile.frameCounter = 0;
