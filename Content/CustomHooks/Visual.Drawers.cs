@@ -68,12 +68,12 @@ namespace Coralite.Content.CustomHooks
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
-                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IPostDrawAdditive)
-                    (Main.projectile[k].ModProjectile as IPostDrawAdditive).DrawAdditive(spriteBatch);
+                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IPostDrawAdditive add)
+                    add.DrawAdditive(spriteBatch);
 
             for (int k = 0; k < Main.maxNPCs; k++) //NPCs
-                if (Main.npc[k].active && Main.npc[k].ModNPC is IPostDrawAdditive)
-                    (Main.npc[k].ModNPC as IPostDrawAdditive).DrawAdditive(spriteBatch);
+                if (Main.npc[k].active && Main.npc[k].ModNPC is IPostDrawAdditive add)
+                    add.DrawAdditive(spriteBatch);
 
             spriteBatch.End();
 
@@ -81,12 +81,19 @@ namespace Coralite.Content.CustomHooks
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
-                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawNonPremultiplied)
-                    (Main.projectile[k].ModProjectile as IDrawNonPremultiplied).DrawNonPremultiplied(Main.spriteBatch);
+                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawNonPremultiplied non)
+                    non.DrawNonPremultiplied(Main.spriteBatch);
 
             for (int k = 0; k < Main.maxNPCs; k++) //NPCs
-                if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawNonPremultiplied)
-                    (Main.npc[k].ModNPC as IDrawNonPremultiplied).DrawNonPremultiplied(Main.spriteBatch);
+                if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawNonPremultiplied non)
+                    non.DrawNonPremultiplied(Main.spriteBatch);
+
+            for (int i = 0; i < ParticleSystem.Particles.Count; i++)
+            {
+                Particle particle = ParticleSystem.Particles[i];
+                if (particle != null && particle.active && particle is IDrawNonPremultiplied sp)
+                    sp.DrawNonPremultiplied(spriteBatch);
+            }
 
             spriteBatch.End();
 

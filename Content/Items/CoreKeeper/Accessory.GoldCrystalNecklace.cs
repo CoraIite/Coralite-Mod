@@ -48,6 +48,11 @@ namespace Coralite.Content.Items.CoreKeeper
             }
         }
 
+        public override void ClonePolish(Item item)
+        {
+            item.rare = RarityType<EpicRarity>();
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (polished)

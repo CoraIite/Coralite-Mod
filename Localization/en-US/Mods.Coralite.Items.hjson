@@ -3860,3 +3860,8 @@ PyropeCrown: {
 	DisplayName: Pyrope Crown
 	Tooltip: ""
 }
+
+PrimaryRoughGemstone: {
+	DisplayName: Primary Rough Gemstone
+	Tooltip: ""
+}

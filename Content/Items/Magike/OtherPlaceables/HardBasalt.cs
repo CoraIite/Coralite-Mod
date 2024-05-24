@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<Basalt>(2)
+                .AddIngredient<Basalt>(4)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
         }

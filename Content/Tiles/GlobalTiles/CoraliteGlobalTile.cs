@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.BossSummons;
 using Coralite.Content.Items.CoreKeeper;
+using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.Pets;
 using Coralite.Content.WorldGeneration;
 using Terraria;
@@ -336,6 +337,16 @@ namespace Coralite.Content.Tiles.GlobalTiles
                         Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<HeartBerryNecklace>());
                     break;
 
+                case TileID.Sapphire:
+                case TileID.Ruby:
+                case TileID.Emerald:
+                case TileID.Topaz:
+                case TileID.Amethyst:
+                case TileID.Diamond:
+                case TileID.DesertFossil:
+                    if (Main.rand.NextBool(3,100))
+                        Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<PrimaryRoughGemstone>());
+                    break;
             }
         }
 

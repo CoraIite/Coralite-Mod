@@ -441,6 +441,14 @@ namespace Coralite.Helpers
                 mainTex.Size() / 2, overrideScale, 0, 0);
         }
 
+        public static void QuickDraw(this Projectile projectile, Color lightColor, Vector2 overrideScale, float exRot)
+        {
+            Texture2D mainTex = projectile.GetTexture();
+
+            Main.spriteBatch.Draw(mainTex, projectile.Center - Main.screenPosition, null, lightColor, projectile.rotation + exRot,
+                mainTex.Size() / 2, overrideScale, 0, 0);
+        }
+
         public static void DrawPrettyStarSparkle(float opacity, SpriteEffects dir, Vector2 drawPos, Color drawColor, Color shineColor, float flareCounter, float fadeInStart, float fadeInEnd, float fadeOutStart, float fadeOutEnd, float rotation, Vector2 scale, Vector2 fatness)
         {
             Texture2D value = TextureAssets.Extra[98].Value;

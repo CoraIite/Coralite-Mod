@@ -137,7 +137,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public void UpdateFrameY(int spacing)
         {
-            Projectile.UpdateFrameNormally(spacing, FrameY);
+            Projectile.UpdateFrameNormally(spacing, FrameY-1);
         }
 
         public void SetDirectionNormally()
