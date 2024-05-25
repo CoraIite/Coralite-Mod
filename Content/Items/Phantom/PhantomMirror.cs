@@ -49,8 +49,7 @@ namespace Coralite.Content.Items.Phantom
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailingMode[Type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Type] = 7;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 7);
         }
 
         public override void SetDefaults()

@@ -113,8 +113,7 @@ namespace Coralite.Content.Items.Corruption
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailingMode[Type] = 0;
-            ProjectileID.Sets.TrailCacheLength[Type] = 8;
+            Projectile.QuickTrailSets(Helper.TrailingMode.OnlyPosition, 8);
             ProjectileID.Sets.MinionSacrificable[Type] = true;
         }
 

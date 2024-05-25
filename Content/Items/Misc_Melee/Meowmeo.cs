@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -258,8 +259,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailingMode[Type] = 0;
-            ProjectileID.Sets.TrailCacheLength[Type] = 16;
+            Projectile.QuickTrailSets(Helper.TrailingMode.OnlyPosition, 16);
         }
 
         public override void SetDefaults()

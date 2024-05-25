@@ -3865,3 +3865,8 @@ PrimaryRoughGemstone: {
 	DisplayName: Primary Rough Gemstone
 	Tooltip: ""
 }
+
+AmethystNeckLace: {
+	DisplayName: Amethyst Neck Lace
+	Tooltip: ""
+}

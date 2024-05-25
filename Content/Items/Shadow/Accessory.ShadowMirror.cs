@@ -2,6 +2,7 @@
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -61,8 +62,7 @@ namespace Coralite.Content.Items.Shadow
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailingMode[Type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Type] = 7;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 7);
         }
 
         public override void SetDefaults()

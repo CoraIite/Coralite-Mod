@@ -86,16 +86,16 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float2 nCoords = (input.Position.xy - basePos) * scale % float2(256.0, 256.0) / float2(256.0, 256.0);
     float4 c2 = tex2D(uImage1, nCoords);
     
-    float gray = c2.r;
+    float gray = c2.r - 0.0001;
 
     //计算基本颜色
-    float4 c1 = BLerp(darkC, brightC, gray);
+    float4 c1 = BLerp(darkC, brightC, sin((gray + uTime) * 3.141f - 1.57f) / 2 + 0.5f);
     
     //计算最终混合后的颜色
-    float4 fc = float4(c1.rgb, tc.a) * tc + c1 * addC; //float4(HSVtoRGB(float3(c1.x, c1.y, (c1.z + tc.r) / 2)), tc.a);
+    float4 fc = float4(c1.rgb, tc.a) * tc + c1 * addC * tc.a; //float4(HSVtoRGB(float3(c1.x, c1.y, (c1.z + tc.r) / 2)), tc.a);
     
     //按时间变亮
-    float t = frac(uTime);
+    float t = frac(sin(uTime) / 2 + 0.5f);
     float a = abs(t - gray);
     float y = 0.299 * fc.r + 0.587 * fc.g + 0.114 * fc.b;
     if (a < lightRange && y > lightLimit)
@@ -103,7 +103,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
         fc = BLerp(fc, highlightC, (lightRange - a) / lightRange);
     }
     
-    return fc*input.Color;
+    return fc * input.Color;
 }
 
 technique Technique1

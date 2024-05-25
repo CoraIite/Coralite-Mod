@@ -5,9 +5,9 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -19,9 +19,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 1));
-            Item.SetWeaponValues(20, 4);
-            Item.useTime = Item.useAnimation = 24;
-            Item.mana = 10;
+            Item.SetWeaponValues(23, 4);
+            Item.useTime = Item.useAnimation = 25;
+            Item.mana = 7;
 
             Item.shoot = ModContent.ProjectileType<PyropeCrownProj>();
             Item.shootSpeed = 12;
@@ -80,8 +80,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailingMode[Type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Type] = 4;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
         }
 
         public override void SetDefaults()
@@ -144,7 +143,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 if (AttackTime == 1 && Main.myPlayer == Projectile.owner)
                 {
                     Projectile.NewProjectileFromThis<PyropeProj>(Projectile.Center,
-                        (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 7, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
+                        (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 6.5f, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
 
                     Helper.PlayPitched("Crystal/CrystalBling", 0.4f, 0, Projectile.Center);
 
@@ -223,7 +222,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 init = false;
             }
 
-            rand.X += 0.3f;
             Projectile.rotation = Projectile.velocity.ToRotation();
             Projectile.UpdateFrameNormally(8, 19);
             Projectile.UpdateOldPosCache(addVelocity: false);
@@ -251,6 +249,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Vector2 dir = Helper.NextVec2Dir();
                 SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
             }
+
+            var style = CoraliteSoundID.Ding_Item4;
+            style.Pitch = Main.rand.NextFloat(0.45f, 0.6f);
+            SoundEngine.PlaySound(style, Projectile.Center);
         }
 
         public static void SpawnTriangleParticle(Vector2 pos,Vector2 velocity)
@@ -284,35 +286,19 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
-            Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
+            rand.X += 0.15f;
 
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            Texture2D noiseTex = GemTextures.CrystalNoises[Projectile.frame].Value;
-
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["basePos"].SetValue((Projectile.Center - Main.screenPosition + rand) * Main.GameZoomTarget);
-            effect.Parameters["scale"].SetValue(new Vector2(1 / Main.GameZoomTarget));
-            effect.Parameters["uTime"].SetValue(MathF.Sin((float)Main.timeForVisualEffects * 0.02f) / 2 + 0.5f);
-            effect.Parameters["lightRange"].SetValue(0.2f);
-            effect.Parameters["lightLimit"].SetValue(0.35f);
-            effect.Parameters["addC"].SetValue(0.75f);
-            effect.Parameters["highlightC"].SetValue(highlightC.ToVector4());
-            effect.Parameters["brightC"].SetValue(brightC.ToVector4());
-            effect.Parameters["darkC"].SetValue(darkC.ToVector4());
-
-            Texture2D mainTex = Projectile.GetTexture();
-
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.GameViewMatrix.ZoomMatrix);
-
-            Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
-            Main.spriteBatch.Draw(mainTex, Projectile.Center, null, Color.White, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, 0, 0);
-
-            spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            Helper.DrawCrystal(spriteBatch, Projectile.frame, Projectile.Center + rand, Vector2.One
+                , (float)(Main.timeForVisualEffects + Projectile.timeLeft) * (Main.gamePaused ? 0.02f : 0.01f) + Projectile.whoAmI / 3f
+                , highlightC, brightC, darkC, () =>
+                {
+                    Texture2D mainTex = Projectile.GetTexture();
+                    spriteBatch.Draw(mainTex, Projectile.Center, null, Color.White, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, 0, 0);
+                }, sb =>
+                {
+                    sb.End();
+                    sb.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                });
         }
     }
 }

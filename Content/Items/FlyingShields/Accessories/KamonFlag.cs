@@ -127,8 +127,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailingMode[Type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Type] = 6;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 6);
         }
 
         public override void SetDefaults()

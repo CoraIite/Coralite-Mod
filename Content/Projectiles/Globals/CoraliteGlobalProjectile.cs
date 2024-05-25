@@ -1,10 +1,13 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
+using Coralite.Content.ModPlayers;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Projectiles.Globals
@@ -12,6 +15,8 @@ namespace Coralite.Content.Projectiles.Globals
     public class CoraliteGlobalProjectile : GlobalProjectile
     {
         public bool isBossProjectile;
+
+        //private Vector2 rand;
 
         public override bool InstancePerEntity => true;
 
@@ -48,6 +53,12 @@ namespace Coralite.Content.Projectiles.Globals
                     }
                 }
             }
+
+            //rand = Main.rand.NextVector2Circular(128, 128);
+        }
+
+        public override void PostAI(Projectile projectile)
+        {
         }
 
         public override bool PreDraw(Projectile projectile, ref Color lightColor)
@@ -72,7 +83,38 @@ namespace Coralite.Content.Projectiles.Globals
                         return false;
                 }
             }
+            //rand.Y -= 0.1f;
+
+            //Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
+
+            //Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            //Matrix view = Main.GameViewMatrix.TransformationMatrix;
+            //Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            //Texture2D noiseTex = GemTextures.CrystalNoises[(int)(Main.timeForVisualEffects / 7) % 20].Value;
+
+            //effect.Parameters["transformMatrix"].SetValue(view * projection);
+            //effect.Parameters["basePos"].SetValue((projectile.Center - Main.screenPosition + rand) * Main.GameZoomTarget);
+            //effect.Parameters["scale"].SetValue(new Vector2(0.7f / Main.GameZoomTarget));
+            //effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * (Main.gamePaused ? 0.02f : 0.01f));
+            //effect.Parameters["lightRange"].SetValue(0.2f);
+            //effect.Parameters["lightLimit"].SetValue(0.25f);
+            //effect.Parameters["addC"].SetValue(0.65f);
+            //effect.Parameters["highlightC"].SetValue(Color.White.ToVector4());
+            //effect.Parameters["brightC"].SetValue(Color.Pink.ToVector4());
+            //effect.Parameters["darkC"].SetValue(new Color(120, 20, 70).ToVector4());
+
+            //Main.spriteBatch.End();
+            //Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.GameViewMatrix.ZoomMatrix);
+            //Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
+
             return base.PreDraw(projectile, ref lightColor);
+        }
+
+        public override void PostDraw(Projectile projectile, Color lightColor)
+        {
+            //Main.spriteBatch.End();
+            //Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         }
     }
 }

@@ -414,8 +414,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[Type] = 10;
-            ProjectileID.Sets.TrailingMode[Type] = 4;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAllAndFollowPlayer, 10);
         }
 
         public override void SetDefs()

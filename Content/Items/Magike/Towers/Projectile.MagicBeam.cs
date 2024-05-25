@@ -19,8 +19,7 @@ namespace Coralite.Content.Items.Magike.Towers
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[Type] = 18;
-            ProjectileID.Sets.TrailingMode[Type] = 2;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 18);
         }
 
         public override void SetDefaults()

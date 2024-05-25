@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Particles;
+﻿using Coralite.Content.Items.Icicle;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.FlyingShieldSystem;
@@ -38,6 +39,13 @@ namespace Coralite.Content.Items.FlyingShields
             CreateRecipe()
                 .AddIngredient(ItemID.SilverBar, 16)
                 .AddIngredient(ItemID.ShadowScale, 5)
+                .AddIngredient(ItemID.Feather, 5)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.SilverBar, 16)
+                .AddIngredient<IcicleScale>(3)
                 .AddIngredient(ItemID.Feather, 5)
                 .AddTile(TileID.Anvils)
                 .Register();

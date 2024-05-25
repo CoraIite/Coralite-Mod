@@ -777,8 +777,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailingMode[Type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Type] = 12;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 12);
         }
 
         public override void SetDefaults()

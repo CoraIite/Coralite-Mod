@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.Icicle;
+using Coralite.Content.ModPlayers;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Terraria;
 using Terraria.ID;
@@ -42,6 +43,12 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 .AddIngredient(ItemID.VanityTreeSakuraSeed)
                 .AddIngredient(ItemID.Feather)
                 .AddIngredient(ItemID.ShadowScale, 5)
+                .AddTile(TileID.TinkerersWorkbench)
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.VanityTreeSakuraSeed)
+                .AddIngredient(ItemID.Feather)
+                .AddIngredient<IcicleBreath>(3)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
         }

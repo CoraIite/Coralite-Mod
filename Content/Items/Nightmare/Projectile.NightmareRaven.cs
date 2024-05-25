@@ -33,8 +33,7 @@ namespace Coralite.Content.Items.Nightmare
             ProjectileID.Sets.MinionSacrificable[Type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Type] = true;
 
-            ProjectileID.Sets.TrailingMode[Type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Type] = 7;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 7);
             Main.projFrames[Projectile.type] = 4;
         }
 
@@ -475,8 +474,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailingMode[Type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Type] = 10;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 10);
         }
 
         public override void SetDefaults()

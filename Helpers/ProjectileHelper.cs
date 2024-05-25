@@ -1,10 +1,12 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Helpers
@@ -292,18 +294,51 @@ namespace Coralite.Helpers
 
         public static bool IsActiveAndHostile(this Projectile projectile) => projectile.active && projectile.hostile;
 
+        public static int NewProjectileFromThis(this Projectile projectile, Vector2 position, Vector2 velocity
+            , int type, int damage, float knockback, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+        {
+            return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, type, damage, knockback, projectile.owner, ai0, ai1, ai2);
+        }
+        public static int NewProjectileFromThis<T>(this Projectile projectile, Vector2 position, Vector2 velocity
+            , int damage, float knockback, float ai0 = 0, float ai1 = 0, float ai2 = 0) where T : ModProjectile
+        {
+            return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockback, projectile.owner, ai0, ai1, ai2);
+        }
 
+
+
+
+        //--------------------------------------------------------------------------------------------
+        //                                    以下是绘制相关部分
+        //--------------------------------------------------------------------------------------------
+
+
+        public enum TrailingMode
+        {
+            OnlyPosition = 0,
+            RecordAll = 2,
+            RecordAllAndSmooth = 3,
+            RecordAllAndFollowPlayer = 4,
+        }
 
         /// <summary>
         /// 快速设置拖尾相关数据
         /// </summary>
         /// <param name="trailingMode"></param>
         /// <param name="trailCacheLength"></param>
-        public static void QuickSetTrailSets(int type, int trailingMode, int trailCacheLength)
+        public static void QuickTrailSets(int type, TrailingMode trailingMode, int trailCacheLength)
         {
-            ProjectileID.Sets.TrailingMode[type] = trailingMode;
+            ProjectileID.Sets.TrailingMode[type] = (int)trailingMode;
             ProjectileID.Sets.TrailCacheLength[type] = trailCacheLength;
         }
+
+        /// <summary>
+        /// 快速设置拖尾相关数据
+        /// </summary>
+        /// <param name="trailingMode"></param>
+        /// <param name="trailCacheLength"></param>
+        public static void QuickTrailSets(this Projectile proj, TrailingMode trailingMode, int trailCacheLength)
+            => QuickTrailSets(proj.type, trailingMode, trailCacheLength);
 
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float extraRot = 0, float scale = -1)
         {
@@ -529,15 +564,34 @@ namespace Coralite.Helpers
             projectile.oldRot[^1] = projectile.rotation;
         }
 
-        public static int NewProjectileFromThis(this Projectile projectile, Vector2 position, Vector2 velocity
-            , int type, int damage, float knockback, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+        public static void DrawCrystal(SpriteBatch spriteBatch, int noiseFrame,Vector2 noiseBasePos,Vector2 noiseScale,float uTime
+            ,Color highlightC, Color brightC, Color darkC, Action doDraw,Action<SpriteBatch> endSpriteBatch)
         {
-            return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, type, damage, knockback, projectile.owner, ai0, ai1, ai2);
-        }
-        public static int NewProjectileFromThis<T>(this Projectile projectile, Vector2 position, Vector2 velocity
-            , int damage, float knockback, float ai0 = 0, float ai1 = 0, float ai2 = 0) where T : ModProjectile
-        {
-            return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockback, projectile.owner, ai0, ai1, ai2);
+            Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.TransformationMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            Texture2D noiseTex = GemTextures.CrystalNoises[noiseFrame].Value;
+
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["basePos"].SetValue((noiseBasePos - Main.screenPosition) * Main.GameZoomTarget);
+            effect.Parameters["scale"].SetValue(noiseScale / Main.GameZoomTarget);
+            effect.Parameters["uTime"].SetValue(uTime);
+            effect.Parameters["lightRange"].SetValue(0.2f);
+            effect.Parameters["lightLimit"].SetValue(0.35f);
+            effect.Parameters["addC"].SetValue(0.75f);
+            effect.Parameters["highlightC"].SetValue(highlightC.ToVector4());
+            effect.Parameters["brightC"].SetValue(brightC.ToVector4());
+            effect.Parameters["darkC"].SetValue(darkC.ToVector4());
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.GameViewMatrix.ZoomMatrix);
+            
+            Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
+            doDraw();
+            endSpriteBatch(spriteBatch);
         }
     }
 }

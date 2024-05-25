@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.Icicle;
+using Coralite.Content.ModPlayers;
 using Terraria;
 using Terraria.ID;
 
@@ -37,6 +38,18 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             CreateRecipe()
                 .AddIngredient(ItemID.Vertebrae, 5)
                 .AddIngredient(ItemID.TissueSample, 5)
+                .AddTile(TileID.TinkerersWorkbench)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.Vertebrae, 5)
+                .AddIngredient<IcicleScale>(3)
+                .AddTile(TileID.TinkerersWorkbench)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.Leather, 5)
+                .AddIngredient<IcicleScale>(3)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
         }

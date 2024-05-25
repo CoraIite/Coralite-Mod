@@ -661,6 +661,11 @@ namespace Coralite.Content.Items.Shadow
 
         public ref float DieTimer => ref Projectile.ai[2];
 
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 10);
+        }
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 32;
@@ -672,8 +677,6 @@ namespace Coralite.Content.Items.Shadow
             Projectile.localNPCHitCooldown = 20;
             Projectile.tileCollide = false;
             Projectile.friendly = true;
-            ProjectileID.Sets.TrailingMode[Type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Type] = 10;
         }
 
         public override void OnKill(int timeLeft)

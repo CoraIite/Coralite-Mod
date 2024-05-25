@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -24,8 +25,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailingMode[Type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Type] = 8;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 8);
         }
 
         public override void SetDefaults()

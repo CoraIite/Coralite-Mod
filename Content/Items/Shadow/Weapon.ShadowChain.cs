@@ -113,8 +113,7 @@ namespace Coralite.Content.Items.Shadow
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[Type] = 8;
-            ProjectileID.Sets.TrailingMode[Type] = 2;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 8);
         }
 
         public override void Load()
@@ -504,8 +503,7 @@ namespace Coralite.Content.Items.Shadow
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[Type] = 7;
-            ProjectileID.Sets.TrailingMode[Type] = 4;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAllAndFollowPlayer, 7);
         }
 
         public override void SetDefaults()

@@ -29,13 +29,12 @@ namespace Coralite.Content.Items.Stars
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("星之书-星符文");
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 6);
         }
 
         public override void SetDefaults()
         {
-            Projectile.width = 16;
-            Projectile.height = 16;
+            Projectile.width = Projectile.height = 16;
             Projectile.scale = 1.2f;
 
             Projectile.aiStyle = -1;
@@ -45,9 +44,6 @@ namespace Coralite.Content.Items.Stars
             Projectile.netImportant = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
-
-            ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
         }
 
         #region AI

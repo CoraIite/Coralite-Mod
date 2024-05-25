@@ -391,7 +391,7 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("寰宇裂隙--亚空裂斩");
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 3);
         }
 
         public override void SetDefaults()
@@ -408,9 +408,6 @@ namespace Coralite.Content.Items.Misc_Magic
             Projectile.netImportant = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
-
-            ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
         }
 
         #region AI

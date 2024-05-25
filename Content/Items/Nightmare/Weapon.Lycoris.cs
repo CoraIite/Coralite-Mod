@@ -274,8 +274,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailingMode[Type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Type] = 12;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 12);
         }
 
         public override void SetDefaults()

@@ -118,8 +118,7 @@ namespace Coralite.Content.Items.FairyCatcher
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailingMode[Type] = 2;
-            ProjectileID.Sets.TrailCacheLength[Type] = 30;
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 30);
         }
 
         public override void SetDefaults()

@@ -3986,6 +3986,11 @@ PrimaryRoughGemstone: {
 	Tooltip:
 		'''
 		使用提炼机可能会提炼出一颗宝石
-		挖掘宝石矿或是沙漠化石时可能会出现的稀有原石
+		挖掘宝石矿或是沙漠化石时可能会出现的宝石原石
 		'''
+}
+
+AmethystNeckLace: {
+	DisplayName: 第六轮回项链
+	Tooltip: 生成轮回紫晶并向敌人发射紫晶光束
 }
