@@ -252,7 +252,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             var style = CoraliteSoundID.Ding_Item4;
             style.Pitch = Main.rand.NextFloat(0.45f, 0.6f);
-            SoundEngine.PlaySound(style, Projectile.Center);
+            style.Volume -= 0.5f;
+            var id= SoundEngine.PlaySound(style, Projectile.Center);
+            if (SoundEngine.TryGetActiveSound(id,out var result))
+            {
+                result.Volume -= 0.5f;
+            }
         }
 
         public static void SpawnTriangleParticle(Vector2 pos, Vector2 velocity)

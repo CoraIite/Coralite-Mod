@@ -27,7 +27,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Item.mana = 20;
 
             Item.shoot = ModContent.ProjectileType<AmethystNeckLaceProj>();
-            Item.shootSpeed = 12;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noUseGraphic = true;
         }
@@ -138,10 +137,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     idlePos += new Vector2(0, -16);
             }
 
-            if (AttackCD>0)
+            float lerpFactor = 0.3f;
+            if (AttackCD > 0)
+            {
                 idlePos += (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 48;
+                lerpFactor = 0.1f;
+            }
 
-            TargetPos = Vector2.SmoothStep(TargetPos, idlePos, 0.25f);
+            TargetPos = Vector2.SmoothStep(TargetPos, idlePos, lerpFactor);
             Projectile.Center = Vector2.Lerp(Projectile.Center, TargetPos, 0.5f);
 
             Lighting.AddLight(Projectile.Center, AmethystLaser.brightC.ToVector3());
@@ -170,7 +173,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 Rot += 0.01f;
                 LengthToCenter = Helper.Lerp(32, 48, 0.1f);
-                Projectile.rotation = Projectile.rotation.AngleTowards((Main.MouseWorld - Projectile.Center).ToRotation(), 0.01f);
+                Projectile.rotation = Projectile.rotation.AngleTowards((Main.MouseWorld - Projectile.Center).ToRotation(), 0.015f);
                 if (AttackCD < AmethystLaser.delayTime)
                 {
                     factorBottom = 1 - AttackCD / AmethystLaser.delayTime;
@@ -181,8 +184,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             else
             {
                 LengthToCenter = Helper.Lerp(LengthToCenter, 54, 0.2f);
-                Projectile.rotation = Helper.Lerp(Projectile.rotation, OwnerDirection > 0 ? 0 : MathHelper.Pi, 0.2f);
-                Rot += 0.05f;
+                Projectile.rotation = Projectile.rotation.AngleLerp( OwnerDirection > 0 ? 0 : MathHelper.Pi, 0.1f);
+                Rot += 0.03f;
             }
         }
 
@@ -324,9 +327,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void OnSpawn(IEntitySource source)
         {
-            SoundStyle style = CoraliteSoundID.PhantasmalDeathray_Zombie104;
-            style.Volume = 0.2f;
-            style.Pitch = 1f;
             soundSlot = Helper.PlayPitched("Crystal/CrystalLaser", 0.2f, 0, Projectile.Center);
         }
 
@@ -348,7 +348,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Projectile.Center = owner.Center;
             LaserRotation = owner.rotation;
-            HitCount = 20;
+            HitCount = 5;
             for (int k = 0; k < 160; k++)
             {
                 Vector2 posCheck = Projectile.Center + Vector2.UnitX.RotatedBy(LaserRotation) * k * 8;
@@ -410,12 +410,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         c2.A = 125;
                         Color c3 = darkC;
                         c3.A = 100;
-                        Color c = Main.rand.NextFromList(highlightC, brightC, c1, c2, c3);
+                        Color c = Main.rand.NextFromList(c1, c2, c3);
 
                         Color c4 = darkC;
                         c4.A = 0;
-                        LightTrailParticle.Spawn(endPoint, (LaserRotation + MathHelper.Pi + Main.rand.NextFloat(-0.3f, 0.3f)).ToRotationVector2() * Main.rand.NextFloat(4f, 6f)
-                            , c, Main.rand.NextFloat(0.3f, 0.6f), c4, 10);
+                        LightTrailParticle.Spawn(endPoint, (LaserRotation + MathHelper.Pi + Main.rand.NextFloat(-0.3f, 0.3f)).ToRotationVector2() * Main.rand.NextFloat(6f, 8f)
+                            , c, Main.rand.NextFloat(0.3f, 0.6f), c4, 8);
                         SpawnTriangleParticle(endPoint, Helper.NextVec2Dir(0.5f, 2f));
                     }
 
@@ -470,7 +470,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.SourceDamage -= 1 / HitCount;
+            if (HitCount < 4)
+                modifiers.SourceDamage -= 1 / HitCount;
             if (HitCount > 2)
                 HitCount--;
         }
@@ -482,7 +483,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Texture2D laserTex = Projectile.GetTexture();
             Texture2D flowTex = CrystalLaser.FlowTex.Value;
 
-            rand += LaserRotation.ToRotationVector2()*4;
+            rand += LaserRotation.ToRotationVector2()*3;
             Color color = darkC;
 
             float height = LaserHeight * laserTex.Height / 4f;
@@ -540,11 +541,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Texture2D glowTex = CrystalLaser.GlowTex.Value;
             Texture2D starTex = CrystalLaser.StarTex.Value;
 
-            spriteBatch.Draw(glowTex, endPos, null, color * (height * 0.012f), 0, glowTex.Size() / 2, 0.5f, 0, 0);
-            spriteBatch.Draw(starTex, endPos, null, color * (height * 0.03f), Main.GlobalTimeWrappedHourly, starTex.Size() / 2, 0.14f, 0, 0);
+            spriteBatch.Draw(glowTex, endPos, null, color * (height * 0.02f), 0, glowTex.Size() / 2, 0.4f, 0, 0);
+            spriteBatch.Draw(starTex, endPos, null, color , Main.GlobalTimeWrappedHourly, starTex.Size() / 2, 0.16f, 0, 0);
 
-            spriteBatch.Draw(glowTex, startPos, null, color * (height * 0.02f), 0, glowTex.Size() / 2, 0.9f, 0, 0);
-            spriteBatch.Draw(starTex, startPos, null, color * (height * 0.05f), Main.GlobalTimeWrappedHourly * -2, starTex.Size() / 2, 0.14f, 0, 0);
+            spriteBatch.Draw(glowTex, startPos, null, color * (height * 0.02f), 0, glowTex.Size() / 2, 0.5f, 0, 0);
+            spriteBatch.Draw(starTex, startPos, null, color , Main.GlobalTimeWrappedHourly * -1.5f, starTex.Size() / 2, 0.25f, 0, 0);
         }
     }
 }
