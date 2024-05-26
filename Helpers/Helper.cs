@@ -152,7 +152,7 @@ namespace Coralite.Helpers
 
                     Tile tile = Framing.GetTileSafely(thisPoint);
 
-                    if (Main.tileSolid[tile.TileType] && tile.HasUnactuatedTile)
+                    if (Main.tileSolid[tile.TileType] && tile.HasUnactuatedTile && !Main.tileSolidTop[tile.TileType])
                     {
                         var rect = new Rectangle(thisPoint.X * 16, thisPoint.Y * 16, 16, 16);
 

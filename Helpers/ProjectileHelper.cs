@@ -564,8 +564,9 @@ namespace Coralite.Helpers
             projectile.oldRot[^1] = projectile.rotation;
         }
 
-        public static void DrawCrystal(SpriteBatch spriteBatch, int noiseFrame,Vector2 noiseBasePos,Vector2 noiseScale,float uTime
-            ,Color highlightC, Color brightC, Color darkC, Action doDraw,Action<SpriteBatch> endSpriteBatch)
+        public static void DrawCrystal(SpriteBatch spriteBatch, int noiseFrame, Vector2 noiseBasePos, Vector2 noiseScale, float uTime
+            , Color highlightC, Color brightC, Color darkC, Action doDraw, Action<SpriteBatch> endSpriteBatch
+            , float lightRange = 0.2f, float lightLimit = 0.35f, float addC = 0.75f)
         {
             Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
 
@@ -579,9 +580,9 @@ namespace Coralite.Helpers
             effect.Parameters["basePos"].SetValue((noiseBasePos - Main.screenPosition) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(noiseScale / Main.GameZoomTarget);
             effect.Parameters["uTime"].SetValue(uTime);
-            effect.Parameters["lightRange"].SetValue(0.2f);
-            effect.Parameters["lightLimit"].SetValue(0.35f);
-            effect.Parameters["addC"].SetValue(0.75f);
+            effect.Parameters["lightRange"].SetValue(lightRange);
+            effect.Parameters["lightLimit"].SetValue(lightLimit);
+            effect.Parameters["addC"].SetValue(addC);
             effect.Parameters["highlightC"].SetValue(highlightC.ToVector4());
             effect.Parameters["brightC"].SetValue(brightC.ToVector4());
             effect.Parameters["darkC"].SetValue(darkC.ToVector4());

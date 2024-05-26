@@ -92,7 +92,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 c1 = BLerp(darkC, brightC, sin((gray + uTime) * 3.141f - 1.57f) / 2 + 0.5f);
     
     //计算最终混合后的颜色
-    float4 fc = float4(c1.rgb, tc.a) * tc + c1 * addC * tc.a; //float4(HSVtoRGB(float3(c1.x, c1.y, (c1.z + tc.r) / 2)), tc.a);
+    float4 fc = (c1 * tc + c1 * addC) * tc.a; //float4(HSVtoRGB(float3(c1.x, c1.y, (c1.z + tc.r) / 2)), tc.a);
+    fc *= input.Color;
     
     //按时间变亮
     float t = frac(sin(uTime) / 2 + 0.5f);
@@ -103,7 +104,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
         fc = BLerp(fc, highlightC, (lightRange - a) / lightRange);
     }
     
-    return fc * input.Color;
+    return fc ;
 }
 
 technique Technique1

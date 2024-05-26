@@ -37,9 +37,9 @@ namespace Coralite.Content.Particles
             if (color.A < 2)
                 active = false;
 
-            if (fadeIn<oldCenter.Length)
+            if (fadeIn < oldCenter.Length)
             {
-                int length=oldCenter.Length;
+                int length = oldCenter.Length;
                 for (int i = 0; i < length; i++)
                 {
                     oldCenter[i] = Vector2.Lerp(oldCenter[0], Center, i / (float)(length - 1));

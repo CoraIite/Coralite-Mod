@@ -126,20 +126,20 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.1f);
             Projectile.Center = Vector2.Lerp(Projectile.Center, TargetPos, 0.5f);
-            Projectile.rotation = Owner.velocity.X / 40;   
+            Projectile.rotation = Owner.velocity.X / 40;
         }
 
         public void Attack()
         {
             if (AttackTime > 0)
             {
-                float factor = 1- AttackTime / Owner.itemTimeMax;
-                if (factor<0.8f)
+                float factor = 1 - AttackTime / Owner.itemTimeMax;
+                if (factor < 0.8f)
                 {
-                    scale = Vector2.SmoothStep(Vector2.One, new Vector2(0.4f, 0.85f), factor/0.8f);
+                    scale = Vector2.SmoothStep(Vector2.One, new Vector2(0.4f, 0.85f), factor / 0.8f);
                 }
                 else
-                    scale = Vector2.SmoothStep(new Vector2(0.5f, 0.7f), new Vector2(1.5f,1.5f), (factor-0.8f) / 0.2f);
+                    scale = Vector2.SmoothStep(new Vector2(0.5f, 0.7f), new Vector2(1.5f, 1.5f), (factor - 0.8f) / 0.2f);
                 if (AttackTime == 1 && Main.myPlayer == Projectile.owner)
                 {
                     Projectile.NewProjectileFromThis<PyropeProj>(Projectile.Center,
@@ -184,7 +184,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         private Trail trail;
 
-        public  static Color highlightC = new Color(255, 230, 230);
+        public static Color highlightC = new Color(255, 230, 230);
         public static Color brightC = new Color(251, 100, 152);
         public static Color darkC = new Color(48, 7, 42);
 
@@ -255,7 +255,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             SoundEngine.PlaySound(style, Projectile.Center);
         }
 
-        public static void SpawnTriangleParticle(Vector2 pos,Vector2 velocity)
+        public static void SpawnTriangleParticle(Vector2 pos, Vector2 velocity)
         {
             Color c1 = highlightC;
             c1.A = 125;
@@ -264,7 +264,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Color c3 = darkC;
             c3.A = 100;
             Color c = Main.rand.NextFromList(highlightC, brightC, c1, c2, c3);
-            CrystalTriangle.Spawn(pos ,velocity , c, 9, Main.rand.NextFloat(0.05f, 0.3f));
+            CrystalTriangle.Spawn(pos, velocity, c, 9, Main.rand.NextFloat(0.05f, 0.3f));
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
