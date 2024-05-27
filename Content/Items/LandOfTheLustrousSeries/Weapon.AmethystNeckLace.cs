@@ -19,6 +19,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
     public class AmethystNeckLace : BaseGemWeapon
     {
+        public bool ShootSound = true;
+
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 1));
@@ -31,9 +33,33 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Item.noUseGraphic = true;
         }
 
+        public override bool AltFunctionUse(Player player) => true;
+
+        public override bool CanUseItem(Player player)
+        {
+            if (player.altFunctionUse == 2)
+            {
+                Item.noUseGraphic = false;
+                Item.useStyle = ItemUseStyleID.HoldUp;
+                if (ShootSound)
+                    ShootSound = false;
+                else
+                    ShootSound = true;
+            }
+            else
+            {
+                Item.noUseGraphic = true;
+                Item.useStyle = ItemUseStyleID.Shoot;
+            }
+            return base.CanUseItem(player);
+        }
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (Main.myPlayer != player.whoAmI)
+                return false;
+
+            if (player.altFunctionUse==2)
                 return false;
 
             if (player.ownedProjectileCounts[type] < 1)
@@ -327,7 +353,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void OnSpawn(IEntitySource source)
         {
-            soundSlot = Helper.PlayPitched("Crystal/CrystalLaser", 0.2f, 0, Projectile.Center);
+            if (Main.player[Projectile.owner].HeldItem.ModItem is AmethystNeckLace an && an.ShootSound)
+                soundSlot = Helper.PlayPitched("Crystal/CrystalLaser", 0.2f, 0, Projectile.Center);
         }
 
         public override void AI()

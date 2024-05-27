@@ -114,6 +114,8 @@ namespace Coralite.Core
         public const string BossSummons = Items + "BossSummons/";
         public const string Banner = Items + "Banner/";
 
+        public const string Donator = Items + "Donator/";
+
         #endregion
 
         #region 弹幕部分！

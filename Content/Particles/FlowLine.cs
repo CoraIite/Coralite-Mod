@@ -79,9 +79,9 @@ namespace Coralite.Content.Particles
             particle.trail = new Trail(Main.instance.GraphicsDevice, spawnTime, new NoTip(), factor => trailWidth, factor =>
             {
                 if (factor.X > 0.5f)
-                    return Color.Lerp(color, new Color(0, 0, 0, 0), (factor.X - 0.5f) * 2);
+                    return Color.Lerp(particle.color, new Color(0, 0, 0, 0), (factor.X - 0.5f) * 2);
 
-                return Color.Lerp(new Color(0, 0, 0, 0), color, factor.X * 2);
+                return Color.Lerp(new Color(0, 0, 0, 0), particle.color, factor.X * 2);
             });
 
             particle.spawnTime = spawnTime;

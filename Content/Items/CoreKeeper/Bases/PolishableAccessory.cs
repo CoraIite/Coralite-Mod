@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Steamworks;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.IO;
 
@@ -7,6 +8,8 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
     public abstract class PolishableAccessory : ModItem
     {
         public bool polished;
+
+        public static bool RecordReforge;
 
         public abstract void Polish(Recipe recipe, Item item, List<Item> list, Item destinationStack);
         public abstract void ClonePolish( Item item);
@@ -28,9 +31,23 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             if (newEntity.ModItem is PolishableAccessory pa)
             {
                 pa.polished = polished;
-                ClonePolish(newEntity);
+                if (pa.polished)
+                    ClonePolish(newEntity);
+
+                return newEntity.ModItem;
             }
+
             return base.Clone(newEntity);
+        }
+
+        public override void PreReforge()
+        {
+            RecordReforge = polished;
+        }
+
+        public override void PostReforge()
+        {
+            polished = RecordReforge;
         }
     }
 }

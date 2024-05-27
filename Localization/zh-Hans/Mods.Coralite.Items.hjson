@@ -3992,5 +3992,23 @@ PrimaryRoughGemstone: {
 
 AmethystNeckLace: {
 	DisplayName: 第六轮回项链
-	Tooltip: 生成轮回紫晶并向敌人发射紫晶光束
+	Tooltip:
+		'''
+		生成轮回紫晶并向敌人发射紫晶光束
+		右键使用可以关闭紫晶光束的持续音效
+		'''
+}
+
+FriedShrimpWhip: {
+	DisplayName: 炸虾鞭
+	Tooltip:
+		'''
+		超长又鲜美的炽热锋利之虾不但吃起来很棒，抽在敌人身上也很棒
+		[c/fd8da6:它是美少女琴叶茜的最爱]
+		'''
+}
+
+ChocomintIce: {
+	// DisplayName: Chocomint Ice
+	// Tooltip: ""
 }

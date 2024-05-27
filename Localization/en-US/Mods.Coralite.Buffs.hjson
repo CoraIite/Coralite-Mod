@@ -159,3 +159,13 @@ ElfBless: {
 	DisplayName: Elf Bless
 	Description: Mods.Coralite.Buffs.ElfBless.Description
 }
+
+FriedShrimpBuff: {
+	DisplayName: Fried Shrimp Buff
+	Description: Mods.Coralite.Buffs.FriedShrimpBuff.Description
+}
+
+ChocomintIceBuff: {
+	DisplayName: Chocomint Ice Buff
+	Description: Mods.Coralite.Buffs.ChocomintIceBuff.Description
+}

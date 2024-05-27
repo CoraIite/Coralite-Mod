@@ -3870,3 +3870,13 @@ AmethystNeckLace: {
 	DisplayName: Amethyst Neck Lace
 	Tooltip: ""
 }
+
+FriedShrimpWhip: {
+	DisplayName: Fried Shrimp Whip
+	Tooltip: ""
+}
+
+ChocomintIce: {
+	DisplayName: Chocomint Ice
+	Tooltip: ""
+}

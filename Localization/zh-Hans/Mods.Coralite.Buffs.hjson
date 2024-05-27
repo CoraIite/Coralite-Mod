@@ -159,3 +159,13 @@ ElfBless: {
 	DisplayName: 妖精祝福
 	Description: 捕捉力增加5%
 }
+
+FriedShrimpBuff: {
+	// DisplayName: Fried Shrimp Buff
+	// Description: Mods.Coralite.Buffs.FriedShrimpBuff.Description
+}
+
+ChocomintIceBuff: {
+	// DisplayName: Chocomint Ice Buff
+	// Description: Mods.Coralite.Buffs.ChocomintIceBuff.Description
+}
