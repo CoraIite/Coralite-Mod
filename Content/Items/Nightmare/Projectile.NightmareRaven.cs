@@ -124,7 +124,7 @@ namespace Coralite.Content.Items.Nightmare
             #region 回到玩家身边，回到玩家身边后将ai0设为0，进入尝试攻击阶段
             if (Timer == -1f)
             {
-                AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index, out var totalIndexesInGroup);
+                Helper.GetMyGroupIndexAndFillBlackList(Projectile, out var index, out var totalIndexesInGroup);
 
                 Vector2 idleSpot = CircleMovement(48 + totalIndexesInGroup * 4, 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index * MathHelper.TwoPi / totalIndexesInGroup);
                 if (Projectile.Distance(idleSpot) < 2f)
@@ -139,7 +139,7 @@ namespace Coralite.Content.Items.Nightmare
             #region  尝试开始攻击
             if (Projectile.ai[0] == 0f)
             {
-                AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out var totalIndexesInGroup2);
+                Helper.GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out var totalIndexesInGroup2);
                 CircleMovement(48 + totalIndexesInGroup2 * 4, 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index2 * MathHelper.TwoPi / totalIndexesInGroup2);
                 if (Main.rand.NextBool(20))
                 {
@@ -391,30 +391,6 @@ namespace Coralite.Content.Items.Nightmare
 
             Projectile.velocity = velRot.AngleTowards(targetRot, angleFactor).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, accelFactor);
             return center;
-        }
-
-        /// <summary>
-        /// 获取自身是第几个召唤物弹幕
-        /// 非常好的东西，建议稍微改改变成静态帮助方法
-        /// </summary>
-        /// <param name="Projectile"></param>
-        /// <param name="index"></param>
-        /// <param name="totalIndexesInGroup"></param>
-        public void AI_GetMyGroupIndexAndFillBlackList(Projectile Projectile, out int index, out int totalIndexesInGroup)
-        {
-            index = 0;
-            totalIndexesInGroup = 0;
-            for (int i = 0; i < 1000; i++)
-            {
-                Projectile projectile = Main.projectile[i];
-                if (projectile.active && projectile.owner == Projectile.owner && projectile.type == Projectile.type && (projectile.type != 759 || projectile.frame == Main.projFrames[projectile.type] - 1))
-                {
-                    if (Projectile.whoAmI > i)
-                        index++;
-
-                    totalIndexesInGroup++;
-                }
-            }
         }
 
         public void GetPower(int howMany)

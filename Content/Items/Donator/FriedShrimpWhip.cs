@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Dusts;
-using Coralite.Content.Items.Gels;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,7 +17,7 @@ namespace Coralite.Content.Items.Donator
 
         public override void SetDefaults()
         {
-            Item.DefaultToWhip(ModContent.ProjectileType<FriedShrimpProj>(), 18, 1.5f, 4f,50);
+            Item.DefaultToWhip(ModContent.ProjectileType<FriedShrimpProj>(), 28, 1.5f, 4f,50);
             Item.useAnimation = 30;
             Item.useTime = 30;
             Item.value = Item.sellPrice(0, 1);

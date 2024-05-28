@@ -86,7 +86,6 @@ namespace Coralite.Content.Items.Thunder
 
             return true;
         }
-
     }
 
     public class ThunderMinion : BaseThunderProj
@@ -110,8 +109,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override void SetDefaults()
         {
-            Projectile.width = 24;
-            Projectile.height = 24;
+            Projectile.width = Projectile.height = 24;
             Projectile.timeLeft = 300;
             Projectile.minionSlots = 1;
             Projectile.penetrate = -1;
@@ -136,7 +134,7 @@ namespace Coralite.Content.Items.Thunder
         public override void AI()
         {
             //发现敌人时先直接朝敌人冲刺，之后如果能够攻击到敌人那么就直接瞬移到目标头顶再向下戳
-            if (!CheckActive(Owner))
+            if (!Projectile.CheckMinionOwnerActive<ThunderveinStaffBuff>())
                 return;
 
             if (Init)
@@ -152,7 +150,7 @@ namespace Coralite.Content.Items.Thunder
                 default:
                 case -1://回到玩家头顶
                     {
-                        AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index, out var totalIndexesInGroup);
+                        Helper.GetMyGroupIndexAndFillBlackList(Projectile, out var index, out var totalIndexesInGroup);
 
                         Vector2 idleSpot = CircleMovement(32 + totalIndexesInGroup * 4, 36, accelFactor: 0.6f, angleFactor: 0.9f, baseRot: index * MathHelper.TwoPi / totalIndexesInGroup);
                         if (Projectile.Distance(idleSpot) < 32f)
@@ -168,20 +166,20 @@ namespace Coralite.Content.Items.Thunder
                     break;
                 case 0://在玩家头顶盘旋
                     {
-                        AI_GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out var totalIndexesInGroup2);
+                        Helper.GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out var totalIndexesInGroup2);
                         CircleMovement(32 + totalIndexesInGroup2 * 4, 28, accelFactor: 0.4f, angleFactor: 0.9f, baseRot: index2 * MathHelper.TwoPi / totalIndexesInGroup2);
                         Projectile.rotation = (Owner.Center - Projectile.Center).ToRotation();
 
                         if (Main.rand.NextBool(20))
                         {
-                            int num6 = AI_156_TryAttackingNPCs(Projectile);
-                            if (num6 != -1)
+                            int index = Projectile.MinionFindTarget();
+                            if (index != -1)
                             {
                                 Projectile.StartAttack();
                                 Projectile.InitOldPosCache(10);
                                 State = 1;
                                 Timer = 0;
-                                Target = num6;
+                                Target = index;
                                 Projectile.netUpdate = true;
                                 CanDrawTrail = false;
                                 return;
@@ -239,12 +237,12 @@ namespace Coralite.Content.Items.Thunder
                         {
                             alpha = 1;
 
-                            int num6 = AI_156_TryAttackingNPCs(Projectile);
-                            if (num6 != -1)
+                            int targetIndex = Projectile.MinionFindTarget();
+                            if (targetIndex != -1)
                             {
                                 State = 2;
                                 Timer = 0;
-                                Target = num6;
+                                Target = targetIndex;
                                 Recorder = -1.57f + Main.rand.NextFloat(-0.7f, 0.7f);
                                 CanDrawTrail = false;
                                 Projectile.Center = target.Center + Recorder.ToRotationVector2() * target.height;
@@ -312,12 +310,12 @@ namespace Coralite.Content.Items.Thunder
                             CanDrawTrail = false;
                             alpha = 1;
 
-                            int num6 = AI_156_TryAttackingNPCs(Projectile);
-                            if (num6 != -1)
+                            int targetIndex = Projectile.MinionFindTarget();
+                            if (targetIndex != -1)
                             {
                                 State = 2;
                                 Timer = 0;
-                                Target = num6;
+                                Target = targetIndex;
                                 Recorder = -1.57f + Main.rand.NextFloat(-0.7f, 0.7f);
                                 Projectile.Center = target.Center + Recorder.ToRotationVector2() * target.height;
                             }
@@ -332,20 +330,6 @@ namespace Coralite.Content.Items.Thunder
                     }
                     break;
             }
-        }
-
-        private bool CheckActive(Player owner)
-        {
-            if (owner.dead || !owner.active)
-            {
-                owner.ClearBuff(BuffType<ThunderveinStaffBuff>());
-                return false;
-            }
-
-            if (owner.HasBuff(BuffType<ThunderveinStaffBuff>()))
-                Projectile.timeLeft = 2;
-
-            return true;
         }
 
         public float ThunderWidthFunc2(float factor)
@@ -402,76 +386,6 @@ namespace Coralite.Content.Items.Thunder
                 trail.BasePositions = Projectile.oldPos;
                 trail.RandomThunder();
             }
-        }
-
-        /// <summary>
-        /// 获取自身是第几个召唤物弹幕
-        /// 非常好的东西，建议稍微改改变成静态帮助方法
-        /// </summary>
-        /// <param name="Projectile"></param>
-        /// <param name="index"></param>
-        /// <param name="totalIndexesInGroup"></param>
-        public void AI_GetMyGroupIndexAndFillBlackList(Projectile Projectile, out int index, out int totalIndexesInGroup)
-        {
-            index = 0;
-            totalIndexesInGroup = 0;
-            for (int i = 0; i < 1000; i++)
-            {
-                Projectile projectile = Main.projectile[i];
-                if (projectile.active && projectile.owner == Projectile.owner && projectile.type == Projectile.type && (projectile.type != 759 || projectile.frame == Main.projFrames[projectile.type] - 1))
-                {
-                    if (Projectile.whoAmI > i)
-                        index++;
-
-                    totalIndexesInGroup++;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取目标NPC的索引
-        /// </summary>
-        /// <param name="Projectile"></param>
-        /// <param name="skipBodyCheck"></param>
-        /// <returns></returns>
-        public int AI_156_TryAttackingNPCs(Projectile Projectile, bool skipBodyCheck = false)
-        {
-            Vector2 ownerCenter = Main.player[Projectile.owner].Center;
-            int result = -1;
-            float num = -1f;
-            //如果有锁定的NPC那么就用锁定的，没有或不符合条件在从所有NPC里寻找
-            NPC ownerMinionAttackTargetNPC = Projectile.OwnerMinionAttackTargetNPC;
-            if (ownerMinionAttackTargetNPC != null && ownerMinionAttackTargetNPC.CanBeChasedBy(this))
-            {
-                bool flag = true;
-                if (!ownerMinionAttackTargetNPC.boss)
-                    flag = false;
-
-                if (ownerMinionAttackTargetNPC.Distance(ownerCenter) > 1000f)
-                    flag = false;
-
-                if (!skipBodyCheck && !Projectile.CanHitWithOwnBody(ownerMinionAttackTargetNPC))
-                    flag = false;
-
-                if (flag)
-                    return ownerMinionAttackTargetNPC.whoAmI;
-            }
-
-            for (int i = 0; i < 200; i++)
-            {
-                NPC nPC = Main.npc[i];
-                if (nPC.CanBeChasedBy(Projectile))
-                {
-                    float npcDistance2Owner = nPC.Distance(ownerCenter);
-                    if (npcDistance2Owner <= 1000f && (npcDistance2Owner <= num || num == -1f) && (skipBodyCheck || Projectile.CanHitWithOwnBody(nPC)))
-                    {
-                        num = npcDistance2Owner;
-                        result = i;
-                    }
-                }
-            }
-
-            return result;
         }
 
         public Vector2 CircleMovement(float distance, float speedMax, float accelFactor = 0.25f, float rollingFactor = 5f, float angleFactor = 0.9f, float baseRot = 0f)

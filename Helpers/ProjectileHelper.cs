@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
+using Coralite.Content.Items.Thunder;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -135,6 +136,77 @@ namespace Coralite.Helpers
                 }
             }
         }
+
+        /// <summary>
+        /// 获取自身是第几个召唤物弹幕
+        /// </summary>
+        /// <param name="Projectile"></param>
+        /// <param name="index"></param>
+        /// <param name="totalIndexesInGroup"></param>
+        [DebuggerHidden]
+        public static void GetMyGroupIndexAndFillBlackList(this Projectile Projectile, out int index, out int totalIndexesInGroup)
+        {
+            index = 0;
+            totalIndexesInGroup = 0;
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile p = Main.projectile[i];
+                if (p.active && p.owner == Projectile.owner && p.type == Projectile.type)
+                {
+                    if (Projectile.whoAmI > i)
+                        index++;
+
+                    totalIndexesInGroup++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取目标NPC的索引
+        /// </summary>
+        /// <param name="Projectile"></param>
+        /// <param name="skipBodyCheck"></param>
+        /// <returns></returns>
+        public static int MinionFindTarget(this Projectile Projectile, bool skipBodyCheck = false)
+        {
+            Vector2 ownerCenter = Main.player[Projectile.owner].Center;
+            int result = -1;
+            float num = -1f;
+            //如果有锁定的NPC那么就用锁定的，没有或不符合条件在从所有NPC里寻找
+            NPC ownerMinionAttackTargetNPC = Projectile.OwnerMinionAttackTargetNPC;
+            if (ownerMinionAttackTargetNPC != null && ownerMinionAttackTargetNPC.CanBeChasedBy(Projectile))
+            {
+                bool flag = true;
+                if (!ownerMinionAttackTargetNPC.boss)
+                    flag = false;
+
+                if (ownerMinionAttackTargetNPC.Distance(ownerCenter) > 1000f)
+                    flag = false;
+
+                if (!skipBodyCheck && !Projectile.CanHitWithOwnBody(ownerMinionAttackTargetNPC))
+                    flag = false;
+
+                if (flag)
+                    return ownerMinionAttackTargetNPC.whoAmI;
+            }
+
+            for (int i = 0; i < 200; i++)
+            {
+                NPC nPC = Main.npc[i];
+                if (nPC.CanBeChasedBy(Projectile))
+                {
+                    float npcDistance2Owner = nPC.Distance(ownerCenter);
+                    if (npcDistance2Owner <= 1000f && (npcDistance2Owner <= num || num == -1f) && (skipBodyCheck || Projectile.CanHitWithOwnBody(nPC)))
+                    {
+                        num = npcDistance2Owner;
+                        result = i;
+                    }
+                }
+            }
+
+            return result;
+        }
+
 
         public static bool GetProjectile(int projType, int index, out Projectile p)
         {
@@ -303,6 +375,48 @@ namespace Coralite.Helpers
             , int damage, float knockback, float ai0 = 0, float ai1 = 0, float ai2 = 0) where T : ModProjectile
         {
             return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockback, projectile.owner, ai0, ai1, ai2);
+        }
+
+        /// <summary>
+        /// 检测玩家是否存活，存活的话就给buff并且让弹幕持续存在
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <param name="buffType"></param>
+        /// <returns></returns>
+        public static bool CheckMinionOwnerActive(this Projectile projectile,int buffType)
+        {
+            Player owner = Main.player[projectile.owner];
+            if (owner.dead || !owner.active)
+            {
+                owner.ClearBuff(buffType);
+                return false;
+            }
+
+            if (owner.HasBuff(buffType))
+                projectile.timeLeft = 2;
+
+            return true;
+        }
+
+        /// <summary>
+        /// 检测玩家是否存活，存活的话就给buff并且让弹幕持续存在
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <param name="buffType"></param>
+        /// <returns></returns>
+        public static bool CheckMinionOwnerActive<T>(this Projectile projectile) where T : ModBuff
+        {
+            Player owner = Main.player[projectile.owner];
+            if (owner.dead || !owner.active)
+            {
+                owner.ClearBuff(ModContent.BuffType<T>());
+                return false;
+            }
+
+            if (owner.HasBuff(ModContent.BuffType<T>()))
+                projectile.timeLeft = 2;
+
+            return true;
         }
 
 
