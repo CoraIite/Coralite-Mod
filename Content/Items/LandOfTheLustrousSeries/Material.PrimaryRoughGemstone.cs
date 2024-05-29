@@ -27,6 +27,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             resultType = Main.rand.NextFromList(
                 ModContent.ItemType<Pyrope>(),
+                ModContent.ItemType<Aquamarine>(),
                 ItemID.Amethyst
                 );
 

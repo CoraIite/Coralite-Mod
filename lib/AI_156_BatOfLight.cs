@@ -6,10 +6,15 @@ namespace Coralite.lib
 {
     public class AI_156_BatOfLight
     {
+        private AI_156_BatOfLight()
+        {
+
+        }
+
         //这是个NPC目标黑名单。
         //它确确实实是能起到防止特定NPC被追踪的作用的，但是并没有在这个AI中将任何一个NPC加入到列表中
         //简单讲就是有用，但这里没用到
-        public static List<int> _ai156_blacklistedTargets = new List<int>();
+        public List<int> _ai156_blacklistedTargets = new List<int>();
 
         //泰拉棱镜和血蝙蝠的AI
         public void AI_BatOfLight(Projectile Projectile)

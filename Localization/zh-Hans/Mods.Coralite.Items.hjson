@@ -4009,6 +4009,20 @@ FriedShrimpWhip: {
 }
 
 ChocomintIce: {
-	// DisplayName: Chocomint Ice
-	// Tooltip: ""
+	DisplayName: 巧克力薄荷冰淇淋
+	Tooltip:
+		'''
+		召唤出甜蜜的极寒霜冻之灵，千万不要说它味道像牙膏，不然你以后吃的东西都会是牙膏味的
+		[c/c9e0ee:它是美少女琴叶葵的最爱]
+		'''
+}
+
+Aquamarine: {
+	DisplayName: 海蓝宝石
+	Tooltip: 使用提炼机从初级宝石原石中提取
+}
+
+AquamarineBracelet: {
+	DisplayName: 海蓝宝石手链
+	Tooltip: ""
 }

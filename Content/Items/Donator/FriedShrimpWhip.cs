@@ -32,6 +32,8 @@ namespace Coralite.Content.Items.Donator
     {
         public override string Texture => AssetDirectory.Buffs + "Buff";
 
+        public static int TagDamage = 2;
+
         public override void SetStaticDefaults()
         {
             BuffID.Sets.IsATagBuff[Type] = true;

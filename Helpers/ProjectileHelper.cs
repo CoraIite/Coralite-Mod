@@ -190,7 +190,7 @@ namespace Coralite.Helpers
                     return ownerMinionAttackTargetNPC.whoAmI;
             }
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC nPC = Main.npc[i];
                 if (nPC.CanBeChasedBy(Projectile))

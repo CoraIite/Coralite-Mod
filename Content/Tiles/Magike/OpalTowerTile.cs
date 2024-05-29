@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Magike.OtherPlaceables;
 using Coralite.Core;
 using Coralite.Helpers;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -68,6 +69,11 @@ namespace Coralite.Content.Tiles.Magike
                 if (++frame > 7)
                     frame = 1;
             }
+        }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            return [new Item(ModContent.ItemType<OpalTower>())];
         }
 
         public override bool RightClick(int i, int j)

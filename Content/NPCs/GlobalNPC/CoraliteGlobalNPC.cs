@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Items.CoreKeeper;
+using Coralite.Content.Items.Donator;
 using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.Gels;
 using Coralite.Content.Items.Materials;
@@ -199,6 +200,13 @@ namespace Coralite.Content.NPCs.GlobalNPC
                 modifiers.FlatBonusDamage += GelWhipDebuff.TagDamage * projTagMultiplier;
             if (npc.HasBuff<ThunderWhipDebuff>())
                 modifiers.FlatBonusDamage += ThunderWhipDebuff.TagDamage * projTagMultiplier;
+
+            if (npc.HasBuff<FriedShrimpBuff>())
+            {
+                modifiers.FlatBonusDamage += FriedShrimpBuff.TagDamage * projTagMultiplier;
+                if (projectile.type==ProjectileType<ChocomintIceProj>())
+                    modifiers.ArmorPenetration += 10;
+            }
 
             if (npc.HasBuff<EdenDebuff>())
             {

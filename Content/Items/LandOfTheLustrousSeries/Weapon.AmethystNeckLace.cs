@@ -4,6 +4,7 @@ using Coralite.Content.NPCs.Magike;
 using Coralite.Content.Particles;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -124,6 +125,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         private float factorTop;
         private float factorBottom;
 
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.OnlyPosition, 3);
+        }
+
         public override void SetDefaults()
         {
             Projectile.DamageType = DamageClass.Magic;
@@ -142,6 +148,18 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 TargetPos = Owner.Center;
                 init = false;
+            }
+
+            if ((int)Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
+            {
+                float length = Main.rand.NextFloat(48, 64);
+                Color c = Main.rand.NextFromList(Color.White, AmethystLaser.brightC, AmethystLaser.highlightC);
+                var cs = CrystalShine.Spawn(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length)
+                     , Helper.NextVec2Dir(0.1f, 0.2f), 5, new Vector2(0.5f, 0.03f) * Main.rand.NextFloat(0.5f, 1f), c);
+                cs.follow = () => Projectile.position - Projectile.oldPos[1];
+                cs.TrailCount = 3;
+                cs.fadeTime = Main.rand.Next(40, 70);
+                cs.shineRange = 12;
             }
 
             Move();
@@ -429,7 +447,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                             Main.player[Projectile.owner].manaRegenDelay = (int)Main.player[Projectile.owner].maxRegenDelay;
                     }
 
-                    if (Main.rand.NextBool(3))
+                    if (VisualEffectSystem.HitEffect_Lightning && Main.rand.NextBool(3))
                     {
                         Color c1 = highlightC;
                         c1.A = 125;

@@ -166,6 +166,6 @@ FriedShrimpBuff: {
 }
 
 ChocomintIceBuff: {
-	// DisplayName: Chocomint Ice Buff
-	// Description: Mods.Coralite.Buffs.ChocomintIceBuff.Description
+	DisplayName: 宝贝吃冰啦
+	Description: 牙膏（薄荷）的清爽给予你力量
 }

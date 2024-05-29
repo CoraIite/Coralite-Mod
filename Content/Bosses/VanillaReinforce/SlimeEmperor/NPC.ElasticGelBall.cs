@@ -141,7 +141,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override bool CheckDead()
         {
-            if (State == 1)
+            if (State < 2)
             {
                 State = 2;
                 NPC.life = 1;

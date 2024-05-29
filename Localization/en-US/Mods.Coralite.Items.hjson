@@ -3880,3 +3880,13 @@ ChocomintIce: {
 	DisplayName: Chocomint Ice
 	Tooltip: ""
 }
+
+Aquamarine: {
+	DisplayName: Aquamarine
+	Tooltip: ""
+}
+
+AquamarineBracelet: {
+	DisplayName: Aquamarine Bracelet
+	Tooltip: ""
+}

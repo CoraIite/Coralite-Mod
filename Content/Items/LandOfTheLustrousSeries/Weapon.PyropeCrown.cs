@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Magike.OtherPlaceables;
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
@@ -88,6 +89,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.DamageType = DamageClass.Magic;
             Projectile.width = Projectile.height = 16;
             Projectile.friendly = true;
+            Projectile.tileCollide = false;
             Projectile.timeLeft = 6000;
         }
 
@@ -102,27 +104,42 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 TargetPos = Owner.Center;
             }
 
+            if ((int)Main.timeForVisualEffects % 30 == 0 && Main.rand.NextBool(2))
+            {
+                float length = Main.rand.NextFloat(24,32);
+                Color c = Main.rand.NextFromList(Color.White, PyropeProj.brightC, PyropeProj.highlightC);
+                var cs = CrystalShine.Spawn(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length)
+                     , Helper.NextVec2Dir(0.1f, 0.2f), 5, new Vector2(0.5f, 0.03f) * Main.rand.NextFloat(0.5f, 1f), c);
+                cs.follow = () => Projectile.position - Projectile.oldPos[1];
+                cs.TrailCount = 3;
+                cs.fadeTime = Main.rand.Next(40,70);
+                cs.shineRange = 12;
+            }
+
             Move();
             Attack();
 
-            Lighting.AddLight(Projectile.Center, new Vector3(0.3f, 0.05f, 0.1f));
+            Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0.1f, 0.2f));
         }
 
         public void Move()
         {
             Vector2 idlePos = Owner.Center;
 
-            for (int i = 0; i < 4; i++)//检测头顶4个方块并尝试找到没有物块阻挡的那个
+            for (int i = 0; i < 16; i++)//检测头顶4个方块并尝试找到没有物块阻挡的那个
             {
                 Tile idleTile = Framing.GetTileSafely(idlePos.ToTileCoordinates());
                 if (idleTile.HasTile && Main.tileSolid[idleTile.TileType] && !Main.tileSolidTop[idleTile.TileType])
                 {
-                    idlePos -= new Vector2(0, -16);
+                    idlePos -= new Vector2(0, -4);
                     break;
                 }
                 else
-                    idlePos += new Vector2(0, -16);
+                    idlePos += new Vector2(0, -4);
             }
+
+            if (AttackTime != 0)
+                idlePos += (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 48;
 
             TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.1f);
             Projectile.Center = Vector2.Lerp(Projectile.Center, TargetPos, 0.5f);
@@ -238,17 +255,19 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void OnKill(int timeLeft)
         {
-            for (int i = 0; i < 8; i++)
-            {
-                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.RedTorch, Helper.NextVec2Dir(2, 4), Scale: Main.rand.NextFloat(1f, 1.5f));
-                d.noGravity = true;
-            }
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 8; i++)
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.RedTorch, Helper.NextVec2Dir(2, 4), Scale: Main.rand.NextFloat(1f, 1.5f));
+                    d.noGravity = true;
+                }
 
-            for (int i = 0; i < 3; i++)
-            {
-                Vector2 dir = Helper.NextVec2Dir();
-                SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
-            }
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 dir = Helper.NextVec2Dir();
+                    SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                }
 
             var style = CoraliteSoundID.Ding_Item4;
             style.Pitch = Main.rand.NextFloat(0.45f, 0.6f);
