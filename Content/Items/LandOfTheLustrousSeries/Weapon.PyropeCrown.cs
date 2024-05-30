@@ -2,7 +2,6 @@
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,6 +11,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
+using Terraria.UI.Chat;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             else
             {
                 foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == type))
-                    proj.ai[0] = player.itemTimeMax;
+                    (proj.ModProjectile as PyropeCrownProj).StartAttack();
             }
 
             return false;
@@ -55,27 +55,65 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
-    }
 
-    public class PyropeCrownProj : BaseHeldProj
-    {
-        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "PyropeCrown";
-
-        public ref float AttackTime => ref Projectile.ai[0];
-        public Vector2 TargetPos
+        public override void DrawGemName(DrawableTooltipLine line)
         {
-            get
-            {
-                return new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
-            }
-            set
-            {
-                Projectile.localAI[0] = value.X;
-                Projectile.localAI[1] = value.Y;
-            }
+            SpriteBatch sb = Main.spriteBatch;
+            Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
+
+            rand.X += 0.2f;
+            rand.Y += 0.01f;
+            if (rand.X > 100000)
+                rand.X = 10;
+
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            Texture2D noiseTex = GemTextures.CrystalNoises[(int)(Main.timeForVisualEffects / 7) % 20].Value;
+
+            effect.Parameters["transformMatrix"].SetValue( projection);
+            effect.Parameters["basePos"].SetValue(rand + new Vector2(line.X, line.Y));
+            effect.Parameters["scale"].SetValue(new Vector2(0.6f / Main.GameZoomTarget));
+            effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * (Main.gamePaused ? 0.02f : 0.01f));
+            effect.Parameters["lightRange"].SetValue(0.1f);
+            effect.Parameters["lightLimit"].SetValue(0.65f);
+            effect.Parameters["addC"].SetValue(0.85f);
+            effect.Parameters["highlightC"].SetValue((PyropeProj.brightC*1.4f).ToVector4());
+            effect.Parameters["brightC"].SetValue(PyropeProj.brightC.ToVector4());
+            effect.Parameters["darkC"].SetValue(new Color(100, 20, 82).ToVector4());
+
+            sb.End();
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect,Main.UIScaleMatrix);
+
+            Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
+            ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y)
+                , Color.White, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
+
+            sb.End();
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+            sb.End();
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
         }
 
-        private bool init = true;
+        public override void SpawnParticle(DrawableTooltipLine line)
+        {
+            if (!Main.gamePaused && Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
+            {
+                Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
+                Color c = Main.rand.NextFromList(Color.White, PyropeProj.brightC, PyropeProj.highlightC);
+
+                var cs = CrystalShine.New(new Vector2(line.X, line.Y) + new Vector2(Main.rand.NextFloat(0, size.X), Main.rand.NextFloat(0, size.Y))
+                    , new Vector2(Main.rand.NextFloat(-0.2f, 0.2f), 0), 5, new Vector2(0.5f, 0.03f) * Main.rand.NextFloat(0.5f, 1f), c);
+                cs.TrailCount = 3;
+                cs.fadeTime = Main.rand.Next(40, 70);
+                cs.shineRange = 12;
+                group.Add(cs);
+            }
+        }
+    }
+
+    public class PyropeCrownProj : BaseGemWeaponProj<PyropeCrown>
+    {
+        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "PyropeCrown";
 
         private Vector2 scale = Vector2.One;
 
@@ -93,36 +131,29 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.timeLeft = 6000;
         }
 
-        public override void AI()
+        public override void Initialize()
         {
-            if (Owner.HeldItem.type == ModContent.ItemType<PyropeCrown>())
-                Projectile.timeLeft = 2;
+            TargetPos = Owner.Center;
+        }
 
-            if (init)
-            {
-                init = false;
-                TargetPos = Owner.Center;
-            }
-
+        public override void BeforeMove()
+        {
             if ((int)Main.timeForVisualEffects % 30 == 0 && Main.rand.NextBool(2))
             {
-                float length = Main.rand.NextFloat(24,32);
+                float length = Main.rand.NextFloat(24, 32);
                 Color c = Main.rand.NextFromList(Color.White, PyropeProj.brightC, PyropeProj.highlightC);
                 var cs = CrystalShine.Spawn(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length)
                      , Helper.NextVec2Dir(0.1f, 0.2f), 5, new Vector2(0.5f, 0.03f) * Main.rand.NextFloat(0.5f, 1f), c);
                 cs.follow = () => Projectile.position - Projectile.oldPos[1];
                 cs.TrailCount = 3;
-                cs.fadeTime = Main.rand.Next(40,70);
+                cs.fadeTime = Main.rand.Next(40, 70);
                 cs.shineRange = 12;
             }
-
-            Move();
-            Attack();
 
             Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0.1f, 0.2f));
         }
 
-        public void Move()
+        public override void Move()
         {
             Vector2 idlePos = Owner.Center;
 
@@ -139,14 +170,22 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
 
             if (AttackTime != 0)
-                idlePos += (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 48;
+            {
+                Vector2 dir = (Main.MouseWorld - Projectile.Center);
+
+                if (dir.Length() < 48)
+                    idlePos += dir;
+                else
+                    idlePos += dir.SafeNormalize(Vector2.Zero) * 48;
+
+            }
 
             TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.1f);
             Projectile.Center = Vector2.Lerp(Projectile.Center, TargetPos, 0.5f);
             Projectile.rotation = Owner.velocity.X / 40;
         }
 
-        public void Attack()
+        public override void Attack()
         {
             if (AttackTime > 0)
             {
@@ -183,6 +222,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 scale = Vector2.SmoothStep(scale, Vector2.One, 0.2f);
             }
+        }
+
+        public override void StartAttack()
+        {
+            AttackTime = Owner.itemTimeMax;
         }
 
         public override bool PreDraw(ref Color lightColor)

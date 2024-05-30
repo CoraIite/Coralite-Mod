@@ -94,8 +94,8 @@ namespace Coralite.Core.Systems.ParticleSystem
                 }
 
                 //一些防止粒子持续时间过长的措施，额...还是建议在update里手动设置active比较好
-                if (particle.shouldKilledOutScreen && !Helper.OnScreen(particle.Center - Main.screenPosition))
-                    particle.active = false;
+                //if (particle.shouldKilledOutScreen && !Helper.OnScreen(particle.Center - Main.screenPosition))
+                //    particle.active = false;
 
                 if (particle.Scale < 0.001f)
                     particle.active = false;

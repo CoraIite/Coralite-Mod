@@ -4024,5 +4024,9 @@ Aquamarine: {
 
 AquamarineBracelet: {
 	DisplayName: 海蓝宝石手链
-	Tooltip: ""
+	Tooltip: 
+	'''
+	生成海洋的灵魂并向四周射出海蓝宝石水滴
+	海蓝宝石水滴会追踪最近的敌人
+	'''
 }

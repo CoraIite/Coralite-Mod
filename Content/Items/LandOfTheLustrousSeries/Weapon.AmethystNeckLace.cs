@@ -5,7 +5,6 @@ using Coralite.Content.Particles;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Utilities;
@@ -14,24 +13,27 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
+using Terraria.UI.Chat;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class AmethystNeckLace : BaseGemWeapon
+    public class AmethystNecklace : BaseGemWeapon
     {
         public bool ShootSound = true;
 
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 1));
-            Item.SetWeaponValues(28, 4);
+            Item.SetWeaponValues(25, 4);
             Item.useTime = Item.useAnimation = 28;
             Item.mana = 20;
 
-            Item.shoot = ModContent.ProjectileType<AmethystNeckLaceProj>();
+            Item.shoot = ModContent.ProjectileType<AmethystNecklaceProj>();
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noUseGraphic = true;
+            Item.autoReuse = true;
         }
 
         public override bool AltFunctionUse(Player player) => true;
@@ -68,7 +70,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             else
             {
                 foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == type))
-                    (proj.ModProjectile as AmethystNeckLaceProj).StartAttack();
+                    (proj.ModProjectile as AmethystNecklaceProj).StartAttack();
             }
 
             return false;
@@ -97,31 +99,70 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 .AddTile<MagicCraftStation>()
                 .Register();
         }
+
+        public override void DrawGemName(DrawableTooltipLine line)
+        {
+            SpriteBatch sb = Main.spriteBatch;
+            Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
+
+            rand.X += 0.2f;
+            rand.Y += 0.01f;
+            if (rand.X>100000)
+                rand.X = 10;
+
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            Texture2D noiseTex = GemTextures.CrystalNoises[(int)(Main.timeForVisualEffects / 7) % 20].Value;
+
+            effect.Parameters["transformMatrix"].SetValue(projection);
+            effect.Parameters["basePos"].SetValue(rand + new Vector2(line.X, line.Y));
+            effect.Parameters["scale"].SetValue(new Vector2( 0.7f / Main.GameZoomTarget));
+            effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * (Main.gamePaused ? 0.02f : 0.01f));
+            effect.Parameters["lightRange"].SetValue(0.1f);
+            effect.Parameters["lightLimit"].SetValue(0.55f);
+            effect.Parameters["addC"].SetValue(0.75f);
+            effect.Parameters["highlightC"].SetValue((AmethystLaser.brightC*1.3f).ToVector4());
+            effect.Parameters["brightC"].SetValue(AmethystLaser.brightC.ToVector4());
+            effect.Parameters["darkC"].SetValue(new Color(110, 60, 110).ToVector4());
+
+            sb.End();
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.GameViewMatrix.ZoomMatrix);
+
+            Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
+            ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y)
+                , Color.White, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
+
+            sb.End();
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+            sb.End();
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+        }
+
+        public override void SpawnParticle(DrawableTooltipLine line)
+        {
+            if (!Main.gamePaused && Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
+            {
+                Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
+                Color c = Main.rand.NextFromList(Color.White, AmethystLaser.brightC, AmethystLaser.highlightC);
+
+                var cs = CrystalShine.New(new Vector2(line.X, line.Y) + new Vector2(Main.rand.NextFloat(0, size.X), Main.rand.NextFloat(0, size.Y))
+                    , new Vector2(Main.rand.NextFloat(-0.2f, 0.2f), 0), Main.rand.Next(5,7), new Vector2(0.5f, 0.03f) * Main.rand.NextFloat(0.5f, 1f), c);
+                cs.TrailCount = 3;
+                cs.fadeTime = Main.rand.Next(40, 70);
+                cs.shineRange = 12;
+                group.Add(cs);
+            }
+        }
     }
 
-    public class AmethystNeckLaceProj : BaseHeldProj
+    public class AmethystNecklaceProj : BaseGemWeaponProj<AmethystNecklace>
     {
-        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
+        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems+Name;
 
-        public ref float AttackTime => ref Projectile.ai[0];
         public ref float AttackCD => ref Projectile.ai[1];
         public ref float LengthToCenter => ref Projectile.ai[2];
         public ref float Rot => ref Projectile.localAI[2];
 
-        public Vector2 TargetPos
-        {
-            get
-            {
-                return new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
-            }
-            set
-            {
-                Projectile.localAI[0] = value.X;
-                Projectile.localAI[1] = value.Y;
-            }
-        }
-
-        private bool init = true;
         private float factorTop;
         private float factorBottom;
 
@@ -139,17 +180,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.timeLeft = 6000;
         }
 
-        public override void AI()
+        public override void Initialize()
         {
-            if (Owner.HeldItem.type == ModContent.ItemType<AmethystNeckLace>())
-                Projectile.timeLeft = 2;
+            TargetPos = Owner.Center;
+        }
 
-            if (init)
-            {
-                TargetPos = Owner.Center;
-                init = false;
-            }
-
+        public override void BeforeMove()
+        {
             if ((int)Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
             {
                 float length = Main.rand.NextFloat(48, 64);
@@ -161,30 +198,27 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 cs.fadeTime = Main.rand.Next(40, 70);
                 cs.shineRange = 12;
             }
-
-            Move();
-            Attack();
         }
 
-        public void Move()
+        public override void Move()
         {
             Vector2 idlePos = Owner.Center + new Vector2(-OwnerDirection * 16, 0);
-            for (int i = 0; i < 3; i++)//检测头顶4个方块并尝试找到没有物块阻挡的那个
+            for (int i = 0; i < 12; i++)//检测头顶4个方块并尝试找到没有物块阻挡的那个
             {
                 Tile idleTile = Framing.GetTileSafely(idlePos.ToTileCoordinates());
                 if (idleTile.HasTile && Main.tileSolid[idleTile.TileType] && !Main.tileSolidTop[idleTile.TileType])
                 {
-                    idlePos -= new Vector2(0, -16);
+                    idlePos -= new Vector2(0, -4);
                     break;
                 }
                 else
-                    idlePos += new Vector2(0, -16);
+                    idlePos += new Vector2(0, -4);
             }
 
             float lerpFactor = 0.3f;
             if (AttackCD > 0)
             {
-                idlePos += (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 48;
+                idlePos += (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 48;
                 lerpFactor = 0.1f;
             }
 
@@ -194,7 +228,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Lighting.AddLight(Projectile.Center, AmethystLaser.brightC.ToVector3());
         }
 
-        public void Attack()
+        public override void Attack()
         {
             if (AttackTime > 0)
             {
@@ -233,7 +267,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public void StartAttack()
+        public override void StartAttack()
         {
             if (AttackCD > 0)
                 return;
@@ -371,7 +405,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void OnSpawn(IEntitySource source)
         {
-            if (Main.player[Projectile.owner].HeldItem.ModItem is AmethystNeckLace an && an.ShootSound)
+            if (Main.player[Projectile.owner].HeldItem.ModItem is AmethystNecklace an && an.ShootSound)
                 soundSlot = Helper.PlayPitched("Crystal/CrystalLaser", 0.2f, 0, Projectile.Center);
         }
 
@@ -385,7 +419,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
 
             owner = Main.projectile[(int)Owner];
-            if (!owner.active || owner.owner != Projectile.owner || owner.type != ModContent.ProjectileType<AmethystNeckLaceProj>())
+            if (!owner.active || owner.owner != Projectile.owner || owner.type != ModContent.ProjectileType<AmethystNecklaceProj>())
             {
                 Projectile.Kill();
                 return;
@@ -440,7 +474,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     {
                         if (!Main.player[Projectile.owner].CheckMana(4, true))
                         {
-                            (owner.ModProjectile as AmethystNeckLaceProj).TurnToDelay();
+                            (owner.ModProjectile as AmethystNecklaceProj).TurnToDelay();
                             Timer = delayTime;
                         }
                         else

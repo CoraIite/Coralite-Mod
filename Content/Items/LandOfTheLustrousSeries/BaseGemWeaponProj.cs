@@ -1,0 +1,48 @@
+﻿using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
+
+namespace Coralite.Content.Items.LandOfTheLustrousSeries
+{
+    public class BaseGemWeaponProj<T>:BaseHeldProj where T : ModItem
+    {
+        private bool init = true;
+
+        public ref float AttackTime => ref Projectile.ai[0];
+
+        public Vector2 TargetPos
+        {
+            get
+            {
+                return new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
+            }
+            set
+            {
+                Projectile.localAI[0] = value.X;
+                Projectile.localAI[1] = value.Y;
+            }
+        }
+
+        public sealed override void AI()
+        {
+            if (Owner.HeldItem.type == ModContent.ItemType<T>())
+                Projectile.timeLeft = 2;
+
+
+            if (init)
+            {
+                Initialize();
+                init = false;
+            }
+
+            BeforeMove();
+            Move();
+            Attack();
+        }
+
+        public virtual void Initialize() { }
+        public virtual void BeforeMove() { }
+        public virtual void Move() { }
+        public virtual void Attack() { }
+        public virtual void StartAttack() { }
+    }
+}
