@@ -4003,6 +4003,7 @@ FriedShrimpWhip: {
 	DisplayName: 炸虾鞭
 	Tooltip:
 		'''
+		2 召唤物标记伤害，对巧克力薄荷冰淇淋额外增加10召唤物护甲穿透
 		超长又鲜美的炽热锋利之虾不但吃起来很棒，抽在敌人身上也很棒
 		[c/fd8da6:它是美少女琴叶茜的最爱]
 		'''
@@ -4023,10 +4024,29 @@ Aquamarine: {
 }
 
 AquamarineBracelet: {
-	DisplayName: 海蓝宝石手链
-	Tooltip: 
-	'''
-	生成海洋的灵魂并向四周射出海蓝宝石水滴
-	海蓝宝石水滴会追踪最近的敌人
-	'''
+	DisplayName: 海魂手链
+	Tooltip:
+		'''
+		生成海洋的灵魂并向四周射出海蓝宝石水滴
+		海蓝宝石水滴会追踪最近的敌人
+		'''
+}
+
+AmethystNecklace: {
+	DisplayName: 第六轮回项链
+	Tooltip:
+		'''
+		生成轮回紫晶并向敌人发射紫晶光束
+		右键使用可以关闭紫晶光束的持续音效
+		'''
+}
+
+PinkDiamond: {
+	DisplayName: 粉钻
+	Tooltip: 使用提炼机从初级宝石原石中提取
+}
+
+PinkDiamondRose: {
+	DisplayName: 粉钻玫瑰
+	Tooltip: ""
 }

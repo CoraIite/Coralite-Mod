@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Donator
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(30, 4);
+            Item.SetWeaponValues(26, 4);
             Item.useTime = 24;
             Item.useAnimation = 24;
             Item.maxStack = 1;
@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Donator
             Item.useTurn = false;
             Item.noMelee = true;
             Item.noUseGraphic = false;
-            Item.autoReuse = false;
+            Item.autoReuse = true;
 
             Item.shoot = ProjectileType<ChocomintIceProj>();
             Item.UseSound = CoraliteSoundID.SummonStaff_Item44;
@@ -36,11 +36,19 @@ namespace Coralite.Content.Items.Donator
             Item.useStyle = ItemUseStyleID.HoldUp;
         }
 
+        public override bool AltFunctionUse(Player player) => true;
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                var projectile = Projectile.NewProjectileDirect(source, Main.MouseWorld, velocity, type, damage, knockback, Main.myPlayer, ai2: 0/*Main.rand.Next(2)*/);
+                if (player.altFunctionUse == 2)
+                {
+                    player.MinionNPCTargetAim(true);
+                    return false;
+                }
+
+                var projectile = Projectile.NewProjectileDirect(source, Main.MouseWorld, velocity, type, damage, knockback, Main.myPlayer, ai2: Main.rand.Next(3));
                 projectile.originalDamage = Item.damage;
             }
 
@@ -202,13 +210,13 @@ namespace Coralite.Content.Items.Donator
                             else
                             {
                                 Projectile.velocity = Projectile.velocity.RotateByRandom(0.01f, 0.1f);
-                                if (Projectile.velocity.Length()<1)
+                                if (Projectile.velocity.Length() < 1)
                                 {
                                     Projectile.velocity += Vector2.UnitX;
                                 }
                             }
 
-                            Projectile.rotation += Projectile.velocity.Length() / 18 ;
+                            Projectile.rotation += Projectile.velocity.Length() / 18;
                         }
                         else
                         {
@@ -258,8 +266,8 @@ namespace Coralite.Content.Items.Donator
         {
             Texture2D mainTex = Projectile.GetTexture();
             var frameBox = mainTex.Frame(1, 3, 0, (int)TextureType);
-            if (State!=0)
-            Projectile.DrawShadowTrails(new Color(141, 255, 202), 0.4f, 0.4f / 5, 1, 5, 1, Projectile.scale, frameBox,0);
+            if (State != 0)
+                Projectile.DrawShadowTrails(new Color(141, 255, 202), 0.4f, 0.4f / 5, 1, 5, 1, Projectile.scale, frameBox, 0);
             Projectile.QuickDraw(frameBox, lightColor, 0);
 
             return false;

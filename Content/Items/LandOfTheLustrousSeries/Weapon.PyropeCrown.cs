@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             effect.Parameters["transformMatrix"].SetValue( projection);
             effect.Parameters["basePos"].SetValue(rand + new Vector2(line.X, line.Y));
             effect.Parameters["scale"].SetValue(new Vector2(0.6f / Main.GameZoomTarget));
-            effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * (Main.gamePaused ? 0.02f : 0.01f));
+            effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects *  0.01f);
             effect.Parameters["lightRange"].SetValue(0.1f);
             effect.Parameters["lightLimit"].SetValue(0.65f);
             effect.Parameters["addC"].SetValue(0.85f);

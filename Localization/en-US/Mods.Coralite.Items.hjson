@@ -3890,3 +3890,18 @@ AquamarineBracelet: {
 	DisplayName: Aquamarine Bracelet
 	Tooltip: ""
 }
+
+AmethystNecklace: {
+	DisplayName: Amethyst Necklace
+	Tooltip: ""
+}
+
+PinkDiamond: {
+	DisplayName: Pink Diamond
+	Tooltip: ""
+}
+
+PinkDiamondRose: {
+	DisplayName: Pink Diamond Rose
+	Tooltip: ""
+}

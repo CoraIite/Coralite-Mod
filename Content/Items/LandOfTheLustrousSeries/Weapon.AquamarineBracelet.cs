@@ -1,4 +1,6 @@
-﻿using Coralite.Content.Particles;
+﻿using Coralite.Content.Items.Icicle;
+using Coralite.Content.Particles;
+using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Systems.Trails;
@@ -65,7 +67,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             effect.Parameters["transformMatrix"].SetValue(projection);
             effect.Parameters["basePos"].SetValue(rand * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(new Vector2(0.7f / Main.GameZoomTarget));
-            effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * (Main.gamePaused ? 0.02f : 0.01f));
+            effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.01f);
             effect.Parameters["lightRange"].SetValue(0.1f);
             effect.Parameters["lightLimit"].SetValue(0.75f);
             effect.Parameters["addC"].SetValue(0.55f);
@@ -100,6 +102,30 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 cs.shineRange = 12;
                 group.Add(cs);
             }
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<Aquamarine>()
+                .AddIngredient(ItemID.ShadowScale, 5)
+                .AddIngredient(ItemID.WaterBucket)
+                .AddTile<MagicCraftStation>()
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient<Aquamarine>()
+                .AddIngredient(ItemID.TissueSample, 5)
+                .AddIngredient(ItemID.WaterBucket)
+                .AddTile<MagicCraftStation>()
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient<Aquamarine>()
+                .AddIngredient<IcicleScale>(3)
+                .AddIngredient(ItemID.WaterBucket)
+                .AddTile<MagicCraftStation>()
+                .Register();
         }
     }
 
@@ -190,7 +216,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 {
                     Owner.manaRegenDelay = (int)Owner.maxRegenDelay;
 
-                    float angle = Main.rand.NextFromList(-1, 1) * 0.3f + Main.rand.NextFloat(-0.4f, 0.4f);
+                    float angle = Main.rand.NextFromList(-1, 1) * 0.35f + Main.rand.NextFloat(-0.5f, 0.5f);
                     Projectile.NewProjectileFromThis<AquamarineProj>(Projectile.Center
                         , Vector2.UnitY.RotatedBy(angle) * 8, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
 
@@ -254,6 +280,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Magic;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.width = Projectile.height = 18;
         }
 
         public override void AI()
@@ -262,10 +291,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 const int maxPoint = 12;
                 trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new NoTip()
-                    , factor => Helper.Lerp(0, 16, factor),
+                    , factor => Helper.Lerp(2, 13, factor),
                       factor =>
                       {
-                          return Color.Lerp(Color.Transparent, Color.White * 0.5f, factor.X);
+                          return Color.Lerp(new Color(0,0,0,0), Color.White * 0.65f, factor.X);
                       });
 
                 Projectile.InitOldPosCache(maxPoint);
@@ -330,9 +359,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (!Target.GetNPCOwner(out NPC target))
             {
                 Timer = 0;
-                State = -1;
-                Projectile.friendly = false;
-                Projectile.tileCollide = false;
+                State = 2;
 
                 return;
             }

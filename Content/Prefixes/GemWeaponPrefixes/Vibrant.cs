@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
+using Terraria;
 
 namespace Coralite.Content.Prefixes.GemWeaponPrefixes
 {
@@ -9,6 +10,11 @@ namespace Coralite.Content.Prefixes.GemWeaponPrefixes
         public override void Apply(Item item)
         {
             item.rare = ModContent.RarityType<VibrantRarity>();
+        }
+
+        public override bool CanRoll(Item item)
+        {
+            return item.DamageType == DamageClass.Magic&&item.ModItem is BaseGemWeapon;
         }
 
         public override void ModifyValue(ref float valueMult)

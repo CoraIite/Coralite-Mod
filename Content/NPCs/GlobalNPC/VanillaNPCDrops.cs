@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.CoreKeeper;
+using Coralite.Content.Items.Donator;
 using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.Materials;
@@ -167,6 +168,16 @@ namespace Coralite.Content.NPCs.GlobalNPC
                     break;
                 case NPCID.DD2OgreT3://三级食人魔
                     npcLoot.Add(ItemDropRule.Common(ItemType<EtheriaLegacy>(), 20));
+                    break;
+                case NPCID.Deerclops://巨鹿
+                    npcLoot.Add(ItemDropRule.Common(ItemType<ChocomintIce>(), 4));
+                    break;
+                case NPCID.Demon:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<FriedShrimpWhip>(), 50));
+                    break;
+                case NPCID.LavaSlime:
+                case NPCID.Lavabat:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<FriedShrimpWhip>(), 100));
                     break;
             }
 
