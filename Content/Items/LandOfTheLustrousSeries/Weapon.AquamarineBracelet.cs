@@ -12,7 +12,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using Terraria.UI.Chat;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
@@ -52,56 +51,22 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void DrawGemName(DrawableTooltipLine line)
         {
-            SpriteBatch sb = Main.spriteBatch;
-            Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
-
-            rand.X += 0.4f;
-            rand.Y += 0.01f;
-            if (rand.X > 100000)
-                rand.X = 10;
-
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            Texture2D noiseTex = GemTextures.CrystalNoises[(int)(Main.timeForVisualEffects / 7) % 20].Value;
-
-            effect.Parameters["transformMatrix"].SetValue(projection);
-            effect.Parameters["basePos"].SetValue(rand * Main.GameZoomTarget);
-            effect.Parameters["scale"].SetValue(new Vector2(0.7f / Main.GameZoomTarget));
-            effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.01f);
-            effect.Parameters["lightRange"].SetValue(0.1f);
-            effect.Parameters["lightLimit"].SetValue(0.75f);
-            effect.Parameters["addC"].SetValue(0.55f);
-            effect.Parameters["highlightC"].SetValue((AquamarineProj.brightC * 1.3f).ToVector4());
-            effect.Parameters["brightC"].SetValue(AquamarineProj.brightC.ToVector4());
-            effect.Parameters["darkC"].SetValue(new Color(50, 50, 160).ToVector4());
-
-            sb.End();
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.UIScaleMatrix);
-
-            Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
-            ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y)
-                , Color.White, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
-
-            sb.End();
-            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
-            sb.End();
-            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+            DrawGemNameNormally(line, effect =>
+            {
+                effect.Parameters["scale"].SetValue(new Vector2(0.7f / Main.GameZoomTarget));
+                effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.01f);
+                effect.Parameters["lightRange"].SetValue(0.1f);
+                effect.Parameters["lightLimit"].SetValue(0.75f);
+                effect.Parameters["addC"].SetValue(0.55f);
+                effect.Parameters["highlightC"].SetValue((AquamarineProj.brightC * 1.3f).ToVector4());
+                effect.Parameters["brightC"].SetValue(AquamarineProj.brightC.ToVector4());
+                effect.Parameters["darkC"].SetValue(new Color(50, 50, 160).ToVector4());
+            }, 0.4f);
         }
 
         public override void SpawnParticle(DrawableTooltipLine line)
         {
-            if (!Main.gamePaused && Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
-            {
-                Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
-                Color c = Main.rand.NextFromList(Color.White, AquamarineProj.brightC, AquamarineProj.highlightC);
-
-                var cs = CrystalShine.New(new Vector2(line.X, line.Y) + new Vector2(Main.rand.NextFloat(0, size.X), Main.rand.NextFloat(0, size.Y))
-                    , new Vector2(Main.rand.NextFloat(-0.2f, 0.2f), 0), 5, new Vector2(0.5f, 0.03f) * Main.rand.NextFloat(0.5f, 1f), c);
-                cs.TrailCount = 3;
-                cs.fadeTime = Main.rand.Next(40, 70);
-                cs.shineRange = 12;
-                group.Add(cs);
-            }
+            SpawnParticleOnTooltipNormaly(line, AquamarineProj.brightC, AquamarineProj.highlightC);
         }
 
         public override void AddRecipes()
@@ -136,15 +101,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
-        }
-
-        public override void SetDefaults()
-        {
-            Projectile.DamageType = DamageClass.Magic;
-            Projectile.width = Projectile.height = 16;
-            Projectile.friendly = true;
-            Projectile.tileCollide = false;
-            Projectile.timeLeft = 6000;
         }
 
         public override void Initialize()

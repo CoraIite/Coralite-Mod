@@ -2516,7 +2516,7 @@ Leonids: {
 }
 
 Solleonis: {
-	DisplayName: 狮煌 破日
+	DisplayName: 狮煌-破日
 	Tooltip: “释放吞噬太阳的巨狮”
 }
 
@@ -2588,7 +2588,7 @@ MineShield: {
 
 ShanHai: {
 	DisplayName: 山海无极
-	Tooltip: ""
+	Tooltip: 格挡时生成阴阳鱼
 }
 
 IcicleArrowItem: {
@@ -2626,7 +2626,7 @@ RedJadeFountain: {
 
 SandWall: {
 	DisplayName: 古沙之壁
-	Tooltip: 防御时生成沙龙卷
+	Tooltip: 格挡时生成沙龙卷
 }
 
 GelFiberTable: {

@@ -115,6 +115,24 @@ namespace Coralite.Core.Systems.ParticleSystem
             return p;
         }
 
+        public static T NewPawticleInstance<T>(Vector2 center, Vector2 velocity, Color newColor = default, float Scale = 1f) where T : Particle
+        {
+            if (Main.netMode == NetmodeID.Server)
+                return null;
+
+            T p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<T>()).NewInstance() as T;
+
+            //设置各种初始值
+            p.active = true;
+            p.color = newColor;
+            p.Center = center;
+            p.Velocity = velocity;
+            p.Scale = Scale;
+            p.OnSpawn();
+
+            return p;
+        }
+
         public virtual void OnSpawn() { }
 
         public virtual void Update() { }

@@ -22,6 +22,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
+        public override void SetDefaults()
+        {
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.width = Projectile.height = 16;
+            Projectile.friendly = true;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 6000;
+        }
+
         public sealed override void AI()
         {
             if (Owner.HeldItem.type == ModContent.ItemType<T>())
