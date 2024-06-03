@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (PrefixLegacy.ItemSets.ItemsThatCanHaveLegendary2[Item.type]) // Fix #3688, Rather than mess with the PrefixCategory enum and Item.GetPrefixCategory at this time and risk compatibility issues, manually support this until a redesign.
                 wr.Add(PrefixID.Legendary2, 1);
 
-            wr.Add(ModContent.PrefixType<Vibrant>(), 0.2f);
+            wr.Add(ModContent.PrefixType<Vibrant>(), 0.1f);
 
             for (int i = 0; i < 50; i++)
             {

@@ -96,6 +96,7 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             Projectile.width = Projectile.height = 48;
             Projectile.DamageType = DamageClass.Melee;
+            Projectile.hide= true;
             Projectile.localNPCHitCooldown = 32;
             onHitFreeze = 0;
         }

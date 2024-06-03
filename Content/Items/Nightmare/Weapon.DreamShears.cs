@@ -141,6 +141,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
             Projectile.height = 90;
+            Projectile.hide = true;
             trailTopWidth = 2;
             distanceToOwner = 8;
             minTime = 0;
@@ -303,28 +304,25 @@ namespace Coralite.Content.Items.Nightmare
 
             if (bars.Count > 2)
             {
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
-
-                Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
-
-                Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-                Matrix view = Main.GameViewMatrix.TransformationMatrix;
-                Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-                effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
-                effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
-
-                Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
-                foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+                Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
                 {
-                    pass.Apply();
-                    Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
-                    //Main.graphics.GraphicsDevice.DrawUserPrimitives(1, bars.ToArray(), 0, bars.Count - 2);
-                }
+                    Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
 
-                Main.graphics.GraphicsDevice.RasterizerState = originalState;
+                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
+                    effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                    effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
+
+                    foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+                    {
+                        pass.Apply();
+                        Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                        //Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
+                        Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                    }
+                }, BlendState.NonPremultiplied, SamplerState.PointWrap, RasterizerState.CullNone);
+
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             }

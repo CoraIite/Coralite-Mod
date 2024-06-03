@@ -41,6 +41,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.localNPCHitCooldown = -1;
             Projectile.width = 24;
             Projectile.height = 24;
+            Projectile.hide = true;
             distanceToOwner = minDistance / 2;
             minTime = 0;
             useShadowTrail = true;

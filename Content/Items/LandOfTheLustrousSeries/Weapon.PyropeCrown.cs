@@ -147,11 +147,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 float factor = 1 - AttackTime / Owner.itemTimeMax;
                 if (factor < 0.8f)
-                {
                     scale = Vector2.SmoothStep(Vector2.One, new Vector2(0.4f, 0.85f), factor / 0.8f);
-                }
                 else
                     scale = Vector2.SmoothStep(new Vector2(0.5f, 0.7f), new Vector2(1.5f, 1.5f), (factor - 0.8f) / 0.2f);
+                
                 if (AttackTime == 1 && Main.myPlayer == Projectile.owner)
                 {
                     Projectile.NewProjectileFromThis<PyropeProj>(Projectile.Center,

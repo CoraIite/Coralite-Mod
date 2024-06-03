@@ -52,6 +52,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public virtual void BeforeMove() { }
         public virtual void Move() { }
         public virtual void Attack() { }
-        public virtual void StartAttack() { }
+        public virtual void StartAttack()
+        {
+            AttackTime = Owner.itemTimeMax;
+        }
     }
 }

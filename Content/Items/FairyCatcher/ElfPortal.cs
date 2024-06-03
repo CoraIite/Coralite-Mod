@@ -53,12 +53,21 @@ namespace Coralite.Content.Items.FairyCatcher
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
 
+            TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+            TileID.Sets.PreventsSandfall[Type] = true;
+
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
+            TileObjectData.newTile.Width = 12;
+            TileObjectData.newTile.Height = 11;
+            TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16];
+
             TileObjectData.newTile.DrawYOffset = 2;
+            TileObjectData.newTile.Origin = new Point16(6,10);
+
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Color.Pink);
+            AddMapEntry(Color.Purple);
         }
 
         public override void NearbyEffects(int i, int j, bool closer)
@@ -87,11 +96,11 @@ namespace Coralite.Content.Items.FairyCatcher
                 if (item == null || item.IsAir || item.timeSinceItemSpawned < 60)
                     continue;
 
-                Vector2 pos = new Vector2(i, j) * 16 + new Vector2(16 * 3 / 2);
+                Vector2 pos = new Vector2(i, j) * 16 + new Vector2(16 * 6 + 4, 16 * 6 + 2);
 
                 if (Vector2.Distance(pos, item.Center) > 16 * 20)
                     continue;
-                
+
                 if (FairySystem.TryGetElfPortalTrades(item.type, out _))
                 {
                    int p= Projectile.NewProjectile(new EntitySource_TileUpdate(i, j), pos, Vector2.Zero, ModContent.ProjectileType<ElfTradeProj>()

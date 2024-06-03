@@ -175,6 +175,7 @@ namespace Coralite.Content.Items.CoreKeeper
             Projectile.localNPCHitCooldown = 60;
             Projectile.width = 40;
             Projectile.height = 70;
+            Projectile.hide = true;
             trailTopWidth = 0;
             distanceToOwner = 12;
             minTime = 0;
@@ -231,17 +232,10 @@ namespace Coralite.Content.Items.CoreKeeper
                     break;
             }
 
-            //if (Combo != 2)
-            //{
-            //    base.Initializer();
-            //    return;
-            //}
-
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
                 _Rotation = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
-                                                                          //if (Combo < 2)
                 totalAngle *= OwnerDirection;
             }
 
@@ -280,7 +274,6 @@ namespace Coralite.Content.Items.CoreKeeper
                 if (Timer == minTime)
                 {
                     _Rotation = startAngle = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
-                    //totalAngle *= OwnerDirection;
                     InitializeCaches();
                 }
                 return;
@@ -323,16 +316,8 @@ namespace Coralite.Content.Items.CoreKeeper
                     Timer = minTime + 1;
 
                     _Rotation = startAngle = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
-                    //totalAngle *= OwnerDirection;
-
-                    //Helper.PlayPitched("Misc/Slash", 0.4f, 0f, Owner.Center);
                     Helper.PlayPitched("CoreKeeper/swooshStrong", 0.9f, 0.2f, Owner.Center);
                     Projectile.damage = (int)(Projectile.damage * 4.5f);
-                    //射弹幕
-                    //Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center
-                    //    , (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 8
-                    //    , ProjectileType<RuneSoneRightProj>(), (int)(Projectile.damage * 1.3f), Projectile.knockBack, Projectile.owner);
-                    //InitializeCaches();
                 }
                 else
                 {
@@ -414,11 +399,6 @@ namespace Coralite.Content.Items.CoreKeeper
                 int type = addbuff ? DustType<PoisonExplosion>() : DustType<PoisonImpact>();
                 Dust.NewDustPerfect(target.Bottom + Main.rand.NextVector2Circular(16, 16), type,
                     Scale: target.width);
-                //dust.rotation = _Rotation + MathHelper.PiOver2 + Main.rand.NextFloat(-0.2f, 0.2f);
-
-                //dust = Dust.NewDustPerfect(pos, type,
-                //         Scale: Main.rand.NextFloat(baseScale * 0.5f, baseScale * 0.8f));
-                //dust.rotation = _Rotation - MathHelper.PiOver2 + Main.rand.NextFloat(-0.2f, 0.2f);
             }
 
             Projectile.damage = (int)(Projectile.damage * 0.8f);
@@ -450,14 +430,12 @@ namespace Coralite.Content.Items.CoreKeeper
                     {
                         Vector2 dir = -RotateVec2.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
                         Dust.NewDustPerfect(pos, DustID.UnholyWater, dir * Main.rand.NextFloat(1f, 3f), newColor: Color.Cyan * 0.5f, Scale: Main.rand.NextFloat(1f, 2f));
-                        //dust.noGravity = true;
                     }
 
                     for (int i = 0; i < 6; i++)
                     {
                         Vector2 dir = RotateVec2.RotatedBy(Main.rand.NextFloat(-1.4f, 1.4f));
                         Dust.NewDustPerfect(pos, DustID.Water_Corruption, dir * Main.rand.NextFloat(1f, 4f), newColor: Color.Cyan * 0.5f, Scale: Main.rand.NextFloat(1.5f, 2f));
-                        //dust.noGravity = true;
                     }
                 }
             }
@@ -493,33 +471,28 @@ namespace Coralite.Content.Items.CoreKeeper
 
             if (bars.Count > 2)
             {
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
-
-                Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
-
-                Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-                Matrix view = Main.GameViewMatrix.TransformationMatrix;
-                Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-                effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
-                effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
-
-                Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
-                foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+                Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
                 {
-                    pass.Apply();
-                    Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
-                }
+                    Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
 
-                Main.graphics.GraphicsDevice.RasterizerState = originalState;
+                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
+                    effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                    effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
+
+                    foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+                    {
+                        pass.Apply();
+                        Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                        Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
+                        Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                    }
+                }, BlendState.NonPremultiplied, SamplerState.PointWrap, RasterizerState.CullNone);
+
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             }
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
         }
 
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)

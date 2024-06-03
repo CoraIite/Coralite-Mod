@@ -4050,3 +4050,22 @@ PinkDiamondRose: {
 	DisplayName: 粉钻玫瑰
 	Tooltip: ""
 }
+
+SeniorRoughGemstone: {
+	DisplayName: 上级宝石原石
+	Tooltip: 
+		'''
+		使用提炼机可能会提炼出一颗宝石
+		挖掘宝石矿或是沙漠化石时可能会出现的宝石原石
+		'''
+}
+
+Zumurud: {
+	DisplayName: 祖母绿
+	Tooltip: 使用提炼机从上级宝石原石中提取
+}
+
+ZumurudRing: {
+	DisplayName: 祖母绿戒指
+	Tooltip: ""
+}

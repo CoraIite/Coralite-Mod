@@ -110,6 +110,7 @@ namespace Coralite.Content.Items.Crimson
         {
             Projectile.width = Projectile.height = 48;
             Projectile.DamageType = DamageClass.Melee;
+            Projectile.hide = true;
             Projectile.localNPCHitCooldown = 16;
             onHitFreeze = 0;
         }

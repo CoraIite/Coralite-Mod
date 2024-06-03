@@ -68,6 +68,7 @@ namespace Coralite.Content.Items.Steel
             Projectile.penetrate = -1;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 6;
+            Projectile.DamageType = DamageClass.Melee;
         }
 
         public override bool? CanDamage()

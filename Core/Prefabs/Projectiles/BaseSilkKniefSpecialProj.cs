@@ -99,6 +99,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (Main.mouseRight)
             {
                 Owner.heldProj = Projectile.whoAmI;
+                Projectile.hide = true;
                 Owner.itemAnimation = Owner.itemTime = 2;
                 Projectile.rotation += 0.5f;
                 if (Projectile.rotation % 4 < 0.2f)
@@ -111,6 +112,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             {
                 SoundEngine.PlaySound(CoraliteSoundID.WhipSwing_Item152, Projectile.Center);
                 Vector2 dir = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero);
+                Projectile.hide = false;
                 Projectile.Center = Owner.Center + dir * 64;
                 Projectile.velocity = dir * shootSpeed;
                 Projectile.rotation = dir.ToRotation();

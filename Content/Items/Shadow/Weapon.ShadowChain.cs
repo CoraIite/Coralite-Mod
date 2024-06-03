@@ -106,7 +106,7 @@ namespace Coralite.Content.Items.Shadow
         public float selfExtraRot;
         public int delay;
 
-        public ShadowChainSwing() : base(trailLength: 44)
+        public ShadowChainSwing() : base(trailLength: 36)
         {
 
         }
@@ -133,6 +133,7 @@ namespace Coralite.Content.Items.Shadow
             Projectile.width = Projectile.height = 48;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
+            Projectile.hide = true;
             minTime = 0;
             onHitFreeze = 6;
             trailTopWidth = 4;
@@ -142,7 +143,7 @@ namespace Coralite.Content.Items.Shadow
 
         protected override float ControlTrailBottomWidth(float factor)
         {
-            return 60 * Projectile.scale;
+            return 50 * Projectile.scale;
         }
 
         protected override Vector2 OwnerCenter()
@@ -289,8 +290,6 @@ namespace Coralite.Content.Items.Shadow
 
                     break;
                 case 1:
-                    //if (timer == halfTime)
-                    //    SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Projectile.Center);
                     Projectile.scale = Helper.EllipticalEase(2f - 4.9f * Smoother.Smoother(timer, maxTime - minTime), 1f, 1.25f);
                     distanceToOwner = Helper.EllipticalEase(2f - 4.9f * Smoother.Smoother(timer, maxTime - minTime), 40, 80);
 
@@ -369,7 +368,6 @@ namespace Coralite.Content.Items.Shadow
                         PositionInWorld = pos,
                         MovementVector = RotateVec2 * Main.rand.NextFloat(2f, 4f),
                     });
-
             }
         }
 
@@ -401,14 +399,6 @@ namespace Coralite.Content.Items.Shadow
             Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             Main.spriteBatch.Draw(chainTex, laserTarget, laserSource, lightColor, Projectile.rotation, origin, 0, 0);
-
-            //Texture2D mainTex = TextureAssets.Projectile[Type].Value;
-
-            //绘制影子拖尾
-            //Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 8, 1, 8, 1, 1.57f, -1);
-
-            //绘制自己
-            //Main.spriteBatch.Draw(mainTex, endPos, null, lightColor, Projectile.rotation + 1.57f, mainTex.Size() / 2, Projectile.scale, 0, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
@@ -463,30 +453,28 @@ namespace Coralite.Content.Items.Shadow
 
             if (bars.Count > 2)
             {
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
-
-                Effect effect = Filters.Scene["StarsTrail"].GetShader().Shader;
-
-                Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-                Matrix view = Main.GameViewMatrix.TransformationMatrix;
-                Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-                effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
-                effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
-                effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
-                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);
-                effect.Parameters["uExchange"].SetValue(0.87f + 0.05f * MathF.Sin(Main.GlobalTimeWrappedHourly));
-
-                Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
-                foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+                Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
                 {
-                    pass.Apply();
-                    Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
-                }
+                    Effect effect = Filters.Scene["StarsTrail"].GetShader().Shader;
 
-                Main.graphics.GraphicsDevice.RasterizerState = originalState;
+                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
+                    effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                    effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
+                    effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
+                    effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);
+                    effect.Parameters["uExchange"].SetValue(0.87f + 0.05f * MathF.Sin(Main.GlobalTimeWrappedHourly));
+
+                    foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+                    {
+                        pass.Apply();
+                        Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                        Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
+                        Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                    }
+                }, BlendState.NonPremultiplied, SamplerState.PointWrap, RasterizerState.CullNone);
+
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             }

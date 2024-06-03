@@ -28,7 +28,7 @@ namespace Coralite.Content.Prefixes.GemWeaponPrefixes
             knockbackMult = 1.15f;
             useTimeMult = 0.95f;
             manaMult = 0.8f;
-            critBonus = 4;
+            critBonus = 6;
         }
     }
 

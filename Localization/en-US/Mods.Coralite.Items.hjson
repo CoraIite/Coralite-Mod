@@ -3905,3 +3905,18 @@ PinkDiamondRose: {
 	DisplayName: Pink Diamond Rose
 	Tooltip: ""
 }
+
+SeniorRoughGemstone: {
+	DisplayName: Senior Rough Gemstone
+	Tooltip: ""
+}
+
+Zumurud: {
+	DisplayName: Zumurud
+	Tooltip: ""
+}
+
+ZumurudRing: {
+	DisplayName: Zumurud Ring
+	Tooltip: ""
+}

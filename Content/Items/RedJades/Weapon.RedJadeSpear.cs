@@ -81,6 +81,7 @@ namespace Coralite.Content.Items.RedJades
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
             Projectile.height = 95;
+            Projectile.hide = true;
             trailTopWidth = -8;
             minTime = 0;
             onHitFreeze = 12;
