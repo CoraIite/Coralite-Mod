@@ -4053,7 +4053,7 @@ PinkDiamondRose: {
 
 SeniorRoughGemstone: {
 	DisplayName: 上级宝石原石
-	Tooltip: 
+	Tooltip:
 		'''
 		使用提炼机可能会提炼出一颗宝石
 		挖掘宝石矿或是沙漠化石时可能会出现的宝石原石

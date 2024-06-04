@@ -470,7 +470,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         datas.Add(data);
                     }
 
-                    owner.manaRegenDelay = (int)owner.maxRegenDelay;
+                    owner.manaRegenDelay = 40;
                 }
             }
             else if (datas.Count == 0)

@@ -28,14 +28,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.width = Projectile.height = 16;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 6000;
+            Projectile.timeLeft = 10;
         }
 
         public sealed override void AI()
         {
             if (Owner.HeldItem.type == ModContent.ItemType<T>())
                 Projectile.timeLeft = 2;
-
 
             if (init)
             {

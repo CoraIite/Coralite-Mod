@@ -170,7 +170,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Projectile.rotation = MathF.Sin((1 - AttackTime / Owner.itemTimeMax) * MathHelper.TwoPi) * 0.5f;
                 if ((int)AttackTime % (Owner.itemTimeMax / 3) == 0 && Owner.CheckMana(Owner.HeldItem.mana, true))
                 {
-                    Owner.manaRegenDelay = (int)Owner.maxRegenDelay;
+                    Owner.manaRegenDelay = 40;
 
                     float angle = Main.rand.NextFromList(-1, 1) * 0.35f + Main.rand.NextFloat(-0.5f, 0.5f);
                     Projectile.NewProjectileFromThis<AquamarineProj>(Projectile.Center
@@ -217,7 +217,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
     public class AquamarineProj : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied
     {
-        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "WaterRropProj1";
+        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "WaterDropProj1";
 
         public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);
 

@@ -50,7 +50,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 Item.noUseGraphic = true;
                 Item.useStyle = ItemUseStyleID.Shoot;
+
+                foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == Item.shoot))
+                {
+                    if (proj.ai[1] > 0)
+                        return false;
+                }
             }
+
             return base.CanUseItem(player);
         }
 
@@ -59,7 +66,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (Main.myPlayer != player.whoAmI)
                 return false;
 
-            if (player.altFunctionUse==2)
+            if (player.altFunctionUse == 2)
                 return false;
 
             if (player.ownedProjectileCounts[type] < 1)
@@ -417,15 +424,16 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     if (SoundEngine.TryGetActiveSound(soundSlot, out var sound2))
                         sound2.Position = Projectile.Center;
                     LaserHeight = Helper.Lerp(2, 1, 0.2f);
-                    if ((Timer - delayTime) % (PerManaCostTime/2) == 0)
+                    if ((Timer - delayTime) % (PerManaCostTime / 4) == 0)
                     {
-                        if (!Main.player[Projectile.owner].CheckMana(4, true))
+                        if (!Main.player[Projectile.owner].CheckMana(2, true))
                         {
                             (owner.ModProjectile as AmethystNecklaceProj).TurnToDelay();
                             Timer = delayTime;
                         }
-                        else
-                            Main.player[Projectile.owner].manaRegenDelay = (int)Main.player[Projectile.owner].maxRegenDelay;
+
+                        Main.player[Projectile.owner].manaRegenDelay = 30;
+                        Main.player[Projectile.owner].manaRegen = 0;
                     }
 
                     if (VisualEffectSystem.HitEffect_Lightning && Main.rand.NextBool(3))
