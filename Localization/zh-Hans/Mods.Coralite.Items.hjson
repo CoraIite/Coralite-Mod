@@ -4048,7 +4048,11 @@ PinkDiamond: {
 
 PinkDiamondRose: {
 	DisplayName: 粉钻玫瑰
-	Tooltip: ""
+	Tooltip:
+		'''
+		生成粉钻玫瑰并向敌人发射粉钻
+		粉钻命中后生成玫瑰花瓣
+		'''
 }
 
 SeniorRoughGemstone: {
@@ -4067,5 +4071,14 @@ Zumurud: {
 
 ZumurudRing: {
 	DisplayName: 祖母绿戒指
+	Tooltip:
+		'''
+		生成祖母绿戒指并向敌人发射大祖母绿
+		命中后会分裂成小祖母绿水花
+		'''
+}
+
+PearlBrooch: {
+	DisplayName: 沧海遗珠
 	Tooltip: ""
 }

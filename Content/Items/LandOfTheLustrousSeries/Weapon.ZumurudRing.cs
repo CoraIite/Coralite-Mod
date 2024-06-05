@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -16,10 +17,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override void SetDefs()
         {
-            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Pink5, Item.sellPrice(0, 7));
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightRed4, Item.sellPrice(0, 7));
             Item.SetWeaponValues(40, 4);
-            Item.useTime = Item.useAnimation = 20;
-            Item.mana = 8;
+            Item.useTime = Item.useAnimation = 24;
+            Item.mana = 14;
 
             Item.shoot = ModContent.ProjectileType<ZumurudRingProj>();
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -67,8 +68,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             CreateRecipe()
                 .AddIngredient<Zumurud>()
-                .AddIngredient(ItemID.BorealWood, 12)
-                .AddIngredient(ItemID.FlowerPacketPink)
+                .AddIngredient(ItemID.OrichalcumBar, 8)
+                .AddIngredient(ItemID.Emerald)
+                .AddTile<MagicCraftStation>()
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient<Zumurud>()
+                .AddIngredient(ItemID.MythrilBar, 8)
+                .AddIngredient(ItemID.Emerald)
                 .AddTile<MagicCraftStation>()
                 .Register();
         }
@@ -107,12 +115,67 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void Move()
         {
+            Vector2 idlePos = Owner.Center+new Vector2(Owner.direction * 32, 0);
 
+            for (int i = 0; i < 8; i++)//检测头顶4个方块并尝试找到没有物块阻挡的那个
+            {
+                Tile idleTile = Framing.GetTileSafely(idlePos.ToTileCoordinates());
+                if (idleTile.HasTile && Main.tileSolid[idleTile.TileType] && !Main.tileSolidTop[idleTile.TileType])
+                {
+                    idlePos -= new Vector2(0, -4);
+                    break;
+                }
+                else
+                    idlePos += new Vector2(0, -4);
+            }
+
+            if (AttackTime != 0)
+            {
+                Vector2 dir = Main.MouseWorld - Projectile.Center;
+
+                if (dir.Length() < 48)
+                    idlePos += dir;
+                else
+                    idlePos += dir.SafeNormalize(Vector2.Zero) * 48;
+            }
+
+            TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.3f);
+            Projectile.Center = Vector2.Lerp(Projectile.Center, TargetPos, 0.5f);
+            Projectile.rotation = Owner.velocity.X / 40;
         }
 
         public override void Attack()
         {
+            if (AttackTime > 0)
+            {
+                Projectile.rotation = Helper.Lerp(0, MathHelper.Pi,Coralite .Instance.SqrtSmoother.Smoother( 1 - AttackTime / Owner.itemTimeMax));
 
+                if (AttackTime == 1 && Main.myPlayer == Projectile.owner)
+                {
+                    Projectile.NewProjectileFromThis<ZumurudProj>(Projectile.Center,
+                        (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 9.5f, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
+
+                    Helper.PlayPitched("Crystal/CrystalBling", 0.4f, -0.35f, Projectile.Center);
+
+                    for (int i = 0; i < 8; i++)
+                    {
+                        Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.GreenTorch, Helper.NextVec2Dir(2, 4), Scale: Main.rand.NextFloat(1f, 1.5f));
+                        d.noGravity = true;
+                    }
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Vector2 dir = Helper.NextVec2Dir();
+                        ZumurudProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                    }
+                }
+
+                AttackTime--;
+            }
+            else
+            {
+                Projectile.rotation = Projectile.rotation.AngleLerp(0, 0.2f);
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -162,6 +225,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.friendly = true;
             Projectile.timeLeft = 1200;
             Projectile.extraUpdates = 1;
+            Projectile.penetrate = -1;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override void AI()
@@ -181,13 +247,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Timer++;
                 if (Timer > 120)
                 {
-                    if (Helper.TryFindClosestEnemy(Projectile.Center, 1200, n => Collision.CanHit(Projectile, n), out _))
+                    if (Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy()&&Collision.CanHit(Projectile, n), out _))
                     {
                         float angle = Main.rand.NextFloat(6.282f);
                         for (int i = 0; i < 4; i++)
                         {
-                            Projectile.NewProjectileFromThis<SmallZumurudProj>(Projectile.Center, (angle + MathHelper.PiOver4 * i).ToRotationVector2() * 6
-                                , Projectile.damage / 4, Projectile.knockBack / 4, Main.rand.NextFloat(-0.2f, 0.2f));
+                            Projectile.NewProjectileFromThis<SmallZumurudProj>(Projectile.Center, (angle + MathHelper.PiOver2 * i).ToRotationVector2() * 3
+                                , Projectile.damage / 4, Projectile.knockBack / 4, Main.rand.NextFloat(-0.3f, 0.3f));
                         }
                     }
 
@@ -195,9 +261,26 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
             }
 
+            if (Projectile.timeLeft % 4 == 0)
+                SpawnTriangleParticle(Projectile.Center + Main.rand.NextVector2Circular(12, 12), Projectile.velocity * Main.rand.NextFloat(0.2f, 0.4f));
+            if (Main.rand.NextBool(6))
+                Projectile.SpawnTrailDust(8f, DustID.GreenTorch, Main.rand.NextFloat(0.2f, 0.4f));
+
             Projectile.rotation = Projectile.velocity.ToRotation();
             Projectile.UpdateOldPosCache();
             Projectile.UpdateOldRotCache();
+        }
+
+        public static void SpawnTriangleParticle(Vector2 pos, Vector2 velocity)
+        {
+            Color c1 = highlightC;
+            c1.A = 125;
+            Color c2 = brightC;
+            c2.A = 125;
+            Color c3 = darkC;
+            c3.A = 100;
+            Color c = Main.rand.NextFromList(highlightC, brightC, c1, c2, c3);
+            CrystalTriangle.Spawn(pos, velocity, c, 9, Main.rand.NextFloat(0.05f, 0.3f));
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -216,7 +299,24 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (Projectile.velocity.Y != oldVelocity.Y)
                 Projectile.velocity.Y = oldVelocity.Y * -0.8f;
 
-            return base.OnTileCollide(oldVelocity);
+            return false;
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 6; i++)
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.GreenTorch, Helper.NextVec2Dir(2, 4), Scale: Main.rand.NextFloat(1f, 1.5f));
+                    d.noGravity = true;
+                }
+
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 dir = Helper.NextVec2Dir();
+                    SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -233,7 +333,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Vector2 Top = Center - Main.screenPosition + normal * 10;
                 Vector2 Bottom = Center - Main.screenPosition - normal * 10;
 
-                var color = Color.Lerp(brightC,darkC,factor);//.MultiplyRGB(lightColor);
+                var color = Color.Lerp(brightC, darkC, factor);//.MultiplyRGB(lightColor);
+                color.A /= 2;
                 bars.Add(new(Top, color, new Vector3(factor, 0, 1)));
                 bars.Add(new(Bottom, color, new Vector3(factor, 1, 1)));
             }
@@ -252,7 +353,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             rand.X += 0.15f;
 
-            Helper.DrawCrystal(spriteBatch, Projectile.frame, Projectile.Center + rand, Vector2.One
+            Helper.DrawCrystal(spriteBatch, Projectile.frame, Projectile.Center + rand, new Vector2(0.4f,1f)
                 , (float)(Main.timeForVisualEffects + Projectile.timeLeft) * (Main.gamePaused ? 0.02f : 0.01f) + Projectile.whoAmI / 3f
                 , highlightC, brightC, darkC, () =>
                 {
@@ -262,7 +363,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 {
                     sb.End();
                     sb.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-                });
+                },addC:0.35f);
         }
     }
 
@@ -276,7 +377,16 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SetStaticDefaults()
         {
-            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 8);
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 12);
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.width = Projectile.height = 16;
+            Projectile.friendly = true;
+            Projectile.timeLeft = 1200;
+            Projectile.extraUpdates = 2;
         }
 
         public override void AI()
@@ -288,17 +398,38 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     {
                         Timer++;
                         Projectile.rotation += ExRot;
-                        ExRot *= 0.96f;
-                        if (Timer>60)
+                        ExRot *= 0.99f;
+                        Projectile.velocity *= 0.98f;
+                        if (Timer > 60)
                         {
-                            if (Helper.TryFindClosestEnemy(Projectile.Center, 1200, n => Collision.CanHit(Projectile, n), out NPC target))
+                            if (Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
                             {
                                 State = 1;
+                                Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 8f;
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.GreenTorch, Helper.NextVec2Dir(0.5f, 2), Scale: Main.rand.NextFloat(1f, 1.5f));
+                                    d.noGravity = true;
+                                }
 
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    Vector2 dir = Helper.NextVec2Dir();
+                                    ZumurudProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 2f));
+                                }
                             }
                             else
                                 Projectile.Kill();
                         }
+                    }
+                    break;
+                case 1:
+                    {
+                        Projectile.rotation += ExRot;
+                        if (Projectile.timeLeft % 6 == 0)
+                            ZumurudProj.SpawnTriangleParticle(Projectile.Center + Main.rand.NextVector2Circular(4, 4), Projectile.velocity * Main.rand.NextFloat(0.2f, 0.4f));
+                        if (Main.rand.NextBool(10))
+                            Projectile.SpawnTrailDust(8f, DustID.GreenTorch, Main.rand.NextFloat(0.2f, 0.4f));
                     }
                     break;
             }
@@ -315,9 +446,26 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             return false;
         }
 
+        public override void OnKill(int timeLeft)
+        {
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 4; i++)
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.GreenTorch, Helper.NextVec2Dir(2, 4), Scale: Main.rand.NextFloat(1f, 1.5f));
+                    d.noGravity = true;
+                }
+
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 dir = Helper.NextVec2Dir();
+                    ZumurudProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                }
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
-            Projectile.DrawShadowTrails(ZumurudProj.darkC, 0.3f, 0.3f / 8, 0, 8, 1, 0, -1);
+            Projectile.DrawShadowTrails(ZumurudProj.darkC, 0.3f, 0.3f / 12, 0, 12, 1, 0, -1);
             Projectile.QuickDraw(lightColor, 0);
             return false;
         }

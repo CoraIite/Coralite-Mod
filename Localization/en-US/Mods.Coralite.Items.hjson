@@ -3920,3 +3920,8 @@ ZumurudRing: {
 	DisplayName: Zumurud Ring
 	Tooltip: ""
 }
+
+PearlBrooch: {
+	DisplayName: Pearl Brooch
+	Tooltip: ""
+}
