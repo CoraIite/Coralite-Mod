@@ -47,7 +47,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Attack();
         }
 
-        public virtual void Initialize() { }
+        public virtual void Initialize()
+        {
+            TargetPos = Owner.Center;
+        }
+
         public virtual void BeforeMove() { }
         public virtual void Move() { }
         public virtual void Attack() { }

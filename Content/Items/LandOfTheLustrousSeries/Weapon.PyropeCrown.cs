@@ -87,11 +87,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
         }
 
-        public override void Initialize()
-        {
-            TargetPos = Owner.Center;
-        }
-
         public override void BeforeMove()
         {
             if ((int)Main.timeForVisualEffects % 30 == 0 && Main.rand.NextBool(2))
@@ -177,11 +172,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 scale = Vector2.SmoothStep(scale, Vector2.One, 0.2f);
             }
-        }
-
-        public override void StartAttack()
-        {
-            AttackTime = Owner.itemTimeMax;
         }
 
         public override bool PreDraw(ref Color lightColor)

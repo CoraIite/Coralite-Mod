@@ -4080,5 +4080,9 @@ ZumurudRing: {
 
 PearlBrooch: {
 	DisplayName: 沧海遗珠
-	Tooltip: ""
+	Tooltip: 
+	'''
+	生成珍珠胸针并向上方发射珍珠
+	珍珠命中后会生成水波持续造成伤害
+	'''
 }

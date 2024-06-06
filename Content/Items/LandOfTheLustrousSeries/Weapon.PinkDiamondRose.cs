@@ -88,11 +88,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
         }
 
-        public override void Initialize()
-        {
-            TargetPos = Owner.Center;
-        }
-
         public override void BeforeMove()
         {
             group ??= new ParticleGroup();

@@ -134,11 +134,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.QuickTrailSets(Helper.TrailingMode.OnlyPosition, 3);
         }
 
-        public override void Initialize()
-        {
-            TargetPos = Owner.Center;
-        }
-
         public override void BeforeMove()
         {
             if ((int)Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))

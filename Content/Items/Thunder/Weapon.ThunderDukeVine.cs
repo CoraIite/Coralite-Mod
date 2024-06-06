@@ -130,7 +130,6 @@ namespace Coralite.Content.Items.Thunder
         public List<Vector2> laserTrailPoints = new List<Vector2>();
 
         public static Asset<Texture2D> gradientTex;
-
         public static Asset<Texture2D> laserTex;
         public static Asset<Texture2D> extraTex;
 
@@ -373,7 +372,6 @@ namespace Coralite.Content.Items.Thunder
 
         public void UpdateCachesNormally()
         {
-
             Vector2 dir = Projectile.rotation.ToRotationVector2();
             for (int i = 0; i < 100; i++)
             {

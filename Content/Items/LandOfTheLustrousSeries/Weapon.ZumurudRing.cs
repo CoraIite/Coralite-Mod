@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightRed4, Item.sellPrice(0, 7));
-            Item.SetWeaponValues(40, 4);
+            Item.SetWeaponValues(36, 4);
             Item.useTime = Item.useAnimation = 24;
             Item.mana = 14;
 
@@ -91,11 +91,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
         }
 
-        public override void Initialize()
-        {
-            TargetPos = Owner.Center;
-        }
-
         public override void BeforeMove()
         {
             if ((int)Main.timeForVisualEffects % 30 == 0 && Main.rand.NextBool(2))
@@ -115,7 +110,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void Move()
         {
-            Vector2 idlePos = Owner.Center+new Vector2(Owner.direction * 32, 0);
+            Vector2 idlePos = Owner.Center + new Vector2(Owner.direction * 32, 0);
 
             for (int i = 0; i < 8; i++)//检测头顶4个方块并尝试找到没有物块阻挡的那个
             {
@@ -148,7 +143,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
-                Projectile.rotation = Helper.Lerp(0, MathHelper.Pi,Coralite .Instance.SqrtSmoother.Smoother( 1 - AttackTime / Owner.itemTimeMax));
+                Projectile.rotation = Helper.Lerp(0, MathHelper.Pi, Coralite.Instance.SqrtSmoother.Smoother(1 - AttackTime / Owner.itemTimeMax));
 
                 if (AttackTime == 1 && Main.myPlayer == Projectile.owner)
                 {
@@ -232,7 +227,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            if (Projectile.localAI[0]==0)
+            if (Projectile.localAI[0] == 0)
             {
                 Projectile.InitOldPosCache(16);
                 Projectile.InitOldRotCache(16);
@@ -247,13 +242,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Timer++;
                 if (Timer > 120)
                 {
-                    if (Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy()&&Collision.CanHit(Projectile, n), out _))
+                    if (Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out _))
                     {
                         float angle = Main.rand.NextFloat(6.282f);
                         for (int i = 0; i < 4; i++)
                         {
                             Projectile.NewProjectileFromThis<SmallZumurudProj>(Projectile.Center, (angle + MathHelper.PiOver2 * i).ToRotationVector2() * 3
-                                , Projectile.damage / 4, Projectile.knockBack / 4, Main.rand.NextFloat(-0.3f, 0.3f));
+                                , (int)(Projectile.damage *0.75f), Projectile.knockBack / 4, Main.rand.NextFloat(-0.3f, 0.3f));
                         }
                     }
 
@@ -321,13 +316,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D Texture = trailTex.Value;
+            if (Projectile.oldPos.Length < 16)
+                return false;
 
+            Texture2D Texture = trailTex.Value;
             List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
 
             for (int i = 0; i < 16; i++)
             {
-                float factor =i  / 16f;
+                float factor = i / 16f;
                 Vector2 Center = Projectile.oldPos[i];
                 Vector2 normal = (Projectile.oldRot[i] + MathHelper.PiOver2).ToRotationVector2();
                 Vector2 Top = Center - Main.screenPosition + normal * 10;
@@ -353,7 +350,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             rand.X += 0.15f;
 
-            Helper.DrawCrystal(spriteBatch, Projectile.frame, Projectile.Center + rand, new Vector2(0.4f,1f)
+            Helper.DrawCrystal(spriteBatch, Projectile.frame, Projectile.Center + rand, new Vector2(0.4f, 1f)
                 , (float)(Main.timeForVisualEffects + Projectile.timeLeft) * (Main.gamePaused ? 0.02f : 0.01f) + Projectile.whoAmI / 3f
                 , highlightC, brightC, darkC, () =>
                 {
@@ -363,7 +360,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 {
                     sb.End();
                     sb.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-                },addC:0.35f);
+                }, addC: 0.35f);
         }
     }
 
@@ -385,7 +382,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.DamageType = DamageClass.Magic;
             Projectile.width = Projectile.height = 16;
             Projectile.friendly = true;
-            Projectile.timeLeft = 1200;
+            Projectile.timeLeft = 600;
             Projectile.extraUpdates = 2;
         }
 
