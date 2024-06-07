@@ -4080,9 +4080,34 @@ ZumurudRing: {
 
 PearlBrooch: {
 	DisplayName: 沧海遗珠
-	Tooltip: 
-	'''
-	生成珍珠胸针并向上方发射珍珠
-	珍珠命中后会生成水波持续造成伤害
-	'''
+	Tooltip:
+		'''
+		生成珍珠胸针并向上方发射珍珠
+		珍珠命中后会生成水波持续造成伤害
+		'''
+}
+
+RubyScepter: {
+	DisplayName: 红宝石权杖
+	Tooltip: ""
+}
+
+IcicleHelmet: {
+	ArmorBonus:
+		'''
+		按下套装奖励键使用冰晶吐息或冰刺
+		套装奖励键可在模组配置中更改
+		'''
+	DisplayName: 冰晶头盔
+	Tooltip: +6% 攻击速度
+}
+
+IcicleBreastplate: {
+	DisplayName: 冰晶鳞甲
+	Tooltip: +8% 攻击速度
+}
+
+IcicleLegs: {
+	DisplayName: 冰晶护胫
+	Tooltip: +6% 攻击速度
 }

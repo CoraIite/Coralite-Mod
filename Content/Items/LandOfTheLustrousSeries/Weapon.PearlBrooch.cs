@@ -110,7 +110,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
     public class PearlBroochProj : BaseGemWeaponProj<PearlBrooch>
     {
-        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "PearlBrooch";
+        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
         public ref float ShootAngle => ref Projectile.ai[1];
 
@@ -188,7 +188,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     ShootAngle++;
                     float factor = MathF.Sin(ShootAngle * 0.7f);
                     float angle = factor * 0.6f - 1.57f;
-                    float speed = 5f + Math.Abs(factor) * 5f;
+                    float speed = 7f + Math.Abs(factor) * 7f;
 
                     Projectile.NewProjectileFromThis<PearlProj>(Projectile.Center
                         , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, Main.rand.Next(4));
@@ -248,7 +248,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefaults()
         {
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.width = Projectile.height = 20;
+            Projectile.width = Projectile.height = 28;
             Projectile.friendly = true;
             Projectile.timeLeft = 600;
             Projectile.penetrate = 2;
@@ -276,8 +276,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 default:
                 case 0://向上发射
                     {
-                        Projectile.velocity *= 0.97f;
-                        if (Projectile.velocity.Length() < 0.3f)
+                        Projectile.velocity *= 0.92f;
+                        if (Projectile.velocity.Length() < 0.5f)
                         {
                             State++;
                         }
@@ -285,16 +285,16 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     break;
                 case 1://下落
                     {
-                        if (Projectile.velocity.Y < 10)
-                            Projectile.velocity.Y += 0.125f;
+                        if (Projectile.velocity.Y < 15)
+                            Projectile.velocity.Y += 0.2f;
 
                         float xLength = Main.MouseWorld.X - Projectile.Center.X;
                         int dir = Math.Sign(xLength);
 
-                        if (Math.Abs(xLength)<32)
-                            Projectile.velocity.X *= 0.9f;
+                        if (Math.Abs(xLength) < 24)
+                            Projectile.velocity.X *= 0.85f;
                         else
-                        Helper.Movement_SimpleOneLine(ref Projectile.velocity.X, dir, 12f, 0.25f, 0.45f, 0.97f);
+                            Helper.Movement_SimpleOneLine(ref Projectile.velocity.X, dir, 14f, 0.35f, 0.65f, 0.97f);
                     }
                     break;
             }
@@ -419,7 +419,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 20;
+            Projectile.localNPCHitCooldown = 30;
             Projectile.alpha = 0;
         }
 
@@ -459,7 +459,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.damage = (int)(Projectile.damage * 0.93f);
+            Projectile.damage = (int)(Projectile.damage * 0.88f);
         }
 
         public override bool PreDraw(ref Color lightColor)

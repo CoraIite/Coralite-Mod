@@ -39,8 +39,15 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     CoraliteContent.ParticleType<SnowFlower>(), Color.White, Main.rand.NextFloat(0.3f, 0.4f));
             }
 
-            Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * 0.2f - Vector2.UnitY * 2,
+            Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * 0.2f - Vector2.UnitY * Main.rand.NextFloat(0.1f,2f),
                    CoraliteContent.ParticleType<Fog>(), Color.AliceBlue, Main.rand.NextFloat(0.8f, 0.9f));
+        }
+
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            width = 20;
+            height = 20;
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

@@ -387,53 +387,53 @@ BlackSpirit.DisplayName: 黑暗魂魄
 ThunderBobber.DisplayName: 闪电浮标
 ChronoHeartSlash.DisplayName: 时轮指针
 ThunderWhipProj.DisplayName: 闪电鞭
-// ThunderShieldGuard.DisplayName: Thunder Shield Guard
-// ThunderShieldProj.DisplayName: Thunder Shield Proj
-// ThunderShieldExProj.DisplayName: Thunder Shield Ex Proj
-// RedJadeArrowProj.DisplayName: Red Jade Arrow Proj
-// RedJadeBulletProj.DisplayName: Red Jade Bullet Proj
-// ReverseFlashProj.DisplayName: Reverse Flash Proj
-// Tenko.DisplayName: Tenko
-// CyberwyrmRehabProj.DisplayName: Cyberwyrm Rehab Proj
-// CancerFlailProj.DisplayName: Cancer Flail Proj
-// LightningBall_Friendly.DisplayName: Lightning Ball_ Friendly
-// ThunderDaggerSlash.DisplayName: Thunder Dagger Slash
-// EternalBloomHeldProj.DisplayName: Eternal Bloom Held Proj
-// FloetteHeldProj.DisplayName: Floette Held Proj
-// PosionedSeedPlantera.DisplayName: Posioned Seed Plantera
-// SeedPlantera.DisplayName: Seed Plantera
-// ThornBall.DisplayName: Thorn Ball
-// VirgoBullet.DisplayName: Virgo Bullet
-// VirgoFeather.DisplayName: Virgo Feather
-// VirgoHeldProj.DisplayName: Virgo Held Proj
-// ThunderMinion.DisplayName: Thunder Minion
-// MeowmeoProj.DisplayName: Meowmeo Proj
-// HylianShieldGuard.DisplayName: Hylian Shield Guard
-// HylianShieldProj.DisplayName: Hylian Shield Proj
-// NuranasaProj.DisplayName: Nuranasa Proj
-// SmallVolcanoProj.DisplayName: Small Volcano Proj
-// TerraShortSwordProj.DisplayName: Terra Short Sword Proj
-// TomatoButchererProj.DisplayName: Tomato Butcherer Proj
-// TrueNightsCageProj.DisplayName: True Nights Cage Proj
-// BladeOfCatnipProj.DisplayName: Blade Of Catnip Proj
-// ExcatbarProj.DisplayName: Excatbar Proj
-// NightsCageProj.DisplayName: Nights Cage Proj
-// ShadowsBaneProj.DisplayName: Shadows Bane Proj
-// TrueExcatbarProj.DisplayName: True Excatbar Proj
-// BeamShortSwordProj.DisplayName: Beam Short Sword Proj
-// CattongueProj.DisplayName: Cattongue Proj
-// CatTreeSwordProj.DisplayName: Cat Tree Sword Proj
-// FlyingDragonBabyProj.DisplayName: Flying Dragon Baby Proj
-// IceShortSwordProj.DisplayName: Ice Short Sword Proj
-// MeowmeoSpecialProj.DisplayName: Meowmeo Special Proj
-// SmallBeeProj.DisplayName: Small Bee Proj
-// TheCatMansBladeProj.DisplayName: The Cat Mans Blade Proj
-// TreelerProj.DisplayName: Treeler Proj
-// ShadowDartProj.DisplayName: Shadow Dart Proj
-// VampireEarlGuard.DisplayName: Vampire Earl Guard
-// VampireEarlProj.DisplayName: Vampire Earl Proj
-// VampireEarlBat.DisplayName: Vampire Earl Bat
-// VineLassoCatcher.DisplayName: Vine Lasso Catcher
+ThunderShieldGuard.DisplayName: 猛雷鼓
+ThunderShieldProj.DisplayName: 猛雷鼓
+ThunderShieldExProj.DisplayName: 雷圈
+RedJadeArrowProj.DisplayName: 赤玉箭
+RedJadeBulletProj.DisplayName: 赤玉弹
+ReverseFlashProj.DisplayName: 逆闪电
+Tenko.DisplayName: 天狐
+CyberwyrmRehabProj.DisplayName: 网瘾少龙
+CancerFlailProj.DisplayName: 巨蟹锤
+LightningBall_Friendly.DisplayName: 闪电球
+ThunderDaggerSlash.DisplayName: 荒雷魔剑
+EternalBloomHeldProj.DisplayName: 永恒绽放
+FloetteHeldProj.DisplayName: 花叶蒂
+PosionedSeedPlantera.DisplayName: 剧毒种子
+SeedPlantera.DisplayName: 种子
+ThornBall.DisplayName: 尖刺球
+VirgoBullet.DisplayName: 处女弹
+VirgoFeather.DisplayName: 处女飞羽
+VirgoHeldProj.DisplayName: 处女座
+ThunderMinion.DisplayName: 闪电
+MeowmeoProj.DisplayName: 彩虹猫圣剑
+HylianShieldGuard.DisplayName: 海利亚盾
+HylianShieldProj.DisplayName: 海利亚盾
+NuranasaProj.DisplayName: 妖刀·小村正
+SmallVolcanoProj.DisplayName: 火柴
+TerraShortSwordProj.DisplayName: Terra Short Sword Proj
+TomatoButchererProj.DisplayName: Tomato Butcherer Proj
+TrueNightsCageProj.DisplayName: True Nights Cage Proj
+BladeOfCatnipProj.DisplayName: Blade Of Catnip Proj
+ExcatbarProj.DisplayName: Excatbar Proj
+NightsCageProj.DisplayName: Nights Cage Proj
+ShadowsBaneProj.DisplayName: Shadows Bane Proj
+TrueExcatbarProj.DisplayName: True Excatbar Proj
+BeamShortSwordProj.DisplayName: Beam Short Sword Proj
+CattongueProj.DisplayName: Cattongue Proj
+CatTreeSwordProj.DisplayName: Cat Tree Sword Proj
+FlyingDragonBabyProj.DisplayName: Flying Dragon Baby Proj
+IceShortSwordProj.DisplayName: Ice Short Sword Proj
+MeowmeoSpecialProj.DisplayName: Meowmeo Special Proj
+SmallBeeProj.DisplayName: Small Bee Proj
+TheCatMansBladeProj.DisplayName: The Cat Mans Blade Proj
+TreelerProj.DisplayName: Treeler Proj
+ShadowDartProj.DisplayName: 影镖
+VampireEarlGuard.DisplayName: 朱红盛宴
+VampireEarlProj.DisplayName: 朱红盛宴
+VampireEarlBat.DisplayName: 吸血蝙蝠
+VineLassoCatcher.DisplayName: 藤蔓套索
 
 GreenFairyProj: {
 	SkillText: 撞击！
@@ -450,39 +450,41 @@ BrownFairyProj: {
 	DisplayName: 棕仙灵
 }
 
-// RedJadeSpearSpurt.DisplayName: Red Jade Spear Spurt
+RedJadeSpearSpurt.DisplayName: 赤玉矛
 
 BreezeFairyProj: {
 	SkillText: 吹散！
 	DisplayName: 微风灵
 }
 
-// PollenGunpowderProj.DisplayName: Pollen Gunpowder Proj
-// RoseGunpowderProj.DisplayName: Rose Gunpowder Proj
-// RoseGunpowderProj2.DisplayName: Rose Gunpowder Proj2
-// VineLassoSwing.DisplayName: Vine Lasso Swing
-// DevilsYokeCatcher.DisplayName: Devils Yoke Catcher
-// DevilsYokeSwing.DisplayName: Devils Yoke Swing
-// TwinRocketLauncherHeldProj.DisplayName: Twin Rocket Launcher Held Proj
-// TwinRocketLauncherProj.DisplayName: Twin Rocket Launcher Proj
-// TwinRocketLauncherProj2.DisplayName: Twin Rocket Launcher Proj2
-// SteelBreakerProj.DisplayName: Steel Breaker Proj
-// ElfTradeProj.DisplayName: Elf Trade Proj
-// PyropeCrownProj.DisplayName: Pyrope Crown Proj
-// PyropeProj.DisplayName: Pyrope Proj
-// AmethystNeckLaceProj.DisplayName: Amethyst Neck Lace Proj
-// AmethystLaser.DisplayName: Amethyst Laser
-// FriedShrimpProj.DisplayName: Fried Shrimp Proj
-// ChocomintIceProj.DisplayName: Chocomint Ice Proj
-// AquamarineBraceletProj.DisplayName: Aquamarine Bracelet Proj
-// AquamarineProj.DisplayName: Aquamarine Proj
-// AmethystNecklaceProj.DisplayName: Amethyst Necklace Proj
-// PinkDiamondExplosion.DisplayName: Pink Diamond Explosion
-// PinkDiamondProj.DisplayName: Pink Diamond Proj
-// PinkDiamondRoseProj.DisplayName: Pink Diamond Rose Proj
-// ZumurudProj.DisplayName: Zumurud Proj
-// ZumurudRingProj.DisplayName: Zumurud Ring Proj
-// SmallZumurudProj.DisplayName: Small Zumurud Proj
-// PearlBroochProj.DisplayName: Pearl Brooch Proj
-// PearlProj.DisplayName: Pearl Proj
-// PearlExplosion.DisplayName: Pearl Explosion
+PollenGunpowderProj.DisplayName: 花粉火药
+RoseGunpowderProj.DisplayName: 玫瑰火药
+RoseGunpowderProj2.DisplayName: 玫瑰火药
+VineLassoSwing.DisplayName: 藤蔓套索
+DevilsYokeCatcher.DisplayName: Devils Yoke Catcher
+DevilsYokeSwing.DisplayName: Devils Yoke Swing
+TwinRocketLauncherHeldProj.DisplayName: Twin Rocket Launcher Held Proj
+TwinRocketLauncherProj.DisplayName: Twin Rocket Launcher Proj
+TwinRocketLauncherProj2.DisplayName: Twin Rocket Launcher Proj2
+SteelBreakerProj.DisplayName: Steel Breaker Proj
+ElfTradeProj.DisplayName: Elf Trade Proj
+PyropeCrownProj.DisplayName: 红榴之冠
+PyropeProj.DisplayName: 红榴石
+AmethystNeckLaceProj.DisplayName: Amethyst Neck Lace Proj
+AmethystLaser.DisplayName: 紫晶光束
+FriedShrimpProj.DisplayName: 炸虾
+ChocomintIceProj.DisplayName: 薄荷巧克力冰淇淋
+AquamarineBraceletProj.DisplayName: 海魂手链
+AquamarineProj.DisplayName: 海蓝宝石
+AmethystNecklaceProj.DisplayName: 第六轮回项链
+PinkDiamondExplosion.DisplayName: 粉钻花瓣
+PinkDiamondProj.DisplayName: 粉钻
+PinkDiamondRoseProj.DisplayName: 粉钻玫瑰
+ZumurudProj.DisplayName: 祖母绿
+ZumurudRingProj.DisplayName: 祖母绿戒指
+SmallZumurudProj.DisplayName: 绿宝石水花
+PearlBroochProj.DisplayName: 沧海遗珠
+PearlProj.DisplayName: 珍珠
+PearlExplosion.DisplayName: 珍珠气泡
+// RubyProj.DisplayName: Ruby Proj
+// RubyScepterProj.DisplayName: Ruby Scepter Proj

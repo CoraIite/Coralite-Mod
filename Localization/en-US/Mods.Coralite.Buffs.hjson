@@ -169,3 +169,8 @@ ChocomintIceBuff: {
 	DisplayName: Chocomint Ice Buff
 	Description: Mods.Coralite.Buffs.ChocomintIceBuff.Description
 }
+
+IcicleArmorBonus: {
+	DisplayName: Icicle Armor Bonus
+	Description: Mods.Coralite.Buffs.IcicleArmorBonus.Description
+}

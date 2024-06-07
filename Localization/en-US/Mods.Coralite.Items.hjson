@@ -3925,3 +3925,28 @@ PearlBrooch: {
 	DisplayName: Pearl Brooch
 	Tooltip: ""
 }
+
+RubyScepter: {
+	DisplayName: Ruby Scepter
+	Tooltip: ""
+}
+
+IcicleHelmet: {
+	ArmorBonus:
+		'''
+		按下套装奖励键使用冰晶吐息或冰刺
+		套装奖励键可在模组配置中更改
+		'''
+	DisplayName: Icicle Helmet
+	Tooltip: ""
+}
+
+IcicleBreastplate: {
+	DisplayName: Icicle Breastplate
+	Tooltip: ""
+}
+
+IcicleLegs: {
+	DisplayName: Icicle Legs
+	Tooltip: ""
+}

@@ -169,3 +169,8 @@ ChocomintIceBuff: {
 	DisplayName: 宝贝吃冰啦
 	Description: 牙膏（薄荷）的清爽给予你力量
 }
+
+IcicleArmorBonus: {
+	DisplayName: 冰晶冷却
+	Description: 你现在无法使用冰晶套装的套装魔法！
+}
