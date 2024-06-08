@@ -2616,7 +2616,11 @@ AncientFurnace: {
 
 Hephaesth: {
 	DisplayName: 炼心城
-	Tooltip: 传说中远古时期所有的盾牌均由这个锻造炉打造而出
+	Tooltip: 
+	'''
+	传说中远古时期所有的盾牌均由这个锻造炉打造而出
+	在背包内时可提供远古锻造炉制造站的效果
+	'''
 }
 
 RedJadeFountain: {

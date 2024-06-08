@@ -41,11 +41,14 @@ namespace Coralite.Content.Items.GlobalItems
 
         public override void SetDefaults(Item item)
         {
+            if (item.ModItem != null && item.ModItem.Mod.Name == "Coralite")
+                item.width = item.height = 40;
+
             switch (item.type)
             {
                 default: break;
                 case ItemID.PhoenixBlaster: //削弱凤凰爆破枪，目的是为了给幽兰让路
-                    item.damage = 30;
+                    item.damage = 32;
                     break;
                 case ItemID.IceRod:     //削弱冰雪魔仗，因为它现在在肉前就能获得
                     item.damage = (int)(item.damage * 0.45f);

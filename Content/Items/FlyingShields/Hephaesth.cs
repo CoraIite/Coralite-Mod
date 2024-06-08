@@ -21,7 +21,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields
 {
-    public class Hephaesth : BaseFlyingShieldItem<HephaesthGuard>
+    public class Hephaesth : BaseFlyingShieldItem<HephaesthGuard>,IInventoryCraftStation
     {
         public Hephaesth() : base(Item.sellPrice(0, 40), ItemRarityID.Red, AssetDirectory.FlyingShieldItems)
         { }
@@ -76,6 +76,22 @@ namespace Coralite.Content.Items.FlyingShields
             }
 
             return base.CanUseItem(player);
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+                cp.inventoryCraftStations.Add(this);
+        }
+
+        public void AdjTiles(Player player)
+        {
+            //player.adjTile[TileID.Furnaces] = true;
+            //player.adjTile[TileID.Hellforge] = true;
+            //player.adjTile[TileID.AdamantiteForge] = true;
+            //player.adjTile[TileID.LunarCraftingStation] = true;
+            TileLoader.AdjTiles(player,ModContent.TileType<AncientFurnaceTile>());
+            player.adjTile[ModContent.TileType<AncientFurnaceTile>()] = true;
         }
 
         public override void LeftShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 velocity, int type, int damage, float knockback)

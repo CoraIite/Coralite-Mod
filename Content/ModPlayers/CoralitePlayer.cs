@@ -32,6 +32,7 @@ namespace Coralite.Content.ModPlayers
         /// 各种效果
         /// </summary>
         public HashSet<string> Effects = new HashSet<string>();
+        public List<IInventoryCraftStation> inventoryCraftStations = new List<IInventoryCraftStation>();
 
         #region 装备类字段
 
@@ -110,6 +111,9 @@ namespace Coralite.Content.ModPlayers
         public override void ResetEffects()
         {
             Effects ??= new HashSet<string>();
+            inventoryCraftStations ??= new List<IInventoryCraftStation> ();
+
+            inventoryCraftStations.Clear();
             Effects.Clear();
 
             pirateKingSoul = 0;

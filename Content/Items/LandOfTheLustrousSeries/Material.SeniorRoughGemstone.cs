@@ -28,7 +28,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             resultStack = 1;
 
             resultType = Main.rand.NextFromList(
-                ModContent.ItemType<Zumurud>()
+                ModContent.ItemType<Zumurud>(),
+                ItemID.Ruby
                 );
 
             if (Main.rand.NextBool(3))
