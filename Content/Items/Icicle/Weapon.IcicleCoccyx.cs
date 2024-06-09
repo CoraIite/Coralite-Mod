@@ -153,6 +153,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetDefaults()
         {
+            Projectile.coldDamage = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 14;
             Projectile.width = 34;
@@ -263,6 +264,8 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetDefaults()
         {
+            Projectile.coldDamage = true;
+
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 14;
             Projectile.width = 34;
@@ -386,6 +389,8 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetDefaults()
         {
+            Projectile.coldDamage = true;
+
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 15;
             Projectile.width = Projectile.height = 32;
@@ -433,6 +438,8 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetDefaults()
         {
+            Projectile.coldDamage = true;
+
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 20;
             Projectile.width = Projectile.height = 48;

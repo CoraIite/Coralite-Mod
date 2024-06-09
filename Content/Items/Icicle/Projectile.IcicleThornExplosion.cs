@@ -17,6 +17,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
+            Projectile.coldDamage = true;
         }
 
         public override void OnSpawn(IEntitySource source)

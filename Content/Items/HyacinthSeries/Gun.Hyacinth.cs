@@ -1,3 +1,4 @@
+using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.WorldGeneration;
@@ -83,7 +84,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             .AddIngredient(ItemID.SDMG)
             .AddIngredient<StarsBreath>()
             .AddIngredient<Lycoris>()
-            .AddTile(TileID.MythrilAnvil)
+            .AddTile<AncientFurnaceTile>()
             .Register();
         }
     }

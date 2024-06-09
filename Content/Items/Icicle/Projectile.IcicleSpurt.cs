@@ -33,6 +33,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.usesLocalNPCImmunity = true;
             Projectile.friendly = true;
             Projectile.netImportant = true;
+            Projectile.coldDamage = true;
         }
 
         public override void AI()

@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 cs.shineRange = 12;
             }
 
-            Lighting.AddLight(Projectile.Center, new Vector3(0.1f, 0.5f, 0.2f));
+            Lighting.AddLight(Projectile.Center, new Vector3(0.6f, 0.1f, 0.1f));
         }
 
         public override void Move()
@@ -146,14 +146,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                            Vector2.Zero, Owner.GetWeaponDamage(Owner.HeldItem)
                            , Projectile.knockBack, Projectile.whoAmI, dir2.ToRotation(),RubyLaser.TotalAttackTime);
 
-                    int howMany = Main.rand.Next(1, 3);
+                    int howMany = Main.rand.NextFromList(1, 1, 1, 2, 2, 3);
 
                     for (int i = 0; i < howMany; i++)
                     {
                         Projectile.NewProjectileFromThis<RubyProj>(Projectile.Center,
-                            dir2.RotatedBy(Main.rand.NextFromList(-0.3f, 0.3f) + Main.rand.NextFloat(-0.1f, 0.1f)) * Main.rand.NextFloat(10f, 15f)
+                            dir2.RotatedBy((i % 2 == 0 ? -0.53f : 0.35f) + Main.rand.NextFloat(-0.15f, 0.15f)) * Main.rand.NextFloat(3f, 13f)
                             , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, Projectile.whoAmI
-                            , ai1: (Main.MouseWorld - Projectile.Center).ToRotation(), 45 + i * 45);
+                            , ai1: (Main.MouseWorld - Projectile.Center).ToRotation(), 35 + i * 35);
                     }
 
                     Helper.PlayPitched("Crystal/CrystalStrike", 0.4f, -0.2f, Projectile.Center);
@@ -202,8 +202,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public Vector2 endPoint;
         public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);
 
-        public static int TotalAttackTime = 20 + delayTime;
-        public static int delayTime = 20;
+        public const int TotalAttackTime = 15 + delayTime;
+        public const int delayTime = 15;
 
         public override void SetDefaults()
         {
@@ -222,8 +222,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (!CheckOwner(out Projectile owner))
                 return;
 
-            delayTime = 15;
-            TotalAttackTime = delayTime + 15;
             Projectile.Center = owner.Center+new Vector2(0,-16);
             LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.04f);
 
@@ -342,7 +340,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            Projectile.damage = (int)(Projectile.damage * 0.8f);
+            Projectile.damage = (int)(Projectile.damage * 0.85f);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
@@ -400,7 +398,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             float factor = Timer / 10;
             float fadeFactor = Math.Abs(factor - MathF.Truncate(factor));
-            float rot = ((int)factor) * MathHelper.PiOver4;
+            float rot = ((int)factor) * MathHelper.TwoPi/3;
 
             for (int i = 0; i < 5; i++)
             {
@@ -444,6 +442,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             base.SetDefaults();
             Projectile.width = Projectile.height = 20;
+            Projectile.idStaticNPCHitCooldown = 20;
         }
 
         public override void AI()
@@ -461,6 +460,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     Player owner = Main.player[Projectile.owner];
                     if (owner.CheckMana(12, true))
                     {
+                        Helper.PlayPitched("Crystal/CrystalStrike", 0.1f, 0.2f, Projectile.Center);
+
                         State = 1;
                         Timer = TotalAttackTime;
                         Projectile.tileCollide = false;
@@ -483,7 +484,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             if (State == 0)
-                return null;
+                return false;
             return base.Colliding(projHitbox, targetHitbox);
         }
 

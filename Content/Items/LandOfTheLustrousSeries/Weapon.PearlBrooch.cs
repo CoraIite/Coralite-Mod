@@ -182,7 +182,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
-                Projectile.rotation = MathF.Sin((1 - AttackTime / Owner.itemTimeMax) * MathHelper.TwoPi) * 0.5f;
+                Projectile.rotation = MathF.Sin((1 - AttackTime / Owner.itemTimeMax) * MathHelper.TwoPi) * 0.3f;
                 if ((int)AttackTime == 1)
                 {
                     ShootAngle++;

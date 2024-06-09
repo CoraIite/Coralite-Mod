@@ -92,6 +92,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.timeLeft = 600;
             Projectile.aiStyle = -1;
 
+            Projectile.coldDamage = true;
             Projectile.friendly = true;
             Projectile.ignoreWater = false;
             Projectile.tileCollide = true;
@@ -166,6 +167,8 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetDefaults()
         {
+            Projectile.coldDamage = true;
+
             Projectile.usesLocalNPCImmunity = false;
             Projectile.localNPCHitCooldown = 20;
             Projectile.width = Projectile.height = 32;

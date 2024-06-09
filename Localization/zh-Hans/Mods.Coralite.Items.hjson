@@ -2616,11 +2616,11 @@ AncientFurnace: {
 
 Hephaesth: {
 	DisplayName: 炼心城
-	Tooltip: 
-	'''
-	传说中远古时期所有的盾牌均由这个锻造炉打造而出
-	在背包内时可提供远古锻造炉制造站的效果
-	'''
+	Tooltip:
+		'''
+		传说中远古时期所有的盾牌均由这个锻造炉打造而出
+		在背包内时可提供远古锻造炉制造站的效果
+		'''
 }
 
 RedJadeFountain: {
@@ -4093,13 +4093,19 @@ PearlBrooch: {
 
 RubyScepter: {
 	DisplayName: 红宝石权杖
-	Tooltip: ""
+	Tooltip: 
+	'''
+	生成红宝石权杖向敌人发射暗红射线
+	同时抛出一些红宝石
+	'''
 }
 
 IcicleHelmet: {
 	ArmorBonus:
 		'''
+		抵御冷系伤害
 		按下套装奖励键使用冰晶吐息或冰刺
+		使用冰晶魔法后会获得冷却Buff，无法使用冰晶魔法但是会增加15%冷系伤害
 		套装奖励键可在模组配置中更改
 		'''
 	DisplayName: 冰晶头盔
@@ -4114,4 +4120,9 @@ IcicleBreastplate: {
 IcicleLegs: {
 	DisplayName: 冰晶护胫
 	Tooltip: +6% 攻击速度
+}
+
+PeridotTalisman: {
+	DisplayName: 幽绿护身符
+	Tooltip: ""
 }

@@ -57,7 +57,7 @@ namespace Coralite.Content.Items.FlyingShields
                 TileID.LunarCraftingStation
             };
 
-            AddMapEntry(Color.DarkGray);
+            AddMapEntry(Color.DarkGray, CreateMapEntryName());
         }
     }
 }

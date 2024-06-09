@@ -21,6 +21,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.aiStyle = -1;
             Projectile.scale = 1.1f;
 
+            Projectile.coldDamage = true;
             Projectile.friendly = true;
             Projectile.ignoreWater = false;
             Projectile.tileCollide = false;

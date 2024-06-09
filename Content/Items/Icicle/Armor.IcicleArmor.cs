@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.BabyIceDragon;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using System;
 using Terraria;
@@ -48,6 +49,7 @@ namespace Coralite.Content.Items.Icicle
         public override void UpdateArmorSet(Player player)
         {
             player.setBonus = bonus.Value;
+            player.resistCold = true;
         }
 
         public override void ArmorSetShadows(Player player)
@@ -62,28 +64,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 if (attType == 0)
                 {
-                    attType = 1;
-                    SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, player.Center);
-                    Vector2 targetDir = (Main.MouseWorld + Main.rand.NextVector2CircularEdge(30, 30) - player.Center).SafeNormalize(Vector2.Zero);
-                    Vector2 pos = player.MountedCenter;
-                    int j = 0;
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                        for (int i = -1; i < 1; i++)
-                        {
-                            int damage = 25;
-                            int index = Projectile.NewProjectile(player.GetSource_FromThis(), pos, targetDir.RotatedBy(i * 0.05f) * (6f+j*2), ProjectileType<IceBreath>(), damage, 5f);
-                            Projectile p = Main.projectile[index];
-                            p.DamageType = DamageClass.Magic;
-                            p.hostile = false;
-                            p.friendly = true;
-                            p.penetrate = 3;
-                            p.usesIDStaticNPCImmunity = true;
-                            p.idStaticNPCHitCooldown = 10;
-                            p.timeLeft = 60;
-                            j++;
-                        }
-
-                    player.AddBuff(BuffType<IcicleArmorBonus>(), 60 * 3);
+                    SpawnIceBreath(player);
                 }
                 else
                 {
@@ -91,6 +72,33 @@ namespace Coralite.Content.Items.Icicle
                     SpawnIceThorns(player);
                 }
             }
+        }
+
+        public void SpawnIceBreath(Player player)
+        {
+            attType = 1;
+            SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, player.Center);
+            Vector2 targetDir = (Main.MouseWorld + Main.rand.NextVector2CircularEdge(30, 30) - player.Center).SafeNormalize(Vector2.Zero);
+            Vector2 pos = player.MountedCenter;
+            int j = 0;
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+                for (int i = -1; i < 1; i++)
+                {
+                    int damage = 25;
+                    int index = Projectile.NewProjectile(player.GetSource_FromThis(), pos, targetDir.RotatedBy(i * 0.05f) * (6f + j * 2), ProjectileType<IceBreath>(), damage, 5f);
+                    Projectile p = Main.projectile[index];
+                    p.DamageType = DamageClass.Magic;
+                    p.hostile = false;
+                    p.friendly = true;
+                    p.penetrate = 3;
+                    p.usesIDStaticNPCImmunity = true;
+                    p.idStaticNPCHitCooldown = 10;
+                    p.timeLeft = 60;
+                    j++;
+                }
+
+            player.AddBuff(BuffType<IcicleArmorBonus>(), 60 * 3);
+
         }
 
         public void SpawnIceThorns(Player player)
@@ -114,6 +122,8 @@ namespace Coralite.Content.Items.Icicle
                 Main.instance.CameraModifiers.Add(modifier);
                 player.AddBuff(BuffType<IcicleArmorBonus>(), 60 * 3);
             }
+            else
+                SpawnIceBreath(player);
         }
 
         private bool TryMakingSpike(Player player, ref Point sourceTileCoords, int dir, int howMany, int whichOne, int xOffset, float scaleOffset)
@@ -260,6 +270,14 @@ namespace Coralite.Content.Items.Icicle
         public override void SetStaticDefaults()
         {
             Main.buffNoSave[Type] = true;
+        }
+
+        public override void Update(Player player, ref int buffIndex)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.coldDamageBonus += 0.15f;
+            }
         }
     }
 }

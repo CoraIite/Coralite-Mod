@@ -15,6 +15,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.width = Projectile.height = 16;
             Projectile.aiStyle = -1;
 
+            Projectile.coldDamage = true;
             Projectile.friendly = true;
         }
 

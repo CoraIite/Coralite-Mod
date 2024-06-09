@@ -172,5 +172,9 @@ ChocomintIceBuff: {
 
 IcicleArmorBonus: {
 	DisplayName: 冰晶冷却
-	Description: 你现在无法使用冰晶套装的套装魔法！
+	Description:
+		'''
+		你现在无法使用冰晶套装的套装魔法！
+		+15% 冷系伤害
+		'''
 }

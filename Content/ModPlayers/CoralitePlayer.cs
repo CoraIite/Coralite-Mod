@@ -98,6 +98,8 @@ namespace Coralite.Content.ModPlayers
         public Vector2 oldOldVelocity;
         public Vector2 oldVelocity;
 
+        public StatModifier coldDamageBonus;
+
         public override void Load()
         {
             LoadDeathReasons();
@@ -132,6 +134,7 @@ namespace Coralite.Content.ModPlayers
             bossDamageReduce = 0;
 
             fallDamageModifyer = new StatModifier();
+            coldDamageBonus = new StatModifier();
 
             ResetFlyingShieldSets();
 
@@ -521,19 +524,24 @@ namespace Coralite.Content.ModPlayers
         public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)
         {
             if (HasEffect(nameof(FlaskOfThunderBuff)) && item.DamageType == DamageClass.Melee)
-                target.AddBuff(BuffType<Items.Thunder.ThunderElectrified>(), 6 * 60);
+                target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
             if (HasEffect(nameof(FlaskOfRedJadeBuff)) && item.DamageType == DamageClass.Melee && Main.rand.NextBool(4))
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
-                    ProjectileType<Items.RedJades.RedJadeBoom>(), (int)(item.damage * 0.75f), 0, Player.whoAmI);
+                    ProjectileType<RedJadeBoom>(), (int)(item.damage * 0.75f), 0, Player.whoAmI);
         }
 
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
         {
             if (HasEffect(nameof(FlaskOfThunderBuff)) && proj.DamageType == DamageClass.Melee)
-                target.AddBuff(BuffType<Items.Thunder.ThunderElectrified>(), 6 * 60);
+                target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
             if (HasEffect(nameof(FlaskOfRedJadeBuff)) && proj.DamageType == DamageClass.Melee && Main.rand.NextBool(4))
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
-                    ProjectileType<Items.RedJades.RedJadeBoom>(), (int)(proj.damage * 0.75f), 0, Player.whoAmI);
+                    ProjectileType<RedJadeBoom>(), (int)(proj.damage * 0.75f), 0, Player.whoAmI);
+
+            if (proj.coldDamage)//冷系加成
+            {
+                modifiers.SourceDamage.CombineWith(coldDamageBonus);
+            }
         }
 
         public override bool FreeDodge(Player.HurtInfo info)

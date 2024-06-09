@@ -27,6 +27,7 @@ namespace Coralite.Content.Items.Icicle
             distanceToOwner = 2;
             minTime = 0;
             onHitFreeze = 4;
+            Projectile.coldDamage = true;
         }
 
         protected override void Initializer()

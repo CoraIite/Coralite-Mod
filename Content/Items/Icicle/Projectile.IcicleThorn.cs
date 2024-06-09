@@ -44,6 +44,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.netImportant = true;
             Projectile.minion = true;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.coldDamage = true;
 
             Projectile.DamageType = DamageClass.Summon;
         }

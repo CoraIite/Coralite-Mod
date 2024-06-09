@@ -6,6 +6,7 @@ using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -48,6 +49,16 @@ namespace Coralite.Content.Items.FairyCatcher
     {
         public override string Texture => AssetDirectory.FairyCatcherItems + Name;
 
+        public static Asset<Texture2D> EyeTex;
+
+        public override void Load()
+        {
+            if (!Main.dedServ)
+            {
+                EyeTex = ModContent.Request<Texture2D>(AssetDirectory.FairyCatcherItems + "ElfPortalEye");
+            }
+        }
+
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
@@ -68,6 +79,8 @@ namespace Coralite.Content.Items.FairyCatcher
             TileObjectData.addTile(Type);
 
             AddMapEntry(Color.Purple);
+
+            AnimationFrameHeight = 11 * 18;
         }
 
         public override void NearbyEffects(int i, int j, bool closer)
@@ -103,13 +116,53 @@ namespace Coralite.Content.Items.FairyCatcher
 
                 if (FairySystem.TryGetElfPortalTrades(item.type, out _))
                 {
-                   int p= Projectile.NewProjectile(new EntitySource_TileUpdate(i, j), pos, Vector2.Zero, ModContent.ProjectileType<ElfTradeProj>()
-                        , 0, 0, ai0: item.type,ai1:item.stack);
+                    int p = Projectile.NewProjectile(new EntitySource_TileUpdate(i, j), pos, Vector2.Zero, ModContent.ProjectileType<ElfTradeProj>()
+                         , 0, 0, ai0: item.type, ai1: item.stack);
 
                     (Main.projectile[p].ModProjectile as ElfTradeProj).itemCenter = item.Center;
                     Main.item[k].TurnToAir();
                 }
             }
+        }
+
+        public override void AnimateTile(ref int frame, ref int frameCounter)
+        {
+            if (++frameCounter > 3)
+            {
+                frameCounter = 0;
+                if (++frame > 35)
+                    frame = 0;
+            }
+        }
+
+        public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+        {
+            if (drawData.tileFrameX % (12*16) == 0 && drawData.tileFrameY % AnimationFrameHeight == 0)
+                Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
+        }
+
+        public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            Vector2 offScreen = new Vector2(Main.offScreenRange);
+            if (Main.drawToScreen)
+                offScreen = Vector2.Zero;
+
+            Point p = new Point(i, j);
+            Tile tile = Main.tile[p.X, p.Y];
+            if (tile == null || !tile.HasTile)
+                return;
+
+            Texture2D texture = EyeTex.Value;
+
+            Vector2 origin = EyeTex.Size() / 2f;
+            Vector2 worldPos = p.ToWorldCoordinates(0, 0);
+
+            const float TwoPi = (float)Math.PI * 2f;
+            float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
+            Vector2 drawPos = worldPos + offScreen - Main.screenPosition + new Vector2(98f, 92) + new Vector2(0f, offset * 8f);
+
+            // 绘制主帖图
+            spriteBatch.Draw(texture, drawPos, null, Color.White, 0f, origin, 0.4f, 0, 0f);
         }
     }
 

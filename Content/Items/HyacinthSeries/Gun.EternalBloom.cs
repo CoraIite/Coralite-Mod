@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.damage = 58;
+            Item.damage = 62;
             Item.useTime = 14;
             Item.useAnimation = 14;
             Item.knockBack = 5.5f;

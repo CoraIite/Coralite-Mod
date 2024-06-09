@@ -3950,3 +3950,8 @@ IcicleLegs: {
 	DisplayName: Icicle Legs
 	Tooltip: ""
 }
+
+PeridotTalisman: {
+	DisplayName: Peridot Talisman
+	Tooltip: ""
+}

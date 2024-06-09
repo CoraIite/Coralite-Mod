@@ -20,6 +20,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.friendly = true;
             Projectile.ignoreWater = false;
             Projectile.tileCollide = true;
+            Projectile.coldDamage = true;
         }
 
         public override void AI()
