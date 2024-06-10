@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.Nightmare
                 player.GetDamage(DamageClass.Generic) += cp.nightmareEnergy * 0.015f;
             }
 
-            //加8防御 2生命恢复每秒 4%减伤 8%移速 10%近战攻速 4%暴击
+            //加8防御 2生命恢复每秒 4%减伤 8%移速 13%近战攻速 4%暴击
 
             player.statDefense += 8;
             player.lifeRegen += 4;

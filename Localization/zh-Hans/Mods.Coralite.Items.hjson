@@ -4064,7 +4064,7 @@ SeniorRoughGemstone: {
 	Tooltip:
 		'''
 		使用提炼机可能会提炼出一颗宝石
-		挖掘宝石矿或是沙漠化石时可能会出现的宝石原石
+		挖掘水晶碎块时可能会出现的宝石原石
 		'''
 }
 
@@ -4093,11 +4093,11 @@ PearlBrooch: {
 
 RubyScepter: {
 	DisplayName: 红宝石权杖
-	Tooltip: 
-	'''
-	生成红宝石权杖向敌人发射暗红射线
-	同时抛出一些红宝石
-	'''
+	Tooltip:
+		'''
+		生成红宝石权杖向敌人发射暗红射线
+		同时抛出一些红宝石
+		'''
 }
 
 IcicleHelmet: {
@@ -4124,5 +4124,19 @@ IcicleLegs: {
 
 PeridotTalisman: {
 	DisplayName: 幽绿护身符
+	Tooltip:
+		'''
+			生成幽绿护身符向敌人发射橄榄石
+			命中后爆开并生成一些鬼魂
+		'''
+}
+
+Peridot: {
+	DisplayName: 橄榄石
+	Tooltip: 使用提炼机从上级宝石原石中提取
+}
+
+SapphireHairpin: {
+	DisplayName: 伯利恒之星
 	Tooltip: ""
 }

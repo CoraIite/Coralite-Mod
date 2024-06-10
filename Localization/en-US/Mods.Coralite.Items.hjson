@@ -3955,3 +3955,13 @@ PeridotTalisman: {
 	DisplayName: Peridot Talisman
 	Tooltip: ""
 }
+
+Peridot: {
+	DisplayName: Peridot
+	Tooltip: ""
+}
+
+SapphireHairpin: {
+	DisplayName: Sapphire Hairpin
+	Tooltip: ""
+}

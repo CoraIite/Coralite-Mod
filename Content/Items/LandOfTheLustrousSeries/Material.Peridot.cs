@@ -4,7 +4,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class Zumurud() : BaseGemItem(Item.sellPrice(0, 0, 50), ItemRarityID.Green, AssetDirectory.LandOfTheLustrousSeriesItems)
+    public class Peridot() : BaseGemItem(Item.sellPrice(0, 1), ItemRarityID.Lime, AssetDirectory.LandOfTheLustrousSeriesItems)
     {
     }
 }
