@@ -180,7 +180,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Projectile.DrawShadowTrails(ZumurudProj.darkC, 0.3f, 0.3f / 4, 0, 4, 1, -0.785f, -1);
+            Projectile.DrawShadowTrails(RubyProj.darkC, 0.3f, 0.3f / 4, 0, 4, 1, -0.785f, -1);
             Projectile.QuickDraw(lightColor, -0.785f);
             return false;
         }
@@ -210,7 +210,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.DamageType = DamageClass.Magic;
             Projectile.friendly = true;
             Projectile.timeLeft = 400;
-            Projectile.width = Projectile.height = 2;
+            Projectile.width = Projectile.height = 6;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.idStaticNPCHitCooldown = 10;

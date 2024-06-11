@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override void SetDefs()
         {
-            Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightPurple6, Item.sellPrice(0, 9));
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightPurple6, Item.sellPrice(0, 11));
             Item.SetWeaponValues(70, 4);
             Item.useTime = Item.useAnimation = 38;
             Item.mana = 20;
@@ -170,7 +170,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Projectile.DrawShadowTrails(ZumurudProj.darkC, 0.3f, 0.3f / 4, 0, 4, 1, 0, -1);
+            Projectile.DrawShadowTrails(PeridotProj.darkC, 0.3f, 0.3f / 4, 0, 4, 1, 0, -1);
             Projectile.QuickDraw(lightColor, 0);
             return false;
         }
