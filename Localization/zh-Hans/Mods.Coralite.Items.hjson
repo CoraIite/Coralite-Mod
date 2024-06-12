@@ -4138,5 +4138,9 @@ Peridot: {
 
 SapphireHairpin: {
 	DisplayName: 伯利恒之星
-	Tooltip: ""
+	Tooltip: 
+	'''
+	射出指引彗星坠落的蓝宝石
+	蓝宝石被彗星命中后爆开
+	'''
 }

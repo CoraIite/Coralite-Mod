@@ -351,6 +351,55 @@ namespace Coralite.Helpers
             return GetNPCOwner<T>((float)index, out owner, notExistAction);
         }
 
+
+        public static bool GetProjectileOwner(this float index, out Projectile owner, Action notExistAction = null)
+        {
+            if (!Main.projectile.IndexInRange((int)index))
+            {
+                notExistAction?.Invoke();
+                owner = null;
+                return false;
+            }
+
+            Projectile npc = Main.projectile[(int)index];
+            if (!npc.active)
+            {
+                notExistAction?.Invoke();
+                owner = null;
+                return false;
+            }
+
+            owner = npc;
+            return true;
+        }
+
+        public static bool GetProjectileOwner<T>(this float index, out Projectile owner, Action notExistAction = null) where T : ModProjectile
+        {
+            if (!Main.projectile.IndexInRange((int)index))
+            {
+                notExistAction?.Invoke();
+                owner = null;
+                return false;
+            }
+
+            Projectile proj = Main.projectile[(int)index];
+            if (!proj.active || proj.type != ModContent.ProjectileType<T>())
+            {
+                notExistAction?.Invoke();
+                owner = null;
+                return false;
+            }
+
+            owner = proj;
+            return true;
+        }
+
+        public static bool GetProjectileOwner<T>(this int index, out Projectile owner, Action notExistAction = null) where T : ModProjectile
+        {
+            return GetProjectileOwner<T>((float)index, out owner, notExistAction);
+        }
+
+
         /// <summary>
         /// 说是开始攻击，然鹅实际上是清空自身所有的本地NPC无敌帧
         /// </summary>
