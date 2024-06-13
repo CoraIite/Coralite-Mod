@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Materials;
-using Coralite.Content.Tiles.RedJades;
+﻿using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Systems.Trails;
@@ -23,7 +22,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override void SetDefs()
         {
-            Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightPurple6, Item.sellPrice(0, 13));
+            Item.SetShopValues(Terraria.Enums.ItemRarityColor.Yellow8, Item.sellPrice(0, 13));
             Item.SetWeaponValues(83, 4);
             Item.useTime = Item.useAnimation = 45;
             Item.mana = 30;
@@ -60,22 +59,22 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 effect.Parameters["lightLimit"].SetValue(0.15f);
                 effect.Parameters["addC"].SetValue(0.7f);
                 effect.Parameters["highlightC"].SetValue(SapphireProj.highlightC.ToVector4());
-                effect.Parameters["brightC"].SetValue(new Color(80, 150, 255).ToVector4());
-                effect.Parameters["darkC"].SetValue(new Color(0, 0, 255).ToVector4());
+                effect.Parameters["brightC"].SetValue(SapphireProj.brightC.ToVector4());
+                effect.Parameters["darkC"].SetValue(SapphireProj.darkC.ToVector4());
             }, 0.2f);
         }
 
         public override void SpawnParticle(DrawableTooltipLine line)
         {
-            SpawnParticleOnTooltipNormaly(line, PeridotProj.brightC, PeridotProj.darkC);
+            SpawnParticleOnTooltipNormaly(line, SapphireProj.brightC, SapphireProj.darkC);
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<Peridot>()
-                .AddIngredient(ItemID.Ectoplasm, 12)
-                .AddIngredient<RegrowthTentacle>()
+                .AddIngredient(ItemID.Sapphire)
+                .AddIngredient(ItemID.MarbleBlock, 30)
+                .AddIngredient(ItemID.FallenStar)
                 .AddTile<MagicCraftStation>()
                 .Register();
         }
@@ -150,7 +149,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                            dir2 * Main.rand.NextFloat(5, 6), Owner.GetWeaponDamage(Owner.HeldItem)
                            , Projectile.knockBack);
 
-                    Helper.PlayPitched("Crystal/GemShoot", 0.3f, -0.8f, Projectile.Center);
+                    Helper.PlayPitched("Crystal/GemShoot", 0.2f, -0.8f, Projectile.Center);
                     SoundEngine.PlaySound(CoraliteSoundID.CrystalSerpent_Item109, Projectile.Center);
 
                     for (int i = 0; i < 6; i++)
@@ -199,8 +198,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public ref float Target => ref Projectile.ai[2];
 
         public static Color highlightC = Color.White;
-        public static Color brightC = new Color(54, 190, 254);
-        public static Color darkC = new Color(0, 0, 121);
+        public static Color brightC = new Color(80, 150, 255);
+        public static Color darkC = new Color(0, 0, 255);
 
         public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);
 
@@ -528,7 +527,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                             st = CoraliteSoundID.Crystal_Item101;
                             st.Pitch =-0.2f;
                             SoundEngine.PlaySound(st, Projectile.Center);
-                            Helper.PlayPitched("Crystal/CrystalStrike", 0.4f, -0.2f, Projectile.Center);
+                            Helper.PlayPitched("Crystal/CrystalStrike", 0.2f, -0.2f, Projectile.Center);
 
                             float angle = Main.rand.NextFloat(6.282f);
                             float velocity = Main.rand.NextFloat(8, 11);
@@ -562,7 +561,17 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void OnKill(int timeLeft)
         {
-            for (int i = 0; i < 8; i++)
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
+                for (int i = 0; i < 10; i++)
+                {
+                    Vector2 dir2 = Helper.NextVec2Dir();
+                    SapphireProj.SpawnTriangleParticle(Projectile.Center + dir2 * Main.rand.NextFloat(6, 12), dir2 * Main.rand.NextFloat(0.5f, 3f));
+                }
+
+            if (!VisualEffectSystem.HitEffect_Dusts)
+                return;
+
+                for (int i = 0; i < 8; i++)
             {
                 Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24, 24),
                     DustID.UnusedWhiteBluePurple, Helper.NextVec2Dir() * Main.rand.NextFloat(2, 8),

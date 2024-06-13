@@ -3965,3 +3965,18 @@ SapphireHairpin: {
 	DisplayName: Sapphire Hairpin
 	Tooltip: ""
 }
+
+SilkAgate: {
+	DisplayName: Silk Agate
+	Tooltip: ""
+}
+
+PhantomCrystalBall: {
+	DisplayName: Phantom Crystal Ball
+	Tooltip: ""
+}
+
+TopazMirror: {
+	DisplayName: Topaz Mirror
+	Tooltip: ""
+}

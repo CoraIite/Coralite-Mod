@@ -19,6 +19,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Furnace)
+                .AddIngredient(ItemID.GlassKiln)
                 .AddIngredient(ItemID.Hellforge)
                 .AddIngredient(ItemID.AdamantiteForge)
                 .AddIngredient(ItemID.LunarCraftingStation)
@@ -27,6 +28,7 @@ namespace Coralite.Content.Items.FlyingShields
 
             CreateRecipe()
                 .AddIngredient(ItemID.Furnace)
+                .AddIngredient(ItemID.GlassKiln)
                 .AddIngredient(ItemID.Hellforge)
                 .AddIngredient(ItemID.TitaniumForge)
                 .AddIngredient(ItemID.LunarCraftingStation)
@@ -53,11 +55,20 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 TileID.Furnaces,
                 TileID.Hellforge,
+                TileID.GlassKiln,
                 TileID.AdamantiteForge,
                 TileID.LunarCraftingStation
             };
 
+            DustType = DustID.Ambient_DarkBrown;
+            MinPick = 160;
+
             AddMapEntry(Color.DarkGray, CreateMapEntryName());
+        }
+
+        public override void NumDust(int i, int j, bool fail, ref int num)
+        {
+            num=fail? 1 : 3;
         }
     }
 }

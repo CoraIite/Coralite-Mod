@@ -144,7 +144,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                     Projectile.NewProjectileFromThis<RubyLaser>(Projectile.Center,
                            Vector2.Zero, Owner.GetWeaponDamage(Owner.HeldItem)
-                           , Projectile.knockBack, Projectile.whoAmI, dir2.ToRotation(),RubyLaser.TotalAttackTime);
+                           , Projectile.knockBack, Projectile.whoAmI, dir2.ToRotation(), RubyLaser.TotalAttackTime);
 
                     int howMany = Main.rand.NextFromList(1, 1, 1, 2, 2, 3);
 
@@ -152,8 +152,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     {
                         Projectile.NewProjectileFromThis<RubyProj>(Projectile.Center,
                             dir2.RotatedBy((i % 2 == 0 ? -0.53f : 0.35f) + Main.rand.NextFloat(-0.15f, 0.15f)) * Main.rand.NextFloat(3f, 13f)
-                            , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, Projectile.whoAmI
-                            , ai1: (Main.MouseWorld - Projectile.Center).ToRotation(), 35 + i * 35);
+                            , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, ai1: (Main.MouseWorld - Projectile.Center).ToRotation(),ai2: 35 + i * 35);
                     }
 
                     Helper.PlayPitched("Crystal/CrystalStrike", 0.4f, -0.2f, Projectile.Center);

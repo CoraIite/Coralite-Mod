@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Items.Accessories;
 using Coralite.Content.Items.Banner;
+using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.Magike.OtherPlaceables;
 using Coralite.Core;
@@ -244,7 +245,11 @@ namespace Coralite.Content.NPCs.Magike
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Basalt>(), 1, 1, 8));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicCrystal>(), 1, 1, 4));
+            
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GigantesShoes>(), 5));
+
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PrimaryRoughGemstone>(), 3,1,3));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<SeniorRoughGemstone>(), 3,1,3));
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

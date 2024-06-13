@@ -1,6 +1,8 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
+using Coralite.Core;
 using Terraria;
 using Terraria.ID;
+using Terraria.Utilities;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
@@ -27,28 +29,21 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             resultStack = 1;
 
-            resultType = Main.rand.NextFromList(
-                ModContent.ItemType<Zumurud>(),
-                ItemID.Ruby
-                );
+            var wr = new WeightedRandom<int>(Main.rand);
 
-            if (Main.rand.NextBool(3))
-            {
-                resultType = Main.rand.NextFromList(
-                   ModContent.ItemType<Pyrope>(),
-                   ModContent.ItemType<Aquamarine>(),
-                   ModContent.ItemType<PinkDiamond>(),
-                   ItemID.Amethyst
-                   );
+            wr.Add(ModContent.ItemType<Zumurud>());
+            wr.Add(ItemID.Ruby,0.5f);
 
-                return;
-            }
+            wr.Add(ModContent.ItemType<Pyrope>(),0.5f);
+            wr.Add(ModContent.ItemType<Aquamarine>(), 0.5f);
+            wr.Add(ModContent.ItemType<PinkDiamond>(), 0.5f);
+            wr.Add(ItemID.Amethyst, 0.3f);
 
-            if (Main.rand.NextBool(5))
-            {
-                resultType = ItemID.StoneBlock;
-            }
+            wr.Add(ModContent.ItemType<SilkAgate>(),0.1f);
 
+            wr.Add(ItemID.StoneBlock,0.5f);
+
+            resultType = wr.Get();
         }
     }
 }

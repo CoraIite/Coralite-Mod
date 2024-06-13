@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Terraria;
 using Terraria.ID;
+using Terraria.Utilities;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
@@ -25,17 +26,16 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack)
         {
-            resultType = Main.rand.NextFromList(
-                ModContent.ItemType<Pyrope>(),
-                ModContent.ItemType<Aquamarine>(),
-                ModContent.ItemType<PinkDiamond>(),
-                ItemID.Amethyst
-                );
+            var wr = new WeightedRandom<int>(Main.rand);
 
-            if (Main.rand.NextBool(3))
-            {
-                resultType = ItemID.StoneBlock;
-            }
+            wr.Add(ModContent.ItemType<Pyrope>());
+            wr.Add(ModContent.ItemType<Aquamarine>());
+            wr.Add(ModContent.ItemType<PinkDiamond>());
+            wr.Add(ItemID.Amethyst,0.8f);
+
+            wr.Add(ItemID.StoneBlock, 0.8f);
+
+            resultType = wr.Get();
 
             resultStack = 1;
         }

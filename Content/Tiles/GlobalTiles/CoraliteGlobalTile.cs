@@ -344,11 +344,11 @@ namespace Coralite.Content.Tiles.GlobalTiles
                 case TileID.Amethyst:
                 case TileID.Diamond:
                 case TileID.DesertFossil:
-                    if (Main.rand.NextBool(3,100))
+                    if (Main.rand.NextBool(12,100))
                         Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<PrimaryRoughGemstone>());
                     break;
                 case TileID.Crystals:
-                    if (Main.rand.NextBool(5, 100))
+                    if (Main.rand.NextBool(15, 100))
                         Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<SeniorRoughGemstone>());
                     break;
             }

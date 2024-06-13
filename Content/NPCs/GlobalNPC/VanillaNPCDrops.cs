@@ -2,6 +2,7 @@
 using Coralite.Content.Items.Donator;
 using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.FlyingShields.Accessories;
+using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Placeable;
 using Coralite.Content.Items.YujianHulu;
@@ -106,8 +107,12 @@ namespace Coralite.Content.NPCs.GlobalNPC
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), ItemType<SkyRing>(), 50, 1, 1));
                     break;
 
-                case NPCID.RockGolem://岩石巨人,花岗岩敌怪，附魔剑 掉落上古宝石
-                case NPCID.GraniteFlyer:
+                case NPCID.RockGolem://岩石巨人掉落上古宝石，上级宝石原石
+                    npcLoot.Add(ItemDropRule.Common(ItemType<AncientGemstone>(), 20, 1, 3));
+                    npcLoot.Add(ItemDropRule.Common(ItemType<SeniorRoughGemstone>(), 2, 1, 3));
+                    break;
+
+                case NPCID.GraniteFlyer://岩石巨人,花岗岩敌怪，附魔剑 掉落上古宝石
                 case NPCID.EnchantedSword:
                     npcLoot.Add(ItemDropRule.Common(ItemType<AncientGemstone>(), 20, 1, 3));
                     break;

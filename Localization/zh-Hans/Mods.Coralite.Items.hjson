@@ -4144,3 +4144,22 @@ SapphireHairpin: {
 		蓝宝石被彗星命中后爆开
 		'''
 }
+
+SilkAgate: {
+	DisplayName: 缠丝玛瑙
+	Tooltip:
+		'''
+		使用提炼机从上级宝石原石中提取
+		+12% 魔法武器攻击速度
+		'''
+}
+
+PhantomCrystalBall: {
+	DisplayName: 幻光球
+	Tooltip: 来自宇宙之外的神秘球体
+}
+
+TopazMirror: {
+	DisplayName: 黄晶幻象
+	Tooltip: ""
+}
