@@ -98,7 +98,14 @@ namespace Coralite.Content.ModPlayers
         public Vector2 oldOldVelocity;
         public Vector2 oldVelocity;
 
+        /// <summary>
+        /// 冷系伤害加成
+        /// </summary>
         public StatModifier coldDamageBonus;
+        /// <summary>
+        /// 宝石武器攻速加成
+        /// </summary>
+        public StatModifier GemWeaponAttSpeedBonus;
 
         public override void Load()
         {
@@ -135,6 +142,7 @@ namespace Coralite.Content.ModPlayers
 
             fallDamageModifyer = new StatModifier();
             coldDamageBonus = new StatModifier();
+            GemWeaponAttSpeedBonus = new StatModifier();
 
             ResetFlyingShieldSets();
 

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Prefixes.GemWeaponPrefixes;
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Content.Prefixes.GemWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
@@ -29,6 +30,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         }
 
         public virtual void SetDefs() { }
+
+        public override float UseSpeedMultiplier(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+                return cp.GemWeaponAttSpeedBonus.ApplyTo(1);
+
+            return 1f;
+        }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
