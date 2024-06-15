@@ -1,6 +1,7 @@
 using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Misc_Melee;
+using Coralite.Content.ModPlayers;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,12 +15,14 @@ using Terraria.Localization;
 
 namespace Coralite.Content.Items.GlobalItems
 {
-    public class CoraliteGlobalItem : GlobalItem, ILocalizedModType, IVariantItem
+    public partial class CoraliteGlobalItem : GlobalItem, ILocalizedModType, IVariantItem
     {
         public static LocalizedText CopperCoralCat;
         public static LocalizedText RubyCoralCat;
         public static LocalizedText TerraCoralCat;
         public static LocalizedText RainBowCoralCat;
+
+        public override bool InstancePerEntity => true;
 
         public string LocalizationCategory => "GlobalItems";
 
@@ -29,6 +32,7 @@ namespace Coralite.Content.Items.GlobalItems
             RubyCoralCat = this.GetLocalization("RubyCoralCat", () => "红玉猫猫币");
             TerraCoralCat = this.GetLocalization("TerraCoralCat", () => "泰拉猫猫币");
             RainBowCoralCat = this.GetLocalization("RainBowCoralCat", () => "彩虹猫猫币");
+            Cold = this.GetLocalization("Cold", () => "[c/5cd7f9:寒冷]");
         }
 
         public override void Unload()
@@ -37,6 +41,7 @@ namespace Coralite.Content.Items.GlobalItems
             RubyCoralCat = null;
             TerraCoralCat = null;
             RainBowCoralCat = null;
+            Cold = null;
         }
 
         public override void SetDefaults(Item item)
@@ -105,6 +110,8 @@ namespace Coralite.Content.Items.GlobalItems
                     }
                     break;
             }
+
+            RegisterColdDamageWeapon(item.type);
         }
 
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
@@ -226,6 +233,23 @@ namespace Coralite.Content.Items.GlobalItems
                             return;
                     }
             }
+
+            if (ColdDamage)
+            {
+                TooltipLine damage = tooltips.Find(line => line.Mod == "Terraria" && line.Name == "Damage");
+                if (damage != null)
+                {
+                    string[] text = damage.Text.Split(" ");
+                    if (text.Length > 1)
+                        damage.Text = string.Concat(text[0], " ", Cold.Value, " ", text[1]);
+                }
+            }
+        }
+
+        public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
+        {
+            if (ColdDamage && player.TryGetModPlayer(out CoralitePlayer cp))
+                damage = damage.CombineWith(cp.coldDamageBonus);
         }
 
         public override void UpdateInventory(Item item, Player player)

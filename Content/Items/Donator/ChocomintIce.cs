@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Particles;
+﻿using Coralite.Content.Items.GlobalItems;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
@@ -34,6 +35,7 @@ namespace Coralite.Content.Items.Donator
             Item.rare = RarityType<ChocomintIceRarity>();
             Item.DamageType = DamageClass.Summon;
             Item.useStyle = ItemUseStyleID.HoldUp;
+            CoraliteGlobalItem.SetColdDamage(Item);
         }
 
         public override bool AltFunctionUse(Player player) => true;

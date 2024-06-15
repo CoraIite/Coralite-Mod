@@ -1,3 +1,4 @@
+using Coralite.Content.Items.GlobalItems;
 using Coralite.Core;
 using System.Linq;
 using Terraria;
@@ -33,6 +34,8 @@ namespace Coralite.Content.Items.Icicle
             Item.rare = ItemRarityID.Green;
             Item.DamageType = DamageClass.Summon;
             Item.useStyle = ItemUseStyleID.Swing;
+
+            CoraliteGlobalItem.SetColdDamage(Item);
         }
 
         public override bool AltFunctionUse(Player Player) => true;

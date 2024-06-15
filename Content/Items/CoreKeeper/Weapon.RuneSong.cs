@@ -153,7 +153,8 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public void UpdateBuffHeldItem(Player player)
         {
-            player.statLifeMax2 += 62;
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+                cp.LifeMaxModifyer.Flat += 62;
         }
     }
 

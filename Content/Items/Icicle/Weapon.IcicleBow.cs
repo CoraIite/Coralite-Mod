@@ -1,3 +1,4 @@
+using Coralite.Content.Items.GlobalItems;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Terraria;
@@ -33,6 +34,7 @@ namespace Coralite.Content.Items.Icicle
             Item.noMelee = true;
             Item.autoReuse = true;
             Item.channel = true;
+            CoraliteGlobalItem.SetColdDamage(Item);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

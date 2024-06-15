@@ -1,4 +1,5 @@
-﻿using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.Items.GlobalItems;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Terraria;
 using Terraria.Audio;
@@ -36,6 +37,7 @@ namespace Coralite.Content.Items.Misc_Melee
             Item.useAnimation = 25;
             Item.useTime = 25;
             Item.shoot = ModContent.ProjectileType<IceShortSwordProj>(); // The projectile is what makes a shortsword work
+            CoraliteGlobalItem.SetColdDamage(Item);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

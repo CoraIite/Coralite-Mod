@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Particles;
+﻿using Coralite.Content.Items.GlobalItems;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
@@ -50,6 +51,7 @@ namespace Coralite.Content.Items.Icicle
             Item.noUseGraphic = true;
             Item.noMelee = true;
             Item.autoReuse = true;
+            CoraliteGlobalItem.SetColdDamage(Item);
         }
 
         public override bool AltFunctionUse(Player player) => true;

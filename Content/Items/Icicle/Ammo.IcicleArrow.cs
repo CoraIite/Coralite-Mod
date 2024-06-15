@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.GlobalItems;
+using Coralite.Core;
 using Terraria;
 using Terraria.ID;
 
@@ -11,7 +12,7 @@ namespace Coralite.Content.Items.Icicle
         public override void SetDefaults()
         {
             Item.ammo = AmmoID.Arrow;
-            Item.damage = 10;
+            Item.damage = 9;
             Item.knockBack = 3f;
             Item.maxStack = Item.CommonMaxStack;
             Item.shootSpeed = 4;
@@ -21,6 +22,7 @@ namespace Coralite.Content.Items.Icicle
             Item.value = Item.sellPrice(0, 0, 0, 5);
             Item.rare = ItemRarityID.Orange;
             Item.shoot = ModContent.ProjectileType<IcicleArrow>();
+            CoraliteGlobalItem.SetColdDamage(Item);
         }
 
         public override void AddRecipes()

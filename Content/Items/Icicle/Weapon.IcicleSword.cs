@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.GlobalItems;
+using Coralite.Core;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -32,6 +33,7 @@ namespace Coralite.Content.Items.Icicle
             Item.noUseGraphic = true;
             Item.noMelee = true;
             Item.autoReuse = true;
+            CoraliteGlobalItem.SetColdDamage(Item);
         }
 
         public override bool CanUseItem(Player player)

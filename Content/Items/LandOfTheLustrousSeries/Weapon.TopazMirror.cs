@@ -67,12 +67,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient(ItemID.Sapphire)
-                .AddIngredient(ItemID.MarbleBlock, 30)
-                .AddIngredient(ItemID.FallenStar)
-                .AddTile<MagicCraftStation>()
-                .Register();
+            //CreateRecipe()
+            //    .AddIngredient(ItemID.Sapphire)
+            //    .AddIngredient(ItemID.MarbleBlock, 30)
+            //    .AddIngredient(ItemID.FallenStar)
+            //    .AddTile<MagicCraftStation>()
+            //    .Register();
         }
     }
 
@@ -81,6 +81,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "TopazMirror";
 
         public int attackType;
+        public int recordTime;
 
         public override void SetStaticDefaults()
         {
@@ -167,6 +168,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             AttackTime = time;
             Owner.itemTime = time;
+            recordTime= time;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -176,14 +178,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime > 0)
             {
-                Vector2 pos = Projectile.Center - Main.screenPosition;
-                float factor = AttackTime / Owner.itemTimeMax;
-                Helper.DrawPrettyStarSparkle(1, 0, pos, SapphireProj.highlightC, SapphireProj.brightC
-                    , factor, 0, 0.5f, 0.5f, 1
-                    , 0, new Vector2(2f, 0.8f), Vector2.One / 3);
-                Helper.DrawPrettyStarSparkle(1, 0, pos, SapphireProj.highlightC, SapphireProj.brightC
-                    , factor, 0, 0.5f, 0.5f, 1
-                    , 0, new Vector2(3f, 1f), Vector2.One / 3);
+                Vector2 pos = Projectile.Center + new Vector2(0, -12) - Main.screenPosition;
+                float factor = AttackTime / recordTime;
+                Helper.DrawPrettyStarSparkle(1, 0, pos, TopazProj.highlightC, TopazProj.brightC
+                    , factor, 0, 0.9f, 0.9f, 1
+                    , MathHelper.PiOver4, new Vector2(1.5f), Vector2.One / 3);
+                Helper.DrawPrettyStarSparkle(1, 0, pos, TopazProj.highlightC, TopazProj.brightC
+                    , factor, 0, 0.9f, 0.9f, 1
+                    , MathHelper.PiOver4, new Vector2(2f), Vector2.One / 3);
             }
             return false;
         }
@@ -197,7 +199,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public ref float State => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.ai[2];
 
+        public ref float RecodeTime => ref Projectile.localAI[0];
+
         private float alpha;
+        private float scale;
+        private float WeaponTexLength;
+        public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);
 
         public enum AttackType
         {
@@ -226,6 +233,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (!POwner.GetProjectileOwner(out Projectile owner, Projectile.Kill))
                 return;
 
+            if (RecodeTime==0)
+                RecodeTime = Timer;
+
             Projectile.Center = owner.Center;
 
             Timer--;
@@ -249,6 +259,29 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     SpawnSpike();
                     break;
             }
+
+            float factor = 1 - Timer / RecodeTime;
+
+            do
+            {
+                if (factor < 0.2f)
+                {
+                    float sqrtFactor = Coralite.Instance.SqrtSmoother.Smoother(factor / 0.2f);
+                    alpha = Helper.Lerp(0, 1, sqrtFactor);
+                    WeaponTexLength = Helper.Lerp(0, 64, sqrtFactor);
+                    scale = Helper.Lerp(0, 0.3f, sqrtFactor);
+                    break;
+                }
+
+                //if (factor < 0.7f)
+                //    break;
+
+                float factor2 = (factor - 0.2f) / 0.7f;
+                alpha = Helper.Lerp(1, 0, factor2);
+                WeaponTexLength = Helper.Lerp(64, 96, factor2);
+            } while (false);
+
+            Projectile.rotation += 0.01f;
         }
 
         public void ShootSword()
@@ -256,9 +289,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if ((int)Timer % (Owner.itemTimeMax*3 / 8) == 0)
             {
                 int count = (int)Timer / (Owner.itemTimeMax*3 / 8);
-                Vector2 pos = Projectile.Center + ( count * MathHelper.PiOver2).ToRotationVector2() * 64;
+                Vector2 pos = Projectile.Center + ( count * MathHelper.PiOver2).ToRotationVector2() * 48;
                 Vector2 dir = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero);
-               int index= Projectile.NewProjectileFromThis<TopazFlySword>(pos,dir  * 15
+               int index= Projectile.NewProjectileFromThis<TopazFlySword>(pos,dir  * 12
                     , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
                 Main.projectile[index].rotation = dir.ToRotation() + 0.785f;
             }
@@ -301,7 +334,30 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D tex = GetTexture(out float exRot);
+            var weaponOrigin=tex.Size()/2;
+            Texture2D circleTex = TextureAssets.Projectile[ProjectileID.CultistRitual].Value;
+            var circleOrigin = circleTex.Size()/2;
+            Texture2D circleTex2 = TextureAssets.Extra[34].Value;
+            var circleOrigin2 = circleTex2.Size()/2;
+            rand.Y += 0.2f;
 
+            Color c = Color.White * alpha;
+
+            Helper.DrawCrystal(Main.spriteBatch, Projectile.frame, Projectile.Center + rand, new Vector2(0.7f)
+                , (float)Main.timeForVisualEffects * 0.02f  
+                , highlightC, brightC, darkC, () =>
+                {
+                    Main.spriteBatch.Draw(tex, Projectile.Center+new Vector2(0,-WeaponTexLength), null,
+                         c, exRot, weaponOrigin, 1, 0, 0);
+                    Main.spriteBatch.Draw(circleTex, Projectile.Center, null,
+                         c, Projectile.rotation, circleOrigin, scale, 0, 0);
+                    Main.spriteBatch.Draw(circleTex2, Projectile.Center, null,
+                         c, Projectile.rotation+Main.GlobalTimeWrappedHourly, circleOrigin2, scale, 0, 0);
+                }, sb =>
+                {
+                    sb.End();
+                    sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                }, 0.1f, 0.15f, 0.7f);
 
             return false;
         }
@@ -383,8 +439,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         #endregion
 
-        #region Draw
-
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTexture();
@@ -400,7 +454,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             rand -= Projectile.velocity / 20;
 
             Helper.DrawCrystal(Main.spriteBatch, Projectile.frame, Projectile.Center + rand, new Vector2(0.7f)
-                , (float)(Main.timeForVisualEffects + Projectile.timeLeft) * (Main.gamePaused ? 0.02f : 0.01f) + Projectile.whoAmI / 3f
+                , (float)Main.timeForVisualEffects * 0.02f
                 , TopazProj.highlightC, TopazProj.brightC, TopazProj.darkC, () =>
                 {
                     Main.spriteBatch.Draw(Projectile.GetTexture(), Projectile.Center, null,
@@ -412,8 +466,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }, 0.1f, 0.15f, 0.7f);
             return false;
         }
-
-        #endregion
 
         public override void OnKill(int timeLeft)
         {
@@ -433,6 +485,72 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (Projectile.ai[0] != 1)
                 SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
+        }
+    }
+
+    public class TopazSpike:ModProjectile
+    {
+        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
+
+        public override void AI()
+        {
+            int num5 = 2;
+            int num6 = 2;
+            int maxValue = 3;
+
+            Projectile.ai[0] += 1f;
+            if (Projectile.localAI[0] == 0f)
+            {
+                Projectile.localAI[0] = 1f;
+                Projectile.rotation = Projectile.velocity.ToRotation();
+                Projectile.frame = Main.rand.Next(maxValue);
+                for (int i = 0; i < 30; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), DustID.YellowTorch, Projectile.velocity * MathHelper.Lerp(0.2f, 0.7f, Main.rand.NextFloat()));
+                    dust.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
+                    dust.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
+                }
+
+                for (int j = 0; j < 30; j++)
+                {
+                    Dust dust2 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), DustID.YellowTorch, Main.rand.NextVector2Circular(2f, 2f) + Projectile.velocity * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat()));
+                    dust2.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
+                    dust2.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
+                    dust2.fadeIn = 1f;
+                }
+
+                    SoundEngine.PlaySound(SoundID.Item60, Projectile.Center);
+            }
+
+            if (Projectile.ai[0] < 20)
+            {
+                Projectile.Opacity += 0.1f;
+                Projectile.scale = Projectile.Opacity * Projectile.ai[1];
+                for (int k = 0; k < num5; k++)
+                {
+                    Dust dust3 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16f, 16f), DustID.YellowTorch, Projectile.velocity * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat()));
+                    dust3.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
+                    dust3.velocity *= 0.5f;
+                    dust3.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
+                }
+            }
+
+            if (Projectile.ai[0] >= 30)
+            {
+                Projectile.Opacity -= 0.2f;
+                for (int l = 0; l < num6; l++)
+                {
+                    Dust dust4 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16f, 16f), DustID.YellowTorch, Projectile.velocity * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat()));
+                    dust4.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
+                    dust4.velocity *= 0.5f;
+                    dust4.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
+                }
+            }
+
+            if (Projectile.ai[0] >= 35)
+                Projectile.Kill();
+
+                Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0.1f, 0.1f) * Projectile.scale);
         }
     }
 }

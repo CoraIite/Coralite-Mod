@@ -4103,31 +4103,31 @@ RubyScepter: {
 IcicleHelmet: {
 	ArmorBonus:
 		'''
-		抵御冷系伤害
+		抵御寒冷伤害
 		按下套装奖励键使用冰晶吐息或冰刺
 		使用冰晶魔法后会获得冷却Buff，无法使用冰晶魔法但是会增加15%冷系伤害
 		套装奖励键可在模组配置中更改
 		'''
 	DisplayName: 冰晶头盔
-	Tooltip: +6% 攻击速度
+	Tooltip: +4% 攻击速度
 }
 
 IcicleBreastplate: {
 	DisplayName: 冰晶鳞甲
-	Tooltip: +8% 攻击速度
+	Tooltip: +6% 攻击速度
 }
 
 IcicleLegs: {
 	DisplayName: 冰晶护胫
-	Tooltip: +6% 攻击速度
+	Tooltip: +4% 攻击速度
 }
 
 PeridotTalisman: {
 	DisplayName: 幽绿护身符
 	Tooltip:
 		'''
-			生成幽绿护身符向敌人发射橄榄石
-			命中后爆开并生成一些鬼魂
+		生成幽绿护身符向敌人发射橄榄石
+		命中后爆开并生成一些鬼魂
 		'''
 }
 

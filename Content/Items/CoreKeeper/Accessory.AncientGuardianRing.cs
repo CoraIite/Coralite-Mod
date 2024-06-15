@@ -20,10 +20,10 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 18;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.bossDamageReduce += 0.05f;
+                cp.LifeMaxModifyer.Flat += 18;
             }
         }
     }

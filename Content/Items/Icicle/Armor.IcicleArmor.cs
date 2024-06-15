@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void UpdateEquip(Player player)
         {
-            player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
+            player.GetAttackSpeed(DamageClass.Generic) += 0.04f;
         }
 
         public override void UpdateArmorSet(Player player)
@@ -97,7 +97,7 @@ namespace Coralite.Content.Items.Icicle
                     j++;
                 }
 
-            player.AddBuff(BuffType<IcicleArmorBonus>(), 60 * 3);
+            player.AddBuff(BuffType<IcicleArmorBonus>(), 60 * 10);
 
         }
 
@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 PunchCameraModifier modifier = new PunchCameraModifier(player.Center, new Vector2(0f, 1f), 10f, 6f, 15, 1000f, "BabyIceDragon");
                 Main.instance.CameraModifiers.Add(modifier);
-                player.AddBuff(BuffType<IcicleArmorBonus>(), 60 * 3);
+                player.AddBuff(BuffType<IcicleArmorBonus>(), 60 * 10);
             }
             else
                 SpawnIceBreath(player);
@@ -222,7 +222,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void UpdateEquip(Player player)
         {
-            player.GetAttackSpeed(DamageClass.Generic) += 0.08f;
+            player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
         }
 
         public override void AddRecipes()
@@ -250,7 +250,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void UpdateEquip(Player player)
         {
-            player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
+            player.GetAttackSpeed(DamageClass.Generic) += 0.04f;
         }
 
         public override void AddRecipes()

@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.CustomHooks;
+using Coralite.Content.Items.GlobalItems;
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;
@@ -24,6 +25,7 @@ namespace Coralite.Content.Items.Icicle
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.DeathbringerPickaxe);
+            CoraliteGlobalItem.SetColdDamage(Item);
         }
 
         public override void AddRecipes()

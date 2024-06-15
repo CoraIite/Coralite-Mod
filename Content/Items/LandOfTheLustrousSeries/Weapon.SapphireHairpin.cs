@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Sapphire)
-                .AddIngredient(ItemID.MarbleBlock, 30)
+                .AddIngredient(ItemID.MartianConduitPlating, 30)
                 .AddIngredient(ItemID.FallenStar)
                 .AddTile<MagicCraftStation>()
                 .Register();

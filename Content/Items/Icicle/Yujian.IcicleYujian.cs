@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.BabyIceDragon;
+using Coralite.Content.Items.GlobalItems;
 using Coralite.Content.Items.YujianHulu;
 using Coralite.Core;
 using Coralite.Core.Systems.YujianSystem;
@@ -17,6 +18,12 @@ namespace Coralite.Content.Items.Icicle
         public IcicleYujian() : base(ItemRarityID.Orange, Item.sellPrice(0, 0, 50, 0), 14, 1.3f, AssetDirectory.IcicleItems) { }
 
         public override int ProjType => ModContent.ProjectileType<IcicleYujianProj>();
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            CoraliteGlobalItem.SetColdDamage(Item);
+        }
 
         public override void AddRecipes()
         {

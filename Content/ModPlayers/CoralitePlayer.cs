@@ -89,6 +89,10 @@ namespace Coralite.Content.ModPlayers
         /// 摔落伤害倍率
         /// </summary>
         public StatModifier fallDamageModifyer = default;
+        /// <summary>
+        /// 生命上限加成
+        /// </summary>
+        public StatModifier LifeMaxModifyer = default;
 
         /// <summary>
         /// 使用特殊攻击
@@ -209,6 +213,9 @@ namespace Coralite.Content.ModPlayers
         {
             if (Player.HeldItem.ModItem is IBuffHeldItem buffHeldItem)
                 buffHeldItem.UpdateBuffHeldItem(Player);
+
+            Player.statLifeMax2 = (int)LifeMaxModifyer.ApplyTo(Player.statLifeMax2);
+            LifeMaxModifyer = new StatModifier();
         }
 
         public override void PostUpdateEquips()
@@ -234,7 +241,6 @@ namespace Coralite.Content.ModPlayers
 
             if (nightmareEnergy > nightmareEnergyMax)
                 nightmareEnergy = nightmareEnergyMax;
-
         }
 
         public override void PostUpdateMiscEffects()
@@ -545,11 +551,6 @@ namespace Coralite.Content.ModPlayers
             if (HasEffect(nameof(FlaskOfRedJadeBuff)) && proj.DamageType == DamageClass.Melee && Main.rand.NextBool(4))
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
                     ProjectileType<RedJadeBoom>(), (int)(proj.damage * 0.75f), 0, Player.whoAmI);
-
-            if (proj.coldDamage)//冷系加成
-            {
-                modifiers.SourceDamage.CombineWith(coldDamageBonus);
-            }
         }
 
         public override bool FreeDodge(Player.HurtInfo info)
