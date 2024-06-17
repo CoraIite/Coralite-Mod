@@ -88,11 +88,11 @@ namespace Coralite.Content.ModPlayers
         /// <summary>
         /// 摔落伤害倍率
         /// </summary>
-        public StatModifier fallDamageModifyer = default;
+        public StatModifier fallDamageModifyer = new StatModifier();
         /// <summary>
         /// 生命上限加成
         /// </summary>
-        public StatModifier LifeMaxModifyer = default;
+        public StatModifier LifeMaxModifyer = new StatModifier();
 
         /// <summary>
         /// 使用特殊攻击
@@ -214,7 +214,11 @@ namespace Coralite.Content.ModPlayers
             if (Player.HeldItem.ModItem is IBuffHeldItem buffHeldItem)
                 buffHeldItem.UpdateBuffHeldItem(Player);
 
-            Player.statLifeMax2 = (int)LifeMaxModifyer.ApplyTo(Player.statLifeMax2);
+            int tempLifeMax = Player.statLifeMax2;
+            Player.statLifeMax2 = (int)LifeMaxModifyer.ApplyTo(Player.statLifeMax2);//防止一些意外事故
+            if (Player.statLifeMax2 < 1)
+                Player.statLifeMax2 = tempLifeMax;
+
             LifeMaxModifyer = new StatModifier();
         }
 
