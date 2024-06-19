@@ -1,29 +1,29 @@
 Rediancie: {
-	SpawnInfo: A bizarre crystal that drives itself through erratic red energy.
-	Despawn: Rediancie returned to the underground
+	SpawnInfo: A bizarre crystal that empowers itself through erratic red energy.
+	Despawn: Rediancie retreated underground
 }
 
 BabyIceDragon: {
-	SpawnInfo: A baby ice dragon that had just broken out of its shell could not fully grasp the power of ice magic
-	Despawn: Baby Ice Dragon escaped
+	SpawnInfo: This newly hatched ice dragon, still unable to control its powerful ice magic.
+	Despawn: The Baby Ice Dragon ran away
 }
 
 SlimeEmperor: {
 	SpawnInfo: A great gel leader with a very high status among slimes
-	Despawn: Slime Emperor returns to its kingdom
+	Despawn: The Slime Emperor returns to its kingdom
 }
 
 NightmarePlantera: {
-	SpawnInfo: Nightmares took over the body of the once defeated Plantera and transformed into a powerful nightmare god
+	SpawnInfo: The Nightmares took over the body of the defeated Plantera and transformed into a powerful nightmare deity
 	Despawn: The dream dissipated
 }
 
 Bloodiancie: {
-	SpawnInfo: 一位伟大的凝胶领袖，在史莱姆中有着极高的地位，在记载中每100只史莱姆王中才会诞生一位皇帝，或许可以叫它“至高帝·史莱姆王”。
-	Despawn: 赤血玉灵回归了地底
+	SpawnInfo: Absorbing the power of the blood moon, the Bloodiancie can create destructive explosions.
+	Despawn: The Bloodiancie retreated back to hell.
 }
 
 ThunderveinDragon: {
-	SpawnInfo: 掌控雷电魔法的双足飞龙种，体内储存着十分庞大的电能。
-	Despawn: 荒雷龙如闪电般离去
+	SpawnInfo: An thunder dragon that harness and control powerful thunder magic.
+	Despawn: The Thundervein Dragon left like lightning.
 }
