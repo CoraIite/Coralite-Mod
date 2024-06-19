@@ -1,26 +1,26 @@
 SnowDebuff: {
 	DisplayName: Snow
-	Description: Surrounded by snowflakes
+	Description: You are surrounded by snowflakes
 }
 
 IcicleThornBuff: {
 	DisplayName: Icicle Thorn
-	Description: Icicle Thorn Fight for you
+	Description: Icicle thorn will fight for you
 }
 
 MushroomDragonBuff: {
 	DisplayName: Mushroom Dragon
-	Description: Mushroom Dragon Fight for you
+	Description: The mushroom dragon will fight for you
 }
 
 RedBinkBuff: {
 	DisplayName: Red Bink
-	Description: The little one is also very cute
+	Description: Quite the cutie
 }
 
 RedianciePetBuff: {
 	DisplayName: Little Rediancie
-	Description: Little Rediancie surrounds you
+	Description: A little rediancie is orbiting you
 }
 
 ShadowCircleBuff: {
@@ -30,17 +30,17 @@ ShadowCircleBuff: {
 
 BloodyHookDebuff: {
 	DisplayName: Bloody Hook Debuff
-	Description: You are bloody!
+	Description: You are bleeding badly!
 }
 
 DreamErosion: {
 	DisplayName: Dream Erosion
-	Description: Mods.Coralite.Buffs.DreamErosion.Description
+	Description: The nightmare erodes away your will
 }
 
 GelWhipDebuff: {
 	DisplayName: Gel Whip Debuff
-	Description: Mods.Coralite.Buffs.GelWhipDebuff.Description
+	Description: Slimy and sticky
 }
 
 EuphorbiaPoison: {
@@ -50,7 +50,7 @@ EuphorbiaPoison: {
 
 NightmareRavenBuff: {
 	DisplayName: Nightmare Raven
-	Description: These little ones from the nightmare will fight for you!
+	Description: Ravens that escaped from the nightmare to heed you.
 }
 
 EdenDebuff: {
@@ -59,30 +59,30 @@ EdenDebuff: {
 }
 
 PurpleToeBuff: {
-	DisplayName: Purple Toe
-	Description: They love your dreams!
+	DisplayName: Nightmare Predator
+	Description: They feast on your dreams.
 }
 
 Bloodthirsty: {
 	DisplayName: Bloodthirsty
 	Description: You crave blood!
-	Current: Number of layers:
+	Current: Number of stacks:
 }
 
 LimbRebirth: {
 	DisplayName: Limb Rebirth
 	Description: I need Healing！
-	Current: Number of layers:
+	Current: Number of stacks:
 }
 
 MetallionBuff: {
 	DisplayName: Metallion Buff
-	Description: Mods.Coralite.Buffs.MetallionBuff.Description
+	Description: Reduce damage taken by 8%
 }
 
 BloodJadeBuff: {
 	DisplayName: Blood Jade Buff
-	Description: Mods.Coralite.Buffs.BloodJadeBuff.Description
+	Description: The blood jade grows more unstable
 }
 
 IvyPoison: {
@@ -92,27 +92,27 @@ IvyPoison: {
 
 KitsuneBuff: {
 	DisplayName: Kitsune Buff
-	Description: Mods.Coralite.Buffs.KitsuneBuff.Description
+	Description: A kitsune is accompanying you
 }
 
 ThunderveinSoulBuff: {
 	DisplayName: Thundervein Soul Buff
-	Description: Mods.Coralite.Buffs.ThunderveinSoulBuff.Description
+	Description: The spirit of the Thundervein dragon is following you
 }
 
 IcicleSoulBuff: {
 	DisplayName: Icicle Soul Buff
-	Description: Mods.Coralite.Buffs.IcicleSoulBuff.Description
+	Description: The spirit of the Icicle dragon is following you
 }
 
 SovereignSipBuff: {
 	DisplayName: Sovereign Sip Buff
-	Description: Mods.Coralite.Buffs.SovereignSipBuff.Description
+	Description: A tiny slime emperor is following you
 }
 
 TightenTheClockwork: {
 	DisplayName: Tighten The Clockwork
-	Description: Mods.Coralite.Buffs.TightenTheClockwork.Description
+	Description: Charged with energy, increaseing melee attack and movement speed by 10%
 }
 
 ThunderWhipDebuff: {
@@ -122,42 +122,42 @@ ThunderWhipDebuff: {
 
 ThunderElectrified: {
 	DisplayName: Thunder Electrified
-	Description: Mods.Coralite.Buffs.ThunderElectrified.Description
+	Description: Moving hurts!
 }
 
 TenkoBuff: {
 	DisplayName: Tenko Buff
-	Description: Mods.Coralite.Buffs.TenkoBuff.Description
+	Description: A tiny Tenko is following you
 }
 
 ThunderveinStaffBuff: {
 	DisplayName: Thundervein Staff Buff
-	Description: Mods.Coralite.Buffs.ThunderveinStaffBuff.Description
+	Description: You're brimming with electricity
 }
 
 FlaskOfRedJadeBuff: {
 	DisplayName: Flask Of Red Jade Buff
-	Description: Mods.Coralite.Buffs.FlaskOfRedJadeBuff.Description
+	Description: Melee attacks occasionally creates an red jade explosion upon hitting enemies
 }
 
 FlaskOfThunderBuff: {
 	DisplayName: Flask Of Thunder Buff
-	Description: Mods.Coralite.Buffs.FlaskOfThunderBuff.Description
+	Description: Melee attacks inflicts the Electrified debuff on enemies
 }
 
 PollenFire: {
 	DisplayName: Pollen Fire
-	Description: Mods.Coralite.Buffs.PollenFire.Description
+	Description: You're on fire! Strangly aromatic.
 }
 
 OpalBuff: {
-	DisplayName: Opal Buff
-	Description: Mods.Coralite.Buffs.OpalBuff.Description
+	DisplayName: Opal Eye
+	Description: Betters your visualisation of magike
 }
 
 ElfBless: {
 	DisplayName: Elf Bless
-	Description: Mods.Coralite.Buffs.ElfBless.Description
+	Description: increases catch rate by 5%
 }
 
 FriedShrimpBuff: {
@@ -167,7 +167,7 @@ FriedShrimpBuff: {
 
 ChocomintIceBuff: {
 	DisplayName: Chocomint Ice Buff
-	Description: Mods.Coralite.Buffs.ChocomintIceBuff.Description
+	Description: The minty fresh taste of toothpaste empowers you
 }
 
 IcicleArmorBonus: {
