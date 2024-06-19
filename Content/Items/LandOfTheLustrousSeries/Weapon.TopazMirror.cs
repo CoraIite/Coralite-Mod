@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Cyan9, Item.sellPrice(0, 20));
-            Item.SetWeaponValues(100, 4);
+            Item.SetWeaponValues(115, 4,2);
             Item.useTime = Item.useAnimation = 28;
             Item.mana = 19;
 
@@ -67,12 +67,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AddRecipes()
         {
-            //CreateRecipe()
-            //    .AddIngredient(ItemID.Sapphire)
-            //    .AddIngredient(ItemID.MarbleBlock, 30)
-            //    .AddIngredient(ItemID.FallenStar)
-            //    .AddTile<MagicCraftStation>()
-            //    .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.Topaz)
+                .AddIngredient(ItemID.LunarBar, 5)
+                .AddIngredient(ItemID.FragmentNebula)
+                .AddTile<PhantomCrystalBallTile>()
+                .Register();
         }
     }
 
@@ -147,14 +147,20 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (attackType < 0)
             {
                 var wr = new WeightedRandom<int>();
-                //wr.Add((int)TopazProj.AttackType.ShootSword, 1);
-                //wr.Add((int)TopazProj.AttackType.SpawnSpike, 2);
-                //wr.Add((int)TopazProj.AttackType.Meteor, 3);
-                wr.Add((int)TopazProj.AttackType.Boulder, 4);
+                wr.Add((int)TopazProj.AttackType.ShootSword, 1);
+                wr.Add((int)TopazProj.AttackType.SpawnSpike, 1.5);
+                wr.Add((int)TopazProj.AttackType.Meteor, 2);
+                wr.Add((int)TopazProj.AttackType.Boulder, 2.5);
+                wr.Add((int)TopazProj.AttackType.Trident, 3);
                 attackType = wr.Get();
+                //attackType = (int)TopazProj.AttackType.Trident;
             }
 
             int time = Owner.itemTimeMax;
+
+            Helper.PlayPitched("Crystal/GemShoot", 0.4f, 0f,Projectile.Center);
+            Helper.PlayPitched("Crystal/CrystalStrike", 0.2f, -0.6f, Projectile.Center);
+            SoundEngine.PlaySound(CoraliteSoundID.MagicStaff_Item8, Projectile.Center);
 
             switch (attackType)
             {
@@ -178,7 +184,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Projectile.DrawShadowTrails(SapphireProj.darkC, 0.3f, 0.3f / 4, 0, 4, 1, 0, -1);
+            Projectile.DrawShadowTrails(TopazProj.darkC, 0.3f, 0.3f / 4, 0, 4, 1, 0, -1);
             Projectile.QuickDraw(lightColor, 0);
 
             if (AttackTime > 0)
@@ -229,6 +235,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             /// 弹力巨石
             /// </summary>
             Boulder,
+            /// <summary>
+            /// 三叉戟
+            /// </summary>
+            Trident,
         }
 
         public static Color highlightC = new Color(255, 234, 186);
@@ -277,6 +287,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 case (int)AttackType.Boulder:
                     Boulder();
                     break;
+                case (int)AttackType.Trident:
+                    Trident();
+                    break;
             }
 
             float factor = 1 - Timer / RecodeTime;
@@ -320,7 +333,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Vector2 pos = Main.MouseWorld ;
 
                 bool hasTile = false;
-                for (int i = 0; i < 50; i++)
+                for (int i = 0; i < 30; i++)
                 {
                     Point pos2 = Main.MouseWorld.ToTileCoordinates() + new Point(Main.rand.Next(-10, 10), Main.rand.Next(-10, 10));
                     if (Framing.GetTileSafely(pos2).HasUnactuatedTile)
@@ -368,6 +381,18 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
+        public void Trident()
+        {
+            if ((int)Timer ==1)
+            {
+                Vector2 pos = Projectile.Center;
+                Vector2 dir = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero);
+                int index = Projectile.NewProjectileFromThis<TopazTrident>(pos, dir * 12
+                     , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
+                Main.projectile[index].rotation = dir.ToRotation()+0.785f;
+            }
+        }
+
         public static void SpawnTriangleParticle(Vector2 pos, Vector2 velocity)
         {
             Color c1 = highlightC;
@@ -402,6 +427,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     extraRot = -0.785f;
                     Main.instance.LoadItem(ItemID.StaffofEarth);
                     return TextureAssets.Item[ItemID.StaffofEarth].Value;
+                case (int)AttackType.Trident:
+                    extraRot = -0.785f;
+                    Main.instance.LoadItem(ItemID.UnholyTrident);
+                    return TextureAssets.Item[ItemID.UnholyTrident].Value;
             }
         }
 
@@ -766,7 +795,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 Projectile.velocity *= 0;
                 Projectile.timeLeft = 2;
-                Projectile.Resize(80, 80);
+                Projectile.Resize(120, 120);
                 Projectile.penetrate = -1;
                 Projectile.StartAttack();
                 Projectile.velocity *= 0;
@@ -815,6 +844,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     d.noGravity = true;
                 }
             }
+
+            SoundEngine.PlaySound(CoraliteSoundID.MeteorImpact_Item89, Projectile.Center);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -850,8 +881,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SetDefaults()
         {
-            Projectile.aiStyle = ProjAIStyleID.Boulder;
-            AIType = ProjectileID.BouncyBoulder;
+            Projectile.aiStyle = ProjAIStyleID.GroundProjectile;
+            AIType = ProjectileID.BoulderStaffOfEarth;
 
             Projectile.DamageType = DamageClass.Magic;
             Projectile.width = Projectile.height = 30;
@@ -862,7 +893,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
 
-            Projectile.penetrate = 6;
+            Projectile.penetrate = 3;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 30;
         }
@@ -881,7 +912,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Projectile.velocity.X = oldVelocity.X * -0.9f;
 
             if (Projectile.velocity.Y != oldVelocity.Y)
-                Projectile.velocity.Y = oldVelocity.Y * -0.9f;
+                Projectile.velocity.Y = oldVelocity.Y * -0.3f;
             return false;
         }
 
@@ -901,8 +932,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     TopazProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
                 }
 
-            if (Projectile.ai[0] != 1)
-                SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
+                SoundEngine.PlaySound(CoraliteSoundID.StoneBurst_Item70, Projectile.Center);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -925,6 +955,109 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     sb.End();
                     sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
                 }, 0.1f, 0.15f, 0.7f);
+            return false;
+        }
+    }
+
+    public class TopazTrident: BaseTopazProj
+    {
+        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems+Name;
+
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 12);
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.width = Projectile.height = 30;
+
+            Projectile.extraUpdates = 8;
+            Projectile.timeLeft = 300;
+            Projectile.friendly = true;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+
+            Projectile.penetrate = 6;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 30;
+        }
+
+        public override void AI()
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation()+0.785f;
+            Projectile.SpawnTrailDust(8f, DustID.Firework_Yellow, Main.rand.NextFloat(0.2f, 0.4f), Scale: Main.rand.NextFloat(0.1f, 0.6f));
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 6; i++)
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.YellowTorch, Helper.NextVec2Dir(2, 4), Scale: Main.rand.NextFloat(1f, 1.5f));
+                    d.noGravity = true;
+                }
+
+            if (VisualEffectSystem.HitEffect_SpecialParticles)
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 dir = Helper.NextVec2Dir();
+                    TopazProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                }
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            if (VisualEffectSystem.HitEffect_Dusts)
+            {
+                Vector2 dir2 = (Projectile.rotation-0.785f).ToRotationVector2();
+
+                for (int i = 0; i < 12; i++)
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + dir2 * i * 8, DustID.Firework_Yellow
+                        , dir2 * 4, Scale: 1f - i * 0.9f / 12);
+                    d.noGravity = true;
+                }
+
+                for (int i = 1; i < 3; i++)
+                    for (int j = -1; j < 2; j += 2)
+                    {
+                        Vector2 v = dir2.RotatedBy(j * i * 0.6f);
+                        for (int k = 0; k < 8; k++)
+                        {
+                            Dust d = Dust.NewDustPerfect(Projectile.Center + v * (3 - i) * k * 4, DustID.Firework_Yellow
+                                 , v * 3, Scale: 0.8f - k * 0.7f / 8);
+                            d.noGravity = true;
+                        }
+
+                    }
+            }
+
+            SoundEngine.PlaySound(CoraliteSoundID.Slash_Item71, Projectile.Center);
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            rand -= Projectile.velocity / 20;
+
+            Texture2D mainTex = Projectile.GetTexture();
+            Vector2 origin = mainTex.Size() / 2;
+
+            Projectile.DrawShadowTrails(TopazProj.brightC, 0.4f, 0.4f / 12, 1, 12, 1);
+
+            Helper.DrawCrystal(Main.spriteBatch, Projectile.frame, Projectile.Center + rand, new Vector2(0.7f)
+                , (float)Main.timeForVisualEffects * 0.02f
+                , TopazProj.highlightC, TopazProj.brightC, TopazProj.darkC, () =>
+                {
+                    Main.spriteBatch.Draw(mainTex, Projectile.Center, null,
+                         Color.White, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+                }, sb =>
+                {
+                    sb.End();
+                    sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                }, 0.1f, 0.15f, 0.7f);
+
             return false;
         }
     }

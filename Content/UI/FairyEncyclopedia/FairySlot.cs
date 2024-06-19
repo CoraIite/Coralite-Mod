@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Nightmare;
-using Coralite.Core.Loaders;
+﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -122,7 +121,6 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             spriteBatch.Draw(texture, new Rectangle(point2.X, point.Y + _cornerSize, _cornerSize, height), new Rectangle(_cornerSize + _barSize, _cornerSize, _cornerSize, _barSize), color);
             spriteBatch.Draw(texture, new Rectangle(point.X + _cornerSize, point.Y + _cornerSize, width, height), new Rectangle(_cornerSize, _cornerSize, _barSize, _barSize), color);
         }
-
 
         public override void LeftClick(UIMouseEvent evt)
         {

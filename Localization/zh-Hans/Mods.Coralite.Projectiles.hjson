@@ -412,23 +412,23 @@ HylianShieldGuard.DisplayName: 海利亚盾
 HylianShieldProj.DisplayName: 海利亚盾
 NuranasaProj.DisplayName: 妖刀·小村正
 SmallVolcanoProj.DisplayName: 火柴
-TerraShortSwordProj.DisplayName: Terra Short Sword Proj
-TomatoButchererProj.DisplayName: Tomato Butcherer Proj
-TrueNightsCageProj.DisplayName: True Nights Cage Proj
-BladeOfCatnipProj.DisplayName: Blade Of Catnip Proj
-ExcatbarProj.DisplayName: Excatbar Proj
-NightsCageProj.DisplayName: Nights Cage Proj
-ShadowsBaneProj.DisplayName: Shadows Bane Proj
-TrueExcatbarProj.DisplayName: True Excatbar Proj
-BeamShortSwordProj.DisplayName: Beam Short Sword Proj
-CattongueProj.DisplayName: Cattongue Proj
-CatTreeSwordProj.DisplayName: Cat Tree Sword Proj
-FlyingDragonBabyProj.DisplayName: Flying Dragon Baby Proj
-IceShortSwordProj.DisplayName: Ice Short Sword Proj
-MeowmeoSpecialProj.DisplayName: Meowmeo Special Proj
-SmallBeeProj.DisplayName: Small Bee Proj
-TheCatMansBladeProj.DisplayName: The Cat Mans Blade Proj
-TreelerProj.DisplayName: Treeler Proj
+TerraShortSwordProj.DisplayName: 泰拉水果刀
+TomatoButchererProj.DisplayName: 番茄屠夫
+TrueNightsCageProj.DisplayName: 真·夜之囚笼
+BladeOfCatnipProj.DisplayName: 猫薄荷剑
+ExcatbarProj.DisplayName: 猫猫条
+NightsCageProj.DisplayName: 夜之囚笼
+ShadowsBaneProj.DisplayName: 暗之驱逐
+TrueExcatbarProj.DisplayName: 超级猫猫条
+BeamShortSwordProj.DisplayName: 光束小刀
+CattongueProj.DisplayName: 猫舌剑
+CatTreeSwordProj.DisplayName: 猫爬架之剑
+FlyingDragonBabyProj.DisplayName: 飞龙宝宝
+IceShortSwordProj.DisplayName: 冰雪短剑
+MeowmeoSpecialProj.DisplayName: 彩虹猫圣剑
+SmallBeeProj.DisplayName: 小蜜蜂
+TheCatMansBladeProj.DisplayName: 猫猫骑士团之剑
+TreelerProj.DisplayName: 大树弯刀
 ShadowDartProj.DisplayName: 影镖
 VampireEarlGuard.DisplayName: 朱红盛宴
 VampireEarlProj.DisplayName: 朱红盛宴
@@ -463,42 +463,43 @@ RoseGunpowderProj2.DisplayName: 玫瑰火药
 VineLassoSwing.DisplayName: 藤蔓套索
 DevilsYokeCatcher.DisplayName: Devils Yoke Catcher
 DevilsYokeSwing.DisplayName: Devils Yoke Swing
-TwinRocketLauncherHeldProj.DisplayName: Twin Rocket Launcher Held Proj
-TwinRocketLauncherProj.DisplayName: Twin Rocket Launcher Proj
-TwinRocketLauncherProj2.DisplayName: Twin Rocket Launcher Proj2
-SteelBreakerProj.DisplayName: Steel Breaker Proj
-ElfTradeProj.DisplayName: Elf Trade Proj
+TwinRocketLauncherHeldProj.DisplayName: 双子火箭筒
+TwinRocketLauncherProj.DisplayName: 双子火箭弹
+TwinRocketLauncherProj2.DisplayName: 双子火箭弹
+SteelBreakerProj.DisplayName: 破魔旋刃
+ElfTradeProj.DisplayName: 仙灵交易
 PyropeCrownProj.DisplayName: 红榴之冠
-PyropeProj.DisplayName: 红榴石
+PyropeProj.DisplayName: 魔法红榴石
 AmethystNeckLaceProj.DisplayName: Amethyst Neck Lace Proj
 AmethystLaser.DisplayName: 紫晶光束
 FriedShrimpProj.DisplayName: 炸虾
 ChocomintIceProj.DisplayName: 薄荷巧克力冰淇淋
 AquamarineBraceletProj.DisplayName: 海魂手链
-AquamarineProj.DisplayName: 海蓝宝石
+AquamarineProj.DisplayName: 魔法海蓝宝石
 AmethystNecklaceProj.DisplayName: 第六轮回项链
 PinkDiamondExplosion.DisplayName: 粉钻花瓣
-PinkDiamondProj.DisplayName: 粉钻
+PinkDiamondProj.DisplayName: 魔法粉钻
 PinkDiamondRoseProj.DisplayName: 粉钻玫瑰
-ZumurudProj.DisplayName: 祖母绿
+ZumurudProj.DisplayName: 魔法祖母绿
 ZumurudRingProj.DisplayName: 祖母绿戒指
 SmallZumurudProj.DisplayName: 绿宝石水花
 PearlBroochProj.DisplayName: 沧海遗珠
-PearlProj.DisplayName: 珍珠
+PearlProj.DisplayName: 魔法珍珠
 PearlExplosion.DisplayName: 珍珠气泡
-// RubyProj.DisplayName: Ruby Proj
-// RubyScepterProj.DisplayName: Ruby Scepter Proj
-// RubyLaser.DisplayName: Ruby Laser
-// PeridotProj.DisplayName: Peridot Proj
-// PeridotSpilit.DisplayName: Peridot Spilit
-// PeridotTalismanProj.DisplayName: Peridot Talisman Proj
-// SapphireComet.DisplayName: Sapphire Comet
-// SapphireHairpinProj.DisplayName: Sapphire Hairpin Proj
-// SapphireProj.DisplayName: Sapphire Proj
-// SapphireSmallProj.DisplayName: Sapphire Small Proj
-// TopazFlySword.DisplayName: Topaz Fly Sword
-// TopazMirrorProj.DisplayName: Topaz Mirror Proj
-// TopazProj.DisplayName: Topaz Proj
-// TopazSpike.DisplayName: Topaz Spike
-// TopazMeteor.DisplayName: Topaz Meteor
-// TopazBoulder.DisplayName: Topaz Boulder
+RubyProj.DisplayName: 魔法红宝石
+RubyScepterProj.DisplayName: 红宝石权杖
+RubyLaser.DisplayName: 红宝石光束
+PeridotProj.DisplayName: 魔法橄榄石
+PeridotSpilit.DisplayName: 幽绿魂灵
+PeridotTalismanProj.DisplayName: 幽绿护身符
+SapphireComet.DisplayName: 苍蓝彗星
+SapphireHairpinProj.DisplayName: 伯利恒之星
+SapphireProj.DisplayName: 魔法蓝宝石
+SapphireSmallProj.DisplayName: 蓝宝石能量
+TopazFlySword.DisplayName: 黄晶飞剑
+TopazMirrorProj.DisplayName: 黄晶幻象
+TopazProj.DisplayName: 魔法托帕石
+TopazSpike.DisplayName: 黄晶刺
+TopazMeteor.DisplayName: 黄晶陨石
+TopazBoulder.DisplayName: 黄晶巨石
+TopazTrident.DisplayName: 黄晶三叉戟
