@@ -31,7 +31,7 @@ VisualEffectConfig: {
 
 	HitEffect_ScreenShaking: {
 		Label: Hit Effect: Screen Shaking
-		Tooltip: Screen vibration effect when the weapon hits
+		Tooltip: Screen shake effect when the weapon hits
 	}
 
 	HitEffect_Lightning: {
@@ -45,7 +45,7 @@ VisualEffectConfig: {
 	}
 
 	DrawKniefLight: {
-		Label: Knief Light
+		Label: Sword Light
 		Tooltip:
 			'''
 			Whether the sword light of melee weapons will be drawn
@@ -78,21 +78,25 @@ VisualEffectConfig: {
 
 	UseNightmareSky: {
 		Label: Use Nightmare Sky
-		Tooltip: ""
+		Tooltip: Enable special effects of the nightmare sky
 	}
 
 	UseNightmareBossBar: {
 		Label: Use Nightmare Boss Bar
-		Tooltip: ""
+		Tooltip: Enable special effects of nightmare plantera's boss bar
 	}
 
 	HylianShieldScreenHighlight: {
 		Label: Hylian Shield Screen Highlight
-		Tooltip: ""
+		Tooltip: enable highlights of the Hylian Shield
 	}
 
 	ParticleCount: {
 		Label: Particle Count
-		Tooltip: ""
+		Tooltip:
+			'''
+			Adjust the particle effects, from 100 to 3000
+                        Note: can cause lag if particle count is too high
+			'''
 	}
 }
