@@ -3980,3 +3980,13 @@ TopazMirror: {
 	DisplayName: Topaz Mirror
 	Tooltip: ""
 }
+
+Tourmaline: {
+	Tooltip: ""
+	DisplayName: Tourmaline
+}
+
+LandOfTheLustrous: {
+	Tooltip: ""
+	DisplayName: Land Of The Lustrous
+}

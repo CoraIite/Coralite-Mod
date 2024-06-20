@@ -4163,3 +4163,13 @@ TopazMirror: {
 	DisplayName: 黄晶幻象
 	Tooltip: ""
 }
+
+Tourmaline: {
+	DisplayName: 碧玺
+	Tooltip: 使用提炼机从上级宝石原石中提取
+}
+
+LandOfTheLustrous: {
+	DisplayName: 宝石之国
+	Tooltip: ""
+}

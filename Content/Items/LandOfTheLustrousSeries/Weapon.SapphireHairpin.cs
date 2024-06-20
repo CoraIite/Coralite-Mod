@@ -624,7 +624,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Color result = Color.Lerp(Color.White, Color.Violet, Utils.GetLerpValue(0f, 0.7f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
             result.A /= 2;
-            return result;
+            return result; 
         }
 
         private float StripWidth(float progressOnStrip) => MathHelper.Lerp(24f, 48f, progressOnStrip);

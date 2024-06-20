@@ -144,6 +144,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void StartAttack()
         {
             attackType--;
+
+            if (Main.rand.NextBool(5))
+                attackType = -1;
+
             if (attackType < 0)
             {
                 var wr = new WeightedRandom<int>();
