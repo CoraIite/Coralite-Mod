@@ -2,13 +2,13 @@ EmeraldRosary: {
 	DisplayName: Emerald Rosary
 	Tooltip:
 		'''
-		Willpower recovery speed increased slightly
+		Slightly increase willpower recovery
 		Willpower damage +3
 		'''
 }
 
 MaintenanceFluid: {
-	DisplayName: Sword Protection Oil
+	DisplayName: Sword Polish
 	Tooltip:
 		'''
 		Give your sword a regular maintenance！
@@ -21,7 +21,7 @@ CallForDestruction: {
 	Tooltip:
 		'''
 		It invokes the incarnation of destruction, but in the form of a phone call
-		Summon The Destroyer at night, without consuming
+		Summons The Destroyer at night, doesn't get consumed
 		'''
 }
 
@@ -29,8 +29,8 @@ CannedLarva: {
 	DisplayName: Canned Larva
 	Tooltip:
 		'''
-		Bee larvae in a jar so it don't get poked easily
-		Summon the Queen Bee in jungle, without consuming
+		Bee larvae in a jar so it doesn't get poked easily
+		Summons the Queen Bee in jungle, doesn't get consumed
 		'''
 }
 
@@ -39,7 +39,7 @@ ChainedEye: {
 	Tooltip:
 		'''
 		Haha, now you can't run away from it
-		Summon the Eye of Cthulhu at night, without consuming
+		Summons the Eye of Cthulhu at night, doesn't get consumed
 		'''
 }
 
@@ -48,7 +48,7 @@ CrystallineGel: {
 	Tooltip:
 		'''
 		The core of the Slime Queen, tastes delicious but a little hard
-		Summon the Queen Slime in hallow, without consuming
+		Summons the Queen Slime in hallow, doesn't get consumed
 		'''
 }
 
@@ -57,7 +57,7 @@ EndlessDeliciousness: {
 	Tooltip:
 		'''
 		Magic-infused rotten food, and importantly, it can be eaten indefinitely!
-		Summon the Eater of Worlds in corrupt, without consuming
+		Summons the Eater of Worlds in corrupt, doesn't get consumed
 		'''
 }
 
@@ -66,7 +66,7 @@ EternalFlower: {
 	Tooltip:
 		'''
 		A flower that symbolizes eternity and will not fade no matter how many centuries pass
-		Summon the Plantera in the underground jungle, without consuming
+		Summons Plantera in the underground jungle, doesn't get consumed
 		'''
 }
 
@@ -74,8 +74,8 @@ HolyLacewing: {
 	DisplayName: Holy Lacewing
 	Tooltip:
 		'''
-		It is gorgeous and should be handled lightly
-		Summon the Empress of Light in hallow, without consuming
+		It is gorgeous and should be handled carefully
+		Summons the Empress of Light in hallow, doesn't get consumed
 		'''
 }
 
@@ -83,8 +83,8 @@ ImmortalDoll: {
 	DisplayName: Immortal Doll
 	Tooltip:
 		'''
-		Voodoo dolls made of obsidian can now not be afraid of lava
-		Summon the Wall of Flesh in hell, without consuming
+		Voodoo dolls made of obsidian, no need to be scared of lava anymore!
+		Summons the Wall of Flesh in hell, doesn't get consumed
 		'''
 }
 
@@ -93,7 +93,7 @@ MachinerySoars: {
 	Tooltip:
 		'''
 		Flesh and blood suffering, mechanical soaring
-		Summon the Skeletron Prime at night, without consuming
+		Summons Skeletron Prime at night, doesn't get consumed
 		'''
 }
 
@@ -102,7 +102,7 @@ PerpetualCore: {
 	Tooltip:
 		'''
 		Ancient technology from the jungle temple, endlessly releasing energy to the outside
-		Summon the Golem near the jungle altar, without consuming
+		Summons the Golem near the jungle altar, doesn't get consumed
 		'''
 }
 
@@ -110,8 +110,8 @@ RedBerry: {
 	DisplayName: Red Berry
 	Tooltip:
 		'''
-		Occasionally grows on a gem tree that attracts a strange ruddy stone
-		Summon the Rediancie
+		Occasionally grows on a gem tree that attracts a strange red gemstone
+		Summons the Rediancie
 			Chance of being dropped by cutting down the gem tree
 		'''
 }
@@ -121,7 +121,7 @@ RegeneratedSpine: {
 	Tooltip:
 		'''
 		It is full of life and seems to be constantly regenerating
-		Summon the Brain of Cthulhu in Crimson, without consuming
+		Summons the Brain of Cthulhu in Crimson, doesn't get consumed
 		'''
 }
 
@@ -130,7 +130,7 @@ SymbolOfRoyal: {
 	Tooltip:
 		'''
 		This Slime colony symbolizes the throne, possessing it is the supreme glory
-		Summon the King Slime, without consuming
+		Summons the King Slime, doesn't get consumed
 		'''
 }
 
@@ -139,7 +139,7 @@ TheTwinsBond: {
 	Tooltip:
 		'''
 		Mechanical twins, they are inseparable
-		Summon The Twins at night, without consuming
+		Summons The Twins at night, doesn't get consumed
 		'''
 }
 
@@ -148,7 +148,7 @@ TwistedBone: {
 	Tooltip:
 		'''
 		The twisted shape of the bones seems to attract the curse directly, but not the source of the curse
-		Summon the Skeletron at night, without consuming
+		Summons Skeletron at night, doesn't get consumed
 		'''
 }
 
@@ -161,7 +161,7 @@ IdentifyLoupe: {
 	DisplayName: Identify Loupe
 	Tooltip:
 		'''
-		Consume 20 magic
+		Consumes 20 mana
 		You can view the genes of unidentified plants by right-clicking on them while they are in your backpack
 		'''
 }
@@ -173,7 +173,7 @@ AgropyronFreezer: {
 
 GloomMushrooms: {
 	DisplayName: Gloom Mushroom
-	Tooltip: It is surrounded by darkness
+	Tooltip: It's surrounded by darkness
 }
 
 PileaNotatata: {
@@ -280,8 +280,8 @@ IcicleBow: {
 	Tooltip:
 		'''
 		Convert arrows into icicle arrows
-		Double click A/D for slide
-		Hold down the left mouse button while sliding to gather ice magic, then release the left button to shoot ice light arrows
+		Double tap to dash
+		Hold down the left mouse button while dashing to gather ice magic, then release to shoot ice light arrows
 		'''
 }
 
@@ -292,15 +292,15 @@ IcicleCrystal: {
 
 IcicleStaff: {
 	DisplayName: Icicle Staff
-	Tooltip: Shoot the ice ball of light
+	Tooltip: Shoots frozen balls of light
 }
 
 IcicleSword: {
 	DisplayName: Icicle Sword
 	Tooltip:
 		'''
-		Release ice wave when swinging
-		Pokes and shoots ice after 3 swings
+		Shoots out icicles
+		every 3rd swing does a jab along with the projectiles
 		'''
 }
 
@@ -308,8 +308,8 @@ IcicleThornStaff: {
 	DisplayName: Icicle Thorn Staff
 	Tooltip:
 		'''
-		Summon Ice Spike Ball
-		[c/00bbff:Consumption 1 summoning slot]
+		Summons a frozen Spike Ball to fight for you
+		[c/00bbff:takes up 1 minion slot]
 		'''
 }
 
@@ -324,7 +324,7 @@ CrossBreedMachine_G1Item: {
 }
 
 IceyPowder: {
-	DisplayName: Icey Powder
+	DisplayName: Icy Powder
 	Tooltip: Contains a faint ice magic
 }
 
@@ -340,7 +340,7 @@ SandlitePowder: {
 
 ShlimmerMushrooms: {
 	DisplayName: Shlimmer Mushrooms
-	Tooltip: Can emit tiny light
+	Tooltip: Can emit a tiny light
 }
 
 WatermelonSlices: {
@@ -357,8 +357,8 @@ MushroomStaff: {
 	DisplayName: Mushroom Staff
 	Tooltip:
 		'''
-		Summon Mushroom Dragon
-		[c/00bbff:Consumption 1 summoning slot]
+		Summons a Mushroom Dragon to fight for you
+		[c/00bbff:takes up 1 minion slot]
 		'''
 }
 
@@ -379,7 +379,7 @@ RediancieBossBag: {
 
 RedianciePet: {
 	DisplayName: Small Rediancie
-	Tooltip: Summon a small Rediancie that emits a faint light
+	Tooltip: Summons a small Rediancie that emits a faint light
 }
 
 RediancieRelic: {
@@ -406,8 +406,8 @@ RedJadeBlade: {
 	DisplayName: Red Jade Blade
 	Tooltip:
 		'''
-		Shoots fragments of Red Jade that occasionally produce explosions
-		Generate a big explosion after a certain number of swings
+		Shoots out fragments of Red Jade that occasionally explode
+		A bigger explosion occurs after a random number of swings
 		'''
 }
 
@@ -438,20 +438,20 @@ RedJadeDroplight: {
 
 RedJadeHulu: {
 	DisplayName: Red Jade Hulu
-	Tooltip: Summoned swords occasionally produce an explosion when hit
+	Tooltip: Summoned swords that may explode when hit
 }
 
 RedJadePendant: {
 	DisplayName: Red Jade Pendant
-	Tooltip: Occasional explosion when the player takes damage
+	Tooltip: May explode when the player takes damage
 }
 
 RedJadeShrine: {
 	DisplayName: Red Jade Shrine
 	Tooltip:
 		'''
-		Summon a small red jade
-		[c/00bbff:Consumption 1 summoning slot]
+		Summons a small red jade to fight for you
+		[c/00bbff:takes up 1 minion slot]
 		'''
 }
 
@@ -459,8 +459,8 @@ RedJadeStaff: {
 	DisplayName: Red Jade Staff
 	Tooltip:
 		'''
-		Shoot the red light beam that will produce an explosion
-		Shoot a certain number of times after shooting a large beam and produce a large explosion
+		Shoots a beam of light that explode
+		Occasionally shoot a larger beam with a larger explosion
 		'''
 }
 
@@ -493,8 +493,8 @@ ShadowBreastplate: {
 	DisplayName: Shadow Breastplate
 	Tooltip:
 		'''
-		damage +10%
-		crit chance +6%
+		10% increased damage
+		6% increased critical strike chance
 		'''
 }
 
@@ -517,8 +517,8 @@ ShadowHead: {
 	DisplayName: Shadow Hood
 	Tooltip:
 		'''
-		Max mana +60
-		Mana cost -10%
+		Increases maximum mana by 60
+		10% reduced mana usage
 		'''
 }
 
@@ -526,8 +526,8 @@ ShadowLegs: {
 	DisplayName: Shadow Legs
 	Tooltip:
 		'''
-		AttackSpeed +8%
-		Knockback +6%
+		8% increased attack speed
+		6% increased knockback
 		'''
 }
 
@@ -540,14 +540,14 @@ ShadowSickle: {
 	DisplayName: Shadow Sickle
 	Tooltip:
 		'''
-		Long press to accumulate power
-		Accumulate power for a certain period of time and then release the chopping attack
+		Hold to accumulate power
+		Release to shoot out a scythe
 		'''
 }
 
 ShadowSword: {
 	DisplayName: Shadow Sword
-	Tooltip: Summons its doppelganger to attack the enemy when swing
+	Tooltip: Summons a doppelganger to attack the enemy
 }
 
 StarBook: {
@@ -562,17 +562,17 @@ StarBook: {
 
 CosmosFracture: {
 	DisplayName: Cosmos Fracture
-	Tooltip: Slash through space, weapons from other worlds will tear your enemies
+	Tooltip: Sends out another worldly cleave, not even infinity could defend against it
 }
 
 MagicalAshes: {
 	DisplayName: Magical Ashes
-	Tooltip: It tastes sweet
+	Tooltip: Sweet tasting
 }
 
 AncientCore: {
 	DisplayName: Ancient Core
-	Tooltip: Arms dealer's treasure, the energy core from ancient civilizations
+	Tooltip: The Arms dealer's treasure, the energy core from ancient civilizations
 }
 
 Arethusa: {
@@ -597,7 +597,7 @@ BarrageMic: {
 
 DukeFishronSkin: {
 	DisplayName: Duke Fishron Skin
-	Tooltip: The rough and tough skin of the giant shark feels good to the touch
+	Tooltip: The rough and tough hide of the giant shark feels good to touch
 }
 
 Dunkleosteus: {
@@ -639,14 +639,14 @@ CatClaws: {
 	DisplayName: Cat Claws
 	Tooltip:
 		'''
-		Cat's favorite weapon
+		A feline's favorite weapon
 		Meow~ Meow Meow~
 		'''
 }
 
 WateringPot: {
 	DisplayName: Watering Pot
-	Tooltip: Sprinklers that are not very stable when injected with magic. Does not water your plants and flowers
+	Tooltip: Grows unstable when injected with magic. Doesn't water your plants and flowers
 }
 
 WatermelonKnife: {
@@ -728,9 +728,9 @@ IcicleCoccyx: {
 	DisplayName: Icicle Coccyx
 	Tooltip:
 		'''
-		Left click to gain charge after a certain number of swings
-		Double-click the A/D button to sprint after charging is complete
-		Right click to release the ice crystal tornado after charging is completed
+		Left click to charge after a certain number of swings
+		Double-tap either direction to sprint after charging is complete
+		Right click to release the ice crystal tornado after its fully charged
 		'''
 }
 
@@ -755,7 +755,7 @@ MagConnectStaff: {
 		'''
 		Right-click to switch modes
 		Connect mode: The first left click selects the receiver and the second left click selects the sender
-			Then establish a connection between them. Sender has distance limitation
+			Then establish a connection between them. Sender has limited range.
 		View mode: Left click a magike sender to show connection.
 		Interrupt mode: Left click a magike sender to interrupt connections.
 
@@ -767,7 +767,7 @@ MagConnectStaff: {
 MagicCrystal: {
 	DisplayName: Magic Crystal
 	Tooltip: Contains a faint amount of magike
-	MoreDescription: “Go underground and look for the crystal caves that contain the knowledge of how to use magike”
+	MoreDescription: “Go underground and look for crystal caves that contains the knowledge of magike”
 }
 
 CrimtaneLens: {
@@ -787,7 +787,7 @@ BrilliantLens: {
 
 CrystallineMagike: {
 	DisplayName: Crystalline Magike
-	Tooltip: Contains abundant magike
+	Tooltip: Contains an abundant amount of magike
 }
 
 CrystalRefractor: {
@@ -852,7 +852,7 @@ MagikeActivator: {
 
 SunlightLens: {
 	DisplayName: Sunlight Lens
-	Tooltip: Produce magike in the daytime
+	Tooltip: Generates magike during the day
 }
 
 CrystalRemodelPool: {
@@ -867,7 +867,7 @@ EvilRemodelPool: {
 
 MoonlightLens: {
 	DisplayName: Moonlight Lens
-	Tooltip: Produce magike at night
+	Tooltip: Generates magike during the night
 }
 
 FeatheredLens: {
@@ -877,12 +877,12 @@ FeatheredLens: {
 
 HolylightLens: {
 	DisplayName: Holylight Lens
-	Tooltip: Produce magike in the daytime
+	Tooltip: Generates magike during the day
 }
 
 BloodMoonLens: {
 	DisplayName: Blood Moon Lens
-	Tooltip: Produce magike at night
+	Tooltip: Generates magike during the night
 }
 
 IcicleHeart: {
@@ -890,7 +890,7 @@ IcicleHeart: {
 	Tooltip:
 		'''
 		A heart that still seems to be beating
-		Summon the Baby Ice Dragon at snow biome, without consuming
+		Summon the Baby Ice Dragon at snow biome, doesn't get consumed on use
 		'''
 }
 
@@ -899,13 +899,13 @@ RedJadeCore: {
 	Tooltip:
 		'''
 		The core part that can generate "firecracker energy"
-		Summon the Rediancie, without consuming
+		Summon the Rediancie, doesn't get consumed on use
 		'''
 }
 
 WaterflowLens: {
 	DisplayName: Waterflow Lens
-	Tooltip: Produce magike while bottom submerged in water
+	Tooltip: Generates magike while submerged in water
 }
 
 RedJadeLens: {
@@ -927,33 +927,33 @@ RedJadeCluster: {
 	DisplayName: Red Jade Cluster
 	Tooltip:
 		'''
-		Produce an explosion upon activation
-		Magike cost: 50
+		Explodes upon activation
+		Consumes 50 magike
 		'''
 }
 
 LavaLens: {
 	DisplayName: Lava Lens
-	Tooltip: Produce magike while bottom submerged in lava
+	Tooltip: Generates magike while submerged in lava
 }
 
 SweetLens: {
 	DisplayName: Sweet Lens
-	Tooltip: Produce magike while bottom submerged in honey
+	Tooltip: Generates magike while submerged in honey
 }
 
 CrystalSpotlighter: {
 	DisplayName: Crystal Spotlighter
 	Tooltip:
 		'''
-		Shoot light beam upon activation
-		Magike cost: 25
+		Shoot out a beam of light upon activation
+		Consumes 25 magike
 		'''
 }
 
 OceanLens: {
 	DisplayName: Ocean Lens
-	Tooltip: Produce magike in ocean biome
+	Tooltip: Generates magike while in the ocean biome
 }
 
 BrilliantQuadprism: {
@@ -998,27 +998,27 @@ WorldGenTester: {
 
 BoneLens: {
 	DisplayName: Bone Lens
-	Tooltip: Produce magike in dungeon
+	Tooltip: Generates magike while in the dungeon
 }
 
 ForestLens: {
 	DisplayName: Forest Lens
-	Tooltip: Produce magike in forest
+	Tooltip: Generates magike while in the forest biome
 }
 
 GlowingMushroomLens: {
 	DisplayName: Glowing Mushroom Lens
-	Tooltip: Produce magike in glowing mushroon biome
+	Tooltip: Generates magike while in the glowing mushroom biome
 }
 
 BrightnessLens: {
 	DisplayName: Brightness Lens
-	Tooltip: Produce magike in light
+	Tooltip: Generates magike from light
 }
 
 DarknessLens: {
 	DisplayName: Darkness Lens
-	Tooltip: Produce magike in dark
+	Tooltip: Generates magike in the dark
 }
 
 BasaltChest: {
@@ -1040,13 +1040,13 @@ Page_MagikeBase: {
 	DisplayName: Page: Magike Base
 	Tooltip:
 		'''
-		Left click use to learn the basis of magic energy
+		Left click use to learn the basis of magike
 		"Magike, a mysterious energy, is usually considered to be highly concentrated magic. "
-		"Because of its extremely high concentration, it cannot provide magic power for people like magic potions."
-		"In order to rationalize the control and use of magic energy, various kinds of lenses, wide-angle mirrors, and crystal pillars have been invented"
-		"Through the lens to produce magic energy, wide angle mirror to transmit magic energy, crystal pillar to store magic energy"
-		"In order to use these devices, a magic energy connector is essential, which can connect the device with sending function to the receiving device"
-		"After being able to control the magic energy, people made various devices that consume magic energy to perform various tasks by consuming magic energy"
+		"Because of its extremely high concentration, it cannot provide magic power for people like potions."
+		"In order to rationalize the control and use of magike, various kinds of lenses, mirrors, and crystal pillars have been invented"
+		"Through the lens to produce magike, wide angle mirror to transmit magike, crystal pillar to store the magike"
+		"In order to use these devices, a connector is essential, which can connect the device with sending function to the receiving device"
+		"After mastering magike, mankind created various tools that are powered by magike"
 		'''
 }
 
@@ -1057,17 +1057,17 @@ HardBasalt: {
 
 HellLens: {
 	DisplayName: Hell Lens
-	Tooltip: Produce magike in underworld
+	Tooltip: Generates magike in the underworld
 }
 
 BreezeLens: {
 	DisplayName: Breeze Lens
-	Tooltip: Produce magike depend on wind speed
+	Tooltip: Generates magike based on wind speed
 }
 
 DrizzleLens: {
 	DisplayName: Drizzle Lens
-	Tooltip: Produce magike while raining
+	Tooltip: Generates magike in the rain
 }
 
 HardBasaltWall: {
@@ -1077,69 +1077,69 @@ HardBasaltWall: {
 
 GraniteLens: {
 	DisplayName: Granite Lens
-	Tooltip: Produce magike in granite biome
+	Tooltip: Generates magike while in the granite biome
 }
 
 MarbleLens: {
 	DisplayName: Marble Lens
-	Tooltip: Produce magike in marble biome
+	Tooltip: Generates magike while in the marble biome
 }
 
 HoneypotLens: {
 	DisplayName: Honeypot Lens
-	Tooltip: Produce magike while bottom submerged in honey
+	Tooltip: Generates magike while submerged in honey
 }
 
 BloodyHook: {
 	DisplayName: Bloody Hook
 	Tooltip:
 		'''
-			Right click to fling the hook
-			Right click again after the hook is hit to pull the player towards the hook
+			Right click to throw the hook
+			Right click again to pull the player towards the hook
 		'''
 }
 
 ChlorophyteLens: {
 	DisplayName: Chlorophyte Lens
-	Tooltip: Produce magike in jungle
+	Tooltip: Generates magike while in the jungle biome
 }
 
 ParadiseLens: {
 	DisplayName: Paradise Lens
-	Tooltip: Produce magike in sky
+	Tooltip: Generates magike while in the space biome
 }
 
 DemoniteEnchantPool: {
 	DisplayName: Demonite Enchant Pool
-	Tooltip: Bringing extra enhancement for your equipments
+	Tooltip: Allows extra enhancement for your equipments
 }
 
 ScorchingLens: {
 	DisplayName: Scorching Lens
-	Tooltip: Produce magike while bottom submerged in lava
+	Tooltip: Generates magike while submerged in lava
 }
 
 CopperRing: {
 	DisplayName: Copper Ring
-	Tooltip: attack -6%
+	Tooltip: 6% decreased damage
 }
 
 TinRing: {
 	DisplayName: Tin Ring
-	Tooltip: attack -6%
+	Tooltip: 6% decreased damage
 }
 
 CogLens: {
 	DisplayName: Cog Lens
-	Tooltip: Produce magike automatically
+	Tooltip: Generates magike on it's own
 }
 
 IronRing: {
 	DisplayName: Iron Ring
 	Tooltip:
 		'''
-		damageReduce +4%
-		moveSpeed -10%
+		Reduces damage by 4%
+		Reduces movement speed by 10%
 		'''
 }
 
@@ -1147,9 +1147,9 @@ LeadRing: {
 	DisplayName: Lead Ring
 	Tooltip:
 		'''
-		“Are you sure to make accessory with this metal? ”
-		damageReduce +4%
-		moveSpeed -10%
+		“Lead? Really? ”
+		Reduces damage by 4%
+		Reduces movement speed by 10%
 		'''
 }
 
@@ -1160,7 +1160,7 @@ SoulRemodelPool: {
 
 RainstormLens: {
 	DisplayName: Rainstorm Lens
-	Tooltip: Produce magike while raining
+	Tooltip: Generates magike while raining
 }
 
 SplendorMagicore: {
@@ -1172,29 +1172,29 @@ CorruptJavelin: {
 	DisplayName: Corrupt Javelin
 	Tooltip:
 		'''
-		Summon the javelin to shoot at the target location
-		Right-click to recall all javelins and split them into small javelins and shoot
+		Shoots a javelin at the target
+		Right-click to recall the splinters
 		'''
 }
 
 BrilliantEnchantPool: {
 	DisplayName: Brilliant Enchant Pool
-	Tooltip: Bring extra reinforcements to your gear
+	Tooltip: Gives extra reinforcements to your equipment
 }
 
 CrimtaneEnchantPool: {
 	DisplayName: Crimtane Enchant Pool
-	Tooltip: Bring extra reinforcements to your gear
+	Tooltip: Gives extra reinforcements to your equipment
 }
 
 CrystalEnchantPool: {
 	DisplayName: Crystal Enchant Pool
-	Tooltip: Bring extra reinforcements to your gear
+	Tooltip: Gives extra reinforcements to your equipment
 }
 
 SoulEnchantPool: {
 	DisplayName: Soul Enchant Pool
-	Tooltip: Bring extra reinforcements to your gear
+	Tooltip: Gives extra reinforcements to your equipment
 }
 
 SoulOfDeveloper: {
@@ -1211,13 +1211,13 @@ GelInvitation: {
 	DisplayName: Gel Invitation
 	Tooltip:
 		'''
-		A invitation touch sticky, a great monarch is waiting for you to attend its sticky banquet...
-		Summon Slime Emperor without cosuming. 
+		A invitation to touch sticky with a slime, a great monarch awaits you for it's gooey banquet...
+		Summons the Slime Emperor without consuming. 
 		'''
 }
 
 EmperorSabre: {
-	DisplayName: Emperor Sabre
+	DisplayName: Emperor Saber
 	Tooltip: The saber of the supreme leader
 }
 
@@ -1233,7 +1233,7 @@ MagikeSymbol: {
 
 GelThrone: {
 	DisplayName: Gel Throne
-	Tooltip: Right-click to sit up
+	Tooltip: Right-click to sit upon it
 }
 
 GOWTester: {
@@ -1250,8 +1250,8 @@ FrostySword: {
 	DisplayName: Frosty Sword
 	Tooltip:
 		'''
-		Left-click hits enemies and accumulates ice magic
-		Right-click to shoot a frost projectile, and when it has abundant ice magic, the frost projectile can burst into ice flowers
+		Left-click to charge ice magic
+		Right-click to shoot a frost projectile, when fully charged, the frost projectile can burst into ice flowers
 		'''
 }
 
@@ -1272,7 +1272,7 @@ ANewBirthOfIce: {
 
 HiddenRed: {
 	DisplayName: Hidden Red
-	Tooltip: There may be rare red fruits in the gem tree that can attract a big red creature
+	Tooltip: There may be precious red fruits in the gem tree that certain beings like
 }
 
 GelFiber: {
@@ -1284,7 +1284,7 @@ NightmareHarp: {
 	DisplayName: Nightmare Harp
 	Tooltip:
 		'''
-		Summon Nightmare Plantera at night, not consumed
+		Summon Nightmare Plantera at night, not consumable
 			Special skies and special health bars can be toggled on or off in the visual effects configuration
 		'''
 }
@@ -1333,7 +1333,7 @@ MagicalPowder: {
 }
 
 MagikePolySymbol: {
-	DisplayName: Magike
+	DisplayName: Magike Polysymbol
 	Tooltip:
 		'''
 		This crafting table needs to be done through magike polymerize!
@@ -1349,7 +1349,7 @@ CrystalCrate: {
 
 FragmentsOfLight: {
 	DisplayName: Fragments Of Light
-	Tooltip: Possess the power of light that purifies the mind
+	Tooltip: Possesses the power of light that purifies the mind
 }
 
 SlimeEruption: {
@@ -1390,7 +1390,7 @@ VoidStaff: {
 
 RoyalGelCannon: {
 	DisplayName: Royal Gel Cannon
-	Tooltip: Quickly shoot the gel ball
+	Tooltip: Rapidly shoots out gel balls
 }
 
 RoyalClassics: {
@@ -1398,7 +1398,7 @@ RoyalClassics: {
 	Tooltip:
 		'''
 		"Chronicles the development of the Slime Kingdom"
-		Shoot a bunch of different gel balls
+		Shoots a bunch of different gel balls
 		'''
 }
 
@@ -1461,8 +1461,8 @@ LostSevensideHook: {
 	DisplayName: Lost Sevenside Hook
 	Tooltip:
 		'''
-		[c/f73535:红取风霜实，青看雨露柯。]
-			Right click to throw out the hook, and after hitting enemy, right click again to drag the player towards the hook position and gain 2 [c/fa0064:Nightmare Sparkle]
+		[c/f73535:Red is due to wind and frost, green is due to rain and dew。]
+			Right click to shoot out a hook, and after hitting enemy, right click again to pull the player towards the hook position and gain 2 [c/fa0064:Nightmare Sparkle]
 			While possessing [c/fa0064:Nightmare Sparkle], left-click to cost 1 [c/fa0064:Nightmare Sparkle] to shoot thorns
 		'''
 }
@@ -1501,8 +1501,9 @@ Dreamcatcher: {
 	Tooltip:
 		'''
 		[c/8d004b: Now you might be able to have a good dream...]
-			Summons the Nightmare Raven, which occupies 1 summon slot
-			Enhanced with the whip weapon "Eden" increases the Nightmare Raven's aggressiveness
+			Summons a Nightmare Raven to fight for you, 
+			Takes up 1 minion slot
+			Enhanced with the whip weapon "Eden" increases the Nightmare Raven's aggression
 		'''
 }
 
@@ -1522,7 +1523,7 @@ DevilsClaw: {
 	Tooltip:
 		'''
 		[c/ccaaf2: Devil's Claw]
-			Shoots dark leaves, shoots a red leaf every 7 attacks, earning 1 [c/fa0064: Nightmare Sparkle] on hit 
+			Shoots dark leaves, shoots a red leaf every 7 attacks, granting 1 [c/fa0064: Nightmare Sparkle] on hit 
 			Right-click to consume 2 [c/fa0064: Nightmare Sparkle] to shoot a cloud of red flying leaves
 		'''
 }
@@ -1559,12 +1560,12 @@ Lullaby: {
 }
 
 PurpleToeStaff: {
-	DisplayName: Purple Toe Staff
+	DisplayName: Staff of the Dream Eater
 	Tooltip:
 		'''
 		[c/4f46a4: Hungry Predators Will Devour Your Dreams]
-			Summons the Nightmare Predator, which occupies 1.5 summon slots
-			Enhanced with the whip weapon "Eden" increases the Nightmare Predator's aggressiveness
+			Summons the Nightmare Predator, takes up 1.5 minion slot
+			Enhanced with the whip weapon "Eden" increases the Nightmare Predator's aggression
 		'''
 }
 
@@ -1638,14 +1639,14 @@ BloodAmulet: {
 	DisplayName: Blood Amulet
 	Tooltip:
 		'''
-		Kill enemies to gain the Bloodthirsty buff, which can be stacked up to 5 layers
-		Each layer of Bloodthirsty +2% damage and +2% move speed
+		Kill enemies to gain the Bloodthirsty buff, caps at 5 stacks
+		Each stack of Bloodthirsty gives +2% damage and +2% movement speed
 		'''
 }
 
 VertebraeBlade: {
 	DisplayName: Vertebrae Blade
-	Tooltip: Shoots vertebrae spikes, converging into Vertebrae blade and smashing to enemies when the number of them are enough
+	Tooltip: Shoots vertebrae spikes, converging into a vertebrae blade and smashing to enemies
 }
 
 RottenAmulet: {
@@ -1653,28 +1654,28 @@ RottenAmulet: {
 	Tooltip:
 		'''
 		After taking a hit, you will receive a limb rebirth buff, which can stack
-		The number of stacks can increase life regen according to the number of stacks
-		When the number of stacks reaches 6, consume all stacks to heal 25 HP
-		This effect has a 5 second CD
+		Increase life regen depending on the stacks.
+		Upon getting 6 stacks, consume all the stacks and restore 25 health
+		5 second cooldown
 		'''
 }
 
 IcicleSilkKnief: {
-	DisplayName: Icicle Silk Knief
+	DisplayName: Icicle Silk Shiv
 	Tooltip:
 		'''
-		Hold rouse right to flick the knief, release to throw 
-		When the knief hit enemy, it will insert into the enemy, and the left click attack hits the enemy to increase marks
-		When the mark is greater than 3, right click to retract the knief and cause an explosion
+		Hold right click to charge the Shiv
+		Upon hit, it will stick to the target, and the left click attack hits the enemy to increase mark
+		When the mark is higher than 3, right click to retract the Shiv and cause an explosion
 		'''
 }
 
 IronSilkKnief: {
-	DisplayName: Iron Silk Knief
+	DisplayName: Iron Silk Shiv
 	Tooltip:
 		'''
-		Hold rouse right to flick the knief, release to throw 
-		After hitting an enemy, hook the knief onto it, and then right click again to drag them towards you					
+		Hold right click to charge the Shiv
+		After hitting an enemy, hook the Shiv onto it, and then right click again to drag them towards you					
 		'''
 }
 
@@ -1695,7 +1696,7 @@ SlimeSceptre: {
 
 MagikeMonoclastic: {
 	DisplayName: Magike Monoclastic
-	Tooltip: When wearing and turning on the visibility of the accessory, the flow of magike can be visually observed
+	Tooltip: While equipped and not hidden, the flow of magike can be visually observed
 }
 
 Reel_MagikeAdvance: {
@@ -1848,17 +1849,17 @@ BloodJade: {
 }
 
 BloodJadeMagicWeapon: {
-	DisplayName: 赤琰圭
+	DisplayName: Authority in Beauty
 	Tooltip: ""
 }
 
 BloodJadeMeleeWeapon: {
-	DisplayName: 赤璋
+	DisplayName: Scarlet Vessel
 	Tooltip: ""
 }
 
 BloodiancieBossBag: {
-	DisplayName: 赤星匣
+	DisplayName: Bloodiancie Treasure Bag
 	Tooltip: Right click to open
 }
 
@@ -1911,7 +1912,7 @@ RuneSong: {
 	DisplayName: Rune Song
 	Tooltip:
 		'''
-		+62 max health
+		+62 maximum health
 		+3 life on melee hit
 		[c/01fe06:+15% chance on hit to kill any target that has lower health than you]
 		[c/8e8e8e:A legendary sword that hums when swung through the air. ]
@@ -1922,14 +1923,14 @@ RuneSong: {
 AncientGemstone: {
 	DisplayName: Ancient Gemstone
 	Tooltip: "[c/8e8e8e:Strange, blue gemstone emitting waves of energy.]"
-	ShlimmerTranslation: 此为微光转化合成表
+	ShlimmerTranslation: This is the shimmer conversion synthesis table
 }
 
 BrokenHandle: {
 	DisplayName: Broken Handle
 	Tooltip:
 		'''
-		+31 max health
+		+31 maximum health
 		[c/8e8e8e:A piece of an ancient weapon. Even though it's only the handle it already feels mysteriously balanced in your hand.]
 		'''
 }
@@ -1956,7 +1957,7 @@ RuneParchment: {
 	DisplayName: Rune Parchment
 	Tooltip:
 		'''
-		[c/8e8e8e:A unusually well preserved piece of ancient paper. ]
+		[c/8e8e8e:A unusually well preserved piece of ancient paper.]
 		[c/8e8e8e:The runes are impossible to decipher but small symbols hint at it being the recipe for a strange weapon.]
 			Sold by the Traveling Merchant after defeating Plantera
 		'''
@@ -1980,9 +1981,9 @@ PhantomSpark: {
 	DisplayName: Phantom Spark
 	Tooltip:
 		'''
-		+12% critical hit chance
-		+27% critical hit damage
-		[c/01fe06:+20% chance to summon a ghost caveling when killing any enemy]
+		12% increased critical strike chance
+		27% increased critical strike damage
+		[c/01fe06:+20% chance to summon a ghost caveling after killing any enemy]
 		[c/8e8e8e:A legendary, masterfully crafted bow that shoots pure energy projectiles. ]
 		[c/8e8e8e:Sometimes those pierce the veil of time and space, calling upon the spirits of the past.]
 		'''
@@ -1992,7 +1993,7 @@ PoisonousSickle: {
 	DisplayName: Poisonous Sickle
 	Tooltip:
 		'''
-		+18% critical hit damage
+		+18% increased critical strike damage
 		+28% chance to apply poison on hit, reduces enemy healing received by 75%
 		[c/8e8e8e:Farming tool that turned into a weapon when a great threat had to be slain.]
 		'''
@@ -2027,7 +2028,7 @@ AncientGemNecklace: {
 	DisplayName: Ancient Gem Necklace
 	Tooltip:
 		'''
-		+5.6% melee attack speed
+		+5.6% increased melee attack speed
 		[c/8e8e8e:A necklace crafted with only using ancient gemstones as well as a super rare white version.]
 		'''
 	AncientGemSet: 2 set: +7% of mining damage added as melee damage
@@ -2038,10 +2039,10 @@ AncientGemRing: {
 	DisplayName: Ancient Gem Ring
 	Tooltip:
 		'''
-		+15% critical hit damage
+		+15% increased critical strike damage
 		[c/8e8e8e:This mysterious ring is entirely made out of ancient gemstones, featuring a super rare white one.]
 		'''
-	AncientGemSet: 2 set: +7% of mining damage added as melee damage
+	AncientGemSet: 2 set: +7% of pickaxe power added as melee damage
 	AncientGemSetTips: Equip the Ancient Gem Necklace to get the set effect
 }
 
@@ -2049,15 +2050,15 @@ GoldCrystalNecklace: {
 	DisplayName: Gold Crystal Necklace
 	Tooltip:
 		'''
-		+9.0% melee damage
-		+9.4% range damage
+		9% increased melee damage
+		9.4% increased ranged damage
 		[c/8e8e8e:A shiny trinket combining the most valuable of materials.]
 		'''
 	Polished: "Polished "
 	PolishedToolTip:
 		'''
-		+12.3% melee damage
-		+12.5% range damage
+		+12.3% increased melee damage
+		+12.5% increased ranged damage
 		'''
 }
 
@@ -2065,14 +2066,14 @@ GoldCrystalRing: {
 	DisplayName: Gold Crystal Ring
 	Tooltip:
 		'''
-		+6.3% range damage
+		+6.3% increased ranged damage
 		[c/8e8e8e:A precious ring featuring an ancient gemstone.]
 		'''
 	Polished: "Polished "
 	PolishedToolTip:
 		'''
-		+8.9% range damage
-		+4% range attack speed
+		+8.9% increased ranged damage
+		+4% increased ranged attack speed
 		'''
 }
 
@@ -2090,8 +2091,8 @@ SkyRing: {
 	DisplayName: Sky Ring
 	Tooltip:
 		'''
-		+7% critical hit chance
-		+8.5% melee damage
+		7% increased critical strike chance
+		8.5% increased melee damage
 		[c/8e8e8e:This ring reminds you of the wide open sky.]
 		'''
 }
@@ -2100,7 +2101,7 @@ CoreBoneRing: {
 	DisplayName: Bone Ring
 	Tooltip:
 		'''
-		+4% critical hit chance
+		4% increased critical strike chance
 		[c/8e8e8e:A prehistoric, crude ring made from bone. Rings like these have been discovered in early human graves.]
 		'''
 }
@@ -2109,8 +2110,8 @@ OceanheartNecklace: {
 	DisplayName: Oceanheart Necklace
 	Tooltip:
 		'''
-		+42 max health
-		+21% more healing from health over time regeneration
+		+42 maximum health
+		+21% increased health regeneration
 		[c/8e8e8e:A big blue diamond is the centerpiece of this extraordinary treasure.]
 		[c/8e8e8e:You feel loved when holding it up to your chest.]
 		'''
@@ -2120,7 +2121,7 @@ HeartBerryNecklace: {
 	DisplayName: Heart Berry Necklace
 	Tooltip:
 		'''
-		+0.5 health every sec
+		+0.5 health every second
 		[c/8e8e8e:A heart berry on the neck makes for an easy snack!]
 		'''
 }
@@ -2130,7 +2131,7 @@ BubblePearlNecklace: {
 	Tooltip:
 		'''
 		+12 max health
-		+7 armor
+		+7 defence
 		+6% dodge chance
 		[c/8e8e8e:Natural grown jewelry made from rare bubble pearls.]
 		'''
@@ -2257,7 +2258,7 @@ BisketyHead: {
 
 StretchGlue: {
 	DisplayName: Stretch Glue
-	Tooltip: Allowing flying shield to ricochet once among enemies.
+	Tooltip: Allow Flying Shield to ricochet once among enemies.
 }
 
 TrashCanLid: {
@@ -2267,12 +2268,12 @@ TrashCanLid: {
 
 FlyingShieldMaintenanceGuide: {
 	DisplayName: Flying Shield Maintenance Guide
-	Tooltip: Enhancing the flying shield with the ability to block using the right click.
+	Tooltip: Enhancing the Flying Shield with the ability to block using the right click.
 }
 
 FlyingShieldVarnish: {
 	DisplayName: Flying Shield Varnish
-	Tooltip: Increasing the flying speed of the flying shield.
+	Tooltip: Increase the flying speed of the Flying Shield.
 }
 
 RedJadeShield: {
@@ -2284,24 +2285,24 @@ FlyingShieldToolbox: {
 	DisplayName: Flying Shield Toolbox
 	Tooltip:
 		'''
-		Allowing flying shield to ricochet once among enemies.
-		Enhancing the flying shield with the ability to block using the right click.
-		Increasing the flying speed of the flying shield.
+		Allows Flying Shield to ricochet once among enemies.
+		Enhancing the Flying Shield with the ability to block using the right click.
+		Increase the flying speed of the Flying Shield.
 		'''
 }
 
 HeavyWedges: {
 	DisplayName: Heavy Wedges
-	Tooltip: Slowing down the flying speed of the flying shield, increasing its size and melee damage.
+	Tooltip: Reduces the flying speed of the Flying Shield, increases its size and melee damage.
 }
 
 DemonsProtection: {
 	DisplayName: Demons Protection
 	Tooltip:
 		'''
-		+10% chance to reduce the number of projectiles penetrated when blocking with the flying shield.
-		Slightly enhancing the blocking capability of the flying shield.
-		Slightly increasing the speed of raising the shield.
+		+10% chance to reduce the number of projectiles penetrated when blocking with the Flying Shield.
+		Slightly enhances the blocking power of the Flying Shield.
+		Slightly increases the speed of raising the shield.
 		'''
 }
 
@@ -2309,16 +2310,16 @@ FlyingShieldToolboxProMax: {
 	DisplayName: Flying Shield Toolbox Pro Max
 	Tooltip:
 		'''
-		Allowing flying shield to ricochet once among enemies.
-		Enhancing the flying shield with the ability to block using the right click.
-		Increasing the flying speed of the flying shield.
-		The right click block can be used even when the flying shield has not returned.
+		Allowing Flying Shield to ricochet once among enemies.
+		Enhances the Flying Shield with the ability to block using the right click.
+		Increases the flying speed of the Flying Shield.
+		The right click block can be used even when the Flying Shield has not returned.
 		'''
 }
 
 LevitationBlossom: {
 	DisplayName: Levitation Blossom
-	Tooltip: Increasing the flying time of the flying shield.
+	Tooltip: Increases the flying time of the Flying Shield.
 }
 
 DeliciousSteak: {
@@ -2328,35 +2329,35 @@ DeliciousSteak: {
 
 ChlorophyteMedal: {
 	DisplayName: Chlorophyte Medal
-	Tooltip: Granting the flying shield tracking abilities.
+	Tooltip: Gives the Flying Shield homing abilities.
 }
 
 SilverAngel: {
 	DisplayName: Silver Angel
-	Tooltip: Summoning the Sword of Justice upon hitting an enemy with the flying shield.
+	Tooltip: Summons the Sword of Justice upon hitting an enemy with the Flying Shield.
 }
 
 FloralHarmonyMedallion: {
 	DisplayName: Floral Harmony Medallion
 	Tooltip:
 		'''
-		Significantly increasing the flight time of the flying shield.
-		Granting the flying shield tracking abilities.
+		Significantly increases the flight time of the Flying Shield.
+		Gives the Flying Shield homing abilities.
 		'''
 }
 
 PearlRay: {
 	DisplayName: Pearl Ray
-	Tooltip: After the flying shield hits or successfully defends, the damage of the next attack increases.
+	Tooltip: After the Flying Shield hits or successfully blocks, the damage of the next attack increases.
 }
 
 FlyingShieldCore: {
 	DisplayName: Flying Shield Core
 	Tooltip:
 		'''
-		Slowing down the flying speed of the flying shield, increasing its size.
-		The right click block can be used even when the flying shield has not returned.
-		+12% Melee Damage
+		Reduces the flying speed of the Flying Shield, but increases its size.
+		The right click block can be used even when the Flying Shield has not returned.
+		+12% increased melee damage
 		'''
 }
 
@@ -2371,20 +2372,20 @@ TortoiseshellFortress: {
 
 ShieldbearersBand: {
 	DisplayName: Shieldbearers Band
-	Tooltip: +1 the number of flying shields that can exist simultaneously.
+	Tooltip: Allows you to throw another Flying Shield
 }
 
 RustedShield: {
 	DisplayName: Rusted Shield
-	Tooltip: It is said that a hero used this shield to halt a terrible disaster in ancient times. But it's grown rusty and worn.
+	Tooltip: It's said that a hero used this shield to halt a terrible disaster in ancient times. But it's grown rusty and worn.
 }
 
 BeetleLimbStrap: {
 	DisplayName: Beetle Limb Strap
 	Tooltip:
 		'''
-		+3 the number of flying shields that can exist simultaneously.
-		Many insects can lift objects several times their own body weight, and this limb is no exception.
+		Increase the number of Flying Shields that can exist simultaneously by 3.
+		Many insects can lift objects several times their own body weight, and this one is no exception.
 		'''
 }
 
@@ -2392,7 +2393,7 @@ PowerliftExoskeleton: {
 	DisplayName: Powerlift Exoskeleton
 	Tooltip:
 		'''
-		+2 the number of flying shields that can exist simultaneously.
+		Increase the number of Flying Shields that can exist simultaneously by 2.
 		A powerful mechanical arm that allows you to carry several more shields.
 		'''
 }
@@ -2402,7 +2403,7 @@ HolyCharm: {
 	Tooltip:
 		'''
 		At the moment of raising the shield, it is possible to perform a perfect block and unleash a holy shield charge.
-		The right click block can be used even when the flying shield has not returned.
+		The right click block can be used even when the Flying Shield has not returned.
 		'''
 }
 
@@ -2411,9 +2412,9 @@ Terracrest: {
 	Tooltip:
 		'''
 		At the moment of raising the shield, it is possible to perform a perfect block and unleash Terra Spike.
-		The right click block can be used even when the flying shield has not returned.
-		+18% chance to reduce the number of projectiles penetrated when blocking with the flying shield.
-		Enhancing the blocking capability of the flying shield.
+		The right click block can be used even when the Flying Shield has not returned.
+		+18% chance to reduce the number of projectiles penetrated when blocking with the Flying Shield.
+		Enhancing the blocking capability of the Flying Shield.
 		Increasing the speed of raising the shield.
 		'''
 }
@@ -2423,7 +2424,7 @@ Fishronguard: {
 	Tooltip:
 		'''
 		Its appearance while gliding through the air is akin to that of a real Duke Fishron flying by.
-		Emitting tracking bubbles while in flight.
+		Emitting homing bubbles while in flight.
 		'''
 }
 
@@ -2434,26 +2435,26 @@ MechRioter: {
 
 BatfangShield: {
 	DisplayName: Batfang Shield
-	Tooltip: Has a chance to produce a life-stealing effect.
+	Tooltip: Chance for life steal.
 }
 
 VampiresFang: {
 	DisplayName: Vampires Fang
 	Tooltip:
 		'''
-		+1 the number of flying shields that can exist simultaneously.
+		Increase the number of Flying Shields that can exist simultaneously by 3.
 		Throwing out a bloodthirsty shield.
 		'''
 }
 
 GlazeBulwark: {
 	DisplayName: Glaze Bulwark
-	Tooltip: It will turn into fragments when defending.
+	Tooltip: It will turn into fragments when blocking.
 }
 
 GemrainAegis: {
 	DisplayName: Gemrain Aegis
-	Tooltip: Turns into rainbow shards when defending.
+	Tooltip: Turns into rainbow shards when blocking.
 }
 
 Leonids: {
@@ -2463,7 +2464,7 @@ Leonids: {
 
 Solleonis: {
 	DisplayName: Solleonis
-	Tooltip: “Unleashes the giant lion that devours the sun.”
+	Tooltip: “Unleashes a giant lion that devours the sun.”
 }
 
 RoyalAngel: {
@@ -2480,9 +2481,9 @@ FlyingShieldTerminalChip: {
 	DisplayName: Flying Shield Terminal Chip
 	Tooltip:
 		'''
-		Slowing down the flying speed of the flying shield, increasing its size.
-		The right click block can be used even when the flying shield has not returned.
-		Increasing the return speed of the flying shield.
+		Slowing down the flying speed of the Flying Shield, increasing its size.
+		The right click block can be used even when the Flying Shield has not returned.
+		Increasing the return speed of the Flying Shield.
 		+15% Melee Damage
 		+7% Melee Attack Speed
 		'''
@@ -2492,10 +2493,10 @@ NanoAmplifier: {
 	DisplayName: Nano Amplifier
 	Tooltip:
 		'''
-		+2 The number of times the flying shield ricochets among enemies.
-		Significantly increase the flying speed of the flying shield.
-		Enhance the right click blocking ability of the flying shield.
-		Allow right click blocking even when the flying shield has not returned.
+		+2 The number of times the Flying Shield ricochets among enemies.
+		Significantly increase the flying speed of the Flying Shield.
+		Enhance the right click blocking ability of the Flying Shield.
+		Allow right click blocking even when the Flying Shield has not returned.
 		'''
 }
 
@@ -2506,7 +2507,7 @@ ConquerorOfTheSeas: {
 
 GoldenSamurai: {
 	DisplayName: Golden Samurai
-	Tooltip: +1 the number of flying shields that can exist simultaneously.
+	Tooltip: +1 the number of Flying Shields that can exist simultaneously.
 }
 
 RemainsOfSamurai: {
@@ -2518,7 +2519,7 @@ HorseshoeCrab: {
 	DisplayName: Horseshoe Crab
 	Tooltip:
 		'''
-		After the flying shield hits or successfully defends, the damage of the next attack increases.
+		After the Flying Shield hits or successfully defends, the damage of the next attack increases.
 		Calls upon companions to attack together upon hitting an enemy.
 		'''
 }
@@ -2672,7 +2673,7 @@ PirateKingHat: {
 	NotHasPirateKingSoul: Soul of the Pirate King: Triggers when at least 2 sets are equipped
 	PirateKingSoul2Part:
 		'''
-		Soul of the Pirate King: Attacking enemies can sometimes loot coins
+		Soul of the Pirate King: Attacking enemies can sometimes drop coins
 		[c/807b7d:(2) Piece set]
 		[c/69a777:5% chance to trigger]
 		[c/69a777:2] [c/807b7d:second cooldown]
@@ -2680,26 +2681,26 @@ PirateKingHat: {
 		'''
 	PirateKingSoul3Part:
 		'''
-		海盗王之魂：攻击敌人有时会抢夺钱币
-		[c/807b7d:(3)件套]
-		[c/69a777:10%概率触发]
-		[c/69a777:1] [c/807b7d:秒冷却时间]
-		[c/807b7d:造成] [c/9e82b5:175%] [c/807b7d:伤害]
+		Soul of the Pirate King: Attacking enemies can sometimes drop coins
+		[c/807b7d:(3)Piece set]
+		[c/69a777:10% chance to trigger]
+		[c/69a777:1] [c/807b7d:second cooldown]
+		[c/807b7d:造成] [c/9e82b5:175%] [c/807b7d:damage]
 		'''
 	NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
 	LuckyStar2Part:
 		'''
-		幸运星：运气增加
-		[c/807b7d:(2)件套]
-		[c/807b7d:增加] [c/9e82b5:0.2]
+		Lucky star: increased luck
+		[c/807b7d:(2)Piece set]
+		[c/807b7d:Increase] [c/9e82b5:0.2]
 		'''
 	LuckyStar3Part:
 		'''
 		幸运星：运气增加
 		[c/807b7d:(3)件套]
-		[c/807b7d:增加] [c/9e82b5:0.3]
+		[c/807b7d:Increase] [c/9e82b5:0.3]
 		'''
-	PriateKingBonus: 幸运777：近战伤害，近战速度，近战暴击率各增加7%
+	PriateKingBonus: Lucky 777: Melee damage, melee speed, and melee critical hit rate each increase by 7%
 }
 
 LightningRods: {
@@ -2718,7 +2719,7 @@ CrystalBlossomShards: {
 
 ThunderveinDragonBossBag: {
 	DisplayName: Thundervein Dragon Boss Bag
-	Tooltip: ""
+	Tooltip: "Right click to open"
 }
 
 ThunderveinDragonRelic: {
@@ -3160,7 +3161,7 @@ FlamingLamps: {
 	DisplayName: Flaming Lamps
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
 		[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
 		Ignore knockback during the dash
 		Dash hits an enemy with a solar blast
@@ -3172,7 +3173,7 @@ LavaLamp: {
 	DisplayName: Lava Lamp
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
 		[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
 		Ignore knockback during the dash
 		Dash hits an enemy with a solar blast
@@ -3184,7 +3185,7 @@ PiezoArmorPanel: {
 	DisplayName: Piezo Armor Panel
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
 		[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
 		Ignore knockback during the dash
 		Dash hits an enemy with a solar blast
@@ -3195,7 +3196,7 @@ PiezoArmorPanel: {
 
 AmberAmulet: {
 	DisplayName: Amber Amulet
-	Tooltip: +8% Chance to reduce the number of projectile penetration when blocking a flying shield
+	Tooltip: +8% Chance to reduce the number of projectile penetration when blocking a Flying Shield
 }
 
 JungleTurtleShell: {
@@ -3226,7 +3227,7 @@ ForbiddenLamp: {
 	DisplayName: Forbidden Lamp
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
 		[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
 		Ignore knockback during the dash
 		Dash hits an enemy with a solar blast
@@ -3238,7 +3239,7 @@ SolarTwinkle: {
 	DisplayName: Solar Twinkle
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
 		[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
 		Ignore knockback during the dash
 		Dash hits an enemy with a solar blast
@@ -3250,7 +3251,7 @@ OniMask: {
 	DisplayName: Oni Mask
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
 		[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
 		[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
 		Throw bones at the start of the Dash
@@ -3262,7 +3263,7 @@ KamonFlag: {
 	DisplayName: Kamon Flag
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
 		[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
 		[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
 		Spawns a grey and black soul at the start of the dash
@@ -3273,7 +3274,7 @@ SolarPanel: {
 	DisplayName: Solar Panel
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
 		[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
 		[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
 		Spawns charged blasters during the dash
@@ -3289,7 +3290,7 @@ OldClockwork: {
 	DisplayName: Old Clockwork
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
 		[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
 		[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
 		Upon dash hit, the "Tighten Clockwork" buff is granted
@@ -3301,7 +3302,7 @@ ChronoHeart: {
 	DisplayName: Chrono Heart
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the flying shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
 		[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
 		[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
 		The clockwise is generated at sprint
@@ -3934,8 +3935,8 @@ RubyScepter: {
 IcicleHelmet: {
 	ArmorBonus:
 		'''
-		按下套装奖励键使用冰晶吐息或冰刺
-		套装奖励键可在模组配置中更改
+		Press the set bonus button to use Ice Breath or Ice Spike
+		Set bonus keys can be changed in the module configuration
 		'''
 	DisplayName: Icicle Helmet
 	Tooltip: ""
