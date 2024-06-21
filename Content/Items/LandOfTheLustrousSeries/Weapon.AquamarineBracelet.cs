@@ -377,17 +377,16 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void DrawPrimitives()
         {
+            if (trail == null)
+                return;
+            
             Effect effect = Filters.Scene["CrystalTrail"].GetShader().Shader;
-
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.ZoomMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             Texture2D noiseTex = GemTextures.CrystalNoises[Projectile.frame].Value;
 
             effect.Parameters["noiseTexture"].SetValue(noiseTex);
             effect.Parameters["TrailTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaser").Value);
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center - Main.screenPosition + rand) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(new Vector2(0.7f / Main.GameZoomTarget));
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * (Main.gamePaused ? 0.02f : 0.01f));
@@ -397,7 +396,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             effect.Parameters["highlightC"].SetValue(highlightC.ToVector4());
             effect.Parameters["brightC"].SetValue(brightC.ToVector4());
             effect.Parameters["darkC"].SetValue(darkC.ToVector4());
-            trail?.Render(effect);
+
+            trail.Render(effect);
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
