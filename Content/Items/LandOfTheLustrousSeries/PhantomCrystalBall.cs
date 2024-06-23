@@ -10,7 +10,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class PhantomCrystalBall() : BasePlaceableItem(Item.sellPrice(0, 1), ItemRarityID.Red,ModContent.TileType<PhantomCrystalBallTile>(), AssetDirectory.LandOfTheLustrousSeriesItems)
+    public class PhantomCrystalBall() : BasePlaceableItem(Item.sellPrice(0, 1), ItemRarityID.Red, ModContent.TileType<PhantomCrystalBallTile>(), AssetDirectory.LandOfTheLustrousSeriesItems)
     {
         public override void AddRecipes()
         {

@@ -11,7 +11,7 @@ using Terraria.GameContent;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
-    public abstract class BaseLassoSwing(short TrailLength) : BaseSwingProj(trailLength:TrailLength)
+    public abstract class BaseLassoSwing(short TrailLength) : BaseSwingProj(trailLength: TrailLength)
     {
         public virtual string HandleTexture => Texture + "Handle";
 
@@ -26,7 +26,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <summary>
         /// 甩动时距离玩家的距离
         /// </summary>
-        public float minDistance=48;
+        public float minDistance = 48;
         /// <summary>
         /// 投出时距离玩家的距离
         /// </summary>
@@ -135,7 +135,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             distanceToOwner = Helper.Lerp(maxDistance, 0, Coralite.Instance.SqrtSmoother.Smoother(factor));
             _Rotation += OwnerDirection * 0.02f;
 
-            if ((int)Timer == maxTime + trailLength+1)
+            if ((int)Timer == maxTime + trailLength + 1)
                 ShootFairy();
 
             Slasher();
@@ -368,7 +368,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public virtual void DrawFairyItem()
         {
-            Vector2 center = CursorCenter-Main.screenPosition;
+            Vector2 center = CursorCenter - Main.screenPosition;
 
             int itemType = (int)ItemType;
             Main.instance.LoadItem(itemType);
@@ -398,7 +398,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             DrawCursor(cursorTex);
 
             //绘制仙灵物品
-            if (Timer < maxTime&&ItemType>0)
+            if (Timer < maxTime && ItemType > 0)
                 DrawFairyItem();
             //绘制手持
             DrawHandle(handleTex);

@@ -1,9 +1,8 @@
-﻿using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
+﻿using Coralite.Core.Prefabs.Projectiles;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class BaseGemWeaponProj<T>:BaseHeldProj where T : ModItem
+    public class BaseGemWeaponProj<T> : BaseHeldProj where T : ModItem
     {
         private bool init = true;
 

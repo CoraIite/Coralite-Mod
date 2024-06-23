@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Stars

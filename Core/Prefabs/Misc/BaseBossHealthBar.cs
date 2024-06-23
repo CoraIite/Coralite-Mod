@@ -164,7 +164,7 @@ namespace Coralite.Core.Prefabs.Misc
                 lostLength -= currentBarLength % 2;
 
                 _lifeLostDatas.Add(new LifeLostData(barTopLeft + new Vector2(barFrame.Width * stretchScale.X, 0)
-                    , lostLength<0.5f?0.5f:lostLength));
+                    , lostLength < 0.5f ? 0.5f : lostLength));
 
                 //设置随机移动
                 SetRandomOffset(lostLife, npc.lifeMax);
@@ -211,7 +211,7 @@ namespace Coralite.Core.Prefabs.Misc
 
         public virtual void DrawBackground(SpriteBatch spriteBatch, Texture2D barTexture, Vector2 topLeft, Rectangle backFrame)
         {
-            spriteBatch.Draw(barTexture, topLeft + offset, backFrame, Color.White, 0f,Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(barTexture, topLeft + offset, backFrame, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
 
         public virtual void DrawBar(SpriteBatch spriteBatch, Texture2D barTexture, Vector2 barTopLeft, Rectangle barFrame, Color barColor, Vector2 stretchScale)

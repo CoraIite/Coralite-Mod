@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
-using Coralite.Content.Items.Thunder;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -432,7 +431,7 @@ namespace Coralite.Helpers
         /// <param name="projectile"></param>
         /// <param name="buffType"></param>
         /// <returns></returns>
-        public static bool CheckMinionOwnerActive(this Projectile projectile,int buffType)
+        public static bool CheckMinionOwnerActive(this Projectile projectile, int buffType)
         {
             Player owner = Main.player[projectile.owner];
             if (owner.dead || !owner.active)
@@ -752,7 +751,7 @@ namespace Coralite.Helpers
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.GameViewMatrix.ZoomMatrix);
-            
+
             Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
             doDraw();
             endSpriteBatch(spriteBatch);

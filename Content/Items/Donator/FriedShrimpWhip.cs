@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Donator
 
         public override void SetDefaults()
         {
-            Item.DefaultToWhip(ModContent.ProjectileType<FriedShrimpProj>(), 27, 1.5f, 4f,50);
+            Item.DefaultToWhip(ModContent.ProjectileType<FriedShrimpProj>(), 27, 1.5f, 4f, 50);
             Item.useAnimation = 30;
             Item.useTime = 30;
             Item.value = Item.sellPrice(0, 1);
@@ -43,14 +43,14 @@ namespace Coralite.Content.Items.Donator
         {
             if (Main.rand.NextBool(3))
             {
-               int index= Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<FriedDust>(), Scale : Main.rand.NextFloat(0.75f, 1.2f));
+                int index = Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<FriedDust>(), Scale: Main.rand.NextFloat(0.75f, 1.2f));
                 Dust d = Main.dust[index];
-                d.velocity = new Vector2(0, -Main.rand.NextFloat(3f)).RotateByRandom(-0.1f,0.1f);
+                d.velocity = new Vector2(0, -Main.rand.NextFloat(3f)).RotateByRandom(-0.1f, 0.1f);
                 //d.noGravity = true;
                 d.fadeIn = 55;
             }
 
-            if ((int)Main.timeForVisualEffects%10==0&&Main.rand.NextBool(5))
+            if ((int)Main.timeForVisualEffects % 10 == 0 && Main.rand.NextBool(5))
             {
                 Dust.NewDustPerfect(npc.Center + Main.rand.NextVector2Circular(16, 16)
                 , ModContent.DustType<Spiral>(), new Vector2(Main.rand.NextFloat(0.3f, 1f) * Main.rand.NextFromList(-1, 1), 0), newColor: new Color(200, 50, 50), Scale: Main.rand.NextFloat(0.6f, 0.8f));
@@ -115,7 +115,7 @@ namespace Coralite.Content.Items.Donator
             }
 
             float swingProgress = Timer / swingTime;
-            if (Utils.GetLerpValue(0.1f, 0.7f, swingProgress, clamped: true) * Utils.GetLerpValue(0.9f, 0.7f, swingProgress, clamped: true) > 0.5f 
+            if (Utils.GetLerpValue(0.1f, 0.7f, swingProgress, clamped: true) * Utils.GetLerpValue(0.9f, 0.7f, swingProgress, clamped: true) > 0.5f
                 && Main.rand.NextBool(4))
             {
                 List<Vector2> points = Projectile.WhipPointsForCollision;
@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.Donator
 
                 // After choosing a randomized dust and a whip segment to spawn from, dust is spawned.
                 Dust dust = Dust.NewDustDirect(spawnArea.TopLeft(), spawnArea.Width, spawnArea.Height, ModContent.DustType<FriedDust>(), 0f, 0f, 150, new Color(78, 136, 255, 80)
-                    ,Scale:Main.rand.NextFloat(0.75f,1f));
+                    , Scale: Main.rand.NextFloat(0.75f, 1f));
                 dust.position = points[pointIndex];
                 //dust.fadeIn = 0.3f;
                 Vector2 spinningpoint = points[pointIndex] - points[pointIndex - 1];
@@ -145,7 +145,7 @@ namespace Coralite.Content.Items.Donator
             Projectile.damage = (int)(Projectile.damage * 0.75f);
 
             Dust.NewDustPerfect(target.Center + Main.rand.NextVector2Circular(16, 16)
-                , ModContent.DustType<Spiral>(), new Vector2(Main.rand.NextFloat(0.3f, 1f)*Main.rand.NextFromList(-1,1), 0) , newColor:new Color(200,50,50),Scale: Main.rand.NextFloat(0.6f, 0.8f));
+                , ModContent.DustType<Spiral>(), new Vector2(Main.rand.NextFloat(0.3f, 1f) * Main.rand.NextFromList(-1, 1), 0), newColor: new Color(200, 50, 50), Scale: Main.rand.NextFloat(0.6f, 0.8f));
         }
 
         private void DrawLine(List<Vector2> list)

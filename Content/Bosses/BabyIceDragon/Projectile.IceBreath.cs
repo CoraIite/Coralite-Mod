@@ -39,7 +39,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     CoraliteContent.ParticleType<SnowFlower>(), Color.White, Main.rand.NextFloat(0.3f, 0.4f));
             }
 
-            Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * 0.2f - Vector2.UnitY * Main.rand.NextFloat(0.1f,2f),
+            Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * 0.2f - Vector2.UnitY * Main.rand.NextFloat(0.1f, 2f),
                    CoraliteContent.ParticleType<Fog>(), Color.AliceBlue, Main.rand.NextFloat(0.8f, 0.9f));
         }
 

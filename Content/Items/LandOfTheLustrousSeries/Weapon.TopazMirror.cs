@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Cyan9, Item.sellPrice(0, 20));
-            Item.SetWeaponValues(115, 4,2);
+            Item.SetWeaponValues(115, 4, 2);
             Item.useTime = Item.useAnimation = 28;
             Item.mana = 19;
 
@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             int time = Owner.itemTimeMax;
 
-            Helper.PlayPitched("Crystal/GemShoot", 0.4f, 0f,Projectile.Center);
+            Helper.PlayPitched("Crystal/GemShoot", 0.4f, 0f, Projectile.Center);
             Helper.PlayPitched("Crystal/CrystalStrike", 0.2f, -0.6f, Projectile.Center);
             SoundEngine.PlaySound(CoraliteSoundID.MagicStaff_Item8, Projectile.Center);
 
@@ -182,7 +182,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 , Projectile.whoAmI, attackType, time);
 
             AttackTime = time;
-            Owner.itemTime =Owner.itemAnimation= time;
+            Owner.itemTime = Owner.itemAnimation = time;
             recordTime = time;
         }
 
@@ -334,7 +334,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if ((int)Timer % (Owner.itemTimeMax / 4) == 0)
             {
-                Vector2 pos = Main.MouseWorld ;
+                Vector2 pos = Main.MouseWorld;
 
                 bool hasTile = false;
                 for (int i = 0; i < 30; i++)
@@ -350,7 +350,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 if (!hasTile)
                 {
-                    pos  += Helper.NextVec2Dir(100, 180);
+                    pos += Helper.NextVec2Dir(100, 180);
                 }
 
                 Vector2 dir = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero);
@@ -365,7 +365,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if ((int)Timer % (Owner.itemTimeMax * 3 / 4) == 0)
             {
-                Vector2 pos = Main.MouseWorld + new Vector2(Main.rand.Next(-500,500),-1200);
+                Vector2 pos = Main.MouseWorld + new Vector2(Main.rand.Next(-500, 500), -1200);
                 Vector2 dir = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero);
                 int index = Projectile.NewProjectileFromThis<TopazMeteor>(pos, dir * 10
                      , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
@@ -375,7 +375,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void Boulder()
         {
-            if ((int)Timer ==1)
+            if ((int)Timer == 1)
             {
                 Vector2 pos = Projectile.Center;
                 Vector2 dir = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero);
@@ -387,13 +387,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void Trident()
         {
-            if ((int)Timer ==1)
+            if ((int)Timer == 1)
             {
                 Vector2 pos = Projectile.Center;
                 Vector2 dir = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero);
                 int index = Projectile.NewProjectileFromThis<TopazTrident>(pos, dir * 12
                      , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
-                Main.projectile[index].rotation = dir.ToRotation()+0.785f;
+                Main.projectile[index].rotation = dir.ToRotation() + 0.785f;
             }
         }
 
@@ -458,9 +458,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     Main.spriteBatch.Draw(tex, Projectile.Center + new Vector2(0, -WeaponTexLength), null,
                          c, exRot, weaponOrigin, 1, 0, 0);
                     Main.spriteBatch.Draw(circleTex, Projectile.Center, null,
-                         c*0.5f, Projectile.rotation, circleOrigin, scale, 0, 0);
+                         c * 0.5f, Projectile.rotation, circleOrigin, scale, 0, 0);
                     Main.spriteBatch.Draw(circleTex2, Projectile.Center, null,
-                         c*0.2f, Projectile.rotation + Main.GlobalTimeWrappedHourly, circleOrigin2, scale, 0, 0);
+                         c * 0.2f, Projectile.rotation + Main.GlobalTimeWrappedHourly, circleOrigin2, scale, 0, 0);
                 }, sb =>
                 {
                     sb.End();
@@ -936,7 +936,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     TopazProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
                 }
 
-                SoundEngine.PlaySound(CoraliteSoundID.StoneBurst_Item70, Projectile.Center);
+            SoundEngine.PlaySound(CoraliteSoundID.StoneBurst_Item70, Projectile.Center);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -963,9 +963,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         }
     }
 
-    public class TopazTrident: BaseTopazProj
+    public class TopazTrident : BaseTopazProj
     {
-        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems+Name;
+        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
         public override void SetStaticDefaults()
         {
@@ -990,7 +990,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation()+0.785f;
+            Projectile.rotation = Projectile.velocity.ToRotation() + 0.785f;
             Projectile.SpawnTrailDust(8f, DustID.Firework_Yellow, Main.rand.NextFloat(0.2f, 0.4f), Scale: Main.rand.NextFloat(0.1f, 0.6f));
         }
 
@@ -1015,7 +1015,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (VisualEffectSystem.HitEffect_Dusts)
             {
-                Vector2 dir2 = (Projectile.rotation-0.785f).ToRotationVector2();
+                Vector2 dir2 = (Projectile.rotation - 0.785f).ToRotationVector2();
 
                 for (int i = 0; i < 12; i++)
                 {

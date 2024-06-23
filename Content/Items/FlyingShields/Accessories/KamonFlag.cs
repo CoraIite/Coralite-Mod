@@ -145,7 +145,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             Projectile.UpdateFrameNormally(4, 2);
             Projectile.SpawnTrailDust(DustID.Smoke, Main.rand.NextFloat(0.2f, 0.6f), 50, newColor: Color.Black, Scale: Main.rand.NextFloat(1f, 1.5f));
-            
+
             if (Main.rand.NextBool())
             {
                 Projectile.SpawnTrailDust(DustID.SilverFlame, Main.rand.NextFloat(0.2f, 0.6f)

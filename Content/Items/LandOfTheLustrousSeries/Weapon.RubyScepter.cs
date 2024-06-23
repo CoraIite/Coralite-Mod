@@ -152,7 +152,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     {
                         Projectile.NewProjectileFromThis<RubyProj>(Projectile.Center,
                             dir2.RotatedBy((i % 2 == 0 ? -0.53f : 0.35f) + Main.rand.NextFloat(-0.15f, 0.15f)) * Main.rand.NextFloat(3f, 13f)
-                            , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, ai1: (Main.MouseWorld - Projectile.Center).ToRotation(),ai2: 35 + i * 35);
+                            , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, ai1: (Main.MouseWorld - Projectile.Center).ToRotation(), ai2: 35 + i * 35);
                     }
 
                     Helper.PlayPitched("Crystal/CrystalStrike", 0.4f, -0.2f, Projectile.Center);
@@ -221,7 +221,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (!CheckOwner(out Projectile owner))
                 return;
 
-            Projectile.Center = owner.Center+new Vector2(0,-16);
+            Projectile.Center = owner.Center + new Vector2(0, -16);
             LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.04f);
 
             GetEndPoint(160);
@@ -287,7 +287,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 if (Timer > delayTime)
                 {
-                    LaserHeight = Helper.Lerp(0, 1,1- (Timer - delayTime) / (TotalAttackTime - delayTime));
+                    LaserHeight = Helper.Lerp(0, 1, 1 - (Timer - delayTime) / (TotalAttackTime - delayTime));
 
                     SpawnLaserParticle();
                     break;
@@ -397,11 +397,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             float factor = Timer / 10;
             float fadeFactor = Math.Abs(factor - MathF.Truncate(factor));
-            float rot = ((int)factor) * MathHelper.TwoPi/3;
+            float rot = ((int)factor) * MathHelper.TwoPi / 3;
 
             for (int i = 0; i < 5; i++)
             {
-                spriteBatch.Draw(glowTex, endPos, null, color * (height * 0.2f), LaserRotation + i*0.785f, glowTex.Size() / 2, height*0.05f*new Vector2(0.5f, 0.1f), 0, 0);
+                spriteBatch.Draw(glowTex, endPos, null, color * (height * 0.2f), LaserRotation + i * 0.785f, glowTex.Size() / 2, height * 0.05f * new Vector2(0.5f, 0.1f), 0, 0);
             }
 
             spriteBatch.Draw(glowTex, startPos, null, color * (height * 0.06f), 0, glowTex.Size() / 2, 0.5f, 0, 0);

@@ -84,7 +84,7 @@ namespace Coralite.Content.WorldGeneration
             }
         }
 
-        public static void BasaltCave(int x, int y,ushort tileType)
+        public static void BasaltCave(int x, int y, ushort tileType)
         {
             if (!WorldGen.InWorld(x, y))
                 return;

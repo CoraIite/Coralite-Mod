@@ -8,7 +8,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Core.Prefabs.Tiles
 {
-    public abstract class BaseBannerTile(Color mapColor,int dustType) : ModTile
+    public abstract class BaseBannerTile(Color mapColor, int dustType) : ModTile
     {
         public override string Texture => AssetDirectory.Banner + Name;
 
@@ -69,7 +69,7 @@ namespace Coralite.Core.Prefabs.Tiles
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
             CoraliteTileDrawing.DrawMultiTileVinesInWind(Main.instance.TilesRenderer, Main.Camera.UnscaledPosition, Vector2.Zero, i, j, 1, 3);
-                //TileHelper.DrawMultWine(i, j, 1, 3);
+            //TileHelper.DrawMultWine(i, j, 1, 3);
         }
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)

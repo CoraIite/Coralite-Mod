@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Nightmare;
-using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;

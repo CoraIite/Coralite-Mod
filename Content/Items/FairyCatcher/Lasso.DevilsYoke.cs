@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.FairyCatcher
         }
 
         public override Texture2D GetStringTex() => LineTex.Value;
-        public override Color GetStringColor(Vector2 pos)=> Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f));
+        public override Color GetStringColor(Vector2 pos) => Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f));
 
         public override Vector2 GetStringTipPos(Texture2D cursorTex)
         {

@@ -96,7 +96,7 @@ VisualEffectConfig: {
 		Tooltip:
 			'''
 			Adjust the particle effects, from 100 to 3000
-                        Note: can cause lag if particle count is too high
+			                     Note: can cause lag if particle count is too high
 			'''
 	}
 }

@@ -84,14 +84,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Amethyst)
-                .AddIngredient(ItemID.DemoniteBar,5)
+                .AddIngredient(ItemID.DemoniteBar, 5)
                 .AddIngredient(ItemID.GoldCoin)
                 .AddTile<MagicCraftStation>()
                 .Register();
 
             CreateRecipe()
                 .AddIngredient(ItemID.Amethyst)
-                .AddIngredient(ItemID.CrimtaneBar,5)
+                .AddIngredient(ItemID.CrimtaneBar, 5)
                 .AddIngredient(ItemID.GoldCoin)
                 .AddTile<MagicCraftStation>()
                 .Register();
@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
     public class AmethystNecklaceProj : BaseGemWeaponProj<AmethystNecklace>
     {
-        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems+Name;
+        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
         public ref float AttackCD => ref Projectile.ai[1];
         public ref float LengthToCenter => ref Projectile.ai[2];
@@ -182,13 +182,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (AttackTime > 0)
             {
                 factorTop = 1 - AttackTime / Owner.itemTimeMax;
-                LengthToCenter = Helper.Lerp(54, 32,factorTop);
+                LengthToCenter = Helper.Lerp(54, 32, factorTop);
                 Rot += 0.05f + (1 - factorTop) * 0.2f;
                 Projectile.rotation = Projectile.rotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.2f);
                 if (AttackTime == 1)//生成射线
                 {
                     Projectile.NewProjectileFromThis<AmethystLaser>(Projectile.Center, Vector2.Zero, Owner.GetWeaponDamage(Owner.HeldItem)
-                        , Projectile.knockBack, Projectile.whoAmI,AmethystLaser.TotalAttackTime+AmethystLaser.delayTime);
+                        , Projectile.knockBack, Projectile.whoAmI, AmethystLaser.TotalAttackTime + AmethystLaser.delayTime);
                     Helper.PlayPitched("Crystal/CrystalStrike", 0.4f, 0, Projectile.Center);
                 }
 
@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             else
             {
                 LengthToCenter = Helper.Lerp(LengthToCenter, 54, 0.2f);
-                Projectile.rotation = Projectile.rotation.AngleLerp( OwnerDirection > 0 ? 0 : MathHelper.Pi, 0.1f);
+                Projectile.rotation = Projectile.rotation.AngleLerp(OwnerDirection > 0 ? 0 : MathHelper.Pi, 0.1f);
                 Rot += 0.03f;
             }
         }
@@ -243,7 +243,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             vector3D = Vector3.Transform(vector3D, zRot);
 
             float k1 = -1000 / (vector3D.Z - 1000);
-            Vector2 CircleDir = k1 * new Vector2(vector3D.X, vector3D.Y)* LengthToCenter;
+            Vector2 CircleDir = k1 * new Vector2(vector3D.X, vector3D.Y) * LengthToCenter;
             pos = Projectile.Center + CircleDir;
             scale = 1f - vector3D.Z * 0.2f;
         }
@@ -284,8 +284,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 var rect = new Rectangle((int)bot.X, (int)bot.Y, lineTex.Width, (int)length);
 
-                Main.spriteBatch.Draw(lineTex, rect, null, AmethystLaser.brightC ,
-                    (topPos - bottomPos).ToRotation()-1.57f, new Vector2(lineTex.Width / 2, 0), 0, 0);
+                Main.spriteBatch.Draw(lineTex, rect, null, AmethystLaser.brightC,
+                    (topPos - bottomPos).ToRotation() - 1.57f, new Vector2(lineTex.Width / 2, 0), 0, 0);
             }
         }
 
@@ -300,7 +300,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 float rot = (pos - Projectile.Center).ToRotation();
                 float scale = scales[i];
 
-                Main.spriteBatch.Draw(mainTex, pos - Main.screenPosition, null, AmethystLaser.brightC * 0.5f, rot, origin, scale*1.1f, 0, 0);
+                Main.spriteBatch.Draw(mainTex, pos - Main.screenPosition, null, AmethystLaser.brightC * 0.5f, rot, origin, scale * 1.1f, 0, 0);
                 Main.spriteBatch.Draw(mainTex, pos - Main.screenPosition, null, lightColor, rot, origin, scale, 0, 0);
             }
         }
@@ -457,8 +457,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     {
                         Vector2 pos = Projectile.Center + dir * i + Main.rand.NextVector2Circular(8, 8);
                         if (Main.rand.NextBool())
-                        Dust.NewDustPerfect(pos, ModContent.DustType<GlowBall>(),
-                            dir * Main.rand.NextFloat(width / 160f), 0, color, 0.35f);
+                            Dust.NewDustPerfect(pos, ModContent.DustType<GlowBall>(),
+                                dir * Main.rand.NextFloat(width / 160f), 0, color, 0.35f);
                         else
                             SpawnTriangleParticle(pos, dir * Main.rand.NextFloat(width / 160f));
                     }
@@ -512,7 +512,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Texture2D laserTex = Projectile.GetTexture();
             Texture2D flowTex = CrystalLaser.FlowTex.Value;
 
-            rand += LaserRotation.ToRotationVector2()*3;
+            rand += LaserRotation.ToRotationVector2() * 3;
             Color color = darkC;
 
             float height = LaserHeight * laserTex.Height / 4f;
@@ -529,8 +529,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             var origin = new Vector2(0, laserTex.Height / 2);
             var origin2 = new Vector2(0, flowTex.Height / 2);
-            
-            Helper.DrawCrystal(spriteBatch, Projectile.frame, Projectile.Center + rand, Vector2.One*0.8f
+
+            Helper.DrawCrystal(spriteBatch, Projectile.frame, Projectile.Center + rand, Vector2.One * 0.8f
                 , (float)Main.timeForVisualEffects * 0.02f + Projectile.whoAmI / 3f
                 , highlightC, brightC, darkC, () =>
                 {
@@ -547,20 +547,20 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         Texture2D texDark = CrystalLaser.BlackTex.Value;
                         float opacity = height / (laserTex.Height / 2f) * 0.5f;
 
-                        spriteBatch.Draw(texDark, startPos-Main.screenPosition, null, Color.White * opacity, LaserRotation, new Vector2(texDark.Width / 2, 0), 50, 0, 0);
+                        spriteBatch.Draw(texDark, startPos - Main.screenPosition, null, Color.White * opacity, LaserRotation, new Vector2(texDark.Width / 2, 0), 50, 0, 0);
                         spriteBatch.Draw(texDark, startPos - Main.screenPosition, null, Color.White * opacity, LaserRotation - 3.14f, new Vector2(texDark.Width / 2, 0), 50, 0, 0);
                     }
 
                     spriteBatch.End();
                     spriteBatch.Begin(default, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-                },0.1f,0.35f,0f);
+                }, 0.1f, 0.35f, 0f);
 
             //绘制主体光束
             Texture2D bodyTex = CrystalLaser.LaserBodyTex.Value;
 
             color = brightC;
 
-            startPos = Projectile.Center-Main.screenPosition;
+            startPos = Projectile.Center - Main.screenPosition;
 
             laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, (int)(height * 0.5f));
             spriteBatch.Draw(bodyTex, laserTarget, laserSource, color, LaserRotation, new Vector2(0, bodyTex.Height / 2), 0, 0);
@@ -571,10 +571,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Texture2D starTex = CrystalLaser.StarTex.Value;
 
             spriteBatch.Draw(glowTex, endPos, null, color * (height * 0.02f), 0, glowTex.Size() / 2, 0.4f, 0, 0);
-            spriteBatch.Draw(starTex, endPos, null, color , Main.GlobalTimeWrappedHourly, starTex.Size() / 2, 0.16f, 0, 0);
+            spriteBatch.Draw(starTex, endPos, null, color, Main.GlobalTimeWrappedHourly, starTex.Size() / 2, 0.16f, 0, 0);
 
             spriteBatch.Draw(glowTex, startPos, null, color * (height * 0.02f), 0, glowTex.Size() / 2, 0.5f, 0, 0);
-            spriteBatch.Draw(starTex, startPos, null, color , Main.GlobalTimeWrappedHourly * -1.5f, starTex.Size() / 2, 0.25f, 0, 0);
+            spriteBatch.Draw(starTex, startPos, null, color, Main.GlobalTimeWrappedHourly * -1.5f, starTex.Size() / 2, 0.25f, 0, 0);
         }
     }
 }

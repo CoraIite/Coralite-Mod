@@ -5,7 +5,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class BaseGemItem(int value, int rare, string texturePath, bool pathHasName = false) :BaseMaterial(Item.CommonMaxStack,value,rare,texturePath,pathHasName)
+    public class BaseGemItem(int value, int rare, string texturePath, bool pathHasName = false) : BaseMaterial(Item.CommonMaxStack, value, rare, texturePath, pathHasName)
     {
         public override void SetDefaults()
         {

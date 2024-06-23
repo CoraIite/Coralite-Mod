@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.FairyCatcher
             TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16];
 
             TileObjectData.newTile.DrawYOffset = 2;
-            TileObjectData.newTile.Origin = new Point16(6,10);
+            TileObjectData.newTile.Origin = new Point16(6, 10);
 
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
@@ -137,7 +137,7 @@ namespace Coralite.Content.Items.FairyCatcher
 
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
-            if (drawData.tileFrameX % (12*16) == 0 && drawData.tileFrameY % AnimationFrameHeight == 0)
+            if (drawData.tileFrameX % (12 * 16) == 0 && drawData.tileFrameY % AnimationFrameHeight == 0)
                 Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
         }
 
@@ -191,7 +191,7 @@ namespace Coralite.Content.Items.FairyCatcher
 
         public override void AI()
         {
-            if (Projectile.localAI[0]==0)
+            if (Projectile.localAI[0] == 0)
             {
                 PortalCenter = Projectile.Center;
                 Projectile.localAI[0] = 1;
@@ -202,7 +202,7 @@ namespace Coralite.Content.Items.FairyCatcher
             if (State == 0)
             {
                 Vector2 targetPos = itemCenter + new Vector2(0, -20);
-                Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(Vector2.Zero)*1.5f;
+                Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(Vector2.Zero) * 1.5f;
                 if (Vector2.Distance(targetPos, Projectile.Center) < 3)
                 {
                     Projectile.Center = targetPos;
@@ -212,7 +212,7 @@ namespace Coralite.Content.Items.FairyCatcher
             else if (State == 1)
             {
                 Projectile.velocity = (PortalCenter - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
-                itemCenter = Projectile.Center+Projectile.velocity+new Vector2(0,20);
+                itemCenter = Projectile.Center + Projectile.velocity + new Vector2(0, 20);
                 if (Vector2.Distance(PortalCenter, Projectile.Center) < 4)
                 {
                     Projectile.velocity *= 0;
@@ -248,7 +248,7 @@ namespace Coralite.Content.Items.FairyCatcher
             Main.instance.LoadItem(itemType);
             Texture2D mainTex = TextureAssets.Item[itemType].Value;
             Rectangle rectangle2;
-            Color c = Lighting.GetColor(itemCenter.ToTileCoordinates())*alpha;
+            Color c = Lighting.GetColor(itemCenter.ToTileCoordinates()) * alpha;
 
             if (Main.itemAnimations[itemType] != null)
                 rectangle2 = Main.itemAnimations[itemType].GetFrame(mainTex, -1);
@@ -257,7 +257,7 @@ namespace Coralite.Content.Items.FairyCatcher
 
             float itemScale = 1f;
 
-            Main.spriteBatch.Draw(mainTex, center, new Rectangle?(rectangle2), c, 0f, rectangle2.Size() / 2, itemScale, 0 , 0f);
+            Main.spriteBatch.Draw(mainTex, center, new Rectangle?(rectangle2), c, 0f, rectangle2.Size() / 2, itemScale, 0, 0f);
         }
 
         public void DrawSelf()

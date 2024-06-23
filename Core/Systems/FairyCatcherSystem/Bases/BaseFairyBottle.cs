@@ -91,7 +91,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public bool ShootFairy(int index, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockback)
         {
-            return (fairies[index].ModItem as IFairyItem).ShootFairy(player,source,position,velocity,damage,knockback);
+            return (fairies[index].ModItem as IFairyItem).ShootFairy(player, source, position, velocity, damage, knockback);
         }
     }
 

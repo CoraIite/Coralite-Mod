@@ -204,7 +204,7 @@ namespace Coralite.Content.NPCs.GlobalNPC
             if (npc.HasBuff<FriedShrimpBuff>())
             {
                 modifiers.FlatBonusDamage += FriedShrimpBuff.TagDamage * projTagMultiplier;
-                if (projectile.type==ProjectileType<ChocomintIceProj>())
+                if (projectile.type == ProjectileType<ChocomintIceProj>())
                     modifiers.ArmorPenetration += 10;
             }
 

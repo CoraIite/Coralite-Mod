@@ -2719,7 +2719,7 @@ CrystalBlossomShards: {
 
 ThunderveinDragonBossBag: {
 	DisplayName: Thundervein Dragon Boss Bag
-	Tooltip: "Right click to open"
+	Tooltip: Right click to open
 }
 
 ThunderveinDragonRelic: {

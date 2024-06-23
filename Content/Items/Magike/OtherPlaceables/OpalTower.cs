@@ -7,7 +7,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.Magike.OtherPlaceables
 {
-    public class OpalTower:ModItem
+    public class OpalTower : ModItem
     {
         public override string Texture => AssetDirectory.MagikeItems + Name;
 
@@ -15,11 +15,11 @@ namespace Coralite.Content.Items.Magike.OtherPlaceables
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<OpalTowerTile>());
             Item.value = Item.sellPrice(0, 0, 50);
-            Item.rare=ModContent.RarityType<MagicCrystalRarity>();
+            Item.rare = ModContent.RarityType<MagicCrystalRarity>();
         }
     }
 
-    public class OpalBuff:ModBuff
+    public class OpalBuff : ModBuff
     {
         public override string Texture => AssetDirectory.Buffs + Name;
 

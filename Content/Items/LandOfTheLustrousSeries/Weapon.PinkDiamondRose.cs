@@ -214,7 +214,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "DiamondProj1";
 
         public static Color highlightC = Color.White;
-        public static Color brightC = new Color(244, 144, 183); 
+        public static Color brightC = new Color(244, 144, 183);
         public static Color darkC = new Color(153, 90, 123);
 
         public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);

@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class CrystalTriangle : Particle, IDrawNonPremultiplied
+    public class CrystalTriangle : Particle
     {
         public override string Texture => AssetDirectory.Particles + "Triangle";
 
@@ -13,6 +13,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void OnSpawn()
         {
+            drawNonPremultiplied = true;
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, Main.rand.Next(0, 5) * 64, 64, 64);
         }
@@ -27,7 +28,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (fadeIn > FadeTime)
             {
                 Scale *= 0.95f;
-                color.A =(byte)(color.A* 0.9f);
+                color.A = (byte)(color.A * 0.9f);
             }
 
             if (fadeIn > 40 || color.A < 10)
@@ -47,9 +48,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             return c;
         }
 
-        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        public override void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
-            Rectangle frame = this.Frame;
+            Rectangle frame = Frame;
             Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
 
             spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);

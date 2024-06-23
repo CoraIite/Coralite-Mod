@@ -4165,11 +4165,11 @@ TopazMirror: {
 }
 
 Tourmaline: {
-	DisplayName: 碧玺
 	Tooltip: 使用提炼机从上级宝石原石中提取
+	DisplayName: 碧玺
 }
 
 LandOfTheLustrous: {
+	Tooltip: 轮回与螺旋
 	DisplayName: 宝石之国
-	Tooltip: ""
 }

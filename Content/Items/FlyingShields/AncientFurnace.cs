@@ -68,7 +68,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
-            num=fail? 1 : 3;
+            num = fail ? 1 : 3;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Coralite.Content.Particles
                 }
 
                 Velocity.X *= 0.98f;
-                Rotation=Velocity.ToRotation();
+                Rotation = Velocity.ToRotation();
             }
 
             if (color.A < 2)

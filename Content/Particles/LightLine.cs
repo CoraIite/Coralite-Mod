@@ -14,9 +14,9 @@ namespace Coralite.Content.Particles
         public Func<Vector2> center;
 
         private float alpha;
-        public float maxAlpha=1;
+        public float maxAlpha = 1;
         public int fadeTime = 15;
-        public float  scaleY = 0.4f;
+        public float scaleY = 0.4f;
 
         public override void OnSpawn()
         {
@@ -31,7 +31,7 @@ namespace Coralite.Content.Particles
                 Center += follow();
             if (center != null)
                 Center = center();
-            
+
             Lighting.AddLight(Center, color.ToVector3() * alpha / 2);
 
             if (fadeIn < fadeTime)
@@ -64,7 +64,7 @@ namespace Coralite.Content.Particles
             Color c = color;
             c.A = (byte)(alpha * 255);
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, origin, new Vector2(Scale,0.4f), SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, origin, new Vector2(Scale, 0.4f), SpriteEffects.None, 0f);
         }
     }
 }

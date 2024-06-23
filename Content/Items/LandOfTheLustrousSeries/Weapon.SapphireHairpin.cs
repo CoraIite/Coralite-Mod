@@ -233,10 +233,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                         Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.Zero);
                         float factor2 = Timer / (50 * Projectile.MaxUpdates);
-                        float baseSpeed = Helper.Lerp(3.5f, 0.2f,factor2 );
+                        float baseSpeed = Helper.Lerp(3.5f, 0.2f, factor2);
                         for (int i = 0; i < 3; i++)
                         {
-                            float factor = MathF.Sin(Main.GlobalTimeWrappedHourly+Timer * 0.05f + i * MathHelper.PiOver2);
+                            float factor = MathF.Sin(Main.GlobalTimeWrappedHourly + Timer * 0.05f + i * MathHelper.PiOver2);
                             Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Firework_Blue
                                 , -dir.RotatedBy(factor) * Main.rand.NextFloat(baseSpeed, baseSpeed + 0.05f), Scale: Main.rand.NextFloat(0.1f, 0.7f));
                             d.noGravity = true;
@@ -522,10 +522,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                             Projectile.StartAttack();
 
                             SoundStyle st = CoraliteSoundID.MeteorImpact_Item89;
-                            st.Pitch =0.5f;
+                            st.Pitch = 0.5f;
                             SoundEngine.PlaySound(st, Projectile.Center);
                             st = CoraliteSoundID.Crystal_Item101;
-                            st.Pitch =-0.2f;
+                            st.Pitch = -0.2f;
                             SoundEngine.PlaySound(st, Projectile.Center);
                             Helper.PlayPitched("Crystal/CrystalStrike", 0.2f, -0.2f, Projectile.Center);
 
@@ -534,7 +534,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                             for (int i = 0; i < 6; i++)
                             {
                                 Projectile.NewProjectileFromThis<SapphireSmallProj>(Projectile.Center
-                                    , (angle + MathHelper.TwoPi / 6 * i).ToRotationVector2() * velocity, (int)(Projectile.damage *0.75f), Projectile.knockBack);
+                                    , (angle + MathHelper.TwoPi / 6 * i).ToRotationVector2() * velocity, (int)(Projectile.damage * 0.75f), Projectile.knockBack);
                             }
                         }
                     }
@@ -571,14 +571,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (!VisualEffectSystem.HitEffect_Dusts)
                 return;
 
-                for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 8; i++)
             {
                 Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24, 24),
                     DustID.UnusedWhiteBluePurple, Helper.NextVec2Dir() * Main.rand.NextFloat(2, 8),
                     Scale: Main.rand.NextFloat(1f, 2.5f));
-               Dust d= Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24, 24),
-                    DustID.PurpleTorch, Helper.NextVec2Dir() * Main.rand.NextFloat(2, 4),
-                    Scale: Main.rand.NextFloat(0.5f, 1f));
+                Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24, 24),
+                     DustID.PurpleTorch, Helper.NextVec2Dir() * Main.rand.NextFloat(2, 4),
+                     Scale: Main.rand.NextFloat(0.5f, 1f));
                 d.noGravity = true;
             }
 
@@ -624,7 +624,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Color result = Color.Lerp(Color.White, Color.Violet, Utils.GetLerpValue(0f, 0.7f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
             result.A /= 2;
-            return result; 
+            return result;
         }
 
         private float StripWidth(float progressOnStrip) => MathHelper.Lerp(24f, 48f, progressOnStrip);

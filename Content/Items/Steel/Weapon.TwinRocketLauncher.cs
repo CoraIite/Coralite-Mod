@@ -42,26 +42,26 @@ namespace Coralite.Content.Items.Steel
                 return false;
 
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), position, Vector2.Zero, ModContent.ProjectileType<TwinRocketLauncherHeldProj>(),
-                0, 0,player.whoAmI);
+                0, 0, player.whoAmI);
 
             if (type == ProjectileID.RocketI || type == ProjectileID.RocketII)
             {
                 type = ModContent.ProjectileType<TwinRocketLauncherProj>();
 
-                Projectile.NewProjectile(source, position, velocity, type, damage, knockback,player.whoAmI);
+                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 
                 type = ModContent.ProjectileType<TwinRocketLauncherProj2>();
                 int sign = Main.rand.NextFromList(-1, 1);
                 int howMany = Main.rand.Next(3, 6);
                 float perAngle = Main.rand.NextFloat(0.25f, 0.4f);
                 float baseAngle = velocity.ToRotation() + sign * perAngle * howMany / 2;
-                float speed = velocity.Length()*0.8f;
+                float speed = velocity.Length() * 0.8f;
 
                 for (int i = 0; i < howMany; i++)
                 {
-                    Projectile.NewProjectile(source, position, baseAngle.ToRotationVector2() * speed, type, damage/2, knockback, player.whoAmI);
+                    Projectile.NewProjectile(source, position, baseAngle.ToRotationVector2() * speed, type, damage / 2, knockback, player.whoAmI);
                     baseAngle -= sign * perAngle;
-                    speed += speed*0.1f;
+                    speed += speed * 0.1f;
                 }
 
                 return false;

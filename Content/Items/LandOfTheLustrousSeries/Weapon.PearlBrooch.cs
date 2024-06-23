@@ -133,7 +133,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 cs.shineRange = 12;
             }
 
-            Lighting.AddLight(Projectile.Center, Color.Pink.ToVector3()/2);
+            Lighting.AddLight(Projectile.Center, Color.Pink.ToVector3() / 2);
         }
 
         public override void Move()
@@ -354,17 +354,17 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (VisualEffectSystem.HitEffect_SpecialParticles)
             {
                 Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
-                Vector2 toCenter = new Vector2(Projectile.width/2, Projectile.height / 2);
+                Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
                 for (int i = 0; i < 4; i++)
                 {
                     Vector2 dir2 = dir.RotateByRandom(-0.6f, 0.6f);
                     SpawnTriangleParticle(Projectile.Center + dir2 * Main.rand.NextFloat(6, 12), dir2 * Main.rand.NextFloat(3f, 6f));
                 }
 
-                for (int i = 0; i < Projectile.oldPos.Length-5; i++)
+                for (int i = 0; i < Projectile.oldPos.Length - 5; i++)
                 {
                     Vector2 dir2 = (Projectile.oldPos[i + 1] - Projectile.oldPos[i]).SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f);
-                    SpawnTriangleParticle(Projectile.oldPos[i] +toCenter+ dir2 * Main.rand.NextFloat(6), dir2 * Main.rand.NextFloat(1f, 6f));
+                    SpawnTriangleParticle(Projectile.oldPos[i] + toCenter + dir2 * Main.rand.NextFloat(6), dir2 * Main.rand.NextFloat(1f, 6f));
                 }
             }
         }
@@ -437,11 +437,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 scale1 = Helper.Lerp(0, 0.3f, sqrtF);
                 scale2 = Helper.Lerp(0, 0.2f, Coralite.Instance.X2Smoother.Smoother(factor));
-                Projectile.alpha = (int)Helper.Lerp(0, 200,sqrtF);
+                Projectile.alpha = (int)Helper.Lerp(0, 200, sqrtF);
             }
             else if (Timer < totalTime)
             {
-                float factor = (Timer - halfTime) / (totalTime-halfTime);
+                float factor = (Timer - halfTime) / (totalTime - halfTime);
                 float x2F = Coralite.Instance.X2Smoother.Smoother(factor);
 
                 scale1 = Helper.Lerp(0.3f, 0, x2F);
@@ -490,9 +490,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
             Texture2D mainTex = Projectile.GetTexture();
             Color c = lightColor;
-            c *=Projectile.alpha/255f;
+            c *= Projectile.alpha / 255f;
             Main.spriteBatch.Draw(mainTex, Projectile.Center, null, c, 0, mainTex.Size() / 2, scale1, 0, 0);
-            Main.spriteBatch.Draw(mainTex, Projectile.Center, null,c, 0, mainTex.Size() / 2, scale2, 0, 0);
+            Main.spriteBatch.Draw(mainTex, Projectile.Center, null, c, 0, mainTex.Size() / 2, scale2, 0, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);

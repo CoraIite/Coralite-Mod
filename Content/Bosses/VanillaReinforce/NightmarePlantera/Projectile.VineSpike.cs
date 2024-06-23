@@ -7,7 +7,6 @@ using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Graphics.CameraModifiers;
-using Terraria.ID;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {

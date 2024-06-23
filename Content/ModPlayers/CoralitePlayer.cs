@@ -124,7 +124,7 @@ namespace Coralite.Content.ModPlayers
         public override void ResetEffects()
         {
             Effects ??= new HashSet<string>();
-            inventoryCraftStations ??= new List<IInventoryCraftStation> ();
+            inventoryCraftStations ??= new List<IInventoryCraftStation>();
 
             inventoryCraftStations.Clear();
             Effects.Clear();
@@ -354,14 +354,14 @@ namespace Coralite.Content.ModPlayers
             {
                 if (PollenGunpowderEffect == 0)
                 {
-                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.1f, 0.1f), 
+                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.1f, 0.1f),
                         ProjectileType<Items.HyacinthSeries.PollenGunpowderProj>(), damage, knockback, Player.whoAmI);
                     PollenGunpowderEffect = 60;
                 }
 
                 if (RoseGunpowderEffect == 0)
                 {
-                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.05f, 0.05f), 
+                    Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.05f, 0.05f),
                         ProjectileType<Items.HyacinthSeries.RoseGunpowderProj>(), (int)(damage * 1.35f), knockback, Player.whoAmI);
                     RoseGunpowderEffect = 90;
                 }
@@ -399,7 +399,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
         {
-            if (Effects.Contains(nameof(Items.RedJades.RedJadePendant)) && Main.myPlayer == Player.whoAmI 
+            if (Effects.Contains(nameof(Items.RedJades.RedJadePendant)) && Main.myPlayer == Player.whoAmI
                 && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
                 Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<Items.RedJades.RedJadePendant>())),
                     Player.Center + (proj.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<Items.RedJades.RedJadeBoom>(), 80, 8f, Player.whoAmI);
@@ -407,7 +407,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
         {
-            if (Effects.Contains(nameof(Items.RedJades.RedJadePendant)) && Main.myPlayer == Player.whoAmI 
+            if (Effects.Contains(nameof(Items.RedJades.RedJadePendant)) && Main.myPlayer == Player.whoAmI
                 && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
                 Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<Items.RedJades.RedJadePendant>())),
                     Player.Center + (npc.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<Items.RedJades.RedJadeBoom>(), 80, 8f, Player.whoAmI);

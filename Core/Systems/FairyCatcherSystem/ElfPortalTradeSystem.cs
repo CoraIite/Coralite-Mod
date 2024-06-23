@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader.Core;
@@ -81,7 +80,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             if (ElfPortalTrades.TryGetValue(trade.selfType, out _))
                 ElfPortalTrades[trade.selfType] = trade;
             else
-                ElfPortalTrades.Add(trade.selfType,  trade );
+                ElfPortalTrades.Add(trade.selfType, trade);
         }
 
         /// <summary>

@@ -1,13 +1,10 @@
-﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
-using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Projectiles.Globals

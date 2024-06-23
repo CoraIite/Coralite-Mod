@@ -65,7 +65,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 {
                     float damage2 = damage;
                     fcp.TotalCatchPowerBonus(ref damage2, Item);
-                    ShootFairy(bottle, player, source, position, velocity,(int)damage2, knockback);
+                    ShootFairy(bottle, player, source, position, velocity, (int)damage2, knockback);
                 }
 
             return false;
@@ -101,7 +101,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="source"></param>
         /// <param name="position"></param>
         /// <param name="velocity"></param>
-        public virtual void ShootFairy(IFairyBottle bottle, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity,int damage, float knockback)
+        public virtual void ShootFairy(IFairyBottle bottle, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockback)
         {
             Item[] fairies = bottle.Fairies;
 

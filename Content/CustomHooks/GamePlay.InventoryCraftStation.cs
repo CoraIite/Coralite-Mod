@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class InventoryCraftStation:HookGroup
+    public class InventoryCraftStation : HookGroup
     {
         public override void Load()
         {

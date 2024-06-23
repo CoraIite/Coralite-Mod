@@ -29,6 +29,8 @@ namespace Coralite.Core.Systems.ParticleSystem
         public Rectangle Frame;
         public ArmorShaderData shader;
 
+        public bool drawNonPremultiplied;
+
         /// <summary>
         /// 用于存储数据的地方，可以自由地在这里存储各种数据
         /// </summary>
@@ -155,8 +157,10 @@ namespace Coralite.Core.Systems.ParticleSystem
             spriteBatch.Draw(GetTexture().Value, Center, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
 
+        public virtual void DrawNonPremultiplied(SpriteBatch spriteBatch) { }
+
         public Asset<Texture2D> GetTexture() => ParticleSystem.ParticleAssets[Type];
-        
+
         /// <summary>
         /// 初始化中心数组
         /// </summary>

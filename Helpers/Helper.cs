@@ -18,7 +18,7 @@ namespace Coralite.Helpers
             const float Epsilon = 1e-10F;
 
             Vector3 rgb = c.ToVector3();
-            Vector3 HCV =RGBtoHCV(c);
+            Vector3 HCV = RGBtoHCV(c);
             float S = HCV.Y / (HCV.Z + Epsilon);
             return new Vector3(HCV.X, S, HCV.Z);
         }

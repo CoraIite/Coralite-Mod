@@ -44,7 +44,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             Initialize();
 
-            Projectile.UpdateFrameNormally(8,3);
+            Projectile.UpdateFrameNormally(8, 3);
 
             switch ((int)State)
             {

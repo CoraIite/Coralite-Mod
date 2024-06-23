@@ -248,7 +248,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         for (int i = 0; i < 4; i++)
                         {
                             Projectile.NewProjectileFromThis<SmallZumurudProj>(Projectile.Center, (angle + MathHelper.PiOver2 * i).ToRotationVector2() * 3
-                                , (int)(Projectile.damage *0.75f), Projectile.knockBack / 4, Main.rand.NextFloat(-0.3f, 0.3f));
+                                , (int)(Projectile.damage * 0.75f), Projectile.knockBack / 4, Main.rand.NextFloat(-0.3f, 0.3f));
                         }
                     }
 
@@ -351,7 +351,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             rand.X += 0.15f;
 
             Helper.DrawCrystal(spriteBatch, Projectile.frame, Projectile.Center + rand, new Vector2(0.4f, 1f)
-                , (float)(Main.timeForVisualEffects + Projectile.timeLeft) * (Main.gamePaused ? 0.02f : 0.01f) + Projectile.whoAmI / 3f
+                , (float)(Main.timeForVisualEffects) * (Main.gamePaused ? 0.02f : 0.01f) + Projectile.whoAmI / 3f
                 , highlightC, brightC, darkC, () =>
                 {
                     Texture2D mainTex = Projectile.GetTexture();
@@ -382,8 +382,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.DamageType = DamageClass.Magic;
             Projectile.width = Projectile.height = 16;
             Projectile.friendly = true;
-            Projectile.timeLeft = 600;
+            Projectile.timeLeft = 800;
             Projectile.extraUpdates = 2;
+            Projectile.tileCollide = true;
         }
 
         public override void AI()

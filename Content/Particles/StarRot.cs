@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Particles
 {
-    public  class StarRot:Particle
+    public class StarRot : Particle
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -34,9 +34,9 @@ namespace Coralite.Content.Particles
                 Velocity *= 0.8f;
             }
 
-            Rotation += Math.Sign( Velocity .X )*Velocity.Length()/ 14;
+            Rotation += Math.Sign(Velocity.X) * Velocity.Length() / 14;
 
-            if (++frameCounter>5)
+            if (++frameCounter > 5)
             {
                 frameCounter = 0;
                 Frame.Y += 26;

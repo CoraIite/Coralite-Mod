@@ -5,7 +5,7 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
-    public class FairyWindow:UIElement
+    public class FairyWindow : UIElement
     {
         private Fairy[] _fairies;
 

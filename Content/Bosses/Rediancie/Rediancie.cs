@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Bosses.BabyIceDragon;
-using Coralite.Content.Items.RedJades;
+﻿using Coralite.Content.Items.RedJades;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;

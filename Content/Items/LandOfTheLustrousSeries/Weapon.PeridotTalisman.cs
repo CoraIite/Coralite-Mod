@@ -281,7 +281,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     Vector2 dir = angle.ToRotationVector2();
                     if (Main.rand.NextBool(x, 10))
                     {
-                        int index = Projectile.NewProjectileFromThis<PeridotSpilit>(Projectile.Center,dir* Main.rand.NextFloat(3, 5f),
+                        int index = Projectile.NewProjectileFromThis<PeridotSpilit>(Projectile.Center, dir * Main.rand.NextFloat(3, 5f),
                              Projectile.damage, Projectile.knockBack, 0);
 
                         Main.projectile[index].penetrate = -1;
@@ -296,7 +296,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
 
                 SoundStyle st = CoraliteSoundID.Crystal_Item101;
-                st.Pitch =-0.4f;
+                st.Pitch = -0.4f;
                 SoundEngine.PlaySound(st, Projectile.Center);
                 Helper.PlayPitched("Crystal/CrystalStrike", 0.4f, -0.2f, Projectile.Center);
             }
@@ -518,7 +518,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     c, Projectile.oldRot[i] + exrot, frame.Size() / 2, 1 * (1 + i * 0.1f), 0, 0);
             }
 
-            rand-= Projectile.velocity/10;
+            rand -= Projectile.velocity / 10;
 
             Helper.DrawCrystal(Main.spriteBatch, Projectile.frame, Projectile.Center + rand, new Vector2(0.7f)
                 , (float)Main.timeForVisualEffects * 0.02f + Projectile.whoAmI / 3f

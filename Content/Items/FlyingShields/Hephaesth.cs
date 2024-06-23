@@ -21,7 +21,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields
 {
-    public class Hephaesth : BaseFlyingShieldItem<HephaesthGuard>,IInventoryCraftStation
+    public class Hephaesth : BaseFlyingShieldItem<HephaesthGuard>, IInventoryCraftStation
     {
         public Hephaesth() : base(Item.sellPrice(0, 40), ItemRarityID.Red, AssetDirectory.FlyingShieldItems)
         { }
@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.FlyingShields
             //player.adjTile[TileID.Hellforge] = true;
             //player.adjTile[TileID.AdamantiteForge] = true;
             //player.adjTile[TileID.LunarCraftingStation] = true;
-            TileLoader.AdjTiles(player,ModContent.TileType<AncientFurnaceTile>());
+            TileLoader.AdjTiles(player, ModContent.TileType<AncientFurnaceTile>());
             player.adjTile[ModContent.TileType<AncientFurnaceTile>()] = true;
         }
 

@@ -33,10 +33,10 @@ namespace Coralite.Content.Items.Steel
 
         public override bool CanUseItem(Player player)
         {
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<SteelBreakerProj>()]<10)
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<SteelBreakerProj>()] < 10)
                 return true;
 
-            return false ;
+            return false;
         }
 
         public override void AddRecipes()
@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.Steel
 
         public override bool? CanDamage()
         {
-            if (Phase==1||State < 3)
+            if (Phase == 1 || State < 3)
                 return base.CanDamage();
 
             return false;
@@ -176,7 +176,7 @@ namespace Coralite.Content.Items.Steel
                             Vector2 direction = (MathHelper.PiOver4 + i * MathHelper.PiOver2).ToRotationVector2();
                             for (int j = 1; j < 3; j++)
                             {
-                                Particle.NewParticle<SpeedLine>(center + direction * i * 8, -direction * 2, Color.Cyan,0.4f);
+                                Particle.NewParticle<SpeedLine>(center + direction * i * 8, -direction * 2, Color.Cyan, 0.4f);
                             }
                         }
 
@@ -188,7 +188,7 @@ namespace Coralite.Content.Items.Steel
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (State <3)
+            if (State < 3)
             {
                 Projectile.velocity.X = 0f - Projectile.velocity.X;
                 Projectile.velocity.Y = 0f - Projectile.velocity.Y;
@@ -199,7 +199,7 @@ namespace Coralite.Content.Items.Steel
 
                     float baseAngle = Main.rand.NextFloat(6.282f);
                     for (int i = 0; i < howMany; i++)
-                        Projectile.NewProjectileFromThis<SteelBreakerProj>(Projectile.Center, (baseAngle + i * MathHelper.Pi * 1.2f).ToRotationVector2() * Main.rand.NextFloat(14, 16), (int)(Projectile.damage *0.75f), Projectile.knockBack, 1);
+                        Projectile.NewProjectileFromThis<SteelBreakerProj>(Projectile.Center, (baseAngle + i * MathHelper.Pi * 1.2f).ToRotationVector2() * Main.rand.NextFloat(14, 16), (int)(Projectile.damage * 0.75f), Projectile.knockBack, 1);
                 }
             }
 
@@ -209,7 +209,7 @@ namespace Coralite.Content.Items.Steel
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            State ++;
+            State++;
             Projectile.velocity.X = 0f - oldVelocity.X;
             Projectile.velocity.Y = 0f - oldVelocity.Y;
             Timer = 10;
@@ -223,7 +223,7 @@ namespace Coralite.Content.Items.Steel
 
             var frameBox = mainTex.Frame(2, 1, (int)Phase, 0);
             var c = Phase == 1 ? Color.White : lightColor;
-            Projectile.DrawShadowTrails(c, 0.5f, 0.5f / 6, 1, 6, 1, Projectile.scale, frameBox,0f);
+            Projectile.DrawShadowTrails(c, 0.5f, 0.5f / 6, 1, 6, 1, Projectile.scale, frameBox, 0f);
             Projectile.QuickDraw(frameBox, c, 0);
             return false;
         }

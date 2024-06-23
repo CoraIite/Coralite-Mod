@@ -4,7 +4,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher.Accessories
 {
-    public class ElfEmblem() : BaseFairyAccessory(ItemRarityID.LightRed, Item.sellPrice(0,2))
+    public class ElfEmblem() : BaseFairyAccessory(ItemRarityID.LightRed, Item.sellPrice(0, 2))
     {
         public override void UpdateAccessory(Player player, bool hideVisual)
         {

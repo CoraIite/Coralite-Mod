@@ -145,7 +145,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     scale = Vector2.SmoothStep(Vector2.One, new Vector2(0.4f, 0.85f), factor / 0.8f);
                 else
                     scale = Vector2.SmoothStep(new Vector2(0.5f, 0.7f), new Vector2(1.5f, 1.5f), (factor - 0.8f) / 0.2f);
-                
+
                 if (AttackTime == 1 && Main.myPlayer == Projectile.owner)
                 {
                     Projectile.NewProjectileFromThis<PyropeProj>(Projectile.Center,
@@ -261,8 +261,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             var style = CoraliteSoundID.Ding_Item4;
             style.Pitch = Main.rand.NextFloat(0.45f, 0.6f);
             style.Volume -= 0.5f;
-            var id= SoundEngine.PlaySound(style, Projectile.Center);
-            if (SoundEngine.TryGetActiveSound(id,out var result))
+            var id = SoundEngine.PlaySound(style, Projectile.Center);
+            if (SoundEngine.TryGetActiveSound(id, out var result))
             {
                 result.Volume -= 0.5f;
             }

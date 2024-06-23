@@ -155,7 +155,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 if (AttackTime % 7 == 0)
                 {
                     Color c = Main.rand.NextFromList(AquamarineProj.brightC, AquamarineProj.highlightC, Main.DiscoColor);
-                    LightLine ll = LightLine.Spwan(Projectile.Center + (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 10, Vector2.Zero, c, 
+                    LightLine ll = LightLine.Spwan(Projectile.Center + (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 10, Vector2.Zero, c,
                        null, Main.rand.NextFloat(0.1f, 0.4f), Main.rand.NextFloat(0.1f, 0.4f));
                     ll.fadeTime = Main.rand.Next(15, 25);
                     ll.center = () => Projectile.Center + (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 10;
@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void StartAttack()
         {
-            AttackTime = Owner.itemTimeMax ;
+            AttackTime = Owner.itemTimeMax;
             Helper.PlayPitched("Crystal/CrystalShoot", 0.4f, 0, Projectile.Center);
         }
 
@@ -200,9 +200,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             var origin = new Vector2(mainTex.Width / 2, 0);
             Vector2 toCenter = new Vector2(Projectile.width / 2, 0);
 
-            for (int i = 0; i < 4; i ++)
+            for (int i = 0; i < 4; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    new Color(251, 100, 152) * (0.3f - i * 0.3f/4), Projectile.oldRot[i] + 0, origin, Projectile.scale, 0, 0);
+                    new Color(251, 100, 152) * (0.3f - i * 0.3f / 4), Projectile.oldRot[i] + 0, origin, Projectile.scale, 0, 0);
 
             Main.spriteBatch.Draw(mainTex, Projectile.Top - Main.screenPosition, null, lightColor, Projectile.rotation,
                 origin, Projectile.scale, 0, 0);
@@ -245,7 +245,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     , factor => Helper.Lerp(2, 13, factor),
                       factor =>
                       {
-                          return Color.Lerp(new Color(0,0,0,0), Color.White * 0.65f, factor.X);
+                          return Color.Lerp(new Color(0, 0, 0, 0), Color.White * 0.65f, factor.X);
                       });
 
                 Projectile.InitOldPosCache(maxPoint);
@@ -379,7 +379,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (trail == null)
                 return;
-            
+
             Effect effect = Filters.Scene["CrystalTrail"].GetShader().Shader;
 
             Texture2D noiseTex = GemTextures.CrystalNoises[Projectile.frame].Value;
@@ -414,7 +414,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 {
                     sb.End();
                     sb.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-                },0.1f,0.65f,0.5f);
+                }, 0.1f, 0.65f, 0.5f);
         }
     }
 }

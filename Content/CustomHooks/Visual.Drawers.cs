@@ -91,8 +91,8 @@ namespace Coralite.Content.CustomHooks
             for (int i = 0; i < ParticleSystem.Particles.Count; i++)
             {
                 Particle particle = ParticleSystem.Particles[i];
-                if (particle != null && particle.active && particle is IDrawNonPremultiplied sp)
-                    sp.DrawNonPremultiplied(spriteBatch);
+                if (particle != null && particle.active && particle.drawNonPremultiplied)
+                    particle.DrawNonPremultiplied(spriteBatch);
             }
 
             spriteBatch.End();

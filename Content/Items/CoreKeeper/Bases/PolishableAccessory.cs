@@ -1,5 +1,4 @@
-﻿using Steamworks;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.IO;
 
@@ -12,7 +11,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         public static bool RecordReforge;
 
         public abstract void Polish(Recipe recipe, Item item, List<Item> list, Item destinationStack);
-        public abstract void ClonePolish( Item item);
+        public abstract void ClonePolish(Item item);
 
         public override void SaveData(TagCompound tag)
         {

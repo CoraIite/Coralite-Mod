@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Items.Magike.OtherPlaceables;
 using Coralite.Core;
-using Coralite.Helpers;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
