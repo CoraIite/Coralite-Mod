@@ -4173,3 +4173,8 @@ LandOfTheLustrous: {
 	Tooltip: 轮回与螺旋
 	DisplayName: 宝石之国
 }
+
+TourmalineMonoclastic: {
+	// DisplayName: Tourmaline Monoclastic
+	// Tooltip: ""
+}

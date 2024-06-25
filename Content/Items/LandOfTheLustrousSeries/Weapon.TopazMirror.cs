@@ -70,7 +70,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             CreateRecipe()
                 .AddIngredient(ItemID.Topaz)
                 .AddIngredient(ItemID.LunarBar, 5)
-                .AddIngredient(ItemID.FragmentNebula)
+                .AddIngredient(ItemID.MagicMirror)
+                .AddTile<PhantomCrystalBallTile>()
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.Topaz)
+                .AddIngredient(ItemID.LunarBar, 5)
+                .AddIngredient(ItemID.IceMirror)
                 .AddTile<PhantomCrystalBallTile>()
                 .Register();
         }
