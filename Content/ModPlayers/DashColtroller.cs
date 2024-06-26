@@ -29,25 +29,13 @@ namespace Coralite.Content.ModPlayers
                     if (UsingVanillaDash())
                         break;
 
-                    if (Player.HeldItem.ModItem is IDashable dashItem)
-                        if (dashItem.Dash(Player, DashDir))
-                            break;
+                    if (HeldItemDash())
+                        break;
 
-                    for (int i = 3; i < 10; i++)
-                    {
-                        if (!Player.armor[i].IsAir && Player.armor[i].ModItem is IDashable dashItem2)
-                        {
-                            if (dashItem2.Dash(Player, DashDir))
-                            {
-                                DashDelay = (int)(DashDelay * DashDelayModifyer.ApplyTo(1));
-                                goto checkDashOver;
-                            }
-                        }
-                    }
+                    if (AccessoryDash())
+                        break;
 
                 } while (false);
-
-            checkDashOver:
 
             if (DashDelay > 0)
             {
@@ -64,6 +52,53 @@ namespace Coralite.Content.ModPlayers
                 Player.armorEffectDrawShadowEOCShield = true;
                 DashTimer--;
             }
+        }
+
+        /// <summary>
+        /// 检测手持物品的冲刺，并调用<br></br>
+        /// 如果不调用也将返回<see langword="true"/>
+        /// </summary>
+        /// <returns></returns>
+        public bool HeldItemDash(bool justCheck = false)
+        {
+            if (Player.HeldItem.ModItem is IDashable dashItem)
+            {
+                if (justCheck)
+                    return true;
+
+                if (dashItem.Dash(Player, DashDir))
+                {
+                    DashDelay = (int)(DashDelay * DashDelayModifyer.ApplyTo(1));
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 检测饰品的冲刺，并选择性调用
+        /// </summary>
+        /// <param name="justCheck"></param>
+        /// <returns></returns>
+        public bool AccessoryDash(bool justCheck = false)//TODO: 以后有机会改成list存储方式，目前这样无法适配额外饰品栏
+        {
+            for (int i = 3; i < 10; i++)
+            {
+                if (!Player.armor[i].IsAir && Player.armor[i].ModItem is IDashable dashItem2)
+                {
+                    if (justCheck)
+                        return true;
+
+                    if (dashItem2.Dash(Player, DashDir))
+                    {
+                        DashDelay = (int)(DashDelay * DashDelayModifyer.ApplyTo(1));
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         /// <summary>

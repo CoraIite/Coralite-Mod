@@ -1,12 +1,13 @@
 ﻿using Coralite.Content.ModPlayers;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 
-namespace Coralite.Core.Prefabs.Items
+namespace Coralite.Core.Systems.FlyingShieldSystem
 {
-    public abstract class BaseFlyingShieldItem<TRightProj> : ModItem where TRightProj : ModProjectile
+    public abstract class BaseFlyingShieldItem<TRightProj> : ModItem,IDashable where TRightProj : ModProjectile
     {
         private readonly int Value;
         private readonly int Rare;
@@ -110,7 +111,7 @@ namespace Coralite.Core.Prefabs.Items
             Projectile.NewProjectile(source, player.Center + new Vector2(0, -16), velocity, type, damage, knockback, player.whoAmI);
         }
 
-        public virtual void RightShoot(Player player, EntitySource_ItemUse_WithAmmo source, int damage)
+        public virtual void RightShoot(Player player, IEntitySource source, int damage)
         {
             Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TRightProj>()
                 , (int)(damage * 0.9f), 6, player.whoAmI);
@@ -130,6 +131,41 @@ namespace Coralite.Core.Prefabs.Items
                 TooltipLine line = new TooltipLine(Mod, "Coralite FlyingShield Description", text);
                 tooltips.Add(line);
             }
+        }
+
+        public bool Dash(Player Player, int DashDir)
+        {
+            if (Player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                if (Player.ownedProjectileCounts[Item.shoot] > 0 && !cp.FlyingShieldLRMeantime)
+                    return true;
+
+                foreach (var acc in cp.FlyingShieldAccessories)
+                {
+                    if (acc is IDashable dasher)
+                    {
+                        if (!cp.TryGetFlyingShieldGuardProj(out _))
+                        {
+                            RightShoot(Player, Player.GetSource_ItemUse(Item), Player.GetWeaponDamage(Item));
+
+                            var projectile = Main.projectile.First(p => p.active && p.owner == Player.whoAmI && p.ModProjectile is BaseFlyingShieldGuard);
+                            if (projectile != null)
+                            {
+                                (projectile.ModProjectile as BaseFlyingShieldGuard).CompletelyHeldUpShield = true;
+                                cp.FlyingShieldGuardIndex = projectile.whoAmI;
+                            }
+                        }
+
+                        dasher.Dash(Player, DashDir);
+                        return true;
+                    }
+                }
+
+                cp.AccessoryDash();
+                return true;
+            }
+
+            return true;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Terraria;
 using Terraria.Audio;

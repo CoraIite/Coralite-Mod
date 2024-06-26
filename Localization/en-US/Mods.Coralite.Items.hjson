@@ -3161,7 +3161,7 @@ FlamingLamps: {
 	DisplayName: Flaming Lamps
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield or fully raising the shield to perform a shield charge]
 		[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
 		Ignore knockback during the dash
 		Dash hits an enemy with a solar blast
@@ -3173,7 +3173,7 @@ LavaLamp: {
 	DisplayName: Lava Lamp
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield or fully raising the shield to perform a shield charge]
 		[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
 		Ignore knockback during the dash
 		Dash hits an enemy with a solar blast
@@ -3185,7 +3185,7 @@ PiezoArmorPanel: {
 	DisplayName: Piezo Armor Panel
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield or fully raising the shield to perform a shield charge]
 		[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
 		Ignore knockback during the dash
 		Dash hits an enemy with a solar blast
@@ -3227,7 +3227,7 @@ ForbiddenLamp: {
 	DisplayName: Forbidden Lamp
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield or fully raising the shield to perform a shield charge]
 		[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
 		Ignore knockback during the dash
 		Dash hits an enemy with a solar blast
@@ -3239,7 +3239,7 @@ SolarTwinkle: {
 	DisplayName: Solar Twinkle
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield or fully raising the shield to perform a shield charge]
 		[c/8aebff:Damage reduction based on shield stats is continuously applied during the shield charge]
 		Ignore knockback during the dash
 		Dash hits an enemy with a solar blast
@@ -3251,7 +3251,7 @@ OniMask: {
 	DisplayName: Oni Mask
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield or fully raising the shield to perform a shield charge]
 		[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
 		[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
 		Throw bones at the start of the Dash
@@ -3263,7 +3263,7 @@ KamonFlag: {
 	DisplayName: Kamon Flag
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield or fully raising the shield to perform a shield charge]
 		[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
 		[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
 		Spawns a grey and black soul at the start of the dash
@@ -3274,7 +3274,7 @@ SolarPanel: {
 	DisplayName: Solar Panel
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield or fully raising the shield to perform a shield charge]
 		[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
 		[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
 		Spawns charged blasters during the dash
@@ -3290,7 +3290,7 @@ OldClockwork: {
 	DisplayName: Old Clockwork
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield or fully raising the shield to perform a shield charge]
 		[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
 		[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
 		Upon dash hit, the "Tighten Clockwork" buff is granted
@@ -3302,7 +3302,7 @@ ChronoHeart: {
 	DisplayName: Chrono Heart
 	Tooltip:
 		'''
-		[c/8aebff:Double-tap A/D while holding the Flying Shield and fully raising the shield to perform a shield charge]
+		[c/8aebff:Double-tap A/D while holding the Flying Shield or fully raising the shield to perform a shield charge]
 		[c/8aebff:Upon impact, Shield Charge bounces itself back and triggers the shield defense effect]
 		[c/8aebff:If you wear the Perfect Block, the relevant accessory triggers the effect at the beginning of the shield charge]
 		The clockwise is generated at sprint

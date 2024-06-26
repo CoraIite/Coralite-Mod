@@ -400,8 +400,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         else
                             Target = -1;
 
-                        float slowTime = Timer<15? Coralite.Instance.X2Smoother.Smoother(  Timer/15):1;
-                        slowTime = Helper.Lerp(200, 30, slowTime);
+                        float slowTime = Timer < 15 ? Coralite.Instance.X2Smoother.Smoother(Timer / 15) : 1;
+                        slowTime = Helper.Lerp(130, 28, slowTime);
 
                         float num481 = 24f;
                         Vector2 center = Projectile.Center;

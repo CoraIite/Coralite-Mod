@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;

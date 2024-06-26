@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Cyan9, Item.sellPrice(0, 20));
-            Item.SetWeaponValues(115, 4, 2);
+            Item.SetWeaponValues(120, 4, 2);
             Item.useTime = Item.useAnimation = 28;
             Item.mana = 19;
 
@@ -331,7 +331,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 int count = (int)Timer / (Owner.itemTimeMax * 3 / 8);
                 Vector2 pos = Projectile.Center + (count * MathHelper.PiOver2).ToRotationVector2() * 48;
                 Vector2 dir = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero);
-                int index = Projectile.NewProjectileFromThis<TopazFlySword>(pos, dir * 12
+                int index = Projectile.NewProjectileFromThis<TopazFlySword>(pos, dir * 15
                      , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
                 Main.projectile[index].rotation = dir.ToRotation() + 0.785f;
             }

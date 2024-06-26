@@ -21,9 +21,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Pink5, Item.sellPrice(0, 8));
-            Item.SetWeaponValues(45, 4);
-            Item.useTime = Item.useAnimation = 27;
-            Item.mana = 16;
+            Item.SetWeaponValues(46, 4);
+            Item.useTime = Item.useAnimation = 25;
+            Item.mana = 15;
 
             Item.shoot = ModContent.ProjectileType<PearlBroochProj>();
             Item.useStyle = ItemUseStyleID.Shoot;

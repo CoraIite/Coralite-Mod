@@ -3,7 +3,6 @@ using Coralite.Content.Items.RedJades;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
@@ -105,7 +104,7 @@ namespace Coralite.Content.Items.FlyingShields
                 , damage, knockback, player.whoAmI, ai2: BurstTime > 0 ? 1 : 0);
         }
 
-        public override void RightShoot(Player player, EntitySource_ItemUse_WithAmmo source, int damage)
+        public override void RightShoot(Player player, IEntitySource source, int damage)
         {
             Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<HephaesthGuard>()
                 , (int)(damage * 0.9f), 6, player.whoAmI, ai2: BurstTime > 0 ? 1 : 0);

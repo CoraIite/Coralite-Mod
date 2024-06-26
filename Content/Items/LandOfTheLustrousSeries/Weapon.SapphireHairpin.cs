@@ -24,8 +24,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Yellow8, Item.sellPrice(0, 13));
             Item.SetWeaponValues(83, 4);
-            Item.useTime = Item.useAnimation = 45;
-            Item.mana = 30;
+            Item.useTime = Item.useAnimation = 35;
+            Item.mana = 27;
 
             Item.shoot = ModContent.ProjectileType<SapphireHairpinProj>();
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -264,7 +264,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         Timer++;
                         Projectile.velocity *= 0.97f;
 
-                        if (Timer > 30 && Timer % 10 == 0 && Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy(), out NPC target))
+                        if (Timer > 30 && Timer % 10 == 0 && Helper.TryFindClosestEnemy(Projectile.Center, 900, n => n.CanBeChasedBy(), out NPC target))
                         {
                             Target = target.whoAmI;
                             State = 2;
@@ -298,8 +298,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                         length = num481 / length;
                         dir *= length;
-                        Projectile.velocity.X = (Projectile.velocity.X * 29f + dir.X) / 30f;
-                        Projectile.velocity.Y = (Projectile.velocity.Y * 29f + dir.Y) / 30f;
+                        Projectile.velocity.X = (Projectile.velocity.X * 24f + dir.X) / 25f;
+                        Projectile.velocity.Y = (Projectile.velocity.Y * 24f + dir.Y) / 25f;
 
                         Timer++;
                         if (Timer > 120 * Projectile.MaxUpdates || length2 < 32)

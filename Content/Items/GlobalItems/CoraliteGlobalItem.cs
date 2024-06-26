@@ -22,6 +22,11 @@ namespace Coralite.Content.Items.GlobalItems
         public static LocalizedText TerraCoralCat;
         public static LocalizedText RainBowCoralCat;
 
+        /// <summary>
+        /// 是否能通过特殊攻击键来使用武器
+        /// </summary>
+        public bool SpecialUse;
+
         public override bool InstancePerEntity => true;
 
         public string LocalizationCategory => "GlobalItems";

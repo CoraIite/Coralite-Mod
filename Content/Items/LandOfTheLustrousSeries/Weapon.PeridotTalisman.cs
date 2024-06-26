@@ -20,8 +20,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Lime7, Item.sellPrice(0, 11));
-            Item.SetWeaponValues(70, 4);
-            Item.useTime = Item.useAnimation = 38;
+            Item.SetWeaponValues(75, 4);
+            Item.useTime = Item.useAnimation = 30;
             Item.mana = 20;
 
             Item.shoot = ModContent.ProjectileType<PeridotTalismanProj>();
@@ -232,7 +232,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Timer++;
                 Projectile.rotation = Projectile.velocity.ToRotation();
 
-                if (Timer > 15)
+                if (Timer > 10)
                 {
                     State = 1;
                     TargetPos = Main.MouseWorld;
@@ -251,7 +251,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Vector2 dir = targetCenter - center;
                 float length = dir.Length();
                 if (length < 100f)
-                    num481 = 10f;
+                    num481 = 14f;
 
                 length = num481 / length;
                 dir *= length;
@@ -385,8 +385,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 30;
-            Projectile.width = Projectile.height = 24;
+            Projectile.localNPCHitCooldown = 15;
+            Projectile.width = Projectile.height = 28;
             //Projectile.penetrate = 2;
             Projectile.tileCollide = false;
         }

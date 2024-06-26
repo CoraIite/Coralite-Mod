@@ -57,7 +57,7 @@ namespace Coralite.Content.ModPlayers
                 FlyingShieldAccessories.Clear();
 
             //查看飞盾右键弹幕是否还存在
-            if (!Main.projectile.IndexInRange(FlyingShieldGuardIndex))
+            if (Main.projectile.IndexInRange(FlyingShieldGuardIndex))
             {
                 Projectile p = Main.projectile[FlyingShieldGuardIndex];
                 if (!p.active || !p.friendly || p.ModProjectile is not BaseFlyingShieldGuard)
