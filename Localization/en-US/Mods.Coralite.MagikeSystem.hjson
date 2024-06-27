@@ -2,189 +2,190 @@ MagikeSystem: {
 	learnedMagikeAdvanced: After learning "Scroll: Enhanced Magike Refining"
 	learnedMagikeBase: After learning "Pages: Basic Magike".
 	DecraftCondition: Mods.Coralite.MagikeSystem.MagikeSystem.DecraftCondition
-	NewKnowledgeUnlocked: 魔能辞典中解锁了新的知识
+	NewKnowledgeUnlocked: New knowledge unlocked
 }
 
 C0_P1_BookName: {
 	BookName: Magike Guide
-	Author: 作者：珊瑚
+	Author: Author: Coral
 }
 
-C1_P1_ChapterName.ChapterName: 第一章 认识魔能
+C1_P1_ChapterName.ChapterName: Chapter 1: Understanding Magike
 
 C1_P2_1_1_History1: {
 	_1_Name: 1.1 What is Magike
-	_1_1_Name: 1.1.1 魔能的历史
-	History1: "  在很久很久之前，泰拉大陆的科技水平并不发达，并且由于各个种族之间的战争，导致世界一片混沌。就是在这样的时代，我来到了这里。在这些种族间，有我曾经的同族：人。它们相对于龙族，妖精族而言十分弱小，但是在它们身上，我看到了曾经的自己。于是我决定帮助他们，带领他们发掘蕴含着魔能的水晶矿物。"
+	_1_1_Name: 1.1.1 The History of Magike
+	History1: "  A long time ago, the technological level of Terraria was not advanced, and due to the war between various races, the world was in chaos. It was during times like this that I came here. Among these races are my former compatriots: humans. They are very weak compared to dragons and fairies, but in them, I see my former self. So I decided to help them and lead them to the discovery of Magike. "
 }
 
-C1_P3_1_1_History2.History2: "    很快，他们学会了使用这种神奇的资源，并逐步在战争中取得了优势。但聪明的妖精族也掌控了这项技术。最终，人取得了胜利，尽管是因为我偷偷与其他种族签订了和平条约，不过这不重要。在漫长的和平岁月中，人们发展了商业，建立了城市，利用魔能制作出各种不可思议的装置，他们在飞速地发展着。"
-C1_P4_1_1_History3.History3: "    但变化发生地就是如此的突然，和我一样来自其他世界的强大生物坠落到了这里。就只是因为它们之间无聊的争斗！我尽力重创并赶走了它们，可一切还是晚了，不仅是人们，连其他种族也遭受重创。整个大陆变得一片死寂。"
-C1_P5_1_1_History4.History4: "    像往常那样，我打开了传送门，前往了其他未踏足过的世界。就在不久前，我观测到这里即将发生的变化，或许事情会变得有趣起来。因此，我写下了这本书，并利用能力批量复制，之后交给了妖精族制造的水晶生命体。"
-C1_P6_1_1_History5.History5: "    正在阅读这本书的人，我想你就是那个特异点，我期待你的到来。这本书将包含你想了解的魔能知识，因为书也拥有魔能，所以你无法理解的事物暂时不会向你展示，不断扩充知识解锁书中的内容吧，祝你好运！"
+C1_P3_1_1_History2.History2: "    Soon after the discovery of Magike, humanity was able to slowly take back territories, however the cunning fairies were more adept at Magike. In the end, humanity won, but only due to me mediating with the other races and signed peace treaties in secret, nonetheless, this created an era of peace which allowed mankind to develop rapidly, villages turned to cities, all due to manipulating Magike to its fullest."
+C1_P4_1_1_History3.History3: "    Peace did not last for long, demonic entities from another world fell from the sky, it was a lengthy battle but my strength was not enough, my weakness lead to not only the annihilation of mankind but to the whole world."
+C1_P5_1_1_History4.History4: "    The situation was dire, in desperation, I pried open an portal which lead me to another untrodden world, this one. I know I won't be safe for long, that's why I wrote this book and left to be protected by a crystal guardian created by the fairies."
+C1_P6_1_1_History5.History5: "    To you, reader, to be able to destroy the guardian shows that you're able to handle the power that this book is imbued with. The knowledge you will learn is too much for any man but you will master it in due time. Keep expanding your knowledge to unlock the content in the book. I wish you good luck!"
+
 
 C0_P2_Catalog: {
-	Index: 目录
-	Chapter1: -第一章 认识魔能-
-	Chapter2: -第二章 探索发现-
-	Chapter3: -第三章 基础仪器-
-	Chapter4: -第四章 手持仪器-
+	Index: Index
+	Chapter1: -Chapter 1 Understanding Magike-
+	Chapter2: -Chapter 2 The Discovery of Magike-
+	Chapter3: -Chapter 3 The basic instruments-
+	Chapter4: -Chapter 4 The handheld instruments-
 }
 
 C1_ChapterName: {
-	ChapterName: 第一章 认识魔能
-	History: -魔能的历史-
-	Property: -魔能的性质-
-	Classify: -魔能的分类-
-	Origin: -魔能的来源-
-	Function: -魔能的作用-
-	Instrument: -认识魔能仪器-
+	ChapterName: Chapter 1 Understanding Magike
+	History: -The history of magike-
+	Property: -The nature of magike-
+	Classify: -The classification of magike-
+	Origin: -The origin of magike-
+	Function: -The function of magike-
+	Instrument: -How to harness magike-
 }
 
 C1_1_1_History1: {
-	_1_Name: 1.1 什么是魔能
-	_1_1_Name: 1.1.1 魔能的历史
-	History1: "    在很久很久之前，泰拉大陆的科技水平并不发达，并且由于各个种族之间的战争，导致世界一片混沌。就是在这样的时代，我来到了这里。在这些种族间，有我曾经的同族：人。它们相对于龙族，妖精族而言十分弱小，但是在它们身上，我看到了曾经的自己。于是我决定帮助他们，带领他们发掘蕴含着魔能的水晶矿物。"
+	_1_Name: 1.1 What is magike?
+	_1_1_Name: 1.1.1 The history of magike
+	History1: "    A long time ago, the technological level of Terraria was not advanced, and due to the war between various races, the world was in chaos. It was during times like this that I came here. Among these races are my former compatriots: humans. They are very weak compared to dragons and fairies, but in them, I see my former self. So I decided to help them and lead them to the discovery of Magike."
 }
 
-C1_1_1_History2.History2: "    很快，他们学会了使用这种神奇的资源，并逐步在战争中取得了优势。但聪明的妖精族也掌控了这项技术。最终，人取得了胜利，尽管是因为我偷偷与其他种族签订了和平条约，不过这不重要。在漫长的和平岁月中，人们发展了商业，建立了城市，利用魔能制作出各种不可思议的装置，他们在飞速地发展着。"
-C1_1_1_History3.History3: "    但变化发生地就是如此的突然，和我一样来自其他世界的强大生物坠落到了这里。就只是因为它们之间无聊的争斗！我尽力重创并赶走了它们，可一切还是晚了，不仅是人们，连其他种族也遭受重创。整个大陆变得一片死寂。"
-C1_1_1_History4.History4: "    像往常那样，我打开了传送门，前往了其他未踏足过的世界。就在不久前，我观测到这里即将发生的变化，或许事情会变得有趣起来。因此，我写下了这本书，并利用能力批量复制，之后交给了妖精族制造的水晶生命体。"
-C1_1_1_History5.History5: "    正在阅读这本书的人，我想你就是那个特异点，我期待你的到来。这本书将包含你想了解的魔能知识，因为书也拥有魔能，所以你无法理解的事物暂时不会向你展示，不断扩充知识解锁书中的内容吧，祝你好运！"
+C1_1_1_History2.History2: "    Soon after the discovery of Magike, humanity was able to slowly take back territories, however the cunning fairies were more adept at Magike. In the end, humanity won, but only due to me mediating with the other races and signed peace treaties in secret, nonetheless, this created an era of peace which allowed mankind to develop rapidly, villages turned to cities, all due to manipulating Magike to its fullest."
+C1_1_1_History3.History3: "    Peace did not last for long, demonic entities from another world fell from the sky, it was a lengthy battle but my strength was not enough, my weakness lead to not only the annihilation of mankind but to the whole world."
+C1_1_1_History4.History4: "    The situation was dire, in desperation, I pried open an portal which lead me to another untrodden world, this one. I know I won't be safe for long, that's why I wrote this book and left to be protected by a crystal guardian created by the fairies。"
+C1_1_1_History5.History5: "    To you, reader, to be able to destroy the guardian shows that you're able to handle the power that this book is imbued with. The knowledge you will learn is too much for any man but you will master it in due time. Keep expanding your knowledge to unlock the content in the book. I wish you good luck!"
 
 C1_1_2_Property: {
-	_1_2_Name: 1.1.2 魔能的性质
-	Property1: "    看到你生命值下方的那个蓝色五角星或其他样式的蓝色条条了吗，那个是你拥有的魔力值，当然，这和魔能没什么关系。"
-	Property2: "    魔能是一种能量，可以粗略地看作压缩过的魔力，通过一些装置或物品中的特殊机构，可以消耗魔能来驱动这些物件。"
+	_1_2_Name: 1.1.2 The nature of magike
+	Property1: "    You've noticed the blue stars under your health bar right? That's your mana, which has nothing to do with magike。"
+	Property2: "    Magike is a type of phenomena, but you can break it down and stored. With special instruments, magike can be stored and be used to power certain tools as well."
 }
 
 C1_1_3_Classify: {
-	_1_3_Name: 1.1.2 魔能的性质
-	Classify: "    大部分装置中使用的是最普通的，没有什么特质的魔能。但随着发展，人们从这种普通的魔能中分离出了拥有特殊性质的魔能，并给这些特殊的魔能冠以一些特殊名字，例如：植生，冻，灼等。对于这些特殊魔能将在之后的章节详细说明他们。"
+	_1_3_Name: 1.1.2 The nature of magike
+	Classify: "    Most devices will consume just basic unfiltered magike, however, with greater control of magike, you can use magike with special properties, such as growth, freezing, burning, etc. The details of this type of magike will be explained in later chapters."
 }
 
 C1_2_Origin: {
-	_2_Name: 1.2 魔能的来源
-	Origin1: "    魔能有时会出现在一些天然矿物中，比如魔力晶体。通过神奇的地质运动，最初的魔能团在逐渐冷却降温后结成晶体，这些晶体团接触到石头后与之融合，形成了拥有较好的魔能传导能力的玄武岩，并将晶体包裹在其中。"
-	Origin2: "    除了天然的魔能，使用各类素材制造而出的各种透镜也拥有制造魔能的能力，只不过它们需要一些特殊的条件来进行生产。"
+	_2_Name: 1.2 The source of magic energy
+	Origin1: "    Magike appears naturally deep underground in the form of crystals, through seismic movements, these crystals become infused into basalt which makes them into a great conductor of magike."
+	Origin2: "    In addition to natural magike, there are lens made from certain material that can generate magike though only in certain conditions。"
 }
 
 C1_2_Origin1: {
-	_2_Name: 1.2 魔能的来源
-	Origin1: "    魔能会出现在一些天然矿物中，比如魔力晶体。通过神奇的地质运动，最初的魔能团在逐渐冷却降温后结成晶体，这些晶体团接触到石头并与之融合，形成了拥有较好的魔能传导能力的玄武岩，将晶体包裹在其中。"
-	Origin2: "    除了天然的魔能，使用各类素材制造而出的各种透镜也拥有制造魔能的能力，只不过它们需要一些特殊的条件来进行生产。"
+	_2_Name: 1.2 The source of magic energy
+	Origin1: "    Magike appears naturally deep underground in the form of crystals, through seismic movements, these crystals become infused into basalt which makes them into a great conductor of magike.。"
+	Origin2: "    In addition to natural magike, there are lens made from certain material that can generate magike though only in certain conditions。"
 }
 
-C1_2_Origin2.Origin3: "    或许你已经发现了，在天黑后的地表或这魔力水晶洞附近会出现一些水晶风格的怪物。这些依靠魔能驱动的生命体们只会按照设定好的程序运作。击败它们后有概率掉落魔力晶体，这也是魔能的重要来源之一。尽管这些魔能并非天然形成，而是由什么东西制造出来的。"
+C1_2_Origin2.Origin3: "    You've probably noticed the crystal lifeforms that spawn after dark and in crystal caves, these creatures are powered by magike and of course will drop magike crystals when destroyed, an important source of magike. Interestingly enough, it seems that they don't form naturally but the origin is unknown.。"
 
 C1_3_Function: {
-	_3_Name: 1.3 魔能的作用
-	Function1: "    一些伟大的魔法师不满足于自身魔力的限制，选择了拿起消耗魔能来释放魔法的法杖。尽管魔能不像魔力那样能够随着呼吸而回复，但好处是魔能的应用范围更广。例如魔力晶体杖，使用它制造出的水晶框架比冰雪魔杖制造的碎冰更加稳定，不会自然消失。"
-	Function2: "    除了这种便携式的物品，其他大部分魔能仪器都需要放置在地上后才能运作，把鼠标放到这些魔能仪器上，就可以直观地看到该仪器存储的魔能量。"
+	_3_Name: 1.3 The function of magike
+	Function1: "    The old masters of magike knew the weaknesses of the flesh and knew that their magike output was limited. To circumvent this, they created wands and staffs which allowed for greater output. Though this magic cannot regenerate naturally, it does allow for broader range of magic such as creating crystal frameworks or ice/snow that melts。"
+	Function2: "    In addition to portable items, most magike instruments needs to be placed down and you can see the storage limit by hovering your mouse over it."
 }
 
 C1_4_1_WhatIsInstrument: {
-	_4_Name: 1.4 认识魔能仪器
-	_4_1_Name: 1.4.1 什么是魔能仪器
-	WhatIsInstrument: "    经过古代人们的不懈研究，发明了许多神奇的机构，将这些机构组合起来便成为了各式各样的魔能仪器。有的仪器能够消耗魔能并执行对应的工作，也有的仅仅是将魔能在不同仪器间传递。这些仪器大多听上去像是光学仪器，因为魔能的传递形式与光的传递形式十分相似。"
+	_4_Name: 1.4 How to harness magike
+	_4_1_Name: 1.4.1 Why use instruments?
+	WhatIsInstrument: "    After relentless research, articulate machinery were created to harness magike with great efficiency. Some were made to store magike while others use magike to function. Many take the appearance of an lens as the property of magike is very similar to light.。"
 }
 
 C1_4_2_ClassifyOfInstrument: {
-	_4_2_Name: 1.4.2 魔能仪器的分类
-	Classify1: "    生产类仪器：透镜，通过各种各样的条件来生产魔能。"
-	Classify2: "    传递类仪器：广角镜，拥有更强的传导能力，体积也较小。另外还有多面镜这类特殊的广角镜，它们牺牲了一些传递距离换来了更多的连接数量。"
-	Classify3: "    存储类仪器：水晶柱，内部空间比想象中的大许多，可以使魔能在其内部循环流动，一般作为存储魔能的仪器。"
-	Classify4: "    以上3种是最基础的魔能仪器，都需要放置在地上之后才能开始工作，除此之外还有统称为“魔能工厂”的仪器，可以进行物品重塑，注魔，聚合，或者是射出攻击性弹幕之类的特殊工作。"
+	_4_2_Name: 1.4.2 Classification of Magike Instruments
+	Classify1: "    Production Class Instruments: Lenses, which produce magike under certain conditions."
+	Classify2: "    Transmission Class Instruments: Wide-angle lenses, with stronger conductivity and smaller storage. There are also special wide-angle lenses like the multifaceted mirror, sacrificing some transmission distance for more connections."
+	Classify3: "    Storage Class Instruments: Crystal pillars, the perfect tool for magike storage due to it's great volume."
+	Classify4: "    The above three are the most basic magike instruments, which need to be placed down to work. Besides, there are instruments collectively called "Magike Factories" that can perform item reshaping, magike infusion, aggregation, or shooting special attack bullets, etc."
 }
 
 C2_ChapterName: {
-	ChapterName: 第二章 探索发现
-	CrystalCave: 发现魔力水晶洞
+	ChapterName: Chapter 2 Discovery
+	CrystalCave: Uncovering the crystal caves
 }
 
 C2_1_CrystalCave1: {
-	_2_Name: 1.1 什么是魔能
-	CrystalCave1: "    探索这个泰拉大陆是一件令人兴奋的事情，你能找到蚁狮们的巢穴，丛林中的蜥蜴人神庙，或者是充满骷髅的地牢，又或者是影子们的地城......哦，我似乎说的太多了，这些有趣的地形都不是重点，重要的是，能够采集到“魔力晶体”的魔力水晶洞。"
-	Date: 【泰拉历235年11月15日】
-	CrystalCave2: "    在深思熟虑后，我决定加入魔能探险队，根据珊瑚的启示，寻找这个特殊的地形。说到那个叫珊瑚的，前两天听说是突然出现在了国王大厅里，吓得卫兵们以为是刺客，全跑过来了。就在那时她拿出了个奇妙的橙色晶体，一下子释放出了惊人的能量把大厅天花板打出了个大洞。当时我正巧路过，听到了巨大的响声后偷偷向门缝内瞄了一眼，似乎是个粉色头发的人，头上还长者蓝色的角。"
-	CrystalCave3: "    很快地解释清楚后，国王就发布了紧急通知，根据珊瑚的说法，组建探险队前往地底调查并寻找称为魔力水晶洞的地方。真不知道这个叫“魔能”的玩意到底靠不靠谱，万一是被骗了怎么办。但是有一线希望就得抓住，在现在这个混乱的情形下可没那么多可选项。"
+	_2_Name: 1.1 What is Magike?
+	CrystalCave1: "    Exploring this continent of Terraria is exciting. You might find the nest of the antlions, the temple of the lihzahrdmen in the jungle, or the dungeon filled with skeletons, or the city of shadows... oh, I seem to have said too much. These fascinating terrains are not the focus; what matters is being able to collect "Magike crystals" at the magike crystal cave。"
+	Date: 【Terrarian Calendar 235th Year, November 15th】
+	CrystalCave2: "    After careful consideration, I decided to join the magike exploration team, seeking this unique formation according to Coral's guidance. Speaking of Coral, she suddenly appeared in the king's hall a few days ago, scaring the guards thinking she was an assassin, they all rushed over. At that moment, she took out a mysterious orange crystal, releasing it's tremendous energy which blew a hole through the ceiling. I happened to pass by, peeking through the crack after the explosion, there seemed to be a pink-haired person with blue horns on her head.。"
+	CrystalCave3: "    Soon enough, the king issued an urgent notice, forming an expedition team to investigate underground and find the magike cave, according to Coral's words. I wonder if this so-called "magike" is reliable, what if we're fooled? But there's hope to  be grasped, in this moment of chaos, there aren't any other options."
 }
 
 C2_1_CrystalCave2: {
-	Date: 【泰拉历235年11月16日】
-	CrystalCave1: "    今天从王国北方的山洞向地底进发，不知到是不是因为那个的影响，怪物出现的频率变高了。洞窟里的各种史莱姆和骷髅已经杀掉2名队友了，我得时刻保持警惕。队伍内的气氛也很紧张，这样下去搞不好任务要失败了。"
+	Date: 【Terrarian Calendar 235th Year, November 16th】
+	CrystalCave1: "    Today we set off from a mountain in the north of the kingdom towards the mines, perhaps due to that influence, the frequency of monsters has increased. Various slimes and skeletons in the cavern have already killed two of our members, I need to be careful. The atmosphere is tense, if this continues, we might all die。"
 }
 
 C2_1_CrystalCave3: {
-	Date: 【泰拉历235年11月18日】
-	CrystalCave1: "    午后在向下探索时发现了从未见过的怪物，它身上的水晶散发出粉色的光芒，一定是来到水晶洞附近了。可是它的实力太过于强大，发出的激光更是引发了洞内部分坍塌。由于怪物的冲击，我和大伙走散了，这可怎么办啊！唯一的好消息是附近出现了粉色晶体和没见过的黑色石头，明明曾经来探索过多次都没发现这样的东西，看样子现在的坐标就在水晶洞附近。"
+	Date: 【Terrarian Calendar 235th Year, November 18th】
+	CrystalCave1: "    In the afternoon, during our descent, we discovered a creature we had never seen before. Its crystal body shined a pink glow, we must not be far from our objective. However, its strength was overwhelming, and the laser it emitted caused parts of the cave to collapse. Due to the aftermath, the team and I got lost, what should we do now? The only good news is that we found pink crystals nearby and unfamiliar black stones. We've explored here many times before and never found anything like this, the objective is close"
 }
 
 C2_1_CrystalCave4: {
-	Date: 【泰拉历235年11月19日】
-	CrystalCave1: "    躲过了危险的水晶怪物，我冒险冲入水晶洞，这里能见到很多大型的晶簇。在里面走了一会后，我在水晶洞的中心处找到了一处落脚点，这里是个很隐蔽的洞口，应该不会被怪物发现，算我好运。暂时安定下来后我打算试着把周围这些粉色的晶体组合一下，根据珊瑚向我们展示过的方法。但是就这样看上去蛮简单的结构能有如此大的能量输出吗，我还是不太相信。"
+	Date: 【Terrarian Calendar 235th Year, November 19th】
+	CrystalCave1: "    Evading the creature, I barely entered the crystal cave. Inside, there were many large clusters of crystal pillars. After walking around for a bit, I found a resting spot in the center. It's a very hidden entrance, unlikely to be discovered. After settling down, I want to try assembling some of these crystals around me using the method Coral showed us. But looking at this seemingly simple structure, could it really have such a massive energy output? I still find it hard to believe.。"
 }
 
 C2_1_CrystalCave5: {
-	Date: 【泰拉历235年11月22日】
-	CrystalCave1: "    成了成了！捣鼓了几天后终于有了成果，经过这几天的加工，打磨成椭圆形后的魔力晶体呈现出了特殊的性质，能够近地悬浮一小段时间，这可真神奇！有时能这样一个人沉浸在研究中也蛮不错的，这样就不会去胡思乱想了。"
+	Date: 【Terrarian Calendar 235th Year, November 22nd】
+	CrystalCave1: "    Success! after several days of tinkering, I finally achieved something. After processing and polishing the magic crystals into an elliptical shape, they exhibited unique properties, capable of hovering near the ground for a short time, truly amazing, sometimes immersing oneself in research alone isn't so bad, it keeps the mind focused."
 }
 
 C2_1_CrystalCave6: {
-	Date: 【泰拉历235年11月23日】
-	CrystalCave1: "    在研究这些魔力水晶时，我发现附近的玄武岩也有一些反应，于是我尝试制作了一个粗糙的底座，并把椭圆形晶体放置上去，结果这个晶体发出了耀眼的粉色光芒，差点引来那些怪物。我决定先把研究成果带回地面上去，这里实在是太危险了。"
+	Date: 【Terrarian Calendar 235th Year, November 23rd】
+	CrystalCave1: "    While studying these crystals, I noticed some reaction from the surrounding obsidian. So, I tried making a rough base and placed the elliptical crystal on top. This crystal emitted a shimmering pink light, almost attracting those monsters. I decided to take my research findings back to the surface, it's just too dangerous here。"
 }
 
 C2_1_CrystalCave7: {
-	Date: 【泰拉历235年11月23日】
-	CrystalCave1: "    真是难办，在水晶洞的研究笔记因为怪物的突然袭击没能带出来。还好我记性好，并且最重要的魔力晶体和玄武岩带够了，是个好消息。不想这些事了，今天的研究发现魔力晶体和玄武岩底座结合后发出的粉色光芒竟然有着转化物品的能力。具体点说，似乎是将物体的性质重构了，我得再多捣鼓捣鼓，顺便去找找蒂姆吧，是他的话应该能掌握这项技术。"
-	Description: "    这是我刚刚告知人们魔能的知识后发生的事。他们领导者对此很重视呢，明明人们因为龙和妖精的战争产生了很多的伤亡，却依旧在第一时间组建了探险队。“为了保护更多国民，不管是什么手段我都要试以试”，那位领导者是这么说的。顺便给你看个后续，我想你会用到这上面写的知识的。"
+	Date: 【Terrarian Calendar 235th Year, November 23rd】
+	CrystalCave1: "    It's tough, the research notes were lost due to an surprise attacks by monster. Luckily, I have a good memory, and most importantly, I have enough of the crucial magike crystals and obsidian, that's good news. Enough of these troubles, today's research discovery is that the combination of magike crystals and obsidian bases emits pink light with the ability to transmute objects. Specifically, it seems to have restructured the properties of objects, I need to tinker some more, and look for Tim, he should be able to master this technique."
+	Description: "    This happened right after I informed everyone about the magike. Their leaders took it seriously, despite the many casualties caused by the war between dragons and fairies, they still quickly formed an expedition team. "To protect our people, I will try any means necessary" the leader said. Here's a follow-up I think you'll find useful for writing about the knowledge mentioned."
 }
 
-C3_ChapterName.ChapterName: 第三章 基础仪器
+C3_ChapterName.ChapterName: Chapter 3 Types of instruments
 
 C3_BasicInstrument: {
-	Origin2: "    右键以打开它的面板，可以将物品放入其中，稍等一会后它就会自动的开始生产魔能并存储在自身中。"
-	Origin1: "    这些最为基础的透镜需要消耗蕴含魔能的物品来生产魔能，或者可以简单理解为将物品转化为了魔能。蕴含魔能的物品会在物品提示中写明这个物品包含多少的魔能。"
-	TitleName: 基本仪器
+	Origin2: "    Right-click to open its panel, you can put items inside, wait a little while, and it will automatically start producing magike and storing it within itself.。"
+	Origin1: "    These most basic lenses require items containing magike to produce magike, or simply understood as converting items into magike. Items containing magike will be marked in the item description showing how much magike the item contains."
+	TitleName: Basic Instruments
 }
 
 C3_BasicLens: {
-	TitleName: 基本透镜
-	BasicLens1: "    这些最为基础的透镜需要消耗蕴含魔能的物品来生产魔能，或者可以简单理解为将物品转化为了魔能。蕴含魔能的物品会在物品提示中写明这个物品包含多少的魔能。"
-	BasicLens2: "    右键以打开它的面板，可以将物品放入其中，稍等一会后它就会自动的开始生产魔能并存储在自身中。"
+	TitleName: Basic Lens
+	BasicLens1: "    These most basic lenses require items containing magike to produce magike, or simply understood as converting items into magike. Items containing magike will be marked in the item description showing how much mana the item contains."
+	BasicLens2: "    Right-click to open its panel, you can put items inside, wait a little while, and it will automatically start producing mana and storing it within itself."
 }
 
 C3_BiomeLens: {
-	TitleName: 环境透镜
-	BiomeLens1: "    这些环境透镜只有在你处于特定环境中时才能放置下来。放置后它会自动工作，不需要消耗任何东西就能生产魔能。"
-	ForestLens: "    森林透镜需要被放置在地表森林。清晨的树林中传来鸟鸣声，太阳花随着太阳的升起而开放。墨绿色的晶体，漂浮在爬满青苔的森之石上。"
+	TitleName: Biome Lens
+	BiomeLens1: "    These biome lenses can only be placed when you are in a specific biome. When placed, it will work automatically and produce magike。"
+	ForestLens: "    The forest lens needs to be placed in the surface forest. The chirping of birds in the morning woods, flowers blooming with the rising sun. The dark green crystal floats on moss-covered forest stones。"
 }
 
 C1_4_3_HowToUseInstrument: {
-	_4_3_Name: 1.4.3 魔能仪器的使用
-	HowToUse: "    具有发送能力的装置需要使用魔能链接仪将他们连接起来才能传输魔能。能够执行特定工作的“魔能工厂”需要使用魔能激活杖或电路将其激活后才能开始工作。具体使用方法点击下方按钮跳转到指定位置。"
+	_4_3_Name: 1.4.3 How to Use Magike Instruments
+	HowToUse: "    Devices with sending capabilities need to be connected using a magike link device to transfer magike. "Mana factories" that can perform specific tasks need to be activated using a magike activation rod or circuit. Specific usage instructions click the button below to jump to the designated location。"
 }
 
 C3_BiomeLens1: {
-	TitleName: 环境透镜
-	BiomeLens1: "    这些环境透镜只有在你处于特定环境中时才能放置下来。放置后它会自动工作，不需要消耗任何东西就能生产魔能。"
-	ForestLens: "    森林透镜需要被放置在地表森林。清晨的树林中传来鸟鸣声，太阳花随着太阳的升起而开放。墨绿色的晶体，漂浮在爬满青苔的森之石上。"
-	MarbleLens: "    大理石透镜需要被放置在地底的大理石环境中。地底的白色洞窟内传来敲打的声音，穿着战甲的骷髅正漫无目的地游走着。白色的八面体石头包裹着中心的晶体，漂浮在同样是白色的底座上。"
-	GraniteLens: "    花岗岩透镜需要被放置在地底的花岗岩环境之中。地底的深蓝色洞窟内传来流水的声响，蓝色的神秘能量驱动着花岗精四处飞翔。深蓝色的石头包裹着中心的晶体，漂浮在深蓝色的底座上。"
+	TitleName: Biome Lens
+	BiomeLens1: "    These biome lenses can only be placed when you are in a specific biome. When placed, it will work automatically and produce magike。"
+	ForestLens: "    The forest lens needs to be placed in the surface forest. The chirping of birds in the morning woods, flowers blooming with the rising sun. The dark green crystal floats on moss-covered forest stones。"
+	MarbleLens: "    The marble lens needs to be placed in the marble biome. The white caves underground echo with knocking sounds, where skeletal warriors clad in armor wander. White octahedral stones encase the central crystal, floating on a similarly white base."
+	GraniteLens: "    The granite lens needs to be placed in the granite environment. The deep blue caves underground resonate with the sound of flowing water, blue mysterious energy drives the floating granites. Deep blue stones encase the central crystal, floating on a deep blue base.。"
 }
 
 C3_BiomeLens2: {
-	TitleName: 环境透镜
-	HellLens: "    地狱透镜需要被放置在地狱环境中。比岩浆更深的地方，有一个巨大的空间，那是恶魔们的住所。被雕刻成恶魔头颅形状的黑曜石包裹着中心的晶体，漂浮在狱岩石底座之上。"
-	GlowingMushroomLens: "    夜光菇透镜需要被放置在夜光蘑菇环境中。地底深处亮起的蓝色光芒，这是地下为数不多的光源。据说一种稀有的饵料就生活在这个地方。夜光蘑菇的菌丝包裹着中心的水晶，漂浮在菌柄上。"
-	BoneLens: "    骸骨透镜需要呗放置在地牢环境中。深邃的回廊中传来哀嚎声，这是地牢的幽魂在讨论他们的午饭。扭曲的骨头上镶嵌着水晶，漂浮在地牢砖块之上。"
+	TitleName: Biome Lens
+	HellLens: "    The hell lens needs to be placed in the hell biome. Deeper than lava, there is a vast space, the residence of sinners. Obsidian carved into demon skull shapes encase the central crystal, floating atop a prison stone base."
+	GlowingMushroomLens: "    The glowing mushroom lens needs to be placed in the glowing mushroom biome. Blue lights illuminate the depths of the earth, one of the few sources of light underground. It is said that a rare bat lives in this place. The mycelium of the glowing mushrooms encases the central crystal, floating atop the stipe."
+	BoneLens: "    The bone lens needs to be placed in the dungeon biome. Echoes of moans reverberate through the deep corridors, the spirits of the dungeon discussing their next meal. Crystals embedded in twisted bones float atop dungeon bricks."
 }
 
-C4_ChapterName.ChapterName: 第四章 手持仪器
+C4_ChapterName.ChapterName: Chapter 4 Handheld instrument
 
 C4_ConnectStaff: {
-	TitleName: 魔能连接仪
-	ConnectStaff1: "    魔能仪器之间需要手动地建立连接，而魔能连接仪就是为此而生的。左键单击一个具有发送功能的魔能仪器，将会唤出一个面板，上面的空位就是该仪器的连接槽位。点击槽位后就可以开始连接了，大部分仪器都有传输距离的限制，超出距离的话连接线将变为红色。"
-	ConnectStaff2: "    点击一个范围内的魔能仪器就可以在两者之间建立起连接了，魔能将会自动的从发送器发向接收器。"
+	TitleName: Magike Link Device
+	ConnectStaff1: "    Connections between magike instruments need to be manually established, and the magike link device is born for this purpose. Left-click on a magike instrument with sending functionality to bring up a panel, the empty slot on the panel is the connection slot for that instrument. Clicking the slot begins the connection process. Most instruments have a transmission distance limit, beyond which the connection line turns red."
+	ConnectStaff2: "    Clicking on another magike instrument within range establishes a connection between the two, magike will automatically be sent from the transmitter to the receiver."
 }

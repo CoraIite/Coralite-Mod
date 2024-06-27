@@ -2,8 +2,8 @@ BabyIceDragon: {
 	DisplayName: Baby Ice Dragon
 
 	BossChecklistIntegration: {
-		SpawnInfo: 刚刚破壳而出的小冰龙，还不能完全掌握冰魔法的力量
-		DespawnMessage: 冰龙宝宝逃走了
+		SpawnInfo: A infant ice dragon just hatched and cannot yet fully control the power of ice magic.
+		DespawnMessage: The baby ice dragon escaped
 	}
 }
 
@@ -60,16 +60,16 @@ CrystalRobot: {
 		Content: I'm satisfied.
 		NoHome: Wild, dangerous, I need a home.
 		FarFromHome: Far from home, too far.
-		LoveSpace: 我非常喜欢有这么大的空间。
-		DislikeCrowded: 我不喜欢这么拥挤。
-		HateCrowded: 我讨厌这么拥挤。
-		LoveBiome: 我非常喜欢{BiomeName}。
-		LikeBiome: 我喜欢{BiomeName}。
-		DislikeBiome: 我不喜欢{BiomeName}。
-		LoveNPC: 我非常喜欢{NPCName}。
-		LikeNPC: 我喜欢{NPCName}。
-		DislikeNPC: 我不喜欢{NPCName}。
-		HateNPC: 我讨厌{NPCName}。
+		LoveSpace: This space is great。
+		DislikeCrowded: It's a bit cluttered for me。
+		HateCrowded: It's too crowded。
+		LoveBiome: I Love {BiomeName}。
+		LikeBiome: I like {BiomeName}。
+		DislikeBiome: i don't like {BiomeName}。
+		LoveNPC: I love {NPCName}。
+		LikeNPC: I like {NPCName}。
+		DislikeNPC: I don't really like {NPCName}。
+		HateNPC: I hate {NPCName}。
 		LikeNPC_Princess: I like {NPCName}.
 		Princess_LovesNPC: I like {NPCName}.
 	}
@@ -95,32 +95,32 @@ ElfRanger: {
 	DisplayName: Elf Ranger
 
 	TownNPCMood: {
-		Content: 我很满足。
-		NoHome: 我讨厌没有家。
-		FarFromHome: 我离家太远了。
-		LoveSpace: 我非常喜欢有这么大的空间。
-		DislikeCrowded: 我不喜欢这么拥挤。
-		HateCrowded: 我讨厌这么拥挤。
-		LoveBiome: 我非常喜欢{BiomeName}。
-		LikeBiome: 我喜欢{BiomeName}。
-		DislikeBiome: 我不喜欢{BiomeName}。
-		LoveNPC: 我非常喜欢{NPCName}。
-		LikeNPC: 我喜欢{NPCName}。
-		DislikeNPC: 我不喜欢{NPCName}。
-		HateNPC: 我讨厌{NPCName}。
+		Content: I'm happy。
+		NoHome: Currently homeless。
+		FarFromHome: Where do I live again?。
+		LoveSpace: I appreciate the space。
+		DislikeCrowded: A tad too crowded for me。
+		HateCrowded: I hate this。
+		LoveBiome: Enjoying {BiomeName} right now。
+		LikeBiome: Loving it, {BiomeName} YEA!。
+		DislikeBiome: not feeling {BiomeName}。
+		LoveNPC: Besties {NPCName}。
+		LikeNPC: BFF {NPCName}。
+		DislikeNPC: Rather not have {NPCName}。
+		HateNPC: Can {NPCName} not exist?
 		LikeNPC_Princess: I like {NPCName}.
 		Princess_LovesNPC: I like {NPCName}.
 	}
 
-	Name7: 菲尔希
-	Chat1: 观察这些小家伙们非常有趣，我经常一看一整天。
-	Chat2: 仙灵们有各自喜欢的墙壁，在这些墙壁前你才能见到他们
-	Chat3: 你知道魔尘吗？仙灵很喜欢这种带有魔力的粉尘。
-	Chat4: 如果你想捕捉仙灵的话，制作一个藤蔓套索吧！
-	Chat5: 捕捉仙灵并饲养它们是很常见的行为，但不要过度捕捉哦！
-	Chat6: 你有见过珊瑚吗，是她将我带到这里来的。
-	Chat7: 或许有一天你能见到空间妖精，并完成它的试炼。
-	DryadChat1: 那是树妖吗，我想我已经很久没有见过她了。
-	DryadChat2: 树妖曾经在这里对抗克苏鲁，而我在另一个世界里...真是令人怀念的时光。
-	DryadChat3: 树妖身上散发着森林的清香，我很喜欢这股味道。
+	Name7: Felix
+	Chat1: bserving these little ones is very entertaining, I often spend an entire day watching them.
+	Chat2: Fairies have their favorite walls, you can see them in front of these walls.
+	Chat3: Do you know about magike dust? Fairies love this kind of powdered magic.。
+	Chat4: If you want to catch fairies, make a vine snare!
+	Chat5: Capturing and raising fairies is quite common, but don't overdo it!
+	Chat6: Have you seen Coral? She brought me here.
+	Chat7: Perhaps one day you will encounter the space fairy and complete its trial.
+	DryadChat1: Is that the Dryad? I haven't seen her in a long time.
+	DryadChat2: The Dryad once fought against Cthulhu here, and I was in another world... such memorable times.
+	DryadChat3: The scent of the forest emanates from the Dryad, I love that smell.
 }
