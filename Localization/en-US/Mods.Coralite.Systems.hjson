@@ -4,28 +4,29 @@ YujianSystem: {
 }
 
 MagikeSystem: {
-	BotanicusBonus: 植生：攻击时生成叶刃环绕自身
-	MetallonBonus: 刚：攻击时获得防御加成Buff
-	FreosanBonus: 冻：攻击时生成冰块
-	HeatanBonus: 灼：攻击时生成灼火球
+	BotanicusBonus: Vegetation: Generates leaf blades around self upon attack
+	MetallonBonus: Metallic: Gains defense buff upon attacking
+	FreosanBonus: Freeze: Generates ice blocks upon attacking
+	HeatanBonus: Heat: Generates fireballs upon attacking
+
 }
 
 FairySystem: {
-	ZoneForest: 在地表森林捕获
-	WeakLevel: 软弱：{0}（基础 {1}）
-	VeryCommonLevel: 普通：{0}（基础 {1}）
-	CommonLevel: 普通：{0}（基础 {1}）
-	UncommonLevel: 少见：{0}（基础 {1}）
-	RareLevel: 稀有：{0}（基础 {1}）
-	SpecialLevel: 独特：{0}（基础 {1}）
-	UniqueLevel: 唯一：{0}（基础 {1}）
-	TimelessLevel: 永恒：{0}（基础 {1}）
-	FairyLifeMax: "血量 "
-	FairyDamage: "伤害 "
-	FairyDefence: "防御 "
-	FairyScale: "大小 "
-	CurrentLife: 当前生命值：{0} / {1}
-	ResurrectionTime: 复活时间：{0}
+	ZoneForest: Capture in surface forests
+	WeakLevel: Weak：{0}（Base {1}）
+	VeryCommonLevel: Common：{0}（Base {1}）
+	CommonLevel: Common：{0}（Base {1}）
+	UncommonLevel: Uncommon：{0}（Base {1}）
+	RareLevel: Rare：{0}（Base {1}）
+	SpecialLevel: Epic：{0}（Base {1}）
+	UniqueLevel: Legendary：{0}（Base {1}）
+	TimelessLevel: Eternal：{0}（Base {1}）
+	FairyLifeMax: "Health "
+	FairyDamage: "Damage "
+	FairyDefence: "Defense "
+	FairyScale: "Size "
+	CurrentLife: Current Health：{0} / {1}
+	ResurrectionTime: Respawn time：{0}
 	RarityC: Common
 	RarityU: Uncommon
 	RarityR: Rare
@@ -37,32 +38,32 @@ FairySystem: {
 	RarityAR: Another Rare
 	RarityMR: 秘宝
 	RaritySP: Special
-	BottleCapacity: 容量 {0} / {1}
-	NotHaveLevel: 无：{0}（基础 {1}）
-	SeeMore: 按上键以查看雷达图（游戏暂停时无法使用）
-	ZoneRockLayer: 在洞穴中出现
-	ZoneBeach: 在海边出现
-	CatchPowerMult: "{0} 捕捉力"
-	EternalLevel: 永恒：{0}（基础 {1}）
+	BottleCapacity: Capacity {0} / {1}
+	NotHaveLevel: None：{0}（Base {1}）
+	SeeMore: Press the key above to view the radar map (cannot be used when paused)
+	ZoneRockLayer: Appears in caves
+	ZoneBeach: Appears at the beach
+	CatchPowerMult: "{0} Catch Power"
+	EternalLevel: Eternal：{0}（Base {1}）
 	UncaughtMouseText:
 		'''
 		???
-		点击以查看捕获条件
+		Click to view capture conditions
 		'''
 	SelectButtonMouseText:
 		'''
-		左键单击以筛选指定稀有度的仙灵
-		右键恢复为显示全部
+		Left-click to filter by specified rarity
+		Right-click to display all
 		'''
 	SortButtonMouseText:
 		'''
-		左键单击以按指定规则排序
-		右键恢复为默认按内部ID排序
+		Left-click to sort by specified rules
+		Right-click to default internal ID sorting
 		'''
-	SortByTypeText: 按内部ID排序
-	SortByRarityText: 按稀有度排序
-	SortByCaughtText: 按是否捕获排序
-	FairyTradeCondition: 使用妖精传送门进行交易
+	SortByTypeText: Sort by internal ID
+	SortByRarityText: Sort by rarity
+	SortByCaughtText: Sort by unlocked
+	FairyTradeCondition: Use fairy teleporter for trading
 }
 
-BossBarSystem.DontTakeDamage: 不可攻击！
+BossBarSystem.DontTakeDamage: Cant attack!！
