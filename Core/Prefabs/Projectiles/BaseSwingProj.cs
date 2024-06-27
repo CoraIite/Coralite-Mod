@@ -12,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
-    public abstract class BaseSwingProj : BaseHeldProj
+    public abstract class BaseSwingProj(float spriteRotation = 0.785f, short trailCount = 15) : BaseHeldProj
     {
         protected float[] oldRotate;
         protected float[] oldDistanceToOwner;
@@ -38,8 +38,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         public float _Rotation;// 实际角度，通过一系列计算得到的每一帧的弹幕角度
         public float Timer;
 
-        protected float spriteRotation;
-        protected readonly short trailLength;
+        protected float spriteRotation = spriteRotation;
+        protected short trailCount = trailCount;
         public float distanceToOwner = 15;
 
         protected ISmoother Smoother;
@@ -47,12 +47,6 @@ namespace Coralite.Core.Prefabs.Projectiles
         public ref Vector2 RotateVec2 => ref Projectile.velocity;
         public Vector2 Top;
         public Vector2 Bottom;
-
-        public BaseSwingProj(float spriteRotation = 0.785f, short trailLength = 15)
-        {
-            this.spriteRotation = spriteRotation;
-            this.trailLength = trailLength;
-        }
 
         public sealed override void SetDefaults()
         {
@@ -87,7 +81,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// 是否可绘制自己的贴图 <see cref="canDrawSelf"/> = true <br></br>
         /// 刀光贴图 <see cref="TrailTexture"/> 建议单独声明一个静态<see cref="Asset{T}"/>字段 <br></br>
         /// 影子拖尾数量 <see cref="shadowCount"/>
-        /// 拖尾数组长度 <see cref="trailLength"/> = 15 <br></br>
+        /// 拖尾数组长度 <see cref="trailCount"/> = 15 <br></br>
         /// 刀光顶部延申的距离 <see cref="trailTopWidth"/> = 10,
         /// 刀光顶部延申的距离<see cref="trailBottomWidth"/> = 10 <br></br>
         /// </summary>
@@ -174,9 +168,9 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             if (useShadowTrail || useSlashTrail)
             {
-                oldRotate = new float[trailLength];
-                oldDistanceToOwner = new float[trailLength];
-                oldLength = new float[trailLength];
+                oldRotate = new float[trailCount];
+                oldDistanceToOwner = new float[trailCount];
+                oldLength = new float[trailCount];
                 InitializeCaches();
             }
 
@@ -258,7 +252,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual void InitializeCaches()
         {
-            for (int j = trailLength - 1; j >= 0; j--)
+            for (int j = trailCount - 1; j >= 0; j--)
             {
                 oldRotate[j] = 100f;
                 oldDistanceToOwner[j] = distanceToOwner;
@@ -268,7 +262,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual void UpdateCaches()
         {
-            for (int i = trailLength - 1; i > 0; i--)
+            for (int i = trailCount - 1; i > 0; i--)
             {
                 oldRotate[i] = oldRotate[i - 1];
                 oldDistanceToOwner[i] = oldDistanceToOwner[i - 1];
@@ -301,6 +295,9 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
+            if (Timer < minTime || Timer > maxTime)
+                return false;
+
             if (target.noTileCollide || target.friendly || Projectile.hostile)
                 return null;
 
@@ -338,10 +335,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Texture2D mainTex = Projectile.GetTexture();
             Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
 
-            int dir = Math.Sign(totalAngle);
-            float extraRot = OwnerDirection < 0 ? MathHelper.Pi : 0;
-            extraRot += OwnerDirection == dir ? 0 : MathHelper.Pi;
-            extraRot += spriteRotation * dir;
+            float extraRot = GetExRot();
 
             if (useShadowTrail && Timer > minTime)
                 DrawShadowTrail(mainTex, origin, lightColor, extraRot);
@@ -431,7 +425,17 @@ namespace Coralite.Core.Prefabs.Projectiles
         //    return Texture + "_Flip";
         //}
 
-        protected SpriteEffects CheckEffect()
+        protected virtual float GetExRot()
+        {
+            int dir = Math.Sign(totalAngle);
+            float extraRot = OwnerDirection < 0 ? MathHelper.Pi : 0;
+            extraRot += OwnerDirection == dir ? 0 : MathHelper.Pi;
+            extraRot += spriteRotation * dir;
+
+            return extraRot;
+        }
+
+        protected virtual SpriteEffects CheckEffect()
         {
             if (OwnerDirection < 0)
             {
@@ -470,7 +474,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         #region OtherHelperMethod
 
-        public void WarpDrawer(float trailBottomExtraMult)
+        public void WarpDrawer(float trailBottomExtraMult, float alpha = 1)
         {
             if (Timer < minTime || oldRotate == null)
                 return;
@@ -491,8 +495,8 @@ namespace Coralite.Core.Prefabs.Projectiles
                 Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
                 Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) * trailBottomExtraMult + oldDistanceToOwner[i]);
 
-                bars.Add(new CustomVertexInfo(Top, new Color(dir, w, 0f, 1f), new Vector3(factor, 0f, w)));
-                bars.Add(new CustomVertexInfo(Bottom, new Color(dir, w, 0f, 1f), new Vector3(factor, 1f, w)));
+                bars.Add(new CustomVertexInfo(Top, new Color(dir, w, 0f, alpha), new Vector3(factor, 0f, w)));
+                bars.Add(new CustomVertexInfo(Bottom, new Color(dir, w, 0f, alpha), new Vector3(factor, 1f, w)));
             }
 
             Main.spriteBatch.End();

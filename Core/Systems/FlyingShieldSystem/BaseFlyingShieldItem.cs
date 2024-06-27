@@ -63,6 +63,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             {
                 if (player.altFunctionUse == 2)//右键了
                 {
+                    if (cp.FlyingShieldGuardIndex != -1)
+                        return false;
                     if (player.ownedProjectileCounts[Item.shoot] > 0)//如果右键时有左键弹幕
                     {
                         if (cp.FlyingShieldLRMeantime)//如果能同时使用
@@ -119,15 +121,15 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            if (Main.LocalPlayer.controlUp)//TODO: 增加本地化
+            if (Main.keyState.PressingShift())//TODO: 增加本地化
             {
-                string text = "左键以丢出盾牌，右键进行防御，成功防御时会根据盾牌属性以及饰品加成获得短暂伤害减免";
+                string text = FlyingShieldSystem.FSDescriptionLong.Value;
                 TooltipLine line = new TooltipLine(Mod, "Coralite FlyingShield Description", text);
                 tooltips.Add(line);
             }
             else
             {
-                string text = "飞盾（按上键以查看详细内容）";
+                string text = FlyingShieldSystem.FSDescriptionShort.Value;
                 TooltipLine line = new TooltipLine(Mod, "Coralite FlyingShield Description", text);
                 tooltips.Add(line);
             }
@@ -151,6 +153,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                             var projectile = Main.projectile.First(p => p.active && p.owner == Player.whoAmI && p.ModProjectile is BaseFlyingShieldGuard);
                             if (projectile != null)
                             {
+                                projectile.ai[0] = (int)BaseFlyingShieldGuard.GuardState.Guarding;
                                 (projectile.ModProjectile as BaseFlyingShieldGuard).CompletelyHeldUpShield = true;
                                 cp.FlyingShieldGuardIndex = projectile.whoAmI;
                             }

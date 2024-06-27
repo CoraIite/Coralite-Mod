@@ -11,12 +11,12 @@ namespace Coralite.Content.CustomHooks
     {
         public override void Load()
         {
-            On_Player.ItemCheck_OwnerOnlyCode += On_Player_ItemCheck_OwnerOnlyCode;
+            //On_Player.ItemCheck_OwnerOnlyCode += On_Player_ItemCheck_OwnerOnlyCode;
         }
 
         public override void Unload()
         {
-            On_Player.ItemCheck_OwnerOnlyCode -= On_Player_ItemCheck_OwnerOnlyCode;
+            //On_Player.ItemCheck_OwnerOnlyCode -= On_Player_ItemCheck_OwnerOnlyCode;
         }
 
         private void On_Player_ItemCheck_OwnerOnlyCode(On_Player.orig_ItemCheck_OwnerOnlyCode orig, Player self, ref Player.ItemCheckContext context, Item sItem, int weaponDamage, Rectangle heldItemFrame)
@@ -37,11 +37,10 @@ namespace Coralite.Content.CustomHooks
                 if (sItem.shoot > 0 && flag2)
                 {
                     ItemCheck_Shoot(self, self.whoAmI, sItem, weaponDamage);
+                    return;
                 }
 
 #pragma warning restore ChangeMagicNumberToID // Change magic numbers into appropriate ID values
-
-                return;
             }
 
             orig.Invoke(self, ref context, sItem, weaponDamage, heldItemFrame);

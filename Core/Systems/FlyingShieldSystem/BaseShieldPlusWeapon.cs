@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Items.GlobalItems;
 using Coralite.Content.ModPlayers;
 using Coralite.Helpers;
-using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 
@@ -32,7 +32,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 {
                     int max = cp.MaxFlyingShield;
                     ModifyFlyingShieldCount(ref max);
-                    if (player.ownedProjectileCounts[Item.shoot] >= max)
+                    if (player.ownedProjectileCounts[FSProjType] >= max)
                         return false;
 
                     return true;
@@ -40,6 +40,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
                 if (player.altFunctionUse == 2)//右键了
                 {
+                    if (cp.FlyingShieldGuardIndex != -1)
+                        return false;
+
                     if (player.ownedProjectileCounts[FSProjType] > 0)//如果右键时有左键弹幕
                     {
                         if (cp.FlyingShieldLRMeantime)//如果能同时使用
@@ -72,11 +75,14 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         }
 
         /// <summary>
-        /// 可以在这里手动修改同时存在的飞盾数量
+        /// 可以在这里手动修改同时存在的飞盾数量<br></br>
+        /// 默认效果限制飞盾数为1
         /// </summary>
         /// <param name="max"></param>
-        public virtual void ModifyFlyingShieldCount(ref int max) { }
-
+        public virtual void ModifyFlyingShieldCount(ref int max)
+        {
+            max = 1;
+        }
 
         public virtual void LeftAttack(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -96,8 +102,11 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 return false;
             }
 
-            if (player.altFunctionUse == 2)//防御
+            if (player.altFunctionUse == 2 || Main.mouseRight)//防御
             {
+                if (player.GetModPlayer<CoralitePlayer>().FlyingShieldGuardIndex != -1)
+                    return false;
+
                 RightShoot(player, source, damage);
                 return false;
             }
@@ -105,6 +114,22 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             LeftAttack(player, source, position, velocity, type, damage, knockback);//正常攻击
 
             return false;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())//TODO: 增加本地化
+            {
+                string text = FlyingShieldSystem.ShieldPlusDescriptionLong.Value;
+                TooltipLine line = new TooltipLine(Mod, "Coralite ShieldPlus Description", text);
+                tooltips.Add(line);
+            }
+            else
+            {
+                string text = FlyingShieldSystem.ShieldPlusDescriptionShort.Value;
+                TooltipLine line = new TooltipLine(Mod, "Coralite ShieldPlus Description", text);
+                tooltips.Add(line);
+            }
         }
     }
 }

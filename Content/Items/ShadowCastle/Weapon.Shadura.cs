@@ -115,7 +115,7 @@ namespace Coralite.Content.Items.ShadowCastle
         public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public ShaduraSlash() : base(new Vector2(52, 56).ToRotation(), trailLength: 48) { }
+        public ShaduraSlash() : base(new Vector2(52, 56).ToRotation(), trailCount: 48) { }
 
         public int delay;
         public int alpha;

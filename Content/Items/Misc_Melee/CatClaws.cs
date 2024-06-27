@@ -199,7 +199,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         private byte tripleCombo = 0;
 
-        public CatClawsProj_Slash() : base(1.57f, trailLength: 30) { }
+        public CatClawsProj_Slash() : base(1.57f, trailCount: 30) { }
 
         public override void SetDefs()
         {

@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.Gels
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public EmperorSabreSlash() : base(new Vector2(56, 64).ToRotation() - 0.1f, trailLength: 48) { }
+        public EmperorSabreSlash() : base(new Vector2(56, 64).ToRotation() - 0.1f, trailCount: 48) { }
 
         public int delay;
         public int alpha;

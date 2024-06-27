@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.RedJades
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public BloodJadeSlash() : base(0.785f, trailLength: 48) { }
+        public BloodJadeSlash() : base(0.785f, trailCount: 48) { }
 
         public int delay;
         public int alpha;

@@ -106,7 +106,7 @@ namespace Coralite.Content.Items.Shadow
         public float selfExtraRot;
         public int delay;
 
-        public ShadowChainSwing() : base(trailLength: 36)
+        public ShadowChainSwing() : base(trailCount: 36)
         {
 
         }

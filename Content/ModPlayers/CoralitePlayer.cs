@@ -657,7 +657,48 @@ namespace Coralite.Content.ModPlayers
                 }
 
             useSpecialAttack = Core.Loaders.KeybindLoader.SpecialAttack.Current;
+            Item item = Player.inventory[Player.selectedItem];
+
+            if (useSpecialAttack && Player.itemAnimation == 0 && item.useStyle != ItemUseStyleID.None)
+            {
+                bool flag3 = !item.IsAir && CombinedHooks.CanUseItem(Player, item);
+
+                if (item.mana > 0 && flag3 && Player.whoAmI == Main.myPlayer && item.buffType != 0 && item.buffTime != 0)
+                    Player.AddBuff(item.buffType, item.buffTime);
+
+                if (Player.whoAmI == Main.myPlayer && Player.gravDir == 1f && item.mountType != -1 && Player.mount.CanMount(item.mountType, Player))
+                    Player.mount.SetMount(item.mountType, Player);
+
+                if (flag3)
+                    ItemCheck_StartActualUse(item);
+            }
         }
+
+        private void ItemCheck_StartActualUse(Item sItem)
+        {
+            bool flag = sItem.type == ItemID.GravediggerShovel;
+            if (sItem.pick > 0 || sItem.axe > 0 || sItem.hammer > 0 || flag)
+                Player.toolTime = 1;
+
+            if (Player.grappling[0] > -1 || sItem.useTurnOnAnimationStart)
+            { // useTurnOnAnimationStart check added by tML
+                Player.pulley = false;
+                Player.pulleyDir = 1;
+                if (Player.controlRight)
+                    Player.direction = 1;
+                else if (Player.controlLeft)
+                    Player.direction = -1;
+            }
+
+            Player.StartChanneling(sItem);
+            Player.attackCD = 0;
+            Player.ResetMeleeHitCooldowns();
+            Player.ApplyItemAnimation(sItem);
+            bool flag2 = ItemID.Sets.SkipsInitialUseSound[sItem.type];
+            if (sItem.UseSound != null && !flag2)
+                SoundEngine.PlaySound(sItem.UseSound, Player.Center);
+        }
+
 
         public override void OnEnterWorld()
         {

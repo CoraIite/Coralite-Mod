@@ -140,7 +140,7 @@ namespace Coralite.Content.Items.Thunder
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public ThunderveinBladeSlash() : base(new Vector2(48, 46).ToRotation() - 0.08f, trailLength: 48) { }
+        public ThunderveinBladeSlash() : base(new Vector2(48, 46).ToRotation() - 0.08f, trailCount: 48) { }
 
         public int delay;
         public int alpha;

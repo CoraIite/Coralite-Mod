@@ -80,7 +80,7 @@ namespace Coralite.Content.Items.Shadow
         public static Asset<Texture2D> GradientTexture;
         public int alpha;
 
-        public ShadowSwordHeldProj() : base(MathHelper.PiOver4, trailLength: 34) { }
+        public ShadowSwordHeldProj() : base(MathHelper.PiOver4, trailCount: 34) { }
 
         public override void SetDefs()
         {

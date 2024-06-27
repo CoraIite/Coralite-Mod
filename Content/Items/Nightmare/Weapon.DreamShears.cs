@@ -112,7 +112,7 @@ namespace Coralite.Content.Items.Nightmare
         public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public DreamShearsSlash() : base(0.785f, trailLength: 26) { }
+        public DreamShearsSlash() : base(0.785f, trailCount: 26) { }
 
         public int alpha;
         public int delay = 24;

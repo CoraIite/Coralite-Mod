@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.ModPlayers;
+using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,12 +10,10 @@ using Terraria.DataStructures;
 
 namespace Coralite.Core.Systems.FlyingShieldSystem
 {
-    public abstract class BaseFlyingShieldGuard : ModProjectile
+    public abstract class BaseFlyingShieldGuard : BaseHeldProj
     {
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
-
-        public Player Owner => Main.player[Projectile.owner];
 
         #region 设置类字段
 
@@ -107,18 +106,23 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
             SetOtherValues();
             UpdateShieldAccessory(accessory => accessory.OnGuardInitialize(this));
+            LimitFields();
+
+            Timer = parryTime;
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            InitState();
+        }
+
+        public virtual void LimitFields()
+        {
             if (damageReduce > 0.8f)
                 damageReduce = 0.8f;
             if (strongGuard > 0.75f)
                 strongGuard = 0.75f;
+        }
 
-            Timer = parryTime;
-            Projectile.rotation = Projectile.velocity.ToRotation();
-            //if (dashFunction != null)//冲刺
-            //{
-            //    State = (int)GuardState.Dashing;
-            //    DistanceToOwner = GetWidth();
-            //}
+        public virtual void InitState()
+        {
             if (Timer > 0)//完美防御
             {
                 State = (int)GuardState.Parry;
@@ -132,8 +136,6 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public override void AI()
         {
-            //Owner.heldProj = Projectile.whoAmI;
-            Owner.itemTime = Owner.itemAnimation = 2;
             Projectile.velocity.X = Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
             Projectile.timeLeft = 4;
 
@@ -165,6 +167,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     break;
                 case (int)GuardState.Parry:
                     {
+                        LockOwnerItemTime();
+
                         if (!Main.mouseRight)
                             TurnToDelay();
 
@@ -190,6 +194,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     break;
                 case (int)GuardState.ParryDelay:
                     {
+                        LockOwnerItemTime();
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / (parryTime * 2));
                         SetPos();
 
@@ -201,34 +206,12 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     }
                     break;
                 case (int)GuardState.Guarding:
-                    {
-                        if (!Main.mouseRight)
-                            TurnToDelay();
-
-                        SetPos();
-                        OnHoldShield();
-
-                        if (DistanceToOwner < GetWidth())
-                        {
-                            DistanceToOwner += distanceAdder;
-                            break;
-                        }
-
-                        CompletelyHeldUpShield = true;
-                        int which = CheckCollide(out int index);
-                        if (which > 0)
-                        {
-                            UpdateShieldAccessory(accessory => accessory.OnGuard(this));
-                            OnGuard();
-                            if (which == (int)GuardType.Projectile)
-                                OnGuardProjectile(index);
-                            else if (which == (int)GuardType.NPC)
-                                OnGuardNPC(index);
-                        }
-                    }
+                    Guarding();
                     break;
                 case (int)GuardState.Delay:
                     {
+                        LockOwnerItemTime();
+
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / delayTime);
                         SetPos();
                         Timer--;
@@ -239,14 +222,43 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             }
 
             //更新弹幕的无敌帧
-            for (int i = 0; i < Main.maxProjectiles; i++)
+            //for (int i = 0; i < Main.maxProjectiles; i++)
+            //{
+            //    if (localProjectileImmunity[i] > 0)
+            //    {
+            //        localProjectileImmunity[i]--;
+            //        if (!Main.projectile[i].active || Main.projectile[i].friendly)
+            //            localProjectileImmunity[i] = 0;
+            //    }
+            //}
+        }
+
+        public virtual void Guarding()
+        {
+            LockOwnerItemTime();
+
+            if (!Main.mouseRight)
+                TurnToDelay();
+
+            SetPos();
+            OnHoldShield();
+
+            if (DistanceToOwner < GetWidth())
             {
-                if (localProjectileImmunity[i] > 0)
-                {
-                    localProjectileImmunity[i]--;
-                    if (!Main.projectile[i].active || Main.projectile[i].friendly)
-                        localProjectileImmunity[i] = 0;
-                }
+                DistanceToOwner += distanceAdder;
+                return;
+            }
+
+            CompletelyHeldUpShield = true;
+            int which = CheckCollide(out int index);
+            if (which > 0)
+            {
+                UpdateShieldAccessory(accessory => accessory.OnGuard(this));
+                OnGuard();
+                if (which == (int)GuardType.Projectile)
+                    OnGuardProjectile(index);
+                else if (which == (int)GuardType.NPC)
+                    OnGuardNPC(index);
             }
         }
 
@@ -337,9 +349,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Timer = delayTime;
         }
 
-        public virtual void OnParry()
-        {
-        }
+        public virtual void OnParry() { }
 
         /// <summary>
         /// 用于设置距离，来有一个盾牌被打回来的效果，以及播放音效，以及生成粒子

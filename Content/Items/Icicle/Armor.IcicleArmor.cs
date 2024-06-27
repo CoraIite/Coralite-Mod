@@ -270,6 +270,8 @@ namespace Coralite.Content.Items.Icicle
         public override void SetStaticDefaults()
         {
             Main.buffNoSave[Type] = true;
+            Main.debuff[Type] = true;
+            BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex)

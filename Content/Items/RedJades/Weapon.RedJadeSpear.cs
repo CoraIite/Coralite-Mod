@@ -71,7 +71,7 @@ namespace Coralite.Content.Items.RedJades
     {
         public override string Texture => AssetDirectory.RedJadeItems + "RedJadeSpear";
 
-        public RedJadeSpearSpurt() : base(new Vector2(68, 66).ToRotation() - 0.05f, trailLength: 6) { }
+        public RedJadeSpearSpurt() : base(new Vector2(68, 66).ToRotation() - 0.05f, trailCount: 6) { }
 
         public ref float Combo => ref Projectile.ai[0];
 

@@ -191,7 +191,7 @@ namespace Coralite.Content.Items.FlyingShields
         public ref float Combo => ref Projectile.ai[0];
         public ref float StartAngle => ref Projectile.ai[1];
 
-        public ConquerorSlash() : base(-MathHelper.PiOver2, trailLength: 35) { }
+        public ConquerorSlash() : base(-MathHelper.PiOver2, trailCount: 35) { }
 
         public int delay;
         public int alpha;

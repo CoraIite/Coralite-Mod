@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.Thunder
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public ThunderveinSpearSlash() : base(new Vector2(92, 96).ToRotation() - 0.05f, trailLength: 48) { }
+        public ThunderveinSpearSlash() : base(new Vector2(92, 96).ToRotation() - 0.05f, trailCount: 48) { }
 
         public int delay;
         public int alpha;
@@ -405,7 +405,7 @@ namespace Coralite.Content.Items.Thunder
     {
         public override string Texture => AssetDirectory.ThunderItems + "ThunderveinSpearProj";
 
-        public ThunderveinSpearSpurt() : base(new Vector2(48, 46).ToRotation() - 0.08f, trailLength: 10) { }
+        public ThunderveinSpearSpurt() : base(new Vector2(48, 46).ToRotation() - 0.08f, trailCount: 10) { }
 
         public override void SetStaticDefaults()
         {

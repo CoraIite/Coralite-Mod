@@ -106,7 +106,7 @@ namespace Coralite.Content.Items.Nightmare
         public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public EuphorbiaMiliiProj() : base(0.785f, trailLength: 36) { }
+        public EuphorbiaMiliiProj() : base(0.785f, trailCount: 36) { }
 
         public int alpha;
         public int delay;
@@ -787,7 +787,7 @@ namespace Coralite.Content.Items.Nightmare
         public int ChannelTime;
         public int MaxChannelTime;
 
-        public EuphorbiaMiliiRightClick() : base(MathHelper.PiOver4, trailLength: 48) { }
+        public EuphorbiaMiliiRightClick() : base(MathHelper.PiOver4, trailCount: 48) { }
 
         public override void SetDefs()
         {
@@ -830,9 +830,9 @@ namespace Coralite.Content.Items.Nightmare
 
             if (useShadowTrail || useSlashTrail)
             {
-                oldRotate = new float[trailLength];
-                oldDistanceToOwner = new float[trailLength];
-                oldLength = new float[trailLength];
+                oldRotate = new float[trailCount];
+                oldDistanceToOwner = new float[trailCount];
+                oldLength = new float[trailCount];
                 InitializeCaches();
             }
 

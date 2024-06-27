@@ -169,7 +169,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public RuneSongSlash() : base(0.785f, trailLength: 48) { }
+        public RuneSongSlash() : base(0.785f, trailCount: 48) { }
 
         public int delay;
         public int alpha;
@@ -270,6 +270,7 @@ namespace Coralite.Content.Items.CoreKeeper
                     ExtraInit();
                     break;
                 case 3:
+                    Projectile.hide = false;
                     startAngle = 0f;
                     totalAngle = 30.5f;
                     maxTime = 90 * 4;
@@ -280,6 +281,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
                     break;
                 case 4:
+                    Projectile.hide = false;
                     startAngle = 3.14f;
                     totalAngle = 30.5f;
                     maxTime = 90 * 4;
@@ -309,9 +311,9 @@ namespace Coralite.Content.Items.CoreKeeper
 
             if (useShadowTrail || useSlashTrail)
             {
-                oldRotate = new float[trailLength];
-                oldDistanceToOwner = new float[trailLength];
-                oldLength = new float[trailLength];
+                oldRotate = new float[trailCount];
+                oldDistanceToOwner = new float[trailCount];
+                oldLength = new float[trailCount];
                 InitializeCaches();
             }
 
@@ -607,6 +609,8 @@ namespace Coralite.Content.Items.CoreKeeper
 
         protected override void DrawSlashTrail()
         {
+            if (oldRotate == null)
+                return;
             List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
             GetCurrentTrailCount(out float count);
 

@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public ShadowBallSlash() : base(new Vector2(66, 70).ToRotation(), trailLength: 48) { }
+        public ShadowBallSlash() : base(new Vector2(66, 70).ToRotation(), trailCount: 48) { }
 
         public int delay;
         public int alpha;
@@ -471,9 +471,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (useShadowTrail || useSlashTrail)
             {
-                oldRotate = new float[trailLength];
-                oldDistanceToOwner = new float[trailLength];
-                oldLength = new float[trailLength];
+                oldRotate = new float[trailCount];
+                oldDistanceToOwner = new float[trailCount];
+                oldLength = new float[trailCount];
                 InitializeCaches();
             }
 

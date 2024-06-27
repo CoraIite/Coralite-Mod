@@ -132,7 +132,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public PoisonousSickleSlash() : base(MathF.Atan2(48, 60), trailLength: 32) { }
+        public PoisonousSickleSlash() : base(MathF.Atan2(48, 60), trailCount: 32) { }
 
         public int delay;
         public int alpha;
@@ -244,9 +244,9 @@ namespace Coralite.Content.Items.CoreKeeper
 
             if (useShadowTrail || useSlashTrail)
             {
-                oldRotate = new float[trailLength];
-                oldDistanceToOwner = new float[trailLength];
-                oldLength = new float[trailLength];
+                oldRotate = new float[trailCount];
+                oldDistanceToOwner = new float[trailCount];
+                oldLength = new float[trailCount];
                 InitializeCaches();
             }
 

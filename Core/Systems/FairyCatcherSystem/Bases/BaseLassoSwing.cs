@@ -11,7 +11,7 @@ using Terraria.GameContent;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
-    public abstract class BaseLassoSwing(short TrailLength) : BaseSwingProj(trailLength: TrailLength)
+    public abstract class BaseLassoSwing(short TrailLength) : BaseSwingProj(trailCount: TrailLength)
     {
         public virtual string HandleTexture => Texture + "Handle";
 
@@ -81,9 +81,9 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             if (useShadowTrail || useSlashTrail)
             {
-                oldRotate = new float[trailLength];
-                oldDistanceToOwner = new float[trailLength];
-                oldLength = new float[trailLength];
+                oldRotate = new float[trailCount];
+                oldDistanceToOwner = new float[trailCount];
+                oldLength = new float[trailCount];
                 InitializeCaches();
             }
 
@@ -135,7 +135,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             distanceToOwner = Helper.Lerp(maxDistance, 0, Coralite.Instance.SqrtSmoother.Smoother(factor));
             _Rotation += OwnerDirection * 0.02f;
 
-            if ((int)Timer == maxTime + trailLength + 1)
+            if ((int)Timer == maxTime + trailCount + 1)
                 ShootFairy();
 
             Slasher();
@@ -197,7 +197,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected override void InitializeCaches()
         {
-            for (int j = trailLength - 1; j >= 0; j--)
+            for (int j = trailCount - 1; j >= 0; j--)
             {
                 oldRotate[j] = _Rotation;
                 oldDistanceToOwner[j] = distanceToOwner;

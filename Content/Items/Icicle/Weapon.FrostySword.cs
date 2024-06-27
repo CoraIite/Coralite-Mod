@@ -118,7 +118,7 @@ namespace Coralite.Content.Items.Icicle
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public FrostySwordSlash() : base(MathHelper.PiOver4, trailLength: 48) { }
+        public FrostySwordSlash() : base(MathHelper.PiOver4, trailCount: 48) { }
 
         public int delay;
         public int alpha;
@@ -608,7 +608,7 @@ namespace Coralite.Content.Items.Icicle
         private int howmany;
         public int alpha;
 
-        public FrostySwordRightSlash() : base(MathHelper.PiOver4, trailLength: 48) { }
+        public FrostySwordRightSlash() : base(MathHelper.PiOver4, trailCount: 48) { }
 
         public override void SetDefs()
         {
@@ -652,9 +652,9 @@ namespace Coralite.Content.Items.Icicle
 
             if (useShadowTrail || useSlashTrail)
             {
-                oldRotate = new float[trailLength];
-                oldDistanceToOwner = new float[trailLength];
-                oldLength = new float[trailLength];
+                oldRotate = new float[trailCount];
+                oldDistanceToOwner = new float[trailCount];
+                oldLength = new float[trailCount];
                 InitializeCaches();
             }
 

@@ -112,7 +112,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
-        public BrokenHandleSlash() : base(0.785f, trailLength: 32) { }
+        public BrokenHandleSlash() : base(0.785f, trailCount: 32) { }
 
         public int delay;
         public int alpha;
