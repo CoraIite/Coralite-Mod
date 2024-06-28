@@ -197,6 +197,8 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
                 case (int)GuardState.Parry:
                     {
+                        LockOwnerItemTime();
+
                         if (!Main.mouseRight)
                             TurnToDelay();
 
@@ -220,6 +222,8 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
                 case (int)GuardState.ParryDelay:
                     {
+                        LockOwnerItemTime();
+
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / (parryTime * 2));
                         SetPos();
 
@@ -231,34 +235,11 @@ namespace Coralite.Content.Items.FlyingShields
                     }
                     break;
                 case (int)GuardState.Guarding:
-                    {
-                        if (!Main.mouseRight)
-                            TurnToDelay();
-
-                        SetPos();
-                        OnHoldShield();
-
-                        if (DistanceToOwner < GetWidth())
-                        {
-                            DistanceToOwner += distanceAdder;
-                            break;
-                        }
-
-                        CompletelyHeldUpShield = true;
-                        int which = CheckCollide(out int index);
-                        if (which > 0)
-                        {
-                            UpdateShieldAccessory(accessory => accessory.OnGuard(this));
-                            OnGuard();
-                            if (which == (int)GuardType.Projectile)
-                                OnGuardProjectile(index);
-                            else if (which == (int)GuardType.NPC)
-                                OnGuardNPC(index);
-                        }
-                    }
+                        Guarding();
                     break;
                 case (int)GuardState.Delay:
                     {
+                        LockOwnerItemTime();
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / delayTime);
                         SetPos();
                         Timer--;
@@ -387,8 +368,6 @@ namespace Coralite.Content.Items.FlyingShields
             Owner.velocity = new Vector2(0, -0.0001f);
 
             Projectile.rotation = Helper.Lerp(Projectile.rotation, 1.57f, 0.2f);
-
-            //Projectile.Center = Owner.Center + Vector2.UnitY * DistanceToOwner;
 
             if (Projectile.velocity.Length() < 0.2f)
                 Projectile.Kill();

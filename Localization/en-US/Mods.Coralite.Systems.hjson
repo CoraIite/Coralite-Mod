@@ -8,7 +8,6 @@ MagikeSystem: {
 	MetallonBonus: Metallic: Gains defense buff upon attacking
 	FreosanBonus: Freeze: Generates ice blocks upon attacking
 	HeatanBonus: Heat: Generates fireballs upon attacking
-
 }
 
 FairySystem: {
@@ -67,3 +66,21 @@ FairySystem: {
 }
 
 BossBarSystem.DontTakeDamage: Cant attack!！
+
+FlyingShieldSystem: {
+	FSDescriptionShort: 飞盾（按shift查看更多）
+	FSDescriptionLong:
+		'''
+		左键以丢出盾牌，右键进行防御
+		成功防御时会根据盾牌属性以及饰品加成获得短暂伤害减免
+		可以格挡敌怪或敌对弹幕
+		'''
+	ShieldPlusDescriptionShort: 盾+（按shift查看更多）
+	ShieldPlusDescriptionLong:
+		'''
+		左键正常使用武器，右键进行防御，特殊攻击键丢出盾牌
+		成功防御时会根据盾牌属性以及饰品加成获得短暂伤害减免
+		可以格挡敌怪或敌对弹幕
+		可以通过举盾来取消部分左键攻击的后摇
+		'''
+}

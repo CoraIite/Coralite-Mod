@@ -99,7 +99,7 @@ C1_4_2_ClassifyOfInstrument: {
 
 C2_ChapterName: {
 	ChapterName: 第二章 探索发现
-	// CrystalCave: 发现魔力水晶洞
+	CrystalCave: 发现魔力水晶洞
 }
 
 C2_1_CrystalCave1: {
@@ -150,15 +150,15 @@ C3_BasicInstrument: {
 }
 
 C3_BasicLens: {
-	// TitleName: 基本透镜
-	// BasicLens1: "    这些最为基础的透镜需要消耗蕴含魔能的物品来生产魔能，或者可以简单理解为将物品转化为了魔能。蕴含魔能的物品会在物品提示中写明这个物品包含多少的魔能。"
-	// BasicLens2: "    右键以打开它的面板，可以将物品放入其中，稍等一会后它就会自动的开始生产魔能并存储在自身中。"
+	// TitleName: Basic Lens
+	// BasicLens1: "    These most basic lenses require items containing magike to produce magike, or simply understood as converting items into magike. Items containing magike will be marked in the item description showing how much mana the item contains."
+	// BasicLens2: "    Right-click to open its panel, you can put items inside, wait a little while, and it will automatically start producing mana and storing it within itself."
 }
 
 C3_BiomeLens: {
-	// TitleName: 环境透镜
-	// BiomeLens1: "    这些环境透镜只有在你处于特定环境中时才能放置下来。放置后它会自动工作，不需要消耗任何东西就能生产魔能。"
-	// ForestLens: "    森林透镜需要被放置在地表森林。清晨的树林中传来鸟鸣声，太阳花随着太阳的升起而开放。墨绿色的晶体，漂浮在爬满青苔的森之石上。"
+	// TitleName: Biome Lens
+	// BiomeLens1: "    These biome lenses can only be placed when you are in a specific biome. When placed, it will work automatically and produce magike。"
+	// ForestLens: "    The forest lens needs to be placed in the surface forest. The chirping of birds in the morning woods, flowers blooming with the rising sun. The dark green crystal floats on moss-covered forest stones。"
 }
 
 C1_4_3_HowToUseInstrument: {

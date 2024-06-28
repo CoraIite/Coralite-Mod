@@ -2,8 +2,8 @@ BabyIceDragon: {
 	DisplayName: 冰龙宝宝
 
 	BossChecklistIntegration: {
-		// SpawnInfo: 刚刚破壳而出的小冰龙，还不能完全掌握冰魔法的力量
-		// DespawnMessage: 冰龙宝宝逃走了
+		// SpawnInfo: A infant ice dragon just hatched and cannot yet fully control the power of ice magic.
+		// DespawnMessage: The baby ice dragon escaped
 	}
 }
 

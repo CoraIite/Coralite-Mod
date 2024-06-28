@@ -23,7 +23,6 @@ C1_P4_1_1_History3.History3: "    Peace did not last for long, demonic entities 
 C1_P5_1_1_History4.History4: "    The situation was dire, in desperation, I pried open an portal which lead me to another untrodden world, this one. I know I won't be safe for long, that's why I wrote this book and left to be protected by a crystal guardian created by the fairies."
 C1_P6_1_1_History5.History5: "    To you, reader, to be able to destroy the guardian shows that you're able to handle the power that this book is imbued with. The knowledge you will learn is too much for any man but you will master it in due time. Keep expanding your knowledge to unlock the content in the book. I wish you good luck!"
 
-
 C0_P2_Catalog: {
 	Index: Index
 	Chapter1: -Chapter 1 Understanding Magike-
@@ -87,7 +86,7 @@ C1_3_Function: {
 C1_4_1_WhatIsInstrument: {
 	_4_Name: 1.4 How to harness magike
 	_4_1_Name: 1.4.1 Why use instruments?
-	WhatIsInstrument: "    After relentless research, articulate machinery were created to harness magike with great efficiency. Some were made to store magike while others use magike to function. Many take the appearance of an lens as the property of magike is very similar to light.。"
+	WhatIsInstrument: "    After relentless research, articulate machinery were created to harness magike with great efficiency. Some were made to store magike while others use magike to function. Many take the appearance of an lens as the property of magike is very similar to light."
 }
 
 C1_4_2_ClassifyOfInstrument: {
@@ -95,7 +94,7 @@ C1_4_2_ClassifyOfInstrument: {
 	Classify1: "    Production Class Instruments: Lenses, which produce magike under certain conditions."
 	Classify2: "    Transmission Class Instruments: Wide-angle lenses, with stronger conductivity and smaller storage. There are also special wide-angle lenses like the multifaceted mirror, sacrificing some transmission distance for more connections."
 	Classify3: "    Storage Class Instruments: Crystal pillars, the perfect tool for magike storage due to it's great volume."
-	Classify4: "    The above three are the most basic magike instruments, which need to be placed down to work. Besides, there are instruments collectively called "Magike Factories" that can perform item reshaping, magike infusion, aggregation, or shooting special attack bullets, etc."
+	Classify4: The above three are the most basic magike instruments, which need to be placed down to work. Besides, there are instruments collectively called "Magike Factories" that can perform item reshaping, magike infusion, aggregation, or shooting special attack bullets, etc.
 }
 
 C2_ChapterName: {
@@ -105,10 +104,10 @@ C2_ChapterName: {
 
 C2_1_CrystalCave1: {
 	_2_Name: 1.1 What is Magike?
-	CrystalCave1: "    Exploring this continent of Terraria is exciting. You might find the nest of the antlions, the temple of the lihzahrdmen in the jungle, or the dungeon filled with skeletons, or the city of shadows... oh, I seem to have said too much. These fascinating terrains are not the focus; what matters is being able to collect "Magike crystals" at the magike crystal cave。"
+	CrystalCave1: Exploring this continent of Terraria is exciting. You might find the nest of the antlions, the temple of the lihzahrdmen in the jungle, or the dungeon filled with skeletons, or the city of shadows... oh, I seem to have said too much. These fascinating terrains are not the focus; what matters is being able to collect "Magike crystals" at the magike crystal cave。
 	Date: 【Terrarian Calendar 235th Year, November 15th】
 	CrystalCave2: "    After careful consideration, I decided to join the magike exploration team, seeking this unique formation according to Coral's guidance. Speaking of Coral, she suddenly appeared in the king's hall a few days ago, scaring the guards thinking she was an assassin, they all rushed over. At that moment, she took out a mysterious orange crystal, releasing it's tremendous energy which blew a hole through the ceiling. I happened to pass by, peeking through the crack after the explosion, there seemed to be a pink-haired person with blue horns on her head.。"
-	CrystalCave3: "    Soon enough, the king issued an urgent notice, forming an expedition team to investigate underground and find the magike cave, according to Coral's words. I wonder if this so-called "magike" is reliable, what if we're fooled? But there's hope to  be grasped, in this moment of chaos, there aren't any other options."
+	CrystalCave3: Soon enough, the king issued an urgent notice, forming an expedition team to investigate underground and find the magike cave, according to Coral's words. I wonder if this so-called "magike" is reliable, what if we're fooled? But there's hope to  be grasped, in this moment of chaos, there aren't any other options.
 }
 
 C2_1_CrystalCave2: {
@@ -139,7 +138,7 @@ C2_1_CrystalCave6: {
 C2_1_CrystalCave7: {
 	Date: 【Terrarian Calendar 235th Year, November 23rd】
 	CrystalCave1: "    It's tough, the research notes were lost due to an surprise attacks by monster. Luckily, I have a good memory, and most importantly, I have enough of the crucial magike crystals and obsidian, that's good news. Enough of these troubles, today's research discovery is that the combination of magike crystals and obsidian bases emits pink light with the ability to transmute objects. Specifically, it seems to have restructured the properties of objects, I need to tinker some more, and look for Tim, he should be able to master this technique."
-	Description: "    This happened right after I informed everyone about the magike. Their leaders took it seriously, despite the many casualties caused by the war between dragons and fairies, they still quickly formed an expedition team. "To protect our people, I will try any means necessary" the leader said. Here's a follow-up I think you'll find useful for writing about the knowledge mentioned."
+	Description: This happened right after I informed everyone about the magike. Their leaders took it seriously, despite the many casualties caused by the war between dragons and fairies, they still quickly formed an expedition team. "To protect our people, I will try any means necessary" the leader said. Here's a follow-up I think you'll find useful for writing about the knowledge mentioned.
 }
 
 C3_ChapterName.ChapterName: Chapter 3 Types of instruments
@@ -164,7 +163,7 @@ C3_BiomeLens: {
 
 C1_4_3_HowToUseInstrument: {
 	_4_3_Name: 1.4.3 How to Use Magike Instruments
-	HowToUse: "    Devices with sending capabilities need to be connected using a magike link device to transfer magike. "Mana factories" that can perform specific tasks need to be activated using a magike activation rod or circuit. Specific usage instructions click the button below to jump to the designated location。"
+	HowToUse: Devices with sending capabilities need to be connected using a magike link device to transfer magike. "Mana factories" that can perform specific tasks need to be activated using a magike activation rod or circuit. Specific usage instructions click the button below to jump to the designated location。
 }
 
 C3_BiomeLens1: {

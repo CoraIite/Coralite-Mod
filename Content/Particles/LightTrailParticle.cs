@@ -11,7 +11,8 @@ namespace Coralite.Content.Particles
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "HorizontalLight";
 
-        private Color targetColor;
+        public Color targetColor;
+        public bool noGravity;
 
         public override void OnSpawn()
         {
@@ -25,7 +26,7 @@ namespace Coralite.Content.Particles
             {
                 color = Color.Lerp(color, targetColor, 0.1f);
 
-                if (Velocity.Y < 7)
+                if (!noGravity && Velocity.Y < 7)
                 {
                     Velocity.Y += 0.1f;
                 }
@@ -105,6 +106,49 @@ namespace Coralite.Content.Particles
             spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar3.ToArray(), 0, bar3.Count - 2);
             spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar4.ToArray(), 0, bar3.Count - 2);
             spriteBatch.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+        }
+    }
+
+    public class LightTrailParticle_NoPrimitive: LightTrailParticle
+    {
+        public override void Update()
+        {
+            fadeIn++;
+            if (fadeIn > 13)
+            {
+                color = Color.Lerp(color, targetColor, 0.1f);
+
+                if (!noGravity && Velocity.Y < 7)
+                {
+                    Velocity.Y += 0.1f;
+                }
+
+                Velocity.X *= 0.98f;
+                Rotation = Velocity.ToRotation();
+            }
+
+            if (color.A < 2)
+                active = false;
+        }
+
+        public static LightTrailParticle_NoPrimitive Spawn(Vector2 center, Vector2 velocity, Color newcolor, float scale, Color targetColor = default)
+        {
+            LightTrailParticle_NoPrimitive p = NewParticle<LightTrailParticle_NoPrimitive>(center, velocity, newcolor, scale);
+            p.targetColor = targetColor == default ? new Color(0, 60, 250, 0) : targetColor;
+
+            return p;
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            Texture2D mainTex = GetTexture().Value;
+            Color c = Color.White * (color.A / 255f);
+            c.A = (byte)(c.A * 0.3f);
+
+            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale*1.5f, 0, 0);
+            c = color;
+            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
+            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
         }
     }
 }
