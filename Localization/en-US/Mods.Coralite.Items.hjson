@@ -3503,7 +3503,7 @@ Floette: {
 
 WarpMirror: {
 	DisplayName: Warp Mirror
-	Tooltip: Consumes 50 mana to teleport randomly
+	Tooltip: Consumes 50 magike to teleport randomly
 }
 
 Virgo: {
@@ -3515,7 +3515,7 @@ GigantesShoes: {
 	DisplayName: Gigantes Shoes
 	Tooltip:
 		'''
-		Increase fall speed by 50%
+		Reduces fall damage by 50%
 		Press the hotkey to descend faster and create an impact that knocks back enemies
 		'''
 }
@@ -3541,7 +3541,7 @@ MagicCrystalMusicBox: {
 }
 
 Meowmeo: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Meowmeo
 	Tooltip: "Meow~ Meow~ Meow~"
 }
@@ -3560,31 +3560,31 @@ HylianShield: {
 }
 
 Nuranasa: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Nuranasa
 	Tooltip: Tiny and cute
 }
 
 SmallVolcano: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Small Volcano
 	Tooltip: A tiny volcano
 }
 
 TerraShortSword: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Terra Short Sword
 	Tooltip: Also great at peeling fruit
 }
 
 TomatoButcherer: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Tomato Butcherer
 	Tooltip: It's just ketchup
 }
 
 TrueNightsCage: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: True Nights Cage
 	Tooltip: Let you travel freely in the dark night
 }
@@ -3595,79 +3595,79 @@ BrokenHeroShortSword: {
 }
 
 BladeOfCatnip: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Blade Of Catnip
 	Tooltip: Impossible to put down (if you're a cat)
 }
 
 Excatbar: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Excatbar
 	Tooltip: The holy sword of legends?
 }
 
 NightsCage: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Nights Cage
 	Tooltip: So you can't sleep?
 }
 
 ShadowsBane: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Shadows Bane
 	Tooltip: Not much shine to it
 }
 
 TrueExcatbar: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: True Excatbar
 	Tooltip: Tastes like a mix of strawberry and blueberry
 }
 
 BeamShortSword: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Beam Short Sword
 	Tooltip: It's not the size that matters
 }
 
 Cattongue: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Catstongue
 	Tooltip: Seem to be scared of hot things
 }
 
 CatTreeSword: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Cat Tree Sword
 	Tooltip: the purrfect cat toy
 }
 
 FlyingDragonBaby: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Flying Dragon Baby
 	Tooltip: shoots out a little boom boom
 }
 
 IceShortSword: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Ice Short Sword
 	Tooltip: Carved from a sabretooth tiger
 }
 
 SmallBee: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Small Bee
 	Tooltip: Bzzt
 }
 
 TheCatMansBlade: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: The Cat Mans Blade
 	Tooltip: Black Cat Captain's Sword
 }
 
 Treeler: {
-	CraftCondition: 在CoralCat的世界中合成
+	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Treeler
 	Tooltip: Grows into a tree
 }
@@ -3931,7 +3931,7 @@ PrimaryRoughGemstone: {
 	Tooltip:
 		'''
 		It is possible to extract a gem using an extractor
-		extracting desert fossil or gems may produce rough gemstones
+		mining desert fossil or gems may produce rough gemstones
 		'''
 }
 
