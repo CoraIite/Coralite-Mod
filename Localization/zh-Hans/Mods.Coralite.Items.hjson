@@ -2336,6 +2336,7 @@ FlyingShieldToolbox: {
 		让飞盾能够在敌人间弹射一次
 		增加飞盾飞行速度
 		增加飞盾右键格挡能力
+		盾冲与格挡变得更加自由
 		'''
 }
 
@@ -2366,7 +2367,7 @@ FlyingShieldToolboxProMax: {
 		让飞盾能够在敌人间弹射一次
 		增加飞盾飞行速度
 		增加飞盾右键格挡能力
-		飞盾未回归时也可以使用右键格挡
+		盾冲与格挡变得更加自由
 		'''
 }
 
@@ -2453,11 +2454,7 @@ PowerliftExoskeleton: {
 
 HolyCharm: {
 	DisplayName: 神圣荣耀
-	Tooltip:
-		'''
-		[c/8aebff:举起盾牌的瞬间能够进行完美格挡并释放神圣盾冲]
-		飞盾未回归时也可以使用右键格挡
-		'''
+	Tooltip: "[c/8aebff:举起盾牌的瞬间能够进行完美格挡并释放神圣盾冲]"
 }
 
 Terracrest: {
@@ -2465,7 +2462,6 @@ Terracrest: {
 	Tooltip:
 		'''
 		[c/8aebff:举起盾牌的瞬间能够进行完美格挡并释放泰拉魔刺]
-		飞盾未回归时也可以使用右键格挡
 		+18% 飞盾格挡时减少弹幕穿透数的概率
 		增加飞盾格挡能力
 		增加举盾速度
@@ -2549,7 +2545,7 @@ NanoAmplifier: {
 		+2 飞盾在敌人间弹射次数
 		大幅增加飞盾飞行速度
 		增加飞盾右键格挡能力
-		飞盾未回归时也可以使用右键格挡
+		盾冲与格挡变得更加自由
 		'''
 }
 
@@ -4161,7 +4157,11 @@ PhantomCrystalBall: {
 
 TopazMirror: {
 	DisplayName: 黄晶幻象
-	Tooltip: ""
+	Tooltip:
+		'''
+		托帕石将投射出其他魔法师的武器
+		使用这些幻象武器进行攻击
+		'''
 }
 
 Tourmaline: {
@@ -4175,6 +4175,17 @@ LandOfTheLustrous: {
 }
 
 TourmalineMonoclastic: {
-	// DisplayName: Tourmaline Monoclastic
-	// Tooltip: ""
+	DisplayName: 绯红的窥视
+	Tooltip: ""
+}
+
+Zircon: {
+	DisplayName: 锆石
+	Tooltip: 使用提炼机从上级宝石原石中提取
+}
+
+FlyingShieldBattleGuide: {
+	DisplayName: 飞盾战斗指南
+	Tooltip: 盾冲与格挡变得更加自由
+
 }

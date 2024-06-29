@@ -2288,6 +2288,7 @@ FlyingShieldToolbox: {
 		Allows Flying Shield to ricochet once among enemies.
 		Enhancing the Flying Shield with the ability to block using the right click.
 		Increase the flying speed of the Flying Shield.
+		Shield dashing and blocking have become more free
 		'''
 }
 
@@ -2313,7 +2314,7 @@ FlyingShieldToolboxProMax: {
 		Allowing Flying Shield to ricochet once among enemies.
 		Enhances the Flying Shield with the ability to block using the right click.
 		Increases the flying speed of the Flying Shield.
-		The right click block can be used even when the Flying Shield has not returned.
+		Shield dashing and blocking have become more free
 		'''
 }
 
@@ -2400,11 +2401,7 @@ PowerliftExoskeleton: {
 
 HolyCharm: {
 	DisplayName: Holy Charm
-	Tooltip:
-		'''
-		At the moment of raising the shield, it is possible to perform a perfect block and unleash a holy shield charge.
-		The right click block can be used even when the Flying Shield has not returned.
-		'''
+	Tooltip: At the moment of raising the shield, it is possible to perform a perfect block and unleash a holy shield charge.
 }
 
 Terracrest: {
@@ -2412,7 +2409,6 @@ Terracrest: {
 	Tooltip:
 		'''
 		At the moment of raising the shield, it is possible to perform a perfect block and unleash Terra Spike.
-		The right click block can be used even when the Flying Shield has not returned.
 		+18% chance to reduce the number of projectiles penetrated when blocking with the Flying Shield.
 		Enhancing the blocking capability of the Flying Shield.
 		Increasing the speed of raising the shield.
@@ -2496,7 +2492,7 @@ NanoAmplifier: {
 		+2 The number of times the Flying Shield ricochets among enemies.
 		Significantly increase the flying speed of the Flying Shield.
 		Enhance the right click blocking ability of the Flying Shield.
-		Allow right click blocking even when the Flying Shield has not returned.
+		Shield dashing and blocking have become more free
 		'''
 }
 
@@ -3349,7 +3345,7 @@ RedJadeBullet: {
 
 ReverseFlash: {
 	DisplayName: Reverse Flash
-	Tooltip: "Every shot creates a thunderbolt aimed towards the player."
+	Tooltip: Every shot creates a thunderbolt aimed towards the player.
 }
 
 TenkoFigurine: {
@@ -3543,7 +3539,7 @@ MagicCrystalMusicBox: {
 Meowmeo: {
 	CraftCondition: Crafting in the CoralCat secret seed world
 	DisplayName: Meowmeo
-	Tooltip: "Meow~ Meow~ Meow~"
+	Tooltip: Meow~ Meow~ Meow~
 }
 
 HylianShield: {
@@ -3682,7 +3678,7 @@ VampireEarl: {
 	Tooltip:
 		'''
 		Gain strength during the blood moon
-                Release bloodthirsty bats while flying
+		              Release bloodthirsty bats while flying
 		'''
 }
 
@@ -3806,7 +3802,6 @@ PollenGunpowder: {
 		Shoots out an extra sparks. 1 second cooldown.
 		'''
 }
-
 
 RoseGunpowder: {
 	DisplayName: Rose Gunpowder
@@ -3940,7 +3935,7 @@ AmethystNeckLace: {
 	Tooltip:
 		'''
 		Generate a cycle of crystals and shoots a beam of light towards enemies.
-                Right-click to turn off the sound effect of the beams.
+		              Right-click to turn off the sound effect of the beams.
 		'''
 }
 
@@ -3959,7 +3954,7 @@ ChocomintIce: {
 	Tooltip:
 		'''
 		Summon the sweet Frost Spirit
-                Absolutely don't say it tastes like toothpaste, otherwise everything you eat later will taste like toothpaste.
+		              Absolutely don't say it tastes like toothpaste, otherwise everything you eat later will taste like toothpaste.
 		[c/c9e0ee: The favorite of the beautiful girl Kotonoha Aoi]
 		'''
 }
@@ -4117,4 +4112,14 @@ LandOfTheLustrous: {
 TourmalineMonoclastic: {
 	DisplayName: Tourmaline Monoclastic
 	Tooltip: ""
+}
+
+Zircon: {
+	DisplayName: Zircon
+	Tooltip: ""
+}
+
+FlyingShieldBattleGuide: {
+	DisplayName: Flying Shield Battle Guide
+	Tooltip: Shield dashing and blocking have become more free
 }

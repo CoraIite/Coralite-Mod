@@ -34,10 +34,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-            {
-                cp.FlyingShieldLRMeantime = true;
                 cp.FlyingShieldAccessories?.Add(this);
-            }
         }
 
         public void OnGuardInitialize(BaseFlyingShieldGuard projectile)

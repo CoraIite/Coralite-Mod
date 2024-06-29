@@ -33,6 +33,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             wr.Add(ModContent.ItemType<Zumurud>());
             wr.Add(ItemID.Ruby, 0.5f);
+            wr.Add(ModContent.ItemType<Peridot>());
+            wr.Add(ItemID.Sapphire, 0.5f);
+            wr.Add(ModContent.ItemType<Tourmaline>());
+            wr.Add(ItemID.Topaz, 0.5f);
+            wr.Add(ModContent.ItemType<Zircon>());
 
             wr.Add(ModContent.ItemType<Pyrope>(), 0.5f);
             wr.Add(ModContent.ItemType<Aquamarine>(), 0.5f);

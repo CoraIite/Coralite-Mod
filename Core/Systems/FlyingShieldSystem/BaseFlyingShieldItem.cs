@@ -15,7 +15,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         private readonly string TexturePath = texturePath;
         private readonly bool PathHasName = pathHasName;
 
-        public override string Texture => TexturePath ?? base.Texture + (PathHasName ? "" : Name);
+        public override string Texture => (TexturePath ?? base.Texture) + (PathHasName ? "" : Name);
 
         public override void SetStaticDefaults()
         {

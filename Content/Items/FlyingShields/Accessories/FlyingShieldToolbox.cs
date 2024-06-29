@@ -31,6 +31,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.FlyingShieldAccessories?.Add(this);
+                cp.FlyingShieldLRMeantime = true;
             }
         }
 
@@ -65,6 +66,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 .AddIngredient<StretchGlue>()
                 .AddIngredient<FlyingShieldVarnish>()
                 .AddIngredient<FlyingShieldMaintenanceGuide>()
+                .AddIngredient<FlyingShieldBattleGuide>()
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
         }

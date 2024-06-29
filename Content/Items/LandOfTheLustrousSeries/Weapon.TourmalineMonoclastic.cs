@@ -4,9 +4,11 @@ using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
@@ -49,14 +51,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             DrawGemNameNormally(line, effect =>
             {
-                effect.Parameters["scale"].SetValue(new Vector2(0.7f / Main.GameZoomTarget));
+                effect.Parameters["scale"].SetValue(new Vector2(1.4f / Main.GameZoomTarget));
                 effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.01f);
-                effect.Parameters["lightRange"].SetValue(0.1f);
-                effect.Parameters["lightLimit"].SetValue(0.75f);
+                effect.Parameters["lightRange"].SetValue(0.15f);
+                effect.Parameters["lightLimit"].SetValue(0.55f);
                 effect.Parameters["addC"].SetValue(0.55f);
-                effect.Parameters["highlightC"].SetValue((AquamarineProj.brightC * 1.3f).ToVector4());
-                effect.Parameters["brightC"].SetValue(AquamarineProj.brightC.ToVector4());
-                effect.Parameters["darkC"].SetValue(new Color(50, 50, 160).ToVector4());
+                effect.Parameters["highlightC"].SetValue(TourmalineProj.highlightC.ToVector4());
+                effect.Parameters["brightC"].SetValue(TourmalineProj.brightC.ToVector4());
+                effect.Parameters["darkC"].SetValue(TourmalineProj.darkC.ToVector4());
             }, 0.4f);
         }
 
@@ -80,6 +82,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
+        public Vector2 scale;
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
@@ -90,7 +94,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if ((int)Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
             {
                 float length = Main.rand.NextFloat(16, 32);
-                Color c = Main.rand.NextFromList(Color.White, AquamarineProj.brightC, AquamarineProj.highlightC);
+                Color c = Main.rand.NextFromList(Color.White, TourmalineProj.brightC, TourmalineProj.highlightC);
                 var cs = CrystalShine.Spawn(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length)
                      , Helper.NextVec2Dir(0.1f, 0.2f), 5, new Vector2(0.5f, 0.03f) * Main.rand.NextFloat(0.5f, 1f), c);
                 cs.follow = () => Projectile.position - Projectile.oldPos[1];
@@ -102,8 +106,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void Move()
         {
-            Vector2 idlePos = Owner.Center + new Vector2(OwnerDirection * 48, 0);
-            for (int i = 0; i < 8; i++)//检测头顶2个方块并尝试找到没有物块阻挡的那个
+            Vector2 idlePos = Owner.Center;
+            for (int i = 0; i < 16; i++)//检测头顶2个方块并尝试找到没有物块阻挡的那个
             {
                 Tile idleTile = Framing.GetTileSafely(idlePos.ToTileCoordinates());
                 if (idleTile.HasTile && Main.tileSolid[idleTile.TileType] && !Main.tileSolidTop[idleTile.TileType])
@@ -134,17 +138,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
-                if (AttackTime % 7 == 0)
-                {
-                    Color c = Main.rand.NextFromList(AquamarineProj.brightC, AquamarineProj.highlightC, Main.DiscoColor);
-                    LightLine ll = LightLine.Spwan(Projectile.Center + (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 10, Vector2.Zero, c,
-                       null, Main.rand.NextFloat(0.1f, 0.4f), Main.rand.NextFloat(0.1f, 0.4f));
-                    ll.fadeTime = Main.rand.Next(15, 25);
-                    ll.center = () => Projectile.Center + (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 10;
-                    ll.scaleY = Main.rand.NextFloat(0.2f, 0.6f);
-                }
 
-                Projectile.rotation = MathF.Sin((1 - AttackTime / Owner.itemTimeMax) * MathHelper.TwoPi) * 0.5f;
                 if ((int)AttackTime % (Owner.itemTimeMax / 3) == 0 && Owner.CheckMana(Owner.HeldItem.mana, true))
                 {
                     Owner.manaRegenDelay = 40;
@@ -173,6 +167,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void StartAttack()
         {
             AttackTime = Owner.itemTimeMax;
+
+            List<NPC> targets = Main.npc.Where(n=>n.CanBeChasedBy()&&Collision.CanHit(Owner,n)).ToList();
+
+            targets.Sort((t1, t2) => t1.DistanceSQ(Projectile.Center) .CompareTo( t2.DistanceSQ(Projectile.Center)));
+
             Helper.PlayPitched("Crystal/CrystalShoot", 0.4f, 0, Projectile.Center);
         }
 
@@ -190,23 +189,72 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 origin, Projectile.scale, 0, 0);
             return false;
         }
+
+
     }
 
     public class TourmalineProj:ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
+        public static Color highlightC = Color.White;
+        public static Color brightC = new Color(255, 83, 113);
+        public static Color darkC = new Color(75, 7, 28);
+
+        public ref float Owner => ref Projectile.ai[0];
+        public ref float Target => ref Projectile.ai[1];
+        public ref float Timer => ref Projectile.ai[2];
+
         public override void SetDefaults()
         {
             base.SetDefaults();
         }
 
+        public override bool? CanDamage() => false;
+        public override bool ShouldUpdatePosition() => false;
+
         public override void AI()
         {
-            base.AI();
+            if (!Owner.GetProjectileOwner(out Projectile owner,Projectile.Kill)
+                ||!Target.GetNPCOwner(out NPC target,Projectile.Kill))
+                return;
+
+            Projectile.Center = owner.Center;
+            Projectile.rotation = (target.Center - Projectile.Center).ToRotation();
+            //追踪一小段时间后生成斩击弹幕
+
+            if (Timer < 0)
+            {
+                //生成斩击弹幕
+                Projectile.Kill();
+            }
+
+            Timer--;
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (!Owner.GetProjectileOwner(out Projectile owner)
+                || !Target.GetNPCOwner(out NPC target))
+                return false;
 
+            Vector2 dir = target.Center - owner.Center;
+            float distance = dir.Length();
+            dir = dir.SafeNormalize(Vector2.Zero);
+
+            Texture2D mainTex = TextureAssets.Extra[98].Value;
+            var origin = new Vector2(0, mainTex.Height / 2);
+            var pos = Projectile.Center - Main.screenPosition;
+
+            distance = Math.Clamp(distance, 0, 350);
+            float factor = distance / mainTex.Width;
+            Vector2 scale = new Vector2(factor, 0.5f * factor);
+
+            Main.spriteBatch.Draw(mainTex, pos, null, Color.Red, Projectile.rotation, origin, scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, Color.White * 0.3f, Projectile.rotation, origin, scale * 0.8f, 0, 0);
+
+            return false;
+        }
     }
 
     public class TourmalineSlash
