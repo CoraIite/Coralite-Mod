@@ -66,11 +66,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     if (cp.FlyingShieldGuardIndex != -1)
                         return false;
                     if (player.ownedProjectileCounts[Item.shoot] > 0)//如果右键时有左键弹幕
-                    {
-                        if (cp.FlyingShieldLRMeantime)//如果能同时使用
-                            return true;
-                        return false;
-                    }
+                        return cp.FlyingShieldLRMeantime;//如果能同时使用
 
                     return true;//右键时没有左键弹幕
                 }
