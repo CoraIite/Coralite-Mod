@@ -3324,13 +3324,17 @@ ThunderShield: {
 	Tooltip:
 		'''
 		+7 Armor penetration
-		Inflicts an Charged debuff on hit, and the faster the enemy moves, the higher the damage
+		Inflicts the Electrified debuff on hit, and the faster the enemy moves, the greater the damage
 		'''
 }
 
 ThunderveinNecklace: {
 	DisplayName: Thundervein Necklace
-	Tooltip: ""
+	Tooltip:
+		'''
+		+7 Armor penetration
+		Inflicts the Electrified debuff on hit, and the faster the enemy moves, the greater the damage
+		'''
 }
 
 RedJadeArrow: {
@@ -3345,12 +3349,17 @@ RedJadeBullet: {
 
 ReverseFlash: {
 	DisplayName: Reverse Flash
-	Tooltip: ""
+	Tooltip: "Every shot creates a thunderbolt aimed towards the player."
 }
 
 TenkoFigurine: {
 	DisplayName: Tenko Figurine
-	Tooltip: ""
+	Tooltip:
+		'''
+		A simple fox statue carved from crystal and tied with straw rope.
+		Summons a tiny tenko
+		[c/98b0ff:From the world of Yunjiang]
+		'''
 }
 
 IcicleBathtub: {
@@ -3460,62 +3469,70 @@ IcicleWorkBench: {
 
 CyberwyrmRehab: {
 	DisplayName: Cyberwyrm Rehab
-	Tooltip: ""
+	Tooltip: Shock up to 3 enemies
 }
 
 CancerFlail: {
 	DisplayName: Cancer Flail
-	Tooltip: ""
+	Tooltip: Holding left click automatically shoots out flails
 }
 
 ThunderDagger: {
 	DisplayName: Thunder Dagger
-	Tooltip: ""
+	Tooltip: Shoots out an ball of electricity that slowly accelerates
 }
 
 RegrowthTentacle: {
 	DisplayName: Regrowth Tentacle
-	Tooltip: ""
+	Tooltip: It's still writhing.
 }
 
 EternalBloom: {
 	DisplayName: Eternal Bloom
-	Tooltip: ""
+	Tooltip:
+		'''
+		Converts musket balls to flower shoots, occasionally shooting out thorns
+		“Eternal life”
+		'''
 }
 
 Floette: {
 	DisplayName: Floette
-	Tooltip: ""
+	Tooltip: Converts musket balls to seeds,
 }
 
 WarpMirror: {
 	DisplayName: Warp Mirror
-	Tooltip: ""
+	Tooltip: Consumes 50 mana to teleport randomly
 }
 
 Virgo: {
 	DisplayName: Virgo
-	Tooltip: ""
+	Tooltip: Convert musket balls into feathers
 }
 
 GigantesShoes: {
 	DisplayName: Gigantes Shoes
-	Tooltip: ""
+	Tooltip:
+		'''
+		Increase fall speed by 50%
+		Press the hotkey to descend faster and create an impact that knocks back enemies
+		'''
 }
 
 ThunderveinStaff: {
 	DisplayName: Thundervein Staff
-	Tooltip: ""
+	Tooltip: Summons lightning bolts around you, which rains down on enemies.
 }
 
 FlaskOfRedJade: {
 	DisplayName: Flask Of Red Jade
-	Tooltip: ""
+	Tooltip: Melee attacks may occasionally explode on impact
 }
 
 FlaskOfThunder: {
 	DisplayName: Flask Of Thunder
-	Tooltip: ""
+	Tooltip: Melee attacks inflict electrified on enemies
 }
 
 MagicCrystalMusicBox: {
@@ -3526,140 +3543,152 @@ MagicCrystalMusicBox: {
 Meowmeo: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Meowmeo
-	Tooltip: ""
+	Tooltip: "Meow~ Meow~ Meow~"
 }
 
 HylianShield: {
 	DisplayName: Hylian Shield
-	Tooltip: ""
+	Tooltip:
+		'''
+		When the shield is raised:
+		+25 defence and double tap to dash
+		Projectile will be deflected
+		“A shield that has been passed down from the royal family of Hyrule since ancient times, along with the legend of the brave man who wielded it.”
+		“Proud of its overwhelming defensive power and durability that no other shield can match.”
+		[c/00ff00:The highlight effect produced when the shield is reversed can be turned off in the module configuration]
+		'''
 }
 
 Nuranasa: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Nuranasa
-	Tooltip: ""
+	Tooltip: Tiny and cute
 }
 
 SmallVolcano: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Small Volcano
-	Tooltip: ""
+	Tooltip: A tiny volcano
 }
 
 TerraShortSword: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Terra Short Sword
-	Tooltip: ""
+	Tooltip: Also great at peeling fruit
 }
 
 TomatoButcherer: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Tomato Butcherer
-	Tooltip: ""
+	Tooltip: It's just ketchup
 }
 
 TrueNightsCage: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: True Nights Cage
-	Tooltip: ""
+	Tooltip: Let you travel freely in the dark night
 }
 
 BrokenHeroShortSword: {
 	DisplayName: Broken Hero Short Sword
-	Tooltip: ""
+	Tooltip: A fruit knife wielded by the heros of the past
 }
 
 BladeOfCatnip: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Blade Of Catnip
-	Tooltip: ""
+	Tooltip: Impossible to put down (if you're a cat)
 }
 
 Excatbar: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Excatbar
-	Tooltip: ""
+	Tooltip: The holy sword of legends?
 }
 
 NightsCage: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Nights Cage
-	Tooltip: ""
+	Tooltip: So you can't sleep?
 }
 
 ShadowsBane: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Shadows Bane
-	Tooltip: ""
+	Tooltip: Not much shine to it
 }
 
 TrueExcatbar: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: True Excatbar
-	Tooltip: ""
+	Tooltip: Tastes like a mix of strawberry and blueberry
 }
 
 BeamShortSword: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Beam Short Sword
-	Tooltip: ""
+	Tooltip: It's not the size that matters
 }
 
 Cattongue: {
 	CraftCondition: 在CoralCat的世界中合成
-	DisplayName: Cattongue
-	Tooltip: ""
+	DisplayName: Catstongue
+	Tooltip: Seem to be scared of hot things
 }
 
 CatTreeSword: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Cat Tree Sword
-	Tooltip: ""
+	Tooltip: the purrfect cat toy
 }
 
 FlyingDragonBaby: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Flying Dragon Baby
-	Tooltip: ""
+	Tooltip: shoots out a little boom boom
 }
 
 IceShortSword: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Ice Short Sword
-	Tooltip: ""
+	Tooltip: Carved from a sabretooth tiger
 }
 
 SmallBee: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Small Bee
-	Tooltip: ""
+	Tooltip: Bzzt
 }
 
 TheCatMansBlade: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: The Cat Mans Blade
-	Tooltip: ""
+	Tooltip: Black Cat Captain's Sword
 }
 
 Treeler: {
 	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: Treeler
-	Tooltip: ""
+	Tooltip: Grows into a tree
 }
 
 ShadowDart: {
 	DisplayName: Shadow Dart
-	Tooltip: ""
+	Tooltip: Shoots ashadow darts that stick to blocks
 }
 
 VampireEarl: {
 	DisplayName: Vampire Earl
-	Tooltip: ""
+	Tooltip:
+		'''
+		Gain strength during the blood moon
+                Release bloodthirsty bats while flying
+		'''
 }
 
 CrystalFins: {
 	DisplayName: Crystal Fins
-	Tooltip: ""
+	Tooltip: Crystal growths on its body
 }
 
 GalacticVortexBanner: {
@@ -3684,27 +3713,35 @@ StarRuneBanner: {
 
 MedalOfLife: {
 	DisplayName: Medal Of Life
-	Tooltip: ""
+	Tooltip:
+		'''
+		When near full health, gain 10% increased damage, 5% attack speed, and 5% movement speed.
+		It takes effect when the difference between the HP and max HP is less than 20 points.
+		'''
 }
 
 LifePulseDevice: {
 	DisplayName: Life Pulse Device
-	Tooltip: ""
+	Tooltip:
+		'''
+		The player takes constant damage if health is above 40.
+		When health is less than 40, 15% increased damage and 5% critical hit 
+		'''
 }
 
 IcicleBreath: {
 	DisplayName: Icicle Breath
-	Tooltip: ""
+	Tooltip: Filled with the magic of ice, the baby ice dragon uses it to turn vapour into lethal breath
 }
 
 IcicleScale: {
 	DisplayName: Icicle Scale
-	Tooltip: ""
+	Tooltip: The scales of the baby ice dragon, not fully grown but gives sufficient defense.
 }
 
 IcicleAxe: {
-	DisplayName: Icicle Axe
-	Tooltip: ""
+	DisplayName: Icicle Pickaxe
+	Tooltip: Digs faster thought ice
 }
 
 VineLasso: {
@@ -3714,7 +3751,7 @@ VineLasso: {
 
 GreenFairyItem: {
 	DisplayName: Green Fairy Item
-	Tooltip: ""
+	Tooltip: A common fairy, it will use impact on enemies.
 }
 
 StarlightBottle: {
@@ -3724,47 +3761,61 @@ StarlightBottle: {
 
 BreezeFairyItem: {
 	DisplayName: Breeze Fairy Item
-	Tooltip: ""
+	Tooltip: Blows wind at the enemy
 }
 
 BlueFairyItem: {
 	DisplayName: Blue Fairy Item
-	Tooltip: ""
+	Tooltip: A common fairy, it will use impact on enemies.
 }
 
 BrownFairyItem: {
 	DisplayName: Brown Fairy Item
-	Tooltip: ""
+	Tooltip: A common fairy, it will use impact on enemies.
 }
 
 PinkFairyItem: {
 	DisplayName: Pink Fairy Item
-	Tooltip: ""
+	Tooltip: A common fairy, it will use impact on enemies.
 }
 
 CandyFairyItem: {
 	DisplayName: Candy Fairy Item
-	Tooltip: ""
+	Tooltip:
+		'''
+		Candy Cane Spirits are very delicious. 
+		They can replenish sugar for the fairies in the fairy bottles and restore 25 health points.
+		'''
 }
 
 FairyEncyclopediaItem: {
 	DisplayName: Fairy Encyclopedia Item
-	Tooltip: ""
+	Tooltip: After placing it, right-click to open the Fairy Encyclopedia.
 }
 
 RedJadeSpear: {
 	DisplayName: Red Jade Spear
-	Tooltip: ""
+	Tooltip: Occasionally causes an explosion
 }
 
 PollenGunpowder: {
 	DisplayName: Pollen Gunpowder
-	Tooltip: ""
+	Tooltip:
+		'''
+		5% increased bullet damage
+		Shoots out an extra sparks. 1 second cooldown.
+		'''
 }
+
 
 RoseGunpowder: {
 	DisplayName: Rose Gunpowder
-	Tooltip: ""
+	Tooltip:
+		'''
+		10% increased bullet damage
+		10% increased knockback
+		Shoots out an extra rose sparks. 1.5 second cooldown.
+		'''
 }
 
 SlimeEmperorMask: {
@@ -3794,7 +3845,7 @@ ThunderveinDragonMask: {
 
 EtheriaLegacy: {
 	DisplayName: Etheria Legacy
-	Tooltip: ""
+	Tooltip: Perfect guarding with the flying shield becomes better
 }
 
 CrystalEyeBannerItem: {
@@ -3819,32 +3870,45 @@ DevilsYoke: {
 
 OpalTower: {
 	DisplayName: Opal Tower
-	Tooltip: ""
+	Tooltip: After placing it, right-click to open it, allowing nearby players to obtain the Opal's Eye Buff to observe the flow of magike.
 }
 
 ElfEmblem: {
 	DisplayName: Elf Emblem
-	Tooltip: ""
+	Tooltip: Capturing power increased by 15%
 }
 
 DryIce: {
 	DisplayName: Dry Ice
-	Tooltip: ""
+	Tooltip:
+		'''
+		Summons rain
+		“Can just this small piece cause rainfall?”
+		'''
 }
 
 TwinRocketLauncher: {
 	DisplayName: Twin Rocket Launcher
-	Tooltip: ""
+	Tooltip: Convert rocket I and rocket II into spreader bombs
 }
 
 SteelBreaker: {
 	DisplayName: Steel Breaker
-	Tooltip: ""
+	Tooltip:
+		'''
+		Releases the spiritual spiral blades upon hitting
+		Instantly kills enemies that has less health than the blade's damage x 4
+		'''
 }
 
 ElfPortal: {
 	DisplayName: Elf Portal
-	Tooltip: ""
+	Tooltip:
+		'''
+		After placement, the player will be given the Fairy Blessing buff
+		Throw the appropriate item nearby and fairies will appear from the portal to take it away.
+		Later, some items will be given in exchange
+		'''
 }
 
 BotanicusPowder: {
@@ -3854,82 +3918,128 @@ BotanicusPowder: {
 
 Pyrope: {
 	DisplayName: Pyrope
-	Tooltip: ""
+	Tooltip: Extract raw gemstones from primary gemstones using a refiner
 }
 
 PyropeCrown: {
 	DisplayName: Pyrope Crown
-	Tooltip: ""
+	Tooltip: Generates a Garnet Crown and shoots Garnets at enemies
 }
 
 PrimaryRoughGemstone: {
 	DisplayName: Primary Rough Gemstone
-	Tooltip: ""
+	Tooltip:
+		'''
+		It is possible to extract a gem using an extractor
+		extracting desert fossil or gems may produce rough gemstones
+		'''
 }
 
 AmethystNeckLace: {
 	DisplayName: Amethyst Neck Lace
-	Tooltip: ""
+	Tooltip:
+		'''
+		Generate a cycle of crystals and shoots a beam of light towards enemies.
+                Right-click to turn off the sound effect of the beams.
+		'''
 }
 
 FriedShrimpWhip: {
 	DisplayName: Fried Shrimp Whip
-	Tooltip: ""
+	Tooltip:
+		'''
+		2 summon tag damage，ignores 10 defence
+		Spicy tiger prawns are great to eat and even better when applied to enemies.
+		[c/fd8da6: The favorite of the beautiful girl Kotonoha Akane]
+		'''
 }
 
 ChocomintIce: {
 	DisplayName: Chocomint Ice
-	Tooltip: ""
+	Tooltip:
+		'''
+		Summon the sweet Frost Spirit
+                Absolutely don't say it tastes like toothpaste, otherwise everything you eat later will taste like toothpaste.
+		[c/c9e0ee: The favorite of the beautiful girl Kotonoha Aoi]
+		'''
 }
 
 Aquamarine: {
 	DisplayName: Aquamarine
-	Tooltip: ""
+	Tooltip: Extract raw gemstones from primary gemstones using a refiner
 }
 
 AquamarineBracelet: {
 	DisplayName: Aquamarine Bracelet
-	Tooltip: ""
+	Tooltip:
+		'''
+		Generates the soul of the ocean and shoots aquamarine droplets around
+		Aquamarine drops will home the nearest enemy
+		'''
 }
 
 AmethystNecklace: {
 	DisplayName: Amethyst Necklace
-	Tooltip: ""
+	Tooltip:
+		'''
+		Generates Samsara Amethyst and fires an Amethyst Beam at the enemy
+		Right-click to turn off the sound effect of the amethyst beam
+		'''
 }
 
 PinkDiamond: {
 	DisplayName: Pink Diamond
-	Tooltip: ""
+	Tooltip: Extract raw gemstones from primary gemstones using a refiner
 }
 
 PinkDiamondRose: {
 	DisplayName: Pink Diamond Rose
-	Tooltip: ""
+	Tooltip:
+		'''
+		Spawns pink diamond roses and fires pink diamonds at enemies
+		Pink Diamond generates rose petals upon hitting
+		'''
 }
 
 SeniorRoughGemstone: {
 	DisplayName: Senior Rough Gemstone
-	Tooltip: ""
+	Tooltip:
+		'''
+		It is possible to extract a gem using an extractor
+		Rough gemstones that may appear when mining crystal fragments
+		'''
 }
 
 Zumurud: {
 	DisplayName: Zumurud
-	Tooltip: ""
+	Tooltip: Use a refining machine to extract high-grade raw gemstones
 }
 
 ZumurudRing: {
 	DisplayName: Zumurud Ring
-	Tooltip: ""
+	Tooltip:
+		'''
+		Generates emerald rings and fires large emeralds at enemies
+		After hitting, it will split into small emerald splashes
+		'''
 }
 
 PearlBrooch: {
 	DisplayName: Pearl Brooch
-	Tooltip: ""
+	Tooltip:
+		'''
+		Spawns a pearl brooch and shoots pearls upwards
+		After the pearl hits, it will generate a wave that continue to cause damage.
+		'''
 }
 
 RubyScepter: {
 	DisplayName: Ruby Scepter
-	Tooltip: ""
+	Tooltip:
+		'''
+		Generates a ruby ​​scepter that fires dark red rays at enemies.
+		Also shoots some rubies
+		'''
 }
 
 IcicleHelmet: {
@@ -3939,42 +4049,54 @@ IcicleHelmet: {
 		Set bonus keys can be changed in the module configuration
 		'''
 	DisplayName: Icicle Helmet
-	Tooltip: ""
+	Tooltip: 4% increased attack speed
 }
 
 IcicleBreastplate: {
 	DisplayName: Icicle Breastplate
-	Tooltip: ""
+	Tooltip: 6% increased attack speed
 }
 
 IcicleLegs: {
 	DisplayName: Icicle Legs
-	Tooltip: ""
+	Tooltip: 4% increased attack speed
 }
 
 PeridotTalisman: {
 	DisplayName: Peridot Talisman
-	Tooltip: ""
+	Tooltip:
+		'''
+		Generates a green amulet that fires peridots at enemies.
+		Explodes upon hit and spawns spirits
+		'''
 }
 
 Peridot: {
 	DisplayName: Peridot
-	Tooltip: ""
+	Tooltip: Use a refining machine to extract high-grade raw gemstones
 }
 
 SapphireHairpin: {
 	DisplayName: Sapphire Hairpin
-	Tooltip: ""
+	Tooltip:
+		'''
+		Shoot a sapphire that guides the comet's fall
+		Sapphire explods after being struck by the comet
+		'''
 }
 
 SilkAgate: {
 	DisplayName: Silk Agate
-	Tooltip: ""
+	Tooltip:
+		'''
+		Use a refining machine to extract high-grade raw gemstones
+		+12% gem weapon attack speed
+		'''
 }
 
 PhantomCrystalBall: {
 	DisplayName: Phantom Crystal Ball
-	Tooltip: ""
+	Tooltip: Mysterious sphere from beyond the universe
 }
 
 TopazMirror: {
@@ -3983,12 +4105,12 @@ TopazMirror: {
 }
 
 Tourmaline: {
-	Tooltip: ""
+	Tooltip: Use a refining machine to extract high-grade raw gemstones
 	DisplayName: Tourmaline
 }
 
 LandOfTheLustrous: {
-	Tooltip: ""
+	Tooltip: Reincarnation and spirals
 	DisplayName: Land Of The Lustrous
 }
 
