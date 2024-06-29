@@ -7,22 +7,15 @@ using Terraria.ID;
 
 namespace Coralite.Core.Systems.FlyingShieldSystem
 {
-    public abstract class BaseFlyingShieldItem<TRightProj> : ModItem,IDashable where TRightProj : ModProjectile
+    public abstract class BaseFlyingShieldItem<TRightProj>(int value, int rare, string texturePath, bool pathHasName = false) : ModItem
+        ,IDashable where TRightProj : ModProjectile
     {
-        private readonly int Value;
-        private readonly int Rare;
-        private readonly string TexturePath;
-        private readonly bool PathHasName;
+        private readonly int Value = value;
+        private readonly int Rare = rare;
+        private readonly string TexturePath = texturePath;
+        private readonly bool PathHasName = pathHasName;
 
-        protected BaseFlyingShieldItem(int value, int rare, string texturePath, bool pathHasName = false)
-        {
-            Value = value;
-            Rare = rare;
-            TexturePath = texturePath;
-            PathHasName = pathHasName;
-        }
-
-        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
+        public override string Texture => TexturePath ?? base.Texture + (PathHasName ? "" : Name);
 
         public override void SetStaticDefaults()
         {
