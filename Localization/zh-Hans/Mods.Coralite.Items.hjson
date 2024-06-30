@@ -4187,5 +4187,9 @@ Zircon: {
 FlyingShieldBattleGuide: {
 	DisplayName: 飞盾战斗指南
 	Tooltip: 盾冲与格挡变得更加自由
+}
 
+Terranascence: {
+	// DisplayName: Terranascence
+	// Tooltip: ""
 }

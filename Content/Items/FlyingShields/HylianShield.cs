@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
         }
 
-        public bool Dash(Player Player, int DashDir)
+        public override bool Dash(Player Player, int DashDir)
         {
             float dashDirection;
             switch (DashDir)
@@ -34,6 +34,8 @@ namespace Coralite.Content.Items.FlyingShields
                 default:
                     return false;
             }
+
+            CheckGuardProj(Player.GetModPlayer<CoralitePlayer>(), Player);
 
             if (Player.TryGetModPlayer(out CoralitePlayer cp)
                 && cp.TryGetFlyingShieldGuardProj(out BaseFlyingShieldGuard flyingShieldGuard)
@@ -168,9 +170,6 @@ namespace Coralite.Content.Items.FlyingShields
             if (State != 5)
                 Projectile.velocity.X = Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
             Projectile.timeLeft = 4;
-
-            if (!Owner.active || Owner.dead)
-                Projectile.Kill();
 
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                 cp.FlyingShieldGuardIndex = Projectile.whoAmI;
@@ -674,12 +673,12 @@ namespace Coralite.Content.Items.FlyingShields
 
             Vector2 dir = Rotation.ToRotationVector2();
             Vector2 normal = dir.RotatedBy(1.57f);
-            float width = mainTex.Width * scale.X / 25;
+            float width = mainTex.Width * scale.X / 15;
             float height = mainTex.Height * scale.Y;
 
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < 15; i++)
             {
-                float factor = i / 25f;
+                float factor = i / 15f;
                 Vector2 Center = this.Center + i * dir * width;
                 Vector2 Top = Center - Main.screenPosition + normal * height * (1 - factor);
                 Vector2 Bottom = Center - Main.screenPosition - normal * height * (1 - factor);

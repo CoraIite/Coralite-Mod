@@ -189,8 +189,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 origin, Projectile.scale, 0, 0);
             return false;
         }
-
-
     }
 
     public class TourmalineProj:ModProjectile

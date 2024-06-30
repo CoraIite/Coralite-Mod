@@ -41,6 +41,14 @@ namespace Coralite.Content.Items.Materials
                 .AddIngredient(ItemID.Diamond)
                 .AddTile<MagicCraftStation>()
                 .Register();
+
+            Recipe r = CreateRecipe();
+            r.ReplaceResult(ItemID.LivingLoom);
+            r.AddIngredient<LeafStone>()
+                .AddRecipeGroup(RecipeGroupID.Wood, 12)
+                .AddIngredient(ItemID.Acorn)
+                .AddTile<MagicCraftStation>()
+                .Register();
         }
 
         //public void AddMagikePolymerizeRecipe()

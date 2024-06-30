@@ -139,9 +139,6 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Projectile.velocity.X = Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
             Projectile.timeLeft = 4;
 
-            if (!Owner.active || Owner.dead)
-                Projectile.Kill();
-
             if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                 cp.FlyingShieldGuardIndex = Projectile.whoAmI;
 
@@ -210,8 +207,6 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     break;
                 case (int)GuardState.Delay:
                     {
-                        LockOwnerItemTime();
-
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / delayTime);
                         SetPos();
                         Timer--;

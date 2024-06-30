@@ -124,7 +124,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             }
         }
 
-        public bool Dash(Player Player, int DashDir)
+        public virtual bool Dash(Player Player, int DashDir)
         {
             if (Player.TryGetModPlayer(out CoralitePlayer cp))
             {
@@ -135,19 +135,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 {
                     if (acc is IDashable dasher)
                     {
-                        if (!cp.TryGetFlyingShieldGuardProj(out _))
-                        {
-                            RightShoot(Player, Player.GetSource_ItemUse(Item), Player.GetWeaponDamage(Item));
-
-                            var projectile = Main.projectile.First(p => p.active && p.owner == Player.whoAmI && p.ModProjectile is BaseFlyingShieldGuard);
-                            if (projectile != null)
-                            {
-                                projectile.ai[0] = (int)BaseFlyingShieldGuard.GuardState.Guarding;
-                                (projectile.ModProjectile as BaseFlyingShieldGuard).CompletelyHeldUpShield = true;
-                                cp.FlyingShieldGuardIndex = projectile.whoAmI;
-                            }
-                        }
-
+                        CheckGuardProj(cp, Player);
                         dasher.Dash(Player, DashDir);
                         return true;
                     }
@@ -158,6 +146,22 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             }
 
             return true;
+        }
+
+        public void CheckGuardProj(CoralitePlayer cp, Player Player)
+        {
+            if (cp.TryGetFlyingShieldGuardProj(out _))
+                return;
+
+            RightShoot(Player, Player.GetSource_ItemUse(Item), Player.GetWeaponDamage(Item));
+
+            var projectile = Main.projectile.FirstOrDefault(p => p.active && p.owner == Player.whoAmI && p.ModProjectile is BaseFlyingShieldGuard);
+            if (projectile != null)
+            {
+                projectile.ai[0] = (int)BaseFlyingShieldGuard.GuardState.Guarding;
+                (projectile.ModProjectile as BaseFlyingShieldGuard).CompletelyHeldUpShield = true;
+                cp.FlyingShieldGuardIndex = projectile.whoAmI;
+            }
         }
     }
 }

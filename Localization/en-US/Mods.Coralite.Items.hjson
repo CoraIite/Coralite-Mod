@@ -4123,3 +4123,8 @@ FlyingShieldBattleGuide: {
 	DisplayName: Flying Shield Battle Guide
 	Tooltip: Shield dashing and blocking have become more free
 }
+
+Terranascence: {
+	DisplayName: Terranascence
+	Tooltip: ""
+}
