@@ -148,7 +148,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             return true;
         }
 
-        public void CheckGuardProj(CoralitePlayer cp, Player Player)
+        public virtual void CheckGuardProj(CoralitePlayer cp, Player Player)
         {
             if (cp.TryGetFlyingShieldGuardProj(out _))
                 return;

@@ -4190,6 +4190,11 @@ FlyingShieldBattleGuide: {
 }
 
 Terranascence: {
-	// DisplayName: Terranascence
-	// Tooltip: ""
+	DisplayName: 泰拉勇者的剑盾
+	Tooltip:
+		'''
+		“看似是非常粗制的武器，但其中包含勇者的信念”
+		通过不同的攻击组合可以触发特殊连段
+			物品栏内右键可以开关普通攻击时的特效
+		'''
 }
