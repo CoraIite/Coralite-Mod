@@ -76,7 +76,7 @@ namespace Coralite.Content.Items.ShieldPlus
             Item.shoot = ModContent.ProjectileType<TerranascenceSwing>();
             Item.knockBack = 4f;
             Item.shootSpeed = 12;
-            Item.damage = 24;
+            Item.damage = 27;
 
             Item.UseSound = null;
             Item.useTurn = false;
