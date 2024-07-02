@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.GlobalItems
     public partial class CoraliteGlobalItem
     {
         public bool ColdDamage;
-        public static HashSet<int> ColdDamageWeapon = new HashSet<int>();
+        //public static HashSet<int> ColdDamageWeapon = new HashSet<int>();
 
         public static LocalizedText Cold;
 

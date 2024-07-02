@@ -111,7 +111,7 @@ ShadowCircle_MeleeTrack.DisplayName: Shadow Claw
 MagicBeam.DisplayName: Magic Beam
 CrystalLaser.DisplayName: Crystal Laser
 BloodHookChain.DisplayName: Blood Hook Chain
-BloodHookSlash.DisplayName: Blood Hook Slash
+BloodHookSlash.DisplayName: Blood Hook
 IceyCloud.DisplayName: Icey Cloud
 CorruptJavelinProj.DisplayName: Corrupt Javelin
 CorruptJavelinSpecial.DisplayName: Corrupt Javelin
@@ -133,11 +133,11 @@ GOWTestProj.DisplayName: GOW Test Proj
 FrostySwordSlash.DisplayName: Frosty Sword
 FrostySwordSlash2.DisplayName: Frosty Sword
 FrostySwordRightSlash.DisplayName: Frosty Sword
-FrostySwordProj.DisplayName: Frosty Projectile
+FrostySwordProj.DisplayName: FrostyBall
 FrostySwordBurst.DisplayName: Ice Follower Burst
 HypnotizeFog.DisplayName: Hypnotize Fog
 DarkLeaf.DisplayName: Dark Leaf
-NightmareSparkle_Normal.DisplayName: Nightmare Sparkle_ Normal
+NightmareSparkle_Normal.DisplayName: Nightmare Sparkle
 NightmareBite.DisplayName: Nightmare Bite
 NightmareSlit.DisplayName: Nightmare Slit
 BlackHole.DisplayName: Black Hole
@@ -147,87 +147,87 @@ ConfusionHole.DisplayName: Confusion Hole
 GhostSlit.DisplayName: Ghost Slit
 GhostHand.DisplayName: Ghost Hand
 SuddenDeath.DisplayName: Sudden Death
-NightmareSparkle_Rolling.DisplayName: Nightmare Sparkle_ Rolling
-NightmareSparkle_Red.DisplayName: Nightmare Sparkle_ Red
+NightmareSparkle_Rolling.DisplayName: Nightmare Sparkle
+NightmareSparkle_Red.DisplayName: Nightmare Sparkle
 FantasyBall.DisplayName: Fantasy Ball
 FantasySpike.DisplayName: Fantasy Spike
 IllusionSpikeHell.DisplayName: Illusion Spike Hell
 SlimeEruptionBall.DisplayName: Slime Eruption Ball
-SlimeEruptionProj.DisplayName: Slime Eruption Proj
+SlimeEruptionProj.DisplayName: Slime Eruption
 GelWhipProj.DisplayName: Gel Whip Proj
-GelSpike_Friendly.DisplayName: Gel Spike_ Friendly
-SmallGelBall_Friendly.DisplayName: Small Gel Ball_ Friendly
-SpikeGelBall_Friendly.DisplayName: Spike Gel Ball_ Friendly
+GelSpike_Friendly.DisplayName: Gel Spike
+SmallGelBall_Friendly.DisplayName: Small Gel Ball
+SpikeGelBall_Friendly.DisplayName: Spike Gel Ball
 NightmareBurst.DisplayName: Nightmare Burst
 NightmareEnergy.DisplayName: Nightmare Energy
 NightmareBat.DisplayName: Nightmare Bat
 NightmareCrow.DisplayName: Nightmare Crow
 VineSpike.DisplayName: Vine Spike
-FantasySpike_Visual.DisplayName: Fantasy Spike_ Visual
-LostSevensideSlash.DisplayName: Lost Sevenside Slash
+FantasySpike_Visual.DisplayName: Fantasy Spike
+LostSevensideSlash.DisplayName: Lost Sevenside
 PlayerNightmareEnergy.DisplayName: Player Nightmare Energy
 LostSevensideChain.DisplayName: Lost Sevenside Chain
-LostSevensideSpurt.DisplayName: Lost Sevenside Spurt
+LostSevensideSpurt.DisplayName: Lost Sevenside
 LostVine.DisplayName: Lost Vine
-DreamShearsSlash.DisplayName: Dream Shears Slash
-DreamShearsSpurt.DisplayName: Dream Shears Spurt
-DreamShearsRolling.DisplayName: Dream Shears Rolling
+DreamShearsSlash.DisplayName: Dream Shears
+DreamShearsSpurt.DisplayName: Dream Shears
+DreamShearsRolling.DisplayName: Dream Shears
 DreamShearsCut.DisplayName: Dream Shears Cut
-NightmareBite_Firendly.DisplayName: Nightmare Bite_ Firendly
+NightmareBite_Firendly.DisplayName: Nightmare Bite
 EuphorbiaMiliiProj.DisplayName: Euphorbia Milii Proj
 EuphorbiaSmallSpike.DisplayName: Euphorbia Small Spike
 EuphorbiaSpike.DisplayName: Euphorbia Spike
-EuphorbiaSilt.DisplayName: Euphorbia Silt
-EuphorbiaSpurt.DisplayName: Euphorbia Spurt
-EuphorbiaMiliiRightClick.DisplayName: Euphorbia Milii Right Click
+EuphorbiaSilt.DisplayName: Euphorbia
+EuphorbiaSpurt.DisplayName: Euphorbia
+EuphorbiaMiliiRightClick.DisplayName: Euphorbia Milii
 EuphorbiaSpecialSpike.DisplayName: Euphorbia Special Spike
 NightmareRaven.DisplayName: Nightmare Raven
 LycorisBullet.DisplayName: Lycoris Bullet
-LycorisHeldProj.DisplayName: Lycoris Held Proj
-LycorisSmallBullet.DisplayName: Lycoris Small Bullet
-LullabySlash.DisplayName: Lullaby Slash
+LycorisHeldProj.DisplayName: Lycoris
+LycorisSmallBullet.DisplayName: Lycoris
+LullabySlash.DisplayName: Lullaby
 LullabyBall.DisplayName: Lullaby Ball
-LullabySlash2.DisplayName: Lullaby Slash2
+LullabySlash2.DisplayName: Lullaby
 EdenWhip.DisplayName: Eden Whip
-EdenWhip2.DisplayName: Eden Whip2
+EdenWhip2.DisplayName: Eden Whip
 DevilsClawLeaf.DisplayName: Devils Claw Leaf
 BarrenFog.DisplayName: Barren Fog
 BarrenThorn.DisplayName: Barren Thorn
-PurpleToeProj.DisplayName: Purple Toe Proj
+PurpleToeProj.DisplayName: Purple Toe
 RavenFeather.DisplayName: Raven Feather
 QueensWreathArrow.DisplayName: Queens Wreath Arrow
-QueensWreathHeldProj.DisplayName: Queens Wreath Held Proj
+QueensWreathHeldProj.DisplayName: Queens Wreath
 BoneClaw.DisplayName: Bone Claw
 BoneHand.DisplayName: Bone Hand
 BoneSilt.DisplayName: Bone Silt
 BoneHands.DisplayName: Bone Hands
 CadaverousDragonBreath.DisplayName: Cadaverous Dragon Breath
-CadaverousDragonHeadProj.DisplayName: Cadaverous Dragon Head Proj
-VertebraeBladeProj.DisplayName: Vertebrae Blade Proj
+CadaverousDragonHeadProj.DisplayName: Cadaverous Dragon Head
+VertebraeBladeProj.DisplayName: Vertebrae Blade
 VertebraeSpike.DisplayName: Vertebrae Spike
 IronSilkKniefChain.DisplayName: Iron Silk Knief Chain
-IronSilkKniefSlash.DisplayName: Iron Silk Knief Slash
+IronSilkKniefSlash.DisplayName: Iron Silk Knief
 IcicleKnief.DisplayName: Icicle Knief
 IcicleKniefChain.DisplayName: Icicle Knief Chain
-ShadowMirrorProj.DisplayName: Shadow Mirror Proj
+ShadowMirrorProj.DisplayName: Shadow Mirror
 SlimeSceptreBall.DisplayName: Slime Sceptre Ball
-MagConnectProj.DisplayName: Mag Connect Proj
+MagConnectProj.DisplayName: Mag Connect
 LeafShield.DisplayName: Leaf Shield
-PhantomMirrorProj.DisplayName: Phantom Mirror Proj
+PhantomMirrorProj.DisplayName: Phantom Mirror
 FreosanProj.DisplayName: Freosan Proj
 HeatanProj.DisplayName: Heatan Proj
-Page_MagikeBaseProj.DisplayName: Page_ Magike Base Proj
-CrystalSwordProj.DisplayName: Crystal Sword Proj
+Page_MagikeBaseProj.DisplayName: Page_ Magike Base
+CrystalSwordProj.DisplayName: Crystal Sword
 Bloodiancie_BigBoom.DisplayName: Bloodiancie_ Big Boom
 BloodiancieBeam.DisplayName: Bloodiancie Beam
-DamnationHeldProj.DisplayName: Damnation Held Proj
+DamnationHeldProj.DisplayName: Damnation Held
 BloodWave.DisplayName: Blood Wave
 RedBomb.DisplayName: Red Bomb
-Bloodiancie_OnSpawnAnim.DisplayName: Bloodiancie_ On Spawn Anim
+Bloodiancie_OnSpawnAnim.DisplayName: Bloodiancie On Spawn Anim
 BloodBall.DisplayName: Blood Ball
 BloodRain.DisplayName: Blood Rain
 BloodJadeSlash.DisplayName: Blood Jade Slash
-BloodJade_BigBoom.DisplayName: Blood Jade_ Big Boom
+BloodJade_BigBoom.DisplayName: Blood Jade Big Boom
 BloodJadeParry.DisplayName: Blood Jade Parry
 BloodJadeWave.DisplayName: Blood Jade Wave
 BloodJadeStrike.DisplayName: Blood Jade Strike
@@ -236,106 +236,106 @@ BloodJadeFrisbee.DisplayName: Blood Jade Frisbee
 BloodJadeFrisbeeParry.DisplayName: Blood Jade Frisbee Parry
 ShadowChainSwing.DisplayName: Shadow Chain Swing
 ShadowChainShadows.DisplayName: Shadow Chain Shadows
-ShadowChainSpecial.DisplayName: Shadow Chain Special
-RuneSoneSlash.DisplayName: Rune Sone Slash
-BrokenHandleSlash.DisplayName: Broken Handle Slash
-RuneSongSlash.DisplayName: Rune Song Slash
-CraftUIProj.DisplayName: Craft U I Proj
-RuneSoneRightProj.DisplayName: Rune Sone Right Proj
-PoisonousSickleSlash.DisplayName: Poisonous Sickle Slash
+ShadowChainSpecial.DisplayName: Shadow Chain
+RuneSoneSlash.DisplayName: Rune Sone
+BrokenHandleSlash.DisplayName: Broken Handle
+RuneSongSlash.DisplayName: Rune Song
+CraftUIProj.DisplayName: Craft UI
+RuneSoneRightProj.DisplayName: Rune Sone Right
+PoisonousSickleSlash.DisplayName: Poisonous Sickle
 NightmareHarpProj.DisplayName: Nightmare Harp Proj
 NightmareMusicalNotes.DisplayName: Nightmare Musical Notes
 NightmareSpawnEnergy.DisplayName: Nightmare Spawn Energy
 SpawnLight.DisplayName: Spawn Light
-BlackHoleMainProj.DisplayName: Black Hole Main Proj
-BlackStarProj.DisplayName: Black Star Proj
-ShaduraSlash.DisplayName: Shadura Slash
+BlackHoleMainProj.DisplayName: Black Hole Main
+BlackStarProj.DisplayName: Black Star
+ShaduraSlash.DisplayName: Shadura
 ShaduraShoot.DisplayName: Shadura Shoot
-ShadowWaveHeldProj.DisplayName: Shadow Wave Held Proj
-ShadowWaveReLoad.DisplayName: Shadow Wave Re Load
+ShadowWaveHeldProj.DisplayName: Shadow Wave
+ShadowWaveReLoad.DisplayName: Shadow Wave Reload
 MercuryStream.DisplayName: Mercury Stream
 SmallLaser.DisplayName: Small Laser
 SmallLaserPredictionLine.DisplayName: Small Laser Prediction Line
 StarsBack.DisplayName: Stars Back
 ShadowBeam.DisplayName: Shadow Beam
-ShadowPlayerSpurt.DisplayName: Shadow Player Spurt
-SpawnProj.DisplayName: Spawn Proj
-ShadowBallSlash.DisplayName: Shadow Ball Slash
+ShadowPlayerSpurt.DisplayName: Shadow Player
+SpawnProj.DisplayName: Spawn
+ShadowBallSlash.DisplayName: Shadow Ball
 ShadowGround.DisplayName: Shadow Ground
-ShadowBallSlash2.DisplayName: Shadow Ball Slash2
+ShadowBallSlash2.DisplayName: Shadow Ball
 ShadowFire.DisplayName: Shadow Fire
 ShadowBallSmash.DisplayName: Shadow Ball Smash
-ShadowBall_NameLine.DisplayName: Shadow Ball_ Name Line
+ShadowBall_NameLine.DisplayName: Shadow Ball Name Line
 GlassShieldGuard.DisplayName: Glass Shield Guard
-GlassShieldProj.DisplayName: Glass Shield Proj
+GlassShieldProj.DisplayName: Glass Shield
 TrashCanLidGuard.DisplayName: Trash Can Lid Guard
-TrashCanLidProj.DisplayName: Trash Can Lid Proj
+TrashCanLidProj.DisplayName: Trash Can Lid
 RedJadeShieldGuard.DisplayName: Red Jade Shield Guard
-RedJadeShieldProj.DisplayName: Red Jade Shield Proj
+RedJadeShieldProj.DisplayName: Red Jade Shield
 DeliciousSteakGuard.DisplayName: Delicious Steak Guard
-DeliciousSteakProj.DisplayName: Delicious Steak Proj
+DeliciousSteakProj.DisplayName: Delicious Steak
 SilverAngelGuard.DisplayName: Silver Angel Guard
-SilverAngelProj.DisplayName: Silver Angel Proj
+SilverAngelProj.DisplayName: Silver Angel
 SilverAngelStrike.DisplayName: Silver Angel Strike
 PearlRayGuard.DisplayName: Pearl Ray Guard
-PearlRayProj.DisplayName: Pearl Ray Proj
+PearlRayProj.DisplayName: Pearl Ray
 TortoiseshellFortressGuard.DisplayName: Tortoiseshell Fortress Guard
-TortoiseshellFortressProj.DisplayName: Tortoiseshell Fortress Proj
-HolyCharmProj.DisplayName: Holy Charm Proj
+TortoiseshellFortressProj.DisplayName: Tortoiseshell Fortress
+HolyCharmProj.DisplayName: Holy Charm
 TortoiseshellFortressDash.DisplayName: Tortoiseshell Fortress Dash
 TerracrestSpike.DisplayName: Terracrest Spike
 FishronguardGuard.DisplayName: Fishronguard Guard
-FishronguardProj.DisplayName: Fishronguard Proj
+FishronguardProj.DisplayName: Fishronguard
 MechRioterGuard.DisplayName: Mech Rioter Guard
-MechRioterProj.DisplayName: Mech Rioter Proj
+MechRioterProj.DisplayName: Mech Rioter
 SmallMechRioter.DisplayName: Small Mech Rioter
 BatfangShieldGuard.DisplayName: Batfang Shield Guard
-BatfangShieldProj.DisplayName: Batfang Shield Proj
+BatfangShieldProj.DisplayName: Batfang Shield
 VampiresFangGuard.DisplayName: Vampires Fang Guard
-VampiresFangProj.DisplayName: Vampires Fang Proj
-GlazeBulwarkEXProj.DisplayName: Glaze Bulwark E X Proj
+VampiresFangProj.DisplayName: Vampires Fang
+GlazeBulwarkEXProj.DisplayName: Glaze Bulwark
 GlazeBulwarkGuard.DisplayName: Glaze Bulwark Guard
-GlazeBulwarkProj.DisplayName: Glaze Bulwark Proj
-GemrainAegisEXProj.DisplayName: Gemrain Aegis E X Proj
+GlazeBulwarkProj.DisplayName: Glaze Bulwark
+GemrainAegisEXProj.DisplayName: Gemrain Aegis
 GemrainAegisGuard.DisplayName: Gemrain Aegis Guard
-GemrainAegisProj.DisplayName: Gemrain Aegis Proj
+GemrainAegisProj.DisplayName: Gemrain Aegis
 LeonidsGuard.DisplayName: Leonids Guard
 LeonidsMeteor.DisplayName: Leonids Meteor
-LeonidsProj.DisplayName: Leonids Proj
+LeonidsProj.DisplayName: Leonids
 SolleonisGuard.DisplayName: Solleonis Guard
 SolleonisMeteor.DisplayName: Solleonis Meteor
-SolleonisProj.DisplayName: Solleonis Proj
+SolleonisProj.DisplayName: Solleonis
 RoyalAngelGuard.DisplayName: Royal Angel Guard
-RoyalAngelProj.DisplayName: Royal Angel Proj
+RoyalAngelProj.DisplayName: Royal Angel
 RoyalAngelStrike.DisplayName: Royal Angel Strike
 NoctiflairGuard.DisplayName: Noctiflair Guard
-NoctiflairProj.DisplayName: Noctiflair Proj
+NoctiflairProj.DisplayName: Noctiflair
 NoctiflairStrike.DisplayName: Noctiflair Strike
-ConquerorFlyProj.DisplayName: Conqueror Fly Proj
+ConquerorFlyProj.DisplayName: Conqueror Fly
 ConquerorOfTheSeasGuard.DisplayName: Conqueror Of The Seas Guard
-ConquerorOfTheSeasProj.DisplayName: Conqueror Of The Seas Proj
-ConquerorSlash.DisplayName: Conqueror Slash
+ConquerorOfTheSeasProj.DisplayName: Conqueror Of The Seas
+ConquerorSlash.DisplayName: Conqueror
 GoldenSamuraiGuard.DisplayName: Golden Samurai Guard
-GoldenSamuraiProj.DisplayName: Golden Samurai Proj
-HorseshoeCrabEXProj.DisplayName: Horseshoe Crab E X Proj
+GoldenSamuraiProj.DisplayName: Golden Samurai
+HorseshoeCrabEXProj.DisplayName: Horseshoe Crab
 HorseshoeCrabGuard.DisplayName: Horseshoe Crab Guard
-HorseshoeCrabProj.DisplayName: Horseshoe Crab Proj
+HorseshoeCrabProj.DisplayName: Horseshoe Crab
 MineShieldGuard.DisplayName: Mine Shield Guard
-MineShieldProj.DisplayName: Mine Shield Proj
+MineShieldProj.DisplayName: Mine Shield
 ShanHaiGuard.DisplayName: Shan Hai Guard
-ShanHaiProj.DisplayName: Shan Hai Proj
+ShanHaiProj.DisplayName: Shan Hai
 TaiJi.DisplayName: Tai Ji
-EekShieldEXProj.DisplayName: Eek Shield E X Proj
+EekShieldEXProj.DisplayName: Eek Shield
 EekShieldGuard.DisplayName: Eek Shield Guard
-EekShieldProj.DisplayName: Eek Shield Proj
+EekShieldProj.DisplayName: Eek Shield
 HephaesthGuard.DisplayName: Hephaesth Guard
-HephaesthProj.DisplayName: Hephaesth Proj
+HephaesthProj.DisplayName: Hephaesth
 HephaesthFire.DisplayName: Hephaesth Fire
 HephaesthBurst.DisplayName: Hephaesth Burst
 HephaesthWave.DisplayName: Hephaesth Wave
 HephaesthSmeltingResults.DisplayName: Hephaesth Smelting Results
 SandWallGuard.DisplayName: Sand Wall Guard
-SandWallProj.DisplayName: Sand Wall Proj
+SandWallProj.DisplayName: Sand Wall
 SandWallStorm.DisplayName: Sand Wall Storm
 LightingDash.DisplayName: Lighting Dash
 DischargingBurst.DisplayName: Discharging Burst
@@ -357,23 +357,23 @@ StrongLightningBall.DisplayName: Strong Lightning Ball
 StrongerCrossLightingBallChasable.DisplayName: Stronger Cross Lighting Ball Chasable
 ElectromagneticCannon.DisplayName: Electromagnetic Cannon
 EndThunder.DisplayName: End Thunder
-ThunderveinDragon_OnSpawnAnim.DisplayName: Thundervein Dragon_ On Spawn Anim
+ThunderveinDragon_OnSpawnAnim.DisplayName: Thundervein Dragon On Spawn Anim
 ThunderSpawn.DisplayName: Thunder Spawn
 LightningDash.DisplayName: Lightning Dash
 StrongLightningDash.DisplayName: Strong Lightning Dash
 Kitsune.DisplayName: Kitsune
 ThunderveinSoul.DisplayName: Thundervein Soul
-ThunderDukeVineHeldProj.DisplayName: Thunder Duke Vine Held Proj
-ElectromagneticCannon_Friendly.DisplayName: Electromagnetic Cannon_ Friendly
-ThunderveinBladeSlash.DisplayName: Thundervein Blade Slash
+ThunderDukeVineHeldProj.DisplayName: Thunder Duke Vine
+ElectromagneticCannon_Friendly.DisplayName: Electromagnetic Cannon
+ThunderveinBladeSlash.DisplayName: Thundervein Blade
 IcicleSoul.DisplayName: Icicle Soul
 ThunderveinBladeDash.DisplayName: Thundervein Blade Dash
 ArachnopyreGuard.DisplayName: Arachnopyre Guard
-ArachnopyreProj.DisplayName: Arachnopyre Proj
+ArachnopyreProj.DisplayName: Arachnopyre
 ArachnopyreSpider.DisplayName: Arachnopyre Spider
 SovereignSlime.DisplayName: Sovereign Slime
-ThunderveinSpearSlash.DisplayName: Thundervein Spear Slash
-ThunderveinSpearSpurt.DisplayName: Thundervein Spear Spurt
+ThunderveinSpearSlash.DisplayName: Thundervein Spear
+ThunderveinSpearSpurt.DisplayName: Thundervein Spear
 FlamingLampsExplosion.DisplayName: Flaming Lamps Explosion
 LavaDroplet.DisplayName: Lava Droplet
 Snowflake.DisplayName: Snowflake
@@ -381,134 +381,135 @@ SnowflakeSpike.DisplayName: Snowflake Spike
 DemonsProtectionClaw.DisplayName: Demons Protection Claw
 ForbiddenDroplet.DisplayName: Forbidden Droplet
 ForbiddenLampExplosion.DisplayName: Forbidden Lamp Explosion
-SolarTwinkleSlash.DisplayName: Solar Twinkle Slash
+SolarTwinkleSlash.DisplayName: Solar Twinkle
 ThunderveinSpearShoot.DisplayName: Thundervein Spear Shoot
 BlackSpirit.DisplayName: Black Spirit
 ThunderBobber.DisplayName: Thunder Bobber
-ChronoHeartSlash.DisplayName: Chrono Heart Slash
-ThunderWhipProj.DisplayName: Thunder Whip Proj
+ChronoHeartSlash.DisplayName: Chrono Heart
+ThunderWhipProj.DisplayName: Thunder Whip
 ThunderShieldGuard.DisplayName: Thunder Shield Guard
-ThunderShieldProj.DisplayName: Thunder Shield Proj
-ThunderShieldExProj.DisplayName: Thunder Shield Ex Proj
-RedJadeArrowProj.DisplayName: Red Jade Arrow Proj
-RedJadeBulletProj.DisplayName: Red Jade Bullet Proj
-ReverseFlashProj.DisplayName: Reverse Flash Proj
+ThunderShieldProj.DisplayName: Thunder Shield
+ThunderShieldExProj.DisplayName: Thunder Shield
+RedJadeArrowProj.DisplayName: Red Jade Arrow
+RedJadeBulletProj.DisplayName: Red Jade Bullet
+ReverseFlashProj.DisplayName: Reverse Flash
 Tenko.DisplayName: Tenko
-CyberwyrmRehabProj.DisplayName: Cyberwyrm Rehab Proj
-CancerFlailProj.DisplayName: Cancer Flail Proj
-LightningBall_Friendly.DisplayName: Lightning Ball_ Friendly
+CyberwyrmRehabProj.DisplayName: Cyberwyrm Rehab
+CancerFlailProj.DisplayName: Cancer Flail
+LightningBall_Friendly.DisplayName: Lightning Ball
 ThunderDaggerSlash.DisplayName: Thunder Dagger Slash
-EternalBloomHeldProj.DisplayName: Eternal Bloom Held Proj
-FloetteHeldProj.DisplayName: Floette Held Proj
+EternalBloomHeldProj.DisplayName: Eternal Bloom
+FloetteHeldProj.DisplayName: Floette
 PosionedSeedPlantera.DisplayName: Posioned Seed Plantera
 SeedPlantera.DisplayName: Seed Plantera
 ThornBall.DisplayName: Thorn Ball
 VirgoBullet.DisplayName: Virgo Bullet
 VirgoFeather.DisplayName: Virgo Feather
-VirgoHeldProj.DisplayName: Virgo Held Proj
+VirgoHeldProj.DisplayName: Virgo
 ThunderMinion.DisplayName: Thunder Minion
-MeowmeoProj.DisplayName: Meowmeo Proj
-HylianShieldGuard.DisplayName: Hylian Shield Guard
-HylianShieldProj.DisplayName: Hylian Shield Proj
-NuranasaProj.DisplayName: Nuranasa Proj
-SmallVolcanoProj.DisplayName: Small Volcano Proj
-TerraShortSwordProj.DisplayName: Terra Short Sword Proj
-TomatoButchererProj.DisplayName: Tomato Butcherer Proj
-TrueNightsCageProj.DisplayName: True Nights Cage Proj
-BladeOfCatnipProj.DisplayName: Blade Of Catnip Proj
-ExcatbarProj.DisplayName: Excatbar Proj
-NightsCageProj.DisplayName: Nights Cage Proj
-ShadowsBaneProj.DisplayName: Shadows Bane Proj
-TrueExcatbarProj.DisplayName: True Excatbar Proj
-BeamShortSwordProj.DisplayName: Beam Short Sword Proj
-CattongueProj.DisplayName: Cattongue Proj
-CatTreeSwordProj.DisplayName: Cat Tree Sword Proj
-FlyingDragonBabyProj.DisplayName: Flying Dragon Baby Proj
-IceShortSwordProj.DisplayName: Ice Short Sword Proj
-MeowmeoSpecialProj.DisplayName: Meowmeo Special Proj
-SmallBeeProj.DisplayName: Small Bee Proj
-TheCatMansBladeProj.DisplayName: The Cat Mans Blade Proj
-TreelerProj.DisplayName: Treeler Proj
-ShadowDartProj.DisplayName: Shadow Dart Proj
-VampireEarlGuard.DisplayName: Vampire Earl Guard
-VampireEarlProj.DisplayName: Vampire Earl Proj
+MeowmeoProj.DisplayName: Meowmeo
+HylianShieldGuard.DisplayName: Hylian Shield
+HylianShieldProj.DisplayName: Hylian Shield
+NuranasaProj.DisplayName: Nuranasa
+SmallVolcanoProj.DisplayName: Small Volcano
+TerraShortSwordProj.DisplayName: Terra Short Sword
+TomatoButchererProj.DisplayName: Tomato Butcherer
+TrueNightsCageProj.DisplayName: True Nights Cage
+BladeOfCatnipProj.DisplayName: Blade Of Catnip
+ExcatbarProj.DisplayName: Excatbar
+NightsCageProj.DisplayName: Nights Cage
+ShadowsBaneProj.DisplayName: Shadows Bane
+TrueExcatbarProj.DisplayName: True Excatbar
+BeamShortSwordProj.DisplayName: Beam Short Sword
+CattongueProj.DisplayName: Cattongue
+CatTreeSwordProj.DisplayName: Cat Tree Sword
+FlyingDragonBabyProj.DisplayName: Flying Dragon Baby
+IceShortSwordProj.DisplayName: Ice Short Sword
+MeowmeoSpecialProj.DisplayName: Meowmeo Special
+SmallBeeProj.DisplayName: Small Bee
+TheCatMansBladeProj.DisplayName: The Cat Mans Blade
+TreelerProj.DisplayName: Treeler
+ShadowDartProj.DisplayName: Shadow Dart
+VampireEarlGuard.DisplayName: Vampire Earl
+VampireEarlProj.DisplayName: Vampire Earl
 VampireEarlBat.DisplayName: Vampire Earl Bat
 VineLassoCatcher.DisplayName: Vine Lasso Catcher
 
 GreenFairyProj: {
 	SkillText: 撞击！
-	DisplayName: Green Fairy Proj
+	DisplayName: Green Fairy
 }
 
 BlueFairyProj: {
 	SkillText: ""
-	DisplayName: Blue Fairy Proj
+	DisplayName: Blue Fairy
 }
 
 BrownFairyProj: {
 	SkillText: ""
-	DisplayName: Brown Fairy Proj
+	DisplayName: Brown Fairy
 }
 
-RedJadeSpearSpurt.DisplayName: Red Jade Spear Spurt
+RedJadeSpearSpurt.DisplayName: Red Jade Spear
 
 BreezeFairyProj: {
 	SkillText: 吹散！
-	DisplayName: Breeze Fairy Proj
+	DisplayName: Breeze Fairy
 }
 
-PollenGunpowderProj.DisplayName: Pollen Gunpowder Proj
-RoseGunpowderProj.DisplayName: Rose Gunpowder Proj
-RoseGunpowderProj2.DisplayName: Rose Gunpowder Proj2
+PollenGunpowderProj.DisplayName: Pollen Gunpowder
+RoseGunpowderProj.DisplayName: Rose Gunpowder
+RoseGunpowderProj2.DisplayName: Rose Gunpowder
 VineLassoSwing.DisplayName: Vine Lasso Swing
 DevilsYokeCatcher.DisplayName: Devils Yoke Catcher
-DevilsYokeSwing.DisplayName: Devils Yoke Swing
-TwinRocketLauncherHeldProj.DisplayName: Twin Rocket Launcher Held Proj
-TwinRocketLauncherProj.DisplayName: Twin Rocket Launcher Proj
-TwinRocketLauncherProj2.DisplayName: Twin Rocket Launcher Proj2
-SteelBreakerProj.DisplayName: Steel Breaker Proj
-ElfTradeProj.DisplayName: Elf Trade Proj
-PyropeCrownProj.DisplayName: Pyrope Crown Proj
-PyropeProj.DisplayName: Pyrope Proj
-AmethystNeckLaceProj.DisplayName: Amethyst Neck Lace Proj
+DevilsYokeSwing.DisplayName: Devils Yoke
+TwinRocketLauncherHeldProj.DisplayName: Twin Rocket Launcher
+TwinRocketLauncherProj.DisplayName: Twin Rocket Launcher
+TwinRocketLauncherProj2.DisplayName: Twin Rocket Launcher
+SteelBreakerProj.DisplayName: Steel Breaker
+ElfTradeProj.DisplayName: Elf Trade
+PyropeCrownProj.DisplayName: Pyrope Crown
+PyropeProj.DisplayName: Pyrope
+AmethystNeckLaceProj.DisplayName: Amethyst Neck Lace
 AmethystLaser.DisplayName: Amethyst Laser
-FriedShrimpProj.DisplayName: Fried Shrimp Proj
-ChocomintIceProj.DisplayName: Chocomint Ice Proj
-AquamarineBraceletProj.DisplayName: Aquamarine Bracelet Proj
-AquamarineProj.DisplayName: Aquamarine Proj
-AmethystNecklaceProj.DisplayName: Amethyst Necklace Proj
+FriedShrimpProj.DisplayName: Fried Shrimp
+ChocomintIceProj.DisplayName: Chocomint Ice
+AquamarineBraceletProj.DisplayName: Aquamarine Bracelet
+AquamarineProj.DisplayName: Aquamarine
+AmethystNecklaceProj.DisplayName: Amethyst Necklace
 PinkDiamondExplosion.DisplayName: Pink Diamond Explosion
-PinkDiamondProj.DisplayName: Pink Diamond Proj
-PinkDiamondRoseProj.DisplayName: Pink Diamond Rose Proj
-ZumurudProj.DisplayName: Zumurud Proj
-ZumurudRingProj.DisplayName: Zumurud Ring Proj
-SmallZumurudProj.DisplayName: Small Zumurud Proj
-PearlBroochProj.DisplayName: Pearl Brooch Proj
-PearlProj.DisplayName: Pearl Proj
+PinkDiamondProj.DisplayName: Pink Diamond
+PinkDiamondRoseProj.DisplayName: Pink Diamond Rose
+ZumurudProj.DisplayName: Zumurud
+ZumurudRingProj.DisplayName: Zumurud Ring
+SmallZumurudProj.DisplayName: Small Zumurud
+PearlBroochProj.DisplayName: Pearl Brooch
+PearlProj.DisplayName: Pearl
 PearlExplosion.DisplayName: Pearl Explosion
-RubyProj.DisplayName: Ruby Proj
-RubyScepterProj.DisplayName: Ruby Scepter Proj
+RubyProj.DisplayName: Ruby
+RubyScepterProj.DisplayName: Ruby Scepter
 RubyLaser.DisplayName: Ruby Laser
-PeridotProj.DisplayName: Peridot Proj
+PeridotProj.DisplayName: Peridot
 PeridotSpilit.DisplayName: Peridot Spilit
-PeridotTalismanProj.DisplayName: Peridot Talisman Proj
+PeridotTalismanProj.DisplayName: Peridot Talisman
 SapphireComet.DisplayName: Sapphire Comet
-SapphireHairpinProj.DisplayName: Sapphire Hairpin Proj
-SapphireProj.DisplayName: Sapphire Proj
-SapphireSmallProj.DisplayName: Sapphire Small Proj
+SapphireHairpinProj.DisplayName: Sapphire Hairpin
+SapphireProj.DisplayName: Sapphire
+SapphireSmallProj.DisplayName: Sapphire Small
 TopazFlySword.DisplayName: Topaz Fly Sword
-TopazMirrorProj.DisplayName: Topaz Mirror Proj
-TopazProj.DisplayName: Topaz Proj
+TopazMirrorProj.DisplayName: Topaz Mirror
+TopazProj.DisplayName: Topaz
 TopazSpike.DisplayName: Topaz Spike
 TopazMeteor.DisplayName: Topaz Meteor
 TopazBoulder.DisplayName: Topaz Boulder
 TopazTrident.DisplayName: Topaz Trident
-LandOfTheLustrousProj.DisplayName: Land Of The Lustrous Proj
-LustrousProj.DisplayName: Lustrous Proj
-TourmalineMonoclasticProj.DisplayName: Tourmaline Monoclastic Proj
-TourmalineProj.DisplayName: Tourmaline Proj
-TerranascenceFSProj.DisplayName: Terranascence F S Proj
+LandOfTheLustrousProj.DisplayName: Land Of The Lustrous
+LustrousProj.DisplayName: Lustrous
+TourmalineMonoclasticProj.DisplayName: Tourmaline Monoclastic
+TourmalineProj.DisplayName: Tourmaline
+TerranascenceFSProj.DisplayName: Terranascence FlyingShield
 TerranascenceGuard.DisplayName: Terranascence Guard
 TerranascenceSwing.DisplayName: Terranascence Swing
-TerranascenceTag.DisplayName: Terranascence Tag
+TerranascenceTag.DisplayName: Terra Crystal
 TerranascenceSpurt.DisplayName: Terranascence Spurt
+TourmalineSlash.DisplayName: Tourmaline

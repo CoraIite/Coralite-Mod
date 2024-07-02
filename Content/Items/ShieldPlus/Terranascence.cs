@@ -971,7 +971,7 @@ namespace Coralite.Content.Items.ShieldPlus
                     maxTime = 12;
                     Helper.PlayPitched("Misc/FlowSwing2", 0.4f, 0.2f, Projectile.Center);
                     Helper.PlayPitched("Misc/EnergyBurst", 0.4f, 0.2f, Projectile.Center);
-                    Main.instance.CameraModifiers.Add(new MoveModifyer(5, 12));
+                    Main.instance.CameraModifiers.Add(new MoveModifyer(8, 15));
                 }
                 else
                 {
@@ -1108,7 +1108,7 @@ namespace Coralite.Content.Items.ShieldPlus
                     WindCircle.Spawn(Owner.Center - RotateVec2 * 20, -Owner.velocity*0.4f, RotateVec2.ToRotation(), Color.DarkSeaGreen, 0.75f, 1f, new Vector2(1.75f, 0.7f));
                 if (!Powerful2)
                     if (VisualEffectSystem.HitEffect_ScreenShaking)
-                        Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, RotateVec2, 10, 8, 10, 1000));
+                        Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, RotateVec2, 12, 8, 8, 1000));
 
                 Timer = maxTime + 1;
                 Owner.velocity *= -0.3f;

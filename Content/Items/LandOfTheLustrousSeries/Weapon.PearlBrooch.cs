@@ -110,7 +110,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
     public class PearlBroochProj : BaseGemWeaponProj<PearlBrooch>
     {
-        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
+        public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "PearlBrooch";
 
         public ref float ShootAngle => ref Projectile.ai[1];
 

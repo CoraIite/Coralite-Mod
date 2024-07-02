@@ -4,4 +4,5 @@ CoraliteGlobalItem: {
 	TerraCoralCat: Terra cat coin
 	RainBowCoralCat: Rainbow Cat coin
 	Cold: "[c/5cd7f9:Frost]"
+	Edible: "[c/f0d0b7:Delicious]"
 }

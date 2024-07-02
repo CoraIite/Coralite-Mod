@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.Steel
             Item.knockBack = 4;
             Item.shootSpeed = 5.5f;
 
-            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Ranged;
             Item.value = Item.sellPrice(0, 5);
             Item.rare = ItemRarityID.LightRed;

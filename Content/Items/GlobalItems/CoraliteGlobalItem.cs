@@ -38,6 +38,7 @@ namespace Coralite.Content.Items.GlobalItems
             TerraCoralCat = this.GetLocalization("TerraCoralCat", () => "泰拉猫猫币");
             RainBowCoralCat = this.GetLocalization("RainBowCoralCat", () => "彩虹猫猫币");
             Cold = this.GetLocalization("Cold", () => "[c/5cd7f9:寒冷]");
+            Edible = this.GetLocalization("Edible", () => "[c/f0d0b7:可食用]");
         }
 
         public override void Unload()
@@ -47,6 +48,7 @@ namespace Coralite.Content.Items.GlobalItems
             TerraCoralCat = null;
             RainBowCoralCat = null;
             Cold = null;
+            Edible = null;
         }
 
         public override void SetDefaults(Item item)
@@ -117,6 +119,7 @@ namespace Coralite.Content.Items.GlobalItems
             }
 
             RegisterColdDamageWeapon(item.type);
+            RegisterEdibleDamageWeapon(item.type);
         }
 
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
@@ -239,14 +242,33 @@ namespace Coralite.Content.Items.GlobalItems
                     }
             }
 
-            if (ColdDamage)
+            TooltipLine damage = tooltips.Find(line => line.Mod == "Terraria" && line.Name == "Damage");
+            if (damage != null)
             {
-                TooltipLine damage = tooltips.Find(line => line.Mod == "Terraria" && line.Name == "Damage");
-                if (damage != null)
+                string[] text = damage.Text.Split(" ");
+                if (text.Length > 1)
                 {
-                    string[] text = damage.Text.Split(" ");
-                    if (text.Length > 1)
-                        damage.Text = string.Concat(text[0], " ", Cold.Value, " ", text[1]);
+                    List<string> newText = new List<string>()
+                        {
+                            text[0],
+                            " "
+                        };
+
+                    if (ColdDamage)
+                    {
+                        newText.Add(Cold.Value);
+                        newText.Add(" ");
+                    }
+
+                    if (EdibleDamage)
+                    {
+                        newText.Add(Edible.Value);
+                        newText.Add(" ");
+                    }
+
+                    newText.Add(text[1]);
+                    damage.Text = string.Concat([.. newText]);
+
                 }
             }
         }

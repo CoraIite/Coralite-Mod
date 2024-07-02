@@ -9,13 +9,28 @@ using Terraria.ID;
 
 namespace Coralite.Content.Projectiles.Globals
 {
-    public class CoraliteGlobalProjectile : GlobalProjectile
+    public partial class CoraliteGlobalProjectile : GlobalProjectile
     {
         public bool isBossProjectile;
 
         //private Vector2 rand;
 
         public override bool InstancePerEntity => true;
+
+        public override void Load()
+        {
+            base.Load();
+        }
+
+        public override void Unload()
+        {
+            base.Unload();
+        }
+
+        public override void SetDefaults(Projectile entity)
+        {
+
+        }
 
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {

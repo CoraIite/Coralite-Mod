@@ -503,12 +503,13 @@ TopazSpike.DisplayName: 黄晶刺
 TopazMeteor.DisplayName: 黄晶陨石
 TopazBoulder.DisplayName: 黄晶巨石
 TopazTrident.DisplayName: 黄晶三叉戟
-// LandOfTheLustrousProj.DisplayName: Land Of The Lustrous Proj
-// LustrousProj.DisplayName: Lustrous Proj
-// TourmalineMonoclasticProj.DisplayName: Tourmaline Monoclastic Proj
-// TourmalineProj.DisplayName: Tourmaline Proj
-// TerranascenceFSProj.DisplayName: Terranascence F S Proj
-// TerranascenceGuard.DisplayName: Terranascence Guard
-// TerranascenceSwing.DisplayName: Terranascence Swing
-// TerranascenceTag.DisplayName: Terranascence Tag
-// TerranascenceSpurt.DisplayName: Terranascence Spurt
+LandOfTheLustrousProj.DisplayName: 宝石之国
+LustrousProj.DisplayName: 闪亮宝石
+TourmalineMonoclasticProj.DisplayName: 绯红的窥视
+TourmalineProj.DisplayName: 魔法碧玺
+TerranascenceFSProj.DisplayName: 泰拉勇者的飞盾
+TerranascenceGuard.DisplayName: 泰拉勇者的盾
+TerranascenceSwing.DisplayName: 泰拉勇者的剑
+TerranascenceTag.DisplayName: 自然水晶
+TerranascenceSpurt.DisplayName: 泰拉勇者的剑
+// TourmalineSlash.DisplayName: Tourmaline

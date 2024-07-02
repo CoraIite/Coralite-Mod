@@ -115,7 +115,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             public bool active = true;
             public float rot = rot;
-            public float scale = 0.4f;
+            public float scale = 0.2f;
             public float alpha;
 
             private int timer;
@@ -128,10 +128,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 if (timer > 60)
                 {
                     alpha -= 0.05f;
-                    scale += 0.01f;
+                    scale += 0.03f;
                 }
                 else
-                    scale = 0.4f+0.6f*Coralite.Instance.SqrtSmoother.Smoother(timer,60);
+                    scale = 0.2f+0.8f*Coralite.Instance.SqrtSmoother.Smoother(timer,60);
 
                 if (timer > 80)
                     active = false;

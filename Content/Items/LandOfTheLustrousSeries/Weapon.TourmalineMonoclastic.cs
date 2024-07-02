@@ -1,6 +1,4 @@
-﻿using Coralite.Content.Particles;
-using Coralite.Content.Tiles.RedJades;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -69,12 +67,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient<Tourmaline>()
-                .AddIngredient(ItemID.FragmentNebula, 5)
-                .AddIngredient(ItemID.Lens)
-                .AddTile<MagicCraftStation>()
-                .Register();
+            //CreateRecipe()
+            //    .AddIngredient<Tourmaline>()
+            //    .AddIngredient(ItemID.FragmentNebula, 5)
+            //    .AddIngredient(ItemID.Lens)
+            //    .AddTile<MagicCraftStation>()
+            //    .Register();
         }
     }
 
@@ -168,9 +166,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             AttackTime = Owner.itemTimeMax;
 
-            List<NPC> targets = Main.npc.Where(n=>n.CanBeChasedBy()&&Collision.CanHit(Owner,n)).ToList();
+            List<NPC> targets = Main.npc.Where(n => n.CanBeChasedBy() && Collision.CanHit(Owner, n)).ToList();
 
-            targets.Sort((t1, t2) => t1.DistanceSQ(Projectile.Center) .CompareTo( t2.DistanceSQ(Projectile.Center)));
+            targets.Sort((t1, t2) => t1.DistanceSQ(Projectile.Center).CompareTo(t2.DistanceSQ(Projectile.Center)));
 
             Helper.PlayPitched("Crystal/CrystalShoot", 0.4f, 0, Projectile.Center);
         }
@@ -191,7 +189,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         }
     }
 
-    public class TourmalineProj:ModProjectile
+    public class TourmalineProj : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -213,8 +211,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            if (!Owner.GetProjectileOwner(out Projectile owner,Projectile.Kill)
-                ||!Target.GetNPCOwner(out NPC target,Projectile.Kill))
+            if (!Owner.GetProjectileOwner(out Projectile owner, Projectile.Kill)
+                || !Target.GetNPCOwner(out NPC target, Projectile.Kill))
                 return;
 
             Projectile.Center = owner.Center;
@@ -255,8 +253,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         }
     }
 
-    public class TourmalineSlash
+    public class TourmalineSlash : ModProjectile
     {
-
+        public override string Texture => AssetDirectory.Blank;
     }
 }

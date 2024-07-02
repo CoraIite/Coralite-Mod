@@ -3746,7 +3746,7 @@ VineLasso: {
 }
 
 GreenFairyItem: {
-	DisplayName: Green Fairy Item
+	DisplayName: Green Fairy
 	Tooltip: A common fairy, it will use impact on enemies.
 }
 
@@ -3756,27 +3756,27 @@ StarlightBottle: {
 }
 
 BreezeFairyItem: {
-	DisplayName: Breeze Fairy Item
+	DisplayName: Breeze Fairy
 	Tooltip: Blows wind at the enemy
 }
 
 BlueFairyItem: {
-	DisplayName: Blue Fairy Item
+	DisplayName: Blue Fairy
 	Tooltip: A common fairy, it will use impact on enemies.
 }
 
 BrownFairyItem: {
-	DisplayName: Brown Fairy Item
+	DisplayName: Brown Fairy
 	Tooltip: A common fairy, it will use impact on enemies.
 }
 
 PinkFairyItem: {
-	DisplayName: Pink Fairy Item
+	DisplayName: Pink Fairy
 	Tooltip: A common fairy, it will use impact on enemies.
 }
 
 CandyFairyItem: {
-	DisplayName: Candy Fairy Item
+	DisplayName: Candy Fairy
 	Tooltip:
 		'''
 		Candy Cane Spirits are very delicious. 
@@ -3785,7 +3785,7 @@ CandyFairyItem: {
 }
 
 FairyEncyclopediaItem: {
-	DisplayName: Fairy Encyclopedia Item
+	DisplayName: Weathered Stone Monument
 	Tooltip: After placing it, right-click to open the Fairy Encyclopedia.
 }
 
@@ -3844,17 +3844,17 @@ EtheriaLegacy: {
 }
 
 CrystalEyeBannerItem: {
-	DisplayName: Crystal Eye Banner Item
+	DisplayName: Crystal Eye Banner
 	Tooltip: ""
 }
 
 CrystalGolemBannerItem: {
-	DisplayName: Crystal Golem Banner Item
+	DisplayName: Crystal Golem Banner
 	Tooltip: ""
 }
 
 CrystalSpiritBannerItem: {
-	DisplayName: Crystal Spirit Banner Item
+	DisplayName: Crystal Spirit Banner
 	Tooltip: ""
 }
 
@@ -3922,7 +3922,7 @@ PyropeCrown: {
 }
 
 PrimaryRoughGemstone: {
-	DisplayName: Primary Rough Gemstone
+	DisplayName: Primary Gemstone
 	Tooltip:
 		'''
 		It is possible to extract a gem using an extractor
@@ -3997,7 +3997,7 @@ PinkDiamondRose: {
 }
 
 SeniorRoughGemstone: {
-	DisplayName: Senior Rough Gemstone
+	DisplayName: High-grade Raw Gemstones
 	Tooltip:
 		'''
 		It is possible to extract a gem using an extractor
@@ -4116,7 +4116,7 @@ TourmalineMonoclastic: {
 
 Zircon: {
 	DisplayName: Zircon
-	Tooltip: ""
+	Tooltip: Use a refining machine to extract high-grade raw gemstones
 }
 
 FlyingShieldBattleGuide: {
@@ -4126,5 +4126,10 @@ FlyingShieldBattleGuide: {
 
 Terranascence: {
 	DisplayName: Terranascence
-	Tooltip: ""
+	Tooltip:
+		'''
+		"It seems to be a very crude weapon, but it contains the faith of the brave"
+		Special combos can be triggered through different attack combinations
+			Right-clicking in the inventory toggles on or off effects for normal attacks
+		'''
 }
