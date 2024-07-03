@@ -109,7 +109,7 @@ namespace Coralite.Content.Particles
         }
     }
 
-    public class LightTrailParticle_NoPrimitive: LightTrailParticle
+    public class LightTrailParticle_NoPrimitive : LightTrailParticle
     {
         public override void Update()
         {
@@ -145,7 +145,7 @@ namespace Coralite.Content.Particles
             Color c = Color.White * (color.A / 255f);
             c.A = (byte)(c.A * 0.3f);
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale*1.5f, 0, 0);
+            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale * 1.5f, 0, 0);
             c = color;
             spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
             spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);

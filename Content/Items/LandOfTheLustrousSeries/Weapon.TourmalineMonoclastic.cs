@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Tiles.RedJades;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -13,12 +14,17 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
     public class TourmalineMonoclastic : BaseGemWeapon
     {
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ToolTipDamageMultiplier[Type] = 0.6f;
+        }
+
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.StrongRed10, Item.sellPrice(0, 18));
-            Item.SetWeaponValues(80, 4);
+            Item.SetWeaponValues(175, 4,6);
             Item.useTime = Item.useAnimation = 35;
-            Item.mana = 8;
+            Item.mana = 12;
 
             Item.shoot = ModContent.ProjectileType<TourmalineMonoclasticProj>();
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -67,12 +73,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AddRecipes()
         {
-            //CreateRecipe()
-            //    .AddIngredient<Tourmaline>()
-            //    .AddIngredient(ItemID.FragmentNebula, 5)
-            //    .AddIngredient(ItemID.Lens)
-            //    .AddTile<MagicCraftStation>()
-            //    .Register();
+            CreateRecipe()
+                .AddIngredient<Tourmaline>()
+                .AddIngredient(ItemID.FragmentNebula, 5)
+                .AddIngredient(ItemID.Lens)
+                .AddTile<MagicCraftStation>()
+                .Register();
         }
     }
 
@@ -80,7 +86,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
-        public Vector2 scale;
+        public Vector2 scale = Vector2.One;
 
         public override void SetStaticDefaults()
         {
@@ -129,35 +135,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             TargetPos = Vector2.SmoothStep(TargetPos, idlePos, 0.3f);
             Projectile.Center = Vector2.Lerp(Projectile.Center, TargetPos, 0.5f);
             Projectile.rotation = Projectile.rotation.AngleLerp(Owner.velocity.X / 20, 0.2f);
-            Lighting.AddLight(Projectile.Center, AquamarineProj.brightC.ToVector3());
+            Lighting.AddLight(Projectile.Center, TourmalineProj.brightC.ToVector3());
         }
 
         public override void Attack()
         {
             if (AttackTime > 0)
             {
-
-                if ((int)AttackTime % (Owner.itemTimeMax / 3) == 0 && Owner.CheckMana(Owner.HeldItem.mana, true))
-                {
-                    Owner.manaRegenDelay = 40;
-
-                    float angle = Main.rand.NextFromList(-1, 1) * 0.35f + Main.rand.NextFloat(-0.5f, 0.5f);
-                    Projectile.NewProjectileFromThis<AquamarineProj>(Projectile.Center
-                        , Vector2.UnitY.RotatedBy(angle) * 8, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
-
-                    for (int i = 0; i < 4; i++)
-                    {
-                        Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight, Helper.NextVec2Dir(2, 4), Scale: Main.rand.NextFloat(1f, 1.5f));
-                        d.noGravity = true;
-                    }
-
-                    for (int i = 0; i < 2; i++)
-                    {
-                        Vector2 dir = Helper.NextVec2Dir();
-                        AquamarineProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
-                    }
-                }
-
+                scale.Y = Helper.Lerp(0.2f, 1f,  Coralite.Instance.SqrtSmoother.Smoother(1- AttackTime / Owner.itemTimeMax));
                 AttackTime--;
             }
         }
@@ -166,9 +151,37 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             AttackTime = Owner.itemTimeMax;
 
-            List<NPC> targets = Main.npc.Where(n => n.CanBeChasedBy() && Collision.CanHit(Owner, n)).ToList();
+            List<NPC> targets = Main.npc.Where(n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n)&&Vector2.DistanceSquared(Projectile.Center,n.Center)<1000*1000).ToList();
 
             targets.Sort((t1, t2) => t1.DistanceSQ(Projectile.Center).CompareTo(t2.DistanceSQ(Projectile.Center)));
+
+            int howMany = targets.Count;
+            if (howMany < 1)
+                return;
+
+            if (howMany > 5)
+                howMany = 5;
+
+            int damage = Owner.GetWeaponDamage(Owner.HeldItem);
+            damage = (int)Helper.Lerp(damage*1.15f, damage * 0.6f, (howMany - 1) / 4f);
+
+            for (int i = 0; i < howMany; i++)
+            {
+                Projectile.NewProjectileFromThis<TourmalineProj>(Projectile.Center, Vector2.Zero, damage, Projectile.knockBack
+                    , Projectile.whoAmI, targets[i].whoAmI,AttackTime);
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.CrimsonTorch, Helper.NextVec2Dir(2, 4), Scale: Main.rand.NextFloat(1f, 1.5f));
+                d.noGravity = true;
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                Vector2 dir = Helper.NextVec2Dir();
+                TourmalineProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+            }
 
             Helper.PlayPitched("Crystal/CrystalShoot", 0.4f, 0, Projectile.Center);
         }
@@ -176,15 +189,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTexture();
-            var origin = new Vector2(mainTex.Width / 2, 0);
-            Vector2 toCenter = new Vector2(Projectile.width / 2, 0);
+            var origin = mainTex.Size()/2;
+            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
 
             for (int i = 0; i < 4; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
                     new Color(251, 100, 152) * (0.3f - i * 0.3f / 4), Projectile.oldRot[i] + 0, origin, Projectile.scale, 0, 0);
 
-            Main.spriteBatch.Draw(mainTex, Projectile.Top - Main.screenPosition, null, lightColor, Projectile.rotation,
-                origin, Projectile.scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation,
+                origin, Projectile.scale*scale, 0, 0);
             return false;
         }
     }
@@ -201,9 +214,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public ref float Target => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.ai[2];
 
+        public ref float RecordTimer => ref Projectile.localAI[0];
+
         public override void SetDefaults()
         {
-            base.SetDefaults();
+            Projectile.friendly = true;
+            Projectile.width = Projectile.height = 22;
+            Projectile.tileCollide = false;
         }
 
         public override bool? CanDamage() => false;
@@ -222,10 +239,37 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (Timer < 0)
             {
                 //生成斩击弹幕
+                Projectile.NewProjectileFromThis<TourmalineSlash>(target.Center + Vector2.UnitY*(10 * 15+20*Main.rand.Next(-4,4)), -Vector2.UnitY * 15,
+                    Projectile.damage, Projectile.knockBack);
+
                 Projectile.Kill();
             }
 
+            float factor = 1 - Timer / RecordTimer;
+            float length = Vector2.Distance(owner.Center, target.Center);
+            Dust d = Dust.NewDustPerfect(Vector2.Lerp(owner.Center, target.Center, Main.rand.NextFloat(factor / 5, factor / 2))
+                , DustID.CrimsonTorch, (target.Center - owner.Center).SafeNormalize(Vector2.Zero).RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2, 4)
+                , Scale: Main.rand.NextFloat(1, 1.5f));
+            d.noGravity = true;
+
+            if (RecordTimer==0)
+            {
+                RecordTimer = Timer;
+            }
+
             Timer--;
+        }
+
+        public static void SpawnTriangleParticle(Vector2 pos, Vector2 velocity)
+        {
+            Color c1 = highlightC;
+            c1.A = 125;
+            Color c2 = brightC;
+            c2.A = 125;
+            Color c3 = darkC;
+            c3.A = 100;
+            Color c = Main.rand.NextFromList(highlightC, brightC, c1, c2, c3);
+            CrystalTriangle.Spawn(pos, velocity, c, 9, Main.rand.NextFloat(0.05f, 0.3f));
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -236,18 +280,29 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Vector2 dir = target.Center - owner.Center;
             float distance = dir.Length();
-            dir = dir.SafeNormalize(Vector2.Zero);
 
             Texture2D mainTex = TextureAssets.Extra[98].Value;
-            var origin = new Vector2(0, mainTex.Height / 2);
+            var origin = new Vector2(mainTex.Width / 2, mainTex.Height);
             var pos = Projectile.Center - Main.screenPosition;
 
             distance = Math.Clamp(distance, 0, 350);
             float factor = distance / mainTex.Width;
-            Vector2 scale = new Vector2(factor, 0.5f * factor);
+            float factor2 = 1 - Timer / RecordTimer;
 
-            Main.spriteBatch.Draw(mainTex, pos, null, Color.Red, Projectile.rotation, origin, scale, 0, 0);
-            Main.spriteBatch.Draw(mainTex, pos, null, Color.White * 0.3f, Projectile.rotation, origin, scale * 0.8f, 0, 0);
+            Vector2 scale = new Vector2(0.1f * factor, factor)*Coralite.Instance.SqrtSmoother.Smoother(factor2);
+
+            Color c1 = darkC*0.6f;
+            c1.A = 0;
+            Color c2 = highlightC * 0.6f;
+            c1.A = 0;
+            Color c3 = brightC * 0.2f;
+            c1.A = 0;
+
+            Main.spriteBatch.Draw(mainTex, pos, null, c3*factor2, Projectile.rotation + 1.57f, origin, new Vector2(0.4f * factor, factor), 0, 0);
+
+            Main.spriteBatch.Draw(mainTex, pos, null, c1, Projectile.rotation+1.57f, origin, scale*1.2f, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, brightC, Projectile.rotation+1.57f, origin, scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, c2, Projectile.rotation + 1.57f, origin, scale * 0.8f, 0, 0);
 
             return false;
         }
@@ -256,5 +311,58 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     public class TourmalineSlash : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
+
+        public ref float Timer => ref Projectile.ai[0];
+
+        public override void SetDefaults()
+        {
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 6;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.width = 24;
+            Projectile.height = 80;
+            Projectile.tileCollide = false;
+            Projectile.extraUpdates = 1;
+            Projectile.penetrate = -1;
+        }
+
+        public override void AI()
+        {
+            int num23 = Dust.NewDust(Projectile.Center + Main.rand.NextVector2Circular(8, 8), 0, 0, DustID.RainbowTorch, 0f, 0f, 0, TourmalineProj.brightC);
+            Main.dust[num23].velocity = -Vector2.UnitY;
+            Main.dust[num23].noGravity = true;
+            Main.dust[num23].scale = Main.rand.NextFloat(0.5f, 1.5f);
+
+            if (Timer > 20)
+            {
+                Projectile.Kill();
+            }
+
+            Timer++;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            float factor = Timer / 20;
+
+            Vector2 fatness = new Vector2(0.5f + factor * 1.5f, 0.8f + MathF.Sin(factor * MathHelper.Pi) * 0.2f);
+            float scale = 2f + 8f * factor;
+            var pos = Projectile.Center - Main.screenPosition;
+            //两侧
+            Helper.DrawPrettyLine(1, 0, pos, TourmalineProj.brightC, TourmalineProj.darkC,
+                factor, 0, 0.4f, 0.6f, 1, MathHelper.Pi/6+MathHelper.PiOver2, 4.5f, fatness);
+            Helper.DrawPrettyLine(1, 0, pos, TourmalineProj.brightC, TourmalineProj.darkC,
+                factor, 0, 0.4f, 0.6f, 1, -MathHelper.Pi/6 + MathHelper.PiOver2, 4.5f, fatness);
+            //竖直
+            Helper.DrawPrettyLine(1, 0, pos, TourmalineProj.brightC, TourmalineProj.darkC,
+                factor, 0, 0.4f, 0.6f, 1, MathHelper.PiOver2, scale,fatness);
+            Helper.DrawPrettyLine(1, 0, pos, TourmalineProj.highlightC, TourmalineProj.brightC,
+                factor, 0, 0.4f, 0.6f, 1, MathHelper.PiOver2, scale,fatness);
+            Helper.DrawPrettyLine(1, 0, pos, TourmalineProj.highlightC, TourmalineProj.brightC,
+                factor, 0, 0.4f, 0.6f, 1, MathHelper.PiOver2, scale,fatness);
+
+            return false;
+        }
     }
 }

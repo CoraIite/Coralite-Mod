@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.FlyingShields;
-using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -76,7 +75,7 @@ namespace Coralite.Content.Items.ShieldPlus
             Item.shoot = ModContent.ProjectileType<TerranascenceSwing>();
             Item.knockBack = 4f;
             Item.shootSpeed = 12;
-            Item.damage = 27;
+            Item.damage = 32;
 
             Item.UseSound = null;
             Item.useTurn = false;
@@ -121,7 +120,7 @@ namespace Coralite.Content.Items.ShieldPlus
                 PowerfulAtt2 = 0;
                 PowerfulLeft = 0;
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TerranascenceSpurt>()
-                    , (int)(damage*3f), knockback, player.whoAmI, 1, 1);
+                    , (int)(damage * 3f), knockback, player.whoAmI, 1, 1);
                 return;
             }
 
@@ -129,7 +128,7 @@ namespace Coralite.Content.Items.ShieldPlus
             {
                 PowerfulLeft = 0;
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TerranascenceSpurt>()
-                    , (int)(damage*1.5f), knockback, player.whoAmI, 1);
+                    , (int)(damage * 1.5f), knockback, player.whoAmI, 1);
                 return;
             }
 
@@ -386,7 +385,7 @@ namespace Coralite.Content.Items.ShieldPlus
                     Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Firework_Green, Helper.NextVec2Dir(2, 4)
                         , Scale: Main.rand.NextFloat(0.2f, 0.6f));
                     d.noGravity = true;
-                }    
+                }
                 Projectile.velocity *= 0.92f;
                 return;
             }
@@ -443,7 +442,7 @@ namespace Coralite.Content.Items.ShieldPlus
             if (Main.rand.NextBool())
             {
                 Projectile.SpawnTrailDust(4f, DustID.PureSpray, Main.rand.NextFloat(0.2f, 0.6f)
-                    ,Scale:Main.rand.NextFloat(0.5f,0.8f));
+                    , Scale: Main.rand.NextFloat(0.5f, 0.8f));
             }
             extraRotation += 0.6f;
         }
@@ -1105,7 +1104,7 @@ namespace Coralite.Content.Items.ShieldPlus
             if (Powerful)
             {
                 if (VisualEffectSystem.HitEffect_SpecialParticles)
-                    WindCircle.Spawn(Owner.Center - RotateVec2 * 20, -Owner.velocity*0.4f, RotateVec2.ToRotation(), Color.DarkSeaGreen, 0.75f, 1f, new Vector2(1.75f, 0.7f));
+                    WindCircle.Spawn(Owner.Center - RotateVec2 * 20, -Owner.velocity * 0.4f, RotateVec2.ToRotation(), Color.DarkSeaGreen, 0.75f, 1f, new Vector2(1.75f, 0.7f));
                 if (!Powerful2)
                     if (VisualEffectSystem.HitEffect_ScreenShaking)
                         Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, RotateVec2, 12, 8, 8, 1000));

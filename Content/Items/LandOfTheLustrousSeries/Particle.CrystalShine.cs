@@ -10,7 +10,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
     public class CrystalShine : Particle
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "LightGlow";
+        public override string Texture => AssetDirectory.OtherProjectiles + "LightGlowShot";
 
         public float TrailCount = 10;
         public Vector2 scale;
@@ -24,10 +24,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public int fadeTime = 15;
 
         public Func<Vector2> follow;
-
-        public override void OnSpawn()
-        {
-        }
 
         public override void Update()
         {
@@ -133,22 +129,43 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             for (int i = 0; i < shotCount; i++)
             {
-                DrawShot(spriteBatch, _shotRotation[i], _shotScale[i], Vector2.Zero);
+                DrawShot2(spriteBatch, _shotRotation[i], _shotScale[i], Vector2.Zero);
             }
         }
 
         public void DrawShot(SpriteBatch spriteBatch, float rot, float exScale, Vector2 screenPos)
         {
             Texture2D mainTex = GetTexture().Value;
+            Vector2 pos = Center - screenPos;
+            Vector2 origin = new Vector2(0, mainTex.Height / 2);
+            Vector2 scale = currentScale * 0.1f * exScale;
+            scale.Y *= 2;
             Color c = color;
 
-            Vector2 scale = currentScale * 0.1f * exScale;
+            spriteBatch.Draw(mainTex, pos
+                , null, c, rot, origin, scale, SpriteEffects.None, 0f);
+            scale.X *= 1.2f;
+
+            Color c2 = Color.White * (c.A / 255f);
+            c2.A = (byte)(c.A * 0.4f);
+
+            spriteBatch.Draw(mainTex, pos
+                , null, c2, rot, origin, scale, SpriteEffects.None, 0f);
+
+        }
+
+        public void DrawShot2(SpriteBatch spriteBatch, float rot, float exScale, Vector2 screenPos)
+        {
+            Texture2D mainTex = GetTexture().Value;
+            Color c = color;
+
             List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
             List<CustomVertexInfo> bar3 = new List<CustomVertexInfo>();
             List<CustomVertexInfo> bar4 = new List<CustomVertexInfo>();
 
             Vector2 dir = rot.ToRotationVector2();
             Vector2 normal = dir.RotatedBy(1.57f);
+            Vector2 scale = currentScale * 0.1f * exScale;
             float width = mainTex.Width * scale.X / TrailCount;
             float height = mainTex.Height * scale.Y;
 

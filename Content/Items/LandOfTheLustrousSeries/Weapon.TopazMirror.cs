@@ -19,8 +19,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Cyan9, Item.sellPrice(0, 20));
-            Item.SetWeaponValues(120, 4, 2);
-            Item.useTime = Item.useAnimation = 28;
+            Item.SetWeaponValues(130, 4, 4);
+            Item.useTime = Item.useAnimation = 26;
             Item.mana = 19;
 
             Item.shoot = ModContent.ProjectileType<TopazMirrorProj>();

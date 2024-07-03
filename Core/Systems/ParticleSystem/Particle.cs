@@ -144,15 +144,15 @@ namespace Coralite.Core.Systems.ParticleSystem
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             Rectangle frame = Frame;
-            Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
+            Vector2 origin = frame.Size() / 2;
 
             spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
 
         public virtual void DrawInUI(SpriteBatch spriteBatch)
         {
-            Rectangle frame = this.Frame;
-            Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
+            Rectangle frame = Frame;
+            Vector2 origin = frame.Size() / 2;
 
             spriteBatch.Draw(GetTexture().Value, Center, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }

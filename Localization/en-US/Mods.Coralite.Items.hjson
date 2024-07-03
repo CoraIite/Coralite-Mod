@@ -4133,3 +4133,23 @@ Terranascence: {
 			Right-clicking in the inventory toggles on or off effects for normal attacks
 		'''
 }
+
+AlloySpring: {
+	DisplayName: Alloy Spring
+	Tooltip:
+		'''
+		Increase flying shield dash speed
+		Increases damage based on defense while dashing, up to a maximum of 10%
+		Shield dashing and blocking have become more free
+		'''
+}
+
+GravitationalCatapult: {
+	DisplayName: Gravitational Catapult
+	Tooltip:
+		'''
+		Dramatically increase flying shield dash speed and dash time
+		Increases damage based on defense while sprinting, up to a maximum of 20%
+		Shield dashing and blocking have become more free
+		'''
+}

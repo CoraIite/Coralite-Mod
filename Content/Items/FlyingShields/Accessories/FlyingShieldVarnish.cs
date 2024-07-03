@@ -45,5 +45,15 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 projectile.trailCachesLength *= 2;
             }
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.Bottle)
+                .AddIngredient(ItemID.BeeWax, 4)
+                .AddTile(TileID.Bottles)
+                .DisableDecraft()
+                .Register();
+        }
     }
 }

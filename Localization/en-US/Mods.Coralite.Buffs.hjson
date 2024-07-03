@@ -161,16 +161,30 @@ ElfBless: {
 }
 
 FriedShrimpBuff: {
-	DisplayName: Fried Shrimp Buff
-	Description: Mods.Coralite.Buffs.FriedShrimpBuff.Description
+	DisplayName: Fried Shrimp
+	Description: Delicious!
 }
 
 ChocomintIceBuff: {
-	DisplayName: Chocomint Ice Buff
-	Description: The minty fresh taste of toothpaste empowers you
+	DisplayName: Chocomint Ice
+	Description: The freshness of toothpaste (peppermint) gives you strength
 }
 
 IcicleArmorBonus: {
-	DisplayName: Icicle Armor Bonus
-	Description: Mods.Coralite.Buffs.IcicleArmorBonus.Description
+	DisplayName: Icicle Cool Down
+	Description:
+		'''
+		You can't use the Iceicle set's magic now!
+		+15% Frosty item damage
+		'''
+}
+
+AlloySpringBuff: {
+	DisplayName: Strengthens Spring
+	Description: Increases damage based on defense while dashing, up to a maximum of 10%
+}
+
+GravitationalCatapultBuff: {
+	DisplayName: Gravitational Catapult Buff
+	Description: Increases damage based on defense while sprinting, up to a maximum of 20%
 }

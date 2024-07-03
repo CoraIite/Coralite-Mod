@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Steel;
@@ -421,6 +422,16 @@ namespace Coralite.Content.ModPlayers
 
             if (Effects.Contains(nameof(ThunderveinNecklace)))
                 target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
+            if (HasEffect(nameof(AlloySpringBuff)))
+            {
+                int defence = (int)Player.statDefense;
+                modifiers.SourceDamage += 0.01f * Math.Clamp(defence / 5, 0, 10);
+            }
+            else if (HasEffect(nameof(GravitationalCatapultBuff)))
+            {
+                int defence = (int)Player.statDefense;
+                modifiers.SourceDamage += 0.01f * Math.Clamp(defence / 5, 0, 20);
+            }
 
             #region 海盗王之魂的效果
             void PriateKingSoulEffect(ref NPC.HitModifiers modifiers)

@@ -161,8 +161,8 @@ ElfBless: {
 }
 
 FriedShrimpBuff: {
-	// DisplayName: Fried Shrimp Buff
-	// Description: Mods.Coralite.Buffs.FriedShrimpBuff.Description
+	DisplayName: 鲜味风暴
+	Description: 好好吃！
 }
 
 ChocomintIceBuff: {
@@ -177,4 +177,14 @@ IcicleArmorBonus: {
 		你现在无法使用冰晶套装的套装魔法！
 		+15% 寒冷物品伤害
 		'''
+}
+
+AlloySpringBuff: {
+	DisplayName: 强化弹力
+	Description: 根据防御增加伤害，最高10%
+}
+
+GravitationalCatapultBuff: {
+	DisplayName: 引力弹射
+	Description: 根据防御增加伤害，最高20%
 }

@@ -22,5 +22,15 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             projectile.damageReduce *= 1.2f;
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.Book)
+                .AddIngredient(ItemID.Hellstone, 8)
+                .AddTile(TileID.Bookcases)
+                .DisableDecraft()
+                .Register();
+        }
     }
 }

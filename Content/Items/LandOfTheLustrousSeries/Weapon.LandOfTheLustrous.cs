@@ -2,6 +2,7 @@
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -77,7 +78,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SpawnParticle(DrawableTooltipLine line)
         {
-            SpawnParticleOnTooltipNormaly(line, Main.DiscoColor, Color.White);
+            SpawnParticleOnTooltipNormaly(line, Main.DiscoColor, Color.Gray);
         }
 
         public override void AddRecipes()
@@ -131,7 +132,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     scale += 0.03f;
                 }
                 else
-                    scale = 0.2f+0.8f*Coralite.Instance.SqrtSmoother.Smoother(timer,60);
+                    scale = 0.2f + 0.8f * Coralite.Instance.SqrtSmoother.Smoother(timer, 60);
 
                 if (timer > 80)
                     active = false;
@@ -163,14 +164,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if ((int)Main.timeForVisualEffects % 30 == 0 && Main.rand.NextBool(2))
             {
-                float length = Main.rand.NextFloat(24, 32);
+                float length = Main.rand.NextFloat(32, 64);
                 Color c = Main.rand.NextFromList(Color.White, PearlProj.brightC, PearlProj.darkC);
-                var cs = CrystalShine.Spawn(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length)
-                     , Helper.NextVec2Dir(0.1f, 0.2f), 5, new Vector2(0.5f, 0.03f) * Main.rand.NextFloat(0.5f, 1f), c);
-                cs.follow = () => Projectile.position - Projectile.oldPos[1];
-                cs.TrailCount = 3;
-                cs.fadeTime = Main.rand.Next(40, 70);
-                cs.shineRange = 12;
+                var p = Particle.NewParticle<HexagramParticle>(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length),
+                     Vector2.UnitX, c, Scale: Main.rand.NextFloat(0.1f, 0.12f));
+                p.follow = () => Projectile.position - Projectile.oldPos[1];
+                p.Rotation = -1.57f;
             }
 
             Lighting.AddLight(Projectile.Center, new Vector3(1.2f));
@@ -178,13 +177,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void Move()
         {
-            Vector2 idlePos = Owner.Center + new Vector2(-Owner.direction*32, -60);
+            Vector2 idlePos = Owner.Center + new Vector2(-Owner.direction * 32, -60);
 
             TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.8f);
             Projectile.Center = Vector2.Lerp(Projectile.Center, TargetPos, 0.8f);
             Projectile.rotation += 0.01f;
 
-            if (Draws.Count>0)
+            if (Draws.Count > 0)
             {
                 for (int i = 0; i < Draws.Count; i++)
                 {
@@ -203,7 +202,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 if ((int)AttackTime % per == 0 && AttackTime > 0)
                 {
                     float angle = Projectile.rotation;
-                    int time = 3- (int)(AttackTime / per);
+                    int time = 3 - (int)(AttackTime / per);
 
                     int recordItemType = itemType;
                     for (int i = 0; i < 10; i++)
@@ -250,7 +249,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void StartAttack()
         {
             base.StartAttack();
-            Draws.Add(new LandOfTheLustrousData(Projectile.rotation));
+            Draws.Add(new LandOfTheLustrousData(Projectile.rotation+1));
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -261,17 +260,28 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             for (int i = 0; i < 5; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    Main.hslToRgb(Main.GlobalTimeWrappedHourly + i * 0.1f, 0.9f, 0.9f) * (0.5f - i * 0.5f / 5), 0, mainTex.Size() / 2, Projectile.scale, 0, 0);
+                    Main.hslToRgb(Main.GlobalTimeWrappedHourly + i * 0.1f, 0.9f, 0.9f) * (0.5f - i * 0.5f / 5), 0, mainTex.Size() / 2, Projectile.scale - i * 0.05f, 0, 0); ;
 
             Projectile.QuickDraw(Color.White, 0, 0);
+
+            float factor1 = MathF.Sin(Main.GlobalTimeWrappedHourly * 4);
+            float factor2 = MathF.Sin((int)Main.timeForVisualEffects * 0.1f);
+            Color c2 = Main.hslToRgb(Main.GlobalTimeWrappedHourly, 0.6f, 0.6f) * (0.2f + factor1 * 0.2f);
+            c2.A = 0;
+
+            for (int i = 0; i < 3; i++)
+            {
+                Main.spriteBatch.Draw(mainTex, Projectile.Center + (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 3).ToRotationVector2() * factor2 * 12 - Main.screenPosition, null,
+                   c2, 0, mainTex.Size() / 2, Projectile.scale * (1.1f + factor2 * 0.3f), 0, 0);
+            }
 
             for (int i = 0; i < Draws.Count; i++)
             {
                 var data = Draws[i];
-                Main.spriteBatch.Draw(haloTex, Projectile.Center - Main.screenPosition, null, Color.White*data.alpha, data.rot, haloTex.Size() / 2
+                Main.spriteBatch.Draw(haloTex, Projectile.Center - Main.screenPosition, null, Color.White * data.alpha, data.rot, haloTex.Size() / 2
                     , data.scale, SpriteEffects.None, 0f);
-                Main.spriteBatch.Draw(haloTex, Projectile.Center - Main.screenPosition, null, new Color(255,255,255,0)*(data.alpha/3), data.rot-0.05f, haloTex.Size() / 2
-                    , data.scale*1.04f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(haloTex, Projectile.Center - Main.screenPosition, null, new Color(255, 255, 255, 0) * (data.alpha / 3), data.rot - 0.05f, haloTex.Size() / 2
+                    , data.scale * 1.04f, SpriteEffects.None, 0f);
             }
 
             //Main.spriteBatch.Draw(haloTex, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, haloTex.Size() / 2
@@ -431,14 +441,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         Timer--;
 
                         if (Timer > 0)
-                            alpha = Coralite.Instance.X2Smoother.Smoother(1 - (Timer - FlyTime / 2) / (FlyTime * 2 / 3));
+                            alpha = Coralite.Instance.X2Smoother.Smoother(1 - Timer / FlyTime);
 
                         if (Timer < 0)
                         {
                             State++;
-                            Projectile.velocity = (Projectile.Center - owner.Center).RotatedBy(1.57f).SafeNormalize(Vector2.Zero) * 12;
+                            Projectile.velocity = (Projectile.Center - owner.Center).RotatedBy(-1.57f).SafeNormalize(Vector2.Zero) * 12;
                             Projectile.extraUpdates = 1;
-                            Projectile.timeLeft = 100 * Projectile.extraUpdates;
+                            Projectile.timeLeft = 110 * Projectile.extraUpdates;
                             Projectile.tileCollide = true;
                             FlyTime = 0;
                             Timer = 0;
@@ -453,7 +463,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                             if (Helper.TryFindClosestEnemy(Projectile.Center, 1200, n => n.CanBeChasedBy(), out NPC t))
                             {
                                 Target = t.whoAmI;
-                                Projectile.timeLeft += 5 * Projectile.MaxUpdates;
+                                Projectile.timeLeft += 10 * Projectile.MaxUpdates;
                             }
                         }
 
@@ -523,7 +533,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Projectile.InitOldRotCache(maxPoint);
                 if (OwnerIndex.GetProjectileOwner(out Projectile owner, Projectile.Kill))
                 {
-                    Timer = 128 / Projectile.velocity.Length();
+                    Timer = 108 / Projectile.velocity.Length();
                     FlyTime = (int)Timer;
                 }
 
@@ -680,7 +690,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (State != 3)
             {
-                Projectile.damage = (int)(Projectile.damage * 0.5f);
+                Projectile.damage = (int)(Projectile.damage * 0.75f);
                 State = 3;
                 Projectile.penetrate = -1;
                 Projectile.timeLeft = 2;
@@ -781,13 +791,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         Color c1 = data.brightC;
                         c1.A = (byte)(i * 0.5f / 5 * 255);
                         spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, null,
-                            c1, Projectile.oldRot[i], origin, Projectile.scale *(0.75f+ i * 0.25f/5), 0, 0);
+                            c1, Projectile.oldRot[i], origin, Projectile.scale * (0.75f + i * 0.25f / 5), 0, 0);
                     }
                 }
             }
 
             Color c = Color.White;
-            c.A = (byte)(70 * alpha);
+            c.A = (byte)(30 * alpha);
             Vector2 pos = Projectile.Center - Main.screenPosition;
             float scale = Projectile.scale * 1.2f;
             for (int i = 0; i < 3; i++)
@@ -795,6 +805,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 spriteBatch.Draw(mainTex, pos + (Main.GlobalTimeWrappedHourly + i * MathHelper.TwoPi / 3).ToRotationVector2() * 2, null, c, Projectile.rotation,
                     origin, scale, 0, 0);
             }
+
             c.A = (byte)(255 * alpha);
             spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation,
                 origin, Projectile.scale, 0, 0);

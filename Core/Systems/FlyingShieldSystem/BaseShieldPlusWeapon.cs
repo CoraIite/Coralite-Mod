@@ -38,7 +38,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     return true;
                 }
 
-                if (player.altFunctionUse == 2||Main.mouseRight)//右键了
+                if (player.altFunctionUse == 2 || Main.mouseRight)//右键了
                 {
                     if (cp.FlyingShieldGuardIndex != -1)
                         return false;

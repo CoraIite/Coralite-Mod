@@ -70,7 +70,7 @@ namespace Coralite.Content.CustomHooks
             float KnockBack = sItem.knockBack;
             int usedAmmoItemId = 0;
             if (sItem.useAmmo > 0)
-               canShoot= player.PickAmmo(sItem, out projToShoot, out speed, out Damage, out KnockBack, out usedAmmoItemId);
+                canShoot = player.PickAmmo(sItem, out projToShoot, out speed, out Damage, out KnockBack, out usedAmmoItemId);
             else
                 canShoot = true;
 

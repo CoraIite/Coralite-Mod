@@ -14,5 +14,15 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             if (player.TryGetModPlayer(out CoralitePlayer cp))
                 cp.FlyingShieldLRMeantime = true;
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.Book)
+                .AddIngredient(ItemID.Bone, 8)
+                .AddTile(TileID.Bookcases)
+                .DisableDecraft()
+                .Register();
+        }
     }
 }
