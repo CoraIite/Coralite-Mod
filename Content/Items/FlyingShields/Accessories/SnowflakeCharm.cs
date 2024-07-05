@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.GlobalItems;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core.Systems.Trails;
@@ -23,6 +24,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             base.SetDefaults();
             Item.damage = 20;
             Item.DamageType = DamageClass.Generic;
+            CoraliteGlobalItem.SetColdDamage(Item);
         }
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)

@@ -4153,3 +4153,13 @@ GravitationalCatapult: {
 		Shield dashing and blocking have become more free
 		'''
 }
+
+ZirconGrail: {
+	DisplayName: Zircon Grail
+	Tooltip: ""
+}
+
+BigMacHamburger: {
+	DisplayName: Big Mac Hamburger
+	Tooltip: ""
+}

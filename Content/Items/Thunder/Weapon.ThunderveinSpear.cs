@@ -30,8 +30,8 @@ namespace Coralite.Content.Items.Thunder
         {
             Item.width = Item.height = 40;
             Item.damage = 65;
-            Item.useTime = 24;
-            Item.useAnimation = 24;
+            Item.useTime = 22;
+            Item.useAnimation = 22;
             Item.knockBack = 2f;
             Item.crit = 10;
 

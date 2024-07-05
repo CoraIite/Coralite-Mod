@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.StrongRed10, Item.sellPrice(0, 33, 10, 8));
-            Item.SetWeaponValues(208, 4, 4);
+            Item.SetWeaponValues(225, 4, 10);
             Item.useTime = Item.useAnimation = 30;
             Item.mana = 25;
 
@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 .AddIngredient<RubyScepter>()
                 .AddIngredient<PeridotTalisman>()
                 .AddIngredient<SapphireHairpin>()
-                //.AddIngredient<SapphireHairpin>()
+                .AddIngredient<TourmalineMonoclastic>()
                 .AddIngredient<TopazMirror>()
                 //.AddIngredient<TopazMirror>()
                 .AddTile<PhantomCrystalBallTile>()

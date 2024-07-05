@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.FairyCatcherSystem;
+﻿using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.ParticleSystem;
 
 namespace Coralite.Core
@@ -11,6 +12,8 @@ namespace Coralite.Core
         public static int ParticleType<T>() where T : Particle => ModContent.GetInstance<T>()?.Type ?? 0;
 
         public static int FairyType<T>() where T : Fairy => ModContent.GetInstance<T>()?.Type ?? 0;
+
+        public static int ComponentType<T>() where T : Component => ModContent.GetInstance<T>()?.ID ?? 0;
 
     }
 }

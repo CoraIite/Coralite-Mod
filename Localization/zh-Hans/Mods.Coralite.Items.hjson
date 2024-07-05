@@ -4218,3 +4218,13 @@ GravitationalCatapult: {
 		让格挡和盾冲更加自由
 		'''
 }
+
+ZirconGrail: {
+	DisplayName: 无色的火彩
+	Tooltip: ""
+}
+
+BigMacHamburger: {
+	DisplayName: 巨无霸汉堡
+	Tooltip: "这是汉堡的王中王"
+}

@@ -68,7 +68,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void SpawnParticle(DrawableTooltipLine line)
         {
-            SpawnParticleOnTooltipNormaly(line, AquamarineProj.brightC, AquamarineProj.highlightC);
+            SpawnParticleOnTooltipNormaly(line, TourmalineProj.brightC, TourmalineProj.highlightC);
         }
 
         public override void AddRecipes()

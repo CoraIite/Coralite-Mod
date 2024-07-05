@@ -641,7 +641,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.width = Projectile.height = 200;
             Projectile.timeLeft = 20;
             Projectile.aiStyle = -1;
-            Projectile.localNPCHitCooldown = 4;
+            Projectile.localNPCHitCooldown = 8;
             Projectile.penetrate = -1;
             Projectile.friendly = true;
             Projectile.netImportant = true;
@@ -655,7 +655,8 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Projectile.ai[0] = Main.rand.NextFloat(6.282f);
             Projectile.localAI[0] += 0.1f;
-            SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, Projectile.Center);
+            if (Main.rand.NextBool(4))
+                SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, Projectile.Center);
         }
 
         public override void AI()

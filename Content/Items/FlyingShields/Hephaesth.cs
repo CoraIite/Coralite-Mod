@@ -855,10 +855,10 @@ namespace Coralite.Content.Items.FlyingShields
                 float a = 1;
                 Color c = GetColor(ref a);
                 Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White * 0.5f, c * 0.7f,
-                    Timer / flyingTime, 0.7f, 0.8f, 0.9f, 1, MathHelper.PiOver4
+                    Timer / flyingTime, 0f, 0.3f, 0.8f, 1, MathHelper.PiOver4
                     , new Vector2(3.5f, 1.5f), Vector2.One);
                 Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, c,
-                    Timer / flyingTime, 0.6f, 0.7f, 0.8f, 0.9f, MathHelper.PiOver4
+                    Timer / flyingTime, 0.4f, 0.6f, 0.9f, 1f, MathHelper.PiOver4
                     , new Vector2(1.5f, 3.5f), Vector2.One);
             }
         }
