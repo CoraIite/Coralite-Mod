@@ -29,8 +29,6 @@
     <None Remove="effects\StarsTrail.fx" />
   </ItemGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Assets\Bosses\SlimeEmperor\" />
     <Folder Include="Assets\Items\Misc_Summon\" />
     <Folder Include="Assets\Walls\Magike\" />
@@ -43,5 +41,8 @@
     <Folder Include="Content\UI\MagikeGuideBook\Chapter5\" />
     <Folder Include="Core\Systems\AstronomySystem\" />
     <Folder Include="Sounds\Shadows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
   </ItemGroup>
 </Project>

@@ -29,11 +29,11 @@ namespace Coralite.Content.Items.Thunder
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 65;
+            Item.damage = 63;
             Item.useTime = 22;
             Item.useAnimation = 22;
             Item.knockBack = 2f;
-            Item.crit = 10;
+            Item.crit = 8;
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Melee;
@@ -537,7 +537,7 @@ namespace Coralite.Content.Items.Thunder
             Projectile.width = Projectile.height = 32;
             Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = false;
-            Projectile.localNPCHitCooldown = 20;
+            Projectile.localNPCHitCooldown = 30;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.penetrate = -1;
             Projectile.friendly = true;

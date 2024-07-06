@@ -13,9 +13,9 @@ namespace Coralite.Content.Items.Thunder
 
         public override void SetDefaults()
         {
-            Item.damage = 65;
-            Item.useTime = 24;
-            Item.useAnimation = 24;
+            Item.damage = 68;
+            Item.useTime = 22;
+            Item.useAnimation = 22;
             Item.knockBack = 7;
             Item.shootSpeed = 15f;
             Item.crit = 10;

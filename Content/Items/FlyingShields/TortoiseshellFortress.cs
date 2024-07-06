@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.FlyingShields
                 .Register();
         }
 
-        public bool Dash(Player Player, int DashDir)
+        public override bool Dash(Player Player, int DashDir)
         {
             Vector2 newVelocity = Player.velocity;
             switch (DashDir)

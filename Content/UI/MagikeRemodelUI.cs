@@ -20,7 +20,6 @@ namespace Coralite.Content.UI
 
         public static bool visible = false;
         public static Vector2 basePos = Vector2.Zero;
-        public static float scale = 1f;
         public static Item currentChooseItem;
 
         public static MagikeFactory_RemodelPool remodelPool = null;
@@ -82,11 +81,10 @@ namespace Coralite.Content.UI
 
         public override void Recalculate()
         {
-            list.Width.Set(52 * 2 * scale + 4, 0f);
+            list.Width.Set(52 * 2 + 4, 0f);
 
             selfSlot.SetContainer(remodelPool);
             //寻找当前物品的合成表
-            scale = ModContent.GetInstance<MagikeUIConfig>().UIScale;
             if (remodelPool is not null)
             {
                 if (remodelPool.containsItem is null || remodelPool.containsItem.IsAir || remodelPool.chooseRecipe == null)
@@ -160,8 +158,8 @@ namespace Coralite.Content.UI
 
         public CraftImage()
         {
-            Width.Set(52 * MagikeRemodelUI.scale, 0f);
-            Height.Set(52 * MagikeRemodelUI.scale, 0f);
+            Width.Set(52 , 0f);
+            Height.Set(52 , 0f);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -173,7 +171,7 @@ namespace Coralite.Content.UI
             Vector2 center = GetDimensions().Center();
 
             Texture2D backTex = TextureAssets.InventoryBack.Value;
-            spriteBatch.Draw(backTex, center, null, Color.White, 0, backTex.Size() / 2, MagikeRemodelUI.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(backTex, center, null, Color.White, 0, backTex.Size() / 2, 1, SpriteEffects.None, 0);
 
             if (showItem != null && !showItem.IsAir)
             {
@@ -187,7 +185,7 @@ namespace Coralite.Content.UI
                     rectangle2 = mainTex.Frame();
 
                 float itemScale = 1f;
-                float pixelWidth = 40 * MagikeRemodelUI.scale;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                float pixelWidth = 40 ;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
                 float pixelHeight = pixelWidth;
                 if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
                 {
@@ -197,8 +195,8 @@ namespace Coralite.Content.UI
                         itemScale = pixelHeight / rectangle2.Height;
                 }
 
-                position.X += 26 * MagikeRemodelUI.scale - rectangle2.Width * itemScale / 2f;
-                position.Y += 26 * MagikeRemodelUI.scale - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
+                position.X += 26  - rectangle2.Width * itemScale / 2f;
+                position.Y += 26 - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
                 position += new Vector2(5, 5);
 
                 spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
@@ -206,7 +204,7 @@ namespace Coralite.Content.UI
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
 
                 if (showItem.stack > 1)
-                    Utils.DrawBorderString(spriteBatch, showItem.stack.ToString(), center + new Vector2(12, 16), Color.White, MagikeRemodelUI.scale, 1, 0.5f);
+                    Utils.DrawBorderString(spriteBatch, showItem.stack.ToString(), center + new Vector2(12, 16), Color.White, 1, 1, 0.5f);
                 if (IsMouseHovering)
                 {
                     Main.HoverItem = showItem.Clone();
@@ -227,8 +225,8 @@ namespace Coralite.Content.UI
         public RemodelItemButton(RemodelRecipe recipe)
         {
             this.recipe = recipe;
-            Width.Set(52 * 2 * MagikeRemodelUI.scale, 0f);
-            Height.Set(52 * MagikeRemodelUI.scale, 0f);
+            Width.Set(52 * 2 , 0f);
+            Height.Set(52 , 0f);
         }
 
         public override void LeftClick(UIMouseEvent evt)
@@ -262,7 +260,7 @@ namespace Coralite.Content.UI
 
             //绘制背景框
             Texture2D backTex = TextureAssets.InventoryBack.Value;
-            spriteBatch.Draw(backTex, position + new Vector2(height, height) / 2, null, drawColor, 0, backTex.Size() / 2, MagikeRemodelUI.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(backTex, position + new Vector2(height, height) / 2, null, drawColor, 0, backTex.Size() / 2, 1, SpriteEffects.None, 0);
 
             #region 绘制物品
             Item showItem = recipe.resultItem;
@@ -280,7 +278,7 @@ namespace Coralite.Content.UI
                     rectangle2 = mainTex.Frame();
 
                 float itemScale = 1f;
-                float pixelWidth = 40 * MagikeRemodelUI.scale;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                float pixelWidth = 40 ;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
                 float pixelHeight = pixelWidth;
                 if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
                 {
@@ -290,15 +288,15 @@ namespace Coralite.Content.UI
                         itemScale = pixelHeight / rectangle2.Height;
                 }
 
-                position.X += 26 * MagikeRemodelUI.scale - rectangle2.Width * itemScale / 2f;
-                position.Y += 26 * MagikeRemodelUI.scale - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
+                position.X += 26 - rectangle2.Width * itemScale / 2f;
+                position.Y += 26  - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
 
                 spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
                 if (showItem.color != default(Color))
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
 
                 if (showItem.stack > 1)
-                    Utils.DrawBorderString(spriteBatch, showItem.stack.ToString(), center + new Vector2(12 - height / 2, 16), Color.White, MagikeRemodelUI.scale, 1, 0.5f);
+                    Utils.DrawBorderString(spriteBatch, showItem.stack.ToString(), center + new Vector2(12 - height / 2, 16), Color.White,1, 1, 0.5f);
                 if (IsMouseHovering)
                 {
                     Main.HoverItem = showItem.Clone();

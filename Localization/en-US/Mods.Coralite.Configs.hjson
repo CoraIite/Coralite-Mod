@@ -96,7 +96,16 @@ VisualEffectConfig: {
 		Tooltip:
 			'''
 			Adjust the particle effects, from 100 to 3000
-			                     Note: can cause lag if particle count is too high
+			Note: can cause lag if particle count is too high
 			'''
+	}
+}
+
+GamePlayConfig: {
+	DisplayName: Game Play Config
+
+	SpecialDashFirst: {
+		Label: Special dash override vanilla dash
+		Tooltip: When enabled, all types of mod dash will completely override vanilla dash.
 	}
 }

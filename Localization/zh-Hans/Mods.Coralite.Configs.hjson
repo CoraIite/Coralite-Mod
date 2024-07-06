@@ -104,3 +104,12 @@ VisualEffectConfig: {
 			'''
 	}
 }
+
+GamePlayConfig: {
+	DisplayName: 玩法效果设置
+
+	SpecialDashFirst: {
+		Label: 特殊冲刺覆盖原版冲刺
+		Tooltip: 启用后模组内的各类冲刺将完全覆盖原版的冲刺
+	}
+}

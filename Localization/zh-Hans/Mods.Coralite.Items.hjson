@@ -4221,10 +4221,15 @@ GravitationalCatapult: {
 
 ZirconGrail: {
 	DisplayName: 无色的火彩
-	Tooltip: ""
+	Tooltip: 发射追踪火焰
 }
 
 BigMacHamburger: {
 	DisplayName: 巨无霸汉堡
-	Tooltip: "这是汉堡的王中王"
+	Tooltip: 这是汉堡的王中王
+}
+
+Afterglow: {
+	DisplayName: 晚霞
+	Tooltip: 点燃木箭
 }

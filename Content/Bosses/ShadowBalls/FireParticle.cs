@@ -10,6 +10,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
         private SpriteEffects effect;
+        public int MaxFrameCount = 5;
+
 
         public override void OnSpawn()
         {
@@ -24,7 +26,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             fadeIn++;
 
-            if (fadeIn % 5 == 0)
+            if (fadeIn % MaxFrameCount == 0)
             {
                 Frame.Y++;
                 if (Frame.Y > 15)

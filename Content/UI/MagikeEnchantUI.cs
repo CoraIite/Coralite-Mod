@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Configs;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
@@ -15,7 +14,6 @@ namespace Coralite.Content.UI
 {
     public class MagikeEnchantUI : BetterUIState
     {
-        public static float scale = 1f;
         public static bool visible = false;
         public static MagikeFactory_EnchantPool tileEntity = null;
         public static SingleItemSlot slot = new SingleItemSlot();
@@ -98,7 +96,6 @@ namespace Coralite.Content.UI
 
         public override void Recalculate()
         {
-            scale = ModContent.GetInstance<MagikeUIConfig>().UIScale;
             slot.SetContainer(tileEntity);
             base.Recalculate();
         }
@@ -110,8 +107,8 @@ namespace Coralite.Content.UI
 
         public EnchantShowPanel()
         {
-            Width.Set(44 * MagikeItemSlotPanel.scale, 0f);
-            Height.Set(44 * MagikeItemSlotPanel.scale, 0f);
+            Width.Set(44 , 0f);
+            Height.Set(44 , 0f);
 
         }
 

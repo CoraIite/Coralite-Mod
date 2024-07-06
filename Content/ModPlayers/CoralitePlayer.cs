@@ -205,9 +205,10 @@ namespace Coralite.Content.ModPlayers
             nianliMax = BaseNianliMax;
         }
 
+
         public override void PreUpdateMovement()
         {
-            UpdateDash();
+            SetStartDash();
         }
 
         public override void PreUpdateBuffs()
@@ -292,6 +293,10 @@ namespace Coralite.Content.ModPlayers
                     d.noGravity = true;
                 }
             }
+
+            //为什么在这里呢，因为在这里才能覆盖掉原版冲刺
+            //所以tml什么时候加个ModDash？？？？
+            UpdateDash();
         }
 
         public override void UpdateLifeRegen()

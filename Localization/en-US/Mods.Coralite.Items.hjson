@@ -4156,10 +4156,15 @@ GravitationalCatapult: {
 
 ZirconGrail: {
 	DisplayName: Zircon Grail
-	Tooltip: ""
+	Tooltip: Fires a tracking flame
 }
 
 BigMacHamburger: {
 	DisplayName: Big Mac Hamburger
-	Tooltip: ""
+	Tooltip: This is the king of the kings of hamburg
+}
+
+Afterglow: {
+	DisplayName: Afterglow
+	Tooltip: Ignite the Wooden Arrow
 }

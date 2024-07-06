@@ -24,9 +24,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.StrongRed10, Item.sellPrice(0, 33, 10, 8));
-            Item.SetWeaponValues(225, 4, 10);
+            Item.SetWeaponValues(235, 4, 12);
             Item.useTime = Item.useAnimation = 30;
-            Item.mana = 25;
+            Item.mana = 23;
 
             Item.shoot = ModContent.ProjectileType<LandOfTheLustrousProj>();
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 .AddIngredient<SapphireHairpin>()
                 .AddIngredient<TourmalineMonoclastic>()
                 .AddIngredient<TopazMirror>()
-                //.AddIngredient<TopazMirror>()
+                .AddIngredient<ZirconGrail>()
                 .AddTile<PhantomCrystalBallTile>()
                 .Register();
         }
@@ -208,7 +208,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     for (int i = 0; i < 10; i++)
                     {
                         itemType = CoraliteWorld.chaosWorld ? itemType = Main.rand.Next(1, ItemLoader.ItemCount)
-                           : -Main.rand.Next(1, (int)LustrousProj.GemType.MagicCrystal);
+                           : -Main.rand.Next(1, (int)LustrousProj.GemType.CrystallineMagike + 1);
                         if (itemType != recordItemType)
                             break;
                     }
@@ -363,9 +363,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Tourmaline,
             /// <summary> 托帕石 </summary>
             Topaz,
-            //锆石,
+            /// <summary> 锆石 </summary>
+            Zircon,
             /// <summary> 魔力水晶 </summary>
             MagicCrystal,
+            /// <summary> 蕴魔水晶 </summary>
+            CrystallineMagike,
         }
 
         public override void Load()
@@ -666,7 +669,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         addC = 0f,
                     };
                 case GemType.Tourmaline:
-                    return new GemDrawData(TextureAssets.Item[ModContent.ItemType<Tourmaline>()].Value, Color.White, Color.Gray, Color.DarkGray);
+                    return new GemDrawData(TextureAssets.Item[ModContent.ItemType<Tourmaline>()].Value
+                        , TourmalineProj.highlightC, TourmalineProj.brightC, TourmalineProj.darkC)
+                    {
+                        scale = new Vector2(1.4f),
+                        lightRange = 0.15f,
+                        lightLimit = 0.55f,
+                        addC = 0.55f,
+                    };
                 case GemType.Topaz:
                     Main.instance.LoadItem(ItemID.Topaz);
                     return new GemDrawData(TextureAssets.Item[ItemID.Topaz].Value
@@ -677,9 +687,22 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         lightLimit = 0.15f,
                         addC = 0.7f,
                     };
+                case GemType.Zircon:
+                    return new GemDrawData(TextureAssets.Item[ModContent.ItemType<Zircon>()].Value
+                        , ZirconProj.highlightC, ZirconProj.brightC, ZirconProj.darkC)
+                    {
+                        scale = new Vector2(1.2f),
+                        lightRange = 0.15f,
+                        lightLimit = 0.45f,
+                        addC = 0.75f,
+                    };
+
                 case GemType.MagicCrystal:
                     return new GemDrawData(TextureAssets.Item[ModContent.ItemType<MagicCrystal>()].Value
                         , Color.White, Coralite.Instance.MagicCrystalPink, Color.DarkMagenta);
+                case GemType.CrystallineMagike:
+                    return new GemDrawData(TextureAssets.Item[ModContent.ItemType<CrystallineMagike>()].Value
+                        , Color.White, Coralite.Instance.CrystallineMagikePurple, Color.DarkBlue);
                 default:
                     return new GemDrawData(Projectile.GetTexture()
                         , Color.White, Color.Gray, Color.DarkGray);
@@ -690,7 +713,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (State != 3)
             {
-                Projectile.damage = (int)(Projectile.damage * 0.75f);
                 State = 3;
                 Projectile.penetrate = -1;
                 Projectile.timeLeft = 2;

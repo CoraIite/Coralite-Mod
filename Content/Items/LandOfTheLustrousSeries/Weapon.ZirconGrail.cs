@@ -1,14 +1,16 @@
-﻿using Coralite.Content.Dusts;
-using Coralite.Content.NPCs.Magike;
+﻿using Coralite.Content.Bosses.ShadowBalls;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
-using Coralite.Core.Configs;
+using Coralite.Core.Systems.ParticleSystem;
+using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
@@ -18,9 +20,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.StrongRed10, Item.sellPrice(0, 24));
-            Item.SetWeaponValues(155, 4, 6);
-            Item.useTime = Item.useAnimation = 35;
-            Item.mana = 12;
+            Item.SetWeaponValues(110, 4, 6);
+            Item.useTime = Item.useAnimation = 37;
+            Item.mana = 18;
 
             Item.shoot = ModContent.ProjectileType<ZirconGrailProj>();
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -136,6 +138,20 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
+                Dust d = Dust.NewDustPerfect(Projectile.Center + new Vector2(Main.rand.Next(-20, 20), -20),
+                    DustID.Torch, -Vector2.UnitY * Main.rand.NextFloat(3, 6));
+                d.noGravity = true;
+
+                if (AttackTime == 1)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                       int p= Projectile.NewProjectileFromThis<ZirconProj>(Projectile.Center+new Vector2(0,-25), -Vector2.UnitY.RotateByRandom(-0.2f, 0.2f) * (12+i*2.5f)
+                            , Owner.GetWeaponDamage(Owner.HeldItem), 5);
+                        Main.projectile[p].localNPCHitCooldown += i ;
+                    }
+                }
+
                 AttackTime--;
             }
         }
@@ -144,8 +160,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             AttackTime = Owner.itemTimeMax;
 
-
-            Helper.PlayPitched("Crystal/CrystalShoot", 0.4f, 0, Projectile.Center);
+            Helper.PlayPitched("Crystal/GemShoot", 0.4f, 0, Projectile.Center);
+            SoundEngine.PlaySound(CoraliteSoundID.FireFork_Item73, Projectile.Center);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -164,220 +180,198 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         }
     }
 
-    public class ZirconProj:ModProjectile,IDrawAdditive
+    public class ZirconProj : ModProjectile, IDrawAdditive, IDrawPrimitive
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "ExtraLaserFlow";
-
-        public ref float BaseLength => ref Projectile.ai[0];
-        public ref float LaserRotation => ref Projectile.ai[1];
-        public ref float Timer => ref Projectile.ai[2];
-
-        public ref float LaserHeight => ref Projectile.localAI[0];
-
-        public Vector2 endPoint;
-        public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);
+        public override string Texture => AssetDirectory.Blank;
 
         public static Color highlightC = Color.White;
         public static Color brightC = new Color(255, 179, 22);
         public static Color darkC = new Color(117, 55, 29);
 
-        public const int TotalAttackTime = 60 + delayTime;
-        public const int delayTime = 15;
+        ref float State => ref Projectile.ai[0];
+        ref float Timer => ref Projectile.ai[1];
+        ref float FlyingTime => ref Projectile.localAI[2];
+
+        private ParticleGroup fireParticles;
+        private Trail trail;
+        private readonly int trailPoint = 16;
+
+        private int chaseTime;
 
         public override void SetDefaults()
         {
             Projectile.DamageType = DamageClass.Magic;
             Projectile.friendly = true;
             Projectile.timeLeft = 400;
-            Projectile.width = Projectile.height = 6;
-            Projectile.penetrate = -1;
+            Projectile.width = Projectile.height = 26;
+            Projectile.penetrate = 7;
             Projectile.tileCollide = false;
-            Projectile.idStaticNPCHitCooldown = 10;
-            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 3;
+            Projectile.usesLocalNPCImmunity = true;
+        }
+
+        public override bool? CanDamage()
+        {
+            if (State > 1)
+            {
+                return false;
+            }
+            return base.CanDamage();
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Projectile.tileCollide = false;
+            Projectile.velocity *= 0;
+            State = 2;
+            return false;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            chaseTime = 0;
+            if (Projectile.penetrate < 3)
+            {
+                State = 2;
+                Projectile.velocity *= 0;
+            }
         }
 
         public override void AI()
         {
-            LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.04f);
-
-            GetEndPoint(160);
-            LaserAI();
-
-            Projectile.UpdateFrameNormally(8, 19);
-        }
-
-        public void GetEndPoint(int count)
-        {
-            for (int k = 0; k < count; k++)
+            if (fireParticles==null)
             {
-                if (k == count - 1)
-                {
-                    Vector2 posCheck2 = Projectile.Center + Vector2.UnitX.RotatedBy(LaserRotation) * k * 16;
-                    endPoint = posCheck2;
-                    break;
-                }
-
-                if (k * 16 < BaseLength)
-                    continue;
-
-                Vector2 posCheck = Projectile.Center + Vector2.UnitX.RotatedBy(LaserRotation) * k * 16;
-
-                if (Helper.PointInTile(posCheck))
-                {
-                    endPoint = posCheck;
-                    break;
-                }
+                fireParticles = new ParticleGroup();
+                Projectile.InitOldPosCache(trailPoint);
+                Projectile.localAI[1] = Main.rand.NextFloat(-0.01f, 0.01f);
+                FlyingTime = 20 * 5;
             }
-        }
 
-        public virtual void LaserAI()
-        {
-            int width = (int)(Projectile.Center - endPoint).Length();
-            Vector2 dir = Vector2.UnitX.RotatedBy(LaserRotation);
-            Color color = RubyProj.brightC;
-
-            do
+            trail ??= new Trail(Main.instance.GraphicsDevice, trailPoint, new NoTip(), factor =>
             {
-                float height = 16 * LaserHeight;
-                float min = width / 140f;
-                float max = width / 120f;
+                if (factor < 0.8f)
+                    return Helper.Lerp(6, 8, factor / 0.8f);
 
-                for (int i = 0; i < width; i += 16)
-                {
-                    Lighting.AddLight(Projectile.position + Vector2.UnitX.RotatedBy(LaserRotation) * i, color.ToVector3() * height * 0.030f);
-                    if (Main.rand.NextBool(50))
+                return Helper.Lerp(12, 0, (factor - 0.8f) / 0.2f);
+            }, ColorFunc1);
+
+            switch (State)
+            {
+                default:
+                case 0://下落
                     {
-                        RubyProj.SpawnTriangleParticle(Projectile.Center + dir * i + Main.rand.NextVector2Circular(8, 8)
-                            , dir * Main.rand.NextFloat(min, max));
-                    }
-                }
-
-                if (Timer > delayTime)
-                {
-                    LaserHeight = Helper.Lerp(0, 1, 1 - (Timer - delayTime) / (TotalAttackTime - delayTime));
-
-                    SpawnLaserParticle();
-                    break;
-                }
-
-                if (Timer == delayTime / 2)
-                {
-                    for (int i = 0; i < width - 128; i += 24)
-                    {
-                        Vector2 pos = Projectile.Center + dir * i + Main.rand.NextVector2Circular(8, 8);
-                        if (Main.rand.NextBool(4))
+                        Lighting.AddLight(Projectile.Center, new Vector3(0.5f));
+                        if (Helper.TryFindClosestEnemy(Projectile.Center, 1000, n => n.CanBeChasedBy() && Projectile.localNPCImmunity.IndexInRange(n.whoAmI) && Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
                         {
-                            if (Main.rand.NextBool())
-                                Dust.NewDustPerfect(pos, ModContent.DustType<GlowBall>(),
-                                    dir * Main.rand.NextFloat(width / 160f), 0, color, 0.35f);
-                            else
-                                RubyProj.SpawnTriangleParticle(pos, dir * Main.rand.NextFloat(width / 160f));
+                            float selfAngle = Projectile.velocity.ToRotation();
+                            float targetAngle = (target.Center - Projectile.Center).ToRotation();
+
+                            Projectile.velocity = selfAngle.AngleLerp(targetAngle, 0.2f + 0.8f * Math.Clamp((chaseTime - 30) / 30, 0, 1f)).ToRotationVector2() * Projectile.velocity.Length();
+                        }
+
+                        SpawnDusts(1 - 0.3f * Timer / FlyingTime);
+
+                        Timer++;
+                        chaseTime++;
+
+                        if (Timer > FlyingTime)
+                        {
+                            State = 1;
+                            Timer = 0;
                         }
                     }
-                }
+                    break;
+                case 1:
+                    {
+                        Projectile.localAI[0] += Projectile.localAI[1];
+                        Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.localAI[0]);
+                        Projectile.velocity *= 0.97f;
 
-                LaserHeight -= 1f / delayTime;
+                        SpawnDusts(0.7f);
 
-            } while (false);
-
-            Timer--;
-            if (Timer < 1)
-                Projectile.Kill();
-        }
-
-        public void SpawnLaserParticle()
-        {
-            if (VisualEffectSystem.HitEffect_Lightning && Main.rand.NextBool(7))
-            {
-                RubyProj.SpawnTriangleParticle(endPoint, Helper.NextVec2Dir(0.5f, 2f));
+                        Lighting.AddLight(Projectile.Center, new Vector3(0.5f));
+                        Timer++;
+                        if (Timer > 15)
+                        {
+                            Projectile.velocity *= 0;
+                            State++;
+                        }
+                    }
+                    break;
+                case 2://他紫砂了
+                    {
+                        if (!fireParticles.Any())
+                        {
+                            Projectile.Kill();
+                            return;
+                        }
+                    }
+                    break;
             }
+
+            Projectile.UpdateOldPosCache();
+            trail.Positions = Projectile.oldPos;
+            fireParticles.UpdateParticles();
         }
 
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        public static Color ColorFunc1(Vector2 factor)
         {
-            if (Timer > delayTime)
+            if (factor.X < 0.7f)
             {
-                float a = 0;
-                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 16, ref a);
+                return Color.Lerp(new Color(0, 0, 0, 0), brightC, factor.X / 0.7f);
             }
 
-            return false;
+            return Color.Lerp(brightC, highlightC, (factor.X - 0.7f) / 0.3f);
         }
 
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        public void SpawnDusts(float factor)
         {
-            Projectile.damage = (int)(Projectile.damage * 0.95f);
+            Color c;
+            int type;
+            type = DustID.OrangeTorch;
+            c = Main.rand.Next(3) switch
+            {
+                1 => darkC,
+                _ =>  brightC,
+            };
+
+            Projectile.SpawnTrailDust(type, Main.rand.NextFloat(0.2f, 0.6f), Scale: Main.rand.NextFloat(1f, 2f));
+
+            float angle = Projectile.velocity.AngleFrom(Projectile.oldVelocity);
+            float rate = MathHelper.Clamp(0.4f - Math.Abs(angle) / 5, 0, 0.4f);
+            if (Main.rand.NextBool())
+            {
+                var p = fireParticles.NewParticle<FireParticle>(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
+                     (Projectile.velocity * factor * Main.rand.NextFloat(rate * 0.7f, rate * 1.3f + 0.001f)).RotatedBy(Main.rand.NextFloat(-0.05f, 0.05f))
+                    , c, Main.rand.NextFloat(0.2f, 0.6f));
+                p.MaxFrameCount = 2;
+            }
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
 
-        public virtual void DrawAdditive(SpriteBatch spriteBatch)
+        public void DrawAdditive(SpriteBatch spriteBatch)
         {
-            Texture2D laserTex = Projectile.GetTexture();
-            Texture2D flowTex = CrystalLaser.LaserBodyTex.Value;
+            fireParticles?.DrawParticles(Main.spriteBatch);
+        }
 
-            rand += LaserRotation.ToRotationVector2() * 3;
-            Color color = RubyProj.darkC;
+        public void DrawPrimitives()
+        {
+            if (State == 2 || trail == null)
+                return;
 
-            float height = LaserHeight * laserTex.Height / 5f;
-            int width = (int)(Projectile.Center - endPoint).Length();   //这个就是激光长度
+            Effect effect = Filters.Scene["Flow2"].GetShader().Shader;
 
-            Vector2 startPos = Projectile.Center;
-            Vector2 endPos = endPoint - Main.screenPosition;
+            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 5);
+            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
+            effect.Parameters["uTextImage"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaserFlow").Value);
 
-            var laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, (int)(height));
-            var flowTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, (int)(height * 0.55f));
+            Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
 
-            var laserSource = new Rectangle((int)(Projectile.timeLeft / 20f * laserTex.Width), 0, laserTex.Width, laserTex.Height);
-            var flowSource = new Rectangle((int)(Projectile.timeLeft / 45f * flowTex.Width), 0, flowTex.Width, flowTex.Height);
+            trail.Render(effect);
 
-            var origin = new Vector2(0, laserTex.Height / 2);
-            var origin2 = new Vector2(0, flowTex.Height / 2);
-
-            Helper.DrawCrystal(spriteBatch, Projectile.frame, Projectile.Center + rand, Vector2.One * 0.8f
-                , (float)Main.timeForVisualEffects * 0.02f + Projectile.whoAmI / 3f
-                , RubyProj.highlightC, RubyProj.brightC, RubyProj.darkC, () =>
-                {
-                    //绘制流动效果
-                    spriteBatch.Draw(laserTex, laserTarget, laserSource, Color.White, LaserRotation, origin, 0, 0);
-                    spriteBatch.Draw(flowTex, flowTarget, flowSource, Color.White * 0.2f, LaserRotation, origin2, 0, 0);
-                }, sb =>
-                {
-                    spriteBatch.End();
-                    spriteBatch.Begin(default, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-                }, 0.1f, 0.35f, 0f);
-
-            //绘制主体光束
-            Texture2D bodyTex = CrystalLaser.LaserBodyTex.Value;
-
-            color = RubyProj.brightC;
-
-            startPos = Projectile.Center - Main.screenPosition;
-
-            laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, (int)(height * 0.65f));
-            spriteBatch.Draw(bodyTex, laserTarget, laserSource, color, LaserRotation, new Vector2(0, bodyTex.Height / 2), 0, 0);
-            spriteBatch.Draw(bodyTex, laserTarget, laserSource, color, LaserRotation, new Vector2(0, bodyTex.Height / 2), 0, 0);
-
-            //绘制用于遮盖首尾的亮光
-            Texture2D glowTex = CrystalLaser.GlowTex.Value;
-            Texture2D starTex = CrystalLaser.StarTex.Value;
-
-            float factor = Timer / 10;
-            float fadeFactor = Math.Abs(factor - MathF.Truncate(factor));
-            float rot = ((int)factor) * MathHelper.TwoPi / 3;
-
-            for (int i = 0; i < 5; i++)
-            {
-                spriteBatch.Draw(glowTex, endPos, null, color * (height * 0.2f), LaserRotation + i * 0.785f, glowTex.Size() / 2, height * 0.05f * new Vector2(0.5f, 0.1f), 0, 0);
-            }
-
-            spriteBatch.Draw(glowTex, startPos, null, color * (height * 0.06f), 0, glowTex.Size() / 2, 0.5f, 0, 0);
-
-            for (int i = 0; i < 3; i++)
-            {
-                Helper.DrawPrettyStarSparkle(1, 0, startPos, color, Color.White
-                , fadeFactor, 0, 0.25f, 0.75f, 1, rot, new Vector2(4f, 2f), Vector2.One);
-            }
+            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
         }
     }
+
 }

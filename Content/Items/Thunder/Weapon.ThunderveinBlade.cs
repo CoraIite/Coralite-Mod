@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Thunder
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 60;
+            Item.damage = 63;
             Item.useTime = 22;
             Item.useAnimation = 22;
             Item.knockBack = 2f;
@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.Thunder
                         Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(), damage, knockback, player.whoAmI, useCount);
                         break;
                     case 2:
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(), (int)(damage * 1.25f), knockback, player.whoAmI, useCount);
+                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(), (int)(damage * 1.35f), knockback, player.whoAmI, useCount);
 
                         break;
                 }

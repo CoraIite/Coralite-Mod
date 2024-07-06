@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Thunder
             Item.useTime = 21;
             Item.useAnimation = 21;
             Item.knockBack = 7;
-            Item.crit = 10;
+            Item.crit = 12;
             Item.mana = 10;
             Item.shootSpeed = 3;
 

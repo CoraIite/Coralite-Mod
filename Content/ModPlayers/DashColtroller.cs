@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Configs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -17,23 +18,56 @@ namespace Coralite.Content.ModPlayers
         public int DashDelay = 0;
         public int DashTimer = 0;
 
+        public bool JustStartDash;
+        public Vector2 DashStartVelocity;
+
         public StatModifier DashDelayModifyer = StatModifier.Default;
 
-        public bool UsingVanillaDash() => Player.dashType != 0 || Player.setSolar || Player.mount.Active;
+        public bool UsingVanillaDash() => Player.dashType != 0;
+
+        public void BanVanillaDash()
+        {
+            Player.dashType = 0;
+            Player.dash = 0;
+            //Player.setSolar = false;
+        }
 
         public void UpdateDash()
         {
-            if (DashDelay == 0 && DashDir != -1 && Player.grappling[0] == -1 && !Player.tongued)
+            if (DashDelay == 0 && DashDir != -1 && Player.grappling[0] == -1 && !Player.tongued && !Player.mount.Active)
                 do
                 {
-                    if (UsingVanillaDash())
-                        break;
+                    if (GamePlaySystem.SpecialDashFirst)
+                    {
+                        if (HeldItemDash())
+                        {
+                            BanVanillaDash();
+                            OnJustStartDash();
+                            break;
+                        }
 
-                    if (HeldItemDash())
-                        break;
-
-                    if (AccessoryDash())
-                        break;
+                        if (AccessoryDash())
+                        {
+                            BanVanillaDash();
+                            OnJustStartDash();
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (UsingVanillaDash())
+                            break;
+                        if (HeldItemDash())
+                        {
+                            OnJustStartDash();
+                            break;
+                        }
+                        if (AccessoryDash())
+                        {
+                            OnJustStartDash();
+                            break;
+                        }
+                    }
 
                 } while (false);
 
@@ -49,8 +83,31 @@ namespace Coralite.Content.ModPlayers
 
             if (DashTimer > 0)
             {
-                Player.armorEffectDrawShadowEOCShield = true;
+                if (GamePlaySystem.SpecialDashFirst)
+                    BanVanillaDash();
+
                 DashTimer--;
+            }
+        }
+
+        /// <summary>
+        /// 记录下玩家速度
+        /// </summary>
+        public void OnJustStartDash()
+        {
+            JustStartDash = true;
+            DashStartVelocity = Player.velocity;
+        }
+
+        /// <summary>
+        /// 开始冲刺时直接设定玩家速度
+        /// </summary>
+        public void SetStartDash()
+        {
+            if (JustStartDash)
+            {
+                JustStartDash = false;
+                Player.velocity = DashStartVelocity;
             }
         }
 

@@ -70,6 +70,8 @@ namespace Coralite.Core.Systems.ParticleSystem
             _particles.Add(particle);
         }
 
+        public bool Any() => _particles.Count > 0;
+
         public void UpdateParticles()
         {
             if (Main.netMode == NetmodeID.Server)//不在服务器上运行

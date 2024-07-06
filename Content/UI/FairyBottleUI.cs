@@ -298,7 +298,7 @@ namespace Coralite.Content.UI
                 backTex = TextureAssets.InventoryBack11.Value;
             }
 
-            spriteBatch.Draw(backTex, center, null, Color.White, 0, backTex.Size() / 2, MagikeItemSlotPanel.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(backTex, center, null, Color.White, 0, backTex.Size() / 2, 1, SpriteEffects.None, 0);
 
             if (Item is not null && !Item.IsAir)
             {
@@ -312,7 +312,7 @@ namespace Coralite.Content.UI
                     rectangle2 = mainTex.Frame();
 
                 float itemScale = 1f;
-                float pixelWidth = 40 * MagikeItemSlotPanel.scale;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                float pixelWidth = 40 ;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
                 float pixelHeight = pixelWidth;
                 if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
                 {
@@ -330,7 +330,7 @@ namespace Coralite.Content.UI
                     spriteBatch.Draw(mainTex, center, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, rectangle2.Size() / 2, itemScale, 0, 0f);
 
                 if (Item.stack > 1)
-                    Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), center + new Vector2(12, 16), Color.White, MagikeItemSlotPanel.scale, 1, 0.5f);
+                    Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), center + new Vector2(12, 16), Color.White, 1, 1, 0.5f);
                 if (IsMouseHovering)
                 {
                     Main.HoverItem = Item.Clone();
