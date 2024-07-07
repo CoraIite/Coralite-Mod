@@ -98,13 +98,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 .AddIngredient(ItemID.HolyWater)
                 .AddTile<MagicCraftStation>()
                 .Register();
-
-            CreateRecipe()
-                .AddIngredient(ItemID.WhitePearl)
-                .AddIngredient(ItemID.GelBalloon, 12)
-                .AddIngredient(ItemID.HolyWater)
-                .AddTile<MagicCraftStation>()
-                .Register();
         }
     }
 

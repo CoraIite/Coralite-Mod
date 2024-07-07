@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Lime7, Item.sellPrice(0, 11));
-            Item.SetWeaponValues(75, 4);
+            Item.SetWeaponValues(78, 4,2);
             Item.useTime = Item.useAnimation = 30;
             Item.mana = 20;
 
@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             CreateRecipe()
                 .AddIngredient<Peridot>()
-                .AddIngredient(ItemID.Ectoplasm, 12)
+                .AddIngredient(ItemID.SpectreBar, 8)
                 .AddIngredient<RegrowthTentacle>()
                 .AddTile<MagicCraftStation>()
                 .Register();

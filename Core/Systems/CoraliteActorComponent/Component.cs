@@ -4,18 +4,11 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
 {
     //并非完全的ECS系统
     //继承后加载
-    public abstract class Component : ModType
+    public abstract class Component
     {
         //正在考虑加入“可拆卸”的属性
 
-        public int ID { get; private set; }
-
-        public virtual Component NewInstance()
-        {
-            var inst = (Component)Activator.CreateInstance(GetType(), true);
-            inst.ID = ID;
-            return inst;
-        }
+        public abstract int ID { get; }
 
         public virtual void OnAdd(IEntity entity) { }
         public virtual void OnRemove(IEntity entity) { }

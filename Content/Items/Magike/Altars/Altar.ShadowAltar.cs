@@ -38,6 +38,12 @@ namespace Coralite.Content.Items.Magike.Altars
 
             CreateRecipe()
                 .AddIngredient<GlistentAltar>()
+                .AddIngredient(ItemID.Bone)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient<GlistentAltar>()
                 .AddIngredient<ShadowCrystal>(3)
                 .AddTile(TileID.Anvils)
                 .Register();

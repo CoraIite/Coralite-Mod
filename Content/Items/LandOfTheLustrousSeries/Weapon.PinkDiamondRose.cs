@@ -19,8 +19,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Orange3, Item.sellPrice(0, 5));
-            Item.SetWeaponValues(30, 4);
-            Item.useTime = Item.useAnimation = 35;
+            Item.SetWeaponValues(33, 4,2);
+            Item.useTime = Item.useAnimation = 33;
             Item.mana = 12;
 
             Item.shoot = ModContent.ProjectileType<PinkDiamondRoseProj>();
@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             CreateRecipe()
                 .AddIngredient<PinkDiamond>()
-                .AddIngredient(ItemID.BorealWood, 12)
+                .AddIngredient(ItemID.Bone, 12)
                 .AddIngredient(ItemID.FlowerPacketPink)
                 .AddTile<MagicCraftStation>()
                 .Register();
