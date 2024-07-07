@@ -13,9 +13,7 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         /// <summary>
         /// 遍历更新组件的地方
         /// </summary>
-        LinkedList<Component> ComponentsCache { get; }
-
-        int MaxComponent { get; }
+        List<Component> ComponentsCache { get; }
 
         public bool HasComponent(int componentId)
             => Components[componentId] != null;
@@ -25,19 +23,14 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         /// </summary>
         /// <param name="component"></param>
         /// <returns></returns>
-        public bool AddComponent(Component component)
+        void AddComponent(Component component)
         {
-            //如果超过限制就不加入
-            if (ComponentsCache.Count >= MaxComponent)
-                return false;
-
-            Components[component.ID] ??= [];
+            Components[component.ID] ??= new List<Component>();
             Components[component.ID].Add(component);
 
-            ComponentsCache.AddLast(component);
+            ComponentsCache.Add(component);
 
             component.OnAdd(this);
-            return true;
         }
 
         /// <summary>
@@ -92,6 +85,5 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
 
             return (T)Components[index].First();
         }
-
     }
 }

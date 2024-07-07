@@ -1,4 +1,5 @@
 ﻿using System;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.CoraliteActorComponent
 {
@@ -14,5 +15,8 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         public virtual void OnRemove(IEntity entity) { }
 
         public abstract void Update(IEntity entity);
+
+        public virtual void SaveData(string preName,TagCompound tag) { }
+        public virtual void LoadData(string preName, TagCompound tag) { }
     }
 }
