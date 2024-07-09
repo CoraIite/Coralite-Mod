@@ -28,7 +28,6 @@ namespace Coralite.Content.Items.Misc_Shoot
             Owner.direction = dir = TargetRot.ToRotationVector2().X > 0 ? 1 : -1;
             TargetRot += Owner.direction > 0 ? 0f : MathHelper.Pi;  //固定角度
 
-            HeldPositionX = heldPositionX;
             Projectile.netUpdate = true;
         }
 

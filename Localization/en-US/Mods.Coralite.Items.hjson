@@ -4168,3 +4168,8 @@ Afterglow: {
 	DisplayName: Afterglow
 	Tooltip: Ignite the Wooden Arrow
 }
+
+SurviveAndPerish: {
+	DisplayName: Survive And Perish
+	Tooltip: ""
+}

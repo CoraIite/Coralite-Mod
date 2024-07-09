@@ -4233,3 +4233,8 @@ Afterglow: {
 	DisplayName: 晚霞
 	Tooltip: 点燃木箭
 }
+
+SurviveAndPerish: {
+	// DisplayName: Survive And Perish
+	// Tooltip: ""
+}

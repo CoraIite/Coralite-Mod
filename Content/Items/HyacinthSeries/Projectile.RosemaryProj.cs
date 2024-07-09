@@ -28,17 +28,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                     TargetRot = 0.0001f;
             }
 
-            //Projectile.localAI[1] += 1;
-            HeldPositionX = heldPositionX;
             Projectile.netUpdate = true;
-        }
-
-        public override void ModifyAI(float factor)
-        {
-            //if (Projectile.localAI[1] > 2)
-            //    return;
-            //if (Projectile.timeLeft < 2)
-            //    Initialize();
         }
     }
 
@@ -59,7 +49,6 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
 
             Projectile.localAI[1] += 1;
-            HeldPositionX = heldPositionX;
             Projectile.netUpdate = true;
         }
 

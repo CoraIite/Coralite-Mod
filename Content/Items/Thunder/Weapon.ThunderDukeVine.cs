@@ -104,15 +104,10 @@ namespace Coralite.Content.Items.Thunder
         {
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override void GetFrame(Texture2D mainTex, out Rectangle? frame, out Vector2 origin)
         {
-            Texture2D mainTex = Projectile.GetTexture();
-
-            var frameBox = mainTex.Frame(1, 15, 0, (int)Frame);
-            var origin = frameBox.Size() / 2;
-            SpriteEffects effects = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor, Projectile.rotation, origin, Projectile.scale, effects, 0f);
-            return false;
+            frame = mainTex.Frame(1, 15, 0, (int)Frame);
+            origin = frame.Value.Size() / 2;
         }
     }
 

@@ -9,24 +9,24 @@ namespace Coralite.Core.Prefabs.Projectiles
     /// 命名规则："XXX" + "HeldProj"
     /// ai0和ai1已使用
     /// </summary>
-    public abstract class BaseGunHeldProj : BaseHeldProj
+    public abstract class BaseGunHeldProj(float recoilAngle, float heldPositionX, float recoilLength, string texturePath, bool pathHasName = false) : BaseHeldProj
     {
-        protected readonly float heldPositionX;
-        protected readonly float recoilAngle;
-        protected readonly float recoilLength;
-        private readonly string TexturePath;
-        private readonly bool PathHasName;
+        protected readonly float recoilAngle = recoilAngle;
+        protected readonly float recoilLength = recoilLength;
 
         /// <summary> 目标角度 </summary>
         protected ref float TargetRot => ref Projectile.ai[0];
         /// <summary> 总时间 </summary>
         protected ref float MaxTime => ref Projectile.ai[1];
 
-        protected ref float HeldPositionX => ref Projectile.localAI[0];
+        protected readonly float heldPositionX = heldPositionX;
+
+        protected float HeldPositionX { get; set; } = heldPositionX;
+        protected virtual float HeldPositionY { get; set; }
 
         public bool initialized;
 
-        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : (TexturePath + (PathHasName ? string.Empty : Name)).Replace("HeldProj", "");
+        public override string Texture => string.IsNullOrEmpty(texturePath) ? base.Texture : (texturePath + (pathHasName ? string.Empty : Name)).Replace("HeldProj", "");
 
         public override void SetDefaults()
         {
@@ -34,19 +34,11 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.timeLeft = 10;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
+            Projectile.hide = true;
         }
 
         public override bool? CanDamage() => false;
         public override bool ShouldUpdatePosition() => false;
-
-        protected BaseGunHeldProj(float recoilAngle, float heldPositionX, float recoilLength, string texturePath, bool pathHasName = false)
-        {
-            this.recoilAngle = recoilAngle;
-            this.heldPositionX = heldPositionX;
-            this.recoilLength = recoilLength;
-            TexturePath = texturePath;
-            PathHasName = pathHasName;
-        }
 
         public sealed override void AI()
         {
@@ -72,7 +64,6 @@ namespace Coralite.Core.Prefabs.Projectiles
                 TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (OwnerDirection > 0 ? 0f : MathHelper.Pi);
             }
 
-            HeldPositionX = heldPositionX;
             Projectile.netUpdate = true;
         }
 
@@ -91,7 +82,9 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Projectile.rotation = TargetRot - OwnerDirection * factor * recoilAngle;
             HeldPositionX = heldPositionX + factor * recoilLength;
-            Projectile.Center = Owner.Center + OwnerDirection * Projectile.rotation.ToRotationVector2() * HeldPositionX;
+            Projectile.Center = Owner.Center
+                + OwnerDirection * Projectile.rotation.ToRotationVector2() * HeldPositionX
+                + (Projectile.rotation - OwnerDirection * 1.57f).ToRotationVector2() * HeldPositionY;
         }
 
         public virtual void ModifyAI(float factor) { }
@@ -106,9 +99,18 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Texture2D mainTex = Projectile.GetTexture();
 
+            GetFrame(mainTex, out Rectangle? frame,out Vector2 origin);
+
             SpriteEffects effects = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, effects, 0f);
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frame, lightColor
+                , Projectile.rotation, origin, Projectile.scale, effects, 0f);
             return false;
+        }
+
+        public virtual void GetFrame(Texture2D mainTex,out Rectangle? frame,out Vector2 origin)
+        {
+            frame = null;
+            origin = mainTex.Size() / 2;
         }
     }
 }
