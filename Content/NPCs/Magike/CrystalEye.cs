@@ -1,8 +1,7 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Items.Banner;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
-using Coralite.Content.Items.Magike;
-using Coralite.Content.Items.Magike.OtherPlaceables;
+using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;

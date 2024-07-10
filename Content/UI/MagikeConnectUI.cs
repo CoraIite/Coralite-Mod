@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.Magike.Tools;
+﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;

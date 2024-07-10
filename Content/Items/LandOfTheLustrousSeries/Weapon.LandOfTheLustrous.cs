@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.Magike;
+using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Configs;

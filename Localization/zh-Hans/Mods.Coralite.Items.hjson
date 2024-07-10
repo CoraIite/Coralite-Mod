@@ -4235,6 +4235,11 @@ Afterglow: {
 }
 
 SurviveAndPerish: {
-	// DisplayName: Survive And Perish
-	// Tooltip: ""
+	DisplayName: 生存与毁灭
+	Tooltip: ""
+}
+
+CrystallineBrick: {
+	DisplayName: 蕴魔砖
+	Tooltip: ""
 }

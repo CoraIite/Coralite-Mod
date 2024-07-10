@@ -10,7 +10,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Magike
+namespace Coralite.Content.Items.MagikeSeries1
 {
     public class Page_MagikeBase : ModItem
     {

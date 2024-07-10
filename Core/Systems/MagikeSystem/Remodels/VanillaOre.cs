@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.Magike.OtherPlaceables;
+﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core.Systems.MagikeSystem.CraftConditions;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;

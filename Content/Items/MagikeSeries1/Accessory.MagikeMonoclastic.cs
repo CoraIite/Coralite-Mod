@@ -3,7 +3,7 @@ using Coralite.Content.Raritys;
 using Coralite.Core;
 using Terraria;
 
-namespace Coralite.Content.Items.Magike.Tools
+namespace Coralite.Content.Items.MagikeSeries1
 {
     [AutoloadEquip(EquipType.Face)]
     public class MagikeMonoclastic : ModItem

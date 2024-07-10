@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ObjectData;
 
-namespace Coralite.Content.Items.Magike.OtherPlaceables
+namespace Coralite.Content.Items.MagikeSeries1
 {
     public class MagicCrystalMusicBox : ModItem
     {

@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.Magike.OtherPlaceables;
+﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;

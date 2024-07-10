@@ -1,6 +1,6 @@
 ﻿using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.Magike;
-using Coralite.Content.Items.Magike.Tools;
+using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Tiles.Magike;
 using Terraria;
 using Terraria.ID;

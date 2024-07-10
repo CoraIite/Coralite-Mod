@@ -100,6 +100,10 @@ namespace Coralite.Core
         public const string BotanicalItems = Items + "Botanical/";
 
         public const string MagikeItems = Items + "Magike/";
+
+        public const string MagikeSeries1Item = Items + "MagikeSeries1/";
+        public const string MagikeSeries2Item = Items + "MagikeSeries2/";
+
         public const string MagikeTools = MagikeItems + "Tools/";
         public const string MagikeLens = MagikeItems + "Lens/";
         public const string MagikeColumns = MagikeItems + "Columns/";
@@ -161,6 +165,10 @@ namespace Coralite.Core
 
 
         public const string MagikeTiles = Tiles + "Magike/";
+
+        public const string MagikeSeries1Tile = Tiles + "MagikeSeries1/";
+        public const string MagikeSeries2Tile = Tiles + "MagikeSeries2/";
+
         public const string MagikeLensTiles = MagikeTiles + "Lens/";
         public const string MagikeEnchantPoolTiles = MagikeTiles + "EnchantPool/";
         public const string MagikeRemodelPoolTiles = MagikeTiles + "RemodelPool/";

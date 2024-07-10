@@ -34,6 +34,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
             return Place(i, j);
         }
 
+        public BaseMagikeTileEntity()
+        {
+            InitializeComponentCache();
+            InitializeBeginningComponent();
+        }
+
         /// <summary>
         /// 初始化用于存储组件的字典和数组
         /// </summary>
@@ -42,6 +48,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
             Components = new Dictionary<int, List<Component>>();
             ComponentsCache = new List<Component>();
         }
+
+        /// <summary>
+        /// 初始化起始时的组件
+        /// </summary>
+        public abstract void InitializeBeginningComponent();
 
         #region 数据存储
 

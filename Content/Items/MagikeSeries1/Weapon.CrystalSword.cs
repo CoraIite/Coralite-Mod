@@ -10,7 +10,7 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Magike.Tools
+namespace Coralite.Content.Items.MagikeSeries1
 {
     public class CrystalSword : BaseMagikeChargeableItem
     {
@@ -79,8 +79,8 @@ namespace Coralite.Content.Items.Magike.Tools
             int num18 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.RainbowMk2, 0f, 0f, 100, new Color(162, 42, 131), 1f);
             Main.dust[num18].velocity *= 0.1f;
             Main.dust[num18].velocity += Projectile.velocity * 0.2f;
-            Main.dust[num18].position.X = Projectile.Center.X + 4f + (float)Main.rand.Next(-4, 4);
-            Main.dust[num18].position.Y = Projectile.Center.Y + (float)Main.rand.Next(-4, 4);
+            Main.dust[num18].position.X = Projectile.Center.X + 4f + Main.rand.Next(-4, 4);
+            Main.dust[num18].position.Y = Projectile.Center.Y + Main.rand.Next(-4, 4);
             Main.dust[num18].noGravity = true;
 
             Projectile.rotation = Projectile.velocity.ToRotation();

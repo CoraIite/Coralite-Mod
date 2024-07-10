@@ -72,6 +72,9 @@ namespace Coralite.Content.Items.GlobalItems
                 case ItemID.Coal:
                     item.maxStack = Item.CommonMaxStack;
                     break;
+                case ItemID.Dynamite: //雷管当弹药
+                    item.ammo = ItemID.Dynamite;
+                    break;
                 case ItemID.Meowmere:
                     if (item.Variant == ItemVariants.WeakerVariant)
                     {

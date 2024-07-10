@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Magike.Tools
+namespace Coralite.Content.Items.MagikeSeries1
 {
     public class MagikeActivator : ModItem
     {

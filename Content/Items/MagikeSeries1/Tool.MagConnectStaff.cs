@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ObjectData;
 
-namespace Coralite.Content.Items.Magike.Tools
+namespace Coralite.Content.Items.MagikeSeries1
 {
     public class MagConnectStaff : ModItem
     {

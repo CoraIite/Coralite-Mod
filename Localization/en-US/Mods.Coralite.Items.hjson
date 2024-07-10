@@ -4173,3 +4173,8 @@ SurviveAndPerish: {
 	DisplayName: Survive And Perish
 	Tooltip: ""
 }
+
+CrystallineBrick: {
+	DisplayName: Crystalline Brick
+	Tooltip: ""
+}

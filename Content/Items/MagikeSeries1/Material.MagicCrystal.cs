@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.Items.Magike;
+using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
@@ -7,11 +8,11 @@ using Coralite.Helpers;
 using System.Collections.Generic;
 using Terraria;
 
-namespace Coralite.Content.Items.Magike
+namespace Coralite.Content.Items.MagikeSeries1
 {
     public class MagicCrystal : BaseMaterial, IMagikeRemodelable
     {
-        public MagicCrystal() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 1), ModContent.RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeItems)
+        public MagicCrystal() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 1), ModContent.RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeSeries1Item)
         { }
 
         public override void SetDefaults()

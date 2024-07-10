@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.Magike.OtherPlaceables;
+﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Configs;

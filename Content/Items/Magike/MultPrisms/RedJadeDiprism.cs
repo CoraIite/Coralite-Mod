@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.RedJades;
+﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Items.RedJades;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;

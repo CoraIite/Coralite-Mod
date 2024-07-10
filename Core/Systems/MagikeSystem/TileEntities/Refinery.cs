@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.Magike;
+﻿using Coralite.Content.Items.MagikeSeries1;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {

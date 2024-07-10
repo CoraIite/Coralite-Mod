@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.Magike.OtherPlaceables;
+﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -10,7 +10,7 @@ namespace Coralite.Content.Items.Magike
 {
     public class CrystalCrate : ModItem
     {
-        public override string Texture => AssetDirectory.MagikeItems + Name;
+        public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 
         public override void SetStaticDefaults()
         {

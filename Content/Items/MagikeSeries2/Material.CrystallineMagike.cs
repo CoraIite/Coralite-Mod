@@ -10,7 +10,7 @@ namespace Coralite.Content.Items.Magike
 {
     public class CrystallineMagike : BaseMaterial, IMagikeRemodelable
     {
-        public CrystallineMagike() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 1), ModContent.RarityType<CrystallineMagikeRarity>(), AssetDirectory.MagikeItems)
+        public CrystallineMagike() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 1), ModContent.RarityType<CrystallineMagikeRarity>(), AssetDirectory.MagikeSeries2Item)
         { }
 
         public override void SetDefaults()

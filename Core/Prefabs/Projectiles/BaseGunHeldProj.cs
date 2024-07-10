@@ -84,7 +84,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             HeldPositionX = heldPositionX + factor * recoilLength;
             Projectile.Center = Owner.Center
                 + OwnerDirection * Projectile.rotation.ToRotationVector2() * HeldPositionX
-                + (Projectile.rotation - OwnerDirection * 1.57f).ToRotationVector2() * HeldPositionY;
+                + (Projectile.rotation +  1.57f).ToRotationVector2() * HeldPositionY;
         }
 
         public virtual void ModifyAI(float factor) { }

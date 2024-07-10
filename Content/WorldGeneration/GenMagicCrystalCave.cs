@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.Magike;
+﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Tiles.Magike;
 using Coralite.Content.Walls.Magike;
 using Coralite.Content.WorldGeneration.Generators;

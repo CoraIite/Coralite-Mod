@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Magike;
+using Coralite.Content.Items.MagikeSeries1;
 using Terraria;
 using Terraria.DataStructures;
 using static Terraria.ModLoader.ModContent;

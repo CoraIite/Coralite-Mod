@@ -175,7 +175,7 @@ namespace Coralite.Content.Tiles.Magike
                 player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "玄武岩箱";
                 if (player.cursorItemIconText == "玄武岩箱")
                 {
-                    player.cursorItemIconID = ModContent.ItemType<Items.Magike.OtherPlaceables.BasaltChest>();
+                    player.cursorItemIconID = ModContent.ItemType<Coralite.Content.Items.MagikeSeries1.BasaltChest>();
 
                     player.cursorItemIconText = "";
                 }

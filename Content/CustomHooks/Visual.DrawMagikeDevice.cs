@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.Magike.Tools;
+﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;

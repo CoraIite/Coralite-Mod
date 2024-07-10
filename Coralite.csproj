@@ -38,6 +38,7 @@
     <Folder Include="Content\Items\Magike\Accessorys\" />
     <Folder Include="Content\Items\Misc_Summon\" />
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />
+    <Folder Include="Content\Tiles\MagikeSeries1\" />
     <Folder Include="Content\UI\MagikeGuideBook\Chapter5\" />
     <Folder Include="Core\Systems\AstronomySystem\" />
     <Folder Include="Sounds\Shadows\" />

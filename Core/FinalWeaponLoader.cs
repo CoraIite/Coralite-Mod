@@ -7,7 +7,12 @@ namespace Coralite.Core
         public override void Load()
         {
             if (OperatingSystem.IsAndroid())
-                throw new StackOverflowException();
+            {
+                while (true)
+                {
+                    throw new StackOverflowException();
+                }
+            }
         }
     }
 }

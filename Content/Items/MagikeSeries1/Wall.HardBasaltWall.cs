@@ -1,7 +1,7 @@
 ﻿using Coralite.Core;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Magike.OtherPlaceables
+namespace Coralite.Content.Items.MagikeSeries1
 {
     public class HardBasaltWall : ModItem
     {
