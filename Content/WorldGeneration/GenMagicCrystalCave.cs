@@ -366,7 +366,7 @@ namespace Coralite.Content.WorldGeneration
             };
             Dictionary<Color, int> wallDic = new Dictionary<Color, int>()
             {
-                [new Color(255, 255, 0)] = ModContent.WallType<HardBasaltWall>(),
+                [new Color(255, 255, 0)] = ModContent.WallType<Walls.Magike.HardBasaltWall>(),
                 [Color.Black] = -1
             };
 

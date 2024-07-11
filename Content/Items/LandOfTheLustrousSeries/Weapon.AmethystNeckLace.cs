@@ -84,14 +84,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Amethyst)
-                .AddIngredient(ItemID.DemoniteBar, 5)
+                .AddIngredient(ItemID.DemoniteBar, 14)
                 .AddIngredient(ItemID.GoldCoin)
                 .AddTile<MagicCraftStation>()
                 .Register();
 
             CreateRecipe()
                 .AddIngredient(ItemID.Amethyst)
-                .AddIngredient(ItemID.CrimtaneBar, 5)
+                .AddIngredient(ItemID.CrimtaneBar, 14)
                 .AddIngredient(ItemID.GoldCoin)
                 .AddTile<MagicCraftStation>()
                 .Register();

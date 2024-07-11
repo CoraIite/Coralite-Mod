@@ -23,6 +23,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public int MagikeMax { get => MagikeMaxBase + MagikeMaxExtra; }
 
+        /// <summary>
+        /// 当前等级
+        /// </summary>
         public MagikeApparatusLevel Level { get; private set; }
 
         public override void Update(IEntity entity)
@@ -30,6 +33,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
 
 
+        /// <summary>
+        /// 请自行判断传入的等级，返回<see langword="true"/>为能升级<br></br>
+        /// 
+        /// </summary>
+        /// <param name="incomeLevel"></param>
+        /// <returns></returns>
         public virtual bool Upgrage(MagikeApparatusLevel incomeLevel)
         {
             return false;

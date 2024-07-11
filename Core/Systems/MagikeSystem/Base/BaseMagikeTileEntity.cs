@@ -17,10 +17,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
         public Dictionary<int, List<Component>> Components { get; private set; }
         public List<Component> ComponentsCache { get; private set; }
 
-        public override bool IsTileValidForEntity(int x, int y)
-        {
-            return Framing.GetTileSafely(x, y).TileType == TileType;
-        }
+        /// <summary>
+        /// 扩展膜容量
+        /// </summary>
+        public virtual int ExtendSpellCapacity { get => 1; }
+
+        public override bool IsTileValidForEntity(int x, int y)=> Framing.GetTileSafely(x, y).TileType == TileType;
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
