@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.MagikeSeries1
     [AutoloadEquip(EquipType.Face)]
     public class MagikeMonoclastic : ModItem
     {
-        public override string Texture => AssetDirectory.MagikeTools + Name;
+        public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 
         public override void SetDefaults()
         {

@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.CoreKeeper
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             MinPick = 220;
             DustType = DustID.Obsidian;
-            MineResist = 0.3f;
+            MineResist = 4f;
             AddMapEntry(new Microsoft.Xna.Framework.Color(7, 60, 49));
             HitSound = new Terraria.Audio.SoundStyle("Coralite/Sounds/CoreKeeper/UnbreakableTile")
             {

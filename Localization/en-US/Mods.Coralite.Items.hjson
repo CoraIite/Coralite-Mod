@@ -4171,10 +4171,29 @@ Afterglow: {
 
 SurviveAndPerish: {
 	DisplayName: Survive And Perish
-	Tooltip: ""
+	Tooltip:
+		'''
+		The emitting signal detonator guides the direction of the missile.
+		Right-click to use the missile nest to fire 11 rounds of tracking Starfire missiles.
+		Prioritize targeting enemies with signal detonators.
+		When hit, the detonator is detonated, causing a chain of explosions.
+		Missile nests take a while to reload after each launch.
+			The brutal power created by the destroyed civilization in order to survive.
+		[c/8c8c8c: From a world that did not survive and a world that was about to be destroyed.]
+		'''
 }
 
 CrystallineBrick: {
 	DisplayName: Crystalline Brick
+	Tooltip: ""
+}
+
+CrystallineSkarn: {
+	DisplayName: Crystalline Skarn
+	Tooltip: ""
+}
+
+Skarn: {
+	DisplayName: Skarn
 	Tooltip: ""
 }

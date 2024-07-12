@@ -1,15 +1,14 @@
-﻿using Coralite.Content.Items.MagikeSeries1;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Magike.Tools
+namespace Coralite.Content.Items.MagikeSeries1
 {
     public class MagicCrystalHook : ModItem
     {
-        public override string Texture => AssetDirectory.MagikeTools + Name;
+        public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 
         public override void SetDefaults()
         {
@@ -30,13 +29,13 @@ namespace Coralite.Content.Items.Magike.Tools
 
     public class MagicCrystalHookProjectile : ModProjectile
     {
-        public override string Texture => AssetDirectory.MagikeTools + Name;
+        public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 
         private static Asset<Texture2D> chainTexture;
 
         public override void Load()
         {
-            chainTexture = ModContent.Request<Texture2D>(AssetDirectory.MagikeTools + "MagicCrystalHookChain");
+            chainTexture = ModContent.Request<Texture2D>(AssetDirectory.MagikeSeries1Item + "MagicCrystalHookChain");
         }
 
         public override void Unload()

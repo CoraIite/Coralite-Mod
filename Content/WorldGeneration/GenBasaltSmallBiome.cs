@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Tiles.Magike;
+﻿using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Walls.Magike;
 using System.Collections.Generic;
 using Terraria;

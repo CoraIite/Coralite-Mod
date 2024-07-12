@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Items.Magike;
-using Coralite.Content.Items.Magike.Tools;
 using Coralite.Content.Items.Magike.Towers;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;

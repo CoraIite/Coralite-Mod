@@ -1,5 +1,5 @@
 ﻿using Coralite.Content.Raritys;
-using Coralite.Content.Tiles.Magike;
+using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
@@ -9,7 +9,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 {
     public class BasaltChest : BaseChestItem
     {
-        public BasaltChest() : base(Item.sellPrice(0, 0, 0, 10), ModContent.RarityType<MagicCrystalRarity>(), ModContent.TileType<BasaltChestTile>(), AssetDirectory.MagikeItems)
+        public BasaltChest() : base(Item.sellPrice(0, 0, 0, 10), ModContent.RarityType<MagicCrystalRarity>(), ModContent.TileType<BasaltChestTile>(), AssetDirectory.MagikeSeries1Item)
         { }
 
         public override void AddRecipes()

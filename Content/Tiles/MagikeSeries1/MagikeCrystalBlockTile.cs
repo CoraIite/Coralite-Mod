@@ -1,47 +1,42 @@
-﻿using Coralite.Content.Items.MagikeSeries1;
-using Coralite.Core;
-using System.Collections.Generic;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Content.Tiles.Magike
+namespace Coralite.Content.Tiles.MagikeSeries1
 {
-    public class CrystalBasaltTile : ModTile
+    public class MagicCrystalBlockTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
+        public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
 
         public override void SetStaticDefaults()
         {
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
+            Main.tileLighted[Type] = true;
             Main.tileShine2[Type] = true;
-            Main.tileShine[Type] = 1000;
-            Main.tileMergeDirt[Type] = true;
+            Main.tileShine[Type] = 600;
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
             //Main.tileMerge[Type][ModContent.TileType<BasaltTile>()] = true;
 
-            //Main.tileMerge[Type][TileID.Stone] = true;
-
             TileID.Sets.ChecksForMerge[Type] = true;
 
-            DustType = DustID.CorruptionThorns;
+            DustType = DustID.CrystalSerpent_Pink;
             HitSound = CoraliteSoundID.DigStone_Tink;
-            AddMapEntry(new Microsoft.Xna.Framework.Color(31, 31, 50));
-        }
-
-        public override IEnumerable<Item> GetItemDrops(int i, int j)
-        {
-            return new Item[1]
-            {
-                new Item(ModContent.ItemType<MagicCrystal>())
-            };
+            AddMapEntry(Coralite.Instance.MagicCrystalPink);
         }
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {
             TileFraming.CustomMergeFrame(i, j, Type, ModContent.TileType<BasaltTile>(), true, true, false);
             return false;
+        }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.1f;
+            g = 0.05f;
+            b = 0.1f;
         }
 
     }

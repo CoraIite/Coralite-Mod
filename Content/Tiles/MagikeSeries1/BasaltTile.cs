@@ -2,11 +2,11 @@
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Content.Tiles.Magike
+namespace Coralite.Content.Tiles.MagikeSeries1
 {
     public class BasaltTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
+        public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
 
         public override void SetStaticDefaults()
         {
@@ -24,7 +24,7 @@ namespace Coralite.Content.Tiles.Magike
 
             DustType = DustID.CorruptionThorns;
             HitSound = CoraliteSoundID.DigStone_Tink;
-            AddMapEntry(new Microsoft.Xna.Framework.Color(31, 31, 50));
+            AddMapEntry(new Color(31, 31, 50));
         }
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)

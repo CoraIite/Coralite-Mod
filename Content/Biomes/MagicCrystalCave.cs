@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Tiles.Magike;
+﻿using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Core;
 using System;
 using Terraria;

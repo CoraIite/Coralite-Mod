@@ -14,7 +14,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 {
     public class Page_MagikeBase : ModItem
     {
-        public override string Texture => AssetDirectory.MagikeItems + Name;
+        public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 
         public override void SetDefaults()
         {
@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
     public class Page_MagikeBaseProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.MagikeItems + "Page_MagikeBase";
+        public override string Texture => AssetDirectory.MagikeSeries1Item + "Page_MagikeBase";
 
         public override void SetDefaults()
         {

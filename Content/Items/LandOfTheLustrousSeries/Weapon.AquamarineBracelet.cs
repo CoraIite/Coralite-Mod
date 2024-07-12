@@ -20,9 +20,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Orange3, Item.sellPrice(0, 3));
-            Item.SetWeaponValues(26, 4);
+            Item.SetWeaponValues(22, 4);
             Item.useTime = Item.useAnimation = 35;
-            Item.mana = 8;
+            Item.mana = 12;
 
             Item.shoot = ModContent.ProjectileType<AquamarineBraceletProj>();
             Item.useStyle = ItemUseStyleID.Shoot;

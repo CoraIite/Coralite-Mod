@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 {
     public class MagConnectStaff : ModItem
     {
-        public override string Texture => AssetDirectory.MagikeTools + Name;
+        public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 
         //private int mode;
         //private IMagikeSender sender;

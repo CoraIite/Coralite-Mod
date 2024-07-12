@@ -14,7 +14,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
 
-            MineResist = 0.2f;
+            MineResist = 3f;
             DustType = DustID.CorruptionThorns;
             HitSound = CoraliteSoundID.DigStone_Tink;
             MinPick = 150;

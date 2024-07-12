@@ -4236,10 +4236,28 @@ Afterglow: {
 
 SurviveAndPerish: {
 	DisplayName: 生存与毁灭
-	Tooltip: ""
+	Tooltip:
+		'''
+		发射信号雷管为导弹引导方向.
+		右键使用导弹巢连射11发追踪星火飞弹.
+		优先锁定身上带有信号雷管的敌人.命中时引爆雷管造成连环爆炸.
+		导弹巢每次发射后需要一段时间重新装填.
+			毁灭后的文明为了生存所创造出的野蛮力量.
+		[c/8c8c8c:来自一个没能生存的世界和一个即将毁灭的世界.]
+		'''
 }
 
 CrystallineBrick: {
 	DisplayName: 蕴魔砖
+	Tooltip: ""
+}
+
+CrystallineSkarn: {
+	DisplayName: 蕴魔矽卡岩
+	Tooltip: ""
+}
+
+Skarn: {
+	DisplayName: 矽卡岩
 	Tooltip: ""
 }

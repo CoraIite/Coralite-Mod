@@ -5,11 +5,11 @@ using Coralite.Core.Systems.MagikeSystem.CraftConditions;
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Magike
+namespace Coralite.Content.Items.MagikeSeries2
 {
     public class Reel_MagikeAdvance : ModItem, IMagikeRemodelable
     {
-        public override string Texture => AssetDirectory.MagikeItems + Name;
+        public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 
         public void AddMagikeRemodelRecipe()
         {

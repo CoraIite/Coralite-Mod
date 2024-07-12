@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.MagikeSeries1
     public class CrystalSword : BaseMagikeChargeableItem
     {
         public CrystalSword() : base(150, Item.sellPrice(0, 0, 10, 0)
-            , ModContent.RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeTools)
+            , ModContent.RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeSeries1Item)
         { }
 
         public override void SetDefs()

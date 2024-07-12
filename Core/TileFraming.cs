@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Tiles.Magike;
+﻿using Coralite.Content.Tiles.MagikeSeries1;
+using Coralite.Content.Tiles.MagikeSeries2;
 using Terraria;
 using Terraria.ID;
 
@@ -21,10 +22,13 @@ namespace Coralite.Core
             }
 
             tileMergeTypes[TileID.Dirt][ModContent.TileType<BasaltTile>()] = true;
+            tileMergeTypes[TileID.Dirt][ModContent.TileType<SkarnTile>()] = true;
 
             tileMergeTypes[ModContent.TileType<BasaltTile>()][ModContent.TileType<CrystalBasaltTile>()] = true;
             tileMergeTypes[ModContent.TileType<BasaltTile>()][ModContent.TileType<MagicCrystalBlockTile>()] = true;
             tileMergeTypes[ModContent.TileType<BasaltTile>()][ModContent.TileType<HardBasaltTile>()] = true;
+
+            tileMergeTypes[ModContent.TileType<SkarnTile>()][ModContent.TileType<CrystallineSkarnTile>()] = true;
         }
 
         public override void Unload()

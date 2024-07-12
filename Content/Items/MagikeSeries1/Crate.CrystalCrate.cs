@@ -104,7 +104,7 @@ namespace Coralite.Content.Items.Magike
 
     public class CrystalCrateTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
+        public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
 
         public override void SetStaticDefaults()
         {

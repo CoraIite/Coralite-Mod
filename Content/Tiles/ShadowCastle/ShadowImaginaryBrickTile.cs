@@ -22,7 +22,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             MinPick = 100;
             DustType = DustID.Shadowflame;
-            MineResist = 0.3f;
+            MineResist = 2f;
 
             AddMapEntry(new Microsoft.Xna.Framework.Color(104, 54, 192));
             HitSound = CoraliteSoundID.DigStone_Tink;

@@ -3,11 +3,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ObjectData;
 
-namespace Coralite.Content.Tiles.Magike
+namespace Coralite.Content.Tiles.MagikeSeries1
 {
-    public class BasaltStalactiteTop : ModTile
+    public class BasaltStalactiteBottom2 : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
+        public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
 
         public override void SetStaticDefaults()
         {
@@ -15,7 +15,7 @@ namespace Coralite.Content.Tiles.Magike
             Main.tileFrameImportant[Type] = true;
             Main.tileObsidianKill[Type] = true;
 
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.StyleWrapLimit = 3;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
@@ -25,7 +25,8 @@ namespace Coralite.Content.Tiles.Magike
 
             HitSound = CoraliteSoundID.DigStone_Tink;
             DustType = DustID.CorruptionThorns;
-            AddMapEntry(new Microsoft.Xna.Framework.Color(31, 31, 50));
+            AddMapEntry(new Color(31, 31, 50));
         }
+
     }
 }

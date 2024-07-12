@@ -8,11 +8,11 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ObjectData;
 
-namespace Coralite.Content.Tiles.Magike
+namespace Coralite.Content.Tiles.MagikeSeries1
 {
     public class BasaltChestTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeTiles + Name;
+        public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
 
         public override void SetStaticDefaults()
         {
