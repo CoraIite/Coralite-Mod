@@ -4197,3 +4197,12 @@ Skarn: {
 	DisplayName: Skarn
 	Tooltip: ""
 }
+
+AmberEardrop: {
+	DisplayName: Amber Eardrop
+	Tooltip:
+		'''
+			Generate amber teardrops that fall from the sky
+			Occasionally, large amber spawns to temporarily slow enemies and prevent them from dealing damage
+		'''
+}

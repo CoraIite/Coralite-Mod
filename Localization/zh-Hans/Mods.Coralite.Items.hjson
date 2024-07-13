@@ -4261,3 +4261,12 @@ Skarn: {
 	DisplayName: 矽卡岩
 	Tooltip: ""
 }
+
+AmberEardrop: {
+	DisplayName: 琥珀耳坠
+	Tooltip:
+		'''
+		生成从天而降的琥珀泪滴
+		偶尔生成大琥珀短暂迟缓敌人行动并阻止敌人造成伤害
+		'''
+}

@@ -421,7 +421,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     LaserHeight = Helper.Lerp(2, 1, 0.2f);
                     if ((Timer - delayTime) % (PerManaCostTime / 4) == 0)
                     {
-                        if (!Main.player[Projectile.owner].CheckMana(2, true))
+                        if (!Main.player[Projectile.owner].CheckMana(6, true))
                         {
                             (owner.ModProjectile as AmethystNecklaceProj).TurnToDelay();
                             Timer = delayTime;

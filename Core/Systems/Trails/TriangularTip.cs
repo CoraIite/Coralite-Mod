@@ -23,7 +23,7 @@ namespace Coralite.Core.Systems.Trails
              *      /  \
              *    /      \
              *  /          \
-             * A--------B
+             * A- - - - - - -B
              * 
              * This tip is arranged as the above shows.
              * Consists of a single triangle with indices (0, 1, 2) offset by the next available index.

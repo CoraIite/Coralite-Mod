@@ -188,3 +188,8 @@ GravitationalCatapultBuff: {
 	DisplayName: Gravitational Catapult Buff
 	Description: Increases damage based on defense while sprinting, up to a maximum of 20%
 }
+
+AmberDebuff: {
+	DisplayName: Amber Debuff
+	Description: Mods.Coralite.Buffs.AmberDebuff.Description
+}

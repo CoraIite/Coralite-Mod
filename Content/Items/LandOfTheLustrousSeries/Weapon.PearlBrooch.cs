@@ -80,8 +80,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 , Color.White, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
 
             sb.End();
-            sb.Begin();
-            sb.End();
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
         }
 

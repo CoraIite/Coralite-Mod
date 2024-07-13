@@ -10,6 +10,7 @@ using Coralite.Content.Items.Thunder;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core.Configs;
 using Coralite.Helpers;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -23,6 +24,9 @@ namespace Coralite.Content.NPCs.GlobalNPC
         public bool EuphorbiaPoison;
         public bool ThunderElectrified;
         public bool PollenFire;
+
+        public bool StopHitPlayer;
+        public float SlowDownPercent;
 
         public override bool InstancePerEntity => true;
 
@@ -112,11 +116,26 @@ namespace Coralite.Content.NPCs.GlobalNPC
             EuphorbiaPoison = false;
             ThunderElectrified = false;
             PollenFire = false;
+            StopHitPlayer = false;
+            SlowDownPercent = 0;
         }
 
-        public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
+        public override void PostAI(NPC npc)
         {
-            base.EditSpawnRate(player, ref spawnRate, ref maxSpawns);
+            if (!npc.boss && SlowDownPercent > 0)
+            {
+                npc.velocity *= Helper.Lerp(SlowDownPercent, 1, Math.Clamp(1 - npc.knockBackResist, 0, 1));
+            }
+        }
+
+        public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
+        {
+            if (StopHitPlayer)
+            {
+                return false;
+            }
+
+            return base.CanHitPlayer(npc, target, ref cooldownSlot);
         }
 
         public override void ModifyShop(NPCShop shop)
@@ -228,7 +247,7 @@ namespace Coralite.Content.NPCs.GlobalNPC
         {
             if (spawnInfo.Player.InModBiome<MagicCrystalCave>())
             {
-                pool[0] = 0.04f;
+                pool[0] = 0.5f;
             }
 
             if (spawnInfo.Player.InModBiome<ShadowCastleBiome>())

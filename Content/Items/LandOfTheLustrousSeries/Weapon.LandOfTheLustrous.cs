@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries1;
+﻿using Coralite.Content.Items.Donator;
+using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
@@ -169,7 +170,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if ((int)Main.timeForVisualEffects % 30 == 0 && Main.rand.NextBool(2))
             {
                 float length = Main.rand.NextFloat(32, 64);
-                Color c = Main.rand.NextFromList(Color.White, PearlProj.brightC, PearlProj.darkC);
+                Color c = Main.rand.NextFromList(Color.White, Main.DiscoColor*1.5f);
                 var p = Particle.NewParticle<HexagramParticle>(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length),
                      Vector2.UnitX, c, Scale: Main.rand.NextFloat(0.1f, 0.12f));
                 p.follow = () => Projectile.position - Projectile.oldPos[1];
@@ -369,6 +370,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Amethyst,
             /// <summary> 海蓝宝石 </summary>
             Aquamarine,
+            /// <summary> 琥珀 </summary>
+            Amber,
             /// <summary> 粉钻 </summary>
             PinkDiamond,
             /// <summary> 钻石 </summary>
@@ -572,7 +575,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 init = false;
                 if (trail == null && Shiny)
-                    trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new NoTip()
+                    trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new TriangularTip(20)
                         , TrailWidth, TrailColor);
             }
         }
@@ -622,6 +625,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         lightRange = 0.1f,
                         lightLimit = 0.65f,
                         addC = 0.5f,
+                    };
+                case GemType.Amber:
+                    Main.instance.LoadItem(ItemID.Amber);
+                    return new GemDrawData(TextureAssets.Item[ItemID.Amber].Value
+                        , AmberProj.highlightC, AmberProj.brightC, AmberProj.darkC)
+                    {
+                        lightRange = 0.1f,
+                        lightLimit = 0.75f,
+                        addC = 0.75f,
                     };
                 case GemType.PinkDiamond:
                     return new GemDrawData(SmallPinkDiamond.Value
@@ -767,7 +779,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void OnKill(int timeLeft)
         {
             if (Shiny)
-                SoundEngine.PlaySound(CoraliteSoundID.Hit_Item10, Projectile.Center);
+                SoundEngine.PlaySound(CoraliteSoundID.CrushedIce_Item27, Projectile.Center);
             if (VisualEffectSystem.HitEffect_Dusts)
                 for (int i = 0; i < 3; i++)
                 {
@@ -776,11 +788,19 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
 
             if (VisualEffectSystem.HitEffect_SpecialParticles)
+            {
+                float length = Main.rand.NextFloat(0, 6);
+                Color c = Main.rand.NextFromList(Color.White, Main.DiscoColor );
+                var p = Particle.NewParticle<HexagramParticle>(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length),
+                     Vector2.UnitX*Main.rand.NextFloat(1,2), c, Scale: Main.rand.NextFloat(0.1f, 0.14f));
+                p.Rotation = -1.57f;
+
                 for (int i = 0; i < 2; i++)
                 {
                     Vector2 dir = Helper.NextVec2Dir();
                     SpawnTriangleParticleSelf(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
                 }
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)

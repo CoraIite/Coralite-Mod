@@ -269,7 +269,7 @@ namespace Coralite.Content.ModPlayers
                     NianliChargingBar.visible = false;
             }
 
-            if (Effects.Contains(nameof(MedalOfLife)) && Player.statLifeMax2 - Player.statLife < 20)
+            if (HasEffect(nameof(MedalOfLife)) && Player.statLifeMax2 - Player.statLife < 20)
             {
                 if (Main.rand.NextBool(15))
                     Gore.NewGore(Player.GetSource_FromThis(),
@@ -281,7 +281,7 @@ namespace Coralite.Content.ModPlayers
                 Player.moveSpeed += 0.05f;
             }
 
-            if (Effects.Contains(nameof(LifePulseDevice)) && Player.statLife <= 40)
+            if (HasEffect(nameof(LifePulseDevice)) && Player.statLife <= 40)
             {
                 Player.GetDamage(DamageClass.Generic) *= 1.15f;
                 Player.GetCritChance(DamageClass.Generic) += 5f;
@@ -306,7 +306,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void UpdateBadLifeRegen()
         {
-            if (Effects.Contains(nameof(ThunderElectrified)))
+            if (HasEffect(nameof(ThunderElectrified)))
             {
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
@@ -320,7 +320,7 @@ namespace Coralite.Content.ModPlayers
                 Player.lifeRegen -= damage * 2;
             }
 
-            if (Effects.Contains(nameof(LifePulseDevice)))
+            if (HasEffect(nameof(LifePulseDevice)))
             {
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
@@ -405,7 +405,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
         {
-            if (Effects.Contains(nameof(Items.RedJades.RedJadePendant)) && Main.myPlayer == Player.whoAmI
+            if (HasEffect(nameof(Items.RedJades.RedJadePendant)) && Main.myPlayer == Player.whoAmI
                 && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
                 Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<Items.RedJades.RedJadePendant>())),
                     Player.Center + (proj.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<Items.RedJades.RedJadeBoom>(), 80, 8f, Player.whoAmI);
@@ -413,7 +413,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
         {
-            if (Effects.Contains(nameof(Items.RedJades.RedJadePendant)) && Main.myPlayer == Player.whoAmI
+            if (HasEffect(nameof(Items.RedJades.RedJadePendant)) && Main.myPlayer == Player.whoAmI
                 && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
                 Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<Items.RedJades.RedJadePendant>())),
                     Player.Center + (npc.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<Items.RedJades.RedJadeBoom>(), 80, 8f, Player.whoAmI);
@@ -425,7 +425,7 @@ namespace Coralite.Content.ModPlayers
             PriateKingSoulEffect(ref modifiers);
             MedusaSoulEffect(ref modifiers);
 
-            if (Effects.Contains(nameof(ThunderveinNecklace)))
+            if (HasEffect(nameof(ThunderveinNecklace)))
                 target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
             if (HasEffect(nameof(AlloySpringBuff)))
             {
@@ -612,9 +612,9 @@ namespace Coralite.Content.ModPlayers
 
         public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
         {
-            if (Effects.Contains(nameof(BoneRing)))
+            if (HasEffect(nameof(BoneRing)))
                 drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "BoneRing", EquipType.HandsOn);
-            if (Effects.Contains(nameof(HylianShield)))
+            if (HasEffect(nameof(HylianShield)))
                 drawInfo.drawPlayer.shield = EquipLoader.GetEquipSlot(Mod, "HylianShield", EquipType.Shield);
         }
 

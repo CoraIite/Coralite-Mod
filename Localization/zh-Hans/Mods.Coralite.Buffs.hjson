@@ -188,3 +188,8 @@ GravitationalCatapultBuff: {
 	DisplayName: 引力弹射
 	Description: 根据防御增加伤害，最高20%
 }
+
+AmberDebuff: {
+	// DisplayName: Amber Debuff
+	// Description: Mods.Coralite.Buffs.AmberDebuff.Description
+}

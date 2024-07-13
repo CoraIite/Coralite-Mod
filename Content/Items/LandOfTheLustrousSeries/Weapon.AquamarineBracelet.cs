@@ -73,21 +73,21 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             CreateRecipe()
                 .AddIngredient<Aquamarine>()
-                .AddIngredient(ItemID.ShadowScale, 5)
+                .AddIngredient(ItemID.ShadowScale, 12)
                 .AddIngredient(ItemID.WaterBucket)
                 .AddTile<MagicCraftStation>()
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<Aquamarine>()
-                .AddIngredient(ItemID.TissueSample, 5)
+                .AddIngredient(ItemID.TissueSample, 12)
                 .AddIngredient(ItemID.WaterBucket)
                 .AddTile<MagicCraftStation>()
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<Aquamarine>()
-                .AddIngredient<IcicleScale>(3)
+                .AddIngredient<IcicleScale>(7)
                 .AddIngredient(ItemID.WaterBucket)
                 .AddTile<MagicCraftStation>()
                 .Register();
