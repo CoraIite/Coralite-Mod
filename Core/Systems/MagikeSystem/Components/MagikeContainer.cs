@@ -1,7 +1,5 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using System;
-using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
@@ -23,10 +21,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public int MagikeMax { get => MagikeMaxBase + MagikeMaxExtra; }
 
-        /// <summary>
-        /// 当前等级
-        /// </summary>
-        public MagikeApparatusLevel Level { get; private set; }
+        ///// <summary>
+        ///// 当前等级
+        ///// </summary>
+        //public MagikeApparatusLevel Level { get; private set; }
 
         public override void Update(IEntity entity)
         {
@@ -38,35 +36,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         /// <param name="incomeLevel"></param>
         /// <returns></returns>
-        public virtual bool Upgrage(MagikeApparatusLevel incomeLevel)
+        public virtual bool ChangeLevel(MagikeApparatusLevel incomeLevel)
         {
             return false;
-        }
-
-        /// <summary>
-        /// 返回<see langword="true"/>为成功移除
-        /// </summary>
-        /// <returns></returns>
-        public bool RemoveCurrentExtendMembrane()
-        {
-            if (Level == MagikeApparatusLevel.MagicCrystal)
-                return true;
-
-            if (!CheckPlayerOwnedExtendMembrane())
-                return false;
-
-            //TODO：生成当前的膜物品
-
-            return true;
-        }
-
-        /// <summary>
-        /// 消耗
-        /// </summary>
-        /// <returns></returns>
-        public static bool CheckPlayerOwnedExtendMembrane()
-        {
-            return Main.LocalPlayer.ConsumeItem(ItemID.Lens, includeVoidBag: true);
         }
 
         #region 魔能操作相关

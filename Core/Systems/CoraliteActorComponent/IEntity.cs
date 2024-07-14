@@ -30,6 +30,7 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
 
             ComponentsCache.Add(component);
 
+            component.Entity= this;
             component.OnAdd(this);
         }
 
