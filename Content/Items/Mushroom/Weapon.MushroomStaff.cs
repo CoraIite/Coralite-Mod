@@ -14,7 +14,7 @@ namespace Coralite.Content.Items.Mushroom
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 6;
+            Item.damage = 17;
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.reuseDelay = 25;

@@ -141,11 +141,10 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     }
                 }
 
-                cp.AccessoryDash();
-                return true;
+                //cp.AccessoryDash();
             }
 
-            return true;
+            return false;
         }
 
         public virtual void CheckGuardProj(CoralitePlayer cp, Player Player)

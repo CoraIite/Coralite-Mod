@@ -20,7 +20,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
         /// <summary>
         /// 扩展膜容量
         /// </summary>
-        public virtual int ExtendSpellCapacity { get => 1; }
+        public virtual int ExtendFilterCapacity { get => 2; }
 
         public override bool IsTileValidForEntity(int x, int y)=> Framing.GetTileSafely(x, y).TileType == TileType;
 

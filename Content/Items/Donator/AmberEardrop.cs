@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.Donator
                     if (special)
                         dam = (int)(1.35f * dam);
                     int type = special ? ModContent.ProjectileType<BigAmber>() : ModContent.ProjectileType<AmberProj>();
-                    Projectile.NewProjectileFromThis(pos, vel, type, dam, Projectile.knockBack);
+                    Projectile.NewProjectileFromThis(pos, vel, type, dam, Projectile.knockBack,Main.MouseWorld.Y);
 
                     for (int i = 0; i < 4; i++)
                     {

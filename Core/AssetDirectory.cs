@@ -81,6 +81,7 @@ namespace Coralite.Core
         public const string ZephyrkiloSeriesItems = Items + "ZephyrkiloSeries/";
 
         public const string Accessories = Items + "Accessories/";
+        public const string Vanity = Items + "Vanity/";
 
         public const string Materials = Items + "Materials/";
         public const string Placeable = Items + "Placeable/";

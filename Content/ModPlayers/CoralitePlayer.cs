@@ -5,6 +5,7 @@ using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Steel;
 using Coralite.Content.Items.Thunder;
+using Coralite.Content.Items.Vanity;
 using Coralite.Content.Projectiles.Globals;
 using Coralite.Content.UI;
 using Coralite.Content.WorldGeneration;
@@ -276,15 +277,40 @@ namespace Coralite.Content.ModPlayers
                         Player.MountedCenter + Main.rand.NextVector2Circular(16, 24), -Vector2.UnitY
                         , 331);
 
-                Player.GetDamage(DamageClass.Generic) += 0.1f;
+                Player.GetDamage(DamageClass.Generic) += 0.07f;
                 Player.GetAttackSpeed(DamageClass.Generic) += 0.05f;
                 Player.moveSpeed += 0.05f;
             }
 
+            if (HasEffect(nameof(CharmOfIsis)) && Player.statLifeMax2 - Player.statLife < 40)
+            {
+                if (Main.rand.NextBool(15))
+                    Gore.NewGore(Player.GetSource_FromThis(),
+                        Player.MountedCenter + Main.rand.NextVector2Circular(16, 24), -Vector2.UnitY
+                        , 331);
+
+                Player.GetDamage(DamageClass.Generic) += 0.10f;
+                Player.GetAttackSpeed(DamageClass.Generic) += 0.05f;
+                Player.moveSpeed += 0.08f;
+            }
+
             if (HasEffect(nameof(LifePulseDevice)) && Player.statLife <= 40)
             {
+                Player.GetDamage(DamageClass.Generic) *= 1.1f;
+                Player.GetCritChance(DamageClass.Generic) += 4f;
+
+                if (Main.rand.NextBool(3))
+                {
+                    Dust d = Dust.NewDustPerfect(Player.MountedCenter + Main.rand.NextVector2Circular(16, 24)
+                        , DustID.Smoke, -Vector2.UnitY * Main.rand.NextFloat(1, 2), newColor: Color.Black, Scale: Main.rand.NextFloat(1, 1.75f));
+                    d.noGravity = true;
+                }
+            }
+
+            if (HasEffect(nameof(OsirisPillar)) && Player.statLife <= 60)
+            {
                 Player.GetDamage(DamageClass.Generic) *= 1.15f;
-                Player.GetCritChance(DamageClass.Generic) += 5f;
+                Player.GetCritChance(DamageClass.Generic) += 6f;
 
                 if (Main.rand.NextBool(3))
                 {
@@ -328,6 +354,18 @@ namespace Coralite.Content.ModPlayers
                 if (Player.statLife > 38)
                 {
                     Player.lifeRegen -= 10 * 2;
+                    Player.lifeRegenTime = 0;
+                }
+            }
+
+            if (HasEffect(nameof(OsirisPillar)) && Player.statMana >= Player.statManaMax2 - 20)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+
+                if (Player.statLife > 50)
+                {
+                    Player.lifeRegen -= 10 * 3;
                     Player.lifeRegenTime = 0;
                 }
             }
@@ -616,6 +654,29 @@ namespace Coralite.Content.ModPlayers
                 drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "BoneRing", EquipType.HandsOn);
             if (HasEffect(nameof(HylianShield)))
                 drawInfo.drawPlayer.shield = EquipLoader.GetEquipSlot(Mod, "HylianShield", EquipType.Shield);
+            
+            //if (HasEffect(nameof(CharmOfIsis)+ "Vanity"))
+            //    drawInfo.drawPlayer.head = EquipLoader.GetEquipSlot(Mod, "CharmOfIsis", EquipType.Head);
+            //if (HasEffect(nameof(OsirisPillar) + "Vanity"))
+            //    drawInfo.drawPlayer.head = EquipLoader.GetEquipSlot(Mod, "OsirisPillar", EquipType.Head);
+
+            if (HasEffect(nameof(SquirrelSet)))
+            {
+                bool squirreSpecial = HasEffect(nameof(SquirrelSet) + "Special");
+                drawInfo.drawPlayer.head = EquipLoader.GetEquipSlot(Mod, "SquirrelSet", EquipType.Head);
+                if (drawInfo.drawPlayer.armor[11].IsAir || drawInfo.drawPlayer.armor[11].type == ItemID.FamiliarShirt)
+                {
+                    drawInfo.drawPlayer.body = EquipLoader.GetEquipSlot(Mod, "SquirrelSet", EquipType.Body);
+                    if (squirreSpecial)
+                        drawInfo.drawPlayer.neck = EquipLoader.GetEquipSlot(Mod, "SquirrelSet", EquipType.Neck);
+                }
+                if (drawInfo.drawPlayer.armor[12].IsAir || drawInfo.drawPlayer.armor[12].type == ItemID.FamiliarPants)
+                {
+                    drawInfo.drawPlayer.legs = EquipLoader.GetEquipSlot(Mod, "SquirrelSet", EquipType.Legs);
+                    if (squirreSpecial)
+                        drawInfo.drawPlayer.back = EquipLoader.GetEquipSlot(Mod, "SquirrelSet", EquipType.Back);
+                }
+            }
         }
 
         #endregion

@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Misc_Melee
             Item.width = 18;
             Item.height = 34;
             Item.useTime = 10;
-            Item.damage = 15;
+            Item.damage = 20;
             Item.shootSpeed = 10f;
             Item.knockBack = 4f;
             Item.useAnimation = 10;

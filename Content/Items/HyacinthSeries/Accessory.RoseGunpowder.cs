@@ -14,14 +14,14 @@ namespace Coralite.Content.Items.HyacinthSeries
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
-        public RoseGunpowder() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 2))
+        public RoseGunpowder() : base(ItemRarityID.Blue, Item.sellPrice(0, 6))
         {
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetKnockback(DamageClass.Ranged) += 0.1f;
-            player.bulletDamage *= 1.1f;
+            player.bulletDamage *= 1.08f;
 
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
@@ -89,11 +89,11 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void OnKill(int timeLeft)
         {
-            int howmany = Main.rand.Next(3, 6);
+            int howmany = Main.rand.Next(3, 5);
             for (int i = 0; i < howmany; i++)
             {
                 Projectile.NewProjectileFromThis<RoseGunpowderProj2>(Projectile.Center, Helper.NextVec2Dir(8, 10)
-                    , (int)(Projectile.damage * 0.8f), Projectile.knockBack);
+                    , (int)(Projectile.damage * 0.6f), Projectile.knockBack);
             }
 
             for (int i = 0; i < 8; i++)

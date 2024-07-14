@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<BatfangShieldProj>();
             Item.knockBack = 2;
             Item.shootSpeed = 12.5f;
-            Item.damage = 17;
+            Item.damage = 19;
         }
     }
 

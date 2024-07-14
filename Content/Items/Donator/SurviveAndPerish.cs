@@ -309,7 +309,7 @@ namespace Coralite.Content.Items.Donator
                     break;
                 case 5://重新装填的动画
                     {
-                        Lighting.AddLight(Projectile.Center, new Vector3(0.4f, 0.2f, 0.1f));
+                        Lighting.AddLight(Projectile.Center, new Vector3(0.7f, 0.35f, 0.2f));
                         Projectile.UpdateFrameNormally(4, 12);
                         if (Projectile.frame > 10)
                         {
@@ -485,6 +485,10 @@ namespace Coralite.Content.Items.Donator
             {
                 Projectile p = Main.projectile[i];
                 if (!p.active || !p.friendly || p.owner != Projectile.owner || p.type != type)
+                    continue;
+
+                NPC n = Main.npc[(int)p.ai[0]];
+                if (!n.CanBeChasedBy() || !Collision.CanHit(Projectile, n))
                     continue;
 
                 hasTarget = true;
@@ -674,9 +678,9 @@ namespace Coralite.Content.Items.Donator
             }
             else
             {
-                if (Main.rand.NextBool(2,3))
+                if (Main.rand.NextBool(3,4))
                     return;
-                scale = Main.rand.NextFloat(0.7f, 0.9f);
+                scale = Main.rand.NextFloat(0.9f, 1.1f);
                 speed = Main.rand.NextFloat(1, 3);
             }
 

@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void SetDefaults()
         {
-            Item.damage = 47;
+            Item.damage = 42;
             Item.useTime = 5;
             Item.useAnimation = 5;
             Item.knockBack = 3;
@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Ranged;
-            Item.value = Item.sellPrice(0, 3, 0, 0);
+            Item.value = Item.sellPrice(0, 8, 0, 0);
             Item.rare = ItemRarityID.Yellow;
             Item.shoot = ProjectileID.PurificationPowder;
             Item.useAmmo = AmmoID.Bullet;
@@ -57,11 +57,11 @@ namespace Coralite.Content.Items.Misc_Shoot
                     case 1:     //射出6发子弹
                         SoundEngine.PlaySound(CoraliteSoundID.Gun3_Item41, player.Center);
                         for (int i = 0; i < 2; i++)
-                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.12f, 0.12f)) * 0.95f, type, (int)(damage * 0.65f), knockback, player.whoAmI);
+                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.12f, 0.12f)) * 0.95f, type, (int)(damage * 0.5f), knockback, player.whoAmI);
                         for (int i = 0; i < 2; i++)
-                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.12f, 0.12f)), type, (int)(damage * 0.65f), knockback, player.whoAmI);
+                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.12f, 0.12f)), type, (int)(damage * 0.5f), knockback, player.whoAmI);
                         for (int i = 0; i < 2; i++)
-                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 1.1f, type, (int)(damage * 0.65f), knockback, player.whoAmI);
+                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 1.1f, type, (int)(damage * 0.5f), knockback, player.whoAmI);
 
                         break;
                 }

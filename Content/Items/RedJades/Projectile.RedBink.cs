@@ -129,7 +129,7 @@ namespace Coralite.Content.Items.RedJades
 
                         if (Timer == 10)
                         {
-                            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.UnitY) * 8f;
+                            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.UnitY) * 14f;
                             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
                             break;
                         }

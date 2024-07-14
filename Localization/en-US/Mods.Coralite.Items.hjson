@@ -3711,7 +3711,7 @@ MedalOfLife: {
 	DisplayName: Medal Of Life
 	Tooltip:
 		'''
-		When near full health, gain 10% increased damage, 5% attack speed, and 5% movement speed.
+		When near full health, gain 7% increased damage, 5% attack speed, and 5% movement speed.
 		It takes effect when the difference between the HP and max HP is less than 20 points.
 		'''
 }
@@ -3721,7 +3721,7 @@ LifePulseDevice: {
 	Tooltip:
 		'''
 		The player takes constant damage if health is above 40.
-		When health is less than 40, 15% increased damage and 5% critical hit 
+		When health is less than 40, 10% increased damage and 4% critical hit 
 		'''
 }
 
@@ -4178,8 +4178,8 @@ SurviveAndPerish: {
 		Prioritize targeting enemies with signal detonators.
 		When hit, the detonator is detonated, causing a chain of explosions.
 		Missile nests take a while to reload after each launch.
-			The brutal power created by the destroyed civilization in order to survive.
-		[c/8c8c8c: From a world that did not survive and a world that was about to be destroyed.]
+		[c/8c8c8c:The brutal power created by the destroyed civilization in order to survive.]
+		[c/ff6741: From a world that did not survive and a world that was about to be destroyed.]
 		'''
 }
 
@@ -4202,7 +4202,40 @@ AmberEardrop: {
 	DisplayName: Amber Eardrop
 	Tooltip:
 		'''
-			Generate amber teardrops that fall from the sky
-			Occasionally, large amber spawns to temporarily slow enemies and prevent them from dealing damage
+		Generate amber teardrops that fall from the sky
+		Occasionally, large amber spawns to temporarily slow enemies and prevent them from dealing damage
+		[c/fcc12d: Sealed Time]
 		'''
+}
+
+CharmOfIsis: {
+	DisplayName: Charm Of Isis
+	Tooltip:
+		'''
+		Increases damage, movement speed, and attack speed when approaching full health
+		Reduces heal potion cooldown time
+		Increases health regeneration
+		'''
+}
+
+OsirisPillar: {
+	DisplayName: Osiris Pillar
+	Tooltip:
+		'''
+		Continuously reduces health while full of mana
+		Gain damage when your health is less than a certain amount, and your critical strike chance increases
+		Increased mana cap and mana regeneration rate
+		'''
+}
+
+SquirrelSet: {
+	DisplayName: Horns and Line clusters
+	Tooltip:
+		'''
+		When equipped, it turns you into a terrifying creature.
+		Handheld and used to switch the display of soft parts.
+		[c/8c8c8c:*With a little fluffy horn and warm red yarn.]
+		"Perfect for impersonating a Coralite developer!"
+		'''
+	ShlimmerTranslation: 此为微光转化合成表
 }

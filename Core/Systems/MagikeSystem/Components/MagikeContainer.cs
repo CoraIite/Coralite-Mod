@@ -32,7 +32,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
         }
 
-
         /// <summary>
         /// 请自行判断传入的等级，返回<see langword="true"/>为能升级<br></br>
         /// 
