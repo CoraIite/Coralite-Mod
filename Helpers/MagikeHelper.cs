@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem;
+﻿using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Terraria;
 using Terraria.DataStructures;
@@ -12,6 +13,41 @@ namespace Coralite.Helpers
         public static MagikeItem GetMagikeItem(this Item item)
         {
             return item.GetGlobalItem<MagikeItem>();
+        }
+
+        /// <summary>
+        /// 从实体上获取魔能容器，请使用<see cref="IsMagikeContainer(IEntity)"/>来检测是否为魔能容器
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static Core.Systems.MagikeSystem.Components.MagikeContainer GetMagikeContainer(this IEntity entity)
+            => entity.GetSingleComponent(MagikeComponentID.MagikeContainer) as Core.Systems.MagikeSystem.Components.MagikeContainer;
+
+        /// <summary>
+        /// 检测实体是否是一个魔能容器
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static bool IsMagikeContainer(this IEntity entity)
+            => entity.HasComponent(MagikeComponentID.MagikeContainer);
+
+        /// <summary>
+        /// 尝试从<see cref="TileEntity"/>种获取<see cref="IEntity"/><br></br>
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static bool TryGetEntity(Point16 position, out IEntity entity)
+        {
+            entity = null;
+            if (!TileEntity.ByPosition.TryGetValue(position, out TileEntity tileEntity))
+                return false;
+
+            if (tileEntity is not IEntity entity1)
+                return false;
+
+            entity = entity1;
+            return true;
         }
 
         public static void SpawnDustOnSend(int selfWidth, int selfHeight, Point16 Position, IMagikeContainer container, Color dustColor, int dustType = DustID.Teleporter)

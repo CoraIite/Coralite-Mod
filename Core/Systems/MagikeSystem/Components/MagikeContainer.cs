@@ -16,19 +16,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 额外魔能量，通过扩展膜附加的魔能容量 </summary>
         public int MagikeMaxExtra { get; set; }
 
-        /// <summary>
-        /// 当前的魔能上限
-        /// </summary>
+        /// <summary> 当前的魔能上限 </summary>
         public int MagikeMax { get => MagikeMaxBase + MagikeMaxExtra; }
 
-        ///// <summary>
-        ///// 当前等级
-        ///// </summary>
-        //public MagikeApparatusLevel Level { get; private set; }
+        /// <summary> 有魔能就为<see langword="true"/> </summary>
+        public bool HasMagike => Magike > 0;
+        /// <summary> 魔能满了后为true </summary>
+        public bool FullMagike => Magike >= MagikeMax;
 
-        public override void Update(IEntity entity)
-        {
-        }
+        public override void Update(IEntity entity) { }
 
         /// <summary>
         /// 请自行判断传入的等级，返回<see langword="true"/>为能升级<br></br>
@@ -45,15 +41,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public void LimitMagikeAmount() => Magike = Math.Clamp(Magike, 0, MagikeMax);
 
-        public bool HasMagike() => Magike > 0;
-
         /// <summary>
         /// 直接向魔能容器内添加魔能
         /// </summary>
         /// <param name="container"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public static MagikeContainer operator +(MagikeContainer container,int count)
+        public static MagikeContainer operator +(MagikeContainer container, int count)
         {
             container.Magike += count;
             container.LimitMagikeAmount();
@@ -61,42 +55,48 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
 
         /// <summary>
-        /// 从魔能容器内取走魔能，返回值为最后能取走多少<br></br>
-        /// 如果能取走给定的值，那么就返回这个值，如果不能则返回当前魔能容器中的魔能量
+        /// 直接减少，请一定在执行这个操作前检测能否减少
         /// </summary>
         /// <param name="container"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public static int operator -(MagikeContainer container, int count)
+        public static MagikeContainer operator -(MagikeContainer container, int count)
         {
-            //如果没有魔能则直接返回0
-            if (!container.HasMagike())
-                return 0;
-
-            //如果魔能量不够那么就返回剩余所有
-            if (container.Magike < count)
-            {
-                int i = container.Magike;
-                container.Magike = 0;
-                return i;
-            }
-            
-            //正常状态
             container.Magike -= count;
             container.LimitMagikeAmount();
-            return count;
+            return container;
+        }
+
+        /// <summary>
+        /// 将传入的数值限制在能接受的魔能数量
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public bool LimitReceiveOverflow(ref int amount)
+        {
+            if (Magike + amount > MagikeMax)
+            {
+                amount = MagikeMax - Magike;
+                return true;
+            }
+
+            return false;
         }
 
         #endregion
 
         public override void SaveData(string preName, TagCompound tag)
         {
-            base.SaveData(preName, tag);
+            tag.Add(preName + nameof(Magike), Magike);
+            tag.Add(preName + nameof(MagikeMaxBase), MagikeMaxBase);
+            tag.Add(preName + nameof(MagikeMaxExtra), MagikeMaxExtra);
         }
 
         public override void LoadData(string preName, TagCompound tag)
         {
-            base.LoadData(preName, tag);
+            Magike = tag.GetInt(preName + nameof(Magike));
+            MagikeMaxBase = tag.GetInt(preName + nameof(MagikeMaxBase));
+            MagikeMaxExtra = tag.GetInt(preName + nameof(MagikeMaxExtra));
         }
     }
 }

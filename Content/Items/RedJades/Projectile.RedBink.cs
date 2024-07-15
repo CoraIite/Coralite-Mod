@@ -129,7 +129,7 @@ namespace Coralite.Content.Items.RedJades
 
                         if (Timer == 10)
                         {
-                            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.UnitY) * 14f;
+                            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.UnitY) * 10f;
                             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
                             break;
                         }
@@ -182,15 +182,15 @@ namespace Coralite.Content.Items.RedJades
                                 return;
                             }
 
-                            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.UnitY) * 9f;
+                            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.UnitY) * 14.5f;
                             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
                             break;
                         }
 
-                        if (Timer < 90)
+                        if (Timer < 60)
                             break;
 
-                        if (Timer > 89 && Timer < 110)
+                        if (Timer > 59 && Timer < 80)
                         {
                             Projectile.velocity *= 0.96f;
                             Projectile.rotation = Helper.Lerp(Projectile.rotation, 0, 0.1f);

@@ -450,7 +450,8 @@ RedJadeShrine: {
 	DisplayName: Red Jade Shrine
 	Tooltip:
 		'''
-		Summons a small red jade to fight for you
+		Summons a little red jade to fight for you
+		Right-click to briefly activate the blast energy of the little red jade
 		[c/00bbff:takes up 1 minion slot]
 		'''
 }

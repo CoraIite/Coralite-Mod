@@ -457,7 +457,7 @@ RedJadeShrine: {
 	DisplayName: 赤玉祭坛
 	Tooltip:
 		'''
-		召唤小赤玉
+		召唤小赤玉，右键短暂激活小赤玉的爆破能量
 		[c/00bbff:消耗1召唤栏]
 		'''
 }
