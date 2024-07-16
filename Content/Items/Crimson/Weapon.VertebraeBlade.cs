@@ -26,13 +26,13 @@ namespace Coralite.Content.Items.Crimson
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.useAnimation = 14;
-            Item.useTime = 14;
+            Item.useAnimation = 16;
+            Item.useTime = 16;
             Item.width = 50;
             Item.height = 18;
             Item.shoot = ModContent.ProjectileType<VertebraeSpike>();
             Item.UseSound = CoraliteSoundID.Swing_Item1;
-            Item.damage = 28;
+            Item.damage = 27;
             Item.knockBack = 0.3f;
             Item.shootSpeed = 16f;
             Item.mana = 10;

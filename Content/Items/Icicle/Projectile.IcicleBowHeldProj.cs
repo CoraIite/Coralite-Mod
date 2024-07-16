@@ -36,6 +36,11 @@ namespace Coralite.Content.Items.Icicle
         public override void AI()
         {
             Owner.heldProj = Projectile.whoAmI;
+            if (Owner.HeldItem.type !=ModContent.ItemType<IcicleBow>())
+            {
+                Projectile.Kill();
+                return;
+            }
 
             if (Alpha == 0)
             {
@@ -106,7 +111,8 @@ namespace Coralite.Content.Items.Icicle
                         {
                             if (canShoot && Main.myPlayer == Projectile.owner)
                             {
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 9.5f, ModContent.ProjectileType<IcicleStarArrow>(), (int)(Projectile.damage * 1.5f), Projectile.knockBack, Projectile.owner);
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 9.5f
+                                    , ModContent.ProjectileType<IcicleStarArrow>(), (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 2f), Projectile.knockBack, Projectile.owner);
                                 SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
                             }
 

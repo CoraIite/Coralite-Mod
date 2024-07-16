@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Corruption
             Item.damage = 14;
             Item.knockBack = 0.3f;
             Item.shootSpeed = 6.5f;
-            Item.mana = 9;
+            Item.mana = 10;
             Item.noMelee = true;
             Item.autoReuse = true;
             Item.noUseGraphic = true;

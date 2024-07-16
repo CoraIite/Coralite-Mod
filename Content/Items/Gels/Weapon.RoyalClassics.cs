@@ -20,9 +20,9 @@ namespace Coralite.Content.Items.Gels
         {
             Item.width = Item.height = 40;
             Item.damage = 31;
-            Item.useTime = 19;
-            Item.useAnimation = 19;
-            Item.mana = 14;
+            Item.useTime = 16;
+            Item.useAnimation = 16;
+            Item.mana = 12;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.DamageType = DamageClass.Magic;
             Item.knockBack = 4;
@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.Gels
                         break;
                     case 2://射出3发小弹弹球
                         for (int i = -1; i < 2; i++)
-                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(i * 0.2f), ProjectileType<SmallGelBall_Friendly>(), (int)(damage * 0.4f), knockback, player.whoAmI, 1);
+                            Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(i * 0.2f), ProjectileType<SmallGelBall_Friendly>(), (int)(damage * 0.7f), knockback, player.whoAmI, 1);
                         break;
                     case 3://射出刺球
                         Projectile.NewProjectile(source, player.Center, velocity, ProjectileType<SpikeGelBall_Friendly>(), damage, knockback, player.whoAmI);
@@ -155,7 +155,7 @@ namespace Coralite.Content.Items.Gels
                 for (int i = 0; i < 3; i++)
                 {
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + Main.rand.NextVector2Circular(Projectile.width, Projectile.height),
-                        -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1f, 1f)) * Main.rand.NextFloat(10, 14), ProjectileType<GelSpike_Friendly>(), (int)(Projectile.damage * 0.6f), 0, Projectile.owner);
+                        -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1f, 1f)) * Main.rand.NextFloat(10, 14), ProjectileType<GelSpike_Friendly>(), (int)(Projectile.damage * 0.8f), 0, Projectile.owner);
                 }
             }
         }

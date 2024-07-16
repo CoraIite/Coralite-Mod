@@ -1,16 +1,13 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Helpers;
-using System;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class MagikeLinerSender : Component
+    public class MagikeLinerSender : MagikeSender
     {
-        public override int ID => MagikeComponentID.MagikeSender;
-
         /// <summary> 基础连接数量 </summary>
         public int MaxConnectBase { get; private set; }
         /// <summary> 额外连接数量 </summary>
@@ -27,27 +24,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 连接距离 </summary>
         public int ConnectLength { get => ConnectLengthBase + ConnectLengthExtra; }
 
-        /// <summary> 基础单次发送量 </summary>
-        public int UnitDeliveryBase { get; private set; }
-        /// <summary> 额外单次发送量 </summary>
-        public int UnitDeliveryExtra { get; set; }
-
-        /// <summary> 单次发送量 </summary>
-        public int UnitDelivery { get => UnitDeliveryBase + UnitDeliveryExtra; }
-
-        /// <summary> 基础发送时间 </summary>
-        public int SendDelayBase { get; private set; }
-        /// <summary> 发送时间减少量（效率增幅量） </summary>
-        public float SendDelayBonus { get; set; } = 1f;
-
-        /// <summary> 发送时间 </summary>
-        public int SendDelay { get => Math.Clamp((int)(SendDelayBase * SendDelayBonus), 1, int.MaxValue); }
-
         /// <summary> 当前连接者 </summary>
         public int CurrentConnector => Receivers.Count;
-
-        /// <summary> 发送魔能的计时器 </summary>
-        private int _sendTimer;
 
         public List<Point16> Receivers = new List<Point16>();
 
@@ -76,18 +54,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     break;
                 Send(container, Receivers[i], amount);
             }
-        }
-
-        public bool CanSend()
-        {
-            _sendTimer--;
-            if (_sendTimer == 0)
-            {
-                _sendTimer = SendDelay;
-                return true;
-            }
-
-            return false;
         }
 
         /// <summary>
@@ -136,6 +102,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
              * 对于传入的魔能数量，分为以下几种情况
              *  - 接收者能接受，就全额发送
              *  - 接收者无法接受全部，就发送接收者能接受的数量
+             *  
+             *  由于已经事先判断过自身魔能容量所以这里必定有足够的魔能来发送
              */
 
             MagikeContainer receiver = receiverEntity.GetMagikeContainer();
@@ -145,10 +113,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //限制不溢出
             receiver.LimitReceiveOverflow(ref amount);
 
-#pragma warning disable IDE0059 // 不需要赋值
-            receiver += amount;
-            selfMagikeContainer -= amount;
-#pragma warning restore IDE0059 // 不需要赋值
+            receiver.AddMagike(amount);
+            selfMagikeContainer.ReduceMagike(amount);
 
             return;
         remove:
@@ -187,17 +153,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void SaveData(string preName, TagCompound tag)
         {
+            base.SaveData(preName, tag);
             tag.Add(preName + nameof(MaxConnectBase), MaxConnectBase);
             tag.Add(preName + nameof(MaxConnectExtra), MaxConnectExtra);
 
             tag.Add(preName + nameof(ConnectLengthBase), ConnectLengthBase);
             tag.Add(preName + nameof(ConnectLengthExtra), ConnectLengthExtra);
-
-            tag.Add(preName + nameof(UnitDeliveryBase), UnitDeliveryBase);
-            tag.Add(preName + nameof(UnitDeliveryExtra), UnitDeliveryExtra);
-
-            tag.Add(preName + nameof(SendDelayBase), SendDelayBase);
-            tag.Add(preName + nameof(SendDelayBonus), SendDelayBonus);
 
             for (int i = 0; i < Receivers.Count; i++)
                 tag.Add(preName + nameof(Receivers) + i, Receivers[i]);
@@ -205,17 +166,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void LoadData(string preName, TagCompound tag)
         {
+            base.LoadData(preName, tag);
+
             MaxConnectBase = tag.GetInt(preName + nameof(MaxConnectBase));
             MaxConnectExtra = tag.GetInt(preName + nameof(MaxConnectExtra));
 
             ConnectLengthBase = tag.GetInt(preName + nameof(ConnectLengthBase));
             ConnectLengthExtra = tag.GetInt(preName + nameof(ConnectLengthExtra));
-
-            UnitDeliveryBase = tag.GetInt(preName + nameof(UnitDeliveryBase));
-            UnitDeliveryExtra = tag.GetInt(preName + nameof(UnitDeliveryExtra));
-
-            SendDelayBase = tag.GetInt(preName + nameof(SendDelayBase));
-            SendDelayBonus = tag.GetFloat(preName + nameof(SendDelayBonus));
 
             int i = 0;
 

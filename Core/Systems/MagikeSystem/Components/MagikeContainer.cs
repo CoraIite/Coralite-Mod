@@ -6,7 +6,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 {
     public class MagikeContainer : Component
     {
-        public override int ID => MagikeComponentID.MagikeContainer;
+        public sealed override int ID => MagikeComponentID.MagikeContainer;
 
         /// <summary> 当前内部的魔能量 </summary>
         public int Magike { get; set; }
@@ -20,9 +20,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int MagikeMax { get => MagikeMaxBase + MagikeMaxExtra; }
 
         /// <summary> 有魔能就为<see langword="true"/> </summary>
-        public bool HasMagike => Magike > 0;
+        public virtual bool HasMagike => Magike > 0;
         /// <summary> 魔能满了后为true </summary>
-        public bool FullMagike => Magike >= MagikeMax;
+        public virtual bool FullMagike => Magike >= MagikeMax;
 
         public override void Update(IEntity entity) { }
 
@@ -44,27 +44,23 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 直接向魔能容器内添加魔能
         /// </summary>
-        /// <param name="container"></param>
-        /// <param name="count"></param>
+        /// <param name="amount"></param>
         /// <returns></returns>
-        public static MagikeContainer operator +(MagikeContainer container, int count)
+        public virtual void AddMagike(int amount)
         {
-            container.Magike += count;
-            container.LimitMagikeAmount();
-            return container;
+            Magike += amount;
+            LimitMagikeAmount();
         }
 
         /// <summary>
         /// 直接减少，请一定在执行这个操作前检测能否减少
         /// </summary>
-        /// <param name="container"></param>
-        /// <param name="count"></param>
+        /// <param name="amount"></param>
         /// <returns></returns>
-        public static MagikeContainer operator -(MagikeContainer container, int count)
+        public virtual void ReduceMagike(int amount)
         {
-            container.Magike -= count;
-            container.LimitMagikeAmount();
-            return container;
+            Magike -= amount;
+            LimitMagikeAmount();
         }
 
         /// <summary>
@@ -72,7 +68,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public bool LimitReceiveOverflow(ref int amount)
+        public virtual bool LimitReceiveOverflow(ref int amount)
         {
             if (Magike + amount > MagikeMax)
             {

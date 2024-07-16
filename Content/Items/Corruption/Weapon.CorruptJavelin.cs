@@ -27,9 +27,9 @@ namespace Coralite.Content.Items.Corruption
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 28;
-            Item.useTime = 24;
-            Item.useAnimation = 24;
+            Item.damage = 30;
+            Item.useTime = 22;
+            Item.useAnimation = 22;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.DamageType = DamageClass.Summon;
             Item.knockBack = 4;

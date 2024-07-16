@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.ShieldPlus
                 PowerfulAtt2 = 0;
                 PowerfulLeft = 0;
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TerranascenceSpurt>()
-                    , (int)(damage * 3f), knockback, player.whoAmI, 1, 1);
+                    , (int)(damage * 3.35f), knockback, player.whoAmI, 1, 1);
                 return;
             }
 
@@ -128,7 +128,7 @@ namespace Coralite.Content.Items.ShieldPlus
             {
                 PowerfulLeft = 0;
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TerranascenceSpurt>()
-                    , (int)(damage * 1.5f), knockback, player.whoAmI, 1);
+                    , (int)(damage * 1.75f), knockback, player.whoAmI, 1);
                 return;
             }
 

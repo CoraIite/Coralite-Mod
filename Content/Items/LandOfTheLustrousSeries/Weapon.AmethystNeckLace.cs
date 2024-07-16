@@ -337,7 +337,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.width = Projectile.height = 2;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.idStaticNPCHitCooldown = 10;
+            Projectile.idStaticNPCHitCooldown = 15;
             Projectile.usesIDStaticNPCImmunity = true;
         }
 

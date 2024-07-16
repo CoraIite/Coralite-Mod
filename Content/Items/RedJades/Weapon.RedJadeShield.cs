@@ -44,7 +44,7 @@ namespace Coralite.Content.Items.RedJades
         {
             flyingTime = 23;
             backTime = 5;
-            backSpeed = 14f;
+            backSpeed = 14.5f;
             trailCachesLength = 9;
             trailWidth = 22 / 2;
         }

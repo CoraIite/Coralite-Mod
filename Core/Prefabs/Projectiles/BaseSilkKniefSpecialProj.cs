@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Coralite.Helpers;
+using Terraria;
 using Terraria.Audio;
 
 namespace Coralite.Core.Prefabs.Projectiles
@@ -110,6 +111,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
             else
             {
+                Projectile.StartAttack();
                 SoundEngine.PlaySound(CoraliteSoundID.WhipSwing_Item152, Projectile.Center);
                 Vector2 dir = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero);
                 Projectile.hide = false;

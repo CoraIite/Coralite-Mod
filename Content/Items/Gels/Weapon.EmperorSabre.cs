@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Gels
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 34;
+            Item.damage = 35;
             Item.useTime = 24;
             Item.useAnimation = 24;
             Item.knockBack = 2f;
@@ -710,7 +710,7 @@ namespace Coralite.Content.Items.Gels
         {
             SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, Projectile.Center);
             float rot = Main.rand.NextFloat(MathHelper.TwoPi);
-            int damage = (int)(Projectile.damage * 0.8f);
+            int damage = (int)(Projectile.damage * 0.9f);
 
             for (int i = 0; i < 4; i++)
             {

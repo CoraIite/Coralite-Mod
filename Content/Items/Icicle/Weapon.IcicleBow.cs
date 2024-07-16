@@ -17,14 +17,13 @@ namespace Coralite.Content.Items.Icicle
         {
             Item.width = Item.height = 40;
             Item.damage = 23;
-            Item.useTime = 22;
-            Item.useAnimation = 22;
+            Item.useTime =  Item.useAnimation = 26;
             Item.knockBack = 3f;
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Ranged;
             Item.useAmmo = AmmoID.Arrow;
-            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.value = Item.sellPrice(0, 1);
             Item.rare = ItemRarityID.Green;
             Item.shoot = ProjectileType<IcicleBowHeldProj>();
             Item.UseSound = CoraliteSoundID.Bow_Item5;
@@ -102,7 +101,7 @@ namespace Coralite.Content.Items.Icicle
                 }
 
                 //生成手持弹幕
-                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ModContent.ProjectileType<IcicleBowHeldProj>(),
+                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<IcicleBowHeldProj>(),
                     Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, (Main.MouseWorld - Player.Center).ToRotation(), 1);
             }
 

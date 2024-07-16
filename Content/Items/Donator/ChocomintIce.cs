@@ -16,6 +16,11 @@ namespace Coralite.Content.Items.Donator
     {
         public override string Texture => AssetDirectory.Donator + Name;
 
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type]  = true;
+        }
+
         public override void SetDefaults()
         {
             Item.SetWeaponValues(26, 4);
@@ -42,17 +47,14 @@ namespace Coralite.Content.Items.Donator
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
+            if (player.altFunctionUse == 2)
             {
-                if (player.altFunctionUse == 2)
-                {
-                    player.MinionNPCTargetAim(true);
-                    return false;
-                }
-
-                var projectile = Projectile.NewProjectileDirect(source, Main.MouseWorld, velocity, type, damage, knockback, Main.myPlayer, ai2: Main.rand.Next(3));
-                projectile.originalDamage = Item.damage;
+                player.MinionNPCTargetAim(true);
+                return false;
             }
+
+            var projectile = Projectile.NewProjectileDirect(source, Main.MouseWorld, velocity, type, damage, knockback, Main.myPlayer, ai2: Main.rand.Next(3));
+            projectile.originalDamage = Item.damage;
 
             return false;
         }
@@ -143,6 +145,10 @@ namespace Coralite.Content.Items.Donator
                         CircleMovement(index, totalIndexesInGroup, out Vector2 idleSpot);
                         Projectile.Center = Projectile.Center.MoveTowards(idleSpot, 32f);
                         Projectile.spriteDirection = Projectile.direction;
+
+                        if (Vector2.Distance(Projectile.Center,Owner.Center)>2000)
+                            Projectile.Center = Owner.Center;
+
                         if (Projectile.Distance(idleSpot) < 32f)
                         {
                             Timer = 0f;
@@ -158,12 +164,21 @@ namespace Coralite.Content.Items.Donator
                         Helper.GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out var totalIndexesInGroup2);
                         CircleMovement(index2, totalIndexesInGroup2, out Vector2 idleSpot);
                         Projectile.Center = Projectile.Center.MoveTowards(idleSpot, 32f);
+
+                        if (Vector2.Distance(Projectile.Center, Owner.Center) > 2000)
+                            Projectile.Center = Owner.Center;
+
                         Projectile.spriteDirection = Projectile.direction;
                         Projectile.rotation = Projectile.rotation.AngleLerp(MathF.Sin(Main.GlobalTimeWrappedHourly + Projectile.whoAmI) * 0.4f, 0.5f);
 
                         if (Main.rand.NextBool(20))
                         {
-                            int index = Projectile.MinionFindTarget();
+                            int index;
+                            if (Owner.HasMinionAttackTargetNPC)
+                                index = Owner.MinionAttackTargetNPC;
+                            else
+                                index = Projectile.MinionFindTarget();
+
                             if (index != -1)
                             {
                                 Projectile.StartAttack();
@@ -222,7 +237,12 @@ namespace Coralite.Content.Items.Donator
                         }
                         else
                         {
-                            int index = Projectile.MinionFindTarget();
+                            int index;
+                            if (Owner.HasMinionAttackTargetNPC)
+                                index = Owner.MinionAttackTargetNPC;
+                            else
+                                index = Projectile.MinionFindTarget();
+
                             Projectile.friendly = true;
                             Timer = 0;
                             if (index == -1 || Vector2.Distance(Projectile.Center, Owner.Center) > 2400)

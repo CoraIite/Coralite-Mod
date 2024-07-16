@@ -37,7 +37,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         //-----------------------------------
         //         生成条件的本地化
         //-----------------------------------
-        public static LocalizedText[] SpawnDescriptions;
+        public static LocalizedText[] SpawnDescriptions { get; private set; }
 
         public class DescriptionID
         {
