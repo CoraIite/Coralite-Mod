@@ -30,7 +30,7 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
 
             ComponentsCache.Add(component);
 
-            component.Entity= this;
+            component.Entity = this;
             component.OnAdd(this);
         }
 
@@ -39,7 +39,7 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         /// </summary>
         /// <param name="componentId"></param>
         /// <param name="listIndex"></param>
-        public void RemoveComponent(int componentId,int listIndex)
+        public void RemoveComponent(int componentId, int listIndex)
         {
             if (Components[componentId] == null)
                 return;
@@ -81,7 +81,7 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         public T GetSingleComponent<T>() where T : Component
         {
             int index = CoraliteContent.ComponentType<T>();
-            if (!HasComponent(index ))
+            if (!HasComponent(index))
                 throw new Exception("所查找的组件不存在！");
 
             return (T)Components[index].First();

@@ -15,12 +15,14 @@ namespace Coralite.Content.Items.Icicle
             recipe.ReplaceResult(ItemID.IceMachine);
             recipe.AddIngredient<IcicleCrystal>(2);
             recipe.AddTile(TileID.Anvils);
+            recipe.DisableDecraft();
             recipe.Register();
 
             recipe = CreateRecipe();
             recipe.ReplaceResult(ItemID.IceRod);
             recipe.AddIngredient<IcicleCrystal>(2);
             recipe.AddTile(TileID.IceMachine);
+            recipe.DisableDecraft();
             recipe.Register();
         }
     }

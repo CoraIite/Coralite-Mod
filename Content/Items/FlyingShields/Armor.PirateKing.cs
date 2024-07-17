@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.CustomHooks;
+using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using System.Collections.Generic;
@@ -19,14 +20,12 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void Load()
         {
-            NotHasPirateKingSoul = Language.GetOrRegister(this.GetLocalizationKey("NotHasPirateKingSoul"), () => "海盗王之魂：装备至少2件套后触发效果");
-            PirateKingSoul2Part = Language.GetOrRegister(this.GetLocalizationKey("PirateKingSoul2Part"),
-                                                () => "海盗王之魂：攻击敌人有时会抢夺钱币\n[c/807b7d:(2)件套]\n[c/69a777:5%概率触发]\n[c/69a777:2] [c/807b7d:秒冷却时间]\n[c/807b7d:造成] [c/9e82b5:150%] [c/807b7d:伤害]");
-            PirateKingSoul3Part = Language.GetOrRegister(this.GetLocalizationKey("PirateKingSoul3Part"),
-                                                () => "海盗王之魂：攻击敌人有时会抢夺钱币\n[c/807b7d:(3)件套]\n[c/69a777:10%概率触发]\n[c/69a777:1] [c/807b7d:秒冷却时间]\n[c/807b7d:造成] [c/9e82b5:175%] [c/807b7d:伤害]");
-            NotHasLuckyStar = Language.GetOrRegister(this.GetLocalizationKey("NotHasLuckyStar"), () => "幸运星：装备至少2件套后触发效果");
-            LuckyStar2Part = Language.GetOrRegister(this.GetLocalizationKey("LuckyStar2Part"), () => "幸运星：运气增加\n[c/807b7d:(2)件套]\n[c/807b7d:增加] [c/9e82b5:0.2]");
-            LuckyStar3Part = Language.GetOrRegister(this.GetLocalizationKey("LuckyStar3Part"), () => "幸运星：运气增加\n[c/807b7d:(3)件套]\n[c/807b7d:增加] [c/9e82b5:0.3]");
+            NotHasPirateKingSoul = Language.GetOrRegister(this.GetLocalizationKey("NotHasPirateKingSoul"));
+            PirateKingSoul2Part = Language.GetOrRegister(this.GetLocalizationKey("PirateKingSoul2Part"));
+            PirateKingSoul3Part = Language.GetOrRegister(this.GetLocalizationKey("PirateKingSoul3Part"));
+            NotHasLuckyStar = Language.GetOrRegister(this.GetLocalizationKey("NotHasLuckyStar"));
+            LuckyStar2Part = Language.GetOrRegister(this.GetLocalizationKey("LuckyStar2Part"));
+            LuckyStar3Part = Language.GetOrRegister(this.GetLocalizationKey("LuckyStar3Part"));
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -101,6 +100,15 @@ namespace Coralite.Content.Items.FlyingShields
             player.GetCritChance(DamageClass.Melee) += 7f;
             player.setBonus = PriateKingBonus.Value;
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<LegendaryCard>()
+                .AddIngredient(ItemID.PirateMap)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+        }
     }
 
     [AutoloadEquip(EquipType.Body)]
@@ -124,6 +132,15 @@ namespace Coralite.Content.Items.FlyingShields
                 cp.pirateKingSoul++;
                 cp.luckyStar++;
             }
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<LegendaryCard>()
+                .AddIngredient(ItemID.PirateMap)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 
@@ -149,6 +166,15 @@ namespace Coralite.Content.Items.FlyingShields
                 cp.pirateKingSoul++;
                 cp.luckyStar++;
             }
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<LegendaryCard>()
+                .AddIngredient(ItemID.PirateMap)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Donator
 
         public override void SetStaticDefaults()
         {
-            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type]  = true;
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
         }
 
         public override void SetDefaults()
@@ -146,7 +146,7 @@ namespace Coralite.Content.Items.Donator
                         Projectile.Center = Projectile.Center.MoveTowards(idleSpot, 32f);
                         Projectile.spriteDirection = Projectile.direction;
 
-                        if (Vector2.Distance(Projectile.Center,Owner.Center)>2000)
+                        if (Vector2.Distance(Projectile.Center, Owner.Center) > 2000)
                             Projectile.Center = Owner.Center;
 
                         if (Projectile.Distance(idleSpot) < 32f)

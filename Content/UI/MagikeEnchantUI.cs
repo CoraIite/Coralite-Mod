@@ -107,8 +107,8 @@ namespace Coralite.Content.UI
 
         public EnchantShowPanel()
         {
-            Width.Set(44 , 0f);
-            Height.Set(44 , 0f);
+            Width.Set(44, 0f);
+            Height.Set(44, 0f);
 
         }
 

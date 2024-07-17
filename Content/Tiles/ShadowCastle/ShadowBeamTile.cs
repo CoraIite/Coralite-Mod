@@ -29,7 +29,8 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
-            height = 18;
+            height = 20;
+            offsetY = -2;
 
             int k = tileFrameY / 18;
             tileFrameY = (short)(k * 22);
@@ -39,6 +40,5 @@ namespace Coralite.Content.Tiles.ShadowCastle
         {
             num = fail ? 1 : 3;
         }
-
     }
 }

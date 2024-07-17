@@ -403,7 +403,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                             if (Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
                             {
                                 State = 1;
-                                Projectile.velocity = (target.Center+target.velocity*4 - Projectile.Center).SafeNormalize(Vector2.Zero) * 9.5f;
+                                Projectile.velocity = (target.Center + target.velocity * 4 - Projectile.Center).SafeNormalize(Vector2.Zero) * 9.5f;
                                 for (int i = 0; i < 4; i++)
                                 {
                                     Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.GreenTorch, Helper.NextVec2Dir(0.5f, 2), Scale: Main.rand.NextFloat(1f, 1.5f));

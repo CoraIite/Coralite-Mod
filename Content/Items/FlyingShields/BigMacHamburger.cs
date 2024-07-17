@@ -1,12 +1,12 @@
 ﻿using Coralite.Content.Items.GlobalItems;
 using Coralite.Content.Projectiles.Globals;
-using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core;
+using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria;
 
 namespace Coralite.Content.Items.FlyingShields
 {
@@ -111,9 +111,9 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class BigMacExProj:ModProjectile
+    public class BigMacExProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.FlyingShieldItems+Name;
+        public override string Texture => AssetDirectory.FlyingShieldItems + Name;
 
     }
 }

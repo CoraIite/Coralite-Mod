@@ -480,12 +480,12 @@ namespace Coralite.Content.ModPlayers
                     return;
 
                 int random = 20;
-                float damageAdder = 0.5f;
+                float damageAdder = 1f;
                 int CD = 120;
                 if (pirateKingSoul > 2)//3件套效果强化
                 {
                     random = 10;
-                    damageAdder = 1f;
+                    damageAdder = 1.75f;
                     CD = 60;
                 }
                 if (Player.RollLuck(random) == random - 1)

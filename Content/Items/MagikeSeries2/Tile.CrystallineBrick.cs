@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<CrystallineBrickTile>());
             Item.GetMagikeItem().magikeAmount = 150;
-            Item.rare=ModContent.RarityType<CrystallineMagikeRarity>();
+            Item.rare = ModContent.RarityType<CrystallineMagikeRarity>();
         }
 
         public override void AddRecipes()

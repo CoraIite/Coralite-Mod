@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.CustomHooks;
+using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using System.Collections.Generic;
@@ -95,10 +96,19 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void UpdateArmorSet(Player player)
         {
-            //player.GetDamage(DamageClass.Ranged) += 0.05f;
+            player.GetDamage(DamageClass.Ranged) += 0.05f;
             player.GetCritChance(DamageClass.Ranged) += 5f;
             player.moveSpeed += 0.05f;
             player.setBonus = MedusaBonus.Value;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<LegendaryCard>()
+                .AddIngredient(ItemID.SoulofNight, 10)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 
@@ -121,6 +131,15 @@ namespace Coralite.Content.Items.FlyingShields
                 cp.split++;
             }
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<LegendaryCard>()
+                .AddIngredient(ItemID.SoulofNight, 12)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+        }
     }
 
     [AutoloadEquip(EquipType.Legs)]
@@ -136,11 +155,21 @@ namespace Coralite.Content.Items.FlyingShields
         public override void UpdateEquip(Player player)
         {
             player.moveSpeed += 0.10f;
+            player.GetDamage(DamageClass.Ranged) += 0.06f;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.medusaSoul++;
                 cp.split++;
             }
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<LegendaryCard>()
+                .AddIngredient(ItemID.SoulofNight, 10)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

@@ -4,7 +4,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 {
     public partial class MagikeSystem
     {
-        public static LocalizedText[] ConnectStaff { get;private set; }
+        public static LocalizedText[] ConnectStaff { get; private set; }
 
         public class ConnectStaffID
         {
@@ -36,7 +36,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public void LoadLocalization()
         {
-            ConnectStaff=new LocalizedText[ConnectStaffID.Count];
+            ConnectStaff = new LocalizedText[ConnectStaffID.Count];
             ConnectStaff[ConnectStaffID.ChooseSender_Found] = this.GetLocalization("ChooseSender_Found"
                 , () => "已选择魔能发送器");
             ConnectStaff[ConnectStaffID.ChooseSender_NotFound] = this.GetLocalization("ChooseSender_NotFound"

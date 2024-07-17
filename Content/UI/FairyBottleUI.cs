@@ -312,7 +312,7 @@ namespace Coralite.Content.UI
                     rectangle2 = mainTex.Frame();
 
                 float itemScale = 1f;
-                float pixelWidth = 40 ;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                float pixelWidth = 40;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
                 float pixelHeight = pixelWidth;
                 if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
                 {

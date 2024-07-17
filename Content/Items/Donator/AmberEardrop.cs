@@ -192,7 +192,7 @@ namespace Coralite.Content.Items.Donator
                 {
                     Color c = Main.rand.NextFromList(AmberProj.brightC, AmberProj.highlightC, AmberProj.darkC);
                     Vector2 dir = Helper.NextVec2Dir();
-                    Dust dust = Dust.NewDustPerfect(Projectile.Center+new Vector2(0,12), ModContent.DustType<NightmareStar>(),
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center + new Vector2(0, 12), ModContent.DustType<NightmareStar>(),
                         dir * Main.rand.NextFloat(1f, 4f), newColor: c, Scale: Main.rand.NextFloat(1f, 1.75f));
                     dust.rotation = dir.ToRotation() + MathHelper.PiOver2;
                 }
@@ -202,7 +202,7 @@ namespace Coralite.Content.Items.Donator
                     Owner.manaRegenDelay = 40;
 
                     Vector2 pos = Main.MouseWorld + new Vector2(Main.rand.Next(-300, 300), -800);
-                    Vector2 vel = (Main.MouseWorld-pos).SafeNormalize(Vector2.Zero)
+                    Vector2 vel = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero)
                         .RotateByRandom(-0.05f, 0.05f) * Main.rand.NextFloat(8, 11);
 
                     bool special = Main.rand.NextBool(5);
@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.Donator
                     if (special)
                         dam = (int)(1.35f * dam);
                     int type = special ? ModContent.ProjectileType<BigAmber>() : ModContent.ProjectileType<AmberProj>();
-                    Projectile.NewProjectileFromThis(pos, vel, type, dam, Projectile.knockBack,Main.MouseWorld.Y);
+                    Projectile.NewProjectileFromThis(pos, vel, type, dam, Projectile.knockBack, Main.MouseWorld.Y);
 
                     for (int i = 0; i < 4; i++)
                     {
@@ -230,7 +230,7 @@ namespace Coralite.Content.Items.Donator
             }
             else
             {
-                if (frameX ==0&&Projectile.frame>5)
+                if (frameX == 0 && Projectile.frame > 5)
                 {
                     frameX = 1;
                     Projectile.frame = 0;

@@ -2,7 +2,6 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 

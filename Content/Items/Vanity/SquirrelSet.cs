@@ -82,7 +82,7 @@ namespace Coralite.Content.Items.Vanity
             CreateRecipe()
                 .AddCondition(this.GetLocalization("ShlimmerTranslation", () => "此为微光转化合成表"), () => false)
                 .AddCustomShimmerResult(ItemID.Squirrel)
-                .AddCustomShimmerResult(ItemID.Chest,2)
+                .AddCustomShimmerResult(ItemID.Chest, 2)
                 .AddCustomShimmerResult(ItemID.RedDye)
                 .Register();
         }

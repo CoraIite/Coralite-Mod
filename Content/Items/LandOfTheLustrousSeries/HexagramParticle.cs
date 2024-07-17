@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 float rot = Rotation + MathHelper.TwoPi / 6 * i;
                 Vector2 pos = Center + rot.ToRotationVector2() * distance - Main.screenPosition;
-                spriteBatch.Draw(tex, pos, null, c*0.75f, rot
+                spriteBatch.Draw(tex, pos, null, c * 0.75f, rot
                     , origin, Scale, SpriteEffects.None, 0f);
                 spriteBatch.Draw(tex, pos, null, c, rot
                     , origin, Scale * new Vector2(0.9f, 0.5f), SpriteEffects.None, 0f);

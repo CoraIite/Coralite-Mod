@@ -40,7 +40,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return false;
         }
 
-        public void OnSend(Point16 selfPoint,Point ReceiverPoint)
+        public void OnSend(Point16 selfPoint, Point ReceiverPoint)
         {
 
         }

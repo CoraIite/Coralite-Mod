@@ -125,10 +125,11 @@ namespace Coralite.Core.Prefabs.Tiles
             tile.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair); // Beds count as chairs for the purpose of suitable room creation
 
             tile.DustType = dustType;
-            tile.AdjTiles = new int[] { TileID.Beds };
+            tile.AdjTiles = [TileID.Beds];
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2); // this style already takes care of direction for us
-            TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
+            TileObjectData.newTile.DrawYOffset = 2;
+            TileObjectData.newTile.CoordinateHeights = [16, 16];
             TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
             TileObjectData.addTile(tile.Type);
 
@@ -207,6 +208,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
             TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, 2);
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
             TileObjectData.newTile.LavaDeath = LavaDeath;
             // The following 3 lines are needed if you decide to add more styles and stack them vertically
@@ -261,6 +263,7 @@ namespace Coralite.Core.Prefabs.Tiles
             tile.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
+            TileObjectData.newTile.DrawYOffset = -2;
             TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom /*| AnchorType.PlanterBox*/, 1, 0);
             TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
             TileObjectData.newTile.StyleHorizontal = true;
@@ -365,12 +368,13 @@ namespace Coralite.Core.Prefabs.Tiles
             tile.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 
             tile.DustType = dustType;
-            tile.AdjTiles = new int[] { TileID.Bookcases }; // Condider adding TileID.Chairs to AdjTiles to mirror "(regular) Toilet" and "Golden Toilet" behavior for crafting stations
+            tile.AdjTiles = [TileID.Bookcases]; // Condider adding TileID.Chairs to AdjTiles to mirror "(regular) Toilet" and "Golden Toilet" behavior for crafting stations
 
             LocalizedText name = tile.CreateMapEntryName();
             tile.AddMapEntry(mapColor, name);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
+            TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 18];
             TileObjectData.newTile.LavaDeath = LavaDeath;
             TileObjectData.newTile.StyleHorizontal = true;
 
@@ -397,6 +401,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
             TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, 2);
             TileObjectData.newTile.LavaDeath = LavaDeath;
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
             TileObjectData.newTile.StyleWrapLimit = 2;
             TileObjectData.newTile.StyleMultiplier = 2;

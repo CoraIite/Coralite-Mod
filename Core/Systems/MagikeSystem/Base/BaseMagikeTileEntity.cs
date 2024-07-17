@@ -22,7 +22,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
         /// </summary>
         public virtual int ExtendFilterCapacity { get => 2; }
 
-        public override bool IsTileValidForEntity(int x, int y)=> Framing.GetTileSafely(x, y).TileType == TileType;
+        public override bool IsTileValidForEntity(int x, int y) => Framing.GetTileSafely(x, y).TileType == TileType;
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
@@ -65,7 +65,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
                 Component component = ComponentsCache[i];
 
                 string fullName = component.GetType().FullName;
-                string preName = SaveName+ i.ToString();
+                string preName = SaveName + i.ToString();
 
                 //存储全名以在加载时找到
                 tag.Add(preName, fullName);
@@ -87,7 +87,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
                     continue;
 
                 var component = (Component)Activator.CreateInstance(t);
-                component.LoadData(SaveName + i.ToString(),tag);
+                component.LoadData(SaveName + i.ToString(), tag);
 
                 (this as IEntity).AddComponent(component);
             }

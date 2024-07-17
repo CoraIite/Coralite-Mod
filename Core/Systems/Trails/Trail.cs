@@ -212,7 +212,7 @@ namespace Coralite.Core.Systems.Trails
         {
             GenerateMesh(out VertexPositionColorTexture[] mainVertices, out short[] mainIndices, out int nextAvailableIndex);
 
-            Vector2 toNext = (Positions[Positions.Length - 1]- Positions[Positions.Length - 2]).SafeNormalize(Vector2.Zero);
+            Vector2 toNext = (Positions[Positions.Length - 1] - Positions[Positions.Length - 2]).SafeNormalize(Vector2.Zero);
 
             tip.GenerateMesh(Positions[Positions.Length - 1], toNext, nextAvailableIndex, out VertexPositionColorTexture[] tipVertices, out short[] tipIndices, trailWidthFunction, trailColorFunction);
 

@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Configs;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -83,13 +82,13 @@ namespace Coralite.Content.UI
 
         public SingleItemSlot()
         {
-            Width.Set(52 , 0f);
+            Width.Set(52, 0f);
             Height.Set(52, 0f);
         }
 
         public override void OnInitialize()
         {
-            Width.Set(52 , 0f);
+            Width.Set(52, 0f);
             Height.Set(52, 0f);
         }
 
@@ -229,7 +228,7 @@ namespace Coralite.Content.UI
                     rectangle2 = mainTex.Frame();
 
                 float itemScale = 1f;
-                float pixelWidth = 40 ;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                float pixelWidth = 40;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
                 float pixelHeight = pixelWidth;
                 if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
                 {
@@ -247,7 +246,7 @@ namespace Coralite.Content.UI
                     spriteBatch.Draw(mainTex, center, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, rectangle2.Size() / 2, itemScale, 0, 0f);
 
                 if (Item.stack > 1)
-                    Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), center + new Vector2(12, 16), Color.White,1, 1, 0.5f);
+                    Utils.DrawBorderString(spriteBatch, Item.stack.ToString(), center + new Vector2(12, 16), Color.White, 1, 1, 0.5f);
                 if (IsMouseHovering)
                 {
                     Main.HoverItem = Item.Clone();

@@ -2674,7 +2674,7 @@ PirateKingHat: {
 		[c/807b7d:(2) Piece set]
 		[c/69a777:5% chance to trigger]
 		[c/69a777:2] [c/807b7d:second cooldown]
-		[c/807b7d:Deal] [c/9e82b5:150%] [c/807b7d:damage]
+		[c/807b7d:Deal] [c/9e82b5:200%] [c/807b7d:damage]
 		'''
 	PirateKingSoul3Part:
 		'''
@@ -2682,9 +2682,9 @@ PirateKingHat: {
 		[c/807b7d:(3)Piece set]
 		[c/69a777:10% chance to trigger]
 		[c/69a777:1] [c/807b7d:second cooldown]
-		[c/807b7d:造成] [c/9e82b5:175%] [c/807b7d:damage]
+		[c/807b7d:Deal] [c/9e82b5:275%] [c/807b7d:damage]
 		'''
-	NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
+	NotHasLuckyStar: Lucky Star: Triggers when at least 2 sets are equipped
 	LuckyStar2Part:
 		'''
 		Lucky star: increased luck
@@ -2693,8 +2693,8 @@ PirateKingHat: {
 		'''
 	LuckyStar3Part:
 		'''
-		幸运星：运气增加
-		[c/807b7d:(3)件套]
+		Lucky star: increased luck
+		[c/807b7d:(3)Piece set]
 		[c/807b7d:Increase] [c/9e82b5:0.3]
 		'''
 	PriateKingBonus: Lucky 777: Melee damage, melee speed, and melee critical hit rate each increase by 7%
@@ -2957,70 +2957,70 @@ ThunderveinBlade: {
 PirateKingCoat: {
 	DisplayName: Pirate King Coat
 	Tooltip: ""
-	NotHasPirateKingSoul: 海盗王之魂：装备至少2件套后触发效果
+	NotHasPirateKingSoul: Soul of the Pirate King: Triggers when at least 2 sets are equipped
 	PirateKingSoul2Part:
 		'''
-		海盗王之魂：攻击敌人有时会抢夺钱币
-		[c/807b7d:(2)件套]
-		[c/69a777:5%概率触发]
-		[c/69a777:2] [c/807b7d:秒冷却时间]
-		[c/807b7d:造成] [c/9e82b5:150%] [c/807b7d:伤害]
+		Soul of the Pirate King: Attacking enemies can sometimes drop coins
+		[c/807b7d:(2) Piece set]
+		[c/69a777:5% chance to trigger]
+		[c/69a777:2] [c/807b7d:second cooldown]
+		[c/807b7d:Deal] [c/9e82b5:200%] [c/807b7d:damage]
 		'''
 	PirateKingSoul3Part:
 		'''
-		海盗王之魂：攻击敌人有时会抢夺钱币
-		[c/807b7d:(3)件套]
-		[c/69a777:10%概率触发]
-		[c/69a777:1] [c/807b7d:秒冷却时间]
-		[c/807b7d:造成] [c/9e82b5:175%] [c/807b7d:伤害]
+		Soul of the Pirate King: Attacking enemies can sometimes drop coins
+		[c/807b7d:(3)Piece set]
+		[c/69a777:10% chance to trigger]
+		[c/69a777:1] [c/807b7d:second cooldown]
+		[c/807b7d:Deal] [c/9e82b5:275%] [c/807b7d:damage]
 		'''
-	NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
+	NotHasLuckyStar: Lucky Star: Triggers when at least 2 sets are equipped
 	LuckyStar2Part:
 		'''
-		幸运星：运气增加
-		[c/807b7d:(2)件套]
-		[c/807b7d:增加] [c/9e82b5:0.2]
+		Lucky star: increased luck
+		[c/807b7d:(2)Piece set]
+		[c/807b7d:Increase] [c/9e82b5:0.2]
 		'''
 	LuckyStar3Part:
 		'''
-		幸运星：运气增加
-		[c/807b7d:(3)件套]
-		[c/807b7d:增加] [c/9e82b5:0.3]
+		Lucky star: increased luck
+		[c/807b7d:(3)Piece set]
+		[c/807b7d:Increase] [c/9e82b5:0.3]
 		'''
 }
 
 PirateKingShoes: {
 	DisplayName: Pirate King Shoes
 	Tooltip: ""
-	NotHasPirateKingSoul: 海盗王之魂：装备至少2件套后触发效果
+	NotHasPirateKingSoul: Soul of the Pirate King: Triggers when at least 2 sets are equipped
 	PirateKingSoul2Part:
 		'''
-		海盗王之魂：攻击敌人有时会抢夺钱币
-		[c/807b7d:(2)件套]
-		[c/69a777:5%概率触发]
-		[c/69a777:2] [c/807b7d:秒冷却时间]
-		[c/807b7d:造成] [c/9e82b5:150%] [c/807b7d:伤害]
+		Soul of the Pirate King: Attacking enemies can sometimes drop coins
+		[c/807b7d:(2) Piece set]
+		[c/69a777:5% chance to trigger]
+		[c/69a777:2] [c/807b7d:second cooldown]
+		[c/807b7d:Deal] [c/9e82b5:200%] [c/807b7d:damage]
 		'''
 	PirateKingSoul3Part:
 		'''
-		海盗王之魂：攻击敌人有时会抢夺钱币
-		[c/807b7d:(3)件套]
-		[c/69a777:10%概率触发]
-		[c/69a777:1] [c/807b7d:秒冷却时间]
-		[c/807b7d:造成] [c/9e82b5:175%] [c/807b7d:伤害]
+		Soul of the Pirate King: Attacking enemies can sometimes drop coins
+		[c/807b7d:(3)Piece set]
+		[c/69a777:10% chance to trigger]
+		[c/69a777:1] [c/807b7d:second cooldown]
+		[c/807b7d:Deal] [c/9e82b5:275%] [c/807b7d:damage]
 		'''
-	NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
+	NotHasLuckyStar: Lucky Star: Triggers when at least 2 sets are equipped
 	LuckyStar2Part:
 		'''
-		幸运星：运气增加
-		[c/807b7d:(2)件套]
-		[c/807b7d:增加] [c/9e82b5:0.2]
+		Lucky star: increased luck
+		[c/807b7d:(2)Piece set]
+		[c/807b7d:Increase] [c/9e82b5:0.2]
 		'''
 	LuckyStar3Part:
 		'''
-		幸运星：运气增加
-		[c/807b7d:(3)件套]
-		[c/807b7d:增加] [c/9e82b5:0.3]
+		Lucky star: increased luck
+		[c/807b7d:(3)Piece set]
+		[c/807b7d:Increase] [c/9e82b5:0.3]
 		'''
 }
 
@@ -3031,23 +3031,23 @@ IcicleSoulStone: {
 
 MedusaLightArmor: {
 	DisplayName: Medusa Light Armor
-	Tooltip: ""
-	NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
+	Tooltip: 6% increased ranged critical strike chance
+	NotHasMedusaSoul: Soul of Medusa: Triggers when at least 2 sets are equipped
 	MedusaSoul2Part:
 		'''
-		美杜莎之魂：对远处的敌人造成更多伤害，
-		但对近处的敌人伤害降低
-		[c/807b7d:最多增加] [c/9e82b5:50%] [c/807b7d:伤害]
-		[c/807b7d:最多减少] [c/9e82b5:50%] [c/807b7d:伤害]
+		Soul of Medusa: Deals more damage to enemies at a distance,
+		However, damage to nearby enemies is reduced
+		[c/807b7d:Up to the increase] [c/9e82b5:50%] [c/807b7d:damage]
+		[c/807b7d:Reduced at most] [c/9e82b5:50%] [c/807b7d:damage]
 		'''
 	MedusaSoul3Part:
 		'''
-		美杜莎之魂：对远处的敌人造成更多伤害，
-		但对近处的敌人伤害降低
-		[c/807b7d:最多增加] [c/9e82b5:75%] [c/807b7d:伤害]
-		[c/807b7d:最多减少] [c/9e82b5:30%] [c/807b7d:伤害]
+		Soul of Medusa: Deals more damage to enemies at a distance,
+		However, damage to nearby enemies is reduced
+		[c/807b7d:Up to the increase] [c/9e82b5:75%] [c/807b7d:damage]
+		[c/807b7d:Reduced at most] [c/9e82b5:30%] [c/807b7d:damage]
 		'''
-	NotHasSplit: 分裂：装备至少2件套后触发效果
+	NotHasSplit: Split：Triggers when at least 2 sets are equipped
 	Split2Part:
 		'''
 		Split: Ranged weapons shoot more projectiles
@@ -3066,23 +3066,23 @@ MedusaLightArmor: {
 
 MedusaMask: {
 	DisplayName: Medusa Mask
-	Tooltip: ""
-	NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
+	Tooltip: +6% Ranged Damage
+	NotHasMedusaSoul: Soul of Medusa: Triggers when at least 2 sets are equipped
 	MedusaSoul2Part:
 		'''
-		美杜莎之魂：对远处的敌人造成更多伤害，
-		但对近处的敌人伤害降低
-		[c/807b7d:最多增加] [c/9e82b5:50%] [c/807b7d:伤害]
-		[c/807b7d:最多减少] [c/9e82b5:50%] [c/807b7d:伤害]
+		Soul of Medusa: Deals more damage to enemies at a distance,
+		However, damage to nearby enemies is reduced
+		[c/807b7d:Up to the increase] [c/9e82b5:50%] [c/807b7d:damage]
+		[c/807b7d:Reduced at most] [c/9e82b5:50%] [c/807b7d:damage]
 		'''
 	MedusaSoul3Part:
 		'''
-		美杜莎之魂：对远处的敌人造成更多伤害，
-		但对近处的敌人伤害降低
-		[c/807b7d:最多增加] [c/9e82b5:75%] [c/807b7d:伤害]
-		[c/807b7d:最多减少] [c/9e82b5:30%] [c/807b7d:伤害]
+		Soul of Medusa: Deals more damage to enemies at a distance,
+		However, damage to nearby enemies is reduced
+		[c/807b7d:Up to the increase] [c/9e82b5:75%] [c/807b7d:damage]
+		[c/807b7d:Reduced at most] [c/9e82b5:30%] [c/807b7d:damage]
 		'''
-	NotHasSplit: 分裂：装备至少2件套后触发效果
+	NotHasSplit: Split：Triggers when at least 2 sets are equipped
 	Split2Part:
 		'''
 		Split: Ranged weapons shoot more projectiles
@@ -3097,26 +3097,30 @@ MedusaMask: {
 		[c/807b7d:Split Rank] [c/9e82b5:+2]
 		[c/807b7d:Damage Correction] [c/9e82b5:50%]
 		'''
-	MedusaBonus: 隐秘行动：远程暴击率，移动速度各增加5%
+	MedusaBonus: Stealth Action: 5% increased ranged damage, ranged critical strike chance, and move speed
 }
 
 MedusaSlippers: {
 	DisplayName: Medusa Slippers
-	Tooltip: ""
-	NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
+	Tooltip: 
+	'''
+	+6% Ranged Damage
+	+10% move speed
+	'''
+	NotHasMedusaSoul: Soul of Medusa: Triggers when at least 2 sets are equipped
 	MedusaSoul2Part:
 		'''
-		美杜莎之魂：对远处的敌人造成更多伤害，
-		但对近处的敌人伤害降低
-		[c/807b7d:最多增加] [c/9e82b5:50%] [c/807b7d:伤害]
-		[c/807b7d:最多减少] [c/9e82b5:50%] [c/807b7d:伤害]
+		Soul of Medusa: Deals more damage to enemies at a distance,
+		However, damage to nearby enemies is reduced
+		[c/807b7d:Up to the increase] [c/9e82b5:50%] [c/807b7d:damage]
+		[c/807b7d:Reduced at most] [c/9e82b5:50%] [c/807b7d:damage]
 		'''
 	MedusaSoul3Part:
 		'''
-		美杜莎之魂：对远处的敌人造成更多伤害，
-		但对近处的敌人伤害降低
-		[c/807b7d:最多增加] [c/9e82b5:75%] [c/807b7d:伤害]
-		[c/807b7d:最多减少] [c/9e82b5:30%] [c/807b7d:伤害]
+		Soul of Medusa: Deals more damage to enemies at a distance,
+		However, damage to nearby enemies is reduced
+		[c/807b7d:Up to the increase] [c/9e82b5:75%] [c/807b7d:damage]
+		[c/807b7d:Reduced at most] [c/9e82b5:30%] [c/807b7d:damage]
 		'''
 	NotHasSplit: Split: Triggers when at least 2 sets are equipped
 	Split2Part:
@@ -4239,4 +4243,128 @@ SquirrelSet: {
 		"Perfect for impersonating a Coralite developer!"
 		'''
 	ShlimmerTranslation: 此为微光转化合成表
+}
+
+IceAxe: {
+	DisplayName: Ice Axe
+	Tooltip: ""
+}
+
+IcicleHammer: {
+	DisplayName: Icicle Hammer
+	Tooltip: ""
+}
+
+BasaltBathtub: {
+	DisplayName: Basalt Bathtub
+	Tooltip: ""
+}
+
+BasaltBed: {
+	DisplayName: Basalt Bed
+	Tooltip: ""
+}
+
+BasaltBigDroplight: {
+	DisplayName: Basalt Big Droplight
+	Tooltip: ""
+}
+
+BasaltBookcase: {
+	DisplayName: Basalt Bookcase
+	Tooltip: ""
+}
+
+BasaltCandelabra: {
+	DisplayName: Basalt Candelabra
+	Tooltip: ""
+}
+
+BasaltCandle: {
+	DisplayName: Basalt Candle
+	Tooltip: ""
+}
+
+BasaltChair: {
+	DisplayName: Basalt Chair
+	Tooltip: ""
+}
+
+BasaltClock: {
+	DisplayName: Basalt Clock
+	Tooltip: ""
+}
+
+BasaltDoor: {
+	DisplayName: Basalt Door
+	Tooltip: ""
+}
+
+BasaltDresser: {
+	DisplayName: Basalt Dresser
+	Tooltip: ""
+}
+
+BasaltDroplight: {
+	DisplayName: Basalt Droplight
+	Tooltip: ""
+}
+
+BasaltFloorLamp: {
+	DisplayName: Basalt Floor Lamp
+	Tooltip: ""
+}
+
+BasaltPiano: {
+	DisplayName: Basalt Piano
+	Tooltip: ""
+}
+
+BasaltPlatform: {
+	DisplayName: Basalt Platform
+	Tooltip: ""
+}
+
+BasaltSink: {
+	DisplayName: Basalt Sink
+	Tooltip: ""
+}
+
+BasaltSofa: {
+	DisplayName: Basalt Sofa
+	Tooltip: ""
+}
+
+BasaltTable: {
+	DisplayName: Basalt Table
+	Tooltip: ""
+}
+
+BasaltToilet: {
+	DisplayName: Basalt Toilet
+	Tooltip: ""
+}
+
+BasaltWorkBench: {
+	DisplayName: Basalt Work Bench
+	Tooltip: ""
+}
+
+LegendaryCard: {
+	DisplayName: Legendary Card
+	Tooltip: ""
+}
+
+BasaltBeam: {
+	DisplayName: Basalt Beam
+	Tooltip: ""
+}
+
+DiamondFlower: {
+	DisplayName: Diamond Flower
+	Tooltip: 
+		'''
+		Spawn diamond flower and shoot diamond
+		Petals are generated when a diamond hits
+		'''
 }

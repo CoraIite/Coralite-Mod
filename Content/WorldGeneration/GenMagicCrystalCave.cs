@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries1;
-using Coralite.Content.Walls.Magike;
 using Coralite.Content.WorldGeneration.Generators;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;

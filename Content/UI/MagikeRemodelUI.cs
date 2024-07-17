@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Configs;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;
@@ -158,8 +157,8 @@ namespace Coralite.Content.UI
 
         public CraftImage()
         {
-            Width.Set(52 , 0f);
-            Height.Set(52 , 0f);
+            Width.Set(52, 0f);
+            Height.Set(52, 0f);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -185,7 +184,7 @@ namespace Coralite.Content.UI
                     rectangle2 = mainTex.Frame();
 
                 float itemScale = 1f;
-                float pixelWidth = 40 ;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                float pixelWidth = 40;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
                 float pixelHeight = pixelWidth;
                 if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
                 {
@@ -195,7 +194,7 @@ namespace Coralite.Content.UI
                         itemScale = pixelHeight / rectangle2.Height;
                 }
 
-                position.X += 26  - rectangle2.Width * itemScale / 2f;
+                position.X += 26 - rectangle2.Width * itemScale / 2f;
                 position.Y += 26 - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
                 position += new Vector2(5, 5);
 
@@ -225,8 +224,8 @@ namespace Coralite.Content.UI
         public RemodelItemButton(RemodelRecipe recipe)
         {
             this.recipe = recipe;
-            Width.Set(52 * 2 , 0f);
-            Height.Set(52 , 0f);
+            Width.Set(52 * 2, 0f);
+            Height.Set(52, 0f);
         }
 
         public override void LeftClick(UIMouseEvent evt)
@@ -278,7 +277,7 @@ namespace Coralite.Content.UI
                     rectangle2 = mainTex.Frame();
 
                 float itemScale = 1f;
-                float pixelWidth = 40 ;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                float pixelWidth = 40;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
                 float pixelHeight = pixelWidth;
                 if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
                 {
@@ -289,14 +288,14 @@ namespace Coralite.Content.UI
                 }
 
                 position.X += 26 - rectangle2.Width * itemScale / 2f;
-                position.Y += 26  - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
+                position.Y += 26 - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
 
                 spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
                 if (showItem.color != default(Color))
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
 
                 if (showItem.stack > 1)
-                    Utils.DrawBorderString(spriteBatch, showItem.stack.ToString(), center + new Vector2(12 - height / 2, 16), Color.White,1, 1, 0.5f);
+                    Utils.DrawBorderString(spriteBatch, showItem.stack.ToString(), center + new Vector2(12 - height / 2, 16), Color.White, 1, 1, 0.5f);
                 if (IsMouseHovering)
                 {
                     Main.HoverItem = showItem.Clone();

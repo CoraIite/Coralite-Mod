@@ -84,7 +84,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             HeldPositionX = heldPositionX + factor * recoilLength;
             Projectile.Center = Owner.Center
                 + OwnerDirection * Projectile.rotation.ToRotationVector2() * HeldPositionX
-                + (Projectile.rotation +  1.57f).ToRotationVector2() * HeldPositionY;
+                + (Projectile.rotation + 1.57f).ToRotationVector2() * HeldPositionY;
         }
 
         public virtual void ModifyAI(float factor) { }
@@ -99,7 +99,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Texture2D mainTex = Projectile.GetTexture();
 
-            GetFrame(mainTex, out Rectangle? frame,out Vector2 origin);
+            GetFrame(mainTex, out Rectangle? frame, out Vector2 origin);
 
             SpriteEffects effects = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frame, lightColor
@@ -107,7 +107,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             return false;
         }
 
-        public virtual void GetFrame(Texture2D mainTex,out Rectangle? frame,out Vector2 origin)
+        public virtual void GetFrame(Texture2D mainTex, out Rectangle? frame, out Vector2 origin)
         {
             frame = null;
             origin = mainTex.Size() / 2;

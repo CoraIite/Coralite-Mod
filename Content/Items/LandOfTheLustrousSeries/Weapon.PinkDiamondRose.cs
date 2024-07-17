@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Orange3, Item.sellPrice(0, 5));
-            Item.SetWeaponValues(33, 4,2);
+            Item.SetWeaponValues(33, 4, 2);
             Item.useTime = Item.useAnimation = 33;
             Item.mana = 12;
 

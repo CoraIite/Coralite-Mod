@@ -2738,7 +2738,7 @@ PirateKingHat: {
 		[c/807b7d:(2)件套]
 		[c/69a777:5%概率触发]
 		[c/69a777:2] [c/807b7d:秒冷却时间]
-		[c/807b7d:造成] [c/9e82b5:150%] [c/807b7d:伤害]
+		[c/807b7d:造成] [c/9e82b5:200%] [c/807b7d:伤害]
 		'''
 	PirateKingSoul3Part:
 		'''
@@ -2746,7 +2746,7 @@ PirateKingHat: {
 		[c/807b7d:(3)件套]
 		[c/69a777:10%概率触发]
 		[c/69a777:1] [c/807b7d:秒冷却时间]
-		[c/807b7d:造成] [c/9e82b5:200%] [c/807b7d:伤害]
+		[c/807b7d:造成] [c/9e82b5:275%] [c/807b7d:伤害]
 		'''
 	NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
 	LuckyStar2Part:
@@ -3029,7 +3029,7 @@ PirateKingCoat: {
 		[c/807b7d:(2)件套]
 		[c/69a777:5%概率触发]
 		[c/69a777:2] [c/807b7d:秒冷却时间]
-		[c/807b7d:造成] [c/9e82b5:150%] [c/807b7d:伤害]
+		[c/807b7d:造成] [c/9e82b5:200%] [c/807b7d:伤害]
 		'''
 	PirateKingSoul3Part:
 		'''
@@ -3037,7 +3037,7 @@ PirateKingCoat: {
 		[c/807b7d:(3)件套]
 		[c/69a777:10%概率触发]
 		[c/69a777:1] [c/807b7d:秒冷却时间]
-		[c/807b7d:造成] [c/9e82b5:200%] [c/807b7d:伤害]
+		[c/807b7d:造成] [c/9e82b5:275%] [c/807b7d:伤害]
 		'''
 	NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
 	LuckyStar2Part:
@@ -3068,7 +3068,7 @@ PirateKingShoes: {
 		[c/807b7d:(2)件套]
 		[c/69a777:5%概率触发]
 		[c/69a777:2] [c/807b7d:秒冷却时间]
-		[c/807b7d:造成] [c/9e82b5:150%] [c/807b7d:伤害]
+		[c/807b7d:造成] [c/9e82b5:200%] [c/807b7d:伤害]
 		'''
 	PirateKingSoul3Part:
 		'''
@@ -3076,7 +3076,7 @@ PirateKingShoes: {
 		[c/807b7d:(3)件套]
 		[c/69a777:10%概率触发]
 		[c/69a777:1] [c/807b7d:秒冷却时间]
-		[c/807b7d:造成] [c/9e82b5:200%] [c/807b7d:伤害]
+		[c/807b7d:造成] [c/9e82b5:275%] [c/807b7d:伤害]
 		'''
 	NotHasLuckyStar: 幸运星：装备至少2件套后触发效果
 	LuckyStar2Part:
@@ -3135,7 +3135,7 @@ MedusaLightArmor: {
 
 MedusaMask: {
 	DisplayName: 美杜莎面罩
-	Tooltip: 远程伤害增加 6%
+	Tooltip: +6% 远程伤害
 	NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
 	MedusaSoul2Part:
 		'''
@@ -3166,12 +3166,16 @@ MedusaMask: {
 		[c/807b7d:分裂等级] [c/9e82b5:+2]
 		[c/807b7d:伤害补正] [c/9e82b5:55%]
 		'''
-	MedusaBonus: 隐秘行动：远程暴击率，移动速度各增加5%
+	MedusaBonus: 隐秘行动：远程伤害，远程暴击率，移动速度各增加5%
 }
 
 MedusaSlippers: {
 	DisplayName: 美杜莎便鞋
-	Tooltip: 移动速度增加10%
+	Tooltip: 
+	'''
+	+6% 远程伤害
+	移动速度增加10%
+	'''
 	NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
 	MedusaSoul2Part:
 		'''
@@ -4301,5 +4305,129 @@ SquirrelSet: {
 		[c/8c8c8c:*带着些许绒毛的小角和温热的红色毛线.]
 		“非常适合用来冒充珊瑚石开发者！”
 		'''
-	// ShlimmerTranslation: 此为微光转化合成表
+	ShlimmerTranslation: 此为微光转化合成表
+}
+
+IceAxe: {
+	DisplayName: 冰晶战斧
+	Tooltip: ""
+}
+
+IcicleHammer: {
+	DisplayName: 碎冰锤
+	Tooltip: ""
+}
+
+BasaltBathtub: {
+	DisplayName: 玄武岩浴缸
+	Tooltip: ""
+}
+
+BasaltBed: {
+	DisplayName: 玄武岩床
+	Tooltip: ""
+}
+
+BasaltBigDroplight: {
+	DisplayName: 玄武岩大吊灯
+	Tooltip: ""
+}
+
+BasaltBookcase: {
+	DisplayName: 玄武岩书架
+	Tooltip: ""
+}
+
+BasaltCandelabra: {
+	DisplayName: 玄武岩烛台
+	Tooltip: ""
+}
+
+BasaltCandle: {
+	DisplayName: 玄武岩蜡烛
+	Tooltip: ""
+}
+
+BasaltChair: {
+	DisplayName: 玄武岩椅子
+	Tooltip: ""
+}
+
+BasaltClock: {
+	DisplayName: 玄武岩钟
+	Tooltip: ""
+}
+
+BasaltDoor: {
+	DisplayName: 玄武岩门
+	Tooltip: ""
+}
+
+BasaltDresser: {
+	DisplayName: 玄武岩梳妆台
+	Tooltip: ""
+}
+
+BasaltDroplight: {
+	DisplayName: 玄武岩灯
+	Tooltip: ""
+}
+
+BasaltFloorLamp: {
+	DisplayName: 玄武岩灯柱
+	Tooltip: ""
+}
+
+BasaltPiano: {
+	DisplayName: 玄武岩钢琴
+	Tooltip: ""
+}
+
+BasaltPlatform: {
+	DisplayName: 玄武岩平台
+	Tooltip: ""
+}
+
+BasaltSink: {
+	DisplayName: 玄武岩水槽
+	Tooltip: ""
+}
+
+BasaltSofa: {
+	DisplayName: 玄武岩沙发
+	Tooltip: ""
+}
+
+BasaltTable: {
+	DisplayName: 玄武岩桌
+	Tooltip: ""
+}
+
+BasaltToilet: {
+	DisplayName: 玄武岩马桶
+	Tooltip: ""
+}
+
+BasaltWorkBench: {
+	DisplayName: 玄武岩工作台
+	Tooltip: ""
+}
+
+LegendaryCard: {
+	DisplayName: 传奇的卡片
+	Tooltip: ""
+}
+
+BasaltBeam: {
+	DisplayName: 玄武岩柱
+	Tooltip: ""
+}
+
+DiamondFlower: {
+	DisplayName: 钻石花
+	Tooltip:
+		'''
+		生成钻石花并向敌人发射钻石
+		钻石命中后生成花瓣
+		'''
 }

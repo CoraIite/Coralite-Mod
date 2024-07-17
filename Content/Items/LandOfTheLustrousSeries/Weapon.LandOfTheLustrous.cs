@@ -170,7 +170,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if ((int)Main.timeForVisualEffects % 30 == 0 && Main.rand.NextBool(2))
             {
                 float length = Main.rand.NextFloat(32, 64);
-                Color c = Main.rand.NextFromList(Color.White, Main.DiscoColor*1.5f);
+                Color c = Main.rand.NextFromList(Color.White, Main.DiscoColor * 1.5f);
                 var p = Particle.NewParticle<HexagramParticle>(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length),
                      Vector2.UnitX, c, Scale: Main.rand.NextFloat(0.1f, 0.12f));
                 p.follow = () => Projectile.position - Projectile.oldPos[1];
@@ -179,7 +179,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Lighting.AddLight(Projectile.Center, new Vector3(1.2f));
 
-            Projectile.UpdateFrameNormally(3, Main.projFrames[Projectile.type]-1);
+            Projectile.UpdateFrameNormally(3, Main.projFrames[Projectile.type] - 1);
         }
 
         public override void Move()
@@ -790,9 +790,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (VisualEffectSystem.HitEffect_SpecialParticles)
             {
                 float length = Main.rand.NextFloat(0, 6);
-                Color c = Main.rand.NextFromList(Color.White, Main.DiscoColor );
+                Color c = Main.rand.NextFromList(Color.White, Main.DiscoColor);
                 var p = Particle.NewParticle<HexagramParticle>(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length),
-                     Vector2.UnitX*Main.rand.NextFloat(1,2), c, Scale: Main.rand.NextFloat(0.1f, 0.14f));
+                     Vector2.UnitX * Main.rand.NextFloat(1, 2), c, Scale: Main.rand.NextFloat(0.1f, 0.14f));
                 p.Rotation = -1.57f;
 
                 for (int i = 0; i < 2; i++)

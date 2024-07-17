@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Icicle
         {
             Item.width = Item.height = 40;
             Item.damage = 23;
-            Item.useTime =  Item.useAnimation = 26;
+            Item.useTime = Item.useAnimation = 26;
             Item.knockBack = 3f;
 
             Item.useStyle = ItemUseStyleID.Rapier;

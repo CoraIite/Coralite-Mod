@@ -1,6 +1,5 @@
 ﻿using Coralite.Core;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.ZephyrkiloSeries
@@ -41,7 +40,7 @@ namespace Coralite.Content.Items.ZephyrkiloSeries
 
         public override Vector2? HoldoutOffset()
         {
-            return new Vector2(-1,0);
+            return new Vector2(-1, 0);
         }
 
         public override void AddRecipes()

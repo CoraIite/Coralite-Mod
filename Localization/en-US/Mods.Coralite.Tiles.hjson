@@ -27,8 +27,8 @@ CoraliteDeathweed.MapEntry: Deathweed
 CoraliteDaybloom.MapEntry: Daybloom
 CoraliteBlinkroot.MapEntry: Blinkroot
 AgropyronFrozen.MapEntry: Agropyron Frozen
-BasaltChestTile.MapEntry: Basalt Chest Tile
-CrystalCrateTile.MapEntry: Crystal Crate Tile
+BasaltChestTile.MapEntry: Basalt Chest
+CrystalCrateTile.MapEntry: Crystal Crate
 
 RottenChestTile: {
 	MapEntry0: Rotten Chest
@@ -44,11 +44,11 @@ VertebraeChestTile: {
 	TryUnlock: Requires a key to be unlocked using the materials of powerful crimson creatures
 }
 
-BloodJadeTile.MapEntry: Blood Jade Tile
-AncientChestTile.MapEntry: Ancient Chest Tile
-GlowTulipDoorClosed.MapEntry: Glow Tulip Door Closed
-GlowTulipDoorOpen.MapEntry: Glow Tulip Door Open
-BlackHoleChestTile.MapEntry: Black Hole Chest Tile
+BloodJadeTile.MapEntry: Blood Jade
+AncientChestTile.MapEntry: Ancient Chest
+GlowTulipDoorClosed.MapEntry: Glow Tulip Door
+GlowTulipDoorOpen.MapEntry: Glow Tulip Door
+BlackHoleChestTile.MapEntry: Black Hole Chest
 
 MercuryChestTile: {
 	MapEntry0: Mods.Coralite.Tiles.MercuryChestTile.MapEntry0
@@ -56,69 +56,84 @@ MercuryChestTile: {
 }
 
 RedJadeFountain.MapEntry: Red Jade Fountain
-GelFiberTableTile.MapEntry: Gel Fiber Table Tile
-GeiFiberDroplightTile.MapEntry: Gei Fiber Droplight Tile
-GelFiberCandleTile.MapEntry: Gel Fiber Candle Tile
-GelFiberFloorLampTile.MapEntry: Gel Fiber Floor Lamp Tile
-GelFiberTallFloorLampTile.MapEntry: Gel Fiber Tall Floor Lamp Tile
-GelFiberBedTile.MapEntry: Gel Fiber Bed Tile
-GelFiberBigDroplightTile.MapEntry: Gel Fiber Big Droplight Tile
-GelFiberBookcaseTile.MapEntry: Gel Fiber Bookcase Tile
-GelFiberPianoTile.MapEntry: Gel Fiber Piano Tile
-GelFiberSofaTile.MapEntry: Gel Fiber Sofa Tile
-GelFiberBathtubTile.MapEntry: Gel Fiber Bathtub Tile
-GelFiberChestTile.MapEntry: Gel Fiber Chest Tile
-GelFiberDresserTile.MapEntry: Gel Fiber Dresser Tile
-GelFiberDoorClosedTile.MapEntry: Gel Fiber Door Closed Tile
-GelFiberDoorOpen.MapEntry: Gel Fiber Door Open
-GelFiberWorkBenchTile.MapEntry: Gel Fiber Work Bench Tile
-ThunderBathtubTile.MapEntry: Thunder Bathtub Tile
-ThunderBedTile.MapEntry: Thunder Bed Tile
-ThunderBigDroplightTile.MapEntry: Thunder Big Droplight Tile
-ThunderBookcaseTile.MapEntry: Thunder Bookcase Tile
-ThunderCandelabraTile.MapEntry: Thunder Candelabra Tile
-ThunderCandleTile.MapEntry: Thunder Candle Tile
-ThunderChestTile.MapEntry: Thunder Chest Tile
-ThunderDoorClosedTile.MapEntry: Thunder Door Closed Tile
-ThunderDoorOpenTile.MapEntry: Thunder Door Open Tile
-ThunderDresserTile.MapEntry: Thunder Dresser Tile
-ThunderDroplightTile.MapEntry: Thunder Droplight Tile
-ThunderFloorLampTile.MapEntry: Thunder Floor Lamp Tile
-ThunderPianoTile.MapEntry: Thunder Piano Tile
-ThunderSofaTile.MapEntry: Thunder Sofa Tile
-ThunderTableTile.MapEntry: Thunder Table Tile
-ThunderWorkBenchTile.MapEntry: Thunder Work Bench Tile
-MercuryBathtubTile.MapEntry: Mercury Bathtub Tile
-MercuryBedTile.MapEntry: Mercury Bed Tile
-MercuryBigDroplightTile.MapEntry: Mercury Big Droplight Tile
-MercuryBookcaseTile.MapEntry: Mercury Bookcase Tile
-MercuryCandelabraTile.MapEntry: Mercury Candelabra Tile
-MercuryCandleTile.MapEntry: Mercury Candle Tile
-MercuryDoorClosedTile.MapEntry: Mercury Door Closed Tile
-MercuryDoorOpenTile.MapEntry: Mercury Door Open Tile
-MercuryDresserTile.MapEntry: Mercury Dresser Tile
-MercuryDroplight2Tile.MapEntry: Mercury Droplight2 Tile
-MercuryFloorLampTile.MapEntry: Mercury Floor Lamp Tile
-MercuryPianoTile.MapEntry: Mercury Piano Tile
-MercurySofaTile.MapEntry: Mercury Sofa Tile
-MercuryTableTile.MapEntry: Mercury Table Tile
-MercuryWorkBenchTile.MapEntry: Mercury Work Bench Tile
-IcicleBathtubTile.MapEntry: Icicle Bathtub Tile
-IcicleBedTile.MapEntry: Icicle Bed Tile
-IcicleBigDroplightTile.MapEntry: Icicle Big Droplight Tile
-IcicleBookcaseTile.MapEntry: Icicle Bookcase Tile
-IcicleCandelabraTile.MapEntry: Icicle Candelabra Tile
-IcicleCandleTile.MapEntry: Icicle Candle Tile
-IcicleChestTile.MapEntry: Icicle Chest Tile
-IcicleDoorClosedTile.MapEntry: Icicle Door Closed Tile
-IcicleDoorOpenTile.MapEntry: Icicle Door Open Tile
-IcicleDresserTile.MapEntry: Icicle Dresser Tile
-IcicleDroplightTile.MapEntry: Icicle Droplight Tile
-IcicleFloorLampTile.MapEntry: Icicle Floor Lamp Tile
-IciclePianoTile.MapEntry: Icicle Piano Tile
-IcicleSofaTile.MapEntry: Icicle Sofa Tile
-IcicleTableTile.MapEntry: Icicle Table Tile
-IcicleWorkBenchTile.MapEntry: Icicle Work Bench Tile
-MagicCrystalMusicBoxTile.MapEntry: Magic Crystal Music Box Tile
-AncientFurnaceTile.MapEntry: Ancient Furnace Tile
-PhantomCrystalBallTile.MapEntry: Phantom Crystal Ball Tile
+GelFiberTableTile.MapEntry: Gel Fiber Table
+GeiFiberDroplightTile.MapEntry: Gei Fiber Droplight
+GelFiberCandleTile.MapEntry: Gel Fiber Candle
+GelFiberFloorLampTile.MapEntry: Gel Fiber Floor Lamp
+GelFiberTallFloorLampTile.MapEntry: Gel Fiber Tall Floor Lamp
+GelFiberBedTile.MapEntry: Gel Fiber Bed
+GelFiberBigDroplightTile.MapEntry: Gel Fiber Big Droplight
+GelFiberBookcaseTile.MapEntry: Gel Fiber Bookcase
+GelFiberPianoTile.MapEntry: Gel Fiber Piano
+GelFiberSofaTile.MapEntry: Gel Fiber Sofa
+GelFiberBathtubTile.MapEntry: Gel Fiber Bathtub
+GelFiberChestTile.MapEntry: Gel Fiber Chest
+GelFiberDresserTile.MapEntry: Gel Fiber Dresser
+GelFiberDoorClosedTile.MapEntry: Gel Fiber Door
+GelFiberDoorOpen.MapEntry: Gel Fiber Door
+GelFiberWorkBenchTile.MapEntry: Gel Fiber Work Bench
+ThunderBathtubTile.MapEntry: Thunder Bathtub
+ThunderBedTile.MapEntry: Thunder Bed
+ThunderBigDroplightTile.MapEntry: Thunder Big Droplight
+ThunderBookcaseTile.MapEntry: Thunder Bookcase
+ThunderCandelabraTile.MapEntry: Thunder Candelabra
+ThunderCandleTile.MapEntry: Thunder Candle
+ThunderChestTile.MapEntry: Thunder Chest
+ThunderDoorClosedTile.MapEntry: Thunder Door Closed
+ThunderDoorOpenTile.MapEntry: Thunder Door Open
+ThunderDresserTile.MapEntry: Thunder Dresser
+ThunderDroplightTile.MapEntry: Thunder Droplight
+ThunderFloorLampTile.MapEntry: Thunder Floor Lamp
+ThunderPianoTile.MapEntry: Thunder Piano
+ThunderSofaTile.MapEntry: Thunder Sofa
+ThunderTableTile.MapEntry: Thunder Table
+ThunderWorkBenchTile.MapEntry: Thunder Work Bench
+MercuryBathtubTile.MapEntry: Mercury Bathtub
+MercuryBedTile.MapEntry: Mercury Bed
+MercuryBigDroplightTile.MapEntry: Mercury Big Droplight
+MercuryBookcaseTile.MapEntry: Mercury Bookcase
+MercuryCandelabraTile.MapEntry: Mercury Candelabra
+MercuryCandleTile.MapEntry: Mercury Candle
+MercuryDoorClosedTile.MapEntry: Mercury Door
+MercuryDoorOpenTile.MapEntry: Mercury Door
+MercuryDresserTile.MapEntry: Mercury Dresser
+MercuryDroplight2Tile.MapEntry: Mercury Droplight
+MercuryFloorLampTile.MapEntry: Mercury Floor Lamp
+MercuryPianoTile.MapEntry: Mercury Piano
+MercurySofaTile.MapEntry: Mercury Sofa
+MercuryTableTile.MapEntry: Mercury Table
+MercuryWorkBenchTile.MapEntry: Mercury Work Bench
+IcicleBathtubTile.MapEntry: Icicle Bathtub
+IcicleBedTile.MapEntry: Icicle Bed
+IcicleBigDroplightTile.MapEntry: Icicle Big Droplight
+IcicleBookcaseTile.MapEntry: Icicle Bookcase
+IcicleCandelabraTile.MapEntry: Icicle Candelabra
+IcicleCandleTile.MapEntry: Icicle Candle
+IcicleChestTile.MapEntry: Icicle Chest
+IcicleDoorClosedTile.MapEntry: Icicle Door
+IcicleDoorOpenTile.MapEntry: Icicle Door
+IcicleDresserTile.MapEntry: Icicle Dresser
+IcicleDroplightTile.MapEntry: Icicle Droplight
+IcicleFloorLampTile.MapEntry: Icicle Floor Lamp
+IciclePianoTile.MapEntry: Icicle Piano
+IcicleSofaTile.MapEntry: Icicle Sofa
+IcicleTableTile.MapEntry: Icicle Table
+IcicleWorkBenchTile.MapEntry: Icicle Work Bench
+MagicCrystalMusicBoxTile.MapEntry: Magic Crystal Music Box
+AncientFurnaceTile.MapEntry: Ancient Furnace
+PhantomCrystalBallTile.MapEntry: Phantom Crystal Ball
+BasaltBathtubTile.MapEntry: Basalt Bathtub
+BasaltBedTile.MapEntry: Basalt Bed
+BasaltBigDroplightTile.MapEntry: Basalt Big Droplight
+BasaltBookcaseTile.MapEntry: Basalt Bookcase
+BasaltCandelabraTile.MapEntry: Basalt Candelabra
+BasaltCandleTile.MapEntry: Basalt Candle
+BasaltDoorClosedTile.MapEntry: Basalt Door
+BasaltDoorOpenTile.MapEntry: Basalt Door
+BasaltDresserTile.MapEntry: Basalt Dresser
+BasaltDroplightTile.MapEntry: Basalt Droplight
+BasaltFloorLampTile.MapEntry: Basalt Floor Lamp
+BasaltPianoTile.MapEntry: Basalt Piano
+BasaltSofaTile.MapEntry: Basalt Sofa
+BasaltTableTile.MapEntry: Basalt Table
+BasaltWorkBenchTile.MapEntry: Basalt Work Bench

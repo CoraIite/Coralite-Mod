@@ -4,7 +4,6 @@ using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using Steamworks;
 using System;
 using Terraria;
 using Terraria.Audio;

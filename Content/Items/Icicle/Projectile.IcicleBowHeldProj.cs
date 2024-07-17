@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.Icicle
         public override void AI()
         {
             Owner.heldProj = Projectile.whoAmI;
-            if (Owner.HeldItem.type !=ModContent.ItemType<IcicleBow>())
+            if (Owner.HeldItem.type != ModContent.ItemType<IcicleBow>())
             {
                 Projectile.Kill();
                 return;
