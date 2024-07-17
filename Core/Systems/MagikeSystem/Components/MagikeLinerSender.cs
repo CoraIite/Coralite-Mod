@@ -25,13 +25,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int ConnectLength { get => ConnectLengthBase + ConnectLengthExtra; }
 
         /// <summary> 当前连接者 </summary>
-        public int CurrentConnector => Receivers.Count;
+        public int CurrentConnector => _receivers.Count;
 
-        public List<Point16> Receivers = new List<Point16>();
+        private List<Point16> _receivers = new List<Point16>();
 
         public MagikeLinerSender()
         {
-            Receivers = new List<Point16>(MaxConnect);
+            _receivers = new List<Point16>(MaxConnect);
         }
 
         #region 发送工作相关
@@ -48,11 +48,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return;
 
             //直接发送
-            for (int i = 0; i < Receivers.Count; i++)
+            for (int i = 0; i < _receivers.Count; i++)
             {
                 if (!container.HasMagike)//自身没魔能了就跳出
                     break;
-                Send(container, Receivers[i], amount);
+                Send(container, _receivers[i], amount);
             }
         }
 
@@ -127,14 +127,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public void Connect(Point16 receiverPoint)
         {
-            Receivers.Add(receiverPoint);
+            _receivers.Add(receiverPoint);
         }
 
         /// <summary>
         /// 移除接收者
         /// </summary>
         /// <param name="receiverPoint"></param>
-        public void RemoveReceiver(Point16 receiverPoint) => Receivers.Remove(receiverPoint);
+        public void RemoveReceiver(Point16 receiverPoint) => _receivers.Remove(receiverPoint);
 
         #endregion
 
@@ -149,7 +149,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 是否已经装满
         /// </summary>
         /// <returns></returns>
-        public bool FillUp() => MaxConnect == Receivers.Count;
+        public bool FillUp() => MaxConnect == _receivers.Count;
 
         public override void SaveData(string preName, TagCompound tag)
         {
@@ -160,8 +160,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             tag.Add(preName + nameof(ConnectLengthBase), ConnectLengthBase);
             tag.Add(preName + nameof(ConnectLengthExtra), ConnectLengthExtra);
 
-            for (int i = 0; i < Receivers.Count; i++)
-                tag.Add(preName + nameof(Receivers) + i, Receivers[i]);
+            for (int i = 0; i < _receivers.Count; i++)
+                tag.Add(preName + nameof(_receivers) + i, _receivers[i]);
         }
 
         public override void LoadData(string preName, TagCompound tag)
@@ -176,9 +176,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             int i = 0;
 
-            while (tag.TryGet(preName + nameof(Receivers) + i, out Point16 position))
+            while (tag.TryGet(preName + nameof(_receivers) + i, out Point16 position))
             {
-                Receivers.Add(position);
+                _receivers.Add(position);
                 i++;
             }
         }
