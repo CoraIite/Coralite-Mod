@@ -5,7 +5,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem
 {
-    public partial class MagikeSystem : ModSystem, ILocalizedModType
+    public partial class MagikeSystem : ModSystem
     {
         public static MagikeSystem Instance { get; private set; }
 
@@ -19,17 +19,6 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <summary> 是否学习过卷轴：强化魔能提炼 </summary>
         public static bool learnedMagikeAdvanced;
 
-        public string LocalizationCategory => "MagikeSystem";
-        public LocalizedText LearnedMagikeBase => this.GetLocalization("learnedMagikeBase");
-        public LocalizedText LearnedMagikeAdvanced => this.GetLocalization("learnedMagikeAdvanced");
-
-        public static LocalizedText NewKnowledgeUnlocked { get; private set; }
-
-        public override void OnModLoad()
-        {
-            NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
-        }
-
         public override void PostAddRecipes()
         {
             if (Main.dedServ)
@@ -39,10 +28,19 @@ namespace Coralite.Core.Systems.MagikeSystem
             RegisterPolymerize();
         }
 
+        public override void Load()
+        {
+            LoadLocalization();
+            LoadAssets();
+        }
+
         public override void Unload()
         {
             if (Main.dedServ)
                 return;
+
+            UnloadLocalization();
+            UnloadAssets();
 
             remodelRecipes?.Clear();
             remodelRecipes = null;

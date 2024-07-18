@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.Materials
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            TileHelper.DrawMultWine(i, j, 1, 2);
+            Helper.DrawMultWine(i, j, 1, 2);
         }
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)

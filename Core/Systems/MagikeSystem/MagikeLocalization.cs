@@ -2,8 +2,15 @@
 
 namespace Coralite.Core.Systems.MagikeSystem
 {
-    public partial class MagikeSystem
+    public partial class MagikeSystem : ILocalizedModType
     {
+        public string LocalizationCategory => "MagikeSystem";
+
+        public static LocalizedText NewKnowledgeUnlocked { get; private set; }
+
+        public LocalizedText LearnedMagikeBase { get; private set; }
+        public LocalizedText LearnedMagikeAdvanced { get; private set; }
+
         public static LocalizedText[] ConnectStaff { get; private set; }
 
         public class ConnectStaffID
@@ -36,6 +43,10 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public void LoadLocalization()
         {
+            LearnedMagikeBase = this.GetLocalization("learnedMagikeBase");
+            LearnedMagikeAdvanced = this.GetLocalization("learnedMagikeAdvanced");
+            NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
+
             ConnectStaff = new LocalizedText[ConnectStaffID.Count];
             ConnectStaff[ConnectStaffID.ChooseSender_Found] = this.GetLocalization("ChooseSender_Found"
                 , () => "已选择魔能发送器");
@@ -55,7 +66,11 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public void UnloadLocalization()
         {
+            LearnedMagikeBase = null;
+            LearnedMagikeAdvanced = null;
+            NewKnowledgeUnlocked = null;
 
+            ConnectStaff = null;
         }
 
         public static string GetConnectStaffText(int id)

@@ -328,6 +328,8 @@ namespace Coralite.Helpers
                 method();
         }
 
+        public static Rectangle QuickMouseRectangle()
+           => new Rectangle((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
 
         /// <summary>
         /// 将你的值根据不同模式来改变

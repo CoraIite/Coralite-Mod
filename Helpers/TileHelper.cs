@@ -2,11 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ObjectData;
 
 namespace Coralite.Helpers
 {
-    public static class TileHelper
+    public static partial class Helper
     {
         public static bool topSlope(this Tile tile)
         {
@@ -110,5 +111,22 @@ namespace Coralite.Helpers
                 }
             }
         }
+    
+        public static Vector2 GetTileCenter(int i,int j)
+        {
+            return GetTileCenter(new Point16(i, j));
+        }
+
+        public static Vector2 GetTileCenter(Point16 position)
+        {
+            Tile tile = Framing.GetTileSafely(position);
+            TileObjectData data = TileObjectData.GetTileData(tile);
+            int x = data == null ? 8 : data.Width * 16 / 2;
+            int y = data == null ? 8 : data.Height * 16 / 2;
+
+            return position.ToWorldCoordinates(x, y);
+        }
+
+
     }
 }

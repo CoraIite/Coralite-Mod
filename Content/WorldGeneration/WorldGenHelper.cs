@@ -367,7 +367,7 @@ namespace Coralite.Content.WorldGeneration
                     {
                         int xs = x;
                         int ys = y;
-                        Vector2 newPos = TileHelper.FindTopLeft(xs, ys);    //找到左上角
+                        Vector2 newPos = Helper.FindTopLeft(xs, ys);    //找到左上角
                         for (int x1 = 0; x1 < width; x1++)      //把原有物块清了
                             for (int y1 = 0; y1 < height; y1++)
                             {

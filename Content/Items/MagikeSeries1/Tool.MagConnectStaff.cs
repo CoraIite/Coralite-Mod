@@ -1,14 +1,15 @@
 ﻿using Coralite.Content.Raritys;
-using Coralite.Content.UI;
 using Coralite.Core;
-using Coralite.Core.Loaders;
+using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Base;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.MagikeSeries1
@@ -16,11 +17,6 @@ namespace Coralite.Content.Items.MagikeSeries1
     public class MagConnectStaff : ModItem
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
-
-        //private int mode;
-        //private IMagikeSender sender;
-
-        public LocalizedText ChooseSenderFailed => this.GetLocalization("ChooseSenderFailed", () => "未找到发送器！");
 
         public override void SetDefaults()
         {
@@ -33,127 +29,42 @@ namespace Coralite.Content.Items.MagikeSeries1
             Item.GetMagikeItem().magikeAmount = 50;
         }
 
-        //public override bool AltFunctionUse(Player player) => true;
+        public override bool AltFunctionUse(Player player) => true;
 
         public override bool CanUseItem(Player player)
         {
             Point16 pos = Main.MouseWorld.ToTileCoordinates16();
-            Rectangle rectangle = new Rectangle((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
+            Rectangle rectangle = Helper.QuickMouseRectangle();
 
-            if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeSender_Line sender))    //找到了
+            //右键打开UI
+            if (player.altFunctionUse==2)
             {
-                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ChooseSender", () => "已选择发送器").Value);
-                MagikeConnectUI.sender = sender;
-                UILoader.GetUIState<MagikeConnectUI>()?.Recalculate();
-                MagikeConnectUI.visible = true;
+                //MagikeConnectUI.sender = sender;
+                //UILoader.GetUIState<MagikeConnectUI>()?.Recalculate();
+                //MagikeConnectUI.visible = true;
+                return false;
+            }
+
+            //左键寻找发送器
+            if (MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(pos.X, pos.Y, MagikeComponentID.MagikeSender, out BaseMagikeTileEntity entity))    //找到了
+            {
+                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink,
+                    MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_Found));
+
+                Point16 p = entity.Position;
+                Projectile.NewProjectile(new EntitySource_ItemUse(Main.LocalPlayer, Main.LocalPlayer.HeldItem), p.ToWorldCoordinates(8, 8),
+                    Vector2.Zero, ModContent.ProjectileType<MagConnectProj>(), 1, 0, Main.myPlayer, p.X, p.Y);
+
             }
             else
-            {
-                if (!MagikeConnectUI.visible)
-                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, ChooseSenderFailed.Value);
+                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink,
+                    MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_NotFound));
 
-                MagikeConnectUI.visible = false;
-            }
-
-            #region 废弃
-
-            //if (player.altFunctionUse == 2)
-            //{
-            //    mode++;
-            //    if (mode > 2)
-            //        mode = 0;
-            //    switch (mode)
-            //    {
-            //        default:
-            //        case 0: //连接模式
-            //            CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ConnectMode", () => "连接模式").Value);
-            //            break;
-            //        case 1: //查看模式
-            //            CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ViewMode", () => "查看模式").Value);
-            //            break;
-            //            //case 2: //断连模式
-            //            //    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("DisconnectMode", () => "断连模式").Value);
-            //            //    break;
-            //    }
-            //    sender = null;
-            //    return true;
-            //}
-
-            //switch (mode)
-            //{
-            //    default:
-            //    case 0://连接模式
-            //        {
-            //            if (sender is null)  //第一次左键
-            //            {
-            //                if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeSender magS))    //找到了
-            //                {
-            //                    sender = magS;
-            //                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ChooseSender", () => "已选择发送器").Value);
-            //                }
-            //                else    //没找到
-            //                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, ChooseSenderFailed.Value);
-            //            }
-            //            else   //第二次左键
-            //            {
-            //                if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeContainer magC))  //找到了，查看是否能连接
-            //                {
-            //                    if (sender.ConnectToRecevier(magC))  //能连接，建立连接
-            //                    {
-            //                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ConnectSuccessfully", () => "成功建立连接！").Value);
-            //                        sender.ShowConnection();
-            //                        sender = null;
-            //                    }
-            //                    else      //不能连接，清空选择
-            //                    {
-            //                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ConnectFailed", () => "连接失败！").Value);
-            //                        sender = null;
-            //                    }
-            //                }
-            //                else  //没找到，清空选择
-            //                {
-            //                    sender = null;
-            //                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ChooseCleared", () => "选择已清空").Value);
-            //                }
-            //            }
-
-            //        }
-            //        break;
-            //    case 1://查看模式
-            //        {
-            //            if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeSender magS))  //找到了，显示所有的连接
-            //                magS.ShowConnection();
-            //            else
-            //                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, ChooseSenderFailed.Value);
-            //        }
-            //        break;
-            //        //case 2://断连模式
-            //        //    {
-            //        //        if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeSender magS))  //找到了，断开所有的连接
-            //        //        {
-            //        //            magS.DisconnectAll();
-            //        //            CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("DisconnectSuccessfully", () => "成功断开连接！").Value);
-            //        //        }
-            //        //        else
-            //        //            CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, ChooseSenderFailed.Value);
-            //        //    }
-            //        //    break;
-            //}
-            #endregion
             return true;
         }
-
-        //public override void AddRecipes()
-        //{
-        //    CreateRecipe()
-        //        .AddIngredient<MagicCrystal>(10)
-        //        .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
-        //        .AddTile(TileID.Anvils)
-        //        .Register();
-        //}
     }
 
-    public class MagConnectProj : ModProjectile
+    public class MagConnectProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -174,26 +85,18 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public override void AI()
         {
-            Player owner = Main.player[Projectile.owner];
-
-            if (owner.HeldItem.ModItem is not MagConnectStaff)
+            if (Owner.HeldItem.ModItem is not MagConnectStaff)
             {
                 Projectile.Kill();
                 return;
             }
 
-            owner.itemTime = owner.itemAnimation = 5;
+            LockOwnerItemTime(5);
 
             Projectile.timeLeft = 2;
 
-            Point16 p1 = new Point16((int)Projectile.ai[0], (int)Projectile.ai[1]);
-
-            Tile tile = Framing.GetTileSafely(p1);
-            TileObjectData data = TileObjectData.GetTileData(tile);
-            int x = data == null ? 8 : data.Width * 16 / 2;
-            int y = data == null ? 8 : data.Height * 16 / 2;
-
-            selfPos = p1.ToWorldCoordinates(x, y);
+            Point16 position = new Point16((int)Projectile.ai[0], (int)Projectile.ai[1]);
+            selfPos = Helper.GetTileCenter(position);
 
             Point16 p2 = new Point16((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
             aimPos = p2.ToWorldCoordinates();
@@ -211,11 +114,11 @@ namespace Coralite.Content.Items.MagikeSeries1
                 aimPos = receiver.GetPosition.ToWorldCoordinates(x2, y2);
             }
 
-            if (MagikeHelper.TryGetEntityWithTopLeft(p1.X, p1.Y, out IMagikeSender_Line sender))
+            if (MagikeHelper.TryGetEntityWithTopLeft(position.X, position.Y, out IMagikeSender_Line sender))
             {
                 c = sender.CanConnect(p2) ? Color.GreenYellow : Color.MediumVioletRed;
 
-                if (owner.controlUseItem)
+                if (Owner.controlUseItem)
                 {
                     Rectangle rectangle = new Rectangle((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
 

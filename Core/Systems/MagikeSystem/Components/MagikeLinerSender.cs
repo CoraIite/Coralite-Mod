@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Helpers;
 using System.Collections.Generic;
 using Terraria.DataStructures;
@@ -91,7 +92,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public void Send(MagikeContainer selfMagikeContainer, Point16 position, int amount)
         {
             //如果无法获取物块实体就移除
-            if (MagikeHelper.TryGetEntity(position, out IEntity receiverEntity))
+            if (MagikeHelper.TryGetEntity(position, out BaseMagikeTileEntity receiverEntity))
                 goto remove;
 
             //如果不是魔能容器那么就丢掉喽
