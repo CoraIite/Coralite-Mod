@@ -12,9 +12,6 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("圣洁的光蛉");
-            // Tooltip.SetDefault("它光彩夺目，可得轻拿轻放\n在神圣地形召唤光之女皇，不消耗");
-
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
 
@@ -60,6 +57,12 @@ namespace Coralite.Content.Items.BossSummons
             CreateRecipe()
                 .AddIngredient(ItemID.EmpressButterfly, 3)
                 .AddIngredient(ItemID.SoulofLight, 15)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.LightningBug, 3)
+                .AddIngredient(ItemID.ButterflyDust)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

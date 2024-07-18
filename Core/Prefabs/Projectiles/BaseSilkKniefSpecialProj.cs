@@ -9,7 +9,7 @@ namespace Coralite.Core.Prefabs.Projectiles
     /// ai2用于决定状态<br></br>
     /// localAI0用于计时
     /// </summary>
-    public abstract class BaseSilkKnifeSpecialProj : BaseHeldProj
+    public abstract class BaseSilkKnifeSpecialProj(int onHookedLength, int rollingLength, float shootSpeed, float shootTime) : BaseHeldProj
     {
         /// <summary>
         /// ai1
@@ -28,25 +28,17 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected Vector2 offset;
 
         /// <summary> 钩住敌人后能保留的最远距离 </summary>
-        protected readonly int onHookedLength;
+        protected readonly int onHookedLength = onHookedLength;
         /// <summary> 在手中旋转时的长度 </summary>
-        protected readonly int rollingLength;
+        protected readonly int rollingLength = rollingLength;
         /// <summary> 在手中旋转后松手射出的速度 </summary>
-        protected readonly float shootSpeed;
+        protected readonly float shootSpeed = shootSpeed;
         /// <summary> 射出多久后开始回到手中 </summary>
-        protected readonly float shootTime;
+        protected readonly float shootTime = shootTime;
 
         public bool canDamage;
 
         protected float backSpeed = 32;
-
-        public BaseSilkKnifeSpecialProj(int onHookedLength, int rollingLength, float shootSpeed, float shootTime)
-        {
-            this.onHookedLength = onHookedLength;
-            this.rollingLength = rollingLength;
-            this.shootSpeed = shootSpeed;
-            this.shootTime = shootTime;
-        }
 
         public enum AIStates
         {

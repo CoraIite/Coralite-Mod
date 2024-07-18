@@ -436,7 +436,7 @@ namespace Coralite.Content.Items.Shadow
 
             Vector2 Center = GetCenter(1);
 
-            for (int i = 0; i < oldRotate.Length; i++)
+            for (int i = 0; i < count; i++)
             {
                 if (oldRotate[i] == 100f)
                     continue;

@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Bosses.ShadowBalls;
+﻿using Coralite.Content.Particles;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;

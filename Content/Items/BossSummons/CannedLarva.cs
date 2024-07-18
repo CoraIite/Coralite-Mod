@@ -12,9 +12,6 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("罐装的幼虫");
-            // Tooltip.SetDefault("装在罐子中的蜜蜂幼虫，这样就不会轻易地被戳破了\n在丛林地形召唤蜂后，不消耗");
-
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
 

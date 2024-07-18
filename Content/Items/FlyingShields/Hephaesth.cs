@@ -1,6 +1,6 @@
-﻿using Coralite.Content.Bosses.ShadowBalls;
-using Coralite.Content.Items.RedJades;
+﻿using Coralite.Content.Items.RedJades;
 using Coralite.Content.ModPlayers;
+using Coralite.Content.Particles;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;

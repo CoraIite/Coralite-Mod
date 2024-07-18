@@ -284,22 +284,17 @@ namespace Coralite.Core.Prefabs.Tiles
         }
     }
 
-    public abstract class BaseChairTile<TItem> : BaseTile where TItem : ModItem
+    public abstract class BaseChairTile<TItem>(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : BaseTile(texturePath, pathHasName) where TItem : ModItem
     {
-        private readonly int dustType;
-        private readonly Color mapColor;
         public const int NextStyleHeight = 40;
-
-        public BaseChairTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
-        {
-            this.dustType = dustType;
-            this.mapColor = mapColor;
-        }
 
         public override void SetStaticDefaults()
         {
             this.ChairPrefab(dustType, mapColor);
         }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+            => [new Item(ModContent.ItemType<TItem>())];
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
         {
@@ -361,6 +356,7 @@ namespace Coralite.Core.Prefabs.Tiles
     {
         public override void SetStaticDefaults()
         {
+            Main.tileTable[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileLavaDeath[Type] = true;
@@ -789,17 +785,8 @@ namespace Coralite.Core.Prefabs.Tiles
 
     }
 
-    public abstract class BaseDresserTile<TItem> : BaseTile where TItem : ModItem
+    public abstract class BaseDresserTile<TItem>(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : BaseTile(texturePath, pathHasName) where TItem : ModItem
     {
-        private readonly int dustType;
-        private readonly Color mapColor;
-
-        public BaseDresserTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
-        {
-            this.dustType = dustType;
-            this.mapColor = mapColor;
-        }
-
         public override void SetStaticDefaults()
         {
             // Properties
@@ -825,16 +812,16 @@ namespace Coralite.Core.Prefabs.Tiles
 
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
+            TileObjectData.newTile.CoordinateHeights = [16, 18];
             TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
-            TileObjectData.newTile.AnchorInvalidTiles = new int[] {
+            TileObjectData.newTile.AnchorInvalidTiles = [
                 TileID.MagicalIceBlock,
                 TileID.Boulder,
                 TileID.BouncyBoulder,
                 TileID.LifeCrystalBoulder,
                 TileID.RollingCactus
-            };
-            TileObjectData.newTile.DrawYOffset = 2;
+            ];
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
         }
@@ -1070,9 +1057,7 @@ namespace Coralite.Core.Prefabs.Tiles
         }
 
         public override IEnumerable<Item> GetItemDrops(int i, int j)
-        {
-            return new Item[] { new Item(ModContent.ItemType<TItem>()) };
-        }
+            => [new Item(ModContent.ItemType<TItem>())];
     }
 
     public abstract class BaseDoorClosedTile<TItem, TOpen> : BaseTile where TItem : ModItem where TOpen : ModTile
@@ -1102,9 +1087,7 @@ namespace Coralite.Core.Prefabs.Tiles
         }
 
         public override IEnumerable<Item> GetItemDrops(int i, int j)
-        {
-            return new Item[] { new Item(ModContent.ItemType<TItem>()) };
-        }
+            => [new Item(ModContent.ItemType<TItem>())];
     }
 
     public abstract class BaseBigDroplightTile<TItem>(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : BaseTile(texturePath, pathHasName) where TItem : ModItem
@@ -1174,19 +1157,13 @@ namespace Coralite.Core.Prefabs.Tiles
                 }
             return true;
         }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+            => [new Item(ModContent.ItemType<TItem>())];
     }
 
-    public abstract class BaseDroplightTile<TItem> : BaseTile where TItem : ModItem
+    public abstract class BaseDroplightTile<TItem>(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : BaseTile(texturePath, pathHasName) where TItem : ModItem
     {
-        private readonly int dustType;
-        private readonly Color mapColor;
-
-        public BaseDroplightTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
-        {
-            this.dustType = dustType;
-            this.mapColor = mapColor;
-        }
-
         public abstract void GetLight(ref float r, ref float g, ref float b);
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
@@ -1252,19 +1229,13 @@ namespace Coralite.Core.Prefabs.Tiles
                 }
             return true;
         }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+            => [new Item(ModContent.ItemType<TItem>())];
     }
 
-    public abstract class BaseCandelabraTile<TItem> : BaseTile where TItem : ModItem
+    public abstract class BaseCandelabraTile<TItem>(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : BaseTile(texturePath, pathHasName) where TItem : ModItem
     {
-        private readonly int dustType;
-        private readonly Color mapColor;
-
-        public BaseCandelabraTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
-        {
-            this.dustType = dustType;
-            this.mapColor = mapColor;
-        }
-
         public abstract void GetLight(ref float r, ref float g, ref float b);
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
@@ -1354,19 +1325,13 @@ namespace Coralite.Core.Prefabs.Tiles
                 }
             return true;
         }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+            => [new Item(ModContent.ItemType<TItem>())];
     }
 
-    public abstract class BaseCandleTile<TItem> : BaseTile where TItem : ModItem
+    public abstract class BaseCandleTile<TItem>(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : BaseTile(texturePath, pathHasName) where TItem : ModItem
     {
-        private readonly int dustType;
-        private readonly Color mapColor;
-
-        public BaseCandleTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
-        {
-            this.dustType = dustType;
-            this.mapColor = mapColor;
-        }
-
         public abstract void GetLight(ref float r, ref float g, ref float b);
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
@@ -1452,19 +1417,13 @@ namespace Coralite.Core.Prefabs.Tiles
                 }
             return true;
         }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+            => [new Item(ModContent.ItemType<TItem>())];
     }
 
-    public abstract class BaseFloorLampTile<TItem> : BaseTile where TItem : ModItem
+    public abstract class BaseFloorLampTile<TItem>(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : BaseTile(texturePath, pathHasName) where TItem : ModItem
     {
-        private readonly int dustType;
-        private readonly Color mapColor;
-
-        public BaseFloorLampTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
-        {
-            this.dustType = dustType;
-            this.mapColor = mapColor;
-        }
-
         public abstract void GetLight(ref float r, ref float g, ref float b);
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
@@ -1553,5 +1512,8 @@ namespace Coralite.Core.Prefabs.Tiles
                 }
             return true;
         }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+            => [new Item(ModContent.ItemType<TItem>())];
     }
 }

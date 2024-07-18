@@ -3,15 +3,14 @@ using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
-namespace Coralite.Content.Bosses.ShadowBalls
+namespace Coralite.Content.Particles
 {
     public class FireParticle : Particle
     {
-        public override string Texture => AssetDirectory.ShadowBalls + Name;
+        public override string Texture => AssetDirectory.Particles + Name;
 
         private SpriteEffects effect;
         public int MaxFrameCount = 5;
-
 
         public override void OnSpawn()
         {
@@ -40,12 +39,24 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override void Draw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = GetTexture().Value;
-            Rectangle frame = mainTex.Frame(1, 16, 0, this.Frame.Y);
+            Rectangle frame = mainTex.Frame(1, 16, 0, Frame.Y);
             Vector2 origin = frame.Size() / 2;
 
             spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, color, Rotation, origin, Scale
                 , effect, 0f);
             spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, color * 0.5f, Rotation, origin, Scale
+                , effect, 0f);
+        }
+
+        public override void DrawInUI(SpriteBatch spriteBatch)
+        {
+            Texture2D mainTex = GetTexture().Value;
+            Rectangle frame = mainTex.Frame(1, 16, 0, Frame.Y);
+            Vector2 origin = frame.Size() / 2;
+
+            spriteBatch.Draw(mainTex, Center, frame, color, Rotation, origin, Scale
+                , effect, 0f);
+            spriteBatch.Draw(mainTex, Center, frame, color * 0.5f, Rotation, origin, Scale
                 , effect, 0f);
         }
     }

@@ -169,6 +169,11 @@ namespace Coralite.Content.NPCs.GlobalNPC
                     break;
                 case NPCID.MoonLordCore:
                     npcLoot.Add(ItemDropRule.Common(ItemType<ConquerorOfTheSeas>(), 9, 1, 1));
+                    npcLoot.Add(ItemDropRule.Common(ItemType<Night_luminescentPearl>(), 1, 1, 3));
+                    break;
+                case NPCID.MoonLordHand:
+                case NPCID.MoonLordHead:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<Night_luminescentPearl>()));
                     break;
                 case NPCID.DD2OgreT2://二级食人魔
                     npcLoot.Add(ItemDropRule.Common(ItemType<EtheriaLegacy>(), 10));

@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.Thunder
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             int i1 = -1;
-            if (Helper.TryFindClosestEnemy(Main.MouseWorld, 700, n => Collision.CanHit(player, n), out NPC target))
+            if (Helper.TryFindClosestEnemy(Main.MouseWorld, 700, n => n.CanBeChasedBy() && Collision.CanHit(player, n), out NPC target))
             {
                 i1 = target.whoAmI;
                 Projectile.NewProjectile(source, position, target.Center, type,
@@ -52,7 +52,7 @@ namespace Coralite.Content.Items.Thunder
             if (i1 != -1)
             {
                 int i2 = -1;
-                if (Helper.TryFindClosestEnemy(Main.MouseWorld, 700, n => Collision.CanHit(player, n) && n.whoAmI != i1, out NPC target1))
+                if (Helper.TryFindClosestEnemy(Main.MouseWorld, 700, n => n.CanBeChasedBy() && Collision.CanHit(player, n) && n.whoAmI != i1, out NPC target1))
                 {
                     i2 = target1.whoAmI;
 
@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.Thunder
                         damage, knockback, player.whoAmI, player.itemTimeMax * 0.6f, target1.whoAmI);
                 }
 
-                if (i2 != -1 && Helper.TryFindClosestEnemy(Main.MouseWorld, 700, n => Collision.CanHit(player, n) && n.whoAmI != i1 && n.whoAmI != i2, out NPC target2))
+                if (i2 != -1 && Helper.TryFindClosestEnemy(Main.MouseWorld, 700, n => n.CanBeChasedBy() && Collision.CanHit(player, n) && n.whoAmI != i1 && n.whoAmI != i2, out NPC target2))
                 {
                     Projectile.NewProjectile(source, position, target2.Center, type,
                         damage, knockback, player.whoAmI, player.itemTimeMax * 0.6f, target2.whoAmI);

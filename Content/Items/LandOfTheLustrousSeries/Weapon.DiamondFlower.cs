@@ -382,7 +382,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     if (timer < 8)
                     {
                         alpha += 1 / 8f;
-                        velocity = rotation.ToRotationVector2() * 2 * timer / 8f;
+                        velocity = rotation.ToRotationVector2() * 2.5f * timer / 8f;
                         break;
                     }
 
@@ -413,8 +413,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 timer++;
                 velocity = Collision.TileCollision(position, velocity, (int)width, (int)height, true, true);
-                velocity = velocity.RotatedBy(0.08f);
-                rotation += 0.02f;
                 position += velocity;
             }
 
@@ -453,7 +451,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         float factor = Timer / 20;
                         factor = Coralite.Instance.X2Smoother.Smoother(factor);
 
-                        float rot = BaseRot + Timer * (MathHelper.TwoPi / 5 - factor * 0.3f);
+                        float rot = BaseRot + Timer * (MathHelper.PiOver2*1.2f - factor * 0.3f);
                         Vector2 dir = rot.ToRotationVector2();
                         float length = 8 + factor * 70;
 

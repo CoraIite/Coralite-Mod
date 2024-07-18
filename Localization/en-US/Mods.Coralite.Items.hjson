@@ -44,10 +44,10 @@ ChainedEye: {
 }
 
 CrystallineGel: {
-	DisplayName: Crystalline Gel
+	DisplayName: Symbol of the Queen
 	Tooltip:
 		'''
-		The core of the Slime Queen, tastes delicious but a little hard
+		This Slime symbolises the majesty of the Queen amongst the Slimes, and to have it is to have the greatest honour.
 		Summons the Queen Slime in hallow, doesn't get consumed
 		'''
 }
@@ -89,10 +89,11 @@ ImmortalDoll: {
 }
 
 MachinerySoars: {
-	DisplayName: Machinery Soars
+	DisplayName: Spiked headphones
 	Tooltip:
 		'''
-		Flesh and blood suffering, mechanical soaring
+		Once you put it on, you will enter the electronic world and cannot escape
+		even if your body has turned into a skeleton
 		Summons Skeletron Prime at night, doesn't get consumed
 		'''
 }
@@ -138,7 +139,7 @@ TheTwinsBond: {
 	DisplayName: The Twins Bond
 	Tooltip:
 		'''
-		Mechanical twins, they are inseparable
+		If you have just one of them, you won't be able to play a lot of games
 		Summons The Twins at night, doesn't get consumed
 		'''
 }
@@ -3102,11 +3103,11 @@ MedusaMask: {
 
 MedusaSlippers: {
 	DisplayName: Medusa Slippers
-	Tooltip: 
-	'''
-	+6% Ranged Damage
-	+10% move speed
-	'''
+	Tooltip:
+		'''
+		+6% Ranged Damage
+		+10% move speed
+		'''
 	NotHasMedusaSoul: Soul of Medusa: Triggers when at least 2 sets are equipped
 	MedusaSoul2Part:
 		'''
@@ -4362,9 +4363,41 @@ BasaltBeam: {
 
 DiamondFlower: {
 	DisplayName: Diamond Flower
-	Tooltip: 
+	Tooltip:
 		'''
 		Spawn diamond flower and shoot diamond
 		Petals are generated when a diamond hits
 		'''
+}
+
+ArcaneFlameDagger: {
+	DisplayName: Arcane Flame Dagger
+	Tooltip:
+		'''
+		Creates a Flame Slash on critical hits
+		[c/e6ffa9: From the world of 枫]
+		'''
+}
+
+CelestialHeart: {
+	DisplayName: Celestial Heart
+	Tooltip:
+		'''
+		Summoning the heart of doom
+		Summon the Moon Lord, without consuming
+		'''
+}
+
+SeductiveFalseBait: {
+	DisplayName: Seductive False Bait
+	Tooltip:
+		'''
+		Perfect for pretending to be a truffle bug!
+		Summon the Duke Fishron by the sea, without consuming
+		'''
+}
+
+Night_luminescentPearl: {
+	DisplayName: Night-luminescent Pearl
+	Tooltip: The heart of the Moon Lord
 }

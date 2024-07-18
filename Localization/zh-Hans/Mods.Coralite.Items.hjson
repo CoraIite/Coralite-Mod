@@ -44,10 +44,10 @@ ChainedEye: {
 }
 
 CrystallineGel: {
-	DisplayName: 结晶的明胶
+	DisplayName: 王后的象征
 	Tooltip:
 		'''
-		史莱姆皇后的核心部位，尝起来很美味但是有点硬
+		这史莱姆族群中象征着王后的威严，拥有它就拥有了无上的荣耀
 		在神圣地形召唤史莱姆皇后，不消耗
 		'''
 }
@@ -89,10 +89,10 @@ ImmortalDoll: {
 }
 
 MachinerySoars: {
-	DisplayName: 飞升的头骨
+	DisplayName: 带刺的耳机
 	Tooltip:
 		'''
-		血肉苦楚，机械飞升
+		戴上后就会进入电子世界无法逃离，即使肉体已经变成骷髅
 		在夜晚召唤机械骷髅王，不消耗
 		'''
 }
@@ -138,7 +138,7 @@ TheTwinsBond: {
 	DisplayName: 双子的牵绊
 	Tooltip:
 		'''
-		机械的双子，它们形影不离
+		只有其中一个的话很多游戏就没法玩了
 		在夜晚召唤双子魔眼，不消耗
 		'''
 }
@@ -3171,11 +3171,11 @@ MedusaMask: {
 
 MedusaSlippers: {
 	DisplayName: 美杜莎便鞋
-	Tooltip: 
-	'''
-	+6% 远程伤害
-	移动速度增加10%
-	'''
+	Tooltip:
+		'''
+		+6% 远程伤害
+		移动速度增加10%
+		'''
 	NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
 	MedusaSoul2Part:
 		'''
@@ -4430,4 +4430,36 @@ DiamondFlower: {
 		生成钻石花并向敌人发射钻石
 		钻石命中后生成花瓣
 		'''
+}
+
+ArcaneFlameDagger: {
+	DisplayName: 玄焰匕首
+	Tooltip:
+		'''
+		暴击时产生玄焰斩击
+		[c/e6ffa9:来自枫的世界]
+		'''
+}
+
+CelestialHeart: {
+	DisplayName: 天体的心脏
+	Tooltip:
+		'''
+		招来末日的心脏
+		召唤月球领主，不消耗
+		'''
+}
+
+SeductiveFalseBait: {
+	DisplayName: 诱人的假饵
+	Tooltip:
+		'''
+		非常适合用来假装松露虫！
+		在海边召唤猪鲨，不消耗
+		'''
+}
+
+Night_luminescentPearl: {
+	DisplayName: 夜明珠
+	Tooltip: 月球领主的核心部位
 }

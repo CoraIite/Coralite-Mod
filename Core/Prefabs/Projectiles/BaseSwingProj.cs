@@ -483,7 +483,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             GetCurrentTrailCount(out float count);
 
             float w = 1f;
-            for (int i = 0; i < oldRotate.Length; i++)
+            for (int i = 0; i < count; i++)
             {
                 if (oldRotate[i] == 100f)
                     continue;
