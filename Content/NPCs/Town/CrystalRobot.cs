@@ -31,10 +31,24 @@ namespace Coralite.Content.NPCs.Town
         private static int ShimmerHeadIndex;
         private static Profiles.StackedNPCProfile NPCProfile;
 
+        private static LocalizedText[] Names;
+
         public override void Load()
         {
             // Adds our Shimmer Head to the NPCHeadLoader.
             ShimmerHeadIndex = Mod.AddNPCHeadTexture(Type, Texture + "_Shimmer_Head");
+            Names = 
+                [
+                this.GetLocalization("Name0", () => "晶华"),
+                this.GetLocalization("Name1", () => "晶: c000"),
+                this.GetLocalization("Name2", () => "克丽丝塔"),
+                this.GetLocalization("Name3", () => "魔盖克"),
+                ];
+        }
+
+        public override void Unload()
+        {
+            Names = null;
         }
 
         public override void SetStaticDefaults()
@@ -163,24 +177,6 @@ namespace Coralite.Content.NPCs.Town
             return MagikeSystem.learnedMagikeBase;
         }
 
-        //public override bool CheckConditions(int left, int right, int top, int bottom)
-        //{
-        //    int score = 0;
-        //    for (int x = left; x <= right; x++)
-        //    {
-        //        for (int y = top; y <= bottom; y++)
-        //        {
-        //            int type = Main.tile[x, y].TileType;
-        //            if (type == ModContent.TileType<BasaltTile>() || type == ModContent.TileType<HardBasaltTile>() || type == ModContent.TileType<MagicCrystalBrickTile>())
-        //            {
-        //                score++;
-        //            }
-        //        }
-        //    }
-
-        //    return score >= ((right - left) * (bottom - top)) / 2;
-        //}
-
         public override ITownNPCProfile TownNPCProfile()
         {
             return NPCProfile;
@@ -188,12 +184,12 @@ namespace Coralite.Content.NPCs.Town
 
         public override List<string> SetNPCNameList()
         {
-            return new List<string>() {
-                "晶体器械",
-                "水晶体",
-                "克丽丝塔",
-                "魔盖克"
-            };
+            List<string> list = new List<string>();
+
+            foreach (var name in Names)
+                list.Add(name.Value);
+
+            return list;
         }
 
         public override string GetChat()
@@ -270,7 +266,7 @@ namespace Coralite.Content.NPCs.Town
                 shopCustomPrice = 8,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
-            npcShop.Add(new Item(ModContent.ItemType<WarpMirror>())//充能球
+            npcShop.Add(new Item(ModContent.ItemType<WarpMirror>())//扭曲镜
             {
                 shopCustomPrice = 10,
                 shopSpecialCurrency = magicCrystalCurrencyID
@@ -284,6 +280,11 @@ namespace Coralite.Content.NPCs.Town
             npcShop.Add(new Item(ModContent.ItemType<CrystalStaff>())//方块杖
             {
                 shopCustomPrice = 10,
+                shopSpecialCurrency = magicCrystalCurrencyID
+            });
+            npcShop.Add(new Item(ModContent.ItemType<MagikeWorldBall>())//世界球
+            {
+                shopCustomPrice = 1,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
 

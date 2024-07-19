@@ -4401,3 +4401,13 @@ Night_luminescentPearl: {
 	DisplayName: Night-luminescent Pearl
 	Tooltip: The heart of the Moon Lord
 }
+
+MagikeWorldBall: {
+	DisplayName: Magike World Ball
+	Tooltip: ""
+}
+
+BasicRefractor: {
+	DisplayName: Basic Refractor
+	Tooltip: ""
+}

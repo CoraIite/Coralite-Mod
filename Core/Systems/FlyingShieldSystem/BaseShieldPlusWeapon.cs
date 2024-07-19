@@ -118,7 +118,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            if (Main.keyState.PressingShift())//TODO: 增加本地化
+            if (Main.keyState.PressingShift())
             {
                 string text = FlyingShieldSystem.ShieldPlusDescriptionLong.Value;
                 TooltipLine line = new TooltipLine(Mod, "Coralite ShieldPlus Description", text);

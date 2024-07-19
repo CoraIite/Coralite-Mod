@@ -126,6 +126,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #region 连接相关
 
+        /// <summary>
+        /// 检测是否能连接
+        /// </summary>
+        /// <param name="receiverPoint"></param>
+        /// <returns></returns>
+        public bool CanConnect_CheckLength(Point16 receiverPoint)
+        {
+            Vector2 selfCenter = Helper.GetTileCenter((Entity as BaseMagikeTileEntity).Position);
+            Vector2 targetCenter = Helper.GetTileCenter(receiverPoint);
+
+            return Vector2.Distance(selfCenter, targetCenter) <= ConnectLength;
+        }
+
         public void Connect(Point16 receiverPoint)
         {
             _receivers.Add(receiverPoint);

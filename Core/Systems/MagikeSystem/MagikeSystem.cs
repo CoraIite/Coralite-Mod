@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Terraria;
-using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem
@@ -58,6 +57,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (learnedMagikeAdvanced)
                 Knowledge.Add("learnedMagikeAdvanced");
 
+            tag.Add("ConnectLineType", (int)CurrentConnectLineType);
+
             SaveData_2_1(Knowledge);
 
             tag.Add("Knowledge", Knowledge);
@@ -69,6 +70,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             IList<string> list = tag.GetList<string>("Knowledge");
             learnedMagikeBase = list.Contains("learnedMagikeBase");
             learnedMagikeAdvanced = list.Contains("learnedMagikeAdvanced");
+
+            CurrentConnectLineType = (ConnectLineType)tag.GetInt("ConnectLineType");
 
             LoadData_2_1(list);
         }

@@ -1,9 +1,9 @@
-﻿using Coralite.Core.Prefabs.Tiles;
+﻿//using Coralite.Core.Prefabs.Tiles;
 
-namespace Coralite.Content.Tiles.Plants
-{
-    public class NormalPlantTileEntity : BasePlantTileEntity
-    {
+//namespace Coralite.Content.Tiles.Plants
+//{
+//    public class NormalPlantTileEntity : BasePlantTileEntity
+//    {
 
-    }
-}
+//    }
+//}

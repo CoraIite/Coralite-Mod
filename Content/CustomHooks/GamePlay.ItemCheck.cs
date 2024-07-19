@@ -152,6 +152,9 @@ namespace Coralite.Content.CustomHooks
             num2 = velocity.X;
             num3 = velocity.Y;
 
+            //傻呗tml，这id都没了还给我搁着提示修改
+#pragma warning disable ChangeMagicNumberToID // Change magic numbers into appropriate ID values
+
             if (sItem.useStyle == ItemUseStyleID.Shoot)
             {
                 player.itemRotation = (float)Math.Atan2(num3 * player.direction, num2 * player.direction) - player.fullRotation;
@@ -165,6 +168,7 @@ namespace Coralite.Content.CustomHooks
                 NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, player.whoAmI);
                 NetMessage.SendData(41, -1, -1, null, player.whoAmI);
             }
+#pragma warning restore ChangeMagicNumberToID // Change magic numbers into appropriate ID values
 
             CombinedHooks.Shoot(player, sItem, (EntitySource_ItemUse_WithAmmo)projectileSource_Item_WithPotentialAmmo, pointPoisition, velocity, projToShoot, Damage, KnockBack);
         }

@@ -9,15 +9,15 @@ namespace Coralite.Helpers
 {
     public static partial class BotanicalHelper
     {
-        public static BotanicalItem GetBotanicalItem(this Item item)
-        {
-            return item.GetGlobalItem<BotanicalItem>();
-        }
+        //public static BotanicalItem GetBotanicalItem(this Item item)
+        //{
+        //    return item.GetGlobalItem<BotanicalItem>();
+        //}
 
-        public static CrossBreedCatalystItem GetCatalystItem(this Item item)
-        {
-            return item.GetGlobalItem<CrossBreedCatalystItem>();
-        }
+        //public static CrossBreedCatalystItem GetCatalystItem(this Item item)
+        //{
+        //    return item.GetGlobalItem<CrossBreedCatalystItem>();
+        //}
 
         /// <summary>
         /// 获取当前植物的生长状态
@@ -109,53 +109,53 @@ namespace Coralite.Helpers
             return true;
         }
 
-        /// <summary>
-        /// 用于随机更新物块时使用
-        /// </summary>
-        /// <typeparam name="T">你的TileEntity类型</typeparam>
-        /// <param name="i"></param>
-        /// <param name="j"></param>
-        /// <param name="frameWidth"></param>
-        /// <param name="frameWidthMax"></param>
-        public static void UpdatePlant<T>(int i, int j, short frameWidth, int frameWidthMax) where T : BasePlantTileEntity
-        {
-            Tile tile = Framing.GetTileSafely(i, j);
-            PlantStage stage = GetPlantStage(i, j, frameWidth, frameWidthMax);
+        ///// <summary>
+        ///// 用于随机更新物块时使用
+        ///// </summary>
+        ///// <typeparam name="T">你的TileEntity类型</typeparam>
+        ///// <param name="i"></param>
+        ///// <param name="j"></param>
+        ///// <param name="frameWidth"></param>
+        ///// <param name="frameWidthMax"></param>
+        //public static void UpdatePlant<T>(int i, int j, short frameWidth, int frameWidthMax) where T : BasePlantTileEntity
+        //{
+        //    Tile tile = Framing.GetTileSafely(i, j);
+        //    PlantStage stage = GetPlantStage(i, j, frameWidth, frameWidthMax);
 
-            if (stage == PlantStage.Grown)
-                return;
+        //    if (stage == PlantStage.Grown)
+        //        return;
 
-            if (TryGetTileEntityAs(i, j, out T plantEntity))
-            {
-                plantEntity.growTime++;
-                if (plantEntity.growTime >= plantEntity.DominantGrowTime)
-                {
-                    plantEntity.growTime = 0;
-                    tile.TileFrameX += frameWidth;
-                    if (Main.netMode != NetmodeID.SinglePlayer)
-                        NetMessage.SendTileSquare(-1, i, j, 1);
-                }
-            }
+        //    if (TryGetTileEntityAs(i, j, out T plantEntity))
+        //    {
+        //        plantEntity.growTime++;
+        //        if (plantEntity.growTime >= plantEntity.DominantGrowTime)
+        //        {
+        //            plantEntity.growTime = 0;
+        //            tile.TileFrameX += frameWidth;
+        //            if (Main.netMode != NetmodeID.SinglePlayer)
+        //                NetMessage.SendTileSquare(-1, i, j, 1);
+        //        }
+        //    }
 
-        }
+        //}
 
-        /// <summary>
-        /// 放置植物时使用
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="i"></param>
-        /// <param name="j"></param>
-        /// <param name="item"></param>
-        public static void PlacePlant<T>(int i, int j, Item item) where T : BasePlantTileEntity
-        {
-            BotanicalItem botanicalItem = item.GetBotanicalItem();
+        ///// <summary>
+        ///// 放置植物时使用
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="i"></param>
+        ///// <param name="j"></param>
+        ///// <param name="item"></param>
+        //public static void PlacePlant<T>(int i, int j, Item item) where T : BasePlantTileEntity
+        //{
+        //    BotanicalItem botanicalItem = item.GetBotanicalItem();
 
-            if (TryGetTileEntityAs(i, j, out BasePlantTileEntity plantEntity))
-            {
-                plantEntity.DominantGrowTime = botanicalItem.DominantGrowTime;
-                plantEntity.RecessiveGrowTime = botanicalItem.RecessiveGrowTime;
-            }
-        }
+        //    if (TryGetTileEntityAs(i, j, out BasePlantTileEntity plantEntity))
+        //    {
+        //        plantEntity.DominantGrowTime = botanicalItem.DominantGrowTime;
+        //        plantEntity.RecessiveGrowTime = botanicalItem.RecessiveGrowTime;
+        //    }
+        //}
 
         /// <summary>
         /// 用于Kill指定位置的Entity

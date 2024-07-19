@@ -4463,3 +4463,17 @@ Night_luminescentPearl: {
 	DisplayName: 夜明珠
 	Tooltip: 月球领主的核心部位
 }
+
+MagikeWorldBall: {
+	DisplayName: 魔能球
+	Tooltip:
+		'''
+		投掷它可改变魔能流动的面貌！
+		“是时候重新观测了”
+		'''
+}
+
+BasicRefractor: {
+	DisplayName: 基础广角镜
+	Tooltip: ""
+}

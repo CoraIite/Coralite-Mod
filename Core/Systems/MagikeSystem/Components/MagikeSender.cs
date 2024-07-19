@@ -5,7 +5,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class MagikeSender : Component
+    public abstract class MagikeSender : Component, ITimerTriggerComponent
     {
         public sealed override int ID => MagikeComponentID.MagikeSender;
 
@@ -18,26 +18,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int UnitDelivery { get => UnitDeliveryBase + UnitDeliveryExtra; }
 
         /// <summary> 基础发送时间 </summary>
-        public int SendDelayBase { get; private set; }
+        public int SendDelayBase { get => DelayBase; private set => DelayBase = value; }
         /// <summary> 发送时间减少量（效率增幅量） </summary>
-        public float SendDelayBonus { get; set; } = 1f;
+        public float SendDelayBonus { get => DelayBonus; set => DelayBonus = value; }
 
         /// <summary> 发送时间 </summary>
-        public int SendDelay { get => Math.Clamp((int)(SendDelayBase * SendDelayBonus), 1, int.MaxValue); }
-
-        /// <summary> 发送魔能的计时器 </summary>
-        private int _sendTimer;
+        public int SendDelay => (this as ITimerTriggerComponent).Delay;
+        
+        public int DelayBase { get; set; }
+        public float DelayBonus { get; set; } = 1f;
+        public int Timer { get; set; }
 
         public bool CanSend()
         {
-            _sendTimer--;
-            if (_sendTimer == 0)
-            {
-                _sendTimer = SendDelay;
-                return true;
-            }
-
-            return false;
+            return (this as ITimerTriggerComponent).UpdateTime();
         }
 
         public void OnSend(Point16 selfPoint, Point ReceiverPoint)
@@ -47,7 +41,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void SaveData(string preName, TagCompound tag)
         {
-            tag.Add(preName + nameof(_sendTimer), _sendTimer);
+            tag.Add(preName + nameof(Timer), Timer);
 
             tag.Add(preName + nameof(UnitDeliveryBase), UnitDeliveryBase);
             tag.Add(preName + nameof(UnitDeliveryExtra), UnitDeliveryExtra);
@@ -58,7 +52,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void LoadData(string preName, TagCompound tag)
         {
-            _sendTimer = tag.GetInt(preName + nameof(_sendTimer));
+            Timer = tag.GetInt(preName + nameof(Timer));
 
             UnitDeliveryBase = tag.GetInt(preName + nameof(UnitDeliveryBase));
             UnitDeliveryExtra = tag.GetInt(preName + nameof(UnitDeliveryExtra));

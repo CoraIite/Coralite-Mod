@@ -25,8 +25,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             public const int ChooseSender_NotFound = 1;
 
             public const int ChooseReceiver_NotFound = 2;
-            public const int ChooseReceiver_TooFar = 3;
-            public const int ChooseReceiver_Success = 4;
+            public const int Connect_TooFar = 3;
+            public const int Connect_Success = 4;
 
             public const int Deconnect = 5;
 
@@ -54,9 +54,9 @@ namespace Coralite.Core.Systems.MagikeSystem
                 , () => "未找到魔能发送器");
             ConnectStaff[ConnectStaffID.ChooseReceiver_NotFound] = this.GetLocalization("ChooseReceiver_NotFound"
                 , () => "未找到接收器");
-            ConnectStaff[ConnectStaffID.ChooseReceiver_TooFar] = this.GetLocalization("ChooseReceiver_TooFar"
+            ConnectStaff[ConnectStaffID.Connect_TooFar] = this.GetLocalization("Connect_TooFar"
                 , () => "接收器距离太远");
-            ConnectStaff[ConnectStaffID.ChooseReceiver_Success] = this.GetLocalization("ChooseReceiver_Success"
+            ConnectStaff[ConnectStaffID.Connect_Success] = this.GetLocalization("ChooseReceiver_Success"
                 , () => "成功建立连接");
             ConnectStaff[ConnectStaffID.Deconnect] = this.GetLocalization("Deconnect"
                 , () => "成功取消连接");

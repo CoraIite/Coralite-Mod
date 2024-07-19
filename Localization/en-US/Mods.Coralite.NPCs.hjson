@@ -73,6 +73,11 @@ CrystalRobot: {
 		LikeNPC_Princess: I like {NPCName}.
 		Princess_LovesNPC: I like {NPCName}.
 	}
+
+	Name0: 晶华
+	Name1: 晶: c000
+	Name2: 克丽丝塔
+	Name3: 魔盖克
 }
 
 Bloodiancie.DisplayName: Bloodiancie

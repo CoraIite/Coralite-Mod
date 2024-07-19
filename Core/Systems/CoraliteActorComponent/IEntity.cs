@@ -78,9 +78,8 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
             return Components[index].First();
         }
 
-        public T GetSingleComponent<T>() where T : Component
+        public T GetSingleComponent<T>(int index) where T : Component
         {
-            int index = CoraliteContent.ComponentType<T>();
             if (!HasComponent(index))
                 throw new Exception("所查找的组件不存在！");
 

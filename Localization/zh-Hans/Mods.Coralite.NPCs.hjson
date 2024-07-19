@@ -73,6 +73,11 @@ CrystalRobot: {
 		LikeNPC_Princess: 这是{NPCName}，尊敬的公主。
 		Princess_LovesNPC: 哇，{NPCName}，一个无机生命体！这个世界果然充满奇妙的事情。
 	}
+
+	// Name0: 晶华
+	// Name1: 晶: c000
+	// Name2: 克丽丝塔
+	// Name3: 魔盖克
 }
 
 Bloodiancie.DisplayName: 赤血玉灵

@@ -211,6 +211,7 @@ namespace Coralite.Core
         public const string UI = Assets + "UI/";
 
         public const string MagikeGuideBook = UI + "MagikeGuideBook/";
+        public const string MagikeUI = UI + "MagikeUI/";
 
         #endregion
 

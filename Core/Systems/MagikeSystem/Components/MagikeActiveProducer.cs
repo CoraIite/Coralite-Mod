@@ -4,32 +4,23 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class MagikeActiveProducer : MagikeProducer
+    public class MagikeActiveProducer : MagikeProducer, ITimerTriggerComponent
     {
-        /// <summary> 基础发送时间 </summary>
-        public int ProductionDelayBase { get; private set; }
+        /// <summary> 基础生产时间 </summary>
+        public int ProductionDelayBase { get => DelayBase; private set => DelayBase = value; }
         /// <summary> 发送时间减少量（效率增幅量） </summary>
-        public float ProductionDelayBonus { get; set; } = 1f;
+        public float ProductionDelayBonus { get => DelayBonus; set => DelayBonus = value; }
 
         /// <summary> 发送时间 </summary>
-        public int ProductionDelay
+        public int ProductionDelay => (this as ITimerTriggerComponent).Delay;
+
+        public int DelayBase { get; set; }
+        public float DelayBonus { get; set; } = 1f;
+        public int Timer { get; set; }
+
+        public virtual bool CanProduce()
         {
-            get => Math.Clamp((int)(ProductionDelayBase * ProductionDelayBonus), 1, int.MaxValue);
-        }
-
-        /// <summary> 生产魔能的计时器 </summary>
-        private int _produceTimer;
-
-        public bool CanProduce()
-        {
-            _produceTimer--;
-            if (_produceTimer == 0)
-            {
-                _produceTimer = ProductionDelay;
-                return true;
-            }
-
-            return false;
+            return (this as ITimerTriggerComponent).UpdateTime();
         }
 
         public override void Update(IEntity entity)
@@ -44,6 +35,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.SaveData(preName, tag);
 
+            tag.Add(preName + nameof(Timer), Timer);
+
             tag.Add(preName + nameof(ProductionDelayBase), ProductionDelayBase);
             tag.Add(preName + nameof(ProductionDelayBonus), ProductionDelayBonus);
         }
@@ -51,6 +44,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void LoadData(string preName, TagCompound tag)
         {
             base.LoadData(preName, tag);
+
+            Timer = tag.GetInt(preName + nameof(Timer));
 
             ProductionDelayBase = tag.GetInt(preName + nameof(ProductionDelayBase));
             ProductionDelayBonus = tag.GetFloat(preName + nameof(ProductionDelayBonus));

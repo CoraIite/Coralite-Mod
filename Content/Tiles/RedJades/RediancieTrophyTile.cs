@@ -1,4 +1,6 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.RedJades;
+using Coralite.Core;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
@@ -27,6 +29,11 @@ namespace Coralite.Content.Tiles.RedJades
 
             AddMapEntry(new Color(120, 85, 60), Language.GetText("MapObject.Trophy"));
             DustType = DustID.WoodFurniture;
+        }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            return [new Item(ModContent.ItemType<RediancieTrophy>())];
         }
     }
 }

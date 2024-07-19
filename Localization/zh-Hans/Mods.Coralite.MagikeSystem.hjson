@@ -3,6 +3,13 @@ MagikeSystem: {
 	learnedMagikeBase: 学习“书页：魔能基础”后可合成
 	DecraftCondition: 该分解无法使用！
 	NewKnowledgeUnlocked: 魔能辞典中解锁了新的知识
+	// ChooseSender_Found: 已选择魔能发送器
+	// ChooseSender_NotFound: 未找到魔能发送器
+	// ChooseReceiver_NotFound: 未找到接收器
+	// Connect_TooFar: 接收器距离太远
+	// ChooseReceiver_Success: 成功建立连接
+	// Deconnect: 成功取消连接
+	// BrilliantConnect: 成功连接{0}个仪器，未成功连接{1}个仪器
 }
 
 C0_P1_BookName: {
