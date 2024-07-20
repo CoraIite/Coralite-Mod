@@ -20,11 +20,15 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<MagicCrystal>(5)
-                .AddIngredient<Basalt>(10)
+                .AddIngredient<Basalt>(14)
                 .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
+    }
+
+    public class BasicRefractorTile:ModTile
+    {
+
     }
 }

@@ -2,8 +2,10 @@
 {
     public enum MagikeApparatusLevel
     {
+        //啥都莫有
+        None = 0,
         /// <summary> 魔力晶体 </summary>
-        MagicCrystal = 0,
+        MagicCrystal,
         /// <summary> 晶莹 </summary>
         Glistent,
         /// <summary> 血腥 </summary>

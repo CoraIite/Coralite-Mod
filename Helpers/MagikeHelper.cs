@@ -145,6 +145,17 @@ namespace Coralite.Helpers
             return  new Point16(i - x, j - y);
         }
 
+        public static int? GetFrameX(Point16 topLeft)
+        {
+            Tile tile = Framing.GetTileSafely(topLeft);
+            if (!tile.HasTile)
+                return null;
+
+            TileObjectData data = TileObjectData.GetTileData(tile);
+
+            return tile.TileFrameX/(data.Width * 18);
+        }
+
         public static void SpawnDustOnSend(int selfWidth, int selfHeight, Point16 Position, IMagikeContainer container, Color dustColor, int dustType = DustID.Teleporter)
         {
             Tile tile = Framing.GetTileSafely(container.GetPosition);
