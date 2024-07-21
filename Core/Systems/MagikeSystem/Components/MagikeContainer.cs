@@ -12,7 +12,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int Magike { get; set; }
 
         /// <summary> 自身魔能基础容量，可以通过升级来变化 </summary>
-        public int MagikeMaxBase { get; private set; }
+        public int MagikeMaxBase { get; protected set; }
         /// <summary> 额外魔能量，通过扩展膜附加的魔能容量 </summary>
         public int MagikeMaxExtra { get; set; }
 
@@ -25,17 +25,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual bool FullMagike => Magike >= MagikeMax;
 
         public override void Update(IEntity entity) { }
-
-        /// <summary>
-        /// 请自行判断传入的等级，返回<see langword="true"/>为能升级<br></br>
-        /// 
-        /// </summary>
-        /// <param name="incomeLevel"></param>
-        /// <returns></returns>
-        public virtual bool ChangeLevel(MagikeApparatusLevel incomeLevel)
-        {
-            return false;
-        }
 
         #region 魔能操作相关
 

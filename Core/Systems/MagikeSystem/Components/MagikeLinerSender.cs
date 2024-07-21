@@ -10,7 +10,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     public class MagikeLinerSender : MagikeSender
     {
         /// <summary> 基础连接数量 </summary>
-        public int MaxConnectBase { get; private set; }
+        public int MaxConnectBase { get; protected set; }
         /// <summary> 额外连接数量 </summary>
         public int MaxConnectExtra { get; set; }
 
@@ -18,7 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int MaxConnect { get => MaxConnectBase + MaxConnectExtra; }
 
         /// <summary> 基础连接距离 </summary>
-        public int ConnectLengthBase { get; private set; }
+        public int ConnectLengthBase { get; protected set; }
         /// <summary> 额外连接距离 </summary>
         public int ConnectLengthExtra { get; set; }
 
@@ -165,7 +165,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 啥也没链接
         /// </summary>
         /// <returns></returns>
-        public bool IsEmpty()=>_receivers.Count == 0;
+        public bool IsEmpty() => _receivers.Count == 0;
 
         /// <summary>
         /// 第一个连接者，请自行判断是否有这么一个
@@ -180,10 +180,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             Vector2 selfPos = Helper.GetTileCenter((Entity as BaseMagikeTileEntity).Position);
 
-            for (int i = _receivers.Count-1; i >=0; i--)
+            for (int i = _receivers.Count - 1; i >= 0; i--)
             {
                 Vector2 targetPos = Helper.GetTileCenter(_receivers[i]);
-                if (Vector2.Distance(selfPos,targetPos)>ConnectLength)
+                if (Vector2.Distance(selfPos, targetPos) > ConnectLength)
                     _receivers.Remove(_receivers[i]);
             }
         }
@@ -229,5 +229,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 i++;
             }
         }
+
     }
 }

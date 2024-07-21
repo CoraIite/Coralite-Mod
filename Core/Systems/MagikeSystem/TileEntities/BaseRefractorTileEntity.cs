@@ -2,8 +2,11 @@
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
-    public abstract class BaseRefractorTileEntity() : BaseMagikeTileEntity()
+    public abstract class BaseRefractorTileEntity<TModTile>() : BaseMagikeTileEntity()
+        where TModTile : ModTile
     {
+        public sealed override ushort TileType => (ushort)ModContent.TileType<TModTile>();
+
         public override void InitializeBeginningComponent()
         {
             AddComponent(GetStartContainer());
