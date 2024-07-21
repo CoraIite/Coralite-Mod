@@ -70,6 +70,16 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
             }
         }
 
+        public bool TryGetComponent<T>(int index, out T result) where T : Component
+        {
+            result = null;
+            if (!HasComponent(index))
+                return false;
+
+            result = (T)Components[index].FirstOrDefault(c => c is T, null);
+            return result != null;
+        }
+
         public Component GetSingleComponent(int index)
         {
             if (!HasComponent(index))

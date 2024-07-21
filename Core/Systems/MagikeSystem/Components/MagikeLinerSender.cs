@@ -1,5 +1,5 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Core.Systems.MagikeSystem.Base;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using System.Collections.Generic;
 using Terraria.DataStructures;
@@ -29,6 +29,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int CurrentConnector => _receivers.Count;
 
         private List<Point16> _receivers = new List<Point16>();
+
+        /// <summary>
+        /// 仅供获取使用，那么为什么不用private set 呢，因为懒得改了，反正区别不大
+        /// </summary>
+        public List<Point16> Receivers { get => _receivers; }
 
         public MagikeLinerSender()
         {
@@ -150,6 +155,39 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <param name="receiverPoint"></param>
         public void RemoveReceiver(Point16 receiverPoint) => _receivers.Remove(receiverPoint);
 
+        /// <summary>
+        /// 是否已经装满
+        /// </summary>
+        /// <returns></returns>
+        public bool FillUp() => MaxConnect == _receivers.Count;
+
+        /// <summary>
+        /// 啥也没链接
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEmpty()=>_receivers.Count == 0;
+
+        /// <summary>
+        /// 第一个连接者，请自行判断是否有这么一个
+        /// </summary>
+        /// <returns></returns>
+        public Point16 FirstConnector() => _receivers[0];
+
+        /// <summary>
+        /// 重新检测是否能连接，超出长度直接断开
+        /// </summary>
+        public void RecheckConnect()
+        {
+            Vector2 selfPos = Helper.GetTileCenter((Entity as BaseMagikeTileEntity).Position);
+
+            for (int i = _receivers.Count-1; i >=0; i--)
+            {
+                Vector2 targetPos = Helper.GetTileCenter(_receivers[i]);
+                if (Vector2.Distance(selfPos,targetPos)>ConnectLength)
+                    _receivers.Remove(_receivers[i]);
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -159,11 +197,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int GetMagikeAmount()
             => Entity.GetMagikeContainer().Magike;
 
-        /// <summary>
-        /// 是否已经装满
-        /// </summary>
-        /// <returns></returns>
-        public bool FillUp() => MaxConnect == _receivers.Count;
 
         public override void SaveData(string preName, TagCompound tag)
         {

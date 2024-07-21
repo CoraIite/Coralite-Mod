@@ -3,7 +3,7 @@ using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core.Systems.MagikeSystem.Base;
+using Coralite.Core.Systems.MagikeSystem.Tile;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -48,7 +48,7 @@ namespace Coralite.Content.Items.Magike.MultPrisms
         }
     }
 
-    public class BrilliantQuadprismTile : BaseRefractorTile
+    public class BrilliantQuadprismTile : OldBaseRefractorTile
     {
         public override string Texture => AssetDirectory.MagikeRefractorTiles + "CrystalRefractorTile";
 

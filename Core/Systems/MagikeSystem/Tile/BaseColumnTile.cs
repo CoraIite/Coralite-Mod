@@ -1,6 +1,4 @@
-﻿using Coralite.Content.UI;
-using Coralite.Core.Loaders;
-using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -9,12 +7,12 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 
-namespace Coralite.Core.Systems.MagikeSystem.Base
+namespace Coralite.Core.Systems.MagikeSystem.Tile
 {
-    public abstract class BaseLensTile : ModTile
+    public abstract class BaseColumnTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeLensTiles + Name;
-        public virtual string TopTextureName => AssetDirectory.MagikeLensTiles + Name + "_Top";
+        public override string Texture => AssetDirectory.MagikeColumnTiles + Name;
+        public virtual string TopTextureName => AssetDirectory.MagikeColumnTiles + Name + "_Top";
 
         public Asset<Texture2D> TopTexture;
         public const int FrameWidth = 18 * 2;
@@ -45,8 +43,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
             SoundEngine.PlaySound(CoraliteSoundID.GlassBroken_Shatter, new Vector2(i, j) * 16);
             int x = i - frameX / 18;
             int y = j - frameY / 18;
-            if (MagikeHelper.TryGetEntityWithTopLeft(x, y, out MagikeGenerator generator))
-                generator.Kill(x, y);
+            if (MagikeHelper.TryGetEntityWithTopLeft(x, y, out MagikeSender_Line sender))
+                sender.Kill(x, y);
         }
 
         public override void MouseOver(int i, int j)
@@ -72,7 +70,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
             //检查物块它是否真的存在
             Point p = new Point(i, j);
-            Tile tile = Main.tile[p.X, p.Y];
+            Terraria.Tile tile = Main.tile[p.X, p.Y];
             if (tile == null || !tile.HasTile)
                 return;
 
@@ -116,30 +114,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
             //effectColor = effectColor * 0.1f * scale;
             //for (float m = 0f; m < 1f; m += 355f / (678f * (float)Math.PI))
             //    spriteBatch.Draw(texture, drawPos + (TwoPi * m).ToRotationVector2() * (6f + offset * 2f), frame, effectColor, 0f, origin, 1f, effects, 0f);
-        }
-    }
-
-
-    public abstract class BaseCostItemLensTile : BaseLensTile
-    {
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            MagikeItemSlotPanel.visible = false;
-            UILoader.GetUIState<MagikeItemSlotPanel>().Recalculate();
-
-            base.KillMultiTile(i, j, frameX, frameY);
-        }
-
-        public override bool RightClick(int i, int j)
-        {
-            if (MagikeHelper.TryGetEntity(i, j, out MagikeGenerator_FromMagItem generator))
-            {
-                MagikeItemSlotPanel.visible = true;
-                MagikeItemSlotPanel.tileEntity = generator;
-                UILoader.GetUIState<MagikeItemSlotPanel>().Recalculate();
-            }
-
-            return true;
         }
     }
 }

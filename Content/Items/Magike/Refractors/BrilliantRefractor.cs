@@ -3,7 +3,7 @@ using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core.Systems.MagikeSystem.Base;
+using Coralite.Core.Systems.MagikeSystem.Tile;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Terraria;
@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Magike.Refractors
         }
     }
 
-    public class BrilliantRefractorTile : BaseRefractorTile
+    public class BrilliantRefractorTile : OldBaseRefractorTile
     {
         public override string Texture => AssetDirectory.MagikeRefractorTiles + "CrystalRefractorTile";
 

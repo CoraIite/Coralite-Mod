@@ -4,7 +4,7 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Terraria.Audio;
 
-namespace Coralite.Core.Systems.MagikeSystem.Base
+namespace Coralite.Core.Systems.MagikeSystem.Tile
 {
     public abstract class BaseItemSiphonTile : ModTile
     {

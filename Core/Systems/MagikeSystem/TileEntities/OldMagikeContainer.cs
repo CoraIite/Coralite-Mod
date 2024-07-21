@@ -9,7 +9,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     /// <summary>
     /// 魔能容器，继承这个类以实现最基础的作为容器的功能
     /// </summary>
-    public abstract class MagikeContainer : ModTileEntity, IMagikeContainer
+    public abstract class OldMagikeContainer : ModTileEntity, IMagikeContainer
     {
         /// <summary> 当前魔能量 </summary>
         public int magike;
@@ -30,7 +30,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public event Action OnCharged;
         public event Action OnDisCharged;
 
-        public MagikeContainer(int magikeMax)
+        public OldMagikeContainer(int magikeMax)
         {
             this.magikeMax = magikeMax;
         }

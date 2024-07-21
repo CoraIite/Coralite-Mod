@@ -27,8 +27,8 @@ namespace Coralite.Content.Items.Magike.Refractors
         }
     }
 
-    public class BasicRefractorTile:ModTile
-    {
+    //public class BasicRefractorTile:ModTile
+    //{
 
-    }
+    //}
 }

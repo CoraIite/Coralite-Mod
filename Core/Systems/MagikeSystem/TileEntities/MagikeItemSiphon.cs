@@ -287,7 +287,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 Charge(-sendItemCost);
                 SendVisualEffect(receiverPoint);
 
-                Tile tile = Framing.GetTileSafely(Position);
+                Terraria.Tile tile = Framing.GetTileSafely(Position);
                 TileObjectData data = TileObjectData.GetTileData(tile);
                 int xOffset = data == null ? 16 : data.Width * 8;
                 int yOffset = data == null ? 24 : data.Height * 8;

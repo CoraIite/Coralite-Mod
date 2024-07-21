@@ -91,6 +91,32 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 .AddIngredient(ItemID.WaterBucket)
                 .AddTile<MagicCraftStation>()
                 .Register();
+
+            if (ModLoader.TryGetMod(CoraliteCrossMod.Thorium, out Mod thorium))
+            {
+                int thoriumAquamarine = thorium.Find<ModItem>("Aquamarine").Type;
+
+                CreateRecipe()
+                    .AddIngredient(thoriumAquamarine)
+                    .AddIngredient(ItemID.ShadowScale, 12)
+                    .AddIngredient(ItemID.WaterBucket)
+                    .AddTile<MagicCraftStation>()
+                    .Register();
+
+                CreateRecipe()
+                    .AddIngredient(thoriumAquamarine)
+                    .AddIngredient(ItemID.TissueSample, 12)
+                    .AddIngredient(ItemID.WaterBucket)
+                    .AddTile<MagicCraftStation>()
+                    .Register();
+
+                CreateRecipe()
+                    .AddIngredient(thoriumAquamarine)
+                    .AddIngredient<IcicleScale>(7)
+                    .AddIngredient(ItemID.WaterBucket)
+                    .AddTile<MagicCraftStation>()
+                    .Register();
+            }
         }
     }
 

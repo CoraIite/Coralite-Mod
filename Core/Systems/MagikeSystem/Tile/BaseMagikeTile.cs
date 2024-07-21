@@ -12,7 +12,7 @@ using Terraria.ID;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Core.Systems.MagikeSystem.Base
+namespace Coralite.Core.Systems.MagikeSystem.Tile
 {
     public class BaseMagikeTile<TEntity>(int width, int height, Color mapColor, int dustType, int minPick = 0, bool topSoild = false) : ModTile
         where TEntity : BaseMagikeTileEntity
@@ -43,7 +43,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
             TileObjectData.newTile.Width = width;
             TileObjectData.newTile.Height = height;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.Table | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
-
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.StyleWrapLimit = 100;
             TileObjectData.newTile.CoordinateHeights = new int[height];
             Array.Fill(TileObjectData.newTile.CoordinateHeights, 16);
 
@@ -106,7 +107,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
                 Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
         }
 
-        public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
+        public sealed override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Vector2 offScreen = new Vector2(Main.offScreenRange);
             if (Main.drawToScreen)
@@ -114,46 +115,42 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
             //检查物块
             Point16 p = new Point16(i, j);
-            Tile tile = Main.tile[p.X, p.Y];
+            Terraria.Tile tile = Main.tile[p.X, p.Y];
             if (tile == null || !tile.HasTile)
                 return;
 
             //获取初始绘制参数
             if (!ExtraAssets.TryGetValue(FrameToLevel(MagikeHelper.GetFrameX(p).Value), out Asset<Texture2D> asset))
                 return;
-            
+
+            if (!MagikeHelper.TryGetEntity(p, out BaseMagikeTileEntity entity))
+                return;
+
             Texture2D texture = asset.Value;
+            TileObjectData data = TileObjectData.GetTileData(tile);
 
-            //// 根据项目的地点样式拾取图纸上的框架
-            //int frameY = tile.TileFrameX / FrameWidth;
-            //Rectangle frame = texture.Frame(HorizontalFrames, VerticalFrames, 0, frameY);
+            Rectangle tileRect = new Rectangle(p.X * 16, p.Y * 16, data == null ? 16 : data.Width * 16, data == null ? 16 : data.Height * 16);
+            Vector2 offset = offScreen - Main.screenPosition;
+            Color lightColor = Lighting.GetColor(p.X, p.Y);
 
-            //Vector2 origin = frame.Size() / 2f;
-            //Vector2 worldPos = p.ToWorldCoordinates(halfWidth, halfHeight);
-
-            //Color color = Lighting.GetColor(p.X, p.Y);
-
-            ////这与我们之前注册的备用磁贴数据有关
-            //bool direction = tile.TileFrameY / FrameHeight != 0;
-            //SpriteEffects effects = direction ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-
-            //Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
-            //float rotation = 0;
-            //if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out MagikeSender_Line sender))
-            //{
-            //    if (sender.receiverPoints[0] == Point16.NegativeOne)
-            //        drawPos += new Vector2(0, halfHeight - 8);
-            //    else
-            //        rotation = (sender.receiverPoints[0].ToWorldCoordinates() - p.ToWorldCoordinates()).ToRotation() + 1.57f;
-            //}
-
-            //// 绘制主帖图
-            //spriteBatch.Draw(texture, drawPos, frame, color, rotation, origin, 1f, effects, 0f);
+            DrawExtraTex(spriteBatch,texture, tileRect, offset, lightColor, entity);
         }
 
-        public MagikeApparatusLevel FrameToLevel(int feameX)
+        /// <summary>
+        /// 绘制额外一层
+        /// </summary>
+        /// <param name="tex"></param>
+        /// <param name="tileRect"></param>
+        /// <param name="offset"></param>
+        /// <param name="entity"></param>
+        public virtual void DrawExtraTex(SpriteBatch spriteBatch,Texture2D tex, Rectangle tileRect, Vector2 offset,Color lightColor, BaseMagikeTileEntity entity)
         {
-            return MagikeApparatusLevel.None;
+
+        }
+
+        public MagikeApparatusLevel FrameToLevel(int frameX)
+        {
+            return (MagikeApparatusLevel)frameX;
         }
     }
 }

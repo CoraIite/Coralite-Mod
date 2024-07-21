@@ -22,6 +22,8 @@
         Hallow,
         /// <summary> 灵魂 </summary>
         Soul,
+        /// <summary> 羽蛇 </summary>
+        Feather,
         /// <summary> 圣光 </summary>
         HolyLight,
         /// <summary> 辉界晶核 </summary>

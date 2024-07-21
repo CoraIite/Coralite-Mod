@@ -3,38 +3,24 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 
-namespace Coralite.Core.Systems.MagikeSystem.Base
+namespace Coralite.Core.Systems.MagikeSystem.Tile
 {
-    public abstract class BaseEnchantPool : ModTile
+    public abstract class BaseAltarTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeEnchantPoolTiles + Name;
-        public virtual string ExtraTextureName => AssetDirectory.MagikeEnchantPoolTiles + Name + "_Top";
+        public override string Texture => AssetDirectory.MagikeAltarTiles + Name;
 
-        public Asset<Texture2D> ExtraTexture;
-        public const int FrameWidth = 18 * 3;
+        public const int FrameWidth = 18 * 2;
         public const int FrameHeight = 18 * 2;
         public const int halfWidth = 16 * 2 / 2;
         public const int halfHeight = 16 * 2 / 2;
         public readonly int HorizontalFrames = 1;
         public readonly int VerticalFrames = 1;
-
-        public override void Load()
-        {
-            if (!Main.dedServ)
-                ExtraTexture = ModContent.Request<Texture2D>(ExtraTextureName);
-        }
-
-        public override void Unload()
-        {
-            ExtraTexture = null;
-        }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -43,32 +29,32 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            MagikeEnchantUI.visible = false;
-            UILoader.GetUIState<MagikeEnchantUI>().Recalculate();
+            MagikePolymerizeUI.visible = false;
+            UILoader.GetUIState<MagikePolymerizeUI>().Recalculate();
 
             SoundEngine.PlaySound(CoraliteSoundID.DigStone_Tink, new Vector2(i, j) * 16);
             int x = i - frameX / 18;
             int y = j - frameY / 18;
-            if (MagikeHelper.TryGetEntityWithTopLeft(x, y, out MagikeFactory_EnchantPool pool))
-                pool.Kill(x, y);
-        }
-
-        public override bool RightClick(int i, int j)
-        {
-            if (MagikeHelper.TryGetEntity(i, j, out MagikeFactory_EnchantPool pool))
-            {
-                MagikeEnchantUI.visible = true;
-                MagikeEnchantUI.tileEntity = pool;
-                UILoader.GetUIState<MagikeEnchantUI>().Recalculate();
-            }
-
-            return true;
+            if (MagikeHelper.TryGetEntityWithTopLeft(x, y, out MagikeFactory_PolymerizeAltar altar))
+                altar.Kill(x, y);
         }
 
         public override void HitWire(int i, int j)
         {
-            if (MagikeHelper.TryGetEntity(i, j, out MagikeFactory pool))
-                pool.StartWork();
+            if (MagikeHelper.TryGetEntity(i, j, out MagikeFactory altar))
+                altar.StartWork();
+        }
+
+        public override bool RightClick(int i, int j)
+        {
+            if (MagikeHelper.TryGetEntity(i, j, out MagikeFactory_PolymerizeAltar altar))
+            {
+                MagikePolymerizeUI.visible = true;
+                MagikePolymerizeUI.altar = altar;
+                UILoader.GetUIState<MagikePolymerizeUI>().Recalculate();
+            }
+
+            return true;
         }
 
         public override void MouseOver(int i, int j)
@@ -94,36 +80,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
             //检查物块它是否真的存在
             Point p = new Point(i, j);
-            Tile tile = Main.tile[p.X, p.Y];
+            Terraria.Tile tile = Main.tile[p.X, p.Y];
             if (tile == null || !tile.HasTile)
                 return;
 
-            Texture2D texture = ExtraTexture.Value;
-
             // 根据项目的地点样式拾取图纸上的框架
-            int frameY = tile.TileFrameX / FrameWidth;
-            Rectangle frame = texture.Frame(HorizontalFrames, VerticalFrames, 0, frameY);
-
-            Vector2 origin = frame.Size() / 2f;
             Vector2 worldPos = p.ToWorldCoordinates(halfWidth, halfHeight);
-
-            Color color = Lighting.GetColor(p.X, p.Y);
-
-            //这与我们之前注册的备用磁贴数据有关
-            bool direction = tile.TileFrameY / FrameHeight != 0;
-            SpriteEffects effects = direction ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-
             Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
-            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out MagikeFactory_EnchantPool pool))
-            {
-                if (pool.magike > 0) //大于0时才会绘制
-                {
-                    spriteBatch.Draw(texture, drawPos + new Vector2(0, 2), frame, color, 0f, origin, 1f, effects, 0f);
-                }
 
-                if (pool.containsItem is not null && !pool.containsItem.IsAir)
+            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out MagikeFactory_PolymerizeAltar altar))
+            {
+                if (altar.containsItem is not null && !altar.containsItem.IsAir)
                 {
-                    int type = pool.containsItem.type;
+                    int type = altar.containsItem.type;
                     float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi / 5f);
                     Vector2 pos = drawPos + new Vector2(0f, offset * 4f - halfHeight * 2);
 
@@ -136,9 +105,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
                     else
                         rectangle2 = itemTex.Frame();
 
-                    Vector2 origin2 = rectangle2.Size() / 2;
+                    Vector2 origin = rectangle2.Size() / 2;
                     float itemScale = 1f;
-                    const float pixelWidth = 16 * 2;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
+                    const float pixelWidth = 16 + 8;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
                     const float pixelHeight = 16 * 3;
                     if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
                     {
@@ -148,9 +117,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
                             itemScale = pixelHeight / rectangle2.Height;
                     }
 
-                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pool.containsItem.GetAlpha(Color.White), 0f, origin2, itemScale, 0, 0f);
-                    if (pool.containsItem.color != default(Color))
-                        spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pool.containsItem.GetColor(Color.White), 0f, origin2, itemScale, 0, 0f);
+                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), altar.containsItem.GetAlpha(Color.White), 0f, origin, itemScale, 0, 0f);
+                    if (altar.containsItem.color != default(Color))
+                        spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), altar.containsItem.GetColor(Color.White), 0f, origin, itemScale, 0, 0f);
                 }
             }
         }

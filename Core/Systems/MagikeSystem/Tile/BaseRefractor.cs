@@ -6,9 +6,9 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 
-namespace Coralite.Core.Systems.MagikeSystem.Base
+namespace Coralite.Core.Systems.MagikeSystem.Tile
 {
-    public abstract class BaseRefractorTile : ModTile
+    public abstract class OldBaseRefractorTile : ModTile
     {
         public override string Texture => AssetDirectory.MagikeRefractorTiles + Name;
         public virtual string TopTextureName => AssetDirectory.MagikeRefractorTiles + Name + "_Top";
@@ -69,7 +69,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
             //检查物块它是否真的存在
             Point p = new Point(i, j);
-            Tile tile = Main.tile[p.X, p.Y];
+            Terraria.Tile tile = Main.tile[p.X, p.Y];
             if (tile == null || !tile.HasTile)
                 return;
 

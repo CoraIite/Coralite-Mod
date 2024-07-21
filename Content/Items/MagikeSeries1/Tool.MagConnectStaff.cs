@@ -3,13 +3,13 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 
 namespace Coralite.Content.Items.MagikeSeries1
 {

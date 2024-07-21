@@ -7,7 +7,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
-    public abstract class PolymerizePedestal : MagikeContainer, IMagikeSingleItemContainer
+    public abstract class PolymerizePedestal : OldMagikeContainer, IMagikeSingleItemContainer
     {
         public Item containsItem = new Item();
         public Item ContainsItem { get => containsItem; set => containsItem = value; }

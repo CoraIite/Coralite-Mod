@@ -1,6 +1,5 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core.Systems.MagikeSystem.Base;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using System.Linq;
 using Terraria;
@@ -57,6 +56,7 @@ namespace Coralite.Helpers
 
         /// <summary>
         /// 尝试从<see cref="TileEntity"/>种获取<see cref="IEntity"/><br></br>
+        /// 必须传入的为左上角的位置才行
         /// </summary>
         /// <param name="position"></param>
         /// <param name="entity"></param>

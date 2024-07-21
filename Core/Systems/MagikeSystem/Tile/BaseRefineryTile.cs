@@ -7,7 +7,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 
-namespace Coralite.Core.Systems.MagikeSystem.Base
+namespace Coralite.Core.Systems.MagikeSystem.Tile
 {
     public abstract class BaseRefineryTile : ModTile
     {
@@ -78,7 +78,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
 
                 //检查物块它是否真的存在
                 Point p = new Point(i, j);
-                Tile tile = Main.tile[p.X, p.Y];
+                Terraria.Tile tile = Main.tile[p.X, p.Y];
                 if (tile == null || !tile.HasTile)
                     return;
 

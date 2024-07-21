@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
 
-namespace Coralite.Core.Systems.MagikeSystem.Base
+namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
     public abstract class BaseMagikeTileEntity : ModTileEntity, IEntity
     {
@@ -50,6 +50,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Base
             Components = new Dictionary<int, List<Component>>();
             ComponentsCache = new List<Component>();
         }
+
+        public void AddComponent(Component component)
+            =>(this as IEntity).AddComponent(component);
 
         /// <summary>
         /// 初始化起始时的组件
