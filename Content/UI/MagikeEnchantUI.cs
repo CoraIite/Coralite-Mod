@@ -17,7 +17,7 @@ namespace Coralite.Content.UI
         public static bool visible = false;
         public static MagikeFactory_EnchantPool tileEntity = null;
         public static SingleItemSlot slot = new SingleItemSlot();
-        public static CloseButton closeButton = new CloseButton();
+        public static Old_CloseButton closeButton = new Old_CloseButton();
         public static EnchantRetargetButton retargetButton = new EnchantRetargetButton();
 
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));

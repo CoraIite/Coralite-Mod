@@ -74,9 +74,10 @@ namespace Coralite.Content.Items.Magike.Refractors
             switch (incomeLevel)
             {
                 case MagikeApparatusLevel.None:
+                    MagikeMaxBase = 0;
                     break;
                 case MagikeApparatusLevel.MagicCrystal:
-
+                    MagikeMaxBase = 50;
                     break;
                 case MagikeApparatusLevel.Crimson:
                     break;

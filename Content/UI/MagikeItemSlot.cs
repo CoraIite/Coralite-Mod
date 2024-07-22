@@ -17,7 +17,7 @@ namespace Coralite.Content.UI
         public static bool visible = false;
         public static IMagikeSingleItemContainer tileEntity = null;
         public static SingleItemSlot slot = new SingleItemSlot();
-        public static CloseButton closeButton = new CloseButton();
+        public static Old_CloseButton closeButton = new Old_CloseButton();
 
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
@@ -261,9 +261,9 @@ namespace Coralite.Content.UI
         }
     }
 
-    public class CloseButton : UIImageButton
+    public class Old_CloseButton : UIImageButton
     {
-        public CloseButton() : base(ModContent.Request<Texture2D>(AssetDirectory.UI + "CloseButton", ReLogic.Content.AssetRequestMode.ImmediateLoad)) { }
+        public Old_CloseButton() : base(ModContent.Request<Texture2D>(AssetDirectory.UI + "CloseButton", ReLogic.Content.AssetRequestMode.ImmediateLoad)) { }
 
         public override void LeftClick(UIMouseEvent evt)
         {

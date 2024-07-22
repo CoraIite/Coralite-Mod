@@ -8,9 +8,6 @@
 	- 10+ 敌怪，包括6个BOSS
 	- 魔能系统
 
-(Most of the English translations are based on machine translation, because I am not good at English)
-（部分英文翻译待完善）
-
-程序：瓶中微光
+程序：瓶中微光，ROH，小天使
 贴图：阿形，Rin，万圣，毒昂，京墨，杜格，云酱，凝胶，枫，WZD，陌林
 英文翻译：ILoveWater

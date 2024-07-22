@@ -17,7 +17,7 @@ namespace Coralite.Content.UI
     {
         public static bool visible = false;
         public static SingleItemSlot slot = new SingleItemSlot();
-        public static CloseButton closeButton = new CloseButton();
+        public static Old_CloseButton closeButton = new Old_CloseButton();
 
         public static MagikeItemSiphon siphon = null;
         public static UIList list = new UIList();

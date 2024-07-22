@@ -61,12 +61,7 @@ namespace Coralite.Content.CustomHooks
                                 int y2 = data2 == null ? 8 : data2.Height * 16 / 2;
                                 Vector2 aimPos = sender.receiverPoints[i].ToWorldCoordinates(x2, y2);
 
-                                int width = (int)(selfPos - aimPos).Length();   //这个就是激光长度
-
-                                var laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, laserTex.Height);
-                                var laserSource = new Rectangle((int)(-Main.GlobalTimeWrappedHourly * laserTex.Width), 0, width, laserTex.Height);
-
-                                Main.spriteBatch.Draw(laserTex, laserTarget, laserSource, drawColor, (aimPos - selfPos).ToRotation(), origin, 0, 0);
+                                MagikeSystem.DrawConnectLine(Main.spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
                             }
                             continue;
                         }
@@ -85,12 +80,7 @@ namespace Coralite.Content.CustomHooks
                             if (!Helper.OnScreen(aimPos - Main.screenPosition))
                                 continue;
 
-                            int width = (int)(selfPos - aimPos).Length();   //这个就是激光长度
-
-                            var laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, laserTex.Height);
-                            var laserSource = new Rectangle((int)(-Main.GlobalTimeWrappedHourly * laserTex.Width), 0, width, laserTex.Height);
-
-                            Main.spriteBatch.Draw(laserTex, laserTarget, laserSource, drawColor, (aimPos - selfPos).ToRotation(), origin, 0, 0);
+                            MagikeSystem.DrawConnectLine(Main.spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
                         }
                     }
                 }

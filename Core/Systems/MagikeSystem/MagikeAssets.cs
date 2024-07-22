@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using Terraria;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Systems.MagikeSystem
@@ -22,7 +23,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static void LoadAssets()
         {
-            ConnectLines = new Asset<Texture2D>[(int)ConnectLineType.Wave+1];
+            ConnectLines = new Asset<Texture2D>[(int)ConnectLineType.Wave + 1];
             ConnectLines[(int)ConnectLineType.Basic] = Request<Texture2D>(AssetDirectory.MagikeUI + "BasicConnectLine");
             ConnectLines[(int)ConnectLineType.ThinSpeed] = Request<Texture2D>(AssetDirectory.MagikeUI + "ThinSpeedConnectLine");
             ConnectLines[(int)ConnectLineType.Star] = Request<Texture2D>(AssetDirectory.MagikeUI + "StarConnectLine");
@@ -38,5 +39,21 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static Texture2D GetConnectLine()
             => ConnectLines[(int)CurrentConnectLineType].Value;
+
+        public static void DrawConnectLine(SpriteBatch spriteBatch, Vector2 startPos, Vector2 endPos,Vector2 screenPos,Color drawColor)
+        {
+            Texture2D laserTex = GetConnectLine();
+
+            int width = (int)(startPos - endPos).Length();   //这个就是激光长度
+            var origin = new Vector2(0, laserTex.Height / 2);
+
+            Vector2 startPosScreen = startPos - screenPos;
+
+            var laserTarget = new Rectangle((int)startPosScreen.X, (int)startPosScreen.Y, width, laserTex.Height);
+            var laserSource = new Rectangle((int)(-Main.GlobalTimeWrappedHourly * laserTex.Width), 0, width, laserTex.Height);
+
+            spriteBatch.Draw(laserTex, laserTarget, laserSource, drawColor, (startPos - endPos).ToRotation(), origin, 0, 0);
+
+        }
     }
 }

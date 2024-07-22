@@ -52,12 +52,17 @@ namespace Coralite.Content.Items.MagikeSeries1
 
                 Point16 p = entity.Position;
                 Projectile.NewProjectile(new EntitySource_ItemUse(Main.LocalPlayer, Main.LocalPlayer.HeldItem), p.ToWorldCoordinates(8, 8),
-                    Vector2.Zero, ModContent.ProjectileType<MagConnectProj>(), 1, 0, Main.myPlayer, p.X, p.Y);
+                    Vector2.Zero, ModContent.ProjectileType<MagConnectProj>(), 0, 0, Main.myPlayer, p.X, p.Y);
 
+                Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0,player.Center);
             }
             else
+            {
+                Helper.PlayPitched("UI/Error", 0.4f, 0, player.Center);
+
                 CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink,
                     MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_NotFound));
+            }
 
             return true;
         }
@@ -131,6 +136,8 @@ namespace Coralite.Content.Items.MagikeSeries1
                     //检测是否有接收者
                     if (!hasReceiver)
                     {
+                        Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
+
                         CombatText.NewText(rect, Coralite.Instance.MagicCrystalPink,
                             MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseReceiver_NotFound));
                         break;
@@ -138,6 +145,8 @@ namespace Coralite.Content.Items.MagikeSeries1
 
                     if (!canConnect)//无法连接，距离太长
                     {
+                        Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
+
                         CombatText.NewText(rect, Coralite.Instance.MagicCrystalPink,
                             MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.Connect_TooFar));
                         break;
@@ -146,6 +155,8 @@ namespace Coralite.Content.Items.MagikeSeries1
                     senderComponent.Connect(receiver.Position);
                     CombatText.NewText(rect, Coralite.Instance.MagicCrystalPink,
                         MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.Connect_Success));
+
+                    Helper.PlayPitched("Fairy/CursorExpand", 0.4f, 0, Owner.Center);
 
                 } while (false);
 
@@ -159,17 +170,8 @@ namespace Coralite.Content.Items.MagikeSeries1
             spriteBatch.End();
             spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D laserTex = MagikeSystem.GetConnectLine();
+            MagikeSystem.DrawConnectLine(spriteBatch, selfPos, aimPos, Main.screenPosition, c);
 
-            Color drawColor = c;
-            var origin = new Vector2(0, laserTex.Height / 2);
-            Vector2 startPos = selfPos - Main.screenPosition;
-            int width = (int)(selfPos - aimPos).Length();   //这个就是激光长度
-
-            var laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, laserTex.Height);
-            var laserSource = new Rectangle((int)(-Main.GlobalTimeWrappedHourly * laserTex.Width), 0, width, laserTex.Height);
-
-            spriteBatch.Draw(laserTex, laserTarget, laserSource, drawColor, (aimPos - selfPos).ToRotation(), origin, 0, 0);
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
 

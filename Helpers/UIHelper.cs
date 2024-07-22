@@ -1,11 +1,18 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Terraria.UI;
 using Terraria.UI.Chat;
 
 namespace Coralite.Helpers
 {
     public partial class Helper
     {
+        public static void SetCenter(this UIElement element,Vector2 center)
+        {
+            element.Top.Set(center.X - element.Width.Pixels, 0);
+            element.Left.Set(center.Y - element.Height.Pixels, 0);
+        }
+
         /// <summary>
         /// 快速绘制，黑底白字，缩放为1
         /// </summary>

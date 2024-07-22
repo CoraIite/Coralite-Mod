@@ -22,7 +22,7 @@ namespace Coralite.Content.UI
         public static Item currentChooseItem;
 
         public static MagikeFactory_RemodelPool remodelPool = null;
-        public static CloseButton closeButton = new CloseButton();
+        public static Old_CloseButton closeButton = new Old_CloseButton();
         public static SingleItemSlot selfSlot = new SingleItemSlot();
         public static CraftImage image = new CraftImage();
         public static UIList list = new UIList();

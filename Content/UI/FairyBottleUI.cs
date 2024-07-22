@@ -22,7 +22,7 @@ namespace Coralite.Content.UI
         public static UIGrid itemSlotGrid;
         public static IFairyBottle bottle;
 
-        public static CloseButton closeButton = new CloseButton();
+        public static Old_CloseButton closeButton = new Old_CloseButton();
 
         public State state;
 
