@@ -73,7 +73,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             OnTileKilled(i, j);
-            if (MagikeHelper.TryGetEntity(i, j, out BaseMagikeTileEntity entity))
+            if (MagikeHelper.TryGetEntity(new Point16(i,j), out BaseMagikeTileEntity entity))
                 entity.Kill(entity.Position.X, entity.Position.Y);
         }
 

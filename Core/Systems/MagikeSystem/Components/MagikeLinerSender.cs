@@ -136,12 +136,37 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         /// <param name="receiverPoint"></param>
         /// <returns></returns>
-        public bool CanConnect_CheckLength(Point16 receiverPoint)
+        public bool CanConnect(Point16 receiverPoint, out string failSource)
         {
-            Vector2 selfCenter = Helper.GetTileCenter((Entity as BaseMagikeTileEntity).Position);
+            failSource = "";
+
+            //检测容量
+            if (FillUp())
+            {
+                failSource = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ConnectFail_ConnectorFillUp);
+                return false;
+            }
+
+            Point16 selfPoint = (Entity as BaseMagikeTileEntity).Position;
+
+            //检测是否是自己
+            if (receiverPoint == selfPoint)
+            {
+                failSource = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ConnectFail_CantBeSelf);
+                return false;
+            }
+
+            Vector2 selfCenter = Helper.GetTileCenter(selfPoint);
             Vector2 targetCenter = Helper.GetTileCenter(receiverPoint);
 
-            return Vector2.Distance(selfCenter, targetCenter) <= ConnectLength;
+            //太远了导致无法连接
+            if (Vector2.Distance(selfCenter, targetCenter) > ConnectLength)
+            {
+                failSource = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ConnectFail_TooFar);
+                return false;
+            }
+
+            return true;
         }
 
         public void Connect(Point16 receiverPoint)

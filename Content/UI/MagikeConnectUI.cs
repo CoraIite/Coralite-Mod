@@ -1,5 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries1;
-using Coralite.Core;
+﻿using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
@@ -24,36 +24,32 @@ namespace Coralite.Content.UI
 
         public override bool Visible => visible;
         public static bool visible = false;
-        public static Vector2 basePos = Vector2.Zero;
+
+        public static Vector2 BasePos { get; private set; } = Vector2.Zero;
 
         //记录的连接者数量
-        private int recordConnectorCount;
+        public static int RecordConnectorCount { get; set; }
 
-        public static int Timer;
-
-        public override void OnInitialize()
-        {
-            closeButton = new CloseButton(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikeConnectCloseButton"));
-            closeButton.SetCenter(basePos);
-        }
+        public static int Timer { get; private set; }
 
         public override void Recalculate()
         {
             if (sender is null)
                 return;
 
+            Timer = 20;
             int length = sender.Receivers.Count;
-            recordConnectorCount= length;
+            RecordConnectorCount = length;
 
-            Elements.Clear();
+            RemoveAllChildren();
+            AddCloseButton();
 
             for (int i = 0; i < length; i++)
             {
-                var button = new MagikeConnectButton(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikeConnectButton", AssetRequestMode.ImmediateLoad));
+                var button = new MagikeConnectButton(MagikeSystem.ConnectUI[(int)MagikeSystem.ConnectUIAssetID.Bottom]);
                 button.index = i;
-                button.total = length;
 
-                button.SetCenter(basePos);
+                button.SetCenter(BasePos);
 
                 Append(button);
             }
@@ -63,7 +59,21 @@ namespace Coralite.Content.UI
 
         public void AddCloseButton()
         {
+            if (closeButton == null)
+            {
+                closeButton = new CloseButton(MagikeSystem.ConnectUI[(int)MagikeSystem.ConnectUIAssetID.Close]);
+                closeButton.OnLeftClick += CloseButton_OnLeftClick;
+            }
+
+            closeButton.SetCenter(Vector2.Zero);
+
             Append(closeButton);
+        }
+
+        private void CloseButton_OnLeftClick(UIMouseEvent evt, UIElement listeningElement)
+        {
+            visible = false;
+            base.Recalculate();
         }
 
         public override void Update(GameTime gameTime)
@@ -74,52 +84,57 @@ namespace Coralite.Content.UI
                 return;
             }
 
+            if (Timer > 0)
+            {
+                Timer--;
+                base.Recalculate();
+            }
+
             Vector2 worldPos = Helper.GetTileCenter((sender.Entity as BaseMagikeTileEntity).Position).ToScreenPosition();
-            if (!Helper.OnScreen(worldPos))
+            if (!Helper.OnScreen(worldPos)) 
             {
                 visible = false;
                 return;
             }
 
-            if (basePos != worldPos)
+            if (BasePos != worldPos)
             {
-                basePos = worldPos;
-                Top.Set((int)basePos.Y, 0f);
-                Left.Set((int)basePos.X, 0f);
+                BasePos = worldPos;
+                Top.Set((int)BasePos.Y, 0f);
+                Left.Set((int)BasePos.X, 0f);
                 base.Recalculate();
             }
 
-            if (recordConnectorCount!=sender.CurrentConnector)
+            if (RecordConnectorCount < sender.CurrentConnector)
                 Recalculate();
         }
-
     }
 
-    public class MagikeConnectButton : UIImageButton
+    public class MagikeConnectButton(Asset<Texture2D> texture) : UIImageButton(texture)
     {
         public int index;
-        public int total;
-
-        public MagikeConnectButton(Asset<Texture2D> texture) : base(texture)
-        {
-
-        }
-
-        public override void LeftClick(UIMouseEvent evt)
-        {
-            base.LeftClick(evt);
-            Point16 p = (MagikeConnectUI.sender.Entity as BaseMagikeTileEntity).Position;
-            Projectile.NewProjectile(new EntitySource_ItemUse(Main.LocalPlayer, Main.LocalPlayer.HeldItem), p.ToWorldCoordinates(8, 8),
-                Vector2.Zero, ModContent.ProjectileType<MagConnectProj>(), 0, 0, Main.myPlayer, p.X, p.Y);
-
-            MagikeConnectUI.visible = false;
-        }
 
         public override void RightClick(UIMouseEvent evt)
         {
             base.RightClick(evt);
-            if (MagikeConnectUI.sender != null)
-                MagikeConnectUI.sender.Receivers.RemoveAt(index);
+            MagikeConnectUI.sender?.Receivers.RemoveAt(index);
+            MagikeConnectUI.RecordConnectorCount--;
+            UILoader.GetUIState<MagikeConnectUI>().RemoveChild(this);
+        }
+
+        public override void Recalculate()
+        {
+            Vector2 targetPos = Vector2.Zero;
+
+            //首先加上时间偏移
+            float perAngle = (MathHelper.TwoPi / MagikeConnectUI.RecordConnectorCount);
+            float angle = Helper.Lerp(perAngle * index, perAngle * index+MathHelper.PiOver2, MagikeConnectUI.Timer / 20f);
+            float length = Helper.Lerp(Width.Pixels * 1.5f, 0, MagikeConnectUI.Timer / 20f);
+
+            targetPos += angle.ToRotationVector2() * length;
+                this.SetCenter(targetPos);
+
+            base.Recalculate();
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -130,6 +145,8 @@ namespace Coralite.Content.UI
                 return;
 
             Point16 p = MagikeConnectUI.sender.Receivers[index];
+            CalculatedStyle dimensions2 = GetDimensions();
+            Vector2 pos=dimensions2.Center();
 
             if (IsMouseHovering)
             {
@@ -141,17 +158,17 @@ namespace Coralite.Content.UI
 
                 Color drawColor = Color.Lerp(Color.White, Color.Coral, MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2 + 0.5f);
 
-                Vector2 selfPos = Helper.GetTileCenter( (MagikeConnectUI.sender.Entity as BaseMagikeTileEntity).Position);
+                Vector2 selfPos = Helper.GetTileCenter((MagikeConnectUI.sender.Entity as BaseMagikeTileEntity).Position);
                 Vector2 aimPos = Helper.GetTileCenter(p);
 
                 MagikeSystem.DrawConnectLine(spriteBatch, selfPos, aimPos,Main.screenPosition, drawColor);
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
-            }
 
-            CalculatedStyle dimensions = GetDimensions();
-            spriteBatch.Draw(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikeConnectButtonFlow").Value, dimensions.Position(), Color.White * (base.IsMouseHovering ? 1f : 0.4f));
+                CalculatedStyle dimensions = GetDimensions();
+                spriteBatch.Draw(MagikeSystem.ConnectUI[(int)MagikeSystem.ConnectUIAssetID.Flow].Value, dimensions.Position(), Color.White * (base.IsMouseHovering ? 1f : 0.4f));
+            }
         }
     }
 }

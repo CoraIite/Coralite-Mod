@@ -4477,3 +4477,13 @@ BasicRefractor: {
 	DisplayName: 基础广角镜
 	Tooltip: ""
 }
+
+Thyphion: {
+	DisplayName: 千气象
+	Tooltip: ""
+}
+
+MagicCrystalFishingRod: {
+	DisplayName: 魔力水晶钓竿
+	Tooltip: ""
+}

@@ -10,6 +10,8 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Content.UI;
+using Coralite.Core.Loaders;
 
 namespace Coralite.Content.Items.MagikeSeries1
 {
@@ -36,17 +38,26 @@ namespace Coralite.Content.Items.MagikeSeries1
             Rectangle rectangle = Helper.QuickMouseRectangle();
 
             //右键打开UI
-            if (player.altFunctionUse==2)
+            if (player.altFunctionUse == 2 && MagikeConnectUI.visible)
             {
-                //MagikeConnectUI.sender = sender;
-                //UILoader.GetUIState<MagikeConnectUI>()?.Recalculate();
-                //MagikeConnectUI.visible = true;
-                return false;
+                MagikeConnectUI.visible = false;
             }
 
             //左键寻找发送器
             if (MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(pos.X, pos.Y, MagikeComponentID.MagikeSender, out BaseMagikeTileEntity entity))    //找到了
             {
+                if (player.altFunctionUse == 2)
+                {
+                    MagikeLinerSender senderComponent = ((IEntity)entity).GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
+
+                    MagikeConnectUI.sender = senderComponent;
+                    UILoader.GetUIState<MagikeConnectUI>()?.Recalculate();
+                    MagikeConnectUI.visible = true;
+                    Helper.PlayPitched("UI/Tick", 0.4f, 0, player.Center);
+
+                    return false;
+                }
+
                 CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink,
                     MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_Found));
 
@@ -54,7 +65,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 Projectile.NewProjectile(new EntitySource_ItemUse(Main.LocalPlayer, Main.LocalPlayer.HeldItem), p.ToWorldCoordinates(8, 8),
                     Vector2.Zero, ModContent.ProjectileType<MagConnectProj>(), 0, 0, Main.myPlayer, p.X, p.Y);
 
-                Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0,player.Center);
+                Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0, player.Center);
             }
             else
             {
@@ -106,7 +117,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             aimPos = currentPoint.ToWorldCoordinates();
 
 
-            if (!MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(currentPoint.X, currentPoint.Y, MagikeComponentID.MagikeSender
+            if (!MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(position.X, position.Y, MagikeComponentID.MagikeSender
                 , out BaseMagikeTileEntity sender))
             {
                 Projectile.Kill();
@@ -122,9 +133,12 @@ namespace Coralite.Content.Items.MagikeSeries1
                 aimPos = Helper.GetTileCenter(currentPoint);
             }
 
+            if (sender == receiver)
+                return;
+
             MagikeLinerSender senderComponent = ((IEntity)sender).GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
 
-            bool canConnect = senderComponent.CanConnect_CheckLength(currentPoint);
+            bool canConnect = senderComponent.CanConnect(currentPoint,out string failText);
             c = hasReceiver && canConnect ? Color.GreenYellow : Color.MediumVioletRed;
 
             if (Owner.controlUseItem)
@@ -143,12 +157,11 @@ namespace Coralite.Content.Items.MagikeSeries1
                         break;
                     }
 
-                    if (!canConnect)//无法连接，距离太长
+                    if (!canConnect)//无法连接，并写明原因
                     {
                         Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
 
-                        CombatText.NewText(rect, Coralite.Instance.MagicCrystalPink,
-                            MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.Connect_TooFar));
+                        CombatText.NewText(rect, Coralite.Instance.MagicCrystalPink,failText);
                         break;
                     }
 

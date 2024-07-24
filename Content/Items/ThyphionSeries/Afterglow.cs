@@ -2,11 +2,11 @@
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.ZephyrkiloSeries
+namespace Coralite.Content.Items.ThyphionSeries
 {
     public class Afterglow : ModItem
     {
-        public override string Texture => AssetDirectory.ZephyrkiloSeriesItems + Name;
+        public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
         public override void SetDefaults()
         {

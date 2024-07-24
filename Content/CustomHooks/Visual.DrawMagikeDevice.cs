@@ -1,12 +1,14 @@
 ﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.ModPlayers;
+using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ObjectData;
 
 namespace Coralite.Content.CustomHooks
 {
@@ -33,49 +35,45 @@ namespace Coralite.Content.CustomHooks
             if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(MagikeMonoclastic)))
             {
                 Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
+                
                 Texture2D laserTex = MagikeSystem.GetConnectLine();
                 Color drawColor = Coralite.Instance.MagicCrystalPink * 0.6f;
                 var origin = new Vector2(0, laserTex.Height / 2);
 
                 foreach (var entity in TileEntity.ByPosition)
                 {
-                    if (entity.Value is IMagikeSender_Line sender)
-                    {
-                        Tile tile = Framing.GetTileSafely(entity.Key);
-                        TileObjectData data = TileObjectData.GetTileData(tile);
-                        int x = data == null ? 8 : data.Width * 16 / 2;
-                        int y = data == null ? 8 : data.Height * 16 / 2;
+                    if (entity.Value is not BaseMagikeTileEntity sender)
+                        continue;
 
-                        Vector2 selfPos = entity.Value.Position.ToWorldCoordinates(x, y);
+                    if (!(sender as IEntity).HasComponent(MagikeComponentID.MagikeSender))
+                        continue;
+
+                    List<Component> senderComponents = sender.Components[MagikeComponentID.MagikeSender];
+
+                    for (int k = 0; k < senderComponents.Count; k++)
+                    {
+                        Component c = senderComponents[k];
+                        if (c is not MagikeLinerSender linerSender) 
+                            continue;
+
+                        Vector2 selfPos = Helper.GetTileCenter(entity.Key);
                         Vector2 startPos = selfPos - Main.screenPosition;
 
                         if (Helper.OnScreen(startPos))
                         {
-                            for (int i = 0; i < sender.receiverPoints.Length; i++)
+                            for (int i = 0; i < linerSender.Receivers.Count; i++)
                             {
-                                if (sender.receiverPoints[i] == Point16.NegativeOne)
-                                    continue;
-                                Tile tile2 = Framing.GetTileSafely(sender.receiverPoints[i]);
-                                TileObjectData data2 = TileObjectData.GetTileData(tile2);
-                                int x2 = data2 == null ? 8 : data2.Width * 16 / 2;
-                                int y2 = data2 == null ? 8 : data2.Height * 16 / 2;
-                                Vector2 aimPos = sender.receiverPoints[i].ToWorldCoordinates(x2, y2);
+                                Vector2 aimPos = Helper.GetTileCenter(linerSender.Receivers[i]);
 
                                 MagikeSystem.DrawConnectLine(Main.spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
                             }
+
                             continue;
                         }
 
-                        for (int i = 0; i < sender.receiverPoints.Length; i++)
+                        for (int i = 0; i < linerSender.Receivers.Count; i++)
                         {
-                            if (sender.receiverPoints[i] == Point16.NegativeOne)
-                                continue;
-
-                            Tile tile2 = Framing.GetTileSafely(sender.receiverPoints[i]);
-                            TileObjectData data2 = TileObjectData.GetTileData(tile2);
-                            int x2 = data2 == null ? 8 : data2.Width * 16 / 2;
-                            int y2 = data2 == null ? 8 : data2.Height * 16 / 2;
-                            Vector2 aimPos = sender.receiverPoints[i].ToWorldCoordinates(x2, y2);
+                            Vector2 aimPos = Helper.GetTileCenter(linerSender.Receivers[i]);
 
                             if (!Helper.OnScreen(aimPos - Main.screenPosition))
                                 continue;

@@ -25,7 +25,9 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         /// <returns></returns>
         void AddComponent(Component component)
         {
-            Components[component.ID] ??= new List<Component>();
+            if (!Components.ContainsKey(component.ID))
+                Components.Add(component.ID, new List<Component>());
+
             Components[component.ID].Add(component);
 
             ComponentsCache.Add(component);

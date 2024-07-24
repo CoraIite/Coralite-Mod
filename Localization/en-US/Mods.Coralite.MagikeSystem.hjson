@@ -10,6 +10,9 @@ MagikeSystem: {
 	ChooseReceiver_Success: 成功建立连接
 	Deconnect: 成功取消连接
 	BrilliantConnect: 成功连接{0}个仪器，未成功连接{1}个仪器
+	ConnectFail_TooFar: Mods.Coralite.MagikeSystem.MagikeSystem.ConnectFail_TooFar
+	ConnectFail_CantBeSelf: Mods.Coralite.MagikeSystem.MagikeSystem.ConnectFail_CantBeSelf
+	ConnectFail_ConnectorFillUp: Mods.Coralite.MagikeSystem.MagikeSystem.ConnectFail_ConnectorFillUp
 }
 
 C0_P1_BookName: {

@@ -9,8 +9,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public override void InitializeBeginningComponent()
         {
-            AddComponent(GetStartContainer());
-            AddComponent(GetStartSender());
+            AddComponentDirectly(GetStartContainer());
+            AddComponentDirectly(GetStartSender());
         }
 
         public abstract MagikeContainer GetStartContainer();

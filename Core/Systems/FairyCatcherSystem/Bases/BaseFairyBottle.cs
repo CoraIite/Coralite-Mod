@@ -15,14 +15,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 仙灵物品数组
         /// </summary>
-        private readonly Item[] fairies;
+        private Item[] fairies;
 
         /// <summary>
         /// 仙灵瓶的容量，默认10
         /// </summary>
         public virtual int Capacity => 10;
 
-        public Item[] Fairies => fairies;
+        public Item[] Fairies { get=>fairies; set=>fairies = value; }
 
         /// <summary>
         /// 每次回血回多少，默认1
@@ -89,6 +89,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
         }
 
+        public override ModItem Clone(Item newEntity)
+        {
+            if (newEntity.ModItem is IFairyBottle newBottle)
+            {
+                newBottle.Fairies = fairies;
+            }
+            return base.Clone(newEntity);
+        }
+
         public bool ShootFairy(int index, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockback)
         {
             return (fairies[index].ModItem as IFairyItem).ShootFairy(player, source, position, velocity, damage, knockback);
@@ -99,7 +108,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
     {
         int Capacity { get; }
 
-        public Item[] Fairies { get; }
+        public Item[] Fairies { get; set; }
 
         public virtual bool CanShootFairy(int index, out IFairyItem fairyItem)
         {

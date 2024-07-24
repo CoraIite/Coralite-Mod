@@ -36,6 +36,12 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             return Place(i, j);
         }
 
+        public override void Update()
+        {
+            for (int i = 0; i < ComponentsCache.Count; i++)
+                ComponentsCache[i].Update(this);
+        }
+
         public BaseMagikeTileEntity()
         {
             InitializeComponentCache();
@@ -51,7 +57,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             ComponentsCache = new List<Component>();
         }
 
-        public void AddComponent(Component component)
+        public void AddComponentDirectly(Component component)
             =>(this as IEntity).AddComponent(component);
 
         /// <summary>

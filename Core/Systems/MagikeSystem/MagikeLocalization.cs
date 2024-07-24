@@ -25,10 +25,12 @@ namespace Coralite.Core.Systems.MagikeSystem
             public const int ChooseSender_NotFound = 1;
 
             public const int ChooseReceiver_NotFound = 2;
-            public const int Connect_TooFar = 3;
-            public const int Connect_Success = 4;
+            public const int ConnectFail_TooFar = 3;
+            public const int ConnectFail_CantBeSelf = 4;
+            public const int ConnectFail_ConnectorFillUp = 5;
+            public const int Connect_Success = 6;
 
-            public const int Deconnect = 5;
+            public const int Deconnect = 7;
 
             /*
              * 璀璨连接仪
@@ -36,7 +38,7 @@ namespace Coralite.Core.Systems.MagikeSystem
              *  - 会显示连接数量和失败数量
              */
 
-            public const int BrilliantConnect = 6;
+            public const int BrilliantConnect = 8;
 
             public const int Count = BrilliantConnect + 1;
         }
@@ -48,20 +50,16 @@ namespace Coralite.Core.Systems.MagikeSystem
             NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
 
             ConnectStaff = new LocalizedText[ConnectStaffID.Count];
-            ConnectStaff[ConnectStaffID.ChooseSender_Found] = this.GetLocalization("ChooseSender_Found"
-                , () => "已选择魔能发送器");
-            ConnectStaff[ConnectStaffID.ChooseSender_NotFound] = this.GetLocalization("ChooseSender_NotFound"
-                , () => "未找到魔能发送器");
-            ConnectStaff[ConnectStaffID.ChooseReceiver_NotFound] = this.GetLocalization("ChooseReceiver_NotFound"
-                , () => "未找到接收器");
-            ConnectStaff[ConnectStaffID.Connect_TooFar] = this.GetLocalization("Connect_TooFar"
-                , () => "接收器距离太远");
-            ConnectStaff[ConnectStaffID.Connect_Success] = this.GetLocalization("ChooseReceiver_Success"
-                , () => "成功建立连接");
-            ConnectStaff[ConnectStaffID.Deconnect] = this.GetLocalization("Deconnect"
-                , () => "成功取消连接");
-            ConnectStaff[ConnectStaffID.BrilliantConnect] = this.GetLocalization("BrilliantConnect"
-                , () => "成功连接{0}个仪器，未成功连接{1}个仪器");
+
+            ConnectStaff[ConnectStaffID.ChooseSender_Found] = this.GetLocalization("ChooseSender_Found");
+            ConnectStaff[ConnectStaffID.ChooseSender_NotFound] = this.GetLocalization("ChooseSender_NotFound");
+            ConnectStaff[ConnectStaffID.ChooseReceiver_NotFound] = this.GetLocalization("ChooseReceiver_NotFound");
+            ConnectStaff[ConnectStaffID.ConnectFail_TooFar] = this.GetLocalization("ConnectFail_TooFar");
+            ConnectStaff[ConnectStaffID.ConnectFail_CantBeSelf] = this.GetLocalization("ConnectFail_CantBeSelf");
+            ConnectStaff[ConnectStaffID.ConnectFail_ConnectorFillUp] = this.GetLocalization("ConnectFail_ConnectorFillUp");
+            ConnectStaff[ConnectStaffID.Connect_Success] = this.GetLocalization("ChooseReceiver_Success");
+            ConnectStaff[ConnectStaffID.Deconnect] = this.GetLocalization("Deconnect");
+            ConnectStaff[ConnectStaffID.BrilliantConnect] = this.GetLocalization("BrilliantConnect");
         }
 
         public void UnloadLocalization()

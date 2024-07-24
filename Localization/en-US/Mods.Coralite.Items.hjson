@@ -4411,3 +4411,13 @@ BasicRefractor: {
 	DisplayName: Basic Refractor
 	Tooltip: ""
 }
+
+Thyphion: {
+	DisplayName: Thyphion
+	Tooltip: ""
+}
+
+MagicCrystalFishingRod: {
+	DisplayName: Magic Crystal Fishing Rod
+	Tooltip: ""
+}
