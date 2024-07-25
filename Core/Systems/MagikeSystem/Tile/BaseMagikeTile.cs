@@ -73,7 +73,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             OnTileKilled(i, j);
-            if (MagikeHelper.TryGetEntity(new Point16(i,j), out BaseMagikeTileEntity entity))
+            if (MagikeHelper.TryGetEntity(new Point16(i, j), out BaseMagikeTileEntity entity))
                 entity.Kill(entity.Position.X, entity.Position.Y);
         }
 
@@ -133,7 +133,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
             Vector2 offset = offScreen - Main.screenPosition;
             Color lightColor = Lighting.GetColor(p.X, p.Y);
 
-            DrawExtraTex(spriteBatch,texture, tileRect, offset, lightColor, entity);
+            DrawExtraTex(spriteBatch, texture, tileRect, offset, lightColor, entity);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
         /// <param name="tileRect"></param>
         /// <param name="offset"></param>
         /// <param name="entity"></param>
-        public virtual void DrawExtraTex(SpriteBatch spriteBatch,Texture2D tex, Rectangle tileRect, Vector2 offset,Color lightColor, BaseMagikeTileEntity entity)
+        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, BaseMagikeTileEntity entity)
         {
 
         }

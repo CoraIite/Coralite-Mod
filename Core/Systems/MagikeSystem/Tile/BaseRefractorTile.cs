@@ -12,7 +12,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
         : BaseMagikeTile<T>(width, height, mapColor, dustType, minPick, topSoild)
         where T : BaseMagikeTileEntity
     {
-        public override void DrawExtraTex(SpriteBatch spriteBatch,Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, BaseMagikeTileEntity entity)
+        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, BaseMagikeTileEntity entity)
         {
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset;

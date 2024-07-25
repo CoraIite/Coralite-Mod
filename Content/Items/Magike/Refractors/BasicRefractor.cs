@@ -1,13 +1,13 @@
 ﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Raritys;
-using Coralite.Core.Prefabs.Items;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
-using Terraria;
-using Terraria.ID;
+using Coralite.Core.Systems.MagikeSystem.BaseItems;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Tile;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
-using Coralite.Core.Systems.MagikeSystem.Components;
+using Terraria;
+using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Refractors

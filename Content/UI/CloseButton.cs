@@ -1,8 +1,8 @@
 ﻿using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Terraria.Audio;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 

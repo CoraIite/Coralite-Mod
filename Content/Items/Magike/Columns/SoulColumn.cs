@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Tile;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -10,6 +10,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
+
 namespace Coralite.Content.Items.Magike.Columns
 {
     public class SoulColumn : BaseMagikePlaceableItem, IMagikeSenderItem

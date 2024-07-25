@@ -17,9 +17,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public sealed override int ID => MagikeComponentID.MagikeProducer;
 
         /// <summary> 基础生产量 </summary>
-        public int ThroughputBase {  get; protected set; }
+        public int ThroughputBase { get; protected set; }
         /// <summary> 额外生产量 </summary>
-        public int ThroughputExtra {  get; set; }
+        public int ThroughputExtra { get; set; }
 
         /// <summary> 生产量 </summary>
         public int Throughput { get => ThroughputBase + ThroughputExtra; }

@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public override bool CanUseItem(Player player)
         {
-            return !NPC.TowerActiveNebula && !NPC.TowerActiveSolar&&!NPC.TowerActiveStardust&& !NPC.TowerActiveVortex&& !NPC.LunarApocalypseIsUp&&
+            return !NPC.TowerActiveNebula && !NPC.TowerActiveSolar && !NPC.TowerActiveStardust && !NPC.TowerActiveVortex && !NPC.LunarApocalypseIsUp &&
                 !NPC.AnyNPCs(NPCID.MoonLordCore);
         }
 

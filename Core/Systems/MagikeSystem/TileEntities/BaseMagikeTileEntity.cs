@@ -58,7 +58,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         }
 
         public void AddComponentDirectly(Component component)
-            =>(this as IEntity).AddComponent(component);
+            => (this as IEntity).AddComponent(component);
 
         /// <summary>
         /// 初始化起始时的组件

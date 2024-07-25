@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Core.Systems.FairyCatcherSystem;
+﻿using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.ParticleSystem;
 
 namespace Coralite.Core

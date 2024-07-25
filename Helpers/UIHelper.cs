@@ -7,7 +7,7 @@ namespace Coralite.Helpers
 {
     public partial class Helper
     {
-        public static void SetCenter(this UIElement element,Vector2 center)
+        public static void SetCenter(this UIElement element, Vector2 center)
         {
             element.Top.Set(center.X - element.Width.Pixels, 0);
             element.Left.Set(center.Y - element.Height.Pixels, 0);

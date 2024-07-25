@@ -35,7 +35,7 @@ namespace Coralite.Content.CustomHooks
             if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(MagikeMonoclastic)))
             {
                 Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
-                
+
                 Texture2D laserTex = MagikeSystem.GetConnectLine();
                 Color drawColor = Coralite.Instance.MagicCrystalPink * 0.6f;
                 var origin = new Vector2(0, laserTex.Height / 2);
@@ -53,7 +53,7 @@ namespace Coralite.Content.CustomHooks
                     for (int k = 0; k < senderComponents.Count; k++)
                     {
                         Component c = senderComponents[k];
-                        if (c is not MagikeLinerSender linerSender) 
+                        if (c is not MagikeLinerSender linerSender)
                             continue;
 
                         Vector2 selfPos = Helper.GetTileCenter(entity.Key);

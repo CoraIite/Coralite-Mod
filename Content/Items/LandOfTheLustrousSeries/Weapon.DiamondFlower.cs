@@ -451,7 +451,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         float factor = Timer / 20;
                         factor = Coralite.Instance.X2Smoother.Smoother(factor);
 
-                        float rot = BaseRot + Timer * (MathHelper.PiOver2*1.2f - factor * 0.3f);
+                        float rot = BaseRot + Timer * (MathHelper.PiOver2 * 1.2f - factor * 0.3f);
                         Vector2 dir = rot.ToRotationVector2();
                         float length = 8 + factor * 70;
 

@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Misc_Melee
             Item.DamageType = DamageClass.Melee;
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Blue1, Item.sellPrice(0, 8));
             Item.rare = ModContent.RarityType<ArcaneFlameDaggerRarity>();
-            Item.SetWeaponValues(50, 4,6);
+            Item.SetWeaponValues(50, 4, 6);
             Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;
@@ -72,9 +72,9 @@ namespace Coralite.Content.Items.Misc_Melee
                 Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
                 Color c = Main.rand.NextFromList(Purple, Green, Gray);
 
-                Vector2 pos = new Vector2(line.X, line.Y) + new Vector2(Main.rand.NextFloat(0, size.X), Main.rand.NextFloat(size.Y*0.6f, size.Y*1f));
+                Vector2 pos = new Vector2(line.X, line.Y) + new Vector2(Main.rand.NextFloat(0, size.X), Main.rand.NextFloat(size.Y * 0.6f, size.Y * 1f));
 
-               var p= group.NewParticle<FireParticle>(pos,-Vector2.UnitY*Main.rand.NextFloat(0.4f,3f),c,Main.rand.NextFloat(0.1f,0.3f));
+                var p = group.NewParticle<FireParticle>(pos, -Vector2.UnitY * Main.rand.NextFloat(0.4f, 3f), c, Main.rand.NextFloat(0.1f, 0.3f));
                 p.MaxFrameCount = 3;
             }
         }
@@ -131,7 +131,7 @@ namespace Coralite.Content.Items.Misc_Melee
             {
                 Projectile.velocity.X *= 0.99f;
                 Projectile.velocity.Y += 0.5f;
-                if (Projectile.velocity.Y>14)
+                if (Projectile.velocity.Y > 14)
                     Projectile.velocity.Y = 14;
 
                 Projectile.rotation += Projectile.velocity.Length() / 40;
@@ -257,8 +257,8 @@ namespace Coralite.Content.Items.Misc_Melee
                 Color c = Color.Lerp(ArcaneFlameDagger.Purple, ArcaneFlameDagger.Green, factor);
                 for (int i = 0; i < 2; i++)
                 {
-                  var p=  Particle.NewParticle<FireParticle>(Projectile.Center + Main.rand.NextVector2Circular(14, 14),
-                        Projectile.velocity * Main.rand.NextFloat(0.1f, 0.4f), c, Main.rand.NextFloat(0.1f, 0.4f));
+                    var p = Particle.NewParticle<FireParticle>(Projectile.Center + Main.rand.NextVector2Circular(14, 14),
+                          Projectile.velocity * Main.rand.NextFloat(0.1f, 0.4f), c, Main.rand.NextFloat(0.1f, 0.4f));
                     p.MaxFrameCount = 3;
                 }
             }

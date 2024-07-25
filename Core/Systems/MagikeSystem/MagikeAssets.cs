@@ -72,7 +72,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static Texture2D GetConnectLine()
             => ConnectLines[(int)CurrentConnectLineType].Value;
 
-        public static void DrawConnectLine(SpriteBatch spriteBatch, Vector2 startPos, Vector2 endPos,Vector2 screenPos,Color drawColor)
+        public static void DrawConnectLine(SpriteBatch spriteBatch, Vector2 startPos, Vector2 endPos, Vector2 screenPos, Color drawColor)
         {
             Texture2D laserTex = GetConnectLine();
 
@@ -84,7 +84,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             var laserTarget = new Rectangle((int)startPosScreen.X, (int)startPosScreen.Y, width, laserTex.Height);
             var laserSource = new Rectangle((int)(-Main.GlobalTimeWrappedHourly * laserTex.Width), 0, width, laserTex.Height);
 
-            spriteBatch.Draw(laserTex, laserTarget, laserSource, drawColor, (endPos  - startPos).ToRotation(), origin, 0, 0);
+            spriteBatch.Draw(laserTex, laserTarget, laserSource, drawColor, (endPos - startPos).ToRotation(), origin, 0, 0);
         }
 
         #endregion

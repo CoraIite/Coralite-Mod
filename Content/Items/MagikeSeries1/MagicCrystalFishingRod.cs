@@ -5,7 +5,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries1
 {
-    public class MagicCrystalFishingRod: ModItem
+    public class MagicCrystalFishingRod : ModItem
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 

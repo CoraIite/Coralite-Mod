@@ -1,17 +1,17 @@
 ﻿using Coralite.Content.Raritys;
+using Coralite.Content.UI;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Coralite.Core.Systems.MagikeSystem.TileEntities;
-using Coralite.Content.UI;
-using Coralite.Core.Loaders;
 
 namespace Coralite.Content.Items.MagikeSeries1
 {
@@ -138,7 +138,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
             MagikeLinerSender senderComponent = ((IEntity)sender).GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
 
-            bool canConnect = senderComponent.CanConnect(currentPoint,out string failText);
+            bool canConnect = senderComponent.CanConnect(currentPoint, out string failText);
             c = hasReceiver && canConnect ? Color.GreenYellow : Color.MediumVioletRed;
 
             if (Owner.controlUseItem)
@@ -161,7 +161,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                     {
                         Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
 
-                        CombatText.NewText(rect, Coralite.Instance.MagicCrystalPink,failText);
+                        CombatText.NewText(rect, Coralite.Instance.MagicCrystalPink, failText);
                         break;
                     }
 

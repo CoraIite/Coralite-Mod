@@ -125,7 +125,7 @@ namespace Coralite.Helpers
         /// <param name="i"></param>
         /// <param name="j"></param>
         /// <returns></returns>
-        public static Point16? ToTopLeft(int i,int j)
+        public static Point16? ToTopLeft(int i, int j)
         {
             Tile tile = Framing.GetTileSafely(i, j);
             if (!tile.HasTile)
@@ -142,7 +142,7 @@ namespace Coralite.Helpers
 
             int x = frameX / 18;
             int y = frameY / 18;
-            return  new Point16(i - x, j - y);
+            return new Point16(i - x, j - y);
         }
 
         public static int? GetFrameX(Point16 topLeft)
@@ -153,7 +153,7 @@ namespace Coralite.Helpers
 
             TileObjectData data = TileObjectData.GetTileData(tile);
 
-            return tile.TileFrameX/(data.Width * 18);
+            return tile.TileFrameX / (data.Width * 18);
         }
 
         public static void SpawnDustOnSend(int selfWidth, int selfHeight, Point16 Position, IMagikeContainer container, Color dustColor, int dustType = DustID.Teleporter)

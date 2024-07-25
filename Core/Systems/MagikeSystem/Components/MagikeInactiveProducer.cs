@@ -1,5 +1,4 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using System;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {

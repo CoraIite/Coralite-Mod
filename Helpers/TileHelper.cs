@@ -111,8 +111,8 @@ namespace Coralite.Helpers
                 }
             }
         }
-    
-        public static Vector2 GetTileCenter(int i,int j)
+
+        public static Vector2 GetTileCenter(int i, int j)
         {
             return GetTileCenter(new Point16(i, j));
         }

@@ -10,7 +10,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             get
             {
-                _magikeApparatusLevels??=new Dictionary<int, Dictionary<MagikeApparatusLevel, int>>();
+                _magikeApparatusLevels ??= new Dictionary<int, Dictionary<MagikeApparatusLevel, int>>();
                 return _magikeApparatusLevels;
             }
         }

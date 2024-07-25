@@ -1,8 +1,5 @@
-﻿using Coralite.Core.Prefabs.Tiles;
-using Coralite.Core.Systems.BotanicalSystem;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ObjectData;
 
 namespace Coralite.Helpers

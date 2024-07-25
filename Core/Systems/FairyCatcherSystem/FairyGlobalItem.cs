@@ -142,7 +142,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             return prefix;
         }
 
-        public override void    ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             if (item.DamageType == FairyDamage.Instance
               )

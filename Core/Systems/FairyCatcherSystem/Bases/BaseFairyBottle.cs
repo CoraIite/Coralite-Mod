@@ -22,7 +22,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public virtual int Capacity => 10;
 
-        public Item[] Fairies { get=>fairies; set=>fairies = value; }
+        public Item[] Fairies { get => fairies; set => fairies = value; }
 
         /// <summary>
         /// 每次回血回多少，默认1

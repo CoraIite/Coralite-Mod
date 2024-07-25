@@ -37,7 +37,7 @@ namespace Coralite.Content.NPCs.Town
         {
             // Adds our Shimmer Head to the NPCHeadLoader.
             ShimmerHeadIndex = Mod.AddNPCHeadTexture(Type, Texture + "_Shimmer_Head");
-            Names = 
+            Names =
                 [
                 this.GetLocalization("Name0", () => "晶华"),
                 this.GetLocalization("Name1", () => "晶: c000"),

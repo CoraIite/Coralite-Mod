@@ -91,7 +91,7 @@ namespace Coralite.Content.UI
             }
 
             Vector2 worldPos = Helper.GetTileCenter((sender.Entity as BaseMagikeTileEntity).Position).ToScreenPosition();
-            if (!Helper.OnScreen(worldPos)) 
+            if (!Helper.OnScreen(worldPos))
             {
                 visible = false;
                 return;
@@ -128,11 +128,11 @@ namespace Coralite.Content.UI
 
             //首先加上时间偏移
             float perAngle = (MathHelper.TwoPi / MagikeConnectUI.RecordConnectorCount);
-            float angle = Helper.Lerp(perAngle * index, perAngle * index+MathHelper.PiOver2, MagikeConnectUI.Timer / 20f);
+            float angle = Helper.Lerp(perAngle * index, perAngle * index + MathHelper.PiOver2, MagikeConnectUI.Timer / 20f);
             float length = Helper.Lerp(Width.Pixels * 1.5f, 0, MagikeConnectUI.Timer / 20f);
 
             targetPos += angle.ToRotationVector2() * length;
-                this.SetCenter(targetPos);
+            this.SetCenter(targetPos);
 
             base.Recalculate();
         }
@@ -146,7 +146,7 @@ namespace Coralite.Content.UI
 
             Point16 p = MagikeConnectUI.sender.Receivers[index];
             CalculatedStyle dimensions2 = GetDimensions();
-            Vector2 pos=dimensions2.Center();
+            Vector2 pos = dimensions2.Center();
 
             if (IsMouseHovering)
             {
@@ -161,7 +161,7 @@ namespace Coralite.Content.UI
                 Vector2 selfPos = Helper.GetTileCenter((MagikeConnectUI.sender.Entity as BaseMagikeTileEntity).Position);
                 Vector2 aimPos = Helper.GetTileCenter(p);
 
-                MagikeSystem.DrawConnectLine(spriteBatch, selfPos, aimPos,Main.screenPosition, drawColor);
+                MagikeSystem.DrawConnectLine(spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);

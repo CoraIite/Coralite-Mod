@@ -1,5 +1,4 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using System;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 
@@ -24,7 +23,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         /// <summary> 发送时间 </summary>
         public int SendDelay => (this as ITimerTriggerComponent).Delay;
-        
+
         public int DelayBase { get; set; }
         public float DelayBonus { get; set; } = 1f;
         public int Timer { get; set; }

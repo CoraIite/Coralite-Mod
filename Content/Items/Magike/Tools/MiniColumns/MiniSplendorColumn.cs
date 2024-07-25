@@ -1,6 +1,6 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
