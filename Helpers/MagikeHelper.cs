@@ -5,6 +5,7 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.IO;
 using Terraria.ObjectData;
 
 namespace Coralite.Helpers
@@ -131,7 +132,14 @@ namespace Coralite.Helpers
             if (!tile.HasTile)
                 return null;
 
-            TileObjectData data = TileObjectData.GetTileData(tile);
+            TileObjectData data= TileObjectData.GetTileData(tile);
+
+            if (data == null)
+                return new Point16(i, j);
+
+            if (!Main.tileSolidTop[tile.TileType])
+                GetMagikeAlternateData(i, j, out data, out _);
+
             int frameX = tile.TileFrameX;
             int frameY = tile.TileFrameY;
             if (data != null)
@@ -143,6 +151,36 @@ namespace Coralite.Helpers
             int x = frameX / 18;
             int y = frameY / 18;
             return new Point16(i - x, j - y);
+        }
+
+        public static void GetMagikeAlternateData(int i, int j, out TileObjectData alternateData, out int alternate)
+        {
+            Tile t = Main.tile[i, j];
+            TileObjectData tileData = TileObjectData.GetTileData(t.TileType, 0, 0);
+
+            int width = tileData.Width;
+            int height = tileData.Height;
+            int y1 = t.TileFrameY / 18;
+
+            alternate = 0;
+
+            if (y1 < height)
+                alternateData = tileData;
+            else if (y1 < height * 2)
+            {
+                alternate = 1;
+                alternateData = TileObjectData.GetTileData(t.TileType, 0, alternate + 1);
+            }
+            else if (y1 < height * 2 + width)
+            {
+                alternate = 2;
+                alternateData = TileObjectData.GetTileData(t.TileType, 0, alternate + 1);
+            }
+            else
+            {
+                alternate = 3;
+                alternateData = TileObjectData.GetTileData(t.TileType, 0, alternate + 1);
+            }
         }
 
         public static int? GetFrameX(Point16 topLeft)

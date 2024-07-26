@@ -21,6 +21,12 @@ namespace Coralite.Content.Items.Steel
                 cp.AddEffect(nameof(LifePulseDevice));
         }
 
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        {
+            return !((equippedItem.type == ModContent.ItemType<OsirisPillar>())//下位
+                && incomingItem.type == ModContent.ItemType<LifePulseDevice>());
+        }
+
         public override void AddRecipes()
         {
             CreateRecipe()

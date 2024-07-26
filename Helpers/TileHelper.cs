@@ -112,9 +112,31 @@ namespace Coralite.Helpers
             }
         }
 
-        public static Vector2 GetTileCenter(int i, int j)
+        public static Vector2 GetMagikeTileCenter(int i, int j)
         {
-            return GetTileCenter(new Point16(i, j));
+            return GetMagikeTileCenter(new Point16(i, j));
+        }
+
+        /// <summary>
+        /// 获取魔能物块的中心点
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public static Vector2 GetMagikeTileCenter(Point16 position)
+        {
+            Tile tile = Framing.GetTileSafely(position);
+            TileObjectData data= TileObjectData.GetTileData(tile);
+
+            if (data == null)
+                return position.ToWorldCoordinates();
+
+            if (!Main.tileSolidTop[tile.TileType])
+                MagikeHelper. GetMagikeAlternateData(position.X, position.Y, out data, out _);
+
+            int x = data == null ? 8 : data.Width * 16 / 2;
+            int y = data == null ? 8 : data.Height * 16 / 2;
+
+            return position.ToWorldCoordinates(x, y);
         }
 
         public static Vector2 GetTileCenter(Point16 position)
@@ -126,7 +148,6 @@ namespace Coralite.Helpers
 
             return position.ToWorldCoordinates(x, y);
         }
-
 
     }
 }

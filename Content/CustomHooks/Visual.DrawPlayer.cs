@@ -37,6 +37,37 @@ namespace Coralite.Content.CustomHooks
                 DrawPlayer_21_Head_TheFace(ref drawinfo);
                 Rectangle bodyFrame3 = drawinfo.drawPlayer.bodyFrame;
 
+                Vector2 vector = new Vector2(-drawinfo.drawPlayer.bodyFrame.Width / 2 + drawinfo.drawPlayer.width / 2, drawinfo.drawPlayer.height - drawinfo.drawPlayer.bodyFrame.Height + 4);
+                Vector2 position = (drawinfo.Position - Main.screenPosition + vector).Floor() + drawinfo.drawPlayer.headPosition + drawinfo.headVect;
+
+                if (drawinfo.fullHair)
+                {
+                    //Color color = drawinfo.colorArmorHead;
+                    //int shader = drawinfo.cHead;
+                    //if (ArmorIDs.Head.Sets.UseSkinColor[drawinfo.drawPlayer.head])
+                    //{
+                    //    color = ((!drawinfo.drawPlayer.isDisplayDollOrInanimate) ? drawinfo.colorHead : drawinfo.colorDisplayDollSkin);
+                    //    shader = drawinfo.skinDyePacked;
+                    //}
+
+                    //DrawData item2 = new DrawData(TextureAssets.ArmorHead[drawinfo.drawPlayer.head].Value, helmetOffset + new Vector2((int)(drawinfo.Position.X - Main.screenPosition.X - (float)(drawinfo.drawPlayer.bodyFrame.Width / 2) + (float)(drawinfo.drawPlayer.width / 2)), (int)(drawinfo.Position.Y - Main.screenPosition.Y + (float)drawinfo.drawPlayer.height - (float)drawinfo.drawPlayer.bodyFrame.Height + 4f)) + drawinfo.drawPlayer.headPosition + drawinfo.headVect, drawinfo.drawPlayer.bodyFrame, color, drawinfo.drawPlayer.headRotation, drawinfo.headVect, 1f, drawinfo.playerEffect);
+                    //item2.shader = shader;
+                    //drawinfo.DrawDataCache.Add(item2);
+                    if (!drawinfo.drawPlayer.invis)
+                    {
+                        DrawData item2 = new DrawData(TextureAssets.PlayerHair[drawinfo.drawPlayer.hair].Value, position, drawinfo.hairFrontFrame, drawinfo.colorHair, drawinfo.drawPlayer.headRotation, drawinfo.headVect, 1f, drawinfo.playerEffect);
+                        item2.shader = drawinfo.hairDyePacked;
+                        drawinfo.DrawDataCache.Add(item2);
+                    }
+                }
+
+                if (drawinfo.hatHair && !drawinfo.drawPlayer.invis)
+                {
+                    DrawData item2 = new DrawData(TextureAssets.PlayerHairAlt[drawinfo.drawPlayer.hair].Value, position, drawinfo.hairFrontFrame, drawinfo.colorHair, drawinfo.drawPlayer.headRotation, drawinfo.headVect, 1f, drawinfo.playerEffect);
+                    item2.shader = drawinfo.hairDyePacked;
+                    drawinfo.DrawDataCache.Add(item2);
+                }
+
                 int frameY2 = bodyFrame3.Y / 56;
 
                 Texture2D mainTex = TextureAssets.ArmorHead[drawinfo.drawPlayer.head].Value;

@@ -72,6 +72,18 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
             }
         }
 
+        /// <summary>
+        /// 移除所有组件
+        /// </summary>
+        public void RemoveAllComponent()
+        {
+            for (int i = 0; i < ComponentsCache.Count; i++)
+                ComponentsCache[i].OnRemove(this);
+
+            ComponentsCache.Clear();
+            Components.Clear();
+        }
+
         public bool TryGetComponent<T>(int index, out T result) where T : Component
         {
             result = null;

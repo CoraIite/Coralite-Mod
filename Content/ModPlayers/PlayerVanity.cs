@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.Nightmare;
+using Coralite.Content.Items.Steel;
 using Coralite.Content.Items.Vanity;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -15,10 +16,10 @@ namespace Coralite.Content.ModPlayers
             if (HasEffect(nameof(HylianShield)))
                 drawInfo.drawPlayer.shield = EquipLoader.GetEquipSlot(Mod, "HylianShield", EquipType.Shield);
 
-            //if (HasEffect(nameof(CharmOfIsis)+ "Vanity"))
-            //    drawInfo.drawPlayer.head = EquipLoader.GetEquipSlot(Mod, "CharmOfIsis", EquipType.Head);
-            //if (HasEffect(nameof(OsirisPillar) + "Vanity"))
-            //    drawInfo.drawPlayer.head = EquipLoader.GetEquipSlot(Mod, "OsirisPillar", EquipType.Head);
+            if (HasEffect(nameof(CharmOfIsis) + "Vanity"))
+                drawInfo.drawPlayer.head = EquipLoader.GetEquipSlot(Mod, "CharmOfIsis", EquipType.Head);
+            if (HasEffect(nameof(OsirisPillar) + "Vanity"))
+                drawInfo.drawPlayer.head = EquipLoader.GetEquipSlot(Mod, "OsirisPillar", EquipType.Head);
 
             if (HasEffect(nameof(SquirrelSet)))
             {

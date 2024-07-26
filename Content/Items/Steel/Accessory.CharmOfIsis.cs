@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CustomHooks;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
@@ -6,13 +7,20 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Steel
 {
-    //[AutoloadEquip(EquipType.Head)]
-    public class CharmOfIsis : BaseAccessory
+    [AutoloadEquip(EquipType.Head)]
+    public class CharmOfIsis : BaseAccessory,ISpecialDrawHead
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
 
         public CharmOfIsis() : base(ItemRarityID.Pink, Item.sellPrice(0, 6, 0, 0))
         {
+        }
+
+        public override void SetStaticDefaults()
+        {
+            int slot = EquipLoader.GetEquipSlot(Mod, "CharmOfIsis", EquipType.Head);
+            ArmorIDs.Head.Sets.DrawHatHair[slot] = true;
+            ArmorIDs.Head.Sets.DrawFullHair[slot] = true;
         }
 
         public override void AutoDefaults() { }
@@ -23,13 +31,19 @@ namespace Coralite.Content.Items.Steel
             Item.lifeRegen = 2;
         }
 
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        {
+            return !((equippedItem.type == ModContent.ItemType<MedalOfLife>())//下位
+                && incomingItem.type == ModContent.ItemType<CharmOfIsis>());
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.AddEffect(nameof(CharmOfIsis));
-                //if (!hideVisual)
-                //    cp.AddEffect(nameof(CharmOfIsis)+"Vanity");
+                if (!hideVisual)
+                    cp.AddEffect(nameof(CharmOfIsis) + "Vanity");
             }
 
             player.pStone = true;

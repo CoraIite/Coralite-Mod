@@ -30,14 +30,17 @@ namespace Coralite.Content.Items.Magike.Refractors
         }
     }
 
-    public class BasicRefractorTile() : BaseRefractorTile<BasicRefractorTileEntity>
+    public class BasicRefractorTile() : BaseRefractorTile
         (1, 2, Coralite.Instance.MagicCrystalPink, DustID.CorruptionThorns)
     {
         public override string Texture => AssetDirectory.MagikeRefractorTiles + Name;
 
-        public override void SetStaticDefaults()
+        public override int DropItemType => ItemType<BasicRefractor>();
+
+        public override BaseMagikeTileEntity GetEntityInstance() => GetInstance<BasicRefractorTileEntity>();
+
+        public override void RegisterApparatusLevel()
         {
-            base.SetStaticDefaults();
             MagikeSystem.RegisterApparatusLevel(Type,
                 MagikeApparatusLevel.None,
                 MagikeApparatusLevel.MagicCrystal,
@@ -94,7 +97,7 @@ namespace Coralite.Content.Items.Magike.Refractors
     {
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
-            MaxConnectBase = 1;
+            MaxConnectBase = 5;
 
             switch (incomeLevel)
             {

@@ -8,9 +8,8 @@ using Terraria.DataStructures;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tile
 {
-    public abstract class BaseRefractorTile<T>(int width, int height, Color mapColor, int dustType, int minPick = 0, bool topSoild = false)
-        : BaseMagikeTile<T>(width, height, mapColor, dustType, minPick, topSoild)
-        where T : BaseMagikeTileEntity
+    public abstract class BaseRefractorTile(int width, int height, Color mapColor, int dustType, int minPick = 0, bool topSoild = false)
+        : BaseMagikeTile(width, height, mapColor, dustType, minPick, topSoild)
     {
         public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, BaseMagikeTileEntity entity)
         {
@@ -28,7 +27,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
             else
             {
                 Point16 p = senderComponent.FirstConnector();
-                Vector2 targetPos = Helper.GetTileCenter(p);
+                Vector2 targetPos = Helper.GetMagikeTileCenter(p);
                 rotation = (targetPos - selfCenter).ToRotation() + MathHelper.PiOver2;
             }
 

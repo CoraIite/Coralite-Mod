@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Projectile.timeLeft = 2;
 
             Point16 position = new Point16((int)Projectile.ai[0], (int)Projectile.ai[1]);
-            selfPos = Helper.GetTileCenter(position);
+            selfPos = Helper.GetMagikeTileCenter(position);
 
             Point16 currentPoint = new Point16((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
             aimPos = currentPoint.ToWorldCoordinates();
@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             if (hasReceiver)
             {
                 currentPoint = receiver.Position;
-                aimPos = Helper.GetTileCenter(currentPoint);
+                aimPos = Helper.GetMagikeTileCenter(currentPoint);
             }
 
             if (sender == receiver)

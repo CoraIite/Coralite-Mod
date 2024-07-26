@@ -56,14 +56,14 @@ namespace Coralite.Content.CustomHooks
                         if (c is not MagikeLinerSender linerSender)
                             continue;
 
-                        Vector2 selfPos = Helper.GetTileCenter(entity.Key);
+                        Vector2 selfPos = Helper.GetMagikeTileCenter(entity.Key);
                         Vector2 startPos = selfPos - Main.screenPosition;
 
                         if (Helper.OnScreen(startPos))
                         {
                             for (int i = 0; i < linerSender.Receivers.Count; i++)
                             {
-                                Vector2 aimPos = Helper.GetTileCenter(linerSender.Receivers[i]);
+                                Vector2 aimPos = Helper.GetMagikeTileCenter(linerSender.Receivers[i]);
 
                                 MagikeSystem.DrawConnectLine(Main.spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
                             }
@@ -73,7 +73,7 @@ namespace Coralite.Content.CustomHooks
 
                         for (int i = 0; i < linerSender.Receivers.Count; i++)
                         {
-                            Vector2 aimPos = Helper.GetTileCenter(linerSender.Receivers[i]);
+                            Vector2 aimPos = Helper.GetMagikeTileCenter(linerSender.Receivers[i]);
 
                             if (!Helper.OnScreen(aimPos - Main.screenPosition))
                                 continue;

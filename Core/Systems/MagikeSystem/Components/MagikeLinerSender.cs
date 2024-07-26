@@ -156,8 +156,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return false;
             }
 
-            Vector2 selfCenter = Helper.GetTileCenter(selfPoint);
-            Vector2 targetCenter = Helper.GetTileCenter(receiverPoint);
+            Vector2 selfCenter = Helper.GetMagikeTileCenter(selfPoint);
+            Vector2 targetCenter = Helper.GetMagikeTileCenter(receiverPoint);
 
             //太远了导致无法连接
             if (Vector2.Distance(selfCenter, targetCenter) > ConnectLength)
@@ -203,11 +203,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public void RecheckConnect()
         {
-            Vector2 selfPos = Helper.GetTileCenter((Entity as BaseMagikeTileEntity).Position);
+            Vector2 selfPos = Helper.GetMagikeTileCenter((Entity as BaseMagikeTileEntity).Position);
 
             for (int i = _receivers.Count - 1; i >= 0; i--)
             {
-                Vector2 targetPos = Helper.GetTileCenter(_receivers[i]);
+                Vector2 targetPos = Helper.GetMagikeTileCenter(_receivers[i]);
                 if (Vector2.Distance(selfPos, targetPos) > ConnectLength)
                     _receivers.Remove(_receivers[i]);
             }

@@ -21,6 +21,12 @@ namespace Coralite.Content.Items.Steel
                 cp.AddEffect(nameof(MedalOfLife));
         }
 
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        {
+            return !((equippedItem.type == ModContent.ItemType<CharmOfIsis>())//下位
+                && incomingItem.type == ModContent.ItemType<MedalOfLife>());
+        }
+
         public override void AddRecipes()
         {
             CreateRecipe()

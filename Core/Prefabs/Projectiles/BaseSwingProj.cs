@@ -478,7 +478,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             if (Timer < minTime || oldRotate == null)
                 return;
-
+            
             List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
             GetCurrentTrailCount(out float count);
 
