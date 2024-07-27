@@ -11,6 +11,29 @@ namespace Coralite.Core.Systems.MagikeSystem
         public LocalizedText LearnedMagikeBase { get; private set; }
         public LocalizedText LearnedMagikeAdvanced { get; private set; }
 
+
+        public void LoadLocalization()
+        {
+            LearnedMagikeBase = this.GetLocalization("learnedMagikeBase");
+            LearnedMagikeAdvanced = this.GetLocalization("learnedMagikeAdvanced");
+            NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
+
+            LoadConnectStaff();
+            LoadFilter();
+        }
+
+        public void UnloadLocalization()
+        {
+            LearnedMagikeBase = null;
+            LearnedMagikeAdvanced = null;
+            NewKnowledgeUnlocked = null;
+
+            ConnectStaff = null;
+            Filter = null;
+        }
+
+        #region 魔能连接仪相关
+
         public static LocalizedText[] ConnectStaff { get; private set; }
 
         public class ConnectStaffID
@@ -43,12 +66,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             public const int Count = BrilliantConnect + 1;
         }
 
-        public void LoadLocalization()
+        public void LoadConnectStaff()
         {
-            LearnedMagikeBase = this.GetLocalization("learnedMagikeBase");
-            LearnedMagikeAdvanced = this.GetLocalization("learnedMagikeAdvanced");
-            NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
-
             ConnectStaff = new LocalizedText[ConnectStaffID.Count];
 
             ConnectStaff[ConnectStaffID.ChooseSender_Found] = this.GetLocalization("ChooseSender_Found");
@@ -62,16 +81,43 @@ namespace Coralite.Core.Systems.MagikeSystem
             ConnectStaff[ConnectStaffID.BrilliantConnect] = this.GetLocalization("BrilliantConnect");
         }
 
-        public void UnloadLocalization()
-        {
-            LearnedMagikeBase = null;
-            LearnedMagikeAdvanced = null;
-            NewKnowledgeUnlocked = null;
-
-            ConnectStaff = null;
-        }
-
         public static string GetConnectStaffText(int id)
             => ConnectStaff[id].Value;
+
+        #endregion
+
+        #region 滤镜相关
+
+        public static LocalizedText[] Filter { get; private set; }
+
+        public class FilterID
+        {
+            /*
+             * 魔能滤镜的ID
+             * 首先通用的为：未找到魔能容器和成功放置，以及滤镜已满
+             */
+
+            public const int ApparatusNotFound = 0;
+            public const int FilterFillUp = 1;
+            public const int InsertSuccess = 2;
+
+
+
+            public const int Count = 3;
+        }
+
+        public void LoadFilter()
+        {
+            Filter = new LocalizedText[FilterID.Count];
+            Filter[FilterID.ApparatusNotFound] = this.GetLocalization("ApparatusNotFound");
+            Filter[FilterID.FilterFillUp] = this.GetLocalization("FilterFillUp");
+            Filter[FilterID.InsertSuccess] = this.GetLocalization("InsertSuccess");
+        }
+
+        public static string GetFilterText(int id)
+            => Filter[id].Value;
+
+        #endregion
+
     }
 }

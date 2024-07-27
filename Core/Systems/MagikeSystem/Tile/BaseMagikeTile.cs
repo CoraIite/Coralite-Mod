@@ -23,17 +23,35 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
         public override void Load()
         {
             ExtraAssets = new Dictionary<MagikeApparatusLevel, Asset<Texture2D>>();
-            RegisterApparatusLevel();
-            LoadAssets();
+
+            MagikeApparatusLevel[] levels = GetAllLevels();
+            if (levels == null || levels.Length == 0)
+                return;
+
+            //加载等级字典
+            MagikeSystem.RegisterApparatusLevel(Type, levels);
+            //加载等级贴图
+            for (int i = 0; i < levels.Length; i++)
+                QuickLoadAsset(levels[i]);
+        }
+
+        public void QuickLoadAsset(MagikeApparatusLevel level)
+        {
+            if (level == MagikeApparatusLevel.None)
+                return;
+
+            string name = Enum.GetName(level);
+            if (string.IsNullOrEmpty(name))
+                return;
+
+            ExtraAssets.Add(level, ModContent.Request<Texture2D>(Texture +"_"+ name));
         }
 
         /// <summary>
-        /// 加载额外贴图
+        /// 返回所有可以有的魔能等级
         /// </summary>
-        public virtual void LoadAssets()
-        {
-
-        }
+        /// <returns></returns>
+        public virtual MagikeApparatusLevel[] GetAllLevels() { return null; }
 
         public override void SetStaticDefaults()
         {
@@ -120,13 +138,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
             MinPick = minPick;
         }
 
-        public abstract BaseMagikeTileEntity GetEntityInstance();
-
-        /// <summary>
-        /// 在这里注册魔能仪器的等级，用于改变帧图和判断能否插入偏振滤镜<br></br>
-        /// 请使用<see cref="MagikeSystem.RegisterApparatusLevel"/>
-        /// </summary>
-        public virtual void RegisterApparatusLevel() { }
+        public abstract MagikeTileEntity GetEntityInstance();
 
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
@@ -154,7 +166,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             OnTileKilled(i, j);
-            if (MagikeHelper.TryGetEntity(new Point16(i, j), out BaseMagikeTileEntity entity))
+            if (MagikeHelper.TryGetEntity(new Point16(i, j), out MagikeTileEntity entity))
             {
                 (entity as IEntity).RemoveAllComponent();
                 entity.Kill(entity.Position.X, entity.Position.Y);
@@ -191,8 +203,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
 
         public sealed override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
-            Point16 topLeft = MagikeHelper.ToTopLeft(i, j).Value;
-            if (i == topLeft.X && j == topLeft.Y)
+            Point16? topLeft = MagikeHelper.ToTopLeft(i, j);
+
+            if (!topLeft.HasValue)
+                return;
+
+            if (i == topLeft.Value.X && j == topLeft.Value.Y)
                 Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
         }
 
@@ -203,20 +219,24 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
                 offScreen = Vector2.Zero;
 
             //检查物块
-            Point16 p = new Point16(i, j);
+            Point16 p = new Point16(i, j);//这个就是左上角
             Terraria.Tile tile = Main.tile[p.X, p.Y];
             if (tile == null || !tile.HasTile)
                 return;
 
             //在这里获取帧图
             //得判断自身现在处于一个什么样的放置情况，然后获取对应的data
+            MagikeHelper.GetMagikeAlternateData(i, j, out TileObjectData data, out int alternate);
 
+            float rotation = alternate switch
+            {
+                1 => MathHelper.PiOver2,//在顶部，正方向朝下
+                2 => 0,//朝向右
+                3 => MathHelper.Pi,//朝向左
+                _ => -MathHelper.PiOver2
+            };
 
-
-
-
-
-            var level = MagikeSystem.FrameToLevel(tile.TileType, 1);
+            var level = MagikeSystem.FrameToLevel(tile.TileType, tile.TileFrameX % data.CoordinateFullWidth);
             if (!level.HasValue)
                 return;
 
@@ -224,17 +244,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
             if (!ExtraAssets.TryGetValue(level.Value, out Asset<Texture2D> asset))
                 return;
 
-            if (!MagikeHelper.TryGetEntity(p, out BaseMagikeTileEntity entity))
+            if (!MagikeHelper.TryGetEntity(p, out MagikeTileEntity entity))
                 return;
 
             Texture2D texture = asset.Value;
-            TileObjectData data = TileObjectData.GetTileData(tile);
 
-            Rectangle tileRect = new Rectangle(p.X * 16, p.Y * 16, data == null ? 16 : data.Width * 16, data == null ? 16 : data.Height * 16);
+            Rectangle tileRect = new Rectangle(i * 16, j * 16, data == null ? 16 : data.Width * 16, data == null ? 16 : data.Height * 16);
             Vector2 offset = offScreen - Main.screenPosition;
             Color lightColor = Lighting.GetColor(p.X, p.Y);
 
-            DrawExtraTex(spriteBatch, texture, tileRect, offset, lightColor, entity);
+            DrawExtraTex(spriteBatch, texture, tileRect, offset, lightColor,rotation, entity);
         }
 
         /// <summary>
@@ -244,14 +263,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
         /// <param name="tileRect"></param>
         /// <param name="offset"></param>
         /// <param name="entity"></param>
-        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, BaseMagikeTileEntity entity)
+        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor,float rotation, MagikeTileEntity entity)
         {
 
-        }
-
-        public MagikeApparatusLevel FrameToLevel(int frameX)
-        {
-            return (MagikeApparatusLevel)frameX;
         }
     }
 }

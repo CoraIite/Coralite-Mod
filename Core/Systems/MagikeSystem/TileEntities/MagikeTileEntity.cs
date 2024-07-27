@@ -7,7 +7,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
-    public abstract class BaseMagikeTileEntity : ModTileEntity, IEntity
+    public abstract class MagikeTileEntity : ModTileEntity, IEntity
     {
         public const string SaveName = "Component";
 
@@ -18,9 +18,21 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public List<Component> ComponentsCache { get; private set; }
 
         /// <summary>
-        /// 扩展膜容量
+        /// 扩展滤镜容量
         /// </summary>
         public virtual int ExtendFilterCapacity { get => 2; }
+
+        /// <summary>
+        /// 检测滤镜容量，如果已经满了那么就无法插入
+        /// </summary>
+        /// <returns></returns>
+        public bool CanInsertFilter()
+        {
+            if (!Components.TryGetValue(MagikeComponentID.MagikeFilter, out var components))
+                return true;
+
+            return components.Count < ExtendFilterCapacity;
+        }
 
         public override bool IsTileValidForEntity(int x, int y) => Framing.GetTileSafely(x, y).TileType == TileType;
 
@@ -42,7 +54,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 ComponentsCache[i].Update(this);
         }
 
-        public BaseMagikeTileEntity()
+        public MagikeTileEntity()
         {
             InitializeComponentCache();
             InitializeBeginningComponent();

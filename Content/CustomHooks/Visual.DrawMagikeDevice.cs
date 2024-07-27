@@ -42,7 +42,7 @@ namespace Coralite.Content.CustomHooks
 
                 foreach (var entity in TileEntity.ByPosition)
                 {
-                    if (entity.Value is not BaseMagikeTileEntity sender)
+                    if (entity.Value is not MagikeTileEntity sender)
                         continue;
 
                     if (!(sender as IEntity).HasComponent(MagikeComponentID.MagikeSender))

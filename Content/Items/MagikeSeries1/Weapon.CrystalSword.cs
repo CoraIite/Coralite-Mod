@@ -12,7 +12,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries1
 {
-    public class CrystalSword : BaseMagikeChargeableItem
+    public class CrystalSword : MagikeChargeableItem
     {
         public CrystalSword() : base(150, Item.sellPrice(0, 0, 10, 0)
             , ModContent.RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeSeries1Item)

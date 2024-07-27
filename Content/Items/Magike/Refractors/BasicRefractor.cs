@@ -34,14 +34,13 @@ namespace Coralite.Content.Items.Magike.Refractors
         (1, 2, Coralite.Instance.MagicCrystalPink, DustID.CorruptionThorns)
     {
         public override string Texture => AssetDirectory.MagikeRefractorTiles + Name;
-
         public override int DropItemType => ItemType<BasicRefractor>();
 
-        public override BaseMagikeTileEntity GetEntityInstance() => GetInstance<BasicRefractorTileEntity>();
+        public override MagikeTileEntity GetEntityInstance() => GetInstance<BasicRefractorTileEntity>();
 
-        public override void RegisterApparatusLevel()
+        public override MagikeApparatusLevel[] GetAllLevels()
         {
-            MagikeSystem.RegisterApparatusLevel(Type,
+            return [
                 MagikeApparatusLevel.None,
                 MagikeApparatusLevel.MagicCrystal,
                 MagikeApparatusLevel.Crimson,
@@ -50,7 +49,7 @@ namespace Coralite.Content.Items.Magike.Refractors
                 MagikeApparatusLevel.CrystallineMagike,
                 MagikeApparatusLevel.Feather,
                 MagikeApparatusLevel.SplendorMagicore
-                );
+                ];
         }
     }
 

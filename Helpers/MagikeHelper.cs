@@ -40,7 +40,7 @@ namespace Coralite.Helpers
         /// <param name="j"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static bool TryGetEntity(int i, int j, out BaseMagikeTileEntity entity)
+        public static bool TryGetEntity(int i, int j, out MagikeTileEntity entity)
         {
             entity = null;
 
@@ -48,7 +48,7 @@ namespace Coralite.Helpers
             if (!topLeft.HasValue)
                 return false;
 
-            if (!TryGetEntity(topLeft.Value, out BaseMagikeTileEntity tempEntity))
+            if (!TryGetEntity(topLeft.Value, out MagikeTileEntity tempEntity))
                 return false;
 
             entity = tempEntity;
@@ -62,13 +62,13 @@ namespace Coralite.Helpers
         /// <param name="position"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static bool TryGetEntity(Point16 position, out BaseMagikeTileEntity entity)
+        public static bool TryGetEntity(Point16 position, out MagikeTileEntity entity)
         {
             entity = null;
             if (!TileEntity.ByPosition.TryGetValue(position, out TileEntity tileEntity))
                 return false;
 
-            if (tileEntity is not BaseMagikeTileEntity entity1)
+            if (tileEntity is not MagikeTileEntity entity1)
                 return false;
 
             entity = entity1;
@@ -83,11 +83,11 @@ namespace Coralite.Helpers
         /// <param name="componentType"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static bool TryGetEntityWithComponent(int i, int j, int componentType, out BaseMagikeTileEntity entity)
+        public static bool TryGetEntityWithComponent(int i, int j, int componentType, out MagikeTileEntity entity)
         {
             entity = null;
 
-            if (!TryGetEntity(i, j, out BaseMagikeTileEntity tempEntity))
+            if (!TryGetEntity(i, j, out MagikeTileEntity tempEntity))
                 return false;
 
             if (!((IEntity)tempEntity).HasComponent(componentType))
@@ -105,12 +105,12 @@ namespace Coralite.Helpers
         /// <param name="componentType"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static bool TryGetEntityWithComponent<T>(int i, int j, int componentType, out BaseMagikeTileEntity entity)
+        public static bool TryGetEntityWithComponent<T>(int i, int j, int componentType, out MagikeTileEntity entity)
             where T : Component
         {
             entity = null;
 
-            if (!TryGetEntityWithComponent(i, j, componentType, out BaseMagikeTileEntity tempEntity))
+            if (!TryGetEntityWithComponent(i, j, componentType, out MagikeTileEntity tempEntity))
                 return false;
 
             if (!tempEntity.Components[componentType].Any(c => c is T))
@@ -132,7 +132,7 @@ namespace Coralite.Helpers
             if (!tile.HasTile)
                 return null;
 
-            TileObjectData data= TileObjectData.GetTileData(tile);
+            TileObjectData data = TileObjectData.GetTileData(tile);
 
             if (data == null)
                 return new Point16(i, j);
@@ -160,7 +160,7 @@ namespace Coralite.Helpers
 
             int width = tileData.Width;
             int height = tileData.Height;
-            int y1 = t.TileFrameY / 18;
+            int y1 = t.TileFrameY / (tileData.CoordinateWidth + tileData.CoordinatePadding);
 
             alternate = 0;
 

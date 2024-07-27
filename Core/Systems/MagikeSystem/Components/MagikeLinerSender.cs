@@ -97,7 +97,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public void Send(MagikeContainer selfMagikeContainer, Point16 position, int amount)
         {
             //如果无法获取物块实体就移除
-            if (MagikeHelper.TryGetEntity(position, out BaseMagikeTileEntity receiverEntity))
+            if (MagikeHelper.TryGetEntity(position, out MagikeTileEntity receiverEntity))
                 goto remove;
 
             //如果不是魔能容器那么就丢掉喽
@@ -147,7 +147,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return false;
             }
 
-            Point16 selfPoint = (Entity as BaseMagikeTileEntity).Position;
+            Point16 selfPoint = (Entity as MagikeTileEntity).Position;
 
             //检测是否是自己
             if (receiverPoint == selfPoint)
@@ -203,7 +203,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public void RecheckConnect()
         {
-            Vector2 selfPos = Helper.GetMagikeTileCenter((Entity as BaseMagikeTileEntity).Position);
+            Vector2 selfPos = Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position);
 
             for (int i = _receivers.Count - 1; i >= 0; i--)
             {

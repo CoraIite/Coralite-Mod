@@ -2,7 +2,7 @@
 
 namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 {
-    public abstract class BaseMagikeChargeableItem(int magikeMax, int value, int rare, int magikeAmount = -1, string texturePath = AssetDirectory.MagikeItems, bool pathHasName = false) : ModItem
+    public abstract class MagikeChargeableItem(int magikeMax, int value, int rare, int magikeAmount = -1, string texturePath = AssetDirectory.MagikeItems, bool pathHasName = false) : ModItem
     {
         public override string Texture => string.IsNullOrEmpty(texturePath) ? base.Texture : texturePath + (pathHasName ? string.Empty : Name);
 

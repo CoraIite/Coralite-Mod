@@ -90,7 +90,7 @@ namespace Coralite.Content.UI
                 base.Recalculate();
             }
 
-            Vector2 worldPos = Helper.GetMagikeTileCenter((sender.Entity as BaseMagikeTileEntity).Position).ToScreenPosition();
+            Vector2 worldPos = Helper.GetMagikeTileCenter((sender.Entity as MagikeTileEntity).Position).ToScreenPosition();
             if (!Helper.OnScreen(worldPos))
             {
                 visible = false;
@@ -122,6 +122,14 @@ namespace Coralite.Content.UI
             UILoader.GetUIState<MagikeConnectUI>().RemoveChild(this);
         }
 
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+            MagikeConnectUI.sender?.Receivers.RemoveAt(index);
+            MagikeConnectUI.RecordConnectorCount--;
+            UILoader.GetUIState<MagikeConnectUI>().RemoveChild(this);
+        }
+
         public override void Recalculate()
         {
             Vector2 targetPos = Vector2.Zero;
@@ -145,8 +153,6 @@ namespace Coralite.Content.UI
                 return;
 
             Point16 p = MagikeConnectUI.sender.Receivers[index];
-            CalculatedStyle dimensions2 = GetDimensions();
-            Vector2 pos = dimensions2.Center();
 
             if (IsMouseHovering)
             {
@@ -158,7 +164,7 @@ namespace Coralite.Content.UI
 
                 Color drawColor = Color.Lerp(Color.White, Color.Coral, MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2 + 0.5f);
 
-                Vector2 selfPos = Helper.GetMagikeTileCenter((MagikeConnectUI.sender.Entity as BaseMagikeTileEntity).Position);
+                Vector2 selfPos = Helper.GetMagikeTileCenter((MagikeConnectUI.sender.Entity as MagikeTileEntity).Position);
                 Vector2 aimPos = Helper.GetMagikeTileCenter(p);
 
                 MagikeSystem.DrawConnectLine(spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);

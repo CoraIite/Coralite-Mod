@@ -11,28 +11,28 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
     public abstract class BaseRefractorTile(int width, int height, Color mapColor, int dustType, int minPick = 0, bool topSoild = false)
         : BaseMagikeTile(width, height, mapColor, dustType, minPick, topSoild)
     {
-        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, BaseMagikeTileEntity entity)
+        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor,float rotation, MagikeTileEntity entity)
         {
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset;
             int halfHeight = tileRect.Height / 2;
-            float rotation = 0;
+            float rotationTop = rotation + MathHelper.PiOver2;
 
             //虽然一般不会没有 但是还是检测一下
             if (!(entity as IEntity).TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender senderComponent))
                 return;
 
             if (senderComponent.IsEmpty())
-                drawPos += new Vector2(0, halfHeight - 8);
+                drawPos -= rotation.ToRotationVector2() * (halfHeight - 8);
             else
             {
                 Point16 p = senderComponent.FirstConnector();
                 Vector2 targetPos = Helper.GetMagikeTileCenter(p);
-                rotation = (targetPos - selfCenter).ToRotation() + MathHelper.PiOver2;
+                rotationTop = (targetPos - selfCenter).ToRotation() + MathHelper.PiOver2;
             }
 
             // 绘制主帖图
-            spriteBatch.Draw(tex, drawPos, null, lightColor, rotation, tex.Size() / 2, 1f, 0, 0f);
+            spriteBatch.Draw(tex, drawPos, null, lightColor, rotationTop, tex.Size() / 2, 1f, 0, 0f);
         }
     }
 }

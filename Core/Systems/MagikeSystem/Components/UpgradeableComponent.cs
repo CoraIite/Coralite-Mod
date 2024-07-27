@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
         {
-            int tileType = (Entity as BaseMagikeTileEntity).TileType;
+            int tileType = (Entity as MagikeTileEntity).TileType;
 
             if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var keyValuePairs))
                 return false;
@@ -36,7 +36,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
         {
-            int tileType = (Entity as BaseMagikeTileEntity).TileType;
+            int tileType = (Entity as MagikeTileEntity).TileType;
 
             if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var keyValuePairs))
                 return false;
@@ -59,7 +59,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
         {
-            int tileType = (Entity as BaseMagikeTileEntity).TileType;
+            int tileType = (Entity as MagikeTileEntity).TileType;
 
             if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var keyValuePairs))
                 return false;

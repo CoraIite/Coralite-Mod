@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Magike.Tools.MiniColumns
 {
-    public class MiniSoulColumn : BaseMagikeChargeableItem
+    public class MiniSoulColumn : MagikeChargeableItem
     {
         public MiniSoulColumn() : base(750, Item.sellPrice(0, 0, 10, 0)
             , ModContent.RarityType<CrystallineMagikeRarity>(), 600, AssetDirectory.MagikeTools)

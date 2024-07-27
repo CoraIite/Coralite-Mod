@@ -26,7 +26,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public bool CanProduce_CheckMagike()
         {
-            return !(Entity as BaseMagikeTileEntity).GetMagikeContainer().FullMagike;
+            return !(Entity as MagikeTileEntity).GetMagikeContainer().FullMagike;
         }
 
         /// <summary>
