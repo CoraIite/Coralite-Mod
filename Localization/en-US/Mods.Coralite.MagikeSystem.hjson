@@ -13,6 +13,9 @@ MagikeSystem: {
 	ConnectFail_TooFar: Mods.Coralite.MagikeSystem.MagikeSystem.ConnectFail_TooFar
 	ConnectFail_CantBeSelf: Mods.Coralite.MagikeSystem.MagikeSystem.ConnectFail_CantBeSelf
 	ConnectFail_ConnectorFillUp: Mods.Coralite.MagikeSystem.MagikeSystem.ConnectFail_ConnectorFillUp
+	ApparatusNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusNotFound
+	FilterFillUp: Mods.Coralite.MagikeSystem.MagikeSystem.FilterFillUp
+	InsertSuccess: Mods.Coralite.MagikeSystem.MagikeSystem.InsertSuccess
 }
 
 C0_P1_BookName: {

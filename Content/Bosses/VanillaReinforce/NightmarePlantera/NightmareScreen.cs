@@ -14,6 +14,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void Load()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
             Filters.Scene["NightmareScreen"] = new Filter(new NightmareScreenShader
                 (ModContent.Request<Effect>("Coralite/Effects/GlowingMarblingBlack",
                 AssetRequestMode.ImmediateLoad), "Marbling"), EffectPriority.VeryHigh);

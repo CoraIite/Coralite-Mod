@@ -20,6 +20,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public StickyGel()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
+
             Main.QueueMainThreadAction(() =>
             {
                 effect = new BasicEffect(Main.instance.GraphicsDevice);

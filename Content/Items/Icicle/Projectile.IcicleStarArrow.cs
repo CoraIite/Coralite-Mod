@@ -21,6 +21,11 @@ namespace Coralite.Content.Items.Icicle
 
         public IcicleStarArrow()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
+
             Main.QueueMainThreadAction(() =>
             {
                 effect = new BasicEffect(Main.instance.GraphicsDevice);
