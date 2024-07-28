@@ -34,7 +34,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <param name="entity"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public virtual bool CanInsert_SpecialCheck(MagikeTileEntity entity,ref string text)
+        public virtual bool CanInsert_SpecialCheck(MagikeTileEntity entity, ref string text)
         {
             return true;
         }

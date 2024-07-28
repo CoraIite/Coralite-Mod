@@ -184,7 +184,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 是否已经装满
         /// </summary>
         /// <returns></returns>
-        public bool FillUp() => MaxConnect == _receivers.Count;
+        public bool FillUp() => MaxConnect >= _receivers.Count;
 
         /// <summary>
         /// 啥也没链接
@@ -207,9 +207,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             for (int i = _receivers.Count - 1; i >= 0; i--)
             {
+                if (i + 1 > MaxConnect)
+                    _receivers.RemoveAt(i);
+
                 Vector2 targetPos = Helper.GetMagikeTileCenter(_receivers[i]);
                 if (Vector2.Distance(selfPos, targetPos) > ConnectLength)
-                    _receivers.Remove(_receivers[i]);
+                    _receivers.RemoveAt(i);
             }
         }
 

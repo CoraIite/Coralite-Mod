@@ -122,6 +122,7 @@ namespace Coralite.Helpers
 
         /// <summary>
         /// 使用两个位置数位置获取物块左上角的位置
+        /// 只在没有物块时返回<see cref="null"/>
         /// </summary>
         /// <param name="i"></param>
         /// <param name="j"></param>
