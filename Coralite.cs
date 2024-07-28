@@ -87,7 +87,7 @@ namespace Coralite
             for (int k = 0; k < loadCache.Count; k++)
             {
                 loadCache[k].Load();
-                SetLoadingText("Loading " + loadCache[k].GetType().Name);     //使用反射来显示加载的内容，但我暂时不需要（
+                //SetLoadingText("Loading " + loadCache[k].GetType().Name);
             }
         }
 
