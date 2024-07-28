@@ -16,7 +16,7 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         List<Component> ComponentsCache { get; }
 
         public bool HasComponent(int componentId)
-            => Components[componentId] != null;
+            => Components.ContainsKey(componentId);
 
         /// <summary>
         /// 向实体内加入组件
@@ -51,6 +51,19 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
 
             ComponentsCache.Remove(component);
             component.OnRemove(this);
+        }
+
+        /// <summary>
+        /// 移除一个组件
+        /// </summary>
+        /// <param name="componentId"></param>
+        /// <param name="currentComponent"></param>
+        public void RemoveComponent(int componentId, Component currentComponent)
+        {
+            Components[componentId].Remove(currentComponent);
+
+            ComponentsCache.Remove(currentComponent);
+            currentComponent.OnRemove(this);
         }
 
         /// <summary>

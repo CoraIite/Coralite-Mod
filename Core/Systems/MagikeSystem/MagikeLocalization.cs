@@ -101,9 +101,9 @@ namespace Coralite.Core.Systems.MagikeSystem
             public const int FilterFillUp = 1;
             public const int InsertSuccess = 2;
 
+            public const int UpgradeableNotFound = 3;
 
-
-            public const int Count = 3;
+            public const int Count = 4;
         }
 
         public void LoadFilter()
@@ -112,6 +112,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             Filter[FilterID.ApparatusNotFound] = this.GetLocalization("ApparatusNotFound");
             Filter[FilterID.FilterFillUp] = this.GetLocalization("FilterFillUp");
             Filter[FilterID.InsertSuccess] = this.GetLocalization("InsertSuccess");
+            Filter[FilterID.UpgradeableNotFound] = this.GetLocalization("UpgradeableNotFound");
         }
 
         public static string GetFilterText(int id)

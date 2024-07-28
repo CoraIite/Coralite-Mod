@@ -96,16 +96,19 @@ namespace Coralite.Content.Items.Magike.Refractors
     {
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
-            MaxConnectBase = 5;
+            MaxConnectBase = 1;
 
             switch (incomeLevel)
             {
                 case MagikeApparatusLevel.None:
-                    //MaxConnectBase = 0;
+                    MaxConnectBase = 0;
                     UnitDeliveryBase = 0;
-                    ConnectLengthBase = 15 * 16;
+                    SendDelayBase = 1_0000_0000;//随便填个大数
+                    ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.MagicCrystal:
+                    UnitDeliveryBase = 10;
+                    SendDelayBase = 60 * 5;
                     ConnectLengthBase = 15 * 16;
                     break;
                 case MagikeApparatusLevel.Crimson:

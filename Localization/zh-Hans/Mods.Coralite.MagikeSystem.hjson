@@ -13,6 +13,10 @@ MagikeSystem: {
 	ConnectFail_TooFar: 接收器距离太远！
 	ConnectFail_CantBeSelf: 不能连接自己！
 	ConnectFail_ConnectorFillUp: 发送器容量已满！
+	// ApparatusNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusNotFound
+	// FilterFillUp: Mods.Coralite.MagikeSystem.MagikeSystem.FilterFillUp
+	// InsertSuccess: Mods.Coralite.MagikeSystem.MagikeSystem.InsertSuccess
+	// UpgradeableNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.UpgradeableNotFound
 }
 
 C0_P1_BookName: {

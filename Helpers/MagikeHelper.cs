@@ -1,6 +1,8 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -154,10 +156,25 @@ namespace Coralite.Helpers
             return new Point16(i - x, j - y);
         }
 
+        /// <summary>
+        /// 获取魔能仪器的<see cref="TileObjectData"/>，对于没有这个的会返回默认值<br></br>
+        /// 使用<see cref="Main.tileSolidTop"/>来判断是否有特殊的摆放形式
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <param name="alternateData"></param>
+        /// <param name="alternate"></param>
         public static void GetMagikeAlternateData(int i, int j, out TileObjectData alternateData, out int alternate)
         {
             Tile t = Main.tile[i, j];
             TileObjectData tileData = TileObjectData.GetTileData(t.TileType, 0, 0);
+
+            if (Main.tileSolidTop[t.TileType])
+            {
+                alternateData = tileData;
+                alternate = -1;
+                return;
+            }
 
             int width = tileData.Width;
             int height = tileData.Height;
@@ -184,15 +201,143 @@ namespace Coralite.Helpers
             }
         }
 
-        public static int? GetFrameX(Point16 topLeft)
+        //public static int? GetFrameX(Point16 topLeft)
+        //{
+        //    Tile tile = Framing.GetTileSafely(topLeft);
+        //    if (!tile.HasTile)
+        //        return null;
+
+        //    TileObjectData data = TileObjectData.GetTileData(tile);
+
+        //    return tile.TileFrameX / (data.Width * 18);
+        //}
+
+        public static void DrawRectangleFrame(SpriteBatch spriteBatch,Point16 p1,Point16 p2)
         {
-            Tile tile = Framing.GetTileSafely(topLeft);
-            if (!tile.HasTile)
-                return null;
+            int x=Math.Min(p1.X, p2.X);
+            int y=Math.Min(p1.Y, p2.Y);
 
-            TileObjectData data = TileObjectData.GetTileData(tile);
+            DrawRectangleFrame(spriteBatch, new Rectangle(x, y, Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y)));
+        }
 
-            return tile.TileFrameX / (data.Width * 18);
+        /// <summary>
+        /// 绘制一个矩形区域
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="rect"></param>
+        public static void DrawRectangleFrame(SpriteBatch spriteBatch, Rectangle rect)
+        {
+            int width = rect.Width+1;
+            int height =  rect.Height+1;
+
+            for (int i = 0; i < width; i++)
+                for (int j = 0; j < height; j++)
+                {
+                    if (!GetFrame(i, j, width, height, out Point framePoint))
+                        continue;
+
+                    Texture2D mainTex = MagikeSystem.SelectFrame.Value;
+                    Rectangle frame = mainTex.Frame(4, 4, framePoint.X, framePoint.Y);
+
+                    Vector2 pos = new Vector2(rect.X + i, rect.Y + j) * 16 - Main.screenPosition;
+                    Color c = Coralite.Instance.MagicCrystalPink;
+                    c.A = 200;
+
+                    spriteBatch.Draw(mainTex, pos, frame, c);
+                }
+        }
+
+        private static bool GetFrame(int currentX, int currentY, int maxX, int maxY, out Point framePoint)
+        {
+            framePoint = new Point();
+            bool maxXIsZero = maxX == 1;
+            bool maxYIsZero = maxY == 1;
+
+            bool topBar = currentY == 0;
+            bool bottomBar = currentY == maxY-1;
+
+            bool leftBar = currentX == 0;
+            bool rightBar = currentX == maxX-1;
+
+            if (maxXIsZero && maxYIsZero)
+            {
+                //对应贴图为右下角的单块
+                framePoint = new Point(3, 3);
+                return true;
+            }
+
+            if (maxXIsZero)
+            {
+                //对应贴图为最右方的一条
+                framePoint.X = 3;
+
+                if (topBar)//右上
+                    framePoint.Y = 0;
+                else if (bottomBar)//右边下
+                    framePoint.Y = 2;
+                else//右边中间
+                    framePoint.Y = 1;
+
+                return true;
+            }
+
+            if (maxYIsZero)
+            {
+                //对应贴图为最下方的一条
+                framePoint.Y = 3;
+
+                if (leftBar)//左下
+                    framePoint.X = 0;
+                else if (rightBar)//下面中
+                    framePoint.X = 2;
+                else//下面右
+                    framePoint.X = 1;
+
+                return true;
+            }
+
+            //正常部分，中心不绘制
+
+            if (topBar)//最上面一条
+            {
+                framePoint.Y = 0;
+
+                if (leftBar)//左边拐角
+                    framePoint.X = 0;
+                else if (rightBar)//右边拐角
+                    framePoint.X = 2;
+                else//上面一条
+                    framePoint.X = 1;                
+
+                return true;
+            }
+            else if (bottomBar)//最下面一条
+            {
+                framePoint.Y = 2;
+
+                if (leftBar)//左边拐角
+                    framePoint.X = 0;
+                else if (rightBar)//右边拐角
+                    framePoint.X = 2;
+                else//上面一条
+                    framePoint.X = 1;
+
+                return true;
+            }
+            else if (leftBar)
+            {
+                framePoint.X = 0;
+                framePoint.Y = 1;
+                return true;
+            }
+            else if (rightBar)
+            {
+                framePoint.X = 2;
+                framePoint.Y = 1;
+                return true;
+            }
+
+            return false;
         }
 
         public static void SpawnDustOnSend(int selfWidth, int selfHeight, Point16 Position, IMagikeContainer container, Color dustColor, int dustType = DustID.Teleporter)

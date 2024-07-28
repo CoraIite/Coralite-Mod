@@ -12,6 +12,8 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static Asset<Texture2D>[] ConnectLines { get; private set; }
         public static Asset<Texture2D>[] ConnectUI { get; private set; }
 
+        public static Asset<Texture2D> SelectFrame { get; private set; }
+
         public enum ConnectLineType
         {
             Basic = 0,
@@ -36,6 +38,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             LoadConnectLine();
             LoadConnectUI();
 
+            SelectFrame= Request<Texture2D>(AssetDirectory.Misc + "SelectFrame");
         }
 
         public static void LoadConnectLine()
@@ -63,6 +66,8 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             ConnectLines = null;
             ConnectUI = null;
+
+            SelectFrame = null;
         }
 
         #endregion

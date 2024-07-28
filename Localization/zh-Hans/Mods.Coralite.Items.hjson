@@ -4487,3 +4487,8 @@ MagicCrystalFishingRod: {
 	DisplayName: 魔力水晶钓竿
 	Tooltip: ""
 }
+
+MagicCrystalPolarizedFilter: {
+	// DisplayName: Magic Crystal Polarized Filter
+	// Tooltip: ""
+}

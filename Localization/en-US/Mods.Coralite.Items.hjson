@@ -4421,3 +4421,8 @@ MagicCrystalFishingRod: {
 	DisplayName: Magic Crystal Fishing Rod
 	Tooltip: ""
 }
+
+MagicCrystalPolarizedFilter: {
+	DisplayName: Magic Crystal Polarized Filter
+	Tooltip: ""
+}

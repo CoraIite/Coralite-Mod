@@ -12,6 +12,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public abstract int ItemType { get; }
 
+        public override void Update(IEntity entity) { }
+
         public bool CanInsert(MagikeTileEntity entity, out string text)
         {
             text = "";
@@ -25,6 +27,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (!PostCheckCanInsert(entity, ref text))
                 return false;
 
+            text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.InsertSuccess);
             return true;
         }
 
@@ -77,8 +80,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 RestoreComponentValues(entity.ComponentsCache[i]);
         }
 
+        /// <summary>
+        /// 改变组件的属性
+        /// </summary>
+        /// <param name="component"></param>
         public virtual void ChangeComponentValues(Component component) { }
 
+        /// <summary>
+        /// 还原组件的属性
+        /// </summary>
+        /// <param name="component"></param>
         public virtual void RestoreComponentValues(Component component) { }
     }
 }

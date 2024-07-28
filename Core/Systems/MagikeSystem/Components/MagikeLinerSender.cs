@@ -184,7 +184,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 是否已经装满
         /// </summary>
         /// <returns></returns>
-        public bool FillUp() => MaxConnect >= _receivers.Count;
+        public bool FillUp() => MaxConnect <= _receivers.Count;
 
         /// <summary>
         /// 啥也没链接

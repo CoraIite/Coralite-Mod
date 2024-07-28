@@ -115,6 +115,8 @@ namespace Coralite.Core
         public const string MagikeRefractors = MagikeItems + "Refractors/";
         public const string MagikeFactories = MagikeItems + "Factories/";
 
+        public const string MagikeFilters = MagikeItems + "Filters/";
+
         public const string Seeds = BotanicalItems + "Seeds/";
         public const string Plants = BotanicalItems + "Plants/";
 
