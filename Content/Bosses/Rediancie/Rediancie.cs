@@ -180,6 +180,10 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void Load()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
             RediancieFollower.tex1 = Request<Texture2D>(AssetDirectory.Rediancie + "RediancieFollower1");
             RediancieFollower.tex2 = Request<Texture2D>(AssetDirectory.Rediancie + "RediancieFollower2");
 
