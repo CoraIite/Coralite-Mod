@@ -17,6 +17,11 @@ namespace Coralite.Content.Particles
 
         public FlowLine()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
+
             Main.QueueMainThreadAction(() =>
             {
                 effect = new BasicEffect(Main.instance.GraphicsDevice);

@@ -419,6 +419,11 @@ namespace Coralite.Content.Items.Donator
 
         public PerishMissile()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
+
             Main.QueueMainThreadAction(() =>
             {
                 effect = new BasicEffect(Main.instance.GraphicsDevice);

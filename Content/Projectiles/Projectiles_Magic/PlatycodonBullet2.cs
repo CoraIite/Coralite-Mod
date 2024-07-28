@@ -17,6 +17,11 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         public PlatycodonBullet2()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
+
             Main.QueueMainThreadAction(() =>
             {
                 effect = new BasicEffect(Main.instance.GraphicsDevice);

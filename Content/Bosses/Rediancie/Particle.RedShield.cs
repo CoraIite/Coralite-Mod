@@ -18,6 +18,10 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void Load()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
             flowTex = ModContent.Request<Texture2D>(AssetDirectory.Rediancie + "RedShield_Flow");
         }
 

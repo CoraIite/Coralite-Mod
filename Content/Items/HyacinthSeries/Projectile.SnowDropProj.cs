@@ -243,6 +243,11 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public SnowSpirit()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
+
             Main.QueueMainThreadAction(() =>
             {
                 effect = new BasicEffect(Main.instance.GraphicsDevice);

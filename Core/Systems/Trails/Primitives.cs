@@ -18,7 +18,7 @@ namespace Coralite.Core.Systems.Trails
         {
             this.device = device;
 
-            if (device != null)
+            if (device != null && !Main.dedServ)
             {
                 Main.QueueMainThreadAction(() =>
                 {

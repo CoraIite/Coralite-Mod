@@ -13,9 +13,6 @@ namespace Coralite.Core.Loaders
 
         public override void PostSetupContent()
         {
-            if (Main.dedServ)
-                return;
-
             Mod Mod = Coralite.Instance;
 
             CurrencySystemIDs = new Dictionary<CustomCurrencySystem, int>();

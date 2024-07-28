@@ -22,6 +22,11 @@ namespace Coralite.Content.Particles
 
         public DizzyStar()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
+
             Main.QueueMainThreadAction(() =>
             {
                 effect = new BasicEffect(Main.instance.GraphicsDevice);

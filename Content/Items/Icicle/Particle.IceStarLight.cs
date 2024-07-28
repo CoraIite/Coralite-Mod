@@ -19,6 +19,11 @@ namespace Coralite.Content.Items.Icicle
 
         public IceStarLight()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
+
             Main.QueueMainThreadAction(() =>
             {
                 effect = new BasicEffect(Main.instance.GraphicsDevice);

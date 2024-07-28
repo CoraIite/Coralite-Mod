@@ -145,6 +145,10 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public SpecialCraftParticle()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
             Main.QueueMainThreadAction(() =>
             {
                 effect = new BasicEffect(Main.instance.GraphicsDevice);

@@ -20,6 +20,11 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         public ref float Alpha => ref Projectile.localAI[0];
         public PlatycodonBullet1()
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
+
             Main.QueueMainThreadAction(() =>
             {
                 effect = new BasicEffect(Main.instance.GraphicsDevice);
