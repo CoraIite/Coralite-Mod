@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Coralite.Content.Items.MagikeSeries1
 {
@@ -35,7 +36,6 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override bool CanUseItem(Player player)
         {
             Point16 pos = Main.MouseWorld.ToTileCoordinates16();
-            Rectangle rectangle = Helper.QuickMouseRectangle();
 
             //右键打开UI
             if (player.altFunctionUse == 2 && MagikeConnectUI.visible)
@@ -58,8 +58,13 @@ namespace Coralite.Content.Items.MagikeSeries1
                     return false;
                 }
 
-                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink,
-                    MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_Found));
+                PopupText.NewText(new AdvancedPopupRequest()
+                {
+                    Color = Coralite.Instance.MagicCrystalPink,
+                    Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_Found),
+                    DurationInFrames = 60,
+                    Velocity = -Vector2.UnitY
+                }, Main.MouseWorld);
 
                 Point16 p = entity.Position;
                 Projectile.NewProjectile(new EntitySource_ItemUse(Main.LocalPlayer, Main.LocalPlayer.HeldItem), p.ToWorldCoordinates(8, 8),
@@ -70,9 +75,13 @@ namespace Coralite.Content.Items.MagikeSeries1
             else
             {
                 Helper.PlayPitched("UI/Error", 0.4f, 0, player.Center);
-
-                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink,
-                    MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_NotFound));
+                PopupText.NewText(new AdvancedPopupRequest()
+                {
+                    Color = Coralite.Instance.MagicCrystalPink,
+                    Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_NotFound),
+                    DurationInFrames = 60,
+                    Velocity = -Vector2.UnitY
+                }, Main.MouseWorld);
             }
 
             return true;
@@ -145,15 +154,19 @@ namespace Coralite.Content.Items.MagikeSeries1
             {
                 do
                 {
-                    var rect = Helper.QuickMouseRectangle();
-
                     //检测是否有接收者
                     if (!hasReceiver)
                     {
                         Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
 
-                        CombatText.NewText(rect, Coralite.Instance.MagicCrystalPink,
-                            MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseReceiver_NotFound));
+                        PopupText.NewText(new AdvancedPopupRequest()
+                        {
+                            Color = Coralite.Instance.MagicCrystalPink,
+                            Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseReceiver_NotFound),
+                            DurationInFrames = 60,
+                            Velocity = -Vector2.UnitY
+                        }, Main.MouseWorld);
+
                         break;
                     }
 
@@ -161,13 +174,25 @@ namespace Coralite.Content.Items.MagikeSeries1
                     {
                         Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
 
-                        CombatText.NewText(rect, Coralite.Instance.MagicCrystalPink, failText);
+                        PopupText.NewText(new AdvancedPopupRequest()
+                        {
+                            Color = Coralite.Instance.MagicCrystalPink,
+                            Text = failText,
+                            DurationInFrames = 60,
+                            Velocity = -Vector2.UnitY
+                        }, Main.MouseWorld);
+
                         break;
                     }
 
                     senderComponent.Connect(receiver.Position);
-                    CombatText.NewText(rect, Coralite.Instance.MagicCrystalPink,
-                        MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.Connect_Success));
+                    PopupText.NewText(new AdvancedPopupRequest()
+                    {
+                        Color = Coralite.Instance.MagicCrystalPink,
+                        Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.Connect_Success),
+                        DurationInFrames = 60,
+                        Velocity = -Vector2.UnitY
+                    }, Main.MouseWorld);
 
                     Helper.PlayPitched("Fairy/CursorExpand", 0.4f, 0, Owner.Center);
 

@@ -3068,36 +3068,12 @@ MedusaLightArmor: {
 MedusaMask: {
 	DisplayName: Medusa Mask
 	Tooltip: +6% Ranged Damage
-	NotHasMedusaSoul: Soul of Medusa: Triggers when at least 2 sets are equipped
-	MedusaSoul2Part:
-		'''
-		Soul of Medusa: Deals more damage to enemies at a distance,
-		However, damage to nearby enemies is reduced
-		[c/807b7d:Up to the increase] [c/9e82b5:50%] [c/807b7d:damage]
-		[c/807b7d:Reduced at most] [c/9e82b5:50%] [c/807b7d:damage]
-		'''
-	MedusaSoul3Part:
-		'''
-		Soul of Medusa: Deals more damage to enemies at a distance,
-		However, damage to nearby enemies is reduced
-		[c/807b7d:Up to the increase] [c/9e82b5:75%] [c/807b7d:damage]
-		[c/807b7d:Reduced at most] [c/9e82b5:30%] [c/807b7d:damage]
-		'''
-	NotHasSplit: Split：Triggers when at least 2 sets are equipped
-	Split2Part:
-		'''
-		Split: Ranged weapons shoot more projectiles
-		[c/807b7d:(2)Piece set]
-		[c/807b7d:Split Rank] [c/9e82b5:+1]
-		[c/807b7d:Damage Correction] [c/9e82b5:65%]
-		'''
-	Split3Part:
-		'''
-		Split: Ranged weapons shoot more projectiles
-		[c/807b7d:(3) Piece set]
-		[c/807b7d:Split Rank] [c/9e82b5:+2]
-		[c/807b7d:Damage Correction] [c/9e82b5:50%]
-		'''
+	NotHasMedusaSoul: "{$Mods.Coralite.Items.MedusaLightArmor.NotHasMedusaSoul}"
+	MedusaSoul2Part: "{$Mods.Coralite.Items.MedusaLightArmor.MedusaSoul2Part}"
+	MedusaSoul3Part: "{$Mods.Coralite.Items.MedusaLightArmor.MedusaSoul3Part}"
+	NotHasSplit: "{$Mods.Coralite.Items.MedusaLightArmor.NotHasSplit}"
+	Split2Part: "{$Mods.Coralite.Items.MedusaLightArmor.Split2Part}"
+	Split3Part: "{$Mods.Coralite.Items.MedusaLightArmor.Split3Part}"
 	MedusaBonus: Stealth Action: 5% increased ranged damage, ranged critical strike chance, and move speed
 }
 
@@ -3108,36 +3084,12 @@ MedusaSlippers: {
 		+6% Ranged Damage
 		+10% move speed
 		'''
-	NotHasMedusaSoul: Soul of Medusa: Triggers when at least 2 sets are equipped
-	MedusaSoul2Part:
-		'''
-		Soul of Medusa: Deals more damage to enemies at a distance,
-		However, damage to nearby enemies is reduced
-		[c/807b7d:Up to the increase] [c/9e82b5:50%] [c/807b7d:damage]
-		[c/807b7d:Reduced at most] [c/9e82b5:50%] [c/807b7d:damage]
-		'''
-	MedusaSoul3Part:
-		'''
-		Soul of Medusa: Deals more damage to enemies at a distance,
-		However, damage to nearby enemies is reduced
-		[c/807b7d:Up to the increase] [c/9e82b5:75%] [c/807b7d:damage]
-		[c/807b7d:Reduced at most] [c/9e82b5:30%] [c/807b7d:damage]
-		'''
-	NotHasSplit: Split: Triggers when at least 2 sets are equipped
-	Split2Part:
-		'''
-		Split: Ranged weapons shoot more projectiles
-		[c/807b7d:(2)Piece set]
-		[c/807b7d:Split Rank] [c/9e82b5:+1]
-		[c/807b7d:Damage Correction] [c/9e82b5:65%]
-		'''
-	Split3Part:
-		'''
-		Split: Ranged weapons shoot more projectiles
-		[c/807b7d:(3) Piece set]
-		[c/807b7d:Split Rank] [c/9e82b5:+2]
-		[c/807b7d:Damage Correction] [c/9e82b5:50%]
-		'''
+	NotHasMedusaSoul: "{$Mods.Coralite.Items.MedusaLightArmor.NotHasMedusaSoul}"
+	MedusaSoul2Part: "{$Mods.Coralite.Items.MedusaLightArmor.MedusaSoul2Part}"
+	MedusaSoul3Part: "{$Mods.Coralite.Items.MedusaLightArmor.MedusaSoul3Part}"
+	NotHasSplit: "{$Mods.Coralite.Items.MedusaLightArmor.NotHasSplit}"
+	Split2Part: "{$Mods.Coralite.Items.MedusaLightArmor.Split2Part}"
+	Split3Part: "{$Mods.Coralite.Items.MedusaLightArmor.Split3Part}"
 }
 
 Arachnopyre: {
@@ -3967,7 +3919,7 @@ ChocomintIce: {
 
 Aquamarine: {
 	DisplayName: Aquamarine
-	Tooltip: Extract raw gemstones from primary gemstones using a refiner
+	Tooltip: "{$Mods.Coralite.Items.Pyrope.Tooltip}"
 }
 
 AquamarineBracelet: {
@@ -3990,7 +3942,7 @@ AmethystNecklace: {
 
 PinkDiamond: {
 	DisplayName: Pink Diamond
-	Tooltip: Extract raw gemstones from primary gemstones using a refiner
+	Tooltip: "{$Mods.Coralite.Items.Pyrope.Tooltip}"
 }
 
 PinkDiamondRose: {
@@ -4074,7 +4026,7 @@ PeridotTalisman: {
 
 Peridot: {
 	DisplayName: Peridot
-	Tooltip: Use a refining machine to extract high-grade raw gemstones
+		{$Mods.Coralite.Items.Zumurud.Tooltip}
 }
 
 SapphireHairpin: {
@@ -4090,7 +4042,7 @@ SilkAgate: {
 	DisplayName: Silk Agate
 	Tooltip:
 		'''
-		Use a refining machine to extract high-grade raw gemstones
+		{$Mods.Coralite.Items.Zumurud.Tooltip}
 		+12% gem weapon attack speed
 		'''
 }
@@ -4146,7 +4098,7 @@ AlloySpring: {
 		'''
 		Increase flying shield dash speed
 		Increases damage based on defense while dashing, up to a maximum of 10%
-		Shield dashing and blocking have become more free
+		{$Mods.Coralite.Items.FlyingShieldBattleGuide.Tooltip}
 		'''
 }
 
@@ -4156,7 +4108,7 @@ GravitationalCatapult: {
 		'''
 		Dramatically increase flying shield dash speed and dash time
 		Increases damage based on defense while sprinting, up to a maximum of 20%
-		Shield dashing and blocking have become more free
+		{$Mods.Coralite.Items.FlyingShieldBattleGuide.Tooltip}
 		'''
 }
 
@@ -4424,5 +4376,65 @@ MagicCrystalFishingRod: {
 
 MagicCrystalPolarizedFilter: {
 	DisplayName: Magic Crystal Polarized Filter
-	Tooltip: ""
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+BasicFilter: {
+	DisplayName: Basic Filter
+	Tooltip: A basic filter with different circles etched into it can give it a different function
+}
+
+CorruptionPolarizedFilter: {
+	DisplayName: Corruption Polarized Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+CrimsonPolarizedFilter: {
+	DisplayName: Crimson Polarized Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+CrystallineMagikePolarizedFilter: {
+	DisplayName: Crystalline Magike Polarized Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+FeatherPolarizedFilter: {
+	DisplayName: Feather Polarized Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+GlistentPolarizedFilter: {
+	DisplayName: Glistent Polarized Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+HallowPolarizedFilter: {
+	DisplayName: Hallow Polarized Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+HolyLightPolarizedFilter: {
+	DisplayName: Holy Light Polarized Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+IciclePolarizedFilter: {
+	DisplayName: Icicle Polarized Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+ShadowPolarizedFilter: {
+	DisplayName: Shadow Polarized Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+SoulPolarizedFilter: {
+	DisplayName: Soul Polarized Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+SplendorMagicorePolarizedFilter: {
+	DisplayName: Splendor Magicore Polarized Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }

@@ -5,19 +5,24 @@ MagikeSystem: {
 	NewKnowledgeUnlocked: 魔能辞典中解锁了新的知识
 	ChooseSender_Found: 已选择魔能发送器
 	ChooseSender_NotFound: 未找到魔能发送器！
-	ChooseReceiver_NotFound: 未找到接收器！
+	ChooseReceiver_NotFound: 未找到魔能接收器！
 	Connect_TooFar: 接收器距离太远！
 	ChooseReceiver_Success: 成功建立连接
 	Deconnect: 成功取消连接
 	BrilliantConnect: 成功连接{0}个仪器，未成功连接{1}个仪器
 	ConnectFail_TooFar: 接收器距离太远！
 	ConnectFail_CantBeSelf: 不能连接自己！
-	ConnectFail_ConnectorFillUp: 发送器容量已满！
+	ConnectFail_ConnectorFillUp: 魔能发送器容量已满！
 	ApparatusNotFound: 未找到魔能仪器！
 	FilterFillUp: 仪器内滤镜已满！
 	InsertSuccess: 成功插入滤镜
 	UpgradeableNotFound: 未找到可升级仪器！
 	CantUpgrade: 无法升级！
+	PolarizedFilterTooltip:
+		'''
+		左键选择区域，松手后为区域内的魔能仪器插入滤镜并将其偏振至滤镜等级
+		右键取消选择
+		'''
 }
 
 C0_P1_BookName: {

@@ -1,18 +1,21 @@
 ﻿using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
-using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 {
     public abstract class FilterItem : ModItem
     {
+        public abstract Color FilterColor { get; }
+
         /// <summary>
         /// 获取滤镜组件
         /// </summary>
@@ -34,6 +37,8 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
         {
             Point16 basePoint = Main.MouseWorld.ToTileCoordinates16();
             Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, 0, 0, player.whoAmI, basePoint.X, basePoint.Y);
+
+            Helper.PlayPitched("UI/Select", 0.4f, 0, player.Center);
             return false;
         }
     }
@@ -79,7 +84,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
             if (Owner.channel)
             {
-                Owner.itemTime = Owner.itemAnimation = 5;
+                Owner.itemTime = Owner.itemAnimation = 7;
                 TargetPoint = Main.MouseWorld.ToTileCoordinates16();
 
                 //限制范围
@@ -144,7 +149,8 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                         placed = true;
                         filter.Insert(entity);
 
-                        //特效部分TODO
+                        //特效部分
+                        TileRenewalController.Spawn(currentTopLeft.Value, (Owner.HeldItem.ModItem  as FilterItem).FilterColor);
 
                         //消耗滤镜
                         Owner.HeldItem.stack--;
@@ -154,27 +160,38 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                             return;
                         }
                     }
-
-                    if (string.IsNullOrEmpty(text))
-                        continue;
-
-                    CombatText.NewText(Utils.CenteredRectangle(Helper.GetMagikeTileCenter(currentTopLeft.Value), Vector2.One), Coralite.Instance.MagicCrystalPink,
-                        text);
+                    else if (!string.IsNullOrEmpty(text))
+                        PopupText.NewText(new AdvancedPopupRequest()
+                        {
+                            Color = Coralite.Instance.MagicCrystalPink,
+                            Text = text,
+                            DurationInFrames = 60,
+                            Velocity=-Vector2.UnitY
+                        }, Helper.GetMagikeTileCenter(currentTopLeft.Value)) ;
                 }
 
-            if (!placed)
+            if (placed)
             {
-                CombatText.NewText(Utils.CenteredRectangle(TargetPoint.ToVector2(), Vector2.One), Coralite.Instance.MagicCrystalPink,
-                    MagikeSystem.GetFilterText(MagikeSystem.FilterID.ApparatusNotFound));
+                Helper.PlayPitched("UI/GetSkill", 0.4f, 0, Owner.Center);
+
+                PopupText.NewText(new AdvancedPopupRequest()
+                {
+                    Color = Coralite.Instance.MagicCrystalPink,
+                    Text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.InsertSuccess),
+                    DurationInFrames = 60,
+                    Velocity = -Vector2.UnitY
+                }, TargetPoint.ToVector2());
             }
+            else
+                Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
-            MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint);
+            if (Owner.HeldItem.ModItem is FilterItem filterItem)
+                MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, filterItem.FilterColor);
         }
     }
-
 }

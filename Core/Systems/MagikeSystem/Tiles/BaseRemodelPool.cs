@@ -10,7 +10,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 
-namespace Coralite.Core.Systems.MagikeSystem.Tile
+namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
     public abstract class BaseRemodelPool : ModTile
     {

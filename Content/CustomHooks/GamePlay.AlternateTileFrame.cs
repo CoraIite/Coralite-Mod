@@ -1,4 +1,4 @@
-﻿using Coralite.Core.Systems.MagikeSystem.Tile;
+﻿using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using System.Reflection;
 using Terraria;

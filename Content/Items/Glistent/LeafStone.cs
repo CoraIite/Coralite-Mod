@@ -3,11 +3,11 @@ using Coralite.Core.Prefabs.Items;
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Materials
+namespace Coralite.Content.Items.Glistent
 {
     public class LeafStone : BaseMaterial  //, IMagikeRemodelable
     {
-        public LeafStone() : base(9999, Item.sellPrice(0, 0, 0, 50), ItemRarityID.Green, AssetDirectory.Materials) { }
+        public LeafStone() : base(9999, Item.sellPrice(0, 0, 0, 50), ItemRarityID.Green, AssetDirectory.GlistentItems) { }
 
         public override void AddRecipes()
         {

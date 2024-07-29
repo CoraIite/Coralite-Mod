@@ -6,11 +6,11 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ObjectData;
 
-namespace Coralite.Content.Items.Materials
+namespace Coralite.Content.Items.Glistent
 {
     public class GlistentBar : BaseMaterial  //, IMagikePolymerizable
     {
-        public GlistentBar() : base(9999, Item.sellPrice(0, 0, 5, 50), ItemRarityID.Green, AssetDirectory.Materials) { }
+        public GlistentBar() : base(9999, Item.sellPrice(0, 0, 5, 50), ItemRarityID.Green, AssetDirectory.GlistentItems) { }
 
         public override void SetStaticDefaults()
         {
@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.Materials
 
     public class GlistentBarTile : ModTile
     {
-        public override string Texture => AssetDirectory.Materials + Name;
+        public override string Texture => AssetDirectory.GlistentItems + Name;
 
         public override void SetStaticDefaults()
         {

@@ -7,7 +7,7 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 
-namespace Coralite.Core.Systems.MagikeSystem.Tile
+namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
     public abstract class BaseRefractorTile(int width, int height, Color mapColor, int dustType, int minPick = 0, bool topSoild = false)
         : BaseMagikeTile(width, height, mapColor, dustType, minPick, topSoild)
@@ -16,7 +16,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
         {
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset;
-            int halfHeight = Math.Max( tileRect.Height / 2,tileRect.Width/2);
+            int halfHeight = Math.Max(tileRect.Height / 2, tileRect.Width / 2);
             float rotationTop = rotation + MathHelper.PiOver2;
 
             //虽然一般不会没有 但是还是检测一下

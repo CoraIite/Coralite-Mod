@@ -3,21 +3,27 @@ MagikeSystem: {
 	learnedMagikeBase: After learning "Pages: Basic Magike".
 	DecraftCondition: Mods.Coralite.MagikeSystem.MagikeSystem.DecraftCondition
 	NewKnowledgeUnlocked: New knowledge unlocked
-	ChooseSender_Found: 已选择魔能发送器
-	ChooseSender_NotFound: 未找到魔能发送器
-	ChooseReceiver_NotFound: 未找到接收器
-	Connect_TooFar: 接收器距离太远
-	ChooseReceiver_Success: 成功建立连接
-	Deconnect: 成功取消连接
-	BrilliantConnect: 成功连接{0}个仪器，未成功连接{1}个仪器
-	ConnectFail_TooFar: Mods.Coralite.MagikeSystem.MagikeSystem.ConnectFail_TooFar
-	ConnectFail_CantBeSelf: Mods.Coralite.MagikeSystem.MagikeSystem.ConnectFail_CantBeSelf
-	ConnectFail_ConnectorFillUp: Mods.Coralite.MagikeSystem.MagikeSystem.ConnectFail_ConnectorFillUp
-	ApparatusNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusNotFound
-	FilterFillUp: Mods.Coralite.MagikeSystem.MagikeSystem.FilterFillUp
-	InsertSuccess: Mods.Coralite.MagikeSystem.MagikeSystem.InsertSuccess
-	UpgradeableNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.UpgradeableNotFound
-	CantUpgrade: Mods.Coralite.MagikeSystem.MagikeSystem.CantUpgrade
+	ChooseSender_Found: The Magike Sender has been selected
+	ChooseSender_NotFound: No Magike Sender found!
+	ChooseReceiver_NotFound: No Magike Receiver found!
+	Connect_TooFar: The receiver is too far away!
+	ChooseReceiver_Success: Connect successfully
+	Deconnect: Disconnect successfully
+	BrilliantConnect: {0} instruments were successfully connected, and {1} instruments were not successfully connected
+	ConnectFail_TooFar: The receiver is too far away!
+	ConnectFail_CantBeSelf: Can't connect yourself!
+	ConnectFail_ConnectorFillUp: The Magike Sender capacity is full!
+	ApparatusNotFound: No Magike Apparatus found!
+	FilterFillUp: The filter is full!
+	InsertSuccess: The filter was successfully inserted
+	UpgradeableNotFound: No upgradeable apparatus found!
+	CantUpgrade: Unable to upgrade!
+	PolarizedFilterTooltip: 
+		'''
+		Left-click to select the area
+		release it to insert a filter into the Magike Apparatus in the area and polarize it to the filter level
+		Right-click to deselect
+		'''
 }
 
 C0_P1_BookName: {

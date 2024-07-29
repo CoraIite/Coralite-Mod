@@ -219,12 +219,12 @@ namespace Coralite.Helpers
         //    return tile.TileFrameX / (data.Width * 18);
         //}
 
-        public static void DrawRectangleFrame(SpriteBatch spriteBatch,Point16 p1,Point16 p2)
+        public static void DrawRectangleFrame(SpriteBatch spriteBatch,Point16 p1,Point16 p2,Color color)
         {
             int x=Math.Min(p1.X, p2.X);
             int y=Math.Min(p1.Y, p2.Y);
 
-            DrawRectangleFrame(spriteBatch, new Rectangle(x, y, Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y)));
+            DrawRectangleFrame(spriteBatch, new Rectangle(x, y, Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y)),color);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="spriteBatch"></param>
         /// <param name="rect"></param>
-        public static void DrawRectangleFrame(SpriteBatch spriteBatch, Rectangle rect)
+        public static void DrawRectangleFrame(SpriteBatch spriteBatch, Rectangle rect,Color color)
         {
             int width = rect.Width+1;
             int height =  rect.Height+1;
@@ -247,10 +247,8 @@ namespace Coralite.Helpers
                     Rectangle frame = mainTex.Frame(4, 4, framePoint.X, framePoint.Y);
 
                     Vector2 pos = new Vector2(rect.X + i, rect.Y + j) * 16 - Main.screenPosition;
-                    Color c = Coralite.Instance.MagicCrystalPink;
-                    c.A = 200;
 
-                    spriteBatch.Draw(mainTex, pos, frame, c);
+                    spriteBatch.Draw(mainTex, pos, frame, color);
                 }
         }
 

@@ -2,22 +2,23 @@
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 
-namespace Coralite.Core.Systems.MagikeSystem.Tile
+namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
-    public abstract class OldBaseRefractorTile : ModTile
+    public abstract class BaseColumnTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeRefractorTiles + Name;
-        public virtual string TopTextureName => AssetDirectory.MagikeRefractorTiles + Name + "_Top";
+        public override string Texture => AssetDirectory.MagikeColumnTiles + Name;
+        public virtual string TopTextureName => AssetDirectory.MagikeColumnTiles + Name + "_Top";
 
         public Asset<Texture2D> TopTexture;
-        public const int FrameWidth = 18;
-        public const int FrameHeight = 18 * 2;
-        public const int halfWidth = 16 / 2;
-        public const int halfHeight = 16 * 2 / 2;
+        public const int FrameWidth = 18 * 2;
+        public const int FrameHeight = 18 * 3;
+        public const int halfWidth = 16 * 2 / 2;
+        public const int halfHeight = 16 * 3 / 2;
         public readonly int HorizontalFrames = 1;
         public readonly int VerticalFrames = 1;
 
@@ -89,19 +90,30 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
             bool direction = tile.TileFrameY / FrameHeight != 0;
             SpriteEffects effects = direction ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
+            // 一些数学魔法，使其随着时间的推移平稳地上下移动
             Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
-            float rotation = 0;
-            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out MagikeSender_Line sender))
+            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out IMagikeContainer container))
             {
-                if (sender.receiverPoints[0] == Point16.NegativeOne)
-                    drawPos += new Vector2(0, halfHeight - 8);
+                if (container.Active)   //如果处于活动状态那么就会上下移动，否则就落在底座上
+                {
+                    const float TwoPi = (float)Math.PI * 2f;
+                    float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
+                    drawPos += new Vector2(0f, offset * 4f);
+                }
                 else
-                    rotation = (sender.receiverPoints[0].ToWorldCoordinates() - p.ToWorldCoordinates()).ToRotation() + 1.57f;
+                    drawPos += new Vector2(0, halfHeight - 16);
             }
 
             // 绘制主帖图
-            spriteBatch.Draw(texture, drawPos, frame, color, rotation, origin, 1f, effects, 0f);
-        }
+            spriteBatch.Draw(texture, drawPos, frame, color, 0f, origin, 1f, effects, 0f);
 
+            // 绘制周期性发光效果
+            //float scale = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 2f) * 0.3f + 0.7f;
+            //Color effectColor = color;
+            //effectColor.A = 0;
+            //effectColor = effectColor * 0.1f * scale;
+            //for (float m = 0f; m < 1f; m += 355f / (678f * (float)Math.PI))
+            //    spriteBatch.Draw(texture, drawPos + (TwoPi * m).ToRotationVector2() * (6f + offset * 2f), frame, effectColor, 0f, origin, 1f, effects, 0f);
+        }
     }
 }

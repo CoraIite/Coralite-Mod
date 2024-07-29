@@ -50,6 +50,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             PolarizedFilter oldFilter = (PolarizedFilter)entity.Components[MagikeComponentID.MagikeFilter].FirstOrDefault(c => c is PolarizedFilter, null);
 
+            if (oldFilter.UpgradeLevel==UpgradeLevel)
+            {
+                text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.CantUpgrade);
+                return false;
+            }
+
             //有就弹出这个
             if (oldFilter != null)
             {

@@ -7,7 +7,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 
-namespace Coralite.Core.Systems.MagikeSystem.Tile
+namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
     public abstract class BaseRefineryTile : ModTile
     {

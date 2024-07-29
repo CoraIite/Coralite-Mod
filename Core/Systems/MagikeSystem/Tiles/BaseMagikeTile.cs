@@ -12,7 +12,7 @@ using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ObjectData;
 
-namespace Coralite.Core.Systems.MagikeSystem.Tile
+namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
     public abstract class BaseMagikeTile(int width, int height, Color mapColor, int dustType, int minPick = 0, bool topSoild = false) : ModTile
     {

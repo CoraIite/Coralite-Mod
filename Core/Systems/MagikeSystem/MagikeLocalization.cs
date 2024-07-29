@@ -18,6 +18,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             LearnedMagikeAdvanced = this.GetLocalization("learnedMagikeAdvanced");
             NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
 
+            this.GetLocalization("PolarizedFilterTooltip");
+
             LoadConnectStaff();
             LoadFilter();
         }

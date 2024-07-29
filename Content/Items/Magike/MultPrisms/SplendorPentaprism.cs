@@ -2,7 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
-using Coralite.Core.Systems.MagikeSystem.Tile;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;

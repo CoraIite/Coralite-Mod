@@ -3136,36 +3136,12 @@ MedusaLightArmor: {
 MedusaMask: {
 	DisplayName: 美杜莎面罩
 	Tooltip: +6% 远程伤害
-	NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
-	MedusaSoul2Part:
-		'''
-		美杜莎之魂：对远处的敌人造成更多伤害，
-		但对近处的敌人伤害降低
-		[c/807b7d:最多增加] [c/9e82b5:15%] [c/807b7d:伤害]
-		[c/807b7d:最多减少] [c/9e82b5:75%] [c/807b7d:伤害]
-		'''
-	MedusaSoul3Part:
-		'''
-		美杜莎之魂：对远处的敌人造成更多伤害，
-		但对近处的敌人伤害降低
-		[c/807b7d:最多增加] [c/9e82b5:25%] [c/807b7d:伤害]
-		[c/807b7d:最多减少] [c/9e82b5:50%] [c/807b7d:伤害]
-		'''
-	NotHasSplit: 分裂：装备至少2件套后触发效果
-	Split2Part:
-		'''
-		分裂：远程武器射出更多的投掷物
-		[c/807b7d:(2)件套]
-		[c/807b7d:分裂等级] [c/9e82b5:+1]
-		[c/807b7d:伤害补正] [c/9e82b5:65%]
-		'''
-	Split3Part:
-		'''
-		分裂：远程武器射出更多的投掷物
-		[c/807b7d:(3)件套]
-		[c/807b7d:分裂等级] [c/9e82b5:+2]
-		[c/807b7d:伤害补正] [c/9e82b5:55%]
-		'''
+	NotHasMedusaSoul: "{$Mods.Coralite.Items.MedusaLightArmor.NotHasMedusaSoul}"
+	MedusaSoul2Part: "{$Mods.Coralite.Items.MedusaLightArmor.MedusaSoul2Part}"
+	MedusaSoul3Part: "{$Mods.Coralite.Items.MedusaLightArmor.MedusaSoul3Part}"
+	NotHasSplit: "{$Mods.Coralite.Items.MedusaLightArmor.NotHasSplit}"
+	Split2Part: "{$Mods.Coralite.Items.MedusaLightArmor.Split2Part}"
+	Split3Part: "{$Mods.Coralite.Items.MedusaLightArmor.Split3Part}"
 	MedusaBonus: 隐秘行动：远程伤害，远程暴击率，移动速度各增加5%
 }
 
@@ -3176,36 +3152,12 @@ MedusaSlippers: {
 		+6% 远程伤害
 		移动速度增加10%
 		'''
-	NotHasMedusaSoul: 美杜莎之魂：装备至少2件套后触发效果
-	MedusaSoul2Part:
-		'''
-		美杜莎之魂：对远处的敌人造成更多伤害，
-		但对近处的敌人伤害降低
-		[c/807b7d:最多增加] [c/9e82b5:15%] [c/807b7d:伤害]
-		[c/807b7d:最多减少] [c/9e82b5:75%] [c/807b7d:伤害]
-		'''
-	MedusaSoul3Part:
-		'''
-		美杜莎之魂：对远处的敌人造成更多伤害，
-		但对近处的敌人伤害降低
-		[c/807b7d:最多增加] [c/9e82b5:25%] [c/807b7d:伤害]
-		[c/807b7d:最多减少] [c/9e82b5:50%] [c/807b7d:伤害]
-		'''
-	NotHasSplit: 分裂：装备至少2件套后触发效果
-	Split2Part:
-		'''
-		分裂：远程武器射出更多的投掷物
-		[c/807b7d:(2)件套]
-		[c/807b7d:分裂等级] [c/9e82b5:+1]
-		[c/807b7d:伤害补正] [c/9e82b5:65%]
-		'''
-	Split3Part:
-		'''
-		分裂：远程武器射出更多的投掷物
-		[c/807b7d:(3)件套]
-		[c/807b7d:分裂等级] [c/9e82b5:+2]
-		[c/807b7d:伤害补正] [c/9e82b5:55%]
-		'''
+	NotHasMedusaSoul: "{$Mods.Coralite.Items.MedusaLightArmor.NotHasMedusaSoul}"
+	MedusaSoul2Part: "{$Mods.Coralite.Items.MedusaLightArmor.MedusaSoul2Part}"
+	MedusaSoul3Part: "{$Mods.Coralite.Items.MedusaLightArmor.MedusaSoul3Part}"
+	NotHasSplit: "{$Mods.Coralite.Items.MedusaLightArmor.NotHasSplit}"
+	Split2Part: "{$Mods.Coralite.Items.MedusaLightArmor.Split2Part}"
+	Split3Part: "{$Mods.Coralite.Items.MedusaLightArmor.Split3Part}"
 }
 
 Arachnopyre: {
@@ -4024,7 +3976,7 @@ ChocomintIce: {
 
 Aquamarine: {
 	DisplayName: 海蓝宝石
-	Tooltip: 使用提炼机从初级宝石原石中提取
+	Tooltip: "{$Mods.Coralite.Items.Pyrope.Tooltip}"
 }
 
 AquamarineBracelet: {
@@ -4047,7 +3999,7 @@ AmethystNecklace: {
 
 PinkDiamond: {
 	DisplayName: 粉钻
-	Tooltip: 使用提炼机从初级宝石原石中提取
+	Tooltip: "{$Mods.Coralite.Items.Pyrope.Tooltip}"
 }
 
 PinkDiamondRose: {
@@ -4133,7 +4085,7 @@ PeridotTalisman: {
 
 Peridot: {
 	DisplayName: 橄榄石
-	Tooltip: 使用提炼机从上级宝石原石中提取
+	Tooltip: "{$Mods.Coralite.Items.Zumurud.Tooltip}"
 }
 
 SapphireHairpin: {
@@ -4149,7 +4101,7 @@ SilkAgate: {
 	DisplayName: 缠丝玛瑙
 	Tooltip:
 		'''
-		使用提炼机从上级宝石原石中提取
+		{$Mods.Coralite.Items.Zumurud.Tooltip}
 		+12% 宝石武器攻击速度
 		'''
 }
@@ -4190,7 +4142,7 @@ Zircon: {
 
 FlyingShieldBattleGuide: {
 	DisplayName: 飞盾战斗指南
-	Tooltip: 盾冲与格挡变得更加自由
+	Tooltip: 让盾冲与格挡变得更加自由
 }
 
 Terranascence: {
@@ -4209,7 +4161,7 @@ AlloySpring: {
 		'''
 		增加冲刺速度
 		冲刺时根据防御力增加伤害，最多10%
-		让格挡和盾冲更加自由
+		{$Mods.Coralite.Items.FlyingShieldBattleGuide.Tooltip}
 		'''
 }
 
@@ -4219,7 +4171,7 @@ GravitationalCatapult: {
 		'''
 		大幅增加冲刺速度，增加冲刺时间
 		冲刺时根据防御力增加伤害，最多20%
-		让格挡和盾冲更加自由
+		{$Mods.Coralite.Items.FlyingShieldBattleGuide.Tooltip}
 		'''
 }
 
@@ -4489,6 +4441,66 @@ MagicCrystalFishingRod: {
 }
 
 MagicCrystalPolarizedFilter: {
-	DisplayName: 偏振滤镜-魔力水晶
-	Tooltip: ""
+	DisplayName: 偏振滤镜-晶体
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+BasicFilter: {
+	DisplayName: 基础滤镜
+	Tooltip: 一块基础的滤镜，在上面蚀刻出不同的法阵就能让它有不同的功能
+}
+
+CorruptionPolarizedFilter: {
+	DisplayName: 偏振滤镜-腐化
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+CrimsonPolarizedFilter: {
+	DisplayName: 偏振滤镜-猩红
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+CrystallineMagikePolarizedFilter: {
+	DisplayName: 偏振滤镜-蕴魔
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+FeatherPolarizedFilter: {
+	DisplayName: 偏振滤镜-羽蛇
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+GlistentPolarizedFilter: {
+	DisplayName: 偏振滤镜-晶莹
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+HallowPolarizedFilter: {
+	DisplayName: 偏振滤镜-神圣
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+HolyLightPolarizedFilter: {
+	DisplayName: 偏振滤镜-圣光
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+IciclePolarizedFilter: {
+	DisplayName: 偏振滤镜-冰晶
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+ShadowPolarizedFilter: {
+	DisplayName: 偏振滤镜-影子
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+SoulPolarizedFilter: {
+	DisplayName: 偏振滤镜-灵魂
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+SplendorMagicorePolarizedFilter: {
+	DisplayName: 偏振滤镜-光辉
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }

@@ -1,9 +1,9 @@
-﻿using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.Items.Glistent;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
-using Coralite.Core.Systems.MagikeSystem.Tile;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Terraria;
 using Terraria.DataStructures;
