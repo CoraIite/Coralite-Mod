@@ -47,6 +47,7 @@ namespace Coralite.Content.Items.Magike.Refractors
                 MagikeApparatusLevel.Corruption,
                 MagikeApparatusLevel.Icicle,
                 MagikeApparatusLevel.CrystallineMagike,
+                MagikeApparatusLevel.Soul,
                 MagikeApparatusLevel.Feather,
                 MagikeApparatusLevel.SplendorMagicore
                 ];
@@ -66,29 +67,19 @@ namespace Coralite.Content.Items.Magike.Refractors
     {
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
-            switch (incomeLevel)
+            MagikeMaxBase = incomeLevel switch
             {
-                case MagikeApparatusLevel.None:
-                    MagikeMaxBase = 20;
-                    break;
-                case MagikeApparatusLevel.MagicCrystal:
-                    MagikeMaxBase = 50;
-                    break;
-                case MagikeApparatusLevel.Crimson:
-                    break;
-                case MagikeApparatusLevel.Corruption:
-                    break;
-                case MagikeApparatusLevel.Icicle:
-                    break;
-                case MagikeApparatusLevel.CrystallineMagike:
-                    break;
-                case MagikeApparatusLevel.Feather:
-                    break;
-                case MagikeApparatusLevel.SplendorMagicore:
-                    break;
-                default:
-                    break;
-            }
+                MagikeApparatusLevel.MagicCrystal => 120,
+                MagikeApparatusLevel.Crimson 
+                or MagikeApparatusLevel.Corruption 
+                or MagikeApparatusLevel.Icicle => 600,
+                MagikeApparatusLevel.CrystallineMagike => 1800,
+                MagikeApparatusLevel.Soul 
+                or MagikeApparatusLevel.Feather => 7500,
+                MagikeApparatusLevel.SplendorMagicore => 18000,
+                _ => 0,
+            };
+            LimitMagikeAmount();
         }
     }
 
@@ -100,6 +91,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 
             switch (incomeLevel)
             {
+                default:
                 case MagikeApparatusLevel.None:
                     MaxConnectBase = 0;
                     UnitDeliveryBase = 0;
@@ -109,23 +101,34 @@ namespace Coralite.Content.Items.Magike.Refractors
                 case MagikeApparatusLevel.MagicCrystal:
                     UnitDeliveryBase = 10;
                     SendDelayBase = 60 * 5;
-                    ConnectLengthBase = 15 * 16;
+                    ConnectLengthBase = 10 * 16;
                     break;
                 case MagikeApparatusLevel.Crimson:
-                    break;
                 case MagikeApparatusLevel.Corruption:
-                    break;
                 case MagikeApparatusLevel.Icicle:
+                    UnitDeliveryBase = 50;
+                    SendDelayBase = 60 * 5;
+                    ConnectLengthBase = 10 * 16;
                     break;
                 case MagikeApparatusLevel.CrystallineMagike:
+                    UnitDeliveryBase = 120;
+                    SendDelayBase = 60 * 4;
+                    ConnectLengthBase = 15 * 16;
                     break;
+                case MagikeApparatusLevel.Soul:
                 case MagikeApparatusLevel.Feather:
+                    UnitDeliveryBase = 500;
+                    SendDelayBase = 60 * 4;
+                    ConnectLengthBase = 15 * 16;
                     break;
                 case MagikeApparatusLevel.SplendorMagicore:
-                    break;
-                default:
+                    UnitDeliveryBase = 900;
+                    SendDelayBase = 60 * 4;
+                    ConnectLengthBase = 15 * 16;
                     break;
             }
+
+            RecheckConnect();
         }
     }
 }

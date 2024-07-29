@@ -203,12 +203,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public void RecheckConnect()
         {
+            if (Entity is null)
+                return;
+            
             Vector2 selfPos = Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position);
 
             for (int i = _receivers.Count - 1; i >= 0; i--)
             {
-                if (i + 1 > MaxConnect)
+                if (i + 1 > MaxConnect|| !TileEntity.ByPosition.ContainsKey(_receivers[i]))
+                {
                     _receivers.RemoveAt(i);
+                    continue;
+                }
 
                 Vector2 targetPos = Helper.GetMagikeTileCenter(_receivers[i]);
                 if (Vector2.Distance(selfPos, targetPos) > ConnectLength)

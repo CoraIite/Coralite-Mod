@@ -4026,7 +4026,7 @@ PeridotTalisman: {
 
 Peridot: {
 	DisplayName: Peridot
-		{$Mods.Coralite.Items.Zumurud.Tooltip}
+	Tooltip: "{$Mods.Coralite.Items.Zumurud.Tooltip}"
 }
 
 SapphireHairpin: {

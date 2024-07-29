@@ -157,7 +157,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                         if (Owner.HeldItem.stack <= 0)
                         {
                             Owner.HeldItem.TurnToAir();
-                            return;
+                            goto PlaceOver;
                         }
                     }
                     else if (!string.IsNullOrEmpty(text))
@@ -169,6 +169,8 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                             Velocity=-Vector2.UnitY
                         }, Helper.GetMagikeTileCenter(currentTopLeft.Value)) ;
                 }
+
+            PlaceOver:
 
             if (placed)
             {

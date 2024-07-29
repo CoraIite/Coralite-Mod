@@ -9,7 +9,7 @@ MagikeSystem: {
 	Connect_TooFar: The receiver is too far away!
 	ChooseReceiver_Success: Connect successfully
 	Deconnect: Disconnect successfully
-	BrilliantConnect: {0} instruments were successfully connected, and {1} instruments were not successfully connected
+	BrilliantConnect: "{0} instruments were successfully connected, and {1} instruments were not successfully connected"
 	ConnectFail_TooFar: The receiver is too far away!
 	ConnectFail_CantBeSelf: Can't connect yourself!
 	ConnectFail_ConnectorFillUp: The Magike Sender capacity is full!
@@ -18,7 +18,7 @@ MagikeSystem: {
 	InsertSuccess: The filter was successfully inserted
 	UpgradeableNotFound: No upgradeable apparatus found!
 	CantUpgrade: Unable to upgrade!
-	PolarizedFilterTooltip: 
+	PolarizedFilterTooltip:
 		'''
 		Left-click to select the area
 		release it to insert a filter into the Magike Apparatus in the area and polarize it to the filter level
