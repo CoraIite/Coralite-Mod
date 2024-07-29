@@ -34,6 +34,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override void Polish(Recipe recipe, Item item, List<Item> list, Item destinationStack)
         {
+           
             if (item.type == Type)
             {
                 ModItem mi = item.ModItem;
