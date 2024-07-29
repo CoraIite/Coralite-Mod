@@ -13,10 +13,11 @@ MagikeSystem: {
 	ConnectFail_TooFar: 接收器距离太远！
 	ConnectFail_CantBeSelf: 不能连接自己！
 	ConnectFail_ConnectorFillUp: 发送器容量已满！
-	// ApparatusNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusNotFound
-	// FilterFillUp: Mods.Coralite.MagikeSystem.MagikeSystem.FilterFillUp
-	// InsertSuccess: Mods.Coralite.MagikeSystem.MagikeSystem.InsertSuccess
-	// UpgradeableNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.UpgradeableNotFound
+	ApparatusNotFound: 未找到魔能仪器！
+	FilterFillUp: 仪器内滤镜已满！
+	InsertSuccess: 成功插入滤镜
+	UpgradeableNotFound: 未找到可升级仪器！
+	CantUpgrade: 无法升级！
 }
 
 C0_P1_BookName: {

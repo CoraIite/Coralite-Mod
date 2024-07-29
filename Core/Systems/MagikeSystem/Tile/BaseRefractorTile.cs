@@ -3,6 +3,7 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 
@@ -15,7 +16,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
         {
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset;
-            int halfHeight = tileRect.Height / 2;
+            int halfHeight = Math.Max( tileRect.Height / 2,tileRect.Width/2);
             float rotationTop = rotation + MathHelper.PiOver2;
 
             //虽然一般不会没有 但是还是检测一下

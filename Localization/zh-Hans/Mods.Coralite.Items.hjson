@@ -4489,6 +4489,6 @@ MagicCrystalFishingRod: {
 }
 
 MagicCrystalPolarizedFilter: {
-	// DisplayName: Magic Crystal Polarized Filter
-	// Tooltip: ""
+	DisplayName: 偏振滤镜-魔力水晶
+	Tooltip: ""
 }

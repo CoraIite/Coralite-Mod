@@ -169,6 +169,13 @@ namespace Coralite.Helpers
             Tile t = Main.tile[i, j];
             TileObjectData tileData = TileObjectData.GetTileData(t.TileType, 0, 0);
 
+            if (tileData == null)
+            {
+                alternateData = null;
+                alternate = 0;
+                return;
+            }
+
             if (Main.tileSolidTop[t.TileType])
             {
                 alternateData = tileData;

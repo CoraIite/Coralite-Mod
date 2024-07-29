@@ -28,8 +28,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
             if (levels == null || levels.Length == 0)
                 return;
 
-            //加载等级字典
-            MagikeSystem.RegisterApparatusLevel(Type, levels);
             //加载等级贴图
             for (int i = 0; i < levels.Length; i++)
                 QuickLoadAsset(levels[i]);
@@ -136,6 +134,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
             DustType = dustType;
 
             MinPick = minPick;
+
+            MagikeApparatusLevel[] levels = GetAllLevels();
+            if (levels == null || levels.Length == 0)
+                return;
+
+            //加载等级字典
+            MagikeSystem.RegisterApparatusLevel(Type, levels);
         }
 
         public abstract MagikeTileEntity GetEntityInstance();
@@ -236,7 +241,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tile
                 _ => -MathHelper.PiOver2
             };
 
-            var level = MagikeSystem.FrameToLevel(tile.TileType, tile.TileFrameX % data.CoordinateFullWidth);
+            var level = MagikeSystem.FrameToLevel(tile.TileType, tile.TileFrameX / data.CoordinateFullWidth);
             if (!level.HasValue)
                 return;
 
