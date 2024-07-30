@@ -12,9 +12,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     /// 偏振滤镜，用于升级魔能仪器
     /// </summary>
     public abstract class PolarizedFilter : MagikeFilter
-    {
-        public abstract MagikeApparatusLevel UpgradeLevel { get; }
-
+    { 
         //只有有可升级的组件才能升级
         public override bool CanInsert_SpecialCheck(MagikeTileEntity entity, ref string text)
         {
@@ -26,14 +24,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
 
             //如果没有对应等级的升级那么就返回
-            Terraria.Tile targetTile = Framing.GetTileSafely(entity.Position);
+            Tile targetTile = Framing.GetTileSafely(entity.Position);
             if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(targetTile.TileType,out var keyValuePairs))
             {
                 text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.CantUpgrade);
                 return false;
             }
 
-            if (!keyValuePairs.ContainsKey(UpgradeLevel))
+            if (!keyValuePairs.ContainsKey(Level))
             {
                 text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.CantUpgrade);
                 return false;
@@ -50,7 +48,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             PolarizedFilter oldFilter = (PolarizedFilter)entity.Components[MagikeComponentID.MagikeFilter].FirstOrDefault(c => c is PolarizedFilter, null);
 
-            if (oldFilter.UpgradeLevel==UpgradeLevel)
+            if (oldFilter.Level == Level)
             {
                 text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.CantUpgrade);
                 return false;
@@ -74,7 +72,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void OnAdd(IEntity entity)
         {
-            ChangeTileFrame(UpgradeLevel, entity);
+            ChangeTileFrame(Level, entity);
             base.OnAdd(entity);
         }
 
@@ -92,7 +90,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public static void ChangeTileFrame(MagikeApparatusLevel level,IEntity entity)
         {
             Point16 topLeft = (entity as MagikeTileEntity).Position;
-            Terraria.Tile tile = Framing.GetTileSafely(topLeft);
+            Tile tile = Framing.GetTileSafely(topLeft);
 
             if (!tile.HasTile)
                 return;
@@ -104,7 +102,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             for (int i = 0; i < data.Width; i++)
                 for (int j = 0; j < data.Height; j++)
                 {
-                    Terraria.Tile t = Framing.GetTileSafely(topLeft + new Point16(i, j));
+                    Tile t = Framing.GetTileSafely(topLeft + new Point16(i, j));
 
                     t.TileFrameX = (short)(frameX + i * (data.CoordinateWidth + data.CoordinatePadding));
                 }
@@ -113,7 +111,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void ChangeComponentValues(Component component)
         {
             if (component is IUpgradeable upgrade)
-                upgrade.Upgrade(UpgradeLevel);
+                upgrade.Upgrade(Level);
         }
 
         public override void RestoreComponentValues(Component component)

@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class CorruptionPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel UpgradeLevel => MagikeApparatusLevel.Corruption;
+        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Corruption;
 
         public override int ItemType => ModContent.ItemType<CorruptionPolarizedFilter>();
     }

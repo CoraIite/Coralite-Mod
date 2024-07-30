@@ -6,12 +6,14 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.ObjectData;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Coralite.Content.Items.MagikeSeries1
@@ -64,12 +66,13 @@ namespace Coralite.Content.Items.MagikeSeries1
                     Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_Found),
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
-                }, Main.MouseWorld);
+                }, Main.MouseWorld - Vector2.UnitY * 32);
 
-                Point16 p = entity.Position;
-                Projectile.NewProjectile(new EntitySource_ItemUse(Main.LocalPlayer, Main.LocalPlayer.HeldItem), p.ToWorldCoordinates(8, 8),
-                    Vector2.Zero, ModContent.ProjectileType<MagConnectProj>(), 0, 0, Main.myPlayer, p.X, p.Y);
+                Point16 topLeft = entity.Position;
+                Projectile.NewProjectile(new EntitySource_ItemUse(Main.LocalPlayer, Main.LocalPlayer.HeldItem), topLeft.ToWorldCoordinates(8, 8),
+                    Vector2.Zero, ModContent.ProjectileType<MagConnectProj>(), 0, 0, Main.myPlayer, topLeft.X, topLeft.Y);
 
+                MagikeHelper.SpawnLozengeParticle_WithTopLeft(topLeft);
                 Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0, player.Center);
             }
             else
@@ -81,7 +84,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                     Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_NotFound),
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
-                }, Main.MouseWorld);
+                }, Main.MouseWorld - Vector2.UnitY * 32);
             }
 
             return true;
@@ -165,7 +168,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                             Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseReceiver_NotFound),
                             DurationInFrames = 60,
                             Velocity = -Vector2.UnitY
-                        }, Main.MouseWorld);
+                        }, Main.MouseWorld - Vector2.UnitY * 32);
 
                         break;
                     }
@@ -180,7 +183,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                             Text = failText,
                             DurationInFrames = 60,
                             Velocity = -Vector2.UnitY
-                        }, Main.MouseWorld);
+                        }, Main.MouseWorld - Vector2.UnitY * 32);
 
                         break;
                     }
@@ -192,7 +195,11 @@ namespace Coralite.Content.Items.MagikeSeries1
                         Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.Connect_Success),
                         DurationInFrames = 60,
                         Velocity = -Vector2.UnitY
-                    }, Main.MouseWorld);
+                    }, Main.MouseWorld-Vector2.UnitY* 32);
+
+                    MagikeHelper.SpawnLozengeParticle_WithTopLeft(sender.Position);
+                    MagikeHelper.SpawnLozengeParticle_WithTopLeft(receiver.Position);
+                    MagikeHelper.SpawnDustOnSend(sender.Position, receiver.Position);
 
                     Helper.PlayPitched("Fairy/CursorExpand", 0.4f, 0, Owner.Center);
 

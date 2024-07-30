@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class HolyLightPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel UpgradeLevel => MagikeApparatusLevel.HolyLight;
+        public override MagikeApparatusLevel Level => MagikeApparatusLevel.HolyLight;
 
         public override int ItemType => ModContent.ItemType<HolyLightPolarizedFilter>();
     }

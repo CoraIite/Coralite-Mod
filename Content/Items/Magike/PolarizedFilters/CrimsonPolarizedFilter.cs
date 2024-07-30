@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class CrimsonPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel UpgradeLevel => MagikeApparatusLevel.Crimson;
+        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Crimson;
 
         public override int ItemType => ModContent.ItemType<CrimsonPolarizedFilter>();
     }

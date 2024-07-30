@@ -4438,3 +4438,10 @@ SplendorMagicorePolarizedFilter: {
 	DisplayName: Splendor Magicore Polarized Filter
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
+
+InfinityClusterWand: {
+	ChargeMode: 充能模式
+	ClearMode: 清空模式
+	DisplayName: Infinity Cluster Wand
+	Tooltip: ""
+}

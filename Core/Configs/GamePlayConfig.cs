@@ -7,6 +7,12 @@ namespace Coralite.Core.Configs
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
+        [Header("Magike")]
+        [DefaultValue(10)]
+        [Range(1,50)]
+        public int SelectSize;
+
+        [Header("Misc")]
         [DefaultValue(true)]
         public bool SpecialDashFirst;
 
@@ -18,11 +24,14 @@ namespace Coralite.Core.Configs
         public void SetValues()
         {
             GamePlaySystem.SpecialDashFirst = SpecialDashFirst;
+            GamePlaySystem.SelectSize = SelectSize;
         }
     }
 
     public class GamePlaySystem
     {
         public static bool SpecialDashFirst = true;
+        public static int SelectSize = 10;
+
     }
 }

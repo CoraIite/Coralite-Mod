@@ -69,10 +69,10 @@ namespace Coralite.Content.Items.Magike.Refractors
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MagikeApparatusLevel.MagicCrystal => 120,
+                MagikeApparatusLevel.MagicCrystal => 60,
                 MagikeApparatusLevel.Crimson 
                 or MagikeApparatusLevel.Corruption 
-                or MagikeApparatusLevel.Icicle => 600,
+                or MagikeApparatusLevel.Icicle => 300,
                 MagikeApparatusLevel.CrystallineMagike => 1800,
                 MagikeApparatusLevel.Soul 
                 or MagikeApparatusLevel.Feather => 7500,

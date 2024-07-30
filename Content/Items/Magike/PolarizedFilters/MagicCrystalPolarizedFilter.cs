@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class MagicCrystalPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel UpgradeLevel => MagikeApparatusLevel.MagicCrystal;
+        public override MagikeApparatusLevel Level => MagikeApparatusLevel.MagicCrystal;
 
         public override int ItemType => ModContent.ItemType<MagicCrystalPolarizedFilter>();
     }

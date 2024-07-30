@@ -112,4 +112,14 @@ GamePlayConfig: {
 		Label: 特殊冲刺覆盖原版冲刺
 		Tooltip: 启用后模组内的各类冲刺将完全覆盖原版的冲刺
 	}
+
+	Headers: {
+		Magike: 魔能系统
+		Misc: 杂项
+	}
+
+	SelectSize: {
+		Label: 选区尺寸
+		Tooltip: 改变各类滤镜等的最大选取尺寸
+	}
 }

@@ -4504,3 +4504,15 @@ SplendorMagicorePolarizedFilter: {
 	DisplayName: 偏振滤镜-光辉
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
+
+InfinityClusterWand: {
+	ChargeMode: 充能模式
+	ClearMode: 清空模式
+	DisplayName: 无限晶簇魔杖
+	Tooltip:
+		'''
+		右键切换模式
+		充能模式：点击魔能存储器将其魔能充满
+		清空模式：点击魔能存储器将其魔能清空
+		'''
+}

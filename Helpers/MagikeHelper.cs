@@ -1,14 +1,18 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.CommandLine.Help;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ObjectData;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Coralite.Helpers
 {
@@ -208,23 +212,62 @@ namespace Coralite.Helpers
             }
         }
 
-        //public static int? GetFrameX(Point16 topLeft)
-        //{
-        //    Tile tile = Framing.GetTileSafely(topLeft);
-        //    if (!tile.HasTile)
-        //        return null;
-
-        //    TileObjectData data = TileObjectData.GetTileData(tile);
-
-        //    return tile.TileFrameX / (data.Width * 18);
-        //}
-
-        public static void DrawRectangleFrame(SpriteBatch spriteBatch,Point16 p1,Point16 p2,Color color)
+        public static bool TryGetMagikeApparatusLevel(Point16 topLeft,out MagikeApparatusLevel level)
         {
-            int x=Math.Min(p1.X, p2.X);
-            int y=Math.Min(p1.Y, p2.Y);
+            level = MagikeApparatusLevel.None;
 
-            DrawRectangleFrame(spriteBatch, new Rectangle(x, y, Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y)),color);
+            Tile targetTile = Framing.GetTileSafely(topLeft);
+            GetMagikeAlternateData(topLeft.X, topLeft.Y, out TileObjectData alternateData, out _);
+
+            if (alternateData == null)
+                return false;
+
+            //计算当前帧图
+            MagikeApparatusLevel? chooseLevel = MagikeSystem.FrameToLevel(targetTile.TileType,targetTile.TileFrameX/alternateData.CoordinateFullWidth);
+
+            if (!chooseLevel.HasValue)
+                return false;
+
+            level = chooseLevel.Value;
+            return true;
+        }
+
+        /// <summary>
+        /// 生成菱形特效
+        /// </summary>
+        /// <param name="pos"></param>
+        public static void SpawnLozengeParticle(Point16 pos)
+        {
+            Point16? topLeft = ToTopLeft(pos.X, pos.Y);
+            if (topLeft.HasValue)
+            {
+                GetMagikeAlternateData(pos.X, pos.Y, out TileObjectData data, out _);
+                Point16 size = data == null ? new Point16(1) : new Point16(data.Width, data.Height);
+
+                if (TryGetMagikeApparatusLevel(topLeft.Value, out MagikeApparatusLevel level))
+                    MagikeLozengeParticle.Spawn(Helper.GetMagikeTileCenter(topLeft.Value), size, MagikeSystem.GetColor(level));
+            }
+        }
+
+        /// <summary>
+        /// 生成菱形特效
+        /// </summary>
+        /// <param name="topLeft"></param>
+        public static void SpawnLozengeParticle_WithTopLeft(Point16 topLeft)
+        {
+            GetMagikeAlternateData(topLeft.X, topLeft.Y, out TileObjectData data, out _);
+            Point16 size = data == null ? new Point16(1) : new Point16(data.Width, data.Height);
+
+            if (TryGetMagikeApparatusLevel(topLeft, out MagikeApparatusLevel level))
+                MagikeLozengeParticle.Spawn(Helper.GetMagikeTileCenter(topLeft), size, MagikeSystem.GetColor(level));
+        }
+
+        public static void DrawRectangleFrame(SpriteBatch spriteBatch, Point16 p1, Point16 p2, Color color)
+        {
+            int x = Math.Min(p1.X, p2.X);
+            int y = Math.Min(p1.Y, p2.Y);
+
+            DrawRectangleFrame(spriteBatch, new Rectangle(x, y, Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y)), color);
         }
 
         /// <summary>
@@ -343,6 +386,26 @@ namespace Coralite.Helpers
             }
 
             return false;
+        }
+
+        public static void SpawnDustOnSend(Point16 selfPos, Point16 targetPos, int dustType = DustID.Teleporter)
+        {
+            if (!TryGetMagikeApparatusLevel(selfPos, out MagikeApparatusLevel level))
+                return;
+
+            Color dustColor = MagikeSystem.GetColor(level);
+            Vector2 selfCenter = Helper.GetTileCenter(selfPos);
+            Vector2 targetCenter = Helper.GetTileCenter(targetPos);
+
+            Vector2 dir = (targetCenter - selfCenter).SafeNormalize(Vector2.Zero);
+            float length = Vector2.Distance(selfCenter, targetCenter);
+
+            while (length > 0)
+            {
+                Dust dust = Dust.NewDustPerfect(selfCenter + dir * length, dustType, dir * 0.2f, newColor: dustColor);
+                dust.noGravity = true;
+                length -= 8;
+            }
         }
 
         public static void SpawnDustOnSend(int selfWidth, int selfHeight, Point16 Position, IMagikeContainer container, Color dustColor, int dustType = DustID.Teleporter)

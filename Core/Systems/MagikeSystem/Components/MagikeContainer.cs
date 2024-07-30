@@ -53,6 +53,22 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
 
         /// <summary>
+        /// 一键充满
+        /// </summary>
+        public void FullChargeMagike()
+        {
+            Magike = MagikeMax;
+        }
+
+        /// <summary>
+        /// 一键清空
+        /// </summary>
+        public void ClearMagike()
+        {
+            Magike = 0;
+        }
+
+        /// <summary>
         /// 将传入的数值限制在能接受的魔能数量
         /// </summary>
         /// <param name="amount"></param>

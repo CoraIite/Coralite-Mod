@@ -97,7 +97,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public void Send(MagikeContainer selfMagikeContainer, Point16 position, int amount)
         {
             //如果无法获取物块实体就移除
-            if (MagikeHelper.TryGetEntity(position, out MagikeTileEntity receiverEntity))
+            if (!MagikeHelper.TryGetEntity(position, out MagikeTileEntity receiverEntity))
                 goto remove;
 
             //如果不是魔能容器那么就丢掉喽
@@ -121,6 +121,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             receiver.AddMagike(amount);
             selfMagikeContainer.ReduceMagike(amount);
+            OnSend((Entity as MagikeTileEntity).Position, position);
 
             return;
         remove:
@@ -205,7 +206,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             if (Entity is null)
                 return;
-            
+
+            Timer = SendDelay;
             Vector2 selfPos = Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position);
 
             for (int i = _receivers.Count - 1; i >= 0; i--)

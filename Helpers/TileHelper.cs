@@ -139,6 +139,30 @@ namespace Coralite.Helpers
             return position.ToWorldCoordinates(x, y);
         }
 
+        public static Vector2 GetMagikeTileCenter_NotTopLeft(int i,int j)
+        {
+            Point16? topleft = MagikeHelper.ToTopLeft(i, j);
+
+            if (!topleft.HasValue)
+                return Vector2.Zero;
+
+            Tile tile = Framing.GetTileSafely(topleft.Value);
+            TileObjectData data= TileObjectData.GetTileData(tile);
+
+            if (data == null)
+                return topleft.Value.ToWorldCoordinates();
+
+            if (!Main.tileSolidTop[tile.TileType])
+                MagikeHelper. GetMagikeAlternateData(topleft.Value.X, topleft.Value.Y, out data, out _);
+
+            int x = data == null ? 8 : data.Width * 16 / 2;
+            int y = data == null ? 8 : data.Height * 16 / 2;
+
+            return topleft.Value.ToWorldCoordinates(x, y);
+        }
+
+
+
         public static Vector2 GetTileCenter(Point16 position)
         {
             Tile tile = Framing.GetTileSafely(position);

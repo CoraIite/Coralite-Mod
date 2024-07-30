@@ -1,7 +1,7 @@
-﻿using Coralite.Core.Configs;
+﻿using Coralite.Core;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.MagikeSystem.Components;
-using Coralite.Core.Systems.MagikeSystem.Particles;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,36 +10,71 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 
-namespace Coralite.Core.Systems.MagikeSystem.BaseItems
+namespace Coralite.Content.Items.Magike.Tools
 {
-    public abstract class FilterItem : ModItem
+    public class InfinityClusterWand : ModItem
     {
-        public abstract Color FilterColor { get; }
+        public override string Texture => AssetDirectory.MagikeTools+Name;
 
-        /// <summary>
-        /// 获取滤镜组件
-        /// </summary>
-        /// <returns></returns>
-        public abstract MagikeFilter GetFilterComponent();
+        public static LocalizedText ChargeMode { get; private set; }
+        public static LocalizedText ClearMode { get; private set; }
+
+        public int mode;
+
+        public override void Load()
+        {
+            ChargeMode = this.GetLocalization("ChargeMode", () => "充能模式");
+            ClearMode = this.GetLocalization("ClearMode", () => "清空模式");
+        }
 
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.useTime = Item.useAnimation = 20;
+            Item.useAnimation = Item.useTime = 20;
+            Item.useTurn = true;
+            Item.shoot = ModContent.ProjectileType<InfinityClusterWandProj>();
+            Item.value = Item.sellPrice(1);
+            Item.rare = ItemRarityID.Red;
 
-            Item.maxStack = Item.CommonMaxStack;
             Item.channel = true;
             Item.autoReuse = false;
-            Item.shoot = ModContent.ProjectileType<FilterProj>();
         }
+
+        public override bool AltFunctionUse(Player player) => true;
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            if (player.altFunctionUse == 2)
+            {
+                mode++;
+                if (mode > 1)
+                    mode = 0;
+
+                string text = mode switch
+                {
+                    0 => ChargeMode.Value,
+                    _ => ClearMode.Value
+                };
+
+                PopupText.NewText(new AdvancedPopupRequest()
+                {
+                    Color = Color.Orange,
+                    Text = text,
+                    DurationInFrames = 60,
+                    Velocity = -Vector2.UnitY
+                }, Main.MouseWorld - Vector2.UnitY * 32);
+
+                return false;
+            }
+
             Point16 basePoint = Main.MouseWorld.ToTileCoordinates16();
             Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, 0, 0, player.whoAmI, basePoint.X, basePoint.Y);
 
             Helper.PlayPitched("UI/Select", 0.4f, 0, player.Center);
+
+
             return false;
         }
     }
@@ -47,7 +82,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
     /// <summary>
     /// 使用ai0和ai1传入初始位置
     /// </summary>
-    public class FilterProj : BaseHeldProj,IDrawNonPremultiplied
+    public class InfinityClusterWandProj : BaseHeldProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -77,7 +112,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
         {
             Projectile.Center = Owner.Center;
 
-            if (Owner.HeldItem.ModItem is not FilterItem)
+            if (Owner.HeldItem.type !=ModContent.ItemType< InfinityClusterWand>())
             {
                 Projectile.Kill();
                 return;
@@ -96,7 +131,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             }
             else
             {
-                PlaceFilter();
+                Charge();
                 Projectile.Kill();
                 return;
             }
@@ -109,17 +144,15 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             }
         }
 
-        public void PlaceFilter()
+        public void Charge()
         {
-            MagikeFilter filter = (Owner.HeldItem.ModItem as FilterItem).GetFilterComponent();
-
-            bool placed = false;
+            int mode = (Owner.HeldItem.ModItem as InfinityClusterWand).mode;
 
             int baseX = Math.Min(TargetPoint.X, BasePosition.X);
             int baseY = Math.Min(TargetPoint.Y, BasePosition.Y);
 
-            int xLength = Math.Abs(TargetPoint.X - BasePosition.X)+1;
-            int yLength = Math.Abs(TargetPoint.Y - BasePosition.Y)+1;
+            int xLength = Math.Abs(TargetPoint.X - BasePosition.X) + 1;
+            int yLength = Math.Abs(TargetPoint.Y - BasePosition.Y) + 1;
 
             HashSet<Point16> insertPoint = new HashSet<Point16>();
 
@@ -141,60 +174,27 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     insertPoint.Add(currentTopLeft.Value);
 
                     //尝试根据左上角获取物块实体
-                    if (!MagikeHelper.TryGetEntity(currentTopLeft.Value, out MagikeTileEntity entity))
+                    if (!MagikeHelper.TryGetEntityWithComponent(currentTopLeft.Value.X, currentTopLeft.Value.Y
+                        , MagikeComponentID.MagikeContainer, out MagikeTileEntity entity))
                         continue;
 
-                    //能插入就插，不能就提供失败原因
-                    if (filter.CanInsert(entity, out string text))
-                    {
-                        placed = true;
-                        filter.Insert(entity);
+                    if (mode == 0)
+                        entity.GetMagikeContainer().FullChargeMagike();
+                    else
+                        entity.GetMagikeContainer().ClearMagike();
 
-                        //特效部分
-                        TileRenewalController.Spawn(currentTopLeft.Value, (Owner.HeldItem.ModItem  as FilterItem).FilterColor);
-
-                        //消耗滤镜
-                        Owner.HeldItem.stack--;
-                        if (Owner.HeldItem.stack <= 0)
-                        {
-                            Owner.HeldItem.TurnToAir();
-                            goto PlaceOver;
-                        }
-                    }
-                    else if (!string.IsNullOrEmpty(text))
-                        PopupText.NewText(new AdvancedPopupRequest()
-                        {
-                            Color = Coralite.Instance.MagicCrystalPink,
-                            Text = text,
-                            DurationInFrames = 60,
-                            Velocity=-Vector2.UnitY
-                        }, Helper.GetMagikeTileCenter(currentTopLeft.Value)) ;
+                    MagikeHelper.SpawnLozengeParticle_WithTopLeft(currentTopLeft.Value);
                 }
 
-            PlaceOver:
-
-            if (placed)
-            {
-                Helper.PlayPitched("UI/GetSkill", 0.4f, 0, Owner.Center);
-
-                PopupText.NewText(new AdvancedPopupRequest()
-                {
-                    Color = Coralite.Instance.MagicCrystalPink,
-                    Text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.InsertSuccess),
-                    DurationInFrames = 60,
-                    Velocity = -Vector2.UnitY
-                }, TargetPoint.ToVector2());
-            }
-            else
-                Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
+            Helper.PlayPitched("UI/GetSkill", 0.4f, 0, Owner.Center);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
-            if (Owner.HeldItem.ModItem is FilterItem filterItem)
-                MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, filterItem.FilterColor);
+            if (Owner.HeldItem.ModItem is InfinityClusterWand wand)
+                MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, wand.mode==0?Color.Orange:Color.DarkGray);
         }
     }
 }

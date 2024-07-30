@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class FeatherPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel UpgradeLevel => MagikeApparatusLevel.Feather;
+        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Feather;
 
         public override int ItemType => ModContent.ItemType<FeatherPolarizedFilter>();
     }
