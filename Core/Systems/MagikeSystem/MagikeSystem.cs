@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.IO;
 
@@ -46,6 +47,26 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             polymerizeRecipes?.Clear();
             polymerizeRecipes = null;
+        }
+
+        public static Color GetColor(MagikeApparatusLevel level)
+        {
+            return level switch
+            {
+                MagikeApparatusLevel.MagicCrystal => Coralite.Instance.MagicCrystalPink,
+                MagikeApparatusLevel.Glistent => Coralite.Instance.GlistentGreen,
+                MagikeApparatusLevel.Crimson => Coralite.Instance.CrimsonRed,
+                MagikeApparatusLevel.Corruption => Coralite.Instance.CorruptionPurple,
+                MagikeApparatusLevel.Icicle => Coralite.Instance.IcicleCyan,
+                MagikeApparatusLevel.Shadow => Coralite.Instance.ShadowPurple,
+                MagikeApparatusLevel.CrystallineMagike => Coralite.Instance.CrystallineMagikePurple,
+                MagikeApparatusLevel.Hallow => Coralite.Instance.HallowYellow,
+                MagikeApparatusLevel.Soul => Coralite.Instance.SoulCyan,
+                MagikeApparatusLevel.Feather => Coralite.Instance.FeatherLime,
+                MagikeApparatusLevel.HolyLight => Main.DiscoColor,
+                MagikeApparatusLevel.SplendorMagicore => Coralite.Instance.SplendorMagicoreLightBlue,
+                _ => Color.Gray,
+            };
         }
 
         //额...每增加一个变量就要在这边多写一段，说实话显得很蠢，以后有机会需要修改掉

@@ -1,5 +1,4 @@
 ﻿using Terraria;
-using Terraria.ID;
 
 namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 {

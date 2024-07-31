@@ -44,14 +44,14 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// 物块帧需要自行计算
         /// </summary>
         /// <param name="tileType"></param>
-        /// <param name="feameX"></param>
+        /// <param name="freamX"></param>
         /// <returns></returns>
-        public static MagikeApparatusLevel? FrameToLevel(int tileType,int feameX)
+        public static MagikeApparatusLevel? FrameToLevel(int tileType,int freamX)
         {
             if (!MagikeFrameToLevels.TryGetValue(tileType, out var keyValuePairs))
                 return null;
 
-            if (!keyValuePairs.TryGetValue(feameX, out var level))
+            if (!keyValuePairs.TryGetValue(freamX, out var level))
                 return null;
 
             return level;

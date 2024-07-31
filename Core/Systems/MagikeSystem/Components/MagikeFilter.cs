@@ -7,6 +7,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         public sealed override int ID => MagikeComponentID.MagikeFilter;
 
+        public abstract MagikeApparatusLevel Level { get; }
+
         /// <summary>
         /// 对应的物品类型，在替换时弹出以及在物块破坏时弹出
         /// </summary>

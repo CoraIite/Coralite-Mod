@@ -1,4 +1,6 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Helpers;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 
@@ -33,9 +35,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return (this as ITimerTriggerComponent).UpdateTime();
         }
 
-        public void OnSend(Point16 selfPoint, Point ReceiverPoint)
+        public virtual void OnSend(Point16 selfPoint, Point16 ReceiverPoint)
         {
+            bool selfOnScreen = Helper.OnScreen(selfPoint.ToWorldCoordinates()-Main.screenPosition);
+            bool rectiverOnScreen = Helper.OnScreen(ReceiverPoint.ToWorldCoordinates()-Main.screenPosition);
 
+            if (selfOnScreen)
+            {
+                MagikeHelper.SpawnLozengeParticle_WithTopLeft(selfPoint);
+                if (rectiverOnScreen)
+                    MagikeHelper.SpawnDustOnSend(selfPoint, ReceiverPoint);
+            }
+
+            if (rectiverOnScreen)
+                MagikeHelper.SpawnLozengeParticle_WithTopLeft(ReceiverPoint);
         }
 
         public override void SaveData(string preName, TagCompound tag)

@@ -108,4 +108,14 @@ GamePlayConfig: {
 		Label: Special dash override vanilla dash
 		Tooltip: When enabled, all types of mod dash will completely override vanilla dash.
 	}
+
+	Headers: {
+		Magike: Magike Header
+		Misc: Misc Header
+	}
+
+	SelectSize: {
+		Label: Select Size
+		Tooltip: ""
+	}
 }

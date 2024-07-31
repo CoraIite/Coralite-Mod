@@ -31,7 +31,14 @@ namespace Coralite
         public Color RedJadeRed { get; private set; }
         public Color IcicleCyan { get; private set; }
         public Color MagicCrystalPink { get; private set; }
+        public Color GlistentGreen { get; private set; }
+        public Color CrimsonRed { get; private set; }
+        public Color CorruptionPurple { get; private set; }
+        public Color ShadowPurple { get; private set; }
         public Color CrystallineMagikePurple { get; private set; }
+        public Color HallowYellow { get; private set; }
+        public Color SoulCyan { get; private set; }
+        public Color FeatherLime { get; private set; }
         public Color SplendorMagicoreLightBlue { get; private set; }
         public Color ThunderveinYellow { get; private set; }
         /// <summary>
@@ -196,13 +203,19 @@ namespace Coralite
         public void InitColor()
         {
             if (Main.dedServ)
-            {
                 return;
-            }
+
             RedJadeRed = new Color(221, 50, 50);
             IcicleCyan = new Color(43, 255, 198);
             MagicCrystalPink = new Color(255, 190, 236);
+            GlistentGreen = new Color(127, 218, 153);
+            CrimsonRed = new Color(231, 48, 54);
+            CorruptionPurple = new Color(107, 66,  208);
+            ShadowPurple = new Color(240, 168,  255);
             CrystallineMagikePurple = new Color(140, 130, 252);
+            HallowYellow = new Color(253, 236, 144);
+            SoulCyan = new Color(122,  174, 188);
+            FeatherLime = new Color(122,  161, 82);
             SplendorMagicoreLightBlue = new Color(190, 225, 235);
             ThunderveinYellow = new Color(255, 202, 101);
         }

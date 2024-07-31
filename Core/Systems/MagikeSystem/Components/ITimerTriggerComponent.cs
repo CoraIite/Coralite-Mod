@@ -20,7 +20,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public bool UpdateTime()
         {
             Timer--;
-            if (Timer == 0)
+            if (Timer <= 0)
             {
                 Timer = Delay;
                 return true;

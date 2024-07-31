@@ -67,6 +67,7 @@ namespace Coralite.Core
         public const string IcicleItems = Items + "Icicle/";
         public const string SteelItems = Items + "Steel/";
         public const string ThunderItems = Items + "Thunder/";
+        public const string GlistentItems = Items + "Glistent/";
         public const string StarsItems = Items + "Stars/";
         public const string DisturbanceItems = Items + "Disturbance/";
         public const string BlazingItems = Items + "Blazing/";

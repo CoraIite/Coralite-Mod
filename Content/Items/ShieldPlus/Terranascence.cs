@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.Items.Glistent;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;

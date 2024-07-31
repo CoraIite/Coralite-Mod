@@ -18,6 +18,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             LearnedMagikeAdvanced = this.GetLocalization("learnedMagikeAdvanced");
             NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
 
+            this.GetLocalization("PolarizedFilterTooltip");
+
             LoadConnectStaff();
             LoadFilter();
         }
@@ -102,8 +104,9 @@ namespace Coralite.Core.Systems.MagikeSystem
             public const int InsertSuccess = 2;
 
             public const int UpgradeableNotFound = 3;
+            public const int CantUpgrade = 4;
 
-            public const int Count = 4;
+            public const int Count = 5;
         }
 
         public void LoadFilter()
@@ -113,6 +116,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             Filter[FilterID.FilterFillUp] = this.GetLocalization("FilterFillUp");
             Filter[FilterID.InsertSuccess] = this.GetLocalization("InsertSuccess");
             Filter[FilterID.UpgradeableNotFound] = this.GetLocalization("UpgradeableNotFound");
+            Filter[FilterID.CantUpgrade] = this.GetLocalization("CantUpgrade");
         }
 
         public static string GetFilterText(int id)
