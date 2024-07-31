@@ -12,10 +12,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Refractors
 {
-    public class BasicRefractor : BaseMagikePlaceableItem
+    public class BasicColumnTile : BaseMagikePlaceableItem
     {
-        public BasicRefractor() : base(TileType<BasicRefractorTile>(), Item.sellPrice(0, 0, 5, 0)
-            , RarityType<MagicCrystalRarity>(), 25, AssetDirectory.MagikeRefractors)
+        public BasicColumnTile() : base(TileType<BasicColumnTileTile>(), Item.sellPrice(0, 0, 5, 0)
+            , RarityType<MagicCrystalRarity>(), 25, AssetDirectory.MagikeColumns)
         { }
 
         public override int MagikeMax => 1;
@@ -23,20 +23,20 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<Basalt>(14)
+                .AddIngredient<Basalt>(20)
                 .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
     }
 
-    public class BasicRefractorTile() : BaseRefractorTile
+    public class BasicColumnTileTile() : BaseColumnTile
         (1, 2, Coralite.Instance.MagicCrystalPink, DustID.CorruptionThorns)
     {
-        public override string Texture => AssetDirectory.MagikeRefractorTiles + Name;
-        public override int DropItemType => ItemType<BasicRefractor>();
+        public override string Texture => AssetDirectory.MagikeColumnTiles + Name;
+        public override int DropItemType => ItemType<BasicColumnTile>();
 
-        public override MagikeTileEntity GetEntityInstance() => GetInstance<BasicRefractorTileEntity>();
+        public override MagikeTileEntity GetEntityInstance() => GetInstance<BasicColumnTileTileEntity>();
 
         public override MagikeApparatusLevel[] GetAllLevels()
         {
@@ -48,42 +48,42 @@ namespace Coralite.Content.Items.Magike.Refractors
                 MagikeApparatusLevel.Icicle,
                 MagikeApparatusLevel.CrystallineMagike,
                 MagikeApparatusLevel.Soul,
-                MagikeApparatusLevel.Feather,
+                //MagikeApparatusLevel.Feather,
                 MagikeApparatusLevel.SplendorMagicore
                 ];
         }
     }
 
-    public class BasicRefractorTileEntity : BaseSenderTileEntity<BasicRefractorTile>
+    public class BasicColumnTileTileEntity : BaseSenderTileEntity<BasicColumnTileTile>
     {
         public override MagikeContainer GetStartContainer()
-            => new BasicRefractorContainer();
+            => new BasicColumnTileContainer();
 
         public override MagikeLinerSender GetStartSender()
-            => new BasicRefractorSender();
+            => new BasicColumnTileSender();
     }
 
-    public class BasicRefractorContainer : UpgradeableContainer
+    public class BasicColumnTileContainer : UpgradeableContainer
     {
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MagikeApparatusLevel.MagicCrystal => 60,
-                MagikeApparatusLevel.Crimson 
-                or MagikeApparatusLevel.Corruption 
-                or MagikeApparatusLevel.Icicle => 300,
-                MagikeApparatusLevel.CrystallineMagike => 1800,
-                MagikeApparatusLevel.Soul 
-                or MagikeApparatusLevel.Feather => 7500,
-                MagikeApparatusLevel.SplendorMagicore => 18000,
+                MagikeApparatusLevel.MagicCrystal => 720,
+                MagikeApparatusLevel.Crimson
+                or MagikeApparatusLevel.Corruption
+                or MagikeApparatusLevel.Icicle => 3600,
+                MagikeApparatusLevel.CrystallineMagike => 12000,
+                MagikeApparatusLevel.Soul
+                or MagikeApparatusLevel.Feather => 60000,
+                MagikeApparatusLevel.SplendorMagicore => 270000,
                 _ => 0,
             };
             LimitMagikeAmount();
         }
     }
 
-    public class BasicRefractorSender : UpgradeableLinerSender
+    public class BasicColumnTileSender : UpgradeableLinerSender
     {
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
@@ -99,31 +99,31 @@ namespace Coralite.Content.Items.Magike.Refractors
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.MagicCrystal:
-                    UnitDeliveryBase = 10;
-                    SendDelayBase = 60 * 5;
+                    UnitDeliveryBase = 60;
+                    SendDelayBase = 60 * 10;
                     ConnectLengthBase = 10 * 16;
                     break;
                 case MagikeApparatusLevel.Crimson:
                 case MagikeApparatusLevel.Corruption:
                 case MagikeApparatusLevel.Icicle:
-                    UnitDeliveryBase = 50;
-                    SendDelayBase = 60 * 5;
+                    UnitDeliveryBase = 300;
+                    SendDelayBase = 60 * 10;
                     ConnectLengthBase = 10 * 16;
                     break;
                 case MagikeApparatusLevel.CrystallineMagike:
-                    UnitDeliveryBase = 120;
-                    SendDelayBase = 60 * 4;
+                    UnitDeliveryBase = 500;
+                    SendDelayBase = 60 * 10;
                     ConnectLengthBase = 15 * 16;
                     break;
                 case MagikeApparatusLevel.Soul:
                 case MagikeApparatusLevel.Feather:
-                    UnitDeliveryBase = 500;
-                    SendDelayBase = 60 * 4;
+                    UnitDeliveryBase = 2500;
+                    SendDelayBase = 60 * 10;
                     ConnectLengthBase = 15 * 16;
                     break;
                 case MagikeApparatusLevel.SplendorMagicore:
-                    UnitDeliveryBase = 900;
-                    SendDelayBase = 60 * 4;
+                    UnitDeliveryBase = 9000;
+                    SendDelayBase = 60 * 10;
                     ConnectLengthBase = 15 * 16;
                     break;
             }

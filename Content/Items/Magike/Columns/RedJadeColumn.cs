@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.Magike.Columns
         }
     }
 
-    public class RedJadeColumnTile : BaseColumnTile
+    public class RedJadeColumnTile : OldBaseColumnTile
     {
         public override string Texture => AssetDirectory.MagikeLensTiles + "RedJadeLensTile";
 

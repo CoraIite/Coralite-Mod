@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.Magike.Towers
         }
     }
 
-    public class CrystalSpotlighterTile : BaseColumnTile
+    public class CrystalSpotlighterTile : OldBaseColumnTile
     {
         public override string Texture => AssetDirectory.MagikeLensTiles + "CrystalLensTile";
         public override string TopTextureName => AssetDirectory.MagikeFactoryTiles + Name + "_Top";

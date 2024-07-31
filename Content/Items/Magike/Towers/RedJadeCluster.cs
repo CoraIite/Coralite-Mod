@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Magike.Towers
         }
     }
 
-    public class RedJadeClusterTile : BaseColumnTile
+    public class RedJadeClusterTile : OldBaseColumnTile
     {
         public override string Texture => AssetDirectory.MagikeLensTiles + "RedJadeLensTile";
         public override string TopTextureName => AssetDirectory.MagikeFactoryTiles + Name + "_Top";
