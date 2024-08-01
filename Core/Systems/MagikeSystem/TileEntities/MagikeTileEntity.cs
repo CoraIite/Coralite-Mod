@@ -102,15 +102,18 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             int i = 0;
             while (tag.TryGet(SaveName + i.ToString(), out string fullName))
             {
-                i++;
                 var t = System.Type.GetType(fullName);
                 if (t is null)
+                {
+                    i++;
                     continue;
+                }
 
                 var component = (Component)Activator.CreateInstance(t);
                 component.LoadData(SaveName + i.ToString(), tag);
+                i++;
 
-                (this as IEntity).AddComponent(component);
+                (this as IEntity).AddComponentWithoutOnAdd(component);
             }
         }
 

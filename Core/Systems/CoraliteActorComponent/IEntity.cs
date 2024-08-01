@@ -37,6 +37,22 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         }
 
         /// <summary>
+        /// 向实体内加入组件，不会触发<see cref="Component.OnAdd(IEntity)"/>
+        /// </summary>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        void AddComponentWithoutOnAdd(Component component)
+        {
+            if (!Components.ContainsKey(component.ID))
+                Components.Add(component.ID, new List<Component>());
+
+            Components[component.ID].Add(component);
+            ComponentsCache.Add(component);
+
+            component.Entity = this;
+        }
+
+        /// <summary>
         /// 移除一个组件
         /// </summary>
         /// <param name="componentId"></param>

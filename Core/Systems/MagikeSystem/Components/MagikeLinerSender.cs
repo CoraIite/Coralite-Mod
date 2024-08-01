@@ -233,7 +233,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int GetMagikeAmount()
             => Entity.GetMagikeContainer().Magike;
 
-
         public override void SaveData(string preName, TagCompound tag)
         {
             base.SaveData(preName, tag);
@@ -244,7 +243,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             tag.Add(preName + nameof(ConnectLengthExtra), ConnectLengthExtra);
 
             for (int i = 0; i < _receivers.Count; i++)
-                tag.Add(preName + nameof(_receivers) + i, _receivers[i]);
+            {
+                tag.Add(string.Concat(preName, nameof(_receivers), i.ToString(), "X"), _receivers[i].X);
+                tag.Add(string.Concat(preName, nameof(_receivers), i.ToString(), "Y"), _receivers[i].Y);
+            }
         }
 
         public override void LoadData(string preName, TagCompound tag)
@@ -259,12 +261,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             int i = 0;
 
-            while (tag.TryGet(preName + nameof(_receivers) + i, out Point16 position))
+            while (tag.TryGet(string.Concat(preName, nameof(_receivers), i.ToString(), "X"), out short X))
             {
-                _receivers.Add(position);
+                _receivers.Add(new Point16(X, tag.GetShort(string.Concat(preName, nameof(_receivers), i.ToString(), "Y"))));
                 i++;
             }
         }
-
     }
 }

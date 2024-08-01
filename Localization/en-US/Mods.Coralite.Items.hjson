@@ -4445,3 +4445,13 @@ InfinityClusterWand: {
 	DisplayName: Infinity Cluster Wand
 	Tooltip: ""
 }
+
+BasicColumn: {
+	DisplayName: Basic Column
+	Tooltip: ""
+}
+
+BasicPrism: {
+	DisplayName: Basic Prism
+	Tooltip: ""
+}

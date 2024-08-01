@@ -4516,3 +4516,13 @@ InfinityClusterWand: {
 		清空模式：点击魔能存储器将其魔能清空
 		'''
 }
+
+BasicColumn: {
+	// DisplayName: Basic Column
+	// Tooltip: ""
+}
+
+BasicPrism: {
+	// DisplayName: Basic Prism
+	// Tooltip: ""
+}

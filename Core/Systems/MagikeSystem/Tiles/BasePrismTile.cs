@@ -7,7 +7,7 @@ using Terraria;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
-    public abstract class BaseColumnTile(int width, int height, Color mapColor, int dustType, int minPick = 0, bool topSoild = true)
+    public abstract class BasePrismTile(int width, int height, Color mapColor, int dustType,int frameCount, int minPick = 0, bool topSoild = false)
         : BaseMagikeTile(width, height, mapColor, dustType, minPick, topSoild)
     {
         public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity)
@@ -18,20 +18,26 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             float rotationTop = rotation + MathHelper.PiOver2;
 
             //虽然一般不会没有 但是还是检测一下
-            if (!(entity as IEntity).TryGetComponent(MagikeComponentID.MagikeContainer, out MagikeContainer container))
+            if (!(entity as IEntity).TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender senderComponent))
                 return;
 
-            //if (senderComponent.IsEmpty())
-            //    drawPos -= rotation.ToRotationVector2() * (halfHeight - 8);
-            //else
-            //{
-            //    Point16 p = senderComponent.FirstConnector();
-            //    Vector2 targetPos = Helper.GetMagikeTileCenter(p);
-            //    rotationTop = (targetPos - selfCenter).ToRotation() + MathHelper.PiOver2;
-            //}
+            Rectangle frameBox;
+
+            if (senderComponent.IsEmpty())
+            {
+                drawPos -= rotation.ToRotationVector2() * (halfHeight - 10);
+                frameBox = tex.Frame(1, frameCount, 0, 0);
+            }
+            else
+            {
+                drawPos += rotation.ToRotationVector2() * (halfHeight - 6);
+                int frame = (tileRect.X/10 + tileRect.Y + (int)Main.timeForVisualEffects / 4) % frameCount;
+                frameBox = tex.Frame(1, frameCount, 0, frame);
+            }
 
             // 绘制主帖图
-            spriteBatch.Draw(tex, drawPos, null, lightColor, rotationTop, tex.Size() / 2, 1f, 0, 0f);
+            spriteBatch.Draw(tex, drawPos, frameBox, lightColor, rotationTop, frameBox.Size() / 2, 1f, 0, 0f);
         }
     }
+
 }

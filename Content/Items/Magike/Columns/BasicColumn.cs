@@ -12,9 +12,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Refractors
 {
-    public class BasicColumnTile : BaseMagikePlaceableItem
+    public class BasicColumn : BaseMagikePlaceableItem
     {
-        public BasicColumnTile() : base(TileType<BasicColumnTileTile>(), Item.sellPrice(0, 0, 5, 0)
+        public BasicColumn() : base(TileType<BasicColumnTile>(), Item.sellPrice(0, 0, 5, 0)
             , RarityType<MagicCrystalRarity>(), 25, AssetDirectory.MagikeColumns)
         { }
 
@@ -30,13 +30,13 @@ namespace Coralite.Content.Items.Magike.Refractors
         }
     }
 
-    public class BasicColumnTileTile() : BaseColumnTile
+    public class BasicColumnTile() : BaseColumnTile
         (1, 2, Coralite.Instance.MagicCrystalPink, DustID.CorruptionThorns)
     {
         public override string Texture => AssetDirectory.MagikeColumnTiles + Name;
-        public override int DropItemType => ItemType<BasicColumnTile>();
+        public override int DropItemType => ItemType<BasicColumn>();
 
-        public override MagikeTileEntity GetEntityInstance() => GetInstance<BasicColumnTileTileEntity>();
+        public override MagikeTileEntity GetEntityInstance() => GetInstance<BasicColumnTileEntity>();
 
         public override MagikeApparatusLevel[] GetAllLevels()
         {
@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.Magike.Refractors
         }
     }
 
-    public class BasicColumnTileTileEntity : BaseSenderTileEntity<BasicColumnTileTile>
+    public class BasicColumnTileEntity : BaseSenderTileEntity<BasicColumnTile>
     {
         public override MagikeContainer GetStartContainer()
             => new BasicColumnTileContainer();
