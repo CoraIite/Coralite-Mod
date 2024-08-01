@@ -12,26 +12,25 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
     {
         public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity)
         {
-            Vector2 selfCenter = tileRect.Center();
-            Vector2 drawPos = selfCenter + offset;
-            int halfHeight = Math.Max(tileRect.Height / 2, tileRect.Width / 2);
-            float rotationTop = rotation + MathHelper.PiOver2;
+            Vector2 bottomLeft = tileRect.BottomLeft();
+            Vector2 drawPos = bottomLeft + offset;
 
             //虽然一般不会没有 但是还是检测一下
             if (!(entity as IEntity).TryGetComponent(MagikeComponentID.MagikeContainer, out MagikeContainer container))
                 return;
 
-            //if (senderComponent.IsEmpty())
-            //    drawPos -= rotation.ToRotationVector2() * (halfHeight - 8);
-            //else
-            //{
-            //    Point16 p = senderComponent.FirstConnector();
-            //    Vector2 targetPos = Helper.GetMagikeTileCenter(p);
-            //    rotationTop = (targetPos - selfCenter).ToRotation() + MathHelper.PiOver2;
-            //}
+            float percent = (float)container.Magike / container.MagikeMax;
 
-            // 绘制主帖图
-            spriteBatch.Draw(tex, drawPos, null, lightColor, rotationTop, tex.Size() / 2, 1f, 0, 0f);
+            for (int i = 0; i < tileRect.Width / 2; i++)
+            {
+                int currentHeight = Math.Clamp(
+                   (int)(tex.Height * (percent + 0.05f * MathF.Sin(((float)Main.timeForVisualEffects+i + tileRect.X + tileRect.Y) * 0.1f)))
+                    , 0, tex.Height);
+
+                Rectangle frameBox = new Rectangle(i * 2, tex.Height - currentHeight, 2, currentHeight);
+                var origin = new Vector2(0, frameBox.Height);
+                spriteBatch.Draw(tex, drawPos + new Vector2(i * 2,0), frameBox, lightColor, 0, origin, 1f, 0, 0f);
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Coralite.Content.Tiles.RedJades
             HitSound = SoundID.Tink;
 
             LocalizedText name = CreateMapEntryName();
-            AddMapEntry(Coralite.Instance.RedJadeRed, name);
+            AddMapEntry(Coralite.RedJadeRed, name);
         }
     }
 }

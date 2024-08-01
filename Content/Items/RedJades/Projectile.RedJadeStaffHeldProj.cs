@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.RedJades
                 {
                     float factor = 1 - (36 - Projectile.timeLeft) / 14f;
                     Helper.DrawPrettyStarSparkle(1, SpriteEffects.None, center + Projectile.velocity, new Color(255, 255, 255, 0) * 0.8f,
-                        Coralite.Instance.RedJadeRed, factor, 0f, 0.4f, 0.6f, 1f, 0f, new Vector2(6, 3f) * factor, Vector2.One);
+                        Coralite.RedJadeRed, factor, 0f, 0.4f, 0.6f, 1f, 0f, new Vector2(6, 3f) * factor, Vector2.One);
                 }
             }
 
@@ -145,7 +145,7 @@ namespace Coralite.Content.Items.RedJades
                 {
                     Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.Rediancie + "RedShield").Value;
                     float factor = 1 - (36 - Projectile.timeLeft) / 14f;
-                    spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition + Projectile.velocity, null, Coralite.Instance.RedJadeRed * (Projectile.alpha / 255f), Projectile.timeLeft * 0.25f, mainTex.Size() / 2, MathF.Sin(factor * 3.141f) * 0.3f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition + Projectile.velocity, null, Coralite.RedJadeRed * (Projectile.alpha / 255f), Projectile.timeLeft * 0.25f, mainTex.Size() / 2, MathF.Sin(factor * 3.141f) * 0.3f, SpriteEffects.None, 0f);
                 }
             }
         }

@@ -164,7 +164,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     else if (!string.IsNullOrEmpty(text))
                         PopupText.NewText(new AdvancedPopupRequest()
                         {
-                            Color = Coralite.Instance.MagicCrystalPink,
+                            Color = Coralite.MagicCrystalPink,
                             Text = text,
                             DurationInFrames = 60,
                             Velocity=-Vector2.UnitY
@@ -179,7 +179,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
                 PopupText.NewText(new AdvancedPopupRequest()
                 {
-                    Color = Coralite.Instance.MagicCrystalPink,
+                    Color = Coralite.MagicCrystalPink,
                     Text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.InsertSuccess),
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY

@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Thunder
             Rectangle spawnArea = npc.getRect();
             int dustType = DustID.PortalBoltTrail;
 
-            Dust dust = Dust.NewDustDirect(spawnArea.TopLeft(), spawnArea.Width, spawnArea.Height, dustType, 0f, 0f, 50, Coralite.Instance.ThunderveinYellow);
+            Dust dust = Dust.NewDustDirect(spawnArea.TopLeft(), spawnArea.Width, spawnArea.Height, dustType, 0f, 0f, 50, Coralite.ThunderveinYellow);
             dust.velocity *= 1.5f;
             dust.noGravity = true;
         }

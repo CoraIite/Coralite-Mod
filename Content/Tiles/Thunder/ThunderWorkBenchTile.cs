@@ -6,7 +6,7 @@ namespace Coralite.Content.Tiles.Thunder
 {
     public class ThunderWorkBenchTile : BaseWorkBenchTile
     {
-        public ThunderWorkBenchTile() : base(DustID.YellowTorch, Coralite.Instance.ThunderveinYellow, AssetDirectory.ThunderTiles)
+        public ThunderWorkBenchTile() : base(DustID.YellowTorch, Coralite.ThunderveinYellow, AssetDirectory.ThunderTiles)
         {
         }
     }

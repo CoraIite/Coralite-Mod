@@ -57,7 +57,7 @@ namespace Coralite.Content.Items.Magike.Chargers
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.MagicCrystalPink);
+            AddMapEntry(Coralite.MagicCrystalPink);
             DustType = DustID.CrystalSerpent_Pink;
         }
     }
@@ -67,11 +67,11 @@ namespace Coralite.Content.Items.Magike.Chargers
         public CrystalChargerEntity() : base(300, 5) { }
 
         public override ushort TileType => (ushort)TileType<CrystalChargerTile>();
-        public override Color MainColor => Coralite.Instance.MagicCrystalPink;
+        public override Color MainColor => Coralite.MagicCrystalPink;
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(2, 2, Position, Coralite.Instance.MagicCrystalPink);
+            MagikeHelper.SpawnDustOnGenerate(2, 2, Position, Coralite.MagicCrystalPink);
         }
     }
 }

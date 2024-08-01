@@ -64,7 +64,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             for (int i = 0; i < 6; i++)
                             {
                                 Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(width, width), DustID.Teleporter,
-                                    -NPC.velocity * Main.rand.NextFloat(0.2f, 0.4f), newColor: Coralite.Instance.MagicCrystalPink, Scale: Main.rand.NextFloat(1f, 1.5f));
+                                    -NPC.velocity * Main.rand.NextFloat(0.2f, 0.4f), newColor: Coralite.MagicCrystalPink, Scale: Main.rand.NextFloat(1f, 1.5f));
                                 dust.noGravity = true;
                             }
 
@@ -95,7 +95,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             for (int i = 0; i < 24; i++)
                             {
                                 Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(80, 80), DustID.Teleporter,
-                                   (i * (MathHelper.TwoPi / 24)).ToRotationVector2() * Main.rand.NextFloat(6, 8), newColor: Coralite.Instance.MagicCrystalPink, Scale: Main.rand.NextFloat(1f, 1.5f));
+                                   (i * (MathHelper.TwoPi / 24)).ToRotationVector2() * Main.rand.NextFloat(6, 8), newColor: Coralite.MagicCrystalPink, Scale: Main.rand.NextFloat(1f, 1.5f));
                                 dust.noGravity = true;
                             }
 

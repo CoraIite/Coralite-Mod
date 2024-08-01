@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.Magike.Towers
             //trail ??= new Trail(Main.instance.GraphicsDevice, 12, new TriangularTip(16), factor => 16,
             //factor =>
             //{
-            //    return Color.Lerp(new Color(0, 0, 0, 0), Coralite.Instance.MagicCrystalPink, factor.X);
+            //    return Color.Lerp(new Color(0, 0, 0, 0), Coralite.MagicCrystalPink, factor.X);
             //});
 
             //for (int i = 0; i < 11; i++)
@@ -83,7 +83,7 @@ namespace Coralite.Content.Items.Magike.Towers
         {
             for (int i = 0; i < 16; i++)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Teleporter, Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3), 100, Coralite.Instance.MagicCrystalPink, 1f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Teleporter, Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3), 100, Coralite.MagicCrystalPink, 1f);
                 //dust.noGravity = true;
             }
         }
@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Magike.Towers
             Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
             Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, Projectile.oldPos[0] - Main.screenPosition,
-                Color.White * 0.8f, Coralite.Instance.MagicCrystalPink, 0.5f, 0f, 0.5f, 0.5f, 0f, 0f,
+                Color.White * 0.8f, Coralite.MagicCrystalPink, 0.5f, 0f, 0.5f, 0.5f, 0f, 0f,
                 new Vector2(2f, 1f), Vector2.One);
             return false;
         }

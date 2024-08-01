@@ -45,9 +45,9 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 dust.noGravity = true;
             }
 
-            Items.RedJades.RedExplosionParticle.Spawn(center, 1.4f, Coralite.Instance.RedJadeRed);
-            Items.RedJades.RedGlowParticle.Spawn(center, 1.3f, Coralite.Instance.RedJadeRed, 0.4f);
-            Items.RedJades.RedGlowParticle.Spawn(center, 1.3f, Coralite.Instance.RedJadeRed, 0.4f);
+            Items.RedJades.RedExplosionParticle.Spawn(center, 1.4f, Coralite.RedJadeRed);
+            Items.RedJades.RedGlowParticle.Spawn(center, 1.3f, Coralite.RedJadeRed, 0.4f);
+            Items.RedJades.RedGlowParticle.Spawn(center, 1.3f, Coralite.RedJadeRed, 0.4f);
 
             var modifier = new PunchCameraModifier(center, Helper.NextVec2Dir(), 20, 8f, 14, 1000f);
             Main.instance.CameraModifiers.Add(modifier);

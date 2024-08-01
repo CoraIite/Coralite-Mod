@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.RedJades
             PowerfulAttackCost: 150,
             attackLength: 430,
             width: 30, height: 60,
-            new Color(43, 43, 51), Coralite.Instance.RedJadeRed,
+            new Color(43, 43, 51), Coralite.RedJadeRed,
             trailCacheLength: 24,
             texturePath: AssetDirectory.RedJadeItems,
             yujianAIsRandom: new int[]
@@ -148,7 +148,7 @@ namespace Coralite.Content.Items.RedJades
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity * (Projectile.extraUpdates + 1), ModContent.ProjectileType<SpurtProj>(),
                         Projectile.damage, Projectile.knockBack, Projectile.owner, spurtTime / (Projectile.extraUpdates + 1), 32);
 
-                Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.RedJadeRed, 0.8f);
+                Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.RedJadeRed, 0.8f);
                 SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
             }
 

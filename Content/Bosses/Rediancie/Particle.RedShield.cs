@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void OnSpawn()
         {
-            color = Coralite.Instance.RedJadeRed;
+            color = Coralite.RedJadeRed;
             color.A = 0;
             Rotation = Main.rand.NextFloat(6.282f);
             Scale = 0f;

@@ -141,7 +141,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void AI()
         {
-            Lighting.AddLight(Projectile.Center, Coralite.Instance.IcicleCyan.ToVector3());
+            Lighting.AddLight(Projectile.Center, Coralite.IcicleCyan.ToVector3());
 
             Projectile.UpdateOldPosCache(addVelocity: true);
             Projectile.UpdateOldRotCache();

@@ -29,11 +29,11 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
             spriteBatch.Draw(mainTex, Bottom + new Vector2(0, -40), null, Color.White, 0, new Vector2(mainTex.Width / 2, mainTex.Height), 1.2f, 0, 0);
 
             Vector2 pos = PageTop + new Vector2(0, 60);
-            Utils.DrawBorderStringBig(spriteBatch, _4_Name.Value, pos, Coralite.Instance.MagicCrystalPink
+            Utils.DrawBorderStringBig(spriteBatch, _4_Name.Value, pos, Coralite.MagicCrystalPink
                 , 0.8f, 0.5f, 0.5f);
 
             pos = Position + new Vector2(0, 100);
-            Utils.DrawBorderString(spriteBatch, _4_1_Name.Value, pos, Coralite.Instance.MagicCrystalPink
+            Utils.DrawBorderString(spriteBatch, _4_1_Name.Value, pos, Coralite.MagicCrystalPink
                 , 1, 0f, 00f);
 
             pos += new Vector2(0, 60);

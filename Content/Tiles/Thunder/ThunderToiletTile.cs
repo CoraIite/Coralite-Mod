@@ -7,7 +7,7 @@ namespace Coralite.Content.Tiles.Thunder
 {
     public class ThunderToiletTile : BaseToiletTile<ThunderToilet>
     {
-        public ThunderToiletTile() : base(DustID.YellowTorch, Coralite.Instance.ThunderveinYellow, AssetDirectory.ThunderTiles)
+        public ThunderToiletTile() : base(DustID.YellowTorch, Coralite.ThunderveinYellow, AssetDirectory.ThunderTiles)
         {
         }
     }

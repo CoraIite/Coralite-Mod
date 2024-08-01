@@ -9,7 +9,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 {
     public class GlistentPolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.Instance.GlistentGreen;
+        public override Color FilterColor => Coralite.GlistentGreen;
 
         public GlistentPolarizedFilter() : base(Item.sellPrice(0, 0, 20), ItemRarityID.Green)
         {

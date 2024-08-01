@@ -2,16 +2,16 @@
 {
     public class MagicCrystalRarity : ModRarity
     {
-        public override Color RarityColor => Coralite.Instance.MagicCrystalPink;
+        public override Color RarityColor => Coralite.MagicCrystalPink;
     }
 
     public class CrystallineMagikeRarity : ModRarity
     {
-        public override Color RarityColor => Coralite.Instance.CrystallineMagikePurple;
+        public override Color RarityColor => Coralite.CrystallineMagikePurple;
     }
 
     public class SplendorMagicoreRarity : ModRarity
     {
-        public override Color RarityColor => Coralite.Instance.SplendorMagicoreLightBlue;
+        public override Color RarityColor => Coralite.SplendorMagicoreLightBlue;
     }
 }

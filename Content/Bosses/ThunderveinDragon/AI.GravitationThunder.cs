@@ -27,7 +27,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         Vector2 center = pos + Helper.NextVec2Dir(edge - 1, edge);
                         Dust d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail,
                             (pos - center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2, 4),
-                            newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
+                            newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
                         d.noGravity = true;
 
                         NPC.QuickSetDirection();

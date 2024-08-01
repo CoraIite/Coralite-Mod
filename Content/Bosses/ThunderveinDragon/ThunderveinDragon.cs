@@ -517,7 +517,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             {
                                 var modifyer = new PunchCameraModifier(NPC.Center, Helper.NextVec2Dir(), 8, 12, 20, 1000);
                                 Main.instance.CameraModifiers.Add(modifyer);
-                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.Instance.ThunderveinYellow, 0.2f);
+                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.ThunderveinYellow, 0.2f);
                             }
                             if ((int)Timer % 20 == 0)
                                 Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.2f);

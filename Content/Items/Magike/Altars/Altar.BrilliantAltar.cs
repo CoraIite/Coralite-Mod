@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.Magike.Altars
     {
         public BrilliantAltarEntity() : base(1200, 60 * 3, 16 * 10, 5) { }
 
-        public override Color MainColor => Coralite.Instance.CrystallineMagikePurple;
+        public override Color MainColor => Coralite.CrystallineMagikePurple;
 
         public override ushort TileType => (ushort)TileType<BrilliantAltarTile>();
 

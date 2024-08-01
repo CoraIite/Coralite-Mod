@@ -22,7 +22,7 @@ namespace Coralite.Content.Tiles.RedJades
             TileObjectData.newTile.StyleHorizontal = false;
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.RedJadeRed);
+            AddMapEntry(Coralite.RedJadeRed);
         }
 
         public override void HitWire(int i, int j)

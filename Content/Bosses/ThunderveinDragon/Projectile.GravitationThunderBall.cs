@@ -84,7 +84,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                 thunderRange = Helper.Lerp(110, 30, Timer / chasingTime);
                 Projectile.SpawnTrailDust(30f, DustID.PortalBoltTrail, Main.rand.NextFloat(0.1f, 0.4f),
-                    newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.3f));
+                    newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.3f));
             }
             else if (Timer == chasingTime)
             {

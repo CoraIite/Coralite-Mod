@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.Magike.Towers
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.RedJadeRed);
+            AddMapEntry(Coralite.RedJadeRed);
             DustType = DustID.GemRuby;
         }
 
@@ -134,7 +134,7 @@ namespace Coralite.Content.Items.Magike.Towers
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.Instance.RedJadeRed);
+            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.RedJadeRed);
         }
 
         public override bool StartWork()

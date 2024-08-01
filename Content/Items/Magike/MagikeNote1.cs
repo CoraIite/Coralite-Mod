@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.Magike
         {
             if (!@lock)
             {
-                Main.NewText(MagikeSystem.NewKnowledgeUnlocked, Coralite.Instance.MagicCrystalPink);
+                Main.NewText(MagikeSystem.NewKnowledgeUnlocked, Coralite.MagicCrystalPink);
             }
 
             @lock = true;

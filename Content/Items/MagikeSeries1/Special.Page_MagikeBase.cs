@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             if (!MagikeSystem.learnedMagikeBase)
             {
                 MagikeSystem.learnedMagikeBase = true;
-                //MagikeHelper.SpawnDustOnGenerate(3, 3, player.Center.ToPoint16(), Coralite.Instance.MagicCrystalPink);
+                //MagikeHelper.SpawnDustOnGenerate(3, 3, player.Center.ToPoint16(), Coralite.MagicCrystalPink);
                 if (Main.myPlayer == player.whoAmI)
                     Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, new Vector2(player.direction * 8, -4),
                         ModContent.ProjectileType<Page_MagikeBaseProj>(), 1, 0, player.whoAmI);
@@ -109,7 +109,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             for (float i = 0f; i < 1f; i += 0.25f)
             {
                 float radians = (i + timer) * MathHelper.TwoPi;
-                Main.spriteBatch.Draw(texture, drawPos + new Vector2(0f, 4f).RotatedBy(radians), frame, Coralite.Instance.MagicCrystalPink, 0, frameOrigin, 1, SpriteEffects.None, 0);
+                Main.spriteBatch.Draw(texture, drawPos + new Vector2(0f, 4f).RotatedBy(radians), frame, Coralite.MagicCrystalPink, 0, frameOrigin, 1, SpriteEffects.None, 0);
             }
 
             Main.spriteBatch.Draw(texture, drawPos, frame, Color.White, 0, frameOrigin, 1, SpriteEffects.None, 0);

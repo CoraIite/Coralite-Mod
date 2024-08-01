@@ -160,14 +160,14 @@ namespace Coralite.Content.NPCs.Magike
                     if (MoveTime % 5 == 0)
                     {
                         Dust dust = Dust.NewDustPerfect(center + Main.rand.NextVector2CircularEdge(width * 1.5f, width * 1.5f),
-                            DustID.FireworksRGB, Vector2.Zero, newColor: Coralite.Instance.MagicCrystalPink);
+                            DustID.FireworksRGB, Vector2.Zero, newColor: Coralite.MagicCrystalPink);
                         dust.noGravity = true;
                         dust.velocity = (center - dust.position).SafeNormalize(Vector2.UnitX) * width / 10;
                     }
 
                     for (int i = 0; i < 2; i++)
                     {
-                        Dust dust = Dust.NewDustPerfect(center + Main.rand.NextVector2CircularEdge(width, width), DustID.LastPrism, Vector2.Zero, newColor: Coralite.Instance.MagicCrystalPink);
+                        Dust dust = Dust.NewDustPerfect(center + Main.rand.NextVector2CircularEdge(width, width), DustID.LastPrism, Vector2.Zero, newColor: Coralite.MagicCrystalPink);
                         dust.noGravity = true;
                     }
 
@@ -224,7 +224,7 @@ namespace Coralite.Content.NPCs.Magike
             if (NPC.life <= 0)
             {
                 for (int i = 0; i < 6; i++)
-                    Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Teleporter, Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2), 100, Coralite.Instance.MagicCrystalPink, 1f);
+                    Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Teleporter, Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2), 100, Coralite.MagicCrystalPink, 1f);
                 if (Main.netMode != NetmodeID.Server)
                     for (int i = 0; i < 5; i++)
                         Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(1, 1), Mod.Find<ModGore>("CrystalGolem_Gore" + i).Type);
@@ -273,7 +273,7 @@ namespace Coralite.Content.NPCs.Magike
                 Vector2 startPos = GetHeadPos() - Main.screenPosition;
                 Rectangle target = new Rectangle((int)startPos.X, (int)startPos.Y, (int)TargetLineLength, (int)height);
 
-                Color color = Coralite.Instance.MagicCrystalPink;
+                Color color = Coralite.MagicCrystalPink;
                 color.A = 200;
                 spriteBatch.Draw(lineTex, target, null, color, TargetRot, new Vector2(0, lineTex.Height / 2), 0, 0);
                 spriteBatch.Draw(WarningLineSideTex.Value, target, null, Color.White, TargetRot, new Vector2(0, lineTex.Height / 2), 0, 0);

@@ -16,7 +16,7 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void SetStaticDefaults()
         {
-            this.ChairPrefab(DustID.GemRuby, Coralite.Instance.RedJadeRed);
+            this.ChairPrefab(DustID.GemRuby, Coralite.RedJadeRed);
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

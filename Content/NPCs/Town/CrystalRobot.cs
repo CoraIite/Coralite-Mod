@@ -368,7 +368,7 @@ namespace Coralite.Content.NPCs.Town
         public MagicCrystalCurrency() : base(ModContent.ItemType<MagicCrystal>(), 9999)
         {
             CurrencyTextKey = "Mods.Coralite.Items.MagicCrystal.DisplayName";
-            CurrencyTextColor = Coralite.Instance.MagicCrystalPink;
+            CurrencyTextColor = Coralite.MagicCrystalPink;
         }
     }
 }

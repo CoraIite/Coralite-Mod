@@ -7,7 +7,7 @@ namespace Coralite.Content.Tiles.Thunder
 {
     public class ThunderCandelabraTile : BaseCandelabraTile<ThunderCandelabra>
     {
-        public ThunderCandelabraTile() : base(DustID.YellowTorch, Coralite.Instance.ThunderveinYellow, AssetDirectory.ThunderTiles)
+        public ThunderCandelabraTile() : base(DustID.YellowTorch, Coralite.ThunderveinYellow, AssetDirectory.ThunderTiles)
         {
         }
 

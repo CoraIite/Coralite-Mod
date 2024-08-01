@@ -29,7 +29,7 @@ namespace Coralite.Content.Tiles.Thunder
             TileID.Sets.HasOutlines[Type] = true;
 
             DustType = DustID.YellowTorch;
-            AddMapEntry(Coralite.Instance.ThunderveinYellow);
+            AddMapEntry(Coralite.ThunderveinYellow);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.PlanterBox | AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);

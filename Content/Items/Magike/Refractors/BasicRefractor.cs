@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Magike.Refractors
     }
 
     public class BasicRefractorTile() : BaseRefractorTile
-        (1, 2, Coralite.Instance.MagicCrystalPink, DustID.CorruptionThorns)
+        (1, 2, Coralite.MagicCrystalPink, DustID.CorruptionThorns)
     {
         public override string Texture => AssetDirectory.MagikeRefractorTiles + Name;
         public override int DropItemType => ItemType<BasicRefractor>();

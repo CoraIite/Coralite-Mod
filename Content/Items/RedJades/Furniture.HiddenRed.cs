@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void SetStaticDefaults()
         {
-            this.PaintingPrefab(2, 3, Coralite.Instance.RedJadeRed, DustID.GemRuby);
+            this.PaintingPrefab(2, 3, Coralite.RedJadeRed, DustID.GemRuby);
         }
 
     }

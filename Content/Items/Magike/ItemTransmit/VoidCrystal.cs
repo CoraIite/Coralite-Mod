@@ -49,7 +49,7 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.MagicCrystalPink);
+            AddMapEntry(Coralite.MagicCrystalPink);
             DustType = DustID.CrystalSerpent_Pink;
         }
 
@@ -77,7 +77,7 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
         public VoidCrystalEntity() : base(250, 1, 1, 16 * 16, 5, 10, 1, 60 * 5, 16 * 5)
         { }
 
-        public override Color MainColor => Coralite.Instance.MagicCrystalPink;
+        public override Color MainColor => Coralite.MagicCrystalPink;
 
         public override ushort TileType => (ushort)TileType<VoidCrystalTile>();
 

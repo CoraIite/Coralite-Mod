@@ -37,7 +37,7 @@ namespace Coralite.Content.CustomHooks
                 Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
 
                 Texture2D laserTex = MagikeSystem.GetConnectLine();
-                Color drawColor = Coralite.Instance.MagicCrystalPink * 0.6f;
+                Color drawColor = Coralite.MagicCrystalPink * 0.6f;
                 var origin = new Vector2(0, laserTex.Height / 2);
 
                 foreach (var entity in TileEntity.ByPosition)

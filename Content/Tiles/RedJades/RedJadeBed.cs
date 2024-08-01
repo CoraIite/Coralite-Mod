@@ -15,7 +15,7 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void SetStaticDefaults()
         {
-            this.BedPrefab(DustID.GemRuby, Coralite.Instance.RedJadeRed);
+            this.BedPrefab(DustID.GemRuby, Coralite.RedJadeRed);
         }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;

@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.Magike.SpecialLens
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.RedJadeRed);
+            AddMapEntry(Coralite.RedJadeRed);
             DustType = DustID.GemRuby;
         }
 
@@ -107,12 +107,12 @@ namespace Coralite.Content.Items.Magike.SpecialLens
 
         public override void SendVisualEffect(IMagikeContainer container)
         {
-            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Coralite.Instance.RedJadeRed);
+            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Coralite.RedJadeRed);
         }
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.Instance.RedJadeRed);
+            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.RedJadeRed);
         }
     }
 }

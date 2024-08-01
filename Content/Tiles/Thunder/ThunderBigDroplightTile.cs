@@ -7,7 +7,7 @@ namespace Coralite.Content.Tiles.Thunder
 {
     public class ThunderBigDroplightTile : BaseBigDroplightTile<ThunderBigDroplight>
     {
-        public ThunderBigDroplightTile() : base(DustID.YellowTorch, Coralite.Instance.ThunderveinYellow, AssetDirectory.ThunderTiles)
+        public ThunderBigDroplightTile() : base(DustID.YellowTorch, Coralite.ThunderveinYellow, AssetDirectory.ThunderTiles)
         {
         }
 

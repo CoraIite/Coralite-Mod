@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.Thunder
                 for (int i = 0; i < 2; i++)
                 {
                     Projectile.SpawnTrailDust((float)(Projectile.width / 2), DustID.PortalBoltTrail, Main.rand.NextFloat(0.2f, 0.5f),
-                        newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.4f));
+                        newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.4f));
                 }
         }
 
@@ -96,7 +96,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override Color GetColor(float factor)
         {
-            return Coralite.Instance.ThunderveinYellow * factor;
+            return Coralite.ThunderveinYellow * factor;
         }
     }
 
@@ -333,7 +333,7 @@ namespace Coralite.Content.Items.Thunder
             if (Timer % 4 == 0)
             {
                 Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(Projectile.width / 5, Projectile.width / 5),
-                    Vector2.Zero, CoraliteContent.ParticleType<BigFog>(), Coralite.Instance.ThunderveinYellow * Main.rand.NextFloat(0.5f, 0.8f),
+                    Vector2.Zero, CoraliteContent.ParticleType<BigFog>(), Coralite.ThunderveinYellow * Main.rand.NextFloat(0.5f, 0.8f),
                     Main.rand.NextFloat(0.5f, 1f));
                 ElectricParticle_Follow.Spawn(Projectile.Center, Helper.NextVec2Dir(Projectile.width / 3, Projectile.width * 0.56f), () => Projectile.Center, Main.rand.NextFloat(0.7f, 1.1f));
             }

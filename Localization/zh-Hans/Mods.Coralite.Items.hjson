@@ -4518,11 +4518,11 @@ InfinityClusterWand: {
 }
 
 BasicColumn: {
-	// DisplayName: Basic Column
-	// Tooltip: ""
+	DisplayName: 基础水晶柱
+	Tooltip: ""
 }
 
 BasicPrism: {
-	// DisplayName: Basic Prism
-	// Tooltip: ""
+	DisplayName: 基础棱镜
+	Tooltip: ""
 }

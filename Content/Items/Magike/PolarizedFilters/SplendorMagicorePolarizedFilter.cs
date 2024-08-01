@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 {
     public class SplendorMagicorePolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.Instance.SplendorMagicoreLightBlue;
+        public override Color FilterColor => Coralite.SplendorMagicoreLightBlue;
 
         public SplendorMagicorePolarizedFilter() : base(Item.sellPrice(0, 2), ItemRarityID.Red)
         {

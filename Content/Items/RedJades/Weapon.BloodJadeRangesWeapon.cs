@@ -255,7 +255,7 @@ namespace Coralite.Content.Items.RedJades
             Texture2D mainTex = Projectile.GetTexture();
 
             Color c = lightColor;
-            Color c2 = Coralite.Instance.RedJadeRed;
+            Color c2 = Coralite.RedJadeRed;
             c2.A = 100;
             c2 *= 0.6f;
             for (int i = 0; i < 3; i++)
@@ -418,7 +418,7 @@ namespace Coralite.Content.Items.RedJades
                     cp.parryTime += 100;
             }
             Particle.NewParticle(Projectile.Center, Vector2.Zero,
-                CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.RedJadeRed, 1.5f);
+                CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.RedJadeRed, 1.5f);
             SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
             Projectile.Kill();
         }
@@ -428,7 +428,7 @@ namespace Coralite.Content.Items.RedJades
             Texture2D mainTex = Projectile.GetTexture();
 
             Color c = lightColor * alpha;
-            Color c2 = Coralite.Instance.RedJadeRed;
+            Color c2 = Coralite.RedJadeRed;
             c2.A = 150;
             c2 *= 0.6f * alpha;
             for (int i = 0; i < 3; i++)

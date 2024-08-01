@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.Magike.BasicLens
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.SplendorMagicoreLightBlue);
+            AddMapEntry(Coralite.SplendorMagicoreLightBlue);
             DustType = DustID.BlueFairy;
         }
     }
@@ -87,12 +87,12 @@ namespace Coralite.Content.Items.Magike.BasicLens
 
         public override void SendVisualEffect(IMagikeContainer container)
         {
-            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Coralite.Instance.SplendorMagicoreLightBlue);
+            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Coralite.SplendorMagicoreLightBlue);
         }
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.Instance.SplendorMagicoreLightBlue);
+            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.SplendorMagicoreLightBlue);
         }
     }
 }

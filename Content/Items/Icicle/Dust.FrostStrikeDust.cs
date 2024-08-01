@@ -6,7 +6,7 @@ namespace Coralite.Content.Items.Icicle
 {
     public class FrostStrikeDust : BaseStrikeDust
     {
-        public FrostStrikeDust() : base(Coralite.Instance.IcicleCyan, new Color(23, 106, 158), 20) { }
+        public FrostStrikeDust() : base(Coralite.IcicleCyan, new Color(23, 106, 158), 20) { }
 
         public override void OnSpawn(Dust dust)
         {
@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override bool Update(Dust dust)
         {
-            Lighting.AddLight(dust.position, Coralite.Instance.IcicleCyan.ToVector3());
+            Lighting.AddLight(dust.position, Coralite.IcicleCyan.ToVector3());
             //float factor = dust.fadeIn / 16f;
             //if (factor < 0.5f)
             //{

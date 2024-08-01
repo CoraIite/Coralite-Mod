@@ -57,7 +57,7 @@
 
 //            TileObjectData.addTile(Type);
 
-//            AddMapEntry(Coralite.Instance.SplendorMagicoreLightBlue);
+//            AddMapEntry(Coralite.SplendorMagicoreLightBlue);
 //            DustType = DustID.BlueFairy;
 //        }
 //    }
@@ -86,12 +86,12 @@
 
 //        public override void SendVisualEffect(IMagikeContainer container)
 //        {
-//            MagikeHelper.SpawnDustOnSend(1, 2, Position, container, Coralite.Instance.SplendorMagicoreLightBlue);
+//            MagikeHelper.SpawnDustOnSend(1, 2, Position, container, Coralite.SplendorMagicoreLightBlue);
 //        }
 
 //        public override void OnReceiveVisualEffect()
 //        {
-//            MagikeHelper.SpawnDustOnGenerate(1, 2, Position, Coralite.Instance.SplendorMagicoreLightBlue);
+//            MagikeHelper.SpawnDustOnGenerate(1, 2, Position, Coralite.SplendorMagicoreLightBlue);
 //        }
 //    }
 //}

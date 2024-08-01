@@ -316,14 +316,14 @@ namespace Coralite.Content.Items.Thunder
                     for (int j = 0; j < 4; j++)
                     {
                         Vector2 dir = -RotateVec2.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
-                        dust = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail, dir * Main.rand.NextFloat(1f, 5f), 50, Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
+                        dust = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail, dir * Main.rand.NextFloat(1f, 5f), 50, Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
                         dust.noGravity = true;
                     }
 
                     for (int i = 0; i < 6; i++)
                     {
                         Vector2 dir = RotateVec2.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f));
-                        dust = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail, dir * Main.rand.NextFloat(2f, 12f), newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1.5f, 2f));
+                        dust = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail, dir * Main.rand.NextFloat(2f, 12f), newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1.5f, 2f));
                         dust.noGravity = true;
                     }
                 }
@@ -554,7 +554,7 @@ namespace Coralite.Content.Items.Thunder
             if (Timer > 30)
             {
                 Projectile.SpawnTrailDust(30f, DustID.PortalBoltTrail, Main.rand.NextFloat(0.1f, 0.4f),
-                    newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.3f));
+                    newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.3f));
                 ThunderWidth = Main.rand.NextFloat(8, 12);
 
                 if (Projectile.velocity.Length() < 20)

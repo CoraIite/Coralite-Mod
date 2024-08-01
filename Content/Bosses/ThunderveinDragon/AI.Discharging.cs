@@ -150,12 +150,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Vector2 pos = NPC.Center + Main.rand.NextVector2CircularEdge(edge, edge);
             Dust d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail
                 , (pos - NPC.Center).SafeNormalize(Vector2.Zero).RotatedBy(NPC.direction * MathHelper.PiOver2) * Main.rand.NextFloat(4f, 8f)
-                , newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
+                , newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
             d.noGravity = true;
             pos = NPC.Center + Main.rand.NextVector2Circular(edge, edge);
             d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail
                 , (pos - NPC.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(4f, 8f)
-                , newColor: Coralite.Instance.ThunderveinYellow);
+                , newColor: Coralite.ThunderveinYellow);
             d.noGravity = true;
         }
     }

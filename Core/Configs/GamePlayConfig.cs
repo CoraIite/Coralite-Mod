@@ -8,7 +8,7 @@ namespace Coralite.Core.Configs
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
         [Header("Magike")]
-        [DefaultValue(10)]
+        [DefaultValue(20)]
         [Range(1,50)]
         public int SelectSize;
 
@@ -31,7 +31,7 @@ namespace Coralite.Core.Configs
     public class GamePlaySystem
     {
         public static bool SpecialDashFirst = true;
-        public static int SelectSize = 10;
+        public static int SelectSize = 20;
 
     }
 }

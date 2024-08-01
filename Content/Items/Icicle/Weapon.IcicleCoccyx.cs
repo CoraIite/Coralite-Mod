@@ -355,7 +355,7 @@ namespace Coralite.Content.Items.Icicle
         public override bool PreDraw(ref Color lightColor)
         {
             //绘制线条
-            Helper.DrawLine(Projectile.oldPos.ToList(), Coralite.Instance.IcicleCyan);
+            Helper.DrawLine(Projectile.oldPos.ToList(), Coralite.IcicleCyan);
 
             //绘制骨头节
             Texture2D _boneTex = boneTex.Value;
@@ -531,7 +531,7 @@ namespace Coralite.Content.Items.Icicle
                     for (int i = 0; i < lineCount - 2; i++)
                     {
                         Particle.NewParticle(Vector2.Lerp(targetCenter, Owner.Center, (float)i / lineCount) + Main.rand.NextVector2Circular(32, 32), -dashDir * Main.rand.NextFloat(6f, 13f),
-                            CoraliteContent.ParticleType<SpeedLine>(), Coralite.Instance.IcicleCyan, Main.rand.NextFloat(0.1f, 0.4f));
+                            CoraliteContent.ParticleType<SpeedLine>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.1f, 0.4f));
                     }
                     Helper.PlayPitched("Icicle/Spurt", 0.8f, 0f, Owner.Center);
                 }

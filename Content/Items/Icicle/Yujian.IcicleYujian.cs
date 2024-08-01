@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.Icicle
             PowerfulAttackCost: 200,
             attackLength: 450,
             width: 30, height: 60,
-            new Color(40, 98, 213), Coralite.Instance.IcicleCyan,
+            new Color(40, 98, 213), Coralite.IcicleCyan,
             trailCacheLength: 20,
             texturePath: AssetDirectory.IcicleItems
             )

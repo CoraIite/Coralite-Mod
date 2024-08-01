@@ -9,7 +9,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 {
     public class IciclePolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.Instance.IcicleCyan;
+        public override Color FilterColor => Coralite.IcicleCyan;
 
         public IciclePolarizedFilter() : base(Item.sellPrice(0, 0, 30), ItemRarityID.Blue)
         {

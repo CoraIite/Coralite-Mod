@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.Magike.EnchantPools
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.MagicCrystalPink);
+            AddMapEntry(Coralite.MagicCrystalPink);
             DustType = DustID.CrystalSerpent_Pink;
         }
     }
@@ -67,6 +67,6 @@ namespace Coralite.Content.Items.Magike.EnchantPools
 
         public override ushort TileType => (ushort)TileType<CrystalEnchantPoolTile>();
 
-        public override Color MainColor => Coralite.Instance.MagicCrystalPink;
+        public override Color MainColor => Coralite.MagicCrystalPink;
     }
 }

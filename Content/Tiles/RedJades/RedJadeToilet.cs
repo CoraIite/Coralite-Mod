@@ -15,7 +15,7 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void SetStaticDefaults()
         {
-            this.ToiletPrefab(DustID.GemRuby, Coralite.Instance.RedJadeRed);
+            this.ToiletPrefab(DustID.GemRuby, Coralite.RedJadeRed);
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

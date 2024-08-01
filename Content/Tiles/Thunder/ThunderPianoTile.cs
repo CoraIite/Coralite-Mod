@@ -6,7 +6,7 @@ namespace Coralite.Content.Tiles.Thunder
 {
     public class ThunderPianoTile : BasePianoTile
     {
-        public ThunderPianoTile() : base(DustID.YellowTorch, Coralite.Instance.ThunderveinYellow, AssetDirectory.ThunderTiles)
+        public ThunderPianoTile() : base(DustID.YellowTorch, Coralite.ThunderveinYellow, AssetDirectory.ThunderTiles)
         {
         }
     }

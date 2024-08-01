@@ -10,7 +10,7 @@ namespace Coralite.Content.Tiles.Thunder
 
         public override void SetStaticDefaults()
         {
-            this.PaintingPrefab(3, 2, Coralite.Instance.ThunderveinYellow, DustID.YellowTorch);
+            this.PaintingPrefab(3, 2, Coralite.ThunderveinYellow, DustID.YellowTorch);
         }
 
     }

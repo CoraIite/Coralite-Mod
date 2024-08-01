@@ -280,7 +280,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         protected override void AIBefore()
         {
-            Lighting.AddLight(Owner.Center, Coralite.Instance.IcicleCyan.ToVector3());
+            Lighting.AddLight(Owner.Center, Coralite.IcicleCyan.ToVector3());
         }
 
         protected override void OnSlash()

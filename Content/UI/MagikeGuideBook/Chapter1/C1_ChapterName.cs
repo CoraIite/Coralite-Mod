@@ -64,7 +64,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Utils.DrawBorderStringBig(spriteBatch, ChapterName.Value, Center + new Vector2(0, -PageWidth / 2), Coralite.Instance.MagicCrystalPink, 1, 0.5f, 0.5f);
+            Utils.DrawBorderStringBig(spriteBatch, ChapterName.Value, Center + new Vector2(0, -PageWidth / 2), Coralite.MagicCrystalPink, 1, 0.5f, 0.5f);
         }
     }
 
@@ -103,7 +103,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
             if (IsMouseHovering)
             {
                 spriteBatch.Draw(borderTexture.Value, pos, null, Color.White, 0, borderTexture.Size() / 2, scale, 0, 0);
-                textColor = Coralite.Instance.MagicCrystalPink;
+                textColor = Coralite.MagicCrystalPink;
             }
 
             pos += new Vector2(r, 4);

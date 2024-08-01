@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
+using System;
 using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
@@ -47,7 +48,7 @@ namespace Coralite.Content.CustomHooks
                 int height = tileData.Height;
                 int y1 = t.TileFrameY / 18;
 
-                TileObjectData alternateData = tileData;
+                TileObjectData alternateData;
                 int style = 0;
 
                 int partFrameY = t.TileFrameY % tileData.CoordinateFullHeight;
@@ -63,13 +64,13 @@ namespace Coralite.Content.CustomHooks
                 {
                     style = 2;
                     alternateData = TileObjectData.GetTileData(type, 0, style + 1);// ((List<TileObjectData>)_alternateInfo.GetValue(tileData))[style];
-                    partFrameY = (t.TileFrameY - alternateData.Width * alternateData.CoordinateFullHeight * 2) & alternateData.CoordinateFullHeight;
+                    partFrameY = (t.TileFrameY - alternateData.CoordinateFullWidth * 2) % alternateData.CoordinateFullHeight;
                 }
                 else
                 {
                     style = 3;
                     alternateData = TileObjectData.GetTileData(type, 0, style + 1);// ((List<TileObjectData>)_alternateInfo.GetValue(tileData))[style];
-                    partFrameY = (t.TileFrameY - alternateData.Width * alternateData.CoordinateFullHeight * 2) & alternateData.CoordinateFullHeight;
+                    partFrameY = (t.TileFrameY - alternateData.CoordinateFullWidth * 2) % alternateData.CoordinateFullHeight;
                 }
 
                 //因为放下来的时候就是0所以不管他

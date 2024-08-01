@@ -11,7 +11,7 @@ namespace Coralite.Content.Tiles.RedJades
     {
         public override void SetStaticDefaults()
         {
-            this.DoorOpenPrefab(ModContent.TileType<RedJadeDoorClosed>(), DustID.GemRuby, Coralite.Instance.RedJadeRed);
+            this.DoorOpenPrefab(ModContent.TileType<RedJadeDoorClosed>(), DustID.GemRuby, Coralite.RedJadeRed);
         }
 
         public override string Texture => AssetDirectory.RedJadeTiles + Name;

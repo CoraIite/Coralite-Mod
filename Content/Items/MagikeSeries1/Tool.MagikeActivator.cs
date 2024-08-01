@@ -31,12 +31,12 @@ namespace Coralite.Content.Items.MagikeSeries1
             if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeFactory magF))
             {
                 if (magF.StartWork())
-                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("Activated", () => "已激活！").Value);
+                    CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("Activated", () => "已激活！").Value);
                 else
-                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("FailToActivate", () => "激活失败！").Value);
+                    CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("FailToActivate", () => "激活失败！").Value);
             }
             else    //没找到
-                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("InstrumentNotFound", () => "未找到魔能仪器！").Value);
+                CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("InstrumentNotFound", () => "未找到魔能仪器！").Value);
 
             return true;
         }

@@ -121,7 +121,7 @@ namespace Coralite.Content.Items.Magike
 
             // Etc
             LocalizedText name = CreateMapEntryName();
-            AddMapEntry(Coralite.Instance.MagicCrystalPink, name);
+            AddMapEntry(Coralite.MagicCrystalPink, name);
         }
 
         public override bool CreateDust(int i, int j, ref int type)

@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 {
     public class HallowPolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.Instance.HallowYellow;
+        public override Color FilterColor => Coralite.HallowYellow;
 
         public HallowPolarizedFilter() : base(Item.sellPrice(0, 0, 60), ItemRarityID.Pink)
         {

@@ -23,7 +23,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileID.Sets.DisableSmartCursor[Type] = true;
 
             DustType = DustID.CrystalSerpent_Pink;
-            AddMapEntry(Coralite.Instance.MagicCrystalPink);
+            AddMapEntry(Coralite.MagicCrystalPink);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.Origin = new Point16(0, 2);

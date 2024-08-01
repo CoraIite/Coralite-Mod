@@ -6,7 +6,7 @@ namespace Coralite.Content.Tiles.Thunder
 {
     public class ThunderTableTile : BaseTableTile
     {
-        public ThunderTableTile() : base(DustID.YellowTorch, Coralite.Instance.ThunderveinYellow, AssetDirectory.ThunderTiles)
+        public ThunderTableTile() : base(DustID.YellowTorch, Coralite.ThunderveinYellow, AssetDirectory.ThunderTiles)
         {
         }
     }

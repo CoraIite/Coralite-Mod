@@ -50,10 +50,10 @@ namespace Coralite.Content.Items.Magike.Tools
                 {
                     default:
                     case 0: //提取模式
-                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ConnectMode", () => "提取模式").Value);
+                        CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("ConnectMode", () => "提取模式").Value);
                         break;
                     case 1: //发送模式
-                        CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ViewMode", () => "发送模式").Value);
+                        CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("ViewMode", () => "发送模式").Value);
                         break;
                 }
                 extractor = null;
@@ -71,10 +71,10 @@ namespace Coralite.Content.Items.Magike.Tools
                             if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IItemExtractor itemExact))    //找到了
                             {
                                 extractor = itemExact;
-                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ChooseExtractor", () => "已选择物品提取器").Value);
+                                CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("ChooseExtractor", () => "已选择物品提取器").Value);
                             }
                             else    //没找到
-                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, ChooseExtractorFailed.Value);
+                                CombatText.NewText(rectangle, Coralite.MagicCrystalPink, ChooseExtractorFailed.Value);
                         }
                         else   //第二次左键
                         {
@@ -94,13 +94,13 @@ namespace Coralite.Content.Items.Magike.Tools
 
                             if (extractor.ConnectToContainer(position))  //能连接，建立连接
                             {
-                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ConnectSuccessfully", () => "成功建立连接！").Value);
+                                CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("ConnectSuccessfully", () => "成功建立连接！").Value);
                                 extractor.ShowConnection_ItemExtractor();
                                 extractor = null;
                             }
                             else      //不能连接，清空选择
                             {
-                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ConnectFailed", () => "连接失败！").Value);
+                                CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("ConnectFailed", () => "连接失败！").Value);
                                 extractor = null;
                             }
                         }
@@ -113,10 +113,10 @@ namespace Coralite.Content.Items.Magike.Tools
                             if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IItemSender itemS))    //找到了
                             {
                                 sender = itemS;
-                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ChooseSender", () => "已选择物品发送器").Value);
+                                CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("ChooseSender", () => "已选择物品发送器").Value);
                             }
                             else    //没找到
-                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, ChooseSenderFailed.Value);
+                                CombatText.NewText(rectangle, Coralite.MagicCrystalPink, ChooseSenderFailed.Value);
                         }
                         else   //第二次左键
                         {
@@ -136,13 +136,13 @@ namespace Coralite.Content.Items.Magike.Tools
 
                             if (sender.ConnectToReceiver(position))  //能连接，建立连接
                             {
-                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ConnectSuccessfully", () => "成功建立连接！").Value);
+                                CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("ConnectSuccessfully", () => "成功建立连接！").Value);
                                 sender.ShowConnection_ItemSender();
                                 sender = null;
                             }
                             else      //不能连接，清空选择
                             {
-                                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, this.GetLocalization("ConnectFailed", () => "连接失败！").Value);
+                                CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("ConnectFailed", () => "连接失败！").Value);
                                 sender = null;
                             }
                         }

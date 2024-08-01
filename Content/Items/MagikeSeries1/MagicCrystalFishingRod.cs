@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         {
             lineOriginOffset = new Vector2(40, -41);
             // Sets the fishing line's color. Note that this will be overridden by the colored string accessories.
-            lineColor = Coralite.Instance.MagicCrystalPink;
+            lineColor = Coralite.MagicCrystalPink;
         }
     }
 
@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         {
             if (!Main.dedServ)
             {
-                Lighting.AddLight(Projectile.Center, Coralite.Instance.MagicCrystalPink.ToVector3());
+                Lighting.AddLight(Projectile.Center, Coralite.MagicCrystalPink.ToVector3());
             }
         }
     }

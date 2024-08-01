@@ -741,10 +741,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 case GemType.MagicCrystal:
                     return new GemDrawData(TextureAssets.Item[ModContent.ItemType<MagicCrystal>()].Value
-                        , Color.White, Coralite.Instance.MagicCrystalPink, Color.DarkMagenta);
+                        , Color.White, Coralite.MagicCrystalPink, Color.DarkMagenta);
                 case GemType.CrystallineMagike:
                     return new GemDrawData(TextureAssets.Item[ModContent.ItemType<CrystallineMagike>()].Value
-                        , Color.White, Coralite.Instance.CrystallineMagikePurple, Color.DarkBlue);
+                        , Color.White, Coralite.CrystallineMagikePurple, Color.DarkBlue);
                 default:
                     return new GemDrawData(Projectile.GetTexture()
                         , Color.White, Color.Gray, Color.DarkGray);

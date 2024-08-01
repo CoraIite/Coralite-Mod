@@ -120,6 +120,7 @@ namespace Coralite.Content.UI
             MagikeConnectUI.sender?.Receivers.RemoveAt(index);
             MagikeConnectUI.RecordConnectorCount--;
             UILoader.GetUIState<MagikeConnectUI>().RemoveChild(this);
+            UILoader.GetUIState<MagikeConnectUI>().Recalculate();
         }
 
         public override void LeftClick(UIMouseEvent evt)
@@ -128,6 +129,7 @@ namespace Coralite.Content.UI
             MagikeConnectUI.sender?.Receivers.RemoveAt(index);
             MagikeConnectUI.RecordConnectorCount--;
             UILoader.GetUIState<MagikeConnectUI>().RemoveChild(this);
+            UILoader.GetUIState<MagikeConnectUI>().Recalculate();
         }
 
         public override void Recalculate()

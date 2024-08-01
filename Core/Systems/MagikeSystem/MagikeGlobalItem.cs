@@ -257,11 +257,11 @@ namespace Coralite.Core.Systems.MagikeSystem
                 string magikeAmount = $"魔能含量: {this.magikeAmount}";
                 TooltipLine line = new TooltipLine(Mod, "magiteAmount", magikeAmount);
                 if (this.magikeAmount < 300)
-                    line.OverrideColor = Coralite.Instance.MagicCrystalPink;
+                    line.OverrideColor = Coralite.MagicCrystalPink;
                 else if (this.magikeAmount < 1000)
-                    line.OverrideColor = Coralite.Instance.CrystallineMagikePurple;
+                    line.OverrideColor = Coralite.CrystallineMagikePurple;
                 else if (this.magikeAmount < 2_0000)
-                    line.OverrideColor = Coralite.Instance.SplendorMagicoreLightBlue;
+                    line.OverrideColor = Coralite.SplendorMagicoreLightBlue;
                 else
                     line.OverrideColor = Color.Orange;
 
@@ -275,11 +275,11 @@ namespace Coralite.Core.Systems.MagikeSystem
                 string conditionNeed = condition == null ? "" : ("\n" + condition.Description);
                 TooltipLine line = new TooltipLine(Mod, "remodelConition", stackAmount + magikeAmount + conditionNeed);
                 if (magike_CraftRequired < 300)
-                    line.OverrideColor = Coralite.Instance.MagicCrystalPink;
+                    line.OverrideColor = Coralite.MagicCrystalPink;
                 else if (magike_CraftRequired < 1000)
-                    line.OverrideColor = Coralite.Instance.CrystallineMagikePurple;
+                    line.OverrideColor = Coralite.CrystallineMagikePurple;
                 else if (this.magikeAmount < 2_0000)
-                    line.OverrideColor = Coralite.Instance.SplendorMagicoreLightBlue;
+                    line.OverrideColor = Coralite.SplendorMagicoreLightBlue;
                 else
                     line.OverrideColor = Color.Orange;
 

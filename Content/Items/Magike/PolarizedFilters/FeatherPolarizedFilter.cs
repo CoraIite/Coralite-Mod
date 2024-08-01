@@ -9,7 +9,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 {
     public class FeatherPolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.Instance.FeatherLime;
+        public override Color FilterColor => Coralite.FeatherLime;
 
         public FeatherPolarizedFilter() : base(Item.sellPrice(0, 0, 70), ItemRarityID.Yellow)
         {

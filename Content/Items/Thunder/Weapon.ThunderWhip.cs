@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.Thunder
                 int dustType = DustID.PortalBoltTrail;
 
                 // After choosing a randomized dust and a whip segment to spawn from, dust is spawned.
-                Dust dust = Dust.NewDustDirect(spawnArea.TopLeft(), spawnArea.Width, spawnArea.Height, dustType, 0f, 0f, 50, Coralite.Instance.ThunderveinYellow);
+                Dust dust = Dust.NewDustDirect(spawnArea.TopLeft(), spawnArea.Width, spawnArea.Height, dustType, 0f, 0f, 50, Coralite.ThunderveinYellow);
                 dust.position = points[pointIndex];
                 Vector2 spinningpoint = points[pointIndex] - points[pointIndex - 1];
                 dust.velocity *= 0.5f;
@@ -151,7 +151,7 @@ namespace Coralite.Content.Items.Thunder
                 Vector2 diff = list[i + 1] - element;
 
                 float rotation = diff.ToRotation() - MathHelper.PiOver2;
-                Color color = Lighting.GetColor(element.ToTileCoordinates(), Coralite.Instance.ThunderveinYellow);
+                Color color = Lighting.GetColor(element.ToTileCoordinates(), Coralite.ThunderveinYellow);
                 Vector2 scale = new Vector2(1, (diff.Length() + 2) / frame.Height);
 
                 Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0);
@@ -231,7 +231,7 @@ namespace Coralite.Content.Items.Thunder
                 Rectangle spawnArea = npc.getRect();
                 int dustType = DustID.PortalBoltTrail;
 
-                Dust dust = Dust.NewDustDirect(spawnArea.TopLeft(), spawnArea.Width, spawnArea.Height, dustType, 0f, 0f, 50, Coralite.Instance.ThunderveinYellow);
+                Dust dust = Dust.NewDustDirect(spawnArea.TopLeft(), spawnArea.Width, spawnArea.Height, dustType, 0f, 0f, 50, Coralite.ThunderveinYellow);
                 dust.velocity *= 1.5f;
                 dust.noGravity = true;
             }

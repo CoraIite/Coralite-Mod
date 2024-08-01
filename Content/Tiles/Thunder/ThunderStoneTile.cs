@@ -15,7 +15,7 @@ namespace Coralite.Content.Tiles.Thunder
 
             DustType = DustID.YellowTorch;
 
-            AddMapEntry(Coralite.Instance.ThunderveinYellow);
+            AddMapEntry(Coralite.ThunderveinYellow);
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

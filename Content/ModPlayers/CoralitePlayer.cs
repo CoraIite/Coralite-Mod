@@ -187,7 +187,7 @@ namespace Coralite.Content.ModPlayers
                 {
                     Rectangle rectangle = new Rectangle((int)Player.Center.X, (int)Player.Center.Y, 2, 2);
 
-                    CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "协调的力量被临时封印了");
+                    CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "协调的力量被临时封印了");
                     return false;
                 }
             }

@@ -49,7 +49,7 @@ namespace Coralite.Content.Items.Thunder
             // This will make it draw 47 pixels right and 31 pixels up from the player's center, while they are looking right and in normal gravity.
             lineOriginOffset = new Vector2(30, -31);
             // Sets the fishing line's color. Note that this will be overridden by the colored string accessories.
-            lineColor = Coralite.Instance.ThunderveinYellow;
+            lineColor = Coralite.ThunderveinYellow;
         }
     }
 
@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.Thunder
             // Always ensure that graphics-related code doesn't run on dedicated servers via this check.
             if (!Main.dedServ)
             {
-                Lighting.AddLight(Projectile.Center, Coralite.Instance.ThunderveinYellow.ToVector3() * 1.5f);
+                Lighting.AddLight(Projectile.Center, Coralite.ThunderveinYellow.ToVector3() * 1.5f);
             }
         }
     }

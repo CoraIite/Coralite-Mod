@@ -27,7 +27,7 @@ namespace Coralite.Content.Tiles.RedJades
 
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("魔导台");
-            AddMapEntry(Coralite.Instance.RedJadeRed, name);
+            AddMapEntry(Coralite.RedJadeRed, name);
         }
 
         public override void NumDust(int x, int y, bool fail, ref int num)

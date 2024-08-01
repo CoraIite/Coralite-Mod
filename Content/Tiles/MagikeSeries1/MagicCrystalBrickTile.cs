@@ -20,7 +20,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
             DustType = DustID.CrystalSerpent_Pink;
             HitSound = CoraliteSoundID.DigStone_Tink;
-            AddMapEntry(Coralite.Instance.MagicCrystalPink);
+            AddMapEntry(Coralite.MagicCrystalPink);
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Thunder
         {
             Item.ResearchUnlockCount = 20;
             ItemID.Sets.DrinkParticleColors[Type] = new Color[1] {
-                Coralite.Instance.ThunderveinYellow
+                Coralite.ThunderveinYellow
             };
         }
 

@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.Magike.MultPrisms
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.RedJadeRed);
+            AddMapEntry(Coralite.RedJadeRed);
             DustType = DustID.GemRuby;
         }
 
@@ -139,12 +139,12 @@ namespace Coralite.Content.Items.Magike.MultPrisms
 
         public override void SendVisualEffect(IMagikeContainer container)
         {
-            MagikeHelper.SpawnDustOnSend(1, 2, Position, container, Coralite.Instance.RedJadeRed);
+            MagikeHelper.SpawnDustOnSend(1, 2, Position, container, Coralite.RedJadeRed);
         }
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(1, 2, Position, Coralite.Instance.RedJadeRed);
+            MagikeHelper.SpawnDustOnGenerate(1, 2, Position, Coralite.RedJadeRed);
         }
     }
 

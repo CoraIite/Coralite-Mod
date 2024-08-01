@@ -35,11 +35,11 @@ namespace Coralite.Content.Items.MagikeSeries1
                 if (player.statMana > 200 && magC.Charge(1))
                     return true;
 
-                CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "无法充能！");
+                CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "无法充能！");
                 return false;
             }
 
-            CombatText.NewText(rectangle, Coralite.Instance.MagicCrystalPink, "未找到魔能容器！");
+            CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "未找到魔能容器！");
             return false;
         }
 

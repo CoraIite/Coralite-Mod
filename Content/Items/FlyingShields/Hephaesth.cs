@@ -814,7 +814,7 @@ namespace Coralite.Content.Items.FlyingShields
             c = (int)ShieldType switch
             {
                 -1 => Color.DarkGray,
-                -2 => Coralite.Instance.RedJadeRed,
+                -2 => Coralite.RedJadeRed,
                 -3 => new Color(238, 202, 158),
                 -4 => Color.Gray,
                 -5 => Color.Gray,

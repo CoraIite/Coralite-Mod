@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 {
     public class SoulPolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.Instance.SoulCyan;
+        public override Color FilterColor => Coralite.SoulCyan;
 
         public SoulPolarizedFilter() : base(Item.sellPrice(0, 0, 70), ItemRarityID.Yellow)
         {

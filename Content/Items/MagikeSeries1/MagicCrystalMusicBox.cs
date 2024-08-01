@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             TileObjectData.addTile(Type);
 
             LocalizedText name = CreateMapEntryName();
-            AddMapEntry(Coralite.Instance.MagicCrystalPink, name);
+            AddMapEntry(Coralite.MagicCrystalPink, name);
         }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;

@@ -498,7 +498,7 @@ namespace Coralite.Content.Items.RedJades
             }
 
             Particle.NewParticle(Projectile.Center, Vector2.Zero,
-                CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.RedJadeRed, 1.5f);
+                CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.RedJadeRed, 1.5f);
             SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<BloodJadeSlash>(),
                 (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner, 4);
@@ -510,7 +510,7 @@ namespace Coralite.Content.Items.RedJades
             Texture2D mainTex = Projectile.GetTexture();
 
             Color c = lightColor * alpha;
-            Color c2 = Coralite.Instance.RedJadeRed;
+            Color c2 = Coralite.RedJadeRed;
             c2.A = 150;
             c2 *= 0.6f * alpha;
             for (int i = 0; i < 3; i++)
@@ -663,9 +663,9 @@ namespace Coralite.Content.Items.RedJades
                 }
             }
 
-            RedExplosionParticle.Spawn(center, 1.4f, Coralite.Instance.RedJadeRed);
-            RedGlowParticle.Spawn(center, 1.3f, Coralite.Instance.RedJadeRed, 0.4f);
-            RedGlowParticle.Spawn(center, 1.3f, Coralite.Instance.RedJadeRed, 0.4f);
+            RedExplosionParticle.Spawn(center, 1.4f, Coralite.RedJadeRed);
+            RedGlowParticle.Spawn(center, 1.3f, Coralite.RedJadeRed, 0.4f);
+            RedGlowParticle.Spawn(center, 1.3f, Coralite.RedJadeRed, 0.4f);
 
             if (VisualEffectSystem.HitEffect_ScreenShaking)
             {

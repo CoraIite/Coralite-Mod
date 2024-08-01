@@ -232,7 +232,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 case (int)GunType.SDMG://太空海豚机枪
                     return new Color(147, 227, 236);
                 case (int)GunType.ThunderDukeVine:
-                    return Coralite.Instance.ThunderveinYellow;
+                    return Coralite.ThunderveinYellow;
                 case (int)GunType.StarsBreath://满天星
                     return Color.White;
                 case (int)GunType.Snowdrop://雪花莲

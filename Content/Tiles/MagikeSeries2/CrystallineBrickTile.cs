@@ -18,7 +18,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             HitSound = CoraliteSoundID.DigStone_Tink;
             MinPick = 150;
 
-            AddMapEntry(Coralite.Instance.CrystallineMagikePurple);
+            AddMapEntry(Coralite.CrystallineMagikePurple);
         }
 
         public override bool CanExplode(int i, int j) => false;

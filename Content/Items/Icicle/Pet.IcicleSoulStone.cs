@@ -115,7 +115,7 @@ namespace Coralite.Content.Items.Icicle
 
             if (Main.rand.NextBool(16))
             {
-                int index = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.IceTorch, newColor: Coralite.Instance.ThunderveinYellow);
+                int index = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.IceTorch, newColor: Coralite.ThunderveinYellow);
                 Main.dust[index].noGravity = true;
             }
 

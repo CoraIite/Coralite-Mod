@@ -57,7 +57,7 @@
 //            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<SplendorColumnEntity>().Hook_AfterPlacement, -1, 0, true);
 //            TileObjectData.addTile(Type);
 
-//            AddMapEntry(Coralite.Instance.SplendorMagicoreLightBlue);
+//            AddMapEntry(Coralite.SplendorMagicoreLightBlue);
 //            DustType = DustID.BlueFairy;
 //        }
 //    }
@@ -86,12 +86,12 @@
 
 //        public override void SendVisualEffect(IMagikeContainer container)
 //        {
-//            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Coralite.Instance.SplendorMagicoreLightBlue);
+//            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Coralite.SplendorMagicoreLightBlue);
 //        }
 
 //        public override void OnReceiveVisualEffect()
 //        {
-//            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.Instance.SplendorMagicoreLightBlue);
+//            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.SplendorMagicoreLightBlue);
 //        }
 //    }
 //}

@@ -42,7 +42,7 @@ namespace Coralite.Content.Bosses.Rediancie
             //文字渐出
             if (timer < 21)
             {
-                drawCharColor = Color.Lerp(blankColor, Coralite.Instance.RedJadeRed, (float)timer / 20);
+                drawCharColor = Color.Lerp(blankColor, Coralite.RedJadeRed, (float)timer / 20);
                 drawPicColor = Color.Lerp(blankColor, Color.White, (float)timer / 20);
                 return;
             }
@@ -58,7 +58,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 else
                     r = 0.314f;       //Pi/10
                 float cosProgress = -MathF.Cos((timer - 120) * r) * 0.5f + 0.5f;
-                drawCharColor = Color.Lerp(Coralite.Instance.RedJadeRed, Color.White, cosProgress);
+                drawCharColor = Color.Lerp(Coralite.RedJadeRed, Color.White, cosProgress);
             }
 
             //生成粒子和声音
@@ -68,7 +68,7 @@ namespace Coralite.Content.Bosses.Rediancie
             //文字减淡
             if (timer > 239)
             {
-                drawCharColor = Color.Lerp(Coralite.Instance.RedJadeRed, blankColor, (float)(timer - 240) / 20);
+                drawCharColor = Color.Lerp(Coralite.RedJadeRed, blankColor, (float)(timer - 240) / 20);
                 drawPicColor = Color.Lerp(Color.White, blankColor, (float)(timer - 240) / 20);
             }
 

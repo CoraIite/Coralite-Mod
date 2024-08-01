@@ -306,11 +306,11 @@ namespace Coralite.Core.Systems.MagikeSystem
             TooltipLine line = new TooltipLine(Mod, "Coralite: MagikeNeed", "魔能需求量：" + Item.stack);
 
             if (Item.stack < 300)
-                line.OverrideColor = Coralite.Instance.MagicCrystalPink;
+                line.OverrideColor = Coralite.MagicCrystalPink;
             else if (Item.stack < 1000)
-                line.OverrideColor = Coralite.Instance.CrystallineMagikePurple;
+                line.OverrideColor = Coralite.CrystallineMagikePurple;
             else if (Item.stack < 2_0000)
-                line.OverrideColor = Coralite.Instance.SplendorMagicoreLightBlue;
+                line.OverrideColor = Coralite.SplendorMagicoreLightBlue;
             else
                 line.OverrideColor = Color.Orange;
 

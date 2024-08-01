@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Magike.Refractors
     }
 
     public class BasicPrismTile() : BasePrismTile
-        (2, 2, Coralite.Instance.MagicCrystalPink, DustID.CorruptionThorns,8)
+        (2, 2, Coralite.MagicCrystalPink, DustID.CorruptionThorns,8)
     {
         public override string Texture => AssetDirectory.MagikeRefractorTiles + Name;
         public override int DropItemType => ItemType<BasicPrism>();
@@ -70,15 +70,15 @@ namespace Coralite.Content.Items.Magike.Refractors
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MagikeApparatusLevel.MagicCrystal => 60,
-                MagikeApparatusLevel.Glistent => 60,
+                MagikeApparatusLevel.MagicCrystal => 90,
+                MagikeApparatusLevel.Glistent => 300,
                 MagikeApparatusLevel.Crimson
                 or MagikeApparatusLevel.Corruption
-                or MagikeApparatusLevel.Icicle => 300,
-                MagikeApparatusLevel.CrystallineMagike => 1800,
-                MagikeApparatusLevel.Hallow => 7500,
-                MagikeApparatusLevel.HolyLight => 7500,
-                MagikeApparatusLevel.SplendorMagicore => 18000,
+                or MagikeApparatusLevel.Icicle => 480,
+                MagikeApparatusLevel.CrystallineMagike => 2250,
+                MagikeApparatusLevel.Hallow => 9000,
+                MagikeApparatusLevel.HolyLight => 15000,
+                MagikeApparatusLevel.SplendorMagicore => 35000,
                 _ => 0,
             };
             LimitMagikeAmount();

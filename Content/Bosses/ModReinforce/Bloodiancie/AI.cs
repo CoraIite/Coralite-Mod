@@ -435,7 +435,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                     if (Timer % 4 == 0)
                     {
                         Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(70, 70), Vector2.UnitY * -2,
-                            CoraliteContent.ParticleType<HorizontalStar>(), Coralite.Instance.RedJadeRed, Main.rand.NextFloat(0.5f, 0.8f));
+                            CoraliteContent.ParticleType<HorizontalStar>(), Coralite.RedJadeRed, Main.rand.NextFloat(0.5f, 0.8f));
                     }
                     break;
                 }
@@ -443,7 +443,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 if (realTime == 18 && Main.netMode != NetmodeID.Server)
                 {
                     SoundEngine.PlaySound(SoundID.Item4, NPC.Center);
-                    Particle.NewParticle(NPC.Center + new Vector2(0, -16), Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.Instance.RedJadeRed, 1.5f);
+                    Particle.NewParticle(NPC.Center + new Vector2(0, -16), Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.RedJadeRed, 1.5f);
                 }
 
                 if (realTime < 20)

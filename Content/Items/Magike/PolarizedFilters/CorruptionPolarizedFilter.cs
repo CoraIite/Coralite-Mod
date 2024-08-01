@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 {
     public class CorruptionPolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.Instance.CorruptionPurple;
+        public override Color FilterColor => Coralite.CorruptionPurple;
 
         public CorruptionPolarizedFilter() : base(Item.sellPrice(0, 0, 30), ItemRarityID.Blue)
         {

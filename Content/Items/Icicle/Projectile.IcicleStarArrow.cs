@@ -62,13 +62,13 @@ namespace Coralite.Content.Items.Icicle
             factor =>
                 {
                     if (factor.X > 0.5f)
-                        return Color.Lerp(Coralite.Instance.IcicleCyan, Color.White, (factor.X - 0.5f) * 2);
+                        return Color.Lerp(Coralite.IcicleCyan, Color.White, (factor.X - 0.5f) * 2);
 
-                    return Color.Lerp(new Color(0, 0, 0, 0), Coralite.Instance.IcicleCyan, factor.X / 0.5f);//new Color(99, 83, 142, 0)
+                    return Color.Lerp(new Color(0, 0, 0, 0), Coralite.IcicleCyan, factor.X / 0.5f);//new Color(99, 83, 142, 0)
                 });
 
             trail.Positions = Projectile.oldPos;
-            Lighting.AddLight(Projectile.Center, Coralite.Instance.IcicleCyan.ToVector3());
+            Lighting.AddLight(Projectile.Center, Coralite.IcicleCyan.ToVector3());
             if (Projectile.timeLeft % 3 == 0)
             {
                 Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16, 16), DustID.FrostStaff, -Projectile.velocity * 0.2f);
@@ -94,7 +94,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 float rot = Main.rand.NextFloat(6.282f);
                 for (int i = 0; i < 3; i++)
-                    Particle.NewParticle(Projectile.Center, (rot + i * 2.094f).ToRotationVector2(), CoraliteContent.ParticleType<HorizontalStar>(), Coralite.Instance.IcicleCyan, Main.rand.NextFloat(0.2f, 0.3f));
+                    Particle.NewParticle(Projectile.Center, (rot + i * 2.094f).ToRotationVector2(), CoraliteContent.ParticleType<HorizontalStar>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.2f, 0.3f));
             }
         }
 

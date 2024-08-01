@@ -73,7 +73,7 @@ namespace Coralite.Content.NPCs.Magike
             if (NPC.life <= 0)
             {
                 for (int i = 0; i < 6; i++)
-                    Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Teleporter, Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2), 100, Coralite.Instance.MagicCrystalPink, 1f);
+                    Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Teleporter, Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2), 100, Coralite.MagicCrystalPink, 1f);
             }
             else
             {

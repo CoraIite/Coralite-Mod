@@ -215,7 +215,7 @@ namespace Coralite.Content.Items.Thunder
                             for (int i = 0; i < Projectile.oldPos.Length - 1; i++)
                                 Projectile.oldPos[i] = Vector2.Lerp(Projectile.Center, BasePos, i / (float)Projectile.oldPos.Length);
                             UpdateCaches();
-                            Projectile.SpawnTrailDust(DustID.PortalBoltTrail, Main.rand.NextFloat(0.2f, 0.5f), newColor: Coralite.Instance.ThunderveinYellow);
+                            Projectile.SpawnTrailDust(DustID.PortalBoltTrail, Main.rand.NextFloat(0.2f, 0.5f), newColor: Coralite.ThunderveinYellow);
                             alpha -= 1f / (AttackTime / 2);
                         }
 
@@ -294,7 +294,7 @@ namespace Coralite.Content.Items.Thunder
 
                             UpdateCaches();
 
-                            Projectile.SpawnTrailDust(DustID.PortalBoltTrail, Main.rand.NextFloat(0.2f, 0.5f), newColor: Coralite.Instance.ThunderveinYellow);
+                            Projectile.SpawnTrailDust(DustID.PortalBoltTrail, Main.rand.NextFloat(0.2f, 0.5f), newColor: Coralite.ThunderveinYellow);
                         }
                         else if (Timer < ReadyTime + AttackTime + DelayTime)
                         {

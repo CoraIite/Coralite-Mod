@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.Magike.Factorys
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.MagicCrystalPink);
+            AddMapEntry(Coralite.MagicCrystalPink);
             DustType = DustID.CrystalSerpent_Pink;
             AnimationFrameHeight = 18 + 18;
         }
@@ -107,11 +107,11 @@ namespace Coralite.Content.Items.Magike.Factorys
         public CrystalStoneMakerEntity() : base(100, 60 * 10, 15, 3) { }
 
         public override ushort TileType => (ushort)TileType<CrystalStoneMakerTile>();
-        public override Color MainColor => Coralite.Instance.MagicCrystalPink;
+        public override Color MainColor => Coralite.MagicCrystalPink;
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(2, 2, Position, Coralite.Instance.MagicCrystalPink);
+            MagikeHelper.SpawnDustOnGenerate(2, 2, Position, Coralite.MagicCrystalPink);
         }
     }
 }

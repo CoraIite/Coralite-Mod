@@ -201,7 +201,7 @@ namespace Coralite.Content.Items.RedJades
                     for (int j = 0; j < 4; j++)
                     {
                         Vector2 dir = -RotateVec2.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
-                        dust = Dust.NewDustPerfect(pos, DustID.RedTorch, dir * Main.rand.NextFloat(1f, 5f), 50, Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
+                        dust = Dust.NewDustPerfect(pos, DustID.RedTorch, dir * Main.rand.NextFloat(1f, 5f), 50, Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
                         dust.noGravity = true;
                     }
                 }
@@ -219,7 +219,7 @@ namespace Coralite.Content.Items.RedJades
                 Vector2 Center = GetCenter(i);
                 Center += oldRotate[i].ToRotationVector2() * (oldLength[i] / 2 + oldDistanceToOwner[i]);
                 Main.spriteBatch.Draw(mainTex, Center - Main.screenPosition, null,
-                    Coralite.Instance.RedJadeRed * (0.3f - i * 0.3f / 6), oldRotate[i] + extraRot, origin, Projectile.scale, effect, 0);
+                    Coralite.RedJadeRed * (0.3f - i * 0.3f / 6), oldRotate[i] + extraRot, origin, Projectile.scale, effect, 0);
             }
         }
     }

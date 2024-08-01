@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetStaticDefaults()
         {
-            this.PaintingPrefab(3, 2, Coralite.Instance.IcicleCyan, DustID.Frost);
+            this.PaintingPrefab(3, 2, Coralite.IcicleCyan, DustID.Frost);
         }
     }
 }

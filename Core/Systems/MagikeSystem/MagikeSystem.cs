@@ -53,18 +53,18 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             return level switch
             {
-                MagikeApparatusLevel.MagicCrystal => Coralite.Instance.MagicCrystalPink,
-                MagikeApparatusLevel.Glistent => Coralite.Instance.GlistentGreen,
-                MagikeApparatusLevel.Crimson => Coralite.Instance.CrimsonRed,
-                MagikeApparatusLevel.Corruption => Coralite.Instance.CorruptionPurple,
-                MagikeApparatusLevel.Icicle => Coralite.Instance.IcicleCyan,
-                MagikeApparatusLevel.Shadow => Coralite.Instance.ShadowPurple,
-                MagikeApparatusLevel.CrystallineMagike => Coralite.Instance.CrystallineMagikePurple,
-                MagikeApparatusLevel.Hallow => Coralite.Instance.HallowYellow,
-                MagikeApparatusLevel.Soul => Coralite.Instance.SoulCyan,
-                MagikeApparatusLevel.Feather => Coralite.Instance.FeatherLime,
+                MagikeApparatusLevel.MagicCrystal => Coralite.MagicCrystalPink,
+                MagikeApparatusLevel.Glistent => Coralite.GlistentGreen,
+                MagikeApparatusLevel.Crimson => Coralite.CrimsonRed,
+                MagikeApparatusLevel.Corruption => Coralite.CorruptionPurple,
+                MagikeApparatusLevel.Icicle => Coralite.IcicleCyan,
+                MagikeApparatusLevel.Shadow => Coralite.ShadowPurple,
+                MagikeApparatusLevel.CrystallineMagike => Coralite.CrystallineMagikePurple,
+                MagikeApparatusLevel.Hallow => Coralite.HallowYellow,
+                MagikeApparatusLevel.Soul => Coralite.SoulCyan,
+                MagikeApparatusLevel.Feather => Coralite.FeatherLime,
                 MagikeApparatusLevel.HolyLight => Main.DiscoColor,
-                MagikeApparatusLevel.SplendorMagicore => Coralite.Instance.SplendorMagicoreLightBlue,
+                MagikeApparatusLevel.SplendorMagicore => Coralite.SplendorMagicoreLightBlue,
                 _ => Color.Gray,
             };
         }

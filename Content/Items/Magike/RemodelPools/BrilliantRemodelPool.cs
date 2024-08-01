@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.CrystallineMagikePurple);
+            AddMapEntry(Coralite.CrystallineMagikePurple);
             DustType = DustID.PurpleTorch;
         }
 
@@ -109,6 +109,6 @@ namespace Coralite.Content.Items.Magike.RemodelPools
 
         public override ushort TileType => (ushort)TileType<BrilliantRemodelPoolTile>();
 
-        public override Color MainColor => Coralite.Instance.CrystallineMagikePurple;
+        public override Color MainColor => Coralite.CrystallineMagikePurple;
     }
 }

@@ -177,7 +177,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (Timer > 30)
             {
                 Projectile.SpawnTrailDust(30f, DustID.PortalBoltTrail, Main.rand.NextFloat(0.1f, 0.4f),
-                    newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.3f));
+                    newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.3f));
                 ThunderWidth = Main.rand.NextFloat(20, 30);
 
                 if (Projectile.velocity.Length() < 20)

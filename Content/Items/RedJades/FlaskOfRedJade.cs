@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.RedJades
         {
             Item.ResearchUnlockCount = 20;
             ItemID.Sets.DrinkParticleColors[Type] = new Color[1] {
-                Coralite.Instance.RedJadeRed
+                Coralite.RedJadeRed
             };
         }
 

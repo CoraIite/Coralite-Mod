@@ -77,7 +77,7 @@ namespace Coralite.Content.Items.Icicle
                             }
                         }
 
-                        Lighting.AddLight(Owner.Center, Coralite.Instance.IcicleCyan.ToVector3() * Alpha);
+                        Lighting.AddLight(Owner.Center, Coralite.IcicleCyan.ToVector3() * Alpha);
 
                         if (Timer < 21)
                         {
@@ -101,7 +101,7 @@ namespace Coralite.Content.Items.Icicle
                                 if (Main.rand.NextBool(20))
                                 {
                                     Vector2 dir = Rotation.ToRotationVector2();
-                                    Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.Instance.IcicleCyan, Main.rand.NextFloat(0.1f, 0.15f));
+                                    Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.1f, 0.15f));
                                 }
                             }
                             Projectile.timeLeft = 2;
@@ -145,7 +145,7 @@ namespace Coralite.Content.Items.Icicle
                 Vector2 dir = Rotation.ToRotationVector2();
                 Main.spriteBatch.Draw(starTex, center + dir * 6, null, Color.White * Alpha, Projectile.rotation + 1.57f, starTex.Size() / 2, 1.4f, SpriteEffects.None, 0f);
 
-                Helpers.Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + dir * 18, new Color(255, 255, 255, 0) * num3 * 0.5f, Coralite.Instance.IcicleCyan,
+                Helpers.Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + dir * 18, new Color(255, 255, 255, 0) * num3 * 0.5f, Coralite.IcicleCyan,
                     factor, 0f, 0.5f, 0.5f, 1f, 0f, new Vector2(1.3f, 1.3f), Vector2.One);
             }
 

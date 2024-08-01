@@ -797,7 +797,7 @@ namespace Coralite.Content.Items.CoreKeeper
             var frameBox = dust.frame;
             var origin = frameBox.Size() / 2;
             Vector2 pos = dust.position - Main.screenPosition;
-            Color c = Coralite.Instance.IcicleCyan * (dust.color.R / 255f) * 0.3f;
+            Color c = Coralite.IcicleCyan * (dust.color.R / 255f) * 0.3f;
 
 
             float r = MathHelper.PiOver4;

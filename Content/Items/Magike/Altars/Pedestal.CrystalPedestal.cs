@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.Magike.Altars
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.MagicCrystalPink);
+            AddMapEntry(Coralite.MagicCrystalPink);
             DustType = DustID.CrystalSerpent_Pink;
         }
     }
@@ -65,7 +65,7 @@ namespace Coralite.Content.Items.Magike.Altars
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(2, 2, Position, Coralite.Instance.MagicCrystalPink);
+            MagikeHelper.SpawnDustOnGenerate(2, 2, Position, Coralite.MagicCrystalPink);
         }
     }
 }

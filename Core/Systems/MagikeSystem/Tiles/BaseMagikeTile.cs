@@ -68,22 +68,24 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             TileObjectData.newTile.CoordinateHeights = new int[height];
             Array.Fill(TileObjectData.newTile.CoordinateHeights, 16);
 
+            //默认防岩浆
+            TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.Allowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.Allowed;
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetEntityInstance().Hook_AfterPlacement, -1, 0, true);
+
             //顶部是平台那么不需要下沉，并且最下面额外扩展一格
             if (topSoild)
             {
                 TileObjectData.newTile.CoordinateHeights[^1] = 18;
                 Main.tileSolidTop[Type] = true;
-                Main.tileSolid[Type] = true;
+                //Main.tileSolid[Type] = true;
+                Main.tileNoAttach[Type] = true;
+                Main.tileTable[Type] = true;
             }
             else
             {
                 TileObjectData.newTile.DrawYOffset = 2;
-
-                //默认防岩浆
-                TileObjectData.newTile.LavaDeath = false;
-                TileObjectData.newTile.WaterPlacement = LiquidPlacement.Allowed;
-                TileObjectData.newTile.LavaPlacement = LiquidPlacement.Allowed;
-                TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetEntityInstance().Hook_AfterPlacement, -1, 0, true);
 
                 TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
                 TileObjectData.newAlternate.AnchorLeft = AnchorData.Empty;
@@ -106,26 +108,26 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
                 TileObjectData.newAlternate.AnchorBottom = AnchorData.Empty;
                 TileObjectData.newAlternate.DrawYOffset = 0;
-                TileObjectData.newAlternate.AnchorLeft = new AnchorData(AnchorType.SolidTile | AnchorType.SolidBottom | AnchorType.SolidSide, TileObjectData.newAlternate.Width, 0);
                 TileObjectData.newAlternate.Width = height;
                 TileObjectData.newAlternate.Height = width;
+                TileObjectData.newAlternate.AnchorLeft = new AnchorData(AnchorType.SolidTile | AnchorType.SolidBottom | AnchorType.SolidSide, TileObjectData.newAlternate.Height, 0);
                 TileObjectData.newAlternate.Origin = new Point16(0, width / 2);
 
                 TileObjectData.newAlternate.CoordinateHeights = new int[width];
                 Array.Fill(TileObjectData.newAlternate.CoordinateHeights, 16);
-                TileObjectData.addAlternate(height * 2);
+                TileObjectData.addAlternate(height * 2 / width);
 
                 //放置在右边
                 TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
                 TileObjectData.newAlternate.AnchorBottom = AnchorData.Empty;
                 TileObjectData.newAlternate.DrawYOffset = 0;
-                TileObjectData.newAlternate.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidBottom | AnchorType.SolidSide, TileObjectData.newAlternate.Width, 0);
                 TileObjectData.newAlternate.Width = height;
                 TileObjectData.newAlternate.Height = width;
+                TileObjectData.newAlternate.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidBottom | AnchorType.SolidSide, TileObjectData.newAlternate.Height, 0);
                 TileObjectData.newAlternate.Origin = new Point16(height - 1, width / 2);
                 TileObjectData.newAlternate.CoordinateHeights = new int[width];
                 Array.Fill(TileObjectData.newAlternate.CoordinateHeights, 16);
-                TileObjectData.addAlternate(height * 2 + width);
+                TileObjectData.addAlternate(height * 2 / width + 1);
             }
 
             TileObjectData.addTile(Type);
@@ -147,7 +149,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
-            Terraria.Tile t = Framing.GetTileSafely(i, j);
+            Tile t = Framing.GetTileSafely(i, j);
             if (Main.tileSolidTop[t.TileType])
                 return;
 

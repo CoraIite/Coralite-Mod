@@ -10,7 +10,7 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void SetStaticDefaults()
         {
-            this.CandlePrefab(DustID.GemRuby, Coralite.Instance.RedJadeRed);
+            this.CandlePrefab(DustID.GemRuby, Coralite.RedJadeRed);
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

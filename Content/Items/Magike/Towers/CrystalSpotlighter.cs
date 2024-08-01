@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.Magike.Towers
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.MagicCrystalPink);
+            AddMapEntry(Coralite.MagicCrystalPink);
             DustType = DustID.CrystalSerpent_Pink;
         }
 
@@ -138,7 +138,7 @@ namespace Coralite.Content.Items.Magike.Towers
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.Instance.MagicCrystalPink);
+            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.MagicCrystalPink);
         }
 
         public override bool CanWork()
@@ -196,7 +196,7 @@ namespace Coralite.Content.Items.Magike.Towers
                 Vector2 center = Position.ToWorldCoordinates(16, 16);
                 for (int i = 0; i < count; i++)
                 {
-                    Dust dust = Dust.NewDustPerfect(center + new Vector2(0, 12) + Main.rand.NextVector2Circular(count * 2, count * 2), DustID.Teleporter, Vector2.Zero, 0, Coralite.Instance.MagicCrystalPink, 1f + count * 0.05f);
+                    Dust dust = Dust.NewDustPerfect(center + new Vector2(0, 12) + Main.rand.NextVector2Circular(count * 2, count * 2), DustID.Teleporter, Vector2.Zero, 0, Coralite.MagicCrystalPink, 1f + count * 0.05f);
                     dust.noGravity = true;
                 }
             }

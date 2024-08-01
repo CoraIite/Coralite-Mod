@@ -16,7 +16,7 @@ namespace Coralite.Content.Tiles.Magike
 
             DustType = DustID.CrystalSerpent_Pink;
             HitSound = CoraliteSoundID.DigStone_Tink;
-            AddMapEntry(Coralite.Instance.MagicCrystalPink);
+            AddMapEntry(Coralite.MagicCrystalPink);
 
             AnimationFrameHeight = 90;
         }

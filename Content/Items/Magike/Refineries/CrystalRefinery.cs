@@ -57,7 +57,7 @@ namespace Coralite.Content.Items.Magike.Refineries
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.MagicCrystalPink);
+            AddMapEntry(Coralite.MagicCrystalPink);
             DustType = DustID.CrystalSerpent_Pink;
         }
     }
@@ -67,11 +67,11 @@ namespace Coralite.Content.Items.Magike.Refineries
         public CrystalRefinerEntity() : base(200, 15 * 60, 50, 1) { }
 
         public override ushort TileType => (ushort)TileType<CrystalRefineryTile>();
-        public override Color MainColor => Coralite.Instance.MagicCrystalPink;
+        public override Color MainColor => Coralite.MagicCrystalPink;
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.Instance.MagicCrystalPink);
+            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.MagicCrystalPink);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter2
             spriteBatch.Draw(mainTex, BottomRight + new Vector2(0, -60), null, Color.White, 0, mainTex.Size(), 1, 0, 0);
 
             Vector2 pos = Position + new Vector2(0, 60);
-            Utils.DrawBorderStringBig(spriteBatch, Date.Value, pos, Coralite.Instance.MagicCrystalPink
+            Utils.DrawBorderStringBig(spriteBatch, Date.Value, pos, Coralite.MagicCrystalPink
                 , 0.8f, 0f, 0f);
 
             pos += new Vector2(0, 60);

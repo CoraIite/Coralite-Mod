@@ -112,7 +112,7 @@ namespace Coralite.Content.Items.Thunder
                 Projectile.rotation = Projectile.velocity.ToRotation();
                 Projectile.direction = Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
 
-                int index = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.PortalBoltTrail, newColor: Coralite.Instance.ThunderveinYellow);
+                int index = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.PortalBoltTrail, newColor: Coralite.ThunderveinYellow);
                 Main.dust[index].noGravity = true;
                 Main.dust[index].velocity = Helper.NextVec2Dir(2f, 6f);
 
@@ -151,7 +151,7 @@ namespace Coralite.Content.Items.Thunder
 
             if (Main.rand.NextBool(16))
             {
-                int index = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.PortalBoltTrail, newColor: Coralite.Instance.ThunderveinYellow);
+                int index = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.PortalBoltTrail, newColor: Coralite.ThunderveinYellow);
                 Main.dust[index].noGravity = true;
             }
 

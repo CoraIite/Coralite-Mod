@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.Magike.RemodelPools
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.SplendorMagicoreLightBlue);
+            AddMapEntry(Coralite.SplendorMagicoreLightBlue);
             DustType = DustID.BlueFairy;
         }
 
@@ -121,6 +121,6 @@ namespace Coralite.Content.Items.Magike.RemodelPools
 
         public override ushort TileType => (ushort)TileType<SplendorRemodelPoolTile>();
 
-        public override Color MainColor => Coralite.Instance.SplendorMagicoreLightBlue;
+        public override Color MainColor => Coralite.SplendorMagicoreLightBlue;
     }
 }

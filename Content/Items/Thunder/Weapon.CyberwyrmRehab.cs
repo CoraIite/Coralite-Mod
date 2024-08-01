@@ -156,7 +156,7 @@ namespace Coralite.Content.Items.Thunder
             if (!Target.GetNPCOwner(out NPC target, Projectile.Kill))
                 return;
             Projectile.velocity = target.Center;
-            Lighting.AddLight(Projectile.Center, Coralite.Instance.ThunderveinYellow.ToVector3());
+            Lighting.AddLight(Projectile.Center, Coralite.ThunderveinYellow.ToVector3());
             if (thunderTrails == null)
             {
                 Projectile.Resize((int)32, 40);

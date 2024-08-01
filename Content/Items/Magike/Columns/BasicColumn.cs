@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Magike.Refractors
     }
 
     public class BasicColumnTile() : BaseColumnTile
-        (1, 2, Coralite.Instance.MagicCrystalPink, DustID.CorruptionThorns)
+        (3, 3, Coralite.MagicCrystalPink, DustID.CorruptionThorns)
     {
         public override string Texture => AssetDirectory.MagikeColumnTiles + Name;
         public override int DropItemType => ItemType<BasicColumn>();
@@ -48,7 +48,7 @@ namespace Coralite.Content.Items.Magike.Refractors
                 MagikeApparatusLevel.Icicle,
                 MagikeApparatusLevel.CrystallineMagike,
                 MagikeApparatusLevel.Soul,
-                //MagikeApparatusLevel.Feather,
+                MagikeApparatusLevel.Feather,
                 MagikeApparatusLevel.SplendorMagicore
                 ];
         }
@@ -88,6 +88,8 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
             MaxConnectBase = 1;
+            ConnectLengthBase = 6 * 16;
+            SendDelayBase = 60 * 10;
 
             switch (incomeLevel)
             {
@@ -100,31 +102,21 @@ namespace Coralite.Content.Items.Magike.Refractors
                     break;
                 case MagikeApparatusLevel.MagicCrystal:
                     UnitDeliveryBase = 60;
-                    SendDelayBase = 60 * 10;
-                    ConnectLengthBase = 10 * 16;
                     break;
                 case MagikeApparatusLevel.Crimson:
                 case MagikeApparatusLevel.Corruption:
                 case MagikeApparatusLevel.Icicle:
                     UnitDeliveryBase = 300;
-                    SendDelayBase = 60 * 10;
-                    ConnectLengthBase = 10 * 16;
                     break;
                 case MagikeApparatusLevel.CrystallineMagike:
                     UnitDeliveryBase = 500;
-                    SendDelayBase = 60 * 10;
-                    ConnectLengthBase = 15 * 16;
                     break;
                 case MagikeApparatusLevel.Soul:
                 case MagikeApparatusLevel.Feather:
                     UnitDeliveryBase = 2500;
-                    SendDelayBase = 60 * 10;
-                    ConnectLengthBase = 15 * 16;
                     break;
                 case MagikeApparatusLevel.SplendorMagicore:
                     UnitDeliveryBase = 9000;
-                    SendDelayBase = 60 * 10;
-                    ConnectLengthBase = 15 * 16;
                     break;
             }
 

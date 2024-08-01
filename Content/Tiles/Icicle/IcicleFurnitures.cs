@@ -20,7 +20,7 @@ namespace Coralite.Content.Tiles.Icicle
 
             DustType = DustID.ApprenticeStorm;
             MinPick = 64;
-            AddMapEntry(Coralite.Instance.IcicleCyan);
+            AddMapEntry(Coralite.IcicleCyan);
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -31,21 +31,21 @@ namespace Coralite.Content.Tiles.Icicle
 
     public class IcicleBathtubTile : BaseBathtubTile
     {
-        public IcicleBathtubTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleBathtubTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleBedTile : BaseBedTile<IcicleBed>
     {
-        public IcicleBedTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleBedTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleBigDroplightTile : BaseBigDroplightTile<IcicleBigDroplight>
     {
-        public IcicleBigDroplightTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleBigDroplightTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
 
@@ -57,14 +57,14 @@ namespace Coralite.Content.Tiles.Icicle
 
     public class IcicleBookcaseTile : BaseBookcaseTile
     {
-        public IcicleBookcaseTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleBookcaseTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleCandelabraTile : BaseCandelabraTile<IcicleCandelabra>
     {
-        public IcicleCandelabraTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleCandelabraTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
 
@@ -76,7 +76,7 @@ namespace Coralite.Content.Tiles.Icicle
 
     public class IcicleCandleTile : BaseCandleTile<IcicleCandle>
     {
-        public IcicleCandleTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleCandleTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
 
@@ -88,49 +88,49 @@ namespace Coralite.Content.Tiles.Icicle
 
     public class IcicleChairTile : BaseChairTile<IcicleChair>
     {
-        public IcicleChairTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleChairTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleChestTile : BaseChestTile<IcicleChest>
     {
-        public IcicleChestTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleChestTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleClockTile : BaseClockTile
     {
-        public IcicleClockTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, 5, new int[] { 16, 16, 16, 16, 16 }, AssetDirectory.IcicleTiles)
+        public IcicleClockTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, 5, new int[] { 16, 16, 16, 16, 16 }, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleDoorClosedTile : BaseDoorClosedTile<IcicleDoor, IcicleDoorOpenTile>
     {
-        public IcicleDoorClosedTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleDoorClosedTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleDoorOpenTile : BaseDoorOpenTile<IcicleDoor, IcicleDoorClosedTile>
     {
-        public IcicleDoorOpenTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleDoorOpenTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleDresserTile : BaseDresserTile<IcicleDresser>
     {
-        public IcicleDresserTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleDresserTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleDroplightTile : BaseDroplightTile<IcicleDroplight>
     {
-        public IcicleDroplightTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleDroplightTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
 
@@ -142,7 +142,7 @@ namespace Coralite.Content.Tiles.Icicle
 
     public class IcicleFloorLampTile : BaseFloorLampTile<IcicleFloorLamp>
     {
-        public IcicleFloorLampTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleFloorLampTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
 
@@ -154,49 +154,49 @@ namespace Coralite.Content.Tiles.Icicle
 
     public class IciclePianoTile : BasePianoTile
     {
-        public IciclePianoTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IciclePianoTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleSinkTile : BaseSinkTile
     {
-        public IcicleSinkTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleSinkTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleSofaTile : BaseSofaTile<IcicleSofa>
     {
-        public IcicleSofaTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleSofaTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleTableTile : BaseTableTile
     {
-        public IcicleTableTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleTableTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleToiletTile : BaseToiletTile<IcicleToilet>
     {
-        public IcicleToiletTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleToiletTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IcicleWorkBenchTile : BaseWorkBenchTile
     {
-        public IcicleWorkBenchTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IcicleWorkBenchTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }
 
     public class IciclePlatformTile : BasePlatformTile
     {
-        public IciclePlatformTile() : base(DustID.ApprenticeStorm, Coralite.Instance.IcicleCyan, AssetDirectory.IcicleTiles)
+        public IciclePlatformTile() : base(DustID.ApprenticeStorm, Coralite.IcicleCyan, AssetDirectory.IcicleTiles)
         {
         }
     }

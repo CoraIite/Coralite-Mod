@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.Icicle
         {
             color = Color.White;
             Frame = new Rectangle(0, 0, 18, 18);
-            trail = new Trail(Main.instance.GraphicsDevice, 8, new NoTip(), factor => 2 * Scale, factor => Color.Lerp(new Color(0, 0, 0, 0), Coralite.Instance.IcicleCyan, factor.X));
+            trail = new Trail(Main.instance.GraphicsDevice, 8, new NoTip(), factor => 2 * Scale, factor => Color.Lerp(new Color(0, 0, 0, 0), Coralite.IcicleCyan, factor.X));
             InitOldCenters(8);
         }
 
@@ -128,7 +128,7 @@ namespace Coralite.Content.Items.Icicle
         public void Kill()
         {
             active = false;
-            NewParticle<HorizontalStar>(Center, Vector2.Zero, Coralite.Instance.IcicleCyan, 0.2f);
+            NewParticle<HorizontalStar>(Center, Vector2.Zero, Coralite.IcicleCyan, 0.2f);
         }
     }
 }

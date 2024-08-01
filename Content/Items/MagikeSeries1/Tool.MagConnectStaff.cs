@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
                 PopupText.NewText(new AdvancedPopupRequest()
                 {
-                    Color = Coralite.Instance.MagicCrystalPink,
+                    Color = Coralite.MagicCrystalPink,
                     Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_Found),
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
@@ -80,7 +80,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 Helper.PlayPitched("UI/Error", 0.4f, 0, player.Center);
                 PopupText.NewText(new AdvancedPopupRequest()
                 {
-                    Color = Coralite.Instance.MagicCrystalPink,
+                    Color = Coralite.MagicCrystalPink,
                     Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_NotFound),
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
@@ -164,7 +164,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
                         PopupText.NewText(new AdvancedPopupRequest()
                         {
-                            Color = Coralite.Instance.MagicCrystalPink,
+                            Color = Coralite.MagicCrystalPink,
                             Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseReceiver_NotFound),
                             DurationInFrames = 60,
                             Velocity = -Vector2.UnitY
@@ -179,7 +179,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
                         PopupText.NewText(new AdvancedPopupRequest()
                         {
-                            Color = Coralite.Instance.MagicCrystalPink,
+                            Color = Coralite.MagicCrystalPink,
                             Text = failText,
                             DurationInFrames = 60,
                             Velocity = -Vector2.UnitY
@@ -191,7 +191,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                     senderComponent.Connect(receiver.Position);
                     PopupText.NewText(new AdvancedPopupRequest()
                     {
-                        Color = Coralite.Instance.MagicCrystalPink,
+                        Color = Coralite.MagicCrystalPink,
                         Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.Connect_Success),
                         DurationInFrames = 60,
                         Velocity = -Vector2.UnitY

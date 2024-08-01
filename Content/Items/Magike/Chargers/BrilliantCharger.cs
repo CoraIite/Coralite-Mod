@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.Magike.Chargers
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.CrystallineMagikePurple);
+            AddMapEntry(Coralite.CrystallineMagikePurple);
             DustType = DustID.PurpleTorch;
         }
     }
@@ -66,11 +66,11 @@ namespace Coralite.Content.Items.Magike.Chargers
         public BrilliantChargerEntity() : base(700, 15) { }
 
         public override ushort TileType => (ushort)TileType<BrilliantChargerTile>();
-        public override Color MainColor => Coralite.Instance.CrystallineMagikePurple;
+        public override Color MainColor => Coralite.CrystallineMagikePurple;
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(2, 2, Position, Coralite.Instance.CrystallineMagikePurple);
+            MagikeHelper.SpawnDustOnGenerate(2, 2, Position, Coralite.CrystallineMagikePurple);
         }
     }
 }

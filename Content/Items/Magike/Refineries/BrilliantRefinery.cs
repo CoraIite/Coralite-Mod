@@ -57,7 +57,7 @@ namespace Coralite.Content.Items.Magike.Refineries
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.CrystallineMagikePurple);
+            AddMapEntry(Coralite.CrystallineMagikePurple);
             DustType = DustID.PurpleTorch;
         }
     }
@@ -67,11 +67,11 @@ namespace Coralite.Content.Items.Magike.Refineries
         public BrilliantRefineryEntity() : base(800, 10 * 60, 50, 1) { }
 
         public override ushort TileType => (ushort)TileType<BrilliantRefineryTile>();
-        public override Color MainColor => Coralite.Instance.CrystallineMagikePurple;
+        public override Color MainColor => Coralite.CrystallineMagikePurple;
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.Instance.CrystallineMagikePurple);
+            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.CrystallineMagikePurple);
         }
     }
 }

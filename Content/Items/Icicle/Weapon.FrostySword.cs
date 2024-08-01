@@ -207,7 +207,7 @@ namespace Coralite.Content.Items.Icicle
 
         protected override void AIBefore()
         {
-            Lighting.AddLight(Owner.Center, Coralite.Instance.IcicleCyan.ToVector3());
+            Lighting.AddLight(Owner.Center, Coralite.IcicleCyan.ToVector3());
             base.AIBefore();
         }
 
@@ -493,7 +493,7 @@ namespace Coralite.Content.Items.Icicle
 
         protected override void AIBefore()
         {
-            Lighting.AddLight(Owner.Center, Coralite.Instance.IcicleCyan.ToVector3());
+            Lighting.AddLight(Owner.Center, Coralite.IcicleCyan.ToVector3());
             base.AIBefore();
         }
 

@@ -14,7 +14,7 @@ namespace Coralite.Content.Tiles.RedJades
 
         public override void SetStaticDefaults()
         {
-            this.ChestPrefab(DustID.GemRuby, Coralite.Instance.RedJadeRed, MapChestName);
+            this.ChestPrefab(DustID.GemRuby, Coralite.RedJadeRed, MapChestName);
         }
 
         public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);

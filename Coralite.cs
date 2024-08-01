@@ -27,25 +27,25 @@ namespace Coralite
         public X2Smoother X2Smoother;
         public SinSmoother SinSmoother;
         public BezierEaseSmoother BezierEaseSmoother;
-
-        public Color RedJadeRed { get; private set; }
-        public Color IcicleCyan { get; private set; }
-        public Color MagicCrystalPink { get; private set; }
-        public Color GlistentGreen { get; private set; }
-        public Color CrimsonRed { get; private set; }
-        public Color CorruptionPurple { get; private set; }
-        public Color ShadowPurple { get; private set; }
-        public Color CrystallineMagikePurple { get; private set; }
-        public Color HallowYellow { get; private set; }
-        public Color SoulCyan { get; private set; }
-        public Color FeatherLime { get; private set; }
-        public Color SplendorMagicoreLightBlue { get; private set; }
-        public Color ThunderveinYellow { get; private set; }
         /// <summary>
         /// 从0快速接近1，之后快速返回0<br></br>
         /// 在0.5的时候到达1
         /// </summary>
         public ReverseX2Smoother ReverseX2Smoother;
+
+        public static Color RedJadeRed => new Color(221, 50, 50);
+        public static Color MagicCrystalPink => new Color(255, 190, 236);
+        public static Color GlistentGreen => new Color(127, 218, 153);
+        public static Color CrimsonRed => new Color(231, 48, 54);
+        public static Color CorruptionPurple=> new Color(107, 66,  208);
+        public static Color IcicleCyan => new Color(43, 255, 198);
+        public static Color ShadowPurple => new Color(240, 168, 255);
+        public static Color CrystallineMagikePurple => new Color(140, 130, 252);
+        public static Color HallowYellow => new Color(253, 236, 144);
+        public static Color ThunderveinYellow => new Color(255, 202, 101);
+        public static Color SoulCyan => new Color(122, 174, 188);
+        public static Color FeatherLime => new Color(122, 161, 82);
+        public static Color SplendorMagicoreLightBlue => new Color(190, 225, 235);
 
         private static Coralite _instance;
 
@@ -54,10 +54,8 @@ namespace Coralite
         {
             get
             {
-                if (_instance == null)
-                {
-                    _instance = (Coralite)ModLoader.GetMod("Coralite");
-                }
+                _instance ??= (Coralite)ModLoader.GetMod("Coralite");
+
                 return _instance;
             }
             set
@@ -76,7 +74,6 @@ namespace Coralite
             SinSmoother = new SinSmoother();
             BezierEaseSmoother = new BezierEaseSmoother();
             ReverseX2Smoother = new ReverseX2Smoother();
-            InitColor();
 
             loadCache = new List<IOrderedLoadable>();
 
@@ -198,26 +195,6 @@ namespace Coralite
                     => DownedBossSystem.downedNightmarePlantera,
                 _ => false,
             };
-        }
-
-        public void InitColor()
-        {
-            if (Main.dedServ)
-                return;
-
-            RedJadeRed = new Color(221, 50, 50);
-            IcicleCyan = new Color(43, 255, 198);
-            MagicCrystalPink = new Color(255, 190, 236);
-            GlistentGreen = new Color(127, 218, 153);
-            CrimsonRed = new Color(231, 48, 54);
-            CorruptionPurple = new Color(107, 66,  208);
-            ShadowPurple = new Color(240, 168,  255);
-            CrystallineMagikePurple = new Color(140, 130, 252);
-            HallowYellow = new Color(253, 236, 144);
-            SoulCyan = new Color(122,  174, 188);
-            FeatherLime = new Color(122,  161, 82);
-            SplendorMagicoreLightBlue = new Color(190, 225, 235);
-            ThunderveinYellow = new Color(255, 202, 101);
         }
     }
 }

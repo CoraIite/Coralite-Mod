@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.Materials
             TileObjectData.newTile.LavaDeath = true;
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.MagicCrystalPink);
+            AddMapEntry(Coralite.MagicCrystalPink);
         }
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)

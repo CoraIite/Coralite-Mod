@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.CoreKeeper
             DustType = DustID.AncientLight;
             AdjTiles = new int[] { TileID.Containers };
             LocalizedText name = CreateMapEntryName();
-            AddMapEntry(Coralite.Instance.MagicCrystalPink, name, MapChestName);
+            AddMapEntry(Coralite.MagicCrystalPink, name, MapChestName);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);

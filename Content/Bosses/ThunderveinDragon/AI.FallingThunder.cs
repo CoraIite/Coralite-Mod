@@ -91,7 +91,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60 * NPC.scale;
                             if ((int)Timer % 10 == 0)
-                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.Instance.ThunderveinYellow, 0.2f);
+                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.ThunderveinYellow, 0.2f);
                             if ((int)Timer % 20 == 0)
                                 Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.2f);
                         }
@@ -158,7 +158,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             {
                                 Dust d = Dust.NewDustPerfect(targetPos, DustID.PortalBoltTrail
                                     , Helper.NextVec2Dir(2, 4)
-                                    , newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
+                                    , newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
                                 d.noGravity = true;
                             }
 
@@ -176,7 +176,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             {
                                 Dust d = Dust.NewDustPerfect(targetPos, DustID.PortalBoltTrail
                                     , Helper.NextVec2Dir(2, 4)
-                                    , newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
+                                    , newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
                                 d.noGravity = true;
                             }
                         }
@@ -245,7 +245,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             if (Timer % 2 == 0)
                             {
                                 Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(NPC.width / 5, NPC.height / 5),
-                                    Vector2.Zero, CoraliteContent.ParticleType<BigFog>(), Coralite.Instance.ThunderveinYellow * Main.rand.NextFloat(0.5f, 0.8f),
+                                    Vector2.Zero, CoraliteContent.ParticleType<BigFog>(), Coralite.ThunderveinYellow * Main.rand.NextFloat(0.5f, 0.8f),
                                     Main.rand.NextFloat(1.5f, 2f));
                                 Vector2 pos = NPC.Center + Main.rand.NextVector2Circular(NPC.width * 0.8f, NPC.height * 0.8f);
                                 Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>(), Vector2.Zero, newColor: ThunderveinYellowAlpha, Scale: Main.rand.NextFloat(0.1f, 0.3f));
@@ -348,7 +348,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60 * NPC.scale;
                             if ((int)Timer % 10 == 0)
-                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.Instance.ThunderveinYellow, 0.2f);
+                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.ThunderveinYellow, 0.2f);
                             if ((int)Timer % 20 == 0)
                                 Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.2f);
                         }
@@ -417,7 +417,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             {
                                 Dust d = Dust.NewDustPerfect(targetPos, DustID.PortalBoltTrail
                                     , Helper.NextVec2Dir(2, 4)
-                                    , newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
+                                    , newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
                                 d.noGravity = true;
                             }
 
@@ -435,7 +435,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             {
                                 Dust d = Dust.NewDustPerfect(targetPos, DustID.PortalBoltTrail
                                     , Helper.NextVec2Dir(2, 4)
-                                    , newColor: Coralite.Instance.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
+                                    , newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
                                 d.noGravity = true;
                             }
                         }
@@ -550,7 +550,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             if (Timer % 2 == 0)
                             {
                                 Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(NPC.width / 5, NPC.height / 5),
-                                    Vector2.Zero, CoraliteContent.ParticleType<BigFog>(), Coralite.Instance.ThunderveinYellow * Main.rand.NextFloat(0.5f, 0.8f),
+                                    Vector2.Zero, CoraliteContent.ParticleType<BigFog>(), Coralite.ThunderveinYellow * Main.rand.NextFloat(0.5f, 0.8f),
                                     Main.rand.NextFloat(1.5f, 2f));
                                 Vector2 pos = NPC.Center + Main.rand.NextVector2Circular(NPC.width * 0.8f, NPC.height * 0.8f);
                                 Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>(), Vector2.Zero, newColor: ThunderveinYellowAlpha, Scale: Main.rand.NextFloat(0.1f, 0.3f));

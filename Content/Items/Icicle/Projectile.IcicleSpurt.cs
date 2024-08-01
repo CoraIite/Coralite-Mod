@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.Icicle
                     Particle.NewParticle(Projectile.Center, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * 0.3f, CoraliteContent.ParticleType<SnowFlower>(), lightColor * Alpha, Main.rand.NextFloat(0.2f, 0.4f));
             }
 
-            Lighting.AddLight(Projectile.Center, Coralite.Instance.IcicleCyan.ToVector3());
+            Lighting.AddLight(Projectile.Center, Coralite.IcicleCyan.ToVector3());
 
             if (Projectile.timeLeft < 10)
             {

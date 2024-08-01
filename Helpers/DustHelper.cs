@@ -30,9 +30,9 @@ namespace Coralite.Helpers
                 dust.noGravity = true;
             }
 
-            Content.Items.RedJades.RedExplosionParticle.Spawn(center, 0.4f, Coralite.Instance.RedJadeRed);
-            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.35f, Coralite.Instance.RedJadeRed, 0.2f);
-            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.35f, Coralite.Instance.RedJadeRed, 0.2f);
+            Content.Items.RedJades.RedExplosionParticle.Spawn(center, 0.4f, Coralite.RedJadeRed);
+            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.35f, Coralite.RedJadeRed, 0.2f);
+            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.35f, Coralite.RedJadeRed, 0.2f);
 
         }
 
@@ -56,9 +56,9 @@ namespace Coralite.Helpers
                 dust.noGravity = true;
             }
 
-            Content.Items.RedJades.RedExplosionParticle.Spawn(center, 0.9f, Coralite.Instance.RedJadeRed);
-            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.8f, Coralite.Instance.RedJadeRed, 0.4f);
-            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.8f, Coralite.Instance.RedJadeRed, 0.4f);
+            Content.Items.RedJades.RedExplosionParticle.Spawn(center, 0.9f, Coralite.RedJadeRed);
+            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.8f, Coralite.RedJadeRed, 0.4f);
+            Content.Items.RedJades.RedGlowParticle.Spawn(center, 0.8f, Coralite.RedJadeRed, 0.4f);
 
             var modifier = new PunchCameraModifier(center, NextVec2Dir(), 6, 4f, 14, 1000f);
             Main.instance.CameraModifiers.Add(modifier);

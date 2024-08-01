@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.Magike.Chargers
 
             TileObjectData.addTile(Type);
 
-            AddMapEntry(Coralite.Instance.SplendorMagicoreLightBlue);
+            AddMapEntry(Coralite.SplendorMagicoreLightBlue);
             DustType = DustID.BlueFairy;
         }
     }
@@ -66,11 +66,11 @@ namespace Coralite.Content.Items.Magike.Chargers
         public SplendorChargerEntity() : base(1500, 25) { }
 
         public override ushort TileType => (ushort)TileType<SplendorChargerTile>();
-        public override Color MainColor => Coralite.Instance.SplendorMagicoreLightBlue;
+        public override Color MainColor => Coralite.SplendorMagicoreLightBlue;
 
         public override void OnReceiveVisualEffect()
         {
-            MagikeHelper.SpawnDustOnGenerate(2, 2, Position, Coralite.Instance.SplendorMagicoreLightBlue);
+            MagikeHelper.SpawnDustOnGenerate(2, 2, Position, Coralite.SplendorMagicoreLightBlue);
         }
     }
 }
