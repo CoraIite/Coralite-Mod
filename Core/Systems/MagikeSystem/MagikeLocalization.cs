@@ -22,6 +22,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             LoadConnectStaff();
             LoadFilter();
+            LoadItemDescription();
         }
 
         public void UnloadLocalization()
@@ -32,6 +33,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             ConnectStaff = null;
             Filter = null;
+            ItemDescription = null;
         }
 
         #region 魔能连接仪相关
@@ -124,5 +126,32 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         #endregion
 
+
+        #region 物品相关
+
+        public static LocalizedText[] ItemDescription { get; private set; }
+
+        public class ItemDescriptionID
+        {
+            /*
+             * 物品描述部分
+             *      - 能够插入哪些偏振滤镜
+             */
+            public const int PolarizedFilter = 0;
+
+            public const int Count = 1;
+        }
+
+        public void LoadItemDescription()
+        {
+            ItemDescription = new LocalizedText[ItemDescriptionID.Count];
+
+            ItemDescription[ItemDescriptionID.PolarizedFilter] = this.GetLocalization(nameof(ItemDescription) +"PolarizedFilter");
+        }
+
+        public static string GetItemDescriptionText(int id)
+            => ItemDescription[id].Value;
+
+        #endregion
     }
 }

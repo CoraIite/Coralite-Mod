@@ -9,8 +9,8 @@ namespace Coralite.Helpers
     {
         public static void SetCenter(this UIElement element, Vector2 center)
         {
-            element.Top.Set(center.X - element.Width.Pixels, 0);
-            element.Left.Set(center.Y - element.Height.Pixels, 0);
+            element.Left.Set(center.X - element.Width.Pixels/2, 0);
+            element.Top.Set(center.Y - element.Height.Pixels/2, 0);
         }
 
         /// <summary>

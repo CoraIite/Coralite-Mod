@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
+﻿using Coralite.Content.Items.Magike.PolarizedFilters;
+using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.IO;
@@ -66,6 +67,26 @@ namespace Coralite.Core.Systems.MagikeSystem
                 MagikeApparatusLevel.HolyLight => Main.DiscoColor,
                 MagikeApparatusLevel.SplendorMagicore => Coralite.SplendorMagicoreLightBlue,
                 _ => Color.Gray,
+            };
+        }
+
+        public static int GetPolarizedFilterItemType(MagikeApparatusLevel level)
+        {
+            return level switch
+            {
+                MagikeApparatusLevel.MagicCrystal => ModContent.ItemType<MagicCrystalPolarizedFilter>(),
+                MagikeApparatusLevel.Glistent => ModContent.ItemType<GlistentPolarizedFilter>(),
+                MagikeApparatusLevel.Crimson => ModContent.ItemType<CrimsonPolarizedFilter>(),
+                MagikeApparatusLevel.Corruption => ModContent.ItemType<CorruptionPolarizedFilter>(),
+                MagikeApparatusLevel.Icicle => ModContent.ItemType<IciclePolarizedFilter>(),
+                MagikeApparatusLevel.Shadow => ModContent.ItemType<ShadowPolarizedFilter>(),
+                MagikeApparatusLevel.CrystallineMagike => ModContent.ItemType<CrystallineMagikePolarizedFilter>(),
+                MagikeApparatusLevel.Hallow => ModContent.ItemType<HallowPolarizedFilter>(),
+                MagikeApparatusLevel.Soul => ModContent.ItemType<SoulPolarizedFilter>(),
+                MagikeApparatusLevel.Feather => ModContent.ItemType<FeatherPolarizedFilter>(),
+                MagikeApparatusLevel.HolyLight => ModContent.ItemType<HolyLightPolarizedFilter>(),
+                MagikeApparatusLevel.SplendorMagicore => ModContent.ItemType<SplendorMagicorePolarizedFilter>(),
+                _ => 0,
             };
         }
 

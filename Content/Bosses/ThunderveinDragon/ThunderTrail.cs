@@ -7,7 +7,7 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
-    public class ThunderTrail
+    public class ThunderTrail(Asset<Texture2D> thunderTex, Func<float, float> widthFunc, Func<float, Color> colorFunc)
     {
         /// <summary>
         /// 数组元素必须得给我大于2喽
@@ -16,20 +16,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public Vector2[] RandomlyPositions { get; set; }
         public bool CanDraw { get; set; }
 
-        private Func<float, float> thunderWidthFunc;
-        private Func<float, Color> thunderColorFunc;
+        private Func<float, float> thunderWidthFunc = widthFunc;
         private (float, float) thunderRandomOffsetRange;
 
-        public Asset<Texture2D> ThunderTex { get; private set; }
+        public Asset<Texture2D> ThunderTex { get; private set; } = thunderTex;
 
         private float randomExpandWidth;
-
-        public ThunderTrail(Asset<Texture2D> thunderTex, Func<float, float> widthFunc, Func<float, Color> colorFunc)
-        {
-            ThunderTex = thunderTex;
-            thunderWidthFunc = widthFunc;
-            thunderColorFunc = colorFunc;
-        }
 
         public void SetWidth(Func<float, float> widthFunc)
         {
@@ -112,7 +104,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             Vector2 normal = (RandomlyPositions[0] - RandomlyPositions[1]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
             float tipRotaion = normal.ToRotation() + 1.57f;
-            Color thunderColor = thunderColorFunc(0);
+            Color thunderColor = colorFunc(0);
             float tipWidth = thunderWidthFunc(0);
             drawInTip = tipWidth > 10;
             Vector2 lengthVec2 = normal * tipWidth;
@@ -132,7 +124,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                  * AC连线的垂直点作为B的法向量
                  */
 
-                thunderColor = thunderColorFunc(factor);
+                thunderColor = colorFunc(factor);
                 float width = thunderWidthFunc(factor);
 
                 Vector2 dirToBack = RandomlyPositions[i - 1] - RandomlyPositions[i];
@@ -231,7 +223,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             Center = RandomlyPositions[^1] - Main.screenPosition;
             normal = (RandomlyPositions[^2] - RandomlyPositions[^1]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
-            thunderColor = thunderColorFunc(1);
+            thunderColor = colorFunc(1);
             float bottomWidth = thunderWidthFunc(1);
             drawInBack = bottomWidth > 10;
             lengthVec2 = normal * bottomWidth;

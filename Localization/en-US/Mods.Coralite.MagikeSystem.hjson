@@ -24,6 +24,7 @@ MagikeSystem: {
 		release it to insert a filter into the Magike Apparatus in the area and polarize it to the filter level
 		Right-click to deselect
 		'''
+	ItemDescriptionPolarizedFilter: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescriptionPolarizedFilter
 }
 
 C0_P1_BookName: {

@@ -30,8 +30,4 @@
         SplendorMagicore,
         //魔源晶簇
     }
-
-    public static class MagikeLevelToItem
-    {
-    }
 }

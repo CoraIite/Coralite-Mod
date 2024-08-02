@@ -24,7 +24,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             for (int i = 0; i < tileRect.Width / 2; i++)
             {
                 int currentHeight = Math.Clamp(
-                   (int)(tex.Height * (percent + 0.05f * MathF.Sin(((float)Main.timeForVisualEffects+i + tileRect.X + tileRect.Y) * 0.1f)))
+                   (int)(tex.Height * (percent + 0.04f * MathF.Sin(((float)Main.timeForVisualEffects + tileRect.X + tileRect.Y) * 0.1f+i*0.3f)))
                     , 0, tex.Height);
 
                 Rectangle frameBox = new Rectangle(i * 2, tex.Height - currentHeight, 2, currentHeight);

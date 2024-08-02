@@ -4,15 +4,11 @@ using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.CommandLine.Help;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.IO;
 using Terraria.ObjectData;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Coralite.Helpers
 {

@@ -161,7 +161,7 @@ namespace Coralite.Content.Items.Thunder
             {
                 Projectile.Resize((int)32, 40);
                 thunderTrails = new ThunderTrail[3];
-                Asset<Texture2D> trailTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody");
+                Asset<Texture2D> trailTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody2");
                 for (int i = 0; i < 3; i++)
                 {
                     if (i == 0)

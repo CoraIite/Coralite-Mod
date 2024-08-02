@@ -12,14 +12,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Refractors
 {
-    public class BasicColumn : BaseMagikePlaceableItem
+    public class BasicColumn() : MagikeApparatusItem(TileType<BasicColumnTile>(), Item.sellPrice(silver: 5)
+            , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeColumns)
     {
-        public BasicColumn() : base(TileType<BasicColumnTile>(), Item.sellPrice(0, 0, 5, 0)
-            , RarityType<MagicCrystalRarity>(), 25, AssetDirectory.MagikeColumns)
-        { }
-
-        public override int MagikeMax => 1;
-
         public override void AddRecipes()
         {
             CreateRecipe()

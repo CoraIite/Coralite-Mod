@@ -77,9 +77,20 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         public void RemoveComponent(int componentId, Component currentComponent)
         {
             Components[componentId].Remove(currentComponent);
-
             ComponentsCache.Remove(currentComponent);
+
             currentComponent.OnRemove(this);
+        }
+
+        /// <summary>
+        /// 移除一个组件，不触发<see cref="Component.OnRemove(IEntity)"/>
+        /// </summary>
+        /// <param name="componentId"></param>
+        /// <param name="currentComponent"></param>
+        public void RemoveComponentWithoutOnRemove(int componentId, Component currentComponent)
+        {
+            Components[componentId].Remove(currentComponent);
+            ComponentsCache.Remove(currentComponent);
         }
 
         /// <summary>

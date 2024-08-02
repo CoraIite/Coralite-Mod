@@ -45,6 +45,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public static Color ThunderveinPurpleAlpha = new Color(135, 94, 255, 0);
         public static Color ThunderveinOrangeAlpha = new Color(219, 114, 22, 0);
 
+        public static Color ThunderveinYellow = new Color(255, 202, 101);
+        public static Color ThunderveinPurple = new Color(135, 94, 255);
+        public static Color ThunderveinOrange = new Color(219, 114, 22);
+
         /// <summary>
         /// 是否绘制残影
         /// </summary>

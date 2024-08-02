@@ -42,7 +42,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override bool PostCheckCanInsert(MagikeTileEntity entity, ref string text)
         {
-            //找一下有没有其他的升级组件
+            //没有其他任何滤镜时
             if (!(entity as IEntity).HasComponent(MagikeComponentID.MagikeFilter))
                 return true;
 
@@ -57,7 +57,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //有就弹出这个
             if (oldFilter != null)
             {
-                (entity as IEntity).RemoveComponent(MagikeComponentID.MagikeFilter, oldFilter);
+                (entity as IEntity).RemoveComponentWithoutOnRemove(MagikeComponentID.MagikeFilter, oldFilter);
+                oldFilter.SpawnItem(entity);
                 return true;
             }
 
@@ -79,12 +80,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void OnRemove(IEntity entity)
         {
             ChangeTileFrame(MagikeApparatusLevel.None, entity);
-            //生成物品
+            SpawnItem(entity);
+            base.OnRemove(entity);
+        }
+
+        /// <summary>
+        /// 生成掉落物
+        /// </summary>
+        /// <param name="entity"></param>
+        public virtual void SpawnItem(IEntity entity)
+        {
             MagikeTileEntity e = entity as MagikeTileEntity;
             Item.NewItem(new EntitySource_TileEntity(e), Utils.CenteredRectangle(Helper.GetMagikeTileCenter(e.Position), Vector2.One)
                 , ItemType);
-
-            base.OnRemove(entity);
         }
 
         public static void ChangeTileFrame(MagikeApparatusLevel level,IEntity entity)
