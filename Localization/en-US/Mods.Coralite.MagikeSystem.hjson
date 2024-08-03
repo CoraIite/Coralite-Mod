@@ -6,7 +6,6 @@ MagikeSystem: {
 	ChooseSender_Found: The Magike Sender has been selected
 	ChooseSender_NotFound: No Magike Sender found!
 	ChooseReceiver_NotFound: No Magike Receiver found!
-	Connect_TooFar: The receiver is too far away!
 	ChooseReceiver_Success: Connect successfully
 	Deconnect: Disconnect successfully
 	BrilliantConnect: "{0} instruments were successfully connected, and {1} instruments were not successfully connected"
@@ -24,7 +23,7 @@ MagikeSystem: {
 		release it to insert a filter into the Magike Apparatus in the area and polarize it to the filter level
 		Right-click to deselect
 		'''
-	ItemDescriptionPolarizedFilter: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescriptionPolarizedFilter
+	ItemDescriptionPolarizedFilter: Insertable Polarization Filter:
 }
 
 C0_P1_BookName: {

@@ -1,25 +1,8 @@
-BabyIceDragon: {
-	DisplayName: Baby Ice Dragon
-
-	BossChecklistIntegration: {
-		SpawnInfo: A infant ice dragon just hatched and cannot yet fully control the power of ice magic.
-		DespawnMessage: The baby ice dragon escaped
-	}
-}
-
+BabyIceDragon.DisplayName: Baby Ice Dragon
 IceCube.DisplayName: Ice Cube
 IceDragonEgg.DisplayName: Ice Dragon Egg
 IceThornsTrap.DisplayName: Ice Thorns Trap
-
-Rediancie: {
-	DisplayName: Rediancie
-
-	BossChecklistIntegration: {
-		SpawnInfo: 一块奇异的巨石，通过不稳定的红色能量来驱动自身。
-		DespawnMessage: 赤玉灵回归了地底
-	}
-}
-
+Rediancie.DisplayName: Rediancie
 RediancieMinion.DisplayName: Rediancie Minion
 IcicleSpirit.DisplayName: Icicle Spirit
 MaragonBody.DisplayName: Maragon Body
@@ -74,10 +57,10 @@ CrystalRobot: {
 		Princess_LovesNPC: I like {NPCName}.
 	}
 
-	Name0: 晶华
-	Name1: 晶: c000
-	Name2: 克丽丝塔
-	Name3: 魔盖克
+	Name0: Crysilly
+	Name1: CRS: c000
+	Name2: Crysta
+	Name3: Mogik
 }
 
 Bloodiancie.DisplayName: Bloodiancie
@@ -91,12 +74,12 @@ ShadowVilliger.DisplayName: Shadow Villiger
 MagicElemental.DisplayName: Magic Elemental
 
 ElfRanger: {
-	Name1: 埃芙
-	Name2: 伊塔
-	Name3: 弥斯代尔
-	Name4: 达卢玛尔
-	Name5: 柯里薇
-	Name6: 塞尔达
+	Name1: Eve
+	Name2: Eta
+	Name3: Miesdale
+	Name4: Dalumar
+	Name5: Corrivie
+	Name6: Zelda
 	DisplayName: Elf Ranger
 
 	TownNPCMood: {

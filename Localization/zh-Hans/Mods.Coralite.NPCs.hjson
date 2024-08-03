@@ -1,25 +1,8 @@
-BabyIceDragon: {
-	DisplayName: 冰龙宝宝
-
-	BossChecklistIntegration: {
-		// SpawnInfo: A infant ice dragon just hatched and cannot yet fully control the power of ice magic.
-		// DespawnMessage: The baby ice dragon escaped
-	}
-}
-
+BabyIceDragon.DisplayName: 冰龙宝宝
 IceCube.DisplayName: 冰块
 IceDragonEgg.DisplayName: 冰龙蛋
 IceThornsTrap.DisplayName: 冰刺陷阱
-
-Rediancie: {
-	DisplayName: 赤玉灵
-
-	BossChecklistIntegration: {
-		// SpawnInfo: 一块奇异的巨石，通过不稳定的红色能量来驱动自身。
-		// DespawnMessage: 赤玉灵回归了地底
-	}
-}
-
+Rediancie.DisplayName: 赤玉灵
 RediancieMinion.DisplayName: 小赤玉灵
 IcicleSpirit.DisplayName: 霜灵
 MaragonBody.DisplayName: 魔龙身体
@@ -74,10 +57,10 @@ CrystalRobot: {
 		Princess_LovesNPC: 哇，{NPCName}，一个无机生命体！这个世界果然充满奇妙的事情。
 	}
 
-	// Name0: 晶华
-	// Name1: 晶: c000
-	// Name2: 克丽丝塔
-	// Name3: 魔盖克
+	Name0: 晶华
+	Name1: CRS: c000
+	Name2: 克丽丝塔
+	Name3: 魔盖克
 }
 
 Bloodiancie.DisplayName: 赤血玉灵

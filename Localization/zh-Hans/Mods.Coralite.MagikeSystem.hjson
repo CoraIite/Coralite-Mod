@@ -6,7 +6,6 @@ MagikeSystem: {
 	ChooseSender_Found: 已选择魔能发送器
 	ChooseSender_NotFound: 未找到魔能发送器！
 	ChooseReceiver_NotFound: 未找到魔能接收器！
-	Connect_TooFar: 接收器距离太远！
 	ChooseReceiver_Success: 成功建立连接
 	Deconnect: 成功取消连接
 	BrilliantConnect: 成功连接{0}个仪器，未成功连接{1}个仪器
@@ -23,7 +22,7 @@ MagikeSystem: {
 		左键选择区域，松手后为区域内的魔能仪器插入滤镜并将其偏振至滤镜等级
 		右键取消选择
 		'''
-	ItemDescriptionPolarizedFilter: "可插入的偏振滤镜："
+	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
 }
 
 C0_P1_BookName: {

@@ -23,11 +23,6 @@ RedianciePetBuff: {
 	Description: 小赤玉灵环绕在你身边
 }
 
-ShadowCircleBuff: {
-	DisplayName: a
-	// Description: Mods.Coralite.Buffs.ShadowCircleBuff.Description
-}
-
 BloodyHookDebuff: {
 	DisplayName: 鲜血斩击
 	Description: 你在流血！

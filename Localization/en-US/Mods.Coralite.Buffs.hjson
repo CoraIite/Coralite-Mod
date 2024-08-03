@@ -23,11 +23,6 @@ RedianciePetBuff: {
 	Description: A little rediancie is orbiting you
 }
 
-ShadowCircleBuff: {
-	DisplayName: Shadow Circle Buff
-	Description: Mods.Coralite.Buffs.ShadowCircleBuff.Description
-}
-
 BloodyHookDebuff: {
 	DisplayName: Bloody Hook Debuff
 	Description: You are bleeding badly!

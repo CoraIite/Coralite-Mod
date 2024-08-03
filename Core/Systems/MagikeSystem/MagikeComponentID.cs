@@ -10,5 +10,7 @@
         public const int ItemContainer = 5;
         public const int ItemGetOnlyContainer = 6;
         public const int ItemSender = 7;
+
+        public const int Count = 8;
     }
 }

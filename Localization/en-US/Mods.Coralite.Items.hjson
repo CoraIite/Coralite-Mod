@@ -329,11 +329,6 @@ IceyPowder: {
 	Tooltip: Contains a faint ice magic
 }
 
-MaglitePowder: {
-	DisplayName: Maglite Powder
-	Tooltip: Contains a faint magic power
-}
-
 SandlitePowder: {
 	DisplayName: Sand Magic Powder
 	Tooltip: Contains a faint desert magic
@@ -582,11 +577,6 @@ Arethusa: {
 	Tooltip: Late Love
 }
 
-ArethusaNormalMode: {
-	DisplayName: Arethusa
-	Tooltip: Late Love
-}
-
 Astrosniper: {
 	DisplayName: Astrosniper
 	Tooltip: Go snipe that dying star!
@@ -741,34 +731,18 @@ CrystalLens: {
 	Tooltip: Right-click to open the UI, put in the item containing magike, and convert the item into magike
 }
 
-DebugStick: {
-	DisplayName: Infinity Cluster Wand
-	Tooltip:
-		'''
-		Right-click to switch modes
-		Charge Mode: Clck the magike container to fill it
-		Clear Mode: Tap the magike container to empty it
-		'''
-}
-
 MagConnectStaff: {
 	DisplayName: Mag Connect Staff
 	Tooltip:
 		'''
-		Right-click to switch modes
-		Connect mode: The first left click selects the receiver and the second left click selects the sender
-			Then establish a connection between them. Sender has limited range.
-		View mode: Left click a magike sender to show connection.
-		Interrupt mode: Left click a magike sender to interrupt connections.
-
-		The sender has a distance limit,
-		Right-click to clear the selection
+		Left-click to select and left-click again to establish the connection
+		Right-click to open the connection UI and click the button to cancel the connection
 		'''
 }
 
 MagicCrystal: {
 	DisplayName: Magic Crystal
-	Tooltip: Contains a faint amount of magike
+	Tooltip: The faint magike glowed pink
 	MoreDescription: “Go underground and look for crystal caves that contains the knowledge of magike”
 }
 
@@ -789,52 +763,7 @@ BrilliantLens: {
 
 CrystallineMagike: {
 	DisplayName: Crystalline Magike
-	Tooltip: Contains an abundant amount of magike
-}
-
-CrystalRefractor: {
-	DisplayName: Crystal Refractor
-	Tooltip: It has a strong sending ability and is able to send magike over long distances
-}
-
-BrilliantRefractor: {
-	DisplayName: Brilliant Refractor
-	Tooltip: It has a strong sending ability and is able to send magike over long distances
-}
-
-CrimtaneRefractor: {
-	DisplayName: Crimtane Refractor
-	Tooltip: It has a strong sending ability and is able to send magike over long distances
-}
-
-DemoniteRefractor: {
-	DisplayName: Demonite Refractor
-	Tooltip: It has a strong sending ability and is able to send magike over long distances
-}
-
-BrilliantColumn: {
-	DisplayName: Brilliant Column
-	Tooltip: It can hold a lot of magike
-}
-
-CrimtaneColumn: {
-	DisplayName: Crimtane Column
-	Tooltip: It can hold a lot of magike
-}
-
-CrystalColumn: {
-	DisplayName: Crystal Column
-	Tooltip: It can hold a lot of magike
-}
-
-DemoniteColumn: {
-	DisplayName: Demonite Column
-	Tooltip: It can hold a lot of magike
-}
-
-Diprism: {
-	DisplayName: Diprism
-	Tooltip: ""
+	Tooltip: The abundant magike reflects the brilliant purple
 }
 
 BrilliantRemodelPool: {
@@ -956,21 +885,6 @@ CrystalSpotlighter: {
 OceanLens: {
 	DisplayName: Ocean Lens
 	Tooltip: Generates magike while in the ocean biome
-}
-
-BrilliantQuadprism: {
-	DisplayName: Brilliant Quadprism
-	Tooltip: ""
-}
-
-CrimtaneTriprism: {
-	DisplayName: Crimtane Triprism
-	Tooltip: ""
-}
-
-DemoniteTriprism: {
-	DisplayName: Demonite Triprism
-	Tooltip: ""
 }
 
 RedJadeDiprism: {
@@ -1716,16 +1630,6 @@ SplendorLens: {
 	Tooltip: Right click to open the UI, put in the item containing magike, and convert the item into magike
 }
 
-SoulColumn: {
-	DisplayName: Soul Column
-	Tooltip: It can hold a lot of magike
-}
-
-FeatheredRefractor: {
-	DisplayName: Feathered Refractor
-	Tooltip: It has a strong sending ability and is able to send magike over long distances
-}
-
 FlyingSnakeFeather: {
 	DisplayName: Flying Snake Feather
 	Tooltip: ""
@@ -1746,16 +1650,6 @@ SplendorRefiner: {
 	Tooltip: Consumes magike to generate magic crystals
 }
 
-SplendorColumn: {
-	DisplayName: Splendor Column
-	Tooltip: It can hold a lot of magike
-}
-
-SplendorPentaprism: {
-	DisplayName: Splendor Pentaprism
-	Tooltip: ""
-}
-
 BrilliantRefinery: {
 	DisplayName: Brilliant Refinery
 	Tooltip: Consumes magike to generate magic crystals
@@ -1764,11 +1658,6 @@ BrilliantRefinery: {
 SplendorRefinery: {
 	DisplayName: Splendor Refinery
 	Tooltip: Consumes magike to generate magic crystals
-}
-
-SplendorRefractor: {
-	DisplayName: Splendor Refractor
-	Tooltip: It has a strong sending ability and is able to send magike over long distances
 }
 
 MiniBrilliantColumn: {
@@ -1901,7 +1790,7 @@ MagikeGuideBook: {
 }
 
 MagikeNote1: {
-	DisplayName: Magike Note1
+	DisplayName: Magike Note
 	Tooltip: ""
 }
 
@@ -2195,11 +2084,6 @@ MercuryDroplight: {
 
 BlackHoleChest: {
 	DisplayName: Black Hole Chest
-	Tooltip: ""
-}
-
-Cosmophore: {
-	DisplayName: Cosmophore
 	Tooltip: ""
 }
 
@@ -3636,7 +3520,7 @@ VampireEarl: {
 	Tooltip:
 		'''
 		Gain strength during the blood moon
-		              Release bloodthirsty bats while flying
+		Release bloodthirsty bats while flying
 		'''
 }
 
@@ -4440,10 +4324,15 @@ SplendorMagicorePolarizedFilter: {
 }
 
 InfinityClusterWand: {
-	ChargeMode: 充能模式
-	ClearMode: 清空模式
+	ChargeMode: Charge Mode
+	ClearMode: Clear Mode
 	DisplayName: Infinity Cluster Wand
-	Tooltip: ""
+	Tooltip:
+		'''
+		Right-click to switch modes
+		Charge Mode: Clck the magike container to fill it
+		Clear Mode: Tap the magike container to empty it
+		'''
 }
 
 BasicColumn: {
@@ -4453,5 +4342,10 @@ BasicColumn: {
 
 BasicPrism: {
 	DisplayName: Basic Prism
+	Tooltip: ""
+}
+
+Cosmophore: {
+	DisplayName: Cosmophore
 	Tooltip: ""
 }

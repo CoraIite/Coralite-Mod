@@ -335,11 +335,6 @@ IceyPowder: {
 	Tooltip: 含有微弱的冰魔力
 }
 
-MaglitePowder: {
-	DisplayName: Maglite Powder
-	Tooltip: Contains a faint magic power
-}
-
 SandlitePowder: {
 	DisplayName: 沙魔尘
 	Tooltip: 含有微弱的沙漠魔力
@@ -583,11 +578,6 @@ Arethusa: {
 	Tooltip: 迟来的爱
 }
 
-ArethusaNormalMode: {
-	DisplayName: 幽兰
-	Tooltip: 迟来的爱
-}
-
 Astrosniper: {
 	DisplayName: 天文狙击枪
 	Tooltip: 去狙击那颗垂死的星星吧！
@@ -746,29 +736,18 @@ CrystalLens: {
 	Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
 }
 
-DebugStick: {
-	DisplayName: 无限晶簇魔杖
-	Tooltip:
-		'''
-		右键切换模式
-		充能模式：点击魔能存储器将其魔能充满
-		清空模式：点击魔能存储器将其魔能清空
-		'''
-}
-
 MagConnectStaff: {
 	DisplayName: 魔能连接仪
 	Tooltip:
 		'''
-		左键点击选中魔能发送器，之后打开UI，可查看连接情况
-		左键点击按钮后可开始连接
-		右键点击按钮清空当前的连接
+		左键点击选中，再次左键建立连接
+		右键点击打开连接UI，点击按钮以取消连接
 		'''
 }
 
 MagicCrystal: {
 	DisplayName: 魔力晶体
-	Tooltip: 蕴含微弱的魔能
+	Tooltip: 微弱的魔能散发出粉色的光芒
 	MoreDescription: “去地下寻找水晶洞穴吧，其中藏有如何使用魔能的知识”
 }
 
@@ -789,52 +768,7 @@ BrilliantLens: {
 
 CrystallineMagike: {
 	DisplayName: 蕴魔水晶
-	Tooltip: 蕴含充沛的魔能
-}
-
-CrystalRefractor: {
-	DisplayName: 水晶广角镜
-	Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
-}
-
-BrilliantRefractor: {
-	DisplayName: 璀璨广角镜
-	Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
-}
-
-CrimtaneRefractor: {
-	DisplayName: 猩红广角镜
-	Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
-}
-
-DemoniteRefractor: {
-	DisplayName: 魔化广角镜
-	Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
-}
-
-BrilliantColumn: {
-	DisplayName: 璀璨水晶柱
-	Tooltip: 能够容纳很多魔能
-}
-
-CrimtaneColumn: {
-	DisplayName: 猩红水晶柱
-	Tooltip: 能够容纳很多魔能
-}
-
-CrystalColumn: {
-	DisplayName: 水晶柱
-	Tooltip: 能够容纳很多魔能
-}
-
-DemoniteColumn: {
-	DisplayName: 魔化水晶柱
-	Tooltip: 能够容纳很多魔能
-}
-
-Diprism: {
-	DisplayName: 二相镜
-	Tooltip: ""
+	Tooltip: 充沛的魔能折射出璀璨的紫色
 }
 
 BrilliantRemodelPool: {
@@ -956,21 +890,6 @@ CrystalSpotlighter: {
 OceanLens: {
 	DisplayName: 海洋透镜
 	Tooltip: 在海洋环境中生产魔能
-}
-
-BrilliantQuadprism: {
-	DisplayName: 璀璨四棱镜
-	Tooltip: ""
-}
-
-CrimtaneTriprism: {
-	DisplayName: 猩红三棱镜
-	Tooltip: ""
-}
-
-DemoniteTriprism: {
-	DisplayName: 魔化三棱镜
-	Tooltip: ""
 }
 
 RedJadeDiprism: {
@@ -1714,16 +1633,6 @@ SplendorLens: {
 	Tooltip: 右键打开UI，放入包含魔能的物品后将物品转化为魔能存储在自身中
 }
 
-SoulColumn: {
-	DisplayName: 灵魂水晶柱
-	Tooltip: 能够容纳很多魔能
-}
-
-FeatheredRefractor: {
-	DisplayName: 羽蛇广角镜
-	Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
-}
-
 FlyingSnakeFeather: {
 	DisplayName: 羽蛇神之羽
 	Tooltip: ""
@@ -1744,16 +1653,6 @@ SplendorRefiner: {
 	Tooltip: 消耗魔能生成魔力晶体
 }
 
-SplendorColumn: {
-	DisplayName: 光辉水晶柱
-	Tooltip: 能够容纳很多魔能
-}
-
-SplendorPentaprism: {
-	DisplayName: 光辉五棱镜
-	Tooltip: ""
-}
-
 BrilliantRefinery: {
 	DisplayName: 璀璨炼化器
 	Tooltip: 消耗魔能生成魔力晶体
@@ -1762,11 +1661,6 @@ BrilliantRefinery: {
 SplendorRefinery: {
 	DisplayName: 光辉炼化器
 	Tooltip: 消耗魔能生成魔力晶体
-}
-
-SplendorRefractor: {
-	DisplayName: 光辉广角镜
-	Tooltip: 拥有较强的发送能力，能够进行较远距离的魔能传输
 }
 
 MiniBrilliantColumn: {
@@ -2222,11 +2116,6 @@ MercuryDroplight: {
 BlackHoleChest: {
 	DisplayName: 黑洞箱
 	Tooltip: 从理想的世界中诞生的微型黑洞，能够分成两半，里面可以存放一些物品。
-}
-
-Cosmophore: {
-	DisplayName: 宙切
-	Tooltip: 以理想的天体为原型制作的近战武器
 }
 
 Shadura: {
@@ -4525,4 +4414,9 @@ BasicColumn: {
 BasicPrism: {
 	DisplayName: 基础棱镜
 	Tooltip: ""
+}
+
+Cosmophore: {
+	DisplayName: 宙切
+	Tooltip: 以理想的天体为原型制作的近战武器
 }
