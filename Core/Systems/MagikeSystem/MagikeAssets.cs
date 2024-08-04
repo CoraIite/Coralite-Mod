@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using rail;
 using ReLogic.Content;
 using Terraria;
 using static Terraria.ModLoader.ModContent;
@@ -8,11 +9,15 @@ namespace Coralite.Core.Systems.MagikeSystem
     public partial class MagikeSystem
     {
         public static ConnectLineType CurrentConnectLineType;
+        public static ConnectUIAssetID CurrentMagikeUIType;
 
         public static Asset<Texture2D>[] ConnectLines { get; private set; }
         public static Asset<Texture2D>[] ConnectUI { get; private set; }
 
         public static Asset<Texture2D> SelectFrame { get; private set; }
+
+        public static Asset<Texture2D>[] UIApparatusButton {  get; private set; }
+        public static Asset<Texture2D>[] UIShowTypeButton {  get; private set; }
 
         public enum ConnectLineType
         {
@@ -31,12 +36,22 @@ namespace Coralite.Core.Systems.MagikeSystem
             Close,
         }
 
+        /// <summary>
+        /// 魔能UI的类型
+        /// </summary>
+        public enum MagikeUIType
+        {
+            MagicCrystal,
+            CrystallineMagike,
+        } 
+
         #region 加载与卸载
 
         public static void LoadAssets()
         {
             LoadConnectLine();
             LoadConnectUI();
+            LoadUIAsset();
 
             SelectFrame= Request<Texture2D>(AssetDirectory.Misc + "SelectFrame");
         }
@@ -62,6 +77,16 @@ namespace Coralite.Core.Systems.MagikeSystem
             ConnectUI[(int)ConnectUIAssetID.Close] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagikeConnectCloseButton");
         }
 
+        public static void LoadUIAsset()
+        {
+            UIApparatusButton = new Asset<Texture2D>[(int)MagikeUIType.CrystallineMagike + 1];
+            UIApparatusButton[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalApparatusButton");
+
+            UIShowTypeButton = new Asset<Texture2D>[(int)MagikeUIType.CrystallineMagike + 1];
+            UIShowTypeButton[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalShowTypeButton");
+
+        }
+
         public static void UnloadAssets()
         {
             ConnectLines = null;
@@ -76,6 +101,12 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static Texture2D GetConnectLine()
             => ConnectLines[(int)CurrentConnectLineType].Value;
+
+        public static Asset<Texture2D> GetUIApparatusButton()
+            => UIApparatusButton[(int)CurrentMagikeUIType];
+
+        public static Asset<Texture2D> GetUIShowTypeButton()
+            => UIShowTypeButton[(int)CurrentMagikeUIType];
 
         public static void DrawConnectLine(SpriteBatch spriteBatch, Vector2 startPos, Vector2 endPos, Vector2 screenPos, Color drawColor)
         {

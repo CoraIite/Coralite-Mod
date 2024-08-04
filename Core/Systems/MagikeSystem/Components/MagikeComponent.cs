@@ -7,8 +7,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 {
     public abstract class MagikeComponent : Component
     {
-        public abstract Asset<Texture2D> IconTexture { get; }
-
         /// <summary>
         /// 自定义UI中的显示
         /// </summary>
