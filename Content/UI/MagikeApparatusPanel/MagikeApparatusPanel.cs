@@ -118,8 +118,11 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             //初始化控制组件显示的按钮
             InitApparatusButtons();
             //初始化数直条
+            InitVerticalLine();
             //初始化组件方格和菱形条
+
             //初始化特殊显示面板
+
             base.OnInitialize();
         }
 
@@ -156,6 +159,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         public void InitVerticalLine()
         {
+            VerticalLine = new UIVerticalLine();
+
 
         }
 

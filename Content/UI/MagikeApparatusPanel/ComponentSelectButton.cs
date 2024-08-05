@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -13,6 +14,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
     public class ComponentSelectButton : UIElement
     {
         private int slot;
+        private float _scale;
 
         public ComponentSelectButton(int slot)
         {
@@ -59,11 +61,12 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             Vector2 pos = GetInnerDimensions().Position();
 
-            Vector2 scale = Vector2.One;
+            Vector2 scale = new Vector2(_scale);
             int frameY = MagikeApparatusPanel.ShowComponents[slot] ? 1 : 0;
 
             if (IsMouseHovering)
             {
+                _scale = Helper.Lerp(_scale, 1.1f, 0.1f);
                 float factor = MathF.Sin((int)Main.timeForVisualEffects * 0.1f) * 0.05f;
                 scale.X = 1.05f + factor;
                 scale.Y = 1.05f - factor;
@@ -71,6 +74,9 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                 //设置鼠标文本
 
             }
+            else
+                _scale = Helper.Lerp(_scale, 1f, 0.1f);
+
 
             Texture2D tex = MagikeSystem.GetUIApparatusButton().Value;
             var frameBox = tex.Frame(MagikeComponentID.Count + 1, 2, slot, frameY);

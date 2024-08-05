@@ -4420,3 +4420,13 @@ Cosmophore: {
 	DisplayName: 宙切
 	Tooltip: 以理想的天体为原型制作的近战武器
 }
+
+GelFiberBow: {
+	DisplayName: 凝胶纤维弓
+	Tooltip: 射出凝胶纤维球，碰撞物块后射出使用的弹药
+}
+
+GelFiberHammer: {
+	DisplayName: 凝胶纤维锤
+	Tooltip: ""
+}

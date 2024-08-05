@@ -4349,3 +4349,13 @@ Cosmophore: {
 	DisplayName: Cosmophore
 	Tooltip: ""
 }
+
+GelFiberBow: {
+	DisplayName: Gel Fiber Bow
+	Tooltip: ""
+}
+
+GelFiberHammer: {
+	DisplayName: Gel Fiber Hammer
+	Tooltip: ""
+}

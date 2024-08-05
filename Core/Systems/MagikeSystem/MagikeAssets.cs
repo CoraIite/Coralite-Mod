@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using rail;
 using ReLogic.Content;
 using Terraria;
 using static Terraria.ModLoader.ModContent;
@@ -79,12 +78,17 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static void LoadUIAsset()
         {
-            UIApparatusButton = new Asset<Texture2D>[(int)MagikeUIType.CrystallineMagike + 1];
-            UIApparatusButton[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalApparatusButton");
+            if (UIApparatusButton == null)
+            {
+                UIApparatusButton = new Asset<Texture2D>[(int)MagikeUIType.CrystallineMagike + 1];
+                UIApparatusButton[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalApparatusButton");
+            }
 
-            UIShowTypeButton = new Asset<Texture2D>[(int)MagikeUIType.CrystallineMagike + 1];
-            UIShowTypeButton[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalShowTypeButton");
-
+            if (UIShowTypeButton == null)
+            {
+                UIShowTypeButton = new Asset<Texture2D>[(int)MagikeUIType.CrystallineMagike + 1];
+                UIShowTypeButton[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalShowTypeButton");
+            }
         }
 
         public static void UnloadAssets()
@@ -103,10 +107,18 @@ namespace Coralite.Core.Systems.MagikeSystem
             => ConnectLines[(int)CurrentConnectLineType].Value;
 
         public static Asset<Texture2D> GetUIApparatusButton()
-            => UIApparatusButton[(int)CurrentMagikeUIType];
+        {
+            if (UIApparatusButton == null)
+                LoadUIAsset();
+            return UIApparatusButton[(int)CurrentMagikeUIType];
+        }
 
         public static Asset<Texture2D> GetUIShowTypeButton()
-            => UIShowTypeButton[(int)CurrentMagikeUIType];
+        {
+            if (UIShowTypeButton == null)
+                LoadUIAsset();
+            return UIShowTypeButton[(int)CurrentMagikeUIType];
+        }
 
         public static void DrawConnectLine(SpriteBatch spriteBatch, Vector2 startPos, Vector2 endPos, Vector2 screenPos, Color drawColor)
         {

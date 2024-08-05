@@ -1,7 +1,7 @@
 ﻿using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System;
 using Terraria;
 using Terraria.UI;
 
@@ -9,6 +9,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 {
     public class ComponentShowTypeButton:UIElement
     {
+        private float _scale;
+
         public ComponentShowTypeButton()
         {
             Asset<Texture2D> buttonTex = MagikeSystem.GetUIApparatusButton();
@@ -40,20 +42,21 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             Vector2 pos = GetInnerDimensions().Position();
 
-            float scale = 1;
             int frameX = (int)MagikeApparatusPanel.CurrentComponentShowType;
 
             if (IsMouseHovering)
             {
-                scale = 1.2f;
+                _scale = Helper.Lerp(_scale, 1.2f, 0.1f);
                 //设置鼠标文本
 
             }
+            else
+                _scale = Helper.Lerp(_scale, 1f, 0.1f);
 
             Texture2D tex = MagikeSystem.GetUIApparatusButton().Value;
             var frameBox = tex.Frame(2, 1, frameX, 0);
 
-            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, Vector2.Zero, scale, 0, 0);
+            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, Vector2.Zero, _scale, 0, 0);
         }
 
     }
