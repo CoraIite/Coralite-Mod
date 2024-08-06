@@ -34,11 +34,11 @@ namespace Coralite.Content.Items.Stars
 
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient(ItemID.FallenStar, 20)
-                .AddIngredient(ItemID.SoulofLight, 9)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
+            //CreateRecipe()
+            //    .AddIngredient(ItemID.FallenStar, 20)
+            //    .AddIngredient(ItemID.SoulofLight, 9)
+            //    .AddTile(TileID.MythrilAnvil)
+            //    .Register();
         }
     }
 }

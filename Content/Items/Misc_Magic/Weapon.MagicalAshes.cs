@@ -50,9 +50,9 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient(ItemID.BambooBlock, 30)
-                .Register();
+            //CreateRecipe()
+            //    .AddIngredient(ItemID.BambooBlock, 30)
+            //    .Register();
         }
     }
 

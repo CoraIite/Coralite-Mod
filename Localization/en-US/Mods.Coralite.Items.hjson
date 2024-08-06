@@ -4359,3 +4359,28 @@ GelFiberHammer: {
 	DisplayName: Gel Fiber Hammer
 	Tooltip: ""
 }
+
+MagicElementalBannerItem: {
+	DisplayName: Magic Elemental Banner Item
+	Tooltip: ""
+}
+
+MaragonBannerItem: {
+	DisplayName: Maragon Banner Item
+	Tooltip: ""
+}
+
+LeafeoBoots: {
+	DisplayName: Leafeo Boots
+	Tooltip: ""
+}
+
+LeafeoHelmet: {
+	DisplayName: Leafeo Helmet
+	Tooltip: ""
+}
+
+LeafeoLightArmor: {
+	DisplayName: Leafeo Light Armor
+	Tooltip: ""
+}

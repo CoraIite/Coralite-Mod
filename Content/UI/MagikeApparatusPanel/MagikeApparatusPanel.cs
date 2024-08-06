@@ -123,17 +123,24 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             //初始化特殊显示面板
 
+            BasePanel.MinWidth.Set(ComponentShowTypeButton.GetOuterDimensions().Width
+                + ShowComponentButtons.GetOuterDimensions().Width + VerticalLine.GetOuterDimensions().Width + 300, 0);
+
+            BasePanel.MinHeight.Set( ShowComponentButtons.GetOuterDimensions().Height + VerticalLine.Width.Pixels+300, 0);
+
             base.OnInitialize();
         }
 
         public void InitBasePanel()
         {
-
+            BasePanel=new UIDragablePanel(true,true,true);
         }
 
         public void InitShowTypeButton()
         {
-
+            ComponentShowTypeButton =new ComponentShowTypeButton();
+            //默认在左上角
+            BasePanel.Append(ComponentShowTypeButton);
         }
 
         /// <summary>
@@ -155,13 +162,16 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             ShowComponentButtons.Width.Set(recordWidth + 4, 0);
             ShowComponentButtons.Height.Set(height, 0);
+
+            ShowComponentButtons.Left.Set(ComponentShowTypeButton.GetOuterDimensions().Width,0);
         }
 
         public void InitVerticalLine()
         {
             VerticalLine = new UIVerticalLine();
 
-
+            VerticalLine.Left.Set(ComponentShowTypeButton.GetOuterDimensions().Width
+                + ShowComponentButtons.GetOuterDimensions().Width, 0);
         }
 
         #endregion

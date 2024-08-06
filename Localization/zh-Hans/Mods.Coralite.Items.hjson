@@ -4430,3 +4430,28 @@ GelFiberHammer: {
 	DisplayName: 凝胶纤维锤
 	Tooltip: ""
 }
+
+MagicElementalBannerItem: {
+	DisplayName: 魔力精旗帜
+	Tooltip: ""
+}
+
+MaragonBannerItem: {
+	DisplayName: 魔龙旗
+	Tooltip: ""
+}
+
+LeafeoBoots: {
+	DisplayName: 叶林靴
+	Tooltip: -25% 摔落伤害
+}
+
+LeafeoHelmet: {
+	DisplayName: 叶林头盔
+	Tooltip: +1 召唤栏
+}
+
+LeafeoLightArmor: {
+	DisplayName: 叶林轻甲
+	Tooltip: ""
+}

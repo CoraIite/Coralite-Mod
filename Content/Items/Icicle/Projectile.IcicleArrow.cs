@@ -23,9 +23,9 @@ namespace Coralite.Content.Items.Icicle
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
 
-            Projectile.velocity.Y += 0.04f;
-            if (Projectile.velocity.Y > 16)
-                Projectile.velocity.Y = 16;
+            Projectile.velocity.Y += 0.2f;
+            if (Projectile.velocity.Y > 12)
+                Projectile.velocity.Y = 12;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

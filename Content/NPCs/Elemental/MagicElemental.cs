@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.Items.Banner;
+using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using System;
 using Terraria;
@@ -18,6 +19,9 @@ namespace Coralite.Content.NPCs.Elemental
 
         public override void SetDefaults()
         {
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<MagicElementalBannerItem>();
+
             NPC.damage = 10;
             NPC.lifeMax = 40;
             NPC.width = NPC.height = 30;
@@ -25,7 +29,7 @@ namespace Coralite.Content.NPCs.Elemental
             NPC.knockBackResist = 0.75f;
             NPC.noGravity = true;
             NPC.aiStyle = -1;
-            NPC.value = Item.buyPrice(0, 0, 5, 0);
+            NPC.value = Item.buyPrice(silver: 5);
             NPC.scale = Main.rand.NextFloat(1, 1.3f);
 
             NPC.HitSound = CoraliteSoundID.Fairy_NPCHit5;
@@ -133,17 +137,15 @@ namespace Coralite.Content.NPCs.Elemental
 
             if (NPC.position.Y + NPC.height > Main.player[NPC.target].position.Y)
             {
+                for (int i = num300; i < num300 + num301; i++)
                 {
-                    for (int i = num300; i < num300 + num301; i++)
+                    if ((Main.tile[num299, i].HasTile && Main.tileSolid[Main.tile[num299, i].TileType]) || Main.tile[num299, i].LiquidAmount > 0)
                     {
-                        if ((Main.tile[num299, i].HasTile && Main.tileSolid[Main.tile[num299, i].TileType]) || Main.tile[num299, i].LiquidAmount > 0)
-                        {
-                            if (i <= num300 + 1)
-                                flag21 = true;
+                        if (i <= num300 + 1)
+                            flag21 = true;
 
-                            flag20 = false;
-                            break;
-                        }
+                        flag20 = false;
+                        break;
                     }
                 }
             }
@@ -171,11 +173,9 @@ namespace Coralite.Content.NPCs.Elemental
 
             if (flag20)
             {
-                {
-                    NPC.velocity.Y += 0.2f;
-                    if (NPC.velocity.Y > 2f)
-                        NPC.velocity.Y = 2f;
-                }
+                NPC.velocity.Y += 0.2f;
+                if (NPC.velocity.Y > 2f)
+                    NPC.velocity.Y = 2f;
             }
             else
             {
