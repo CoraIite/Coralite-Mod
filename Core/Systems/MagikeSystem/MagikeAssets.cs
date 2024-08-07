@@ -17,6 +17,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static Asset<Texture2D>[] UIApparatusButton {  get; private set; }
         public static Asset<Texture2D>[] UIShowTypeButton {  get; private set; }
+        public static Asset<Texture2D>[] ComponentRollingBar {  get; private set; }
 
         public enum ConnectLineType
         {
@@ -78,16 +79,23 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static void LoadUIAsset()
         {
+            int count = (int)MagikeUIType.CrystallineMagike + 1;
             if (UIApparatusButton == null)
             {
-                UIApparatusButton = new Asset<Texture2D>[(int)MagikeUIType.CrystallineMagike + 1];
+                UIApparatusButton = new Asset<Texture2D>[count];
                 UIApparatusButton[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalApparatusButton");
             }
 
             if (UIShowTypeButton == null)
             {
-                UIShowTypeButton = new Asset<Texture2D>[(int)MagikeUIType.CrystallineMagike + 1];
+                UIShowTypeButton = new Asset<Texture2D>[count];
                 UIShowTypeButton[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalShowTypeButton");
+            }
+
+            if (ComponentRollingBar == null)
+            {
+                ComponentRollingBar = new Asset<Texture2D>[count];
+                ComponentRollingBar[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalShowRollingBar");
             }
         }
 
@@ -118,6 +126,13 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (UIShowTypeButton == null)
                 LoadUIAsset();
             return UIShowTypeButton[(int)CurrentMagikeUIType];
+        }
+
+        public static Asset<Texture2D> GetUIRollingBar()
+        {
+            if (ComponentRollingBar == null)
+                LoadUIAsset();
+            return ComponentRollingBar[(int)CurrentMagikeUIType];
         }
 
         public static void DrawConnectLine(SpriteBatch spriteBatch, Vector2 startPos, Vector2 endPos, Vector2 screenPos, Color drawColor)

@@ -25,8 +25,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         /// <summary> 当前组件的显示方式 </summary>
         public static ComponentShowType CurrentComponentShowType;
-         
-        public int RecordComponentCount;
+        /// <summary> 当前显示的组件的ID </summary>
+        public static int CurrentShowComponentIndex;
 
         /// <summary> 当前显示的组件 </summary>
         public static bool[] _showComponents;
@@ -61,6 +61,18 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
          */
         /// <summary> 组件方格，显示在最左边 </summary>
         public UIGrid ComponentGrid;
+
+        /*
+         * 0代表物品组件的按钮
+         *  |                  |
+         *  |    0      |      |
+         *  |    0      |      |
+         *  |  < 0 >    |      |
+         *  |    0      |      |
+         *  |    0      |      |
+         */
+        /// <summary> 组件方格，显示在最左边 </summary>
+        public UIRollingBar ComponentRollingBar;
 
         /*
          *  | ■                |
@@ -178,6 +190,20 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         public override void Recalculate()
         {
+            BasePanel.RemoveAllChildren();
+            BasePanel.Append(ComponentShowTypeButton);
+            BasePanel.Append(ShowComponentButtons);
+
+            switch (CurrentComponentShowType)
+            {
+                default:
+                case ComponentShowType.Grid:
+                    //BasePanel.Append(ComponentShowTypeButton);
+                    break;
+                case ComponentShowType.VerticalBar:
+                    break;
+            }
+
             base.Recalculate();
         }
 

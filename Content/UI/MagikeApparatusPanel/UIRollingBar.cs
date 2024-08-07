@@ -6,26 +6,20 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.MagikeApparatusPanel
 {
-    public class UIRollingBar:UIElement
+    public class UIRollingBar(Action<int> setIndex, Func<int> getIndex) : UIElement
     {
-        public Action<int> SetIndex { get; set; }
-        public Func<int> GetIndex { get; set; }
+        public Action<int> SetIndex { get; set; } = setIndex;
+        public Func<int> GetIndex { get; set; } = getIndex;
 
         private float _indexForVisual;
         private float _indexForVisualOld;
         private int _timerForVisual;
 
-        public UIRollingBar(Action<int> setIndex, Func<int> getIndex)
-        {
-            SetIndex = setIndex;
-            GetIndex = getIndex;
-        }
-
         private void SetValues(int changeCount)
         {
-            int currentValue=GetIndex();
+            int currentValue = GetIndex();
             currentValue += changeCount;
-            currentValue = Math.Clamp(currentValue,0,Elements.Count-1);
+            currentValue = Math.Clamp(currentValue, 0, Elements.Count - 1);
 
             SetIndex(currentValue);
             _timerForVisual = 20;
@@ -61,20 +55,28 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             int index = GetIndex();
 
+            Vector2 selfCenter = GetDimensions().Center();
+            float perLength = GetDimensions().Height / 5f;
             //共计绘制5个
-            for (int i = index - 2; i < index + 2; i++)
+            for (int i = index - 3; i < index + 3; i++)
             {
                 if (!Elements.IndexInRange(i))
                     continue;
 
+                float sub = _indexForVisual - index;
+                float alpha = 1 - Math.Abs(sub) / 3f;
+                Vector2 center = selfCenter + new Vector2(0, sub * perLength);
+
+                if (Elements[i] is UIAlphaDrawElement special)
+                    special.DrawSelfAlpha(spriteBatch, center, alpha);
             }
         }
     }
 
-    public class UIAlphaDrawElement:UIElement
+    public class UIAlphaDrawElement : UIElement
     {
         protected sealed override void DrawSelf(SpriteBatch spriteBatch) { }
-    
-        protected virtual void DrawSelfAlpha (SpriteBatch spriteBatch,float alpha) { }
+
+        public virtual void DrawSelfAlpha(SpriteBatch spriteBatch, Vector2 center, float alpha) { }
     }
 }
