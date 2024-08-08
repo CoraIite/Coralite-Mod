@@ -35,7 +35,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     continue;
 
                 int itemType = MagikeSystem.GetPolarizedFilterItemType(i.Value);
-                text = string.Concat(text, "[i:", itemType.ToString(), "] ");
+                text = string.Concat(text, "[i:", itemType.ToString(), "]");
             }
 
             tooltipLine = new TooltipLine(Mod, "MagikeApparatusLevelItems", text);

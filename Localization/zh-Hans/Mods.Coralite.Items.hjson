@@ -4465,3 +4465,8 @@ HungryPotion: {
 	DisplayName: 饥饿药剂
 	Tooltip: 增加美味伤害，太饿了让你抬不起脚
 }
+
+MagikeAnalyser: {
+	DisplayName: 魔谱分析仪
+	Tooltip: 放置在背包内时可以查看魔能仪器的状况
+}

@@ -1,4 +1,8 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
+﻿using Coralite.Content.Items.Magike;
+using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.ModPlayers;
+using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +14,9 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.ModLoader.UI;
 using Terraria.ObjectData;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
@@ -42,7 +48,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             if (string.IsNullOrEmpty(name))
                 return;
 
-            ExtraAssets.Add(level, ModContent.Request<Texture2D>(Texture +"_"+ name));
+            ExtraAssets.Add(level, ModContent.Request<Texture2D>(Texture + "_" + name));
         }
 
         /// <summary>
@@ -197,15 +203,114 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public override void MouseOver(int i, int j)
         {
-            //鼠标移上去时显示魔能仪器的各种信息，不需要任何东西
+            if (!Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp))
+                return;
+            if (!cp.HasEffect(nameof(MagikeAnalyser)))
+                return;
+
+            if (!MagikeHelper.TryGetEntity(i, j, out MagikeTileEntity entity))
+                return;
+
+            //鼠标移上去时显示魔能仪器的各种信息
+            IEntity entityBase = entity;
+            string text = "";
+
             //  魔能量 / 魔能上限
             //  对于上限，如果大于基础魔能上限显示为绿色，否则显示为红色
-            //  当前魔能量的百分比
+            if (entityBase.HasComponent(MagikeComponentID.MagikeContainer))
+            {
+                string amountText = MagikeAmountText((MagikeContainer)entityBase.GetSingleComponent(MagikeComponentID.MagikeContainer));
+                if (string.IsNullOrEmpty(text))
+                    text = amountText;
+                else
+                    text = string.Concat(text, amountText);
+            }
+
+            //连接显示
+            if (entityBase.HasComponent(MagikeComponentID.MagikeSender)
+                && entityBase.GetSingleComponent(MagikeComponentID.MagikeSender) is MagikeLinerSender linerSender)
+            {
+                string amountText = LinerConnectText(linerSender);
+                if (string.IsNullOrEmpty(text))
+                    text = amountText;
+                else
+                    text = string.Concat(text, amountText,"\n");
+            }
+
             //  所有的滤镜对应的的物品图标
+            string filterText = FilterText(entity);
+            if (string.IsNullOrEmpty(text))
+                text = filterText;
+            else
+                text = string.Concat(text, filterText);
+
             //  额外自定义显示内容
+            Main.instance.MouseText(text);
+        }
 
+        /// <summary>
+        /// 获取魔能容量的文本
+        /// </summary>
+        /// <param name="container"></param>
+        /// <returns></returns>
+        public virtual string MagikeAmountText(MagikeContainer container)
+        {
+            string colorCode;
+            if (container.MagikeMax > container.MagikeMaxBase)
+                colorCode = "80d3ff";//蓝色
+            else if (container.MagikeMax < container.MagikeMaxBase)
+                colorCode = "ff1919";//红色
+            else
+                colorCode = "ffffff";
 
-            //MagikeHelper.ShowMagikeNumber(i, j);
+            return string.Concat(MagikeSystem.GetApparatusDescriptionText(MagikeSystem.ApparatusDescriptionID.MagikeAmount)
+                , container.Magike, " / ", $"[c/{colorCode}:{container.MagikeMax}]\n");
+        }
+
+        public virtual string LinerConnectText(MagikeLinerSender sender)
+        {
+            string have = "◈";
+            string nothave = "◇";
+
+            string text = MagikeSystem.GetApparatusDescriptionText(MagikeSystem.ApparatusDescriptionID.ConnectAmount);
+
+            for (int i = 0; i < sender.MaxConnect; i++)
+            {
+                string temp;
+                if (sender.Receivers.IndexInRange(i))
+                    temp = have;
+                else
+                    temp = nothave;
+
+                if (i >= sender.MaxConnectBase)
+                    temp = $"[c/80d3ff:{temp}]";
+
+                text = string.Concat(text, temp);
+            }
+
+            return text;
+        }
+
+        public virtual string FilterText(MagikeTileEntity entity)
+        {
+            string empty = $"[i:{ModContent.ItemType<BasicFilter>()}]";
+            string text = "";
+
+            List<Component> list;
+            entity.Components.TryGetValue(MagikeComponentID.MagikeFilter, out list);
+
+            for (int i = 0; i < entity.ExtendFilterCapacity; i++)
+            {
+                string filterIcon;
+                if (list == null || !list.IndexInRange(i))
+                    filterIcon = empty;
+                else
+                    filterIcon = $"[i:{(list[i] as MagikeFilter).ItemType}]";
+
+                text = string.Concat(text, filterIcon);
+            }
+
+            return text;
         }
 
         public sealed override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
@@ -260,7 +365,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             Vector2 offset = offScreen - Main.screenPosition;
             Color lightColor = Lighting.GetColor(p.X, p.Y);
 
-            DrawExtraTex(spriteBatch, texture, tileRect, offset, lightColor,rotation, entity);
+            DrawExtraTex(spriteBatch, texture, tileRect, offset, lightColor, rotation, entity);
         }
 
         /// <summary>
@@ -270,7 +375,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// <param name="tileRect"></param>
         /// <param name="offset"></param>
         /// <param name="entity"></param>
-        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor,float rotation, MagikeTileEntity entity)
+        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity)
         {
 
         }

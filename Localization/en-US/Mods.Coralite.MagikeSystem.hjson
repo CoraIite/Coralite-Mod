@@ -24,6 +24,8 @@ MagikeSystem: {
 		Right-click to deselect
 		'''
 	ItemDescriptionPolarizedFilter: Insertable Polarization Filter:
+	ApparatusDescriptionMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionMagikeAmount
+	ApparatusDescriptionConnectAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionConnectAmount
 }
 
 C0_P1_BookName: {

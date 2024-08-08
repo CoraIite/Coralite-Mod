@@ -186,6 +186,20 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                 + ShowComponentButtons.GetOuterDimensions().Width, 0);
         }
 
+        public void InitComponentRollingBar()
+        {
+            ComponentRollingBar = new UIRollingBar((int i) => CurrentShowComponentIndex = i,()=>CurrentShowComponentIndex);
+            ComponentRollingBar.Top.Set(ShowComponentButtons.GetOuterDimensions().Height, 0);
+
+            //宽度和物品按钮相同，高度填满剩余的
+            ComponentRollingBar.Width.Set(ComponentShowTypeButton.GetOuterDimensions().Width
+                + ShowComponentButtons.GetOuterDimensions().Width, 0);
+            ComponentRollingBar.Height.Set(BasePanel.Height.Pixels- ShowComponentButtons.GetOuterDimensions().Height, 0);
+            ComponentRollingBar.OverflowHidden = true;
+
+            BasePanel.Append(ComponentRollingBar);
+        }
+
         #endregion
 
         public override void Recalculate()

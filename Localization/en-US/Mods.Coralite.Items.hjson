@@ -4394,3 +4394,8 @@ HungryPotion: {
 	DisplayName: Hungry Potion
 	Tooltip: ""
 }
+
+MagikeAnalyser: {
+	DisplayName: Magike Analyser
+	Tooltip: ""
+}

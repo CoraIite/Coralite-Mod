@@ -23,6 +23,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             LoadConnectStaff();
             LoadFilter();
             LoadItemDescription();
+            LoadApparatusDescription();
         }
 
         public void UnloadLocalization()
@@ -34,6 +35,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             ConnectStaff = null;
             Filter = null;
             ItemDescription = null;
+            ApparatusDescription = null;
         }
 
         #region 魔能连接仪相关
@@ -126,6 +128,35 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         #endregion
 
+        #region 仪器显示
+
+        public static LocalizedText[] ApparatusDescription { get; private set; }
+
+        public class ApparatusDescriptionID
+        {
+            /*
+             * 魔能容量
+             * 连接数量
+             * 
+             */
+            public const int MagikeAmount = 0;
+            public const int ConnectAmount = 1;
+
+            public const int Count = 2;
+        }
+
+        public void LoadApparatusDescription()
+        {
+            ApparatusDescription = new LocalizedText[ApparatusDescriptionID.Count];
+
+            ApparatusDescription[ApparatusDescriptionID.MagikeAmount] = this.GetLocalization(nameof(ApparatusDescription) + "MagikeAmount");
+            ApparatusDescription[ApparatusDescriptionID.ConnectAmount] = this.GetLocalization(nameof(ApparatusDescription) + "ConnectAmount");
+        }
+
+        public static string GetApparatusDescriptionText(int id)
+            => ApparatusDescription[id].Value;
+
+        #endregion
 
         #region 物品相关
 

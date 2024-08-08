@@ -200,9 +200,9 @@ FreezePotionBuff: {
 
 HungryPotionBuff: {
 	DisplayName: 饥饿精华
-	Description: 
-	'''
-	+10% 美味伤害
-	-8% 移动速度
-	'''
+	Description:
+		'''
+		+10% 美味伤害
+		-8% 移动速度
+		'''
 }

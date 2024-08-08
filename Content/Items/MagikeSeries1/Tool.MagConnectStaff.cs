@@ -6,15 +6,12 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
-using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ObjectData;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Coralite.Content.Items.MagikeSeries1
 {

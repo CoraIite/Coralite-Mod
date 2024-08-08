@@ -23,6 +23,8 @@ MagikeSystem: {
 		右键取消选择
 		'''
 	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
+	ApparatusDescriptionMagikeAmount: "魔能容量 "
+	ApparatusDescriptionConnectAmount: "连接情况 "
 }
 
 C0_P1_BookName: {
