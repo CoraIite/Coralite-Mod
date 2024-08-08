@@ -1,6 +1,8 @@
 ﻿using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.ModPlayers;
+using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
@@ -14,9 +16,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
-using Terraria.ModLoader.UI;
 using Terraria.ObjectData;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
@@ -201,6 +201,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             return [new Item(DropItemType)];
         }
 
+        public override bool RightClick(int i, int j)
+        {
+            if (!MagikeHelper.TryGetEntity(i, j, out MagikeTileEntity entity))
+                return false;
+
+            Main.playerInventory = true;
+
+            UILoader.GetUIState<MagikeApparatusPanel>().visible=true;
+            MagikeApparatusPanel.CurrentEntity = entity;
+            UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
+
+            return true;
+        }
+
         public override void MouseOver(int i, int j)
         {
             if (!Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp))
@@ -313,6 +327,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             return text;
         }
 
+        #region 特殊绘制
+
         public sealed override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
             Point16? topLeft = MagikeHelper.ToTopLeft(i, j);
@@ -379,5 +395,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         {
 
         }
+
+        #endregion
     }
 }

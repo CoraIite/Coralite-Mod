@@ -31,11 +31,6 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
     public class ComponentButtonAlpha(int index) : UIAlphaDrawElement
     {
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
-
         public override void DrawSelfAlpha(SpriteBatch spriteBatch, Vector2 center, float alpha)
         {
             if (MagikeApparatusPanel.CurrentEntity == null)

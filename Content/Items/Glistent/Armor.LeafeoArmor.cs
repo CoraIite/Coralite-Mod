@@ -85,4 +85,9 @@ namespace Coralite.Content.Items.Glistent
                 .Register();
         }
     }
+
+    public class LeafeoShield
+    {
+
+    }
 }
