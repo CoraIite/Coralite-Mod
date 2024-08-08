@@ -145,7 +145,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         public void InitBasePanel()
         {
-            BasePanel=new UIDragablePanel(true,true,true);
+            BasePanel = new UIDragablePanel(true, true,true);
         }
 
         public void InitShowTypeButton()
@@ -190,6 +190,9 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         public override void Recalculate()
         {
+            if (BasePanel == null)
+                return;
+            
             BasePanel.RemoveAllChildren();
             BasePanel.Append(ComponentShowTypeButton);
             BasePanel.Append(ShowComponentButtons);

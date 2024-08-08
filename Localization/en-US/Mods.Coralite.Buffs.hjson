@@ -188,3 +188,13 @@ AmberDebuff: {
 	DisplayName: Amber Debuff
 	Description: Mods.Coralite.Buffs.AmberDebuff.Description
 }
+
+FreezePotionBuff: {
+	DisplayName: Freeze Potion Buff
+	Description: Mods.Coralite.Buffs.FreezePotionBuff.Description
+}
+
+HungryPotionBuff: {
+	DisplayName: Hungry Potion Buff
+	Description: Mods.Coralite.Buffs.HungryPotionBuff.Description
+}

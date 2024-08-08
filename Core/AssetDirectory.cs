@@ -31,6 +31,7 @@ namespace Coralite.Core
         public const string MinionBuffs = Buffs + "Minions/";
         public const string PetBuffs = Buffs + "Pets/";
         public const string Debuffs = Buffs + "Debuffs/";
+        public const string PotionBuffs = Buffs + "Potions/";
 
         #endregion
 
@@ -83,6 +84,7 @@ namespace Coralite.Core
 
         public const string Accessories = Items + "Accessories/";
         public const string Vanity = Items + "Vanity/";
+        public const string PotionItems = Items + "Potions/";
 
         public const string Materials = Items + "Materials/";
         public const string Placeable = Items + "Placeable/";

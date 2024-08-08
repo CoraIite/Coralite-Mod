@@ -4455,3 +4455,13 @@ LeafeoLightArmor: {
 	DisplayName: 叶林轻甲
 	Tooltip: ""
 }
+
+FreezePotion: {
+	DisplayName: 冻结药剂
+	Tooltip: 增加寒冷伤害，并且让你的身体变脆
+}
+
+HungryPotion: {
+	DisplayName: 饥饿药剂
+	Tooltip: 增加美味伤害，太饿了让你抬不起脚
+}

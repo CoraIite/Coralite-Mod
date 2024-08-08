@@ -66,48 +66,33 @@ namespace Coralite.Content.ModPlayers
         public int nightmareEnergy;
         public int nightmareEnergyMax;
 
-        /// <summary>
-        /// 爆伤加成
-        /// </summary>
+        /// <summary> 爆伤加成 </summary>
         public float critDamageBonus;
-        /// <summary>
-        /// 回复量乘算加成
-        /// </summary>
+        /// <summary> 回复量乘算加成 </summary>
         public float lifeReganBonus;
-        /// <summary>
-        /// 来自BOSS的伤害减免
-        /// </summary>
+        /// <summary> 来自BOSS的伤害减免 </summary>
         public float bossDamageReduce;
 
-        /// <summary>
-        /// 地心护核者的闪避
-        /// </summary>
+        /// <summary> 地心护核者的闪避 </summary>
         public float coreKeeperDodge;
 
-        /// <summary>
-        /// 摔落伤害倍率
-        /// </summary>
+        /// <summary> 摔落伤害倍率 </summary>
         public StatModifier fallDamageModifyer = new StatModifier();
-        /// <summary>
-        /// 生命上限加成
-        /// </summary>
+        /// <summary> 生命上限加成 </summary>
         public StatModifier LifeMaxModifyer = new StatModifier();
 
-        /// <summary>
-        /// 使用特殊攻击
-        /// </summary>
+        /// <summary> 使用特殊攻击 </summary>
         public bool useSpecialAttack;
 
         public Vector2 oldOldVelocity;
         public Vector2 oldVelocity;
 
-        /// <summary>
-        /// 冷系伤害加成
-        /// </summary>
+        /// <summary> 冷系伤害加成 </summary>
         public StatModifier coldDamageBonus;
-        /// <summary>
-        /// 宝石武器攻速加成
-        /// </summary>
+        /// <summary> 美味伤害加成 </summary>
+        public StatModifier deliciousDamageBonus;
+
+        /// <summary> 宝石武器攻速加成 </summary>
         public StatModifier GemWeaponAttSpeedBonus;
 
         public override void Load()
@@ -145,6 +130,7 @@ namespace Coralite.Content.ModPlayers
 
             fallDamageModifyer = new StatModifier();
             coldDamageBonus = new StatModifier();
+            deliciousDamageBonus = new StatModifier();
             GemWeaponAttSpeedBonus = new StatModifier();
 
             ResetFlyingShieldSets();

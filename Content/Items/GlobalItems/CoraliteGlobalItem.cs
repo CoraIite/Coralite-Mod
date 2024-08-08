@@ -278,8 +278,14 @@ namespace Coralite.Content.Items.GlobalItems
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
-            if (ColdDamage && player.TryGetModPlayer(out CoralitePlayer cp))
-                damage = damage.CombineWith(cp.coldDamageBonus);
+            
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                if (ColdDamage)
+                    damage = damage.CombineWith(cp.coldDamageBonus);
+                if (EdibleDamage)
+                    damage = damage.CombineWith(cp.deliciousDamageBonus);
+            }
         }
 
         public override void UpdateInventory(Item item, Player player)

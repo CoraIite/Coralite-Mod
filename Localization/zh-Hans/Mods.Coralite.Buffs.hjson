@@ -188,3 +188,21 @@ AmberDebuff: {
 	// DisplayName: Amber Debuff
 	// Description: Mods.Coralite.Buffs.AmberDebuff.Description
 }
+
+FreezePotionBuff: {
+	DisplayName: 冻结精华
+	Description:
+		'''
+		+10% 寒冷伤害
+		-8 防御力
+		'''
+}
+
+HungryPotionBuff: {
+	DisplayName: 饥饿精华
+	Description: 
+	'''
+	+10% 美味伤害
+	-8% 移动速度
+	'''
+}

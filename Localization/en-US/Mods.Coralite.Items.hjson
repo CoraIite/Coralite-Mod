@@ -4384,3 +4384,13 @@ LeafeoLightArmor: {
 	DisplayName: Leafeo Light Armor
 	Tooltip: ""
 }
+
+FreezePotion: {
+	DisplayName: Freeze Potion
+	Tooltip: ""
+}
+
+HungryPotion: {
+	DisplayName: Hungry Potion
+	Tooltip: ""
+}
