@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.UI;
 using Terraria.UI.Chat;
@@ -12,6 +13,22 @@ namespace Coralite.Helpers
             element.Left.Set(center.X - element.Width.Pixels/2, 0);
             element.Top.Set(center.Y - element.Height.Pixels/2, 0);
         }
+
+        /// <summary>
+        /// 获取宽度+左右的间隔
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        public static float OutsideWidth(this UIElement element)
+            => element.Width.Pixels + element.PaddingLeft + element.PaddingRight;
+
+        /// <summary>
+        /// 获取宽度+左右的间隔
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        public static float OutsideHeight(this UIElement element)
+            => element.Height.Pixels + element.PaddingTop + element.PaddingBottom;
 
         /// <summary>
         /// 快速绘制，黑底白字，缩放为1

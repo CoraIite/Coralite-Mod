@@ -57,31 +57,34 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             }
         }
 
+        public void ResetScale()
+            => _scale = 0;
+
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Vector2 pos = GetInnerDimensions().Position();
+            Vector2 pos = GetInnerDimensions().Center();
 
             Vector2 scale = new Vector2(_scale);
             int frameY = MagikeApparatusPanel.ShowComponents[slot] ? 1 : 0;
 
             if (IsMouseHovering)
             {
-                _scale = Helper.Lerp(_scale, 1.1f, 0.1f);
+                _scale = Helper.Lerp(_scale, 1.15f, 0.2f);
                 float factor = MathF.Sin((int)Main.timeForVisualEffects * 0.1f) * 0.05f;
-                scale.X = 1.05f + factor;
-                scale.Y = 1.05f - factor;
+                scale.X = _scale + factor;
+                scale.Y = _scale - factor;
 
                 //设置鼠标文本
 
             }
             else
-                _scale = Helper.Lerp(_scale, 1f, 0.1f);
+                _scale = Helper.Lerp(_scale, 1f, 0.2f);
 
 
             Texture2D tex = MagikeSystem.GetUIApparatusButton().Value;
             var frameBox = tex.Frame(MagikeComponentID.Count + 1, 2, slot, frameY);
 
-            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, Vector2.Zero, scale, 0, 0);
+            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, frameBox.Size()/2, scale, 0, 0);
         }
     }
 }

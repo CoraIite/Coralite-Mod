@@ -15,7 +15,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset;
             int halfHeight = Math.Max(tileRect.Height / 2, tileRect.Width / 2);
-            float rotationTop = rotation + MathHelper.PiOver2;
+            float rotationTop = 0;//rotation + MathHelper.PiOver2;
 
             //虽然一般不会没有 但是还是检测一下
             if (!(entity as IEntity).TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender senderComponent))

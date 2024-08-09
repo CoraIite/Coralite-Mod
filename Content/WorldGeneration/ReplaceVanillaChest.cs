@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Items.Misc_Shoot;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Terraria;
 using Terraria.ID;
@@ -125,6 +126,23 @@ namespace Coralite.Content.WorldGeneration
                                                 }
                                     }
                                 }
+                                break;
+                        }
+                        break;
+                    case TileID.Containers2:
+                        switch (tile.TileFrameX)
+                        {
+                            default:
+                                break;
+                            case 10*18*2://沙漠
+                                if (WorldGen.genRand.NextBool(20, 100))
+                                    foreach (var item in chest.item)
+                                        if (item.IsAir)
+                                        {
+                                            item.SetDefaults(ModContent.ItemType<TremblingBow>());
+                                            break;
+                                        }
+
                                 break;
                         }
                         break;

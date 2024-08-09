@@ -4470,3 +4470,8 @@ MagikeAnalyser: {
 	DisplayName: 魔谱分析仪
 	Tooltip: 放置在背包内时可以查看魔能仪器的状况
 }
+
+TremblingBow: {
+	DisplayName: 颤弦弓
+	Tooltip: 射出交错电流
+}

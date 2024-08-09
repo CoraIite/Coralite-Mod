@@ -9,10 +9,9 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
     {
         public UIVerticalLine()
         {
-            PaddingTop = 12;
-            PaddingBottom = 12;
-            Width.Set(TextureAssets.FishingLine.Width(),0);
-            Height.Set(-12, 1);
+            Width.Set(TextureAssets.FishingLine.Width()+6,0);
+            Top.Set(20, 0);
+            Height.Set(-20, 1);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -22,7 +21,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             var style = GetDimensions();
             Rectangle frame = new Rectangle(0, 0, line.Width, (int)style.Height);
 
-            spriteBatch.Draw(line, style.Position(), frame, Color.White);
+            spriteBatch.Draw(line, style.Center(), frame, Color.White,0,frame.Size()/2,1,0,0);
         }
     }
 }
