@@ -7,6 +7,7 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Misc_Shoot
@@ -14,6 +15,15 @@ namespace Coralite.Content.Items.Misc_Shoot
     public class TremblingBow : ModItem
     {
         public override string Texture => AssetDirectory.Misc_Shoot + Name;
+
+        public static short GlowMaskID;
+
+        public override void SetStaticDefaults()
+        {
+            Array.Resize(ref TextureAssets.GlowMask, TextureAssets.GlowMask.Length + 1);
+            TextureAssets.GlowMask[^1] = ModContent.Request<Texture2D>(Texture + "_Glow");
+            GlowMaskID= (short)(TextureAssets.GlowMask.Length - 1);
+        }
 
         public override void SetDefaults()
         {
@@ -32,6 +42,9 @@ namespace Coralite.Content.Items.Misc_Shoot
             Item.useTurn = false;
             Item.noMelee = true;
             Item.autoReuse = false;
+
+            Item.glowMask = GlowMaskID;
+
 
             Item.UseSound = CoraliteSoundID.Bow_Item5;
         }
@@ -91,12 +104,12 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public virtual Color ThunderColorFunc(float factor)
         {
-            return new Color(190, 225, 235, 0) * ThunderAlpha;
+            return new Color(103, 255, 255, 0) * ThunderAlpha;
         }
 
         public override void AI()
         {
-            Lighting.AddLight(Projectile.Center, Coralite.SplendorMagicoreLightBlue.ToVector3() / 2);
+            Lighting.AddLight(Projectile.Center, Coralite.IcicleCyan.ToVector3() / 2);
             if (thunderTrails == null)
             {
                 Projectile.InitOldPosCache(10);
