@@ -41,10 +41,9 @@ namespace Coralite.Content.Items.Misc_Shoot
 
             Item.useTurn = false;
             Item.noMelee = true;
-            Item.autoReuse = false;
+            Item.autoReuse = true;
 
             Item.glowMask = GlowMaskID;
-
 
             Item.UseSound = CoraliteSoundID.Bow_Item5;
         }
@@ -60,8 +59,9 @@ namespace Coralite.Content.Items.Misc_Shoot
             int damage2 = (int)(damage * 0.4f);
             for (int i = -1; i < 2; i += 2)
             {
+                Vector2 velocity2 = dir.RotatedBy(-i * 0.5f) * speed;
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
-                    , position + dir.RotatedBy(i * 1f) * 48, dir.RotatedBy(-i * 0.5f) * speed, ModContent.ProjectileType<TremblingElectric>()
+                    , position + dir.RotatedBy(i * 1f) * 48-velocity*2, dir.RotatedBy(-i * 0.5f) * speed, ModContent.ProjectileType<TremblingElectric>()
                     , damage2, knockback, player.whoAmI, i);
             }
 

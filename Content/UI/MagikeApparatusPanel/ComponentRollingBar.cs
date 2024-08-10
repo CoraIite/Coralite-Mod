@@ -1,4 +1,6 @@
-﻿using Coralite.Core.Systems.MagikeSystem;
+﻿using Coralite.Core.Loaders;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -43,8 +45,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             int id = MagikeApparatusPanel.CurrentEntity.ComponentsCache[index].ID;
             int frameY = MagikeApparatusPanel.CurrentShowComponentIndex == index ? 1 : 0;
 
-            Texture2D tex = MagikeSystem.GetUIApparatusButton().Value;
-            var frameBox = tex.Frame(MagikeComponentID.Count + 1, 2, id, frameY);
+            Texture2D tex = MagikeSystem.GetComponentButton().Value;
+            var frameBox = tex.Frame(MagikeComponentID.Count, 2, id, frameY);
 
             spriteBatch.Draw(tex, pos, frameBox, Color.White * alpha, 0, Vector2.Zero, 1, 0, 0);
         }
@@ -53,11 +55,12 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
     public class ComponentButton : UIElement
     {
         private int index;
+        private float _scale;
 
         public ComponentButton(int index)
         {
-            Asset<Texture2D> buttonTex = MagikeSystem.GetUIApparatusButton();
-            Vector2 size = buttonTex.Frame(MagikeComponentID.Count + 1, 2, 
+            Asset<Texture2D> buttonTex = MagikeSystem.GetComponentButton();
+            Vector2 size = buttonTex.Frame(MagikeComponentID.Count, 2, 
                0, 0).Size();
             Width.Set(size.X, 0);
             Height.Set(size.Y, 0);
@@ -70,6 +73,9 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         public override void LeftClick(UIMouseEvent evt)
         {
             MagikeApparatusPanel.CurrentShowComponentIndex = index;
+
+            UILoader.GetUIState<MagikeApparatusPanel>().ResetComponentPanel();
+
             base.LeftClick(evt);
         }
 
@@ -78,23 +84,25 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             if (MagikeApparatusPanel.CurrentEntity == null)
                 return;
 
-            Vector2 pos = GetInnerDimensions().Position();
+            Vector2 pos = GetInnerDimensions().Center();
 
             int id = MagikeApparatusPanel.CurrentEntity.ComponentsCache[index].ID;
             int frameY = MagikeApparatusPanel.CurrentShowComponentIndex == index ? 1 : 0;
 
-            Texture2D tex = MagikeSystem.GetUIApparatusButton().Value;
-            var frameBox = tex.Frame(MagikeComponentID.Count + 1, 2, id+1, frameY);
+            Texture2D tex = MagikeSystem.GetComponentButton().Value;
+            var frameBox = tex.Frame(MagikeComponentID.Count, 2, id, frameY);
 
-            float scale = 1;
 
             if (IsMouseHovering)
             {
-                scale = 1.1f;
+                _scale = Helper.Lerp(_scale, 1.2f, 0.2f);
 
             }
+            else
+                _scale = Helper.Lerp(_scale, 1f, 0.2f);
 
-            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, Vector2.Zero, scale, 0, 0);
+
+            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, frameBox.Size()/2, _scale, 0, 0);
         }
     }
 }

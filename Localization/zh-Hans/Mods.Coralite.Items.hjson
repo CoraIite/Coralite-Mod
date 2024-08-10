@@ -4475,3 +4475,8 @@ TremblingBow: {
 	DisplayName: 颤弦弓
 	Tooltip: 射出交错电流
 }
+
+PooToilet: {
+	// DisplayName: Poo Toilet
+	// Tooltip: ""
+}

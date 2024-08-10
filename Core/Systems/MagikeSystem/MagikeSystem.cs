@@ -3,12 +3,17 @@ using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.IO;
+using Terraria.ModLoader.UI;
+using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem
 {
     public partial class MagikeSystem : ModSystem
     {
         public static MagikeSystem Instance { get; private set; }
+
+        public static bool DrawSpecialTileText;
+        public static string SpecialTileText;
 
         public MagikeSystem()
         {
@@ -48,6 +53,15 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             polymerizeRecipes?.Clear();
             polymerizeRecipes = null;
+        }
+
+        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+        {
+            if (DrawSpecialTileText)
+            {
+                DrawSpecialTileText = false;
+                UICommon.TooltipMouseText(SpecialTileText);
+            }
         }
 
         public static Color GetColor(MagikeApparatusLevel level)

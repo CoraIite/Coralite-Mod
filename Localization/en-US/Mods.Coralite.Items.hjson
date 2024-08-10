@@ -4404,3 +4404,8 @@ TremblingBow: {
 	DisplayName: Trembling Bow
 	Tooltip: ""
 }
+
+PooToilet: {
+	DisplayName: Poo Toilet
+	Tooltip: ""
+}

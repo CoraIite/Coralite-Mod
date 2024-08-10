@@ -114,15 +114,6 @@ namespace Coralite.Content.UI
     {
         public int index;
 
-        public override void RightClick(UIMouseEvent evt)
-        {
-            base.RightClick(evt);
-            MagikeConnectUI.sender?.Receivers.RemoveAt(index);
-            MagikeConnectUI.RecordConnectorCount--;
-            UILoader.GetUIState<MagikeConnectUI>().RemoveChild(this);
-            UILoader.GetUIState<MagikeConnectUI>().Recalculate();
-        }
-
         public override void LeftClick(UIMouseEvent evt)
         {
             base.LeftClick(evt);

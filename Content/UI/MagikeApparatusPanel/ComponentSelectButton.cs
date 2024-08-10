@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem;
+﻿using Coralite.Core.Loaders;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -39,7 +40,6 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             base.LeftClick(evt);
 
-             
 
             if (slot == 0)//第零个为操控所有的
             {
@@ -55,6 +55,10 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                 else
                     MagikeApparatusPanel.ShowComponents[slot] = true;
             }
+
+            UILoader.GetUIState<MagikeApparatusPanel>().ResetComponentButton();
+            UILoader.GetUIState<MagikeApparatusPanel>().BaseRecalculate();
+            UILoader.GetUIState<MagikeApparatusPanel>().BaseRecalculate();
         }
 
         public void ResetScale()
@@ -64,16 +68,11 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             Vector2 pos = GetInnerDimensions().Center();
 
-            Vector2 scale = new Vector2(_scale);
             int frameY = MagikeApparatusPanel.ShowComponents[slot] ? 1 : 0;
 
             if (IsMouseHovering)
             {
-                _scale = Helper.Lerp(_scale, 1.15f, 0.2f);
-                float factor = MathF.Sin((int)Main.timeForVisualEffects * 0.1f) * 0.05f;
-                scale.X = _scale + factor;
-                scale.Y = _scale - factor;
-
+                _scale = Helper.Lerp(_scale, 1.3f, 0.2f);
                 //设置鼠标文本
 
             }
@@ -84,7 +83,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             Texture2D tex = MagikeSystem.GetUIApparatusButton().Value;
             var frameBox = tex.Frame(MagikeComponentID.Count + 1, 2, slot, frameY);
 
-            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, frameBox.Size()/2, scale, 0, 0);
+            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, frameBox.Size()/2, _scale, 0, 0);
         }
     }
 }

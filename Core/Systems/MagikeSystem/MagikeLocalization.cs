@@ -24,6 +24,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             LoadFilter();
             LoadItemDescription();
             LoadApparatusDescription();
+            LoadUIText();
         }
 
         public void UnloadLocalization()
@@ -36,6 +37,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             Filter = null;
             ItemDescription = null;
             ApparatusDescription = null;
+            UIText = null;
         }
 
         #region 魔能连接仪相关
@@ -182,6 +184,50 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static string GetItemDescriptionText(int id)
             => ItemDescription[id].Value;
+
+        #endregion
+
+        #region UI显示
+
+        public static LocalizedText[] UIText { get; private set; }
+
+        public class UITextID
+        {
+            /*
+             * UI部分
+             */
+
+            /*
+             * 魔能容器
+             *      - 当前魔能量
+             *      - 魔能上限
+             *      - 基础魔能上限
+             *      - 额外魔能上限
+             *      - 魔能百分比
+             */
+            public const int ContainerMagikeAmount = 0;
+            public const int ContainerMagikeMax = 1;
+            public const int ContainerMagikeMaxBase = 2;
+            public const int ContainerMagikeMaxExtra = 3;
+            public const int ContainerMagikePercent = 4;
+
+            public const int Count = 5;
+        }
+
+        public void LoadUIText()
+        {
+            UIText = new LocalizedText[UITextID.Count];
+
+            UIText[UITextID.ContainerMagikeAmount] = this.GetLocalization(nameof(UIText) + "ContainerMagikeAmount");
+            UIText[UITextID.ContainerMagikeMax] = this.GetLocalization(nameof(UIText) + "ContainerMagikeMax");
+            UIText[UITextID.ContainerMagikeMaxBase] = this.GetLocalization(nameof(UIText) + "ContainerMagikeMaxBase");
+            UIText[UITextID.ContainerMagikeMaxExtra] = this.GetLocalization(nameof(UIText) + "ContainerMagikeMaxExtra");
+            UIText[UITextID.ContainerMagikePercent] = this.GetLocalization(nameof(UIText) + "ContainerMagikePercent");
+        }
+
+        public static string GetUIText(int id)
+            => UIText[id].Value;
+
 
         #endregion
     }

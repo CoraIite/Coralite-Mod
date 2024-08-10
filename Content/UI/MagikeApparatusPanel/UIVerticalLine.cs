@@ -10,8 +10,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         public UIVerticalLine()
         {
             Width.Set(TextureAssets.FishingLine.Width()+6,0);
-            Top.Set(20, 0);
-            Height.Set(-20, 1);
+            Top.Set(0, 0);
+            Height.Set(0, 1);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

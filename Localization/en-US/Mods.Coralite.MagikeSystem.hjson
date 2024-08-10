@@ -26,6 +26,11 @@ MagikeSystem: {
 	ItemDescriptionPolarizedFilter: Insertable Polarization Filter:
 	ApparatusDescriptionMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionMagikeAmount
 	ApparatusDescriptionConnectAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionConnectAmount
+	UITextContainerMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UITextContainerMagikeAmount
+	UITextContainerMagikeMax: Mods.Coralite.MagikeSystem.MagikeSystem.UITextContainerMagikeMax
+	UITextContainerMagikeMaxBase: Mods.Coralite.MagikeSystem.MagikeSystem.UITextContainerMagikeMaxBase
+	UITextContainerMagikeMaxExtra: Mods.Coralite.MagikeSystem.MagikeSystem.UITextContainerMagikeMaxExtra
+	UITextContainerMagikePercent: Mods.Coralite.MagikeSystem.MagikeSystem.UITextContainerMagikePercent
 }
 
 C0_P1_BookName: {

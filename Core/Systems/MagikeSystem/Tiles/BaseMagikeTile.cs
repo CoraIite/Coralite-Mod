@@ -16,6 +16,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.ModLoader.UI;
 using Terraria.ObjectData;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
@@ -203,6 +204,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public override bool RightClick(int i, int j)
         {
+
+            if (Main.LocalPlayer.HeldItem.ModItem != null &&
+                Main.LocalPlayer.HeldItem.ModItem.AltFunctionUse(Main.LocalPlayer))
+                return false;
+
             if (!MagikeHelper.TryGetEntity(i, j, out MagikeTileEntity entity))
                 return false;
 
@@ -260,6 +266,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
             //  额外自定义显示内容
             Main.instance.MouseText(text);
+
+            MagikeSystem.DrawSpecialTileText = true;
+            MagikeSystem.SpecialTileText = text;
+
+
+            //UICommon.TooltipMouseText(text);
         }
 
         /// <summary>
@@ -283,7 +295,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public virtual string LinerConnectText(MagikeLinerSender sender)
         {
-            string have = "◈";
+            string have = "◆";
             string nothave = "◇";
 
             string text = MagikeSystem.GetApparatusDescriptionText(MagikeSystem.ApparatusDescriptionID.ConnectAmount);

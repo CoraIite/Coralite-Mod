@@ -1,10 +1,13 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
+﻿using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Systems.CoraliteActorComponent;
 using System;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader.IO;
+using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class MagikeContainer : Component
+    public class MagikeContainer : MagikeComponent
     {
         public sealed override int ID => MagikeComponentID.MagikeContainer;
 
@@ -82,6 +85,35 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
 
             return false;
+        }
+
+        #endregion
+
+        #region UI
+
+        public override void ShowInUI(UIElement parent)
+        {
+            UIList list = new UIList();
+            list.Width.Set(0, 1);
+            list.Height.Set(0, 1);
+
+            AddText(list, c =>
+                 MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeAmount) + c.Magike, parent);
+            AddText(list, c =>
+                 MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeMax) + c.MagikeMax, parent);
+            AddText(list, c =>
+                 MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeMaxBase) + c.MagikeMaxBase, parent);
+            AddText(list, c =>
+                 MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeMaxExtra) + c.MagikeMaxExtra, parent);
+            AddText(list, c =>
+                 MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikePercent) + MathF.Round(100*c.Magike / (float)c.MagikeMax, 1)+"%", parent);
+
+            parent.Append(list);
+        }
+
+        public void AddText(UIList list, Func<MagikeContainer, string> textFunc, UIElement parent)
+        {
+            list.Add(new ComponentUIElementText<MagikeContainer>(textFunc, this, parent));
         }
 
         #endregion

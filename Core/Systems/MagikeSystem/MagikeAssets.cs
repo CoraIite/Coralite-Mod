@@ -16,6 +16,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static Asset<Texture2D> SelectFrame { get; private set; }
 
         public static Asset<Texture2D>[] UIApparatusButton {  get; private set; }
+        public static Asset<Texture2D>[] UIComponentButton {  get; private set; }
         public static Asset<Texture2D>[] UIShowTypeButton {  get; private set; }
         public static Asset<Texture2D>[] ComponentRollingBar {  get; private set; }
 
@@ -86,6 +87,12 @@ namespace Coralite.Core.Systems.MagikeSystem
                 UIApparatusButton[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalApparatusButton");
             }
 
+            if (UIComponentButton == null)
+            {
+                UIComponentButton = new Asset<Texture2D>[count];
+                UIComponentButton[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalComponentButton");
+            }
+
             if (UIShowTypeButton == null)
             {
                 UIShowTypeButton = new Asset<Texture2D>[count];
@@ -119,6 +126,13 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (UIApparatusButton == null)
                 LoadUIAsset();
             return UIApparatusButton[(int)CurrentMagikeUIType];
+        }
+
+        public static Asset<Texture2D> GetComponentButton()
+        {
+            if (UIComponentButton == null)
+                LoadUIAsset();
+            return UIComponentButton[(int)CurrentMagikeUIType];
         }
 
         public static Asset<Texture2D> GetUIShowTypeButton()

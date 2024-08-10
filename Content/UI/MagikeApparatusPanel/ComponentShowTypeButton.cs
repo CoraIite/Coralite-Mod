@@ -8,7 +8,7 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.MagikeApparatusPanel
 {
-    public class ComponentShowTypeButton:UIElement
+    public class ComponentShowTypeButton : UIElement
     {
         private float _scale;
 
@@ -35,7 +35,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             //切换显示方式
             MagikeApparatusPanel.CurrentComponentShowType++;
-            if (MagikeApparatusPanel.CurrentComponentShowType>MagikeApparatusPanel.ComponentShowType.VerticalBar)
+            if (MagikeApparatusPanel.CurrentComponentShowType > MagikeApparatusPanel.ComponentShowType.VerticalBar)
                 MagikeApparatusPanel.CurrentComponentShowType = MagikeApparatusPanel.ComponentShowType.Grid;
 
             UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
@@ -49,7 +49,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             if (IsMouseHovering)
             {
-                _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
+                _scale = Helper.Lerp(_scale, 1.2f, 0.2f);
                 //设置鼠标文本
 
             }
@@ -59,7 +59,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             Texture2D tex = MagikeSystem.GetUIShowTypeButton().Value;
             var frameBox = tex.Frame(2, 1, frameX, 0);
 
-            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, frameBox.Size()/2, _scale, 0, 0);
+            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, frameBox.Size() / 2, _scale, 0, 0);
         }
 
     }
