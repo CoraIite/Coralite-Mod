@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
@@ -7,10 +6,11 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader.UI.Elements;
+using Terraria.ObjectData;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.MagikeApparatusPanel
@@ -435,11 +435,19 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                 return;
 
             //绘制方框
-            //Point16 topLeft = CurrentEntity.Position;
-            //MagikeHelper.GetMagikeAlternateData(topLeft.X, topLeft.Y, out TileObjectData data, out _);
-            //Point16 bottomRight = CurrentEntity.Position+new Point16(data.Width-1,data.Height-1);
+            spriteBatch.End();
+            spriteBatch.Begin(default, BlendState.NonPremultiplied, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
 
-            //MagikeHelper.DrawRectangleFrame(spriteBatch, topLeft, bottomRight, Coralite.MagicCrystalPink);
+            Point16 topLeft = CurrentEntity.Position;
+            MagikeHelper.GetMagikeAlternateData(topLeft.X, topLeft.Y, out TileObjectData data, out _);
+            Point16 bottomRight = CurrentEntity.Position + new Point16(data.Width - 1, data.Height - 1);
+
+            Color drawColor = Color.Lerp(Coralite.MagicCrystalPink, Color.Coral, MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2 + 0.5f);
+            MagikeHelper.DrawRectangleFrame(spriteBatch, topLeft, bottomRight, drawColor);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+
             base.Draw(spriteBatch);
         }
     }

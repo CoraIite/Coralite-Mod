@@ -1,4 +1,6 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
+﻿using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Loaders;
+using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
@@ -68,6 +70,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Insert(MagikeTileEntity entity)
         {
             entity.AddComponentDirectly(this);
+
+            if (entity == MagikeApparatusPanel.CurrentEntity)
+            {
+                var ui = UILoader.GetUIState<MagikeApparatusPanel>();
+
+                if (ui.visible)
+                    ui.Recalculate();
+            }
         }
 
         public override void OnAdd(IEntity entity)

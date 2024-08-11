@@ -1,12 +1,11 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Helpers;
+﻿using Coralite.Helpers;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class MagikeSender : Component, ITimerTriggerComponent
+    public abstract class MagikeSender : MagikeComponent, ITimerTriggerComponent
     {
         public sealed override int ID => MagikeComponentID.MagikeSender;
 

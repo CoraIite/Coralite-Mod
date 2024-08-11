@@ -1,9 +1,17 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
+﻿using Coralite.Content.UI;
+using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Loaders;
+using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader.IO;
+using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
@@ -226,6 +234,33 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #endregion
 
+        #region UI部分
+
+        public override void ShowInUI(UIElement parent)
+        {
+            //添加显示在最上面的组件名称
+            UIElement title = new ComponentUIElementText<MagikeLinerSender>(c =>
+                 MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeLinerSenderName), this, parent, new Vector2(1.3f));
+            parent.Append(title);
+
+            UIList list = new UIList();
+            list.Width.Set(0, 1);
+            list.Height.Set(0, 1);
+            list.Left.Set(0, 0);
+            list.Top.Set(title.Height.Pixels + 8, 0);
+            list.OverflowHidden = false;
+
+            list.Add(new ComponentUIElementText<MagikeLinerSender>(c =>
+                 MagikeSystem.GetUIText(MagikeSystem.UITextID.CurrentConnect), this, list));
+
+            for (int i = 0; i < MaxConnect; i++)
+                list.Add(new ConnectButtonForComponent(i, this));
+
+            parent.Append(list);
+        }
+
+        #endregion
+
         /// <summary>
         /// 获取魔能量，一定得有唯一的魔能容器才行，没有的话我给你一拳
         /// </summary>
@@ -266,6 +301,84 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 _receivers.Add(new Point16(X, tag.GetShort(string.Concat(preName, nameof(_receivers), i.ToString(), "Y"))));
                 i++;
             }
+        }
+    }
+
+    public class ConnectButtonForComponent:UIElement
+    {
+        private int _index;
+        private MagikeLinerSender _sender;
+
+        public ConnectButtonForComponent(int index,MagikeLinerSender sender)
+        {
+            _index = index;
+            _sender = sender;
+
+            Texture2D tex = MagikeSystem.ConnectUI[(int)MagikeSystem.ConnectUIAssetID.Botton].Value;
+
+            Width.Set(tex.Width + 40,0);
+            Height.Set(tex.Height + 10,0);
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            if (_sender.Receivers.IndexInRange(_index))
+                _sender.Receivers.RemoveAt(_index);
+
+            base.LeftClick(evt);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+
+            Texture2D tex = MagikeSystem.ConnectUI[(int)MagikeSystem.ConnectUIAssetID.Botton].Value;
+
+            var style = GetDimensions();
+            Vector2 pos = style.Position()+new Vector2(style.Width-tex.Width/2,style.Height/2);
+            Vector2 origin = tex.Size() / 2;
+
+            bool ishover = IsMouseHovering;
+            float scale = ishover ? 1.2f : 1f;
+
+            spriteBatch.Draw(tex, pos, null, Color.White, 0, origin, scale, 0, 0);
+
+            bool indexInRange = _sender.Receivers.IndexInRange(_index);
+
+            if (indexInRange)
+            {
+                Texture2D tex2 = MagikeSystem.ConnectUI[(int)MagikeSystem.ConnectUIAssetID.Flow].Value;
+                spriteBatch.Draw(tex2, pos, null, Color.White, 0, origin, scale, 0, 0);
+            }
+
+            if (ishover)
+            {
+                if (indexInRange)
+                {
+                    spriteBatch.End();
+                    spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
+
+                    Color drawColor = Color.Lerp(Color.White, Color.Coral, MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2 + 0.5f);
+
+                    Vector2 selfPos = Helper.GetMagikeTileCenter(MagikeApparatusPanel.CurrentEntity.Position);
+                    Vector2 aimPos = Helper.GetMagikeTileCenter(_sender.Receivers[_index]);
+
+                    MagikeSystem.DrawConnectLine(spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
+
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+                }
+            }
+
+            //位置在右侧往左按钮的距离再一半
+            pos.X -= style.Width / 2;
+            pos.Y = style.Center().Y+4;
+
+            string temp = indexInRange ? "◆" : "◇";
+
+            if (_index >= _sender.MaxConnectBase)
+                temp = $"[c/80d3ff:{temp}]";
+
+            Utils.DrawBorderString(spriteBatch, temp, pos, Color.White, 1, 0.5f, 0.5f);
         }
     }
 }

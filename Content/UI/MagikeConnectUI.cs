@@ -46,7 +46,7 @@ namespace Coralite.Content.UI
 
             for (int i = 0; i < length; i++)
             {
-                var button = new MagikeConnectButton(MagikeSystem.ConnectUI[(int)MagikeSystem.ConnectUIAssetID.Bottom]);
+                var button = new MagikeConnectButton(MagikeSystem.ConnectUI[(int)MagikeSystem.ConnectUIAssetID.Botton]);
                 button.index = i;
 
                 button.SetCenter(BasePos);

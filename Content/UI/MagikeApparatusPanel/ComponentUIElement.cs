@@ -1,29 +1,27 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Microsoft.CodeAnalysis.Text;
+﻿using Coralite.Core.Loaders;
+using Coralite.Core.Systems.CoraliteActorComponent;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Terraria;
 using Terraria.GameContent;
 using Terraria.UI;
 using Terraria.UI.Chat;
 
 namespace Coralite.Content.UI.MagikeApparatusPanel
 {
-    public abstract class ComponentUIElement(Component component):UIElement
-    {
+    //public abstract class ComponentUIElement(Component component):UIElement
+    //{
 
-    }
+    //}
 
     public class ComponentUIElementText<TComponent>:UIElement 
         where TComponent : Component 
     {
         private readonly TComponent component;
         private readonly Func<TComponent,string> text;
+        private Vector2 scale;
 
-        public ComponentUIElementText(Func<TComponent,string> text,TComponent component,UIElement parent)
+        public ComponentUIElementText(Func<TComponent,string> text,TComponent component,UIElement parent,Vector2? scale=null)
         {
             this.text = text;
             this.component = component;
@@ -35,19 +33,26 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(text2, Color.White)];
             ChatManager.ConvertNormalSnippets(textSnippets);
 
-           Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, Vector2.One, width);
+           Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, scale ?? Vector2.One, width);
 
-            Width.Set(0, 1);
+            Width.Set(textSize.X, 0);
             Height.Set(textSize.Y, 0);
+
+            if (scale.HasValue)
+                this.scale = scale.Value;
+            else
+                this.scale = Vector2.One;
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Helpers.Helper.DrawTextQuick(spriteBatch, text(component), Parent.GetInnerDimensions().Width, GetDimensions().Position(), Vector2.Zero, out Vector2 textSize);
-            if (Height.Pixels!=textSize.Y)
+            Helpers.Helper.DrawText(spriteBatch, text(component), Parent.GetInnerDimensions().Width, GetDimensions().Position()
+                , new Vector2(0.5f), scale, new Color(0, 0, 0, 150), Color.White, out Vector2 textSize);
+            if (Height.Pixels != textSize.Y || Width.Pixels != textSize.X)
             {
+                Width.Pixels = textSize.X;
                 Height.Pixels = textSize.Y;
-                Recalculate();
+                UILoader.GetUIState<MagikeApparatusPanel>().ComponentPanel.Recalculate();
             }
         }
     }

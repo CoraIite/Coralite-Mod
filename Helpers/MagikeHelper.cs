@@ -1,9 +1,11 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Drawing.Imaging;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -208,6 +210,12 @@ namespace Coralite.Helpers
             }
         }
 
+        /// <summary>
+        /// 尝试获取魔能仪器的等级
+        /// </summary>
+        /// <param name="topLeft"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
         public static bool TryGetMagikeApparatusLevel(Point16 topLeft,out MagikeApparatusLevel level)
         {
             level = MagikeApparatusLevel.None;
@@ -403,6 +411,31 @@ namespace Coralite.Helpers
                 length -= 8;
             }
         }
+
+        /// <summary>
+        /// 获取魔能容器组件的魔能上限应该有的颜色<br></br>
+        /// 上限大于基础值就为蓝色，否则为红色，不变是白色
+        /// </summary>
+        /// <param name="container"></param>
+        /// <returns></returns>
+        public static string GetMagikeContainerMaxColorCode(this MagikeContainer container)
+        {
+            if (container.MagikeMaxExtra > 0)
+                return  "80d3ff";//蓝色
+            else if (container.MagikeMaxExtra < 0)
+                return "ff1919";//红色
+            else
+                return "ffffff";
+        }
+
+
+
+
+
+
+
+
+
 
         public static void SpawnDustOnSend(int selfWidth, int selfHeight, Point16 Position, IMagikeContainer container, Color dustColor, int dustType = DustID.Teleporter)
         {

@@ -254,7 +254,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 if (string.IsNullOrEmpty(text))
                     text = amountText;
                 else
-                    text = string.Concat(text, amountText,"\n");
+                    text = string.Concat(text, amountText, "\n");
             }
 
             //  所有的滤镜对应的的物品图标
@@ -281,16 +281,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// <returns></returns>
         public virtual string MagikeAmountText(MagikeContainer container)
         {
-            string colorCode;
-            if (container.MagikeMax > container.MagikeMaxBase)
-                colorCode = "80d3ff";//蓝色
-            else if (container.MagikeMax < container.MagikeMaxBase)
-                colorCode = "ff1919";//红色
-            else
-                colorCode = "ffffff";
+            string colorCode = container.GetMagikeContainerMaxColorCode();
 
             return string.Concat(MagikeSystem.GetApparatusDescriptionText(MagikeSystem.ApparatusDescriptionID.MagikeAmount)
-                , container.Magike, " / ", $"[c/{colorCode}:{container.MagikeMax}]\n");
+                , $"{container.Magike} / [c/{colorCode}:{container.MagikeMax}]\n");
         }
 
         public virtual string LinerConnectText(MagikeLinerSender sender)

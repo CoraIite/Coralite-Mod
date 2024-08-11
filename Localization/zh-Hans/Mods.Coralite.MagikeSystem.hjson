@@ -25,11 +25,11 @@ MagikeSystem: {
 	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
 	ApparatusDescriptionMagikeAmount: "魔能容量 "
 	ApparatusDescriptionConnectAmount: "连接情况 "
-	UITextContainerMagikeAmount: 魔能容量：
-	UITextContainerMagikeMax: 魔能上限：
-	UITextContainerMagikeMaxBase: 魔能基础上限：
-	UITextContainerMagikeMaxExtra: 魔能额外上限：
-	UITextContainerMagikePercent: 当前魔能百分比：
+	UITextContainerMagikeAmount: ◇ 魔能量
+	UITextContainerMagikeMax: ◇ 魔能上限
+	UITextMagikeContainerName: 魔能存储器
+	UITextCurrentConnect: ◇ 当前连接
+	UITextMagikeLinerSenderName: 线性魔能发送器
 }
 
 C0_P1_BookName: {

@@ -201,17 +201,25 @@ namespace Coralite.Core.Systems.MagikeSystem
              * 魔能容器
              *      - 当前魔能量
              *      - 魔能上限
-             *      - 基础魔能上限
-             *      - 额外魔能上限
-             *      - 魔能百分比
+             *      - 魔能存储器名称
              */
             public const int ContainerMagikeAmount = 0;
             public const int ContainerMagikeMax = 1;
-            public const int ContainerMagikeMaxBase = 2;
-            public const int ContainerMagikeMaxExtra = 3;
-            public const int ContainerMagikePercent = 4;
+            public const int MagikeContainerName = 2;
 
-            public const int Count = 5;
+            /*
+             * 魔能线性发送器
+             *      - 连接情况
+             *      - 线性发送器名称
+             *      - 发送量
+             *      - 发送间隔
+             */
+            public const int CurrentConnect = 3;
+            public const int MagikeLinerSenderName = 4;
+            public const int MagikeSendTime = 5;
+            public const int MagikeSendAmount = 6;
+
+            public const int Count = 7;
         }
 
         public void LoadUIText()
@@ -220,9 +228,11 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             UIText[UITextID.ContainerMagikeAmount] = this.GetLocalization(nameof(UIText) + "ContainerMagikeAmount");
             UIText[UITextID.ContainerMagikeMax] = this.GetLocalization(nameof(UIText) + "ContainerMagikeMax");
-            UIText[UITextID.ContainerMagikeMaxBase] = this.GetLocalization(nameof(UIText) + "ContainerMagikeMaxBase");
-            UIText[UITextID.ContainerMagikeMaxExtra] = this.GetLocalization(nameof(UIText) + "ContainerMagikeMaxExtra");
-            UIText[UITextID.ContainerMagikePercent] = this.GetLocalization(nameof(UIText) + "ContainerMagikePercent");
+            UIText[UITextID.MagikeContainerName] = this.GetLocalization(nameof(UIText) + "MagikeContainerName");
+            UIText[UITextID.CurrentConnect] = this.GetLocalization(nameof(UIText) + "CurrentConnect");
+            UIText[UITextID.MagikeLinerSenderName] = this.GetLocalization(nameof(UIText) + "MagikeLinerSenderName");
+            UIText[UITextID.MagikeSendTime] = this.GetLocalization(nameof(UIText) + "MagikeSendTime");
+            UIText[UITextID.MagikeSendAmount] = this.GetLocalization(nameof(UIText) + "MagikeSendAmount");
         }
 
         public static string GetUIText(int id)

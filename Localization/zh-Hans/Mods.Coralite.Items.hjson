@@ -4477,6 +4477,6 @@ TremblingBow: {
 }
 
 PooToilet: {
-	// DisplayName: Poo Toilet
-	// Tooltip: ""
+	DisplayName: 臭臭马桶
+	Tooltip: ""
 }
