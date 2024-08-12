@@ -295,9 +295,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     angle += Main.rand.NextFloat(MathHelper.TwoPi / 3 - 0.3f, MathHelper.TwoPi / 3 + 0.3f);
                 }
 
-                SoundStyle st = CoraliteSoundID.Crystal_Item101;
-                st.Pitch = -0.4f;
-                SoundEngine.PlaySound(st, Projectile.Center);
+                Helper.PlayPitched(CoraliteSoundID.Crystal_Item101, Projectile.Center, pitch: -0.4f);
                 Helper.PlayPitched("Crystal/CrystalStrike", 0.4f, -0.2f, Projectile.Center);
             }
 

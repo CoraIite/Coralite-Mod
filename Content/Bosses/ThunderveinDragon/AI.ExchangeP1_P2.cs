@@ -63,9 +63,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.frame.X = 1;
 
                             shadowScale = 1.2f;
-                            SoundStyle st = CoraliteSoundID.LightningOrb_Item121;
-                            st.Pitch = 0.4f;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.LightningOrb_Item121, NPC.Center, pitch: 0.4f);
                             SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
 
                             NPC.NewProjectileDirectInAI<ExchangePhaseAnmi>(NPC.Center, Vector2.Zero, 1, 0, NPC.target,

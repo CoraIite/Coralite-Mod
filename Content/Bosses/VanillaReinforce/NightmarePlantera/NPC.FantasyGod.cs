@@ -52,9 +52,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void OnSpawn(IEntitySource source)
         {
-            SoundStyle st = CoraliteSoundID.EmpressOfLight_Summoned_Item161;
-            st.Pitch = 0.5f;
-            SoundEngine.PlaySound(st, NPC.Center);
+            Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Summoned_Item161, NPC.Center, pitch: 0.5f);
         }
 
         public override void AI()
@@ -211,9 +209,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         if (Timer == 50)
                         {
-                            SoundStyle st = CoraliteSoundID.EmpressOfLight_Summoned_Item161;
-                            st.Pitch = 0.5f;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Summoned_Item161, NPC.Center, pitch: 0.5f);
                         }
                         else if (Timer > 65)
                         {

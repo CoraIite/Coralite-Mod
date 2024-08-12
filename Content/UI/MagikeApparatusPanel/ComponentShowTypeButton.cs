@@ -34,9 +34,10 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             base.LeftClick(evt);
 
             //切换显示方式
-            MagikeApparatusPanel.CurrentComponentShowType++;
-            if (MagikeApparatusPanel.CurrentComponentShowType > MagikeApparatusPanel.ComponentShowType.VerticalBar)
-                MagikeApparatusPanel.CurrentComponentShowType = MagikeApparatusPanel.ComponentShowType.Grid;
+            if (MagikeApparatusPanel.ComponentButtonsvisible)
+                MagikeApparatusPanel.ComponentButtonsvisible = false;
+            else
+                MagikeApparatusPanel.ComponentButtonsvisible = true;
 
             UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
         }
@@ -45,7 +46,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             Vector2 pos = GetInnerDimensions().Center();
 
-            int frameX = (int)MagikeApparatusPanel.CurrentComponentShowType;
+            int frameX = MagikeApparatusPanel.ComponentButtonsvisible ? 0 : 1;
 
             if (IsMouseHovering)
             {

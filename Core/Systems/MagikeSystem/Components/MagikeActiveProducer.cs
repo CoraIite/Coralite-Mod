@@ -5,14 +5,14 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class MagikeActiveProducer : MagikeProducer, ITimerTriggerComponent
+    public abstract class MagikeActiveProducer : MagikeProducer, ITimerTriggerComponent
     {
         /// <summary> 基础生产时间 </summary>
         public int ProductionDelayBase { get => DelayBase; private set => DelayBase = value; }
         /// <summary> 发送时间减少量（效率增幅量） </summary>
         public float ProductionDelayBonus { get => DelayBonus; set => DelayBonus = value; }
 
-        /// <summary> 发送时间 </summary>
+        /// <summary> 生产时间 </summary>
         public int ProductionDelay => (this as ITimerTriggerComponent).Delay;
 
         public int DelayBase { get; set; }

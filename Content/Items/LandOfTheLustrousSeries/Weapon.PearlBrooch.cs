@@ -329,9 +329,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (Projectile.owner == Main.myPlayer)
             {
-                SoundStyle st = CoraliteSoundID.NoUse_WaterDrop_Item86;
-                //st.Pitch = 0.6f;
-                SoundEngine.PlaySound(st, Projectile.Center);
+                SoundEngine.PlaySound(CoraliteSoundID.NoUse_WaterDrop_Item86, Projectile.Center);
                 Projectile.NewProjectileFromThis<PearlExplosion>(Projectile.Center, Vector2.Zero, Projectile.damage, Projectile.knockBack / 2);
             }
 

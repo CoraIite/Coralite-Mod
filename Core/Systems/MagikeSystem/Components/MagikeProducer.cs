@@ -27,7 +27,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 生产
         /// </summary>
-        public void Produce()
+        public virtual void Produce()
         {
             Entity.GetMagikeContainer().AddMagike(ThroughputBase);
         }

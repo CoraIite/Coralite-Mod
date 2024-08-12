@@ -191,10 +191,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     30, 14, 12, 1000);
                                 Main.instance.CameraModifiers.Add(modifyer);
 
-                                SoundStyle st = CoraliteSoundID.BottleExplosion_Item107;
-                                st.Pitch = -0.5f;
-                                st.Volume += 0.25f;
-                                SoundEngine.PlaySound(st, Projectile.Center);
+                                Helper.PlayPitched(CoraliteSoundID.BottleExplosion_Item107, Projectile.Center, pitch: -0.5f,volumeAdjust: 0.25f);
                             }
 
                             break;
@@ -273,10 +270,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     20, 14, 12, 1000);
                                 Main.instance.CameraModifiers.Add(modifyer);
 
-                                SoundStyle st = CoraliteSoundID.BottleExplosion_Item107;
-                                st.Pitch = -0.7f;
-                                st.Volume += 0.25f;
-                                SoundEngine.PlaySound(st, Projectile.Center);
+                                Helper.PlayPitched(CoraliteSoundID.BottleExplosion_Item107, Projectile.Center, pitch: -0.5f, volumeAdjust: 0.25f);
                             }
 
                             break;

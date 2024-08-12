@@ -213,13 +213,15 @@ namespace Coralite.Core.Systems.MagikeSystem
              *      - 线性发送器名称
              *      - 发送量
              *      - 发送间隔
+             *      - 连接距离
              */
             public const int CurrentConnect = 3;
             public const int MagikeLinerSenderName = 4;
             public const int MagikeSendTime = 5;
             public const int MagikeSendAmount = 6;
+            public const int MagikeConnectLength = 7;
 
-            public const int Count = 7;
+            public const int Count = 8;
         }
 
         public void LoadUIText()
@@ -229,10 +231,12 @@ namespace Coralite.Core.Systems.MagikeSystem
             UIText[UITextID.ContainerMagikeAmount] = this.GetLocalization(nameof(UIText) + "ContainerMagikeAmount");
             UIText[UITextID.ContainerMagikeMax] = this.GetLocalization(nameof(UIText) + "ContainerMagikeMax");
             UIText[UITextID.MagikeContainerName] = this.GetLocalization(nameof(UIText) + "MagikeContainerName");
+            
             UIText[UITextID.CurrentConnect] = this.GetLocalization(nameof(UIText) + "CurrentConnect");
             UIText[UITextID.MagikeLinerSenderName] = this.GetLocalization(nameof(UIText) + "MagikeLinerSenderName");
             UIText[UITextID.MagikeSendTime] = this.GetLocalization(nameof(UIText) + "MagikeSendTime");
             UIText[UITextID.MagikeSendAmount] = this.GetLocalization(nameof(UIText) + "MagikeSendAmount");
+            UIText[UITextID.MagikeConnectLength] = this.GetLocalization(nameof(UIText) + "MagikeConnectLength");
         }
 
         public static string GetUIText(int id)

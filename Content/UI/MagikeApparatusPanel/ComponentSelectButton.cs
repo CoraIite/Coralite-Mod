@@ -56,7 +56,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                     MagikeApparatusPanel.ShowComponents[slot] = true;
             }
 
-            UILoader.GetUIState<MagikeApparatusPanel>().ResetComponentButton();
+            UILoader.GetUIState<MagikeApparatusPanel>().ResetComponentGrid();
             UILoader.GetUIState<MagikeApparatusPanel>().BaseRecalculate();
             UILoader.GetUIState<MagikeApparatusPanel>().BaseRecalculate();
         }

@@ -353,9 +353,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnStrongGuard()
         {
-            SoundStyle st = CoraliteSoundID.NoUse_SuperMagicShoot_Item68;
-            st.Pitch = -0.5f;
-            SoundEngine.PlaySound(st, Projectile.Center);
+            Helper.PlayPitched(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, Projectile.Center, pitch: -0.5f);
             if (Owner.HeldItem.ModItem is Hephaesth hephaesth)
             {
                 if (!Burning && hephaesth.GetFuel(30 * 8))

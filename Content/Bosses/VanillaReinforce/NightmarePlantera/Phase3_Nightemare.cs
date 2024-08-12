@@ -131,13 +131,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }, PostTeleport: () =>
                         {
                             NPC.rotation = (Target.Center - NPC.Center).ToRotation();
-                            SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
-                            st.Pitch = -0.5f;
-                            SoundEngine.PlaySound(st, NPC.Center);
-                            st = CoraliteSoundID.EmpressOfLight_Dash_Item160;
-                            st.Pitch = -0.75f;
-                            st.Volume -= 0.2f;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, NPC.Center, pitch: -0.5f);
+                            Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Dash_Item160, NPC.Center, pitch: -0.75f,volumeAdjust:-0.2f);
                             var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY, 15, 8, 20, 1000);
                             Main.instance.CameraModifiers.Add(modifyer);
                         });
@@ -194,12 +189,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
 
                         if (Timer % 8 == 0)
-                        {
-                            SoundStyle st = CoraliteSoundID.FireBallExplosion_Item74;
-                            st.Volume -= 0.2f;
-                            st.Pitch -= 0.2f;
-                            SoundEngine.PlaySound(st, NPC.Center);
-                        }
+                            Helper.PlayPitched(CoraliteSoundID.FireBallExplosion_Item74, NPC.Center, pitchAdjust: -0.2f, volumeAdjust: -0.2f);
 
                         if (Timer > 80)
                             SetPhase3States();
@@ -358,10 +348,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             SonState++;
                             int damage = Helper.ScaleValueForDiffMode(30, 20, 15, 15);
                             NPC.NewProjectileInAI<NightmareBite>(NPC.Center, Vector2.Zero, damage, 4, ai0: 0, ai1: 60, ai2: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -2);
-                            SoundStyle st = CoraliteSoundID.EmpressOfLight_Dash_Item160;
-                            st.Volume -= 0.2f;
-                            st.Pitch = -1;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Dash_Item160, NPC.Center, pitch: -1f, volumeAdjust: -0.2f);
                         }, PostTeleport: () =>
                         {
                             Vector2 pos = Target.Center;
@@ -445,9 +432,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             Vector2 pos = Target.Center;
 
-                            SoundStyle st = CoraliteSoundID.DeathCalling_Item103;
-                            st.Pitch -= 0.4f;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.DeathCalling_Item103, NPC.Center, pitchAdjust: -0.4f);
+
                             NPC.rotation = (pos - NPC.Center).ToRotation();
                             ShootCount = (NPC.Center - pos).ToRotation();
                         });
@@ -473,9 +459,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             Vector2 pos = Target.Center;
 
-                            SoundStyle st = CoraliteSoundID.DeathCalling_Item103;
-                            st.Pitch -= 0.4f;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.DeathCalling_Item103, NPC.Center, pitchAdjust: -0.4f);
                             NPC.rotation = (pos - NPC.Center).ToRotation();
                             ShootCount = (NPC.Center - pos).ToRotation();
                         });
@@ -810,9 +794,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 dust.rotation = dir2.ToRotation() + MathHelper.PiOver2;
                             }
 
-                            SoundStyle st = CoraliteSoundID.NoUse_SuperMagicShoot_Item68;
-                            st.Pitch = -1;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, NPC.Center, pitch: -1f);
                         }
 
                         if (Timer > RollingTime + fadeTime)
@@ -878,13 +860,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }, fadeTime: 60, PostTeleport: () =>
                         {
                             NPC.rotation = (Target.Center - NPC.Center).ToRotation();
-                            SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
-                            st.Pitch = -0.5f;
-                            SoundEngine.PlaySound(st, NPC.Center);
-                            st = CoraliteSoundID.EmpressOfLight_Dash_Item160;
-                            st.Pitch = -0.75f;
-                            st.Volume -= 0.2f;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, NPC.Center, pitch: -0.5f);
+                            Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Dash_Item160, NPC.Center, pitch: -0.75f, volumeAdjust: -0.2f);
                             var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY, 15, 8, 20, 1000);
                             Main.instance.CameraModifiers.Add(modifyer);
 
@@ -950,12 +927,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
 
                         if (Timer % 8 == 0)
-                        {
-                            SoundStyle st = CoraliteSoundID.NoUse_BlowgunPlus_Item65;
-                            st.Volume -= 0.2f;
-                            st.Pitch -= 0.2f;
-                            SoundEngine.PlaySound(st, NPC.Center);
-                        }
+                            Helper.PlayPitched(CoraliteSoundID.NoUse_BlowgunPlus_Item65, NPC.Center, pitchAdjust: -0.2f, volumeAdjust: -0.2f);
 
                         if (Timer % 6 == 0)
                         {
@@ -1086,9 +1058,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         SonState++;
                         Timer = 0;
-                        SoundStyle st = CoraliteSoundID.EmpressOfLight_Dash_Item160;
-                        st.Pitch = -0.7f;
-                        SoundEngine.PlaySound(st, NPC.Center);
+                        Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Dash_Item160, NPC.Center, pitch: -0.7f);
                         canDrawWarp = true;
                     }
                     break;
@@ -1247,9 +1217,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                                 NPC.NewProjectileInAI<NightmareSparkle_Red>(NPC.Center, dir, damage, 0);
                             }
-                            SoundStyle st = CoraliteSoundID.CrystalSerpent_Item109;
-                            st.Pitch = -0.5f;
-                            SoundEngine.PlaySound(st, NPC.Center);
+
+                            Helper.PlayPitched(CoraliteSoundID.CrystalSerpent_Item109, NPC.Center, pitch: -0.5f);
                         }
 
                         Vector2 center = NPC.Center;
@@ -1283,9 +1252,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 dust.rotation = dir2.ToRotation() + MathHelper.PiOver2;
                             }
 
-                            SoundStyle st = CoraliteSoundID.NoUse_SuperMagicShoot_Item68;
-                            st.Pitch = -1;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, NPC.Center, pitch: -1f);
 
                             for (int i = 0; i < 3; i++)
                             {
@@ -1472,9 +1439,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     dust.rotation = dir2.ToRotation() + MathHelper.PiOver2;
                 }
 
-                SoundStyle st = CoraliteSoundID.NoUse_SuperMagicShoot_Item68;
-                st.Pitch = -1;
-                SoundEngine.PlaySound(st, NPC.Center);
+                Helper.PlayPitched(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, NPC.Center, pitch: -1f);
             }
 
             if (Timer > fadeTime)

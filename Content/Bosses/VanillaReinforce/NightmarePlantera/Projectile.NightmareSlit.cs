@@ -142,10 +142,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 proj.ai[0] = 2;
                 (proj.ModProjectile as NightmareSlit).tentacleWidth += 30;
 
-                SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
-                st.Pitch = -0.5f;
-                SoundEngine.PlaySound(st, proj.Center);
-
+                Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, proj.Center, pitch: -0.5f);
                 Vector2 selfCenter = (proj.ModProjectile as NightmareSlit).originCenter;
                 Vector2 targetCenter = proj.Center;
                 var modifyer = new PunchCameraModifier((targetCenter + selfCenter) / 2, Vector2.One, 20, 8, 20, 1000);

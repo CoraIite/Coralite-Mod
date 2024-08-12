@@ -50,9 +50,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            SoundStyle st = CoraliteSoundID.ElectricExplosion_Item94;
-            st.Volume -= 0.6f;
-            SoundEngine.PlaySound(st, player.Center);
+            Helper.PlayPitched(CoraliteSoundID.ElectricExplosion_Item94, player.Center, volumeAdjust: -0.6f);
 
             Vector2 dir = velocity.SafeNormalize(Vector2.Zero);
             float speed = 9f;

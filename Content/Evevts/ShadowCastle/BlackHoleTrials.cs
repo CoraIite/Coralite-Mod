@@ -50,9 +50,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
         public override void OnSpawn(IEntitySource source)
         {
-            SoundStyle st = CoraliteSoundID.ShieldDestroyed_NPCDeath58;
-            st.Pitch = 0.5f;
-            SoundEngine.PlaySound(st, Projectile.Center);
+            Helper.PlayPitched(CoraliteSoundID.ShieldDestroyed_NPCDeath58, Projectile.Center, pitch: 0.5f);
         }
 
         public override bool? CanDamage()
@@ -94,9 +92,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
                         {
                             State++;
                             Timer = 0;
-                            SoundStyle st = CoraliteSoundID.ShieldDestroyed_NPCDeath58;
-                            st.Pitch = 0.5f;
-                            SoundEngine.PlaySound(st, Projectile.Center);
+                            Helper.PlayPitched(CoraliteSoundID.ShieldDestroyed_NPCDeath58, Projectile.Center, pitch: 0.5f);
                         }
                     }
                     break;
@@ -142,10 +138,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
                             State++;
                             Timer = 0;
                             warpScale = 0;
-                            SoundStyle st = CoraliteSoundID.ShieldDestroyed_NPCDeath58;
-                            st.Pitch = 0.5f;
-                            SoundEngine.PlaySound(st, Projectile.Center);
-
+                            Helper.PlayPitched(CoraliteSoundID.ShieldDestroyed_NPCDeath58, Projectile.Center, pitch: 0.5f);
                         }
                     }
                     break;
@@ -199,10 +192,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
                             State++;
                             Timer = 0;
                             warpScale = 0;
-                            SoundStyle st = CoraliteSoundID.ShieldDestroyed_NPCDeath58;
-                            st.Pitch = 0.5f;
-                            SoundEngine.PlaySound(st, Projectile.Center);
-
+                            Helper.PlayPitched(CoraliteSoundID.ShieldDestroyed_NPCDeath58, Projectile.Center, pitch: 0.5f);
                         }
                     }
                     break;
@@ -253,12 +243,8 @@ namespace Coralite.Content.Evevts.ShadowCastle
                             warpScale = 0;
                             State++;
                             Timer = 0;
-                            SoundStyle st = CoraliteSoundID.ShieldDestroyed_NPCDeath58;
-                            st.Pitch = 0.8f;
-                            SoundEngine.PlaySound(st, Projectile.Center);
-
+                            Helper.PlayPitched(CoraliteSoundID.ShieldDestroyed_NPCDeath58, Projectile.Center, pitch: 0.5f);
                         }
-
                     }
                     break;
                 case 4:
@@ -402,10 +388,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
                         if (Projectile.ai[2] == 80)
                         {
-                            SoundStyle st = CoraliteSoundID.SpiritFlame_Item117;
-                            st.Volume *= 0.5f;
-                            st.Pitch = 0.5f;
-                            SoundEngine.PlaySound(st, Projectile.Center);
+                            Helper.PlayPitched(CoraliteSoundID.SpiritFlame_Item117, Projectile.Center, pitch: 0.5f,volume:0.3f);
 
                             Projectile.velocity = (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(6, 8);
                             Projectile.ai[2]++;
@@ -427,10 +410,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
                             if (Projectile.ai[2] == 80)
                             {
-                                SoundStyle st = CoraliteSoundID.FireBallExplosion_Item74;
-                                st.Volume *= 0.5f;
-                                st.Pitch = 0.5f;
-                                SoundEngine.PlaySound(st, Projectile.Center);
+                                Helper.PlayPitched(CoraliteSoundID.FireBallExplosion_Item74, Projectile.Center, pitch: 0.5f, volume: 0.3f);
 
                                 float Length = Vector2.Distance(owner.Center, Projectile.Center);
                                 Projectile.velocity = new Vector2(Length, Projectile.velocity.Y);

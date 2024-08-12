@@ -126,10 +126,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 NPC.NewProjectileDirectInAI<ElectromagneticCannon>(pos + Recorder.ToRotationVector2() * 1800, pos, damage, 0, NPC.target
                                     , burstTime, NPC.whoAmI, 85);
 
-                                SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
-                                SoundStyle st = CoraliteSoundID.PhantasmalDeathray_Zombie104;
-                                st.Pitch = 0.3f;
-                                SoundEngine.PlaySound(st, NPC.Center);
+                                Helper.PlayPitched(CoraliteSoundID.PhantasmalDeathray_Zombie104, NPC.Center, pitch: 0.3f);
                                 var modifyer = new PunchCameraModifier(NPC.Center, Recorder.ToRotationVector2() * 2, 24, 20, 20, 1000);
                                 Main.instance.CameraModifiers.Add(modifyer);
                                 canDrawShadows = true;

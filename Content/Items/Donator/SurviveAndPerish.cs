@@ -118,13 +118,8 @@ namespace Coralite.Content.Items.Donator
                 d.noGravity = true;
             }
 
-            SoundStyle st = CoraliteSoundID.Shotgun2_Item38;
-            st.Pitch = -0.4f;
-            st.Volume -= 0.4f;
-            SoundEngine.PlaySound(st, player.Center);
-            st = CoraliteSoundID.Gun3_Item41;
-            st.Pitch = -0.8f;
-            SoundEngine.PlaySound(st, player.Center);
+            Helper.PlayPitched(CoraliteSoundID.Shotgun2_Item38, player.Center, pitch: -0.4f, volumeAdjust: -0.4f);
+            Helper.PlayPitched(CoraliteSoundID.Gun3_Item41, player.Center, pitch: -0.8f);
             return false;
         }
 
@@ -559,9 +554,7 @@ namespace Coralite.Content.Items.Donator
 
         public override void OnKill(int timeLeft)
         {
-            SoundStyle st = CoraliteSoundID.Fairy_NPCHit5;
-            st.Volume -= 0.6f;
-            SoundEngine.PlaySound(st, Projectile.Center);
+            Helper.PlayPitched(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center, volumeAdjust: -0.6f);
 
             int dustType = Main.rand.NextFromList(
                 ModContent.DustType<PerishMissileFog1>(),

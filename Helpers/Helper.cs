@@ -316,6 +316,23 @@ namespace Coralite.Helpers
             return SoundEngine.PlaySound(style, position);
         }
 
+        public static SlotId PlayPitched(SoundStyle style, Vector2? position = null, float? volume = null, float? pitch = null, float volumeAdjust = 0, float pitchAdjust = 0)
+        {
+            if (Main.netMode == NetmodeID.Server)
+                return SlotId.Invalid;
+
+            if (volume.HasValue)
+                style.Volume = volume.Value;
+
+            if (pitch.HasValue)
+                style.Pitch = pitch.Value;
+
+            style.Volume += volumeAdjust;
+            style.Pitch = pitchAdjust;
+
+            return SoundEngine.PlaySound(style, position);
+        }
+
         public static bool OnScreen(Vector2 pos) => pos.X > -16 && pos.X < Main.screenWidth + 16 && pos.Y > -16 && pos.Y < Main.screenHeight + 16;
 
         public static bool OnScreen(Rectangle rect) => rect.Intersects(new Rectangle(0, 0, Main.screenWidth, Main.screenHeight));

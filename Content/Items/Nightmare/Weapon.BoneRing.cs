@@ -730,9 +730,7 @@ namespace Coralite.Content.Items.Nightmare
 
                         if (Timer == 35)
                         {
-                            SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
-                            st.Pitch = -0.5f;
-                            SoundEngine.PlaySound(st, Projectile.Center);
+                            Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, Projectile.Center, pitch: -0.5f);
 
                             tentacleWidth = 20;
                             State++;

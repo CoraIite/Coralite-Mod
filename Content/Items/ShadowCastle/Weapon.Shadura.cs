@@ -318,11 +318,7 @@ namespace Coralite.Content.Items.ShadowCastle
                             Projectile.NewProjectileFromThis(OwnerCenter() + new Vector2(0, -16), Vector2.Zero, ProjectileType<ShaduraShoot>(),
                                 Projectile.damage, Projectile.knockBack);
 
-                            SoundStyle st = CoraliteSoundID.SpiritFlame_Item117;
-                            st.Pitch = -0.5f;
-                            //SoundEngine.PlaySound(st, Owner.Center);
-                            SoundEngine.PlaySound(st, Owner.Center);
-
+                            Helper.PlayPitched(CoraliteSoundID.SpiritFlame_Item117, Owner.Center, pitch: -0.5f);
                             break;
                     }
                     break;

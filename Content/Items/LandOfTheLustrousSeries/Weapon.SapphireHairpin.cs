@@ -521,12 +521,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                             Projectile.tileCollide = true;
                             Projectile.StartAttack();
 
-                            SoundStyle st = CoraliteSoundID.MeteorImpact_Item89;
-                            st.Pitch = 0.5f;
-                            SoundEngine.PlaySound(st, Projectile.Center);
-                            st = CoraliteSoundID.Crystal_Item101;
-                            st.Pitch = -0.2f;
-                            SoundEngine.PlaySound(st, Projectile.Center);
+                            Helper.PlayPitched(CoraliteSoundID.MeteorImpact_Item89, Projectile.Center, pitch: 0.5f);
+                            Helper.PlayPitched(CoraliteSoundID.Crystal_Item101, Projectile.Center, pitch: -0.2f);
                             Helper.PlayPitched("Crystal/CrystalStrike", 0.2f, -0.2f, Projectile.Center);
 
                             float angle = Main.rand.NextFloat(6.282f);

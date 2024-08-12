@@ -150,10 +150,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 }
             }
 
-            SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
-            st.Pitch = -0.5f;
-            SoundEngine.PlaySound(st);
-
+            Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, pitch: -0.5f);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

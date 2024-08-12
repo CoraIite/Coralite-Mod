@@ -277,11 +277,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             }
 
             if (timer % 20 == 0)
-            {
-                SoundStyle st = CoraliteSoundID.LaserSwing_Item15;
-                st.Volume = 1;
-                SoundEngine.PlaySound(st, Projectile.Center);
-            }
+                Helper.PlayPitched(CoraliteSoundID.LaserSwing_Item15, Projectile.Center, volume: 1);
 
             if (timer < minTime + 8)
             {

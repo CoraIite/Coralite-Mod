@@ -145,9 +145,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             State++;
                             Timer = 0;
-                            SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
-                            st.Pitch = -0.5f;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, NPC.Center, pitch: -0.5f);
 
                             float angle = Main.rand.NextFloat(6.282f);
                             for (int i = 0; i < 3; i++)

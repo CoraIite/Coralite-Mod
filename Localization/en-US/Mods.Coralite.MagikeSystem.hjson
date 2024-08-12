@@ -31,6 +31,9 @@ MagikeSystem: {
 	UITextMagikeContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikeContainerName
 	UITextCurrentConnect: Mods.Coralite.MagikeSystem.MagikeSystem.UITextCurrentConnect
 	UITextMagikeLinerSenderName: Liner Magike Sender
+	UITextMagikeSendTime: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikeSendTime
+	UITextMagikeSendAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikeSendAmount
+	UITextMagikeConnectLength: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikeConnectLength
 }
 
 C0_P1_BookName: {

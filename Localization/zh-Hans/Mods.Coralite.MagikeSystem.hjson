@@ -30,6 +30,9 @@ MagikeSystem: {
 	UITextMagikeContainerName: 魔能存储器
 	UITextCurrentConnect: ◇ 当前连接
 	UITextMagikeLinerSenderName: 线性魔能发送器
+	UITextMagikeSendTime: ◇ 发送CD（计时器归零后执行一次发送操作）
+	UITextMagikeSendAmount: ◇ 单次发送量
+	UITextMagikeConnectLength: ◇ 连接距离（单位：格）
 }
 
 C0_P1_BookName: {

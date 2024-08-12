@@ -16,7 +16,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
-using Terraria.ModLoader.UI;
 using Terraria.ObjectData;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles

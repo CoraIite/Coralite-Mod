@@ -286,9 +286,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override bool PreKill()
         {
-            SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
-            st.Pitch = -0.5f;
-            SoundEngine.PlaySound(st, NPC.Center);
+            Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, NPC.Center, pitch: -0.5f);
 
             for (int i = 0; i < 24; i++)
             {

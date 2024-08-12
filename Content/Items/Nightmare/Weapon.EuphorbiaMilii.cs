@@ -376,9 +376,7 @@ namespace Coralite.Content.Items.Nightmare
                             dir2 * Main.rand.NextFloat(1f, 3f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 1.3f));
                     }
 
-                    SoundStyle st = CoraliteSoundID.NoUse_SuperMagicShoot_Item68;
-                    st.Pitch = -1;
-                    SoundEngine.PlaySound(st, Owner.Center);
+                    Helper.PlayPitched(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, Owner.Center, pitch: -1f);
 
                     Owner.AddImmuneTime(ImmunityCooldownID.General, 60);
                     Owner.immune = true;

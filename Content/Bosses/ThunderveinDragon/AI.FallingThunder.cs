@@ -82,9 +82,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.frame.Y = 0;
                             NPC.frame.X = 1;
                             NPC.velocity *= 0;
-                            SoundStyle st = CoraliteSoundID.LightningOrb_Item121;
-                            st.Pitch = 0.4f;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.LightningOrb_Item121, NPC.Center, pitch: 0.4f);
                             SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                         }
                         else if (Timer > 15 && Timer < 70)
@@ -339,9 +337,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.frame.Y = 0;
                             NPC.frame.X = 1;
                             NPC.velocity *= 0;
-                            SoundStyle st = CoraliteSoundID.LightningOrb_Item121;
-                            st.Pitch = 0.4f;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.LightningOrb_Item121, NPC.Center, pitch: 0.4f);
                             SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                         }
                         else if (Timer > 15 && Timer < 70)

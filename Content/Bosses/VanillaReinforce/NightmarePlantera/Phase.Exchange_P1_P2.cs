@@ -56,13 +56,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             NCamera.shakeLevel = 3f;
                             NCamera.shakeDelay = 2;
 
-                            SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
-                            st.Pitch = -0.5f;
-                            SoundEngine.PlaySound(st, NPC.Center);
-                            st = CoraliteSoundID.EmpressOfLight_Dash_Item160;
-                            st.Pitch = -0.75f;
-                            st.Volume -= 0.2f;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, NPC.Center, pitch: -0.5f);
+                            Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Dash_Item160, NPC.Center,volumeAdjust:-0.2f,pitchAdjust:-0.75f);
                         }
                     }
                     break;
@@ -94,9 +89,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             State++;
                             Timer = 0;
-                            SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
-                            st.Pitch = -0.5f;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, NPC.Center, pitch: -0.5f);
 
                             canDrawWarp = true;
                             warpScale = 0;
@@ -112,12 +105,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 case 2: //第二次炸开后产生一大堆的雾
                     {
                         if (Timer % 8 == 0)
-                        {
-                            SoundStyle st = CoraliteSoundID.FireBallExplosion_Item74;
-                            st.Volume -= 0.4f;
-                            st.Pitch -= 0.4f;
-                            SoundEngine.PlaySound(st, NPC.Center);
-                        }
+                            Helper.PlayPitched(CoraliteSoundID.FireBallExplosion_Item74, NPC.Center, volumeAdjust: -0.4f, pitchAdjust: -0.4f);
 
                         warpScale += 0.3f;
                         if (warpScale > 10)
@@ -149,9 +137,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             nameScale = 0;
                             nameAlpha = 1;
                             nameDrawTimer = 0;
-                            SoundStyle st = CoraliteSoundID.BigBOOM_Item62;
-                            st.Pitch = -0.5f;
-                            SoundEngine.PlaySound(st, NPC.Center);
+                            Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, NPC.Center, pitch: -0.5f);
 
                             if (Main.LocalPlayer.TryGetModPlayer(out NightmarePlayerCamera NCamera))
                             {

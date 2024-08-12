@@ -245,18 +245,42 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             UIList list = new UIList();
             list.Width.Set(0, 1);
-            list.Height.Set(0, 1);
+            list.Height.Set(-title.Height.Pixels, 1);
             list.Left.Set(0, 0);
             list.Top.Set(title.Height.Pixels + 8, 0);
-            list.OverflowHidden = false;
 
-            list.Add(new ComponentUIElementText<MagikeLinerSender>(c =>
-                 MagikeSystem.GetUIText(MagikeSystem.UITextID.CurrentConnect), this, list));
+            var scrollbar = new UIScrollbar();
+            scrollbar.Left.Set(4000, 0);
+            scrollbar.Top.Set(4000, 0);
+            list.SetScrollbar(scrollbar);
+
+            //发送时间
+            AddText(list, c =>
+                 MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendTime)
+                 +$"\n  - {c.Timer} / {c.SendDelay} ({c.SendDelayBase} * {c.SendDelayBonus})", parent);
+
+            //发送量
+            AddText(list, c =>
+                 MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendAmount)
+                 + $"\n  - {c.UnitDelivery} ({c.UnitDeliveryBase} {(c.UnitDeliveryExtra >= 0 ? "+" : "-")} {Math.Abs(c.UnitDeliveryExtra)})", parent);
+
+            //连接距离
+            AddText(list, c =>
+                 MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeConnectLength)
+                 + $"\n  - {MathF.Round(c.ConnectLength / 16f, 1)} ({MathF.Round(c.ConnectLengthBase / 16f, 1)} {(c.ConnectLengthExtra >= 0 ? "+" : "- ")} {MathF.Round(Math.Abs(c.ConnectLengthExtra) / 16f, 1)})", parent);
+
+            AddText(list, c =>
+                 MagikeSystem.GetUIText(MagikeSystem.UITextID.CurrentConnect), parent);
 
             for (int i = 0; i < MaxConnect; i++)
                 list.Add(new ConnectButtonForComponent(i, this));
 
             parent.Append(list);
+        }
+
+        public void AddText(UIList list, Func<MagikeLinerSender, string> textFunc, UIElement parent)
+        {
+            list.Add(new ComponentUIElementText<MagikeLinerSender>(textFunc, this, parent));
         }
 
         #endregion

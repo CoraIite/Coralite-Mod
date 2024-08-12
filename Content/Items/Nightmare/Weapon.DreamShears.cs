@@ -418,9 +418,7 @@ namespace Coralite.Content.Items.Nightmare
                 SelfRot = startAngle + totalAngle;
                 Angle = 1f;
 
-                SoundStyle st = CoraliteSoundID.Slash_Item71;
-                st.Pitch = 0.8f;
-                SoundEngine.PlaySound(st, Owner.Center);
+                Helper.PlayPitched(CoraliteSoundID.Slash_Item71, Owner.Center, pitch: 0.8f);
 
                 init = false;
             }
@@ -456,9 +454,7 @@ namespace Coralite.Content.Items.Nightmare
                     else if (Timer == rolllingTime / 2)
                     {
                         Hited = true;
-                        SoundStyle st = CoraliteSoundID.Slash_Item71;
-                        st.Pitch = 0.6f;
-                        SoundEngine.PlaySound(st, Owner.Center);
+                        Helper.PlayPitched(CoraliteSoundID.Slash_Item71, Owner.Center, pitch: 0.6f);
                     }
 
                     if (Timer > rolllingTime - 8)
@@ -948,9 +944,7 @@ namespace Coralite.Content.Items.Nightmare
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center,
                                 Projectile.rotation.ToRotationVector2(), ProjectileType<DreamShearsSpurt>(), Projectile.damage, 2, Owner.whoAmI, 0, 0, 12);
 
-                            SoundStyle st = CoraliteSoundID.Slash_Item71;
-                            st.Pitch = 0.8f;
-                            SoundEngine.PlaySound(st, Owner.Center);
+                            Helper.PlayPitched(CoraliteSoundID.Slash_Item71, Owner.Center, pitch: 0.8f);
                         }
                     }
                     if (Timer < 6)
@@ -1096,9 +1090,7 @@ namespace Coralite.Content.Items.Nightmare
                             30, 14, 12, 1000);
                         Main.instance.CameraModifiers.Add(modifyer);
 
-                        SoundStyle st = CoraliteSoundID.BottleExplosion_Item107;
-                        st.Pitch = -0.5f;
-                        SoundEngine.PlaySound(st, Projectile.Center);
+                        Helper.PlayPitched(CoraliteSoundID.BottleExplosion_Item107, Projectile.Center, pitch: -0.5f);
                     }
 
                     break;
