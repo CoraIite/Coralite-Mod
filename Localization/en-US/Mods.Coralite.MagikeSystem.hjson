@@ -34,6 +34,9 @@ MagikeSystem: {
 	UITextMagikeSendTime: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikeSendTime
 	UITextMagikeSendAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikeSendAmount
 	UITextMagikeConnectLength: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikeConnectLength
+	UITextPolarizedFilterLevel: Mods.Coralite.MagikeSystem.MagikeSystem.UITextPolarizedFilterLevel
+	UITextClickToRemove: Mods.Coralite.MagikeSystem.MagikeSystem.UITextClickToRemove
+	UITextMagikePolarizedFilterName: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikePolarizedFilterName
 }
 
 C0_P1_BookName: {

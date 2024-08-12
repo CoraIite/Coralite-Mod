@@ -4480,3 +4480,8 @@ PooToilet: {
 	DisplayName: 臭臭马桶
 	Tooltip: ""
 }
+
+BasicExtractLens: {
+	// DisplayName: Basic Extract Lens
+	// Tooltip: ""
+}

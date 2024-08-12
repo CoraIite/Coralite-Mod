@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
         }
     }
 
-    public class BoneLensTile : BaseLensTile
+    public class BoneLensTile : OldBaseLensTile
     {
         public override void SetStaticDefaults()
         {

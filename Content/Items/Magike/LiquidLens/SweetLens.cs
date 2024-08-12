@@ -38,7 +38,7 @@ namespace Coralite.Content.Items.Magike.LiquidLens
         }
     }
 
-    public class SweetLensTile : BaseLensTile
+    public class SweetLensTile : OldBaseLensTile
     {
         public override void SetStaticDefaults()
         {

@@ -33,6 +33,9 @@ MagikeSystem: {
 	UITextMagikeSendTime: ◇ 发送CD（计时器归零后执行一次发送操作）
 	UITextMagikeSendAmount: ◇ 单次发送量
 	UITextMagikeConnectLength: ◇ 连接距离（单位：格）
+	UITextPolarizedFilterLevel: ◇ 滤镜等级
+	UITextClickToRemove: 点击以取出滤镜
+	UITextMagikePolarizedFilterName: 偏振滤镜
 }
 
 C0_P1_BookName: {

@@ -46,7 +46,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
         }
     }
 
-    public class GlowingMushroomLensTile : BaseLensTile
+    public class GlowingMushroomLensTile : OldBaseLensTile
     {
         public override void SetStaticDefaults()
         {

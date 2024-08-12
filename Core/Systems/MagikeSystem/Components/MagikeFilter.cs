@@ -2,10 +2,14 @@
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.ModLoader.UI;
+using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class MagikeFilter : Component
+    public abstract class MagikeFilter : MagikeComponent
     {
         public sealed override int ID => MagikeComponentID.MagikeFilter;
 
@@ -103,5 +107,52 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         /// <param name="component"></param>
         public virtual void RestoreComponentValues(Component component) { }
+    }
+
+    public class FilterRemoveButton : UIElement
+    {
+        private IEntity _entity;
+        private MagikeFilter _filter;
+
+        private float _scale = 1f;
+
+        public FilterRemoveButton(IEntity entity, MagikeFilter filter)
+        {
+            Texture2D tex = MagikeSystem.FilterRemoveButton.Value;
+            var frameBox = tex.Frame(1, 2);
+            Width.Set(frameBox.Width + 8, 0);
+            Height.Set(frameBox.Height + 8, 0);
+
+            _entity = entity;
+            _filter = filter;
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            _entity.RemoveComponent(MagikeComponentID.MagikeFilter, _filter);
+            UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
+            base.LeftClick(evt);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Texture2D tex = MagikeSystem.FilterRemoveButton.Value;
+
+            int frame = 0;
+
+            var position = GetDimensions().Center();
+
+            if (IsMouseHovering)
+            {
+                UICommon.TooltipMouseText(MagikeSystem.GetUIText(MagikeSystem.UITextID.ClickToRemove));
+                frame = 1;
+                _scale = Helpers.Helper.Lerp(_scale, 1.1f, 0.2f);
+            }
+            else
+                _scale = Helpers.Helper.Lerp(_scale, 1, 0.2f);
+
+            var frameBox = tex.Frame(1, 2, 0, frame);
+            spriteBatch.Draw(tex, position, frameBox, Color.White, 0, frameBox.Size() / 2, _scale, 0, 0);
+        }
     }
 }

@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.Magike.LightLens
         }
     }
 
-    public class DarknessLensTile : BaseLensTile
+    public class DarknessLensTile : OldBaseLensTile
     {
         public override void SetStaticDefaults()
         {

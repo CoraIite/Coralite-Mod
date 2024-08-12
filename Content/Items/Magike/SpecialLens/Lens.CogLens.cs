@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.Magike.SpecialLens
         }
     }
 
-    public class CogLensTile : BaseLensTile
+    public class CogLensTile : OldBaseLensTile
     {
         public override void SetStaticDefaults()
         {

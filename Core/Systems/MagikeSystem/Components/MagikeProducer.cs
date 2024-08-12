@@ -25,6 +25,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int Throughput { get => ThroughputBase + ThroughputExtra; }
 
         /// <summary>
+        /// 是否能生产，同时对应物块悬浮状态
+        /// </summary>
+        public abstract bool CanProduce();
+
+        /// <summary>
         /// 生产
         /// </summary>
         public virtual void Produce()

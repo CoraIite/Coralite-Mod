@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
         }
     }
 
-    public class HellLensTile : BaseLensTile
+    public class HellLensTile : OldBaseLensTile
     {
         public override void SetStaticDefaults()
         {

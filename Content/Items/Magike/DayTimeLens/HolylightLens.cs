@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
         }
     }
 
-    public class HolylightLensTile : BaseLensTile
+    public class HolylightLensTile : OldBaseLensTile
     {
         public Asset<Texture2D> bottomGemTex;
 

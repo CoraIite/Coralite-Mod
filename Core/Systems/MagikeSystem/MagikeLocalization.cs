@@ -191,7 +191,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static LocalizedText[] UIText { get; private set; }
 
-        public class UITextID
+        public enum UITextID
         {
             /*
              * UI部分
@@ -203,45 +203,58 @@ namespace Coralite.Core.Systems.MagikeSystem
              *      - 魔能上限
              *      - 魔能存储器名称
              */
-            public const int ContainerMagikeAmount = 0;
-            public const int ContainerMagikeMax = 1;
-            public const int MagikeContainerName = 2;
+            ContainerMagikeAmount,
+            ContainerMagikeMax,
+            MagikeContainerName,
 
             /*
              * 魔能线性发送器
              *      - 连接情况
-             *      - 线性发送器名称
              *      - 发送量
              *      - 发送间隔
              *      - 连接距离
+             *      - 线性发送器名称
              */
-            public const int CurrentConnect = 3;
-            public const int MagikeLinerSenderName = 4;
-            public const int MagikeSendTime = 5;
-            public const int MagikeSendAmount = 6;
-            public const int MagikeConnectLength = 7;
+            CurrentConnect,
+            MagikeSendTime,
+            MagikeSendAmount,
+            MagikeConnectLength,
+            MagikeLinerSenderName,
 
-            public const int Count = 8;
+            /*
+             * 偏振滤镜
+             *      - 当前等级
+             *      - 点击取出
+             *      - 名称
+             */
+            PolarizedFilterLevel,
+            ClickToRemove,
+            MagikePolarizedFilterName,
+
+            Count
         }
 
         public void LoadUIText()
         {
-            UIText = new LocalizedText[UITextID.Count];
+            UIText = new LocalizedText[(int)UITextID.Count];
 
-            UIText[UITextID.ContainerMagikeAmount] = this.GetLocalization(nameof(UIText) + "ContainerMagikeAmount");
-            UIText[UITextID.ContainerMagikeMax] = this.GetLocalization(nameof(UIText) + "ContainerMagikeMax");
-            UIText[UITextID.MagikeContainerName] = this.GetLocalization(nameof(UIText) + "MagikeContainerName");
+            UIText[(int)UITextID.ContainerMagikeAmount] = this.GetLocalization(nameof(UIText) + "ContainerMagikeAmount");
+            UIText[(int)UITextID.ContainerMagikeMax] = this.GetLocalization(nameof(UIText) + "ContainerMagikeMax");
+            UIText[(int)UITextID.MagikeContainerName] = this.GetLocalization(nameof(UIText) + "MagikeContainerName");
             
-            UIText[UITextID.CurrentConnect] = this.GetLocalization(nameof(UIText) + "CurrentConnect");
-            UIText[UITextID.MagikeLinerSenderName] = this.GetLocalization(nameof(UIText) + "MagikeLinerSenderName");
-            UIText[UITextID.MagikeSendTime] = this.GetLocalization(nameof(UIText) + "MagikeSendTime");
-            UIText[UITextID.MagikeSendAmount] = this.GetLocalization(nameof(UIText) + "MagikeSendAmount");
-            UIText[UITextID.MagikeConnectLength] = this.GetLocalization(nameof(UIText) + "MagikeConnectLength");
+            UIText[(int)UITextID.CurrentConnect] = this.GetLocalization(nameof(UIText) + "CurrentConnect");
+            UIText[(int)UITextID.MagikeSendTime] = this.GetLocalization(nameof(UIText) + "MagikeSendTime");
+            UIText[(int)UITextID.MagikeSendAmount] = this.GetLocalization(nameof(UIText) + "MagikeSendAmount");
+            UIText[(int)UITextID.MagikeConnectLength] = this.GetLocalization(nameof(UIText) + "MagikeConnectLength");
+            UIText[(int)UITextID.MagikeLinerSenderName] = this.GetLocalization(nameof(UIText) + "MagikeLinerSenderName");
+
+            UIText[(int)UITextID.PolarizedFilterLevel] = this.GetLocalization(nameof(UIText) + "PolarizedFilterLevel");
+            UIText[(int)UITextID.ClickToRemove] = this.GetLocalization(nameof(UIText) + "ClickToRemove");
+            UIText[(int)UITextID.MagikePolarizedFilterName] = this.GetLocalization(nameof(UIText) + "MagikePolarizedFilterName");
         }
 
-        public static string GetUIText(int id)
-            => UIText[id].Value;
-
+        public static string GetUIText(UITextID id)
+            => UIText[(int)id].Value;
 
         #endregion
     }

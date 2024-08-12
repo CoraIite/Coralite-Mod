@@ -291,7 +291,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         public void ResetComponentGrid()
         {
             ComponentGrid.Clear();
-            for (int i = 0; i < CurrentEntity.Components.Count; i++)
+            for (int i = 0; i < CurrentEntity.ComponentsCache.Count; i++)
             {
                 int id = CurrentEntity.ComponentsCache[i].ID;
                 if (!ShowComponents[id + 1])

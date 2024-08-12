@@ -1,11 +1,12 @@
-﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class ItemContainer : MagikeComponent
+    public class ItemContainer : MagikeComponent
     {
         public override int ID => MagikeComponentID.ItemContainer;
 
@@ -32,6 +33,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         private Item[] _items;
         public Item[] Items => _items;
+
+        public override void Update(IEntity entity)
+        {
+        }
 
         /// <summary>
         /// 修改容量后必须调用这个方法！

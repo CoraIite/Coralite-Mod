@@ -1,10 +1,14 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
+﻿using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using System;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ObjectData;
+using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
@@ -48,18 +52,21 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             PolarizedFilter oldFilter = (PolarizedFilter)entity.Components[MagikeComponentID.MagikeFilter].FirstOrDefault(c => c is PolarizedFilter, null);
 
-            if (oldFilter.Level == Level)
+            if (oldFilter!=null)
             {
-                text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.CantUpgrade);
-                return false;
-            }
+                if (oldFilter.Level == Level)
+                {
+                    text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.CantUpgrade);
+                    return false;
+                }
 
-            //有就弹出这个
-            if (oldFilter != null)
-            {
-                (entity as IEntity).RemoveComponentWithoutOnRemove(MagikeComponentID.MagikeFilter, oldFilter);
-                oldFilter.SpawnItem(entity);
-                return true;
+                //有就弹出这个
+                if (oldFilter != null)
+                {
+                    (entity as IEntity).RemoveComponentWithoutOnRemove(MagikeComponentID.MagikeFilter, oldFilter);
+                    oldFilter.SpawnItem(entity);
+                    return true;
+                }
             }
 
             if (!entity.CanInsertFilter())//这里不能插入就是真不能插入了
@@ -126,6 +133,38 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             if (component is IUpgradeable upgrade)
                 upgrade.Upgrade(MagikeApparatusLevel.None);
+        }
+
+        public override void ShowInUI(UIElement parent)
+        {
+            UIElement title = new ComponentUIElementText<PolarizedFilter>(c =>
+                 MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikePolarizedFilterName), this, parent, new Vector2(1.3f));
+            parent.Append(title);
+
+            UIList list = new UIList();
+            list.Width.Set(0, 1);
+            list.Height.Set(-title.Height.Pixels, 1);
+            list.Left.Set(0, 0);
+            list.Top.Set(title.Height.Pixels + 8, 0);
+
+            var scrollbar = new UIScrollbar();
+            scrollbar.Left.Set(4000, 0);
+            scrollbar.Top.Set(4000, 0);
+            list.SetScrollbar(scrollbar);
+
+            //等级
+            AddText(list, c =>
+                 MagikeSystem.GetUIText(MagikeSystem.UITextID.PolarizedFilterLevel)
+                 + $"\n  - [i:{c.ItemType}]", parent);
+
+            list.Add(new FilterRemoveButton(Entity, this));
+
+            parent.Append(list);
+        }
+
+        public void AddText(UIList list, Func<PolarizedFilter, string> textFunc, UIElement parent)
+        {
+            list.Add(new ComponentUIElementText<PolarizedFilter>(textFunc, this, parent));
         }
     }
 }

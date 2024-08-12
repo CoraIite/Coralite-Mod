@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Terraria;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
@@ -71,7 +72,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
     }
 
-    public class UpgradeableExtractProducer : MagikeActiveProducer, IUpgradeable
+    public class UpgradeableExtractProducer : MagikeExtractProducer, IUpgradeable
     {
         public override void Initialize()
         {

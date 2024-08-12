@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.Magike.LiquidLens
         }
     }
 
-    public class ScorchingLensTile : BaseLensTile
+    public class ScorchingLensTile : OldBaseLensTile
     {
         public override void SetStaticDefaults()
         {

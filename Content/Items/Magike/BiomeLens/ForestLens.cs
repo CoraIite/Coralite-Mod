@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
         }
     }
 
-    public class ForestLensTile : BaseLensTile
+    public class ForestLensTile : OldBaseLensTile
     {
         public override void SetStaticDefaults()
         {

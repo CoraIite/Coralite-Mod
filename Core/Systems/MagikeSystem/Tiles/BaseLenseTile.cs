@@ -11,7 +11,7 @@ using Terraria.DataStructures;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
-    public abstract class BaseLensTile : ModTile
+    public abstract class OldBaseLensTile : ModTile
     {
         public override string Texture => AssetDirectory.MagikeLensTiles + Name;
         public virtual string TopTextureName => AssetDirectory.MagikeLensTiles + Name + "_Top";
@@ -120,7 +120,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
     }
 
 
-    public abstract class BaseCostItemLensTile : BaseLensTile
+    public abstract class BaseCostItemLensTile : OldBaseLensTile
     {
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {

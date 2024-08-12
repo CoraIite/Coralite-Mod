@@ -46,7 +46,7 @@ namespace Coralite.Content.Items.Magike.WeatherLens
         }
     }
 
-    public class RainstormLensTile : BaseLensTile
+    public class RainstormLensTile : OldBaseLensTile
     {
         public override void SetStaticDefaults()
         {

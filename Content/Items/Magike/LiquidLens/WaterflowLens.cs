@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.Magike.LiquidLens
         }
     }
 
-    public class WaterflowLensTile : BaseLensTile
+    public class WaterflowLensTile : OldBaseLensTile
     {
         public override void SetStaticDefaults()
         {

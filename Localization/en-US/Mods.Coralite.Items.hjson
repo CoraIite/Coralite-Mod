@@ -4409,3 +4409,8 @@ PooToilet: {
 	DisplayName: Poo Toilet
 	Tooltip: ""
 }
+
+BasicExtractLens: {
+	DisplayName: Basic Extract Lens
+	Tooltip: ""
+}

@@ -19,7 +19,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public float DelayBonus { get; set; } = 1f;
         public int Timer { get; set; }
 
-        public bool CanProduce_CheckTime()
+        public bool CheckTime()
         {
             return (this as ITimerTriggerComponent).UpdateTime();
         }
@@ -32,19 +32,21 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 重写这个检测是否能生产
         /// </summary>
-        public virtual bool CanProduce() => true;
+        public override bool CanProduce()
+        {
+            //魔能容量限制
+            //其他特定的特殊条件
+            return CanProduce_CheckMagike() && CanProduce();
+        }
+
+        public virtual bool CanProduce_SpecialCheck() => true;
 
         public override void Update(IEntity entity)
         {
             //生产时间限制
-            if (!CanProduce_CheckTime())
+            if (!CheckTime())
                 return;
 
-            //魔能容量限制
-            if (!CanProduce_CheckMagike())
-                return;
-
-            //其他特定的特殊条件
             if (!CanProduce())
                 return;
 

@@ -38,7 +38,7 @@ namespace Coralite.Content.Items.Magike.SpecialLens
         }
     }
 
-    public class RedJadeLensTile : BaseLensTile
+    public class RedJadeLensTile : OldBaseLensTile
     {
         public override void SetStaticDefaults()
         {

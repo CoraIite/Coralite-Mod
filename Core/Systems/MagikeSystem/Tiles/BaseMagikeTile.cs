@@ -353,7 +353,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
             //检查物块
             Point16 p = new Point16(i, j);//这个就是左上角
-            Terraria.Tile tile = Main.tile[p.X, p.Y];
+            Tile tile = Main.tile[p.X, p.Y];
             if (tile == null || !tile.HasTile)
                 return;
 
@@ -386,7 +386,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             Vector2 offset = offScreen - Main.screenPosition;
             Color lightColor = Lighting.GetColor(p.X, p.Y);
 
-            DrawExtraTex(spriteBatch, texture, tileRect, offset, lightColor, rotation, entity);
+            DrawExtraTex(spriteBatch, texture, tileRect, offset, lightColor, rotation, entity, level.Value);
         }
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// <param name="tileRect"></param>
         /// <param name="offset"></param>
         /// <param name="entity"></param>
-        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity)
+        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity,MagikeApparatusLevel level)
         {
 
         }

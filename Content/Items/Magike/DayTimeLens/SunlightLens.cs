@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.Magike.DayTimeLens
         }
     }
 
-    public class SunlightLensTile : BaseLensTile
+    public class SunlightLensTile : OldBaseLensTile
     {
         public override void SetStaticDefaults()
         {

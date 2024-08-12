@@ -2,7 +2,7 @@
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class MagikeInactiveProducer : MagikeProducer
+    public abstract class MagikeInactiveProducer : MagikeProducer
     {
         public sealed override void Update(IEntity entity) { }
     }
