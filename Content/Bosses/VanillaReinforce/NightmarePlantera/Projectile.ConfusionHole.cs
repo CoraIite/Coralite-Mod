@@ -184,7 +184,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (warningLineAlpha > 0)
             {
                 Texture2D warningTex = NightmareSpike.WarningLineTex.Value;
-                Rectangle destination = new Rectangle((int)pos.X, (int)pos.Y, (int)SpurtLength, warningTex.Height);
+                Rectangle destination = new((int)pos.X, (int)pos.Y, (int)SpurtLength, warningTex.Height);
 
                 spriteBatch.Draw(warningTex, destination, null, new Color(190, 0, 101, (byte)(warningLineAlpha * 255)), Projectile.rotation, new Vector2(0, warningTex.Height / 2), 0, 0);
             }

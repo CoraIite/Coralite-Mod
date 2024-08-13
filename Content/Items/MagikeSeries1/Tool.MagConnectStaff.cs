@@ -119,10 +119,10 @@ namespace Coralite.Content.Items.MagikeSeries1
 
             Projectile.timeLeft = 2;
 
-            Point16 position = new Point16((int)Projectile.ai[0], (int)Projectile.ai[1]);
+            Point16 position = new((int)Projectile.ai[0], (int)Projectile.ai[1]);
             selfPos = Helper.GetMagikeTileCenter(position);
 
-            Point16 currentPoint = new Point16((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
+            Point16 currentPoint = new((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
             aimPos = currentPoint.ToWorldCoordinates();
 
 
@@ -192,7 +192,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                         Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.Connect_Success),
                         DurationInFrames = 60,
                         Velocity = -Vector2.UnitY
-                    }, Main.MouseWorld-Vector2.UnitY* 32);
+                    }, Main.MouseWorld - Vector2.UnitY * 32);
 
                     MagikeHelper.SpawnLozengeParticle_WithTopLeft(sender.Position);
                     MagikeHelper.SpawnLozengeParticle_WithTopLeft(receiver.Position);

@@ -180,16 +180,16 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "Peridot";
 
-        public static Color highlightC = new Color(140, 238, 255);
-        public static Color brightC = new Color(181, 243, 0);
-        public static Color darkC = new Color(70, 126, 0);
+        public static Color highlightC = new(140, 238, 255);
+        public static Color brightC = new(181, 243, 0);
+        public static Color darkC = new(70, 126, 0);
 
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
 
         public Vector2 TargetPos
         {
-            get => new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
+            get => new(Projectile.localAI[0], Projectile.localAI[1]);
             set
             {
                 Projectile.localAI[0] = value.X;
@@ -324,7 +324,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Texture2D exTex = TextureAssets.Extra[98].Value;
 
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
             var origin = exTex.Size() / 2;
 
             for (int i = 0; i < 12; i++)
@@ -507,7 +507,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             var frame = mainTex.Frame(1, TexType == 0 ? 4 : 3, 0, Projectile.frame);
             float exrot = TexType == 0 ? 0 : -1.57f;
 
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             for (int i = 1; i < 6; i++)
             {

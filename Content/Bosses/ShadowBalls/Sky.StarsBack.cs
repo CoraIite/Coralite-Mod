@@ -96,7 +96,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 Texture2D sky = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "ShadowBallSky").Value;
 
-                Rectangle screen = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
+                Rectangle screen = new(0, 0, Main.screenWidth, Main.screenHeight);
                 spriteBatch.Draw(sky, screen, Color.White * (Timeleft / 100f));
 
                 int num13 = screenWidth;
@@ -116,7 +116,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     num14 = 600;
                 }
 
-                SceneArea sceneArea2 = default(SceneArea);
+                SceneArea sceneArea2 = default;
                 sceneArea2.bgTopY = 0;
                 sceneArea2.totalWidth = num13;
                 sceneArea2.totalHeight = num14;
@@ -167,7 +167,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             var frameBox = mainTex.Frame(1, 2, 0, 1);
 
             int num2 = sceneArea.bgTopY;
-            int num3 = (int)(Main.time / 54000.0 * (double)(sceneArea.totalWidth + (float)(mainTex.Width * 2))) - mainTex.Width;
+            int num3 = (int)(Main.time / 54000.0 * (double)(sceneArea.totalWidth + mainTex.Width * 2)) - mainTex.Width;
             int num4 = 0;
             float scale = 1f;
             float rotation = (float)(Main.time / 54000.0) * 2f - 7.3f;
@@ -177,12 +177,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 if (Main.time < 27000.0)
                 {
                     num10 = Math.Pow(1.0 - Main.time / 54000.0 * 2.0, 2.0);
-                    num4 = (int)((double)num2 + num10 * 250.0 + 180.0);
+                    num4 = (int)(num2 + num10 * 250.0 + 180.0);
                 }
                 else
                 {
                     num10 = Math.Pow((Main.time / 54000.0 - 0.5) * 2.0, 2.0);
-                    num4 = (int)((double)num2 + num10 * 250.0 + 180.0);
+                    num4 = (int)(num2 + num10 * 250.0 + 180.0);
                 }
 
                 scale = (float)(1.2 - num10 * 0.4);

@@ -11,8 +11,8 @@ namespace Coralite.Content.UI
     class NianliChargingBar : BetterUIState
     {
         public static bool visible = false;
-        public static Vector2 basePos = new Vector2((Main.screenWidth / 2) + 40, (Main.screenHeight / 2) + 80);
-        public static ChargingBar ChargingBar = new ChargingBar();
+        public static Vector2 basePos = new((Main.screenWidth / 2) + 40, (Main.screenHeight / 2) + 80);
+        public static ChargingBar ChargingBar = new();
 
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 
@@ -58,7 +58,7 @@ namespace Coralite.Content.UI
             spriteBatch.Draw(backTex, center, backTex.Frame(), Color.White * coralitePlayer.yujianUIAlpha, 0f, new Vector2(backTex.Width / 2, backTex.Height / 2), 1f, SpriteEffects.None, 0f);
 
             float chargePercent = coralitePlayer.nianli / coralitePlayer.nianliMax;
-            Rectangle barSource = new Rectangle(0, 0, (int)(chargePercent * barTex.Width), barTex.Height);
+            Rectangle barSource = new(0, 0, (int)(chargePercent * barTex.Width), barTex.Height);
             spriteBatch.Draw(barTex, center, barSource, Color.White * coralitePlayer.yujianUIAlpha, 0f, new Vector2(barTex.Width / 2, barTex.Height / 2), 1f, SpriteEffects.None, 0f);
 
             if (IsMouseHovering)

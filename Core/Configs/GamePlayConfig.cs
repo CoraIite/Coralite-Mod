@@ -9,7 +9,7 @@ namespace Coralite.Core.Configs
 
         [Header("Magike")]
         [DefaultValue(20)]
-        [Range(1,50)]
+        [Range(1, 50)]
         public int SelectSize;
 
         [Header("Misc")]

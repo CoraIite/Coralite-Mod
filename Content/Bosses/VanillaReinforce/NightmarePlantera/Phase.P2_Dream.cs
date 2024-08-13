@@ -40,17 +40,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             //设置三条拖尾
             rotateTentacles ??= new RotateTentacle[3]
             {
-                new RotateTentacle(20, TentacleColor, TentacleWidth, tentacleTex, waterFlowTex)
+                new(20, TentacleColor, TentacleWidth, tentacleTex, waterFlowTex)
                 {
                     pos = NPC.Center,
                     targetPos = NPC.Center
                 },
-                new RotateTentacle(20,TentacleColor,TentacleWidth,tentacleTex,waterFlowTex)
+                new(20,TentacleColor,TentacleWidth,tentacleTex,waterFlowTex)
                 {
                     pos = NPC.Center,
                     targetPos = NPC.Center
                 },
-                new RotateTentacle(20,TentacleColor,TentacleWidth,tentacleTex,waterFlowTex)
+                new(20,TentacleColor,TentacleWidth,tentacleTex,waterFlowTex)
                 {
                     pos = NPC.Center,
                     targetPos = NPC.Center
@@ -1510,7 +1510,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         const int RollingTime = 120;
                         if (Timer < RollingTime)
                         {
-                            float currentRot = baseRot + ShootCount * Timer / (float)RollingTime * MathHelper.TwoPi;
+                            float currentRot = baseRot + ShootCount * Timer / RollingTime * MathHelper.TwoPi;
 
                             Vector2 center = Target.Center + currentRot.ToRotationVector2() * 800;
                             Vector2 dir = center - NPC.Center;
@@ -1875,7 +1875,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 NPC.NewProjectileInAI<NightmareSparkle_Rolling>(pos, Vector2.Zero, damage, 0, NPC.target, rollingTime + i * 6, ai2: 550);
                             }
 
-                            Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Dash_Item160, NPC.Center,volumeAdjust:-0.2f, pitch: -1f);
+                            Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Dash_Item160, NPC.Center, volumeAdjust: -0.2f, pitch: -1f);
                         }
 
                         if (Timer > 210)
@@ -2549,7 +2549,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public static int SpecialMove2(int oldState)
         {
-            List<int> list = new List<int>
+            List<int> list = new()
             {
                 (int)AIStates.spikeBalls,
                 (int)AIStates.batsAndCrows,

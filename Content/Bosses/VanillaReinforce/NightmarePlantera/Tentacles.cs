@@ -63,7 +63,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public void DrawTentacle(float warpAmount = -1)
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 normal = dir.RotatedBy(MathHelper.PiOver2);
 
@@ -123,7 +123,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public void DrawTentacle_NoEndBegin(float warpAmount = -1)
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 normal = dir.RotatedBy(MathHelper.PiOver2);
 
@@ -177,7 +177,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public void DrawTentacle_NoEndBegin_UI(float warpAmount = -1)
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 normal = dir.RotatedBy(MathHelper.PiOver2);
 
@@ -329,7 +329,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public void DrawTentacle(Func<int, float> curve, float warpAmount = -1)
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
 
             if (warpAmount == -1)
             {
@@ -388,7 +388,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public void DrawTentacle_NoEndBegin(Func<int, float> curve, float warpAmount = -1)
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
 
             if (warpAmount == -1)
             {
@@ -517,7 +517,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public void DrawTentacle(Func<int, float> curve, float warpAmount = -1)
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
 
             if (warpAmount == -1)
             {
@@ -623,7 +623,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public void DrawTentacle(Func<int, float> curve)
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
 
             float count = pointCount + 1;
 

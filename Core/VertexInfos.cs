@@ -8,11 +8,11 @@ namespace Coralite.Core
         public Color Color;
         public Vector3 TexCoord;
 
-        private static VertexDeclaration _vertexDeclaration = new VertexDeclaration(new VertexElement[3]
+        private static VertexDeclaration _vertexDeclaration = new(new VertexElement[3]
         {
-                new VertexElement(0,VertexElementFormat.Vector2,VertexElementUsage.Position,0),
-                new VertexElement(8,VertexElementFormat.Color,VertexElementUsage.Color,0),
-                new VertexElement(12,VertexElementFormat.Vector3,VertexElementUsage.TextureCoordinate,0)
+                new(0,VertexElementFormat.Vector2,VertexElementUsage.Position,0),
+                new(8,VertexElementFormat.Color,VertexElementUsage.Color,0),
+                new(12,VertexElementFormat.Vector3,VertexElementUsage.TextureCoordinate,0)
         });
 
         public CustomVertexInfo(Vector2 position, Color color, Vector3 texCoord)
@@ -44,10 +44,10 @@ namespace Coralite.Core
             get { return _vertexDeclaration; }
         }
 
-        private static VertexDeclaration _vertexDeclaration = new VertexDeclaration(new VertexElement[]
+        private static VertexDeclaration _vertexDeclaration = new(new VertexElement[]
         {
-                new VertexElement(0,VertexElementFormat.Vector2,VertexElementUsage.Position,0),
-                new VertexElement(8,VertexElementFormat.Color,VertexElementUsage.Color,0),
+                new(0,VertexElementFormat.Vector2,VertexElementUsage.Position,0),
+                new(8,VertexElementFormat.Color,VertexElementUsage.Color,0),
         });
     }
 }

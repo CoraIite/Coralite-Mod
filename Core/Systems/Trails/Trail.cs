@@ -139,8 +139,8 @@ namespace Coralite.Core.Systems.Trails
                  * 为了实现这一点，我们令 A 的 Y 坐标为 0，C 的 Y 坐标为 1，而 X 坐标只是沿轨迹的因子。
                  * 这会导致跟踪中最后一个点的 X 坐标为 0，第一个点的 Y 坐标为 1。
                  */
-                Vector2 texCoordA = new Vector2(factorAlongTrail, texCoordA_Y);
-                Vector2 texCoordC = new Vector2(factorAlongTrail, texCoordC_Y);
+                Vector2 texCoordA = new(factorAlongTrail, texCoordA_Y);
+                Vector2 texCoordC = new(factorAlongTrail, texCoordC_Y);
 
                 // Calculates the color for each vertex based on its texture coordinates. This acts like a very simple shader (for more complex effects you can use the actual shader).
                 //根据每个顶点的纹理坐标计算其颜色。这就像一个非常简单的shader（对于更复杂的效果，建议使用真正的shader）。

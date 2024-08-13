@@ -52,11 +52,11 @@ namespace Coralite.Content.Items.Misc_Melee
                 vector55 += Main.rand.NextVector2Circular(20f, 20f);
             }
 
-            Vector2 vector56 = player.Center + new Vector2(Main.rand.NextFloatDirection() * (float)player.width / 2f, player.height / 2) * player.Directions;
+            Vector2 vector56 = player.Center + new Vector2(Main.rand.NextFloatDirection() * player.width / 2f, player.height / 2) * player.Directions;
             Vector2 v6 = vector55 - vector56;
-            float num175 = ((float)Math.PI + (float)Math.PI * 2f * Main.rand.NextFloat() * 1.5f) * ((float)(-player.direction) * player.gravDir);
+            float num175 = ((float)Math.PI + (float)Math.PI * 2f * Main.rand.NextFloat() * 1.5f) * (-player.direction * player.gravDir);
             int num176 = 60;
-            float num177 = num175 / (float)num176;
+            float num177 = num175 / num176;
             float num178 = 16f;
             float num179 = v6.Length();
             if (Math.Abs(num177) >= 0.17f)
@@ -211,8 +211,8 @@ namespace Coralite.Content.Items.Misc_Melee
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 - MathHelper.PiOver4 * Projectile.spriteDirection;
 
             int num7 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height
-                , DustID.JunglePlants, Projectile.velocity.X * 0.2f + (float)(Main.player[Projectile.owner].direction * 3),
-                Projectile.velocity.Y * 0.2f, 0, default(Color), 1.2f);
+                , DustID.JunglePlants, Projectile.velocity.X * 0.2f + Main.player[Projectile.owner].direction * 3,
+                Projectile.velocity.Y * 0.2f, 0, default, 1.2f);
             Main.dust[num7].noGravity = true;
 
             // The code in this method is important to align the sprite with the hitbox how we want it to

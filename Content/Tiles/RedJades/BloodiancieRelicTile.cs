@@ -35,7 +35,7 @@ namespace Coralite.Content.Tiles.RedJades
         {
             return new Item[]
             {
-                new Item(ModContent.ItemType<Items.RedJades.BloodiancieRelic>())
+                new(ModContent.ItemType<Items.RedJades.BloodiancieRelic>())
             };
         }
     }

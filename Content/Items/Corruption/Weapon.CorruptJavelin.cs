@@ -199,7 +199,7 @@ namespace Coralite.Content.Items.Corruption
                 case (int)AIStates.shoot:
                     //仅仅是生成粒子而已
                     int type = DustID.Shadowflame;
-                    Color color = default(Color);
+                    Color color = default;
                     switch (Main.rand.Next(4))
                     {
                         case 0:
@@ -316,7 +316,7 @@ namespace Coralite.Content.Items.Corruption
 
             if ((int)State == 1)//残影绘制
             {
-                Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+                Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
                 Color color = Color.MediumPurple;
                 color.A = 0;
                 for (int i = 1; i < 8; i += 2)

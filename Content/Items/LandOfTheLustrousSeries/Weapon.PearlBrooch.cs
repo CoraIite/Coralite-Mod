@@ -206,7 +206,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTexture();
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             for (int i = 0; i < 5; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
@@ -222,14 +222,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
         public static Color highlightC = Color.White;
-        public static Color brightC = new Color(226, 174, 214);
-        public static Color darkC = new Color(109, 214, 214);
+        public static Color brightC = new(226, 174, 214);
+        public static Color darkC = new(109, 214, 214);
 
         public ref float State => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.ai[2];
         public ref float Tex => ref Projectile.ai[0];
 
-        private VertexStrip _vertexStrip = new VertexStrip();
+        private VertexStrip _vertexStrip = new();
 
         public override void SetStaticDefaults()
         {
@@ -343,7 +343,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (VisualEffectSystem.HitEffect_SpecialParticles)
             {
                 Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
-                Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+                Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
                 for (int i = 0; i < 4; i++)
                 {
                     Vector2 dir2 = dir.RotateByRandom(-0.6f, 0.6f);

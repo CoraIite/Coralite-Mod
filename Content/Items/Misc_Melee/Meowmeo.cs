@@ -296,7 +296,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
             Vector2 spinningpoint = new Vector2(0f, -3f - Projectile.ai[0] * 0.7f).RotatedByRandom(3.1415927410125732);
             float num21 = 10f + Projectile.ai[0] * 3f;
-            Vector2 vector19 = new Vector2(1.05f, 1f);
+            Vector2 vector19 = new(1.05f, 1f);
             for (float i = 0f; i < num21; i += 1f)
             {
                 int num23 = Dust.NewDust(Projectile.Center, 0, 0, DustID.RainbowTorch, 0f, 0f, 0, Color.Transparent);
@@ -425,7 +425,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
             Main.instance.LoadProjectile(250);
             Texture2D value84 = TextureAssets.Projectile[250].Value;
-            Vector2 origin22 = new Vector2(value84.Width / 2, 0f);
+            Vector2 origin22 = new(value84.Width / 2, 0f);
             Vector2 vector75 = new Vector2(Projectile.width, Projectile.height) / 2f;
             Color white3 = Color.White;
             white3.A = 127;
@@ -436,7 +436,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 {
                     Vector2 vector77 = Projectile.oldPos[num316 - 1] + vector75;
                     float rotation27 = (vector77 - vector76).ToRotation() - (float)Math.PI / 2f;
-                    Vector2 scale7 = new Vector2(1f, Vector2.Distance(vector76, vector77) / value84.Height);
+                    Vector2 scale7 = new(1f, Vector2.Distance(vector76, vector77) / value84.Height);
                     Color color82 = white3 * (1f - num316 / (float)Projectile.oldPos.Length);
                     Main.EntitySpriteDraw(value84, vector76 - Main.screenPosition, null, color82, rotation27, origin22, scale7, dir);
                 }

@@ -1,6 +1,4 @@
-﻿using Coralite.Content.UI;
-using Coralite.Content.UI.MagikeApparatusPanel;
-using Coralite.Core.Loaders;
+﻿using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -15,7 +13,7 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class MagikeLinerSender : MagikeSender
+    public class MagikeLinerSender : MagikeSender, IUIShowable
     {
         /// <summary> 基础连接数量 </summary>
         public int MaxConnectBase { get; protected set; }
@@ -36,7 +34,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 当前连接者 </summary>
         public int CurrentConnector => _receivers.Count;
 
-        private List<Point16> _receivers = new List<Point16>();
+        private List<Point16> _receivers = new();
 
         /// <summary>
         /// 仅供获取使用，那么为什么不用private set 呢，因为懒得改了，反正区别不大
@@ -220,7 +218,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             for (int i = _receivers.Count - 1; i >= 0; i--)
             {
-                if (i + 1 > MaxConnect|| !TileEntity.ByPosition.ContainsKey(_receivers[i]))
+                if (i + 1 > MaxConnect || !TileEntity.ByPosition.ContainsKey(_receivers[i]))
                 {
                     _receivers.RemoveAt(i);
                     continue;
@@ -236,14 +234,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #region UI部分
 
-        public override void ShowInUI(UIElement parent)
+        public void ShowInUI(UIElement parent)
         {
             //添加显示在最上面的组件名称
             UIElement title = new ComponentUIElementText<MagikeLinerSender>(c =>
                  MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeLinerSenderName), this, parent, new Vector2(1.3f));
             parent.Append(title);
 
-            UIList list = new UIList();
+            UIList list = new();
             list.Width.Set(0, 1);
             list.Height.Set(-title.Height.Pixels, 1);
             list.Left.Set(0, 0);
@@ -257,7 +255,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //发送时间
             AddText(list, c =>
                  MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendTime)
-                 +$"\n  - {c.Timer} / {c.SendDelay} ({c.SendDelayBase} * {c.SendDelayBonus})", parent);
+                 + $"\n  - {c.Timer} / {c.SendDelay} ({c.SendDelayBase} * {c.SendDelayBonus})", parent);
 
             //发送量
             AddText(list, c =>
@@ -328,20 +326,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
     }
 
-    public class ConnectButtonForComponent:UIElement
+    public class ConnectButtonForComponent : UIElement
     {
         private int _index;
         private MagikeLinerSender _sender;
 
-        public ConnectButtonForComponent(int index,MagikeLinerSender sender)
+        public ConnectButtonForComponent(int index, MagikeLinerSender sender)
         {
             _index = index;
             _sender = sender;
 
             Texture2D tex = MagikeSystem.ConnectUI[(int)MagikeSystem.ConnectUIAssetID.Botton].Value;
 
-            Width.Set(tex.Width + 40,0);
-            Height.Set(tex.Height + 10,0);
+            Width.Set(tex.Width + 40, 0);
+            Height.Set(tex.Height + 10, 0);
         }
 
         public override void LeftClick(UIMouseEvent evt)
@@ -354,11 +352,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-
             Texture2D tex = MagikeSystem.ConnectUI[(int)MagikeSystem.ConnectUIAssetID.Botton].Value;
 
             var style = GetDimensions();
-            Vector2 pos = style.Position()+new Vector2(style.Width-tex.Width/2,style.Height/2);
+            Vector2 pos = style.Position() + new Vector2(style.Width - tex.Width / 2, style.Height / 2);
             Vector2 origin = tex.Size() / 2;
 
             bool ishover = IsMouseHovering;
@@ -395,7 +392,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             //位置在右侧往左按钮的距离再一半
             pos.X -= style.Width / 2;
-            pos.Y = style.Center().Y+4;
+            pos.Y = style.Center().Y + 4;
 
             string temp = indexInRange ? "◆" : "◇";
 

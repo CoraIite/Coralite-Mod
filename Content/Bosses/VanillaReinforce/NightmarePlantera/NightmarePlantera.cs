@@ -11,7 +11,6 @@ using ReLogic.Content;
 using System;
 using System.IO;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
@@ -64,10 +63,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public float alpha = 1f;
 
         public static Color[] phantomColors;
-        public static Color nightPurple = new Color(204, 170, 242, 230);
-        public static Color lightPurple = new Color(195, 116, 219, 230);
-        public static Color nightmareSparkleColor = new Color(111, 80, 180, 230);
-        public static Color nightmareRed = new Color(250, 0, 100);
+        public static Color nightPurple = new(204, 170, 242, 230);
+        public static Color lightPurple = new(195, 116, 219, 230);
+        public static Color nightmareSparkleColor = new(111, 80, 180, 230);
+        public static Color nightmareRed = new(250, 0, 100);
 
         #region tml hooks
 
@@ -185,7 +184,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NightmarePlanteraMask>(), 7));
             //npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<NightmareHeart>()));
 
-            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
             IItemDropRule[] weaponTypes = [
                 ItemDropRule.Common(ModContent.ItemType<LostSevensideHook>(), 1, 1, 1),

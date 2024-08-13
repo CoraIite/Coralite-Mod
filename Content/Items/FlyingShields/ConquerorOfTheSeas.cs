@@ -325,7 +325,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         protected override void DrawShadowTrail(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             SpriteEffects effect = CheckEffect();
             for (int i = 1; i < 10; i += 1)
@@ -336,7 +336,7 @@ namespace Coralite.Content.Items.FlyingShields
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -421,7 +421,7 @@ namespace Coralite.Content.Items.FlyingShields
                 for (int i = 0; i < 200; i++)
                 {
                     NPC npc = Main.npc[i];
-                    if (npc.CanBeChasedBy(this) && (Projectile.ai[0] == 0f || Projectile.ai[0] == (float)(i + 1)))
+                    if (npc.CanBeChasedBy(this) && (Projectile.ai[0] == 0f || Projectile.ai[0] == i + 1))
                     {
                         Vector2 center7 = npc.Center;
                         float num609 = Vector2.Distance(center7, vector52);
@@ -451,8 +451,8 @@ namespace Coralite.Content.Items.FlyingShields
                 if (Main.npc[num610].active && !Main.npc[num610].dontTakeDamage && Projectile.localNPCImmunity[num610] == 0)
                 {
                     float num611 = Main.npc[num610].position.X + (Main.npc[num610].width / 2);
-                    float num612 = Main.npc[num610].position.Y + (float)(Main.npc[num610].height / 2);
-                    float num613 = Math.Abs(Projectile.position.X + (Projectile.width / 2) - num611) + Math.Abs(Projectile.position.Y + (float)(Projectile.height / 2) - num612);
+                    float num612 = Main.npc[num610].position.Y + Main.npc[num610].height / 2;
+                    float num613 = Math.Abs(Projectile.position.X + (Projectile.width / 2) - num611) + Math.Abs(Projectile.position.Y + Projectile.height / 2 - num612);
                     if (num613 < 1000f)
                     {
                         flag33 = true;

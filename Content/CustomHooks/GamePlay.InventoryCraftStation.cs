@@ -19,7 +19,7 @@ namespace Coralite.Content.CustomHooks
 
         private void IL_Player_AdjTiles(MonoMod.Cil.ILContext il)
         {
-            ILCursor cursor = new ILCursor(il);
+            ILCursor cursor = new(il);
             cursor.TryGotoNext(
                  i => i.MatchRet()
                 , i => i.MatchLdcI4(0)

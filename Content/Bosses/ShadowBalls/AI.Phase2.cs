@@ -74,7 +74,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         }
                         else//自然下落至指定高度
                         {
-                            Vector2 targetPos = new Vector2(Target.Center.X, Recorder);
+                            Vector2 targetPos = new(Target.Center.X, Recorder);
                             SetDirection(targetPos, out float xLength, out _);
 
                             if (xLength > 250)
@@ -151,7 +151,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                                 float xLength = Target.Center.X - NPC.Center.X;
                                 float velocityX = MathHelper.Clamp((xLength / 30), -5.5f, 5.5f);
 
-                                Vector2 velocity = new Vector2(velocityX, -30);
+                                Vector2 velocity = new(velocityX, -30);
 
                                 int damage = Helper.ScaleValueForDiffMode(20, 30, 25, 25);
                                 ShadowBallSlash.Spawn(NPC, damage, ShadowBallSlash.ComboType.SmashDown_Shouryuukenn, velocity.ToRotation());
@@ -237,7 +237,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             CanDamage = false;
 
             //检测玩家位置，如果离自身较高就升龙，否则直接回旋斩
-            Vector2 targetPos = new Vector2(Target.Center.X, Recorder);
+            Vector2 targetPos = new(Target.Center.X, Recorder);
             SetDirection(targetPos, out float xLength, out _);
 
             if (xLength < 200 && Target.Center.Y < NPC.Center.Y - 100)
@@ -463,7 +463,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             Recorder = Target.Center.X;
                             Recorder2 = Target.Center.Y - yOffset;
-                            Vector2 targetPos = new Vector2(Recorder, Recorder2);
+                            Vector2 targetPos = new(Recorder, Recorder2);
 
                             float distance = (targetPos - NPC.Center).Length();
                             NPC.velocity = (targetPos - NPC.Center).SafeNormalize(Vector2.Zero) * distance / (DashTime - ChasingTime);

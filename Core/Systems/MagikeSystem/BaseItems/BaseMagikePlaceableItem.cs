@@ -21,7 +21,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             string magikeMax = $"魔能上限：{MagikeMax}";
-            TooltipLine line = new TooltipLine(Mod, "magikeMax", magikeMax);
+            TooltipLine line = new(Mod, "magikeMax", magikeMax);
             tooltips.Add(line);
         }
     }

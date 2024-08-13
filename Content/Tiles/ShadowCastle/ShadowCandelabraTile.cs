@@ -78,7 +78,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
                 int x = t.TileFrameX / 18;
                 int y = t.TileFrameY / 18;
 
-                Point p = new Point(i - x, j - y);
+                Point p = new(i - x, j - y);
 
                 Projectile.NewProjectile(new EntitySource_TileInteraction(Main.LocalPlayer, i, j),
                     p.ToVector2() * 16, Vector2.Zero, ModContent.ProjectileType<SpawnProj>(), 1, 0, Main.myPlayer);

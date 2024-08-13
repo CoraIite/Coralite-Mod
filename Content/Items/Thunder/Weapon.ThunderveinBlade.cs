@@ -351,7 +351,7 @@ namespace Coralite.Content.Items.Thunder
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
-                    PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, RotateVec2, strength, 6, 6, 1000);
+                    PunchCameraModifier modifier = new(Projectile.Center, RotateVec2, strength, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
 
@@ -397,7 +397,7 @@ namespace Coralite.Content.Items.Thunder
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -497,7 +497,7 @@ namespace Coralite.Content.Items.Thunder
         {
             if (thunderTrails == null)
             {
-                Projectile.Resize((int)32, 40);
+                Projectile.Resize(32, 40);
                 Projectile.velocity = Projectile.Center;
                 thunderTrails = new ThunderTrail[3];
                 Asset<Texture2D> trailTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody");
@@ -529,7 +529,7 @@ namespace Coralite.Content.Items.Thunder
                 Owner.immune = true;
 
                 Vector2 pos2 = Projectile.velocity;
-                List<Vector2> pos = new List<Vector2>
+                List<Vector2> pos = new()
                 {
                     Projectile.velocity
                 };

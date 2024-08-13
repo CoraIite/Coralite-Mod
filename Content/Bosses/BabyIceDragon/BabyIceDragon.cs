@@ -163,7 +163,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             npcLoot.Add(ItemDropRule.Common(ItemType<BabyIceDragonTrophy>(), 10));
             npcLoot.Add(ItemDropRule.Common(ItemType<BabyIceDragonMask>(), 7));
 
-            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<IcicleCrystal>(), 1, 3, 5));
             notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<IcicleScale>(), 1, 2, 4));
             notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<IcicleBreath>(), 1, 4, 7));
@@ -390,7 +390,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
                                 Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
-                                PunchCameraModifier modifier = new PunchCameraModifier(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
+                                PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
                                 Main.instance.CameraModifiers.Add(modifier);
                             }
 
@@ -455,7 +455,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
                                 Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
-                                PunchCameraModifier modifier = new PunchCameraModifier(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
+                                PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
                                 Main.instance.CameraModifiers.Add(modifier);
                             }
 
@@ -701,7 +701,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
-            PunchCameraModifier modifier = new PunchCameraModifier(NPC.Center, new Vector2(0f, 1f), 20f, 6f, 30, 1000f, "BabyIceDragon");
+            PunchCameraModifier modifier = new(NPC.Center, new Vector2(0f, 1f), 20f, 6f, 30, 1000f, "BabyIceDragon");
             Main.instance.CameraModifiers.Add(modifier);
 
             Point sourceTileCoords = NPC.Bottom.ToTileCoordinates();
@@ -727,7 +727,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             int position_Y = TryMakingSpike_FindBestY(ref sourceTileCoords, position_X);
             if (WorldGen.ActiveAndWalkableTile(position_X, position_Y))
             {
-                Vector2 position = new Vector2(position_X * 16 + 8, position_Y * 16 - 8);
+                Vector2 position = new(position_X * 16 + 8, position_Y * 16 - 8);
                 Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
                 int damage = Helper.GetProjDamage(40, 45, 60);
                 Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, damage, 0f, Main.myPlayer, 0f, 0.4f + scaleOffset + xOffset * 1.1f / howMany);
@@ -741,7 +741,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (!targetData.Invalid)
             {
                 Rectangle hitbox = targetData.Hitbox;
-                Vector2 vector = new Vector2(hitbox.Center.X, hitbox.Bottom);
+                Vector2 vector = new(hitbox.Center.X, hitbox.Bottom);
                 int num2 = (int)(vector.Y / 16f);
                 int num3 = Math.Sign(num2 - position_Y);
                 int num4 = num2 + num3 * 15;

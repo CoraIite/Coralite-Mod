@@ -18,7 +18,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     {
         public override string Texture => AssetDirectory.ShadowCastleEvents + "Trail";
 
-        public List<Vector2> laserTrailPoints = new List<Vector2>();
+        public List<Vector2> laserTrailPoints = new();
 
         protected ref float OwnerIndex => ref Projectile.ai[0];
         protected ref float ShootTime => ref Projectile.ai[1];
@@ -199,10 +199,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
             var pos = laserTrailPoints[^1] - Main.screenPosition;
             var origin = mainTex.Size() / 2;
-            Color c = new Color(189, 109, 255, 0);
+            Color c = new(189, 109, 255, 0);
             c.A = 0;
 
-            Vector2 scale = new Vector2(LaserWidth / 90, LaserWidth / 130);
+            Vector2 scale = new(LaserWidth / 90, LaserWidth / 130);
 
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale, 0, 0);
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale * 0.75f, 0, 0);
@@ -226,7 +226,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public virtual void DrawPrimitive(SpriteBatch spriteBatch)
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             float count = laserTrailPoints.Count;
             Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
             for (int i = 0; i < count; i++)
@@ -362,7 +362,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override void DrawPrimitive(SpriteBatch spriteBatch)
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             float count = laserTrailPoints.Count;
             Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
             for (int i = 0; i < count; i++)

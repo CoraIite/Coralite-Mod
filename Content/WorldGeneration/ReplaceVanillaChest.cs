@@ -134,7 +134,7 @@ namespace Coralite.Content.WorldGeneration
                         {
                             default:
                                 break;
-                            case 10*18*2://沙漠
+                            case 10 * 18 * 2://沙漠
                                 if (WorldGen.genRand.NextBool(20, 100))
                                     foreach (var item in chest.item)
                                         if (item.IsAir)

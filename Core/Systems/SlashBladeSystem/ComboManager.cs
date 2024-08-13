@@ -44,7 +44,7 @@ namespace Coralite.Core.Systems.SlashBladeSystem
 
         public ComboManager AddCombo(int controlType, int combo, int type, float damageMult, PostShoot postShoot = null)
         {
-            ComboData data = new ComboData(type, damageMult, postShoot ?? ComboData.PostShoot);
+            ComboData data = new(type, damageMult, postShoot ?? ComboData.PostShoot);
             if (!ComboDatas.ContainsKey(controlType))
                 ComboDatas.Add(controlType, new Dictionary<int, ComboData>());
 

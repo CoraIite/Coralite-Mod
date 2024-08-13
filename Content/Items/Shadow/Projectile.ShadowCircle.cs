@@ -287,7 +287,7 @@ namespace Coralite.Content.Items.Shadow
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle frameBox = mainTex.Frame(1, 3, 0, Projectile.frame);
             Vector2 center = Projectile.Center - Main.screenPosition;
-            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 6);
+            Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 6);
 
             Main.spriteBatch.Draw(mainTex, center, frameBox, lightColor, 0, origin, 1.3f, SpriteEffects.None, 0);
             if ((int)State != (int)AIState.idle)
@@ -482,7 +482,7 @@ namespace Coralite.Content.Items.Shadow
             Texture2D mainTex = Projectile.GetTexture();
 
             Vector2 center = Vector2.Lerp(Projectile.Center, Projectile.velocity, PosFactor);
-            Vector2 scale = new Vector2(ScaleFactor * MaxScale, YScale);
+            Vector2 scale = new(ScaleFactor * MaxScale, YScale);
             Vector2 origin = mainTex.Size() / 2;
 
             spriteBatch.Draw(mainTex, center - Main.screenPosition, null, Color.White, Projectile.rotation, origin, scale, SpriteEffects.None, 0);
@@ -816,7 +816,7 @@ namespace Coralite.Content.Items.Shadow
             #region 泰拉棱镜的冲刺
             //在一般时间之前先缓慢地靠近
             //之后快速突刺到目标身后
-            Vector2 originCenter = new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
+            Vector2 originCenter = new(Projectile.localAI[0], Projectile.localAI[1]);
             originCenter += new Vector2(0f, Utils.GetLerpValue(0f, 0.4f, lerpValue2, clamped: true) * -100f);
             Vector2 v = target.Center - originCenter;
             Vector2 vector6 = v.SafeNormalize(Vector2.Zero) * MathHelper.Clamp(v.Length(), 60f, 150f);
@@ -924,7 +924,7 @@ namespace Coralite.Content.Items.Shadow
         {
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle frameBox = mainTex.Frame(1, 7, 0, Projectile.frame);
-            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 14);
+            Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 14);
 
             if (Projectile.ai[0] > 0)
                 for (int i = 1; i < 6; i++)

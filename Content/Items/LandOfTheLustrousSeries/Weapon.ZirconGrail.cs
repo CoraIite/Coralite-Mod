@@ -168,7 +168,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Texture2D mainTex = Projectile.GetTexture();
             var origin = mainTex.Size() / 2;
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             for (int i = 0; i < 4; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
@@ -185,8 +185,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override string Texture => AssetDirectory.Blank;
 
         public static Color highlightC = Color.White;
-        public static Color brightC = new Color(255, 179, 22);
-        public static Color darkC = new Color(117, 55, 29);
+        public static Color brightC = new(255, 179, 22);
+        public static Color darkC = new(117, 55, 29);
 
         ref float State => ref Projectile.ai[0];
         ref float Timer => ref Projectile.ai[1];

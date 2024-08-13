@@ -47,7 +47,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public Player Target => Main.player[NPC.target];
 
         public bool SpawnedSmallBalls;
-        public List<NPC> smallBalls = new List<NPC>();
+        public List<NPC> smallBalls = new();
         public int smallBallCount;
 
         public Rectangle MovementLimitRect;
@@ -61,7 +61,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public ShadowCircleController[] shadowCircle;
 
-        internal static readonly RasterizerState OverflowHiddenRasterizerState = new RasterizerState
+        internal static readonly RasterizerState OverflowHiddenRasterizerState = new()
         {
             CullMode = CullMode.None,
             ScissorTestEnable = true
@@ -766,13 +766,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             float height = SpawnOverflowHeight * frameBox.Height;
             Vector2 position = center + new Vector2(-frameBox.Width / 2, frameBox.Height / 2 - height);
-            Vector2 size = new Vector2(frameBox.Width, height);
+            Vector2 size = new(frameBox.Width, height);
 
             position = Vector2.Transform(position, Main.Transform);
             //size = Vector2.Transform(size, Main.Transform);
             size *= Main.GameZoomTarget;
 
-            Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+            Rectangle rectangle = new((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
             int screenWidth = Main.screenWidth;
             int screenHeight = Main.screenHeight;
             rectangle.X = Utils.Clamp(rectangle.X, 0, screenWidth);

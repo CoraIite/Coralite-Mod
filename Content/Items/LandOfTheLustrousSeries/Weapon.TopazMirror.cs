@@ -252,9 +252,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Trident,
         }
 
-        public static Color highlightC = new Color(255, 234, 186);
-        public static Color brightC = new Color(255, 132, 0);
-        public static Color darkC = new Color(136, 47, 0);
+        public static Color highlightC = new(255, 234, 186);
+        public static Color brightC = new(255, 132, 0);
+        public static Color darkC = new(136, 47, 0);
 
         public override void SetDefaults()
         {
@@ -723,9 +723,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle value24 = mainTex.Frame(1, 3, 0, Projectile.frame);
-            Vector2 origin11 = new Vector2(16f, value24.Height / 2);
+            Vector2 origin11 = new(16f, value24.Height / 2);
             Color alpha4 = lightColor;
-            Vector2 scale2 = new Vector2(Projectile.scale);
+            Vector2 scale2 = new(Projectile.scale);
             float lerpValue4 = Utils.GetLerpValue(35f, 35f - 5f, Projectile.ai[0], clamped: true);
             scale2.Y *= lerpValue4;
             Vector4 vector37 = lightColor.ToVector4();

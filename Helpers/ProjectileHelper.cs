@@ -505,7 +505,7 @@ namespace Coralite.Helpers
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float extraRot = 0, float scale = -1)
         {
             Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
-            Vector2 toCenter = new Vector2(projectile.width / 2, projectile.height / 2);
+            Vector2 toCenter = new(projectile.width / 2, projectile.height / 2);
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, null,
@@ -515,7 +515,7 @@ namespace Coralite.Helpers
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scaleStep, float extraRot = 0, float scale = -1)
         {
             Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
-            Vector2 toCenter = new Vector2(projectile.width / 2, projectile.height / 2);
+            Vector2 toCenter = new(projectile.width / 2, projectile.height / 2);
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, null,
@@ -525,7 +525,7 @@ namespace Coralite.Helpers
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scaleStep, Rectangle frameBox, float extraRot = 0, float scale = -1)
         {
             Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
-            Vector2 toCenter = new Vector2(projectile.width / 2, projectile.height / 2);
+            Vector2 toCenter = new(projectile.width / 2, projectile.height / 2);
             var origin = frameBox.Size() / 2;
 
             for (int i = start; i < howMany; i += step)
@@ -536,7 +536,7 @@ namespace Coralite.Helpers
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, Vector2 scale, float extraRot = 0)
         {
             Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
-            Vector2 toCenter = new Vector2(projectile.width / 2, projectile.height / 2);
+            Vector2 toCenter = new(projectile.width / 2, projectile.height / 2);
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, null,
@@ -546,7 +546,7 @@ namespace Coralite.Helpers
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, Vector2 scale, float scaleStep, float extraRot = 0)
         {
             Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
-            Vector2 toCenter = new Vector2(projectile.width / 2, projectile.height / 2);
+            Vector2 toCenter = new(projectile.width / 2, projectile.height / 2);
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, null,
@@ -556,7 +556,7 @@ namespace Coralite.Helpers
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scale, Rectangle frameBox, float extraRot)
         {
             Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
-            Vector2 toCenter = new Vector2(projectile.width / 2, projectile.height / 2);
+            Vector2 toCenter = new(projectile.width / 2, projectile.height / 2);
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
@@ -566,7 +566,7 @@ namespace Coralite.Helpers
         public static void DrawShadowTrailsSacleStep(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scaleStep, Rectangle frameBox, float extraRot = 0, float scale = -1)
         {
             Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
-            Vector2 toCenter = new Vector2(projectile.width / 2, projectile.height / 2);
+            Vector2 toCenter = new(projectile.width / 2, projectile.height / 2);
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
@@ -577,7 +577,7 @@ namespace Coralite.Helpers
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, Vector2 scale, Rectangle frameBox, float extraRot = 0)
         {
             Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
-            Vector2 toCenter = new Vector2(projectile.width / 2, projectile.height / 2);
+            Vector2 toCenter = new(projectile.width / 2, projectile.height / 2);
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
@@ -588,7 +588,7 @@ namespace Coralite.Helpers
         {
             Texture2D texture = TextureAssets.FishingLine.Value;
             Rectangle frame = texture.Frame();
-            Vector2 origin = new Vector2(frame.Width / 2, 2);
+            Vector2 origin = new(frame.Width / 2, 2);
 
             Vector2 pos = list[0];
             for (int i = 0; i < list.Count - 1; i++)
@@ -598,7 +598,7 @@ namespace Coralite.Helpers
 
                 float rotation = diff.ToRotation() - MathHelper.PiOver2;
                 Color color = Lighting.GetColor(element.ToTileCoordinates(), originColor);
-                Vector2 scale = new Vector2(1, (diff.Length() + 2) / frame.Height);
+                Vector2 scale = new(1, (diff.Length() + 2) / frame.Height);
 
                 Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0);
 

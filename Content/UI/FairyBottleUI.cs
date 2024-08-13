@@ -22,7 +22,7 @@ namespace Coralite.Content.UI
         public static UIGrid itemSlotGrid;
         public static IFairyBottle bottle;
 
-        public static Old_CloseButton closeButton = new Old_CloseButton();
+        public static Old_CloseButton closeButton = new();
 
         public State state;
 
@@ -144,7 +144,7 @@ namespace Coralite.Content.UI
             {
                 for (int i = 0; i < bottle.Capacity; i++)
                 {
-                    FairyItemSlot slot = new FairyItemSlot(i);
+                    FairyItemSlot slot = new(i);
                     itemSlotGrid.Add(slot);
                 }
             }
@@ -326,7 +326,7 @@ namespace Coralite.Content.UI
                 //position.Y += 26 * MagikeItemSlotPanel.scale - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
 
                 spriteBatch.Draw(mainTex, center, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, rectangle2.Size() / 2, itemScale, 0, 0f);
-                if (Item.color != default(Color))
+                if (Item.color != default)
                     spriteBatch.Draw(mainTex, center, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, rectangle2.Size() / 2, itemScale, 0, 0f);
 
                 if (Item.stack > 1)

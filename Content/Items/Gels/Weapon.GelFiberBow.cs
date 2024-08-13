@@ -8,9 +8,9 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Gels
 {
-    public class GelFiberBow:ModItem
+    public class GelFiberBow : ModItem
     {
-        public override string Texture => AssetDirectory.GelItems+Name;
+        public override string Texture => AssetDirectory.GelItems + Name;
 
         public override void SetDefaults()
         {
@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.Gels
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<GelFiberBall>(),damage,knockback,player.whoAmI,type);
+            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<GelFiberBall>(), damage, knockback, player.whoAmI, type);
             return false;
         }
 
@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.Gels
 
             //简易撞墙反弹
 
-            bool top = oldVelocity.Y < 0 && Math.Sign(oldVelocity.Y+Projectile.velocity.X) < 0;
+            bool top = oldVelocity.Y < 0 && Math.Sign(oldVelocity.Y + Projectile.velocity.X) < 0;
             float newVelX = Math.Abs(Projectile.velocity.X);
             float newVelY = Math.Abs(Projectile.velocity.Y);
             float oldVelX = Math.Abs(oldVelocity.X);
@@ -116,7 +116,7 @@ namespace Coralite.Content.Items.Gels
                 Projectile.velocity.Y *= -1;
             }
 
-            Projectile.NewProjectileFromThis(Projectile.Center+(top?new Vector2(0,Projectile.height/2):Vector2.Zero)
+            Projectile.NewProjectileFromThis(Projectile.Center + (top ? new Vector2(0, Projectile.height / 2) : Vector2.Zero)
                 , Projectile.velocity, (int)ArrowType, Projectile.damage, Projectile.knockBack);
 
             for (int i = 0; i < 8; i++)

@@ -123,7 +123,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (Main.rand.Next(4) < 3)
             {
                 Dust dust4 = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4
-                    , Main.rand.NextBool(4) ? DustID.UnusedWhiteBluePurple : DustID.PurpleTorch, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 2f);
+                    , Main.rand.NextBool(4) ? DustID.UnusedWhiteBluePurple : DustID.PurpleTorch, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default, 2f);
                 dust4.noGravity = true;
                 dust4.velocity *= 1.8f;
                 dust4.velocity.Y -= 0.5f;

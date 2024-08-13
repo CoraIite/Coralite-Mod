@@ -16,7 +16,7 @@ namespace Coralite.Core.Prefabs.Items
         {
             Item.UseSound = CoraliteSoundID.Drink_Item3;
             Item.useStyle = ItemUseStyleID.DrinkLiquid;
-            Item.useAnimation =   Item.useTime = 17;
+            Item.useAnimation = Item.useTime = 17;
             Item.maxStack = Item.CommonMaxStack;
 
             Item.useTurn = true;

@@ -660,7 +660,7 @@ namespace Coralite.Core
             if (resetFrame)
             {
                 randomFrame = WorldGen.genRand.Next(3);
-                Main.tile[x, y].Get<TileWallWireStateData>().TileFrameNumber = (int)((byte)randomFrame);
+                Main.tile[x, y].Get<TileWallWireStateData>().TileFrameNumber = (byte)randomFrame;
             }
             else
             {

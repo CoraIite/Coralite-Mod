@@ -191,7 +191,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     30, 14, 12, 1000);
                                 Main.instance.CameraModifiers.Add(modifyer);
 
-                                Helper.PlayPitched(CoraliteSoundID.BottleExplosion_Item107, Projectile.Center, pitch: -0.5f,volumeAdjust: 0.25f);
+                                Helper.PlayPitched(CoraliteSoundID.BottleExplosion_Item107, Projectile.Center, pitch: -0.5f, volumeAdjust: 0.25f);
                             }
 
                             break;

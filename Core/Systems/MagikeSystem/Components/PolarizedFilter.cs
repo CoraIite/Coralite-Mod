@@ -15,8 +15,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     /// <summary>
     /// 偏振滤镜，用于升级魔能仪器
     /// </summary>
-    public abstract class PolarizedFilter : MagikeFilter
-    { 
+    public abstract class PolarizedFilter : MagikeFilter, IUIShowable
+    {
         //只有有可升级的组件才能升级
         public override bool CanInsert_SpecialCheck(MagikeTileEntity entity, ref string text)
         {
@@ -29,7 +29,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             //如果没有对应等级的升级那么就返回
             Tile targetTile = Framing.GetTileSafely(entity.Position);
-            if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(targetTile.TileType,out var keyValuePairs))
+            if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(targetTile.TileType, out var keyValuePairs))
             {
                 text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.CantUpgrade);
                 return false;
@@ -52,7 +52,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             PolarizedFilter oldFilter = (PolarizedFilter)entity.Components[MagikeComponentID.MagikeFilter].FirstOrDefault(c => c is PolarizedFilter, null);
 
-            if (oldFilter!=null)
+            if (oldFilter != null)
             {
                 if (oldFilter.Level == Level)
                 {
@@ -102,7 +102,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 , ItemType);
         }
 
-        public static void ChangeTileFrame(MagikeApparatusLevel level,IEntity entity)
+        public static void ChangeTileFrame(MagikeApparatusLevel level, IEntity entity)
         {
             Point16 topLeft = (entity as MagikeTileEntity).Position;
             Tile tile = Framing.GetTileSafely(topLeft);
@@ -135,13 +135,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 upgrade.Upgrade(MagikeApparatusLevel.None);
         }
 
-        public override void ShowInUI(UIElement parent)
+        public void ShowInUI(UIElement parent)
         {
             UIElement title = new ComponentUIElementText<PolarizedFilter>(c =>
                  MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikePolarizedFilterName), this, parent, new Vector2(1.3f));
             parent.Append(title);
 
-            UIList list = new UIList();
+            UIList list = new();
             list.Width.Set(0, 1);
             list.Height.Set(-title.Height.Pixels, 1);
             list.Left.Set(0, 0);

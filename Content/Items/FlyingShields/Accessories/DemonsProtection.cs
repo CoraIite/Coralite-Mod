@@ -192,18 +192,15 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
             spriteBatch.End();
-            if (_multiplyBlendState == null)
+            _multiplyBlendState ??= new BlendState
             {
-                _multiplyBlendState = new BlendState
-                {
-                    ColorBlendFunction = BlendFunction.ReverseSubtract,
-                    ColorDestinationBlend = Blend.One,
-                    ColorSourceBlend = Blend.SourceAlpha,
-                    AlphaBlendFunction = BlendFunction.ReverseSubtract,
-                    AlphaDestinationBlend = Blend.One,
-                    AlphaSourceBlend = Blend.SourceAlpha
-                };
-            }
+                ColorBlendFunction = BlendFunction.ReverseSubtract,
+                ColorDestinationBlend = Blend.One,
+                ColorSourceBlend = Blend.SourceAlpha,
+                AlphaBlendFunction = BlendFunction.ReverseSubtract,
+                AlphaDestinationBlend = Blend.One,
+                AlphaSourceBlend = Blend.SourceAlpha
+            };
 
             BlendState multiplyBlendState = _multiplyBlendState;
             spriteBatch.Begin(SpriteSortMode.Deferred, multiplyBlendState, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
@@ -216,7 +213,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             float num = Utils.Remap(Projectile.frame, 0f, 3f, 0f, 1f) * Utils.Remap(Projectile.frame, 4f, 12f, 1f, 0f);
             Rectangle value = asset.Frame(1, 13, 0, 12);
             Vector2 origin = vector + new Vector2(0f, 0f);
-            Color c = new Color(255, 0, 155, 255);
+            Color c = new(255, 0, 155, 255);
 
             spriteBatch.Draw(asset.Value, position, value, Color.White * 0.4f * num, Projectile.rotation, origin, new Vector2(1f, 6f) * vector2, SpriteEffects.None, 0f);
             spriteBatch.Draw(asset.Value, position, value, Color.White * 0.4f * num, Projectile.rotation, origin, new Vector2(1.75f, 2f) * vector2, SpriteEffects.None, 0f);

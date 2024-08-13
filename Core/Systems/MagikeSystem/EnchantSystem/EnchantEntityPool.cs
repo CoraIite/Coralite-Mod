@@ -90,7 +90,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
 
         public EnchantEntityPool Clone()
         {
-            EnchantEntityPool pool = new EnchantEntityPool();
+            EnchantEntityPool pool = new();
             pool._datas.AddRange(_datas);
 
             return pool;

@@ -183,7 +183,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 Texture2D warningTex = WarningLineTex.Value;
                 Vector2 pos = Projectile.Center - Main.screenPosition;
-                Rectangle destination = new Rectangle((int)pos.X, (int)pos.Y, (int)SpurtLength, warningTex.Height);
+                Rectangle destination = new((int)pos.X, (int)pos.Y, (int)SpurtLength, warningTex.Height);
 
                 Main.spriteBatch.Draw(warningTex, destination, null, new Color(190, 0, 101, (byte)(warningLineAlpha * 255)), Projectile.rotation, new Vector2(0, warningTex.Height / 2), 0, 0);
             }

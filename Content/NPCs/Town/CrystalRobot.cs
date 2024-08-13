@@ -184,7 +184,7 @@ namespace Coralite.Content.NPCs.Town
 
         public override List<string> SetNPCNameList()
         {
-            List<string> list = new List<string>();
+            List<string> list = new();
 
             foreach (var name in Names)
                 list.Add(name.Value);
@@ -194,7 +194,7 @@ namespace Coralite.Content.NPCs.Town
 
         public override string GetChat()
         {
-            WeightedRandom<string> chat = new WeightedRandom<string>();
+            WeightedRandom<string> chat = new();
 
             //int partyGirl = NPC.FindFirstNPC(NPCID.PartyGirl);
             //if (partyGirl >= 0 && Main.rand.NextBool(4))

@@ -35,7 +35,7 @@ namespace Coralite.Content.Particles
         {
             Texture2D mainTex = GetTexture().Value;
             Rectangle frame = Frame;
-            Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
+            Vector2 origin = new(frame.Width / 2, frame.Height / 2);
             var pos = Center - Main.screenPosition;
             Color c = Color.White * 0.5f;
             if (oldCenter != null)

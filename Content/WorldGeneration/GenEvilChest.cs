@@ -17,82 +17,82 @@ namespace Coralite.Content.WorldGeneration
     {
         private static Point[] CorruptionLeft = new Point[6]
         {
-            new Point(4,10),
-            new Point(4,6),
-            new Point(7, 9),
-            new Point(3, 9),
-            new Point(5, 8),
-            new Point(6, 11),
+            new(4,10),
+            new(4,6),
+            new(7, 9),
+            new(3, 9),
+            new(5, 8),
+            new(6, 11),
         };
         private static Point[] CorruptionRight = new Point[6]
         {
-            new Point(13,9),
-            new Point(14, 9),
-            new Point(11,9),
-            new Point(15,9),
-            new Point(13,9),
-            new Point(12,11),
+            new(13,9),
+            new(14, 9),
+            new(11,9),
+            new(15,9),
+            new(13,9),
+            new(12,11),
         };
 
         private static Point[] CorruptionTorch1 = new Point[6]
         {
-            new Point(5,8),
-            new Point(16, 5),
-            new Point(7, 5),
-            new Point(7, 7),
-            new Point(7, 5),
-            new Point(6, 8),
+            new(5,8),
+            new(16, 5),
+            new(7, 5),
+            new(7, 7),
+            new(7, 5),
+            new(6, 8),
         };
         private static Point[] CorruptionTorch2 = new Point[6]
         {
             Point.Zero,
             Point.Zero,
-            new Point(13, 6),
-            new Point(12, 7),
+            new(13, 6),
+            new(12, 7),
             Point.Zero,
-            new Point(13, 8),
+            new(13, 8),
         };
 
         private static Point[] CrimsonLeft = new Point[7]
         {
-            new Point(6,9),
-            new Point(4,6),
-            new Point(4, 6),
-            new Point(3, 9),
-            new Point(3, 3),
-            new Point(2, 11),
-            new Point(11, 9),
+            new(6,9),
+            new(4,6),
+            new(4, 6),
+            new(3, 9),
+            new(3, 3),
+            new(2, 11),
+            new(11, 9),
         };
         private static Point[] CrimsonRight = new Point[7]
         {
-            new Point(12,9),
-            new Point(14, 6),
-            new Point(9,3),
-            new Point(15,9),
-            new Point(17,6),
-            new Point(15,12),
-            new Point(15,9),
+            new(12,9),
+            new(14, 6),
+            new(9,3),
+            new(15,9),
+            new(17,6),
+            new(15,12),
+            new(15,9),
         };
 
         private static Point[] CrimsonTorch1 = new Point[7]
         {
-            new Point(8,6),
-            new Point(7, 4),
-            new Point(15, 7),
-            new Point(8, 5),
-            new Point(4, 7),
-            new Point(7, 7),
-            new Point(7, 4),
+            new(8,6),
+            new(7, 4),
+            new(15, 7),
+            new(8, 5),
+            new(4, 7),
+            new(7, 7),
+            new(7, 4),
         };
         private static Point[] CrimsonTorch2 = new Point[7]
         {
-            new Point(11, 6),
-            new Point(12, 4),
+            new(11, 6),
+            new(12, 4),
             Point.Zero,
-            new Point(11, 5),
+            new(11, 5),
             Point.Zero,
-            new Point(12, 7),
-            new Point(14, 5),
+            new(12, 7),
+            new(14, 5),
         };
 
         public void GenEvilChest(GenerationProgress progress, GameConfiguration configuration)
@@ -127,7 +127,7 @@ namespace Coralite.Content.WorldGeneration
                 //if (itemCount > heartCount)
                 //    itemCount = heartCount;
 
-                Dictionary<Color, int> clearDic = new Dictionary<Color, int>()
+                Dictionary<Color, int> clearDic = new()
                 {
                     [Color.White] = -2,
                     [Color.Black] = -1
@@ -146,7 +146,7 @@ namespace Coralite.Content.WorldGeneration
 
                 if (WorldGen.crimson)
                 {
-                    Dictionary<Color, int> mainDic = new Dictionary<Color, int>()
+                    Dictionary<Color, int> mainDic = new()
                     {
                         [new Color(184, 106, 97)] = TileID.CrimstoneBrick,
                         [new Color(236, 74, 79)] = TileID.CrimtaneBrick,
@@ -154,7 +154,7 @@ namespace Coralite.Content.WorldGeneration
                         [new Color(219, 15, 6)] = TileID.FleshBlock,
                         [Color.Black] = -1
                     };
-                    Dictionary<Color, int> wallDic = new Dictionary<Color, int>()
+                    Dictionary<Color, int> wallDic = new()
                     {
                         [new Color(144, 82, 90)] = WallID.CrimstoneBrick,
                         [new Color(64, 38, 27)] = WallID.CrimtaneBrick,
@@ -174,7 +174,7 @@ namespace Coralite.Content.WorldGeneration
                             + new Point(WorldGen.genRand.Next(-25, 25), WorldGen.genRand.Next(-100, 100))
                             + new Point(arr[i] * (Main.maxTilesX - 200) / 100, 175);
 
-                        Dictionary<ushort, int> tileDictionary = new Dictionary<ushort, int>();
+                        Dictionary<ushort, int> tileDictionary = new();
                         WorldUtils.Gen(
                             new Point(position.X - 25, position.Y - 25),
                             new Shapes.Rectangle(50, 50),
@@ -250,7 +250,7 @@ namespace Coralite.Content.WorldGeneration
                 {
                     //int[] indexs = GetRandomArray(itemCount, 0, heartCount);
 
-                    Dictionary<Color, int> mainDic = new Dictionary<Color, int>()
+                    Dictionary<Color, int> mainDic = new()
                     {
                         [new Color(71, 49, 57)] = TileID.LesionBlock,
                         [new Color(100, 61, 184)] = TileID.EbonstoneBrick,
@@ -260,7 +260,7 @@ namespace Coralite.Content.WorldGeneration
 
                         [Color.Black] = -1
                     };
-                    Dictionary<Color, int> wallDic = new Dictionary<Color, int>()
+                    Dictionary<Color, int> wallDic = new()
                     {
                         [new Color(160, 116, 255)] = WallID.EbonstoneBrick,
                         [new Color(128, 85, 100)] = WallID.Corruption3Echo,
@@ -278,7 +278,7 @@ namespace Coralite.Content.WorldGeneration
                             + new Point(WorldGen.genRand.Next(-25, 25), WorldGen.genRand.Next(-60, 60))
                             + new Point(arr[i] * (Main.maxTilesX - 200) / 100, 125);
 
-                        Dictionary<ushort, int> tileDictionary = new Dictionary<ushort, int>();
+                        Dictionary<ushort, int> tileDictionary = new();
                         WorldUtils.Gen(
                             new Point(position.X - 25, position.Y - 25),
                             new Shapes.Rectangle(50, 50),

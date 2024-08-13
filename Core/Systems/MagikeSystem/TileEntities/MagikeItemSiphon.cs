@@ -17,7 +17,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public readonly int howManyToCheckPerFrame;
         public readonly int sendItemDelay;
 
-        public Item containsItem = new Item();
+        public Item containsItem = new();
 
         public Point16 receiverPoint = Point16.NegativeOne;
         public int connectChestIndex = -1;

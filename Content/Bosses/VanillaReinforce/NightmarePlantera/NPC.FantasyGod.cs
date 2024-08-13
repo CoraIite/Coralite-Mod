@@ -28,7 +28,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public ref float Angle => ref NPC.ai[2];
         public ref float LightScale => ref NPC.ai[3];
 
-        public static Color shineColor = new Color(252, 233, 194);
+        public static Color shineColor = new(252, 233, 194);
 
         private bool canDrawWarp = false;
         private float warpScale = 0;
@@ -65,16 +65,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             leftTentacles ??= new FantasyTentacle[3]
             {
-                new FantasyTentacle(25,TentacleColor,TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex),
-                new FantasyTentacle(25,TentacleColor,TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex),
-                new FantasyTentacle(25,TentacleColor,TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex)
+                new(25,TentacleColor,TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex),
+                new(25,TentacleColor,TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex),
+                new(25,TentacleColor,TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex)
             };
 
             rightTentacles ??= new FantasyTentacle[3]
             {
-                new FantasyTentacle(25,TentacleColor,TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex),
-                new FantasyTentacle(25,TentacleColor,TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex),
-                new FantasyTentacle(25,TentacleColor,TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex)
+                new(25,TentacleColor,TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex),
+                new(25,TentacleColor,TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex),
+                new(25,TentacleColor,TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex)
             };
 
             float sin = MathF.Sin(Main.GlobalTimeWrappedHourly);
@@ -305,7 +305,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 }
             }
 
-            Vector2 mainSparkleScale = new Vector2(8, 10);
+            Vector2 mainSparkleScale = new(8, 10);
             Helper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos, Color.White, shineColor * 0.6f,
                 LightScale, 0f, 1, 1, 1.5f, 0, mainSparkleScale, Vector2.One * 3); ;
 

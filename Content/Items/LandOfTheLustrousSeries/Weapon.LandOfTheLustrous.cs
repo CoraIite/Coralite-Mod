@@ -114,7 +114,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         private float selfRot;
 
-        private List<LandOfTheLustrousData> Draws = new List<LandOfTheLustrousData>();
+        private List<LandOfTheLustrousData> Draws = new();
 
         public class LandOfTheLustrousData(float rot)
         {
@@ -282,7 +282,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Texture2D mainTex = Projectile.GetTexture();
             Texture2D haloTex = HaloTex.Value;
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
             var frame = mainTex.Frame(1, Main.projFrames[Projectile.type], 0, Projectile.frame);
             var origin = frame.Size() / 2;
 

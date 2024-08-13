@@ -121,13 +121,13 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             if (Main.keyState.PressingShift())
             {
                 string text = FlyingShieldSystem.ShieldPlusDescriptionLong.Value;
-                TooltipLine line = new TooltipLine(Mod, "Coralite ShieldPlus Description", text);
+                TooltipLine line = new(Mod, "Coralite ShieldPlus Description", text);
                 tooltips.Add(line);
             }
             else
             {
                 string text = FlyingShieldSystem.ShieldPlusDescriptionShort.Value;
-                TooltipLine line = new TooltipLine(Mod, "Coralite ShieldPlus Description", text);
+                TooltipLine line = new(Mod, "Coralite ShieldPlus Description", text);
                 tooltips.Add(line);
             }
         }

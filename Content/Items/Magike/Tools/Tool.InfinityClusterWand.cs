@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Magike.Tools
 {
     public class InfinityClusterWand : ModItem
     {
-        public override string Texture => AssetDirectory.MagikeTools+Name;
+        public override string Texture => AssetDirectory.MagikeTools + Name;
 
         public static LocalizedText ChargeMode { get; private set; }
         public static LocalizedText ClearMode { get; private set; }
@@ -88,7 +88,7 @@ namespace Coralite.Content.Items.Magike.Tools
 
         public Point16 BasePosition
         {
-            get => new Point16((int)Projectile.ai[0], (int)Projectile.ai[1]);
+            get => new((int)Projectile.ai[0], (int)Projectile.ai[1]);
         }
 
         public Point16 TargetPoint { get; set; }
@@ -112,7 +112,7 @@ namespace Coralite.Content.Items.Magike.Tools
         {
             Projectile.Center = Owner.Center;
 
-            if (Owner.HeldItem.type !=ModContent.ItemType< InfinityClusterWand>())
+            if (Owner.HeldItem.type != ModContent.ItemType<InfinityClusterWand>())
             {
                 Projectile.Kill();
                 return;
@@ -154,7 +154,7 @@ namespace Coralite.Content.Items.Magike.Tools
             int xLength = Math.Abs(TargetPoint.X - BasePosition.X) + 1;
             int yLength = Math.Abs(TargetPoint.Y - BasePosition.Y) + 1;
 
-            HashSet<Point16> insertPoint = new HashSet<Point16>();
+            HashSet<Point16> insertPoint = new();
 
             //遍历一个矩形区域，并直接检测该位置是否有魔能仪器的物块实体
             for (int j = baseY; j < baseY + yLength; j++)
@@ -194,7 +194,7 @@ namespace Coralite.Content.Items.Magike.Tools
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
             if (Owner.HeldItem.ModItem is InfinityClusterWand wand)
-                MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, wand.mode==0?Color.Orange:Color.DarkGray);
+                MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, wand.mode == 0 ? Color.Orange : Color.DarkGray);
         }
     }
 }

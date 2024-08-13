@@ -79,15 +79,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case 3://生成小球并等待小球完成生成
                     {
-                        if (shadowCircle == null)
-                        {
-                            shadowCircle = new ShadowCircleController[3]
+                        shadowCircle ??= new ShadowCircleController[3]
                             {
-                                new ShadowCircleController(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BigCircle1", AssetRequestMode.ImmediateLoad)),
-                                new ShadowCircleController(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BigCircle2", AssetRequestMode.ImmediateLoad)),
-                                new ShadowCircleController(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BigCircle3", AssetRequestMode.ImmediateLoad)),
+                                new(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BigCircle1", AssetRequestMode.ImmediateLoad)),
+                                new(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BigCircle2", AssetRequestMode.ImmediateLoad)),
+                                new(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BigCircle3", AssetRequestMode.ImmediateLoad)),
                             };
-                        }
                         InitCaches();
                         ResetState();
                         SpawnSmallBalls();

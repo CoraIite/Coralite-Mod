@@ -333,7 +333,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             //Main.spriteBatch.Begin(0, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
             Texture2D mainTex = Projectile.GetTexture();
-            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
+            Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
 
             float extraRot = GetExRot();
 
@@ -355,7 +355,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected virtual void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars = new();
 
             float length = 1;
             for (int i = 1; i < oldRotate.Length; i++)
@@ -478,8 +478,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             if (Timer < minTime || oldRotate == null)
                 return;
-            
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
+
+            List<CustomVertexInfo> bars = new();
             GetCurrentTrailCount(out float count);
 
             float w = 1f;

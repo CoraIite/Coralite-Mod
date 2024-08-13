@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.Magike.PolarizedFilters;
-using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.IO;
@@ -107,7 +106,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         //额...每增加一个变量就要在这边多写一段，说实话显得很蠢，以后有机会需要修改掉
         public override void SaveWorldData(TagCompound tag)
         {
-            List<string> Knowledge = new List<string>();
+            List<string> Knowledge = new();
             if (learnedMagikeBase)
                 Knowledge.Add("learnedMagikeBase");
             if (learnedMagikeAdvanced)

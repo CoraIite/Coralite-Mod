@@ -154,7 +154,7 @@ namespace Coralite.Content.UI
             //	Rectangle hitbox = GetInnerDimensions().ToRectangle();
             //	Main.spriteBatch.Draw(Main.magicPixel, hitbox, Color.LightBlue * 0.6f);
 
-            Point point = new Point((int)(dimensions.X + dimensions.Width - 12), (int)(dimensions.Y + dimensions.Height - 12));
+            Point point = new((int)(dimensions.X + dimensions.Width - 12), (int)(dimensions.Y + dimensions.Height - 12));
             var source = texture.Frame();//new Rectangle(12 + 4, 12 + 4, 12, 12);
 
             //spriteBatch.Draw(texture, new Rectangle(point.X - 2, point.Y - 2, 12 - 2, 12 - 2), source, color);

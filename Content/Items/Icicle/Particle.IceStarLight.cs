@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Icicle
         public override void Draw(SpriteBatch spriteBatch)
         {
             Rectangle frame = Frame;
-            Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
+            Vector2 origin = new(frame.Width / 2, frame.Height / 2);
 
             spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, frame, color, Rotation, origin, 1.2f, SpriteEffects.None, 0f);
         }

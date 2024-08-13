@@ -113,7 +113,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             Texture2D mainTex = TextureAssets.Npc[Type].Value;
 
             Rectangle frameBox = mainTex.Frame(1, Main.npcFrameCount[Type], 0, NPC.frame.Y);
-            Vector2 origin = new Vector2(frameBox.Width / 2, frameBox.Height);
+            Vector2 origin = new(frameBox.Width / 2, frameBox.Height);
             SpriteEffects effect = SpriteEffects.FlipHorizontally;
 
             if (NPC.spriteDirection < 0)

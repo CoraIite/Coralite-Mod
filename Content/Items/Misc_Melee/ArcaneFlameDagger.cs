@@ -22,9 +22,9 @@ namespace Coralite.Content.Items.Misc_Melee
 
         protected static ParticleGroup group;
 
-        public static Color Green = new Color(162, 248, 2);
-        public static Color Gray = new Color(172, 167, 198);
-        public static Color Purple = new Color(212, 195, 255);
+        public static Color Green = new(162, 248, 2);
+        public static Color Gray = new(172, 167, 198);
+        public static Color Purple = new(212, 195, 255);
 
         public override void SetDefaults()
         {
@@ -335,7 +335,7 @@ namespace Coralite.Content.Items.Misc_Melee
             if (Timer < 0)
                 return;
 
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars = new();
 
             float w = 1f;
             Vector2 up = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();

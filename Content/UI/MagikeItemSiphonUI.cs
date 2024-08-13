@@ -16,11 +16,11 @@ namespace Coralite.Content.UI
     public class MagikeItemSiphonUI : BetterUIState
     {
         public static bool visible = false;
-        public static SingleItemSlot slot = new SingleItemSlot();
-        public static Old_CloseButton closeButton = new Old_CloseButton();
+        public static SingleItemSlot slot = new();
+        public static Old_CloseButton closeButton = new();
 
         public static MagikeItemSiphon siphon = null;
-        public static UIList list = new UIList();
+        public static UIList list = new();
 
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
@@ -50,7 +50,7 @@ namespace Coralite.Content.UI
 
             Append(list);
 
-            UIScrollbar scrollbar = new UIScrollbar();
+            UIScrollbar scrollbar = new();
             scrollbar.SetView(100f, 1000f);
             scrollbar.Top.Pixels = 2_0000;
             scrollbar.Height.Set(-42f - 8, 1f);
@@ -104,7 +104,7 @@ namespace Coralite.Content.UI
 
                 for (int i = 0; i < siphon.extensions.Length; i++)
                 {
-                    ExtensionSlot slot = new ExtensionSlot(i);
+                    ExtensionSlot slot = new(i);
                     list.Add(slot);
                 }
             }
@@ -270,7 +270,7 @@ namespace Coralite.Content.UI
                 position.Y += 26 - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
 
                 spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
-                if (Item.color != default(Color))
+                if (Item.color != default)
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
 
                 if (Item.stack > 1)

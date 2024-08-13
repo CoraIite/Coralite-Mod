@@ -4,8 +4,8 @@ using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
-using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Magike.Refractors
     }
 
     public class BasicPrismTile() : BasePrismTile
-        (2, 2, Coralite.MagicCrystalPink, DustID.CorruptionThorns,8)
+        (2, 2, Coralite.MagicCrystalPink, DustID.CorruptionThorns, 8)
     {
         public override string Texture => AssetDirectory.MagikeRefractorTiles + Name;
         public override int DropItemType => ItemType<BasicPrism>();

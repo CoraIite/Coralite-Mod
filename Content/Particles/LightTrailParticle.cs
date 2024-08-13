@@ -69,9 +69,9 @@ namespace Coralite.Content.Particles
             float scale = Scale;
             Color c = color;
 
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
-            List<CustomVertexInfo> bar3 = new List<CustomVertexInfo>();
-            List<CustomVertexInfo> bar4 = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars = new();
+            List<CustomVertexInfo> bar3 = new();
+            List<CustomVertexInfo> bar4 = new();
 
             float height = mainTex.Height * scale;
             int cacheCount = oldCenter.Length;

@@ -18,8 +18,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 {
     public partial class Bloodiancie
     {
-        public List<int> meleeList = new List<int>();
-        public List<int> shootList = new List<int>();
+        public List<int> meleeList = new();
+        public List<int> shootList = new();
 
         #region AI
 

@@ -179,7 +179,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             ItemDescription = new LocalizedText[ItemDescriptionID.Count];
 
-            ItemDescription[ItemDescriptionID.PolarizedFilter] = this.GetLocalization(nameof(ItemDescription) +"PolarizedFilter");
+            ItemDescription[ItemDescriptionID.PolarizedFilter] = this.GetLocalization(nameof(ItemDescription) + "PolarizedFilter");
         }
 
         public static string GetItemDescriptionText(int id)
@@ -201,10 +201,14 @@ namespace Coralite.Core.Systems.MagikeSystem
              * 魔能容器
              *      - 当前魔能量
              *      - 魔能上限
+             *      - 当前反魔能量
+             *      - 反魔能上限
              *      - 魔能存储器名称
              */
             ContainerMagikeAmount,
             ContainerMagikeMax,
+            ContainerAntiMagikeAmount,
+            ContainerAntiMagikeMax,
             MagikeContainerName,
 
             /*
@@ -240,8 +244,10 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             UIText[(int)UITextID.ContainerMagikeAmount] = this.GetLocalization(nameof(UIText) + "ContainerMagikeAmount");
             UIText[(int)UITextID.ContainerMagikeMax] = this.GetLocalization(nameof(UIText) + "ContainerMagikeMax");
+            UIText[(int)UITextID.ContainerAntiMagikeAmount] = this.GetLocalization(nameof(UIText) + "ContainerAntiMagikeAmount");
+            UIText[(int)UITextID.ContainerAntiMagikeMax] = this.GetLocalization(nameof(UIText) + "ContainerAntiMagikeMax");
             UIText[(int)UITextID.MagikeContainerName] = this.GetLocalization(nameof(UIText) + "MagikeContainerName");
-            
+
             UIText[(int)UITextID.CurrentConnect] = this.GetLocalization(nameof(UIText) + "CurrentConnect");
             UIText[(int)UITextID.MagikeSendTime] = this.GetLocalization(nameof(UIText) + "MagikeSendTime");
             UIText[(int)UITextID.MagikeSendAmount] = this.GetLocalization(nameof(UIText) + "MagikeSendAmount");

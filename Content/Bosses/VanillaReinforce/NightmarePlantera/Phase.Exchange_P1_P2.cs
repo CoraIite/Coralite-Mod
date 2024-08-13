@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 
@@ -57,7 +56,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             NCamera.shakeDelay = 2;
 
                             Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, NPC.Center, pitch: -0.5f);
-                            Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Dash_Item160, NPC.Center,volumeAdjust:-0.2f,pitchAdjust:-0.75f);
+                            Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Dash_Item160, NPC.Center, volumeAdjust: -0.2f, pitchAdjust: -0.75f);
                         }
                     }
                     break;
@@ -255,7 +254,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 nameAlpha = 0;
             }
 
-            Vector2 basePos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
+            Vector2 basePos = new(Main.screenWidth / 2, Main.screenHeight / 2);
 
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             Main.spriteBatch.Draw(BlackBack.Value, basePos, null, Color.White * nameAlpha, 0, BlackBack.Size() / 2, nameScale, 0, 0);

@@ -21,17 +21,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             //设置三条拖尾，如果玩家通过某些奇葩手段跳过了二阶段的话在3阶段设置这个
             rotateTentacles ??= new RotateTentacle[3]
             {
-                new RotateTentacle(20, TentacleColor, TentacleWidth, tentacleTex, waterFlowTex)
+                new(20, TentacleColor, TentacleWidth, tentacleTex, waterFlowTex)
                 {
                     pos = NPC.Center,
                     targetPos = NPC.Center
                 },
-                new RotateTentacle(20,TentacleColor,TentacleWidth,tentacleTex,waterFlowTex)
+                new(20,TentacleColor,TentacleWidth,tentacleTex,waterFlowTex)
                 {
                     pos = NPC.Center,
                     targetPos = NPC.Center
                 },
-                new RotateTentacle(20,TentacleColor,TentacleWidth,tentacleTex,waterFlowTex)
+                new(20,TentacleColor,TentacleWidth,tentacleTex,waterFlowTex)
                 {
                     pos = NPC.Center,
                     targetPos = NPC.Center
@@ -132,7 +132,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             NPC.rotation = (Target.Center - NPC.Center).ToRotation();
                             Helper.PlayPitched(CoraliteSoundID.BigBOOM_Item62, NPC.Center, pitch: -0.5f);
-                            Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Dash_Item160, NPC.Center, pitch: -0.75f,volumeAdjust:-0.2f);
+                            Helper.PlayPitched(CoraliteSoundID.EmpressOfLight_Dash_Item160, NPC.Center, pitch: -0.75f, volumeAdjust: -0.2f);
                             var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY, 15, 8, 20, 1000);
                             Main.instance.CameraModifiers.Add(modifyer);
                         });
@@ -767,7 +767,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         const int fadeTime = 25;
 
-                        if (Timer == (int)RollingTime)
+                        if (Timer == RollingTime)
                             SoundEngine.PlaySound(CoraliteSoundID.ShieldDestroyed_NPCDeath58, NPC.Center);
 
                         DoRotation(0.3f);

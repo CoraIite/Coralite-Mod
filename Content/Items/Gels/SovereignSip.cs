@@ -106,7 +106,7 @@ namespace Coralite.Content.Items.Gels
             else
                 vector.X -= (45 + player.width) * player.direction;
 
-            Projectile.shouldFallThrough = player.position.Y + player.height - 12f > Projectile.position.Y + (float)Projectile.height;
+            Projectile.shouldFallThrough = player.position.Y + player.height - 12f > Projectile.position.Y + Projectile.height;
             Projectile.friendly = false;
 
             switch (Projectile.ai[0])

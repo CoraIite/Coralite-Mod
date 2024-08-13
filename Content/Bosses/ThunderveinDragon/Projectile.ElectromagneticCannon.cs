@@ -22,7 +22,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         const int DelayTime = 30;
         private float laserWidth;
 
-        public List<Vector2> laserTrailPoints = new List<Vector2>();
+        public List<Vector2> laserTrailPoints = new();
 
         public static Asset<Texture2D> gradientTex;
 
@@ -80,7 +80,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 SpawnDusts();
 
                 Vector2 pos2 = Projectile.velocity;
-                List<Vector2> pos = new List<Vector2>
+                List<Vector2> pos = new()
                 {
                     Projectile.velocity
                 };
@@ -258,10 +258,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
             var pos = laserTrailPoints[^1] - Main.screenPosition;
             var origin = mainTex.Size() / 2;
-            Color c = new Color(189, 109, 255, 0);
+            Color c = new(189, 109, 255, 0);
             c.A = 0;
 
-            Vector2 scale = new Vector2(laserWidth / 90, laserWidth / 130);
+            Vector2 scale = new(laserWidth / 90, laserWidth / 130);
 
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale, 0, 0);
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, scale * 0.75f, 0, 0);
@@ -277,7 +277,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             float count = laserTrailPoints.Count;
             Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
             for (int i = 0; i < count; i++)

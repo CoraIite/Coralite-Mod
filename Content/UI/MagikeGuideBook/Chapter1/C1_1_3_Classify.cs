@@ -31,7 +31,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter1
                 , 1, 0f, 00f);
             pos = PageTop + new Vector2(0, 60 + 30);
 
-            Vector2 textPos = new Vector2(Position.X, pos.Y);
+            Vector2 textPos = new(Position.X, pos.Y);
             Helpers.Helper.DrawText(spriteBatch, Classify.Value, PageWidth, textPos, Vector2.Zero, Vector2.One
                 , new Color(40, 40, 40), Color.White, out _);
         }

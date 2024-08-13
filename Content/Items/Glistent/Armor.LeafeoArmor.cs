@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Glistent
 
         public override void SetDefaults()
         {
-            Item.value = Item.sellPrice( silver: 5);
+            Item.value = Item.sellPrice(silver: 5);
             Item.rare = ItemRarityID.Blue;
             Item.defense = 1;
         }
@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.Glistent
         {
             CreateRecipe()
                 .AddIngredient<LeafStone>(14)
-                .AddIngredient(ItemID.IronBar,8)
+                .AddIngredient(ItemID.IronBar, 8)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.Glistent
 
         public override void UpdateEquip(Player player)
         {
-            if (player.TryGetModPlayer(out CoralitePlayer cp) )
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
                 cp.fallDamageModifyer -= 0.25f;
         }
 

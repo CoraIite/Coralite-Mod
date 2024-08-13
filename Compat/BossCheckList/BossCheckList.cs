@@ -16,7 +16,7 @@ namespace Coralite.Compat.BossCheckList
             if (ModLoader.TryGetMod("BossCheckList", out Mod bcl))
             {
                 //赤玉灵
-                List<int> RediancieCollection = new List<int>()
+                List<int> RediancieCollection = new()
                 {
                     //ItemType<Content.Items.RedJades.RedJade>(),
                     //ItemType<Content.Items.RedJades.RediancieBossBag>(),
@@ -44,7 +44,7 @@ namespace Coralite.Compat.BossCheckList
                     });
 
                 //冰龙宝宝
-                List<int> BabyIceDragonCollection = new List<int>()
+                List<int> BabyIceDragonCollection = new()
                 {
                     ItemType<Content.Items.Icicle.IcicleCrystal>(),
                     //ItemType<Content.Items.Icicle.BabyIceDragonBossBag>(),
@@ -72,7 +72,7 @@ namespace Coralite.Compat.BossCheckList
                     });
 
                 //史莱姆皇帝
-                List<int> SlimeEmperorCollection = new List<int>()
+                List<int> SlimeEmperorCollection = new()
                 {
                     //ItemType<Content.Items.Icicle.IcicleCrystal>(),
                     //ItemType<Content.Items.Gels.SlimeEmperorSoulBox>(),
@@ -103,7 +103,7 @@ namespace Coralite.Compat.BossCheckList
                     });
 
                 //赤血玉灵
-                List<int> BloodiancieCollection = new List<int>()
+                List<int> BloodiancieCollection = new()
                 {
                     //ItemType<Content.Items.RedJades.BloodiancieBossBag>(),
                     //ItemType<Content.Items.Gels.EmperorSabre>(),
@@ -133,7 +133,7 @@ namespace Coralite.Compat.BossCheckList
                         ["collectibles"] = BloodiancieCollection
                     });
 
-                List<int> ThunderveinDragonCollection = new List<int>()
+                List<int> ThunderveinDragonCollection = new()
                 {
                     //ItemType<Content.Items.Icicle.IcicleCrystal>(),
                     //ItemType<Content.Items.RedJades.BloodiancieBossBag>(),
@@ -165,7 +165,7 @@ namespace Coralite.Compat.BossCheckList
                     });
 
                 //梦魇之花
-                List<int> NightmarePlanteraCollection = new List<int>()
+                List<int> NightmarePlanteraCollection = new()
                 {
                     ItemType<Content.Items.Nightmare.GriefSeed>(),
                     ItemType<Content.Items.Nightmare.NightmareBed>(),

@@ -421,9 +421,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public ref float State => ref Projectile.ai[0];
 
-        public static Color highlightC = new Color(255, 164, 163);
-        public static Color brightC = new Color(238, 51, 53);
-        public static Color darkC = new Color(73, 10, 0);
+        public static Color highlightC = new(255, 164, 163);
+        public static Color brightC = new(238, 51, 53);
+        public static Color darkC = new(73, 10, 0);
 
         public static void SpawnTriangleParticle(Vector2 pos, Vector2 velocity)
         {

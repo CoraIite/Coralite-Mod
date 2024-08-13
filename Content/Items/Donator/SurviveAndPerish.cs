@@ -477,7 +477,7 @@ namespace Coralite.Content.Items.Donator
         {
             int type = ModContent.ProjectileType<MiniDynamite>();
 
-            Dictionary<int, int> targetRecord = new Dictionary<int, int>();
+            Dictionary<int, int> targetRecord = new();
 
             bool hasTarget = false;
 
@@ -696,7 +696,7 @@ namespace Coralite.Content.Items.Donator
 
             for (int i = 0; i < 2; i++)
             {
-                int num911 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<StarFireSmokeDust>(), 0f, 0f, 100, default(Color), 1f);
+                int num911 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<StarFireSmokeDust>(), 0f, 0f, 100, default, 1f);
                 Dust dust2 = Main.dust[num911];
                 dust2.velocity *= 1.2f;
                 if (Main.rand.NextBool(2))
@@ -710,11 +710,11 @@ namespace Coralite.Content.Items.Donator
 
             for (int i = 0; i < 6; i++)
             {
-                int num913 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, type, 0f, 0f, 100, default(Color), 1f);
+                int num913 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, type, 0f, 0f, 100, default, 1f);
                 Main.dust[num913].noGravity = true;
                 Dust dust2 = Main.dust[num913];
                 dust2.velocity *= 3f;
-                num913 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, type, 0f, 0f, 100, default(Color), 0.6f);
+                num913 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, type, 0f, 0f, 100, default, 0.6f);
                 dust2 = Main.dust[num913];
                 dust2.velocity *= 2f;
             }
@@ -729,13 +729,13 @@ namespace Coralite.Content.Items.Donator
 
             for (int i = 0; i < 5; i++)
             {
-                int num911 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<StarFireSmokeDust>(), 0f, 0f, 100, default(Color), 1.2f);
+                int num911 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<StarFireSmokeDust>(), 0f, 0f, 100, default, 1.2f);
                 Dust dust2 = Main.dust[num911];
                 dust2.velocity *= 1.5f;
                 if (Main.rand.NextBool(2))
                 {
                     Main.dust[num911].scale = 0.5f;
-                    Main.dust[num911].fadeIn = 1f + (float)Main.rand.Next(10) * 0.1f;
+                    Main.dust[num911].fadeIn = 1f + Main.rand.Next(10) * 0.1f;
                 }
             }
 
@@ -743,11 +743,11 @@ namespace Coralite.Content.Items.Donator
 
             for (int i = 0; i < 10; i++)
             {
-                int num913 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, type, 0f, 0f, 100, default(Color), 1.5f);
+                int num913 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, type, 0f, 0f, 100, default, 1.5f);
                 Main.dust[num913].noGravity = true;
                 Dust dust2 = Main.dust[num913];
                 dust2.velocity *= 3f;
-                num913 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, type, 0f, 0f, 100, default(Color), 1f);
+                num913 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, type, 0f, 0f, 100, default, 1f);
                 dust2 = Main.dust[num913];
                 dust2.velocity *= 2f;
             }

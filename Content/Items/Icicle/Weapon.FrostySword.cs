@@ -187,7 +187,7 @@ namespace Coralite.Content.Items.Icicle
                     totalAngle = 5.6f;
                     minTime = 66;
                     onHitFreeze = 20;
-                    maxTime = (int)(Owner.itemTimeMax) + 70;
+                    maxTime = Owner.itemTimeMax + 70;
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     delay = 28;
                     Projectile.scale = 0.8f;
@@ -302,7 +302,7 @@ namespace Coralite.Content.Items.Icicle
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -351,7 +351,7 @@ namespace Coralite.Content.Items.Icicle
         {
             if (VisualEffectSystem.HitEffect_ScreenShaking)
             {
-                PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, RotateVec2, strength, 6, 6, 1000);
+                PunchCameraModifier modifier = new(Projectile.Center, RotateVec2, strength, 6, 6, 1000);
                 Main.instance.CameraModifiers.Add(modifier);
             }
 
@@ -576,7 +576,7 @@ namespace Coralite.Content.Items.Icicle
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -735,7 +735,7 @@ namespace Coralite.Content.Items.Icicle
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)

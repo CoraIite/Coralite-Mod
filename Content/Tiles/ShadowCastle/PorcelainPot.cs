@@ -26,7 +26,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             AddMapEntry(Color.SandyBrown);
         }
 
-        private static EntitySource_TileBreak GetProjectileSource_TileBreak(int x, int y) => new EntitySource_TileBreak(x, y);
+        private static EntitySource_TileBreak GetProjectileSource_TileBreak(int x, int y) => new(x, y);
         public static IEntitySource GetItemSource_FromTileBreak(int x, int y) => new EntitySource_TileBreak(x, y);
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -44,7 +44,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             if (Main.remixWorld)
             {
                 rockLayer = j > Main.rockLayer && j < Main.UnderworldLayer;
-                underWorld = j > Main.worldSurface && (double)j < Main.rockLayer;
+                underWorld = j > Main.worldSurface && j < Main.rockLayer;
             }
 
             float num = 1f;
@@ -343,28 +343,28 @@ namespace Coralite.Content.Tiles.ShadowCastle
             }
 
             float num15 = 200 + WorldGen.genRand.Next(-100, 101);
-            if ((double)j < Main.worldSurface)
+            if (j < Main.worldSurface)
                 num15 *= 0.5f;
             else if (rockLayer)
                 num15 *= 0.75f;
             else if (j > Main.maxTilesY - 250)
                 num15 *= 1.25f;
 
-            num15 *= 1f + (float)Main.rand.Next(-20, 21) * 0.01f;
+            num15 *= 1f + Main.rand.Next(-20, 21) * 0.01f;
             if (Main.rand.NextBool(4))
-                num15 *= 1f + (float)Main.rand.Next(5, 11) * 0.01f;
+                num15 *= 1f + Main.rand.Next(5, 11) * 0.01f;
 
             if (Main.rand.NextBool(8))
-                num15 *= 1f + (float)Main.rand.Next(10, 21) * 0.01f;
+                num15 *= 1f + Main.rand.Next(10, 21) * 0.01f;
 
             if (Main.rand.NextBool(12))
-                num15 *= 1f + (float)Main.rand.Next(20, 41) * 0.01f;
+                num15 *= 1f + Main.rand.Next(20, 41) * 0.01f;
 
             if (Main.rand.NextBool(16))
-                num15 *= 1f + (float)Main.rand.Next(40, 81) * 0.01f;
+                num15 *= 1f + Main.rand.Next(40, 81) * 0.01f;
 
             if (Main.rand.NextBool(20))
-                num15 *= 1f + (float)Main.rand.Next(50, 101) * 0.01f;
+                num15 *= 1f + Main.rand.Next(50, 101) * 0.01f;
 
             if (Main.expertMode)
                 num15 *= 2.5f;
@@ -426,7 +426,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
                     if (Main.rand.NextBool(2))
                         num16 /= Main.rand.Next(3) + 1;
 
-                    num15 -= (float)(1000000 * num16);
+                    num15 -= 1000000 * num16;
                     Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 74, num16);
                     continue;
                 }
@@ -440,7 +440,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
                     if (Main.rand.NextBool(2))
                         num17 /= Main.rand.Next(3) + 1;
 
-                    num15 -= (float)(10000 * num17);
+                    num15 -= 10000 * num17;
                     Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 73, num17);
                     continue;
                 }
@@ -454,7 +454,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
                     if (Main.rand.NextBool(2))
                         num18 /= Main.rand.Next(3) + 1;
 
-                    num15 -= (float)(100 * num18);
+                    num15 -= 100 * num18;
                     Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 72, num18);
                     continue;
                 }
@@ -469,7 +469,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
                 if (num19 < 1)
                     num19 = 1;
 
-                num15 -= (float)num19;
+                num15 -= num19;
                 Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 71, num19);
             }
         }

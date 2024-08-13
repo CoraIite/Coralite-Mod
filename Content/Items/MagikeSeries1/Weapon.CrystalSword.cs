@@ -48,7 +48,7 @@ namespace Coralite.Content.Items.MagikeSeries1
     {
         public override string Texture => AssetDirectory.Blank;
 
-        private VertexStrip _vertexStrip = new VertexStrip();
+        private VertexStrip _vertexStrip = new();
 
         public override void SetStaticDefaults()
         {

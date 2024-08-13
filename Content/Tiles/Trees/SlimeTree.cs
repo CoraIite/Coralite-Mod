@@ -9,7 +9,7 @@ namespace Coralite.Content.Tiles.Trees
 {
     public class SlimeTree : ModTree
     {
-        public override TreePaintingSettings TreeShaderSettings => new TreePaintingSettings
+        public override TreePaintingSettings TreeShaderSettings => new()
         {
             UseSpecialGroups = true,    //使用特殊组
             SpecialGroupMinimalHueValue = 11f / 72f,    //特殊组最小色调值

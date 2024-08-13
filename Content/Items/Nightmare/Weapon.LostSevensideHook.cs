@@ -268,7 +268,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
-                    PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, RotateVec2, 2, 6, 6, 1000);
+                    PunchCameraModifier modifier = new(Projectile.Center, RotateVec2, 2, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
 
@@ -325,7 +325,7 @@ namespace Coralite.Content.Items.Nightmare
 
         protected override void DrawShadowTrail(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             SpriteEffects effect = CheckEffect();
             for (int i = 1; i < 8; i += 1)
@@ -342,7 +342,7 @@ namespace Coralite.Content.Items.Nightmare
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -498,7 +498,7 @@ namespace Coralite.Content.Items.Nightmare
 
             if (HookState == (int)AIStates.rolling)
             {
-                Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+                Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
                 for (int i = 1; i < 7; i += 1)
                     Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
@@ -666,7 +666,7 @@ namespace Coralite.Content.Items.Nightmare
             if (Timer < 0)
                 return;
 
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars = new();
 
             float w = 1f;
             Vector2 up = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
@@ -727,11 +727,11 @@ namespace Coralite.Content.Items.Nightmare
 
         public float alpha;
         private bool init = true;
-        private Color tentacleColor = new Color(80, 86, 102);
+        private Color tentacleColor = new(80, 86, 102);
         private Vector2 rotateVec2;
         public SpriteEffects effect;
 
-        public static Color pink = new Color(233, 184, 230);
+        public static Color pink = new(233, 184, 230);
 
         public override void SetStaticDefaults()
         {

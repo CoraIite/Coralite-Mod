@@ -78,15 +78,15 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
             this.bonus2 = bonus2;
         }
 
-        public override sealed float UseSpeedMultiplier(Item item, Player player) => 1f;
-        public override sealed void ModifyManaCost(Item item, Player player, ref float reduce, ref float mult) { }
-        public override sealed void ModifyItemScale(Item item, Player player, ref float scale) { }
-        public override sealed void ModifyWeaponCrit(Item item, Player player, ref float crit) { }
-        public override sealed void ModifyWeaponKnockback(Item item, Player player, ref StatModifier knockback) { }
+        public sealed override float UseSpeedMultiplier(Item item, Player player) => 1f;
+        public sealed override void ModifyManaCost(Item item, Player player, ref float reduce, ref float mult) { }
+        public sealed override void ModifyItemScale(Item item, Player player, ref float scale) { }
+        public sealed override void ModifyWeaponCrit(Item item, Player player, ref float crit) { }
+        public sealed override void ModifyWeaponKnockback(Item item, Player player, ref StatModifier knockback) { }
 
 
-        public override sealed void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) { }
-        public override sealed void Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) { }
+        public sealed override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) { }
+        public sealed override void Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) { }
     }
 
     public abstract class OtherEnchant : EnchantData
@@ -98,8 +98,8 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
             this.bonus2 = bonus2;
         }
 
-        public override sealed void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) { }
-        public override sealed void Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) { }
+        public sealed override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) { }
+        public sealed override void Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) { }
 
     }
 
@@ -112,11 +112,11 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
             this.bonus2 = bonus2;
         }
 
-        public override sealed float UseSpeedMultiplier(Item item, Player player) => 1f;
-        public override sealed void ModifyManaCost(Item item, Player player, ref float reduce, ref float mult) { }
-        public override sealed void ModifyItemScale(Item item, Player player, ref float scale) { }
-        public override sealed void ModifyWeaponCrit(Item item, Player player, ref float crit) { }
-        public override sealed void ModifyWeaponKnockback(Item item, Player player, ref StatModifier knockback) { }
+        public sealed override float UseSpeedMultiplier(Item item, Player player) => 1f;
+        public sealed override void ModifyManaCost(Item item, Player player, ref float reduce, ref float mult) { }
+        public sealed override void ModifyItemScale(Item item, Player player, ref float scale) { }
+        public sealed override void ModifyWeaponCrit(Item item, Player player, ref float crit) { }
+        public sealed override void ModifyWeaponKnockback(Item item, Player player, ref StatModifier knockback) { }
 
     }
 }

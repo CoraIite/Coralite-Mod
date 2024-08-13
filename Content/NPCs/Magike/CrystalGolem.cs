@@ -271,7 +271,7 @@ namespace Coralite.Content.NPCs.Magike
 
                 float height = lineTex.Height / 5f;
                 Vector2 startPos = GetHeadPos() - Main.screenPosition;
-                Rectangle target = new Rectangle((int)startPos.X, (int)startPos.Y, (int)TargetLineLength, (int)height);
+                Rectangle target = new((int)startPos.X, (int)startPos.Y, (int)TargetLineLength, (int)height);
 
                 Color color = Coralite.MagicCrystalPink;
                 color.A = 200;

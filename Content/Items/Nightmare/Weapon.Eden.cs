@@ -170,7 +170,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             Texture2D texture = TextureAssets.FishingLine.Value;
             Rectangle frame = texture.Frame();
-            Vector2 origin = new Vector2(frame.Width / 2, 2);
+            Vector2 origin = new(frame.Width / 2, 2);
 
             Vector2 pos = list[0];
             for (int i = 0; i < list.Count - 2; i++)
@@ -180,7 +180,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 float rotation = diff.ToRotation() - MathHelper.PiOver2;
                 Color color = Lighting.GetColor(element.ToTileCoordinates(), Color.Gray);
-                Vector2 scale = new Vector2(2, (diff.Length() + 2) / frame.Height);
+                Vector2 scale = new(2, (diff.Length() + 2) / frame.Height);
 
                 Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0);
 
@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override bool PreDraw(ref Color lightColor)
         {
-            List<Vector2> list = new List<Vector2>();
+            List<Vector2> list = new();
             Projectile.FillWhipControlPoints(Projectile, list);
 
             DrawLine(list);
@@ -204,7 +204,7 @@ namespace Coralite.Content.Items.Nightmare
 
             for (int i = 0; i < list.Count - 1; i++)
             {
-                Rectangle frame = new Rectangle(0, 0, 34, 24); // 鞭子把手的大小
+                Rectangle frame = new(0, 0, 34, 24); // 鞭子把手的大小
                 float scale = 1;
 
                 if (i == list.Count - 2)
@@ -367,7 +367,7 @@ namespace Coralite.Content.Items.Nightmare
 
             Texture2D mainTex = Projectile.GetTexture();
 
-            Rectangle frame = new Rectangle(0, 0, 34, 24); // 鞭子把手的大小
+            Rectangle frame = new(0, 0, 34, 24); // 鞭子把手的大小
 
             //绘制握把
             SpriteEffects effect = SpriteEffects.FlipHorizontally;

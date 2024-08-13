@@ -235,7 +235,7 @@ namespace Coralite.Content.Items.Nightmare
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -383,7 +383,7 @@ namespace Coralite.Content.Items.Nightmare
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -550,7 +550,7 @@ namespace Coralite.Content.Items.Nightmare
             {
                 int i = Main.rand.NextFromList(-1, 1);
                 int type = Main.rand.NextFromList(DustID.PlatinumCoin, DustID.GoldCoin);
-                Vector2 dir = new Vector2(i, 0);
+                Vector2 dir = new(i, 0);
                 Dust.NewDustPerfect(Projectile.Center, type, dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(0.5f, 2), Scale: Main.rand.NextFloat(1, 1.5f));
 
             }
@@ -661,7 +661,7 @@ namespace Coralite.Content.Items.Nightmare
             Vector2 pos = Projectile.Center - Main.screenPosition;
 
             float rot = Projectile.rotation;
-            Color shineColor = new Color(252, 233, 194, 255);
+            Color shineColor = new(252, 233, 194, 255);
             //中心的闪光
 
             Texture2D lightTex = BaseNightmareSparkle.MainLight.Value;

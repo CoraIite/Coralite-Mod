@@ -90,7 +90,7 @@ namespace Coralite.Content.WorldGeneration
 
                 shadowCastleRestraint = new Rectangle(dungeonLocation - limit, dungeonHeight, limit * 2, Main.UnderworldLayer - dungeonHeight);
 
-                NormalRoom root = new NormalRoom(new Point(dungeonLocation, dungeonHeight));
+                NormalRoom root = new(new Point(dungeonLocation, dungeonHeight));
                 root.InitializeType();
 
                 if (root.shadowCastleRooms.Count < roomCount && i < 199998)
@@ -103,7 +103,7 @@ namespace Coralite.Content.WorldGeneration
 
                 #region 生成黑洞房间
                 {
-                    BlackHoleRoom blackHole = new BlackHoleRoom(rooms[rand].roomRect.Center);
+                    BlackHoleRoom blackHole = new(rooms[rand].roomRect.Center);
                     ShadowCastleRoom.Exchange(rooms[rand], blackHole);
                     rooms[rand] = blackHole;
                 }
@@ -119,7 +119,7 @@ namespace Coralite.Content.WorldGeneration
                         if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
                             continue;
 
-                        DungeonArtifactRoom dungeonChestRoom = new DungeonArtifactRoom(rooms[rand].roomRect.Center);
+                        DungeonArtifactRoom dungeonChestRoom = new(rooms[rand].roomRect.Center);
                         ShadowCastleRoom.Exchange(rooms[rand], dungeonChestRoom);
                         rooms[rand] = dungeonChestRoom;
 
@@ -138,7 +138,7 @@ namespace Coralite.Content.WorldGeneration
                         if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
                             continue;
 
-                        BookRoom bookRoom = new BookRoom(rooms[rand].roomRect.Center);
+                        BookRoom bookRoom = new(rooms[rand].roomRect.Center);
                         ShadowCastleRoom.Exchange(rooms[rand], bookRoom);
                         rooms[rand] = bookRoom;
 
@@ -167,7 +167,7 @@ namespace Coralite.Content.WorldGeneration
                         if (rooms[rand].roomType != ShadowCastleRoom.RoomType.Normal)//防止把其他房间创了
                             continue;
 
-                        ChestRoom chestRoom = new ChestRoom(rooms[rand].roomRect.Center, tresures[chestRoomCount]);
+                        ChestRoom chestRoom = new(rooms[rand].roomRect.Center, tresures[chestRoomCount]);
                         ShadowCastleRoom.Exchange(rooms[rand], chestRoom);
                         rooms[rand] = chestRoom;
 
@@ -190,7 +190,7 @@ namespace Coralite.Content.WorldGeneration
                         && room.parentDirection != ShadowCastleRoom.Direction.Down
                         && WorldGen.genRand.NextBool())
                     {
-                        Spire spire = new Spire(room.roomRect.Center);//底端换成 我超，塔！
+                        Spire spire = new(room.roomRect.Center);//底端换成 我超，塔！
                         ShadowCastleRoom.Exchange(room, spire);//交换一下信息
                         rooms[m] = spire;//替换列表里的
                         continue;
@@ -221,7 +221,7 @@ namespace Coralite.Content.WorldGeneration
                 }
 
                 recordPoint += new Point(0, 6);
-                BossRoom bossRoom = new BossRoom(recordPoint);
+                BossRoom bossRoom = new(recordPoint);
                 bossRoom.Append(root, ShadowCastleRoom.Direction.Down);
 
                 bossRoom.GenerateSelf();
@@ -428,7 +428,7 @@ namespace Coralite.Content.WorldGeneration
             {
                 int i2 = WorldGen.genRand.Next(GenVars.dMinX, GenVars.dMaxX);
                 int num11 = GenVars.dMinY;
-                if ((double)num11 < Main.worldSurface)
+                if (num11 < Main.worldSurface)
                     num11 = (int)Main.worldSurface;
 
                 int j = WorldGen.genRand.Next(num11, GenVars.dMaxY);
@@ -899,11 +899,11 @@ namespace Coralite.Content.WorldGeneration
                     {
                         for (int num58 = num56 - num54; num58 < num56 + num54; num58++)
                         {
-                            if ((double)num58 > Main.worldSurface)
+                            if (num58 > Main.worldSurface)
                             {
                                 double num59 = Math.Abs(num55 - num57);
                                 double num60 = Math.Abs(num56 - num58);
-                                if (Math.Sqrt(num59 * num59 + num60 * num60) < (double)num54 * 0.4 && Main.wallDungeon[Main.tile[num57, num58].WallType])
+                                if (Math.Sqrt(num59 * num59 + num60 * num60) < num54 * 0.4 && Main.wallDungeon[Main.tile[num57, num58].WallType])
                                     WorldGen.Spread.WallDungeon(num57, num58, array[num53]);
                             }
                         }
@@ -918,7 +918,7 @@ namespace Coralite.Content.WorldGeneration
                 int num63 = GenVars.dungeonPlatformY[num61];
                 int num64 = Main.maxTilesX;
                 int num65 = 10;
-                if ((double)num63 < Main.worldSurface + 50.0)
+                if (num63 < Main.worldSurface + 50.0)
                     num65 = 20;
 
                 for (int num66 = num63 - 5; num66 <= num63 + 5; num66++)
@@ -1190,7 +1190,7 @@ namespace Coralite.Content.WorldGeneration
                                     if (flag7)
                                     {
                                         WorldGen.PlaceTile(num83, num84 - 1, 50, mute: true);
-                                        if (WorldGen.genRand.NextBool(50) && (double)num84 > (Main.worldSurface + Main.rockLayer) / 2.0 && Main.tile[num83, num84 - 1].TileType == 50)
+                                        if (WorldGen.genRand.NextBool(50) && num84 > (Main.worldSurface + Main.rockLayer) / 2.0 && Main.tile[num83, num84 - 1].TileType == 50)
                                             Main.tile[num83, num84 - 1].TileFrameX = 90;
                                     }
 
@@ -1245,7 +1245,7 @@ namespace Coralite.Content.WorldGeneration
                 int num94 = 0;
                 while (num94 < 1000)
                 {
-                    int num95 = (int)((double)GenVars.dRoomSize[num93] * 0.4);
+                    int num95 = (int)(GenVars.dRoomSize[num93] * 0.4);
                     int i3 = GenVars.dRoomX[num93] + WorldGen.genRand.Next(-num95, num95 + 1);
                     int num96 = GenVars.dRoomY[num93] + WorldGen.genRand.Next(-num95, num95 + 1);
                     int num97 = 0;
@@ -1283,7 +1283,7 @@ namespace Coralite.Content.WorldGeneration
                             break;
                     }
 
-                    if ((double)num96 < Main.worldSurface + 50.0)
+                    if (num96 < Main.worldSurface + 50.0)
                     {
                         num97 = 327;
                         style3 = 0;
@@ -1557,8 +1557,8 @@ namespace Coralite.Content.WorldGeneration
 
         private static double MakeDungeon_Banners(int[] roomWall, double count)
         {
-            count = 840000.0 / (double)Main.maxTilesX;
-            for (int i = 0; (double)i < count; i++)
+            count = 840000.0 / Main.maxTilesX;
+            for (int i = 0; i < count; i++)
             {
                 int num = WorldGen.genRand.Next(GenVars.dMinX, GenVars.dMaxX);
                 int num2 = WorldGen.genRand.Next(GenVars.dMinY, GenVars.dMaxY);
@@ -1606,8 +1606,8 @@ namespace Coralite.Content.WorldGeneration
 
         private static double MakeDungeon_Pictures(int[] roomWall, double count)
         {
-            count = 420000.0 / (double)Main.maxTilesX;
-            for (int i = 0; (double)i < count; i++)
+            count = 420000.0 / Main.maxTilesX;
+            for (int i = 0; i < count; i++)
             {
                 int num = WorldGen.genRand.Next(GenVars.dMinX, GenVars.dMaxX);
                 int num2 = WorldGen.genRand.Next((int)Main.worldSurface, GenVars.dMaxY);
@@ -1873,10 +1873,10 @@ namespace Coralite.Content.WorldGeneration
 
         private static double MakeDungeon_GroundFurniture(int wallType)
         {
-            double num = (double)(2000 * Main.maxTilesX) / 4200.0;
-            int num2 = 1 + (int)((double)Main.maxTilesX / 4200.0);
-            int num3 = 1 + (int)((double)Main.maxTilesX / 4200.0);
-            for (int i = 0; (double)i < num; i++)
+            double num = 2000 * Main.maxTilesX / 4200.0;
+            int num2 = 1 + (int)(Main.maxTilesX / 4200.0);
+            int num3 = 1 + (int)(Main.maxTilesX / 4200.0);
+            for (int i = 0; i < num; i++)
             {
                 if (num2 > 0 || num3 > 0)
                     i--;
@@ -2084,7 +2084,7 @@ namespace Coralite.Content.WorldGeneration
                     }
                 }
 
-                if ((double)num6 < (double)num19 * 1.75)
+                if (num6 < num19 * 1.75)
                     num18 = -1;
 
                 if (num2 > 0 || num3 > 0)
@@ -2270,7 +2270,7 @@ namespace Coralite.Content.WorldGeneration
                     break;
             }
 
-            PaintingEntry result = default(PaintingEntry);
+            PaintingEntry result = default;
             result.tileType = num;
             result.style = num2;
             return result;
@@ -2281,7 +2281,7 @@ namespace Coralite.Content.WorldGeneration
             Vector2D zero = Vector2D.Zero;
             double num = WorldGen.genRand.Next(5, 9);
             int num2 = 1;
-            Vector2D vector2D = default(Vector2D);
+            Vector2D vector2D = default;
             vector2D.X = i;
             vector2D.Y = j;
             int num3 = WorldGen.genRand.Next(10, 30);
@@ -2294,9 +2294,9 @@ namespace Coralite.Content.WorldGeneration
             zero.Y = -1.0;
             zero.X = num2;
             if (!WorldGen.genRand.NextBool(3))
-                zero.X *= 1.0 + (double)WorldGen.genRand.Next(0, 200) * 0.01;
+                zero.X *= 1.0 + WorldGen.genRand.Next(0, 200) * 0.01;
             else if (WorldGen.genRand.NextBool(3))
-                zero.X *= (double)WorldGen.genRand.Next(50, 76) * 0.01;
+                zero.X *= WorldGen.genRand.Next(50, 76) * 0.01;
             else if (WorldGen.genRand.NextBool(6))
                 zero.Y *= 2.0;
 
@@ -2315,10 +2315,10 @@ namespace Coralite.Content.WorldGeneration
             while (num3 > 0)
             {
                 num3--;
-                int num4 = (int)(vector2D.X - num - 4.0 - (double)WorldGen.genRand.Next(6));
-                int num5 = (int)(vector2D.X + num + 4.0 + (double)WorldGen.genRand.Next(6));
+                int num4 = (int)(vector2D.X - num - 4.0 - WorldGen.genRand.Next(6));
+                int num5 = (int)(vector2D.X + num + 4.0 + WorldGen.genRand.Next(6));
                 int num6 = (int)(vector2D.Y - num - 4.0);
-                int num7 = (int)(vector2D.Y + num + 4.0 + (double)WorldGen.genRand.Next(6));
+                int num7 = (int)(vector2D.Y + num + 4.0 + WorldGen.genRand.Next(6));
                 if (num4 < 0)
                     num4 = 0;
 
@@ -2332,15 +2332,15 @@ namespace Coralite.Content.WorldGeneration
                     num7 = Main.maxTilesY;
 
                 int num8 = 1;
-                if (vector2D.X > (double)(Main.maxTilesX / 2))
+                if (vector2D.X > Main.maxTilesX / 2)
                     num8 = -1;
 
-                int num9 = (int)(vector2D.X + GenVars.dxStrength1 * 0.6 * (double)num8 + GenVars.dxStrength2 * (double)num8);
+                int num9 = (int)(vector2D.X + GenVars.dxStrength1 * 0.6 * num8 + GenVars.dxStrength2 * num8);
                 int num10 = (int)(GenVars.dyStrength2 * 0.5);
-                if (vector2D.Y < Main.worldSurface - 5.0 && Main.tile[num9, (int)(vector2D.Y - num - 6.0 + (double)num10)].WallType == 0 && Main.tile[num9, (int)(vector2D.Y - num - 7.0 + (double)num10)].WallType == 0 && Main.tile[num9, (int)(vector2D.Y - num - 8.0 + (double)num10)].WallType == 0)
+                if (vector2D.Y < Main.worldSurface - 5.0 && Main.tile[num9, (int)(vector2D.Y - num - 6.0 + num10)].WallType == 0 && Main.tile[num9, (int)(vector2D.Y - num - 7.0 + num10)].WallType == 0 && Main.tile[num9, (int)(vector2D.Y - num - 8.0 + num10)].WallType == 0)
                 {
                     GenVars.dSurface = true;
-                    WorldGen.TileRunner(num9, (int)(vector2D.Y - num - 6.0 + (double)num10), WorldGen.genRand.Next(25, 35), WorldGen.genRand.Next(10, 20), -1, addTile: false, 0.0, -1.0);
+                    WorldGen.TileRunner(num9, (int)(vector2D.Y - num - 6.0 + num10), WorldGen.genRand.Next(25, 35), WorldGen.genRand.Next(10, 20), -1, addTile: false, 0.0, -1.0);
                 }
 
                 for (int k = num4; k < num5; k++)
@@ -2368,10 +2368,10 @@ namespace Coralite.Content.WorldGeneration
                 if (WorldGen.genRand.NextBool((int)num))
                     num11 = WorldGen.genRand.Next(1, 3);
 
-                num4 = (int)(vector2D.X - num * 0.5 - (double)num11);
-                num5 = (int)(vector2D.X + num * 0.5 + (double)num11);
-                num6 = (int)(vector2D.Y - num * 0.5 - (double)num11);
-                num7 = (int)(vector2D.Y + num * 0.5 + (double)num11);
+                num4 = (int)(vector2D.X - num * 0.5 - num11);
+                num5 = (int)(vector2D.X + num * 0.5 + num11);
+                num6 = (int)(vector2D.Y - num * 0.5 - num11);
+                num7 = (int)(vector2D.Y + num * 0.5 + num11);
                 if (num4 < 0)
                     num4 = 0;
 
@@ -2535,7 +2535,7 @@ namespace Coralite.Content.WorldGeneration
             Vector2D zero2 = Vector2D.Zero;
             Vector2D zero3 = Vector2D.Zero;
             int num3 = 1;
-            Vector2D vector2D = default(Vector2D);
+            Vector2D vector2D = default;
             vector2D.X = i;
             vector2D.Y = j;
             int num4 = WorldGen.genRand.Next(35, 80);
@@ -2705,16 +2705,16 @@ namespace Coralite.Content.WorldGeneration
                     {
                         flag3 = true;
                         if (WorldGen.genRand.NextBool(2))
-                            zero.X = (double)WorldGen.genRand.Next(10, 20) * 0.1;
+                            zero.X = WorldGen.genRand.Next(10, 20) * 0.1;
                         else
-                            zero.X = (double)(-WorldGen.genRand.Next(10, 20)) * 0.1;
+                            zero.X = -WorldGen.genRand.Next(10, 20) * 0.1;
                     }
                     else if (WorldGen.genRand.NextBool(2))
                     {
                         if (WorldGen.genRand.NextBool(2))
-                            zero.X = (double)WorldGen.genRand.Next(20, 40) * 0.01;
+                            zero.X = WorldGen.genRand.Next(20, 40) * 0.01;
                         else
-                            zero.X = (double)(-WorldGen.genRand.Next(20, 40)) * 0.01;
+                            zero.X = -WorldGen.genRand.Next(20, 40) * 0.01;
                     }
                     else
                     {
@@ -2733,7 +2733,7 @@ namespace Coralite.Content.WorldGeneration
 
             if (!forceX)
             {
-                if (vector2D.X > (double)(Main.maxTilesX - 200))
+                if (vector2D.X > Main.maxTilesX - 200)
                 {
                     num3 = -1;
                     zero2.Y = 0.0;
@@ -2763,7 +2763,7 @@ namespace Coralite.Content.WorldGeneration
                             zero.Y = 0.2;
                     }
                 }
-                else if (vector2D.Y > (double)(Main.maxTilesY - 300))
+                else if (vector2D.Y > Main.maxTilesY - 300)
                 {
                     num3 = -1;
                     num += 1.0;
@@ -2774,9 +2774,9 @@ namespace Coralite.Content.WorldGeneration
                     if (WorldGen.genRand.NextBool(2))
                     {
                         if (WorldGen.genRand.NextBool(2))
-                            zero.X = (double)WorldGen.genRand.Next(20, 50) * 0.01;
+                            zero.X = WorldGen.genRand.Next(20, 50) * 0.01;
                         else
-                            zero.X = (double)(-WorldGen.genRand.Next(20, 50)) * 0.01;
+                            zero.X = -WorldGen.genRand.Next(20, 50) * 0.01;
                     }
                 }
                 else if (flag11)
@@ -2791,19 +2791,19 @@ namespace Coralite.Content.WorldGeneration
                     {
                         flag3 = true;
                         if (WorldGen.genRand.NextBool(2))
-                            zero.X = (double)WorldGen.genRand.Next(10, 20) * 0.1;
+                            zero.X = WorldGen.genRand.Next(10, 20) * 0.1;
                         else
-                            zero.X = (double)(-WorldGen.genRand.Next(10, 20)) * 0.1;
+                            zero.X = -WorldGen.genRand.Next(10, 20) * 0.1;
                     }
                     else if (WorldGen.genRand.NextBool(2))
                     {
                         if (WorldGen.genRand.NextBool(2))
-                            zero.X = (double)WorldGen.genRand.Next(20, 50) * 0.01;
+                            zero.X = WorldGen.genRand.Next(20, 50) * 0.01;
                         else
-                            zero.X = (double)WorldGen.genRand.Next(20, 50) * 0.01;
+                            zero.X = WorldGen.genRand.Next(20, 50) * 0.01;
                     }
                 }
-                else if (vector2D.X < (double)(Main.maxTilesX / 2) && vector2D.X > (double)Main.maxTilesX * 0.25)
+                else if (vector2D.X < Main.maxTilesX / 2 && vector2D.X > Main.maxTilesX * 0.25)
                 {
                     num3 = -1;
                     zero2.Y = 0.0;
@@ -2818,7 +2818,7 @@ namespace Coralite.Content.WorldGeneration
                             zero.Y = 0.2;
                     }
                 }
-                else if (vector2D.X > (double)(Main.maxTilesX / 2) && vector2D.X < (double)Main.maxTilesX * 0.75)
+                else if (vector2D.X > Main.maxTilesX / 2 && vector2D.X < Main.maxTilesX * 0.75)
                 {
                     num3 = 1;
                     zero2.Y = 0.0;
@@ -2851,16 +2851,16 @@ namespace Coralite.Content.WorldGeneration
 
             GenVars.lastDungeonHall = zero2;
             if (Math.Abs(zero.X) > Math.Abs(zero.Y) && !WorldGen.genRand.NextBool(3))
-                num = (int)(num2 * ((double)WorldGen.genRand.Next(110, 150) * 0.01));
+                num = (int)(num2 * (WorldGen.genRand.Next(110, 150) * 0.01));
 
             while (num4 > 0)
             {
                 num9++;
-                if (zero2.X > 0.0 && vector2D.X > (double)(Main.maxTilesX - 100))
+                if (zero2.X > 0.0 && vector2D.X > Main.maxTilesX - 100)
                     num4 = 0;
                 else if (zero2.X < 0.0 && vector2D.X < 100.0)
                     num4 = 0;
-                else if (zero2.Y > 0.0 && vector2D.Y > (double)(Main.maxTilesY - 100))
+                else if (zero2.Y > 0.0 && vector2D.Y > Main.maxTilesY - 100)
                     num4 = 0;
                 else if (WorldGen.remixWorldGen && zero2.Y < 0.0 && vector2D.Y < (Main.rockLayer + Main.worldSurface) / 2.0)
                     num4 = 0;
@@ -2868,10 +2868,10 @@ namespace Coralite.Content.WorldGeneration
                     num4 = 0;
 
                 num4--;
-                int num10 = (int)(vector2D.X - num - 4.0 - (double)WorldGen.genRand.Next(6));
-                int num11 = (int)(vector2D.X + num + 4.0 + (double)WorldGen.genRand.Next(6));
-                int num12 = (int)(vector2D.Y - num - 4.0 - (double)WorldGen.genRand.Next(6));
-                int num13 = (int)(vector2D.Y + num + 4.0 + (double)WorldGen.genRand.Next(6));
+                int num10 = (int)(vector2D.X - num - 4.0 - WorldGen.genRand.Next(6));
+                int num11 = (int)(vector2D.X + num + 4.0 + WorldGen.genRand.Next(6));
+                int num12 = (int)(vector2D.Y - num - 4.0 - WorldGen.genRand.Next(6));
+                int num13 = (int)(vector2D.Y + num + 4.0 + WorldGen.genRand.Next(6));
                 if (num10 < 0)
                     num10 = 0;
 
@@ -2922,10 +2922,10 @@ namespace Coralite.Content.WorldGeneration
                 else if (WorldGen.genRand.NextBool((int)num * 3))
                     num16 = WorldGen.genRand.Next(1, 3);
 
-                num10 = (int)(vector2D.X - num * 0.5 - (double)num16);
-                num11 = (int)(vector2D.X + num * 0.5 + (double)num16);
-                num12 = (int)(vector2D.Y - num * 0.5 - (double)num16);
-                num13 = (int)(vector2D.Y + num * 0.5 + (double)num16);
+                num10 = (int)(vector2D.X - num * 0.5 - num16);
+                num11 = (int)(vector2D.X + num * 0.5 + num16);
+                num12 = (int)(vector2D.Y - num * 0.5 - num16);
+                num13 = (int)(vector2D.Y + num * 0.5 + num16);
                 if (num10 < 0)
                     num10 = 0;
 
@@ -3129,9 +3129,9 @@ namespace Coralite.Content.WorldGeneration
 
             double dxStrength = GenVars.dxStrength1;
             double dyStrength = GenVars.dyStrength1;
-            Vector2D vector2D = default(Vector2D);
+            Vector2D vector2D = default;
             vector2D.X = i;
-            vector2D.Y = (double)j - dyStrength / 2.0;
+            vector2D.Y = j - dyStrength / 2.0;
             GenVars.dMinY = (int)vector2D.Y;
             int num2 = 1;
             if (i > Main.maxTilesX / 2)
@@ -3140,10 +3140,10 @@ namespace Coralite.Content.WorldGeneration
             if (WorldGen.drunkWorldGen || WorldGen.getGoodWorldGen)
                 num2 *= -1;
 
-            int num3 = (int)(vector2D.X - dxStrength * 0.6 - (double)WorldGen.genRand.Next(2, 5));
-            int num4 = (int)(vector2D.X + dxStrength * 0.6 + (double)WorldGen.genRand.Next(2, 5));
-            int num5 = (int)(vector2D.Y - dyStrength * 0.6 - (double)WorldGen.genRand.Next(2, 5));
-            int num6 = (int)(vector2D.Y + dyStrength * 0.6 + (double)WorldGen.genRand.Next(8, 16));
+            int num3 = (int)(vector2D.X - dxStrength * 0.6 - WorldGen.genRand.Next(2, 5));
+            int num4 = (int)(vector2D.X + dxStrength * 0.6 + WorldGen.genRand.Next(2, 5));
+            int num5 = (int)(vector2D.Y - dyStrength * 0.6 - WorldGen.genRand.Next(2, 5));
+            int num6 = (int)(vector2D.Y + dyStrength * 0.6 + WorldGen.genRand.Next(8, 16));
             if (num3 < 0)
                 num3 = 0;
 
@@ -3232,7 +3232,7 @@ namespace Coralite.Content.WorldGeneration
 
             for (int num20 = num3; num20 < num4; num20++)
             {
-                for (int num21 = num6; (double)num21 < Main.worldSurface; num21++)
+                for (int num21 = num6; num21 < Main.worldSurface; num21++)
                 {
                     Main.tile[num20, num21].LiquidAmount = 0;
                     if (!Main.wallDungeon[Main.tile[num20, num21].WallType])
@@ -3351,16 +3351,16 @@ namespace Coralite.Content.WorldGeneration
                 }
             }
 
-            vector2D.X += dxStrength * 0.6 * (double)num2;
+            vector2D.X += dxStrength * 0.6 * num2;
             vector2D.Y += dyStrength * 0.5;
             dxStrength = GenVars.dxStrength2;
             dyStrength = GenVars.dyStrength2;
-            vector2D.X += dxStrength * 0.55 * (double)num2;
+            vector2D.X += dxStrength * 0.55 * num2;
             vector2D.Y -= dyStrength * 0.5;
-            num3 = (int)(vector2D.X - dxStrength * 0.6 - (double)WorldGen.genRand.Next(1, 3));
-            num4 = (int)(vector2D.X + dxStrength * 0.6 + (double)WorldGen.genRand.Next(1, 3));
-            num5 = (int)(vector2D.Y - dyStrength * 0.6 - (double)WorldGen.genRand.Next(1, 3));
-            num6 = (int)(vector2D.Y + dyStrength * 0.6 + (double)WorldGen.genRand.Next(6, 16));
+            num3 = (int)(vector2D.X - dxStrength * 0.6 - WorldGen.genRand.Next(1, 3));
+            num4 = (int)(vector2D.X + dxStrength * 0.6 + WorldGen.genRand.Next(1, 3));
+            num5 = (int)(vector2D.Y - dyStrength * 0.6 - WorldGen.genRand.Next(1, 3));
+            num6 = (int)(vector2D.Y + dyStrength * 0.6 + WorldGen.genRand.Next(6, 16));
             if (num3 < 0)
                 num3 = 0;
 
@@ -3384,10 +3384,10 @@ namespace Coralite.Content.WorldGeneration
                     bool flag = true;
                     if (num2 < 0)
                     {
-                        if ((double)num31 < vector2D.X - dxStrength * 0.5)
+                        if (num31 < vector2D.X - dxStrength * 0.5)
                             flag = false;
                     }
-                    else if ((double)num31 > vector2D.X + dxStrength * 0.5 - 1.0)
+                    else if (num31 > vector2D.X + dxStrength * 0.5 - 1.0)
                     {
                         flag = false;
                     }
@@ -3403,7 +3403,7 @@ namespace Coralite.Content.WorldGeneration
 
             for (int num33 = num3; num33 < num4; num33++)
             {
-                for (int num34 = num6; (double)num34 < Main.worldSurface; num34++)
+                for (int num34 = num6; num34 < Main.worldSurface; num34++)
                 {
                     Main.tile[num33, num34].LiquidAmount = 0;
                     if (!Main.wallDungeon[Main.tile[num33, num34].WallType])
@@ -3661,7 +3661,7 @@ namespace Coralite.Content.WorldGeneration
                 }
             }
 
-            vector2D.X -= dxStrength * 0.6 * (double)num2;
+            vector2D.X -= dxStrength * 0.6 * num2;
             vector2D.Y += dyStrength * 0.5;
             dxStrength = 15.0;
             dyStrength = 3.0;
@@ -3782,7 +3782,7 @@ namespace Coralite.Content.WorldGeneration
             {
                 int num12 = array[l] + array3[l];
                 int num13 = array2[l];
-                int num14 = (int)((double)array4[l] * (1.0 + (double)WorldGen.genRand.Next(20, 30) * 0.1));
+                int num14 = (int)(array4[l] * (1.0 + WorldGen.genRand.Next(20, 30) * 0.1));
                 Main.tile[num12, num13 + 1].ResetToType(191);
                 Main.tile[num12, num13 + 1].Clear(TileDataType.Slope);
                 WorldGen.paintTile(num12, num13 + 1, 28);
@@ -3962,7 +3962,7 @@ namespace Coralite.Content.WorldGeneration
 
                     int num35 = num33;
                     int num36 = n;
-                    num27 = WorldGen.genRand.Next((int)((double)num5 * 3.5), num5 * 6);
+                    num27 = WorldGen.genRand.Next((int)(num5 * 3.5), num5 * 6);
                     while (num27 > 0)
                     {
                         num27--;
@@ -4000,7 +4000,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int num37 = 0; num37 < num2; num37++)
                 {
                     int num38 = WorldGen.genRand.Next(5, 8);
-                    num38 = (int)((double)num38 * (1.0 + (double)num5 * 0.05));
+                    num38 = (int)(num38 * (1.0 + num5 * 0.05));
                     if (array7[num37])
                         num38 = WorldGen.genRand.Next(6, 12) + num5;
 
@@ -4008,7 +4008,7 @@ namespace Coralite.Content.WorldGeneration
                     int num40 = array5[num37] + num38 * 2;
                     int num41 = array6[num37] - num38 * 2;
                     int num42 = array6[num37] + num38 * 2;
-                    double num43 = 2.0 - (double)WorldGen.genRand.Next(5) * 0.1;
+                    double num43 = 2.0 - WorldGen.genRand.Next(5) * 0.1;
                     for (int num44 = num39; num44 <= num40; num44++)
                     {
                         for (int num45 = num41; num45 <= num42; num45++)
@@ -4018,14 +4018,14 @@ namespace Coralite.Content.WorldGeneration
 
                             if (array7[num37])
                             {
-                                if ((new Vector2D(array5[num37], array6[num37]) - new Vector2D(num44, num45)).Length() < (double)num38 * 0.9)
+                                if ((new Vector2D(array5[num37], array6[num37]) - new Vector2D(num44, num45)).Length() < num38 * 0.9)
                                 {
                                     Main.tile[num44, num45].ResetToType(192);
                                     Main.tile[num44, num45].Clear(TileDataType.Slope);
                                     WorldGen.paintTile(num44, num45, 28);
                                 }
                             }
-                            else if ((double)Math.Abs(array5[num37] - num44) + (double)Math.Abs(array6[num37] - num45) * num43 < (double)num38)
+                            else if (Math.Abs(array5[num37] - num44) + Math.Abs(array6[num37] - num45) * num43 < num38)
                             {
                                 Main.tile[num44, num45].ResetToType(192);
                                 Main.tile[num44, num45].Clear(TileDataType.Slope);
@@ -4074,10 +4074,10 @@ namespace Coralite.Content.WorldGeneration
                             if (!Main.wallDungeon[Main.tile[i, num4].WallType])
                                 Main.tile[i, num4].WallType = 244;
 
-                            if (!Main.wallDungeon[Main.tile[i - 1, num4].WallType] && (Main.tile[i - 1, num4].WallType > 0 || (double)num4 >= Main.worldSurface))
+                            if (!Main.wallDungeon[Main.tile[i - 1, num4].WallType] && (Main.tile[i - 1, num4].WallType > 0 || num4 >= Main.worldSurface))
                                 Main.tile[i - 1, num4].WallType = 244;
 
-                            if (!Main.wallDungeon[Main.tile[i + 1, num4].WallType] && (Main.tile[i + 1, num4].WallType > 0 || (double)num4 >= Main.worldSurface))
+                            if (!Main.wallDungeon[Main.tile[i + 1, num4].WallType] && (Main.tile[i + 1, num4].WallType > 0 || num4 >= Main.worldSurface))
                                 Main.tile[i + 1, num4].WallType = 244;
 
                             if (num4 == j && i > num6 - 2 && i <= num6 + 1)
@@ -4228,12 +4228,12 @@ namespace Coralite.Content.WorldGeneration
         /// </summary>
         public List<ShadowCastleRoom> shadowCastleRooms;
 
-        public static Dictionary<Color, int> clearDic = new Dictionary<Color, int>()
+        public static Dictionary<Color, int> clearDic = new()
         {
             [Color.White] = -2,
             [Color.Black] = -1
         };
-        public static Dictionary<Color, int> GenDic = new Dictionary<Color, int>()
+        public static Dictionary<Color, int> GenDic = new()
         {
             [Color.Black] = -1,
             [Color.White] = ModContent.TileType<ShadowBrickTile>(),
@@ -4242,7 +4242,7 @@ namespace Coralite.Content.WorldGeneration
             [new Color(189, 109, 255)] = ModContent.TileType<ShadowImaginaryBrickTile>(),//影虚砖bd6dff
             [new Color(164, 135, 154)] = ModContent.TileType<ShadowBeamTile>(),//影立柱a4879a
         };
-        public static Dictionary<Color, int> WallDic = new Dictionary<Color, int>()
+        public static Dictionary<Color, int> WallDic = new()
         {
             [Color.Black] = -1,
             [Color.White] = WallID.SandFall,
@@ -4250,7 +4250,7 @@ namespace Coralite.Content.WorldGeneration
             [new Color(245, 115, 31)] = ModContent.WallType<BlackHoleWall>(),//黑洞墙f5731f
             [new Color(210, 123, 198)] = ModContent.WallType<ShadowGlassWall>(),//影玻璃墙d27bc6
         };
-        public static Dictionary<Color, (int, int)> ObjectDic = new Dictionary<Color, (int, int)>
+        public static Dictionary<Color, (int, int)> ObjectDic = new()
         {
             [Color.Black] = (-1, 0),
             [new Color(186, 255, 196)] = (ModContent.TileType<MercuryPlatformTile>(), 0),//水银平台baffc4
@@ -4469,7 +4469,7 @@ namespace Coralite.Content.WorldGeneration
 
         public virtual bool NextDirection(out Direction direction)
         {
-            List<Direction> directions = new List<Direction>() { Direction.Up, Direction.Down, Direction.Left, Direction.Right };
+            List<Direction> directions = new() { Direction.Up, Direction.Down, Direction.Left, Direction.Right };
             directions.Remove(parentDirection);
 
             if (childrenRooms != null)

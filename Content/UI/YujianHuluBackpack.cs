@@ -17,9 +17,9 @@ namespace Coralite.Content.UI
         public static bool visible = false;
         public static BaseHulu huluItem = null;
         public static HuluBackpackSlot[] huluBackpackSlots;
-        public static HuluBackpackPanel panel = new HuluBackpackPanel();
+        public static HuluBackpackPanel panel = new();
 
-        public static Vector2 basePos = new Vector2((Main.screenWidth / 2) - 159, (Main.screenHeight / 2) - 200 - 47);
+        public static Vector2 basePos = new((Main.screenWidth / 2) - 159, (Main.screenHeight / 2) - 200 - 47);
 
         public YujianHuluBackpack()
         {
@@ -162,7 +162,7 @@ namespace Coralite.Content.UI
                 Texture2D canChannelAnim = ModContent.Request<Texture2D>(AssetDirectory.UI + "CanChannelAnim").Value;
 
                 int frame = (int)(Main.timeForVisualEffects % 36) / 3;
-                Rectangle source = new Rectangle(frame * 30, 0, 30, 72);        //贴图长宽这里就直接写了
+                Rectangle source = new(frame * 30, 0, 30, 72);        //贴图长宽这里就直接写了
 
                 spriteBatch.Draw(canChannelAnim, position, source, Color.White);
                 //if (YujianHuluBackpack.huluItem.CanChannel[slotIndex])      //绘制特效
@@ -202,7 +202,7 @@ namespace Coralite.Content.UI
                     position.Y += 36 - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高的一半
 
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
-                    if (Item.color != default(Color))
+                    if (Item.color != default)
                         spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
 
                     if (IsMouseHovering)

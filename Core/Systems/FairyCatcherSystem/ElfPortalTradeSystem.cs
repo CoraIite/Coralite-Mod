@@ -8,7 +8,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     public partial class FairySystem
     {
-        internal static Dictionary<int, ElfPortalTrade> ElfPortalTrades = new Dictionary<int, ElfPortalTrade>();
+        internal static Dictionary<int, ElfPortalTrade> ElfPortalTrades = new();
 
         private static void RegisterElfTrade()
         {
@@ -49,7 +49,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public static void AddElfTrade(int selfType, int resultType, int selfStack = 1, int resultStack = 1, params Condition[] conditions)
         {
-            ElfPortalTrade trade = new ElfPortalTrade(selfType, resultType, selfStack, resultStack, conditions);
+            ElfPortalTrade trade = new(selfType, resultType, selfStack, resultStack, conditions);
 
             if (ElfPortalTrades == null)
                 throw new Exception("合成表为null!");

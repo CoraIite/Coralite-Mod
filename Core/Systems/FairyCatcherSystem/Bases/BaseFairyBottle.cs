@@ -68,7 +68,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            TooltipLine line = new TooltipLine(Mod, "Capacity",
+            TooltipLine line = new(Mod, "Capacity",
                 FairySystem.BottleCapacity.Format(fairies.Count(i => !i.IsAir), Capacity));
         }
 

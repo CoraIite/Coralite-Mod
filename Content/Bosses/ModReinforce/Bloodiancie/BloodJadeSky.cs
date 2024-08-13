@@ -22,7 +22,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         private Asset<Texture2D>[] _textures;
         private Slime[] _slimes;
-        private UnifiedRandom _random = new UnifiedRandom();
+        private UnifiedRandom _random = new();
         private int _slimesRemaining;
         private bool _isActive;
         private bool _isLeaving;
@@ -140,7 +140,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 return;
 
             Vector2 vector = Main.screenPosition + new Vector2(Main.screenWidth >> 1, Main.screenHeight >> 1);
-            Rectangle rectangle = new Rectangle(-1000, -1000, 4000, 4000);
+            Rectangle rectangle = new(-1000, -1000, 4000, 4000);
             for (int j = num; j < num2; j++)
             {
                 if (_slimes[j].Active)
@@ -158,7 +158,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
                     num3 *= 0.6f;
                     color = new Color((int)(color.R * num3), (int)(color.G * num3), (int)(color.B * num3), (int)(color.A * num3));
-                    Vector2 vector2 = new Vector2(1f / _slimes[j].Depth, 0.9f / _slimes[j].Depth);
+                    Vector2 vector2 = new(1f / _slimes[j].Depth, 0.9f / _slimes[j].Depth);
                     Vector2 position = _slimes[j].Position;
                     position = (position - vector) * vector2 + vector - Main.screenPosition;
                     position.X = (position.X + 500f) % 4000f;

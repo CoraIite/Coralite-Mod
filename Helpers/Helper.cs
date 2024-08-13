@@ -36,7 +36,7 @@ namespace Coralite.Helpers
             return new Vector3(H, C, Q.X);
         }
 
-        public static Vector3 Vec3(this Vector2 vector) => new Vector3(vector.X, vector.Y, 0);
+        public static Vector3 Vec3(this Vector2 vector) => new(vector.X, vector.Y, 0);
 
         public static float SignedAngle(Vector2 from, Vector2 to)
         {
@@ -272,7 +272,7 @@ namespace Coralite.Helpers
             Vector3 v3D = Vector3.Transform(v3, Matrix.CreateRotationX(zRot - MathHelper.PiOver2));
 
             //float k1 = -1000 / (v3D.Z - 1000);
-            Vector2 targetDir = /*k1 **/ new Vector2(v3D.X, v3D.Y);
+            Vector2 targetDir = /*k1 **/ new(v3D.X, v3D.Y);
             overrideAngle = targetDir.ToRotation();
             return targetDir.Length();
         }
@@ -346,7 +346,7 @@ namespace Coralite.Helpers
         }
 
         public static Rectangle QuickMouseRectangle()
-           => new Rectangle((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
+           => new((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
 
         /// <summary>
         /// 将你的值根据不同模式来改变

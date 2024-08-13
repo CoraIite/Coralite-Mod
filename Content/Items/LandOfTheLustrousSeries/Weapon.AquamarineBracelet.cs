@@ -224,7 +224,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Texture2D mainTex = Projectile.GetTexture();
             var origin = new Vector2(mainTex.Width / 2, 0);
-            Vector2 toCenter = new Vector2(Projectile.width / 2, 0);
+            Vector2 toCenter = new(Projectile.width / 2, 0);
 
             for (int i = 0; i < 4; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
@@ -247,9 +247,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public ref float Timer => ref Projectile.ai[2];
         public ref float HitTileCount => ref Projectile.localAI[0];
 
-        public static Color highlightC = new Color(168, 248, 249);
-        public static Color brightC = new Color(71, 235, 250);
-        public static Color darkC = new Color(24, 27, 81);
+        public static Color highlightC = new(168, 248, 249);
+        public static Color brightC = new(71, 235, 250);
+        public static Color darkC = new(24, 27, 81);
 
         private Trail trail;
 

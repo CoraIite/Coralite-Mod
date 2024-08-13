@@ -17,10 +17,10 @@ namespace Coralite.Content.UI
         public static Item currentChooseItem;
 
         public static MagikeFactory_PolymerizeAltar altar = null;
-        public static Old_CloseButton closeButton = new Old_CloseButton();
-        public static SingleItemSlot selfSlot = new SingleItemSlot();
-        public static CraftImage image = new CraftImage();
-        public static UIList list = new UIList();
+        public static Old_CloseButton closeButton = new();
+        public static SingleItemSlot selfSlot = new();
+        public static CraftImage image = new();
+        public static UIList list = new();
 
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
@@ -53,7 +53,7 @@ namespace Coralite.Content.UI
 
             Append(list);
 
-            UIScrollbar scrollbar = new UIScrollbar();
+            UIScrollbar scrollbar = new();
             scrollbar.SetView(100f, 1000f);
             scrollbar.Top.Pixels = 2_0000;
             scrollbar.Height.Set(-42f - 8, 1f);
@@ -96,7 +96,7 @@ namespace Coralite.Content.UI
                     {
                         foreach (var recipe in recipeList)
                         {
-                            PolymerizeItemButton shower = new PolymerizeItemButton(recipe);
+                            PolymerizeItemButton shower = new(recipe);
                             list.Add(shower);
                         }
                     }
@@ -151,14 +151,14 @@ namespace Coralite.Content.UI
             Height.Set(52, 0f);
             //IgnoresMouseInteraction = true;
 
-            ItemShower slot1 = new ItemShower(recipe.ResultItem, 1);
+            ItemShower slot1 = new(recipe.ResultItem, 1);
             slot1.Left.Set(0, 0f);
             slot1.OnLeftClick += Slot_OnLeftClick;
             Append(slot1);
 
             for (int i = 0; i < recipe.RequiredItems.Count; i++)
             {
-                ItemShower slot = new ItemShower(recipe.RequiredItems[i], 0);
+                ItemShower slot = new(recipe.RequiredItems[i], 0);
                 slot.Left.Set((52 + i * 52), 0f);
                 slot.OnLeftClick += Slot_OnLeftClick;
                 Append(slot);
@@ -328,7 +328,7 @@ namespace Coralite.Content.UI
                 position.Y += 26 - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
 
                 spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
-                if (Item.color != default(Color))
+                if (Item.color != default)
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
 
                 if (Item.stack > 1)

@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.Crimson
                 {
                     //遍历获取到椎骨刃碎片的中心点，生成弹幕，之后将各个弹幕的index传给剑弹幕
                     Vector2 bladePos = Vector2.Zero;
-                    List<int> indexs = new List<int>();
+                    List<int> indexs = new();
 
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
@@ -225,7 +225,7 @@ namespace Coralite.Content.Items.Crimson
             var frameBox = mainTex.Frame(1, 4, 0, Projectile.frame);
             var origin = frameBox.Size() / 2;
 
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             for (int i = 1; i < 6; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,

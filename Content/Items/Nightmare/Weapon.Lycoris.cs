@@ -471,7 +471,7 @@ namespace Coralite.Content.Items.Nightmare
             vector31 *= 0.4f;
             vector32 *= 0.4f;
 
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             //残影
             for (int i = 1; i < 12; i++)

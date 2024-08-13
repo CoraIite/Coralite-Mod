@@ -9,7 +9,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 {
     public partial class MagikeSystem : ModSystem, ILocalizedModType
     {
-        internal static Dictionary<int, List<PolymerizeRecipe>> polymerizeRecipes = new Dictionary<int, List<PolymerizeRecipe>>();
+        internal static Dictionary<int, List<PolymerizeRecipe>> polymerizeRecipes = new();
 
         private void RegisterPolymerize()
         {
@@ -199,7 +199,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            TooltipLine line = new TooltipLine(Mod, "Coralite: MagikeNeed", "魔能需求量：" + Item.stack);
+            TooltipLine line = new(Mod, "Coralite: MagikeNeed", "魔能需求量：" + Item.stack);
 
             if (Item.stack < 300)
                 line.OverrideColor = Coralite.MagicCrystalPink;

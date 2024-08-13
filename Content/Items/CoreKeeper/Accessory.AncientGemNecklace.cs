@@ -65,7 +65,7 @@ namespace Coralite.Content.Items.CoreKeeper
                     tooltips.Add(new TooltipLine(Mod, "AncientGemSet", this.GetLocalization("AncientGemSet", () => "2件套：将背包内物品的最高镐力的+7%加到攻击伤害上").Value));
                 else
                 {
-                    TooltipLine line = new TooltipLine(Mod, "AncientGemSetTips"
+                    TooltipLine line = new(Mod, "AncientGemSetTips"
                          , this.GetLocalization("AncientGemSetTips", () => "装备上古宝石戒指以获得套装效果").Value + $"[i:{ItemType<AncientGemRing>()}]");
                     line.OverrideColor = new Microsoft.Xna.Framework.Color(147, 147, 147);
                     tooltips.Add(line);

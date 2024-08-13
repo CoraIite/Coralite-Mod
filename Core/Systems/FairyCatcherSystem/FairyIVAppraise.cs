@@ -6,8 +6,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
     {
         public readonly (float, Color, LocalizedText)[] AppraiseLevels = appraiseLevels;
 
-        public static FairyIVAppraise FairyDamageAppraise = new FairyIVAppraise
-            (
+        public static FairyIVAppraise FairyDamageAppraise = new(
                 new (float, Color, LocalizedText)[]
                 {
                     (0.9f,Color.Gray,FairySystem.WeakLevel),
@@ -21,8 +20,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 }
             );
 
-        public static FairyIVAppraise FairyDefenceAppraise = new FairyIVAppraise
-            (
+        public static FairyIVAppraise FairyDefenceAppraise = new(
                 new (float, Color, LocalizedText)[]
                 {
                     (0.9f,Color.Gray,FairySystem.WeakLevel),
@@ -36,8 +34,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 }
             );
 
-        public static FairyIVAppraise FairyLifeMaxAppraise = new FairyIVAppraise
-            (
+        public static FairyIVAppraise FairyLifeMaxAppraise = new(
                 new (float, Color, LocalizedText)[]
                 {
                     (0.9f,Color.Gray,FairySystem.WeakLevel),

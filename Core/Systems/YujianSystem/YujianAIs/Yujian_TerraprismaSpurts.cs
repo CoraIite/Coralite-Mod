@@ -25,7 +25,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 
             Vector2 targetCenter = yujianProj.GetTargetCenter(IsAimingMouse);
 
-            Vector2 originCenter = new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
+            Vector2 originCenter = new(Projectile.localAI[0], Projectile.localAI[1]);
             originCenter += new Vector2(0f, Utils.GetLerpValue(0f, 0.4f, factor, clamped: true) * -100f);
             Vector2 v = targetCenter - originCenter;
             Vector2 vector6 = v.SafeNormalize(Vector2.Zero) * MathHelper.Clamp(v.Length(), 60f, 150f);

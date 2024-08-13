@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public PowerliftExoskeleton() : base(ItemRarityID.Pink, Item.sellPrice(0, 1, 30))
         { }
 
-        public Vector2 ExtraOffset => new Vector2(0, 10);
+        public Vector2 ExtraOffset => new(0, 10);
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {

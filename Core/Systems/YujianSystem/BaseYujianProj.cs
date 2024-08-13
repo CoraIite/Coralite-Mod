@@ -357,7 +357,7 @@ namespace Coralite.Core.Systems.YujianSystem
         /// <param name="idleRotation"></param>
         public void GetIdlePosition(int stackedIndex, int totalIndexes, out Vector2 idleSpot, out float idleRotation)
         {
-            idleRotation = (float)MathHelper.PiOver2 * 1.5f * Owner.direction + Owner.direction * 0.2f * totalIndexes * stackedIndex;
+            idleRotation = MathHelper.PiOver2 * 1.5f * Owner.direction + Owner.direction * 0.2f * totalIndexes * stackedIndex;
             //idleRotation = (-Vector2.UnitX).RotatedBy(stackedIndex * 0.1f * totalIndexes * Owner.direction).ToRotation();
             //float num2 = (totalIndexes - 1f) / 2f;
             //idleSpot = Owner.Center - Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 33f - new Vector2(Owner.direction * 16, 8);

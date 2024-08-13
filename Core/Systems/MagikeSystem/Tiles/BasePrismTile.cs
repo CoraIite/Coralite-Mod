@@ -7,7 +7,7 @@ using Terraria;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
-    public abstract class BasePrismTile(int width, int height, Color mapColor, int dustType,int frameCount, int minPick = 0, bool topSoild = false)
+    public abstract class BasePrismTile(int width, int height, Color mapColor, int dustType, int frameCount, int minPick = 0, bool topSoild = false)
         : BaseMagikeTile(width, height, mapColor, dustType, minPick, topSoild)
     {
         public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MagikeApparatusLevel level)
@@ -31,7 +31,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             else
             {
                 drawPos += rotation.ToRotationVector2() * (halfHeight - 6);
-                int frame = (tileRect.X/10 + tileRect.Y + (int)Main.timeForVisualEffects / 4) % frameCount;
+                int frame = (tileRect.X / 10 + tileRect.Y + (int)Main.timeForVisualEffects / 4) % frameCount;
                 frameBox = tex.Frame(1, frameCount, 0, frame);
             }
 

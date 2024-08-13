@@ -16,7 +16,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     {
         public float itemScale = 1;
         public float itemAlpha = 1;
-        public Item containsItem = new Item();
+        public Item containsItem = new();
         public RemodelRecipe chooseRecipe;
 
         public abstract Color MainColor { get; }

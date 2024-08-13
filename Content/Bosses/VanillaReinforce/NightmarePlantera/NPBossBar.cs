@@ -71,7 +71,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             float life = drawParams.Life;
             float lifeMax = drawParams.LifeMax;
 
-            Point barSize = new Point(920, 20); //条条尺寸
+            Point barSize = new(920, 20); //条条尺寸
 
             Rectangle barPosition = Utils.CenteredRectangle(trueCenter, (barSize + new Point(4, 0)).ToVector2());
 

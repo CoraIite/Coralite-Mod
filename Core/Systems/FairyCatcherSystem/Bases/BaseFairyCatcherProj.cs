@@ -454,7 +454,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             float halfWidth = stringTex.Width / 2;
             float halfHeight = stringTex.Height / 2;
-            Vector2 origin = new Vector2(halfWidth, 0f);
+            Vector2 origin = new(halfWidth, 0f);
 
             if (distanceX == 0f && distanceY == 0f)
             {

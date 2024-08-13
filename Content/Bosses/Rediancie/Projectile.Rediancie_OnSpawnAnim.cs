@@ -13,7 +13,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public Color drawCharColor;
         public Color drawPicColor;
-        public readonly Color blankColor = new Color(0, 0, 0, 0);
+        public readonly Color blankColor = new(0, 0, 0, 0);
 
         public override void SetDefaults()
         {

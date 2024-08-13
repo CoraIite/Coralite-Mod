@@ -37,6 +37,8 @@ MagikeSystem: {
 	UITextPolarizedFilterLevel: Mods.Coralite.MagikeSystem.MagikeSystem.UITextPolarizedFilterLevel
 	UITextClickToRemove: Mods.Coralite.MagikeSystem.MagikeSystem.UITextClickToRemove
 	UITextMagikePolarizedFilterName: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikePolarizedFilterName
+	UITextContainerAntiMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UITextContainerAntiMagikeAmount
+	UITextContainerAntiMagikeMax: Mods.Coralite.MagikeSystem.MagikeSystem.UITextContainerAntiMagikeMax
 }
 
 C0_P1_BookName: {

@@ -157,7 +157,7 @@ namespace Coralite.Content.NPCs.Town
 
         public override string GetChat()
         {
-            WeightedRandom<string> chat = new WeightedRandom<string>();
+            WeightedRandom<string> chat = new();
 
             int dryad = NPC.FindFirstNPC(NPCID.Dryad);
             if (dryad >= 0 && Main.rand.NextBool(8))

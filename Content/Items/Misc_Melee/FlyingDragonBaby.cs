@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             Vector2 vector = Main.MouseWorld - position;
 
-            position += vector.SafeNormalize(Vector2.Zero).RotatedBy((float)player.direction * (-(float)Math.PI / 2f)) * 24f;
+            position += vector.SafeNormalize(Vector2.Zero).RotatedBy(player.direction * (-(float)Math.PI / 2f)) * 24f;
 
             Projectile.NewProjectile(source, position
                 , velocity.SafeNormalize(Vector2.Zero) * 7.5f, ProjectileID.DD2SquireSonicBoom

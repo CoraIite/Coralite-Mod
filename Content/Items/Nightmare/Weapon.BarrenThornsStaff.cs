@@ -171,7 +171,7 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     float num336 = Main.npc[i].position.X + (Main.npc[i].width / 2);
                     float num337 = Main.npc[i].position.Y + (Main.npc[i].height / 2);
-                    float num338 = Math.Abs(Projectile.position.X + (Projectile.width / 2) - num336) + Math.Abs(Projectile.position.Y + (float)(Projectile.height / 2) - num337);
+                    float num338 = Math.Abs(Projectile.position.X + (Projectile.width / 2) - num336) + Math.Abs(Projectile.position.Y + Projectile.height / 2 - num337);
                     if (num338 < num334 && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, Main.npc[i].position, Main.npc[i].width, Main.npc[i].height))
                     {
                         num334 = num338;

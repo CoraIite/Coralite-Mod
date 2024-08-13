@@ -252,7 +252,7 @@ namespace Coralite.Content.Items.Donator
             Texture2D mainTex = Projectile.GetTexture();
             var frame = mainTex.Frame(2, Main.projFrames[Projectile.type], frameX, Projectile.frame);
             var origin = new Vector2(frame.Width / 2, 0);
-            Vector2 toCenter = new Vector2(Projectile.width / 2, 0);
+            Vector2 toCenter = new(Projectile.width / 2, 0);
 
             for (int i = 0; i < 4; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frame,
@@ -268,9 +268,9 @@ namespace Coralite.Content.Items.Donator
     {
         public override string Texture => AssetDirectory.Donator + Name;
 
-        public static Color highlightC = new Color(255, 251, 201);
-        public static Color brightC = new Color(252, 193, 45);
-        public static Color darkC = new Color(142, 45, 0);
+        public static Color highlightC = new(255, 251, 201);
+        public static Color brightC = new(252, 193, 45);
+        public static Color darkC = new(142, 45, 0);
 
         public ref float RecordY => ref Projectile.ai[0];
         public ref float TileCollide => ref Projectile.ai[1];

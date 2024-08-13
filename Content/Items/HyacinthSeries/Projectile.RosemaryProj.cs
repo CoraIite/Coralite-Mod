@@ -266,7 +266,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Texture2D mainTex = Projectile.GetTexture();
             Vector2 center = Projectile.Center - Main.screenPosition;
-            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 4);
+            Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 4);
 
             Main.spriteBatch.Draw(mainTex, center, mainTex.Frame(1, 2, 0, 0), Color.White * Alpha, 0f, origin, 0.8f, SpriteEffects.None, 0f);
             Main.spriteBatch.Draw(mainTex, center, mainTex.Frame(1, 2, 0, 1), new Color(255, 219, 253) * visualAlpha, 0f, origin, visualScale, SpriteEffects.None, 0f);

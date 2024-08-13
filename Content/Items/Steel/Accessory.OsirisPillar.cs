@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.FlyingShields.Accessories;
-using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria;

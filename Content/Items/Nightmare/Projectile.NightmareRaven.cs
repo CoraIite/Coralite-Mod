@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.Nightmare
             }
 
             float lerpValue = Utils.GetLerpValue(attackTime_less1, 0f, Timer, clamped: true);
-            Vector2 vector = new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
+            Vector2 vector = new(Projectile.localAI[0], Projectile.localAI[1]);
 
             if (lerpValue >= 0.5f)
                 vector = Main.player[Projectile.owner].Center;
@@ -422,7 +422,7 @@ namespace Coralite.Content.Items.Nightmare
             Vector2 origin = frameBox.Size() / 2;
             SpriteEffects effect = Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             //绘制残影
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             for (int i = 0; i < 7; i += 1)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
@@ -523,7 +523,7 @@ namespace Coralite.Content.Items.Nightmare
             //Rectangle frameBox = mainTex.Frame(1, 4, 0, Projectile.frame);
             Vector2 origin = mainTex.Size() / 2;
             //绘制残影
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             for (int i = 0; i < 10; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,

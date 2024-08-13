@@ -47,7 +47,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                         yujianProj.Timer = StartTime;
                         startElliptical = Helper.EllipticalEase(StartAngle, halfShortAxis, halfLongAxis);
                         //重设中心点以及角度和拖尾数组
-                        Vector2 slashCenter = new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
+                        Vector2 slashCenter = new(Projectile.localAI[0], Projectile.localAI[1]);
                         Projectile.rotation = targetRotation + StartAngle;
                         Projectile.Center = slashCenter + Projectile.rotation.ToRotationVector2() * SlashWidth;
                         Projectile.rotation += 1.57f;

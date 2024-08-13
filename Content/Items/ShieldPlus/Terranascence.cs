@@ -819,7 +819,7 @@ namespace Coralite.Content.Items.ShieldPlus
 
             float rot;
 
-            Color c = new Color(50, 200, 150, 150);
+            Color c = new(50, 200, 150, 150);
             for (int i = -1; i < 2; i += 2)
             {
                 rot = _Rotation + Main.rand.NextFloat(0.7f, 1.4f) * i;
@@ -857,7 +857,7 @@ namespace Coralite.Content.Items.ShieldPlus
 
         protected override void DrawSlashTrail()
         {
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)

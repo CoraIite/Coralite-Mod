@@ -15,13 +15,13 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static Asset<Texture2D> SelectFrame { get; private set; }
 
-        public static Asset<Texture2D>[] UIApparatusButton {  get; private set; }
-        public static Asset<Texture2D>[] UIComponentButton {  get; private set; }
-        public static Asset<Texture2D>[] UIShowTypeButton {  get; private set; }
-        public static Asset<Texture2D>[] ComponentRollingBar {  get; private set; }
+        public static Asset<Texture2D>[] UIApparatusButton { get; private set; }
+        public static Asset<Texture2D>[] UIComponentButton { get; private set; }
+        public static Asset<Texture2D>[] UIShowTypeButton { get; private set; }
+        public static Asset<Texture2D>[] ComponentRollingBar { get; private set; }
 
-        public static Asset<Texture2D> MagikeContainerBar {  get; private set; }
-        public static Asset<Texture2D> FilterRemoveButton {  get; private set; }
+        public static Asset<Texture2D> MagikeContainerBar { get; private set; }
+        public static Asset<Texture2D> FilterRemoveButton { get; private set; }
 
         public enum ConnectLineType
         {
@@ -47,7 +47,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             MagicCrystal,
             CrystallineMagike,
-        } 
+        }
 
         #region 加载与卸载
 
@@ -57,8 +57,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             LoadConnectUI();
             LoadUIAsset();
 
-            SelectFrame= Request<Texture2D>(AssetDirectory.Misc + "SelectFrame");
-            MagikeContainerBar= Request<Texture2D>(AssetDirectory.MagikeUI + "MagikeContainerBar");
+            SelectFrame = Request<Texture2D>(AssetDirectory.Misc + "SelectFrame");
+            MagikeContainerBar = Request<Texture2D>(AssetDirectory.MagikeUI + "MagikeContainerBar");
             FilterRemoveButton = Request<Texture2D>(AssetDirectory.MagikeUI + "FilterRemoveButton");
         }
 

@@ -52,7 +52,7 @@ namespace Coralite.Content.Items.Pets
             {
                 Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "HorizontalLight").Value;
 
-                Vector2 origin = new Vector2(0, mainTex.Height / 2);
+                Vector2 origin = new(0, mainTex.Height / 2);
                 Color c = Color.Pink;
                 c.A = 0;
                 c *= 0.25f + MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.2f;
@@ -124,7 +124,7 @@ namespace Coralite.Content.Items.Pets
         public override void DrawInUI(SpriteBatch spriteBatch)
         {
             Rectangle frame = Frame;
-            Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
+            Vector2 origin = new(frame.Width / 2, frame.Height / 2);
             Color c = color;
             if (fadeIn < 6)
             {

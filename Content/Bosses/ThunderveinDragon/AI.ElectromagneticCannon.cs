@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
 using Terraria;
-using Terraria.Audio;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 

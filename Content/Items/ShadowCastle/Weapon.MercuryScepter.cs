@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.ShadowCastle
                     {
                         int offset = 6;
                         int index = Dust.NewDust(new Vector2(Projectile.position.X + offset, Projectile.position.Y + offset), Projectile.width - offset * 2, Projectile.height - offset * 2
-                            , Main.rand.NextBool(1, 5) ? DustID.GemDiamond : DustID.SilverCoin, 0f, 0f, 100, default(Color), 0.75f);
+                            , Main.rand.NextBool(1, 5) ? DustID.GemDiamond : DustID.SilverCoin, 0f, 0f, 100, default, 0.75f);
                         Dust dust2 = Main.dust[index];
                         dust2.velocity *= 0.5f;
                         dust2.velocity += Projectile.velocity * 0.5f;

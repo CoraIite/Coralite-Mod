@@ -15,7 +15,7 @@ namespace Coralite.Helpers
             if (canMakeSound)
                 PlayPitched("RedJade/RedJadeBoom", 0.4f, 0f, center);
 
-            Color red = new Color(221, 50, 50);
+            Color red = new(221, 50, 50);
             int type = CoraliteContent.ParticleType<LightBall>();
 
             for (int i = 0; i < 2; i++)
@@ -41,7 +41,7 @@ namespace Coralite.Helpers
             if (canMakeSound)
                 PlayPitched("RedJade/RedJadeBoom", 0.8f, -1f, center);
 
-            Color red = new Color(221, 50, 50);
+            Color red = new(221, 50, 50);
             int type = CoraliteContent.ParticleType<LightBall>();
 
             for (int i = 0; i < 4; i++)

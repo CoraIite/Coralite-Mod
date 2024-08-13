@@ -1,11 +1,12 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class MagikeSender : MagikeComponent, ITimerTriggerComponent
+    public abstract class MagikeSender : Component, ITimerTriggerComponent
     {
         public sealed override int ID => MagikeComponentID.MagikeSender;
 
@@ -36,8 +37,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public virtual void OnSend(Point16 selfPoint, Point16 ReceiverPoint)
         {
-            bool selfOnScreen = Helper.OnScreen(selfPoint.ToWorldCoordinates()-Main.screenPosition);
-            bool rectiverOnScreen = Helper.OnScreen(ReceiverPoint.ToWorldCoordinates()-Main.screenPosition);
+            bool selfOnScreen = Helper.OnScreen(selfPoint.ToWorldCoordinates() - Main.screenPosition);
+            bool rectiverOnScreen = Helper.OnScreen(ReceiverPoint.ToWorldCoordinates() - Main.screenPosition);
 
             if (selfOnScreen)
             {

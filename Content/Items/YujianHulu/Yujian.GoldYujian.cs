@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.YujianHulu
             if (yujianProj.Timer > firstPhaseTime)  //准备阶段
             {
                 //从1到0
-                float factor = (yujianProj.Timer - firstPhaseTime) / (float)(StartTime - firstPhaseTime);
+                float factor = (yujianProj.Timer - firstPhaseTime) / (StartTime - firstPhaseTime);
 
                 Vector2 targetCenter = yujianProj.GetTargetCenter(IsAimingMouse);
                 Vector2 targetVector = targetCenter - Projectile.Center;
@@ -153,7 +153,7 @@ namespace Coralite.Content.Items.YujianHulu
             //绘制影子拖尾
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle source = mainTex.Frame();
-            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
+            Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
             float scale = 1.6f + yujianProj.trailCacheLength * 0.015f;
 
             for (int i = yujianProj.trailCacheLength - 1; i > 0; i -= 3)
@@ -238,7 +238,7 @@ namespace Coralite.Content.Items.YujianHulu
                 return false;
 
             Texture2D mainTex = TextureAssets.Extra[98].Value;
-            Vector2 scale = new Vector2(Width / mainTex.Width, (Projectile.Center - center).Length() / mainTex.Height);
+            Vector2 scale = new(Width / mainTex.Width, (Projectile.Center - center).Length() / mainTex.Height);
 
             Main.spriteBatch.Draw(mainTex, center - Projectile.velocity - Main.screenPosition, null, Color.Gold * Alpha, Projectile.rotation + 3.141f, new Vector2(mainTex.Width / 2, 0), scale, SpriteEffects.None, 0);
 

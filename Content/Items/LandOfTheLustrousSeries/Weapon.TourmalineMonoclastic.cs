@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Texture2D mainTex = Projectile.GetTexture();
             var origin = mainTex.Size() / 2;
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             for (int i = 0; i < 4; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
@@ -207,8 +207,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override string Texture => AssetDirectory.Blank;
 
         public static Color highlightC = Color.White;
-        public static Color brightC = new Color(255, 83, 113);
-        public static Color darkC = new Color(75, 7, 28);
+        public static Color brightC = new(255, 83, 113);
+        public static Color darkC = new(75, 7, 28);
 
         public ref float Owner => ref Projectile.ai[0];
         public ref float Target => ref Projectile.ai[1];
@@ -346,7 +346,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             float factor = Timer / 20;
 
-            Vector2 fatness = new Vector2(0.5f + factor * 1.5f, 0.8f + MathF.Sin(factor * MathHelper.Pi) * 0.2f);
+            Vector2 fatness = new(0.5f + factor * 1.5f, 0.8f + MathF.Sin(factor * MathHelper.Pi) * 0.2f);
             float scale = 2f + 8f * factor;
             var pos = Projectile.Center - Main.screenPosition;
             //两侧

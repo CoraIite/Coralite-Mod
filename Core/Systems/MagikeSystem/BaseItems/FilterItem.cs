@@ -47,13 +47,13 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
     /// <summary>
     /// 使用ai0和ai1传入初始位置
     /// </summary>
-    public class FilterProj : BaseHeldProj,IDrawNonPremultiplied
+    public class FilterProj : BaseHeldProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
 
         public Point16 BasePosition
         {
-            get => new Point16((int)Projectile.ai[0], (int)Projectile.ai[1]);
+            get => new((int)Projectile.ai[0], (int)Projectile.ai[1]);
         }
 
         public Point16 TargetPoint { get; set; }
@@ -118,10 +118,10 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             int baseX = Math.Min(TargetPoint.X, BasePosition.X);
             int baseY = Math.Min(TargetPoint.Y, BasePosition.Y);
 
-            int xLength = Math.Abs(TargetPoint.X - BasePosition.X)+1;
-            int yLength = Math.Abs(TargetPoint.Y - BasePosition.Y)+1;
+            int xLength = Math.Abs(TargetPoint.X - BasePosition.X) + 1;
+            int yLength = Math.Abs(TargetPoint.Y - BasePosition.Y) + 1;
 
-            HashSet<Point16> insertPoint = new HashSet<Point16>();
+            HashSet<Point16> insertPoint = new();
 
             //遍历一个矩形区域，并直接检测该位置是否有魔能仪器的物块实体
             for (int j = baseY; j < baseY + yLength; j++)
@@ -151,7 +151,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                         filter.Insert(entity);
 
                         //特效部分
-                        TileRenewalController.Spawn(currentTopLeft.Value, (Owner.HeldItem.ModItem  as FilterItem).FilterColor);
+                        TileRenewalController.Spawn(currentTopLeft.Value, (Owner.HeldItem.ModItem as FilterItem).FilterColor);
 
                         //消耗滤镜
                         Owner.HeldItem.stack--;
@@ -167,8 +167,8 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                             Color = Coralite.MagicCrystalPink,
                             Text = text,
                             DurationInFrames = 60,
-                            Velocity=-Vector2.UnitY
-                        }, Helper.GetMagikeTileCenter(currentTopLeft.Value)) ;
+                            Velocity = -Vector2.UnitY
+                        }, Helper.GetMagikeTileCenter(currentTopLeft.Value));
                 }
 
             PlaceOver:

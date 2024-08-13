@@ -16,7 +16,7 @@ namespace Coralite.Content.Tiles.Icicle
         {
             return new Item[]
             {
-                new Item(ModContent.ItemType<Items.Icicle.BabyIceDragonRelic>())
+                new(ModContent.ItemType<Items.Icicle.BabyIceDragonRelic>())
             };
         }
     }

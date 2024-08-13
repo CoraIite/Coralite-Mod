@@ -10,7 +10,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
     {
         public override Point[] DownCorridor => new Point[]
         {
-            new Point(47,128)
+            new(47,128)
         };
 
         public BossRoom(Point center) : base(center + new Point(0, -64), RoomType.BossRoom)

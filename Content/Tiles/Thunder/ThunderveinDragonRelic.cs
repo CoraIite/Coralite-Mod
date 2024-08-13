@@ -16,7 +16,7 @@ namespace Coralite.Content.Tiles.Thunder
         {
             return new Item[]
             {
-                new Item(ModContent.ItemType<Items.Thunder.ThunderveinDragonRelic>())
+                new(ModContent.ItemType<Items.Thunder.ThunderveinDragonRelic>())
             };
         }
     }

@@ -32,7 +32,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 Item item = items[i];
                 if (item == null || item.IsAir)
                     continue;
-                
+
                 if (CanConsumeItem(item))
                 {
                     _index = i;

@@ -36,6 +36,8 @@ MagikeSystem: {
 	UITextPolarizedFilterLevel: ◇ 滤镜等级
 	UITextClickToRemove: 点击以取出滤镜
 	UITextMagikePolarizedFilterName: 偏振滤镜
+	UITextContainerAntiMagikeAmount: ▽ 反魔能量
+	UITextContainerAntiMagikeMax: ▽ 反魔能上限
 }
 
 C0_P1_BookName: {

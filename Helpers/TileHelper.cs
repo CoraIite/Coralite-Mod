@@ -47,11 +47,11 @@ namespace Coralite.Helpers
                 highestWindGridPushComplex = CoraliteTileDrawing.GetHighestWindGridPushComplex(Main.instance.TilesRenderer, i, j, sizeX, sizeY, totalPushTime, pushForcePerFrame, 3, true);
 
             windCycle += highestWindGridPushComplex;
-            Vector2 vector = new Vector2(i * 16 - (int)screenPosition.X + sizeX * 16f * 0.5f, j * 16 - (int)screenPosition.Y);
+            Vector2 vector = new(i * 16 - (int)screenPosition.X + sizeX * 16f * 0.5f, j * 16 - (int)screenPosition.Y);
             float num2 = 0.15f;
             Tile tile = Main.tile[i, j];
             int type = tile.TileType;
-            Vector2 vector2 = new Vector2(0f, -2f);
+            Vector2 vector2 = new(0f, -2f);
             vector += vector2;
             if (((uint)(type - 591) > 1u) ? (sizeX == 1 && WorldGen.IsBelowANonHammeredPlatform(i, j)) : (WorldGen.IsBelowANonHammeredPlatform(i, j) && WorldGen.IsBelowANonHammeredPlatform(i + 1, j)))
             {
@@ -95,15 +95,15 @@ namespace Coralite.Helpers
                     Color tileLight = Lighting.GetColor(m, n);
                     tileLight = tile2.IsTileFullbright ? Color.White : tileLight;
 
-                    Vector2 vector3 = new Vector2(m * 16 - (int)screenPosition.X, n * 16 - (int)screenPosition.Y + tileTop);
+                    Vector2 vector3 = new(m * 16 - (int)screenPosition.X, n * 16 - (int)screenPosition.Y + tileTop);
                     vector3 += vector2;
-                    Vector2 vector4 = new Vector2(windCycle * num4, Math.Abs(windCycle) * num5 * num7);
+                    Vector2 vector4 = new(windCycle * num4, Math.Abs(windCycle) * num5 * num7);
                     Vector2 vector5 = vector - vector3;
                     Texture2D tileDrawTexture = Main.instance.TilesRenderer.GetTileDrawTexture(tile2, m, n);
                     if (tileDrawTexture != null)
                     {
                         Vector2 vector6 = vector + new Vector2(0f, vector4.Y);
-                        Rectangle rectangle = new Rectangle(tileFrameX + addFrX, tileFrameY + addFrY, tileWidth, tileHeight - halfBrickHeight);
+                        Rectangle rectangle = new(tileFrameX + addFrX, tileFrameY + addFrY, tileWidth, tileHeight - halfBrickHeight);
                         float rotation = windCycle * num2 * num7;
 
                         Main.spriteBatch.Draw(tileDrawTexture, vector6, rectangle, tileLight, rotation, vector5, 1f, tileSpriteEffect, 0f);
@@ -125,13 +125,13 @@ namespace Coralite.Helpers
         public static Vector2 GetMagikeTileCenter(Point16 position)
         {
             Tile tile = Framing.GetTileSafely(position);
-            TileObjectData data= TileObjectData.GetTileData(tile);
+            TileObjectData data = TileObjectData.GetTileData(tile);
 
             if (data == null)
                 return position.ToWorldCoordinates();
 
             if (!Main.tileSolidTop[tile.TileType])
-                MagikeHelper. GetMagikeAlternateData(position.X, position.Y, out data, out _);
+                MagikeHelper.GetMagikeAlternateData(position.X, position.Y, out data, out _);
 
             int x = data == null ? 8 : data.Width * 16 / 2;
             int y = data == null ? 8 : data.Height * 16 / 2;
@@ -139,7 +139,7 @@ namespace Coralite.Helpers
             return position.ToWorldCoordinates(x, y);
         }
 
-        public static Vector2 GetMagikeTileCenter_NotTopLeft(int i,int j)
+        public static Vector2 GetMagikeTileCenter_NotTopLeft(int i, int j)
         {
             Point16? topleft = MagikeHelper.ToTopLeft(i, j);
 
@@ -147,13 +147,13 @@ namespace Coralite.Helpers
                 return Vector2.Zero;
 
             Tile tile = Framing.GetTileSafely(topleft.Value);
-            TileObjectData data= TileObjectData.GetTileData(tile);
+            TileObjectData data = TileObjectData.GetTileData(tile);
 
             if (data == null)
                 return topleft.Value.ToWorldCoordinates();
 
             if (!Main.tileSolidTop[tile.TileType])
-                MagikeHelper. GetMagikeAlternateData(topleft.Value.X, topleft.Value.Y, out data, out _);
+                MagikeHelper.GetMagikeAlternateData(topleft.Value.X, topleft.Value.Y, out data, out _);
 
             int x = data == null ? 8 : data.Width * 16 / 2;
             int y = data == null ? 8 : data.Height * 16 / 2;

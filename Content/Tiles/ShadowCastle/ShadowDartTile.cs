@@ -44,7 +44,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-            return new Item[] { new Item(ModContent.ItemType<ShadowDart>()) };
+            return new Item[] { new(ModContent.ItemType<ShadowDart>()) };
         }
     }
 }

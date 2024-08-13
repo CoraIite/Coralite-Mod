@@ -3,10 +3,13 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ModLoader.IO;
+using Terraria.ModLoader.UI.Elements;
+using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class ItemContainer : MagikeComponent
+    public class ItemContainer : Component,IUIShowable
     {
         public override int ID => MagikeComponentID.ItemContainer;
 
@@ -15,7 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 基础容量，不能小于1 </summary>
         public int CapacityBase
         {
-            get => _capacityBase; 
+            get => _capacityBase;
             set
             {
                 if (value < 1)
@@ -32,7 +35,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int Capacity => CapacityBase + CapacityExtra;
 
         private Item[] _items;
-        public Item[] Items => _items;
+        public Item[] Items
+        {
+            get
+            {
+                if (_items == null)
+                {
+                    _items = new Item[Capacity];
+                    for (int i = 0; i < Capacity; i++)
+                        _items[i] = new Item();
+                }
+
+                return _items;
+            }
+        }
 
         public override void Update(IEntity entity)
         {
@@ -44,7 +60,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public void ResetCapacity()
         {
             Vector2 worldPos = (Entity as MagikeTileEntity).Position.ToWorldCoordinates();
-            var source=new EntitySource_TileEntity(Entity as MagikeTileEntity);
+            var source = new EntitySource_TileEntity(Entity as MagikeTileEntity);
 
             //超出容量的部分生成掉落物
             for (int i = Capacity; i < _items.Length; i++)
@@ -68,5 +84,51 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     _items[i] = new Item();
             }
         }
+
+        #region UI部分
+
+        public void ShowInUI(UIElement parent)
+        {
+
+
+            UIGrid grid=new UIGrid();
+
+            grid.Width.Set(0, 1);
+        }
+
+        #endregion
+
+        #region 存储与加载部分
+
+        public override void SaveData(string preName, TagCompound tag)
+        {
+            tag.Add(preName + nameof(CapacityBase), CapacityBase);
+            tag.Add(preName + nameof(CapacityExtra), CapacityExtra);
+
+            for (int i = 0; i < Items.Length; i++)
+            {
+                if (Items[i].IsAir)
+                    continue;
+
+                tag.Add(preName + nameof(_items) + i, Items[i]);
+            }
+        }
+
+        public override void LoadData(string preName, TagCompound tag)
+        {
+            CapacityBase = tag.GetInt(preName + nameof(CapacityBase));
+            CapacityExtra = tag.GetInt(preName + nameof(CapacityExtra));
+
+            _items = new Item[Capacity];
+            for (int i = 0; i < Items.Length; i++)
+            {
+                if (tag.TryGet(preName + nameof(_items) + i, out Item item))
+                    _items[i] = item;
+                else
+                    _items[i] = new Item();
+            }
+        }
+
+        #endregion
     }
 }

@@ -46,7 +46,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 //懒得看这是啥，反正是从星怒那里抄过来的
                 //new Vector2(100f, 0f);
-                Vector2 pointPosition = new Vector2(player.Center.X + (float)(offset * -player.direction) + ((float)Main.mouseX + Main.screenPosition.X - player.position.X), player.MountedCenter.Y - 600f);
+                Vector2 pointPosition = new(player.Center.X + offset * -player.direction + (Main.mouseX + Main.screenPosition.X - player.position.X), player.MountedCenter.Y - 600f);
 
                 if (player.ItemAnimationJustStarted)
                 {
@@ -56,10 +56,10 @@ namespace Coralite.Content.Items.Misc_Shoot
                 }
                 else
                 {
-                    float num2 = (float)Main.mouseX + Main.screenPosition.X - pointPosition.X;
-                    float num3 = (float)Main.mouseY + Main.screenPosition.Y - pointPosition.Y;
+                    float num2 = Main.mouseX + Main.screenPosition.X - pointPosition.X;
+                    float num3 = Main.mouseY + Main.screenPosition.Y - pointPosition.Y;
                     if (player.gravDir == -1f)
-                        num3 = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY - pointPosition.Y;
+                        num3 = Main.screenPosition.Y + Main.screenHeight - Main.mouseY - pointPosition.Y;
 
                     float num4 = MathF.Sqrt(num2 * num2 + num3 * num3);
                     if ((float.IsNaN(num2) && float.IsNaN(num3)) || (num2 == 0f && num3 == 0f))

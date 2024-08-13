@@ -97,7 +97,7 @@ namespace Coralite.Content.Items.Shadow
             OnChannelComplete(45, 45);
             Scale = 0.2f + 0.8f * factor;
             Projectile.damage = (int)(Projectile.damage * (1f + factor * 3f));
-            PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, _Rotation.ToRotationVector2(), Scale * 6f, 8f, 10, 1000f, "ShadowSickle");
+            PunchCameraModifier modifier = new(Projectile.Center, _Rotation.ToRotationVector2(), Scale * 6f, 8f, 10, 1000f, "ShadowSickle");
             Main.instance.CameraModifiers.Add(modifier);
 
             Projectile.netUpdate = true;
@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.Shadow
             {
                 _Rotation = _Rotation % 6.282f;
                 SoundEngine.PlaySound(CoraliteSoundID.Slash_Item71, Projectile.Center);
-                PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, rotateDir, Scale * 6f, 8f, 10, 1000f, "ShadowSickle");
+                PunchCameraModifier modifier = new(Projectile.Center, rotateDir, Scale * 6f, 8f, 10, 1000f, "ShadowSickle");
                 Main.instance.CameraModifiers.Add(modifier);
             }
 
@@ -181,9 +181,9 @@ namespace Coralite.Content.Items.Shadow
                 float num4 = 0.975f;
                 float fromValue = lightColor.ToVector3().Length() / MathF.Sqrt(3f);
                 fromValue = Utils.Remap(fromValue, 0.2f, 1f, 0f, 1f);
-                Color color = new Color(40, 20, 60);
+                Color color = new(40, 20, 60);
                 spriteBatch.Draw(slashTex.Value, center, rectangle, color * fromValue * num3, _Rotation + Owner.direction * ((float)Math.PI / 4f) * -1f * (1f - num2), origin, num * num4, effects, 0f);
-                Color color2 = new Color(80, 40, 180);
+                Color color2 = new(80, 40, 180);
                 Color color3 = Color.White * num3 * 0.5f;
                 color3.A = (byte)(color3.A * (1f - fromValue));
                 Color color4 = color3 * fromValue * 0.5f;

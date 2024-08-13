@@ -213,7 +213,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
             Main.playerInventory = true;
 
-            UILoader.GetUIState<MagikeApparatusPanel>().visible=true;
+            UILoader.GetUIState<MagikeApparatusPanel>().visible = true;
             MagikeApparatusPanel.CurrentEntity = entity;
             UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
 
@@ -347,12 +347,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public sealed override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Vector2 offScreen = new Vector2(Main.offScreenRange);
+            Vector2 offScreen = new(Main.offScreenRange);
             if (Main.drawToScreen)
                 offScreen = Vector2.Zero;
 
             //检查物块
-            Point16 p = new Point16(i, j);//这个就是左上角
+            Point16 p = new(i, j);//这个就是左上角
             Tile tile = Main.tile[p.X, p.Y];
             if (tile == null || !tile.HasTile)
                 return;
@@ -382,7 +382,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
             Texture2D texture = asset.Value;
 
-            Rectangle tileRect = new Rectangle(i * 16, j * 16, data == null ? 16 : data.Width * 16, data == null ? 16 : data.Height * 16);
+            Rectangle tileRect = new(i * 16, j * 16, data == null ? 16 : data.Width * 16, data == null ? 16 : data.Height * 16);
             Vector2 offset = offScreen - Main.screenPosition;
             Color lightColor = Lighting.GetColor(p.X, p.Y);
 
@@ -396,7 +396,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// <param name="tileRect"></param>
         /// <param name="offset"></param>
         /// <param name="entity"></param>
-        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity,MagikeApparatusLevel level)
+        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MagikeApparatusLevel level)
         {
 
         }

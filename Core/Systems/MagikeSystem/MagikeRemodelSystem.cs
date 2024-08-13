@@ -10,7 +10,7 @@ namespace Coralite.Core.Systems.MagikeSystem
     public partial class MagikeSystem : ModSystem, ILocalizedModType
     {
         /// <summary> 魔能重塑的合成表 </summary>
-        internal static Dictionary<int, List<RemodelRecipe>> remodelRecipes = new Dictionary<int, List<RemodelRecipe>>();
+        internal static Dictionary<int, List<RemodelRecipe>> remodelRecipes = new();
 
         private void RegisterRemodel()
         {
@@ -75,7 +75,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                 magikeItem.condition = condition;
             }
 
-            RemodelRecipe recipe = new RemodelRecipe(selfType, selfStack, magikeCost, resultItem, condition);
+            RemodelRecipe recipe = new(selfType, selfStack, magikeCost, resultItem, condition);
 
             if (remodelRecipes == null)
                 throw new Exception("合成表为null!");
@@ -221,7 +221,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public bool CanRemodel(Item selfItem, int magike, int itemType, int stack)
         {
-            bool checkCondition = condition is null ? true : condition.CanCraft(selfItem);
+            bool checkCondition = condition is null || condition.CanCraft(selfItem);
             return magike >= magikeCost && itemType == selfType && stack >= selfRequiredNumber && checkCondition;
         }
 
@@ -303,7 +303,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            TooltipLine line = new TooltipLine(Mod, "Coralite: MagikeNeed", "魔能需求量：" + Item.stack);
+            TooltipLine line = new(Mod, "Coralite: MagikeNeed", "魔能需求量：" + Item.stack);
 
             if (Item.stack < 300)
                 line.OverrideColor = Coralite.MagicCrystalPink;

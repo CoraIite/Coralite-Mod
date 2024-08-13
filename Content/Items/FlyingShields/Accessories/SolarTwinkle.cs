@@ -381,7 +381,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -431,7 +431,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = Request<Texture2D>(AssetDirectory.Accessories + "SolarTwinkleProj").Value;
-            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
+            Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
 
             int dir = Math.Sign(totalAngle);
             float extraRot = OwnerDirection < 0 ? MathHelper.Pi : 0;

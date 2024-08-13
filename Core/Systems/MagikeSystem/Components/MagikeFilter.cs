@@ -9,7 +9,7 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class MagikeFilter : MagikeComponent
+    public abstract class MagikeFilter : Component
     {
         public sealed override int ID => MagikeComponentID.MagikeFilter;
 

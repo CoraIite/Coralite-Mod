@@ -22,7 +22,7 @@ namespace Coralite.Core.Systems.BossSystems
 
         public override void SaveWorldData(TagCompound tag)
         {
-            List<string> downed = new List<string>();
+            List<string> downed = new();
             if (downedRediancie)
                 downed.Add("Rediancie");
 

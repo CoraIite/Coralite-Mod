@@ -287,7 +287,7 @@ namespace Coralite.Content.Items.Gels
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
-                    PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, RotateVec2, strength, 6, 6, 1000);
+                    PunchCameraModifier modifier = new(Projectile.Center, RotateVec2, strength, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
 
@@ -340,7 +340,7 @@ namespace Coralite.Content.Items.Gels
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -507,7 +507,7 @@ namespace Coralite.Content.Items.Gels
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
-                    PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, RotateVec2, strength, 6, 6, 1000);
+                    PunchCameraModifier modifier = new(Projectile.Center, RotateVec2, strength, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
 
@@ -560,7 +560,7 @@ namespace Coralite.Content.Items.Gels
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -740,7 +740,7 @@ namespace Coralite.Content.Items.Gels
         protected ref float State => ref Projectile.ai[0];
         protected Vector2 Center
         {
-            get => new Vector2(Projectile.ai[1], Projectile.ai[2]);
+            get => new(Projectile.ai[1], Projectile.ai[2]);
             set
             {
                 Projectile.ai[1] = value.X;

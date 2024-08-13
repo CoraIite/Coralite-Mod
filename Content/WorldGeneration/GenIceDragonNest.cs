@@ -49,12 +49,12 @@ namespace Coralite.Content.WorldGeneration
 
             NestCenter = new Point(genOrigin_x + 52, genOrigin_y + 20);
 
-            Dictionary<Color, int> clearDic = new Dictionary<Color, int>()
+            Dictionary<Color, int> clearDic = new()
             {
                 [Color.White] = -2,
                 [Color.Black] = -1
             };
-            Dictionary<Color, int> nestDic = new Dictionary<Color, int>()
+            Dictionary<Color, int> nestDic = new()
             {
                 [new Color(95, 205, 228)] = TileID.IceBlock,
                 [new Color(215, 123, 186)] = TileID.IceBrick,

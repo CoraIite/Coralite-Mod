@@ -56,7 +56,7 @@ namespace Coralite.Content.Particles
         {
             Texture2D mainTex = GetTexture().Value;
             Vector2 pos = Center - Main.screenPosition;
-            Vector2 origin = new Vector2(0, mainTex.Height / 2);
+            Vector2 origin = new(0, mainTex.Height / 2);
             Vector2 scale = Velocity * 0.3f;
             scale.Y *= 2;
             Color c = color;

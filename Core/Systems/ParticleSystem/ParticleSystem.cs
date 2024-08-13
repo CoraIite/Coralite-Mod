@@ -11,7 +11,7 @@ namespace Coralite.Core.Systems.ParticleSystem
     public class ParticleSystem : ModSystem
     {
         //public static Particle[] Particles = new Particle[Coralite.MaxParticleCount];
-        public static List<Particle> Particles = new List<Particle>(VisualEffectSystem.ParticleCount);
+        public static List<Particle> Particles = new(VisualEffectSystem.ParticleCount);
 
         public static Asset<Texture2D>[] ParticleAssets;
 

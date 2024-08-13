@@ -60,7 +60,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         public ComponentButton(int index)
         {
             Asset<Texture2D> buttonTex = MagikeSystem.GetComponentButton();
-            Vector2 size = buttonTex.Frame(MagikeComponentID.Count, 2, 
+            Vector2 size = buttonTex.Frame(MagikeComponentID.Count, 2,
                0, 0).Size();
             Width.Set(size.X, 0);
             Height.Set(size.Y, 0);
@@ -102,7 +102,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                 _scale = Helper.Lerp(_scale, 1f, 0.2f);
 
 
-            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, frameBox.Size()/2, _scale, 0, 0);
+            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, frameBox.Size() / 2, _scale, 0, 0);
         }
     }
 }

@@ -88,7 +88,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             }
 
             //由3个爪子共同决定的目标点
-            Vector2 targetPos = new Vector2(targetX, targetY);
+            Vector2 targetPos = new(targetX, targetY);
             float num781 = Target.Center.X - targetPos.X;
             float num782 = Target.Center.Y - targetPos.Y;
 

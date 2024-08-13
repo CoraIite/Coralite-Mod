@@ -68,7 +68,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override void SaveWorldData(TagCompound tag)
         {
-            List<string> caught = new List<string>();
+            List<string> caught = new();
 
             for (int i = 0; i < FairyLoader.FairyCount; i++)
             {
@@ -94,7 +94,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             if (fairySpawnConditions.ContainsKey(attempt.wallType) && fairySpawnConditions[attempt.wallType] != null)
             {
-                List<FairySpawnController> currentCondition = new List<FairySpawnController>();
+                List<FairySpawnController> currentCondition = new();
                 List<FairySpawnController> totalCondition = fairySpawnConditions[attempt.wallType];
                 foreach (var condition in totalCondition)
                     if (condition.CheckCondition(attempt) //稀有度是额外判定的

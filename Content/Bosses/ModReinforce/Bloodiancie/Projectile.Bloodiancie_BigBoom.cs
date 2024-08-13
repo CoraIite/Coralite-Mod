@@ -30,7 +30,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             Vector2 center = Projectile.Center;
             Helper.PlayPitched("RedJade/RedJadeBoom", 1f, -1f, center);
 
-            Color red = new Color(221, 50, 50);
+            Color red = new(221, 50, 50);
             int type = CoraliteContent.ParticleType<LightBall>();
 
             for (int i = 0; i < 5; i++)

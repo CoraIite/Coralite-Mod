@@ -186,7 +186,7 @@ namespace Coralite.Content.Items.Nightmare
 
             //绘制发光
             Main.spriteBatch.Draw(highlightTex, pos, highlightFrameBox, color, Projectile.rotation, hightlightOrigin, Projectile.scale, 0, 0);
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             for (int i = 1; i < 6; i++)
                 Main.spriteBatch.Draw(highlightTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, highlightFrameBox,

@@ -691,7 +691,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         const int MoveTime = 15;
 
-                        Vector2 targetPos = new Vector2(
+                        Vector2 targetPos = new(
                             CoraliteWorld.shadowBallsFightArea.X + (Recorder > 0 ? 100 : CoraliteWorld.shadowBallsFightArea.Width - 100),
                             CoraliteWorld.shadowBallsFightArea.Y + Recorder2);
                         SetDirection(targetPos, out float xLength, out float yLength);
@@ -736,7 +736,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         if (Timer < DelayTime)
                         {
-                            Vector2 targetPos = new Vector2(
+                            Vector2 targetPos = new(
                                 CoraliteWorld.shadowBallsFightArea.X + (Recorder > 0 ? 100 : CoraliteWorld.shadowBallsFightArea.Width - 80),
                                 Recorder2);
                             SetDirection(targetPos, out float xLength, out _);
@@ -893,7 +893,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case 1://移动过去
                     {
                         //直线运动到目标位置
-                        Vector2 targetPos = new Vector2(Recorder, Recorder2);
+                        Vector2 targetPos = new(Recorder, Recorder2);
 
                         float factor = Math.Clamp(Timer / 20, 0, 1);
 

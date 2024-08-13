@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Terraria;
 
 namespace Coralite
 {
@@ -33,19 +32,19 @@ namespace Coralite
         /// </summary>
         public ReverseX2Smoother ReverseX2Smoother;
 
-        public static Color RedJadeRed => new Color(221, 50, 50);
-        public static Color MagicCrystalPink => new Color(255, 190, 236);
-        public static Color GlistentGreen => new Color(127, 218, 153);
-        public static Color CrimsonRed => new Color(231, 48, 54);
-        public static Color CorruptionPurple=> new Color(107, 66,  208);
-        public static Color IcicleCyan => new Color(43, 255, 198);
-        public static Color ShadowPurple => new Color(240, 168, 255);
-        public static Color CrystallineMagikePurple => new Color(140, 130, 252);
-        public static Color HallowYellow => new Color(253, 236, 144);
-        public static Color ThunderveinYellow => new Color(255, 202, 101);
-        public static Color SoulCyan => new Color(122, 174, 188);
-        public static Color FeatherLime => new Color(122, 161, 82);
-        public static Color SplendorMagicoreLightBlue => new Color(190, 225, 235);
+        public static Color RedJadeRed => new(221, 50, 50);
+        public static Color MagicCrystalPink => new(255, 190, 236);
+        public static Color GlistentGreen => new(127, 218, 153);
+        public static Color CrimsonRed => new(231, 48, 54);
+        public static Color CorruptionPurple => new(107, 66, 208);
+        public static Color IcicleCyan => new(43, 255, 198);
+        public static Color ShadowPurple => new(240, 168, 255);
+        public static Color CrystallineMagikePurple => new(140, 130, 252);
+        public static Color HallowYellow => new(253, 236, 144);
+        public static Color ThunderveinYellow => new(255, 202, 101);
+        public static Color SoulCyan => new(122, 174, 188);
+        public static Color FeatherLime => new(122, 161, 82);
+        public static Color SplendorMagicoreLightBlue => new(190, 225, 235);
 
         private static Coralite _instance;
 

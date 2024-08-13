@@ -39,9 +39,9 @@ namespace Coralite.Content.WorldGeneration
                     if (!TileID.Sets.Grass[tile2.TileType] && !TileID.Sets.Dirt[tile2.TileType])
                         continue;
 
-                    Point position = new Point(tabletCenter_x, tabletCenter_y);
+                    Point position = new(tabletCenter_x, tabletCenter_y);
 
-                    Dictionary<ushort, int> tileDictionary = new Dictionary<ushort, int>();
+                    Dictionary<ushort, int> tileDictionary = new();
                     if (!WorldGen.InWorld(position.X - 30, position.Y - 15) || !WorldGen.InWorld(position.X + 30, position.Y + 15))
                         continue;
                     WorldUtils.Gen(

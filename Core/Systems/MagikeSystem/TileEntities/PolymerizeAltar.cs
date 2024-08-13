@@ -44,7 +44,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public event Action<IMagikeContainer> OnConnected;
 
-        public Item containsItem = new Item();
+        public Item containsItem = new();
         public PolymerizeRecipe chooseRecipe;
 
         public void InitReceivers()

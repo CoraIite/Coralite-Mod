@@ -325,7 +325,7 @@ namespace Coralite.Content.Items.RedJades
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -645,7 +645,7 @@ namespace Coralite.Content.Items.RedJades
             Vector2 center = Projectile.Center;
             Helper.PlayPitched("RedJade/RedJadeBoom", 1f, -1f, center);
 
-            Color red = new Color(221, 50, 50);
+            Color red = new(221, 50, 50);
             int type = CoraliteContent.ParticleType<LightBall>();
 
             if (VisualEffectSystem.HitEffect_SpecialParticles)

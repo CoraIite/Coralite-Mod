@@ -156,7 +156,7 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 value20 = new Vector2(point7.X, topY) * 16f + new Vector2(8f);
             Vector2 value21 = new Vector2(point7.X, bottomY) * 16f + new Vector2(8f);
             Vector2 vector164 = Vector2.Lerp(value20, value21, 0.5f);
-            Vector2 vector165 = new Vector2(0f, value21.Y - value20.Y);
+            Vector2 vector165 = new(0f, value21.Y - value20.Y);
             vector165.X = vector165.Y * 0.2f;
             Projectile.width = (int)(vector165.X * 0.65f);
             Projectile.height = (int)vector165.Y;
@@ -214,7 +214,7 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 value77 = new Vector2(point5.X, topY) * 16f + new Vector2(8f);
             Vector2 value78 = new Vector2(point5.X, bottomY) * 16f + new Vector2(8f);
             Vector2.Lerp(value77, value78, 0.5f);
-            Vector2 vector69 = new Vector2(0f, value78.Y - value77.Y);
+            Vector2 vector69 = new(0f, value78.Y - value77.Y);
             vector69.X = vector69.Y * num295;
 
             Main.instance.LoadProjectile(656);
@@ -225,7 +225,7 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 spinningpoint4 = Vector2.UnitY.RotatedBy(num293 * 0.1f);
             float num297 = 0f;
             float num298 = 5.1f;
-            Color value80 = new Color(212, 192, 100);
+            Color value80 = new(212, 192, 100);
             for (float i = (int)value78.Y; i > (int)value77.Y; i -= num298)
             {
                 num297 += num298;
@@ -233,13 +233,13 @@ namespace Coralite.Content.Items.FlyingShields
                 float num301 = num297 * ((float)Math.PI * 2f) / -20f;
                 float num302 = num300 - 0.15f;
                 Vector2 position19 = spinningpoint4.RotatedBy(num301);
-                Vector2 vector70 = new Vector2(0f, num300 + 1f);
+                Vector2 vector70 = new(0f, num300 + 1f);
                 vector70.X = vector70.Y * num295;
                 Color color77 = Color.Lerp(Color.Transparent, value80, num300 * 2f);
                 if (num300 > 0.5f)
                     color77 = Color.Lerp(Color.Transparent, value80, 2f - num300 * 2f);
 
-                color77.A = (byte)((float)(int)color77.A * 0.5f);
+                color77.A = (byte)(color77.A * 0.5f);
                 color77 *= num294;
                 position19 *= vector70 * 100f;
                 position19.Y = 0f;

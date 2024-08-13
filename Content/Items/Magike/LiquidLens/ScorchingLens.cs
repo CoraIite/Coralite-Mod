@@ -2,8 +2,8 @@
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
-using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.DataStructures;
@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.Magike.LiquidLens
 
         public override bool CanGenerate()
         {
-            Point point = new Point(Position.X, Position.Y + 2);
+            Point point = new(Position.X, Position.Y + 2);
             Tile tile = Framing.GetTileSafely(point);
             return tile.LiquidType == LiquidID.Lava && tile.LiquidAmount > 128;
         }

@@ -323,9 +323,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public Vector2 endPoint;
         private SlotId soundSlot;
 
-        public static Color highlightC = new Color(235, 201, 238);
-        public static Color brightC = new Color(200, 123, 193);
-        public static Color darkC = new Color(71, 34, 76);
+        public static Color highlightC = new(235, 201, 238);
+        public static Color brightC = new(200, 123, 193);
+        public static Color darkC = new(71, 34, 76);
 
         public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);
 

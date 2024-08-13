@@ -65,7 +65,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (NPC.AnyNPCs(ModContent.NPCType<IceDragonEgg>()))
                 return false;
 
-            Vector2 center = new Vector2(x * 16 + 8, y * 16 - 8);
+            Vector2 center = new(x * 16 + 8, y * 16 - 8);
             if (!CheckFloor(center))
                 return false;
 

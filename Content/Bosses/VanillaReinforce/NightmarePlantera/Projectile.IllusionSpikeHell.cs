@@ -44,17 +44,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             rotateTentacles ??= new RotateTentacle[3]
             {
-                new RotateTentacle(20, TentacleColor,  NightmarePlantera.TentacleWidth, NightmarePlantera.tentacleTex, NightmarePlantera.waterFlowTex)
+                new(20, TentacleColor,  NightmarePlantera.TentacleWidth, NightmarePlantera.tentacleTex, NightmarePlantera.waterFlowTex)
                 {
                     pos = Projectile.Center,
                     targetPos = Projectile.Center
                 },
-                new RotateTentacle(20, TentacleColor,NightmarePlantera.TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex)
+                new(20, TentacleColor,NightmarePlantera.TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex)
                 {
                     pos = Projectile.Center,
                     targetPos = Projectile.Center
                 },
-                new RotateTentacle(20, TentacleColor,NightmarePlantera.TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex)
+                new(20, TentacleColor,NightmarePlantera.TentacleWidth,NightmarePlantera.tentacleTex,NightmarePlantera.waterFlowTex)
                 {
                     pos = Projectile.Center,
                     targetPos = Projectile.Center

@@ -123,7 +123,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             Texture2D Texture = CircleTex.Value;
 
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars = new();
             //对法向量进行一个投影
             float k1 = -1000 / (normal.Z - 1000);
             var normalDir = k1 * new Vector2(normal.X, normal.Y);
@@ -143,7 +143,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 }
             }
 
-            List<CustomVertexInfo> Vx = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> Vx = new();
             if (bars.Count > 2)
             {
                 for (int i = 0; i < bars.Count - 2; i += 2)

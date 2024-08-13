@@ -190,9 +190,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         private Trail trail;
 
-        public static Color highlightC = new Color(255, 230, 230);
-        public static Color brightC = new Color(251, 100, 152);
-        public static Color darkC = new Color(48, 7, 42);
+        public static Color highlightC = new(255, 230, 230);
+        public static Color brightC = new(251, 100, 152);
+        public static Color darkC = new(48, 7, 42);
 
         public bool init = true;
 

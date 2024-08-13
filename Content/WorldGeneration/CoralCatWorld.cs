@@ -448,10 +448,10 @@ namespace Coralite.Content.WorldGeneration
                 if (Main.tile[x, y].HasTile || Main.tile[x, y].LiquidAmount == 0)
                     continue;
 
-                Point origin = new Point(x, y);
+                Point origin = new(x, y);
                 int width = WorldGen.genRand.Next(2, 12);
 
-                ShapeData circleData = new ShapeData();
+                ShapeData circleData = new();
 
                 WorldUtils.Gen(
                     origin,  //中心点

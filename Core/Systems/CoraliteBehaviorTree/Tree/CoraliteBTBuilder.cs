@@ -5,7 +5,7 @@ namespace Coralite.Systems.CoraliteBehaviorTree.Tree
 {
     public class CoraliteBTBuilder
     {
-        private Stack<IBehaviour> behaviours = new Stack<IBehaviour>();
+        private Stack<IBehaviour> behaviours = new();
         private IBehaviour treeRoot = null;
 
         public CoraliteBTBuilder AddBehaviour(IBehaviour behaviour)
@@ -33,7 +33,7 @@ namespace Coralite.Systems.CoraliteBehaviorTree.Tree
             while (!(behaviours.Count == 0))
                 behaviours.Pop();
 
-            CoraliteBT tmp = new CoraliteBT(treeRoot);
+            CoraliteBT tmp = new(treeRoot);
             return tmp;
         }
     }

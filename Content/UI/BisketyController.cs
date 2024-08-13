@@ -12,7 +12,7 @@ namespace Coralite.Content.UI
     public class BisketyController : BetterUIState
     {
         public static bool visible = false;
-        public static Vector2 basePos = new Vector2((Main.screenWidth / 2) - 100, (Main.screenHeight / 2) - 150);
+        public static Vector2 basePos = new((Main.screenWidth / 2) - 100, (Main.screenHeight / 2) - 150);
 
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
@@ -34,7 +34,7 @@ namespace Coralite.Content.UI
         {
             for (int i = 0; i < ShowFlags.Length; i++)
                 ShowFlags[i] = false;
-            UIPanel panel = new UIPanel();
+            UIPanel panel = new();
 
             panel.Width.Set(240, 0);
             panel.Height.Set(400, 0);
@@ -43,20 +43,20 @@ namespace Coralite.Content.UI
 
             Append(panel);
 
-            UIList list = new UIList();
+            UIList list = new();
             list.Width.Set(200, 0);
             list.Left.Set(40, 0);
             list.Height.Set(400, 0);
 
             for (int i = 0; i < ShowFlags.Length; i++)
             {
-                BisketyButton uIImageButton = new BisketyButton(ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "Biskety", AssetRequestMode.ImmediateLoad), i);
+                BisketyButton uIImageButton = new(ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "Biskety", AssetRequestMode.ImmediateLoad), i);
                 list.Add(uIImageButton);
             }
 
             panel.Append(list);
 
-            UIImageButton close = new UIImageButton(ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "BisketyHead", AssetRequestMode.ImmediateLoad));
+            UIImageButton close = new(ModContent.Request<Texture2D>(AssetDirectory.MiscItems + "BisketyHead", AssetRequestMode.ImmediateLoad));
             close.OnLeftClick += Close_OnLeftClick;
             panel.Append(close);
         }

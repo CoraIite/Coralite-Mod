@@ -90,8 +90,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 return;
 
             Texture2D Texture = ThunderTex.Value;
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
-            List<CustomVertexInfo> bars2 = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars = new();
+            List<CustomVertexInfo> bars2 = new();
 
             int trailCachesLength = RandomlyPositions.Length;
 
@@ -241,9 +241,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
                 var pos = RandomlyPositions[0] - Main.screenPosition;
                 var origin = mainTex.Size() / 2;
-                Color c = new Color(255, 202, 101, 0);
+                Color c = new(255, 202, 101, 0);
 
-                Vector2 scale = new Vector2(thunderWidthFunc(0) / 90, thunderWidthFunc(0) / 130);
+                Vector2 scale = new(thunderWidthFunc(0) / 90, thunderWidthFunc(0) / 130);
 
                 Main.spriteBatch.Draw(mainTex, pos, null, c, tipRotaion, origin, scale, 0, 0);
                 Main.spriteBatch.Draw(mainTex, pos, null, c, tipRotaion, origin, scale * 0.75f, 0, 0);
@@ -255,9 +255,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
                 var pos = RandomlyPositions[^1] - Main.screenPosition;
                 var origin = mainTex.Size() / 2;
-                Color c = new Color(255, 202, 101, 0);
+                Color c = new(255, 202, 101, 0);
 
-                Vector2 scale = new Vector2(thunderWidthFunc(1) / 170, thunderWidthFunc(1) / 200);
+                Vector2 scale = new(thunderWidthFunc(1) / 170, thunderWidthFunc(1) / 200);
                 float rot = normal.ToRotation() + 1.57f;
                 Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale, 0, 0);
                 Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale * 0.75f, 0, 0);

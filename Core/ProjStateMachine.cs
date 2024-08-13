@@ -15,8 +15,8 @@ namespace Coralite.Core
     public abstract class ProjStateMachine : ModProjectile
     {
         public ProjState currentState => projStates[State - 1];
-        private List<ProjState> projStates = new List<ProjState>();
-        private Dictionary<string, int> stateDict = new Dictionary<string, int>();
+        private List<ProjState> projStates = new();
+        private Dictionary<string, int> stateDict = new();
 
         private int State
         {

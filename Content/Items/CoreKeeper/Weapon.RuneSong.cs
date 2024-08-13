@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 Vector2 center = player.Center + new Vector2(0f, player.height * -0.1f);
                 Vector2 direction = Main.rand.NextVector2CircularEdge(Item.width * 0.6f, Item.height * 0.6f);
                 //float distance = 0.8f + Main.rand.NextFloat() * 0.2f;
-                Vector2 velocity = new Vector2(0f, -Main.rand.NextFloat() * 0.3f - 1.5f);
+                Vector2 velocity = new(0f, -Main.rand.NextFloat() * 0.3f - 1.5f);
 
                 Dust dust = Dust.NewDustPerfect(center + direction, DustID.SilverFlame, velocity, newColor: new Color(150, 150, 150));
                 dust.scale = 0.5f;
@@ -524,7 +524,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
-                    PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, RotateVec2, strength, 4, 6, 1000);
+                    PunchCameraModifier modifier = new(Projectile.Center, RotateVec2, strength, 4, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
 
@@ -611,7 +611,7 @@ namespace Coralite.Content.Items.CoreKeeper
         {
             if (oldRotate == null)
                 return;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)

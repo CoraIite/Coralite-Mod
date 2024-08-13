@@ -87,7 +87,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             //绘制影子拖尾
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle source = mainTex.Frame();
-            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
+            Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
             float scale = 1.6f + yujianProj.trailCacheLength * 0.015f;
 
             for (int i = yujianProj.trailCacheLength - 1; i > 0; i -= 4)

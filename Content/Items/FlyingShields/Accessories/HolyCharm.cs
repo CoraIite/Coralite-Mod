@@ -172,13 +172,13 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             float num4 = 0.975f;
             float fromValue = Lighting.GetColor(Projectile.Center.ToTileCoordinates()).ToVector3().Length() / (float)Math.Sqrt(3.0);
             fromValue = Utils.Remap(fromValue, 0.2f, 1f, 0f, 1f);
-            Color color = new Color(180, 160, 60);
+            Color color = new(180, 160, 60);
             float rot = Projectile.rotation;
 
             Main.spriteBatch.Draw(extraTex, pos, frameBox, color * fromValue * num3, rot
                 + Timer2 * MathHelper.PiOver4 * -1f * (1f - num2), extraOrigin, num, 0, 0f);
-            Color color2 = new Color(255, 240, 150);
-            Color color3 = new Color(255, 255, 80);
+            Color color2 = new(255, 240, 150);
+            Color color3 = new(255, 255, 80);
             Color color4 = Color.White * num3 * 0.5f;
             color4.A = (byte)(color4.A * (1f - fromValue));
             Color color5 = color4 * fromValue * 0.5f;

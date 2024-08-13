@@ -1,6 +1,5 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
-using System;
 using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
@@ -10,14 +9,14 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class AlternateTileFrame:HookGroup
+    public class AlternateTileFrame : HookGroup
     {
         //private static PropertyInfo _alternateInfo;
         private static MethodInfo _killTile;
 
         public override void Load()
         {
-           // _alternateInfo = typeof(TileObjectData).GetProperty("Alternates", BindingFlags.Instance | BindingFlags.NonPublic);
+            // _alternateInfo = typeof(TileObjectData).GetProperty("Alternates", BindingFlags.Instance | BindingFlags.NonPublic);
             _killTile = typeof(WorldGen).GetMethod("KillTile_DropItems", BindingFlags.Static | BindingFlags.NonPublic);
 
             var tileLoader = typeof(TileLoader);
@@ -121,7 +120,7 @@ namespace Coralite.Content.CustomHooks
                                 WorldGen.KillTile(x, y, false, false, false);
                             }
                         }
-                    } 
+                    }
                     TileLoader.KillMultiTile(i, j, t.TileFrameX - partFrameX, t.TileFrameY - partFrameY, type);
                     WorldGen.destroyObject = false;
                     for (int x = i - 1; x < i + tileData.Width + 2; x++)
@@ -136,10 +135,10 @@ namespace Coralite.Content.CustomHooks
                 return;
             }
 
-            orig.Invoke(i,j,type);
+            orig.Invoke(i, j, type);
         }
 
-        public static bool CanPlace(int x, int y, int type,int alternate,TileObjectData tileData, int dir, bool checkStay = false)
+        public static bool CanPlace(int x, int y, int type, int alternate, TileObjectData tileData, int dir, bool checkStay = false)
         {
             if (tileData == null)
                 return false;
@@ -167,7 +166,7 @@ namespace Coralite.Content.CustomHooks
                 if (num8 < 5 || num8 + tileData.Width > Main.maxTilesX - 5 || num9 < 5 || num9 + tileData.Height > Main.maxTilesY - 5)
                     return false;
 
-                Rectangle rectangle = new Rectangle(0, 0, tileData.Width, tileData.Height);
+                Rectangle rectangle = new(0, 0, tileData.Width, tileData.Height);
                 int num10 = 0;
                 int num11 = 0;
                 if (tileData.AnchorTop.tileCount != 0)
@@ -269,7 +268,7 @@ namespace Coralite.Content.CustomHooks
                 TileObject.objectPreview.Reset();
                 TileObject.objectPreview.Active = true;
                 TileObject.objectPreview.Type = (ushort)type;
-                TileObject.objectPreview.Style = (short)0;
+                TileObject.objectPreview.Style = 0;
                 TileObject.objectPreview.Alternate = num7;
                 TileObject.objectPreview.Size = new Point16(rectangle.Width, rectangle.Height);
                 TileObject.objectPreview.ObjectStart = new Point16(num10, num11);
@@ -315,7 +314,7 @@ namespace Coralite.Content.CustomHooks
                 AnchorData anchorBottom = tileData.AnchorBottom;
                 if (anchorBottom.tileCount != 0)
                 {
-                    num25 += (float)anchorBottom.tileCount;
+                    num25 += anchorBottom.tileCount;
                     int height = tileData.Height;
                     for (int k = 0; k < anchorBottom.tileCount; k++)
                     {
@@ -375,7 +374,7 @@ namespace Coralite.Content.CustomHooks
                 anchorBottom = tileData.AnchorTop;
                 if (anchorBottom.tileCount != 0)
                 {
-                    num25 += (float)anchorBottom.tileCount;
+                    num25 += anchorBottom.tileCount;
                     int num28 = -1;
                     for (int l = 0; l < anchorBottom.tileCount; l++)
                     {
@@ -430,7 +429,7 @@ namespace Coralite.Content.CustomHooks
                 anchorBottom = tileData.AnchorRight;
                 if (anchorBottom.tileCount != 0)
                 {
-                    num25 += (float)anchorBottom.tileCount;
+                    num25 += anchorBottom.tileCount;
                     int width = tileData.Width;
                     for (int m = 0; m < anchorBottom.tileCount; m++)
                     {
@@ -507,7 +506,7 @@ namespace Coralite.Content.CustomHooks
                 anchorBottom = tileData.AnchorLeft;
                 if (anchorBottom.tileCount != 0)
                 {
-                    num25 += (float)anchorBottom.tileCount;
+                    num25 += anchorBottom.tileCount;
                     int num31 = -1;
                     for (int n = 0; n < anchorBottom.tileCount; n++)
                     {
@@ -672,7 +671,7 @@ namespace Coralite.Content.CustomHooks
                 int num45 = tileData.SpecificRandomStyles.Length;
                 int num46 = Main.rand.Next(num45);
 
-                num35 = (!flag10  ? TileObjectPreviewData.randomCache.Random : (tileData.SpecificRandomStyles[num46]));
+                num35 = (!flag10 ? TileObjectPreviewData.randomCache.Random : (tileData.SpecificRandomStyles[num46]));
             }
 
             if (num4 != 1f || num5 != 1f)
@@ -739,4 +738,4 @@ namespace Coralite.Content.CustomHooks
         {
         }
     }
-} 
+}

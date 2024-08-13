@@ -113,13 +113,13 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             if (Main.keyState.PressingShift())
             {
                 string text = FlyingShieldSystem.FSDescriptionLong.Value;
-                TooltipLine line = new TooltipLine(Mod, "Coralite FlyingShield Description", text);
+                TooltipLine line = new(Mod, "Coralite FlyingShield Description", text);
                 tooltips.Add(line);
             }
             else
             {
                 string text = FlyingShieldSystem.FSDescriptionShort.Value;
-                TooltipLine line = new TooltipLine(Mod, "Coralite FlyingShield Description", text);
+                TooltipLine line = new(Mod, "Coralite FlyingShield Description", text);
                 tooltips.Add(line);
             }
         }

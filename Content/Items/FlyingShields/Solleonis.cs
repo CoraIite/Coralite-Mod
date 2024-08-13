@@ -213,7 +213,7 @@ namespace Coralite.Content.Items.FlyingShields
             for (int i = 0; i < 3; i++)
             {
                 int type = Utils.SelectRandom(Main.rand, 6, 259, 158);
-                int num142 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, type, 2.5f * (float)Projectile.direction, -2.5f);
+                int num142 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, type, 2.5f * Projectile.direction, -2.5f);
                 Main.dust[num142].alpha = 200;
                 Dust dust2 = Main.dust[num142];
                 //dust2.velocity *= 2.4f;
@@ -259,8 +259,8 @@ namespace Coralite.Content.Items.FlyingShields
         {
             Texture2D Texture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "CircleTrail").Value;
 
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
-            List<CustomVertexInfo> bars2 = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars = new();
+            List<CustomVertexInfo> bars2 = new();
             Color c = new Color(255, 174, 33) * 0.9f;
             for (int i = 0; i < trailCachesLength; i++)
             {

@@ -89,9 +89,9 @@ namespace Coralite.Content.WorldGeneration
             if (!WorldGen.InWorld(x, y))
                 return;
 
-            List<Point> list = new List<Point>();
-            List<Point> list2 = new List<Point>();
-            HashSet<Point> hashSet = new HashSet<Point>();
+            List<Point> list = new();
+            List<Point> list2 = new();
+            HashSet<Point> hashSet = new();
             list2.Add(new Point(x, y));
             while (list2.Count > 0)
             {
@@ -127,7 +127,7 @@ namespace Coralite.Content.WorldGeneration
                         WorldGen.PlaceWall(item.X, item.Y, ModContent.WallType<HardBasaltWall>());
 
                         {
-                            Point item2 = new Point(item.X - 1, item.Y);
+                            Point item2 = new(item.X - 1, item.Y);
                             if (!hashSet.Contains(item2))
                                 list2.Add(item2);
 
@@ -146,7 +146,7 @@ namespace Coralite.Content.WorldGeneration
 
                         for (int i = 2; i < 4; i++)
                         {
-                            Point item2 = new Point(item.X - i, item.Y);
+                            Point item2 = new(item.X - i, item.Y);
                             if (Main.tile[item2.X, item2.Y].HasTile && !hashSet.Contains(item2))
                                 list2.Add(item2);
 

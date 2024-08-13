@@ -2,8 +2,8 @@
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
-using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

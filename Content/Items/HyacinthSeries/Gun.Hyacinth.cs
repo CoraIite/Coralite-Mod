@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                List<int> textureList = new List<int>();
+                List<int> textureList = new();
                 for (int i = 1; i < 24; i++)
                     textureList.Add(-i);
 

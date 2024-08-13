@@ -864,8 +864,8 @@ namespace Coralite.Content.Items.FlyingShields
         {
             Texture2D Texture = ModContent.Request<Texture2D>(TrailTexture).Value;
 
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
-            List<CustomVertexInfo> bars2 = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars = new();
+            List<CustomVertexInfo> bars2 = new();
             for (int i = 0; i < trailCachesLength; i++)
             {
                 float factor = (float)i / trailCachesLength;

@@ -39,7 +39,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
         {
             return new Item[1]
             {
-                new Item(ModContent.ItemType<MagicCrystal>())
+                new(ModContent.ItemType<MagicCrystal>())
             };
         }
 
@@ -74,7 +74,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
         {
             return new Item[1]
             {
-                new Item(ModContent.ItemType<MagicCrystal>())
+                new(ModContent.ItemType<MagicCrystal>())
             };
         }
 
@@ -110,7 +110,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
         {
             return new Item[1]
             {
-                new Item(ModContent.ItemType<MagicCrystal>())
+                new(ModContent.ItemType<MagicCrystal>())
             };
         }
 
@@ -145,7 +145,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
         {
             return new Item[1]
             {
-                new Item(ModContent.ItemType<MagicCrystal>())
+                new(ModContent.ItemType<MagicCrystal>())
             };
         }
 
@@ -180,7 +180,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
         {
             return new Item[1]
             {
-                new Item(ModContent.ItemType<MagicCrystal>())
+                new(ModContent.ItemType<MagicCrystal>())
             };
         }
 
@@ -214,7 +214,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
         {
             return new Item[1]
             {
-                new Item(ModContent.ItemType<MagicCrystal>())
+                new(ModContent.ItemType<MagicCrystal>())
             };
         }
     }

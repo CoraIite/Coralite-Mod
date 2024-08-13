@@ -170,7 +170,7 @@ namespace Coralite.Content.Items.Icicle
             //绘制影子拖尾
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle source = mainTex.Frame();
-            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
+            Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
             float scale = 1.4f + yujianProj.trailCacheLength * 0.015f;
 
             for (int i = yujianProj.trailCacheLength - 1; i > 0; i -= 3)
@@ -193,7 +193,7 @@ namespace Coralite.Content.Items.Icicle
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
-            PunchCameraModifier modifier = new PunchCameraModifier(projectile.Center, new Vector2(0f, 1f), 20f, 6f, 30, 1000f, "BabyIceDragon");
+            PunchCameraModifier modifier = new(projectile.Center, new Vector2(0f, 1f), 20f, 6f, 30, 1000f, "BabyIceDragon");
             Main.instance.CameraModifiers.Add(modifier);
 
             Point sourceTileCoords = projectile.Bottom.ToTileCoordinates();
@@ -219,7 +219,7 @@ namespace Coralite.Content.Items.Icicle
             int position_Y = TryMakingSpike_FindBestY(ref sourceTileCoords, position_X);
             if (WorldGen.ActiveAndWalkableTile(position_X, position_Y))
             {
-                Vector2 position = new Vector2(position_X * 16 + 8, position_Y * 16 - 8);
+                Vector2 position = new(position_X * 16 + 8, position_Y * 16 - 8);
                 Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
                 Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<IceThorn>(),
                     projectile.damage, 0f, projectile.owner, 0f, 0.4f + scaleOffset + xOffset * 1.1f / howMany);
@@ -411,7 +411,7 @@ namespace Coralite.Content.Items.Icicle
             //绘制影子拖尾
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle source = mainTex.Frame();
-            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
+            Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
             float scale = 1.6f + yujianProj.trailCacheLength * 0.015f;
 
             for (int i = yujianProj.trailCacheLength - 1; i > 0; i -= 3)

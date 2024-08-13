@@ -83,7 +83,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             Texture2D tex = MagikeSystem.GetUIApparatusButton().Value;
             var frameBox = tex.Frame(MagikeComponentID.Count + 1, 2, slot, frameY);
 
-            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, frameBox.Size()/2, _scale, 0, 0);
+            spriteBatch.Draw(tex, pos, frameBox, Color.White, 0, frameBox.Size() / 2, _scale, 0, 0);
         }
     }
 }

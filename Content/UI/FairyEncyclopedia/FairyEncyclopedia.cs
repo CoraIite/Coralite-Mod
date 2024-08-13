@@ -165,8 +165,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         private void InitPageText()
         {
             PageText = new PageText();
-            UIImageButton leftButton = new UIImageButton(ModContent.Request<Texture2D>(AssetDirectory.UI + "FairyEncyclopediaLeftButton", ReLogic.Content.AssetRequestMode.ImmediateLoad));
-            UIImageButton rightButton = new UIImageButton(ModContent.Request<Texture2D>(AssetDirectory.UI + "FairyEncyclopediaRightButton", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+            UIImageButton leftButton = new(ModContent.Request<Texture2D>(AssetDirectory.UI + "FairyEncyclopediaLeftButton", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+            UIImageButton rightButton = new(ModContent.Request<Texture2D>(AssetDirectory.UI + "FairyEncyclopediaRightButton", ReLogic.Content.AssetRequestMode.ImmediateLoad));
 
             PageText.Left.Set(0, 0);
             PageText.Width.Set(100, 0);
@@ -213,14 +213,14 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             SelectButtonsPanel.Width.Set(circleButtonTex.Width() * 6 + 10, 0);
             SelectButtonsPanel.Height.Set(BackGround.Height.Pixels / 3, 0);
 
-            UIGrid buttonsGrid = new UIGrid();
+            UIGrid buttonsGrid = new();
             buttonsGrid.Width.Set(SelectButtonsPanel.Width.Pixels, 0);
             buttonsGrid.Height.Set(SelectButtonsPanel.Height.Pixels, 0);
 
-            SelectButton AllButton = new SelectButton(circleButtonTex, null);//生成默认按钮
+            SelectButton AllButton = new(circleButtonTex, null);//生成默认按钮
             AllButton.SetHoverImage(circleButtonHoverTex);
             buttonsGrid.Add(AllButton);
-            SelectButton SPButton = new SelectButton(circleButtonTex, (Rarity)(-1));
+            SelectButton SPButton = new(circleButtonTex, (Rarity)(-1));
             SPButton.SetHoverImage(circleButtonHoverTex);
             buttonsGrid.Add(SPButton);
 
@@ -228,7 +228,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
             foreach (var rairty in rarities)
             {
-                SelectButton rarityButton = new SelectButton(circleButtonTex, rairty);
+                SelectButton rarityButton = new(circleButtonTex, rairty);
                 rarityButton.SetHoverImage(circleButtonHoverTex);
                 buttonsGrid.Add(rarityButton);
             }
@@ -249,7 +249,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             SortButtonsPanel.Width.Set(BackGround.Width.Pixels / 4, 0);
             SortButtonsPanel.Height.Set(BackGround.Height.Pixels / 3, 0);
 
-            UIGrid buttonsGrid = new UIGrid();
+            UIGrid buttonsGrid = new();
             buttonsGrid.Width.Set(SelectButtonsPanel.Width.Pixels, 0);
             buttonsGrid.Height.Set(SelectButtonsPanel.Height.Pixels, 0);
 
@@ -262,7 +262,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         private void MakeExitButton(UIElement outerContainer)
         {
-            UITextPanel<LocalizedText> uITextPanel = new UITextPanel<LocalizedText>(Language.GetText("UI.Back"), 0.7f, large: true)
+            UITextPanel<LocalizedText> uITextPanel = new(Language.GetText("UI.Back"), 0.7f, large: true)
             {
                 Width = StyleDimension.FromPixelsAndPercent(-10f, 0.3f),
                 Height = StyleDimension.FromPixels(50f),
@@ -280,7 +280,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         private void MakeSortButton(SortStyle sortStyle, Func<LocalizedText> description, UIGrid grid)
         {
-            SortButton sortButton = new SortButton(sortStyle, description);
+            SortButton sortButton = new(sortStyle, description);
 
             sortButton.OnMouseOver += FadedMouseOver;
             sortButton.OnMouseOut += FadedMouseOut;
@@ -414,7 +414,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
                 if (index < fairies.Count)
                 {
-                    FairySlot slot = new FairySlot(fairies[index].Type, i);
+                    FairySlot slot = new(fairies[index].Type, i);
                     slot.SetSize(FairyGrid);
                     FairyGrid.Add(slot);
                 }

@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.Pets
             {
                 Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "HorizontalLight").Value;
 
-                Vector2 origin = new Vector2(0, mainTex.Height / 2);
+                Vector2 origin = new(0, mainTex.Height / 2);
                 Color c = Color.SkyBlue;
                 c.A = 0;
                 c *= 0.25f + MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.2f;
@@ -174,7 +174,7 @@ namespace Coralite.Content.Items.Pets
             else
                 vector.X -= (45 + player.width) * player.direction;
 
-            Projectile.shouldFallThrough = player.position.Y + player.height - 12f > Projectile.position.Y + (float)Projectile.height;
+            Projectile.shouldFallThrough = player.position.Y + player.height - 12f > Projectile.position.Y + Projectile.height;
             Projectile.friendly = false;
 
             switch (State)

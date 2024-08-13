@@ -198,8 +198,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public ref float Target => ref Projectile.ai[2];
 
         public static Color highlightC = Color.White;
-        public static Color brightC = new Color(80, 150, 255);
-        public static Color darkC = new Color(0, 0, 255);
+        public static Color brightC = new(80, 150, 255);
+        public static Color darkC = new(0, 0, 255);
 
         public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);
 
@@ -410,7 +410,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 {
                     Texture2D exTex = TextureAssets.Extra[98].Value;
 
-                    Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+                    Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
                     var origin = exTex.Size() / 2;
 
                     for (int i = 0; i < 12; i++)
@@ -432,7 +432,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.Blank;
 
-        private VertexStrip _vertexStrip = new VertexStrip();
+        private VertexStrip _vertexStrip = new();
         private Trail trail;
 
         public ref float Owner => ref Projectile.ai[0];
@@ -702,7 +702,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             for (int i = 0; i < 2; i++)
             {
-                int num249 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.UnusedWhiteBluePurple, Projectile.velocity.X, Projectile.velocity.Y, 50, default(Color), 1.1f);
+                int num249 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.UnusedWhiteBluePurple, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 1.1f);
                 Dust dust2 = Main.dust[num249];
                 dust2.position = (dust2.position + Projectile.Center) / 2f;
                 dust2.noGravity = true;
@@ -712,7 +712,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             for (int o = 0; o < 1; o++)
             {
-                int num249 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.MushroomTorch, Projectile.velocity.X, Projectile.velocity.Y, 50, default(Color), 0.6f);
+                int num249 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.MushroomTorch, Projectile.velocity.X, Projectile.velocity.Y, 50, default, 0.6f);
                 Dust dust2 = Main.dust[num249];
                 dust2.position = (dust2.position + Projectile.Center * 5f) / 6f;
                 dust2.velocity *= 0.4f;
@@ -743,18 +743,18 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             for (int i = 0; i < 10; i++)
             {
                 int num187 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height
-                    , DustID.BlueTorch, Projectile.velocity.X * 0.1f, Projectile.velocity.Y * 0.1f, 0, default(Color), 0.5f);
+                    , DustID.BlueTorch, Projectile.velocity.X * 0.1f, Projectile.velocity.Y * 0.1f, 0, default, 0.5f);
                 Dust dust2;
                 if (Main.rand.NextBool(3))
                 {
-                    Main.dust[num187].fadeIn = 0.75f + (float)Main.rand.Next(-10, 11) * 0.01f;
-                    Main.dust[num187].scale = 0.25f + (float)Main.rand.Next(-10, 11) * 0.005f;
+                    Main.dust[num187].fadeIn = 0.75f + Main.rand.Next(-10, 11) * 0.01f;
+                    Main.dust[num187].scale = 0.25f + Main.rand.Next(-10, 11) * 0.005f;
                     dust2 = Main.dust[num187];
                     dust2.type++;
                 }
                 else
                 {
-                    Main.dust[num187].scale = 1f + (float)Main.rand.Next(-10, 11) * 0.01f;
+                    Main.dust[num187].scale = 1f + Main.rand.Next(-10, 11) * 0.01f;
                 }
 
                 Main.dust[num187].noGravity = true;

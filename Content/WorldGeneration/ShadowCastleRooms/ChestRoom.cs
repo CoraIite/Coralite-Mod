@@ -13,34 +13,34 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
 
         public override Point[] UpCorridor => new Point[]
         {
-            new Point(32,19),
-            new Point(31,12),
-            new Point(32,12),
+            new(32,19),
+            new(31,12),
+            new(32,12),
         };
         public override Point[] DownCorridor => new Point[]
         {
-            new Point(31,44),
-            new Point(31,52),
-            new Point(32,51),
+            new(31,44),
+            new(31,52),
+            new(32,51),
         };
         public override Point[] LeftCorridor => new Point[]
         {
-            new Point(19,32),
-            new Point(12,32),
-            new Point(12,32),
+            new(19,32),
+            new(12,32),
+            new(12,32),
         };
         public override Point[] RightCorridor => new Point[]
         {
-            new Point(45,32),
-            new Point(52,32),
-            new Point(51,32),
+            new(45,32),
+            new(52,32),
+            new(51,32),
         };
 
         public static Point[] ChestPoint => new Point[]
         {
-            new Point(31,36),
-            new Point(31,38),
-            new Point(31,18),
+            new(31,36),
+            new(31,38),
+            new(31,18),
         };
 
         public ChestRoom(Point center, int tresureItemType) : base(center, RoomType.SingleChest)

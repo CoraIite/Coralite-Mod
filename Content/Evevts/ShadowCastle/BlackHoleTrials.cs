@@ -4,7 +4,6 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -388,7 +387,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
                         if (Projectile.ai[2] == 80)
                         {
-                            Helper.PlayPitched(CoraliteSoundID.SpiritFlame_Item117, Projectile.Center, pitch: 0.5f,volume:0.3f);
+                            Helper.PlayPitched(CoraliteSoundID.SpiritFlame_Item117, Projectile.Center, pitch: 0.5f, volume: 0.3f);
 
                             Projectile.velocity = (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(6, 8);
                             Projectile.ai[2]++;

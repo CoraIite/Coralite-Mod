@@ -44,7 +44,7 @@ namespace Coralite.Content.WorldGeneration
             for (int i = 0; i < 1000; i++)
             {
                 //随机选取一个中心点
-                Point origin = new Point(WorldGen.genRand.Next(minX, maxX), WorldGen.genRand.Next(minY, maxY));
+                Point origin = new(WorldGen.genRand.Next(minX, maxX), WorldGen.genRand.Next(minY, maxY));
 
                 if (MagicCrystalCave(origin))
                 {
@@ -84,7 +84,7 @@ namespace Coralite.Content.WorldGeneration
             }
 
             // 通过使用TileScanner，检查以原点为中心的50x50区域是否大部分是泥土或石头。
-            Dictionary<ushort, int> tileDictionary = new Dictionary<ushort, int>();
+            Dictionary<ushort, int> tileDictionary = new();
             WorldUtils.Gen(
                 new Point(origin.X - 25, origin.Y - 25),
                 new Shapes.Rectangle(50, 50),
@@ -103,8 +103,8 @@ namespace Coralite.Content.WorldGeneration
                 return false;
 
             //原版提供的形状，可以使用一些生成器生成出形状来并用这个变量记录
-            ShapeData innerData = new ShapeData();
-            ShapeData outerData = new ShapeData();
+            ShapeData innerData = new();
+            ShapeData outerData = new();
 
             #region 主体圆环
             //挖出一个球，内部全空
@@ -345,16 +345,16 @@ namespace Coralite.Content.WorldGeneration
             int genOrigin_x = origin.X - clearTex.Width / 2;
             int genOrigin_y = origin.Y - clearTex.Height / 2;
 
-            Point chestPos = new Point(genOrigin_x + 13, genOrigin_y + 13);
-            Point lightPoint1 = new Point(genOrigin_x + 7, genOrigin_y + 14);
-            Point lightPoint2 = new Point(genOrigin_x + 17, genOrigin_y + 14);
+            Point chestPos = new(genOrigin_x + 13, genOrigin_y + 13);
+            Point lightPoint1 = new(genOrigin_x + 7, genOrigin_y + 14);
+            Point lightPoint2 = new(genOrigin_x + 17, genOrigin_y + 14);
 
-            Dictionary<Color, int> clearDic = new Dictionary<Color, int>()
+            Dictionary<Color, int> clearDic = new()
             {
                 [Color.White] = -2,
                 [Color.Black] = -1
             };
-            Dictionary<Color, int> mainDic = new Dictionary<Color, int>()
+            Dictionary<Color, int> mainDic = new()
             {
                 [new Color(255, 112, 210)] = crystalBlock,
                 [new Color(255, 177, 230)] = crystalBrick,
@@ -363,7 +363,7 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(90, 100, 80)] = TileID.Chain,
                 [Color.Black] = -1
             };
-            Dictionary<Color, int> wallDic = new Dictionary<Color, int>()
+            Dictionary<Color, int> wallDic = new()
             {
                 [new Color(255, 255, 0)] = ModContent.WallType<Walls.Magike.HardBasaltWall>(),
                 [Color.Black] = -1

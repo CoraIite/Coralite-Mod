@@ -1,6 +1,4 @@
-﻿using Coralite.Content.Items.Icicle;
-using Coralite.Content.Particles;
-using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -9,7 +7,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Core.Systems.MagikeSystem.Particles
 {
-    public class TileRenewalController:Particle
+    public class TileRenewalController : Particle
     {
         public override string Texture => AssetDirectory.DefaultItem;
 
@@ -24,7 +22,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             shouldKilledOutScreen = false;
         }
 
-        public static TileRenewalController Spawn(Point16 topLeft,Color color)
+        public static TileRenewalController Spawn(Point16 topLeft, Color color)
         {
             TileRenewalController particle = NewParticle<TileRenewalController>(topLeft.ToWorldCoordinates(), Vector2.Zero, color, 1);
             particle.topLeft = topLeft;
@@ -45,16 +43,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             MagikeHelper.GetMagikeAlternateData(topLeft.X, topLeft.Y, out TileObjectData altermateData, out _);
 
             fadeIn++;
-            if (fadeIn>frameDelay)
+            if (fadeIn > frameDelay)
             {
                 fadeIn = 0;
 
-                int x= topLeft.X;
+                int x = topLeft.X;
                 int y = startY;
 
-                Rectangle tileRect = new Rectangle(topLeft.X, topLeft.Y, altermateData.Width, altermateData.Height);
+                Rectangle tileRect = new(topLeft.X, topLeft.Y, altermateData.Width, altermateData.Height);
 
-                bool spawn=false;
+                bool spawn = false;
 
                 for (int k = 0; k < altermateData.Width; k++)
                 {

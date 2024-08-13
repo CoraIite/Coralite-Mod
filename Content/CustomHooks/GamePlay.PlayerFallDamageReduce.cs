@@ -19,7 +19,7 @@ namespace Coralite.Content.CustomHooks
 
         public void FallDamageReduce(ILContext il)
         {
-            ILCursor cursor = new ILCursor(il);
+            ILCursor cursor = new(il);
             cursor.TryGotoNext(
                  i => i.MatchConvI4()
                 , i => i.MatchLdcI4(10)

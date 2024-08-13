@@ -20,7 +20,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public Vector2 Center
         {
-            get => new Vector2(NPC.ai[2], NPC.ai[3]);
+            get => new(NPC.ai[2], NPC.ai[3]);
             set
             {
                 NPC.ai[2] = value.X;

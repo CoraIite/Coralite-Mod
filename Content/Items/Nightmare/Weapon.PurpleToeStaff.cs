@@ -67,7 +67,7 @@ namespace Coralite.Content.Items.Nightmare
 
         private RotateTentacle tentacle;
         private Color tentacleColor;
-        private Vector2 exVec2 = new Vector2(0, -300);
+        private Vector2 exVec2 = new(0, -300);
 
         private const int NormalAttackTime = 50;
         private const int PowerfulAttackTime = 35;
@@ -171,7 +171,7 @@ namespace Coralite.Content.Items.Nightmare
                     SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Projectile.position);
                     for (int i = 0; i < 2; i++)
                     {
-                        Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.VilePowder, Projectile.oldVelocity.X * 0.2f, Projectile.oldVelocity.Y * 0.2f, 0, default(Color), 1.4f);
+                        Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.VilePowder, Projectile.oldVelocity.X * 0.2f, Projectile.oldVelocity.Y * 0.2f, 0, default, 1.4f);
                         if (!Main.rand.NextBool(3))
                         {
                             dust.scale *= 1.3f;
@@ -254,7 +254,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 float lerpValue2 = Utils.GetLerpValue(AttackTimer, resetTimer, Timer, clamped: true);
 
-                Vector2 originCenter = new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
+                Vector2 originCenter = new(Projectile.localAI[0], Projectile.localAI[1]);
                 originCenter += Utils.GetLerpValue(0f, 0.4f, lerpValue2, clamped: true) * exVec2;
                 Vector2 v = target.Center - originCenter;
                 Vector2 vector6 = v.SafeNormalize(Vector2.Zero) * MathHelper.Clamp(v.Length(), 60f, 150f);

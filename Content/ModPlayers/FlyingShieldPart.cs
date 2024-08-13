@@ -25,7 +25,7 @@ namespace Coralite.Content.ModPlayers
         /// <summary>
         /// 飞盾饰品的list
         /// </summary>
-        public List<IFlyingShieldAccessory> FlyingShieldAccessories = new List<IFlyingShieldAccessory>();
+        public List<IFlyingShieldAccessory> FlyingShieldAccessories = new();
 
         /// <summary>
         /// 飞盾右键防御的手持弹幕

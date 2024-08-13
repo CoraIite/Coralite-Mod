@@ -39,7 +39,7 @@ namespace Coralite.Content.Items.Magike.Tools
         public override bool CanUseItem(Player player)
         {
             Point16 pos = Main.MouseWorld.ToTileCoordinates16();
-            Rectangle rectangle = new Rectangle((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
+            Rectangle rectangle = new((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
 
             if (player.altFunctionUse == 2)
             {
@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.Magike.Tools
 
                             int x = frameX / 18;
                             int y = frameY / 18;
-                            Point16 position = new Point16(pos.X - x, pos.Y - y);
+                            Point16 position = new(pos.X - x, pos.Y - y);
 
                             if (extractor.ConnectToContainer(position))  //能连接，建立连接
                             {
@@ -132,7 +132,7 @@ namespace Coralite.Content.Items.Magike.Tools
 
                             int x = frameX / 18;
                             int y = frameY / 18;
-                            Point16 position = new Point16(pos.X - x, pos.Y - y);
+                            Point16 position = new(pos.X - x, pos.Y - y);
 
                             if (sender.ConnectToReceiver(position))  //能连接，建立连接
                             {

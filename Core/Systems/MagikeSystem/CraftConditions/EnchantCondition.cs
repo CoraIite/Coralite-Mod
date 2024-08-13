@@ -7,7 +7,7 @@ namespace Coralite.Core.Systems.MagikeSystem.CraftConditions
 {
     public class EnchantCondition : IMagikeCraftCondition
     {
-        private static readonly Lazy<EnchantCondition> singleton = new Lazy<EnchantCondition>(() => new EnchantCondition());
+        private static readonly Lazy<EnchantCondition> singleton = new(() => new EnchantCondition());
         public static EnchantCondition Instance { get => singleton.Value; }
 
         public string Description => Language.GetOrRegister($"Mods.Coralite.MagikeSystem.Conditions.EnchantCondition", () => "拥有特殊注魔时可进行魔能合成").Value;

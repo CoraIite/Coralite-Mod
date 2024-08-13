@@ -138,7 +138,7 @@ namespace Coralite.Content.NPCs.GlobalNPC
                             ItemDropRule.Common(ItemType<MedusaLightArmor>(), 1),
                             ItemDropRule.Common(ItemType<MedusaSlippers>(), 11),
                         };
-                        LeadingConditionRule leadingConditionRule = new LeadingConditionRule(new Conditions.IsHardmode());
+                        LeadingConditionRule leadingConditionRule = new(new Conditions.IsHardmode());
 
                         leadingConditionRule.OnSuccess(new FewFromRulesRule(1, 25, PirateKingTypes));
                         npcLoot.Add(leadingConditionRule);
@@ -151,7 +151,7 @@ namespace Coralite.Content.NPCs.GlobalNPC
                 case NPCID.Retinazer://双子魔眼在天顶世界掉落美杜莎面罩
                 case NPCID.Spazmatism://双子魔眼在天顶世界掉落美杜莎面罩
                     {
-                        LeadingConditionRule leadingConditionRule = new LeadingConditionRule(new Conditions.MissingTwin());
+                        LeadingConditionRule leadingConditionRule = new(new Conditions.MissingTwin());
                         leadingConditionRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.ZenithSeedIsUp(), ItemType<MedusaMask>(), 1));
 
                         npcLoot.Add(leadingConditionRule);

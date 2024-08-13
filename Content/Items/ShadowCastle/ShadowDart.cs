@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.ShadowCastle
     {
         public override string Texture => AssetDirectory.Blank;
 
-        public Vector2 TargetPos => new Vector2(Projectile.ai[0], Projectile.ai[1]);
+        public Vector2 TargetPos => new(Projectile.ai[0], Projectile.ai[1]);
 
         public override void SetDefaults()
         {

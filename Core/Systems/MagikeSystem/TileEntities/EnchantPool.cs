@@ -15,7 +15,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
     public abstract class MagikeFactory_EnchantPool : MagikeFactory, IMagikeSingleItemContainer
     {
-        public Item containsItem = new Item();
+        public Item containsItem = new();
 
         public MagikeFactory_EnchantPool(int magikeMax, int workTimeMax) : base(magikeMax, workTimeMax) { }
 
@@ -202,7 +202,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
             if (currentData.level == Enchant.Level.Max)
             {
-                List<int> otherDataIndex = new List<int>();
+                List<int> otherDataIndex = new();
 
                 for (int i = 0; i < enchant.datas.Length; i++)
                 {

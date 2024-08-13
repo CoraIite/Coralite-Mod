@@ -1,9 +1,6 @@
 ﻿using Coralite.Content.UI.UILib;
-using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.Localization;
 
 namespace Coralite.Content.UI.MagikeGuideBook.Chapter3

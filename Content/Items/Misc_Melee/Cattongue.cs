@@ -184,7 +184,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
             target.AddBuff(69, 60 * Main.rand.Next(5, 10));
 
-            Vector2 vector = new Vector2(p.direction * 100 + Main.rand.Next(-25, 26), Main.rand.Next(-75, 76));
+            Vector2 vector = new(p.direction * 100 + Main.rand.Next(-25, 26), Main.rand.Next(-75, 76));
             vector.Normalize();
             vector *= Main.rand.Next(30, 41) * 0.1f;
             Vector2 vector2 = p.Center;

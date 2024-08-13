@@ -80,7 +80,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             Projectile.rotation = targetRotation + changeAngle;
 
             //根据目前中心和距离中心的位置加上椭圆得到轨道（说的什么玩意，总之看码）
-            Vector2 slashCenter = new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
+            Vector2 slashCenter = new(Projectile.localAI[0], Projectile.localAI[1]);
 
             float current = Helper.EllipticalEase(changeAngle, halfShortAxis, halfLongAxis);
             float Width = current * SlashWidth / startElliptical;

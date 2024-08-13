@@ -96,7 +96,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     public abstract class MagikeGenerator_FromMagItem : MagikeGenerator_Normal, IMagikeSingleItemContainer
     {
         /// <summary> 内部存储的物品，仅当物品魔能含量不小于0是才能消耗物品并获得魔能  </summary>
-        public Item itemToCosume = new Item();
+        public Item itemToCosume = new();
 
         public MagikeGenerator_FromMagItem(int magikeMax, int connectLenghMax, int generateDelay, int howManyCanConnect = 1) : base(magikeMax, connectLenghMax, generateDelay, howManyCanConnect) { }
 

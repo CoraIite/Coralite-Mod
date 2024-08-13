@@ -11,7 +11,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     {
         public int Timeleft = 100; //弄一个计时器，让天空能自己消失
         private int particleTimer;
-        public Color color = new Color(204, 170, 242);
+        public Color color = new(204, 170, 242);
 
         public static FlowerParticle[] flowers;
         public static Rectangle ScreenRetangle;
@@ -22,7 +22,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 Texture2D sky = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "NightmareSky").Value;
 
-                Rectangle screen = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
+                Rectangle screen = new(0, 0, Main.screenWidth, Main.screenHeight);
                 if (VisualEffectSystem.UseNightmareSky)
                 {
                     Effect e = Filters.Scene["GlowingMarblingBlack2"].GetShader().Shader;
@@ -214,7 +214,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public static bool OnScreen(Vector2 pos, Vector2 size)
         {
-            Rectangle rect = new Rectangle((int)pos.X + 300, (int)pos.Y + 300, (int)size.X, (int)size.Y);
+            Rectangle rect = new((int)pos.X + 300, (int)pos.Y + 300, (int)size.X, (int)size.Y);
             return rect.Intersects(new Rectangle(0, 0, Main.screenWidth + 600, Main.screenHeight + 600));
         }
 

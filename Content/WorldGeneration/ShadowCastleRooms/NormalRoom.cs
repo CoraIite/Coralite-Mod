@@ -17,27 +17,27 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
 
         public override Point[] UpCorridor => new Point[]
         {
-            new Point(32,10),
-            new Point(32,19),
-            new Point(31,8),
+            new(32,10),
+            new(32,19),
+            new(31,8),
         };
         public override Point[] DownCorridor => new Point[]
         {
-            new Point(31,59),
-            new Point(32,45),
-            new Point(32,55),
+            new(31,59),
+            new(32,45),
+            new(32,55),
         };
         public override Point[] LeftCorridor => new Point[]
         {
-            new Point(12,28),
-            new Point(19,32),
-            new Point(8,32),
+            new(12,28),
+            new(19,32),
+            new(8,32),
         };
         public override Point[] RightCorridor => new Point[]
         {
-            new Point(53,31),
-            new Point(45,32),
-            new Point(55,32),
+            new(53,31),
+            new(45,32),
+            new(55,32),
         };
 
         public NormalRoom(Point center) : base(center, RoomType.Normal)
@@ -66,7 +66,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                     if (NextDirection(out Direction direction))
                     {
                         Point d = GetDir(direction);
-                        NormalRoom childRoom = new NormalRoom(roomRect.Center);
+                        NormalRoom childRoom = new(roomRect.Center);
                         int length = (roomRect.Width / 2) + (childRoom.Width / 2) + 1/*+ WorldGen.genRand.Next(-4, 0)*/;
                         int height = (roomRect.Height / 2) + (childRoom.Height / 2) + 1/*+ WorldGen.genRand.Next(-4, 0)*/;
 
@@ -76,7 +76,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                         if (!CoraliteWorld.shadowCastleRestraint.Contains(newCenter.X, newCenter.Y))
                             continue;
 
-                        Dictionary<ushort, int> tileDictionary = new Dictionary<ushort, int>();
+                        Dictionary<ushort, int> tileDictionary = new();
 
                         WorldUtils.Gen(
                             new Point(newCenter.X - 32, newCenter.Y - 32),
@@ -104,7 +104,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
 
         public override bool NextDirection(out Direction direction)
         {
-            List<Direction> directions = new List<Direction>()
+            List<Direction> directions = new()
             { Direction.Up
             , Direction.Down, Direction.Down, Direction.Down, Direction.Down
             , Direction.Left

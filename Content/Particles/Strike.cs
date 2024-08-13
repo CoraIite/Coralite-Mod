@@ -33,7 +33,7 @@ namespace Coralite.Content.Particles
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Vector2 origin = new Vector2(96, 96);
+            Vector2 origin = new(96, 96);
 
             spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, Frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
 

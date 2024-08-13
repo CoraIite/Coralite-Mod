@@ -8,19 +8,19 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
     {
         public override Point[] UpCorridor => new Point[]
 {
-            new Point(32,9),
+            new(32,9),
 };
         public override Point[] DownCorridor => new Point[]
         {
-            new Point(32,64-9),
+            new(32,64-9),
         };
         public override Point[] LeftCorridor => new Point[]
         {
-            new Point(10,32),
+            new(10,32),
         };
         public override Point[] RightCorridor => new Point[]
         {
-            new Point(64-9,32),
+            new(64-9,32),
         };
 
         public DungeonArtifactRoom(Point center) : base(center, RoomType.DenguonChest)

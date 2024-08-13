@@ -11,18 +11,18 @@ namespace Coralite.Compat.BossCheckList
     {
         private static readonly BloodiancieFollower[] followers = new BloodiancieFollower[12]
         {
-            new BloodiancieFollower(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
-            new BloodiancieFollower(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
-            new BloodiancieFollower(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
-            new BloodiancieFollower(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
-            new BloodiancieFollower(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
-            new BloodiancieFollower(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
-            new BloodiancieFollower(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
-            new BloodiancieFollower(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
-            new BloodiancieFollower(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
-            new BloodiancieFollower(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
-            new BloodiancieFollower(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
-            new BloodiancieFollower(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
+            new(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
+            new(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
+            new(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
+            new(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
+            new(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
+            new(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
+            new(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
+            new(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
+            new(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
+            new(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
+            new(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
+            new(new Vector2( Main.screenWidth/2,Main.screenHeight/2)),
         };//这也太蠢了... 
 
         public static void UpdateFollower_Idle(Vector2 center, float centerLerpSpeed = 0.6f)

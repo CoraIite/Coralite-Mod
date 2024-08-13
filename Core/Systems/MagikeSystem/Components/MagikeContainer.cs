@@ -1,22 +1,18 @@
-﻿using Coralite.Content.CustomHooks;
-using Coralite.Content.UI.MagikeApparatusPanel;
+﻿using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
-using Microsoft.Build.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.ComponentModel;
-using System.Linq;
 using Terraria;
-using Terraria.GameContent;
+using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
-using Terraria.UI.Chat;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class MagikeContainer : MagikeComponent
+    public class MagikeContainer : Component, IUIShowable
     {
         public sealed override int ID => MagikeComponentID.MagikeContainer;
 
@@ -29,7 +25,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int MagikeMaxExtra { get; set; }
 
         /// <summary> 当前的魔能上限 </summary>
-        public int MagikeMax { get => MagikeMaxBase + MagikeMaxExtra; }
+        public int MagikeMax { get => Math.Clamp(MagikeMaxBase + MagikeMaxExtra, 0, int.MaxValue); }
+
+        /// <summary> 当前内部的反魔能量 </summary>
+        public int AntiMagike { get; set; }
+
+        /// <summary> 自身反魔能基础容量，可以通过升级来变化 </summary>
+        public int AntiMagikeMaxBase { get; protected set; }
+        /// <summary> 额外反魔能量，通过扩展膜附加的魔能容量 </summary>
+        public int AntiMagikeMaxExtra { get; set; }
+
+        /// <summary> 当前的反魔能上限 </summary>
+        public int AntiMagikeMax { get => Math.Clamp(AntiMagikeMaxBase + AntiMagikeMaxExtra, 0, int.MaxValue); }
 
         /// <summary> 有魔能就为<see langword="true"/> </summary>
         public virtual bool HasMagike => Magike > 0;
@@ -98,27 +105,87 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #endregion
 
+        #region 反魔能相关
+
+        public void LimitAntiMagikeAmount() => AntiMagike = Math.Clamp(AntiMagike, 0, AntiMagikeMax);
+
+        /// <summary>
+        /// 反魔能过载时调用<br></br>
+        /// 包括摧毁物块，炸掉附近物块和生成反魔能污染
+        /// </summary>
+        public virtual void AntiMagikeOverflow()
+        {
+            for (int i = 0; i < Entity.ComponentsCache.Count; i++)
+                if (Entity.ComponentsCache[i] is IAnnihilateable annihilateable)
+                    annihilateable.OnAnnihilate();
+
+            Point16 p = (Entity as MagikeTileEntity).Position;
+            WorldGen.KillTile(p.X, p.Y, noItem: true);
+
+            //TODO: 爆炸与反魔能污染
+
+        }
+
+        /// <summary>
+        /// 直接向魔能容器内添加魔能
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public virtual void AddAntiMagike(int amount)
+        {
+            AntiMagike += amount;
+            CheckAntiMagike();
+        }
+
+        /// <summary>
+        /// 直接减少，请一定在执行这个操作前检测能否减少
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public virtual void ReduceAntiMagike(int amount)
+        {
+            AntiMagike -= amount;
+            CheckAntiMagike();
+        }
+
+        /// <summary>
+        /// 检测当前的反魔能量，如果超过上限就TM爆了
+        /// </summary>
+        public virtual void CheckAntiMagike()
+        {
+            if (AntiMagike >= AntiMagikeMax)
+                AntiMagikeOverflow();
+        }
+
+        #endregion
+
         #region UI
 
-        public override void ShowInUI(UIElement parent)
+        public void ShowInUI(UIElement parent)
         {
             //添加显示在最上面的组件名称
-            UIElement title = new ComponentUIElementText<MagikeContainer>(c =>
-                 MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeContainerName), this, parent, new Vector2(1.3f));
-            parent.Append(title);
+            UIElement title = this.AddTitle(MagikeSystem.UITextID.MagikeContainerName, parent);
 
             //添加魔能量显示条，在左边
-            ContainerBar bar = new ContainerBar(this);
+            ContainerBar bar = new(this);
             bar.Top.Set(title.Height.Pixels + 8, 0);
             parent.Append(bar);
 
+            AntiContainerBar bar2 = new(this);
+            bar2.Top.Set(bar.Top.Pixels + bar.Height.Pixels+24, 0);
+            parent.Append(bar2);
+
             //其他的文本信息在右侧
-            UIList list = new UIList();
+            UIList list = [];
             list.Width.Set(0, 1);
-            list.Height.Set(0, 1);
+            list.Height.Set(-title.Height.Pixels, 1);
             list.Left.Set(bar.Width.Pixels + 6, 0);
             list.Top.Set(title.Height.Pixels + 8, 0);
-            list.OverflowHidden = false;
+
+            UIScrollbar scrollbar = new ();
+            scrollbar.Top.Set(4000, 0);
+            scrollbar.Left.Set(4000, 0);
+            list.SetScrollbar(scrollbar);
 
             AddText(list, c =>
             {
@@ -131,6 +198,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             AddText(list, c =>
                 string.Concat(MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeMax)
                 , $"\n  - {c.MagikeMax} ({c.MagikeMaxBase} {(c.MagikeMaxExtra >= 0 ? "+" : "-")} {Math.Abs(c.MagikeMaxExtra)})"), parent);
+            
+            AddText(list, c =>
+            {
+                string colorCode = c.GetMagikeContainerMaxColorCode();
+
+                return string.Concat(MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeAmount)
+                    , $"\n  - {c.AntiMagike} / [c/{colorCode}:{c.AntiMagikeMax}]");
+            }, parent);
+
+            AddText(list, c =>
+                string.Concat(MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeMax)
+                , $"\n  - {c.AntiMagikeMax} ({c.AntiMagikeMaxBase} {(c.AntiMagikeMaxExtra >= 0 ? "+" : "-")} {Math.Abs(c.AntiMagikeMaxExtra)})"), parent);
 
             parent.Append(list);
         }
@@ -147,6 +226,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             tag.Add(preName + nameof(Magike), Magike);
             tag.Add(preName + nameof(MagikeMaxBase), MagikeMaxBase);
             tag.Add(preName + nameof(MagikeMaxExtra), MagikeMaxExtra);
+
+            tag.Add(preName + nameof(AntiMagike), AntiMagike);
+            tag.Add(preName + nameof(AntiMagikeMaxBase), AntiMagikeMaxBase);
+            tag.Add(preName + nameof(AntiMagikeMaxExtra), AntiMagikeMaxExtra);
         }
 
         public override void LoadData(string preName, TagCompound tag)
@@ -154,12 +237,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Magike = tag.GetInt(preName + nameof(Magike));
             MagikeMaxBase = tag.GetInt(preName + nameof(MagikeMaxBase));
             MagikeMaxExtra = tag.GetInt(preName + nameof(MagikeMaxExtra));
+
+            AntiMagike = tag.GetInt(preName + nameof(AntiMagike));
+            AntiMagikeMaxBase = tag.GetInt(preName + nameof(AntiMagikeMaxBase));
+            AntiMagikeMaxExtra = tag.GetInt(preName + nameof(AntiMagikeMaxExtra));
         }
     }
 
     public class ContainerBar : UIElement
     {
-        private MagikeContainer container;
+        protected MagikeContainer container;
 
         public ContainerBar(MagikeContainer container)
         {
@@ -193,7 +280,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                    (int)(tex.Height * (percent + 0.04f * MathF.Sin(((float)Main.timeForVisualEffects) * 0.1f + i * 0.3f)))
                     , 0, tex.Height);
 
-                Rectangle frameBox2 = new Rectangle(frameBox.Width + i * 2, tex.Height - currentHeight, 2, currentHeight);
+                Rectangle frameBox2 = new(frameBox.Width + i * 2, tex.Height - currentHeight, 2, currentHeight);
                 var origin = new Vector2(0, frameBox2.Height);
                 spriteBatch.Draw(tex, drawPos + new Vector2(i * 2, 0), frameBox2, Color.White, 0, origin, 1f, 0, 0f);
             }
@@ -201,6 +288,45 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             string percentText = MathF.Round(100 * percent, 1) + "%";
 
             Utils.DrawBorderString(spriteBatch, percentText, center, Color.White, 0.75f, anchorx: 0.5f, anchory: 0.5f);
+        }
+    }
+
+    public class AntiContainerBar : ContainerBar
+    {
+        public AntiContainerBar(MagikeContainer container) : base(container)
+        {
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Texture2D tex = MagikeSystem.MagikeContainerBar.Value;
+
+            var frameBox = tex.Frame(2, 1);
+
+            var dimensions = GetDimensions();
+            Vector2 pos = dimensions.Position() + new Vector2((dimensions.Width - frameBox.Width) / 2, 0);
+            Vector2 center = dimensions.Center();
+
+            //绘制底层
+            spriteBatch.Draw(tex, pos, frameBox, Color.White);
+            float percent = (float)container.Magike / container.MagikeMax;
+            Color c = Color.Lerp(Color.Green, Color.Red, percent);
+
+            Vector2 drawPos = pos + new Vector2(0, frameBox.Height);
+            for (int i = 0; i < frameBox.Width / 2; i++)
+            {
+                int currentHeight = Math.Clamp(
+                   (int)(tex.Height * (percent + 0.04f * MathF.Sin(((float)Main.timeForVisualEffects) * 0.1f + i * 0.3f)))
+                    , 0, tex.Height);
+
+                Rectangle frameBox2 = new(i * 2, tex.Height - currentHeight, 2, currentHeight);
+                var origin = new Vector2(0, frameBox2.Height);
+                spriteBatch.Draw(tex, drawPos + new Vector2(i * 2, 0), frameBox2, c, 0, origin, 1f, 0, 0f);
+            }
+
+            string percentText = MathF.Round(100 * percent, 1) + "%";
+
+            Utils.DrawBorderString(spriteBatch, percentText, center, c, 0.75f, anchorx: 0.5f, anchory: 0.5f);
         }
     }
 }

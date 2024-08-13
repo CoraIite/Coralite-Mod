@@ -16,7 +16,7 @@ namespace Coralite.Content.UI
         //public override bool Visible => visible;
         //public static bool visible = false;
 
-        public static UIPanel panel = new UIPanel();
+        public static UIPanel panel = new();
         public static UIText descriptionText;
 
         public static GroupOptionButton<WorldDungeonID>[] DungeonButtons;
@@ -83,8 +83,8 @@ namespace Coralite.Content.UI
 
             Color[] array4 = new Color[3] {
             Color.White,
-            new Color(160,89,130),
-            new Color(189,109,255)
+            new(160,89,130),
+            new(189,109,255)
             };
 
             string[] array5 = new string[3] {
@@ -99,7 +99,7 @@ namespace Coralite.Content.UI
             for (int i = 0; i < array6.Length; i++)
             {
                 GroupOptionButton<WorldDungeonID> groupOptionButton =
-                    new GroupOptionButton<WorldDungeonID>(array[i], array2[i], array3[i], array4[i],
+                    new(array[i], array2[i], array3[i], array4[i],
                     i == 0 ? array5[i] : null, 1f, 1f, 16f);
                 groupOptionButton.Width = StyleDimension.FromPixelsAndPercent(-4 * (array6.Length - 1), 1f / array6.Length * 1f);
                 groupOptionButton.Left = StyleDimension.FromPercent(1f - 1f);
@@ -127,7 +127,7 @@ namespace Coralite.Content.UI
         private static void AddDescriptionPanel(UIElement container, float accumulatedHeight, string tagGroup)
         {
             float num = 0f;
-            UISlicedImage uISlicedImage = new UISlicedImage(Main.Assets.Request<Texture2D>("Images/UI/CharCreation/CategoryPanelHighlight"))
+            UISlicedImage uISlicedImage = new(Main.Assets.Request<Texture2D>("Images/UI/CharCreation/CategoryPanelHighlight"))
             {
                 HAlign = 0.5f,
                 VAlign = 1f,
@@ -140,7 +140,7 @@ namespace Coralite.Content.UI
             uISlicedImage.SetSliceDepths(10);
             uISlicedImage.Color = Color.LightGray * 0.7f;
             container.Append(uISlicedImage);
-            UIText uIText = new UIText(Language.GetText("UI.WorldDescriptionDefault"), 0.82f)
+            UIText uIText = new(Language.GetText("UI.WorldDescriptionDefault"), 0.82f)
             {
                 HAlign = 0f,
                 VAlign = 0f,
@@ -158,7 +158,7 @@ namespace Coralite.Content.UI
 
         private static void AddHorizontalSeparator(UIElement Container, float accumualtedHeight)
         {
-            UIHorizontalSeparator element = new UIHorizontalSeparator
+            UIHorizontalSeparator element = new()
             {
                 Width = StyleDimension.FromPercent(1f),
                 Top = StyleDimension.FromPixels(accumualtedHeight - 8f),

@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
         protected static ParticleGroup group;
-        protected static Vector2 rand = new Vector2(30, 30);
+        protected static Vector2 rand = new(30, 30);
 
         public sealed override void SetDefaults()
         {

@@ -41,13 +41,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public float selfAlpha = 1f;
         public float anmiAlpha;
 
-        public static Color ThunderveinYellowAlpha = new Color(255, 202, 101, 0);
-        public static Color ThunderveinPurpleAlpha = new Color(135, 94, 255, 0);
-        public static Color ThunderveinOrangeAlpha = new Color(219, 114, 22, 0);
+        public static Color ThunderveinYellowAlpha = new(255, 202, 101, 0);
+        public static Color ThunderveinPurpleAlpha = new(135, 94, 255, 0);
+        public static Color ThunderveinOrangeAlpha = new(219, 114, 22, 0);
 
-        public static Color ThunderveinYellow = new Color(255, 202, 101);
-        public static Color ThunderveinPurple = new Color(135, 94, 255);
-        public static Color ThunderveinOrange = new Color(219, 114, 22);
+        public static Color ThunderveinYellow = new(255, 202, 101);
+        public static Color ThunderveinPurple = new(135, 94, 255);
+        public static Color ThunderveinOrange = new(219, 114, 22);
 
         /// <summary>
         /// 是否绘制残影
@@ -175,7 +175,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThunderveinDragonTrophy>(), 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThunderveinDragonMask>(), 7));
 
-            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ZapCrystal>(), 1, 6, 8));
             npcLoot.Add(notExpertRule);
         }
@@ -587,7 +587,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Recorder = 0;
             Recorder2 = 0;
 
-            List<int> moves = new List<int>();
+            List<int> moves = new();
             int oldState = (int)State;
             float distance = Vector2.Distance(NPC.Center, Target.Center);
             int dir = Target.Center.X > NPC.Center.X ? 1 : -1;
@@ -992,7 +992,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 Texture2D exTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "StrikeTrail").Value;
 
-                Vector2 exOrigin = new Vector2(exTex.Width * 6 / 10, exTex.Height / 2);
+                Vector2 exOrigin = new(exTex.Width * 6 / 10, exTex.Height / 2);
 
                 Vector2 scale = new Vector2(1.3f, 1.5f) * NPC.scale;
                 spriteBatch.Draw(exTex, pos, null, ThunderveinYellowAlpha, rot

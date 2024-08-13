@@ -90,7 +90,7 @@ namespace Coralite.Content.Bosses.GodOfWind
                             Main.spriteBatch.GraphicsDevice.DepthStencilState, RasterizerState.CullNone, shader, Main.GameViewMatrix.TransformationMatrix);
 
             float scale = (Main.screenWidth) / texture.Width;
-            Vector2 vector2 = new Vector2(1, texture.Width / (float)texture.Height);
+            Vector2 vector2 = new(1, texture.Width / (float)texture.Height);
             Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, 0, texture.Size() / 2, scale, 0, 0);
 
             Main.spriteBatch.End();

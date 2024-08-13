@@ -27,7 +27,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public ref float State => ref NPC.ai[0];
         public Vector2 TargetPos
         {
-            get => new Vector2(NPC.ai[1], NPC.ai[2]);
+            get => new(NPC.ai[1], NPC.ai[2]);
             set
             {
                 NPC.ai[1] = value.X;
@@ -158,7 +158,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         timer++;
                         if (timer > 45)
                         {
-                            Rectangle rectangle = new Rectangle((int)NPC.Center.X, (int)NPC.Center.Y, 2, 2);
+                            Rectangle rectangle = new((int)NPC.Center.X, (int)NPC.Center.Y, 2, 2);
                             CombatText.NewText(rectangle, Color.LightGoldenrodYellow, "帮帮我！");
                             timer = 0;
                         }
@@ -235,13 +235,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
                         if (timer == 10)
                         {
-                            Rectangle rectangle = new Rectangle((int)NPC.Center.X, (int)NPC.Center.Y, 2, 2);
+                            Rectangle rectangle = new((int)NPC.Center.X, (int)NPC.Center.Y, 2, 2);
                             CombatText.NewText(rectangle, Color.LightGoldenrodYellow, "别害怕！！");
                         }
 
                         if (timer == 60)
                         {
-                            Rectangle rectangle = new Rectangle((int)NPC.Center.X, (int)NPC.Center.Y, 2, 2);
+                            Rectangle rectangle = new((int)NPC.Center.X, (int)NPC.Center.Y, 2, 2);
                             CombatText.NewText(rectangle, Color.LightGoldenrodYellow, "我会帮你！");
                         }
 
@@ -276,7 +276,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 for (int i = -1; i < 2; i += 2)
                 {
                     int type = Main.rand.NextFromList(DustID.PlatinumCoin, DustID.GoldCoin);
-                    Vector2 dir = new Vector2(i, 0);
+                    Vector2 dir = new(i, 0);
                     Dust d = Dust.NewDustPerfect(NPC.Center, type, dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(1, 4), Scale: Main.rand.NextFloat(1, 1.5f));
                     //d.noGravity = true;
                 }
@@ -295,7 +295,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
             Vector2 pos = NPC.Center - screenPos;
             float rot = NPC.rotation;
-            Color shineColor = new Color(252, 233, 194);
+            Color shineColor = new(252, 233, 194);
             //中心的闪光
 
             Texture2D lightTex = BaseNightmareSparkle.MainLight.Value;

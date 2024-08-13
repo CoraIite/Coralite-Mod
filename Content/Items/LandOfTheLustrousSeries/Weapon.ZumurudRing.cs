@@ -193,9 +193,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public static Asset<Texture2D> trailTex;
 
-        public static Color highlightC = new Color(206, 248, 239);
-        public static Color brightC = new Color(49, 230, 127);
-        public static Color darkC = new Color(19, 112, 60);
+        public static Color highlightC = new(206, 248, 239);
+        public static Color brightC = new(49, 230, 127);
+        public static Color darkC = new(19, 112, 60);
 
         public override void Load()
         {
@@ -320,7 +320,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 return false;
 
             Texture2D Texture = trailTex.Value;
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars = new();
 
             for (int i = 0; i < 16; i++)
             {

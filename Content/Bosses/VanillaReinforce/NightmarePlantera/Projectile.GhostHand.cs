@@ -96,7 +96,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Color c = drawColor * 0.5f;
 
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             for (int i = 0; i < 6; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,

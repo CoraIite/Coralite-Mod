@@ -181,7 +181,7 @@ namespace Coralite.Content.Items.Corruption
             //绘制上下鄂
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle frameBox = mainTex.Frame(1, 2, 0, 1);
-            Vector2 origin = new Vector2(frameBox.Width * 0.3f, frameBox.Height / 2);
+            Vector2 origin = new(frameBox.Width * 0.3f, frameBox.Height / 2);
             Color c = lightColor;
 
             SpriteEffects effects = SpriteEffects.None;
@@ -319,10 +319,10 @@ namespace Coralite.Content.Items.Corruption
             float fadeTime = 12f;
             float totalTime = shootTime + fadeTime;
             Color transparent = Color.Transparent;
-            Color color = new Color(100, 90, 255, 200);
-            Color color2 = new Color(130, 80, 200, 70);
+            Color color = new(100, 90, 255, 200);
+            Color color2 = new(130, 80, 200, 70);
             Color color3 = Color.Lerp(new Color(100, 90, 255, 100), color2, 0.25f);
-            Color color4 = new Color(80, 80, 80, 100);
+            Color color4 = new(80, 80, 80, 100);
             float num3 = 0.35f;
             float num4 = 0.7f;
             float num5 = 0.85f;

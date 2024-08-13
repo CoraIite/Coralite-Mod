@@ -5,7 +5,7 @@ namespace Coralite.Systems.CoraliteBehaviorTree.Bases
 {
     public abstract class BaseComposite : BaseBehavior, IComposite
     {
-        protected List<IBehaviour> children = new List<IBehaviour>();
+        protected List<IBehaviour> children = new();
 
         public override void AddChild(IBehaviour child)
         {

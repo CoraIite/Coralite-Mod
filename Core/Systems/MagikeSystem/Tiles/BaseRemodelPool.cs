@@ -116,7 +116,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
                 itemScale *= pool.itemScale;
                 spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pool.containsItem.GetAlpha(Color.White) * pool.itemAlpha, 0f, origin, itemScale, 0, 0f);
-                if (pool.containsItem.color != default(Color))
+                if (pool.containsItem.color != default)
                     spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pool.containsItem.GetColor(Color.White) * pool.itemAlpha, 0f, origin, itemScale, 0, 0f);
             }
 

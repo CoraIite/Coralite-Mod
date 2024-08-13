@@ -2,8 +2,8 @@
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
-using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -63,12 +63,12 @@ namespace Coralite.Content.Items.Magike.RemodelPools
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
             //这是特定于照明模式的，如果您手动绘制瓷砖，请始终包含此内容
-            Vector2 offScreen = new Vector2(Main.offScreenRange);
+            Vector2 offScreen = new(Main.offScreenRange);
             if (Main.drawToScreen)
                 offScreen = Vector2.Zero;
 
             //检查物块它是否真的存在
-            Point p = new Point(i, j);
+            Point p = new(i, j);
             Tile tile = Main.tile[p.X, p.Y];
             if (tile == null || !tile.HasTile)
                 return;

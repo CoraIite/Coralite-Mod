@@ -177,7 +177,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                 float height = 0;
                 for (int i = 0; i < MagikeComponentID.Count + 1; i++)
                 {
-                    ComponentSelectButton button = new ComponentSelectButton(i);
+                    ComponentSelectButton button = new(i);
                     recordWidth += button.Width.Pixels;
                     height = button.Height.Pixels;
                     ShowComponentButtons.Add(button);
@@ -221,7 +221,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             ComponentGrid ??= new UIGrid();
             ComponentGrid.Top.Set(ComponentControllerPanel.Height.Pixels + ComponentControllerPanel.Top.Pixels + 12, 0);
 
-            UIScrollbar scb = new UIScrollbar();
+            UIScrollbar scb = new();
             scb.Left.Set(4000, 0);
             scb.Top.Set(4000, 0);
             ComponentGrid.SetScrollbar(scb);
@@ -312,9 +312,9 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             if (!CurrentEntity.ComponentsCache.IndexInRange(CurrentShowComponentIndex))
                 return;
 
-            if (CurrentEntity.ComponentsCache[CurrentShowComponentIndex] is MagikeComponent mc)
+            if (CurrentEntity.ComponentsCache[CurrentShowComponentIndex] is IUIShowable showable)
             {
-                mc.ShowInUI(ComponentPanel);
+                showable.ShowInUI(ComponentPanel);
                 BaseRecalculate();
                 BaseRecalculate();
             }

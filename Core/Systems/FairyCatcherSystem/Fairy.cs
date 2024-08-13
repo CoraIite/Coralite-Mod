@@ -96,7 +96,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             set => position = value - new Vector2(height / 2, width);
         }
 
-        public Rectangle HitBox => new Rectangle((int)position.X, (int)position.Y, width, height);
+        public Rectangle HitBox => new((int)position.X, (int)position.Y, width, height);
 
         protected sealed override void Register()
         {
@@ -324,7 +324,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             active = false;
 
             //new一个物品出来
-            Item i = new Item(ItemType);
+            Item i = new(ItemType);
 
             //为物品的字段赋值，如果这个物品不是一个仙灵那么就跳过
             if (i.ModItem is BaseFairyItem fairyitem && player.TryGetModPlayer(out FairyCatcherPlayer fcp))

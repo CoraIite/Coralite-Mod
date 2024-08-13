@@ -17,7 +17,7 @@ namespace Coralite.Content.UI.MagikeGuideBook
         /// <summary> 是否可见 </summary>
         public override bool Visible { get => visible; set => visible = value; }
 
-        public static MagikeGuideBookPanel BookPanel = new MagikeGuideBookPanel();
+        public static MagikeGuideBookPanel BookPanel = new();
         //public static SwitchArrow leftArrow = new SwitchArrow(SpriteEffects.FlipHorizontally);
         //public static SwitchArrow rightArrow = new SwitchArrow(SpriteEffects.None);
 
@@ -29,11 +29,11 @@ namespace Coralite.Content.UI.MagikeGuideBook
         public bool openingBook;
         public bool closeingBook;
         public bool drawExtra;
-        public static Vector2 basePos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
+        public static Vector2 basePos = new(Main.screenWidth / 2, Main.screenHeight / 2);
         public Vector2 bookSize;
         public float bookWidth;
         public int Timer;
-        public readonly ParticleGroup particles = new ParticleGroup();
+        public readonly ParticleGroup particles = new();
 
         public MagicCircle magicCircle;
 
@@ -326,7 +326,7 @@ namespace Coralite.Content.UI.MagikeGuideBook
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearWrap/*注意了奥*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
 
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars = new();
             //对法向量进行一个投影
             float k1 = -1000 / (normal.Z - 1000);
             var normalDir = k1 * new Vector2(normal.X, normal.Y);
@@ -347,7 +347,7 @@ namespace Coralite.Content.UI.MagikeGuideBook
                 }
             }
 
-            List<CustomVertexInfo> Vx = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> Vx = new();
             if (bars.Count > 2)
             {
                 for (int i = 0; i < bars.Count - 2; i += 2)

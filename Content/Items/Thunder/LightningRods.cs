@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.Thunder
                 Vector2 targetPos = Vector2.Lerp(Projectile.Center, Projectile.velocity, factor);
                 Vector2 pos2 = targetPos;
 
-                List<Vector2> pos = new List<Vector2>
+                List<Vector2> pos = new()
                 {
                     targetPos
                 };

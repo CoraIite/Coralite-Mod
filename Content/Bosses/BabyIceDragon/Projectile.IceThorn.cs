@@ -109,9 +109,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle frame = mainTex.Frame(1, 5, 0, Projectile.frame);
             SpriteEffects effects = SpriteEffects.None;
-            Vector2 origin = new Vector2(16f, frame.Height / 2);
+            Vector2 origin = new(16f, frame.Height / 2);
             Color Color = Projectile.GetAlpha(lightColor);
-            Vector2 scale = new Vector2(Projectile.scale);
+            Vector2 scale = new(Projectile.scale);
 
             float lerpValue5 = Utils.GetLerpValue(30f, 25f, Timer, clamped: true);
             scale.Y *= lerpValue5;

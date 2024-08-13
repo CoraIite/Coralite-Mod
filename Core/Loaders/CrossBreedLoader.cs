@@ -60,7 +60,7 @@ namespace Coralite.Core.Loaders
         /// <param name="percentage"></param>
         public static void RemoveCrossBreed(int fatherType, int motherType, int mutantType, int percentage)
         {
-            CrossBreedData data = new CrossBreedData(fatherType, motherType, mutantType, percentage);
+            CrossBreedData data = new(fatherType, motherType, mutantType, percentage);
             foreach (var item in CrossBreedDatas)
             {
                 if (item == data)

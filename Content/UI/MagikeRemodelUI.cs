@@ -22,10 +22,10 @@ namespace Coralite.Content.UI
         public static Item currentChooseItem;
 
         public static MagikeFactory_RemodelPool remodelPool = null;
-        public static Old_CloseButton closeButton = new Old_CloseButton();
-        public static SingleItemSlot selfSlot = new SingleItemSlot();
-        public static CraftImage image = new CraftImage();
-        public static UIList list = new UIList();
+        public static Old_CloseButton closeButton = new();
+        public static SingleItemSlot selfSlot = new();
+        public static CraftImage image = new();
+        public static UIList list = new();
 
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
@@ -58,7 +58,7 @@ namespace Coralite.Content.UI
 
             Append(list);
 
-            UIScrollbar scrollbar = new UIScrollbar();
+            UIScrollbar scrollbar = new();
             scrollbar.SetView(100f, 1000f);
             scrollbar.Top.Pixels = 2_0000;
             scrollbar.Height.Set(-42f - 8, 1f);
@@ -105,7 +105,7 @@ namespace Coralite.Content.UI
                     {
                         foreach (var recipe in recipeList)
                         {
-                            RemodelItemButton shower = new RemodelItemButton(recipe);
+                            RemodelItemButton shower = new(recipe);
                             list.Add(shower);
                         }
                     }
@@ -199,7 +199,7 @@ namespace Coralite.Content.UI
                 position += new Vector2(5, 5);
 
                 spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
-                if (showItem.color != default(Color))
+                if (showItem.color != default)
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
 
                 if (showItem.stack > 1)
@@ -291,7 +291,7 @@ namespace Coralite.Content.UI
                 position.Y += 26 - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高
 
                 spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
-                if (showItem.color != default(Color))
+                if (showItem.color != default)
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), showItem.GetColor(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
 
                 if (showItem.stack > 1)
@@ -307,8 +307,8 @@ namespace Coralite.Content.UI
             //绘制显示条
             Texture2D exTex;
             Item item = MagikeRemodelUI.remodelPool.GetItem();
-            bool stackEnough = item is null ? false : item.stack >= recipe.selfRequiredNumber;
-            bool conditionCanRemodel = recipe.condition == null ? true : recipe.condition.CanCraft(item);
+            bool stackEnough = item is not null && item.stack >= recipe.selfRequiredNumber;
+            bool conditionCanRemodel = recipe.condition == null || recipe.condition.CanCraft(item);
             bool magikeEnough = MagikeRemodelUI.remodelPool.magike >= recipe.magikeCost;
 
             canRemodel = conditionCanRemodel && magikeEnough && stackEnough;

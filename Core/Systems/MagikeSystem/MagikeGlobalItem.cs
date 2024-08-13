@@ -210,7 +210,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                 string perSend = $"每次发送魔能量： {senderItem.HowManyPerSend}\n";
                 string connectLengthMax = $"连接距离： {senderItem.ConnectLengthMax} 格\n";
                 string howManyCanConnect = $"连接数量： {senderItem.HowManyCanConnect}";
-                TooltipLine line = new TooltipLine(Mod, "magikeSend", string.Concat(sendDelay, perSend, connectLengthMax, howManyCanConnect));
+                TooltipLine line = new(Mod, "magikeSend", string.Concat(sendDelay, perSend, connectLengthMax, howManyCanConnect));
                 tooltips.Add(line);
             }
 
@@ -218,7 +218,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             {
                 string GenerateDelay = string.Concat("每 ", generatorItem.GenerateDelay, " 秒生产一次魔能");
                 string howManyToGenerate = generatorItem.HowManyToGenerate < 0 ? "" : $"\n每次生产魔能量：{generatorItem.HowManyToGenerate}";
-                TooltipLine line = new TooltipLine(Mod, "magikeGenerate", GenerateDelay + howManyToGenerate);
+                TooltipLine line = new(Mod, "magikeGenerate", GenerateDelay + howManyToGenerate);
                 tooltips.Add(line);
             }
 
@@ -226,13 +226,13 @@ namespace Coralite.Core.Systems.MagikeSystem
             {
                 string workTimeMax = string.Concat("工作时间：", factoryItem.WorkTimeMax, " 秒\n");
                 string workCost = string.Concat("每次工作消耗 ", factoryItem.WorkCost, " 魔能");
-                TooltipLine line = new TooltipLine(Mod, "magikeFactory", workTimeMax + workCost);
+                TooltipLine line = new(Mod, "magikeFactory", workTimeMax + workCost);
                 tooltips.Add(line);
             }
 
             if (magikeMax >= 0)
             {
-                TooltipLine line = new TooltipLine(Mod, "magikeFactory", $"魔能：{magike} / {magikeMax}");
+                TooltipLine line = new(Mod, "magikeFactory", $"魔能：{magike} / {magikeMax}");
                 tooltips.Add(line);
             }
 
@@ -242,7 +242,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                 {
                     if (enchant.datas[i] != null)
                     {
-                        TooltipLine line = new TooltipLine(Mod, "enchant" + i.ToString(), enchant.datas[i].Description);
+                        TooltipLine line = new(Mod, "enchant" + i.ToString(), enchant.datas[i].Description);
                         line.OverrideColor = GetColor(enchant.datas[i].level);
                         tooltips.Add(line);
                     }
@@ -255,7 +255,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (magikeAmount > 0)
             {
                 string magikeAmount = $"魔能含量: {this.magikeAmount}";
-                TooltipLine line = new TooltipLine(Mod, "magiteAmount", magikeAmount);
+                TooltipLine line = new(Mod, "magiteAmount", magikeAmount);
                 if (this.magikeAmount < 300)
                     line.OverrideColor = Coralite.MagicCrystalPink;
                 else if (this.magikeAmount < 1000)
@@ -273,7 +273,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                 string stackAmount = $"物品需求量： {stack_CraftRequired}\n";
                 string magikeAmount = $"消耗魔能： {magike_CraftRequired}";
                 string conditionNeed = condition == null ? "" : ("\n" + condition.Description);
-                TooltipLine line = new TooltipLine(Mod, "remodelConition", stackAmount + magikeAmount + conditionNeed);
+                TooltipLine line = new(Mod, "remodelConition", stackAmount + magikeAmount + conditionNeed);
                 if (magike_CraftRequired < 300)
                     line.OverrideColor = Coralite.MagicCrystalPink;
                 else if (magike_CraftRequired < 1000)

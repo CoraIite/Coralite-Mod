@@ -146,11 +146,11 @@ namespace Coralite.Content.Items.Misc_Melee
 
             if (Main.rand.NextBool(5))
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Demonite
-                    , Main.player[Projectile.owner].direction * 2, 0f, 150, default(Color), 1.4f);
+                    , Main.player[Projectile.owner].direction * 2, 0f, 150, default, 1.4f);
 
             int num3 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height,
-                DustID.Shadowflame, Projectile.velocity.X * 0.2f + (float)(Main.player[Projectile.owner].direction * 3)
-                , Projectile.velocity.Y * 0.2f, 100, default(Color), 1.2f);
+                DustID.Shadowflame, Projectile.velocity.X * 0.2f + Main.player[Projectile.owner].direction * 3
+                , Projectile.velocity.Y * 0.2f, 100, default, 1.2f);
             Main.dust[num3].noGravity = true;
             Main.dust[num3].velocity.X /= 2f;
             Main.dust[num3].velocity.Y /= 2f;

@@ -16,7 +16,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 仙灵的个体数据，用于存放各类增幅
         /// </summary>
-        protected FairyData fairyData = new FairyData();
+        protected FairyData fairyData = new();
 
         /// <summary> 仙灵的实际血量 </summary>
         protected int life;
@@ -232,7 +232,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             string description = FairySystem.GetRarityDescription(Rarity);
             Color color = FairySystem.GetRarityColor(Rarity);
 
-            TooltipLine line = new TooltipLine(Mod, "FairyRarity", description);
+            TooltipLine line = new(Mod, "FairyRarity", description);
             line.OverrideColor = color;
 
             return line;
@@ -253,7 +253,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 status = FairySystem.CurrentLife.Format(life, (int)FairyLifeMax);
             }
 
-            TooltipLine line = new TooltipLine(Mod, "SurvivalStatus", status);
+            TooltipLine line = new(Mod, "SurvivalStatus", status);
             line.OverrideColor = newColor;
 
             return line;
@@ -265,7 +265,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             float bonused = FairyLifeMax;
             (Color, LocalizedText) group = FairyIVAppraise.FairyLifeMaxAppraise.GetAppraiseResult(@base, bonused);
 
-            TooltipLine line = new TooltipLine(Mod, "LifeMaxBonus"
+            TooltipLine line = new(Mod, "LifeMaxBonus"
                 , FairySystem.FormatIVDescription(FairySystem.FairyLifeMax, group.Item2, @base, (int)bonused));
             line.OverrideColor = group.Item1;
             return line;
@@ -277,7 +277,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             float bonused = FairyDamage;
             (Color, LocalizedText) group = FairyIVAppraise.FairyDamageAppraise.GetAppraiseResult(@base, bonused);
 
-            TooltipLine line = new TooltipLine(Mod, "DamageBonus"
+            TooltipLine line = new(Mod, "DamageBonus"
                 , FairySystem.FormatIVDescription(FairySystem.FairyDamage, group.Item2, @base, (int)bonused));
             line.OverrideColor = group.Item1;
             return line;
@@ -289,7 +289,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             float bonused = FairyDefence;
             (Color, LocalizedText) group = FairyIVAppraise.FairyDefenceAppraise.GetAppraiseResult(@base, bonused);
 
-            TooltipLine line = new TooltipLine(Mod, "DefenceBonus"
+            TooltipLine line = new(Mod, "DefenceBonus"
                 , FairySystem.FormatIVDescription(FairySystem.FairyDefence, group.Item2, @base, (int)bonused));
             line.OverrideColor = group.Item1;
             return line;
@@ -300,7 +300,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             float @base = Item.GetGlobalItem<FairyGlobalItem>().baseScale;
             float bonused = MathF.Round(FairyScale, 2);
 
-            TooltipLine line = new TooltipLine(Mod, "ScaleBonus"
+            TooltipLine line = new(Mod, "ScaleBonus"
                 , FairySystem.FairyScale.Value + $"{bonused} ({@base})");
             return line;
         }
@@ -309,7 +309,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             if (showRadarCount > 0 && line.Name == "RaderChart")
             {
-                Vector2 topLeft = new Vector2(line.OriginalX, line.OriginalY);
+                Vector2 topLeft = new(line.OriginalX, line.OriginalY);
                 float factor = showRadarCount / 15f;
 
                 Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
@@ -406,8 +406,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public static Color GetScaledColor(float factor, float alphaFactor)
         {
-            Color green = new Color(108, 234, 255);
-            Color pink = new Color(238, 206, 231);
+            Color green = new(108, 234, 255);
+            Color pink = new(238, 206, 231);
             Color c;
             if (factor < 0.3f)
                 c = Color.Lerp(Color.Gray, pink, factor / 0.3f);

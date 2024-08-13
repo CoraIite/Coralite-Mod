@@ -34,13 +34,13 @@ namespace Coralite.Content.WorldGeneration
             //if (itemCount > heartCount)
             //    itemCount = heartCount;
 
-            Dictionary<Color, int> clearDic = new Dictionary<Color, int>()
+            Dictionary<Color, int> clearDic = new()
             {
                 [Color.White] = -2,
                 [Color.Black] = -1
             };
 
-            Dictionary<Color, int> mainDic = new Dictionary<Color, int>()
+            Dictionary<Color, int> mainDic = new()
             {
                 [new Color(102, 57, 49)] = TileID.Dirt,
                 [new Color(7, 60, 49)] = ModContent.TileType<HartcoreObsidianTile>(),
@@ -57,14 +57,14 @@ namespace Coralite.Content.WorldGeneration
 
                     float r = Math.Abs(junglePos - Main.maxTilesX / 2);
 
-                    Vector2 pos = new Vector2(Main.maxTilesX / 2, (float)Main.worldSurface);
+                    Vector2 pos = new(Main.maxTilesX / 2, (float)Main.worldSurface);
                     float angle = Main.rand.NextFloat(0, MathHelper.Pi);
 
                     pos += angle.ToRotationVector2() * r;
 
                     Point position = pos.ToPoint();
 
-                    Dictionary<ushort, int> tileDictionary = new Dictionary<ushort, int>();
+                    Dictionary<ushort, int> tileDictionary = new();
                     if (!WorldGen.InWorld(position.X - 25, position.Y - 25) || !WorldGen.InWorld(position.X - 25 + 58, position.Y - 25 + 67))
                         continue;
                     WorldUtils.Gen(

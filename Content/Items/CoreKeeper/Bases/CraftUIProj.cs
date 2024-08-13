@@ -268,7 +268,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         public override void Draw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = GetTexture().Value;
-            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height);
+            Vector2 origin = new(mainTex.Width / 2, mainTex.Height);
             Vector2 pos = Center - Main.screenPosition;
             spriteBatch.Draw(mainTex, pos, null, color, 0, origin, Velocity, SpriteEffects.None, 0f);
             spriteBatch.Draw(mainTex, pos, null, color, 0, origin, Velocity * 0.9f, SpriteEffects.None, 0f);
@@ -311,7 +311,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         public override void Draw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.CoreKeeperItems + "CircleLight2").Value;
-            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
+            Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
             Vector2 pos = Center - Main.screenPosition;
             spriteBatch.Draw(mainTex, pos, null, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
             spriteBatch.Draw(mainTex, pos, null, color, Rotation, origin, Scale, SpriteEffects.None, 0f);

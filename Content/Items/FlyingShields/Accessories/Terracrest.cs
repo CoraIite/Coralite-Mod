@@ -256,8 +256,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             if (Timer < 0)
                 return;
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
-            
+            List<CustomVertexInfo> bars = new();
+
             float w = 1f;
             Vector2 up = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
             Vector2 down = (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2();

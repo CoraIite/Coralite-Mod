@@ -118,7 +118,7 @@ namespace Coralite.Content.Items.Icicle
 
             if (spawn)
             {
-                PunchCameraModifier modifier = new PunchCameraModifier(player.Center, new Vector2(0f, 1f), 10f, 6f, 15, 1000f, "BabyIceDragon");
+                PunchCameraModifier modifier = new(player.Center, new Vector2(0f, 1f), 10f, 6f, 15, 1000f, "BabyIceDragon");
                 Main.instance.CameraModifiers.Add(modifier);
                 player.AddBuff(BuffType<IcicleArmorBonus>(), 60 * 10);
             }
@@ -132,7 +132,7 @@ namespace Coralite.Content.Items.Icicle
             int position_Y = TryMakingSpike_FindBestY(player.Bottom, ref sourceTileCoords, position_X);
             if (WorldGen.ActiveAndWalkableTile(position_X, position_Y))
             {
-                Vector2 position = new Vector2(position_X * 16 + 8, position_Y * 16 - 8);
+                Vector2 position = new(position_X * 16 + 8, position_Y * 16 - 8);
                 Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
                 int damage = 35;
                 int index = Projectile.NewProjectile(player.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, damage, 0f, player.whoAmI, 0f, 0.4f + scaleOffset + xOffset * 1.1f / howMany);

@@ -60,8 +60,8 @@ namespace Coralite.Content.Bosses.Rediancie
         /// <summary> 目前的AI循环的计数 </summary>
         internal ref float MoveCount => ref NPC.localAI[1];
 
-        internal static readonly Color red = new Color(221, 50, 50);
-        internal static readonly Color grey = new Color(91, 93, 102);
+        internal static readonly Color red = new(221, 50, 50);
+        internal static readonly Color grey = new(91, 93, 102);
         public const int ON_KILL_ANIM_TIME = 250;
 
         public List<RediancieFollower> followers;
@@ -153,7 +153,7 @@ namespace Coralite.Content.Bosses.Rediancie
             npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
             npcLoot.Add(ItemDropRule.Common(ItemType<RediancieMask>(), 7));
 
-            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<RedJade>(), 1, 20, 24));
             npcLoot.Add(notExpertRule);
         }
@@ -404,7 +404,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (Timer % 5 == 0 && Main.netMode != NetmodeID.Server)
             {
-                int count = (int)Timer / 25;
+                int count = Timer / 25;
                 for (int i = 0; i < count; i++)
                 {
                     Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
@@ -450,7 +450,7 @@ namespace Coralite.Content.Bosses.Rediancie
             float factor = Math.Clamp(targetVec.Length() / 150f, 0f, 1f);
             Vector2 targetDir = targetVec.SafeNormalize(Vector2.One);
             Vector2 targetCenter = NPC.Center + targetDir * (32 + factor * 32);
-            int realTime = (int)Timer - 60;
+            int realTime = Timer - 60;
 
             ChangeRotationNormally();
 
@@ -599,7 +599,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public void Dash()
         {
-            int realTime = (int)Timer % 100;
+            int realTime = Timer % 100;
 
             do
             {
@@ -625,7 +625,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 if (realTime == 22)//开始冲刺
                 {
                     SpawnFollowers(2);
-                    NPC.velocity = (Target.Center + new Vector2(0, (int)Timer / 100 % 2 == 0 ? 100 : -100) - NPC.Center).SafeNormalize(Vector2.One) * 10f;
+                    NPC.velocity = (Target.Center + new Vector2(0, Timer / 100 % 2 == 0 ? 100 : -100) - NPC.Center).SafeNormalize(Vector2.One) * 10f;
                     NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
                 }
 
@@ -666,7 +666,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (Timer % 3 == 0 && Main.netMode != NetmodeID.Server)
             {
-                int count = ((int)Timer % 80) / 10;
+                int count = (Timer % 80) / 10;
                 for (int i = 0; i < count; i++)
                 {
                     Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.1f);

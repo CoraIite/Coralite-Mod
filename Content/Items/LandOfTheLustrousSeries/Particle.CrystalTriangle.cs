@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
             Rectangle frame = Frame;
-            Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
+            Vector2 origin = new(frame.Width / 2, frame.Height / 2);
 
             spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }

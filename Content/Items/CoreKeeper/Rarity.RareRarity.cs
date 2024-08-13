@@ -2,6 +2,6 @@
 {
     public class RareRarity : ModRarity
     {
-        public override Color RarityColor => new Color(50, 138, 255, 255);
+        public override Color RarityColor => new(50, 138, 255, 255);
     }
 }

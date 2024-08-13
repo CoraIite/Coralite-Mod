@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.HallowedBar,8)
+                .AddIngredient(ItemID.HallowedBar, 8)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.Magike.ExtractLens
             => new BasicExtractProducer();
 
         public override ItemContainer GetStartItemContainer()
-            => new ItemContainer()
+            => new()
             {
                 CapacityBase = 1
             };
@@ -146,7 +146,7 @@ namespace Coralite.Content.Items.Magike.ExtractLens
         }
     }
 
-    public class BasicExtractProducer: UpgradeableExtractProducer
+    public class BasicExtractProducer : UpgradeableExtractProducer
     {
 
     }

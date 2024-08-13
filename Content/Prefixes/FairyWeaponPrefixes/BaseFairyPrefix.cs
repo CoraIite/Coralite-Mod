@@ -40,7 +40,7 @@ namespace Coralite.Content.Prefixes.FairyWeaponPrefixes
 
             return new List<TooltipLine>()
             {
-                new TooltipLine(Mod, "CatchPowerMult", FairySystem.CatchPowerMult.Format(modify))
+                new(Mod, "CatchPowerMult", FairySystem.CatchPowerMult.Format(modify))
                 {
                     IsModifier = true,
                     IsModifierBad = isbad

@@ -145,13 +145,13 @@ namespace Coralite.Core.Prefabs.NPCs
                         }
             if (!canFly && head)
             {
-                Rectangle hitBox = new Rectangle((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height);
+                Rectangle hitBox = new((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height);
                 int farAwayDis = 1000;
                 bool farAwayFromPlayer = true;
                 for (int i = 0; i < 255; i++)
                     if (Main.player[i].active)
                     {
-                        Rectangle farAwayRect = new Rectangle((int)Main.player[i].position.X - farAwayDis, (int)Main.player[i].position.Y - farAwayDis, farAwayDis * 2, farAwayDis * 2);
+                        Rectangle farAwayRect = new((int)Main.player[i].position.X - farAwayDis, (int)Main.player[i].position.Y - farAwayDis, farAwayDis * 2, farAwayDis * 2);
                         if (hitBox.Intersects(farAwayRect))
                         {
                             farAwayFromPlayer = false;

@@ -317,7 +317,7 @@ namespace Coralite.Content.Items.Nightmare
 
                     break;
                 case 7 when innerCombo == 0://瞬移到鼠标位置并转圈圈放刺
-                    Vector2 pointPoisition = default(Vector2);
+                    Vector2 pointPoisition = default;
                     pointPoisition.X = Main.mouseX + Main.screenPosition.X;
                     if (Owner.gravDir == 1f)
                         pointPoisition.Y = Main.mouseY + Main.screenPosition.Y - Owner.height;
@@ -690,7 +690,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
-                    PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, RotateVec2, 3, 6, 6, 1000);
+                    PunchCameraModifier modifier = new(Projectile.Center, RotateVec2, 3, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
 
@@ -726,7 +726,7 @@ namespace Coralite.Content.Items.Nightmare
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -1335,7 +1335,7 @@ namespace Coralite.Content.Items.Nightmare
             if (Timer < 0)
                 return;
 
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars = new();
 
             float w = 1f;
             Vector2 up = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();
@@ -1560,7 +1560,7 @@ namespace Coralite.Content.Items.Nightmare
                 gnpc.EuphorbiaPoison = true;
             }
 
-            Dust dust6 = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.VilePowder, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 1.5f);
+            Dust dust6 = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.VilePowder, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default, 1.5f);
             dust6.noGravity = true;
             dust6.velocity *= 2.8f;
             dust6.velocity.Y -= 0.5f;

@@ -521,7 +521,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Texture2D mainTex = Projectile.GetTexture();
             var pos = Projectile.Center - Main.screenPosition;
 
-            Vector2 scale = new Vector2(1 - DistanceToOwner / (Projectile.width * scalePercent), 1);
+            Vector2 scale = new(1 - DistanceToOwner / (Projectile.width * scalePercent), 1);
             scale *= Projectile.scale;
             var effect = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
             float rotation = Projectile.rotation + extraRotation;

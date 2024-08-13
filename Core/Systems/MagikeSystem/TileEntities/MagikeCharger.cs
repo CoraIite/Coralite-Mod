@@ -18,7 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         }
 
         public readonly int howManyPerCharge;
-        public Item containsItem = new Item();
+        public Item containsItem = new();
         public float rotation;
 
         public Item ContainsItem { get => containsItem; set => containsItem = value; }

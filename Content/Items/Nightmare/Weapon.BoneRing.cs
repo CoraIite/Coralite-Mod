@@ -238,7 +238,7 @@ namespace Coralite.Content.Items.Nightmare
 
             Color c = NightmarePlantera.nightmareRed * 0.5f;
 
-            Vector2 scale = new Vector2(0.55f, Projectile.scale);
+            Vector2 scale = new(0.55f, Projectile.scale);
 
             for (int i = 0; i < 3; i++)
             {
@@ -639,7 +639,7 @@ namespace Coralite.Content.Items.Nightmare
 
             if ((int)State == 0)//残影绘制
             {
-                Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+                Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
                 for (int i = 1; i < 0; i++)
                     Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
@@ -792,7 +792,7 @@ namespace Coralite.Content.Items.Nightmare
                 float rot = Projectile.rotation - MathHelper.PiOver2;
                 Vector2 dir = Projectile.rotation.ToRotationVector2();
                 float length = (originCenter - Projectile.Center).Length();
-                Vector2 scale = new Vector2(0.35f, 0.55f);
+                Vector2 scale = new(0.35f, 0.55f);
                 Vector2 handPosLeft = originCenter + dir * length * 7 / 20f - rot.ToRotationVector2() * tentacleWidth - Main.screenPosition;
 
                 for (int i = 0; i < 3; i++)
@@ -838,7 +838,7 @@ namespace Coralite.Content.Items.Nightmare
             Vector2 pos = new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X - (drawInfo.drawPlayer.bodyFrame.Width / 2) + (drawInfo.drawPlayer.width / 2)), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawInfo.drawPlayer.height - drawInfo.drawPlayer.bodyFrame.Height + 4f))
                 + drawInfo.drawPlayer.bodyPosition
                 + drawInfo.drawPlayer.bodyFrame.Size() / 2;
-            DrawData item = new DrawData(Request<Texture2D>(AssetDirectory.NightmareItems + "BoneRing_HandsOn").Value,
+            DrawData item = new(Request<Texture2D>(AssetDirectory.NightmareItems + "BoneRing_HandsOn").Value,
                 pos,
                 drawInfo.drawPlayer.bodyFrame,
                 Color.White/*drawInfo.colorArmorBody*/,

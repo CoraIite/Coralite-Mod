@@ -166,7 +166,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
                         else if (Timer == ChasingTime)
                         {
-                            Vector2 targetPos = new Vector2(Recorder, Recorder2);
+                            Vector2 targetPos = new(Recorder, Recorder2);
                             NPC.Center = targetPos + new Vector2(0, -UpLength);
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, targetPos);
@@ -180,7 +180,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
                         else
                         {
-                            Vector2 targetPos = new Vector2(Recorder, Recorder2);
+                            Vector2 targetPos = new(Recorder, Recorder2);
                             NPC.Center = targetPos + new Vector2(0, -UpLength);
                             float length = 30 + 60 * (Timer - ChasingTime) / (AimingTime - ChasingTime);
                             if (Main.rand.NextBool())
@@ -194,7 +194,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             SonState++;
                             Timer = 0;
                             //生成闪电弹幕
-                            Vector2 targetPos = new Vector2(Recorder, Recorder2);
+                            Vector2 targetPos = new(Recorder, Recorder2);
                             int damage = Helper.GetProjDamage(70, 80, 90);
 
                             NPC.velocity = new Vector2(0, UpLength / (float)SmashDownTime);
@@ -423,7 +423,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
                         else if (Timer == ChasingTime)
                         {
-                            Vector2 targetPos = new Vector2(Recorder, Recorder2);
+                            Vector2 targetPos = new(Recorder, Recorder2);
                             NPC.Center = targetPos + new Vector2(0, -UpLength);
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, targetPos);
@@ -437,7 +437,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
                         else
                         {
-                            Vector2 targetPos = new Vector2(Recorder, Recorder2);
+                            Vector2 targetPos = new(Recorder, Recorder2);
                             NPC.Center = targetPos + new Vector2(0, -UpLength);
                             float length = 30 + 60 * (Timer - ChasingTime) / (AimingTime - ChasingTime);
                             if (Main.rand.NextBool())
@@ -459,7 +459,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                             Timer = 0;
                             //生成闪电弹幕
-                            Vector2 targetPos = new Vector2(Recorder, Recorder2);
+                            Vector2 targetPos = new(Recorder, Recorder2);
                             int damage = Helper.GetProjDamage(100, 130, 150);
 
                             NPC.velocity = new Vector2(0, UpLength / (float)SmashDownTime);

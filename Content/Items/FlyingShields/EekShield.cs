@@ -36,8 +36,8 @@ namespace Coralite.Content.Items.FlyingShields
 
                 Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
 
-                Vector2 pos = new Vector2(line.X, line.Y);
-                Vector2 pos2 = new Vector2(line.X + size.X, line.Y);
+                Vector2 pos = new(line.X, line.Y);
+                Vector2 pos2 = new(line.X + size.X, line.Y);
 
                 for (int i = 0; i < 3; i++)
                 {
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.FlyingShields
                 Main.spriteBatch.Draw(mainTex, pos, frameBox, Color.White, 0, origin, 1.2f, 0, 0);
                 Main.spriteBatch.Draw(mainTex, pos2, frameBox2, Color.White, 0, origin, 1.2f, 0, 0);
 
-                Vector2 pos3 = new Vector2(line.X + size.X / 2, line.Y);
+                Vector2 pos3 = new(line.X + size.X / 2, line.Y);
                 for (int i = -1; i < 2; i += 2)
                 {
                     Helper.DrawPrettyStarSparkle(1, 0, pos3 + new Vector2(i * size.X / 4, 15), Color.White,

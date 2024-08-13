@@ -533,8 +533,8 @@ namespace Coralite.Content.Items.Mushroom
 
             int frameWidth = mainTex.Width;
             int frameHeight = mainTex.Height / Main.projFrames[Type];
-            Rectangle frameBox = new Rectangle(0, Projectile.frame * frameHeight, frameWidth, frameHeight);
-            Vector2 origin = new Vector2(frameWidth / 2, frameHeight / 2);
+            Rectangle frameBox = new(0, Projectile.frame * frameHeight, frameWidth, frameHeight);
+            Vector2 origin = new(frameWidth / 2, frameHeight / 2);
             SpriteEffects effects = SpriteEffects.None;
 
             if (Projectile.spriteDirection != 1)

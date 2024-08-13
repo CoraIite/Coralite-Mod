@@ -21,13 +21,13 @@ namespace Coralite.Core.Prefabs.Misc
         /// <summary>
         /// 血条背景的尺寸
         /// </summary>
-        public virtual Point BarSize => new Point(406, 20);
+        public virtual Point BarSize => new(406, 20);
         /// <summary>
         /// 血条背景的左上角位置<br></br>
         /// 为血条背景这一帧对应的血条左上角到帧左上角的距离
         /// </summary>
-        public virtual Point BackgroundTopLeftOffset => new Point(66, 20);
-        public virtual Point IconOffset => new Point(34, 14);
+        public virtual Point BackgroundTopLeftOffset => new(66, 20);
+        public virtual Point IconOffset => new(34, 14);
         /// <summary>
         /// 血条背景的框线宽度
         /// </summary>
@@ -76,9 +76,9 @@ namespace Coralite.Core.Prefabs.Misc
                 Color c = Color.White;
                 c.A = 0;
                 c *= _alpha;
-                Vector2 stretchScale = new Vector2(length / frame.Width, 1f);
+                Vector2 stretchScale = new(length / frame.Width, 1f);
                 Vector2 pos = topLeft + offset;
-                Vector2 origin = new Vector2(0, frame.Height / 2);
+                Vector2 origin = new(0, frame.Height / 2);
 
                 for (int i = 0; i < 3; i++)
                 {
@@ -132,7 +132,7 @@ namespace Coralite.Core.Prefabs.Misc
             barFrame.Y += topLeftOffset.Y;
             barFrame.Width = 2;
             barFrame.Height = BarSize.Y;
-            Vector2 stretchScale = new Vector2(currentBarLength / barFrame.Width, 1f);
+            Vector2 stretchScale = new(currentBarLength / barFrame.Width, 1f);
             Color barColor = npc.dontTakeDamage ? DontTakeDamageColor : Color.White;
 
             DrawBar(spriteBatch, barTexture, barTopLeft, barFrame, barColor, stretchScale);
@@ -181,7 +181,7 @@ namespace Coralite.Core.Prefabs.Misc
             #endregion
 
             #region 图标的绘制
-            Vector2 iconOffset = new Vector2(34f, 14f);     //应该在哪绘制图标
+            Vector2 iconOffset = new(34f, 14f);     //应该在哪绘制图标
             Vector2 iconSize = iconTexture.Size();   //这个要跟着贴图变化
             Vector2 iconPos = iconOffset + iconSize / 2f;
             DrawIcon(spriteBatch, iconTexture, topLeft + iconPos, iconFrame, iconColor, iconScale);

@@ -169,7 +169,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             npcLoot.Add(ItemDropRule.Common(ItemType<RoyalGelCannon>(), 10));
             npcLoot.Add(ItemDropRule.Common(ItemType<SlimeEmperorMask>(), 7));
 
-            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
             IItemDropRule[] weaponTypes = new IItemDropRule[] {
                 ItemDropRule.Common(ItemType<SlimeEruption>(), 1, 1, 1),
@@ -778,7 +778,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             Texture2D crownTex = CrownTex.Value;
 
             Rectangle frameBox = mainTex.Frame(1, Main.npcFrameCount[Type], 0, NPC.frame.Y);
-            Vector2 origin = new Vector2(frameBox.Width / 2, frameBox.Height);
+            Vector2 origin = new(frameBox.Width / 2, frameBox.Height);
 
             Vector2 crownOrigin;
             Vector2 crownPos;
@@ -798,7 +798,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     spriteBatch.Draw(mainTex, NPC.Bottom + offset, frameBox, drawColor, NPC.rotation, origin, scale, 0, 0f);
                     if (CanDrawShadow)
                     {
-                        Vector2 toBottom = new Vector2(NPC.width / 2, NPC.height);
+                        Vector2 toBottom = new(NPC.width / 2, NPC.height);
                         for (int i = 1; i < 12; i += 2)
                         {
                             spriteBatch.Draw(mainTex, NPC.oldPos[i] + toBottom + offset, frameBox, drawColor * (0.4f - i * 0.04f), NPC.rotation, origin, scale, 0, 0f);

@@ -199,8 +199,8 @@ namespace Coralite.Content.NPCs.Shadow
         {
             Texture2D mainTex = TextureAssets.Npc[Type].Value;
 
-            Rectangle frameBox = new Rectangle((int)FrameX * FRAME_WIDTH, (int)FrameY * FRAME_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT);
-            Vector2 origin = new Vector2(32, 32);
+            Rectangle frameBox = new((int)FrameX * FRAME_WIDTH, (int)FrameY * FRAME_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT);
+            Vector2 origin = new(32, 32);
             SpriteEffects effects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Vector2 pos = new Vector2(NPC.Center.X, NPC.Top.Y + 16) - screenPos;

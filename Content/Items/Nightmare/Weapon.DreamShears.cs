@@ -249,7 +249,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
-                    PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, RotateVec2, 3, 6, 6, 1000);
+                    PunchCameraModifier modifier = new(Projectile.Center, RotateVec2, 3, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
 
@@ -283,7 +283,7 @@ namespace Coralite.Content.Items.Nightmare
         protected override void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<VertexPositionColorTexture> bars = new List<VertexPositionColorTexture>();
+            List<VertexPositionColorTexture> bars = new();
             GetCurrentTrailCount(out float count);
 
             for (int i = 0; i < count; i++)
@@ -352,8 +352,8 @@ namespace Coralite.Content.Items.Nightmare
         public static Asset<Texture2D> rollingCircleTex;
         public static Asset<Texture2D> WarpTex;
 
-        public static Color darkRed = new Color(61, 0, 51);
-        public static Color lightRed = new Color(190, 0, 101);
+        public static Color darkRed = new(61, 0, 51);
+        public static Color lightRed = new(190, 0, 101);
 
         public override void Load()
         {
@@ -532,7 +532,7 @@ namespace Coralite.Content.Items.Nightmare
                 Hited = false;
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
-                    PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, rotDir, 3, 6, 6, 1000);
+                    PunchCameraModifier modifier = new(Projectile.Center, rotDir, 3, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
             }
@@ -558,7 +558,7 @@ namespace Coralite.Content.Items.Nightmare
             //绘制旋转的残影
             Texture2D circleTex = rollingCircleTex.Value;
             Vector2 origin = circleTex.Size() / 2;
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
             float scale = 200f / circleTex.Width;
 
             for (int i = 0; i < 8; i += 1)
@@ -774,7 +774,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
-                    PunchCameraModifier modifier = new PunchCameraModifier(Projectile.Center, rotDir, 3, 6, 6, 1000);
+                    PunchCameraModifier modifier = new(Projectile.Center, rotDir, 3, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
                 }
             }
@@ -818,7 +818,7 @@ namespace Coralite.Content.Items.Nightmare
             if (Timer < 0)
                 return;
 
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars = new();
 
             float w = 1f;
             Vector2 up = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2();

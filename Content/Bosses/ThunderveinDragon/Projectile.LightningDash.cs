@@ -80,7 +80,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 SpawnDusts();
                 Projectile.Center = owner.Center;
                 Vector2 pos2 = Projectile.velocity;
-                List<Vector2> pos = new List<Vector2>
+                List<Vector2> pos = new()
                 {
                     Projectile.velocity
                 };

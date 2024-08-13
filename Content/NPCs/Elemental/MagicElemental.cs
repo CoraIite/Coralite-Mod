@@ -54,7 +54,7 @@ namespace Coralite.Content.NPCs.Elemental
                     flag18 = true;
 
                 num298 += 24;
-                if (NPC.position.Y > NPC.ai[1] - (float)num298 && NPC.position.Y < NPC.ai[1] + num298)
+                if (NPC.position.Y > NPC.ai[1] - num298 && NPC.position.Y < NPC.ai[1] + num298)
                     flag19 = true;
 
                 if (flag18 && flag19)

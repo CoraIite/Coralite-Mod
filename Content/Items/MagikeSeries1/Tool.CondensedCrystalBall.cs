@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override bool CanUseItem(Player player)
         {
             Point16 pos = Main.MouseWorld.ToTileCoordinates16();
-            Rectangle rectangle = new Rectangle((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
+            Rectangle rectangle = new((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
 
             if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeContainer magC)) //TODO: 添加本地化
             {

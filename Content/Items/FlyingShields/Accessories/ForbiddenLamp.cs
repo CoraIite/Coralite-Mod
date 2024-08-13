@@ -282,7 +282,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
             Color baseColor = Color.Gold;
             Vector2 extraOrigin = extraTex.Size() / 2f;
-            Vector2 toCenter = new Vector2(Projectile.width / 2, Projectile.height / 2);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
             //残影
             for (int i = 1; i < 10; i++)

@@ -39,7 +39,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         public override void Update(GameTime gameTime)
         {
-            if (_timerForVisual>0)
+            if (_timerForVisual > 0)
             {
                 _timerForVisual--;
                 _indexForVisual = Helper.Lerp(GetIndex(), _indexForVisualOld, _timerForVisual / 20f);

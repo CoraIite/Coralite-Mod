@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -22,7 +21,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             Array.Resize(ref TextureAssets.GlowMask, TextureAssets.GlowMask.Length + 1);
             TextureAssets.GlowMask[^1] = ModContent.Request<Texture2D>(Texture + "_Glow");
-            GlowMaskID= (short)(TextureAssets.GlowMask.Length - 1);
+            GlowMaskID = (short)(TextureAssets.GlowMask.Length - 1);
         }
 
         public override void SetDefaults()
@@ -59,7 +58,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 Vector2 velocity2 = dir.RotatedBy(-i * 0.5f) * speed;
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
-                    , position + dir.RotatedBy(i * 1f) * 48-velocity*2, dir.RotatedBy(-i * 0.5f) * speed, ModContent.ProjectileType<TremblingElectric>()
+                    , position + dir.RotatedBy(i * 1f) * 48 - velocity * 2, dir.RotatedBy(-i * 0.5f) * speed, ModContent.ProjectileType<TremblingElectric>()
                     , damage2, knockback, player.whoAmI, i);
             }
 

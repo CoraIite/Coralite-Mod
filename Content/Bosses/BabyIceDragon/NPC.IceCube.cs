@@ -92,7 +92,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (ExtendCount >= 19)
             {
                 //大于多少后产生爆炸
-                PunchCameraModifier modifier = new PunchCameraModifier(NPC.Center, new Vector2(2f, 2f), 16f, 20f, 25, 1000f, "BabyIceDragon");
+                PunchCameraModifier modifier = new(NPC.Center, new Vector2(2f, 2f), 16f, 20f, 25, 1000f, "BabyIceDragon");
                 Main.instance.CameraModifiers.Add(modifier);
                 Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<IceBurst>(), 90, 10f);
                 NPC.Kill();

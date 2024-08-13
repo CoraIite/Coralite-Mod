@@ -232,7 +232,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <returns></returns>
         public FairyData RollFairyIndividualValues(BaseFairyItem faityItem)
         {
-            FairyData data = new FairyData();
+            FairyData data = new();
 
             data.damageBonus = new StatModifier(
                 Main.rand.NextFloat(damageRamdom.additive_Min, damageRamdom.additive_Max),

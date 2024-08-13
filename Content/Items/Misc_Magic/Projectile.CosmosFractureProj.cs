@@ -298,7 +298,7 @@ namespace Coralite.Content.Items.Misc_Magic
         protected void DrawMagic()
         {
             Texture2D mainTex = Request<Texture2D>(AssetDirectory.Projectiles_Magic + "CosmosFractureMagic").Value;
-            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 6);
+            Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 6);
 
             int alpha;
             if (completeAndRelease)
@@ -315,7 +315,7 @@ namespace Coralite.Content.Items.Misc_Magic
             int b = (int)(245 + cosProgress * 10);
             alpha *= 200;
             //绘制中心
-            Rectangle source = new Rectangle(0, 0, 256, 256);       //<---因为知道贴图多大所以就暴力填数字了
+            Rectangle source = new(0, 0, 256, 256);       //<---因为知道贴图多大所以就暴力填数字了
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
                                                 new Color(r, 241, b, alpha), Projectile.rotation, origin, magicScale, SpriteEffects.None, 0f);
 
@@ -346,8 +346,8 @@ namespace Coralite.Content.Items.Misc_Magic
         {
             Texture2D mainTex = Request<Texture2D>(AssetDirectory.Projectiles_Magic + "Fracture").Value;
 
-            Rectangle source = new Rectangle(fractureFrameX * 256, fractureFrameY * 256, 256, 256);
-            Vector2 origin = new Vector2(128, 128);
+            Rectangle source = new(fractureFrameX * 256, fractureFrameY * 256, 256, 256);
+            Vector2 origin = new(128, 128);
 
             float rotation;
             if (fractureFrameY == 2)//&& fractureFrameX == 1
@@ -611,8 +611,8 @@ namespace Coralite.Content.Items.Misc_Magic
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = Projectile.GetTexture();
-            Rectangle source = new Rectangle(38 * textureType, 0, 38, 36);      //<---简单粗暴地填数字了，前提是贴图不能有改动
-            Vector2 origin = new Vector2(19, 18);
+            Rectangle source = new(38 * textureType, 0, 38, 36);      //<---简单粗暴地填数字了，前提是贴图不能有改动
+            Vector2 origin = new(19, 18);
 
             float sinProgress;
             int r;

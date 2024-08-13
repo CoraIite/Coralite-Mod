@@ -174,7 +174,7 @@ namespace Coralite.Content.CustomHooks
             if (num4 > Main.maxTilesY)
                 num4 = Main.maxTilesY;
 
-            Vector2 vector2 = default(Vector2);
+            Vector2 vector2 = default;
             for (int i = num; i < num2; i++)
             {
                 for (int j = num3; j < num4; j++)

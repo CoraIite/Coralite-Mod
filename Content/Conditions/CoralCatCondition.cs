@@ -5,6 +5,6 @@ namespace Coralite.Content.CoraliteConditions
 {
     public class CoraliteConditions
     {
-        public static readonly Condition CoralCatCondition = new Condition("Conditions.CoralCat", () => CoraliteWorld.coralCatWorld);
+        public static readonly Condition CoralCatCondition = new("Conditions.CoralCat", () => CoraliteWorld.coralCatWorld);
     }
 }

@@ -1,6 +1,4 @@
-﻿
-using Coralite.Content.NPCs.Elemental;
-using Coralite.Content.NPCs.OtherNPC;
+﻿using Coralite.Content.NPCs.OtherNPC;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Tiles;
 using Terraria;

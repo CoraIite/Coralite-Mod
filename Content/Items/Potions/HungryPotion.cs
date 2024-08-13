@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Potions
             CreateRecipe()
                 .AddIngredient(ItemID.BottledWater)
                 .AddIngredient(ItemID.Deathweed)
-                .AddIngredient(ItemID.Vertebrae,3)
+                .AddIngredient(ItemID.Vertebrae, 3)
                 .AddTile(TileID.Bottles)
                 .DisableDecraft()
                 .Register();

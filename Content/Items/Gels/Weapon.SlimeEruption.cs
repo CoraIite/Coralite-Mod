@@ -96,7 +96,7 @@ namespace Coralite.Content.Items.Gels
 
         protected Vector2 Scale
         {
-            get => new Vector2(Projectile.localAI[1], Projectile.localAI[2]);
+            get => new(Projectile.localAI[1], Projectile.localAI[2]);
             set
             {
                 Projectile.localAI[1] = value.X;

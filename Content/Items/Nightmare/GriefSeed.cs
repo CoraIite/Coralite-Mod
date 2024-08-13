@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.Nightmare
                 Vector2 center = Item.Center + new Vector2(0f, Item.height * -0.1f);
                 Vector2 direction = Main.rand.NextVector2CircularEdge(Item.width * 0.6f, Item.height * 0.6f);
                 //float distance = 0.8f + Main.rand.NextFloat() * 0.2f;
-                Vector2 velocity = new Vector2(0f, -Main.rand.NextFloat() * 0.3f - 1.5f);
+                Vector2 velocity = new(0f, -Main.rand.NextFloat() * 0.3f - 1.5f);
 
                 Dust dust = Dust.NewDustPerfect(center + direction, DustID.SilverFlame, velocity, newColor: new Color(150, 150, 150));
                 dust.scale = 0.5f;
@@ -96,7 +96,7 @@ namespace Coralite.Content.Items.Nightmare
                 frame = texture.Frame();
 
             Vector2 frameOrigin = frame.Size() / 2f;
-            Vector2 offset = new Vector2(Item.width / 2 - frameOrigin.X, Item.height - frame.Height);
+            Vector2 offset = new(Item.width / 2 - frameOrigin.X, Item.height - frame.Height);
             Vector2 drawPos = Item.position - Main.screenPosition + frameOrigin + offset;
             Vector2 effectDrawPos = drawPos + new Vector2(0, -4);
             float time = Main.GlobalTimeWrappedHourly;
@@ -110,7 +110,7 @@ namespace Coralite.Content.Items.Nightmare
 
             time = time * 0.5f + 0.5f;
 
-            Vector2 mainSparkleScale = new Vector2(2f, 5f);
+            Vector2 mainSparkleScale = new(2f, 5f);
             //中心的闪光
             //ProjectilesHelper.DrawPrettyStarSparkle(1, 0, effectDrawPos, NightmarePlantera.nightmareRed, NightmarePlantera.nightmareRed,
             //    0.5f + time * 0.1f, 0f, 0.5f, 0.5f, 1f, 0, mainSparkleScale, Vector2.One);

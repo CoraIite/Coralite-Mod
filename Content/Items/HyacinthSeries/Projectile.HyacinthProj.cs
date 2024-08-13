@@ -718,9 +718,9 @@ namespace Coralite.Content.Items.HyacinthSeries
             Texture2D haloTex = Projectile.GetTexture();
             Vector2 haloOrigin = haloTex.Size() / 2;
 
-            Color black = new Color(0, 0, 0, (int)(Projectile.ai[1] * 255));
-            Color red = new Color(255, 20, 20, (int)(Projectile.ai[1] * 165));
-            Color white = new Color(255, 255, 255, (int)(highlightAlpha * 255));
+            Color black = new(0, 0, 0, (int)(Projectile.ai[1] * 255));
+            Color red = new(255, 20, 20, (int)(Projectile.ai[1] * 165));
+            Color white = new(255, 255, 255, (int)(highlightAlpha * 255));
 
             for (int i = 0; i < 3; i++)
             {

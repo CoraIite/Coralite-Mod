@@ -113,8 +113,8 @@ namespace Coralite.Content.Items.Steel
                 float num63 = 18f;
                 float num64 = 1.2f;
                 Vector2 vector6 = Projectile.Center;
-                float num65 = Main.player[Projectile.owner].position.X + (float)(Main.player[Projectile.owner].width / 2) - vector6.X;
-                float num66 = Main.player[Projectile.owner].position.Y + (float)(Main.player[Projectile.owner].height / 2) - vector6.Y;
+                float num65 = Main.player[Projectile.owner].position.X + Main.player[Projectile.owner].width / 2 - vector6.X;
+                float num66 = Main.player[Projectile.owner].position.Y + Main.player[Projectile.owner].height / 2 - vector6.Y;
                 float num67 = (float)Math.Sqrt(num65 * num65 + num66 * num66);
                 if (num67 > 3000f)
                     Projectile.Kill();
@@ -150,8 +150,8 @@ namespace Coralite.Content.Items.Steel
 
                 if (Main.myPlayer == Projectile.owner)
                 {
-                    Rectangle rectangle = new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height);
-                    Rectangle value = new Rectangle((int)Main.player[Projectile.owner].position.X, (int)Main.player[Projectile.owner].position.Y, Main.player[Projectile.owner].width, Main.player[Projectile.owner].height);
+                    Rectangle rectangle = new((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height);
+                    Rectangle value = new((int)Main.player[Projectile.owner].position.X, (int)Main.player[Projectile.owner].position.Y, Main.player[Projectile.owner].width, Main.player[Projectile.owner].height);
                     if (rectangle.Intersects(value))
                         Projectile.Kill();
                 }

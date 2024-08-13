@@ -180,7 +180,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.damage = (int)(Projectile.damage / 2);
+            Projectile.damage = Projectile.damage / 2;
         }
 
         public override Color ThunderColorFunc_Yellow(float factor)

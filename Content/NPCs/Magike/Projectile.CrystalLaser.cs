@@ -97,7 +97,7 @@ namespace Coralite.Content.NPCs.Magike
 
             int width = (int)(Projectile.Center - endPoint).Length();
             Vector2 dir = Vector2.UnitX.RotatedBy(LaserRotation);
-            Color color = new Color(162, 42, 131);
+            Color color = new(162, 42, 131);
 
             do
             {
@@ -174,7 +174,7 @@ namespace Coralite.Content.NPCs.Magike
             Texture2D laserTex = Projectile.GetTexture();
             Texture2D flowTex = FlowTex.Value;
 
-            Color color = new Color(162, 42, 131);
+            Color color = new(162, 42, 131);
 
             Effect effect = Coralite.Instance.Assets.Request<Effect>("Effects/GlowingDust").Value;
 

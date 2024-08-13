@@ -187,7 +187,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
             if (Main.rand.NextBool(15))
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height
-                    , DustID.Demonite, Main.player[Projectile.owner].direction * 2, 0f, 150, default(Color), 1.3f);
+                    , DustID.Demonite, Main.player[Projectile.owner].direction * 2, 0f, 150, default, 1.3f);
 
             // The code in this method is important to align the sprite with the hitbox how we want it to
             SetVisualOffsets();

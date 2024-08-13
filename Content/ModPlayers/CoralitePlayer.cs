@@ -30,8 +30,8 @@ namespace Coralite.Content.ModPlayers
         /// <summary>
         /// 各种效果
         /// </summary>
-        public HashSet<string> Effects = new HashSet<string>();
-        public List<IInventoryCraftStation> inventoryCraftStations = new List<IInventoryCraftStation>();
+        public HashSet<string> Effects = new();
+        public List<IInventoryCraftStation> inventoryCraftStations = new();
 
         #region 装备类字段
 
@@ -77,9 +77,9 @@ namespace Coralite.Content.ModPlayers
         public float coreKeeperDodge;
 
         /// <summary> 摔落伤害倍率 </summary>
-        public StatModifier fallDamageModifyer = new StatModifier();
+        public StatModifier fallDamageModifyer = new();
         /// <summary> 生命上限加成 </summary>
-        public StatModifier LifeMaxModifyer = new StatModifier();
+        public StatModifier LifeMaxModifyer = new();
 
         /// <summary> 使用特殊攻击 </summary>
         public bool useSpecialAttack;
@@ -171,7 +171,7 @@ namespace Coralite.Content.ModPlayers
             {
                 if (NightmarePlantera.NightmarePlanteraAlive(out _))
                 {
-                    Rectangle rectangle = new Rectangle((int)Player.Center.X, (int)Player.Center.Y, 2, 2);
+                    Rectangle rectangle = new((int)Player.Center.X, (int)Player.Center.Y, 2, 2);
 
                     CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "协调的力量被临时封印了");
                     return false;

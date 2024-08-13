@@ -123,11 +123,11 @@ namespace Coralite.Content.CustomHooks
                     player.ChangeDir(-1);
             }
 
-            float num2 = (float)Main.mouseX + Main.screenPosition.X - pointPoisition.X;
-            float num3 = (float)Main.mouseY + Main.screenPosition.Y - pointPoisition.Y;
+            float num2 = Main.mouseX + Main.screenPosition.X - pointPoisition.X;
+            float num3 = Main.mouseY + Main.screenPosition.Y - pointPoisition.Y;
 
             if (player.gravDir == -1f)
-                num3 = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY - pointPoisition.Y;
+                num3 = Main.screenPosition.Y + Main.screenHeight - Main.mouseY - pointPoisition.Y;
 
             float num4 = (float)Math.Sqrt(num2 * num2 + num3 * num3);
             float num5 = num4;
@@ -145,7 +145,7 @@ namespace Coralite.Content.CustomHooks
             num2 *= num4;
             num3 *= num4;
 
-            Vector2 velocity = new Vector2(num2, num3);
+            Vector2 velocity = new(num2, num3);
 
             CombinedHooks.ModifyShootStats(player, sItem, ref pointPoisition, ref velocity, ref projToShoot, ref Damage, ref KnockBack);
 

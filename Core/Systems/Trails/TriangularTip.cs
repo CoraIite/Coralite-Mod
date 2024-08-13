@@ -40,8 +40,8 @@ namespace Coralite.Core.Systems.Trails
 
             Vector2 texCoordA = Vector2.UnitX;
             Vector2 texCoordB = Vector2.One;
-            Vector2 texCoordC = new Vector2(1, 0.5f);//this fixes the texture being skewed off to the side
-                                                     //这修复了纹理被歪向一边的问题
+            Vector2 texCoordC = new(1, 0.5f);//this fixes the texture being skewed off to the side
+                                             //这修复了纹理被歪向一边的问题
 
             Color colorA = trailColorFunction?.Invoke(texCoordA) ?? Color.White;
             Color colorB = trailColorFunction?.Invoke(texCoordB) ?? Color.White;
@@ -49,9 +49,9 @@ namespace Coralite.Core.Systems.Trails
 
             vertices = new VertexPositionColorTexture[]
             {
-                new VertexPositionColorTexture(a.Vec3(), colorA, texCoordA),
-                new VertexPositionColorTexture(b.Vec3(), colorB, texCoordB),
-                new VertexPositionColorTexture(c.Vec3(), colorC, texCoordC)
+                new(a.Vec3(), colorA, texCoordA),
+                new(b.Vec3(), colorB, texCoordB),
+                new(c.Vec3(), colorC, texCoordC)
             };
 
             indices = new short[]

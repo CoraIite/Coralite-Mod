@@ -70,7 +70,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            TooltipLine line = new TooltipLine(Mod, "YujianDescription", Language.GetOrRegister($"Mods.Coralite.Systems.YujianSystem.YujianDescription", () => "需要放置在葫芦中以使用").Value);
+            TooltipLine line = new(Mod, "YujianDescription", Language.GetOrRegister($"Mods.Coralite.Systems.YujianSystem.YujianDescription", () => "需要放置在葫芦中以使用").Value);
             tooltips.Add(line);
         }
     }

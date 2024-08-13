@@ -251,7 +251,7 @@ namespace Coralite.Content.Items.GlobalItems
                 string[] text = damage.Text.Split(" ");
                 if (text.Length > 1)
                 {
-                    List<string> newText = new List<string>()
+                    List<string> newText = new()
                         {
                             text[0],
                             " "
@@ -278,7 +278,7 @@ namespace Coralite.Content.Items.GlobalItems
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
-            
+
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 if (ColdDamage)

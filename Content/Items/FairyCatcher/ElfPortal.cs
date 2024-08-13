@@ -143,11 +143,11 @@ namespace Coralite.Content.Items.FairyCatcher
 
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Vector2 offScreen = new Vector2(Main.offScreenRange);
+            Vector2 offScreen = new(Main.offScreenRange);
             if (Main.drawToScreen)
                 offScreen = Vector2.Zero;
 
-            Point p = new Point(i, j);
+            Point p = new(i, j);
             Tile tile = Main.tile[p.X, p.Y];
             if (tile == null || !tile.HasTile)
                 return;

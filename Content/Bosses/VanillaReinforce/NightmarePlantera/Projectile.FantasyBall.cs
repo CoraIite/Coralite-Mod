@@ -82,7 +82,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 for (int i = -1; i < 2; i += 2)
                 {
                     int type = Main.rand.NextFromList(DustID.PlatinumCoin, DustID.GoldCoin);
-                    Vector2 dir = new Vector2(i, 0);
+                    Vector2 dir = new(i, 0);
                     Dust.NewDustPerfect(Projectile.Center, type, dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(1, 4), Scale: Main.rand.NextFloat(1, 1.5f));
                 }
 
@@ -120,7 +120,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override bool PreDraw(ref Color lightColor)
         {
             Vector2 pos = Projectile.Center - Main.screenPosition;
-            Vector2 scale = new Vector2(0.75f);
+            Vector2 scale = new(0.75f);
             Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos, Color.White, FantasyGod.shineColor * 0.6f,
                 0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, scale, Vector2.One * 2);
 

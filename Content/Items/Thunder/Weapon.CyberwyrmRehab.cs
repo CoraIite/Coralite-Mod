@@ -159,7 +159,7 @@ namespace Coralite.Content.Items.Thunder
             Lighting.AddLight(Projectile.Center, Coralite.ThunderveinYellow.ToVector3());
             if (thunderTrails == null)
             {
-                Projectile.Resize((int)32, 40);
+                Projectile.Resize(32, 40);
                 thunderTrails = new ThunderTrail[3];
                 Asset<Texture2D> trailTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody2");
                 for (int i = 0; i < 3; i++)
@@ -233,8 +233,8 @@ namespace Coralite.Content.Items.Thunder
         public void UpdateTrails()
         {
             Vector2 pos2 = Projectile.velocity;
-            List<Vector2> pos = new List<Vector2>
-                {
+            List<Vector2> pos = new()
+            {
                     Projectile.velocity
                 };
             if (Vector2.Distance(Projectile.velocity, Projectile.Center) < 32)

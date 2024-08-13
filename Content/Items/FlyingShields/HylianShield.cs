@@ -280,7 +280,7 @@ namespace Coralite.Content.Items.FlyingShields
             LightShotParticle.Spawn(Projectile.Center, Color.SkyBlue, rot
                 , new Vector2(0.7f, 0.03f));
 
-            Color c = new Color(0, 100, 255, 150);
+            Color c = new(0, 100, 255, 150);
             for (int i = 0; i < 6; i++)
             {
                 rot = Main.rand.NextFloat(6.282f);

@@ -5,7 +5,7 @@ namespace Coralite.Core.Systems.MagikeSystem
     public partial class MagikeSystem
     {
         private static Dictionary<int, Dictionary<MagikeApparatusLevel, int>> _magikeApparatusLevels;
-        private static Dictionary<int, Dictionary< int, MagikeApparatusLevel>> _magikeFrameToLevels;
+        private static Dictionary<int, Dictionary<int, MagikeApparatusLevel>> _magikeFrameToLevels;
 
         public static Dictionary<int, Dictionary<MagikeApparatusLevel, int>> MagikeApparatusLevels
         {
@@ -15,24 +15,24 @@ namespace Coralite.Core.Systems.MagikeSystem
                 return _magikeApparatusLevels;
             }
         }
-        public static Dictionary<int, Dictionary<int,MagikeApparatusLevel>> MagikeFrameToLevels
+        public static Dictionary<int, Dictionary<int, MagikeApparatusLevel>> MagikeFrameToLevels
         {
             get
             {
-                _magikeFrameToLevels ??= new Dictionary<int, Dictionary< int, MagikeApparatusLevel>>();
+                _magikeFrameToLevels ??= new Dictionary<int, Dictionary<int, MagikeApparatusLevel>>();
                 return _magikeFrameToLevels;
             }
         }
 
         public static void RegisterApparatusLevel(int tileType, params MagikeApparatusLevel[] levels)
         {
-            Dictionary<MagikeApparatusLevel, int> keyValuePairs = new Dictionary<MagikeApparatusLevel, int>();
-            Dictionary< int, MagikeApparatusLevel> keyValuePairs2 = new ();
+            Dictionary<MagikeApparatusLevel, int> keyValuePairs = new();
+            Dictionary<int, MagikeApparatusLevel> keyValuePairs2 = new();
 
             for (int i = 0; i < levels.Length; i++)
             {
                 keyValuePairs.Add(levels[i], i);
-                keyValuePairs2.Add( i, levels[i]);
+                keyValuePairs2.Add(i, levels[i]);
             }
 
             MagikeApparatusLevels.Add(tileType, keyValuePairs);
@@ -46,7 +46,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="tileType"></param>
         /// <param name="freamX"></param>
         /// <returns></returns>
-        public static MagikeApparatusLevel? FrameToLevel(int tileType,int freamX)
+        public static MagikeApparatusLevel? FrameToLevel(int tileType, int freamX)
         {
             if (!MagikeFrameToLevels.TryGetValue(tileType, out var keyValuePairs))
                 return null;

@@ -9,7 +9,7 @@ namespace Coralite.Core.Systems.IKSystem
         public float len;
         public float angle;
 
-        public Vector2 angleLimt = new Vector2(-180f, 180f);
+        public Vector2 angleLimt = new(-180f, 180f);
         public Vector2 StartPos { get; private set; }
         public Vector2 EndPos { get; private set; }
         public Vector2 Forward { get => (EndPos - StartPos).SafeNormalize(Vector2.UnitX); }

@@ -214,8 +214,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "DiamondProj1";
 
         public static Color highlightC = Color.White;
-        public static Color brightC = new Color(218, 185, 210);
-        public static Color darkC = new Color(99, 99, 149);
+        public static Color brightC = new(218, 185, 210);
+        public static Color darkC = new(99, 99, 149);
 
         public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);
 
@@ -367,7 +367,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Center = center;
             }
 
-            public Rectangle GetRect() => new Rectangle((int)position.X, (int)position.Y, (int)width, (int)height);
+            public Rectangle GetRect() => new((int)position.X, (int)position.Y, (int)width, (int)height);
 
             public void OnSpawn()
             {

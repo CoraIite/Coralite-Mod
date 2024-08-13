@@ -86,7 +86,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            TooltipLine line = new TooltipLine(Mod, "HuluDescription", Language.GetOrRegister($"Mods.Coralite.Systems.YujianSystem.HuluDescription", () => "右键单击打开UI面板，将御剑放进栏位后可召唤出御剑").Value);
+            TooltipLine line = new(Mod, "HuluDescription", Language.GetOrRegister($"Mods.Coralite.Systems.YujianSystem.HuluDescription", () => "右键单击打开UI面板，将御剑放进栏位后可召唤出御剑").Value);
             tooltips.Add(line);
         }
 

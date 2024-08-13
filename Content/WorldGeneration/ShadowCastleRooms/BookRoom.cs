@@ -8,19 +8,19 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
     {
         public override Point[] UpCorridor => new Point[]
         {
-            new Point(32,5),
+            new(32,5),
         };
         public override Point[] DownCorridor => new Point[]
         {
-            new Point(32,64-5),
+            new(32,64-5),
         };
         public override Point[] LeftCorridor => new Point[]
         {
-            new Point(5,38),
+            new(5,38),
         };
         public override Point[] RightCorridor => new Point[]
         {
-            new Point(64-5,39),
+            new(64-5,39),
         };
 
         public BookRoom(Point center) : base(center, RoomType.Sanctum)

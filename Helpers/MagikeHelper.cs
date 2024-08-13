@@ -1,16 +1,17 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
+﻿using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Drawing.Imaging;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ObjectData;
+using Terraria.UI;
 
 namespace Coralite.Helpers
 {
@@ -216,7 +217,7 @@ namespace Coralite.Helpers
         /// <param name="topLeft"></param>
         /// <param name="level"></param>
         /// <returns></returns>
-        public static bool TryGetMagikeApparatusLevel(Point16 topLeft,out MagikeApparatusLevel level)
+        public static bool TryGetMagikeApparatusLevel(Point16 topLeft, out MagikeApparatusLevel level)
         {
             level = MagikeApparatusLevel.None;
 
@@ -227,7 +228,7 @@ namespace Coralite.Helpers
                 return false;
 
             //计算当前帧图
-            MagikeApparatusLevel? chooseLevel = MagikeSystem.FrameToLevel(targetTile.TileType,targetTile.TileFrameX/alternateData.CoordinateFullWidth);
+            MagikeApparatusLevel? chooseLevel = MagikeSystem.FrameToLevel(targetTile.TileType, targetTile.TileFrameX / alternateData.CoordinateFullWidth);
 
             if (!chooseLevel.HasValue)
                 return false;
@@ -279,10 +280,10 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="spriteBatch"></param>
         /// <param name="rect"></param>
-        public static void DrawRectangleFrame(SpriteBatch spriteBatch, Rectangle rect,Color color)
+        public static void DrawRectangleFrame(SpriteBatch spriteBatch, Rectangle rect, Color color)
         {
-            int width = rect.Width+1;
-            int height =  rect.Height+1;
+            int width = rect.Width + 1;
+            int height = rect.Height + 1;
 
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
@@ -306,10 +307,10 @@ namespace Coralite.Helpers
             bool maxYIsZero = maxY == 1;
 
             bool topBar = currentY == 0;
-            bool bottomBar = currentY == maxY-1;
+            bool bottomBar = currentY == maxY - 1;
 
             bool leftBar = currentX == 0;
-            bool rightBar = currentX == maxX-1;
+            bool rightBar = currentX == maxX - 1;
 
             if (maxXIsZero && maxYIsZero)
             {
@@ -359,7 +360,7 @@ namespace Coralite.Helpers
                 else if (rightBar)//右边拐角
                     framePoint.X = 2;
                 else//上面一条
-                    framePoint.X = 1;                
+                    framePoint.X = 1;
 
                 return true;
             }
@@ -421,14 +422,30 @@ namespace Coralite.Helpers
         public static string GetMagikeContainerMaxColorCode(this MagikeContainer container)
         {
             if (container.MagikeMaxExtra > 0)
-                return  "80d3ff";//蓝色
+                return "80d3ff";//蓝色
             else if (container.MagikeMaxExtra < 0)
                 return "ff1919";//红色
             else
                 return "ffffff";
         }
 
+        /// <summary>
+        /// 添加标题
+        /// </summary>
+        /// <typeparam name="TComponent"></typeparam>
+        /// <param name="component"></param>
+        /// <param name="id"></param>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        public static UIElement AddTitle<TComponent>(this TComponent component, MagikeSystem.UITextID id,UIElement parent)
+            where TComponent : Component
+        {
+            UIElement title = new ComponentUIElementText<TComponent>(c =>
+                 MagikeSystem.GetUIText(id), component, parent, new Vector2(1.3f));
+            parent.Append(title);
 
+            return title;
+        }
 
 
 
@@ -516,7 +533,7 @@ namespace Coralite.Helpers
 
             int x = frameX / 18;
             int y = frameY / 18;
-            Point16 position = new Point16(i - x, j - y);
+            Point16 position = new(i - x, j - y);
 
             if (TileEntity.ByPosition.TryGetValue(position, out TileEntity value) && value is T tEntity)
             {
@@ -530,7 +547,7 @@ namespace Coralite.Helpers
 
         public static bool TryGetEntityWithTopLeft<T>(int top, int left, out T entity) where T : class
         {
-            Point16 position = new Point16(top, left);
+            Point16 position = new(top, left);
 
             if (TileEntity.ByPosition.TryGetValue(position, out TileEntity value) && value is T tEntity)
             {

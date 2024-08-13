@@ -66,10 +66,10 @@ namespace Coralite.Content.NPCs.Shadow
 
             int frameWidth = mainTex.Width;
             int frameHeight = mainTex.Height / Main.npcFrameCount[NPC.type];
-            Rectangle frameBox = new Rectangle(0, NPC.frame.Y * frameHeight, frameWidth, frameHeight);
+            Rectangle frameBox = new(0, NPC.frame.Y * frameHeight, frameWidth, frameHeight);
 
             SpriteEffects effects = SpriteEffects.FlipHorizontally;
-            Vector2 origin = new Vector2(frameWidth / 2, frameHeight / 2);
+            Vector2 origin = new(frameWidth / 2, frameHeight / 2);
 
             if (NPC.spriteDirection != 1)
                 effects = SpriteEffects.None;

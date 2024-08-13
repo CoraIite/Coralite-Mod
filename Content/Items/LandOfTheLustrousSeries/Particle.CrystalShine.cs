@@ -137,7 +137,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Texture2D mainTex = GetTexture().Value;
             Vector2 pos = Center - screenPos;
-            Vector2 origin = new Vector2(0, mainTex.Height / 2);
+            Vector2 origin = new(0, mainTex.Height / 2);
             Vector2 scale = currentScale * 0.1f * exScale;
             scale.Y *= 2;
             Color c = color;
@@ -159,9 +159,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Texture2D mainTex = GetTexture().Value;
             Color c = color;
 
-            List<CustomVertexInfo> bars = new List<CustomVertexInfo>();
-            List<CustomVertexInfo> bar3 = new List<CustomVertexInfo>();
-            List<CustomVertexInfo> bar4 = new List<CustomVertexInfo>();
+            List<CustomVertexInfo> bars = new();
+            List<CustomVertexInfo> bar3 = new();
+            List<CustomVertexInfo> bar4 = new();
 
             Vector2 dir = rot.ToRotationVector2();
             Vector2 normal = dir.RotatedBy(1.57f);

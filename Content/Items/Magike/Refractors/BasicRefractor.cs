@@ -4,8 +4,8 @@ using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
-using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -65,11 +65,11 @@ namespace Coralite.Content.Items.Magike.Refractors
             MagikeMaxBase = incomeLevel switch
             {
                 MagikeApparatusLevel.MagicCrystal => 60,
-                MagikeApparatusLevel.Crimson 
-                or MagikeApparatusLevel.Corruption 
+                MagikeApparatusLevel.Crimson
+                or MagikeApparatusLevel.Corruption
                 or MagikeApparatusLevel.Icicle => 300,
                 MagikeApparatusLevel.CrystallineMagike => 1800,
-                MagikeApparatusLevel.Soul 
+                MagikeApparatusLevel.Soul
                 or MagikeApparatusLevel.Feather => 7500,
                 MagikeApparatusLevel.SplendorMagicore => 18000,
                 _ => 0,
