@@ -447,7 +447,19 @@ namespace Coralite.Helpers
             return title;
         }
 
-
+        /// <summary>
+        /// 新建一个文字UI元素
+        /// </summary>
+        /// <typeparam name="TComponent"></typeparam>
+        /// <param name="component"></param>
+        /// <param name="textFunc"></param>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        public static ComponentUIElementText<TComponent> NewTextBar<TComponent>(this TComponent component, Func<TComponent, string> textFunc, UIElement parent)
+            where TComponent : Component
+        {
+            return new ComponentUIElementText<TComponent>(textFunc, component, parent);
+        }
 
 
 

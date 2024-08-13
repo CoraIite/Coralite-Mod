@@ -235,6 +235,19 @@ namespace Coralite.Core.Systems.MagikeSystem
             ClickToRemove,
             MagikePolarizedFilterName,
 
+            /*
+             * 物品容器
+             *      - 当前容量
+             *      - 强夺全部
+             *      - 快速堆叠
+             *      - 名称
+             */
+
+            CurrentItemAmount,
+            OutPutAll,
+            FastStack,
+            ItemContainerName,
+
             Count
         }
 
@@ -257,6 +270,11 @@ namespace Coralite.Core.Systems.MagikeSystem
             UIText[(int)UITextID.PolarizedFilterLevel] = this.GetLocalization(nameof(UIText) + "PolarizedFilterLevel");
             UIText[(int)UITextID.ClickToRemove] = this.GetLocalization(nameof(UIText) + "ClickToRemove");
             UIText[(int)UITextID.MagikePolarizedFilterName] = this.GetLocalization(nameof(UIText) + "MagikePolarizedFilterName");
+            
+            UIText[(int)UITextID.CurrentItemAmount] = this.GetLocalization(nameof(UIText) + "CurrentItemAmount");
+            UIText[(int)UITextID.OutPutAll] = this.GetLocalization(nameof(UIText) + "OutPutAll");
+            UIText[(int)UITextID.FastStack] = this.GetLocalization(nameof(UIText) + "FastStack");
+            UIText[(int)UITextID.ItemContainerName] = this.GetLocalization(nameof(UIText) + "ItemContainerName");
         }
 
         public static string GetUIText(UITextID id)

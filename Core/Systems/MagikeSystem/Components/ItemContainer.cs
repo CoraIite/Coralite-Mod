@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Helpers;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -42,8 +43,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if (_items == null)
                 {
                     _items = new Item[Capacity];
-                    for (int i = 0; i < Capacity; i++)
-                        _items[i] = new Item();
+                    FillItemArray();
                 }
 
                 return _items;
@@ -89,9 +89,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public void ShowInUI(UIElement parent)
         {
+            UIElement title = this.AddTitle(MagikeSystem.UITextID.ItemContainerName, parent);
 
-
-            UIGrid grid=new UIGrid();
+            UIGrid grid =new();
 
             grid.Width.Set(0, 1);
         }

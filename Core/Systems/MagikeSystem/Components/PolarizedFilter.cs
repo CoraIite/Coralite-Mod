@@ -17,6 +17,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     /// </summary>
     public abstract class PolarizedFilter : MagikeFilter, IUIShowable
     {
+        #region 插入与取出部分
+
         //只有有可升级的组件才能升级
         public override bool CanInsert_SpecialCheck(MagikeTileEntity entity, ref string text)
         {
@@ -135,29 +137,27 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 upgrade.Upgrade(MagikeApparatusLevel.None);
         }
 
+        #endregion
+
+        #region UI部分
+
         public void ShowInUI(UIElement parent)
         {
-            UIElement title = new ComponentUIElementText<PolarizedFilter>(c =>
-                 MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikePolarizedFilterName), this, parent, new Vector2(1.3f));
-            parent.Append(title);
+            UIElement title = this.AddTitle(MagikeSystem.UITextID.MagikePolarizedFilterName, parent);
 
-            UIList list = new();
-            list.Width.Set(0, 1);
-            list.Height.Set(-title.Height.Pixels, 1);
-            list.Left.Set(0, 0);
-            list.Top.Set(title.Height.Pixels + 8, 0);
+            UIList list = 
+            [
+                //等级
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.PolarizedFilterLevel)
+                 + $"\n  - [i:{c.ItemType}]", parent),
+                //取出按钮
+                new FilterRemoveButton(Entity, this)
+            ];
 
-            var scrollbar = new UIScrollbar();
-            scrollbar.Left.Set(4000, 0);
-            scrollbar.Top.Set(4000, 0);
-            list.SetScrollbar(scrollbar);
+            list.SetSize(0, 0, 1, 1);
+            list.SetTopLeft(title.Height.Pixels + 8, 0);
 
-            //等级
-            AddText(list, c =>
-                 MagikeSystem.GetUIText(MagikeSystem.UITextID.PolarizedFilterLevel)
-                 + $"\n  - [i:{c.ItemType}]", parent);
-
-            list.Add(new FilterRemoveButton(Entity, this));
+            list.QuickInvisibleScrollbar();
 
             parent.Append(list);
         }
@@ -166,5 +166,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             list.Add(new ComponentUIElementText<PolarizedFilter>(textFunc, this, parent));
         }
+
+        #endregion
     }
 }

@@ -1,5 +1,8 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria.GameContent;
+using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using Terraria.UI.Chat;
 
@@ -28,6 +31,19 @@ namespace Coralite.Helpers
         /// <returns></returns>
         public static float OutsideHeight(this UIElement element)
             => element.Height.Pixels + element.PaddingTop + element.PaddingBottom;
+
+        public static void SetSize(this UIElement element,float widthPixel,float heightPixel,float widthPercent=0,float heightPercent = 0)
+        {
+            element.Width.Set(widthPixel, widthPercent);
+            element.Height.Set(heightPixel, heightPercent);
+        }
+
+        public static void SetTopLeft(this UIElement element,float topPixel,float leftPixel,float topPercent = 0,float leftPercent = 0)
+        {
+            element.Top.Set(topPixel, topPercent);
+            element.Left.Set(leftPixel, leftPercent);
+        }
+
 
         /// <summary>
         /// 快速绘制，黑底白字，缩放为1
@@ -66,5 +82,12 @@ namespace Coralite.Helpers
                 position, textColor, 0f, origin, scale, out _, maxWidth, false);
         }
 
+        public static void QuickInvisibleScrollbar(this UIList list)
+        {
+            var scrollbar = new UIScrollbar();
+            scrollbar.Left.Set(5000, 0);
+            scrollbar.Top.Set(5000, 0);
+            list.SetScrollbar(scrollbar);
+        }
     }
 }

@@ -237,38 +237,27 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public void ShowInUI(UIElement parent)
         {
             //添加显示在最上面的组件名称
-            UIElement title = new ComponentUIElementText<MagikeLinerSender>(c =>
-                 MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeLinerSenderName), this, parent, new Vector2(1.3f));
-            parent.Append(title);
+            UIElement title = this.AddTitle(MagikeSystem.UITextID.MagikeLinerSenderName, parent);
 
-            UIList list = new();
-            list.Width.Set(0, 1);
-            list.Height.Set(-title.Height.Pixels, 1);
-            list.Left.Set(0, 0);
-            list.Top.Set(title.Height.Pixels + 8, 0);
+            UIList list =
+            [
+                //发送时间
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendTime)
+                 + $"\n  - {c.Timer} / {c.SendDelay} ({c.SendDelayBase} * {c.SendDelayBonus})", parent),
+                //发送量
+                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendAmount)
+                 + $"\n  - {c.UnitDelivery} ({c.UnitDeliveryBase} {(c.UnitDeliveryExtra >= 0 ? "+" : "-")} {Math.Abs(c.UnitDeliveryExtra)})", parent),
+                //连接距离
+                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeConnectLength)
+                 + $"\n  - {MathF.Round(c.ConnectLength / 16f, 1)} ({MathF.Round(c.ConnectLengthBase / 16f, 1)} {(c.ConnectLengthExtra >= 0 ? "+" : "- ")} {MathF.Round(Math.Abs(c.ConnectLengthExtra) / 16f, 1)})", parent),
 
-            var scrollbar = new UIScrollbar();
-            scrollbar.Left.Set(4000, 0);
-            scrollbar.Top.Set(4000, 0);
-            list.SetScrollbar(scrollbar);
+                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.CurrentConnect),parent)
+            ];
 
-            //发送时间
-            AddText(list, c =>
-                 MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendTime)
-                 + $"\n  - {c.Timer} / {c.SendDelay} ({c.SendDelayBase} * {c.SendDelayBonus})", parent);
+            list.SetSize(0, -title.Height.Pixels, 1, 1);
+            list.SetTopLeft(title.Height.Pixels + 8, 0);
 
-            //发送量
-            AddText(list, c =>
-                 MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendAmount)
-                 + $"\n  - {c.UnitDelivery} ({c.UnitDeliveryBase} {(c.UnitDeliveryExtra >= 0 ? "+" : "-")} {Math.Abs(c.UnitDeliveryExtra)})", parent);
-
-            //连接距离
-            AddText(list, c =>
-                 MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeConnectLength)
-                 + $"\n  - {MathF.Round(c.ConnectLength / 16f, 1)} ({MathF.Round(c.ConnectLengthBase / 16f, 1)} {(c.ConnectLengthExtra >= 0 ? "+" : "- ")} {MathF.Round(Math.Abs(c.ConnectLengthExtra) / 16f, 1)})", parent);
-
-            AddText(list, c =>
-                 MagikeSystem.GetUIText(MagikeSystem.UITextID.CurrentConnect), parent);
+            list.QuickInvisibleScrollbar();
 
             for (int i = 0; i < MaxConnect; i++)
                 list.Add(new ConnectButtonForComponent(i, this));
