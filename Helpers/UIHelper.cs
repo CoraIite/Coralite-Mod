@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
@@ -44,7 +45,6 @@ namespace Coralite.Helpers
             element.Left.Set(leftPixel, leftPercent);
         }
 
-
         /// <summary>
         /// 快速绘制，黑底白字，缩放为1
         /// </summary>
@@ -56,6 +56,23 @@ namespace Coralite.Helpers
         public static void DrawTextQuick(SpriteBatch spriteBatch, string originText, float maxWidth, Vector2 position, Vector2 origin, out Vector2 textSize)
         {
             DrawText(spriteBatch, originText, maxWidth, position, origin, Vector2.One, Color.Black, Color.White, out textSize);
+        }
+
+        /// <summary>
+        /// 根据物品type获取对应的贴图与帧
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="tex"></param>
+        /// <param name="frameBox"></param>
+        public static void GetItemTexAndFrame(int itemType,out Texture2D tex,out Rectangle frameBox)
+        {
+            Main.instance.LoadItem(itemType);
+            tex = TextureAssets.Item[itemType].Value;
+
+            if (Main.itemAnimations[itemType] != null)
+                frameBox = Main.itemAnimations[itemType].GetFrame(tex, -1);
+            else
+                frameBox = tex.Frame();
         }
 
         /// <summary>

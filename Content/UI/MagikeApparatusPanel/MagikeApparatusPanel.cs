@@ -278,6 +278,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             BasePanel.Width.Pixels = Math.Clamp(BasePanel.Width.Pixels, BasePanel.MinWidth.Pixels, BasePanel.MaxWidth.Pixels);
             BasePanel.Height.Pixels = Math.Clamp(BasePanel.Height.Pixels, BasePanel.MinHeight.Pixels, BasePanel.MaxHeight.Pixels);
 
+            BasePanel.OverflowHidden = true;
+
             base.Recalculate();
 
             ResetComponentPanel();
@@ -357,6 +359,10 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             Point16 topLeft = CurrentEntity.Position;
             MagikeHelper.GetMagikeAlternateData(topLeft.X, topLeft.Y, out TileObjectData data, out _);
+
+            if (data == null)
+                return;
+
             Point16 bottomRight = CurrentEntity.Position + new Point16(data.Width - 1, data.Height - 1);
 
             Color drawColor = Color.Lerp(Coralite.MagicCrystalPink, Color.Coral, MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2 + 0.5f);

@@ -8,7 +8,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     public abstract class MagikeActiveProducer : MagikeProducer, ITimerTriggerComponent
     {
         /// <summary> 基础生产时间 </summary>
-        public int ProductionDelayBase { get => DelayBase; private set => DelayBase = value; }
+        public int ProductionDelayBase { get => DelayBase; protected set => DelayBase = value; }
         /// <summary> 发送时间减少量（效率增幅量） </summary>
         public float ProductionDelayBonus { get => DelayBonus; set => DelayBonus = value; }
 
@@ -36,7 +36,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             //魔能容量限制
             //其他特定的特殊条件
-            return CanProduce_CheckMagike() && CanProduce();
+            return CanProduce_CheckMagike() && CanProduce_SpecialCheck();
         }
 
         public virtual bool CanProduce_SpecialCheck() => true;
@@ -55,7 +55,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void SaveData(string preName, TagCompound tag)
         {
-            base.SaveData(preName, tag);
+            //base.SaveData(preName, tag);//不需要存取基类里的生产量
 
             tag.Add(preName + nameof(Timer), Timer);
 
@@ -65,7 +65,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void LoadData(string preName, TagCompound tag)
         {
-            base.LoadData(preName, tag);
+            //base.LoadData(preName, tag);//不需要存取基类里的生产量
 
             Timer = tag.GetInt(preName + nameof(Timer));
 

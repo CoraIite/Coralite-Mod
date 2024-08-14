@@ -65,7 +65,7 @@ namespace Coralite.Content.Items.Magike.Refractors
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MagikeApparatusLevel.MagicCrystal => 90,
+                MagikeApparatusLevel.MagicCrystal => 60,
                 MagikeApparatusLevel.Glistent => 300,
                 MagikeApparatusLevel.Crimson
                 or MagikeApparatusLevel.Corruption
@@ -77,6 +77,9 @@ namespace Coralite.Content.Items.Magike.Refractors
                 _ => 0,
             };
             LimitMagikeAmount();
+
+            AntiMagikeMaxBase = MagikeMaxBase * 2;
+            LimitAntiMagikeAmount();
         }
     }
 
@@ -96,41 +99,47 @@ namespace Coralite.Content.Items.Magike.Refractors
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.MagicCrystal:
-                    UnitDeliveryBase = 10;
-                    SendDelayBase = 60 * 5;
-                    ConnectLengthBase = 10 * 16;
+                    UnitDeliveryBase = 15;
+                    SendDelayBase = 60 * 10;
+                    ConnectLengthBase = 8 * 16;
                     break;
                 case MagikeApparatusLevel.Glistent:
+                    MaxConnectBase = 3;
                     UnitDeliveryBase = 50;
-                    SendDelayBase = 60 * 5;
-                    ConnectLengthBase = 10 * 16;
+                    SendDelayBase = 60 * 10;
+                    ConnectLengthBase = 8 * 16;
                     break;
                 case MagikeApparatusLevel.Crimson:
                 case MagikeApparatusLevel.Corruption:
                 case MagikeApparatusLevel.Icicle:
-                    UnitDeliveryBase = 50;
-                    SendDelayBase = 60 * 5;
-                    ConnectLengthBase = 10 * 16;
+                    MaxConnectBase = 3;
+                    UnitDeliveryBase = 80;
+                    SendDelayBase = 60 * 10;
+                    ConnectLengthBase = 8 * 16;
                     break;
                 case MagikeApparatusLevel.CrystallineMagike:
-                    UnitDeliveryBase = 120;
-                    SendDelayBase = 60 * 4;
-                    ConnectLengthBase = 15 * 16;
+                    MaxConnectBase = 3;
+                    UnitDeliveryBase = 200;
+                    SendDelayBase = 60 * 8;
+                    ConnectLengthBase = 10 * 16;
                     break;
                 case MagikeApparatusLevel.Hallow:
-                    UnitDeliveryBase = 500;
-                    SendDelayBase = 60 * 4;
-                    ConnectLengthBase = 15 * 16;
+                    MaxConnectBase = 4;
+                    UnitDeliveryBase = 600;
+                    SendDelayBase = 60 * 8;
+                    ConnectLengthBase = 10 * 16;
                     break;
                 case MagikeApparatusLevel.HolyLight:
-                    UnitDeliveryBase = 500;
-                    SendDelayBase = 60 * 4;
-                    ConnectLengthBase = 15 * 16;
+                    MaxConnectBase = 4;
+                    UnitDeliveryBase = 1000;
+                    SendDelayBase = 60 * 8;
+                    ConnectLengthBase = 10 * 16;
                     break;
                 case MagikeApparatusLevel.SplendorMagicore:
-                    UnitDeliveryBase = 900;
-                    SendDelayBase = 60 * 4;
-                    ConnectLengthBase = 15 * 16;
+                    MaxConnectBase = 4;
+                    UnitDeliveryBase = 1500;
+                    SendDelayBase = 60 * 6;
+                    ConnectLengthBase = 12 * 16;
                     break;
             }
 

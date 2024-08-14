@@ -75,6 +75,9 @@ namespace Coralite.Content.Items.Magike.Refractors
                 _ => 0,
             };
             LimitMagikeAmount();
+
+            AntiMagikeMaxBase = MagikeMaxBase / 2;
+            LimitAntiMagikeAmount();
         }
     }
 

@@ -236,6 +236,20 @@ namespace Coralite.Core.Systems.MagikeSystem
             MagikePolarizedFilterName,
 
             /*
+             * 物品生产器
+             *      - 生产时间
+             * - 提取生产器
+             *      - 名称
+             *      - 生产条件
+             *      - 含有魔能的物品
+             */
+
+            ExtractProducerName,
+            ProduceTime,
+            ExtractProducerCondition,
+            ItemWithMagike,
+
+            /*
              * 物品容器
              *      - 当前容量
              *      - 强夺全部
@@ -270,6 +284,11 @@ namespace Coralite.Core.Systems.MagikeSystem
             UIText[(int)UITextID.PolarizedFilterLevel] = this.GetLocalization(nameof(UIText) + "PolarizedFilterLevel");
             UIText[(int)UITextID.ClickToRemove] = this.GetLocalization(nameof(UIText) + "ClickToRemove");
             UIText[(int)UITextID.MagikePolarizedFilterName] = this.GetLocalization(nameof(UIText) + "MagikePolarizedFilterName");
+            
+            UIText[(int)UITextID.ExtractProducerName] = this.GetLocalization(nameof(UIText) + "ExtractProducerName");
+            UIText[(int)UITextID.ProduceTime] = this.GetLocalization(nameof(UIText) + "ProduceTime");
+            UIText[(int)UITextID.ExtractProducerCondition] = this.GetLocalization(nameof(UIText) + "ExtractProducerCondition");
+            UIText[(int)UITextID.ItemWithMagike] = this.GetLocalization(nameof(UIText) + "ItemWithMagike");
             
             UIText[(int)UITextID.CurrentItemAmount] = this.GetLocalization(nameof(UIText) + "CurrentItemAmount");
             UIText[(int)UITextID.OutPutAll] = this.GetLocalization(nameof(UIText) + "OutPutAll");

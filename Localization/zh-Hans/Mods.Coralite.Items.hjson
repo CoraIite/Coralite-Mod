@@ -4482,6 +4482,6 @@ PooToilet: {
 }
 
 BasicExtractLens: {
-	// DisplayName: Basic Extract Lens
-	// Tooltip: ""
+	DisplayName: 基础提取透镜
+	Tooltip: ""
 }

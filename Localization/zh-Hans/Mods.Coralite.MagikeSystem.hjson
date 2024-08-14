@@ -38,6 +38,14 @@ MagikeSystem: {
 	UITextMagikePolarizedFilterName: 偏振滤镜
 	UITextContainerAntiMagikeAmount: ▽ 反魔能量
 	UITextContainerAntiMagikeMax: ▽ 反魔能上限
+	UITextCurrentItemAmount: ◇ 当前物品容量
+	UITextOutPutAll: 强夺全部
+	UITextFastStack: 快速堆叠
+	UITextItemContainerName: 物品容器
+	UITextExtractProducerName: 魔能提取器
+	UITextExtractProducerCondition: ◇ 生产条件
+	UITextItemWithMagike: 需要放入含有魔能的物品
+	UITextProduceTime: ◇ 生产CD（计时器归零后执行一次生产操作）
 }
 
 C0_P1_BookName: {

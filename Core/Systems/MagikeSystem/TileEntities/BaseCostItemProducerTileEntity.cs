@@ -12,6 +12,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             AddComponentDirectly(GetStartContainer());
             AddComponentDirectly(GetStartSender());
             AddComponentDirectly(GetStartProducer());
+            AddComponentDirectly(GetStartItemContainer());
         }
 
         public abstract MagikeContainer GetStartContainer();

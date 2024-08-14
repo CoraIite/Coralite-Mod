@@ -73,18 +73,20 @@ namespace Coralite.Content.Items.Magike.ExtractLens
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MagikeApparatusLevel.MagicCrystal => 90,
-                MagikeApparatusLevel.Glistent => 300,
+                MagikeApparatusLevel.MagicCrystal => 120,
                 MagikeApparatusLevel.Crimson
                 or MagikeApparatusLevel.Corruption
-                or MagikeApparatusLevel.Icicle => 480,
-                MagikeApparatusLevel.CrystallineMagike => 2250,
-                MagikeApparatusLevel.Hallow => 9000,
-                MagikeApparatusLevel.HolyLight => 15000,
-                MagikeApparatusLevel.SplendorMagicore => 35000,
+                or MagikeApparatusLevel.Icicle => 600,
+                MagikeApparatusLevel.CrystallineMagike => 1800,
+                MagikeApparatusLevel.Soul 
+                or MagikeApparatusLevel.Feather => 7500,
+                MagikeApparatusLevel.SplendorMagicore => 18000,
                 _ => 0,
             };
             LimitMagikeAmount();
+
+            AntiMagikeMaxBase = MagikeMaxBase *2;
+            LimitAntiMagikeAmount();
         }
     }
 
@@ -92,12 +94,11 @@ namespace Coralite.Content.Items.Magike.ExtractLens
     {
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
-            MaxConnectBase = 2;
-
+            MaxConnectBase = 1;
+            ConnectLengthBase = 4 * 16;
             switch (incomeLevel)
             {
                 default:
-                case MagikeApparatusLevel.None:
                     MaxConnectBase = 0;
                     UnitDeliveryBase = 0;
                     SendDelayBase = 1_0000_0000;//随便填个大数
@@ -106,39 +107,25 @@ namespace Coralite.Content.Items.Magike.ExtractLens
                 case MagikeApparatusLevel.MagicCrystal:
                     UnitDeliveryBase = 10;
                     SendDelayBase = 60 * 5;
-                    ConnectLengthBase = 10 * 16;
-                    break;
-                case MagikeApparatusLevel.Glistent:
-                    UnitDeliveryBase = 50;
-                    SendDelayBase = 60 * 5;
-                    ConnectLengthBase = 10 * 16;
                     break;
                 case MagikeApparatusLevel.Crimson:
                 case MagikeApparatusLevel.Corruption:
                 case MagikeApparatusLevel.Icicle:
                     UnitDeliveryBase = 50;
                     SendDelayBase = 60 * 5;
-                    ConnectLengthBase = 10 * 16;
                     break;
                 case MagikeApparatusLevel.CrystallineMagike:
                     UnitDeliveryBase = 120;
                     SendDelayBase = 60 * 4;
-                    ConnectLengthBase = 15 * 16;
                     break;
-                case MagikeApparatusLevel.Hallow:
+                case MagikeApparatusLevel.Soul:
+                case MagikeApparatusLevel.Feather:
                     UnitDeliveryBase = 500;
                     SendDelayBase = 60 * 4;
-                    ConnectLengthBase = 15 * 16;
-                    break;
-                case MagikeApparatusLevel.HolyLight:
-                    UnitDeliveryBase = 500;
-                    SendDelayBase = 60 * 4;
-                    ConnectLengthBase = 15 * 16;
                     break;
                 case MagikeApparatusLevel.SplendorMagicore:
                     UnitDeliveryBase = 900;
-                    SendDelayBase = 60 * 4;
-                    ConnectLengthBase = 15 * 16;
+                    SendDelayBase = 60 * 3;
                     break;
             }
 
@@ -148,6 +135,20 @@ namespace Coralite.Content.Items.Magike.ExtractLens
 
     public class BasicExtractProducer : UpgradeableExtractProducer
     {
-
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            ProductionDelayBase = incomeLevel switch
+            {
+                MagikeApparatusLevel.MagicCrystal
+                or MagikeApparatusLevel.Crimson
+                or MagikeApparatusLevel.Corruption
+                or MagikeApparatusLevel.Icicle
+                or MagikeApparatusLevel.CrystallineMagike
+                or MagikeApparatusLevel.Soul
+                or MagikeApparatusLevel.Feather
+                or MagikeApparatusLevel.SplendorMagicore => 10,
+                _ => 1_0000_0000 / 60,//随便填个大数
+            } * 60;
+        }
     }
 }
