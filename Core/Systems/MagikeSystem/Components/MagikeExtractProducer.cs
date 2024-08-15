@@ -1,6 +1,7 @@
 ﻿using Coralite.Helpers;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -29,7 +30,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceTime)
                 + $"\n  - {c.Timer} / {c.ProductionDelay} ({c.ProductionDelayBase} * {c.ProductionDelayBonus})", parent),
                 //提取条件
-                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ExtractProducerCondition)
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceCondition)
                 + $"\n  - {c.GetCanProduceText}", parent),
 
                 grid
@@ -41,6 +42,26 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             list.QuickInvisibleScrollbar();
 
             parent.Append(list);
+        }
+
+        public override void SaveData(string preName, TagCompound tag)
+        {
+            //base.SaveData(preName, tag);//不需要存取基类里的生产量
+
+            tag.Add(preName + nameof(Timer), Timer);
+
+            tag.Add(preName + nameof(ProductionDelayBase), ProductionDelayBase);
+            tag.Add(preName + nameof(ProductionDelayBonus), ProductionDelayBonus);
+        }
+
+        public override void LoadData(string preName, TagCompound tag)
+        {
+            //base.LoadData(preName, tag);//不需要存取基类里的生产量
+
+            Timer = tag.GetInt(preName + nameof(Timer));
+
+            ProductionDelayBase = tag.GetInt(preName + nameof(ProductionDelayBase));
+            ProductionDelayBonus = tag.GetFloat(preName + nameof(ProductionDelayBonus));
         }
     }
 }

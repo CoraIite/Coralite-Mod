@@ -117,6 +117,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             UIElement title = this.AddTitle(MagikeSystem.UITextID.ItemContainerName, parent);
 
+            UIElement text = this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ItemMax)
+            + $"\n  ▶ {c.Capacity} ({c.CapacityBase} {(c.CapacityExtra < 0 ? "-" : "+")} {c.CapacityExtra})", parent);
+
+            text.SetTopLeft(title.Height.Pixels + 8, 0);
+            parent.Append(text);
+
             UIGrid grid = new()
             {
                 OverflowHidden = false
@@ -128,8 +134,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 grid.Add(slot);
             }
 
-            grid.SetSize(0, -title.Height.Pixels, 1, 1);
-            grid.SetTopLeft(title.Height.Pixels+8, 0);
+            grid.SetSize(0, -text.Top.Pixels - text.Height.Pixels, 1, 1);
+            grid.SetTopLeft(text.Top.Pixels + text.Height.Pixels + 6, 0);
 
             parent.Append(grid);
         }

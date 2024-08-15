@@ -23,7 +23,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             if (producer.CanProduce())
             {
                 const float TwoPi = (float)Math.PI * 2f;
-                float offset2 = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
+                float offset2 = (float)Math.Sin((Main.GlobalTimeWrappedHourly+tileRect.X+tileRect.Y) * TwoPi / 5f);
                 drawPos += new Vector2(0f, offset2 * 4f);
             }
             else

@@ -25,27 +25,45 @@ MagikeSystem: {
 	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
 	ApparatusDescriptionMagikeAmount: "魔能容量 "
 	ApparatusDescriptionConnectAmount: "连接情况 "
-	UITextContainerMagikeAmount: ◇ 魔能量
-	UITextContainerMagikeMax: ◇ 魔能上限
-	UITextMagikeContainerName: 魔能存储器
-	UITextCurrentConnect: ◇ 当前连接
-	UITextMagikeLinerSenderName: 线性魔能发送器
-	UITextMagikeSendTime: ◇ 发送CD（计时器归零后执行一次发送操作）
-	UITextMagikeSendAmount: ◇ 单次发送量
-	UITextMagikeConnectLength: ◇ 连接距离（单位：格）
-	UITextPolarizedFilterLevel: ◇ 滤镜等级
-	UITextClickToRemove: 点击以取出滤镜
-	UITextMagikePolarizedFilterName: 偏振滤镜
-	UITextContainerAntiMagikeAmount: ▽ 反魔能量
-	UITextContainerAntiMagikeMax: ▽ 反魔能上限
-	UITextCurrentItemAmount: ◇ 当前物品容量
-	UITextOutPutAll: 强夺全部
-	UITextFastStack: 快速堆叠
-	UITextItemContainerName: 物品容器
-	UITextExtractProducerName: 魔能提取器
-	UITextExtractProducerCondition: ◇ 生产条件
-	UITextItemWithMagike: 需要放入含有魔能的物品
-	UITextProduceTime: ◇ 生产CD（计时器归零后执行一次生产操作）
+
+	UIText: {
+		ContainerMagikeAmount: ◇ 魔能量
+		ContainerMagikeMax: ◇ 魔能上限
+		ContainerAntiMagikeAmount: ▽ 反魔能量
+		ContainerAntiMagikeMax: ▽ 反魔能上限
+		MagikeContainerName: 魔能存储单元
+		CurrentConnect: ◇ 当前连接
+		MagikeSendTime:
+			'''
+			◇ 发送冷却（单位：秒）
+			  ▶ 计时器归零后执行一次发送
+			'''
+		MagikeSendAmount: ◇ 单次发送量
+		MagikeConnectLength: ◇ 连接距离（单位：格）
+		MagikeLinerSenderName: 线性魔能发送器
+		PolarizedFilterLevel: ◇ 偏振等级
+		ClickToRemove: 点击以取出滤镜
+		MagikePolarizedFilterName: 偏振滤镜
+		ExtractProducerName: 魔能提取透镜
+		ProduceTime:
+			'''
+			◇ 生产冷却（单位：秒）
+			  ▶ 计时器归零后执行一次生产
+			'''
+		ProduceAmount: ◇ 单次生产量
+		ProduceCondition: ◇ 生产条件
+		ItemWithMagike: 需要放入含有魔能的物品
+		ForestLensName: 森林透镜
+		ForestCondition:
+			'''
+			  ▶ 需要将底座放置在草方块上
+			  ▶ 需要在草墙或花墙前
+			'''
+		ItemMax: ◇ 当前物品容量
+		OutPutAll: 强夺全部
+		FastStack: 快速堆叠
+		ItemContainerName: 物品容器
+	}
 }
 
 C0_P1_BookName: {

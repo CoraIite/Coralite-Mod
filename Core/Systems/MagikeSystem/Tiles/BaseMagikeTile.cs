@@ -17,6 +17,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ObjectData;
+using static Coralite.Helpers.MagikeHelper;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
@@ -55,7 +56,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// 返回所有可以有的魔能等级
         /// </summary>
         /// <returns></returns>
-        public virtual MagikeApparatusLevel[] GetAllLevels() { return null; }
+        public virtual MagikeApparatusLevel[] GetAllLevels()  => null; 
+
+        /// <summary>
+        /// 获取可放置的物块类型
+        /// </summary>
+        /// <returns></returns>
+        public virtual int[] GetAnchorValidTiles() => null;
 
         public override void SetStaticDefaults()
         {
@@ -72,6 +79,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             TileObjectData.newTile.Origin = new Point16(width / 2, height - 1);
             //TileObjectData.newTile.StyleWrapLimit = 100;
             TileObjectData.newTile.CoordinateHeights = new int[height];
+
+            int[] tiles = GetAnchorValidTiles();
+            if (tiles != null)
+                TileObjectData.newTile.AnchorValidTiles = tiles;
+
             Array.Fill(TileObjectData.newTile.CoordinateHeights, 16);
 
             //默认防岩浆
@@ -159,18 +171,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             if (Main.tileSolidTop[t.TileType])
                 return;
 
-            MagikeHelper.GetMagikeAlternateData(i, j, out _, out int alternate);
+            GetMagikeAlternateData(i, j, out _, out MagikeAlternateStyle alternate);
 
             switch (alternate)
             {
                 default:
-                case 0:
                     return;
-                case 1:
+                case MagikeAlternateStyle.Top:
                     offsetY = -2;
                     return;
-                case 2:
-                case 3:
+                case MagikeAlternateStyle.Left:
+                case MagikeAlternateStyle.Right:
                     offsetY = 0;
                     return;
             }
@@ -359,13 +370,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
             //在这里获取帧图
             //得判断自身现在处于一个什么样的放置情况，然后获取对应的data
-            MagikeHelper.GetMagikeAlternateData(i, j, out TileObjectData data, out int alternate);
+            MagikeHelper.GetMagikeAlternateData(i, j, out TileObjectData data, out MagikeAlternateStyle alternate);
 
             float rotation = alternate switch
             {
-                1 => MathHelper.PiOver2,//在顶部，正方向朝下
-                2 => 0,//朝向右
-                3 => MathHelper.Pi,//朝向左
+                MagikeAlternateStyle.Top => MathHelper.PiOver2,//在顶部，正方向朝下
+                MagikeAlternateStyle.Left => 0,//头朝向右
+                MagikeAlternateStyle.Right => MathHelper.Pi,//头朝向左
                 _ => -MathHelper.PiOver2
             };
 

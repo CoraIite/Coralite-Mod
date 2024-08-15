@@ -183,22 +183,22 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     string colorCode = c.GetMagikeContainerMaxColorCode();
 
                     return string.Concat(MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeAmount)
-                        , $"\n  - {c.Magike} / [c/{colorCode}:{c.MagikeMax}]");
+                        , $"\n  ▶ {c.Magike} / [c/{colorCode}:{c.MagikeMax}]");
                 }, parent),
 
                 this.NewTextBar(c =>string.Concat(MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeMax)
-                , $"\n  - {c.MagikeMax} ({c.MagikeMaxBase} {(c.MagikeMaxExtra >= 0 ? "+" : "-")} {Math.Abs(c.MagikeMaxExtra)})"), parent),
+                , $"\n  ▶ {c.MagikeMax} ({c.MagikeMaxBase} {(c.MagikeMaxExtra >= 0 ? "+" : "-")} {Math.Abs(c.MagikeMaxExtra)})"), parent),
 
                 this.NewTextBar(c =>
                 {
                     string colorCode = c.GetMagikeContainerMaxColorCode();
 
                     return string.Concat(MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeAmount)
-                        , $"\n  - {c.AntiMagike} / [c/{colorCode}:{c.AntiMagikeMax}]");
+                        , $"\n  ▶ {c.AntiMagike} / [c/{colorCode}:{c.AntiMagikeMax}]");
                 }, parent),
 
                 this.NewTextBar(c =>string.Concat(MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeMax)
-                , $"\n  - {c.AntiMagikeMax} ({c.AntiMagikeMaxBase} {(c.AntiMagikeMaxExtra >= 0 ? "+" : "-")} {Math.Abs(c.AntiMagikeMaxExtra)})"), parent),
+                , $"\n  ▶ {c.AntiMagikeMax} ({c.AntiMagikeMaxBase} {(c.AntiMagikeMaxExtra >= 0 ? "+" : "-")} {Math.Abs(c.AntiMagikeMaxExtra)})"), parent),
             ];
 
             list.SetSize(0, -title.Height.Pixels, 1, 1);
@@ -304,7 +304,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             //绘制底层
             spriteBatch.Draw(tex, pos, frameBox, Color.White);
-            float percent = (float)container.Magike / container.MagikeMax;
+            float percent = (float)container.AntiMagike / container.AntiMagikeMax;
             Color c = Color.Lerp(Color.Green, Color.Red, percent);
 
             Vector2 drawPos = pos + new Vector2(0, frameBox.Height);

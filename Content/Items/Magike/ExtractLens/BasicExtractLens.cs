@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Magike.ExtractLens
     }
 
     public class BasicExtractLensTile() : BaseLensTile
-        (2, 3, Coralite.MagicCrystalPink, DustID.CorruptionThorns, 8)
+        (2, 3, Coralite.MagicCrystalPink, DustID.CorruptionThorns)
     {
         public override string Texture => AssetDirectory.MagikeLensTiles + Name;
         public override int DropItemType => ItemType<BasicExtractLens>();
@@ -149,6 +149,8 @@ namespace Coralite.Content.Items.Magike.ExtractLens
                 or MagikeApparatusLevel.SplendorMagicore => 10,
                 _ => 1_0000_0000 / 60,//随便填个大数
             } * 60;
+
+            Timer = ProductionDelayBase;
         }
     }
 }

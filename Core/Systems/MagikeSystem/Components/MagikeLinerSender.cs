@@ -243,13 +243,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             [
                 //发送时间
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendTime)
-                 + $"\n  - {c.Timer} / {c.SendDelay} ({c.SendDelayBase} * {c.SendDelayBonus})", parent),
+                 + $"\n  ▶ {Math.Round(c.Timer/60f,1)} / {Math.Round(c.SendDelay/60f,1)} ({Math.Round(c.SendDelayBase/60f,1)} * {c.SendDelayBonus})", parent),
                 //发送量
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendAmount)
-                 + $"\n  - {c.UnitDelivery} ({c.UnitDeliveryBase} {(c.UnitDeliveryExtra >= 0 ? "+" : "-")} {Math.Abs(c.UnitDeliveryExtra)})", parent),
+                 + $"\n  ▶ {c.UnitDelivery} ({c.UnitDeliveryBase} {(c.UnitDeliveryExtra >= 0 ? "+" : "-")} {Math.Abs(c.UnitDeliveryExtra)})", parent),
                 //连接距离
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeConnectLength)
-                 + $"\n  - {MathF.Round(c.ConnectLength / 16f, 1)} ({MathF.Round(c.ConnectLengthBase / 16f, 1)} {(c.ConnectLengthExtra >= 0 ? "+" : "- ")} {MathF.Round(Math.Abs(c.ConnectLengthExtra) / 16f, 1)})", parent),
+                 + $"\n  ▶ {MathF.Round(c.ConnectLength / 16f, 1)} ({MathF.Round(c.ConnectLengthBase / 16f, 1)} {(c.ConnectLengthExtra >= 0 ? "+" : "- ")} {MathF.Round(Math.Abs(c.ConnectLengthExtra) / 16f, 1)})", parent),
 
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.CurrentConnect),parent)
             ];

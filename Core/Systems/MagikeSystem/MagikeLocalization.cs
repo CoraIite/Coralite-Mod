@@ -1,4 +1,5 @@
-﻿using Terraria.Localization;
+﻿using System;
+using Terraria.Localization;
 
 namespace Coralite.Core.Systems.MagikeSystem
 {
@@ -238,16 +239,24 @@ namespace Coralite.Core.Systems.MagikeSystem
             /*
              * 物品生产器
              *      - 生产时间
+             *      - 生产量
              * - 提取生产器
              *      - 名称
              *      - 生产条件
              *      - 含有魔能的物品
+             * - 其他生产器
+             *      - 森林名称
+             *      - 森林条件
+             *      
              */
 
             ExtractProducerName,
             ProduceTime,
-            ExtractProducerCondition,
+            ProduceAmount,
+            ProduceCondition,
             ItemWithMagike,
+            ForestLensName,
+            ForestCondition,
 
             /*
              * 物品容器
@@ -257,7 +266,7 @@ namespace Coralite.Core.Systems.MagikeSystem
              *      - 名称
              */
 
-            CurrentItemAmount,
+            ItemMax,
             OutPutAll,
             FastStack,
             ItemContainerName,
@@ -269,31 +278,10 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             UIText = new LocalizedText[(int)UITextID.Count];
 
-            UIText[(int)UITextID.ContainerMagikeAmount] = this.GetLocalization(nameof(UIText) + "ContainerMagikeAmount");
-            UIText[(int)UITextID.ContainerMagikeMax] = this.GetLocalization(nameof(UIText) + "ContainerMagikeMax");
-            UIText[(int)UITextID.ContainerAntiMagikeAmount] = this.GetLocalization(nameof(UIText) + "ContainerAntiMagikeAmount");
-            UIText[(int)UITextID.ContainerAntiMagikeMax] = this.GetLocalization(nameof(UIText) + "ContainerAntiMagikeMax");
-            UIText[(int)UITextID.MagikeContainerName] = this.GetLocalization(nameof(UIText) + "MagikeContainerName");
-
-            UIText[(int)UITextID.CurrentConnect] = this.GetLocalization(nameof(UIText) + "CurrentConnect");
-            UIText[(int)UITextID.MagikeSendTime] = this.GetLocalization(nameof(UIText) + "MagikeSendTime");
-            UIText[(int)UITextID.MagikeSendAmount] = this.GetLocalization(nameof(UIText) + "MagikeSendAmount");
-            UIText[(int)UITextID.MagikeConnectLength] = this.GetLocalization(nameof(UIText) + "MagikeConnectLength");
-            UIText[(int)UITextID.MagikeLinerSenderName] = this.GetLocalization(nameof(UIText) + "MagikeLinerSenderName");
-
-            UIText[(int)UITextID.PolarizedFilterLevel] = this.GetLocalization(nameof(UIText) + "PolarizedFilterLevel");
-            UIText[(int)UITextID.ClickToRemove] = this.GetLocalization(nameof(UIText) + "ClickToRemove");
-            UIText[(int)UITextID.MagikePolarizedFilterName] = this.GetLocalization(nameof(UIText) + "MagikePolarizedFilterName");
-            
-            UIText[(int)UITextID.ExtractProducerName] = this.GetLocalization(nameof(UIText) + "ExtractProducerName");
-            UIText[(int)UITextID.ProduceTime] = this.GetLocalization(nameof(UIText) + "ProduceTime");
-            UIText[(int)UITextID.ExtractProducerCondition] = this.GetLocalization(nameof(UIText) + "ExtractProducerCondition");
-            UIText[(int)UITextID.ItemWithMagike] = this.GetLocalization(nameof(UIText) + "ItemWithMagike");
-            
-            UIText[(int)UITextID.CurrentItemAmount] = this.GetLocalization(nameof(UIText) + "CurrentItemAmount");
-            UIText[(int)UITextID.OutPutAll] = this.GetLocalization(nameof(UIText) + "OutPutAll");
-            UIText[(int)UITextID.FastStack] = this.GetLocalization(nameof(UIText) + "FastStack");
-            UIText[(int)UITextID.ItemContainerName] = this.GetLocalization(nameof(UIText) + "ItemContainerName");
+            for (int i = 0; i < (int)UITextID.Count; i++)
+            {
+                UIText[i] = this.GetLocalization(nameof(UIText)+"." + Enum.GetName((UITextID)i));
+            }
         }
 
         public static string GetUIText(UITextID id)

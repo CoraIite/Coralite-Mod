@@ -165,9 +165,9 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="i"></param>
         /// <param name="j"></param>
-        /// <param name="alternateData"></param>
+        /// <param name="alternateData">正常0，挂天花板1，底座在左2，底座在右3</param>
         /// <param name="alternate"></param>
-        public static void GetMagikeAlternateData(int i, int j, out TileObjectData alternateData, out int alternate)
+        public static void GetMagikeAlternateData(int i, int j, out TileObjectData alternateData, out MagikeAlternateStyle alternate)
         {
             Tile t = Main.tile[i, j];
             TileObjectData tileData = TileObjectData.GetTileData(t.TileType, 0, 0);
@@ -182,7 +182,7 @@ namespace Coralite.Helpers
             if (Main.tileSolidTop[t.TileType])
             {
                 alternateData = tileData;
-                alternate = -1;
+                alternate = MagikeAlternateStyle.None;
                 return;
             }
 
@@ -190,25 +190,36 @@ namespace Coralite.Helpers
             int height = tileData.Height;
             int y1 = t.TileFrameY / (tileData.CoordinateWidth + tileData.CoordinatePadding);
 
-            alternate = 0;
 
             if (y1 < height)
+            {
+                alternate = MagikeAlternateStyle.Bottom;
                 alternateData = tileData;
+            }
             else if (y1 < height * 2)
             {
-                alternate = 1;
-                alternateData = TileObjectData.GetTileData(t.TileType, 0, alternate + 1);
+                alternate = MagikeAlternateStyle.Top;
+                alternateData = TileObjectData.GetTileData(t.TileType, 0, (int)alternate + 1);
             }
             else if (y1 < height * 2 + width)
             {
-                alternate = 2;
-                alternateData = TileObjectData.GetTileData(t.TileType, 0, alternate + 1);
+                alternate = MagikeAlternateStyle.Left;
+                alternateData = TileObjectData.GetTileData(t.TileType, 0, (int)alternate + 1);
             }
             else
             {
-                alternate = 3;
-                alternateData = TileObjectData.GetTileData(t.TileType, 0, alternate + 1);
+                alternate = MagikeAlternateStyle.Right;
+                alternateData = TileObjectData.GetTileData(t.TileType, 0, (int)alternate + 1);
             }
+        }
+
+        public enum MagikeAlternateStyle
+        {
+            None = -1,
+            Bottom,
+            Top,
+            Left,
+            Right,
         }
 
         /// <summary>
@@ -234,6 +245,25 @@ namespace Coralite.Helpers
                 return false;
 
             level = chooseLevel.Value;
+            return true;
+        }
+
+        /// <summary>
+        /// 检测是实体否能升级
+        /// </summary>
+        /// <param name="Entity"></param>
+        /// <param name="incomeLevel"></param>
+        /// <returns></returns>
+        public static bool CheckUpgrageable(this IEntity Entity,MagikeApparatusLevel incomeLevel)
+        {
+            int tileType = (Entity as MagikeTileEntity).TileType;
+
+            if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var keyValuePairs))
+                return false;
+
+            if (!keyValuePairs.ContainsKey(incomeLevel))
+                return false;
+
             return true;
         }
 

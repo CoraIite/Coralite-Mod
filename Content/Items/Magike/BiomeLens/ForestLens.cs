@@ -1,124 +1,167 @@
-﻿//using Coralite.Content.Items.MagikeSeries1;
-//using Coralite.Content.Raritys;
-//using Coralite.Core;
-//using Coralite.Core.Systems.MagikeSystem;
-//using Coralite.Core.Systems.MagikeSystem.BaseItems;
-//using Coralite.Core.Systems.MagikeSystem.TileEntities;
-//using Coralite.Core.Systems.MagikeSystem.Tiles;
-//using Coralite.Helpers;
-//using Terraria;
-//using Terraria.DataStructures;
-//using Terraria.ID;
-//using Terraria.ObjectData;
-//using static Terraria.ModLoader.ModContent;
+﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Raritys;
+using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.BaseItems;
+using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
+using Terraria;
+using Terraria.ID;
+using static Terraria.ModLoader.ModContent;
 
-//namespace Coralite.Content.Items.Magike.BiomeLens
-//{
-//    public class ForestLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
-//    {
-//        public ForestLens() : base(TileType<ForestLensTile>(), Item.sellPrice(0, 0, 10, 0)
-//            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeLens)
-//        { }
+namespace Coralite.Content.Items.Magike.BiomeLens
+{
+    public class ForestLens() : MagikeApparatusItem(TileType<ForestLensTile>(), Item.sellPrice(silver: 5)
+        , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
+    {
+        public override bool CanUseItem(Player player)
+        {
+            return player.ZoneForest;
+        }
 
-//        public override int MagikeMax => 20;
-//        public string SendDelay => "10";
-//        public int HowManyPerSend => 2;
-//        public int ConnectLengthMax => 5;
-//        public int HowManyToGenerate => 1;
-//        public string GenerateDelay => "12";
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<Basalt>(10)
+                .AddIngredient(ItemID.Wood, 10)
+                .AddIngredient(ItemID.GrassSeeds)
+                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
+    }
 
-//        public override void AddRecipes()
-//        {
-//            CreateRecipe()
-//                .AddIngredient<MagicCrystal>(2)
-//                .AddIngredient(ItemID.Wood, 5)
-//                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
-//                .AddTile(TileID.WorkBenches)
-//                .Register();
-//        }
+    public class ForestLensTile() : BaseLensTile
+        (2, 3, Color.Green, DustID.Grass, 8)
+    {
+        public override string Texture => AssetDirectory.MagikeLensTiles + Name;
+        public override int DropItemType => ItemType<ForestLens>();
 
-//        public override bool CanUseItem(Player player)
-//        {
-//            return !player.ZoneJungle
-//                && !player.ZoneDungeon
-//                && !player.ZoneCorrupt
-//                && !player.ZoneCrimson
-//                && !player.ZoneHallow
-//                && !player.ZoneSnow
-//                && !player.ZoneUndergroundDesert
-//                && !player.ZoneGlowshroom
-//                && !player.ZoneMeteor
-//                && !player.ZoneBeach
-//                && !player.ZoneDesert
-//                && player.ZoneOverworldHeight;
-//        }
-//    }
+        public override int[] GetAnchorValidTiles()
+        {
+            return
+            [
+                TileID.Grass, TileID.HallowedGrass, TileID.GolfGrass, TileID.GolfGrassHallowed
+            ];
+        }
 
-//    public class ForestLensTile : OldBaseLensTile
-//    {
-//        public override void SetStaticDefaults()
-//        {
-//            Main.tileShine[Type] = 400;
-//            Main.tileFrameImportant[Type] = true;
-//            Main.tileNoFail[Type] = true; //不会出现挖掘失败的情况
-//            TileID.Sets.IgnoredInHouseScore[Type] = true;
+        public override MagikeTileEntity GetEntityInstance() => GetInstance<ForestLensTileEntity>();
 
-//            TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
-//            TileObjectData.newTile.Height = 3;
-//            TileObjectData.newTile.CoordinateHeights = new int[3] {
-//                16,
-//                16,
-//                16
-//            };
-//            TileObjectData.newTile.DrawYOffset = 2;
-//            TileObjectData.newTile.LavaDeath = false;
-//            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<ForestLensEntity>().Hook_AfterPlacement, -1, 0, true);
+        public override MagikeApparatusLevel[] GetAllLevels()
+        {
+            return
+            [
+                MagikeApparatusLevel.None,
+                MagikeApparatusLevel.Glistent,
+                MagikeApparatusLevel.CrystallineMagike,
+                MagikeApparatusLevel.SplendorMagicore
+            ];
+        }
+    }
 
-//            TileObjectData.addTile(Type);
+    public class ForestLensTileEntity : BaseActiveProducerTileEntity<ForestLensTile>
+    {
+        public override MagikeContainer GetStartContainer()
+            => new ForestLensContainer();
 
-//            AddMapEntry(Color.Green);
-//            DustType = DustID.Grass;
-//        }
-//    }
+        public override MagikeLinerSender GetStartSender()
+            => new ForestLensSender();
 
-//    public class ForestLensEntity : MagikeGenerator_Normal
-//    {
-//        public const int sendDelay = 10 * 60;
-//        public int sendTimer;
-//        public ForestLensEntity() : base(20, 5 * 16, 12 * 60) { }
+        public override MagikeActiveProducer GetStartProducer()
+            => new ForestProducer();
+    }
 
-//        public override ushort TileType => (ushort)TileType<ForestLensTile>();
+    public class ForestLensContainer : UpgradeableContainer
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            MagikeMaxBase = incomeLevel switch
+            {
+                MagikeApparatusLevel.Glistent => 45,
+                MagikeApparatusLevel.CrystallineMagike => 250,
+                MagikeApparatusLevel.SplendorMagicore => 1125,
+                _ => 0,
+            };
+            LimitMagikeAmount();
 
-//        public override int HowManyPerSend => 2;
-//        public override int HowManyToGenerate => 1;
+            AntiMagikeMaxBase = MagikeMaxBase * 2;
+            LimitAntiMagikeAmount();
+        }
+    }
 
-//        public override bool CanSend()
-//        {
-//            sendTimer++;
-//            if (sendTimer > sendDelay)
-//            {
-//                sendTimer = 0;
-//                return true;
-//            }
+    public class ForestLensSender : UpgradeableLinerSender
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            MaxConnectBase = 1;
+            ConnectLengthBase = 4 * 16;
 
-//            return false;
-//        }
+            switch (incomeLevel)
+            {
+                default:
+                    MaxConnectBase = 0;
+                    UnitDeliveryBase = 0;
+                    SendDelayBase = 1_0000_0000 / 60;//随便填个大数
+                    ConnectLengthBase = 0;
+                    break;
+                case MagikeApparatusLevel.Glistent:
+                    UnitDeliveryBase = 15;
+                    SendDelayBase = 10;
+                    break;
+                case MagikeApparatusLevel.CrystallineMagike:
+                    UnitDeliveryBase = 75;
+                    SendDelayBase = 9;
+                    break;
+                case MagikeApparatusLevel.SplendorMagicore:
+                    UnitDeliveryBase = 300;
+                    SendDelayBase = 8;
+                    break;
+            }
 
-//        public override void OnGenerate(int howMany)
-//        {
-//            GenerateAndChargeSelf(howMany);
-//        }
+            SendDelayBase *= 60;
+            RecheckConnect();
+        }
+    }
 
-//        public override bool CanGenerate() => true;
+    public class ForestProducer : UpgradeableBiomeProducer
+    {
+        public override MagikeSystem.UITextID ApparatusName()
+            => MagikeSystem.UITextID.ForestLensName;
 
-//        public override void SendVisualEffect(IMagikeContainer container)
-//        {
-//            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Color.Green);
-//        }
+        public override MagikeSystem.UITextID ProduceCondition()
+            => MagikeSystem.UITextID.ForestCondition;
 
-//        public override void OnReceiveVisualEffect()
-//        {
-//            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.Green, DustID.Grass);
-//        }
-//    }
-//}
+        public override bool CheckTile(Tile tile)
+            => TileID.Sets.Grass[tile.TileType];
+
+        public override bool CheckWall(Tile tile)
+            => tile.WallType is WallID.Grass or WallID.GrassUnsafe or WallID.Flower or WallID.FlowerUnsafe;
+
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            switch (incomeLevel)
+            {
+                default:
+                    ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
+                    ThroughputBase = 5;
+                    break;
+                case MagikeApparatusLevel.Glistent:
+                    ProductionDelayBase = 10;
+                    ThroughputBase = 5;
+                    break;
+                case MagikeApparatusLevel.CrystallineMagike:
+                    ProductionDelayBase = 9;
+                    ThroughputBase = 25;
+                    break;
+                case MagikeApparatusLevel.SplendorMagicore:
+                    ProductionDelayBase = 8;
+                    ThroughputBase = 100;
+                    break;
+            }
+
+            ProductionDelayBase *= 60;
+            Timer = ProductionDelayBase;
+        }
+    }
+}

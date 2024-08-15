@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Helpers;
+using System;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
@@ -19,10 +20,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 基础生产量 </summary>
         public int ThroughputBase { get; protected set; }
         /// <summary> 额外生产量 </summary>
-        public int ThroughputExtra { get; set; }
+        public float ThroughputBonus { get; set; } = 1f;
 
         /// <summary> 生产量 </summary>
-        public int Throughput { get => ThroughputBase + ThroughputExtra; }
+        public int Throughput { get => Math.Clamp((int)(ThroughputBase * ThroughputBonus), 1, int.MaxValue); }
 
         /// <summary>
         /// 是否能生产，同时对应物块悬浮状态
@@ -40,13 +41,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void SaveData(string preName, TagCompound tag)
         {
             tag.Add(preName + nameof(ThroughputBase), ThroughputBase);
-            tag.Add(preName + nameof(ThroughputExtra), ThroughputExtra);
+            tag.Add(preName + nameof(ThroughputBonus), ThroughputBonus);
         }
 
         public override void LoadData(string preName, TagCompound tag)
         {
             ThroughputBase = tag.GetInt(preName + nameof(ThroughputBase));
-            ThroughputExtra = tag.GetInt(preName + nameof(ThroughputExtra));
+            ThroughputBonus = tag.GetFloat(preName + nameof(ThroughputBonus));
         }
     }
 }

@@ -30,42 +30,42 @@ namespace Coralite.Content.UI.MagikeGuideBook.Chapter3
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Vector2 pos = PageTop + new Vector2(0, 60);
-            Utils.DrawBorderStringBig(spriteBatch, TitleName.Value, pos, Coralite.MagicCrystalPink
-                , 0.8f, 0.5f, 0.5f);
+            //Vector2 pos = PageTop + new Vector2(0, 60);
+            //Utils.DrawBorderStringBig(spriteBatch, TitleName.Value, pos, Coralite.MagicCrystalPink
+            //    , 0.8f, 0.5f, 0.5f);
 
-            pos += new Vector2(0, 60);
+            //pos += new Vector2(0, 60);
 
-            //文字段1
-            Helpers.Helper.DrawText(spriteBatch, BiomeLens1.Value, PageWidth, new Vector2(Position.X, pos.Y), Vector2.Zero, Vector2.One
-                , new Color(40, 40, 40), Color.White, out Vector2 textSize);
+            ////文字段1
+            //Helpers.Helper.DrawText(spriteBatch, BiomeLens1.Value, PageWidth, new Vector2(Position.X, pos.Y), Vector2.Zero, Vector2.One
+            //    , new Color(40, 40, 40), Color.White, out Vector2 textSize);
 
-            pos += new Vector2(0, textSize.Y + 20);
+            //pos += new Vector2(0, textSize.Y + 20);
 
-            //森林透镜
-            Helpers.Helper.DrawText(spriteBatch, ForestLens.Value, PageWidth - 100, new Vector2(Position.X + 100, pos.Y), Vector2.Zero, Vector2.One
-                , new Color(40, 40, 40), Color.White, out textSize);
+            ////森林透镜
+            //Helpers.Helper.DrawText(spriteBatch, ForestLens.Value, PageWidth - 100, new Vector2(Position.X + 100, pos.Y), Vector2.Zero, Vector2.One
+            //    , new Color(40, 40, 40), Color.White, out textSize);
 
-            Texture2D mainTex = TextureAssets.Item[ModContent.ItemType<ForestLens>()].Value;
-            spriteBatch.Draw(mainTex, new Vector2(Position.X + 50, pos.Y + textSize.Y / 2), null, Color.White, 0, mainTex.Size() / 2, 1, 0, 0);
+            //Texture2D mainTex = TextureAssets.Item[ModContent.ItemType<ForestLens>()].Value;
+            //spriteBatch.Draw(mainTex, new Vector2(Position.X + 50, pos.Y + textSize.Y / 2), null, Color.White, 0, mainTex.Size() / 2, 1, 0, 0);
 
-            pos += new Vector2(0, textSize.Y + 30);
+            //pos += new Vector2(0, textSize.Y + 30);
 
-            //大理石透镜
-            Helpers.Helper.DrawText(spriteBatch, MarbleLens.Value, PageWidth - 100, new Vector2(Position.X + 100, pos.Y), Vector2.Zero, Vector2.One
-                , new Color(40, 40, 40), Color.White, out textSize);
+            ////大理石透镜
+            //Helpers.Helper.DrawText(spriteBatch, MarbleLens.Value, PageWidth - 100, new Vector2(Position.X + 100, pos.Y), Vector2.Zero, Vector2.One
+            //    , new Color(40, 40, 40), Color.White, out textSize);
 
-            mainTex = TextureAssets.Item[ModContent.ItemType<MarbleLens>()].Value;
-            spriteBatch.Draw(mainTex, new Vector2(Position.X + 50, pos.Y + textSize.Y / 2), null, Color.White, 0, mainTex.Size() / 2, 1, 0, 0);
+            //mainTex = TextureAssets.Item[ModContent.ItemType<MarbleLens>()].Value;
+            //spriteBatch.Draw(mainTex, new Vector2(Position.X + 50, pos.Y + textSize.Y / 2), null, Color.White, 0, mainTex.Size() / 2, 1, 0, 0);
 
-            pos += new Vector2(0, textSize.Y + 30);
+            //pos += new Vector2(0, textSize.Y + 30);
 
-            //花岗岩透镜
-            Helpers.Helper.DrawText(spriteBatch, GraniteLens.Value, PageWidth - 100, new Vector2(Position.X + 100, pos.Y), Vector2.Zero, Vector2.One
-                , new Color(40, 40, 40), Color.White, out textSize);
+            ////花岗岩透镜
+            //Helpers.Helper.DrawText(spriteBatch, GraniteLens.Value, PageWidth - 100, new Vector2(Position.X + 100, pos.Y), Vector2.Zero, Vector2.One
+            //    , new Color(40, 40, 40), Color.White, out textSize);
 
-            mainTex = TextureAssets.Item[ModContent.ItemType<GraniteLens>()].Value;
-            spriteBatch.Draw(mainTex, new Vector2(Position.X + 50, pos.Y + textSize.Y / 2), null, Color.White, 0, mainTex.Size() / 2, 1, 0, 0);
+            //mainTex = TextureAssets.Item[ModContent.ItemType<GraniteLens>()].Value;
+            //spriteBatch.Draw(mainTex, new Vector2(Position.X + 50, pos.Y + textSize.Y / 2), null, Color.White, 0, mainTex.Size() / 2, 1, 0, 0);
         }
     }
 }

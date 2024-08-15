@@ -16,7 +16,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             Asset<Texture2D> buttonTex = MagikeSystem.GetUIShowTypeButton();
             Vector2 size = buttonTex.Frame(2, 1, 0, 0).Size();
-            Width.Set(size.X, 0);
+            Width.Set(size.X+10, 0);
             Height.Set(size.Y, 0);
 
             PaddingLeft = 2;
@@ -34,10 +34,10 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             base.LeftClick(evt);
 
             //切换显示方式
-            if (MagikeApparatusPanel.ComponentButtonsvisible)
-                MagikeApparatusPanel.ComponentButtonsvisible = false;
+            if (MagikeApparatusPanel.ComponentButtonsVisible)
+                MagikeApparatusPanel.ComponentButtonsVisible = false;
             else
-                MagikeApparatusPanel.ComponentButtonsvisible = true;
+                MagikeApparatusPanel.ComponentButtonsVisible = true;
 
             UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
         }
@@ -46,7 +46,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             Vector2 pos = GetInnerDimensions().Center();
 
-            int frameX = MagikeApparatusPanel.ComponentButtonsvisible ? 0 : 1;
+            int frameX = MagikeApparatusPanel.ComponentButtonsVisible ? 0 : 1;
 
             if (IsMouseHovering)
             {

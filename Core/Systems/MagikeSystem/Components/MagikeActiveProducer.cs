@@ -55,7 +55,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void SaveData(string preName, TagCompound tag)
         {
-            //base.SaveData(preName, tag);//不需要存取基类里的生产量
+            base.SaveData(preName, tag);
 
             tag.Add(preName + nameof(Timer), Timer);
 
@@ -65,7 +65,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void LoadData(string preName, TagCompound tag)
         {
-            //base.LoadData(preName, tag);//不需要存取基类里的生产量
+            base.LoadData(preName, tag);
 
             Timer = tag.GetInt(preName + nameof(Timer));
 

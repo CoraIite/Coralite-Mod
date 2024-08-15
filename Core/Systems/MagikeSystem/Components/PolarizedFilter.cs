@@ -149,7 +149,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             [
                 //等级
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.PolarizedFilterLevel)
-                 + $"\n  - [i:{c.ItemType}]", parent),
+                 + $"\n  ▶ [i:{c.ItemType}]", parent),
                 //取出按钮
                 new FilterRemoveButton(Entity, this)
             ];

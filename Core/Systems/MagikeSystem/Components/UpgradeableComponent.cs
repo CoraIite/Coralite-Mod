@@ -1,4 +1,4 @@
-﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Helpers;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
@@ -12,17 +12,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
 
         public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
-        {
-            int tileType = (Entity as MagikeTileEntity).TileType;
-
-            if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var keyValuePairs))
-                return false;
-
-            if (!keyValuePairs.ContainsKey(incomeLevel))
-                return false;
-
-            return true;
-        }
+            => Entity.CheckUpgrageable(incomeLevel);
     }
 
     public class UpgradeableContainer : MagikeContainer, IUpgradeable
@@ -35,17 +25,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
 
         public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
-        {
-            int tileType = (Entity as MagikeTileEntity).TileType;
-
-            if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var keyValuePairs))
-                return false;
-
-            if (!keyValuePairs.ContainsKey(incomeLevel))
-                return false;
-
-            return true;
-        }
+            => Entity.CheckUpgrageable(incomeLevel);
     }
 
     public class UpgradeableActiveProducer : MagikeActiveProducer, IUpgradeable
@@ -58,17 +38,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
 
         public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
-        {
-            int tileType = (Entity as MagikeTileEntity).TileType;
-
-            if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var keyValuePairs))
-                return false;
-
-            if (!keyValuePairs.ContainsKey(incomeLevel))
-                return false;
-
-            return true;
-        }
+            => Entity.CheckUpgrageable(incomeLevel);
     }
 
     public class UpgradeableExtractProducer : MagikeExtractProducer, IUpgradeable
@@ -81,16 +51,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
 
         public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
+            => Entity.CheckUpgrageable(incomeLevel);
+    }
+
+    public abstract class UpgradeableBiomeProducer : BiomeProducer, IUpgradeable
+    {
+        public override void Initialize()
         {
-            int tileType = (Entity as MagikeTileEntity).TileType;
-
-            if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var keyValuePairs))
-                return false;
-
-            if (!keyValuePairs.ContainsKey(incomeLevel))
-                return false;
-
-            return true;
+            Upgrade(MagikeApparatusLevel.None);
         }
+
+        public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
+
+        public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
+            => Entity.CheckUpgrageable(incomeLevel);
     }
 }

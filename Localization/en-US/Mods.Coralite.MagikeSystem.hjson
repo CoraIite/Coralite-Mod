@@ -26,27 +26,33 @@ MagikeSystem: {
 	ItemDescriptionPolarizedFilter: Insertable Polarization Filter:
 	ApparatusDescriptionMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionMagikeAmount
 	ApparatusDescriptionConnectAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionConnectAmount
-	UITextContainerMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UITextContainerMagikeAmount
-	UITextContainerMagikeMax: Mods.Coralite.MagikeSystem.MagikeSystem.UITextContainerMagikeMax
-	UITextMagikeContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikeContainerName
-	UITextCurrentConnect: Mods.Coralite.MagikeSystem.MagikeSystem.UITextCurrentConnect
-	UITextMagikeLinerSenderName: Liner Magike Sender
-	UITextMagikeSendTime: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikeSendTime
-	UITextMagikeSendAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikeSendAmount
-	UITextMagikeConnectLength: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikeConnectLength
-	UITextPolarizedFilterLevel: Mods.Coralite.MagikeSystem.MagikeSystem.UITextPolarizedFilterLevel
-	UITextClickToRemove: Mods.Coralite.MagikeSystem.MagikeSystem.UITextClickToRemove
-	UITextMagikePolarizedFilterName: Mods.Coralite.MagikeSystem.MagikeSystem.UITextMagikePolarizedFilterName
-	UITextContainerAntiMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UITextContainerAntiMagikeAmount
-	UITextContainerAntiMagikeMax: Mods.Coralite.MagikeSystem.MagikeSystem.UITextContainerAntiMagikeMax
-	UITextCurrentItemAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UITextCurrentItemAmount
-	UITextOutPutAll: Mods.Coralite.MagikeSystem.MagikeSystem.UITextOutPutAll
-	UITextFastStack: Mods.Coralite.MagikeSystem.MagikeSystem.UITextFastStack
-	UITextItemContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UITextItemContainerName
-	UITextExtractProducerName: Mods.Coralite.MagikeSystem.MagikeSystem.UITextExtractProducerName
-	UITextExtractProducerCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UITextExtractProducerCondition
-	UITextItemWithMagike: Mods.Coralite.MagikeSystem.MagikeSystem.UITextItemWithMagike
-	UITextProduceTime: Mods.Coralite.MagikeSystem.MagikeSystem.UITextProduceTime
+
+	UIText: {
+		ContainerMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ContainerMagikeAmount
+		ContainerMagikeMax: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ContainerMagikeMax
+		ContainerAntiMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ContainerAntiMagikeAmount
+		ContainerAntiMagikeMax: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ContainerAntiMagikeMax
+		MagikeContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MagikeContainerName
+		CurrentConnect: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CurrentConnect
+		MagikeSendTime: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MagikeSendTime
+		MagikeSendAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MagikeSendAmount
+		MagikeConnectLength: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MagikeConnectLength
+		MagikeLinerSenderName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MagikeLinerSenderName
+		PolarizedFilterLevel: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PolarizedFilterLevel
+		ClickToRemove: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToRemove
+		MagikePolarizedFilterName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MagikePolarizedFilterName
+		ExtractProducerName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ExtractProducerName
+		ProduceTime: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ProduceTime
+		ProduceAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ProduceAmount
+		ProduceCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ProduceCondition
+		ItemWithMagike: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ItemWithMagike
+		ForestLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ForestLensName
+		ForestCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ForestCondition
+		ItemMax: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ItemMax
+		OutPutAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.OutPutAll
+		FastStack: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.FastStack
+		ItemContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ItemContainerName
+	}
 }
 
 C0_P1_BookName: {

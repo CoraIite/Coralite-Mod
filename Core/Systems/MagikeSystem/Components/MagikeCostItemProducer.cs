@@ -66,7 +66,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <returns></returns>
         public UIGrid ItemSlotGrid()
         {
-            ItemContainer container=Entity.GetSingleComponent<ItemContainer>(MagikeComponentID.ItemContainer);
+            ItemContainer container = Entity.GetSingleComponent<ItemContainer>(MagikeComponentID.ItemContainer);
             Item[] items = container.Items;
 
             UIGrid grid = new()

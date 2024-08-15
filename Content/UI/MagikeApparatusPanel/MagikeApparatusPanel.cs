@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameInput;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.ObjectData;
 using Terraria.UI;
@@ -22,7 +23,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         public bool visible;
         public override bool Visible => visible;
 
-        public static bool ComponentButtonsvisible = true;
+        public static bool ComponentButtonsVisible = true;
 
         #region 各类记录用字段
 
@@ -70,6 +71,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
          */
         /// <summary> 组件方格，显示在最左边 </summary>
         public UIGrid ComponentGrid;
+        public UIList ComponentList;
 
         /*
          *  | ■                |
@@ -169,7 +171,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             ShowComponentButtons ??= new UIGrid();
 
-            if (ComponentButtonsvisible)
+            if (ComponentButtonsVisible)
             {
                 ShowComponentButtons.Clear();
 
@@ -219,19 +221,28 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         public void InitComponentGird()
         {
             ComponentGrid ??= new UIGrid();
-            ComponentGrid.Top.Set(ComponentControllerPanel.Height.Pixels + ComponentControllerPanel.Top.Pixels + 12, 0);
+            if (ComponentList==null)
+            {
+                ComponentList = new ();
+                ComponentList.QuickInvisibleScrollbar();
+            }  
 
-            UIScrollbar scb = new();
-            scb.Left.Set(4000, 0);
-            scb.Top.Set(4000, 0);
-            ComponentGrid.SetScrollbar(scb);
+            ComponentGrid.Top.Set(ComponentControllerPanel.Height.Pixels + ComponentControllerPanel.Top.Pixels + 12, 0);
+            ComponentList.Top.Set(ComponentControllerPanel.Height.Pixels + ComponentControllerPanel.Top.Pixels + 12, 0);
 
             //宽度和物品按钮相同，高度填满剩余的
             ComponentGrid.Width.Set(ComponentControllerPanel.Width.Pixels, 0);
-            ComponentGrid.Height.Set(-ComponentControllerPanel.Height.Pixels - ComponentControllerPanel.Top.Pixels, 1);
-            ComponentGrid.OverflowHidden = false;
+            ComponentGrid.Height.Set(-ComponentControllerPanel.Height.Pixels - ComponentControllerPanel.Top.Pixels-12, 1);
+            ComponentGrid.OverflowHidden = true;
 
-            BasePanel.Append(ComponentGrid);
+            ComponentList.Width.Set(ComponentControllerPanel.Width.Pixels, 0);
+            ComponentList.Height.Set(-ComponentControllerPanel.Height.Pixels - ComponentControllerPanel.Top.Pixels-12, 1);
+            ComponentList.OverflowHidden = true;
+
+            if (ComponentButtonsVisible)
+                BasePanel.Append(ComponentGrid);
+            else
+                BasePanel.Append(ComponentList);
         }
 
         public void InitComponentPanel()
@@ -292,15 +303,32 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         public void ResetComponentGrid()
         {
-            ComponentGrid.Clear();
-            for (int i = 0; i < CurrentEntity.ComponentsCache.Count; i++)
+            if (ComponentButtonsVisible)
             {
-                int id = CurrentEntity.ComponentsCache[i].ID;
-                if (!ShowComponents[id + 1])
-                    continue;
+                ComponentGrid.Clear();
+                for (int i = 0; i < CurrentEntity.ComponentsCache.Count; i++)
+                {
+                    int id = CurrentEntity.ComponentsCache[i].ID;
+                    if (!ShowComponents[id + 1])
+                        continue;
 
-                var button = new ComponentButton(i);
-                ComponentGrid.Add(button);
+                    var button = new ComponentButton(i);
+                    ComponentGrid.Add(button);
+                }
+            }
+            else
+            {
+                ComponentList.Clear();
+                for (int i = 0; i < CurrentEntity.ComponentsCache.Count; i++)
+                {
+                    int id = CurrentEntity.ComponentsCache[i].ID;
+                    if (!ShowComponents[id + 1])
+                        continue;
+
+                    var button = new ComponentButton(i);
+                    button.HAlign = 0.3f;
+                    ComponentList.Add(button);
+                }
             }
         }
 
@@ -370,6 +398,9 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+
+            if (BasePanel.IsMouseHovering)
+                PlayerInput.LockVanillaMouseScroll("Coralite/MagikePanel");
 
             base.Draw(spriteBatch);
         }
