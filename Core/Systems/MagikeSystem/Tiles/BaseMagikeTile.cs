@@ -214,16 +214,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public override bool RightClick(int i, int j)
         {
-
             if (Main.LocalPlayer.HeldItem.ModItem != null &&
                 Main.LocalPlayer.HeldItem.ModItem.AltFunctionUse(Main.LocalPlayer))
                 return false;
 
-            if (!MagikeHelper.TryGetEntity(i, j, out MagikeTileEntity entity))
+            if (!TryGetEntity(i, j, out MagikeTileEntity entity))
                 return false;
 
             Main.playerInventory = true;
-
+            Helper.PlayPitched("Fairy/CursorExpand", 0.5f, 0);
             UILoader.GetUIState<MagikeApparatusPanel>().visible = true;
             MagikeApparatusPanel.CurrentEntity = entity;
             UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();

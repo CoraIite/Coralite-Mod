@@ -12,7 +12,6 @@ namespace Coralite.Core.Systems.MagikeSystem
         public LocalizedText LearnedMagikeBase { get; private set; }
         public LocalizedText LearnedMagikeAdvanced { get; private set; }
 
-
         public void LoadLocalization()
         {
             LearnedMagikeBase = this.GetLocalization("learnedMagikeBase");

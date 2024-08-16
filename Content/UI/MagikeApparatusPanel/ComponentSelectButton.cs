@@ -33,13 +33,13 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         public override void MouseOver(UIMouseEvent evt)
         {
             base.MouseOver(evt);
-
+            Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
         }
 
         public override void LeftClick(UIMouseEvent evt)
         {
             base.LeftClick(evt);
-
+            Helper.PlayPitched("UI/Tick", 0.4f, 0);
 
             if (slot == 0)//第零个为操控所有的
             {

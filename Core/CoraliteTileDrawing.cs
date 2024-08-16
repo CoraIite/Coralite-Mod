@@ -157,6 +157,5 @@ namespace Coralite.Core
             AnyDirectionalGrass,
             Count
         }
-
     }
 }

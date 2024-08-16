@@ -2,6 +2,7 @@
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
 using Terraria;
@@ -148,8 +149,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             UIList list = 
             [
                 //等级
-                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.PolarizedFilterLevel)
-                 + $"\n  ▶ [i:{c.ItemType}]", parent),
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.PolarizedFilterLevel), parent),
+                new PolarizedFilterText(c =>
+                    $"  ▶ [i:{c.ItemType}]",this,parent),
                 //取出按钮
                 new FilterRemoveButton(Entity, this)
             ];
@@ -162,11 +164,22 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             parent.Append(list);
         }
 
-        public void AddText(UIList list, Func<PolarizedFilter, string> textFunc, UIElement parent)
-        {
-            list.Add(new ComponentUIElementText<PolarizedFilter>(textFunc, this, parent));
-        }
-
         #endregion
     }
+
+    public class PolarizedFilterText(Func<PolarizedFilter, string> text, PolarizedFilter component, UIElement parent, Vector2? scale = null) : ComponentUIElementText<PolarizedFilter>(text, component, parent, scale)
+    {
+        private Item item = new (component.ItemType);
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            base.DrawSelf(spriteBatch);
+            if (IsMouseHovering)
+            {
+                Main.HoverItem = item.Clone();
+                Main.hoverItemName = "Coralite: PolarizedFilter";
+            }
+        }
+    }
 }
+    

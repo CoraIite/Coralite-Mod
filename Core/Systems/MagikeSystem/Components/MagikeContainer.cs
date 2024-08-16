@@ -172,33 +172,35 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             parent.Append(bar);
 
             AntiContainerBar bar2 = new(this);
-            bar2.Top.Set(bar.Top.Pixels + bar.Height.Pixels+24, 0);
+            bar2.Top.Set(bar.Top.Pixels + bar.Height.Pixels + 24, 0);
             parent.Append(bar2);
 
             //其他的文本信息在右侧
             UIList list =
             [
+                //魔能量
+                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeAmount), parent),
                 this.NewTextBar(c =>
                 {
                     string colorCode = c.GetMagikeContainerMaxColorCode();
-
-                    return string.Concat(MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeAmount)
-                        , $"\n  ▶ {c.Magike} / [c/{colorCode}:{c.MagikeMax}]");
+                    return  $"  ▶ {c.Magike} / [c/{colorCode}:{c.MagikeMax}]";
                 }, parent),
 
-                this.NewTextBar(c =>string.Concat(MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeMax)
-                , $"\n  ▶ {c.MagikeMax} ({c.MagikeMaxBase} {(c.MagikeMaxExtra >= 0 ? "+" : "-")} {Math.Abs(c.MagikeMaxExtra)})"), parent),
+                //魔能上限
+                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeMax), parent),
+                this.NewTextBar(c =>
+                    $"  ▶ {c.MagikeMax} ({c.MagikeMaxBase} {(c.MagikeMaxExtra >= 0 ? "+" : "-")} {Math.Abs(c.MagikeMaxExtra)})", parent),
 
+                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeAmount), parent),
                 this.NewTextBar(c =>
                 {
                     string colorCode = c.GetMagikeContainerMaxColorCode();
-
-                    return string.Concat(MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeAmount)
-                        , $"\n  ▶ {c.AntiMagike} / [c/{colorCode}:{c.AntiMagikeMax}]");
+                    return $"  ▶ {c.AntiMagike} / [c/{colorCode}:{c.AntiMagikeMax}]";
                 }, parent),
 
-                this.NewTextBar(c =>string.Concat(MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeMax)
-                , $"\n  ▶ {c.AntiMagikeMax} ({c.AntiMagikeMaxBase} {(c.AntiMagikeMaxExtra >= 0 ? "+" : "-")} {Math.Abs(c.AntiMagikeMaxExtra)})"), parent),
+                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeMax), parent),
+                this.NewTextBar(c =>
+                    $"  ▶ {c.AntiMagikeMax} ({c.AntiMagikeMaxBase} {(c.AntiMagikeMaxExtra >= 0 ? "+" : "-")} {Math.Abs(c.AntiMagikeMaxExtra)})", parent),
             ];
 
             list.SetSize(0, -title.Height.Pixels, 1, 1);

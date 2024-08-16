@@ -249,8 +249,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             ComponentPanel ??= new UIPanel();
 
-            ComponentPanel.Left.Set(ComponentControllerPanel.Width.Pixels + VerticalLine.Width.Pixels, 0);
-            ComponentPanel.Width.Set(-VerticalLine.Left.Pixels - VerticalLine.Width.Pixels, 1);
+            ComponentPanel.Left.Set(ComponentControllerPanel.Width.Pixels + VerticalLine.Width.Pixels-6, 0);
+            ComponentPanel.Width.Set(-VerticalLine.Left.Pixels - VerticalLine.Width.Pixels-6, 1);
             ComponentPanel.Top.Set(0, 0);
             ComponentPanel.Height.Set(0, 1f);
             ComponentPanel.BorderColor = new Color(255, 190, 236, 255);

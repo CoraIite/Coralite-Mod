@@ -144,7 +144,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
             {
                 default:
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
-                    ThroughputBase = 5;
+                    ThroughputBase = 1;
                     break;
                 case MagikeApparatusLevel.Glistent:
                     ProductionDelayBase = 10;

@@ -242,14 +242,30 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             UIList list =
             [
                 //发送时间
-                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendTime)
-                 + $"\n  ▶ {Math.Round(c.Timer/60f,1)} / {Math.Round(c.SendDelay/60f,1)} ({Math.Round(c.SendDelayBase/60f,1)} * {c.SendDelayBonus})", parent),
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendTime), parent),
+                this.NewTextBar(c => 
+                {
+                    float timer= MathF.Round(c.Timer/60f,1);
+                    float delay= MathF.Round(c.SendDelay/60f,1);
+                    float delayBase= MathF.Round(c.SendDelayBase/60f,1);
+                    float DelayBonus= c.SendDelayBonus;
+
+                    return $"  ▶ {timer} / {delay} ({delayBase} * {DelayBonus})";
+                }, parent),
                 //发送量
-                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendAmount)
-                 + $"\n  ▶ {c.UnitDelivery} ({c.UnitDeliveryBase} {(c.UnitDeliveryExtra >= 0 ? "+" : "-")} {Math.Abs(c.UnitDeliveryExtra)})", parent),
+                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendAmount), parent),
+                this.NewTextBar(c =>
+                    $"\n  ▶ {c.UnitDelivery} ({c.UnitDeliveryBase} {(c.UnitDeliveryExtra >= 0 ? "+" : "-")} {Math.Abs(c.UnitDeliveryExtra)})", parent),
                 //连接距离
-                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeConnectLength)
-                 + $"\n  ▶ {MathF.Round(c.ConnectLength / 16f, 1)} ({MathF.Round(c.ConnectLengthBase / 16f, 1)} {(c.ConnectLengthExtra >= 0 ? "+" : "- ")} {MathF.Round(Math.Abs(c.ConnectLengthExtra) / 16f, 1)})", parent),
+                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeConnectLength), parent),
+                this.NewTextBar(c =>{
+                    float length= MathF.Round(c.ConnectLength/16f,1);
+                    float lengthBase= MathF.Round(c.ConnectLengthBase/16f,1);
+                    string sign= (c.ConnectLengthExtra >= 0 ? "+" : "- ");
+                    float lengthExtra= MathF.Round(c.ConnectLengthExtra/16f,1);
+
+                    return $"  ▶ {length} ({lengthBase} {sign} {lengthExtra})";
+                }, parent),
 
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.CurrentConnect),parent)
             ];
