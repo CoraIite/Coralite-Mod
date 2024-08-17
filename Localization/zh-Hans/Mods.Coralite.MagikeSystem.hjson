@@ -63,6 +63,11 @@ MagikeSystem: {
 		OutPutAll: 强夺全部
 		FastStack: 快速堆叠
 		ItemContainerName: 物品容器
+		OceanLensName: 海洋透镜
+		OceanCondition: 
+		'''
+		  ▶ 需要将底座放置在沙块上
+		'''
 	}
 }
 

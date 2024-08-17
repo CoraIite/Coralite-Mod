@@ -4414,3 +4414,23 @@ BasicExtractLens: {
 	DisplayName: Basic Extract Lens
 	Tooltip: ""
 }
+
+EmperorGel: {
+	DisplayName: Emperor Gel
+	Tooltip: ""
+}
+
+EmperorFilter: {
+	DisplayName: Emperor Filter
+	Tooltip: ""
+}
+
+PelagicPolarizedFilter: {
+	DisplayName: Pelagic Polarized Filter
+	Tooltip: ""
+}
+
+SeashorePolarizedFilter: {
+	DisplayName: Seashore Polarized Filter
+	Tooltip: ""
+}

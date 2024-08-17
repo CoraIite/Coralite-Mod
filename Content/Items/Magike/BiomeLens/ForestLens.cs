@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries1;
+﻿using Coralite.Content.Items.Glistent;
+using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
@@ -24,7 +25,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
         {
             CreateRecipe()
                 .AddIngredient<Basalt>(10)
-                .AddIngredient(ItemID.Wood, 10)
+                .AddIngredient<GlistentBar>(3)
                 .AddIngredient(ItemID.GrassSeeds)
                 .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
@@ -78,14 +79,32 @@ namespace Coralite.Content.Items.Magike.BiomeLens
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MagikeApparatusLevel.Glistent => 45,
+                MagikeApparatusLevel.Glistent => 27,
                 MagikeApparatusLevel.CrystallineMagike => 250,
                 MagikeApparatusLevel.SplendorMagicore => 1125,
                 _ => 0,
             };
-            LimitMagikeAmount();
+            switch (incomeLevel)
+            {
+                default:
+                    MagikeMaxBase = 0;
+                    AntiMagikeMaxBase = 0;
+                    break;
+                case MagikeApparatusLevel.Glistent:
+                    MagikeMaxBase = 27;
+                    AntiMagikeMaxBase = MagikeMaxBase*3;
+                    break;
+                case MagikeApparatusLevel.CrystallineMagike:
+                    MagikeMaxBase = 483;
+                    AntiMagikeMaxBase = MagikeMaxBase * 2;
+                    break;
+                case MagikeApparatusLevel.SplendorMagicore:
+                    MagikeMaxBase = 5400;
+                    AntiMagikeMaxBase = MagikeMaxBase * 3;
+                    break;
+            }
 
-            AntiMagikeMaxBase = MagikeMaxBase * 2;
+            LimitMagikeAmount();
             LimitAntiMagikeAmount();
         }
     }
@@ -106,16 +125,16 @@ namespace Coralite.Content.Items.Magike.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.Glistent:
-                    UnitDeliveryBase = 15;
+                    UnitDeliveryBase = 9;
                     SendDelayBase = 10;
                     break;
                 case MagikeApparatusLevel.CrystallineMagike:
-                    UnitDeliveryBase = 75;
-                    SendDelayBase = 9;
+                    UnitDeliveryBase = 129;
+                    SendDelayBase = 8;
                     break;
                 case MagikeApparatusLevel.SplendorMagicore:
-                    UnitDeliveryBase = 300;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 1080;
+                    SendDelayBase = 6;
                     break;
             }
 
@@ -148,15 +167,15 @@ namespace Coralite.Content.Items.Magike.BiomeLens
                     break;
                 case MagikeApparatusLevel.Glistent:
                     ProductionDelayBase = 10;
-                    ThroughputBase = 5;
+                    ThroughputBase = 3;
                     break;
                 case MagikeApparatusLevel.CrystallineMagike:
-                    ProductionDelayBase = 9;
-                    ThroughputBase = 25;
+                    ProductionDelayBase = 8;
+                    ThroughputBase = 43;
                     break;
                 case MagikeApparatusLevel.SplendorMagicore:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 100;
+                    ProductionDelayBase = 6;
+                    ThroughputBase = 360;
                     break;
             }
 

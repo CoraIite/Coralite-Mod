@@ -1,116 +1,164 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
-using Coralite.Helpers;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.BiomeLens
 {
-    public class OceanLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
+    public class OceanLens() : MagikeApparatusItem(TileType<OceanLensTile>(), Item.sellPrice(silver: 5)
+        , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
     {
-        public OceanLens() : base(TileType<OceanLensTile>(), Item.sellPrice(0, 0, 10, 0)
-            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeLens)
-        { }
-
-        public override int MagikeMax => 350;
-        public string SendDelay => "10";
-        public int HowManyPerSend => 20;
-        public int ConnectLengthMax => 5;
-        public int HowManyToGenerate => 18;
-        public string GenerateDelay => "10";
-
-        public override void AddRecipes()
-        {
-            //TODO: 添加虹水母/巨蟹后修改合成表
-            CreateRecipe()
-                .AddIngredient<CrystallineMagike>(5)
-                .AddIngredient(ItemID.Coral, 10)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeAdvanced, () => MagikeSystem.learnedMagikeAdvanced)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
-        }
-
         public override bool CanUseItem(Player player)
         {
             return player.ZoneBeach;
         }
-    }
 
-    public class OceanLensTile : OldBaseLensTile
-    {
-        public override void SetStaticDefaults()
+        public override void AddRecipes()
         {
-            Main.tileShine[Type] = 400;
-            Main.tileFrameImportant[Type] = true;
-            Main.tileNoFail[Type] = true; //不会出现挖掘失败的情况
-            TileID.Sets.IgnoredInHouseScore[Type] = true;
-
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
-            TileObjectData.newTile.Height = 3;
-            TileObjectData.newTile.CoordinateHeights = new int[3] {
-                16,
-                16,
-                16
-            };
-            TileObjectData.newTile.DrawYOffset = 2;
-            TileObjectData.newTile.LavaDeath = true;
-            TileObjectData.newTile.WaterDeath = false;
-            TileObjectData.newTile.WaterPlacement = Terraria.Enums.LiquidPlacement.Allowed;
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<OceanLensEntity>().Hook_AfterPlacement, -1, 0, true);
-
-            TileObjectData.addTile(Type);
-
-            AddMapEntry(Color.Aqua);
-            DustType = DustID.BubbleBurst_Blue;
+            CreateRecipe()
+                .AddIngredient<Basalt>(10)
+                .AddIngredient(ItemID.SandBlock, 5)
+                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 
-    public class OceanLensEntity : MagikeGenerator_Normal
+    public class OceanLensTile() : BaseLensTile
+        (2, 3, Color.SandyBrown, DustID.Sand, 8)
     {
-        public const int sendDelay = 10 * 60;
-        public int sendTimer;
-        public OceanLensEntity() : base(350, 5 * 16, 10 * 60) { }
+        public override string Texture => AssetDirectory.MagikeLensTiles + Name;
+        public override int DropItemType => ItemType<OceanLens>();
 
-        public override ushort TileType => (ushort)TileType<OceanLensTile>();
-
-        public override int HowManyPerSend => 20;
-        public override int HowManyToGenerate => 18;
-
-        public override bool CanSend()
+        public override int[] GetAnchorValidTiles()
         {
-            sendTimer++;
-            if (sendTimer > sendDelay)
+            return
+            [
+                TileID.Sand
+            ];
+        }
+
+        public override MagikeTileEntity GetEntityInstance() => GetInstance<OceanLensTileEntity>();
+
+        public override MagikeApparatusLevel[] GetAllLevels()
+        {
+            return
+            [
+                MagikeApparatusLevel.None,
+                MagikeApparatusLevel.Seashore,
+                MagikeApparatusLevel.Pelagic,
+            ];
+        }
+    }
+
+    public class OceanLensTileEntity : BaseActiveProducerTileEntity<OceanLensTile>
+    {
+        public override MagikeContainer GetStartContainer()
+            => new OceanLensContainer();
+
+        public override MagikeLinerSender GetStartSender()
+            => new OceanLensSender();
+
+        public override MagikeActiveProducer GetStartProducer()
+            => new OceanProducer();
+    }
+
+    public class OceanLensContainer : UpgradeableContainer
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            switch (incomeLevel)
             {
-                sendTimer = 0;
-                return true;
+                default:
+                    MagikeMaxBase = 0;
+                    AntiMagikeMaxBase = 0;
+                    break;
+                case MagikeApparatusLevel.Seashore:
+                    MagikeMaxBase = 9;
+                    AntiMagikeMaxBase = MagikeMaxBase * 3;
+                    break;
+                case MagikeApparatusLevel.Pelagic:
+                    MagikeMaxBase = 562;
+                    AntiMagikeMaxBase = MagikeMaxBase * 2;
+                    break;
             }
 
-            return false;
+            LimitMagikeAmount();
+            LimitAntiMagikeAmount();
         }
+    }
 
-        public override void OnGenerate(int howMany)
+    public class OceanLensSender : UpgradeableLinerSender
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
-            GenerateAndChargeSelf(howMany);
+            MaxConnectBase = 1;
+            ConnectLengthBase = 4 * 16;
+
+            switch (incomeLevel)
+            {
+                default:
+                    MaxConnectBase = 0;
+                    UnitDeliveryBase = 0;
+                    SendDelayBase = 1_0000_0000 / 60;//随便填个大数
+                    ConnectLengthBase = 0;
+                    break;
+                case MagikeApparatusLevel.Seashore:
+                    UnitDeliveryBase = 3;
+                    SendDelayBase = 10;
+                    break;
+                case MagikeApparatusLevel.Pelagic:
+                    UnitDeliveryBase = 150;
+                    SendDelayBase = 8;
+                    break;
+            }
+
+            SendDelayBase *= 60;
+            RecheckConnect();
         }
+    }
 
-        public override bool CanGenerate() => true;
+    public class OceanProducer : UpgradeableBiomeProducer
+    {
+        public override MagikeSystem.UITextID ApparatusName()
+            => MagikeSystem.UITextID.OceanLensName;
 
-        public override void SendVisualEffect(IMagikeContainer container)
+        public override MagikeSystem.UITextID ProduceCondition()
+            => MagikeSystem.UITextID.OceanCondition;
+
+        public override bool CheckTile(Tile tile)
+            => tile.TileType == TileID.Sand;
+
+        public override bool CheckWall(Tile tile)
+            => true;
+
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
-            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Color.Aqua, DustID.BubbleBurst_Blue);
-        }
+            switch (incomeLevel)
+            {
+                default:
+                    ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
+                    ThroughputBase = 1;
+                    break;
+                case MagikeApparatusLevel.Seashore:
+                    ProductionDelayBase = 10;
+                    ThroughputBase = 1;
+                    break;
+                case MagikeApparatusLevel.Pelagic:
+                    ProductionDelayBase = 8;
+                    ThroughputBase = 50;
+                    break;
+            }
 
-        public override void OnReceiveVisualEffect()
-        {
-            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.Aqua, DustID.BubbleBurst_Blue);
+            ProductionDelayBase *= 60;
+            Timer = ProductionDelayBase;
         }
     }
 }

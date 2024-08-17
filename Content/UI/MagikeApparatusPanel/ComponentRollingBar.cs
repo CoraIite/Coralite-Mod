@@ -74,6 +74,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             MagikeApparatusPanel.CurrentShowComponentIndex = index;
 
+            Helper.PlayPitched("UI/Tick", 0.4f, 0);
             UILoader.GetUIState<MagikeApparatusPanel>().ResetComponentPanel();
 
             base.LeftClick(evt);

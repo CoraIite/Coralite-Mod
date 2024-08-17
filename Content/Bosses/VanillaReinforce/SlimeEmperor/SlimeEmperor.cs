@@ -18,23 +18,27 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
     /// <summary>
     /// 史莱姆皇帝，加强版史莱姆王
     /// 
-    /// “又是这个囊地过分的波斯”
+    /// “蚩尤说：又是这个囊地过分的波斯”
     /// “300颗够吗，应该够了吧”
+    /// “这个武器打这个BOSS，从来没试过哦”
+    /// “这个波斯对我来说超囊的”
     /// “来吧，试一下米妮”
     /// “诶呀，亡了亡了，我没有史莱姆ang啊”
     /// 
+    ///    591 60 15 3
+    /// 
     /// 粘滑生物真正的领袖，史莱姆王？不过是个小弟罢了
-    ///                                            /\
-    ///                                | \      /      \      /|
-    ///                                |    \/           \/    |
-    ///                                |            ◇           |
-    ///                          ——————————
-    ///                      /                                         \
-    ///                   /              □               □             \
-    ///                 /                                                   \
-    ///               |                                □                     |
-    ///                 \                                                  /
-    ///                     ————————————
+    ///                                     /\
+    ///                                |\  /  \  /|
+    ///                                | \/    \/ |
+    ///                                |    ◇     |
+    ///                                 ——————————
+    ///                             /                \
+    ///                           /      □       □     \
+    ///                         /                        \
+    ///                        |                □        |
+    ///                         \                       /
+    ///                            ---————————————----
     /// </summary>
     [AutoloadBossHead]
     public partial class SlimeEmperor : ModNPC
@@ -171,15 +175,16 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            IItemDropRule[] weaponTypes = new IItemDropRule[] {
+            IItemDropRule[] weaponTypes = [
                 ItemDropRule.Common(ItemType<SlimeEruption>(), 1, 1, 1),
                 ItemDropRule.Common(ItemType<GelWhip>(), 1, 1, 1),
                 ItemDropRule.Common(ItemType<RoyalClassics>(), 1, 1, 1),
                 ItemDropRule.Common(ItemType<SlimeSceptre>(), 1, 1, 1),
-            };
+            ];
 
             notExpertRule.OnSuccess(new OneFromRulesRule(1, weaponTypes));
             notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.Gel, 1, 30, 100));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<EmperorGel>(), 1, 15, 30));
 
             npcLoot.Add(notExpertRule);
         }

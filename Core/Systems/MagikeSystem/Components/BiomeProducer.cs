@@ -115,6 +115,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             list.SetTopLeft(title.Height.Pixels + 8, 0);
             list.SetSize(0, -list.Top.Pixels, 1, 1);
+            list.QuickInvisibleScrollbar();
 
             parent.Append(list);
         }

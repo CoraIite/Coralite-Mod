@@ -99,6 +99,9 @@ namespace Coralite.Core.Systems.MagikeSystem
                 MagikeApparatusLevel.Feather => ModContent.ItemType<FeatherPolarizedFilter>(),
                 MagikeApparatusLevel.HolyLight => ModContent.ItemType<HolyLightPolarizedFilter>(),
                 MagikeApparatusLevel.SplendorMagicore => ModContent.ItemType<SplendorMagicorePolarizedFilter>(),
+                MagikeApparatusLevel.Seashore => ModContent.ItemType<SeashorePolarizedFilter>(),
+                MagikeApparatusLevel.Emperor => ModContent.ItemType<EmperorFilter>(),
+                MagikeApparatusLevel.Pelagic => ModContent.ItemType<PelagicPolarizedFilter>(),
                 _ => 0,
             };
         }

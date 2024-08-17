@@ -29,5 +29,12 @@
         /// <summary> 辉界晶核 </summary>
         SplendorMagicore,
         //魔源晶簇
+
+        /// <summary> 海滨 </summary>
+        Seashore,
+        /// <summary> 帝凝胶 </summary>
+        Emperor,
+        /// <summary> 远洋 </summary>
+        Pelagic,
     }
 }

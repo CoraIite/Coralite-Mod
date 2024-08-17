@@ -42,16 +42,16 @@ namespace Coralite.Content.Items.Gels
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<EmperorSabre>()));
-            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<RedJade>(), 1, 26, 30));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<EmperorGel>(), 1, 20, 40));
             itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<SlimeEmperor>()));
             itemLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 45, 150));
 
-            IItemDropRule[] weaponTypes = new IItemDropRule[] {
+            IItemDropRule[] weaponTypes = [
                 ItemDropRule.Common(ModContent.ItemType<SlimeEruption>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<GelWhip>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<RoyalClassics>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<SlimeSceptre>(), 1, 1, 1),
-            };
+            ];
 
             itemLoot.Add(new OneFromRulesRule(1, weaponTypes));
         }

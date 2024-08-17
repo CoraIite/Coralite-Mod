@@ -4485,3 +4485,23 @@ BasicExtractLens: {
 	DisplayName: 基础提取透镜
 	Tooltip: ""
 }
+
+EmperorGel: {
+	DisplayName: 帝凝胶
+	Tooltip: "水润且尝起来甜甜的"
+}
+
+EmperorFilter: {
+	DisplayName: 偏振滤镜-帝凝胶
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+PelagicPolarizedFilter: {
+	DisplayName: 偏振滤镜-远洋
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+SeashorePolarizedFilter: {
+	DisplayName: 偏振滤镜-海滨
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}

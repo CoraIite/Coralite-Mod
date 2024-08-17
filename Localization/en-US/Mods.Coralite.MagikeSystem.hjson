@@ -52,6 +52,8 @@ MagikeSystem: {
 		OutPutAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.OutPutAll
 		FastStack: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.FastStack
 		ItemContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ItemContainerName
+		OceanLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.OceanLensName
+		OceanCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.OceanCondition
 	}
 }
 
