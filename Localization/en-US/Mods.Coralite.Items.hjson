@@ -726,11 +726,6 @@ IcicleCoccyx: {
 		'''
 }
 
-CrystalLens: {
-	DisplayName: Crystal Lens
-	Tooltip: Right-click to open the UI, put in the item containing magike, and convert the item into magike
-}
-
 MagConnectStaff: {
 	DisplayName: Mag Connect Staff
 	Tooltip:
@@ -744,21 +739,6 @@ MagicCrystal: {
 	DisplayName: Magic Crystal
 	Tooltip: The faint magike glowed pink
 	MoreDescription: “Go underground and look for crystal caves that contains the knowledge of magike”
-}
-
-CrimtaneLens: {
-	DisplayName: Crimtane Lens
-	Tooltip: Right-click to open the UI, put in the item containing magike, and convert the item into magike
-}
-
-DemoniteLens: {
-	DisplayName: Demonite Lens
-	Tooltip: Right-click to open the UI, put in the item containing magike, and convert the item into magike
-}
-
-BrilliantLens: {
-	DisplayName: Brilliant Lens
-	Tooltip: Right-click to open the UI, put in the item containing magike, and convert the item into magike
 }
 
 CrystallineMagike: {
@@ -799,11 +779,6 @@ EvilRemodelPool: {
 MoonlightLens: {
 	DisplayName: Moonlight Lens
 	Tooltip: Generates magike during the night
-}
-
-FeatheredLens: {
-	DisplayName: Feathered Lens
-	Tooltip: Right-click to open the UI, put in the item containing magike, and convert the item into magike
 }
 
 HolylightLens: {
@@ -1018,11 +993,6 @@ BloodyHook: {
 ChlorophyteLens: {
 	DisplayName: Chlorophyte Lens
 	Tooltip: Generates magike while in the jungle biome
-}
-
-ParadiseLens: {
-	DisplayName: Paradise Lens
-	Tooltip: Generates magike while in the space biome
 }
 
 DemoniteEnchantPool: {
@@ -1623,11 +1593,6 @@ Reel_MagikeAdvance: {
 PhantomMirror: {
 	DisplayName: Phantom Mirror
 	Tooltip: Shine a light on your phantoms and they will follow your trajectory
-}
-
-SplendorLens: {
-	DisplayName: Splendor Lens
-	Tooltip: Right click to open the UI, put in the item containing magike, and convert the item into magike
 }
 
 FlyingSnakeFeather: {
@@ -3772,15 +3737,6 @@ PrimaryRoughGemstone: {
 		'''
 }
 
-AmethystNeckLace: {
-	DisplayName: Amethyst Neck Lace
-	Tooltip:
-		'''
-		Generate a cycle of crystals and shoots a beam of light towards enemies.
-		              Right-click to turn off the sound effect of the beams.
-		'''
-}
-
 FriedShrimpWhip: {
 	DisplayName: Fried Shrimp Whip
 	Tooltip:
@@ -4420,11 +4376,6 @@ EmperorGel: {
 	Tooltip: ""
 }
 
-EmperorFilter: {
-	DisplayName: Emperor Filter
-	Tooltip: ""
-}
-
 PelagicPolarizedFilter: {
 	DisplayName: Pelagic Polarized Filter
 	Tooltip: ""
@@ -4432,5 +4383,25 @@ PelagicPolarizedFilter: {
 
 SeashorePolarizedFilter: {
 	DisplayName: Seashore Polarized Filter
+	Tooltip: ""
+}
+
+SkyLens: {
+	DisplayName: Sky Lens
+	Tooltip: ""
+}
+
+EiderdownPolarizedFilter: {
+	DisplayName: Eiderdown Polarized Filter
+	Tooltip: ""
+}
+
+EmperorPolarizedFilter: {
+	DisplayName: Emperor Polarized Filter
+	Tooltip: ""
+}
+
+FlightPolarizedFilter: {
+	DisplayName: Flight Polarized Filter
 	Tooltip: ""
 }

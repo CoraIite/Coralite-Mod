@@ -155,7 +155,7 @@ namespace Coralite.Content.Items.Magike.Tools
 
         public void AddMagikePolymerizeRecipe()
         {
-            PolymerizeRecipe.CreateRecipe<VoidStaff>(150)
+            MagikeCraftRecipe.CreateRecipe<VoidStaff>(150)
                  .SetMainItem(ItemID.Bone, 15)
                  .AddIngredient(ItemID.JungleSpores, 5)
                  .AddIngredient<MagicCrystal>(2)

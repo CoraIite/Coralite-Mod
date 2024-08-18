@@ -50,8 +50,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             remodelRecipes?.Clear();
             remodelRecipes = null;
 
-            polymerizeRecipes?.Clear();
-            polymerizeRecipes = null;
+            magikeCraftRecipes?.Clear();
+            magikeCraftRecipes = null;
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
@@ -100,8 +100,10 @@ namespace Coralite.Core.Systems.MagikeSystem
                 MagikeApparatusLevel.HolyLight => ModContent.ItemType<HolyLightPolarizedFilter>(),
                 MagikeApparatusLevel.SplendorMagicore => ModContent.ItemType<SplendorMagicorePolarizedFilter>(),
                 MagikeApparatusLevel.Seashore => ModContent.ItemType<SeashorePolarizedFilter>(),
-                MagikeApparatusLevel.Emperor => ModContent.ItemType<EmperorFilter>(),
+                MagikeApparatusLevel.Eiderdown => ModContent.ItemType<EiderdownPolarizedFilter>(),
+                MagikeApparatusLevel.Emperor => ModContent.ItemType<EmperorPolarizedFilter>(),
                 MagikeApparatusLevel.Pelagic => ModContent.ItemType<PelagicPolarizedFilter>(),
+                MagikeApparatusLevel.Flight => ModContent.ItemType<FlightPolarizedFilter>(),
                 _ => 0,
             };
         }

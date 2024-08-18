@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikePolymerizeRecipe()
         {
-            PolymerizeRecipe.CreateRecipe<IceyPowder>(15)
+            MagikeCraftRecipe.CreateRecipe<IceyPowder>(15)
                 .SetMainItem<MagicalPowder>()
                 .AddIngredient(ItemID.IceBlock, 6)
                 .Register();

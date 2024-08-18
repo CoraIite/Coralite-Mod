@@ -32,9 +32,13 @@
 
         /// <summary> 海滨 </summary>
         Seashore,
+        /// <summary> 羽毛 </summary>
+        Eiderdown,
         /// <summary> 帝凝胶 </summary>
         Emperor,
         /// <summary> 远洋 </summary>
         Pelagic,
+        /// <summary> 飞翔 </summary>
+        Flight,
     }
 }

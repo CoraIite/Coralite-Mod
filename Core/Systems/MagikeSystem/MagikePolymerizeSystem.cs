@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Raritys;
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -9,78 +10,48 @@ namespace Coralite.Core.Systems.MagikeSystem
 {
     public partial class MagikeSystem : ModSystem, ILocalizedModType
     {
-        internal static Dictionary<int, List<PolymerizeRecipe>> polymerizeRecipes = new();
+        internal Dictionary<int, List<MagikeCraftRecipe>> magikeCraftRecipes;
+        internal static FrozenDictionary<int, List<MagikeCraftRecipe>> MagikeCraftRecipes;
 
         private void RegisterPolymerize()
         {
             Mod Mod = Coralite.Instance;
 
-            polymerizeRecipes = new Dictionary<int, List<PolymerizeRecipe>>();
+            magikeCraftRecipes = [];
 
-            foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))  //添加魔能聚合合成表
+            foreach (var magPolymerize in from Type t in AssemblyManager.GetLoadableTypes(Mod.Code)//添加魔能聚合合成表
+                                          where !t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikePolymerizable))
+                                          let magPolymerize = Activator.CreateInstance(t) as IMagikePolymerizable
+                                          select magPolymerize)
             {
-                if (!t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikePolymerizable)))
-                {
-                    IMagikePolymerizable magPolymerize = Activator.CreateInstance(t) as IMagikePolymerizable;
-                    magPolymerize.AddMagikePolymerizeRecipe();
-                }
+                magPolymerize.AddMagikePolymerizeRecipe();
             }
 
-            foreach (var mod in ModLoader.Mods)
-                if (mod is ICoralite)
-                    foreach (Type t in AssemblyManager.GetLoadableTypes(mod.Code))  //添加魔能聚合合成表
-                    {
-                        if (!t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikePolymerizable)))
-                        {
-                            IMagikePolymerizable magPolymerize = Activator.CreateInstance(t) as IMagikePolymerizable;
-                            magPolymerize.AddMagikePolymerizeRecipe();
-                        }
-                    }
+            foreach (var magPolymerize in from mod in ModLoader.Mods
+                                          where mod is ICoralite
+                                          from Type t in AssemblyManager.GetLoadableTypes(mod.Code)//添加魔能聚合合成表
+                                          where !t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikePolymerizable))
+                                          let magPolymerize = Activator.CreateInstance(t) as IMagikePolymerizable
+                                          select magPolymerize)
+            {
+                magPolymerize.AddMagikePolymerizeRecipe();
+            }
 
-            foreach (var recipes in polymerizeRecipes)     //只是简单整理一下
+            foreach (var recipes in magikeCraftRecipes)     //只是简单整理一下
             {
                 recipes.Value.Sort((r1, r2) => r1.magikeCost.CompareTo(r2.magikeCost));
             }
 
-            foreach (var list in polymerizeRecipes)
-            {
-                foreach (var polymerize in list.Value)
-                {
-                    Recipe recipe = Recipe.Create(polymerize.ResultItem.type, polymerize.ResultItem.stack);
-                    recipe.AddIngredient<MagikePolySymbol>(polymerize.magikeCost);
-                    recipe.AddIngredient(polymerize.selfType, polymerize.selfRequiredNumber);
-                    foreach (var item in polymerize.RequiredItems)
-                        recipe.AddIngredient(item.type, item.stack);
-
-                    recipe.AddDecraftCondition(this.GetLocalization("DecraftCondition"), () => false);
-                    recipe.Register();
-                }
-            }
+            //使用性能更高的冻结字典
+            MagikeCraftRecipes = magikeCraftRecipes.ToFrozenDictionary();
+            magikeCraftRecipes = null;
         }
 
-        public static void AddPolymerizeRecipes(PolymerizeRecipe recipe)
+        public static bool TryGetMagikeCraftRecipes(int selfType, out List<MagikeCraftRecipe> recipes)
         {
-            if (recipe.ResultItem != null && recipe.ResultItem.TryGetGlobalItem(out MagikeItem magikeItem))
+            if (MagikeCraftRecipes != null && MagikeCraftRecipes.TryGetValue(selfType, out List<MagikeCraftRecipe> value))
             {
-                magikeItem.magike_CraftRequired = recipe.magikeCost;
-                magikeItem.stack_CraftRequired = recipe.selfRequiredNumber;
-                magikeItem.condition = recipe.condition;
-            }
-
-            if (polymerizeRecipes == null)
-                throw new Exception("合成表为null!");
-
-            if (polymerizeRecipes.ContainsKey(recipe.selfType))
-                polymerizeRecipes[recipe.selfType].Add(recipe);
-            else
-                polymerizeRecipes.Add(recipe.selfType, new List<PolymerizeRecipe> { recipe });
-        }
-
-        public static bool TryGetPolymerizeRecipes(int selfType, out List<PolymerizeRecipe> recipes)
-        {
-            if (polymerizeRecipes != null && polymerizeRecipes.ContainsKey(selfType))
-            {
-                recipes = polymerizeRecipes[selfType];
+                recipes = value;
                 return true;
             }
 
@@ -89,99 +60,151 @@ namespace Coralite.Core.Systems.MagikeSystem
         }
     }
 
-    public class PolymerizeRecipe
+    public class MagikeCraftRecipe
     {
-        public int selfType;
-        public int selfRequiredNumber;
+        /// <summary>
+        /// 主物品，以此物品为基础进行合成
+        /// </summary>
+        public required Item MainItem { get; set; }
+        /// <summary>
+        /// 结果物品，最后产出的物品
+        /// </summary>
+        public required Item ResultItem { get; set; }
+
         public int magikeCost;
-        public IMagikeCraftCondition condition;
+        public int antiMagikeCost;
 
-        public Item MainItem;
-        public Item ResultItem;
+        private List<Condition> _conditions;
+        public List<Condition> Conditions
+        {
+            get
+            {
+                _conditions ??= [];
+                return _conditions;
+            }
+        }
 
-        public List<Item> RequiredItems;
+        private List<Item> _items;
+        public List<Item> RequiredItems
+        {
+            get
+            {
+                _items ??= [];
+                return _items;
+            }
+        }
 
         public Action<Item, Item> onPolymerize;
 
-        public bool CanPolymerize(Item item)
+        /// <summary>
+        /// 检测是否能合成
+        /// </summary>
+        /// <returns></returns>
+        public bool CanCraft()
         {
-            if (condition == null)
+            if (_conditions == null)
                 return true;
 
-            return condition.CanCraft(item);
+            foreach (var condition in Conditions)
+                if (!condition.Predicate())
+                    return false;
+
+            return true;
         }
 
         /// <summary>
-        /// 在之后请一定要调用<see cref="SetMainItem"/>
         /// </summary>
-        /// <param name="resultItemType"></param>
         /// <param name="magikeCost"></param>
         /// <param name="resultItemStack"></param>
         /// <returns></returns>
-        public static PolymerizeRecipe CreateRecipe(int resultItemType, int magikeCost, int resultItemStack = 1)
+        public static MagikeCraftRecipe CreateRecipe<TMainItem, TResultItem>(int magikeCost, int MainItenStack = 1, int resultItemStack = 1)
+            where TMainItem : ModItem where TResultItem : ModItem
         {
-            return new PolymerizeRecipe()
+            return new MagikeCraftRecipe()
             {
-                RequiredItems = new List<Item>(),
-                ResultItem = new Item(resultItemType, resultItemStack),
+                MainItem = new(ModContent.ItemType<TMainItem>(), MainItenStack),
+                ResultItem = new(ModContent.ItemType<TResultItem>(), resultItemStack),
                 magikeCost = magikeCost
             };
         }
 
         /// <summary>
-        /// 在之后请一定要调用<see cref="SetMainItem"/>
         /// </summary>
         /// <param name="magikeCost"></param>
         /// <param name="resultItemStack"></param>
         /// <returns></returns>
-        public static PolymerizeRecipe CreateRecipe<T>(int magikeCost, int resultItemStack = 1) where T : ModItem
+        public static MagikeCraftRecipe CreateRecipe(int mainItemType, int resultItemType, int magikeCost, int MainItenStack = 1, int resultItemStack = 1)
         {
-            return new PolymerizeRecipe()
+            return new MagikeCraftRecipe()
             {
-                RequiredItems = new List<Item>(),
-                ResultItem = new Item(ModContent.ItemType<T>(), resultItemStack),
+                MainItem = new(mainItemType, MainItenStack),
+                ResultItem = new(resultItemType, resultItemStack),
                 magikeCost = magikeCost
             };
         }
 
-        public PolymerizeRecipe SetMainItem(int itemID, int stack = 1)
+        public MagikeCraftRecipe SetAntiMagikeCost(int antiMagikeCost)
         {
-            MainItem = new Item(itemID, stack);
-            selfType = itemID;
-            selfRequiredNumber = stack;
+            magikeCost = 0;
+            this.antiMagikeCost = antiMagikeCost;
             return this;
         }
 
-        public PolymerizeRecipe SetMainItem<T>(int stack = 1) where T : ModItem
+        public MagikeCraftRecipe SetMagikeCost(int MagikeCost)
         {
-            MainItem = new Item(ModContent.ItemType<T>(), stack);
-            selfType = ModContent.ItemType<T>();
-            selfRequiredNumber = stack;
+            antiMagikeCost = 0;
+            this.magikeCost = MagikeCost;
             return this;
         }
 
-        public PolymerizeRecipe AddIngredient(int itemID, int stack = 1)
+        public MagikeCraftRecipe AddIngredient(int itemID, int stack = 1)
         {
-            RequiredItems ??= new List<Item>();
             RequiredItems.Add(new Item(itemID, stack));
             return this;
         }
 
-        public PolymerizeRecipe AddIngredient<T>(int stack = 1) where T : ModItem
+        public MagikeCraftRecipe AddIngredient<T>(int stack = 1) where T : ModItem
         {
-            RequiredItems ??= new List<Item>();
             RequiredItems.Add(new Item(ModContent.ItemType<T>(), stack));
             return this;
         }
-        public PolymerizeRecipe AddCondition(IMagikeCraftCondition condition)
+
+        public MagikeCraftRecipe AddCondition(Condition condition)
         {
-            this.condition = condition;
+            Conditions.Add(condition);
             return this;
         }
 
         public void Register()
         {
-            MagikeSystem.AddPolymerizeRecipes(this);
+            Dictionary<int, List<MagikeCraftRecipe>> MagikeCraftRecipes = ModContent.GetInstance<MagikeSystem>().magikeCraftRecipes;
+            if (MagikeCraftRecipes == null)
+                return;
+
+            if (MagikeCraftRecipes.TryGetValue(MainItem.type, out List<MagikeCraftRecipe> value))
+                value.Add(this);
+            else
+                MagikeCraftRecipes.Add(MainItem.type, [this]);
+
+            AddVanillaRecipe();
+        }
+
+        private void AddVanillaRecipe()
+        {
+            Recipe recipe = Recipe.Create(ResultItem.type, ResultItem.stack);
+            if (magikeCost > 0)
+                recipe.AddIngredient<MagikePolySymbol>(magikeCost);
+
+            recipe.AddIngredient(MainItem.type, MainItem.stack);
+
+            if (_items != null)
+                foreach (var item in RequiredItems)
+                    recipe.AddIngredient(item.type, item.stack);
+            if (_conditions != null)
+                recipe.AddCondition(Conditions);
+
+            recipe.DisableDecraft();
+            recipe.Register();
         }
     }
 
@@ -191,7 +214,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public override void SetDefaults()
         {
-            Item.maxStack = 999999;
+            Item.maxStack = int.MaxValue;
             Item.rare = ModContent.RarityType<MagicCrystalRarity>();
         }
 
@@ -199,19 +222,12 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            TooltipLine line = new(Mod, "Coralite: MagikeNeed", "魔能需求量：" + Item.stack);
-
-            if (Item.stack < 300)
-                line.OverrideColor = Coralite.MagicCrystalPink;
-            else if (Item.stack < 1000)
-                line.OverrideColor = Coralite.CrystallineMagikePurple;
-            else if (Item.stack < 2_0000)
-                line.OverrideColor = Coralite.SplendorMagicoreLightBlue;
-            else
-                line.OverrideColor = Color.Orange;
+            TooltipLine line = new(Mod, "Coralite: MagikeNeed", "魔能需求量：" + Item.stack)
+            {
+                OverrideColor = Coralite.MagicCrystalPink
+            };
 
             tooltips.Add(line);
         }
     }
-
 }

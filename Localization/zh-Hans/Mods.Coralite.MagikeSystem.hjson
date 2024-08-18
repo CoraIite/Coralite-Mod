@@ -25,6 +25,7 @@ MagikeSystem: {
 	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
 	ApparatusDescriptionMagikeAmount: "魔能容量 "
 	ApparatusDescriptionConnectAmount: "连接情况 "
+	NeedPolarizedFilter: 插入偏振滤镜后才能正常工作
 
 	UIText: {
 		ContainerMagikeAmount: ◇ 魔能量
@@ -64,10 +65,9 @@ MagikeSystem: {
 		FastStack: 快速堆叠
 		ItemContainerName: 物品容器
 		OceanLensName: 海洋透镜
-		OceanCondition: 
-		'''
-		  ▶ 需要将底座放置在沙块上
-		'''
+		OceanCondition: "  ▶ 需要将底座放置在沙块上"
+		SkyLensName: 天空透镜
+		SkyCondition: "  ▶ 需要将底座放置在任意云块上"
 	}
 }
 

@@ -10,13 +10,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Terraria.Localization;
 
 namespace Coralite
 {
     public class Coralite : Mod
     {
         public const int YujianHuluContainsMax = 3;
-        public const int MaxParticleCount = 1201;
 
         private List<IOrderedLoadable> loadCache;
 
@@ -74,7 +74,7 @@ namespace Coralite
             BezierEaseSmoother = new BezierEaseSmoother();
             ReverseX2Smoother = new ReverseX2Smoother();
 
-            loadCache = new List<IOrderedLoadable>();
+            loadCache = [];
 
             foreach (Type type in Code.GetTypes())
             {
@@ -167,17 +167,20 @@ namespace Coralite
                 "Rediancie"
                     => DownedBossSystem.downedRediancie,
                 "冰龙宝宝" or
-                "BabyIceDragon"
+                "BabyIceDragon" or
+                "Baby Ice Dragon"
                     => DownedBossSystem.downedBabyIceDragon,
                 // "影子球" or "ShadowBalls" => DownedBossSystem.xxxx,
                 "荒雷龙" or
-                "ThunderveinDragon"
+                "ThunderveinDragon" or
+                "Thundervein Dragon"
                     => DownedBossSystem.downedThunderveinDragon,
                 "史莱姆皇帝" or
                 "至高帝史莱姆王" or
                 "至高帝·史莱姆王" or
                 "至高帝" or
-                "SlimeEmperor"
+                "SlimeEmperor" or
+                "Slime Emperor"
                     => DownedBossSystem.downedSlimeEmperor,
                 "赤血玉灵" or
                 "血咒精赤玉灵" or

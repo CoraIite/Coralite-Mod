@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikePolymerizeRecipe()
         {
-            PolymerizeRecipe.CreateRecipe<HeatanInABottle>(60)
+            MagikeCraftRecipe.CreateRecipe<HeatanInABottle>(60)
                 .SetMainItem(ItemID.Bottle)
                 .AddIngredient(ItemID.LivingFireBlock, 20)
                 .AddIngredient<EmpyrosPowder>(7)

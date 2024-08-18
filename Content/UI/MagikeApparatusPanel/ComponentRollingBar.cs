@@ -54,7 +54,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
     public class ComponentButton : UIElement
     {
-        private int index;
+        private readonly int _index;
         private float _scale;
 
         public ComponentButton(int index)
@@ -65,14 +65,18 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             Width.Set(size.X, 0);
             Height.Set(size.Y, 0);
 
-            //PaddingLeft = 4;
-            //PaddingRight = 4;
-            this.index = index;
+            this._index = index;
+        }
+
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            base.MouseOver(evt);
+            Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
         }
 
         public override void LeftClick(UIMouseEvent evt)
         {
-            MagikeApparatusPanel.CurrentShowComponentIndex = index;
+            MagikeApparatusPanel.CurrentShowComponentIndex = _index;
 
             Helper.PlayPitched("UI/Tick", 0.4f, 0);
             UILoader.GetUIState<MagikeApparatusPanel>().ResetComponentPanel();
@@ -87,8 +91,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             Vector2 pos = GetInnerDimensions().Center();
 
-            int id = MagikeApparatusPanel.CurrentEntity.ComponentsCache[index].ID;
-            int frameY = MagikeApparatusPanel.CurrentShowComponentIndex == index ? 1 : 0;
+            int id = MagikeApparatusPanel.CurrentEntity.ComponentsCache[_index].ID;
+            int frameY = MagikeApparatusPanel.CurrentShowComponentIndex == _index ? 1 : 0;
 
             Texture2D tex = MagikeSystem.GetComponentButton().Value;
             var frameBox = tex.Frame(MagikeComponentID.Count, 2, id, frameY);

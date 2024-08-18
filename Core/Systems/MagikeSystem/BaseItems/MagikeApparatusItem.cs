@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 {
@@ -29,6 +30,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
             string text = MagikeSystem.GetItemDescriptionText(MagikeSystem.ItemDescriptionID.PolarizedFilter);
 
+            int lineCountMax = 0;
             foreach (var i in keyValuePairs)
             {
                 if (i.Value == MagikeApparatusLevel.None)
@@ -36,6 +38,12 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
                 int itemType = MagikeSystem.GetPolarizedFilterItemType(i.Value);
                 text = string.Concat(text, "[i:", itemType.ToString(), "]");
+                lineCountMax++;
+                if (lineCountMax > 8)
+                {
+                    lineCountMax = 0;
+                    text += Environment.NewLine + "    ";
+                }
             }
 
             tooltipLine = new TooltipLine(Mod, "MagikeApparatusLevelItems", text);

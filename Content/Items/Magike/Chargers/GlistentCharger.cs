@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Magike.Chargers
 
         public void AddMagikePolymerizeRecipe()
         {
-            PolymerizeRecipe.CreateRecipe<GlistentCharger>(75)
+            MagikeCraftRecipe.CreateRecipe<GlistentCharger>(75)
                 .SetMainItem<CrystalCharger>()
                 .AddIngredient<GlistentBar>(2)
                 .Register();

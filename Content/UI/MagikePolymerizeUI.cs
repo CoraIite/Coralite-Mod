@@ -92,7 +92,7 @@ namespace Coralite.Content.UI
                 if (item is not null && !item.IsAir)
                 {
                     int type = item.type;
-                    if (MagikeSystem.TryGetPolymerizeRecipes(type, out List<PolymerizeRecipe> recipeList))
+                    if (MagikeSystem.TryGetMagikeCraftRecipes(type, out List<MagikeCraftRecipe> recipeList))
                     {
                         foreach (var recipe in recipeList)
                         {
@@ -142,9 +142,9 @@ namespace Coralite.Content.UI
     public class PolymerizeItemButton : UIElement
     {
         public bool canRemodel;
-        public PolymerizeRecipe recipe;
+        public MagikeCraftRecipe recipe;
 
-        public PolymerizeItemButton(PolymerizeRecipe recipe)
+        public PolymerizeItemButton(MagikeCraftRecipe recipe)
         {
             this.recipe = recipe;
             Width.Set((52 * recipe.RequiredItems.Count + 52), 0f);

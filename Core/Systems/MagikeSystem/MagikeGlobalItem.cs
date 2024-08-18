@@ -32,10 +32,6 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public bool accessoryOrArmorCanEnchant;
 
-        public int magike_CraftRequired = -1;
-        public int stack_CraftRequired;
-        public IMagikeCraftCondition condition = null;
-
         //只是为了判断是否为null才用的这个
         internal Enchant enchant;
         public Enchant Enchant

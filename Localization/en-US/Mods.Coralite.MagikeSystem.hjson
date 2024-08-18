@@ -26,6 +26,7 @@ MagikeSystem: {
 	ItemDescriptionPolarizedFilter: Insertable Polarization Filter:
 	ApparatusDescriptionMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionMagikeAmount
 	ApparatusDescriptionConnectAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionConnectAmount
+	NeedPolarizedFilter: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionConnectAmount
 
 	UIText: {
 		ContainerMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ContainerMagikeAmount
@@ -54,6 +55,8 @@ MagikeSystem: {
 		ItemContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ItemContainerName
 		OceanLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.OceanLensName
 		OceanCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.OceanCondition
+		SkyLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SkyLensName
+		SkyCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SkyCondition
 	}
 }
 

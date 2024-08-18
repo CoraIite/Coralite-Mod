@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
 
         public void AddMagikePolymerizeRecipe()
         {
-            PolymerizeRecipe.CreateRecipe<VoidCrystal>(150)
+            MagikeCraftRecipe.CreateRecipe<VoidCrystal>(150)
                  .SetMainItem(ItemID.Bone, 10)
                  .AddIngredient(ItemID.JungleSpores, 5)
                  .AddIngredient<MagicCrystal>(10)

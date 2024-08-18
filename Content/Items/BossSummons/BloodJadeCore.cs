@@ -57,7 +57,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public void AddMagikePolymerizeRecipe()
         {
-            PolymerizeRecipe.CreateRecipe<BloodJadeCore>(1000)
+            MagikeCraftRecipe.CreateRecipe<BloodJadeCore>(1000)
                 .SetMainItem<RedJadeCore>()
                 .AddIngredient<BloodyOrb>(3)
                 .AddIngredient(ItemID.SoulofNight, 5)

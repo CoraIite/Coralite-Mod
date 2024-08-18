@@ -258,6 +258,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             ForestCondition,
             OceanLensName,
             OceanCondition,
+            SkyLensName,
+            SkyCondition,
 
             /*
              * 物品容器

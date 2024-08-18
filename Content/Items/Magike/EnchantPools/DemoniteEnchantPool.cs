@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.Magike.EnchantPools
 
         public void AddMagikePolymerizeRecipe()
         {
-            PolymerizeRecipe.CreateRecipe<DemoniteEnchantPool>(150)
+            MagikeCraftRecipe.CreateRecipe<DemoniteEnchantPool>(150)
                 .SetMainItem<CrystalEnchantPool>()
                 .AddIngredient<GlistentBar>(4)
                 .AddIngredient(ItemID.ShadowScale, 4)
