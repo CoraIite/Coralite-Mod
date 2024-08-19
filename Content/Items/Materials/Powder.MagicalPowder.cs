@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeRemodelRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<MagicalPowder>(150, ItemID.EnchantedSword, selfStack: 40);
+            MagikeSystem.AddRemodelRecipe<MagicalPowder>(150, ItemID.EnchantedSword, mainStack: 40);
             MagikeSystem.AddRemodelRecipe<MagicalPowder>(0f, ItemID.FallenStar, 25, 5);
             MagikeSystem.AddRemodelRecipe<MagicalPowder>(0f, ItemID.ManaCrystal, 50, 25);
         }

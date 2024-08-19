@@ -6,11 +6,11 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Materials
 {
-    public class SandlitePowder : BaseMaterial, IMagikePolymerizable
+    public class SandlitePowder : BaseMaterial, IMagikeCraftable
     {
         public SandlitePowder() : base(9999, Item.sellPrice(0, 0, 2, 50), ItemRarityID.Green, AssetDirectory.Materials) { }
 
-        public void AddMagikePolymerizeRecipe()
+        public void AddMagikeCraftRecipe()
         {
             MagikeCraftRecipe.CreateRecipe<SandlitePowder>(15)
                 .SetMainItem<MagicalPowder>()

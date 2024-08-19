@@ -9,7 +9,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
         public void AddMagikeRemodelRecipe()
         {
             //泥土
-            AddRemodelRecipe(ItemID.DirtBlock, 5, ItemID.Acorn, selfStack: 8);
+            AddRemodelRecipe(ItemID.DirtBlock, 5, ItemID.Acorn, mainStack: 8);
 
             //橡实
             AddRemodelRecipe(ItemID.Acorn, 25, ItemID.Wood, 6);

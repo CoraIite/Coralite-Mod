@@ -8,7 +8,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Materials
 {
-    public class MetallonInABottle : BaseMaterial, IMagikePolymerizable
+    public class MetallonInABottle : BaseMaterial, IMagikeCraftable
     {
         public MetallonInABottle() : base(9999, Item.sellPrice(0, 0, 1, 50), ItemRarityID.Gray, AssetDirectory.Materials) { }
 
@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Materials
             Item.DefaultToPlaceableTile(ModContent.TileType<MetallonInABottleTile>());
         }
 
-        public void AddMagikePolymerizeRecipe()
+        public void AddMagikeCraftRecipe()
         {
             //PolymerizeRecipe.CreateRecipe<FreosanInABottle>(300)
             //    .SetMainItem<>

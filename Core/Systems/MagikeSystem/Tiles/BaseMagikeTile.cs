@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Magike;
+﻿using Coralite.Content.CustomHooks;
+using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.UI.MagikeApparatusPanel;
@@ -190,7 +191,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             OnTileKilled(i, j);
-            if (MagikeHelper.TryGetEntity(new Point16(i, j), out MagikeTileEntity entity))
+            if (TryGetEntity(new Point16(i, j), out MagikeTileEntity entity))
             {
                 (entity as IEntity).RemoveAllComponent();
                 entity.Kill(entity.Position.X, entity.Position.Y);
@@ -325,8 +326,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             string empty = $"[i:{ModContent.ItemType<BasicFilter>()}]";
             string text = "";
 
-            List<Component> list;
-            entity.Components.TryGetValue(MagikeComponentID.MagikeFilter, out list);
+            List<Component> list = null;
+            if ((entity as IEntity).HasComponent(MagikeComponentID.MagikeFilter))
+                list = entity.Components[MagikeComponentID.MagikeFilter] as List<Component>;
 
             for (int i = 0; i < entity.ExtendFilterCapacity; i++)
             {
@@ -346,13 +348,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public sealed override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
-            Point16? topLeft = MagikeHelper.ToTopLeft(i, j);
+            Point16? topLeft = ToTopLeft(i, j);
 
             if (!topLeft.HasValue)
                 return;
 
             if (i == topLeft.Value.X && j == topLeft.Value.Y)
+            {
                 Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
+                DrawMagikeDevice.Points.Add(new Point16(i, j));
+            }
         }
 
         public sealed override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
@@ -369,7 +374,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
             //在这里获取帧图
             //得判断自身现在处于一个什么样的放置情况，然后获取对应的data
-            MagikeHelper.GetMagikeAlternateData(i, j, out TileObjectData data, out MagikeAlternateStyle alternate);
+            GetMagikeAlternateData(i, j, out TileObjectData data, out MagikeAlternateStyle alternate);
 
             float rotation = alternate switch
             {

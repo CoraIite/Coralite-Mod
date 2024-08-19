@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class GelInvitation : ModItem, IMagikePolymerizable
+    public class GelInvitation : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 
@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.BossSummons
             return true;
         }
 
-        public void AddMagikePolymerizeRecipe()
+        public void AddMagikeCraftRecipe()
         {
             MagikeCraftRecipe.CreateRecipe<GelInvitation>(250)
                 .SetMainItem<SymbolOfRoyal>()

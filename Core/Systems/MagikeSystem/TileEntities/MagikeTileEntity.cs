@@ -1,6 +1,7 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
@@ -14,7 +15,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// <summary> 物块类型 </summary>
         public abstract ushort TileType { get; }
 
-        public Dictionary<int, List<Component>> Components { get; private set; }
+        public HybridDictionary Components { get; private set; }
         public List<Component> ComponentsCache { get; private set; }
 
         /// <summary>
@@ -28,10 +29,10 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// <returns></returns>
         public bool CanInsertFilter()
         {
-            if (!Components.TryGetValue(MagikeComponentID.MagikeFilter, out var components))
+            if (!Components.Contains(MagikeComponentID.MagikeFilter))
                 return true;
 
-            return components.Count < ExtendFilterCapacity;
+            return ((List<Component>)Components[MagikeComponentID.MagikeFilter]).Count < ExtendFilterCapacity;
         }
 
         public override bool IsTileValidForEntity(int x, int y) => Framing.GetTileSafely(x, y).TileType == TileType;
@@ -65,8 +66,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// </summary>
         public void InitializeComponentCache()
         {
-            Components = new Dictionary<int, List<Component>>();
-            ComponentsCache = new List<Component>();
+            Components = [];
+            ComponentsCache = [];
         }
 
         public void AddComponentDirectly(Component component)

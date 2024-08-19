@@ -1,8 +1,8 @@
 ﻿namespace Coralite.Core.Systems.MagikeSystem.Polymerizes
 {
-    public class VanillaRareItems : IMagikePolymerizable
+    public class VanillaRareItems : IMagikeCraftable
     {
-        public void AddMagikePolymerizeRecipe()
+        public void AddMagikeCraftRecipe()
         {
         }
     }

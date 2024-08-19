@@ -761,6 +761,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Projectile.StartAttack();
                 Projectile.Resize(80, 80);
                 Projectile.velocity *= 0;
+                Projectile.damage = (int)(Projectile.damage * 0.5f);
             }
         }
 

@@ -14,6 +14,8 @@ namespace Coralite.Content.CustomHooks
 {
     public class DrawMagikeDevice : HookGroup
     {
+        public static List<Point16> Points = new(128);
+
         // 应该不会干涉任何东西
         public override SafetyLevel Safety => SafetyLevel.Safe;
 
@@ -32,7 +34,8 @@ namespace Coralite.Content.CustomHooks
             if (Main.gameMenu)
                 return;
 
-            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(MagikeMonoclastic)))
+            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(MagikeMonoclastic))
+                && Points.Count > 0)
             {
                 Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
 
@@ -40,49 +43,32 @@ namespace Coralite.Content.CustomHooks
                 Color drawColor = Coralite.MagicCrystalPink * 0.6f;
                 var origin = new Vector2(0, laserTex.Height / 2);
 
-                foreach (var entity in TileEntity.ByPosition)
+                foreach (var point in Points)
                 {
-                    if (entity.Value is not MagikeTileEntity sender)
-                        continue;
+                    MagikeTileEntity sender = TileEntity.ByPosition[point] as MagikeTileEntity;
 
                     if (!(sender as IEntity).HasComponent(MagikeComponentID.MagikeSender))
                         continue;
 
-                    List<Component> senderComponents = sender.Components[MagikeComponentID.MagikeSender];
+                    Component senderComponent = (Component)sender.Components[MagikeComponentID.MagikeSender];
 
-                    for (int k = 0; k < senderComponents.Count; k++)
+                    if (senderComponent is not MagikeLinerSender linerSender)
+                        continue;
+
+                    //以上是获取线性发送器组件
+
+                    Vector2 selfPos = Helper.GetMagikeTileCenter(point);
+                    Vector2 startPos = selfPos - Main.screenPosition;
+
+                    for (int i = 0; i < linerSender.Receivers.Count; i++)
                     {
-                        Component c = senderComponents[k];
-                        if (c is not MagikeLinerSender linerSender)
-                            continue;
+                        Vector2 aimPos = Helper.GetMagikeTileCenter(linerSender.Receivers[i]);
 
-                        Vector2 selfPos = Helper.GetMagikeTileCenter(entity.Key);
-                        Vector2 startPos = selfPos - Main.screenPosition;
-
-                        if (Helper.OnScreen(startPos))
-                        {
-                            for (int i = 0; i < linerSender.Receivers.Count; i++)
-                            {
-                                Vector2 aimPos = Helper.GetMagikeTileCenter(linerSender.Receivers[i]);
-
-                                MagikeSystem.DrawConnectLine(Main.spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
-                            }
-
-                            continue;
-                        }
-
-                        for (int i = 0; i < linerSender.Receivers.Count; i++)
-                        {
-                            Vector2 aimPos = Helper.GetMagikeTileCenter(linerSender.Receivers[i]);
-
-                            if (!Helper.OnScreen(aimPos - Main.screenPosition))
-                                continue;
-
-                            MagikeSystem.DrawConnectLine(Main.spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
-                        }
+                        MagikeSystem.DrawConnectLine(Main.spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
                     }
                 }
 
+                Points.Clear();
                 Main.spriteBatch.End();
             }
         }

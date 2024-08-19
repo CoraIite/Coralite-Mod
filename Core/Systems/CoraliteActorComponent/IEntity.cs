@@ -1,22 +1,20 @@
-﻿using System;
+﻿using Coralite.Core.Systems.MagikeSystem;
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 
 namespace Coralite.Core.Systems.CoraliteActorComponent
 {
     public interface IEntity
     {
-        /// <summary>
-        /// 使用组件ID查找组件的地方
-        /// </summary>
-        Dictionary<int, List<Component>> Components { get; }
-        /// <summary>
-        /// 遍历更新组件的地方
-        /// </summary>
+        /// <summary> 使用组件ID查找组件的地方 </summary>
+        HybridDictionary Components { get; }
+        /// <summary> 遍历更新组件的地方 </summary>
         List<Component> ComponentsCache { get; }
 
         public bool HasComponent(int componentId)
-            => Components.ContainsKey(componentId);
+            => Components.Contains(componentId);
 
         /// <summary>
         /// 向实体内加入组件
@@ -25,14 +23,7 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         /// <returns></returns>
         void AddComponent(Component component)
         {
-            if (!Components.ContainsKey(component.ID))
-                Components.Add(component.ID, new List<Component>());
-
-            Components[component.ID].Add(component);
-
-            ComponentsCache.Add(component);
-
-            component.Entity = this;
+            AddComponentWithoutOnAdd(component);
             component.OnAdd(this);
         }
 
@@ -43,10 +34,21 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         /// <returns></returns>
         void AddComponentWithoutOnAdd(Component component)
         {
-            if (!Components.ContainsKey(component.ID))
-                Components.Add(component.ID, new List<Component>());
+            if (MagikeComponentID.IsSingleton(component.ID))//该组件为单例形态
+            {
+                if (!Components.Contains(component.ID))
+                    Components.Add(component.ID, component);
+                else
+                    Components[component.ID] = component;
+            }
+            else//该组件需要多重存在
+            {
+                if (!Components.Contains(component.ID))
+                    Components.Add(component.ID, new List<Component>());
 
-            Components[component.ID].Add(component);
+                ((List<Component>)(Components[component.ID])).Add(component);
+            }
+
             ComponentsCache.Add(component);
 
             component.Entity = this;
@@ -62,8 +64,18 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
             if (Components[componentId] == null)
                 return;
 
-            Component component = Components[componentId][listIndex];
-            Components[componentId].Remove(component);
+            Component component;
+
+            if (MagikeComponentID.IsSingleton(componentId))//该组件为单例形态
+            {
+                 component = (Component)(Components[componentId]);
+                Components.Remove(componentId);
+            }
+            else//该组件需要多重存在
+            {
+                component = ((List<Component>)(Components[componentId]))[listIndex];
+                ((List<Component>)(Components[componentId])).Remove(component);
+            }
 
             ComponentsCache.Remove(component);
             component.OnRemove(this);
@@ -72,24 +84,25 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         /// <summary>
         /// 移除一个组件
         /// </summary>
-        /// <param name="componentId"></param>
         /// <param name="currentComponent"></param>
-        public void RemoveComponent(int componentId, Component currentComponent)
+        public void RemoveComponent( Component currentComponent)
         {
-            Components[componentId].Remove(currentComponent);
-            ComponentsCache.Remove(currentComponent);
-
+            RemoveComponentWithoutOnRemove( currentComponent);
             currentComponent.OnRemove(this);
         }
 
         /// <summary>
         /// 移除一个组件，不触发<see cref="Component.OnRemove(IEntity)"/>
         /// </summary>
-        /// <param name="componentId"></param>
         /// <param name="currentComponent"></param>
-        public void RemoveComponentWithoutOnRemove(int componentId, Component currentComponent)
+        public void RemoveComponentWithoutOnRemove( Component currentComponent)
         {
-            Components[componentId].Remove(currentComponent);
+            int id = currentComponent.ID;
+            if (MagikeComponentID.IsSingleton(id))//该组件为单例形态
+                Components.Remove(id);
+            else//该组件需要多重存在
+                ((List<Component>)(Components[id])).Remove(currentComponent);
+
             ComponentsCache.Remove(currentComponent);
         }
 
@@ -102,14 +115,8 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
             if (Components[componentId] == null)
                 return;
 
-            for (int i = 0; i < Components[componentId].Count; i++)
-            {
-                Component component = Components[componentId][i];
-                Components[componentId].Remove(component);
-
-                ComponentsCache.Remove(component);
-                component.OnRemove(this);
-            }
+            Components.Remove(componentId);
+            ComponentsCache.RemoveAll(c=>c.ID == componentId);
         }
 
         /// <summary>
@@ -130,7 +137,11 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
             if (!HasComponent(index))
                 return false;
 
-            result = (T)Components[index].FirstOrDefault(c => c is T, null);
+            if (MagikeComponentID.IsSingleton(index))
+                result = (T)Components[index];
+            else
+                result = (T)(((List<Component>)Components[index]).FirstOrDefault(c => c is T, null));
+
             return result != null;
         }
 
@@ -139,7 +150,10 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
             if (!HasComponent(index))
                 throw new Exception("所查找的组件不存在！");
 
-            return Components[index].First();
+            if (MagikeComponentID.IsSingleton(index))
+                return (Component)Components[index];
+            else
+                return ((List<Component>)Components[index]).First();
         }
 
         public T GetSingleComponent<T>(int index) where T : Component
@@ -147,7 +161,10 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
             if (!HasComponent(index))
                 throw new Exception("所查找的组件不存在！");
 
-            return (T)Components[index].First();
+            if (MagikeComponentID.IsSingleton(index))
+                return (T)Components[index];
+            else
+                return (T)((List<Component>)Components[index]).First();
         }
     }
 }

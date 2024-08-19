@@ -9,7 +9,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 时间减少量（效率增幅量） </summary>
         float DelayBonus { get; set; }
 
-        /// <summary> 发送时间 </summary>
         int Delay
         {
             get => Math.Clamp((int)(DelayBase * DelayBonus), 1, int.MaxValue);

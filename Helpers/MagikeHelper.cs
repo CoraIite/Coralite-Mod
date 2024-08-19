@@ -6,6 +6,7 @@ using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -118,7 +119,15 @@ namespace Coralite.Helpers
             if (!TryGetEntityWithComponent(i, j, componentType, out MagikeTileEntity tempEntity))
                 return false;
 
-            if (!tempEntity.Components[componentType].Any(c => c is T))
+            if (!tempEntity.Components.Contains(componentType))
+                return false;
+
+            if (MagikeComponentID.IsSingleton(componentType))
+            {
+                if (tempEntity.Components[componentType] is T)
+                    return true;
+            }
+            else if (!(tempEntity.Components[componentType] as List<Component>).Any(c => c is T))
                 return false;
 
             entity = tempEntity;

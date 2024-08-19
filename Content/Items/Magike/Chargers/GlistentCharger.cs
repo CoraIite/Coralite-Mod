@@ -14,7 +14,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Chargers
 {
-    public class GlistentCharger : BaseMagikePlaceableItem, IMagikeFactoryItem, IMagikePolymerizable
+    public class GlistentCharger : BaseMagikePlaceableItem, IMagikeFactoryItem, IMagikeCraftable
     {
         public GlistentCharger() : base(TileType<GlistentChargerTile>(), Item.sellPrice(0, 0, 10, 0)
             , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeFactories)
@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Magike.Chargers
         public string WorkTimeMax => "?";
         public string WorkCost => "5";
 
-        public void AddMagikePolymerizeRecipe()
+        public void AddMagikeCraftRecipe()
         {
             MagikeCraftRecipe.CreateRecipe<GlistentCharger>(75)
                 .SetMainItem<CrystalCharger>()

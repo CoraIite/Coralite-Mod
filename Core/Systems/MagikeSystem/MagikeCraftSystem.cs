@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader.Core;
+using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Systems.MagikeSystem
 {
@@ -19,33 +20,68 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             magikeCraftRecipes = [];
 
-            foreach (var magPolymerize in from Type t in AssemblyManager.GetLoadableTypes(Mod.Code)//添加魔能聚合合成表
-                                          where !t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikePolymerizable))
-                                          let magPolymerize = Activator.CreateInstance(t) as IMagikePolymerizable
-                                          select magPolymerize)
+            foreach (var magCraft in from Type t in AssemblyManager.GetLoadableTypes(Mod.Code)//添加魔能合成表
+                                          where !t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikeCraftable))
+                                          let magCraft = Activator.CreateInstance(t) as IMagikeCraftable
+                                          select magCraft)
             {
-                magPolymerize.AddMagikePolymerizeRecipe();
+                magCraft.AddMagikeCraftRecipe();
             }
 
-            foreach (var magPolymerize in from mod in ModLoader.Mods
+            foreach (var magCraft in from mod in ModLoader.Mods
                                           where mod is ICoralite
-                                          from Type t in AssemblyManager.GetLoadableTypes(mod.Code)//添加魔能聚合合成表
-                                          where !t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikePolymerizable))
-                                          let magPolymerize = Activator.CreateInstance(t) as IMagikePolymerizable
-                                          select magPolymerize)
+                                          from Type t in AssemblyManager.GetLoadableTypes(mod.Code)//添加魔能合成表
+                                          where !t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikeCraftable))
+                                          let magCraft = Activator.CreateInstance(t) as IMagikeCraftable
+                                          select magCraft)
             {
-                magPolymerize.AddMagikePolymerizeRecipe();
+                magCraft.AddMagikeCraftRecipe();
             }
 
             foreach (var recipes in magikeCraftRecipes)     //只是简单整理一下
-            {
                 recipes.Value.Sort((r1, r2) => r1.magikeCost.CompareTo(r2.magikeCost));
-            }
 
             //使用性能更高的冻结字典
             MagikeCraftRecipes = magikeCraftRecipes.ToFrozenDictionary();
             magikeCraftRecipes = null;
         }
+
+        #region 重塑帮助方法
+
+        /// <summary>
+        /// 向重塑合成表字典中添加重塑合成
+        /// </summary>
+        /// <remarks>
+        /// 该重载的理想使用情况：自身和对方都是原版物品
+        /// </remarks>
+        /// <param name="mainItemType">自身type</param>
+        /// <param name="magikeCost">魔能消耗量</param>
+        /// <param name="resultItemType">重塑成的物品type</param>
+        /// <param name="resultStack">重塑成的物品数量，默认1</param>
+        public static void AddRemodelRecipe(int mainItemType, int resultItemType, int magikeCost, int mainStack = 1, int resultStack = 1, params Condition[] conditions)
+        {
+            MagikeCraftRecipe recipe = MagikeCraftRecipe.CreateRecipe(mainItemType, resultItemType, magikeCost, mainStack, resultStack);
+            if (conditions != null)
+                foreach (var condition in conditions)
+                    recipe.AddCondition(condition);
+
+            recipe.Register();
+        }
+
+        /// <summary>
+        /// 向重塑合成表字典中添加重塑合成
+        /// </summary>
+        /// <remarks>
+        /// 该重载的理想使用情况：自身和对方都是模组物品
+        /// </remarks>
+        /// <param name="magikeCost">魔能消耗量</param>
+        /// <param name="resultStack">重塑成的物品数量，默认1</param>
+        public static void AddRemodelRecipe<TMainItem, TResultItem>(int magikeCost, int mainStack = 1, int resultStack = 1, params Condition[] conditions)
+            where TMainItem : ModItem
+            where TResultItem : ModItem
+           => AddRemodelRecipe(ItemType<TMainItem>(), ItemType<TMainItem>(), magikeCost, mainStack, resultStack, conditions);
+
+        #endregion
 
         public static bool TryGetMagikeCraftRecipes(int selfType, out List<MagikeCraftRecipe> recipes)
         {
@@ -193,7 +229,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             Recipe recipe = Recipe.Create(ResultItem.type, ResultItem.stack);
             if (magikeCost > 0)
-                recipe.AddIngredient<MagikePolySymbol>(magikeCost);
+                recipe.AddIngredient<MagikeSymbol>(magikeCost);
 
             recipe.AddIngredient(MainItem.type, MainItem.stack);
 
@@ -208,14 +244,14 @@ namespace Coralite.Core.Systems.MagikeSystem
         }
     }
 
-    public class MagikePolySymbol : ModItem
+    public class MagikeSymbol : ModItem
     {
-        public override string Texture => AssetDirectory.MagikeItems + "MagikeSymbol";
+        public override string Texture => AssetDirectory.MagikeItems + Name;
 
         public override void SetDefaults()
         {
             Item.maxStack = int.MaxValue;
-            Item.rare = ModContent.RarityType<MagicCrystalRarity>();
+            Item.rare = RarityType<MagicCrystalRarity>();
         }
 
         public override bool OnPickup(Player player) => false;
@@ -230,4 +266,5 @@ namespace Coralite.Core.Systems.MagikeSystem
             tooltips.Add(line);
         }
     }
+
 }

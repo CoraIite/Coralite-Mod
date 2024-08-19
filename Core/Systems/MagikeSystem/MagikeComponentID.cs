@@ -12,5 +12,15 @@
         public const int ItemSender = 7;
 
         public const int Count = 8;
+
+        /// <summary>
+        /// 是否为单一实例
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public static bool IsSingleton(int ID)
+        {
+            return ID is MagikeContainer or MagikeSender or MagikeProducer or MagikeFactory or ItemSender;
+        }
     }
 }

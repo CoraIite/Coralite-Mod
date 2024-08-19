@@ -9,7 +9,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class BloodJadeCore : ModItem, IMagikePolymerizable
+    public class BloodJadeCore : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 
@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.BossSummons
             return true;
         }
 
-        public void AddMagikePolymerizeRecipe()
+        public void AddMagikeCraftRecipe()
         {
             MagikeCraftRecipe.CreateRecipe<BloodJadeCore>(1000)
                 .SetMainItem<RedJadeCore>()

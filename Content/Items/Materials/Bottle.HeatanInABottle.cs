@@ -9,7 +9,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Materials
 {
-    public class HeatanInABottle : BaseMaterial, IMagikePolymerizable
+    public class HeatanInABottle : BaseMaterial, IMagikeCraftable
     {
         public HeatanInABottle() : base(9999, Item.sellPrice(0, 0, 1, 50), ItemRarityID.Yellow, AssetDirectory.Materials) { }
 
@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.Materials
             Item.DefaultToPlaceableTile(ModContent.TileType<HeatanInABottleTile>());
         }
 
-        public void AddMagikePolymerizeRecipe()
+        public void AddMagikeCraftRecipe()
         {
             MagikeCraftRecipe.CreateRecipe<HeatanInABottle>(60)
                 .SetMainItem(ItemID.Bottle)

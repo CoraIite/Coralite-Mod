@@ -6,11 +6,11 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Materials
 {
-    public class IceyPowder : BaseMaterial, IMagikePolymerizable
+    public class IceyPowder : BaseMaterial, IMagikeCraftable
     {
         public IceyPowder() : base(9999, Item.sellPrice(0, 0, 1, 50), ItemRarityID.Green, AssetDirectory.Materials) { }
 
-        public void AddMagikePolymerizeRecipe()
+        public void AddMagikeCraftRecipe()
         {
             MagikeCraftRecipe.CreateRecipe<IceyPowder>(15)
                 .SetMainItem<MagicalPowder>()

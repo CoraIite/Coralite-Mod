@@ -13,7 +13,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.ItemTransmit
 {
-    public class VoidCrystal : BaseMagikePlaceableItem, IMagikePolymerizable, IMagikeFactoryItem
+    public class VoidCrystal : BaseMagikePlaceableItem, IMagikeCraftable, IMagikeFactoryItem
     {
         public VoidCrystal() : base(TileType<VoidCrystalTile>(), Item.sellPrice(0, 1, 0, 0)
             , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeFactories)
@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
         public string WorkTimeMax => "5";
         public string WorkCost => "5（发送物品）/ 10（吸取物品）";
 
-        public void AddMagikePolymerizeRecipe()
+        public void AddMagikeCraftRecipe()
         {
             MagikeCraftRecipe.CreateRecipe<VoidCrystal>(150)
                  .SetMainItem(ItemID.Bone, 10)

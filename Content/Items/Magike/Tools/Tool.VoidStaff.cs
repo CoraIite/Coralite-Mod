@@ -12,7 +12,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Magike.Tools
 {
-    public class VoidStaff : ModItem, IMagikePolymerizable
+    public class VoidStaff : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeTools + Name;
 
@@ -153,7 +153,7 @@ namespace Coralite.Content.Items.Magike.Tools
             return true;
         }
 
-        public void AddMagikePolymerizeRecipe()
+        public void AddMagikeCraftRecipe()
         {
             MagikeCraftRecipe.CreateRecipe<VoidStaff>(150)
                  .SetMainItem(ItemID.Bone, 15)

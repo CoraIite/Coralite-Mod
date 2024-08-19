@@ -10,20 +10,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
         public void AddMagikeRemodelRecipe()
         {
             //木头
-            AddRemodelRecipe(ItemID.Wood, 5, ItemID.Coal, selfStack: 20);
-            AddRemodelRecipe(ItemID.AshWood, 5, ItemID.Coal, selfStack: 20);
-            AddRemodelRecipe(ItemID.RichMahogany, 5, ItemID.Coal, selfStack: 20);
-            AddRemodelRecipe(ItemID.Ebonwood, 5, ItemID.Coal, selfStack: 20);
-            AddRemodelRecipe(ItemID.Shadewood, 5, ItemID.Coal, selfStack: 20);
-            AddRemodelRecipe(ItemID.Pearlwood, 5, ItemID.Coal, selfStack: 20);
-            AddRemodelRecipe(ItemID.BorealWood, 5, ItemID.Coal, selfStack: 20);
-            AddRemodelRecipe(ItemID.PalmWood, 5, ItemID.Coal, selfStack: 20);
+            AddRemodelRecipe(ItemID.Wood, 5, ItemID.Coal, mainStack: 20);
+            AddRemodelRecipe(ItemID.AshWood, 5, ItemID.Coal, mainStack: 20);
+            AddRemodelRecipe(ItemID.RichMahogany, 5, ItemID.Coal, mainStack: 20);
+            AddRemodelRecipe(ItemID.Ebonwood, 5, ItemID.Coal, mainStack: 20);
+            AddRemodelRecipe(ItemID.Shadewood, 5, ItemID.Coal, mainStack: 20);
+            AddRemodelRecipe(ItemID.Pearlwood, 5, ItemID.Coal, mainStack: 20);
+            AddRemodelRecipe(ItemID.BorealWood, 5, ItemID.Coal, mainStack: 20);
+            AddRemodelRecipe(ItemID.PalmWood, 5, ItemID.Coal, mainStack: 20);
 
             //煤
-            AddRemodelRecipe(ItemID.Coal, 150, ItemID.Diamond, selfStack: 20);
+            AddRemodelRecipe(ItemID.Coal, 150, ItemID.Diamond, mainStack: 20);
 
             //沙漠化石
-            AddRemodelRecipe(ItemID.DesertFossil, 1, ItemID.Amber, selfStack: 10);
+            AddRemodelRecipe(ItemID.DesertFossil, 1, ItemID.Amber, mainStack: 10);
 
             //黄玉
             AddRemodelRecipe(ItemID.Topaz, 25, ItemID.GemSquirrelTopaz);
@@ -50,22 +50,22 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.Diamond, 25, ItemID.GemBunnyDiamond);
 
             //石头
-            AddRemodelRecipe(ItemID.StoneBlock, 1, ItemID.CopperOre, selfStack: 20);
-            AddRemodelRecipe(ItemID.StoneBlock, 1, ItemID.TinOre, selfStack: 20);
-            AddRemodelRecipe(ItemID.StoneBlock, 50, ItemID.Amethyst, selfStack: 100);
-            AddRemodelRecipe(ItemID.StoneBlock, 50, ItemID.Topaz, selfStack: 100);
-            AddRemodelRecipe(ItemID.StoneBlock, 100, ItemID.Sapphire, selfStack: 200);
-            AddRemodelRecipe(ItemID.StoneBlock, 100, ItemID.Emerald, selfStack: 200);
-            AddRemodelRecipe(ItemID.StoneBlock, 200, ItemID.Ruby, selfStack: 300);
+            AddRemodelRecipe(ItemID.StoneBlock, 1, ItemID.CopperOre, mainStack: 20);
+            AddRemodelRecipe(ItemID.StoneBlock, 1, ItemID.TinOre, mainStack: 20);
+            AddRemodelRecipe(ItemID.StoneBlock, 50, ItemID.Amethyst, mainStack: 100);
+            AddRemodelRecipe(ItemID.StoneBlock, 50, ItemID.Topaz, mainStack: 100);
+            AddRemodelRecipe(ItemID.StoneBlock, 100, ItemID.Sapphire, mainStack: 200);
+            AddRemodelRecipe(ItemID.StoneBlock, 100, ItemID.Emerald, mainStack: 200);
+            AddRemodelRecipe(ItemID.StoneBlock, 200, ItemID.Ruby, mainStack: 300);
 
             //石头变泥土，虽然微光转化也可以做到，但是使用魔能的话可以翻倍
             AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.DirtBlock, 2);
             //石头变各种乱七八糟的石头
-            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.Granite, selfStack: 2);
-            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.Marble, selfStack: 2);
-            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.AshBlock, selfStack: 2);
-            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.MudBlock, selfStack: 2);
-            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.SandBlock, selfStack: 2);
+            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.Granite, mainStack: 2);
+            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.Marble, mainStack: 2);
+            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.AshBlock, mainStack: 2);
+            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.MudBlock, mainStack: 2);
+            AddRemodelRecipe(ItemID.StoneBlock, 10, ItemID.SandBlock, mainStack: 2);
             AddRemodelRecipe<Basalt>(0f, ItemID.StoneBlock, 15, selfStack: 4);
 
             //铜和锡
@@ -97,10 +97,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
 
             AddRemodelRecipe(ItemID.IronBar, 6, ItemID.SilverBar);
             AddRemodelRecipe(ItemID.IronBar, 6, ItemID.TungstenBar);
-            AddRemodelRecipe(ItemID.IronBar, 150, ItemID.AncientIronHelmet, selfStack: 10);
+            AddRemodelRecipe(ItemID.IronBar, 150, ItemID.AncientIronHelmet, mainStack: 10);
             AddRemodelRecipe(ItemID.LeadBar, 6, ItemID.SilverBar);
             AddRemodelRecipe(ItemID.LeadBar, 6, ItemID.TungstenBar);
-            AddRemodelRecipe(ItemID.LeadBar, 150, ItemID.AncientIronHelmet, selfStack: 10);
+            AddRemodelRecipe(ItemID.LeadBar, 150, ItemID.AncientIronHelmet, mainStack: 10);
 
             //银和钨
             AddRemodelRecipe(ItemID.SilverOre, 5, ItemID.GoldOre);
@@ -134,14 +134,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.GoldBar, 15, ItemID.CrimtaneBar);
             AddRemodelRecipe(ItemID.GoldBar, 15, ItemID.DemoniteBar);
             AddRemodelRecipe(ItemID.GoldBar, 15, ItemID.MeteoriteBar);
-            AddRemodelRecipe(ItemID.GoldBar, 150, ItemID.AncientGoldHelmet, selfStack: 10);
-            AddRemodelRecipe(ItemID.GoldBar, 100, ItemID.GoldChest, selfStack: 15);
+            AddRemodelRecipe(ItemID.GoldBar, 150, ItemID.AncientGoldHelmet, mainStack: 10);
+            AddRemodelRecipe(ItemID.GoldBar, 100, ItemID.GoldChest, mainStack: 15);
             AddRemodelRecipe(ItemID.GoldBar, 400, ItemID.GoldenKey, selfStack: 20, condition: DownedSkeletronCondition.Instance);
             AddRemodelRecipe(ItemID.PlatinumBar, 15, ItemID.CrimtaneBar);
             AddRemodelRecipe(ItemID.PlatinumBar, 15, ItemID.DemoniteBar);
             AddRemodelRecipe(ItemID.PlatinumBar, 15, ItemID.MeteoriteBar);
-            AddRemodelRecipe(ItemID.PlatinumBar, 150, ItemID.AncientGoldHelmet, selfStack: 10);
-            AddRemodelRecipe(ItemID.PlatinumBar, 100, ItemID.GoldChest, selfStack: 15);
+            AddRemodelRecipe(ItemID.PlatinumBar, 150, ItemID.AncientGoldHelmet, mainStack: 10);
+            AddRemodelRecipe(ItemID.PlatinumBar, 100, ItemID.GoldChest, mainStack: 15);
 
             //猩红矿和魔矿
             AddRemodelRecipe(ItemID.CrimtaneOre, 15, ItemID.TissueSample, selfStack: 3, condition: DownedEvilBossCondition.Instance);
@@ -156,13 +156,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.DemoniteOre, 20, ItemID.CrimtaneBar);
             AddRemodelRecipe(ItemID.DemoniteOre, 20, ItemID.DemoniteBar);
 
-            AddRemodelRecipe(ItemID.CrimtaneBar, 150, ItemID.AncientShadowHelmet, selfStack: 10);
-            AddRemodelRecipe(ItemID.CrimtaneBar, 150, ItemID.AncientShadowScalemail, selfStack: 10);
-            AddRemodelRecipe(ItemID.CrimtaneBar, 150, ItemID.AncientShadowGreaves, selfStack: 10);
+            AddRemodelRecipe(ItemID.CrimtaneBar, 150, ItemID.AncientShadowHelmet, mainStack: 10);
+            AddRemodelRecipe(ItemID.CrimtaneBar, 150, ItemID.AncientShadowScalemail, mainStack: 10);
+            AddRemodelRecipe(ItemID.CrimtaneBar, 150, ItemID.AncientShadowGreaves, mainStack: 10);
             AddRemodelRecipe(ItemID.CrimtaneBar, 25, ItemID.HellstoneBar);
-            AddRemodelRecipe(ItemID.DemoniteBar, 150, ItemID.AncientShadowHelmet, selfStack: 10);
-            AddRemodelRecipe(ItemID.DemoniteBar, 150, ItemID.AncientShadowScalemail, selfStack: 10);
-            AddRemodelRecipe(ItemID.DemoniteBar, 150, ItemID.AncientShadowGreaves, selfStack: 10);
+            AddRemodelRecipe(ItemID.DemoniteBar, 150, ItemID.AncientShadowHelmet, mainStack: 10);
+            AddRemodelRecipe(ItemID.DemoniteBar, 150, ItemID.AncientShadowScalemail, mainStack: 10);
+            AddRemodelRecipe(ItemID.DemoniteBar, 150, ItemID.AncientShadowGreaves, mainStack: 10);
             AddRemodelRecipe(ItemID.DemoniteBar, 25, ItemID.HellstoneBar);
 
             //陨石矿
