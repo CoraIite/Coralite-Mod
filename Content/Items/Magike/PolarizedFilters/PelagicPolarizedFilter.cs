@@ -22,7 +22,6 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
                 .AddIngredient<SeashorePolarizedFilter>()
                 .AddIngredient(ItemID.SoulofLight)
                 .AddIngredient(ItemID.SharkFin)
-                .DisableDecraft()
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

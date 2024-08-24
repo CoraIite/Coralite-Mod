@@ -21,7 +21,6 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
                 .AddIngredient(ItemID.Feather, 5)
-                .DisableDecraft()
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

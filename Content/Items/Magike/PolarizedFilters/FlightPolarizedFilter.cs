@@ -21,7 +21,6 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
             CreateRecipe()
                 .AddIngredient<EiderdownPolarizedFilter>()
                 .AddIngredient(ItemID.SoulofFlight,12)
-                .DisableDecraft()
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

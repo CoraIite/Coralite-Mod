@@ -260,6 +260,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             OceanCondition,
             SkyLensName,
             SkyCondition,
+            DesertLensName,
+            DesertCondition,
 
             /*
              * 物品容器

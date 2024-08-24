@@ -36,9 +36,17 @@
         Eiderdown,
         /// <summary> 帝凝胶 </summary>
         Emperor,
+        /// <summary> 狱石 </summary>
+        Hellstone,
+        /// <summary> 流沙 </summary>
+        Quicksand,
         /// <summary> 远洋 </summary>
         Pelagic,
         /// <summary> 飞翔 </summary>
         Flight,
+        /// <summary> 禁戒 </summary>
+        Forbidden,
+        /// <summary> 薪火 </summary>
+        EternalFlame,
     }
 }
