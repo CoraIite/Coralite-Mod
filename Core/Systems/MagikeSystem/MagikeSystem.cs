@@ -18,7 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             Instance = this;
         }
-
+         
         /// <summary> 是否学习过 书页：魔能基础 </summary>
         public static bool learnedMagikeBase;
         /// <summary> 是否学习过卷轴：强化魔能提炼 </summary>
@@ -29,7 +29,6 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (Main.dedServ)
                 return;
 
-            RegisterRemodel();
             RegisterPolymerize();
         }
 
@@ -47,11 +46,9 @@ namespace Coralite.Core.Systems.MagikeSystem
             UnloadLocalization();
             UnloadAssets();
 
-            remodelRecipes?.Clear();
-            remodelRecipes = null;
-
             magikeCraftRecipes?.Clear();
             magikeCraftRecipes = null;
+            MagikeCraftRecipes = null;
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
@@ -104,6 +101,10 @@ namespace Coralite.Core.Systems.MagikeSystem
                 MagikeApparatusLevel.Emperor => ModContent.ItemType<EmperorPolarizedFilter>(),
                 MagikeApparatusLevel.Pelagic => ModContent.ItemType<PelagicPolarizedFilter>(),
                 MagikeApparatusLevel.Flight => ModContent.ItemType<FlightPolarizedFilter>(),
+                MagikeApparatusLevel.Hellstone => ModContent.ItemType<HellstonePolarizedFilter>(),
+                MagikeApparatusLevel.Quicksand => ModContent.ItemType<QuicksandPolarizedFilter>(),
+                MagikeApparatusLevel.Forbidden => ModContent.ItemType<ForbiddenPolarizedFilter>(),
+                MagikeApparatusLevel.EternalFlame => ModContent.ItemType<EternalFlamePolarizedFilter>(),
                 _ => 0,
             };
         }
@@ -122,7 +123,6 @@ namespace Coralite.Core.Systems.MagikeSystem
             SaveData_2_1(Knowledge);
 
             tag.Add("Knowledge", Knowledge);
-
         }
 
         public override void LoadWorldData(TagCompound tag)

@@ -3,7 +3,7 @@ using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Core.Systems.MagikeSystem.Remodels
 {
-    public class VanillaCrate : IMagikeRemodelable
+    public class Crate : IMagikeRemodelable
     {
         public void AddMagikeRemodelRecipe()
         {

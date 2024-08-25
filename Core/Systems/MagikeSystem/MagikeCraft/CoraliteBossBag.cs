@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Items.Icicle;
 using Coralite.Content.Items.RedJades;
-using Coralite.Core.Systems.MagikeSystem.CraftConditions;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Core.Systems.MagikeSystem.Remodels

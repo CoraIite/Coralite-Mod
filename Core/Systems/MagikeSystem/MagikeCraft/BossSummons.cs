@@ -5,7 +5,7 @@ using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Core.Systems.MagikeSystem.Remodels
 {
-    public class CoraliteBossSummons : IMagikeRemodelable
+    public class BossSummons : IMagikeRemodelable
     {
         public void AddMagikeRemodelRecipe()
         {

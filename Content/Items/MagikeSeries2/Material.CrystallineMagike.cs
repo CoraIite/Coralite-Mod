@@ -3,7 +3,6 @@ using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core.Systems.MagikeSystem.CraftConditions;
 using Coralite.Helpers;
 using Terraria;
 
@@ -22,7 +21,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeRemodelRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<CrystallineMagike, SplendorMagicore>(700, condition: DownedMoonlordCondition.Instance);
+            MagikeSystem.AddRemodelRecipe<CrystallineMagike, SplendorMagicore>(700, conditions: Condition.DownedMoonLord);
         }
     }
 }

@@ -140,7 +140,7 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
             if (MagikeComponentID.IsSingleton(index))
                 result = (T)Components[index];
             else
-                result = (T)(((List<Component>)Components[index]).FirstOrDefault(c => c is T, null));
+                result = (T)((List<Component>)Components[index]).FirstOrDefault(c => c is T, null);
 
             return result != null;
         }

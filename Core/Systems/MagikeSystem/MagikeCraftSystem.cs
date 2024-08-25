@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Systems.MagikeSystem
 {
-    public partial class MagikeSystem : ModSystem, ILocalizedModType
+    public partial class MagikeSystem : ModSystem
     {
         internal Dictionary<int, List<MagikeCraftRecipe>> magikeCraftRecipes;
         internal static FrozenDictionary<int, List<MagikeCraftRecipe>> MagikeCraftRecipes;
@@ -96,7 +96,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         }
     }
 
-    public class MagikeCraftRecipe
+    public record class MagikeCraftRecipe
     {
         /// <summary>
         /// 主物品，以此物品为基础进行合成
@@ -158,8 +158,8 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             return new MagikeCraftRecipe()
             {
-                MainItem = new(ModContent.ItemType<TMainItem>(), MainItenStack),
-                ResultItem = new(ModContent.ItemType<TResultItem>(), resultItemStack),
+                MainItem = new(ItemType<TMainItem>(), MainItenStack),
+                ResultItem = new(ItemType<TResultItem>(), resultItemStack),
                 magikeCost = magikeCost
             };
         }
@@ -189,7 +189,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public MagikeCraftRecipe SetMagikeCost(int MagikeCost)
         {
             antiMagikeCost = 0;
-            this.magikeCost = MagikeCost;
+            magikeCost = MagikeCost;
             return this;
         }
 
@@ -201,7 +201,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public MagikeCraftRecipe AddIngredient<T>(int stack = 1) where T : ModItem
         {
-            RequiredItems.Add(new Item(ModContent.ItemType<T>(), stack));
+            RequiredItems.Add(new Item(ItemType<T>(), stack));
             return this;
         }
 
@@ -213,7 +213,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public void Register()
         {
-            Dictionary<int, List<MagikeCraftRecipe>> MagikeCraftRecipes = ModContent.GetInstance<MagikeSystem>().magikeCraftRecipes;
+            Dictionary<int, List<MagikeCraftRecipe>> MagikeCraftRecipes = GetInstance<MagikeSystem>().magikeCraftRecipes;
             if (MagikeCraftRecipes == null)
                 return;
 
@@ -223,6 +223,27 @@ namespace Coralite.Core.Systems.MagikeSystem
                 MagikeCraftRecipes.Add(MainItem.type, [this]);
 
             AddVanillaRecipe();
+        }
+
+        /// <summary>
+        /// 在注册的同时新建一个拥有相同主物品类型和堆叠数的合成表
+        /// </summary>
+        /// <param name="resultItemType"></param>
+        /// <param name="magikeCost"></param>
+        /// <param name="resultItemStack"></param>
+        /// <returns></returns>
+        public MagikeCraftRecipe RegisterNew(int resultItemType, int magikeCost, int resultItemStack = 1)
+        {
+            Register();
+            return CreateRecipe(MainItem.type,resultItemType, magikeCost,MainItem.stack,resultItemStack);
+        }
+
+        public MagikeCraftRecipe RegisterAndNewSameMain<TResultItem>(int magikeCost, int resultItemStack = 1)
+            where TResultItem : ModItem
+
+        {
+            Register();
+            return CreateRecipe(MainItem.type, ItemType<TResultItem>(), magikeCost, MainItem.stack, resultItemStack);
         }
 
         private void AddVanillaRecipe()
@@ -266,5 +287,4 @@ namespace Coralite.Core.Systems.MagikeSystem
             tooltips.Add(line);
         }
     }
-
 }

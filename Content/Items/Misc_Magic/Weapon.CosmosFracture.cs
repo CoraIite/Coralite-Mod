@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core.Systems.MagikeSystem.CraftConditions;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -87,7 +86,9 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public void AddMagikeRemodelRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<CosmosFracture>(0f, ItemID.SkyFracture, 1_0000, condition: EnchantCondition.Instance);
+            MagikeCraftRecipe.CreateRecipe(ItemID.SkyFracture, ModContent.ItemType<CosmosFracture>(), 1_0000)
+                .SetAntiMagikeCost(1_0000)
+                .Register();
         }
 
         //public override void AddRecipes()

@@ -20,7 +20,7 @@
         /// <returns></returns>
         public static bool IsSingleton(int ID)
         {
-            return ID is MagikeContainer or MagikeSender or MagikeProducer or MagikeFactory or ItemSender;
+            return ID !=MagikeFilter;
         }
     }
 }

@@ -12,11 +12,14 @@ namespace Coralite.Core.Systems.MagikeSystem
         public LocalizedText LearnedMagikeBase { get; private set; }
         public LocalizedText LearnedMagikeAdvanced { get; private set; }
 
+        public static LocalizedText Error { get; private set; }
+
         public void LoadLocalization()
         {
             LearnedMagikeBase = this.GetLocalization("learnedMagikeBase");
             LearnedMagikeAdvanced = this.GetLocalization("learnedMagikeAdvanced");
             NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
+            Error= this.GetLocalization("Error");
 
             this.GetLocalization("PolarizedFilterTooltip");
 

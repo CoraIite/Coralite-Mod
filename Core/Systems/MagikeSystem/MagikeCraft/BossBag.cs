@@ -1,53 +1,55 @@
 ﻿using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.Materials;
-using Coralite.Core.Systems.MagikeSystem.CraftConditions;
+using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Core.Systems.MagikeSystem.Remodels
 {
-    public class VanillaBossBag : IMagikeRemodelable
+    public class BossBag : IMagikeRemodelable
     {
         public void AddMagikeRemodelRecipe()
         {
-            //史莱姆王宝藏袋
-            AddRemodelRecipe(ItemID.KingSlimeBossBag, 150, ItemID.SlimySaddle);
-            AddRemodelRecipe(ItemID.KingSlimeBossBag, 100, ItemID.NinjaHood);
-            AddRemodelRecipe(ItemID.KingSlimeBossBag, 100, ItemID.NinjaShirt);
-            AddRemodelRecipe(ItemID.KingSlimeBossBag, 100, ItemID.NinjaPants);
-            AddRemodelRecipe(ItemID.KingSlimeBossBag, 150, ItemID.SlimeHook);
-            AddRemodelRecipe(ItemID.KingSlimeBossBag, 50, ItemID.SlimeGun);
-            AddRemodelRecipe(ItemID.KingSlimeBossBag, 100, ItemID.KingSlimeMask);
-            AddRemodelRecipe(ItemID.KingSlimeBossBag, 150, ItemID.KingSlimeTrophy);
-            AddRemodelRecipe(ItemID.KingSlimeBossBag, 50, ItemID.KingSlimePetItem, condition: MasterModeCondition.Instance);
+            #region 史莱姆王
+            MagikeCraftRecipe.CreateRecipe(ItemID.KingSlimeBossBag, ItemID.SlimySaddle, 150)
+                .RegisterNew(ItemID.NinjaHood, 100)
+                .RegisterNew(ItemID.NinjaShirt, 100)
+                .RegisterNew(ItemID.NinjaPants, 100)
+                .RegisterNew(ItemID.SlimeHook, 150)
+                .RegisterNew(ItemID.SlimeGun, 50)
+                .RegisterNew(ItemID.KingSlimeMask, 100)
+                .RegisterNew(ItemID.KingSlimeTrophy, 150)
+                .Register();
+            AddRemodelRecipe(ItemID.KingSlimeBossBag, ItemID.KingSlimePetItem, 50, conditions: Condition.InMasterMode);
+            #endregion
 
             //克苏鲁之眼宝藏袋
-            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, 150, ItemID.CrimtaneOre, 85);
-            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, 150, ItemID.DemoniteOre, 85);
-            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, 150, ItemID.Binoculars);
-            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, 100, ItemID.EyeMask);
-            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, 150, ItemID.EyeofCthulhuTrophy);
-            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, 50, ItemID.EyeOfCthulhuPetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.CrimtaneOre, 150, 85);
+            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.DemoniteOre, 150, 85);
+            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.Binoculars, 150);
+            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.EyeMask, 100);
+            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.EyeofCthulhuTrophy, 150);
+            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.EyeOfCthulhuPetItem, 50, conditions: Condition.InMasterMode);
 
             //世界吞噬怪宝藏袋
-            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, 225, ItemID.DemoniteOre, 70);
-            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, 250, ItemID.ShadowScale, 25);
-            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, 450, ItemID.EatersBone);
-            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, 200, ItemID.EaterMask);
-            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, 300, ItemID.EaterofWorldsTrophy);
-            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, 100, ItemID.EaterOfWorldsPetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, ItemID.DemoniteOre, 225, 70);
+            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, ItemID.ShadowScale, 250, 25);
+            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, ItemID.EatersBone, 450);
+            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, ItemID.EaterMask, 200);
+            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, ItemID.EaterofWorldsTrophy, 300);
+            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, ItemID.EaterOfWorldsPetItem, 100, conditions: Condition.InMasterMode);
 
             //克苏鲁之脑宝藏袋
-            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, 225, ItemID.CrimtaneOre, 70);
-            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, 250, ItemID.TissueSample, 25);
-            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, 450, ItemID.BoneRattle);
-            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, 200, ItemID.BrainMask);
-            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, 300, ItemID.BrainofCthulhuTrophy);
-            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, 100, ItemID.BrainOfCthulhuPetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.CrimtaneOre, 225, 70);
+            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.TissueSample, 250, 25);
+            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.BoneRattle, 450);
+            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.BrainMask, 200);
+            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.BrainofCthulhuTrophy, 300);
+            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.BrainOfCthulhuPetItem, 100, conditions: Condition.InMasterMode);
 
             //蜂后宝藏袋
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 200, ItemID.BeeGun);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 200, ItemID.BeeKeeper);
+            AddRemodelRecipe(ItemID.QueenBeeBossBag, ItemID.BeeGun, 200);
+            AddRemodelRecipe(ItemID.QueenBeeBossBag, ItemID.BeeKeeper, 200);
             AddRemodelRecipe(ItemID.QueenBeeBossBag, 200, ItemID.BeesKnees);
             AddRemodelRecipe(ItemID.QueenBeeBossBag, 100, ItemID.BeeHat);
             AddRemodelRecipe(ItemID.QueenBeeBossBag, 100, ItemID.BeeShirt);
@@ -58,7 +60,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.QueenBeeBossBag, 300, ItemID.Beenade, 80);
             AddRemodelRecipe(ItemID.QueenBeeBossBag, 200, ItemID.BeeMask);
             AddRemodelRecipe(ItemID.QueenBeeBossBag, 300, ItemID.QueenBeeTrophy);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 100, ItemID.QueenBeePetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.QueenBeeBossBag, 100, ItemID.QueenBeePetItem, conditions: Condition.InMasterMode);
 
             //巨鹿宝藏袋
             AddRemodelRecipe(ItemID.DeerclopsBossBag, 450, ItemID.ChesterPetItem);
@@ -71,7 +73,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.DeerclopsBossBag, 250, ItemID.LucyTheAxe);
             AddRemodelRecipe(ItemID.DeerclopsBossBag, 200, ItemID.DeerclopsMask);
             AddRemodelRecipe(ItemID.DeerclopsBossBag, 300, ItemID.DeerclopsTrophy);
-            AddRemodelRecipe(ItemID.DeerclopsBossBag, 100, ItemID.DeerclopsPetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.DeerclopsBossBag, 100, ItemID.DeerclopsPetItem, conditions: Condition.InMasterMode);
 
             //骷髅王宝藏袋
             AddRemodelRecipe(ItemID.SkeletronBossBag, 200, ItemID.SkeletronHand);
@@ -79,7 +81,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.SkeletronBossBag, 450, ItemID.ChippysCouch);
             AddRemodelRecipe(ItemID.SkeletronBossBag, 200, ItemID.SkeletronMask);
             AddRemodelRecipe(ItemID.SkeletronBossBag, 300, ItemID.SkeletronTrophy);
-            AddRemodelRecipe(ItemID.SkeletronBossBag, 100, ItemID.SkeletronPetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.SkeletronBossBag, 100, ItemID.SkeletronPetItem, conditions: Condition.InMasterMode);
 
             //肉山宝藏袋
             AddRemodelRecipe(ItemID.WallOfFleshBossBag, 350, ItemID.WarriorEmblem);
@@ -92,7 +94,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.WallOfFleshBossBag, 300, ItemID.FireWhip);
             AddRemodelRecipe(ItemID.WallOfFleshBossBag, 300, ItemID.FleshMask);
             AddRemodelRecipe(ItemID.WallOfFleshBossBag, 400, ItemID.WallofFleshTrophy);
-            AddRemodelRecipe(ItemID.WallOfFleshBossBag, 200, ItemID.WallOfFleshGoatMountItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.WallOfFleshBossBag, 200, ItemID.WallOfFleshGoatMountItem, conditions: Condition.InMasterMode);
 
             //史莱姆皇后宝藏袋
             AddRemodelRecipe(ItemID.QueenSlimeBossBag, 1500, ItemID.GelBalloon, 100);
@@ -104,7 +106,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.QueenSlimeBossBag, 1500, ItemID.CrystalNinjaLeggings);
             AddRemodelRecipe(ItemID.QueenSlimeBossBag, 1500, ItemID.QueenSlimeMask);
             AddRemodelRecipe(ItemID.QueenSlimeBossBag, 2500, ItemID.QueenSlimeTrophy);
-            AddRemodelRecipe(ItemID.QueenSlimeBossBag, 500, ItemID.QueenSlimePetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.QueenSlimeBossBag, 500, ItemID.QueenSlimePetItem, conditions: Condition.InMasterMode);
             //AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.QueenSlimeBossBag, 1500, 3);
 
             //双子魔眼宝藏袋
@@ -113,7 +115,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.TwinsBossBag, 1500, ItemID.TwinMask);
             AddRemodelRecipe(ItemID.TwinsBossBag, 2500, ItemID.RetinazerTrophy);
             AddRemodelRecipe(ItemID.TwinsBossBag, 2500, ItemID.SpazmatismTrophy);
-            AddRemodelRecipe(ItemID.TwinsBossBag, 500, ItemID.TwinsPetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.TwinsBossBag, 500, ItemID.TwinsPetItem, conditions: Condition.InMasterMode);
             AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.TwinsBossBag, 1500, 3);
 
             //铁长直宝藏袋
@@ -121,7 +123,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.DestroyerBossBag, 500, ItemID.SoulofMight, 40);
             AddRemodelRecipe(ItemID.DestroyerBossBag, 1500, ItemID.DestroyerMask);
             AddRemodelRecipe(ItemID.DestroyerBossBag, 2500, ItemID.DestroyerTrophy);
-            AddRemodelRecipe(ItemID.DestroyerBossBag, 500, ItemID.DestroyerPetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.DestroyerBossBag, 500, ItemID.DestroyerPetItem, conditions: Condition.InMasterMode);
             AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.DestroyerBossBag, 1500, 3);
 
             //铁骷髅王宝藏袋
@@ -129,7 +131,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.SkeletronPrimeBossBag, 500, ItemID.SoulofFright, 40);
             AddRemodelRecipe(ItemID.SkeletronPrimeBossBag, 1500, ItemID.SkeletronPrimeMask);
             AddRemodelRecipe(ItemID.SkeletronPrimeBossBag, 2500, ItemID.SkeletronPrimeTrophy);
-            AddRemodelRecipe(ItemID.SkeletronPrimeBossBag, 500, ItemID.SkeletronPrimePetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.SkeletronPrimeBossBag, 500, ItemID.SkeletronPrimePetItem, conditions: Condition.InMasterMode);
             AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.SkeletronPrimeBossBag, 1500, 3);
 
             //世纪之花宝藏袋
@@ -145,7 +147,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.PlanteraBossBag, 2000, ItemID.ThornHook);
             AddRemodelRecipe(ItemID.PlanteraBossBag, 1500, ItemID.PlanteraMask);
             AddRemodelRecipe(ItemID.PlanteraBossBag, 2500, ItemID.PlanteraTrophy);
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 500, ItemID.PlanteraPetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.PlanteraBossBag, 500, ItemID.PlanteraPetItem, conditions: Condition.InMasterMode);
             AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.PlanteraBossBag, 1500, 3);
 
             //石巨人宝藏袋
@@ -160,7 +162,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.GolemBossBag, 4500, ItemID.GolemFist);
             AddRemodelRecipe(ItemID.GolemBossBag, 3000, ItemID.GolemMask);
             AddRemodelRecipe(ItemID.GolemBossBag, 4000, ItemID.GolemTrophy);
-            AddRemodelRecipe(ItemID.GolemBossBag, 1000, ItemID.GolemPetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.GolemBossBag, 1000, ItemID.GolemPetItem, conditions: Condition.InMasterMode);
             AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.GolemBossBag, 1500, 3);
 
             //猪鲨宝藏袋
@@ -172,7 +174,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.FishronBossBag, 7000, ItemID.FishronWings);
             AddRemodelRecipe(ItemID.FishronBossBag, 3000, ItemID.DukeFishronMask);
             AddRemodelRecipe(ItemID.FishronBossBag, 4000, ItemID.DukeFishronTrophy);
-            AddRemodelRecipe(ItemID.FishronBossBag, 1000, ItemID.DukeFishronPetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.FishronBossBag, 1000, ItemID.DukeFishronPetItem, conditions: Condition.InMasterMode);
             AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.FishronBossBag, 1500, 3);
 
             //光女宝藏袋
@@ -186,7 +188,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.FairyQueenBossBag, 6000, ItemID.HallowBossDye, 3);
             AddRemodelRecipe(ItemID.FairyQueenBossBag, 3000, ItemID.FairyQueenMask);
             AddRemodelRecipe(ItemID.FairyQueenBossBag, 4000, ItemID.FairyQueenTrophy);
-            AddRemodelRecipe(ItemID.FairyQueenBossBag, 1000, ItemID.FairyQueenPetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.FairyQueenBossBag, 1000, ItemID.FairyQueenPetItem, conditions: Condition.InMasterMode);
             AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.FairyQueenBossBag, 1500, 3);
 
             //月总宝藏袋
@@ -204,7 +206,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.MeowmereMinecart);
             AddRemodelRecipe(ItemID.MoonLordBossBag, 4000, ItemID.BossMaskMoonlord);
             AddRemodelRecipe(ItemID.MoonLordBossBag, 6000, ItemID.MoonLordTrophy);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 2000, ItemID.MoonLordPetItem, condition: MasterModeCondition.Instance);
+            AddRemodelRecipe(ItemID.MoonLordBossBag, 2000, ItemID.MoonLordPetItem, conditions: Condition.InMasterMode);
             AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.MoonLordBossBag, 1500, 3);
         }
     }
