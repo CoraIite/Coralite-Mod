@@ -68,8 +68,9 @@ namespace Coralite.Content.CustomHooks
                     }
                 }
 
-                Points.Clear();
                 Main.spriteBatch.End();
+
+                Points.Clear();
             }
         }
     }

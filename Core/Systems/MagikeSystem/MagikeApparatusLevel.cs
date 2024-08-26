@@ -46,6 +46,8 @@
         Flight,
         /// <summary> 禁戒 </summary>
         Forbidden,
+        /// <summary> 寒霜 </summary>
+        Frost,
         /// <summary> 薪火 </summary>
         EternalFlame,
     }

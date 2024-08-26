@@ -3,6 +3,7 @@ using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -11,7 +12,7 @@ using Terraria.ModLoader.IO;
 namespace Coralite.Content.Items.Vanity
 {
     [AutoloadEquip(EquipType.Head, EquipType.Body, EquipType.Legs, EquipType.Neck, EquipType.Back)]
-    public class SquirrelSet : ModItem, ISpecialDrawBackpacks, IMagikeRemodelable
+    public class SquirrelSet : ModItem, ISpecialDrawBackpacks, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.Vanity + Name;
 
@@ -87,7 +88,7 @@ namespace Coralite.Content.Items.Vanity
                 .Register();
         }
 
-        public void AddMagikeRemodelRecipe()
+        public void AddMagikeCraftRecipe()
         {
             MagikeSystem.AddRemodelRecipe<SoulOfDeveloper, SquirrelSet>(1000);
         }

@@ -2552,7 +2552,7 @@ PirateKingHat: {
 
 LightningRods: {
 	DisplayName: Lightning Rods
-	Tooltip: Right-click to summon the Desolate Thunder Dragon
+	Tooltip: Right-click to summon the Desolate Thundervein wyvern
 }
 
 CrystalBlossomShards: {
@@ -2565,17 +2565,17 @@ CrystalBlossomShards: {
 }
 
 ThunderveinDragonBossBag: {
-	DisplayName: Thundervein Dragon Boss Bag
+	DisplayName: Thundervein Wyvern Boss Bag
 	Tooltip: Right click to open
 }
 
 ThunderveinDragonRelic: {
-	DisplayName: Thundervein Dragon Relic
+	DisplayName: Thundervein Wyvern Relic
 	Tooltip: ""
 }
 
 ThunderveinDragonTrophy: {
-	DisplayName: Thundervein Dragon Trophy
+	DisplayName: Thundervein Wyvern Trophy
 	Tooltip: ""
 }
 
@@ -2691,12 +2691,12 @@ ThunderWorkBench: {
 
 TheGazeOfTheThundervein: {
 	DisplayName: The Gaze Of The Thundervein
-	Tooltip: The Thundervein Dragon, which is watching its prey in the dark, is said to be more vulnerable to damage to its head
+	Tooltip: The Thundervein Wyvern, which is watching its prey in the dark, is said to be more vulnerable to damage to its head
 }
 
 ThunderveinSoulStone: {
 	DisplayName: Thundervein Soul Stone
-	Tooltip: The spirit of the Thundervein Dragon is with you
+	Tooltip: The spirit of the Thundervein Wyvern is with you
 }
 
 ThunderDukeVine: {
@@ -3641,7 +3641,7 @@ NightmarePlanteraMask: {
 }
 
 ThunderveinDragonMask: {
-	DisplayName: Thundervein Dragon Mask
+	DisplayName: Thundervein Wyvern Mask
 	Tooltip: ""
 }
 
@@ -4403,5 +4403,45 @@ EmperorPolarizedFilter: {
 
 FlightPolarizedFilter: {
 	DisplayName: Flight Polarized Filter
+	Tooltip: ""
+}
+
+DesertLens: {
+	DisplayName: Desert Lens
+	Tooltip: ""
+}
+
+EternalFlamePolarizedFilter: {
+	DisplayName: Eternal Flame Polarized Filter
+	Tooltip: ""
+}
+
+ForbiddenPolarizedFilter: {
+	DisplayName: Forbidden Polarized Filter
+	Tooltip: ""
+}
+
+FrostPolarizedFilter: {
+	DisplayName: Frost Polarized Filter
+	Tooltip: ""
+}
+
+HellstonePolarizedFilter: {
+	DisplayName: Hellstone Polarized Filter
+	Tooltip: ""
+}
+
+QuicksandPolarizedFilter: {
+	DisplayName: Quicksand Polarized Filter
+	Tooltip: ""
+}
+
+ElectrificationWing: {
+	DisplayName: Electrification Wing
+	Tooltip: ""
+}
+
+InsulationCortex: {
+	DisplayName: Insulation Cortex
 	Tooltip: ""
 }

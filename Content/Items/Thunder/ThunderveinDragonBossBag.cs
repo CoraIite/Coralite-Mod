@@ -43,6 +43,8 @@ namespace Coralite.Content.Items.Thunder
         {
             itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<ThunderveinNecklace>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ZapCrystal>(), 1, 8, 12));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ElectrificationWing>(), 1, 4, 5));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<InsulationCortex>(), 1, 10, 14));
             itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<ThunderveinDragon>()));
         }
 

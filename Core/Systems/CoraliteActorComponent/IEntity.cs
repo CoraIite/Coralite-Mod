@@ -57,33 +57,6 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         /// <summary>
         /// 移除一个组件
         /// </summary>
-        /// <param name="componentId"></param>
-        /// <param name="listIndex"></param>
-        public void RemoveComponent(int componentId, int listIndex)
-        {
-            if (Components[componentId] == null)
-                return;
-
-            Component component;
-
-            if (MagikeComponentID.IsSingleton(componentId))//该组件为单例形态
-            {
-                 component = (Component)(Components[componentId]);
-                Components.Remove(componentId);
-            }
-            else//该组件需要多重存在
-            {
-                component = ((List<Component>)(Components[componentId]))[listIndex];
-                ((List<Component>)(Components[componentId])).Remove(component);
-            }
-
-            ComponentsCache.Remove(component);
-            component.OnRemove(this);
-        }
-
-        /// <summary>
-        /// 移除一个组件
-        /// </summary>
         /// <param name="currentComponent"></param>
         public void RemoveComponent( Component currentComponent)
         {

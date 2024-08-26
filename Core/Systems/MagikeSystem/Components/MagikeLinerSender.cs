@@ -1,4 +1,5 @@
-﻿using Coralite.Content.UI.MagikeApparatusPanel;
+﻿using Coralite.Content.CustomHooks;
+using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -34,7 +35,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 当前连接者 </summary>
         public int CurrentConnector => _receivers.Count;
 
-        private List<Point16> _receivers = new();
+        private List<Point16> _receivers = [];
 
         /// <summary>
         /// 仅供获取使用，那么为什么不用private set 呢，因为懒得改了，反正区别不大
@@ -50,6 +51,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Update(IEntity entity)
         {
+            Point16 p = (entity as MagikeTileEntity).Position;
+            if (Helper.OnScreen(p.ToWorldCoordinates() - Main.screenPosition, new Vector2(ConnectLength)))
+                DrawMagikeDevice.Points.Add(p);
+
             //发送时间限制
             if (!CanSend())
                 return;

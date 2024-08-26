@@ -1,4 +1,4 @@
-﻿namespace Coralite.Core
+﻿namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 {
     public interface IMagikeCraftable
     {

@@ -3,6 +3,7 @@ using Coralite.Content.Items.Gels;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
@@ -58,22 +59,10 @@ namespace Coralite.Content.Items.BossSummons
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe<GelInvitation>(250)
-                .SetMainItem<SymbolOfRoyal>()
-                .AddIngredient<GelFiber>(20)
-                .AddIngredient(ItemID.Gel, 99)
-                .Register();
-            MagikeCraftRecipe.CreateRecipe<GelInvitation>(250)
-                .SetMainItem(ItemID.SlimeCrown, 3)
+            MagikeCraftRecipe.CreateRecipe<SymbolOfRoyal, GelInvitation>(250)
                 .AddIngredient<GelFiber>(20)
                 .AddIngredient(ItemID.Gel, 99)
                 .Register();
         }
-
-        //public void AddMagikeRemodelRecipe()
-        //{
-        //MagikeSystem.AddRemodelRecipe<SymbolOfRoyal, GelInvitation>(400);
-        //MagikeSystem.AddRemodelRecipe<GelInvitation>(0f, ItemID.SlimeCrown, 400, selfStack: 3);
-        //}
     }
 }

@@ -1,15 +1,27 @@
 ﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.Items.Icicle;
 using Coralite.Content.Items.Materials;
+using Coralite.Content.Items.RedJades;
+using Coralite.Content.Items.Thunder;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria;
 using Terraria.ID;
-using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Core.Systems.MagikeSystem.Remodels
 {
-    public class BossBag : IMagikeRemodelable
+    public class BossBag : IMagikeCraftable
     {
-        public void AddMagikeRemodelRecipe()
+        public void AddMagikeCraftRecipe()
         {
+            #region 赤玉灵
+            MagikeCraftRecipe.CreateRecipe<RediancieBossBag, RedJade>(150, resultItemStack: 34)
+                .RegisterNew<RediancieMask>(50)
+                .RegisterNew<RediancieTrophy>(250)
+                .RegisterNew<RedianciePet>(50)
+                .AddCondition(Condition.InMasterMode)
+                .Register();
+            #endregion
+
             #region 史莱姆王
             MagikeCraftRecipe.CreateRecipe(ItemID.KingSlimeBossBag, ItemID.SlimySaddle, 150)
                 .RegisterNew(ItemID.NinjaHood, 100)
@@ -19,195 +31,266 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .RegisterNew(ItemID.SlimeGun, 50)
                 .RegisterNew(ItemID.KingSlimeMask, 100)
                 .RegisterNew(ItemID.KingSlimeTrophy, 150)
+                .RegisterNew(ItemID.KingSlimePetItem, 50)
+                .AddCondition(Condition.InMasterMode)
                 .Register();
-            AddRemodelRecipe(ItemID.KingSlimeBossBag, ItemID.KingSlimePetItem, 50, conditions: Condition.InMasterMode);
             #endregion
 
-            //克苏鲁之眼宝藏袋
-            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.CrimtaneOre, 150, 85);
-            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.DemoniteOre, 150, 85);
-            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.Binoculars, 150);
-            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.EyeMask, 100);
-            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.EyeofCthulhuTrophy, 150);
-            AddRemodelRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.EyeOfCthulhuPetItem, 50, conditions: Condition.InMasterMode);
+            #region 克苏鲁之眼
+            MagikeCraftRecipe.CreateRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.CrimtaneOre, 150, resultItemStack: 85)
+                .RegisterNew(ItemID.DemoniteOre, 150, 85)
+                .RegisterNew(ItemID.Binoculars, 150)
+                .RegisterNew(ItemID.EyeMask, 100)
+                .RegisterNew(ItemID.EyeofCthulhuTrophy, 150)
+                .RegisterNew(ItemID.EyeOfCthulhuPetItem, 50)
+                .AddCondition(Condition.InMasterMode)
+                .Register();
+            #endregion
 
-            //世界吞噬怪宝藏袋
-            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, ItemID.DemoniteOre, 225, 70);
-            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, ItemID.ShadowScale, 250, 25);
-            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, ItemID.EatersBone, 450);
-            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, ItemID.EaterMask, 200);
-            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, ItemID.EaterofWorldsTrophy, 300);
-            AddRemodelRecipe(ItemID.EaterOfWorldsBossBag, ItemID.EaterOfWorldsPetItem, 100, conditions: Condition.InMasterMode);
+            #region 世界吞噬怪
+            MagikeCraftRecipe.CreateRecipe(ItemID.EaterOfWorldsBossBag, ItemID.DemoniteOre, 225, resultItemStack: 70)
+                .RegisterNew(ItemID.ShadowScale, 250, 25)
+                .RegisterNew(ItemID.EatersBone, 450)
+                .RegisterNew(ItemID.EaterMask, 200)
+                .RegisterNew(ItemID.EaterofWorldsTrophy, 300)
+                .RegisterNew(ItemID.EaterOfWorldsPetItem, 100)
+                .AddCondition(Condition.InMasterMode)
+                .Register();
+            #endregion
 
-            //克苏鲁之脑宝藏袋
-            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.CrimtaneOre, 225, 70);
-            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.TissueSample, 250, 25);
-            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.BoneRattle, 450);
-            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.BrainMask, 200);
-            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.BrainofCthulhuTrophy, 300);
-            AddRemodelRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.BrainOfCthulhuPetItem, 100, conditions: Condition.InMasterMode);
+            #region 克苏鲁之脑
+            MagikeCraftRecipe.CreateRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.CrimtaneOre, 225, resultItemStack: 70)
+                .RegisterNew(ItemID.TissueSample, 250, 25)
+                .RegisterNew(ItemID.BoneRattle, 450)
+                .RegisterNew(ItemID.BrainMask, 200)
+                .RegisterNew(ItemID.BrainofCthulhuTrophy, 300)
+                .RegisterNew(ItemID.BrainOfCthulhuPetItem, 100)
+                .AddCondition(Condition.InMasterMode)
+                .Register();
+            #endregion
 
-            //蜂后宝藏袋
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, ItemID.BeeGun, 200);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, ItemID.BeeKeeper, 200);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 200, ItemID.BeesKnees);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 100, ItemID.BeeHat);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 100, ItemID.BeeShirt);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 100, ItemID.BeePants);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 200, ItemID.HoneyComb);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 450, ItemID.Nectar);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 450, ItemID.HoneyedGoggles);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 300, ItemID.Beenade, 80);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 200, ItemID.BeeMask);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 300, ItemID.QueenBeeTrophy);
-            AddRemodelRecipe(ItemID.QueenBeeBossBag, 100, ItemID.QueenBeePetItem, conditions: Condition.InMasterMode);
+            #region 冰龙宝宝
+            MagikeCraftRecipe.CreateRecipe<BabyIceDragonBossBag, IcicleCrystal>(225, resultItemStack: 8)
+                .RegisterNew<IcicleScale>(225, 7)
+                .RegisterNew<IcicleBreath>(225, 10)
+                .RegisterNew<BabyIceDragonMask>(150)
+                .RegisterNew<BabyIceDragonTrophy>(150)
+                .RegisterNew<IcicleSoulStone>( 150)
+                .AddCondition(Condition.InMasterMode)
+                .Register();
+            #endregion
 
-            //巨鹿宝藏袋
-            AddRemodelRecipe(ItemID.DeerclopsBossBag, 450, ItemID.ChesterPetItem);
-            AddRemodelRecipe(ItemID.DeerclopsBossBag, 200, ItemID.Eyebrella);
-            AddRemodelRecipe(ItemID.DeerclopsBossBag, 200, ItemID.DontStarveShaderItem);
-            AddRemodelRecipe(ItemID.DeerclopsBossBag, 450, ItemID.DizzyHat);
-            AddRemodelRecipe(ItemID.DeerclopsBossBag, 250, ItemID.PewMaticHorn);
-            AddRemodelRecipe(ItemID.DeerclopsBossBag, 250, ItemID.WeatherPain);
-            AddRemodelRecipe(ItemID.DeerclopsBossBag, 250, ItemID.HoundiusShootius);
-            AddRemodelRecipe(ItemID.DeerclopsBossBag, 250, ItemID.LucyTheAxe);
-            AddRemodelRecipe(ItemID.DeerclopsBossBag, 200, ItemID.DeerclopsMask);
-            AddRemodelRecipe(ItemID.DeerclopsBossBag, 300, ItemID.DeerclopsTrophy);
-            AddRemodelRecipe(ItemID.DeerclopsBossBag, 100, ItemID.DeerclopsPetItem, conditions: Condition.InMasterMode);
+            #region 蜂后
+            MagikeCraftRecipe.CreateRecipe(ItemID.QueenBeeBossBag, ItemID.BeeGun, 200)
+                .RegisterNew(ItemID.BeeKeeper, 200)
+                .RegisterNew(ItemID.BeesKnees, 200)
+                .RegisterNew(ItemID.BeeHat, 100)
+                .RegisterNew(ItemID.BeeShirt, 100)
+                .RegisterNew(ItemID.BeePants, 100)
+                .RegisterNew(ItemID.HoneyComb, 200)
+                .RegisterNew(ItemID.Nectar, 450)
+                .RegisterNew(ItemID.HoneyedGoggles, 450)
+                .RegisterNew(ItemID.Beenade, 300,80)
+                .RegisterNew(ItemID.BeeMask, 200)
+                .RegisterNew(ItemID.QueenBeeTrophy, 300)
+                .RegisterNew(ItemID.QueenBeePetItem, 100)
+                .AddCondition(Condition.InMasterMode)
+                .Register();
+            #endregion
 
-            //骷髅王宝藏袋
-            AddRemodelRecipe(ItemID.SkeletronBossBag, 200, ItemID.SkeletronHand);
-            AddRemodelRecipe(ItemID.SkeletronBossBag, 200, ItemID.BookofSkulls);
-            AddRemodelRecipe(ItemID.SkeletronBossBag, 450, ItemID.ChippysCouch);
-            AddRemodelRecipe(ItemID.SkeletronBossBag, 200, ItemID.SkeletronMask);
-            AddRemodelRecipe(ItemID.SkeletronBossBag, 300, ItemID.SkeletronTrophy);
-            AddRemodelRecipe(ItemID.SkeletronBossBag, 100, ItemID.SkeletronPetItem, conditions: Condition.InMasterMode);
+            #region 巨鹿
+            MagikeCraftRecipe.CreateRecipe(ItemID.DeerclopsBossBag, ItemID.ChesterPetItem, 450)
+                .RegisterNew(ItemID.Eyebrella, 200)
+                .RegisterNew(ItemID.DontStarveShaderItem, 200)
+                .RegisterNew(ItemID.DizzyHat, 450)
+                .RegisterNew(ItemID.PewMaticHorn, 250)
+                .RegisterNew(ItemID.WeatherPain, 250)
+                .RegisterNew(ItemID.HoundiusShootius, 250)
+                .RegisterNew(ItemID.LucyTheAxe, 250)
+                .RegisterNew(ItemID.DeerclopsMask, 200)
+                .RegisterNew(ItemID.DeerclopsTrophy, 300)
+                .RegisterNew(ItemID.DeerclopsPetItem, 100)
+                .AddCondition(Condition.InMasterMode)
+                .Register();
+            #endregion
 
-            //肉山宝藏袋
-            AddRemodelRecipe(ItemID.WallOfFleshBossBag, 350, ItemID.WarriorEmblem);
-            AddRemodelRecipe(ItemID.WallOfFleshBossBag, 350, ItemID.RangerEmblem);
-            AddRemodelRecipe(ItemID.WallOfFleshBossBag, 350, ItemID.SorcererEmblem);
-            AddRemodelRecipe(ItemID.WallOfFleshBossBag, 350, ItemID.SummonerEmblem);
-            AddRemodelRecipe(ItemID.WallOfFleshBossBag, 300, ItemID.BreakerBlade);
-            AddRemodelRecipe(ItemID.WallOfFleshBossBag, 300, ItemID.ClockworkAssaultRifle);
-            AddRemodelRecipe(ItemID.WallOfFleshBossBag, 300, ItemID.LaserRifle);
-            AddRemodelRecipe(ItemID.WallOfFleshBossBag, 300, ItemID.FireWhip);
-            AddRemodelRecipe(ItemID.WallOfFleshBossBag, 300, ItemID.FleshMask);
-            AddRemodelRecipe(ItemID.WallOfFleshBossBag, 400, ItemID.WallofFleshTrophy);
-            AddRemodelRecipe(ItemID.WallOfFleshBossBag, 200, ItemID.WallOfFleshGoatMountItem, conditions: Condition.InMasterMode);
+            #region 骷髅王
+            MagikeCraftRecipe.CreateRecipe(ItemID.SkeletronBossBag, ItemID.SkeletronHand, 200)
+                .RegisterNew(ItemID.BookofSkulls, 200)
+                .RegisterNew(ItemID.ChippysCouch, 450)
+                .RegisterNew(ItemID.SkeletronMask, 200)
+                .RegisterNew(ItemID.SkeletronTrophy, 300)
+                .RegisterNew(ItemID.SkeletronPetItem, 100)
+                .AddCondition(Condition.InMasterMode)
+                .Register();
+            #endregion
 
-            //史莱姆皇后宝藏袋
-            AddRemodelRecipe(ItemID.QueenSlimeBossBag, 1500, ItemID.GelBalloon, 100);
-            AddRemodelRecipe(ItemID.QueenSlimeBossBag, 3000, ItemID.Smolstar);
-            AddRemodelRecipe(ItemID.QueenSlimeBossBag, 3000, ItemID.QueenSlimeHook);
-            AddRemodelRecipe(ItemID.QueenSlimeBossBag, 3500, ItemID.QueenSlimeMountSaddle);
-            AddRemodelRecipe(ItemID.QueenSlimeBossBag, 1500, ItemID.CrystalNinjaHelmet);
-            AddRemodelRecipe(ItemID.QueenSlimeBossBag, 1500, ItemID.CrystalNinjaChestplate);
-            AddRemodelRecipe(ItemID.QueenSlimeBossBag, 1500, ItemID.CrystalNinjaLeggings);
-            AddRemodelRecipe(ItemID.QueenSlimeBossBag, 1500, ItemID.QueenSlimeMask);
-            AddRemodelRecipe(ItemID.QueenSlimeBossBag, 2500, ItemID.QueenSlimeTrophy);
-            AddRemodelRecipe(ItemID.QueenSlimeBossBag, 500, ItemID.QueenSlimePetItem, conditions: Condition.InMasterMode);
-            //AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.QueenSlimeBossBag, 1500, 3);
+            #region 肉山
+            MagikeCraftRecipe.CreateRecipe(ItemID.WallOfFleshBossBag, ItemID.WarriorEmblem, 350)
+                .RegisterNew(ItemID.RangerEmblem, 350)
+                .RegisterNew(ItemID.SorcererEmblem, 350)
+                .RegisterNew(ItemID.SummonerEmblem, 350)
+                .RegisterNew(ItemID.BreakerBlade, 300)
+                .RegisterNew(ItemID.ClockworkAssaultRifle, 300)
+                .RegisterNew(ItemID.LaserRifle, 300)
+                .RegisterNew(ItemID.FireWhip, 300)
+                .RegisterNew(ItemID.FleshMask, 300)
+                .RegisterNew(ItemID.WallofFleshTrophy, 400)
+                .RegisterNew(ItemID.WallOfFleshGoatMountItem, 200)
+                .AddCondition(Condition.InMasterMode)
+                .Register();
+            #endregion
 
-            //双子魔眼宝藏袋
-            AddRemodelRecipe(ItemID.TwinsBossBag, 500, ItemID.HallowedBar, 35);
-            AddRemodelRecipe(ItemID.TwinsBossBag, 500, ItemID.SoulofSight, 40);
-            AddRemodelRecipe(ItemID.TwinsBossBag, 1500, ItemID.TwinMask);
-            AddRemodelRecipe(ItemID.TwinsBossBag, 2500, ItemID.RetinazerTrophy);
-            AddRemodelRecipe(ItemID.TwinsBossBag, 2500, ItemID.SpazmatismTrophy);
-            AddRemodelRecipe(ItemID.TwinsBossBag, 500, ItemID.TwinsPetItem, conditions: Condition.InMasterMode);
-            AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.TwinsBossBag, 1500, 3);
+            #region 史莱姆皇后
+            MagikeCraftRecipe.CreateRecipe(ItemID.QueenSlimeBossBag, ItemID.GelBalloon, 1500,resultItemStack: 100)
+                .RegisterNew(ItemID.Smolstar, 3000)
+                .RegisterNew(ItemID.QueenSlimeHook, 3000)
+                .RegisterNew(ItemID.QueenSlimeMountSaddle, 3500)
+                .RegisterNew(ItemID.CrystalNinjaHelmet, 1500)
+                .RegisterNew(ItemID.CrystalNinjaChestplate, 1500)
+                .RegisterNew(ItemID.CrystalNinjaLeggings, 1500)
+                .RegisterNew(ItemID.QueenSlimeMask, 1500)
+                .RegisterNew(ItemID.QueenSlimeTrophy, 2500)
+                .RegisterNew(ItemID.QueenSlimePetItem, 500)
+                .AddCondition(Condition.InMasterMode)
+                .Register();
+            #endregion
 
-            //铁长直宝藏袋
-            AddRemodelRecipe(ItemID.DestroyerBossBag, 500, ItemID.HallowedBar, 35);
-            AddRemodelRecipe(ItemID.DestroyerBossBag, 500, ItemID.SoulofMight, 40);
-            AddRemodelRecipe(ItemID.DestroyerBossBag, 1500, ItemID.DestroyerMask);
-            AddRemodelRecipe(ItemID.DestroyerBossBag, 2500, ItemID.DestroyerTrophy);
-            AddRemodelRecipe(ItemID.DestroyerBossBag, 500, ItemID.DestroyerPetItem, conditions: Condition.InMasterMode);
-            AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.DestroyerBossBag, 1500, 3);
+            #region 双子魔眼
+            MagikeCraftRecipe.CreateRecipe(ItemID.TwinsBossBag, ItemID.HallowedBar, 500, resultItemStack: 35)
+                .RegisterNew(ItemID.SoulofSight, 500, 40)
+                .RegisterNew(ItemID.TwinMask, 1500)
+                .RegisterNew(ItemID.RetinazerTrophy, 2500)
+                .RegisterNew(ItemID.SpazmatismTrophy, 2500)
+                .RegisterNew(ItemID.TwinsPetItem, 500)
+                .AddCondition(Condition.InMasterMode)
+                .RegisterNew<SoulOfDeveloper>( 1500, 3)
+                .Register();
+            #endregion
 
-            //铁骷髅王宝藏袋
-            AddRemodelRecipe(ItemID.SkeletronPrimeBossBag, 500, ItemID.HallowedBar, 35);
-            AddRemodelRecipe(ItemID.SkeletronPrimeBossBag, 500, ItemID.SoulofFright, 40);
-            AddRemodelRecipe(ItemID.SkeletronPrimeBossBag, 1500, ItemID.SkeletronPrimeMask);
-            AddRemodelRecipe(ItemID.SkeletronPrimeBossBag, 2500, ItemID.SkeletronPrimeTrophy);
-            AddRemodelRecipe(ItemID.SkeletronPrimeBossBag, 500, ItemID.SkeletronPrimePetItem, conditions: Condition.InMasterMode);
-            AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.SkeletronPrimeBossBag, 1500, 3);
+            #region 铁长直
+            MagikeCraftRecipe.CreateRecipe(ItemID.DestroyerBossBag, ItemID.HallowedBar, 500, resultItemStack: 35)
+                .RegisterNew(ItemID.SoulofMight, 500, 40)
+                .RegisterNew(ItemID.DestroyerMask, 1500)
+                .RegisterNew(ItemID.DestroyerTrophy, 2500)
+                .RegisterNew(ItemID.DestroyerPetItem, 500)
+                .AddCondition(Condition.InMasterMode)
+                .RegisterNew<SoulOfDeveloper>(1500, 3)
+                .Register();
+            #endregion
 
-            //世纪之花宝藏袋
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 3000, ItemID.GrenadeLauncher);
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 3000, ItemID.VenusMagnum);
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 2500, ItemID.NettleBurst);
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 3000, ItemID.FlowerPow);
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 3000, ItemID.WaspGun);
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 3500, ItemID.Seedler);
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 6000, ItemID.Seedling);
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 7000, ItemID.TheAxe);
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 3000, ItemID.PygmyStaff);
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 2000, ItemID.ThornHook);
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 1500, ItemID.PlanteraMask);
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 2500, ItemID.PlanteraTrophy);
-            AddRemodelRecipe(ItemID.PlanteraBossBag, 500, ItemID.PlanteraPetItem, conditions: Condition.InMasterMode);
-            AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.PlanteraBossBag, 1500, 3);
+            #region 铁骷髅王
+            MagikeCraftRecipe.CreateRecipe(ItemID.SkeletronPrimeBossBag, ItemID.HallowedBar, 500, resultItemStack: 35)
+                .RegisterNew(ItemID.SoulofFright, 500, 40)
+                .RegisterNew(ItemID.SkeletronPrimeMask, 1500)
+                .RegisterNew(ItemID.SkeletronPrimeTrophy, 2500)
+                .RegisterNew(ItemID.SkeletronPrimePetItem, 500)
+                .AddCondition(Condition.InMasterMode)
+                .RegisterNew<SoulOfDeveloper>(1500, 3)
+                .Register();
+            #endregion
 
-            //石巨人宝藏袋
-            AddRemodelRecipe(ItemID.GolemBossBag, 3000, ItemID.BeetleHusk, 35);
-            AddRemodelRecipe(ItemID.GolemBossBag, 5000, ItemID.Picksaw);
-            AddRemodelRecipe(ItemID.GolemBossBag, 4500, ItemID.Stynger);
-            AddRemodelRecipe(ItemID.GolemBossBag, 4500, ItemID.PossessedHatchet);
-            AddRemodelRecipe(ItemID.GolemBossBag, 4500, ItemID.SunStone);
-            AddRemodelRecipe(ItemID.GolemBossBag, 4500, ItemID.EyeoftheGolem);
-            AddRemodelRecipe(ItemID.GolemBossBag, 4500, ItemID.HeatRay);
-            AddRemodelRecipe(ItemID.GolemBossBag, 4500, ItemID.StaffofEarth);
-            AddRemodelRecipe(ItemID.GolemBossBag, 4500, ItemID.GolemFist);
-            AddRemodelRecipe(ItemID.GolemBossBag, 3000, ItemID.GolemMask);
-            AddRemodelRecipe(ItemID.GolemBossBag, 4000, ItemID.GolemTrophy);
-            AddRemodelRecipe(ItemID.GolemBossBag, 1000, ItemID.GolemPetItem, conditions: Condition.InMasterMode);
-            AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.GolemBossBag, 1500, 3);
+            #region 荒雷龙
+            MagikeCraftRecipe.CreateRecipe<ThunderveinDragonBossBag, ZapCrystal>(3000, resultItemStack: 16)
+                .RegisterNew<ElectrificationWing>(3000, 6)
+                .RegisterNew<InsulationCortex>(3000, 20)
+                .RegisterNew<ThunderveinDragonMask>(1000)
+                .RegisterNew<ThunderveinDragonTrophy>(1000)
+                .RegisterNew<ThunderveinSoulStone>(1000)
+                .AddCondition(Condition.InMasterMode)
+                .RegisterNew<SoulOfDeveloper>(1500, 3)
+                .Register();
+            #endregion
 
-            //猪鲨宝藏袋
-            AddRemodelRecipe(ItemID.FishronBossBag, 5000, ItemID.BubbleGun);
-            AddRemodelRecipe(ItemID.FishronBossBag, 5000, ItemID.Flairon);
-            AddRemodelRecipe(ItemID.FishronBossBag, 5000, ItemID.RazorbladeTyphoon);
-            AddRemodelRecipe(ItemID.FishronBossBag, 5000, ItemID.TempestStaff);
-            AddRemodelRecipe(ItemID.FishronBossBag, 5000, ItemID.Tsunami);
-            AddRemodelRecipe(ItemID.FishronBossBag, 7000, ItemID.FishronWings);
-            AddRemodelRecipe(ItemID.FishronBossBag, 3000, ItemID.DukeFishronMask);
-            AddRemodelRecipe(ItemID.FishronBossBag, 4000, ItemID.DukeFishronTrophy);
-            AddRemodelRecipe(ItemID.FishronBossBag, 1000, ItemID.DukeFishronPetItem, conditions: Condition.InMasterMode);
-            AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.FishronBossBag, 1500, 3);
+            #region 世纪之花宝藏袋
+            MagikeCraftRecipe.CreateRecipe(ItemID.PlanteraBossBag, ItemID.GrenadeLauncher, 3000)
+                .RegisterNew(ItemID.VenusMagnum, 3000)
+                .RegisterNew(ItemID.NettleBurst, 2500)
+                .RegisterNew(ItemID.FlowerPow, 3000)
+                .RegisterNew(ItemID.WaspGun, 3000)
+                .RegisterNew(ItemID.Seedler, 3500)
+                .RegisterNew(ItemID.Seedling, 6000)
+                .RegisterNew(ItemID.TheAxe, 7000)
+                .RegisterNew(ItemID.PygmyStaff, 3000)
+                .RegisterNew(ItemID.ThornHook, 2000)
+                .RegisterNew(ItemID.PlanteraMask, 2000)
+                .RegisterNew(ItemID.PlanteraTrophy, 2000)
+                .RegisterNew(ItemID.PlanteraPetItem, 500)
+                .AddCondition(Condition.InMasterMode)
+                .RegisterNew<SoulOfDeveloper>(1500, 3)
+                .Register();
+            #endregion
 
-            //光女宝藏袋
-            AddRemodelRecipe(ItemID.FairyQueenBossBag, 5000, ItemID.FairyQueenMagicItem);
-            AddRemodelRecipe(ItemID.FairyQueenBossBag, 5000, ItemID.PiercingStarlight);
-            AddRemodelRecipe(ItemID.FairyQueenBossBag, 5000, ItemID.RainbowWhip);
-            AddRemodelRecipe(ItemID.FairyQueenBossBag, 5000, ItemID.FairyQueenRangedItem);
-            AddRemodelRecipe(ItemID.FairyQueenBossBag, 6000, ItemID.RainbowWings);
-            AddRemodelRecipe(ItemID.FairyQueenBossBag, 7000, ItemID.SparkleGuitar);
-            AddRemodelRecipe(ItemID.FairyQueenBossBag, 7000, ItemID.RainbowCursor);
-            AddRemodelRecipe(ItemID.FairyQueenBossBag, 6000, ItemID.HallowBossDye, 3);
-            AddRemodelRecipe(ItemID.FairyQueenBossBag, 3000, ItemID.FairyQueenMask);
-            AddRemodelRecipe(ItemID.FairyQueenBossBag, 4000, ItemID.FairyQueenTrophy);
-            AddRemodelRecipe(ItemID.FairyQueenBossBag, 1000, ItemID.FairyQueenPetItem, conditions: Condition.InMasterMode);
-            AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.FairyQueenBossBag, 1500, 3);
+            #region 石巨人宝藏袋
+            MagikeCraftRecipe.CreateRecipe(ItemID.GolemBossBag, ItemID.BeetleHusk, 3000, resultItemStack:35)
+                .RegisterNew(ItemID.Picksaw, 5000)
+                .RegisterNew(ItemID.Stynger, 4500)
+                .RegisterNew(ItemID.PossessedHatchet, 4500)
+                .RegisterNew(ItemID.SunStone, 4500)
+                .RegisterNew(ItemID.HeatRay, 4500)
+                .RegisterNew(ItemID.EyeoftheGolem, 4500)
+                .RegisterNew(ItemID.StaffofEarth, 4500)
+                .RegisterNew(ItemID.GolemFist, 4500)
+                .RegisterNew(ItemID.GolemMask, 3000)
+                .RegisterNew(ItemID.GolemTrophy, 4000)
+                .RegisterNew(ItemID.GolemPetItem, 500)
+                .AddCondition(Condition.InMasterMode)
+                .RegisterNew<SoulOfDeveloper>(1500, 3)
+                .Register();
+            #endregion
 
-            //月总宝藏袋
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.Meowmere);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.Terrarian);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.StarWrath);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.SDMG);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.LastPrism);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.LunarFlareBook);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.RainbowCrystalStaff);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.MoonlordTurretStaff);
-            AddRemodelRecipe<ConquerorOfTheSeas>(0f, ItemID.MoonLordBossBag, 7000);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.Celeb2);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.LunarOre, 170);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 7000, ItemID.MeowmereMinecart);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 4000, ItemID.BossMaskMoonlord);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 6000, ItemID.MoonLordTrophy);
-            AddRemodelRecipe(ItemID.MoonLordBossBag, 2000, ItemID.MoonLordPetItem, conditions: Condition.InMasterMode);
-            AddRemodelRecipe<SoulOfDeveloper>(0f, ItemID.MoonLordBossBag, 1500, 3);
+            #region 猪鲨宝藏袋
+            MagikeCraftRecipe.CreateRecipe(ItemID.FishronBossBag, ItemID.BubbleGun, 5000)
+                .RegisterNew(ItemID.Flairon, 5000)
+                .RegisterNew(ItemID.RazorbladeTyphoon, 5000)
+                .RegisterNew(ItemID.TempestStaff, 5000)
+                .RegisterNew(ItemID.Tsunami, 5000)
+                .RegisterNew(ItemID.FishronWings, 5000)
+                .RegisterNew(ItemID.DukeFishronMask, 5000)
+                .RegisterNew(ItemID.DukeFishronTrophy, 5000)
+                .RegisterNew(ItemID.DukeFishronPetItem, 1000)
+                .AddCondition(Condition.InMasterMode)
+                .RegisterNew<SoulOfDeveloper>(1500, 3)
+                .Register();
+            #endregion
+
+            #region 光女宝藏袋
+            MagikeCraftRecipe.CreateRecipe(ItemID.FairyQueenBossBag, ItemID.FairyQueenMagicItem, 5000)
+                .RegisterNew(ItemID.PiercingStarlight, 5000)
+                .RegisterNew(ItemID.RainbowWhip, 5000)
+                .RegisterNew(ItemID.FairyQueenRangedItem, 5000)
+                .RegisterNew(ItemID.RainbowWings, 6000)
+                .RegisterNew(ItemID.SparkleGuitar, 7000)
+                .RegisterNew(ItemID.RainbowCursor, 7000)
+                .RegisterNew(ItemID.HallowBossDye, 6000,3)
+                .RegisterNew(ItemID.FairyQueenMask, 3000)
+                .RegisterNew(ItemID.FairyQueenTrophy, 4000)
+                .RegisterNew(ItemID.FairyQueenPetItem, 1000)
+                .AddCondition(Condition.InMasterMode)
+                .RegisterNew<SoulOfDeveloper>(1500, 3)
+                .Register();
+            #endregion
+
+            #region 月总宝藏袋
+            MagikeCraftRecipe.CreateRecipe(ItemID.MoonLordBossBag, ItemID.Meowmere, 7000)
+                .RegisterNew(ItemID.Terrarian, 7000)
+                .RegisterNew(ItemID.StarWrath, 7000)
+                .RegisterNew(ItemID.SDMG, 7000)
+                .RegisterNew(ItemID.LastPrism, 7000)
+                .RegisterNew(ItemID.LunarFlareBook, 7000)
+                .RegisterNew(ItemID.RainbowCrystalStaff, 7000)
+                .RegisterNew(ItemID.MoonlordTurretStaff, 7000)
+                .RegisterNew<ConquerorOfTheSeas>( 7000)
+                .RegisterNew(ItemID.Celeb2, 7000)
+                .RegisterNew(ItemID.LunarOre, 7000,170)
+                .RegisterNew(ItemID.MeowmereMinecart, 7000)
+                .RegisterNew(ItemID.BossMaskMoonlord, 4000)
+                .RegisterNew(ItemID.MoonLordTrophy, 6000)
+                .RegisterNew(ItemID.MoonLordPetItem, 2000)
+                .AddCondition(Condition.InMasterMode)
+                .RegisterNew<SoulOfDeveloper>(1500, 3)
+                .Register();
+            #endregion
         }
     }
 }

@@ -159,7 +159,7 @@ namespace Coralite.Helpers
             int frameY = tile.TileFrameY;
             if (data != null)
             {
-                frameX %= data.Width * 18;
+                frameX %= data.Width * (data.CoordinateWidth + data.CoordinatePadding);
                 frameY %= data.Height * 18;
             }
 

@@ -354,10 +354,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 return;
 
             if (i == topLeft.Value.X && j == topLeft.Value.Y)
-            {
                 Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
-                DrawMagikeDevice.Points.Add(new Point16(i, j));
-            }
         }
 
         public sealed override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)

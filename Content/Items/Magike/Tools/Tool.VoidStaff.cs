@@ -3,6 +3,7 @@ using Coralite.Content.Items.Materials;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.DataStructures;
@@ -155,12 +156,12 @@ namespace Coralite.Content.Items.Magike.Tools
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe<VoidStaff>(150)
-                 .SetMainItem(ItemID.Bone, 15)
-                 .AddIngredient(ItemID.JungleSpores, 5)
-                 .AddIngredient<MagicCrystal>(2)
-                 .AddIngredient<MagicalPowder>(2)
-                 .Register();
+            //MagikeCraftRecipe.CreateRecipe<VoidStaff>(150)
+            //     .SetMainItem(ItemID.Bone, 15)
+            //     .AddIngredient(ItemID.JungleSpores, 5)
+            //     .AddIngredient<MagicCrystal>(2)
+            //     .AddIngredient<MagicalPowder>(2)
+            //     .Register();
         }
     }
 }

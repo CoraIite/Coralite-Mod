@@ -4459,11 +4459,6 @@ EmperorGel: {
 	Tooltip: 水润且尝起来甜甜的
 }
 
-EmperorFilter: {
-	DisplayName: 偏振滤镜-帝凝胶
-	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
-}
-
 PelagicPolarizedFilter: {
 	DisplayName: 偏振滤镜-远洋
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
@@ -4476,7 +4471,7 @@ SeashorePolarizedFilter: {
 
 SkyLens: {
 	DisplayName: 天空滤镜
-	Tooltip: 
+	Tooltip:
 		'''
 		在天空生产魔能，只能放置在任意云块上
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
@@ -4496,4 +4491,48 @@ EmperorPolarizedFilter: {
 FlightPolarizedFilter: {
 	DisplayName: 偏振滤镜-飞翔
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+DesertLens: {
+	DisplayName: 沙漠透镜
+	Tooltip:
+		'''
+		在沙漠生产魔能，只能放置在沙块
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
+}
+
+EternalFlamePolarizedFilter: {
+	DisplayName: 偏振滤镜-薪火
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+ForbiddenPolarizedFilter: {
+	DisplayName: 偏振滤镜-禁戒
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+FrostPolarizedFilter: {
+	DisplayName: 偏振滤镜-寒霜
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+HellstonePolarizedFilter: {
+	DisplayName: 偏振滤镜-狱石
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+QuicksandPolarizedFilter: {
+	DisplayName: 偏振滤镜-流沙
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+ElectrificationWing: {
+	DisplayName: 荒雷龙的带电翼膜
+	Tooltip: 从荒雷龙的电翼上取下的一小部分，时刻保持着带电状态
+}
+
+InsulationCortex: {
+	DisplayName: 荒雷龙的绝缘壳
+	Tooltip: 荒雷龙身体上覆盖的绝缘甲壳，可以保护自身的重要部位不被电流伤害
 }

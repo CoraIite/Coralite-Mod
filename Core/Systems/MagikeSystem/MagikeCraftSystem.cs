@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Raritys;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
@@ -130,7 +131,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             }
         }
 
-        public Action<Item, Item> onPolymerize;
+        public Action<Item, Item> onCraft;
 
         /// <summary>
         /// 检测是否能合成
@@ -177,6 +178,12 @@ namespace Coralite.Core.Systems.MagikeSystem
                 ResultItem = new(resultItemType, resultItemStack),
                 magikeCost = magikeCost
             };
+        }
+
+        public MagikeCraftRecipe SetMainStack(int mainItemStack)
+        {
+            MainItem.stack = mainItemStack;
+            return this;
         }
 
         public MagikeCraftRecipe SetAntiMagikeCost(int antiMagikeCost)
@@ -238,9 +245,15 @@ namespace Coralite.Core.Systems.MagikeSystem
             return CreateRecipe(MainItem.type,resultItemType, magikeCost,MainItem.stack,resultItemStack);
         }
 
-        public MagikeCraftRecipe RegisterAndNewSameMain<TResultItem>(int magikeCost, int resultItemStack = 1)
+        /// <summary>
+        /// 在注册的同时新建一个拥有相同主物品类型和堆叠数的合成表
+        /// </summary>
+        /// <typeparam name="TResultItem"></typeparam>
+        /// <param name="magikeCost"></param>
+        /// <param name="resultItemStack"></param>
+        /// <returns></returns>
+        public MagikeCraftRecipe RegisterNew<TResultItem>(int magikeCost, int resultItemStack = 1)
             where TResultItem : ModItem
-
         {
             Register();
             return CreateRecipe(MainItem.type, ItemType<TResultItem>(), magikeCost, MainItem.stack, resultItemStack);

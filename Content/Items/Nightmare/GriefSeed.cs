@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -10,7 +11,7 @@ using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Content.Items.Nightmare
 {
-    public class GriefSeed : ModItem, IMagikeRemodelable
+    public class GriefSeed : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.NightmareItems + Name;
 
@@ -174,7 +175,7 @@ namespace Coralite.Content.Items.Nightmare
             return false;
         }
 
-        public void AddMagikeRemodelRecipe()
+        public void AddMagikeCraftRecipe()
         {
             AddRemodelRecipe<GriefSeed, LostSevensideHook>(1_3500);
             AddRemodelRecipe<GriefSeed, DreamShears>(1_3500);

@@ -87,7 +87,8 @@ namespace Coralite.Content.Items.Thunder
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<ZapCrystal>(2)
+                .AddIngredient<ZapCrystal>(3)
+                .AddIngredient<ElectrificationWing>()
                 .AddIngredient(ItemID.IllegalGunParts)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

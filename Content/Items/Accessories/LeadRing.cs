@@ -1,18 +1,18 @@
-﻿using Coralite.Core;
-using Coralite.Core.Prefabs.Items;
+﻿using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Accessories
 {
-    internal class LeadRing : BaseAccessory, IMagikeRemodelable
+    internal class LeadRing : BaseAccessory, IMagikeCraftable
     {
         public LeadRing() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 0, 20)) { }
 
-        public void AddMagikeRemodelRecipe()
+        public void AddMagikeCraftRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<LeadRing>(0f, ItemID.LeadBar, 150, selfStack: 100);
+            //MagikeSystem.AddRemodelRecipe<LeadRing>(0f, ItemID.LeadBar, 150, selfStack: 100);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

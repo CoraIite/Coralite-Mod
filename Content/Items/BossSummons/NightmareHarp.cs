@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,7 +17,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.BossSummons
 {
-    public class NightmareHarp : ModItem, IMagikeRemodelable
+    public class NightmareHarp : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.BossSummons + Name;
 
@@ -85,9 +86,9 @@ namespace Coralite.Content.Items.BossSummons
             return false;
         }
 
-        public void AddMagikeRemodelRecipe()
+        public void AddMagikeCraftRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<NightmareHarp>(0f, ItemID.Harp, 10000);
+            MagikeSystem.AddRemodelRecipe(ModContent.ItemType<NightmareHarp>(), ItemID.Harp, 10000);
         }
     }
 

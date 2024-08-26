@@ -3,6 +3,7 @@ using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
@@ -26,10 +27,10 @@ namespace Coralite.Content.Items.Magike.Chargers
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe<GlistentCharger>(75)
-                .SetMainItem<CrystalCharger>()
-                .AddIngredient<GlistentBar>(2)
-                .Register();
+            //MagikeCraftRecipe.CreateRecipe<GlistentCharger>(75)
+            //    .SetMainItem<CrystalCharger>()
+            //    .AddIngredient<GlistentBar>(2)
+            //    .Register();
         }
     }
 

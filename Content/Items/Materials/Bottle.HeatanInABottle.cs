@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -21,11 +22,11 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe<HeatanInABottle>(60)
-                .SetMainItem(ItemID.Bottle)
-                .AddIngredient(ItemID.LivingFireBlock, 20)
-                .AddIngredient<EmpyrosPowder>(7)
-                .Register();
+            //MagikeCraftRecipe.CreateRecipe<HeatanInABottle>(60)
+            //    .SetMainItem(ItemID.Bottle)
+            //    .AddIngredient(ItemID.LivingFireBlock, 20)
+            //    .AddIngredient<EmpyrosPowder>(7)
+            //    .Register();
         }
     }
 

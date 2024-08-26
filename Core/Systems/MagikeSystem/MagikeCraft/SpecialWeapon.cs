@@ -1,8 +1,10 @@
-﻿namespace Coralite.Core.Systems.MagikeSystem.Remodels
+﻿using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+
+namespace Coralite.Core.Systems.MagikeSystem.Remodels
 {
-    public class SpecialWeapon : IMagikeRemodelable
+    public class SpecialWeapon : IMagikeCraftable
     {
-        public void AddMagikeRemodelRecipe()
+        public void AddMagikeCraftRecipe()
         {
 
         }

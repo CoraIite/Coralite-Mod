@@ -39,14 +39,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             TileObjectData.newTile.CoordinateHeights = [16, 16, 16];
             TileObjectData.newTile.Origin = new Terraria.DataStructures.Point16(0, 2);
             TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.addTile(Type);
 
-            AdjTiles = new int[]
-            {
+            AdjTiles =
+            [
                 TileID.CrystalBall,
                 TileID.AlchemyTable,
                 ModContent.TileType<MagicCraftStation>()
-            };
+            ];
 
             DustType = DustID.WitherLightning;
             MinPick = 160;

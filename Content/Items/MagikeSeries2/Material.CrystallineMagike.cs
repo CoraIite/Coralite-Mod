@@ -3,12 +3,13 @@ using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
 using Terraria;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class CrystallineMagike : BaseMaterial, IMagikeRemodelable
+    public class CrystallineMagike : BaseMaterial, IMagikeCraftable
     {
         public CrystallineMagike() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 1), ModContent.RarityType<CrystallineMagikeRarity>(), AssetDirectory.MagikeSeries2Item)
         { }
@@ -19,7 +20,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             Item.GetMagikeItem().magikeAmount = 300;
         }
 
-        public void AddMagikeRemodelRecipe()
+        public void AddMagikeCraftRecipe()
         {
             MagikeSystem.AddRemodelRecipe<CrystallineMagike, SplendorMagicore>(700, conditions: Condition.DownedMoonLord);
         }

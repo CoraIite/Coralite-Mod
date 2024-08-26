@@ -57,7 +57,11 @@ MagikeSystem: {
 		OceanCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.OceanCondition
 		SkyLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SkyLensName
 		SkyCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SkyCondition
+		DesertLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.DesertLensName
+		DesertCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.DesertCondition
 	}
+
+	Error: Mods.Coralite.MagikeSystem.MagikeSystem.Error
 }
 
 C0_P1_BookName: {

@@ -1,9 +1,11 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Thunder;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
@@ -40,14 +42,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((2200 + numPlayers * 500) / journeyScale);
+                    NPC.lifeMax = (int)((2200 + numPlayers * 700) / journeyScale);
                     NPC.damage = 66;
                     NPC.defense = 35;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((2200 + numPlayers * 1000) / journeyScale);
+                    NPC.lifeMax = (int)((2200 + numPlayers * 1400) / journeyScale);
                     NPC.damage = 72;
                     NPC.defense = 35;
                 }
@@ -66,20 +68,20 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 return;
             }
 
-            NPC.lifeMax = 2200 + numPlayers * 500;
+            NPC.lifeMax = 2200 + numPlayers * 700;
             NPC.damage = 66;
             NPC.defense = 35;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 2200 + numPlayers * 1000;
+                NPC.lifeMax = 2200 + numPlayers * 1400;
                 NPC.damage = 72;
                 NPC.defense = 35;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 2500 + numPlayers * 1200;
+                NPC.lifeMax = 2500 + numPlayers * 1600;
                 NPC.damage = 80;
                 NPC.defense = 35;
             }
@@ -88,6 +90,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 NPC.scale = 0.4f;
             }
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ElectrificationWing>(), 1,1,2));
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)

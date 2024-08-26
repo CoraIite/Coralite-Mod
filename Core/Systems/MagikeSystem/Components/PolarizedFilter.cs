@@ -4,6 +4,7 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -53,7 +54,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (!(entity as IEntity).HasComponent(MagikeComponentID.MagikeFilter))
                 return true;
 
-            PolarizedFilter oldFilter = (PolarizedFilter)entity.Components[MagikeComponentID.MagikeFilter].FirstOrDefault(c => c is PolarizedFilter, null);
+            PolarizedFilter oldFilter = (PolarizedFilter)(entity.Components[MagikeComponentID.MagikeFilter] as List<Component>)
+                .FirstOrDefault(c => c is PolarizedFilter, null);
 
             if (oldFilter != null)
             {
@@ -66,7 +68,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 //有就弹出这个
                 if (oldFilter != null)
                 {
-                    (entity as IEntity).RemoveComponentWithoutOnRemove(MagikeComponentID.MagikeFilter, oldFilter);
+                    (entity as IEntity).RemoveComponentWithoutOnRemove(oldFilter);
                     oldFilter.SpawnItem(entity);
                     return true;
                 }

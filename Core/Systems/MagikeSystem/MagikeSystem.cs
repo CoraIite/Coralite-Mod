@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Magike.PolarizedFilters;
+﻿using Coralite.Content.Items.Magike;
+using Coralite.Content.Items.Magike.PolarizedFilters;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.IO;
@@ -84,6 +85,8 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             return level switch
             {
+                MagikeApparatusLevel.None => ModContent.ItemType<BasicFilter>(),
+
                 MagikeApparatusLevel.MagicCrystal => ModContent.ItemType<MagicCrystalPolarizedFilter>(),
                 MagikeApparatusLevel.Glistent => ModContent.ItemType<GlistentPolarizedFilter>(),
                 MagikeApparatusLevel.Crimson => ModContent.ItemType<CrimsonPolarizedFilter>(),
@@ -105,6 +108,8 @@ namespace Coralite.Core.Systems.MagikeSystem
                 MagikeApparatusLevel.Quicksand => ModContent.ItemType<QuicksandPolarizedFilter>(),
                 MagikeApparatusLevel.Forbidden => ModContent.ItemType<ForbiddenPolarizedFilter>(),
                 MagikeApparatusLevel.EternalFlame => ModContent.ItemType<EternalFlamePolarizedFilter>(),
+                MagikeApparatusLevel.Frost => ModContent.ItemType<FrostPolarizedFilter>(),
+
                 _ => 0,
             };
         }

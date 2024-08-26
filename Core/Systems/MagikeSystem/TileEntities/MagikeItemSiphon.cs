@@ -91,13 +91,13 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                         continue;
                     }
 
-                    foreach (var extension in extensions)   //遍历以下扩展膜，如果无法提取物品，那么就继续向下查找
-                        if (extension is IExtensionCoating coating)
-                            if (!coating.CanExtractItem(item))
-                            {
-                                currentCheckItem++;
-                                continue;
-                            }
+                    //foreach (var extension in extensions)   //遍历以下扩展膜，如果无法提取物品，那么就继续向下查找
+                    //    if (extension is IExtensionCoating coating)
+                    //        if (!coating.CanExtractItem(item))
+                    //        {
+                    //            currentCheckItem++;
+                    //            continue;
+                    //        }
 
                     //经过一系列检测，最后判断自身是否有东西，如果type一样才能去放入自身
                     if (containsItem == null || containsItem.IsAir)

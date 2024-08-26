@@ -1,12 +1,13 @@
-﻿using Terraria;
+﻿using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Core.Systems.MagikeSystem.Remodels
 {
-    public class Misc : IMagikeRemodelable
+    public class Misc : IMagikeCraftable
     {
-        public void AddMagikeRemodelRecipe()
+        public void AddMagikeCraftRecipe()
         {
             //泥土
             AddRemodelRecipe(ItemID.DirtBlock, ItemID.Acorn, 5, mainStack: 8);

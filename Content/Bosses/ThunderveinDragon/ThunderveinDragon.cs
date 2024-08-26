@@ -34,6 +34,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         internal ref float StateRecorder => ref NPC.localAI[2];
         internal ref float UseMoveCount => ref NPC.localAI[3];
 
+        public int hitCount;
+
         public readonly int trailCacheLength = 12;
         public Point[] oldFrame;
         public int[] oldDirection;
@@ -177,6 +179,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ZapCrystal>(), 1, 6, 8));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ElectrificationWing>(), 1, 3, 4));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InsulationCortex>(), 1, 8, 12));
             npcLoot.Add(notExpertRule);
         }
 
@@ -220,6 +224,15 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 Particle.NewParticle(NPC.Center.MoveTowards(projectile.Center, 50), Vector2.Zero,
                     CoraliteContent.ParticleType<LightningParticle>(), Scale: Main.rand.NextFloat(1f, 1.5f));
+            }
+
+            //残血，没有在带电状态，受到暴击时掉落绝缘壳
+            if (NPC.life < NPC.lifeMax / 6 && hitCount < 6 && !currentSurrounding 
+                && hit.Crit && Main.rand.NextBool(3))
+            {
+                Item.NewItem(NPC.GetSource_OnHit(projectile), NPC.Center + Main.rand.NextVector2Circular(NPC.width, NPC.height)
+                    , ModContent.ItemType<InsulationCortex>());
+                hitCount++;
             }
         }
 

@@ -1,19 +1,19 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core.Systems.MagikeSystem.CraftConditions;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class Reel_MagikeAdvance : ModItem, IMagikeRemodelable
+    public class Reel_MagikeAdvance : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 
-        public void AddMagikeRemodelRecipe()
+        public void AddMagikeCraftRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<CrystallineMagike, Reel_MagikeAdvance>(300, selfStack: 5, condition: HardModeCondition.Instance);
+            //MagikeSystem.AddRemodelRecipe<CrystallineMagike, Reel_MagikeAdvance>(300, selfStack: 5, condition: HardModeCondition.Instance);
         }
 
         public override void SetDefaults()

@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
@@ -6,9 +7,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Systems.MagikeSystem.Remodels
 {
-    public class Ore : IMagikeRemodelable
+    public class Ore : IMagikeCraftable
     {
-        public void AddMagikeRemodelRecipe()
+        public void AddMagikeCraftRecipe()
         {
             //木头
             AddRemodelRecipe(ItemID.Wood, ItemID.Coal, 5, mainStack: 20);

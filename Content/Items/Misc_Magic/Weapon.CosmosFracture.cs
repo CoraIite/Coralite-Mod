@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -9,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Magic
 {
-    public class CosmosFracture : ModItem, IMagikeRemodelable
+    public class CosmosFracture : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.Misc_Magic + Name;
         public override bool AltFunctionUse(Player Player) => true;
@@ -84,7 +85,7 @@ namespace Coralite.Content.Items.Misc_Magic
             return false;
         }
 
-        public void AddMagikeRemodelRecipe()
+        public void AddMagikeCraftRecipe()
         {
             MagikeCraftRecipe.CreateRecipe(ItemID.SkyFracture, ModContent.ItemType<CosmosFracture>(), 1_0000)
                 .SetAntiMagikeCost(1_0000)

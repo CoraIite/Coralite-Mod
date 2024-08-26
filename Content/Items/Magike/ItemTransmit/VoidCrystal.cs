@@ -3,6 +3,7 @@ using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Terraria;
@@ -25,11 +26,11 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe<VoidCrystal>(150)
-                 .SetMainItem(ItemID.Bone, 10)
-                 .AddIngredient(ItemID.JungleSpores, 5)
-                 .AddIngredient<MagicCrystal>(10)
-                 .Register();
+            //MagikeCraftRecipe.CreateRecipe<VoidCrystal>(150)
+            //     .SetMainItem(ItemID.Bone, 10)
+            //     .AddIngredient(ItemID.JungleSpores, 5)
+            //     .AddIngredient<MagicCrystal>(10)
+            //     .Register();
         }
     }
 
