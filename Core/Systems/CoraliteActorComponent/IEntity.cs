@@ -104,16 +104,16 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
             Components.Clear();
         }
 
-        public bool TryGetComponent<T>(int index, out T result) where T : Component
+        public bool TryGetComponent<T>(int id, out T result) where T : Component
         {
             result = null;
-            if (!HasComponent(index))
+            if (!HasComponent(id))
                 return false;
 
-            if (MagikeComponentID.IsSingleton(index))
-                result = (T)Components[index];
+            if (MagikeComponentID.IsSingleton(id))
+                result = (T)Components[id];
             else
-                result = (T)((List<Component>)Components[index]).FirstOrDefault(c => c is T, null);
+                result = (T)((List<Component>)Components[id]).FirstOrDefault(c => c is T, null);
 
             return result != null;
         }

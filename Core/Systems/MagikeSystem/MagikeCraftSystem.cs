@@ -134,17 +134,27 @@ namespace Coralite.Core.Systems.MagikeSystem
         public Action<Item, Item> onCraft;
 
         /// <summary>
+        /// 是湮灭反应（需求的是反魔能而不是魔能）
+        /// </summary>
+        public bool IsAnnihilation=>magikeCost==0&& antiMagikeCost!=0;
+
+        /// <summary>
         /// 检测是否能合成
         /// </summary>
         /// <returns></returns>
-        public bool CanCraft()
+        public bool CanCraft(out string fillText)
         {
+            fillText = "";
+
             if (_conditions == null)
                 return true;
 
             foreach (var condition in Conditions)
                 if (!condition.Predicate())
+                {
+                    fillText = condition.Description.Value;
                     return false;
+                }
 
             return true;
         }

@@ -41,6 +41,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             ItemDescription = null;
             ApparatusDescription = null;
             UIText = null;
+            CraftText = null;
         }
 
         #region 魔能连接仪相关
@@ -160,6 +161,37 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static string GetApparatusDescriptionText(int id)
             => ApparatusDescription[id].Value;
+
+        #endregion
+
+        #region 魔能合成相关
+
+        public static LocalizedText[] CraftText { get; private set; }
+
+        public enum CraftTextID
+        {
+            NoMainItem,
+            MainItemIncorrect,
+            MainItemNotEnough,
+            ConditionNotMet,
+            OtherItemNotEnough,
+            OtherItemLack,
+
+            MagikeNotEnough,
+            NoCraftRecipe,
+            Count
+        }
+
+        public void LoadCraftText()
+        {
+            CraftText = new LocalizedText[(int)CraftTextID.Count];
+
+            for (int i = 0; i < (int)CraftTextID.Count; i++)
+                CraftText[i] = this.GetLocalization(nameof(CraftText) + "." + Enum.GetName((CraftTextID)i));
+        }
+
+        public static string GetCraftText(CraftTextID id)
+            => CraftText[(int)id].Value;
 
         #endregion
 
