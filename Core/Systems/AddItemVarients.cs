@@ -5,7 +5,7 @@ using System.Reflection;
 using Terraria.GameContent.Items;
 using Terraria.ModLoader.Core;
 
-namespace Coralite.Core
+namespace Coralite.Core.Systems
 {
     public class AddItemVarients : ModSystem
     {
