@@ -1,9 +1,11 @@
 ﻿using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
+using Coralite.Core.Systems.Pools;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Graphics.Renderers;
 using Terraria.ID;
 
 namespace Coralite.Core.Systems.ParticleSystem
@@ -12,6 +14,8 @@ namespace Coralite.Core.Systems.ParticleSystem
     {
         //public static Particle[] Particles = new Particle[Coralite.MaxParticleCount];
         public static List<Particle> Particles = new(VisualEffectSystem.ParticleCount);
+
+        //public static ObjectPool pool=new ObjectPool(typeof(Particle),);
 
         public static Asset<Texture2D>[] ParticleAssets;
 

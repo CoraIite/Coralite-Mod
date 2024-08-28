@@ -19,7 +19,7 @@ namespace Coralite.Content.CustomHooks
         private TileObject On_Player_PlaceThing_Tiles_PlaceIt(On_Player.orig_PlaceThing_Tiles_PlaceIt orig, Player self, bool newObjectType, TileObject data, int tileToCreate)
         {
             Item item = self.inventory[self.selectedItem];
-            if (item.ModItem is IMagikeContainerItemPlaceable checker)
+            if (item.ModItem is ISpecialPlaceable checker)
             {
                 if (checker.CanPlace(self))
                     return orig.Invoke(self, newObjectType, data, tileToCreate);

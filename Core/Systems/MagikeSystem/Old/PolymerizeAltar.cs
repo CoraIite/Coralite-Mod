@@ -177,23 +177,23 @@
 //                containsItem.type == chooseRecipe.MainItem.type && containsItem.stack >= chooseRecipe.MainItem.stack && magike >= chooseRecipe.magikeCost
 //                && chooseRecipe.CanCraft(containsItem))
 //            {
-foreach (var item in chooseRecipe.RequiredItems)
-{
-    int howManyNeed = item.stack;
-    for (int i = 0; i < receiverPoints.Length; i++)
-    {
-        Point16 position = receiverPoints[i];
-        if (position != Point16.NegativeOne && ByPosition.ContainsKey(position) && ByPosition[position] is PolymerizePedestal pedestal)
-        {
-            Item pItem = pedestal.GetItem();
-            if (pItem.type == item.type)  //如果台座上的是需要的物品，那就减一下，减完了之后如果小于零说明物品数量足够
-            {
-                howManyNeed -= pItem.stack;
-                if (howManyNeed <= 0)
-                    break;
-            }
-        }
-    }
+//foreach (var item in chooseRecipe.RequiredItems)
+//{
+//    int howManyNeed = item.stack;
+//    for (int i = 0; i < receiverPoints.Length; i++)
+//    {
+//        Point16 position = receiverPoints[i];
+//        if (position != Point16.NegativeOne && ByPosition.ContainsKey(position) && ByPosition[position] is PolymerizePedestal pedestal)
+//        {
+//            Item pItem = pedestal.GetItem();
+//            if (pItem.type == item.type)  //如果台座上的是需要的物品，那就减一下，减完了之后如果小于零说明物品数量足够
+//            {
+//                howManyNeed -= pItem.stack;
+//                if (howManyNeed <= 0)
+//                    break;
+//            }
+//        }
+//    }
 
 //                    if (howManyNeed > 0)//如果遍历完一遍之后发现这个还大于零那么说明当前台座上需要的数量不够，不能聚合
 //                        return false;

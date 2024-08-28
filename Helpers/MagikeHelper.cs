@@ -505,25 +505,25 @@ namespace Coralite.Helpers
 
 
 
-        public static void SpawnDustOnSend(int selfWidth, int selfHeight, Point16 Position, IMagikeContainer container, Color dustColor, int dustType = DustID.Teleporter)
-        {
-            Tile tile = Framing.GetTileSafely(container.GetPosition);
-            TileObjectData data = TileObjectData.GetTileData(tile);
-            int xOffset = data == null ? 16 : data.Width * 8;
-            int yOffset = data == null ? 24 : data.Height * 8;
+        //public static void SpawnDustOnSend(int selfWidth, int selfHeight, Point16 Position, IMagikeContainer container, Color dustColor, int dustType = DustID.Teleporter)
+        //{
+        //    Tile tile = Framing.GetTileSafely(container.GetPosition);
+        //    TileObjectData data = TileObjectData.GetTileData(tile);
+        //    int xOffset = data == null ? 16 : data.Width * 8;
+        //    int yOffset = data == null ? 24 : data.Height * 8;
 
-            Vector2 selfPos = Position.ToWorldCoordinates(selfWidth * 8, selfHeight * 8);
-            Vector2 receiverPos = container.GetPosition.ToWorldCoordinates(xOffset, yOffset);
-            Vector2 dir = selfPos.DirectionTo(receiverPos);
-            float length = Vector2.Distance(selfPos, receiverPos);
+        //    Vector2 selfPos = Position.ToWorldCoordinates(selfWidth * 8, selfHeight * 8);
+        //    Vector2 receiverPos = container.GetPosition.ToWorldCoordinates(xOffset, yOffset);
+        //    Vector2 dir = selfPos.DirectionTo(receiverPos);
+        //    float length = Vector2.Distance(selfPos, receiverPos);
 
-            while (length > 0)
-            {
-                Dust dust = Dust.NewDustPerfect(selfPos + dir * length, dustType, dir * 0.2f, newColor: dustColor);
-                dust.noGravity = true;
-                length -= 8;
-            }
-        }
+        //    while (length > 0)
+        //    {
+        //        Dust dust = Dust.NewDustPerfect(selfPos + dir * length, dustType, dir * 0.2f, newColor: dustColor);
+        //        dust.noGravity = true;
+        //        length -= 8;
+        //    }
+        //}
 
         public static void SpawnDustOnItemSend(int selfWidth, int selfHeight, Point16 Position, Color dustColor, int dustType = DustID.VilePowder)
         {
@@ -615,11 +615,11 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="i"></param>
         /// <param name="j"></param>
-        public static void ShowMagikeNumber(int i, int j)
-        {
-            if (TryGetEntity(i, j, out IMagikeContainer magikeContainer))
-                Main.instance.MouseText(magikeContainer.Magike + " / " + magikeContainer.MagikeMax, 0, 0, -1, -1, -1, -1);
-        }
+        //public static void ShowMagikeNumber(int i, int j)
+        //{
+        //    if (TryGetEntity(i, j, out IMagikeContainer magikeContainer))
+        //        Main.instance.MouseText(magikeContainer.Magike + " / " + magikeContainer.MagikeMax, 0, 0, -1, -1, -1, -1);
+        //}
 
         /// <summary>
         /// 消耗玩家背包中的魔能，前提是玩家背包内拥有可提供魔能的物品

@@ -23,23 +23,23 @@ namespace Coralite.Content.Items.MagikeSeries1
             Item.GetMagikeItem().magikeAmount = 25;
         }
 
-        public override bool CanUseItem(Player player)
-        {
-            Point16 pos = Main.MouseWorld.ToTileCoordinates16();
-            Rectangle rectangle = new((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
+        //public override bool CanUseItem(Player player)
+        //{
+        //    Point16 pos = Main.MouseWorld.ToTileCoordinates16();
+        //    Rectangle rectangle = new((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
 
-            if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeFactory magF))
-            {
-                if (magF.StartWork())
-                    CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("Activated", () => "已激活！").Value);
-                else
-                    CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("FailToActivate", () => "激活失败！").Value);
-            }
-            else    //没找到
-                CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("InstrumentNotFound", () => "未找到魔能仪器！").Value);
+        //    if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeFactory magF))
+        //    {
+        //        if (magF.StartWork())
+        //            CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("Activated", () => "已激活！").Value);
+        //        else
+        //            CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("FailToActivate", () => "激活失败！").Value);
+        //    }
+        //    else    //没找到
+        //        CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("InstrumentNotFound", () => "未找到魔能仪器！").Value);
 
-            return true;
-        }
+        //    return true;
+        //}
 
         //public override void AddRecipes()
         //{

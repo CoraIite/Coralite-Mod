@@ -134,8 +134,8 @@ namespace Coralite.Content.Items.Thunder
             if (!Main.dedServ)
             {
                 gradientTex = Request<Texture2D>(AssetDirectory.ThunderveinDragon + "LaserGradient");
-                laserTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserCore");
-                extraTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaser");
+                laserTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrailB");
+                extraTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserTrail");
             }
         }
 
@@ -354,14 +354,14 @@ namespace Coralite.Content.Items.Thunder
                 thunderTrails = new ThunderTrail[3];
                 for (int i = 0; i < 3; i++)
                 {
-                    thunderTrails[i] = new ThunderTrail(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserBody2")
+                    thunderTrails[i] = new (Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserBody2")
                         , ThunderWidthFunc_Sin, ThunderColorFunc_Yellow);
                     thunderTrails[i].CanDraw = false;
                     thunderTrails[i].SetRange((5, 20));
-                    thunderTrails[i].BasePositions = new Vector2[3]
-                    {
+                    thunderTrails[i].BasePositions =
+                    [
                         Projectile.Center,Projectile.Center,Projectile.Center
-                    };
+                    ];
                 }
             }
         }
@@ -438,7 +438,7 @@ namespace Coralite.Content.Items.Thunder
         public virtual void DrawPrimitive(SpriteBatch spriteBatch)
         {
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
             List<VertexPositionColorTexture> bars = new();
@@ -458,13 +458,14 @@ namespace Coralite.Content.Items.Thunder
 
             if (bars.Count > 2)
             {
-                Effect effect = Filters.Scene["ShadowLaser"].GetShader().Shader;
+                Effect effect = Filters.Scene["LaserAlpha"].GetShader().Shader;
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 6);
+                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly*2 );
+                effect.Parameters["exAdd"].SetValue(0.2f);
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
                 effect.Parameters["sampleTexture"].SetValue(laserTex.Value);
                 effect.Parameters["gradientTexture"].SetValue(gradientTex.Value);

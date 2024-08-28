@@ -69,7 +69,7 @@ MagikeSystem: {
 		SkyLensName: 天空透镜
 		SkyCondition: "  ▶ 需要将底座放置在任意云块上"
 		DesertLensName: 沙漠透镜
-		DesertCondition: 
+		DesertCondition:
 			'''
 			  ▶ 需要将底座放置在沙块上
 			  ▶ 发生沙尘暴时产量增加

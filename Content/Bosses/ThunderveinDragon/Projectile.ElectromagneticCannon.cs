@@ -294,13 +294,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             if (bars.Count > 2)
             {
-                Effect effect = Filters.Scene["ShadowLaser"].GetShader().Shader;
+                Effect effect = Filters.Scene["LaserAlpha"].GetShader().Shader;
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 6);
+                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 2);
+                effect.Parameters["exAdd"].SetValue(0.2f);
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
                 effect.Parameters["sampleTexture"].SetValue(laserTex.Value);
                 effect.Parameters["gradientTexture"].SetValue(gradientTex.Value);

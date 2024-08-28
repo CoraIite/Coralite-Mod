@@ -25,23 +25,23 @@ namespace Coralite.Content.Items.MagikeSeries1
             Item.GetMagikeItem().magikeAmount = 50;
         }
 
-        public override bool CanUseItem(Player player)
-        {
-            Point16 pos = Main.MouseWorld.ToTileCoordinates16();
-            Rectangle rectangle = new((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
+        //public override bool CanUseItem(Player player)
+        //{
+        //    Point16 pos = Main.MouseWorld.ToTileCoordinates16();
+        //    Rectangle rectangle = new((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
 
-            if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeContainer magC)) //TODO: 添加本地化
-            {
-                if (player.statMana > 200 && magC.Charge(1))
-                    return true;
+        //    if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeContainer magC)) //TODO: 添加本地化
+        //    {
+        //        if (player.statMana > 200 && magC.Charge(1))
+        //            return true;
 
-                CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "无法充能！");
-                return false;
-            }
+        //        CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "无法充能！");
+        //        return false;
+        //    }
 
-            CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "未找到魔能容器！");
-            return false;
-        }
+        //    CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "未找到魔能容器！");
+        //    return false;
+        //}
 
         //public override void AddRecipes()
         //{
