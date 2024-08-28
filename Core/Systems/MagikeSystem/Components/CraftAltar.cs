@@ -1,10 +1,12 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
@@ -25,7 +27,159 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Work()
         {
+            if (ChosenResipe == null)
+                return;
+
+            //检测魔能量是否足够
+            if (!CheckCanCraft_MagickCheck(out string text))
+            {
+                PopupText.NewText(new AdvancedPopupRequest()
+                {
+                    Color = Coralite.MagicCrystalPink,
+                    Text = text,
+                    DurationInFrames = 60,
+                    Velocity = -Vector2.UnitY
+                }, Helper.GetTileCenter((Entity as MagikeTileEntity).Position) - Vector2.UnitY * 32);
+                return;
+            }
+
+            //先减少魔能
+            Entity.GetMagikeContainer().ReduceMagike(ChosenResipe.magikeCost);
+
+            if (!WorkCheck_CostMainItem())//消耗主要物品与次要物品
+                return;
+
+            if (ChosenResipe.RequiredItems != null)
+                if (!WorkCheck_CostOtherItem())
+                    return;
+
+            //生成物品并放入
+            if (Entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container))
+                container.AddItem(ChosenResipe.ResultItem.type, ChosenResipe.ResultItem.stack);
         }
+
+        /// <summary>
+        /// 消耗主要物品
+        /// </summary>
+        /// <returns></returns>
+        private bool WorkCheck_CostMainItem()
+        {
+            if (!Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
+                return false;
+
+            int count = ChosenResipe.MainItem.stack;
+
+            foreach (var item in container.Items)
+            {
+                if (item.IsAir)
+                    continue;
+
+                if (item.type != ChosenResipe.MainItem.type)
+                    continue;
+
+                int cost = Math.Min(item.stack, count);
+                item.stack -= cost;
+
+                if (item.stack < 1)
+                    item.TurnToAir();
+
+                count -= cost;
+                if (count == 0)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 消耗其他物品
+        /// </summary>
+        /// <returns></returns>
+        private bool WorkCheck_CostOtherItem()
+        {
+            //获取物品容器
+            if (!Entity.TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender linerSender))
+                return false;
+
+            List<Item> otherItems = FillOtherItemList(linerSender);
+
+            //挨个消耗物品
+            foreach (var item in ChosenResipe.RequiredItems)
+            {
+                int howManyNeed = item.stack;
+
+                foreach (var pos in linerSender.Receivers)
+                {
+                    if (!MagikeHelper.TryGetEntity(pos, out MagikeTileEntity receiverEntity))
+                        continue;
+
+                    Item[] tempItems = null;
+
+                    if ((receiverEntity as IEntity).TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
+                        tempItems = container2.Items;
+
+                    if ((receiverEntity as IEntity).TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
+                        tempItems = container3.Items;
+
+                    foreach (var tempitem in tempItems)
+                        if (!tempitem.IsAir && tempitem.type == item.type)
+                        {
+                            int cost = Math.Min(item.stack, howManyNeed);
+                            tempitem.stack -= cost;
+
+                            if (tempitem.stack < 1)
+                                tempitem.TurnToAir();
+
+                            howManyNeed -= cost;
+                            if (howManyNeed < 1)
+                                goto costEnd;
+                        }
+
+                    return false;//这块给我写迷糊了，总之就是遍历所有的物品然后挨个消耗
+                }
+
+            costEnd:
+                ;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 获取连接的所有物品容器内的物品
+        /// </summary>
+        /// <param name="linerSender"></param>
+        /// <returns></returns>
+        private static List<Item> FillOtherItemList(MagikeLinerSender linerSender)
+        {
+            List<Item> otherItems = [];
+
+            foreach (var pos in linerSender.Receivers)
+            {
+                if (!MagikeHelper.TryGetEntity(pos, out MagikeTileEntity entity))
+                    continue;
+
+                Item[] tempItems = null;
+
+                if ((entity as IEntity).TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
+                    tempItems = container2.Items;
+
+                if ((entity as IEntity).TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
+                    tempItems = container3.Items;
+
+                if (tempItems == null)
+                    continue;
+
+                //添加物品
+                foreach (var tempitem in tempItems)
+                    if (!tempitem.IsAir)
+                            otherItems.Add(tempitem);
+            }
+
+            return otherItems;
+        }
+
+        #region 检测能否开始工作
 
         public override bool CanActivated_SpecialCheck(out string text)
         {
@@ -38,7 +192,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
 
             Item[] items = container.Items;
-            FrozenDictionary<int, int> otherItems = FillOtherItemList(linerSender);
+            FrozenDictionary<int, int> otherItems = FillOtherItemDict(linerSender);
 
             if (ChosenResipe != null && !CheckCanCraft_FindRecipe(items, otherItems, out text))//寻找合成表
                 return false;
@@ -58,7 +212,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         /// <param name="linerSender"></param>
         /// <returns></returns>
-        private static FrozenDictionary<int,int> FillOtherItemList(MagikeLinerSender linerSender) 
+        private static FrozenDictionary<int,int> FillOtherItemDict(MagikeLinerSender linerSender) 
         {
             Dictionary<int,int> otherItems = [];
 
@@ -72,9 +226,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if ((entity as IEntity).TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
                     tempItems = container2.Items;
 
-                //TODO: 添加只读容器的检测
-                //if ((entity as IEntity).TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
-                //    tempItems = container2.Items;
+                if ((entity as IEntity).TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
+                    tempItems = container3.Items;
 
                 if (tempItems == null)
                     continue;
@@ -254,7 +407,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <returns></returns>
         private bool CheckCanCraft_MagickCheck(out string text)
         {
-            if (Entity.GetMagikeContainer().Magike<ChosenResipe.magikeCost)
+            if (Entity.GetMagikeContainer().Magike < ChosenResipe.magikeCost)
             {
                 text = MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MagikeNotEnough);
                 return false;
@@ -264,10 +417,33 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return true;
         }
 
+        #endregion
+
+        #region 开始工作部分
+
+        public override void StarkWork()
+        {
+            base.StarkWork();
+
+            Point16 pos = (Entity as MagikeTileEntity).Position;
+
+            if (Helper.OnScreen(pos.ToWorldCoordinates(),new Vector2(16*20)))
+            {
+                //在视野内生成特殊合成粒子
+
+            }
+        }
+
+        #endregion
+
         #region UI部分
 
         public void ShowInUI(UIElement parent)
         {
+            //显示所有物品格子 
+            //显示选择的合成表
+            //显示所有的合成表
+            //展开与关闭的按钮
         }
 
         #endregion

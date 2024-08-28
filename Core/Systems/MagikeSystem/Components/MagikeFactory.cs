@@ -71,6 +71,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public abstract bool CanActivated_SpecialCheck(out string text);
 
+        /// <summary>
+        /// 开始工作，基方法内包含对<see cref="Timer"/>的赋值
+        /// </summary>
         public virtual void StarkWork()
         {
             IsWorking = true;

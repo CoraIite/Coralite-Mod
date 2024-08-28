@@ -5,6 +5,7 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
@@ -111,9 +112,67 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 Item.NewItem(new EntitySource_TileBreak(coord.X, coord.Y), pos, Items[i]);
         }
 
+        /// <summary>
+        /// 向容器内加入物品，注意在结束后会使传入的item消失
+        /// </summary>
+        /// <param name="item"></param>
+        public virtual void AddItem(Item item)
+        {
+            int type = item.type;
+            int stack = item.stack;
+
+            foreach (var i in Items.Where(i => !i.IsAir && i.type == type && i.stack < i.maxStack))
+            {
+                int maxCanInsert = Math.Min(i.maxStack - i.stack, stack);
+                i.stack += maxCanInsert;
+                stack -= maxCanInsert;
+                if (stack < 1)
+                {
+                    item.TurnToAir();
+                    return;
+                }
+            }
+
+            for (int i = 0;i < Items.Length; i++)
+                if (Items[i].IsAir)
+                {
+                    Items[i] = item.Clone();
+                    item.TurnToAir();
+                    return;
+                }
+
+            Item.NewItem(item.GetSource_DropAsItem(), Helper.GetTileCenter((Entity as MagikeTileEntity).Position), item.Clone());
+            item.TurnToAir();
+        }
+
+        /// <summary>
+        /// 向容器内加入物品，注意在结束后会使传入的item消失
+        /// </summary>
+        /// <param name="item"></param>
+        public virtual void AddItem(int itemType,int stack)
+        {
+            foreach (var i in Items.Where(i => !i.IsAir && i.type == itemType && i.stack < i.maxStack))
+            {
+                int maxCanInsert = Math.Min(i.maxStack - i.stack, stack);
+                i.stack += maxCanInsert;
+                stack -= maxCanInsert;
+                if (stack < 1)
+                    return;
+            }
+
+            for (int i = 0;i < Items.Length; i++)
+                if (Items[i].IsAir)
+                {
+                    Items[i] = new Item(itemType,stack);
+                    return;
+                }
+
+            Item.NewItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetTileCenter((Entity as MagikeTileEntity).Position), itemType,stack);
+        }
+
         #region UI部分
 
-        public void ShowInUI(UIElement parent)
+        public virtual void ShowInUI(UIElement parent)
         {
             UIElement title = this.AddTitle(MagikeSystem.UITextID.ItemContainerName, parent);
 
@@ -216,7 +275,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
                 ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
                 ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
-                _container[_index] = inv;
+                //_container[_index] = inv;
                 _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
             }
             else
@@ -225,7 +284,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            if (!TryGetItem(out _))
+            if (!TryGetItem(out Item inv))
                 return;
 
             HandleItemSlotLogic();
@@ -233,7 +292,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             float scale = Main.inventoryScale;
             Main.inventoryScale = _scale;
 
-            Item inv = _container[_index];
             Vector2 position = GetDimensions().Center() + new Vector2(52f, 52f) * -0.5f * Main.inventoryScale;
             ItemSlot.Draw(spriteBatch, ref inv, ItemSlot.Context.VoidItem, position,Coralite.MagicCrystalPink);
 

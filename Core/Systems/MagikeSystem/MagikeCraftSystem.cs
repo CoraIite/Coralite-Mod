@@ -136,7 +136,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <summary>
         /// 是湮灭反应（需求的是反魔能而不是魔能）
         /// </summary>
-        public bool IsAnnihilation=>magikeCost==0&& antiMagikeCost!=0;
+        public bool IsAnnihilation => magikeCost == 0 && antiMagikeCost != 0;
 
         /// <summary>
         /// 检测是否能合成

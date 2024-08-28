@@ -310,6 +310,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             OutPutAll,
             FastStack,
             ItemContainerName,
+            GetOnlyItemContainerName,
 
             Count
         }
