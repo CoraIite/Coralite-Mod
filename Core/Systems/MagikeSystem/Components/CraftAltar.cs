@@ -39,7 +39,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     Text = text,
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
-                }, Helper.GetTileCenter((Entity as MagikeTileEntity).Position) - Vector2.UnitY * 32);
+                }, Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position) - Vector2.UnitY * 32);
                 return;
             }
 

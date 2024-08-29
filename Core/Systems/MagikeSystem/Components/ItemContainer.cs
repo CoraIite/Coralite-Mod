@@ -141,7 +141,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     return;
                 }
 
-            Item.NewItem(item.GetSource_DropAsItem(), Helper.GetTileCenter((Entity as MagikeTileEntity).Position), item.Clone());
+            Item.NewItem(item.GetSource_DropAsItem(), Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position), item.Clone());
             item.TurnToAir();
         }
 
@@ -167,7 +167,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     return;
                 }
 
-            Item.NewItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetTileCenter((Entity as MagikeTileEntity).Position), itemType,stack);
+            Item.NewItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position), itemType,stack);
         }
 
         #region UI部分
