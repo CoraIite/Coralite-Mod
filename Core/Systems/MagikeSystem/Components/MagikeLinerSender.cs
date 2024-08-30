@@ -35,7 +35,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 当前连接者 </summary>
         public int CurrentConnector => _receivers.Count;
 
-        private List<Point16> _receivers = [];
+        protected List<Point16> _receivers = [];
 
         /// <summary>
         /// 仅供获取使用，那么为什么不用private set 呢，因为懒得改了，反正区别不大
@@ -239,7 +239,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #region UI部分
 
-        public void ShowInUI(UIElement parent)
+        public virtual void ShowInUI(UIElement parent)
         {
             //添加显示在最上面的组件名称
             UIElement title = this.AddTitle(MagikeSystem.UITextID.MagikeLinerSenderName, parent);

@@ -121,6 +121,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override void SetDefaults()
         {
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.friendly = true;
             Projectile.width = Projectile.height = 40;
             Projectile.tileCollide = false;

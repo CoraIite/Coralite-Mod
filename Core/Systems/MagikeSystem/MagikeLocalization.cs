@@ -259,6 +259,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             MagikeSendAmount,
             MagikeConnectLength,
             MagikeLinerSenderName,
+            CheckOnlyLinerSenderName,
 
             /*
              * 偏振滤镜
@@ -297,6 +298,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             SkyCondition,
             DesertLensName,
             DesertCondition,
+            GlowingMushroomLensName,
+            GlowingMushroomCondition,
 
             /*
              * 物品容器

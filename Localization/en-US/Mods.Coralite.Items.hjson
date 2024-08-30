@@ -4445,3 +4445,8 @@ InsulationCortex: {
 	DisplayName: Insulation Cortex
 	Tooltip: ""
 }
+
+ShroomitePolarizedFilter: {
+	DisplayName: Shroomite Polarized Filter
+	Tooltip: ""
+}

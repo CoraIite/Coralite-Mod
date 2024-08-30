@@ -24,6 +24,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         private Point16 _pos;
         private int _totalTime;
+        private float alpha;
 
         /// <summary>
         /// 各个接收器与本体之间的连接拖尾
@@ -56,6 +57,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                 return;
             }
 
+            if (alpha<1)
+            {
+                alpha += 0.2f;
+            }
+
             fadeIn--;
             if (fadeIn < 0)
                 active = false;
@@ -65,7 +71,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
         {
             Tile t = Framing.GetTileSafely(pos);
             ModTile mt = TileLoader.GetTile(t.TileType);
-            if (mt == null || mt is not BaseCraftAltarTile cat)
+            if (mt == null || mt is not BaseCraftAltarTile cat
+                || !TryGetEntity(pos, out MagikeTileEntity entity))
                 return null;
 
             //获取alt对应的偏转量
@@ -76,13 +83,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
             p._pos = pos;
             p.fadeIn =p._totalTime= craftTime;
+            p._trails = new List<Trail>();
+
+            //foreach (var pos2 in )
+            //{
+
+            //}
 
             return p;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(spriteBatch);
+            
         }
 
         public void DrawPrimitives()

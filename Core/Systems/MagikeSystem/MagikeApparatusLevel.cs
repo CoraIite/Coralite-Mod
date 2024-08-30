@@ -48,7 +48,9 @@
         Forbidden,
         /// <summary> 寒霜 </summary>
         Frost,
-        /// <summary> 薪火 </summary>
+        /// <summary> 薪火锭 </summary>
         EternalFlame,
+        /// <summary> 蘑菇矿锭 </summary>
+        Shroomite,
     }
 }

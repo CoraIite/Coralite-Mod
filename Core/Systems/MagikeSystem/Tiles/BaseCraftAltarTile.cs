@@ -1,9 +1,6 @@
-﻿using Coralite.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
@@ -28,6 +25,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         public virtual Vector2 GetRestOffset(MagikeHelper.MagikeAlternateStyle alternate)
         {
             return Vector2.Zero;
+        }
+
+        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MagikeApparatusLevel level)
+        {
+
         }
     }
 }

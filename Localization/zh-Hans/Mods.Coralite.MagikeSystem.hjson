@@ -74,7 +74,10 @@ MagikeSystem: {
 			  ▶ 需要将底座放置在沙块上
 			  ▶ 发生沙尘暴时产量增加
 			'''
-		// GetOnlyItemContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GetOnlyItemContainerName
+		GetOnlyItemContainerName: 仅取出的物品容器
+		CheckOnlyLinerSenderName: 线性连接器
+		GlowingMushroomLensName: 蘑菇透镜
+		GlowingMushroomCondition: "  ▶ 需要将底座放置在蘑菇草块上"
 	}
 
 	Error: 发生致命错误！请重新摆放该物块！

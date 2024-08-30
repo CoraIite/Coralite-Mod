@@ -15,22 +15,14 @@ namespace Coralite.Core.Systems.MagikeSystem
         internal Dictionary<int, List<MagikeCraftRecipe>> magikeCraftRecipes;
         internal static FrozenDictionary<int, List<MagikeCraftRecipe>> MagikeCraftRecipes;
 
-        private void RegisterPolymerize()
+        private void RegisterMagikeCraft()
         {
             Mod Mod = Coralite.Instance;
 
             magikeCraftRecipes = [];
 
-            foreach (var magCraft in from Type t in AssemblyManager.GetLoadableTypes(Mod.Code)//添加魔能合成表
-                                          where !t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikeCraftable))
-                                          let magCraft = Activator.CreateInstance(t) as IMagikeCraftable
-                                          select magCraft)
-            {
-                magCraft.AddMagikeCraftRecipe();
-            }
-
             foreach (var magCraft in from mod in ModLoader.Mods
-                                          where mod is ICoralite
+                                          where mod is ICoralite or Coralite
                                           from Type t in AssemblyManager.GetLoadableTypes(mod.Code)//添加魔能合成表
                                           where !t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikeCraftable))
                                           let magCraft = Activator.CreateInstance(t) as IMagikeCraftable

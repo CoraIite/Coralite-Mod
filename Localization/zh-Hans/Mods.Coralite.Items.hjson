@@ -912,7 +912,11 @@ ForestLens: {
 
 GlowingMushroomLens: {
 	DisplayName: 夜光蘑菇透镜
-	Tooltip: 在夜光蘑菇环境生产魔能
+	Tooltip:
+		'''
+		在夜光蘑菇环境生产魔能，只能放置在蘑菇草块上
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }
 
 BrightnessLens: {
@@ -4497,7 +4501,7 @@ DesertLens: {
 	DisplayName: 沙漠透镜
 	Tooltip:
 		'''
-		在沙漠生产魔能，只能放置在沙块
+		在沙漠生产魔能，只能放置在沙块上
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }
@@ -4535,4 +4539,9 @@ ElectrificationWing: {
 InsulationCortex: {
 	DisplayName: 荒雷龙的绝缘壳
 	Tooltip: 荒雷龙身体上覆盖的绝缘甲壳，可以保护自身的重要部位不被电流伤害
+}
+
+ShroomitePolarizedFilter: {
+	DisplayName: 偏振滤镜-蘑菇矿锭
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }

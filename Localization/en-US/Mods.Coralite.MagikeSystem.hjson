@@ -60,6 +60,9 @@ MagikeSystem: {
 		DesertLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.DesertLensName
 		DesertCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.DesertCondition
 		GetOnlyItemContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GetOnlyItemContainerName
+		CheckOnlyLinerSenderName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CheckOnlyLinerSenderName
+		GlowingMushroomLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GlowingMushroomLensName
+		GlowingMushroomCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GlowingMushroomCondition
 	}
 
 	Error: Mods.Coralite.MagikeSystem.MagikeSystem.Error

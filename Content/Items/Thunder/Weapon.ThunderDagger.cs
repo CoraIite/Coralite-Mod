@@ -124,6 +124,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override void SetDefs()
         {
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
             Projectile.height = 80;
@@ -396,6 +397,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override void SetDefaults()
         {
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.width = Projectile.height = 80;
             Projectile.scale = 0.5f;
             Projectile.friendly = true;
