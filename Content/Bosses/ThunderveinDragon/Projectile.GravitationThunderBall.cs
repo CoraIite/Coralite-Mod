@@ -39,19 +39,19 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth * 1.2f;
         }
 
-        public Color ThunderColorFunc_Fade(float factor)
+        public float GetAlphaFade(float factor)
         {
-            return ThunderveinDragon.ThunderveinYellowAlpha * ThunderAlpha * (1 - factor);
+            return ThunderAlpha * (1 - factor);
         }
 
         public override Color ThunderColorFunc_Yellow(float factor)
         {
-            return Color.Lerp(ThunderveinDragon.ThunderveinYellowAlpha, ThunderveinDragon.ThunderveinPurpleAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
+            return Color.Lerp(ThunderveinDragon.ThunderveinYellow, ThunderveinDragon.ThunderveinPurple, MathF.Sin(factor * MathHelper.Pi));
         }
 
         public override Color ThunderColorFunc2_Orange(float factor)
         {
-            return Color.Lerp(ThunderveinDragon.ThunderveinOrangeAlpha, ThunderveinDragon.ThunderveinPurpleAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
+            return Color.Lerp(ThunderveinDragon.ThunderveinOrange, ThunderveinDragon.ThunderveinPurple, MathF.Sin(factor * MathHelper.Pi));
         }
 
         public override void AI()
@@ -142,14 +142,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 circles = new ThunderTrail[5];
                 trails = new ThunderTrail[3];
-                Asset<Texture2D> thunderTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody");
+                Asset<Texture2D> thunderTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrailB");
 
                 for (int i = 0; i < circles.Length; i++)
                 {
                     if (i < 2)
-                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow);
+                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow, GetAlpha);
                     else
-                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange);
+                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange, GetAlpha);
 
                     circles[i].SetRange((0, 10));
                     circles[i].SetExpandWidth(6);
@@ -157,7 +157,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                 for (int i = 0; i < trails.Length; i++)
                 {
-                    trails[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc_Fade);
+                    trails[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc_Yellow, GetAlphaFade);
                     trails[i].SetRange((0, 6));
                     trails[i].SetExpandWidth(4);
                 }

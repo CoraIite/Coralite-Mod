@@ -43,14 +43,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 thunderTrails = new ThunderTrail[3];
                 for (int i = 0; i < 3; i++)
                 {
-                    thunderTrails[i] = new ThunderTrail(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserBody2")
-                        , ThunderWidthFunc_Sin, ThunderColorFunc_Yellow);
+                    thunderTrails[i] = new ThunderTrail(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrailB2")
+                        , ThunderWidthFunc_Sin, ThunderColorFunc_Yellow,GetAlpha);
                     thunderTrails[i].CanDraw = false;
                     thunderTrails[i].SetRange((5, 20));
-                    thunderTrails[i].BasePositions = new Vector2[3]
-                    {
+                    thunderTrails[i].BasePositions =
+                    [
                     Projectile.Center,Projectile.Center,Projectile.Center
-                    };
+                    ];
                 }
             }
 
@@ -58,6 +58,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 SpawnDusts();
                 Vector2 pos2 = Projectile.velocity;
+                Vector2 normal = (Projectile.velocity - Projectile.Center).SafeNormalize(Vector2.Zero).RotatedBy(1.57f);
+
                 List<Vector2> pos = new()
                 {
                     Projectile.velocity
@@ -74,7 +76,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             break;
                         }
                         else
-                            pos.Add(pos2);
+                        {
+                            float f1 = (float)Main.timeForVisualEffects * 0.5f;
+                            float f2 = i * 0.4f;
+                            float factor2 = MathF.Sin(f1 + f2) + MathF.Cos(f2 + f1 / 2);
+                            pos.Add(pos2 + normal * factor2 * 8);
+                        }
                     }
 
                 foreach (var trail in thunderTrails)

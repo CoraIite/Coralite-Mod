@@ -214,38 +214,38 @@
 //                int index = workTimer / perWorkTime;
 //                if (index < chooseRecipe.RequiredItems.Count)
 //                {
-Item item = chooseRecipe.RequiredItems[index];
-int howManyNeed = item.stack;
+//Item item = chooseRecipe.RequiredItems[index];
+//int howManyNeed = item.stack;
 
-for (int i = 0; i < receiverPoints.Length; i++)
-{
-    Point16 position = receiverPoints[i];
-    if (position != Point16.NegativeOne && ByPosition.ContainsKey(position) && ByPosition[position] is PolymerizePedestal pedestal)
-    {
-        Item pItem = pedestal.GetItem();
-        if (pItem.type == item.type)  //如果台座上的是需要的物品，那就减一下，减完了之后如果小于零说明物品数量足够
-        {
-            pedestal.OnReceiveVisualEffect();
-            SendVisualEffect(pedestal);
-            if (pItem.stack >= howManyNeed)//数量够，减少一下stack
-            {
-                pItem.stack -= howManyNeed;
-                if (pItem.stack <= 0)
-                    pItem.TurnToAir();
-                howManyNeed = 0;
-                break;
-            }
-            else//数量不够，全部消耗之后继续循环
-            {
-                howManyNeed -= pItem.stack;
-                pItem.TurnToAir();
-            }
-        }
-    }
-}
+//for (int i = 0; i < receiverPoints.Length; i++)
+//{
+//    Point16 position = receiverPoints[i];
+//    if (position != Point16.NegativeOne && ByPosition.ContainsKey(position) && ByPosition[position] is PolymerizePedestal pedestal)
+//    {
+//        Item pItem = pedestal.GetItem();
+//        if (pItem.type == item.type)  //如果台座上的是需要的物品，那就减一下，减完了之后如果小于零说明物品数量足够
+//        {
+//            pedestal.OnReceiveVisualEffect();
+//            SendVisualEffect(pedestal);
+//            if (pItem.stack >= howManyNeed)//数量够，减少一下stack
+//            {
+//                pItem.stack -= howManyNeed;
+//                if (pItem.stack <= 0)
+//                    pItem.TurnToAir();
+//                howManyNeed = 0;
+//                break;
+//            }
+//            else//数量不够，全部消耗之后继续循环
+//            {
+//                howManyNeed -= pItem.stack;
+//                pItem.TurnToAir();
+//            }
+//        }
+//    }
+//}
 
-if (howManyNeed > 0)//如果没能完全消耗那么就说明物品不够，停止聚合
-    workTimer = -1;
+//if (howManyNeed > 0)//如果没能完全消耗那么就说明物品不够，停止聚合
+//    workTimer = -1;
 //                }
 //            }
 

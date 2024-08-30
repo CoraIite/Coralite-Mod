@@ -341,7 +341,12 @@ namespace Coralite.Content.Items.Thunder
 
         public Color ThunderColorFunc_Fade(float factor)
         {
-            return ThunderveinDragon.ThunderveinYellowAlpha * ThunderAlpha * (1 - factor);
+            return ThunderveinDragon.ThunderveinYellow * (1 - factor);
+        }
+
+        public override float GetAlpha(float factor)
+        {
+            return ThunderAlpha * (1 - factor);
         }
 
         public void InitCaches()
@@ -349,11 +354,12 @@ namespace Coralite.Content.Items.Thunder
             if (trails == null)
             {
                 trails = new ThunderTrail[3];
-                Asset<Texture2D> thunderTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody");
+                Asset<Texture2D> thunderTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBodyF");
 
                 for (int i = 0; i < trails.Length; i++)
                 {
-                    trails[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc_Fade);
+                    trails[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc_Fade, GetAlpha);
+                    trails[i].UseNonOrAdd=true;
                     trails[i].SetRange((0, 6));
                     trails[i].SetExpandWidth(4);
                 }

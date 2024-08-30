@@ -101,7 +101,12 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public virtual Color ThunderColorFunc(float factor)
         {
-            return new Color(103, 255, 255, 0) * ThunderAlpha;
+            return new Color(103, 255, 255) ;
+        }
+
+        public virtual float GetAlpha(float factor)
+        {
+            return ThunderAlpha * (1 - factor);
         }
 
         public override void AI()
@@ -111,11 +116,12 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 Projectile.InitOldPosCache(10);
                 thunderTrails = new ThunderTrail[3];
-                Asset<Texture2D> trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody2");
+                Asset<Texture2D> trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrail2");
                 for (int i = 0; i < 3; i++)
                 {
-                    thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc);
+                    thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc, GetAlpha);
                     thunderTrails[i].CanDraw = i == 0;
+                    thunderTrails[i].UseNonOrAdd = true;
                     thunderTrails[i].SetRange((0, 7));
                     thunderTrails[i].SetExpandWidth(2);
                     thunderTrails[i].BasePositions =

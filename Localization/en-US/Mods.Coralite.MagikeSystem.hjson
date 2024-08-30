@@ -59,6 +59,7 @@ MagikeSystem: {
 		SkyCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SkyCondition
 		DesertLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.DesertLensName
 		DesertCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.DesertCondition
+		GetOnlyItemContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GetOnlyItemContainerName
 	}
 
 	Error: Mods.Coralite.MagikeSystem.MagikeSystem.Error

@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Thunder
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 63;
+            Item.damage = 65;
             Item.useTime = 22;
             Item.useAnimation = 22;
             Item.knockBack = 2f;
@@ -457,6 +457,8 @@ namespace Coralite.Content.Items.Thunder
 
         public ref float Timer => ref Projectile.localAI[0];
 
+        public float fade = 0;
+
         public Player Owner => Main.player[Projectile.owner];
 
         private bool ExtraDash = true;
@@ -492,35 +494,27 @@ namespace Coralite.Content.Items.Thunder
         public override void OnSpawn(IEntitySource source)
         {
             Main.instance.CameraModifiers.Add(new MoveModifyer(5, 50));
+            if (VisualEffectSystem.HitEffect_ScreenShaking)
+                Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Helper.NextVec2Dir(), 12, 8, 5, 1000));
+        }
+
+        public override float GetAlpha(float factor)
+        {
+            if (factor < fade)
+                return 0;
+
+            return ThunderAlpha * (factor - fade) / (1 - fade);
         }
 
         public override void AI()
         {
-            if (thunderTrails == null)
-            {
-                Projectile.Resize(32, 40);
-                Projectile.velocity = Projectile.Center;
-                thunderTrails = new ThunderTrail[3];
-                Asset<Texture2D> trailTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody");
-                for (int i = 0; i < 3; i++)
-                {
-                    if (i == 0)
-                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange);
-                    else
-                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow);
-                    thunderTrails[i].CanDraw = false;
-                    thunderTrails[i].SetRange((0, 15));
-                    thunderTrails[i].BasePositions = new Vector2[3]
-                    {
-                        Projectile.Center,Projectile.Center,Projectile.Center
-                    };
-                }
-            }
+            InitThunderTrail();
 
             if (Timer < DashTime)
             {
                 SpawnDusts();
-                Projectile.Center = Owner.Center;
+                Projectile.Center = Owner.Center
+                    + (Owner.Center - Projectile.velocity).SafeNormalize(Vector2.Zero) * Timer * 12;
                 if (DashCount < 3)
                 {
                     Owner.velocity = new Vector2(DashDir * 30, Owner.velocity.Y);
@@ -529,40 +523,7 @@ namespace Coralite.Content.Items.Thunder
                 Owner.immuneTime = 20;
                 Owner.immune = true;
 
-                Vector2 pos2 = Projectile.velocity;
-                List<Vector2> pos = new()
-                {
-                    Projectile.velocity
-                };
-                if (Vector2.Distance(Projectile.velocity, Projectile.Center) < 32)
-                    pos.Add(Projectile.Center);
-                else
-                    for (int i = 0; i < 40; i++)
-                    {
-                        pos2 = pos2.MoveTowards(Projectile.Center, 32);
-                        if (Vector2.Distance(pos2, Projectile.Center) < 32)
-                        {
-                            pos.Add(Projectile.Center);
-                            break;
-                        }
-                        else
-                            pos.Add(pos2);
-                    }
-
-                foreach (var trail in thunderTrails)
-                {
-                    trail.BasePositions = pos.ToArray();
-                    trail.SetExpandWidth(4);
-                }
-
-                if (Timer % 4 == 0)
-                {
-                    foreach (var trail in thunderTrails)
-                    {
-                        trail.CanDraw = Main.rand.NextBool();
-                        trail.RandomThunder();
-                    }
-                }
+                UpdateTrailPoints();
 
                 ThunderWidth = 20;
                 ThunderAlpha = Timer / DashTime;
@@ -632,8 +593,9 @@ namespace Coralite.Content.Items.Thunder
                         }
                     }
                 }
-                SpawnDusts();
 
+                SpawnDusts();
+                
                 float factor = (Timer - DashTime) / (DelayTime);
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
                 ThunderWidth = 20 + sinFactor * 30;
@@ -641,8 +603,8 @@ namespace Coralite.Content.Items.Thunder
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.SetRange((0, 17 + sinFactor * 16 / 2));
-                    trail.SetExpandWidth((1 - factor) * 16 / 3);
+                    trail.SetRange((0, 8 + sinFactor * 16 / 2));
+                    trail.SetExpandWidth((1 - factor) * 14 / 3);
 
                     if (Timer % 6 == 0)
                     {
@@ -651,6 +613,8 @@ namespace Coralite.Content.Items.Thunder
                     }
                 }
 
+                fade =Coralite.Instance.X2Smoother.Smoother((int)(Timer - DashTime),DelayTime);
+
                 if (Timer > DashTime + DelayTime)
                     Projectile.Kill();
             }
@@ -658,9 +622,75 @@ namespace Coralite.Content.Items.Thunder
             Timer++;
         }
 
+        private void InitThunderTrail()
+        {
+            if (thunderTrails == null)
+            {
+                Projectile.Resize(32, 40);
+                Projectile.velocity = Projectile.Center;
+                thunderTrails = new ThunderTrail[3];
+                Asset<Texture2D> trailTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBodyF");
+                for (int i = 0; i < 3; i++)
+                {
+                    if (i == 0)
+                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange, GetAlpha);
+                    else
+                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow, GetAlpha);
+                    thunderTrails[i].CanDraw = false;
+                    thunderTrails[i].UseNonOrAdd = true;
+                    thunderTrails[i].SetRange((0, 6));
+                    thunderTrails[i].BasePositions =
+                    [
+                        Projectile.Center,Projectile.Center,Projectile.Center
+                    ];
+                }
+            }
+        }
+
+        private void UpdateTrailPoints()
+        {
+            Vector2 pos2 = Projectile.velocity;
+            List<Vector2> pos = new()
+                {
+                    Projectile.velocity
+                };
+
+            if (Vector2.Distance(Projectile.velocity, Projectile.Center) < 32)
+                pos.Add(Projectile.Center);
+            else
+                for (int i = 0; i < 40; i++)
+                {
+                    pos2 = pos2.MoveTowards(Projectile.Center, 32);
+                    if (Vector2.Distance(pos2, Projectile.Center) < 32)
+                    {
+                        pos.Add(Projectile.Center);
+                        break;
+                    }
+                    else
+                        pos.Add(pos2);
+                }
+
+            foreach (var trail in thunderTrails)
+            {
+                pos[0] = Projectile.velocity + Main.rand.NextVector2CircularEdge(12, 12);
+                pos[^1]= Projectile.Center+Main.rand.NextVector2CircularEdge(12, 12);
+                trail.BasePositions = [.. pos];
+                trail.SetExpandWidth(4);
+            }
+
+            if (Timer % 4 == 0)
+            {
+                foreach (var trail in thunderTrails)
+                {
+                    trail.CanDraw = Main.rand.NextBool();
+                    trail.RandomThunder();
+                }
+            }
+        }
+
         public virtual void SpawnDusts()
         {
-            if (Main.rand.NextBool(3))
+            if (Main.rand.NextBool(7))
             {
                 Vector2 pos = Vector2.Lerp(Projectile.velocity, Projectile.Center, Main.rand.NextFloat(0.1f, 0.9f))
                     + Main.rand.NextVector2Circular(Projectile.width / 2, Projectile.width / 2);

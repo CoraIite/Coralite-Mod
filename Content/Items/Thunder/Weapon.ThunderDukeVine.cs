@@ -226,7 +226,7 @@ namespace Coralite.Content.Items.Thunder
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.BasePositions = pos.ToArray();
+                    trail.BasePositions = [.. pos];
                     trail.SetExpandWidth(4);
                 }
 
@@ -286,7 +286,7 @@ namespace Coralite.Content.Items.Thunder
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.BasePositions = pos.ToArray();
+                    trail.BasePositions = [.. pos];
                     trail.SetExpandWidth(4);
                 }
 
@@ -338,7 +338,7 @@ namespace Coralite.Content.Items.Thunder
                 }
                 else
                 {
-                    Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>()
+                    Dust.NewDustPerfect(pos, DustType<LightningShineBall>()
                         , Projectile.rotation.ToRotationVector2() * Main.rand.NextFloat(2, 4)
                         , newColor: ThunderveinDragon.ThunderveinYellowAlpha, Scale: Main.rand.NextFloat(0.1f, 0.2f));
                 }
@@ -354,9 +354,10 @@ namespace Coralite.Content.Items.Thunder
                 thunderTrails = new ThunderTrail[3];
                 for (int i = 0; i < 3; i++)
                 {
-                    thunderTrails[i] = new (Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserBody2")
-                        , ThunderWidthFunc_Sin, ThunderColorFunc_Yellow);
+                    thunderTrails[i] = new (Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrail2")
+                        , ThunderWidthFunc_Sin, ThunderColorFunc_Yellow,GetAlpha);
                     thunderTrails[i].CanDraw = false;
+                    thunderTrails[i].UseNonOrAdd = true;
                     thunderTrails[i].SetRange((5, 20));
                     thunderTrails[i].BasePositions =
                     [
@@ -385,19 +386,19 @@ namespace Coralite.Content.Items.Thunder
 
         public override Color ThunderColorFunc_Yellow(float factor)
         {
-            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinYellowAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
+            return Color.Lerp(ThunderveinDragon.ThunderveinPurple, ThunderveinDragon.ThunderveinYellow, MathF.Sin(factor * MathHelper.Pi));
         }
 
         public override Color ThunderColorFunc2_Orange(float factor)
         {
-            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinOrangeAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
+            return Color.Lerp(ThunderveinDragon.ThunderveinPurple, ThunderveinDragon.ThunderveinOrange, MathF.Sin(factor * MathHelper.Pi));
         }
 
         public virtual (float, float) GetRange(float factor)
         {
             float sinFactor = MathF.Sin(factor * MathHelper.Pi);
 
-            return (5, 20 + sinFactor * PointDistance / 2);
+            return (5, 10 + sinFactor * PointDistance / 2);
         }
 
         public virtual float GetExpandWidth(float factor)

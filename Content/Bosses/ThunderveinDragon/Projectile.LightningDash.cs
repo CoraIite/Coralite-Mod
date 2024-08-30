@@ -21,6 +21,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public ref float OwnerIndex => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.localAI[0];
 
+        public float fade = 0;
+
         const int DelayTime = 30;
 
         protected ThunderTrail[] thunderTrails;
@@ -49,6 +51,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.velocity, Projectile.Center, Projectile.width, ref a);
         }
 
+        public override float GetAlpha(float factor)
+        {
+            if (factor < fade)
+                return 0;
+
+            return ThunderAlpha * (factor - fade) / (1 - fade);
+        }
+
         public override void AI()
         {
             if (!OwnerIndex.GetNPCOwner<ThunderveinDragon>(out NPC owner, Projectile.Kill))
@@ -63,15 +73,15 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 for (int i = 0; i < 3; i++)
                 {
                     if (i == 0)
-                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange);
+                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange, GetAlpha);
                     else
-                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow);
+                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow, GetAlpha);
                     thunderTrails[i].CanDraw = false;
-                    thunderTrails[i].SetRange((0, 15));
-                    thunderTrails[i].BasePositions = new Vector2[3]
-                    {
+                    thunderTrails[i].SetRange((0, 10));
+                    thunderTrails[i].BasePositions =
+                    [
                         Projectile.Center,Projectile.Center,Projectile.Center
-                    };
+                    ];
                 }
             }
 
@@ -101,6 +111,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                 foreach (var trail in thunderTrails)
                 {
+                    pos[0] = Projectile.velocity + Main.rand.NextVector2Circular(24, 24);
+                    pos[^1] = Projectile.Center + Main.rand.NextVector2Circular(24, 24);
+
                     trail.BasePositions = pos.ToArray();
                     trail.SetExpandWidth(4);
                 }
@@ -136,7 +149,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.SetRange((0, 17 + sinFactor * PointDistance / 2));
+                    trail.SetRange((0, 12 + sinFactor * PointDistance / 2));
                     trail.SetExpandWidth((1 - factor) * PointDistance / 3);
 
                     if (Timer % 6 == 0)
@@ -145,6 +158,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         trail.RandomThunder();
                     }
                 }
+
+                fade = Coralite.Instance.X2Smoother.Smoother((int)(Timer - DashTime), DelayTime);
 
                 if (Timer > DashTime + DelayTime)
                     Projectile.Kill();

@@ -96,9 +96,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 for (int i = 0; i < circles.Length; i++)
                 {
                     if (i == 0)
-                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc2_Orange);
+                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc2_Orange, GetAlpha);
                     else
-                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc_Yellow);
+                        circles[i] = new ThunderTrail(thunderTex, ThunderWidthFunc2, ThunderColorFunc_Yellow, GetAlpha);
 
                     circles[i].SetRange((5, 10));
                     circles[i].SetExpandWidth(8);
@@ -107,9 +107,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 for (int i = 0; i < outers.Length; i++)
                 {
                     if (i < 2)
-                        outers[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange);
+                        outers[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange, GetAlpha);
                     else
-                        outers[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow);
+                        outers[i] = new ThunderTrail(thunderTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow, GetAlpha);
                     outers[i].SetRange((5, 30));
                     outers[i].SetExpandWidth(8);
                 }

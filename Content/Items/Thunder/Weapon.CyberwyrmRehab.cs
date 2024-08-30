@@ -162,21 +162,23 @@ namespace Coralite.Content.Items.Thunder
             if (thunderTrails == null)
             {
                 Projectile.Resize(32, 40);
-                thunderTrails = new ThunderTrail[3];
-                Asset<Texture2D> trailTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody2");
-                for (int i = 0; i < 3; i++)
+                thunderTrails = new ThunderTrail[2];
+                Asset<Texture2D> trailTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBodyF");
+                for (int i = 0; i < 2; i++)
                 {
                     if (i == 0)
-                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange);
+                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange,GetAlpha);
                     else
-                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow);
+                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow, GetAlpha);
+                    thunderTrails[i].UseNonOrAdd = true;
                     thunderTrails[i].CanDraw = false;
-                    thunderTrails[i].SetRange((0, 8));
+                    thunderTrails[i].PartitionPointCount = 3;
+                    thunderTrails[i].SetRange((0, 6));
                     thunderTrails[i].SetExpandWidth(2);
-                    thunderTrails[i].BasePositions = new Vector2[3]
-                    {
+                    thunderTrails[i].BasePositions =
+                    [
                         Projectile.Center,Projectile.Center,Projectile.Center
-                    };
+                    ];
                 }
             }
 
@@ -215,7 +217,7 @@ namespace Coralite.Content.Items.Thunder
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.SetRange((0, 6 + sinFactor * 12));
+                    trail.SetRange((0, 6 + sinFactor * 10));
                     trail.SetExpandWidth((1 - factor) * 6);
 
                     if (Timer % 6 == 0)
@@ -235,10 +237,13 @@ namespace Coralite.Content.Items.Thunder
         public void UpdateTrails()
         {
             Vector2 pos2 = Projectile.velocity;
-            List<Vector2> pos = new()
-            {
-                    Projectile.velocity
-                };
+            List<Vector2> pos =
+            [
+                Projectile.velocity
+            ];
+
+            Vector2 normal = (Projectile.velocity - Projectile.Center).SafeNormalize(Vector2.Zero).RotatedBy(1.57f);
+
             if (Vector2.Distance(Projectile.velocity, Projectile.Center) < 32)
                 pos.Add(Projectile.Center);
             else
@@ -251,11 +256,16 @@ namespace Coralite.Content.Items.Thunder
                         break;
                     }
                     else
-                        pos.Add(pos2);
+                    {
+                        float f1 = (float)Main.timeForVisualEffects * 0.5f+Projectile.whoAmI/2;
+                        float f2 = i * 0.4f;
+                        float factor = MathF.Sin(f1 + f2) + MathF.Cos(f2 + f1 / 2);
+                        pos.Add(pos2 + normal * factor * 22);
+                    }
                 }
 
             foreach (var trail in thunderTrails)
-                trail.BasePositions = pos.ToArray();
+                trail.BasePositions = [.. pos];
 
             if (Timer % 5 == 0)
             {

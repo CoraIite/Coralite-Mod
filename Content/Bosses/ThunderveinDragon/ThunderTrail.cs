@@ -7,14 +7,23 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
-    public class ThunderTrail(Asset<Texture2D> thunderTex, Func<float, float> widthFunc, Func<float, Color> colorFunc)
+    public class ThunderTrail(Asset<Texture2D> thunderTex, Func<float, float> widthFunc, Func<float, Color> colorFunc,Func<float ,float> alphaFunc)
     {
         /// <summary>
         /// 数组元素必须得给我大于2喽
         /// </summary>
         public Vector2[] BasePositions { get; set; }
         public Vector2[] RandomlyPositions { get; set; }
+
+        public bool UseNonOrAdd=false;
+        public Color FlowColor = Color.White;
+
         public bool CanDraw { get; set; }
+
+        /// <summary>
+        /// 对于闪电中锐利的部分分割几次
+        /// </summary>
+        public int PartitionPointCount { get; set; } = 1;
 
         private Func<float, float> thunderWidthFunc = widthFunc;
         private (float, float) thunderRandomOffsetRange;
@@ -90,8 +99,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 return;
 
             Texture2D Texture = ThunderTex.Value;
-            List<CustomVertexInfo> bars = new();
-            List<CustomVertexInfo> bars2 = new();
+
+            int texWidth=Texture.Width;
+            float length = 0;
+
+            List<CustomVertexInfo> barsTop = new();
+            List<CustomVertexInfo> barsBottom = new();
+            List<CustomVertexInfo> bars2Top = new();
+            List<CustomVertexInfo> bars2Bottom = new();
 
             int trailCachesLength = RandomlyPositions.Length;
 
@@ -104,14 +119,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             Vector2 normal = (RandomlyPositions[0] - RandomlyPositions[1]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
             float tipRotaion = normal.ToRotation() + 1.57f;
-            Color thunderColor = colorFunc(0);
+            Color thunderColor = GetColor(0);
             float tipWidth = thunderWidthFunc(0);
             drawInTip = tipWidth > 10;
             Vector2 lengthVec2 = normal * tipWidth;
-            bars.Add(new(Center + lengthVec2, thunderColor, new Vector3(0, 0, 0)));
-            bars.Add(new(Center - lengthVec2, thunderColor, new Vector3(0, 1, 0)));
-            bars2.Add(new(Center + lengthVec2, thunderColor, new Vector3(0, 0, 0)));
-            bars2.Add(new(Center - lengthVec2, thunderColor, new Vector3(0, 1, 0)));
+
+            AddVertexInfo2(barsTop, barsBottom, Center, lengthVec2, thunderColor, 0);
+            AddVertexInfo2(bars2Top, bars2Bottom, Center, lengthVec2, GetFlowColor(0), 0);
 
             for (int i = 1; i < trailCachesLength - 1; i++)
             {
@@ -124,11 +138,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                  * AC连线的垂直点作为B的法向量
                  */
 
-                thunderColor = colorFunc(factor);
+                thunderColor = GetColor(factor);
                 float width = thunderWidthFunc(factor);
 
                 Vector2 dirToBack = RandomlyPositions[i - 1] - RandomlyPositions[i];
                 Vector2 dirToTront = RandomlyPositions[i + 1] - RandomlyPositions[i];
+
+                length += dirToBack.Length();
+                float lengthFactor = length / texWidth;//当前闪电长度相对于图片长度的值，总之是用于拉伸闪电贴图的
 
                 float y = (RandomlyPositions[i].X - RandomlyPositions[i - 1].X)
                     / (RandomlyPositions[i + 1].X - RandomlyPositions[i - 1].X)
@@ -138,110 +155,169 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                 float angle = Helpers.Helper.AngleRad(dirToBack, dirToTront);
 
+                //normal = (RandomlyPositions[i - 1].SafeNormalize(Vector2.One) + RandomlyPositions[i + 1].SafeNormalize(Vector2.One)).SafeNormalize(Vector2.One);
                 normal = (RandomlyPositions[i - 1] - RandomlyPositions[i + 1]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
 
-                if (angle > 0.5f && angle < 1.2f)
+                if (angle > 0.5f && angle < 1.9f)
                 {
-                    if (RandomlyPositions[i].Y > y)
+                    bool PartitionBottom = RandomlyPositions[i].Y < y;//分割底部的点
+                    if (RandomlyPositions[i - 1].X> RandomlyPositions[i + 1].X)
+                        PartitionBottom = !PartitionBottom;
+
+                    int sign = PartitionBottom ? 1 : -1;
+
+                    float perAngle = angle / PartitionPointCount;//分割几次的每次增加的角度
+                    Vector2 exNormal = normal.RotatedBy(-sign * angle / 2);
+
+                    for (int j = 0; j < PartitionPointCount + 1; j++)
                     {
-                        /*
-                         * 
-                         *      C      -
-                         *                      B
-                         *          A      -
-                         * 角ABC过小
-                         * 这时把B点右边拆分成两个点
-                         * 
-                         */
+                        Vector2 exNormal2;
+                        if (j != 0)
+                            exNormal2 = exNormal.RotatedBy(sign * perAngle);
+                        else
+                            exNormal2 = exNormal;
 
-                        Vector2 exNormal1 = normal.RotatedBy(angle / 2);
-                        Vector2 exNormal2 = normal.RotatedBy(-angle / 2);
+                        Vector2 Top;
+                        Vector2 Bottom;
+                        if (PartitionBottom)
+                        {
+                            Top = Center + normal * width;
+                            Bottom = Center - exNormal2 * width;
+                        }
+                        else
+                        {
+                            Top = Center + exNormal2 * width;
+                            Bottom = Center - normal * width;
+                        }
 
-                        Vector2 Top = Center + normal * width;
-                        Vector2 Bottom2 = Center - exNormal1 * width;
-                        Vector2 Bottom1 = Center - exNormal2 * width;
-                        //Vector2 exBottom1 = Center - exNormal1 * width / 3;
-                        //Vector2 exBottom2 = Center - exNormal2 * width / 3;
+                        AddVertexInfo(barsTop, barsBottom, Top, Bottom, thunderColor, lengthFactor);
 
-                        bars.Add(new(Top, thunderColor, new Vector3(factor, 0, 0)));
-                        bars.Add(new(Bottom1, thunderColor, new Vector3(factor, 1, 0)));
-
-                        bars.Add(new(Top, thunderColor, new Vector3(factor, 0, 0)));
-                        bars.Add(new(Bottom2, thunderColor, new Vector3(factor, 1, 0)));
-
-                        bars2.Add(new(Top, thunderColor, new Vector3(factor, 0, 0)));
-                        bars2.Add(new(Bottom1, thunderColor, new Vector3(factor, 1, 0)));
-
-                        bars2.Add(new(Top, thunderColor, new Vector3(factor, 0, 0)));
-                        bars2.Add(new(Bottom2, thunderColor, new Vector3(factor, 1, 0)));
+                        Vector2 center2 = (Top + Bottom) / 2;
+                        Vector2 dir = (Top - center2) / 4;
+                        AddVertexInfo2(bars2Top, bars2Bottom, center2, dir, GetFlowColor(factor), lengthFactor);
+                        exNormal = exNormal2;
                     }
-                    else
-                    {
-                        /*
-                         * 
-                         *                -      C
-                         *        B
-                         *               -    A
-                         * 角ABC过小，和上面那个反过来的
-                         * 这时把B点右边拆分成两个点
-                         * 
-                         */
 
-                        Vector2 exNormal1 = normal.RotatedBy(-angle / 2);
-                        Vector2 exNormal2 = normal.RotatedBy(angle / 2);
+                    #region 旧算法
+                    //if (RandomlyPositions[i].Y > y)
+                    //{
+                    //    /*
+                    //     * 
+                    //     *      C      -
+                    //     *                      B
+                    //     *          A      -
+                    //     * 角ABC过小
+                    //     * 这时把B点右边拆分成两个点
+                    //     * 
+                    //     */
 
-                        Vector2 Top2 = Center + exNormal1 * width;
-                        Vector2 Top1 = Center + exNormal2 * width;
-                        //Vector2 exTop1 = Center + exNormal2 * width / 3;
-                        //Vector2 exTop2 = Center + exNormal2 * width / 3;
-                        Vector2 Bottom = Center - normal * width;
+                    //    Vector2 exNormal1 = normal.RotatedBy(angle / 2);
+                    //    Vector2 exNormal2 = normal.RotatedBy(-angle / 2);
 
-                        bars.Add(new(Top1, thunderColor, new Vector3(factor, 0, 0)));
-                        bars.Add(new(Bottom, thunderColor, new Vector3(factor, 1, 0)));
+                    //    Vector2 Top = Center + normal * width;
+                    //    Vector2 Bottom2 = Center - exNormal1 * width;
+                    //    Vector2 Bottom1 = Center - exNormal2 * width;
+                    //    //Vector2 exBottom1 = Center - exNormal1 * width / 3;
+                    //    //Vector2 exBottom2 = Center - exNormal2 * width / 3;
 
-                        bars.Add(new(Top2, thunderColor, new Vector3(factor, 0, 0)));
-                        bars.Add(new(Bottom, thunderColor, new Vector3(factor, 1, 0)));
+                    //    AddVertexInfo(barsTop, barsBottom, Top, Bottom1, thunderColor, factor);
+                    //    AddVertexInfo(barsTop, barsBottom, Top, Bottom2, thunderColor, factor);
 
-                        bars2.Add(new(Top1, thunderColor, new Vector3(factor, 0, 0)));
-                        bars2.Add(new(Bottom, thunderColor, new Vector3(factor, 1, 0)));
+                    //    bars2Top.Add(new(Top, thunderColor, new Vector3(factor, 0, 0)));
+                    //    bars2Top.Add(new(Bottom1, thunderColor, new Vector3(factor, 1, 0)));
 
-                        bars2.Add(new(Top2, thunderColor, new Vector3(factor, 0, 0)));
-                        bars2.Add(new(Bottom, thunderColor, new Vector3(factor, 1, 0)));
-                    }
+                    //    bars2Top.Add(new(Top, thunderColor, new Vector3(factor, 0, 0)));
+                    //    bars2Top.Add(new(Bottom2, thunderColor, new Vector3(factor, 1, 0)));
+                    //}
+                    //else
+                    //{
+                    //    /*
+                    //     * 
+                    //     *                -      C
+                    //     *        B
+                    //     *               -    A
+                    //     * 角ABC过小，和上面那个反过来的
+                    //     * 这时把B点右边拆分成两个点
+                    //     * 
+                    //     */
+
+                    //    Vector2 exNormal1 = normal.RotatedBy(-angle / 2);
+                    //    Vector2 exNormal2 = normal.RotatedBy(angle / 2);
+
+                    //    Vector2 Top2 = Center + exNormal1 * width;
+                    //    Vector2 Top1 = Center + exNormal2 * width;
+                    //    //Vector2 exTop1 = Center + exNormal2 * width / 3;
+                    //    //Vector2 exTop2 = Center + exNormal2 * width / 3;
+                    //    Vector2 Bottom = Center - normal * width;
+
+                    //    barsTop.Add(new(Top1, thunderColor, new Vector3(factor, 0, 0)));
+                    //    barsTop.Add(new(Bottom, thunderColor, new Vector3(factor, 1, 0)));
+
+                    //    barsTop.Add(new(Top2, thunderColor, new Vector3(factor, 0, 0)));
+                    //    barsTop.Add(new(Bottom, thunderColor, new Vector3(factor, 1, 0)));
+
+                    //    bars2Top.Add(new(Top1, thunderColor, new Vector3(factor, 0, 0)));
+                    //    bars2Top.Add(new(Bottom, thunderColor, new Vector3(factor, 1, 0)));
+
+                    //    bars2Top.Add(new(Top2, thunderColor, new Vector3(factor, 0, 0)));
+                    //    bars2Top.Add(new(Bottom, thunderColor, new Vector3(factor, 1, 0)));
+                    //}
+                    #endregion
                 }
                 else//正常的
                 {
-                    Vector2 Top = Center + normal * width;
-                    Vector2 Bottom = Center - normal * width;
+                    //Vector2 Top = Center + normal * width;
+                    //Vector2 Bottom = Center - normal * width;
+                    AddVertexInfo2(barsTop, barsBottom, Center, normal * width, thunderColor, lengthFactor);
+                    AddVertexInfo2(bars2Top, bars2Bottom, Center, normal * width / 4, GetFlowColor(factor), lengthFactor);
 
-                    bars.Add(new(Top, thunderColor, new Vector3(factor, 0, 0)));
-                    bars.Add(new(Bottom, thunderColor, new Vector3(factor, 1, 0)));
-                    bars2.Add(new(Center + normal * width / 3, thunderColor, new Vector3(factor, 0, 0)));
-                    bars2.Add(new(Center - normal * width / 3, thunderColor, new Vector3(factor, 1, 0)));
+                    /*barsTop.Add(new(Top, thunderColor, new Vector3(factor, 0, 0)));
+                    //barsTop.Add(new(Bottom, thunderColor, new Vector3(factor, 1, 0)));
+                    //bars2Top.Add(new(Center + normal * width / 3, thunderColor, new Vector3(factor, 0, 0)));
+                    bars2Top.Add(new(Center - normal * width / 3, thunderColor, new Vector3(factor, 1, 0))); */
                 }
             }
 
             Center = RandomlyPositions[^1] - Main.screenPosition;
-            normal = (RandomlyPositions[^2] - RandomlyPositions[^1]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
-            thunderColor = colorFunc(1);
+            Vector2 dirToBack2 = RandomlyPositions[^2] - RandomlyPositions[^1];
+            normal = dirToBack2.RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
             float bottomWidth = thunderWidthFunc(1);
             drawInBack = bottomWidth > 10;
             lengthVec2 = normal * bottomWidth;
-            bars.Add(new(Center + lengthVec2, thunderColor, new Vector3(1, 0, 0)));
-            bars.Add(new(Center - lengthVec2, thunderColor, new Vector3(1, 1, 0)));
-            bars2.Add(new(Center + lengthVec2, thunderColor, new Vector3(1, 0, 0)));
-            bars2.Add(new(Center - lengthVec2, thunderColor, new Vector3(1, 1, 0)));
+
+            length += dirToBack2.Length();
+            float lengthFactor2 = length / texWidth;
+
+            AddVertexInfo2(barsTop, barsBottom, Center, lengthVec2, GetColor(1), lengthFactor2);
+            AddVertexInfo2(bars2Top, bars2Bottom, Center, lengthVec2, GetFlowColor(1), lengthFactor2);
+
+            /*barsTop.Add(new(Center + lengthVec2, thunderColor, new Vector3(1, 0, 0)));
+            //barsTop.Add(new(Center - lengthVec2, thunderColor, new Vector3(1, 1, 0)));
+            //bars2Top.Add(new(Center + lengthVec2, thunderColor, new Vector3(1, 0, 0)));
+            bars2Top.Add(new(Center - lengthVec2, thunderColor, new Vector3(1, 1, 0)));*/
 
             graphicsDevice.Textures[0] = Texture;
-            graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
-            graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars2.ToArray(), 0, bars2.Count - 2);
+            BlendState state = graphicsDevice.BlendState;
+
+            if (UseNonOrAdd)
+                graphicsDevice.BlendState = BlendState.NonPremultiplied;
+            graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, barsTop.ToArray(), 0, barsTop.Count - 2);
+            graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, barsBottom.ToArray(), 0, barsTop.Count - 2);
+
+            if (UseNonOrAdd)
+                graphicsDevice.BlendState = BlendState.Additive;
+            graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars2Top.ToArray(), 0, bars2Top.Count - 2);
+            graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars2Bottom.ToArray(), 0, bars2Top.Count - 2);
+
+            graphicsDevice.BlendState = state;
 
             if (drawInTip)
             {
                 Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
                 var pos = RandomlyPositions[0] - Main.screenPosition;
                 var origin = mainTex.Size() / 2;
-                Color c = new(255, 202, 101, 0);
+                Color c = colorFunc(0);
+                c.A = 0;
 
                 Vector2 scale = new(thunderWidthFunc(0) / 90, thunderWidthFunc(0) / 130);
 
@@ -255,7 +331,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.NightmarePlantera + "Light").Value;
                 var pos = RandomlyPositions[^1] - Main.screenPosition;
                 var origin = mainTex.Size() / 2;
-                Color c = new(255, 202, 101, 0);
+                Color c = colorFunc(1);
+                c.A = 0;
 
                 Vector2 scale = new(thunderWidthFunc(1) / 170, thunderWidthFunc(1) / 200);
                 float rot = normal.ToRotation() + 1.57f;
@@ -263,6 +340,63 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale * 0.75f, 0, 0);
                 //Main.spriteBatch.Draw(mainTex, pos, null, c, rot, origin, scale * 0.5f, 0, 0);
             }
+        }
+
+        public void AddVertexInfo(List<CustomVertexInfo> topList, List<CustomVertexInfo> bottomList, Vector2 top,Vector2 bottom,Color color,float factor)
+        {
+            Vector2 center = (top + bottom)/2;
+
+            topList.Add(new(top, color, new Vector3(factor, 0, 0)));
+            topList.Add(new(center, color, new Vector3(factor, 0.5f, 0)));
+
+            bottomList.Add(new(center, color, new Vector3(factor, 0.5f, 0)));
+            bottomList.Add(new(bottom, color, new Vector3(factor, 1, 0)));
+        }
+
+        public void AddVertexInfo2(List<CustomVertexInfo> topList, List<CustomVertexInfo> bottomList, Vector2 center,Vector2 dir,Color color,float factor)
+        {
+            topList.Add(new(center+dir, color, new Vector3(factor, 0, 0)));
+            topList.Add(new(center, color, new Vector3(factor, 0.5f, 0)));
+
+            bottomList.Add(new(center, color, new Vector3(factor, 0.5f, 0)));
+            bottomList.Add(new(center-dir, color, new Vector3(factor, 1, 0)));
+        }
+
+        /// <summary>
+        /// 获取闪电颜色，会根据<see cref="UseNonOrAdd"/>发生变化
+        /// </summary>
+        /// <param name="factor"></param>
+        /// <returns></returns>
+        public Color GetColor(float factor)
+        {
+            Color thunderColor = colorFunc(factor);
+            float alpha = alphaFunc(factor);
+
+            if (UseNonOrAdd)
+                thunderColor.A = (byte)(alpha * 255);
+            else
+            {
+                thunderColor.A = 0;
+                thunderColor *= alpha;
+            }
+
+            return thunderColor;
+        }
+
+        public Color GetFlowColor(float factor)
+        {
+            Color thunderColor = FlowColor;
+            float alpha = alphaFunc(factor);
+
+            if (UseNonOrAdd)
+                thunderColor.A = (byte)(alpha * 255);
+            else
+            {
+                thunderColor.A = 0;
+                thunderColor *= alpha;
+            }
+
+            return thunderColor;
         }
     }
 }

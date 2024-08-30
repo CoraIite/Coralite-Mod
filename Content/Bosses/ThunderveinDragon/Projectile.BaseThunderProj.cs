@@ -21,12 +21,17 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public virtual Color ThunderColorFunc_Yellow(float factor)
         {
-            return ThunderveinDragon.ThunderveinYellowAlpha * ThunderAlpha;
+            return ThunderveinDragon.ThunderveinYellow;
         }
 
         public virtual Color ThunderColorFunc2_Orange(float factor)
         {
-            return ThunderveinDragon.ThunderveinOrangeAlpha * ThunderAlpha;
+            return ThunderveinDragon.ThunderveinOrange;
+        }
+
+        public virtual float GetAlpha(float factor)
+        {
+            return ThunderAlpha;
         }
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)

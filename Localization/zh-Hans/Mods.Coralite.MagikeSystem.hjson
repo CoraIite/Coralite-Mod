@@ -74,6 +74,7 @@ MagikeSystem: {
 			  ▶ 需要将底座放置在沙块上
 			  ▶ 发生沙尘暴时产量增加
 			'''
+		// GetOnlyItemContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GetOnlyItemContainerName
 	}
 
 	Error: 发生致命错误！请重新摆放该物块！
