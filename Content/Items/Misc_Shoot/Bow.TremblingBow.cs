@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 Vector2 velocity2 = dir.RotatedBy(-i * 0.5f) * speed;
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
-                    , position + dir.RotatedBy(i * 1f) * 48 - velocity * 2, dir.RotatedBy(-i * 0.5f) * speed, ModContent.ProjectileType<TremblingElectric>()
+                    , position + dir.RotatedBy(i * 1f) * 48 - velocity * 2, velocity2, ModContent.ProjectileType<TremblingElectric>()
                     , damage2, knockback, player.whoAmI, i);
             }
 
@@ -119,15 +119,17 @@ namespace Coralite.Content.Items.Misc_Shoot
                 Asset<Texture2D> trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrail2");
                 for (int i = 0; i < 3; i++)
                 {
-                    thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc, GetAlpha);
-                    thunderTrails[i].CanDraw = i == 0;
-                    thunderTrails[i].UseNonOrAdd = true;
+                    thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc, GetAlpha)
+                    {
+                        CanDraw = i == 0,
+                        UseNonOrAdd = true,
+                        BasePositions = 
+                        [
+                            Projectile.Center,Projectile.Center,Projectile.Center
+                        ]
+                    };
                     thunderTrails[i].SetRange((0, 7));
                     thunderTrails[i].SetExpandWidth(2);
-                    thunderTrails[i].BasePositions =
-                    [
-                        Projectile.Center,Projectile.Center,Projectile.Center
-                    ];
                 }
             }
 

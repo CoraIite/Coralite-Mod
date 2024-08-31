@@ -86,8 +86,8 @@ namespace Coralite.Content.Items.Glistent
         }
     }
 
-    public class LeafeoShield
+    public class LeafeoShield:ModProjectile
     {
-
+        public override string Texture => AssetDirectory.OtherProjectiles+ "Circle";
     }
 }

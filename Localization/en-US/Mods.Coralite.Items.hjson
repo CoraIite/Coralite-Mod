@@ -4450,3 +4450,8 @@ ShroomitePolarizedFilter: {
 	DisplayName: Shroomite Polarized Filter
 	Tooltip: ""
 }
+
+PlasmaBow: {
+	DisplayName: Plasma Bow
+	Tooltip: ""
+}

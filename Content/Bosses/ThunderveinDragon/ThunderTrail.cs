@@ -15,10 +15,21 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public Vector2[] BasePositions { get; set; }
         public Vector2[] RandomlyPositions { get; set; }
 
-        public bool UseNonOrAdd=false;
+        /// <summary>
+        /// 在绘制同时使用Non与Add的绘制模式
+        /// </summary>
+        public bool UseNonOrAdd { get; set; } = false;
         public Color FlowColor = Color.White;
 
+        /// <summary>
+        /// 是否能绘制闪电，可以用这个来制作闪烁效果
+        /// </summary>
         public bool CanDraw { get; set; }
+
+        /// <summary>
+        /// 转角小于多少时会进行圆滑处理
+        /// </summary>
+        public float PartitionLimit { get; set; } = 1.9f;
 
         /// <summary>
         /// 对于闪电中锐利的部分分割几次
@@ -95,7 +106,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void DrawThunder(GraphicsDevice graphicsDevice)
         {
-            if (!CanDraw)
+            if (!CanDraw|| RandomlyPositions==null)
                 return;
 
             Texture2D Texture = ThunderTex.Value;
@@ -153,19 +164,20 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     + RandomlyPositions[i - 1].Y;
 
 
-                float angle = Helpers.Helper.AngleRad(dirToBack, dirToTront);
+                float angle = MathF.Acos((Vector2.Dot( dirToBack , dirToTront) /(dirToTront.Length()*dirToBack.Length())));//Helpers.Helper.AngleRad(dirToBack, dirToTront);
 
                 //normal = (RandomlyPositions[i - 1].SafeNormalize(Vector2.One) + RandomlyPositions[i + 1].SafeNormalize(Vector2.One)).SafeNormalize(Vector2.One);
                 normal = (RandomlyPositions[i - 1] - RandomlyPositions[i + 1]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
-
-                if (angle > 0.5f && angle < 1.9f)
+                
+                if (angle < PartitionLimit)
                 {
                     bool PartitionBottom = RandomlyPositions[i].Y < y;//分割底部的点
-                    if (RandomlyPositions[i - 1].X> RandomlyPositions[i + 1].X)
+                    if (RandomlyPositions[i - 1].X > RandomlyPositions[i + 1].X)
                         PartitionBottom = !PartitionBottom;
 
                     int sign = PartitionBottom ? 1 : -1;
 
+                    angle = 3.141f - angle;
                     float perAngle = angle / PartitionPointCount;//分割几次的每次增加的角度
                     Vector2 exNormal = normal.RotatedBy(-sign * angle / 2);
 

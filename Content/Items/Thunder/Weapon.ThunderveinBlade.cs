@@ -613,7 +613,7 @@ namespace Coralite.Content.Items.Thunder
                     }
                 }
 
-                fade =Coralite.Instance.X2Smoother.Smoother((int)(Timer - DashTime),DelayTime);
+                fade = Coralite.Instance.X2Smoother.Smoother((int)(Timer - DashTime), DelayTime);
 
                 if (Timer > DashTime + DelayTime)
                     Projectile.Kill();

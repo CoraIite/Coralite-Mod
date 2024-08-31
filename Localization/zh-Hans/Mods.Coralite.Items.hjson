@@ -4545,3 +4545,8 @@ ShroomitePolarizedFilter: {
 	DisplayName: 偏振滤镜-蘑菇矿锭
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
+
+PlasmaBow: {
+	DisplayName: 电浆弓
+	Tooltip: "射出球形闪电"
+}
