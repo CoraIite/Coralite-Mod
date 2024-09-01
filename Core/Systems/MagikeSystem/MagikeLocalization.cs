@@ -28,6 +28,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             LoadItemDescription();
             LoadApparatusDescription();
             LoadUIText();
+            LoadCraftText();
         }
 
         public void UnloadLocalization()
@@ -36,7 +37,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             LearnedMagikeAdvanced = null;
             NewKnowledgeUnlocked = null;
 
-            ConnectStaff = null;
+            Staffs = null;
             Filter = null;
             ItemDescription = null;
             ApparatusDescription = null;
@@ -46,9 +47,9 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         #region 魔能连接仪相关
 
-        public static LocalizedText[] ConnectStaff { get; private set; }
+        public static LocalizedText[] Staffs { get; private set; }
 
-        public class ConnectStaffID
+        public enum StaffTextID
         {
             /*
              * 魔能连接仪的各种情况
@@ -56,16 +57,16 @@ namespace Coralite.Core.Systems.MagikeSystem
              *  - 第二步：选择接收器，分为没有接收器，太远了无法连接和连接成功3种情况
              *  - 右键点击为打开连接面板，左键单击面板和选择发送器一样，右键单击取消连接
              */
-            public const int ChooseSender_Found = 0;
-            public const int ChooseSender_NotFound = 1;
+            ChooseSender_Found = 0,
+            ChooseSender_NotFound ,
 
-            public const int ChooseReceiver_NotFound = 2;
-            public const int ConnectFail_TooFar = 3;
-            public const int ConnectFail_CantBeSelf = 4;
-            public const int ConnectFail_ConnectorFillUp = 5;
-            public const int Connect_Success = 6;
+            ChooseReceiver_NotFound,
+            ConnectFail_TooFar,
+            ConnectFail_CantBeSelf,
+            ConnectFail_ConnectorFillUp,
+            Connect_Success,
 
-            public const int Deconnect = 7;
+            Deconnect,
 
             /*
              * 璀璨连接仪
@@ -73,28 +74,26 @@ namespace Coralite.Core.Systems.MagikeSystem
              *  - 会显示连接数量和失败数量
              */
 
-            public const int BrilliantConnect = 8;
+            BrilliantConnect,
 
-            public const int Count = BrilliantConnect + 1;
+            //充能球：未找到魔能容器
+            ChargeNotFound,
+            //激活杖：未找到魔能工厂
+            FactoryNotFound,
+
+            Count
         }
 
         public void LoadConnectStaff()
         {
-            ConnectStaff = new LocalizedText[ConnectStaffID.Count];
+            Staffs = new LocalizedText[(int)StaffTextID.Count];
 
-            ConnectStaff[ConnectStaffID.ChooseSender_Found] = this.GetLocalization("ChooseSender_Found");
-            ConnectStaff[ConnectStaffID.ChooseSender_NotFound] = this.GetLocalization("ChooseSender_NotFound");
-            ConnectStaff[ConnectStaffID.ChooseReceiver_NotFound] = this.GetLocalization("ChooseReceiver_NotFound");
-            ConnectStaff[ConnectStaffID.ConnectFail_TooFar] = this.GetLocalization("ConnectFail_TooFar");
-            ConnectStaff[ConnectStaffID.ConnectFail_CantBeSelf] = this.GetLocalization("ConnectFail_CantBeSelf");
-            ConnectStaff[ConnectStaffID.ConnectFail_ConnectorFillUp] = this.GetLocalization("ConnectFail_ConnectorFillUp");
-            ConnectStaff[ConnectStaffID.Connect_Success] = this.GetLocalization("ChooseReceiver_Success");
-            ConnectStaff[ConnectStaffID.Deconnect] = this.GetLocalization("Deconnect");
-            ConnectStaff[ConnectStaffID.BrilliantConnect] = this.GetLocalization("BrilliantConnect");
+            for (int i = 0; i < (int)StaffTextID.Count; i++)
+                Staffs[i] = this.GetLocalization(nameof(Staffs) + "." + Enum.GetName((StaffTextID)i));
         }
 
-        public static string GetConnectStaffText(int id)
-            => ConnectStaff[id].Value;
+        public static string GetConnectStaffText(StaffTextID id)
+            => Staffs[(int)id].Value;
 
         #endregion
 
@@ -138,29 +137,30 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static LocalizedText[] ApparatusDescription { get; private set; }
 
-        public class ApparatusDescriptionID
+        public enum ApparatusDescriptionID
         {
             /*
              * 魔能容量
              * 连接数量
              * 
              */
-            public const int MagikeAmount = 0;
-            public const int ConnectAmount = 1;
+             MagikeAmount = 0,
+             ConnectAmount = 1,
+             IsWorking = 2,
 
-            public const int Count = 2;
+             Count = 3,
         }
 
         public void LoadApparatusDescription()
         {
-            ApparatusDescription = new LocalizedText[ApparatusDescriptionID.Count];
+            ApparatusDescription = new LocalizedText[(int)ApparatusDescriptionID.Count];
 
-            ApparatusDescription[ApparatusDescriptionID.MagikeAmount] = this.GetLocalization(nameof(ApparatusDescription) + "MagikeAmount");
-            ApparatusDescription[ApparatusDescriptionID.ConnectAmount] = this.GetLocalization(nameof(ApparatusDescription) + "ConnectAmount");
+            for (int i = 0; i < (int)ApparatusDescriptionID.Count; i++)
+                ApparatusDescription[i] = this.GetLocalization(nameof(ApparatusDescription) + "." + Enum.GetName((ApparatusDescriptionID)i));
         }
 
-        public static string GetApparatusDescriptionText(int id)
-            => ApparatusDescription[id].Value;
+        public static string GetApparatusDescriptionText(ApparatusDescriptionID id)
+            => ApparatusDescription[(int)id].Value;
 
         #endregion
 

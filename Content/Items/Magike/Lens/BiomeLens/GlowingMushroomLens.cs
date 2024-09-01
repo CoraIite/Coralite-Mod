@@ -10,7 +10,7 @@ using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Magike.BiomeLens
+namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 {
     public class GlowingMushroomLens() : MagikeApparatusItem(TileType<GlowingMushroomLensTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
     }
 
     public class GlowingMushroomLensTile() : BaseLensTile
-        (2, 3, Color.DarkBlue, DustID.GlowingMushroom, 8)
+        (2, 3, Color.DarkBlue, DustID.GlowingMushroom)
     {
         public override string Texture => AssetDirectory.MagikeLensTiles + Name;
         public override int DropItemType => ItemType<GlowingMushroomLens>();

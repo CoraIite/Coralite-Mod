@@ -1,116 +1,77 @@
-﻿//using Coralite.Content.UI;
-//using Coralite.Core.Loaders;
-//using Coralite.Core.Systems.MagikeSystem.TileEntities;
-//using Coralite.Helpers;
-//using Microsoft.Xna.Framework.Graphics;
-//using System;
-//using Terraria;
-//using Terraria.Audio;
-//using Terraria.DataStructures;
-//using Terraria.GameContent;
+﻿using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.GameContent;
 
-//namespace Coralite.Core.Systems.MagikeSystem.Tiles
-//{
-//    public abstract class BasePedestalTile : ModTile
-//    {
-//        public override string Texture => AssetDirectory.MagikeAltarTiles + Name;
+namespace Coralite.Core.Systems.MagikeSystem.Tiles
+{
+    public abstract class BasePedestalTile(int width, int height, Color mapColor, int dustType, int minPick = 0)
+        : BaseMagikeTile(width, height, mapColor, dustType, minPick)
+    {
+        public const float ItemSize = 36;
 
-//        public const int FrameWidth = 18;
-//        public const int FrameHeight = 18 * 2;
-//        public const int halfWidth = 16 / 2;
-//        public const int halfHeight = 16 * 2 / 2;
-//        public readonly int HorizontalFrames = 1;
-//        public readonly int VerticalFrames = 1;
+        public override void QuickLoadAsset(MagikeApparatusLevel level)
+        {
 
-//        public override void NumDust(int i, int j, bool fail, ref int num)
-//        {
-//            num = 2;
-//        }
+        }
 
-//        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-//        {
-//            MagikeItemSlotPanel.visible = false;
-//            UILoader.GetUIState<MagikeItemSlotPanel>().Recalculate();
+        public override void DrawExtra(SpriteBatch spriteBatch, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity)
+        {
+            Vector2 selfCenter = tileRect.Center();
+            Vector2 drawPos = selfCenter + offset - Main.screenPosition;
 
-//            SoundEngine.PlaySound(CoraliteSoundID.DigStone_Tink, new Vector2(i, j) * 16);
-//            int x = i - frameX / 18;
-//            int y = j - frameY / 18;
-//            if (MagikeHelper.TryGetEntityWithTopLeft(x, y, out PolymerizePedestal pedestal))
-//                pedestal.Kill(x, y);
-//        }
+            //虽然一般不会没有 但是还是检测一下
+            if (!entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
+                return;
 
-//        public override bool RightClick(int i, int j)
-//        {
-//            if (MagikeHelper.TryGetEntity(i, j, out PolymerizePedestal pedestal))
-//            {
-//                MagikeItemSlotPanel.visible = true;
-//                MagikeItemSlotPanel.tileEntity = pedestal;
-//                UILoader.GetUIState<MagikeItemSlotPanel>().Recalculate();
-//            }
+            if (!container.Items[0].IsAir)
+                DrawItem(spriteBatch, container.Items[0], drawPos + rotation.ToRotationVector2()
+                    * (18 + ItemSize / 2 + MathF.Sin(Main.GlobalTimeWrappedHourly + (tileRect.X + tileRect.Y) * 0.1f) * 6));
+        }
 
-//            return true;
-//        }
+        public static void DrawItem(SpriteBatch spriteBatch, Item i, Vector2 pos)
+        {
+            int type = i.type;
 
-//        public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
-//        {
-//            //由于该物块在其工作表上没有悬停部分，因此我们必须自己对其进行动画处理
-//            //因此，我们将瓷砖的左上角注册为“特殊点”
-//            //这使我们能够在SpecialDraw中绘制内容
-//            if (drawData.tileFrameX % FrameWidth == 0 && drawData.tileFrameY % FrameHeight == 0)
-//                Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
-//        }
+            Main.instance.LoadItem(type);
+            Texture2D itemTex = TextureAssets.Item[type].Value;
+            Rectangle rectangle2;
 
-//        public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
-//        {
-//            //这是特定于照明模式的，如果您手动绘制瓷砖，请始终包含此内容
-//            Vector2 offScreen = new(Main.offScreenRange);
-//            if (Main.drawToScreen)
-//                offScreen = Vector2.Zero;
+            if (Main.itemAnimations[type] != null)
+                rectangle2 = Main.itemAnimations[type].GetFrame(itemTex, -1);
+            else
+                rectangle2 = itemTex.Frame();
 
-//            //检查物块它是否真的存在
-//            Point p = new(i, j);
-//            Terraria.Tile tile = Main.tile[p.X, p.Y];
-//            if (tile == null || !tile.HasTile)
-//                return;
+            Vector2 origin = rectangle2.Size() / 2;
+            float itemScale = 1f;
 
-//            // 根据项目的地点样式拾取图纸上的框架
-//            Vector2 worldPos = p.ToWorldCoordinates(halfWidth, halfHeight);
-//            Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
+            if (rectangle2.Width > ItemSize || rectangle2.Height > ItemSize)
+            {
+                if (rectangle2.Width > ItemSize)
+                    itemScale = ItemSize / rectangle2.Width;
+                else
+                    itemScale = ItemSize / rectangle2.Height;
+            }
 
-//            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out PolymerizePedestal pedestal))
-//            {
-//                if (pedestal.containsItem is not null && !pedestal.containsItem.IsAir)
-//                {
-//                    int type = pedestal.containsItem.type;
-//                    float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi / 5f);
-//                    Vector2 pos = drawPos + new Vector2(0f, offset * 4f - halfHeight * 1.5f);
+            spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), i.GetAlpha(Color.White), 0f, origin, itemScale, 0, 0f);
+            if (i.color != default)
+                spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), i.GetColor(Color.White), 0f, origin, itemScale, 0, 0f);
+        }
 
-//                    Main.instance.LoadItem(type);
-//                    Texture2D itemTex = TextureAssets.Item[type].Value;
-//                    Rectangle rectangle2;
-
-//                    if (Main.itemAnimations[type] != null)
-//                        rectangle2 = Main.itemAnimations[type].GetFrame(itemTex, -1);
-//                    else
-//                        rectangle2 = itemTex.Frame();
-
-//                    Vector2 origin = rectangle2.Size() / 2;
-//                    float itemScale = 1f;
-//                    const float pixelWidth = 16 + 8;      //同样的魔法数字，是物品栏的长和宽（去除了边框的）
-//                    const float pixelHeight = 16 * 2;
-//                    if (rectangle2.Width > pixelWidth || rectangle2.Height > pixelHeight)
-//                    {
-//                        if (rectangle2.Width > pixelWidth)
-//                            itemScale = pixelWidth / rectangle2.Width;
-//                        else
-//                            itemScale = pixelHeight / rectangle2.Height;
-//                    }
-
-//                    spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pedestal.containsItem.GetAlpha(Color.White), 0f, origin, itemScale, 0, 0f);
-//                    if (pedestal.containsItem.color != default)
-//                        spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), pedestal.containsItem.GetColor(Color.White), 0f, origin, itemScale, 0, 0f);
-//                }
-//            }
-//        }
-//    }
-//}
+        /// <summary>
+        /// 可以根据不同等级自定义绘制
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="tex"></param>
+        /// <param name="drawPos"></param>
+        /// <param name="lightColor"></param>
+        /// <param name="rotation"></param>
+        /// <param name="level"></param>
+        public virtual void DrawTopTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 drawPos, Color lightColor, MagikeApparatusLevel level)
+        {
+            spriteBatch.Draw(tex, drawPos, null, lightColor, 0, tex.Size() / 2, 1f, 0, 0f);
+        }
+    }
+}

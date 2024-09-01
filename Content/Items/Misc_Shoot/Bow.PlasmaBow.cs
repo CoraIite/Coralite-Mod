@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         Vector2 TargetCenter;
 
-        public ThunderTrail[] trails;
+        public ThunderTrail trail;
 
         LinkedList<Vector2> trailList;
 
@@ -152,14 +152,16 @@ namespace Coralite.Content.Items.Misc_Shoot
                 default:
                 case 0://刚生成，等待透明度变高后开始寻敌
                     {
-                        Alpha += 0.05f;
+                        Alpha += 0.03f;
                         Projectile.velocity *= 0.95f;
+                        if (Main.rand.NextBool(3))
+                            Projectile.SpawnTrailDust(DustID.Electric, Main.rand.NextFloat(0.1f, 0.3f), Scale: Main.rand.NextFloat(0.4f, 0.8f));
 
-                        if (Alpha>1)
+                        if (Alpha > 1)
                         {
                             Alpha = 1;
 
-                            if (Helper.TryFindClosestEnemy(Projectile.Center, 1000
+                            if (Helper.TryFindClosestEnemy(Projectile.Center, 800
                                 , n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
                             {
                                 NPCIndex = target.whoAmI;
@@ -181,7 +183,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                     {
                         Timer++;
                         fade = Coralite.Instance.X2Smoother.Smoother((int)Timer, 30);
-                        ThunderWidth = Coralite.Instance.X2Smoother.Smoother(60 - (int)Timer, 60) * 18;
+                        ThunderWidth = Coralite.Instance.X2Smoother.Smoother(60 - (int)Timer, 60) * 14;
 
                         float factor = Timer / 30;
                         float sinFactor = MathF.Sin(factor * MathHelper.Pi);
@@ -198,31 +200,27 @@ namespace Coralite.Content.Items.Misc_Shoot
             Projectile.tileCollide = true;
             State = 1;
             ThunderAlpha = 1;
-            ThunderWidth = 18;
-            Projectile.extraUpdates = 10;
+            ThunderWidth = 14;
+            Projectile.extraUpdates = 6;
             Projectile.timeLeft = 10 * 100;
             trailList = new LinkedList<Vector2>();
 
             Projectile.velocity = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 16;
 
-            trails = new ThunderTrail[1];
             Asset<Texture2D> trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrail2");
 
-            for (int i = 0; i < trails.Length; i++)
+            trail = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc, GetAlpha)
             {
-                trails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc, GetAlpha)
-                {
-                    CanDraw = true,
-                    UseNonOrAdd = true,
-                    PartitionPointCount = 3,
-                    BasePositions =
-                    [
-                        Projectile.Center,Projectile.Center,Projectile.Center
-                    ]
-                };
-                trails[i].SetRange((0, 7));
-                trails[i].SetExpandWidth(7);
-            }
+                CanDraw = true,
+                UseNonOrAdd = true,
+                PartitionPointCount = 3,
+                BasePositions =
+                [
+                    Projectile.Center,Projectile.Center,Projectile.Center
+                ]
+            };
+            trail.SetRange((0, 7));
+            trail.SetExpandWidth(7);
         }
 
         public void Chase()
@@ -266,21 +264,20 @@ namespace Coralite.Content.Items.Misc_Shoot
             float selfAngle = Projectile.velocity.ToRotation();
             float targetAngle = (targetCenter - Projectile.Center).ToRotation();
 
-            float factor =1- Math.Clamp(Vector2.Distance(targetCenter, Projectile.Center) / 500, 0, 1);
+            float factor = 1 - Math.Clamp(Vector2.Distance(targetCenter, Projectile.Center) / 500, 0, 1);
 
             Projectile.velocity = selfAngle.AngleLerp(targetAngle, 0.5f + 0.5f * factor).ToRotationVector2() * 24f;
 
             if (Main.rand.NextBool(8))
-                Projectile.SpawnTrailDust(DustID.Electric, Main.rand.NextFloat(0.2f, 0.6f), Scale: Main.rand.NextFloat(0.4f, 0.8f));
+                Projectile.SpawnTrailDust(DustID.Electric, Main.rand.NextFloat(0.1f, 0.3f), Scale: Main.rand.NextFloat(0.4f, 0.8f));
 
             trailList.AddLast(Projectile.Center);
 
             if (Timer % Projectile.MaxUpdates == 0)
-                foreach (var trail in trails)
-                {
-                    trail.BasePositions = [.. trailList];//消失的时候不随机闪电
-                    trail.RandomThunder();
-                }
+            {
+                trail.BasePositions = [.. trailList];//消失的时候不随机闪电
+                trail.RandomThunder();
+            }
         }
 
         public void Fade()
@@ -299,15 +296,12 @@ namespace Coralite.Content.Items.Misc_Shoot
             Timer = 0;
             State = 2;
 
-            if (trails != null)
-                foreach (var trail in trails)
-                {
-                    if (trail == null)
-                        continue;
-                    trail.BasePositions = [.. trailList];
-                    if (trail.BasePositions.Length > 3)
-                        trail.RandomThunder();
-                }
+            if (trail != null)
+            {
+                trail.BasePositions = [.. trailList];
+                if (trail.BasePositions.Length > 3)
+                    trail.RandomThunder();
+            }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -323,9 +317,10 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void OnKill(int timeLeft)
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 5; i++)
             {
-                Dust.NewDustPerfect(Projectile.Center, DustID.Electric, Helper.NextVec2Dir(0.5f, 3f));
+               Dust d= Dust.NewDustPerfect(Projectile.Center, DustID.Electric, Helper.NextVec2Dir(2f, 5f));
+                d.noGravity = true;
             }
         }
 
@@ -361,12 +356,8 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 if (State == 1 && Timer < 3)
                     return false;
-                
-                if (trails != null)
-                    foreach (var trail in trails)
-                    {
-                        trail?.DrawThunder(Main.instance.GraphicsDevice);
-                    }
+
+                trail?.DrawThunder(Main.instance.GraphicsDevice);
             }
 
             return false;

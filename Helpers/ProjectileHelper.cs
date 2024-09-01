@@ -352,26 +352,30 @@ namespace Coralite.Helpers
            =>  GetNPCOwner<T>((float)index, out owner, notExistAction);
 
 
-        public static bool GetProjectileOwner(this float index, out Projectile owner, Action notExistAction = null)
+
+        public static bool GetProjectileOwner(this int index, out Projectile owner, Action notExistAction = null)
         {
-            if (!Main.projectile.IndexInRange((int)index))
+            if (!Main.projectile.IndexInRange(index))
             {
                 notExistAction?.Invoke();
                 owner = null;
                 return false;
             }
 
-            Projectile npc = Main.projectile[(int)index];
-            if (!npc.active)
+            Projectile proj = Main.projectile[index];
+            if (!proj.active)
             {
                 notExistAction?.Invoke();
                 owner = null;
                 return false;
             }
 
-            owner = npc;
+            owner = proj;
             return true;
         }
+
+        public static bool GetProjectileOwner(this float index, out Projectile owner, Action notExistAction = null)
+            => GetProjectileOwner((int)index, out owner, notExistAction);
 
         public static bool GetProjectileOwner<T>(this float index, out Projectile owner, Action notExistAction = null) where T : ModProjectile
         {

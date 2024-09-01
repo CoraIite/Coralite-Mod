@@ -11,7 +11,7 @@ using Terraria.GameContent.Events;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Magike.BiomeLens
+namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 {
     public class DesertLens() : MagikeApparatusItem(TileType<DesertLensTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
     }
 
     public class DesertLensTile() : BaseLensTile
-        (2, 3, Color.SandyBrown, DustID.Sand, 8)
+        (2, 3, Color.SandyBrown, DustID.Sand)
     {
         public override string Texture => AssetDirectory.MagikeLensTiles + Name;
         public override int DropItemType => ItemType<DesertLens>();
@@ -137,7 +137,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
         public override bool CheckTile(Tile tile)
             => tile.TileType is TileID.Sand or TileID.Sandstone or TileID.SandstoneBrick;
 
-        public override int Throughput => base.Throughput+(Sandstorm.Happening?5:0);
+        public override int Throughput => base.Throughput + (Sandstorm.Happening ? 5 : 0);
 
         public override bool CheckWall(Tile tile)
             => true;

@@ -1,5 +1,7 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Terraria;
@@ -23,31 +25,33 @@ namespace Coralite.Content.Items.MagikeSeries1
             Item.GetMagikeItem().magikeAmount = 25;
         }
 
-        //public override bool CanUseItem(Player player)
-        //{
-        //    Point16 pos = Main.MouseWorld.ToTileCoordinates16();
-        //    Rectangle rectangle = new((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
+        public override bool CanUseItem(Player player)
+        {
+            Point16 pos = Main.MouseWorld.ToTileCoordinates16();
+            string text ;
 
-        //    if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeFactory magF))
-        //    {
-        //        if (magF.StartWork())
-        //            CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("Activated", () => "已激活！").Value);
-        //        else
-        //            CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("FailToActivate", () => "激活失败！").Value);
-        //    }
-        //    else    //没找到
-        //        CombatText.NewText(rectangle, Coralite.MagicCrystalPink, this.GetLocalization("InstrumentNotFound", () => "未找到魔能仪器！").Value);
+            if (MagikeHelper.TryGetEntityWithComponent(pos.X, pos.Y, MagikeComponentID.MagikeFactory, out MagikeTileEntity entity))
+            {
+                MagikeFactory factory = entity.GetSingleComponent<MagikeFactory>(MagikeComponentID.MagikeFactory);
 
-        //    return true;
-        //}
+               if( factory.Activation(out text))
+                    Helper.PlayPitched("UI/Activation", 0.4f, 0, player.Center);
+            }
+            else //没找到
+            {
+                Helper.PlayPitched("UI/Error", 0.4f, 0, player.Center);
+                text = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.FactoryNotFound);
+            }
 
-        //public override void AddRecipes()
-        //{
-        //    CreateRecipe()
-        //        .AddIngredient<MagicCrystal>(2)
-        //        .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
-        //        .AddTile(TileID.Anvils)
-        //        .Register();
-        //}
+            PopupText.NewText(new AdvancedPopupRequest()
+            {
+                Color = Coralite.MagicCrystalPink,
+                Text = text,
+                DurationInFrames = 60,
+                Velocity = -Vector2.UnitY
+            }, Main.MouseWorld - Vector2.UnitY * 32);
+
+            return true;
+        }
     }
 }

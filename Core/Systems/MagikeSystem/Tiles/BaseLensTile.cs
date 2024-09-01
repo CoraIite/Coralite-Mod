@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Core.Systems.MagikeSystem.Components;
+﻿using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -17,7 +16,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             int halfHeight = Math.Max(tileRect.Height / 2, tileRect.Width / 2);
 
             //虽然一般不会没有 但是还是检测一下
-            if (!(entity as IEntity).TryGetComponent(MagikeComponentID.MagikeProducer, out MagikeProducer producer))
+            if (!entity.TryGetComponent(MagikeComponentID.MagikeProducer, out MagikeProducer producer))
                 return;
 
             if (producer.CanProduce())

@@ -111,11 +111,9 @@ namespace Coralite.Core
         public const string MagikeTools = MagikeItems + "Tools/";
         public const string MagikeLens = MagikeItems + "Lens/";
         public const string MagikeColumns = MagikeItems + "Columns/";
-        public const string MagikeEnchantPools = MagikeItems + "EnchantPools/";
-        public const string MagikeRemodelPools = MagikeItems + "RemodelPools/";
         public const string MagikeAltars = MagikeItems + "Altars/";
-        public const string MagikeMultPrisms = MagikeItems + "MultPrisms/";
         public const string MagikeRefractors = MagikeItems + "Refractors/";
+        public const string MagikePedestals = MagikeItems + "Pedestals/";
         public const string MagikeFactories = MagikeItems + "Factories/";
 
         public const string MagikeFilters = MagikeItems + "Filters/";
@@ -176,9 +174,8 @@ namespace Coralite.Core
         public const string MagikeSeries2Tile = Tiles + "MagikeSeries2/";
 
         public const string MagikeLensTiles = MagikeTiles + "Lens/";
-        public const string MagikeEnchantPoolTiles = MagikeTiles + "EnchantPool/";
-        public const string MagikeRemodelPoolTiles = MagikeTiles + "RemodelPool/";
         public const string MagikeAltarTiles = MagikeTiles + "Altar/";
+        public const string MagikePedestalTiles = MagikeTiles + "Pedestal/";
         public const string MagikeColumnTiles = MagikeTiles + "Column/";
         public const string MagikeRefractorTiles = MagikeTiles + "Refractor/";
         public const string MagikeFactoryTiles = MagikeTiles + "Factory/";

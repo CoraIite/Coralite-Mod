@@ -96,7 +96,7 @@ namespace Coralite.Helpers
             if (!TryGetEntity(i, j, out MagikeTileEntity tempEntity))
                 return false;
 
-            if (!((IEntity)tempEntity).HasComponent(componentType))
+            if (!tempEntity.HasComponent(componentType))
                 return false;
 
             entity = tempEntity;
@@ -124,11 +124,14 @@ namespace Coralite.Helpers
 
             if (MagikeComponentID.IsSingleton(componentType))
             {
-                if (tempEntity.Components[componentType] is T)
-                    return true;
+                if (tempEntity.Components[componentType] is not T)
+                    return false;
             }
-            else if (!(tempEntity.Components[componentType] as List<Component>).Any(c => c is T))
-                return false;
+            else
+            {
+                if (!(tempEntity.Components[componentType] as List<Component>).Any(c => c is T))
+                    return false;
+            }
 
             entity = tempEntity;
             return true;

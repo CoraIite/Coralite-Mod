@@ -115,10 +115,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                     Item[] tempItems = null;
 
-                    if ((receiverEntity as IEntity).TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
+                    if (receiverEntity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
                         tempItems = container2.Items;
 
-                    if ((receiverEntity as IEntity).TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
+                    if (receiverEntity .TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
                         tempItems = container3.Items;
 
                     foreach (var tempitem in tempItems)
@@ -161,10 +161,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 Item[] tempItems = null;
 
-                if ((entity as IEntity).TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
+                if (entity .TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
                     tempItems = container2.Items;
 
-                if ((entity as IEntity).TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
+                if (entity .TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
                     tempItems = container3.Items;
 
                 if (tempItems == null)
@@ -223,10 +223,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 Item[] tempItems = null;
 
-                if ((entity as IEntity).TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
+                if (entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
                     tempItems = container2.Items;
 
-                if ((entity as IEntity).TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
+                if (entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
                     tempItems = container3.Items;
 
                 if (tempItems == null)

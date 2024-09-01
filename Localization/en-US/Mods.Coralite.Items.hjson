@@ -746,11 +746,6 @@ CrystallineMagike: {
 	Tooltip: The abundant magike reflects the brilliant purple
 }
 
-BrilliantRemodelPool: {
-	DisplayName: Brilliant Remodel Pool
-	Tooltip: Right-click to open the UI, put in item and select a remodel recipe and activate it to remodel item
-}
-
 CondensedCrystalBall: {
 	DisplayName: Condensed Crystal Ball
 	Tooltip: Charge the magike container in the mouse position
@@ -759,36 +754,6 @@ CondensedCrystalBall: {
 MagikeActivator: {
 	DisplayName: Magike Activator
 	Tooltip: Activate the magike machine in the mouse position
-}
-
-SunlightLens: {
-	DisplayName: Sunlight Lens
-	Tooltip: Generates magike during the day
-}
-
-CrystalRemodelPool: {
-	DisplayName: Crystal Remodel Pool
-	Tooltip: Right-click to open the UI, put in item and select a remodel recipe and activate it to remodel item
-}
-
-EvilRemodelPool: {
-	DisplayName: Evil Remodel Pool
-	Tooltip: Right-click to open the UI, put in item and select a remodel recipe and activate it to remodel item
-}
-
-MoonlightLens: {
-	DisplayName: Moonlight Lens
-	Tooltip: Generates magike during the night
-}
-
-HolylightLens: {
-	DisplayName: Holylight Lens
-	Tooltip: Generates magike during the day
-}
-
-BloodMoonLens: {
-	DisplayName: Blood Moon Lens
-	Tooltip: Generates magike during the night
 }
 
 IcicleHeart: {
@@ -807,11 +772,6 @@ RedJadeCore: {
 		The core part that can generate "firecracker energy"
 		Summon the Rediancie, doesn't get consumed on use
 		'''
-}
-
-WaterflowLens: {
-	DisplayName: Waterflow Lens
-	Tooltip: Generates magike while submerged in water
 }
 
 RedJadeLens: {
@@ -836,16 +796,6 @@ RedJadeCluster: {
 		Explodes upon activation
 		Consumes 50 magike
 		'''
-}
-
-LavaLens: {
-	DisplayName: Lava Lens
-	Tooltip: Generates magike while submerged in lava
-}
-
-SweetLens: {
-	DisplayName: Sweet Lens
-	Tooltip: Generates magike while submerged in honey
 }
 
 CrystalSpotlighter: {
@@ -887,11 +837,6 @@ WorldGenTester: {
 	Tooltip: !!!! Debug Item !!!
 }
 
-BoneLens: {
-	DisplayName: Bone Lens
-	Tooltip: Generates magike while in the dungeon
-}
-
 ForestLens: {
 	DisplayName: Forest Lens
 	Tooltip: Generates magike while in the forest biome
@@ -900,16 +845,6 @@ ForestLens: {
 GlowingMushroomLens: {
 	DisplayName: Glowing Mushroom Lens
 	Tooltip: Generates magike while in the glowing mushroom biome
-}
-
-BrightnessLens: {
-	DisplayName: Brightness Lens
-	Tooltip: Generates magike from light
-}
-
-DarknessLens: {
-	DisplayName: Darkness Lens
-	Tooltip: Generates magike in the dark
 }
 
 BasaltChest: {
@@ -946,39 +881,9 @@ HardBasalt: {
 	Tooltip: ""
 }
 
-HellLens: {
-	DisplayName: Hell Lens
-	Tooltip: Generates magike in the underworld
-}
-
-BreezeLens: {
-	DisplayName: Breeze Lens
-	Tooltip: Generates magike based on wind speed
-}
-
-DrizzleLens: {
-	DisplayName: Drizzle Lens
-	Tooltip: Generates magike in the rain
-}
-
 HardBasaltWall: {
 	DisplayName: Hard Basalt Wall
 	Tooltip: ""
-}
-
-GraniteLens: {
-	DisplayName: Granite Lens
-	Tooltip: Generates magike while in the granite biome
-}
-
-MarbleLens: {
-	DisplayName: Marble Lens
-	Tooltip: Generates magike while in the marble biome
-}
-
-HoneypotLens: {
-	DisplayName: Honeypot Lens
-	Tooltip: Generates magike while submerged in honey
 }
 
 BloodyHook: {
@@ -990,19 +895,9 @@ BloodyHook: {
 		'''
 }
 
-ChlorophyteLens: {
-	DisplayName: Chlorophyte Lens
-	Tooltip: Generates magike while in the jungle biome
-}
-
 DemoniteEnchantPool: {
 	DisplayName: Demonite Enchant Pool
 	Tooltip: Allows extra enhancement for your equipments
-}
-
-ScorchingLens: {
-	DisplayName: Scorching Lens
-	Tooltip: Generates magike while submerged in lava
 }
 
 CopperRing: {
@@ -1013,11 +908,6 @@ CopperRing: {
 TinRing: {
 	DisplayName: Tin Ring
 	Tooltip: 6% decreased damage
-}
-
-CogLens: {
-	DisplayName: Cog Lens
-	Tooltip: Generates magike on it's own
 }
 
 IronRing: {
@@ -1039,16 +929,6 @@ LeadRing: {
 		'''
 }
 
-SoulRemodelPool: {
-	DisplayName: Soul Remodel Pool
-	Tooltip: Right-click to open the UI, put in item and select a remodel recipe and activate it to remodel item
-}
-
-RainstormLens: {
-	DisplayName: Rainstorm Lens
-	Tooltip: Generates magike while raining
-}
-
 SplendorMagicore: {
 	DisplayName: Splendor Magicore
 	Tooltip: Contains strong magike
@@ -1063,34 +943,9 @@ CorruptJavelin: {
 		'''
 }
 
-BrilliantEnchantPool: {
-	DisplayName: Brilliant Enchant Pool
-	Tooltip: Gives extra reinforcements to your equipment
-}
-
-CrimtaneEnchantPool: {
-	DisplayName: Crimtane Enchant Pool
-	Tooltip: Gives extra reinforcements to your equipment
-}
-
-CrystalEnchantPool: {
-	DisplayName: Crystal Enchant Pool
-	Tooltip: Gives extra reinforcements to your equipment
-}
-
-SoulEnchantPool: {
-	DisplayName: Soul Enchant Pool
-	Tooltip: Gives extra reinforcements to your equipment
-}
-
 SoulOfDeveloper: {
 	DisplayName: Soul Of Developer
 	Tooltip: Great for impersonating developers!
-}
-
-SplendorRemodelPool: {
-	DisplayName: Splendor Remodel Pool
-	Tooltip: Right-click to open the UI, put in item and select a remodel recipe and activate it to remodel item
 }
 
 GelInvitation: {
@@ -1173,29 +1028,6 @@ NightmareHarp: {
 		Summon Nightmare Plantera at night, not consumable
 			Special skies and special health bars can be toggled on or off in the visual effects configuration
 		'''
-}
-
-CrystalStoneMaker: {
-	DisplayName: Crystal Stone Maker
-	Tooltip: Consumes magike to produce stone blocks
-}
-
-CrystalAltar: {
-	DisplayName: Crystal Altar
-	Tooltip:
-		'''
-			Number of connections: 4
-
-		Right click to open the UI, place the item, and select the polymerization recipe
-		Use the magike connect staff to connect to the pedestal
-		Place the secondary items in polymerization recipe into the pedestal
-		Polymerize begins after activation
-		'''
-}
-
-CrystalPedestal: {
-	DisplayName: Crystal Pedestal
-	Tooltip: Right click to open the UI and place items
 }
 
 EmpyrosPowder: {
@@ -1600,31 +1432,6 @@ FlyingSnakeFeather: {
 	Tooltip: ""
 }
 
-CrystalRefinery: {
-	DisplayName: Crystal Refinery
-	Tooltip: Consumes magike to generate magic crystals
-}
-
-BrilliantRefiner: {
-	DisplayName: Brilliant Refiner
-	Tooltip: Consumes magike to generate magic crystals
-}
-
-SplendorRefiner: {
-	DisplayName: Splendor Refiner
-	Tooltip: Consumes magike to generate magic crystals
-}
-
-BrilliantRefinery: {
-	DisplayName: Brilliant Refinery
-	Tooltip: Consumes magike to generate magic crystals
-}
-
-SplendorRefinery: {
-	DisplayName: Splendor Refinery
-	Tooltip: Consumes magike to generate magic crystals
-}
-
 MiniBrilliantColumn: {
 	DisplayName: Mini Brilliant Column
 	Tooltip: A portable column that can power your magike-consuming devices
@@ -1662,21 +1469,6 @@ CrystalSword: {
 
 BrilliantCharger: {
 	DisplayName: Brilliant Charger
-	Tooltip: Right click to open the UI, insert an item that can hold magike, and activate to charge that item
-}
-
-CrystalCharger: {
-	DisplayName: Crystal Charger
-	Tooltip: Right click to open the UI, insert an item that can hold magike, and activate to charge that item
-}
-
-GlistentCharger: {
-	DisplayName: Glistent Charger
-	Tooltip: Right click to open the UI, insert an item that can hold magike, and activate to charge that item
-}
-
-SplendorCharger: {
-	DisplayName: Splendor Charger
 	Tooltip: Right click to open the UI, insert an item that can hold magike, and activate to charge that item
 }
 
@@ -4339,6 +4131,7 @@ LeafeoHelmet: {
 LeafeoLightArmor: {
 	DisplayName: Leafeo Light Armor
 	Tooltip: ""
+	ArmorBonus: Mods.Coralite.Items.LeafeoLightArmor.ArmorBonus
 }
 
 FreezePotion: {
@@ -4453,5 +4246,16 @@ ShroomitePolarizedFilter: {
 
 PlasmaBow: {
 	DisplayName: Plasma Bow
+	Tooltip: ""
+}
+
+Heptachromic: {
+	DisplayName: Heptachromic
+	Tooltip: ""
+	Bonus: Mods.Coralite.Items.Heptachromic.Bonus
+}
+
+BasicPedestal: {
+	DisplayName: Basic Pedestal
 	Tooltip: ""
 }

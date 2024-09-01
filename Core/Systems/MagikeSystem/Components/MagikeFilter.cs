@@ -73,7 +73,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <param name="entity"></param>
         public virtual void Insert(MagikeTileEntity entity)
         {
-            entity.AddComponentDirectly(this);
+            entity.AddComponent(this);
 
             if (entity == MagikeApparatusPanel.CurrentEntity)
             {

@@ -10,7 +10,7 @@ using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Magike.ExtractLens
+namespace Coralite.Content.Items.Magike.Lens.ExtractLens
 {
     public class BasicExtractLens() : MagikeApparatusItem(TileType<BasicExtractLensTile>(), Item.sellPrice(silver: 5)
             , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
@@ -78,14 +78,14 @@ namespace Coralite.Content.Items.Magike.ExtractLens
                 or MagikeApparatusLevel.Corruption
                 or MagikeApparatusLevel.Icicle => 600,
                 MagikeApparatusLevel.CrystallineMagike => 1800,
-                MagikeApparatusLevel.Soul 
+                MagikeApparatusLevel.Soul
                 or MagikeApparatusLevel.Feather => 7500,
                 MagikeApparatusLevel.SplendorMagicore => 18000,
                 _ => 0,
             };
             LimitMagikeAmount();
 
-            AntiMagikeMaxBase = MagikeMaxBase *2;
+            AntiMagikeMaxBase = MagikeMaxBase * 2;
             LimitAntiMagikeAmount();
         }
     }

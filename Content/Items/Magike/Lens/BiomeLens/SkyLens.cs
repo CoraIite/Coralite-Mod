@@ -10,7 +10,7 @@ using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Magike.BiomeLens
+namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 {
     public class SkyLens() : MagikeApparatusItem(TileType<SkyLensTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)

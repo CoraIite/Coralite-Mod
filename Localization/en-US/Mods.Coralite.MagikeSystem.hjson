@@ -3,15 +3,6 @@ MagikeSystem: {
 	learnedMagikeBase: After learning "Pages: Basic Magike".
 	DecraftCondition: Mods.Coralite.MagikeSystem.MagikeSystem.DecraftCondition
 	NewKnowledgeUnlocked: New knowledge unlocked
-	ChooseSender_Found: The Magike Sender has been selected
-	ChooseSender_NotFound: No Magike Sender found!
-	ChooseReceiver_NotFound: No Magike Receiver found!
-	ChooseReceiver_Success: Connect successfully
-	Deconnect: Disconnect successfully
-	BrilliantConnect: "{0} instruments were successfully connected, and {1} instruments were not successfully connected"
-	ConnectFail_TooFar: The receiver is too far away!
-	ConnectFail_CantBeSelf: Can't connect yourself!
-	ConnectFail_ConnectorFillUp: The Magike Sender capacity is full!
 	ApparatusNotFound: No Magike Apparatus found!
 	FilterFillUp: The filter is full!
 	InsertSuccess: The filter was successfully inserted
@@ -26,6 +17,13 @@ MagikeSystem: {
 	ItemDescriptionPolarizedFilter: Insertable Polarization Filter:
 	ApparatusDescriptionMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionMagikeAmount
 	ApparatusDescriptionConnectAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionConnectAmount
+
+	ApparatusDescription: {
+		MagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescription.MagikeAmount
+		ConnectAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescription.ConnectAmount
+		IsWorking: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescription.IsWorking
+	}
+
 	NeedPolarizedFilter: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionConnectAmount
 
 	UIText: {
@@ -66,6 +64,31 @@ MagikeSystem: {
 	}
 
 	Error: Mods.Coralite.MagikeSystem.MagikeSystem.Error
+
+	Staffs: {
+		ChooseSender_Found: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ChooseSender_Found
+		ChooseSender_NotFound: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ChooseSender_NotFound
+		ChooseReceiver_NotFound: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ChooseReceiver_NotFound
+		ConnectFail_TooFar: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ConnectFail_TooFar
+		ConnectFail_CantBeSelf: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ConnectFail_CantBeSelf
+		ConnectFail_ConnectorFillUp: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ConnectFail_ConnectorFillUp
+		Connect_Success: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.Connect_Success
+		Deconnect: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.Deconnect
+		BrilliantConnect: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.BrilliantConnect
+		ChargeNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ChargeNotFound
+		FactoryNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.FactoryNotFound
+	}
+
+	CraftText: {
+		NoMainItem: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.NoMainItem
+		MainItemIncorrect: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.MainItemIncorrect
+		MainItemNotEnough: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.MainItemNotEnough
+		ConditionNotMet: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.ConditionNotMet
+		OtherItemNotEnough: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.OtherItemNotEnough
+		OtherItemLack: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.OtherItemLack
+		MagikeNotEnough: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.MagikeNotEnough
+		NoCraftRecipe: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.NoCraftRecipe
+	}
 }
 
 C0_P1_BookName: {

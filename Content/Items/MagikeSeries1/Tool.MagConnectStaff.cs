@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 PopupText.NewText(new AdvancedPopupRequest()
                 {
                     Color = Coralite.MagicCrystalPink,
-                    Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_Found),
+                    Text = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseSender_Found),
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
                 }, Main.MouseWorld - Vector2.UnitY * 32);
@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 PopupText.NewText(new AdvancedPopupRequest()
                 {
                     Color = Coralite.MagicCrystalPink,
-                    Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseSender_NotFound),
+                    Text = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseSender_NotFound),
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
                 }, Main.MouseWorld - Vector2.UnitY * 32);
@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                         PopupText.NewText(new AdvancedPopupRequest()
                         {
                             Color = Coralite.MagicCrystalPink,
-                            Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.ChooseReceiver_NotFound),
+                            Text = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseReceiver_NotFound),
                             DurationInFrames = 60,
                             Velocity = -Vector2.UnitY
                         }, Main.MouseWorld - Vector2.UnitY * 32);
@@ -189,7 +189,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                     PopupText.NewText(new AdvancedPopupRequest()
                     {
                         Color = Coralite.MagicCrystalPink,
-                        Text = MagikeSystem.GetConnectStaffText(MagikeSystem.ConnectStaffID.Connect_Success),
+                        Text = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.Connect_Success),
                         DurationInFrames = 60,
                         Velocity = -Vector2.UnitY
                     }, Main.MouseWorld - Vector2.UnitY * 32);

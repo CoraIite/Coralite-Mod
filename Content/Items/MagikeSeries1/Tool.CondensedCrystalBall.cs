@@ -1,5 +1,7 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Terraria;
@@ -15,9 +17,10 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.useAnimation = Item.useTime = 45;
+            Item.useAnimation = Item.useTime = 20;
             Item.useTurn = true;
-            Item.mana = 180;
+            Item.autoReuse = true;
+            Item.mana = 25;
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 0, 10, 0);
             Item.UseSound = CoraliteSoundID.ManaCrystal_Item29;
@@ -25,31 +28,30 @@ namespace Coralite.Content.Items.MagikeSeries1
             Item.GetMagikeItem().magikeAmount = 50;
         }
 
-        //public override bool CanUseItem(Player player)
-        //{
-        //    Point16 pos = Main.MouseWorld.ToTileCoordinates16();
-        //    Rectangle rectangle = new((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
+        public override bool CanUseItem(Player player)
+        {
+            Point16 pos = Main.MouseWorld.ToTileCoordinates16();
 
-        //    if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out IMagikeContainer magC)) //TODO: 添加本地化
-        //    {
-        //        if (player.statMana > 200 && magC.Charge(1))
-        //            return true;
+            if (MagikeHelper.TryGetEntityWithComponent<MagikeContainer>(pos.X, pos.Y, MagikeComponentID.MagikeContainer, out MagikeTileEntity entity))
+            {
+                if (player.statMana > 20)
+                {
+                    entity.GetMagikeContainer().AddMagike(1);
+                    return true;
+                }
 
-        //        CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "无法充能！");
-        //        return false;
-        //    }
+                return false;
+            }
 
-        //    CombatText.NewText(rectangle, Coralite.MagicCrystalPink, "未找到魔能容器！");
-        //    return false;
-        //}
+            PopupText.NewText(new AdvancedPopupRequest()
+            {
+                Color = Coralite.MagicCrystalPink,
+                Text = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChargeNotFound),
+                DurationInFrames = 60,
+                Velocity = -Vector2.UnitY
+            }, Main.MouseWorld - Vector2.UnitY * 32);
 
-        //public override void AddRecipes()
-        //{
-        //    CreateRecipe()
-        //        .AddIngredient<MagicCrystal>(2)
-        //        .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
-        //        .AddTile(TileID.Anvils)
-        //        .Register();
-        //}
+            return false;
+        }
     }
 }

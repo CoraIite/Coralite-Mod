@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries1;
+﻿using Coralite.Content.Items.Glistent;
+using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
@@ -10,83 +11,96 @@ using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Items.Magike.BiomeLens
+namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 {
-    public class OceanLens() : MagikeApparatusItem(TileType<OceanLensTile>(), Item.sellPrice(silver: 5)
+    public class ForestLens() : MagikeApparatusItem(TileType<ForestLensTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
     {
         public override bool CanUseItem(Player player)
         {
-            return player.ZoneBeach;
+            return player.ZoneForest;
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient<Basalt>(10)
-                .AddIngredient(ItemID.SandBlock, 5)
+                .AddIngredient<GlistentBar>(3)
+                .AddIngredient(ItemID.GrassSeeds)
                 .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
     }
 
-    public class OceanLensTile() : BaseLensTile
-        (2, 3, Color.SandyBrown, DustID.Sand, 8)
+    public class ForestLensTile() : BaseLensTile
+        (2, 3, Color.Green, DustID.Grass)
     {
         public override string Texture => AssetDirectory.MagikeLensTiles + Name;
-        public override int DropItemType => ItemType<OceanLens>();
+        public override int DropItemType => ItemType<ForestLens>();
 
         public override int[] GetAnchorValidTiles()
         {
             return
             [
-                TileID.Sand
+                TileID.Grass, TileID.HallowedGrass, TileID.GolfGrass, TileID.GolfGrassHallowed
             ];
         }
 
-        public override MagikeTileEntity GetEntityInstance() => GetInstance<OceanLensTileEntity>();
+        public override MagikeTileEntity GetEntityInstance() => GetInstance<ForestLensTileEntity>();
 
         public override MagikeApparatusLevel[] GetAllLevels()
         {
             return
             [
                 MagikeApparatusLevel.None,
-                MagikeApparatusLevel.Seashore,
-                MagikeApparatusLevel.Pelagic,
+                MagikeApparatusLevel.Glistent,
+                MagikeApparatusLevel.CrystallineMagike,
+                MagikeApparatusLevel.SplendorMagicore
             ];
         }
     }
 
-    public class OceanLensTileEntity : BaseActiveProducerTileEntity<OceanLensTile>
+    public class ForestLensTileEntity : BaseActiveProducerTileEntity<ForestLensTile>
     {
         public override MagikeContainer GetStartContainer()
-            => new OceanLensContainer();
+            => new ForestLensContainer();
 
         public override MagikeLinerSender GetStartSender()
-            => new OceanLensSender();
+            => new ForestLensSender();
 
         public override MagikeActiveProducer GetStartProducer()
-            => new OceanProducer();
+            => new ForestProducer();
     }
 
-    public class OceanLensContainer : UpgradeableContainer
+    public class ForestLensContainer : UpgradeableContainer
     {
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
+            MagikeMaxBase = incomeLevel switch
+            {
+                MagikeApparatusLevel.Glistent => 27,
+                MagikeApparatusLevel.CrystallineMagike => 250,
+                MagikeApparatusLevel.SplendorMagicore => 1125,
+                _ => 0,
+            };
             switch (incomeLevel)
             {
                 default:
                     MagikeMaxBase = 0;
                     AntiMagikeMaxBase = 0;
                     break;
-                case MagikeApparatusLevel.Seashore:
-                    MagikeMaxBase = 9;
+                case MagikeApparatusLevel.Glistent:
+                    MagikeMaxBase = 27;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
-                case MagikeApparatusLevel.Pelagic:
-                    MagikeMaxBase = 562;
+                case MagikeApparatusLevel.CrystallineMagike:
+                    MagikeMaxBase = 483;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
+                    break;
+                case MagikeApparatusLevel.SplendorMagicore:
+                    MagikeMaxBase = 5400;
+                    AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
             }
 
@@ -95,7 +109,7 @@ namespace Coralite.Content.Items.Magike.BiomeLens
         }
     }
 
-    public class OceanLensSender : UpgradeableLinerSender
+    public class ForestLensSender : UpgradeableLinerSender
     {
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
@@ -110,13 +124,17 @@ namespace Coralite.Content.Items.Magike.BiomeLens
                     SendDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.Seashore:
-                    UnitDeliveryBase = 3;
+                case MagikeApparatusLevel.Glistent:
+                    UnitDeliveryBase = 9;
                     SendDelayBase = 10;
                     break;
-                case MagikeApparatusLevel.Pelagic:
-                    UnitDeliveryBase = 150;
+                case MagikeApparatusLevel.CrystallineMagike:
+                    UnitDeliveryBase = 129;
                     SendDelayBase = 8;
+                    break;
+                case MagikeApparatusLevel.SplendorMagicore:
+                    UnitDeliveryBase = 1080;
+                    SendDelayBase = 6;
                     break;
             }
 
@@ -125,19 +143,19 @@ namespace Coralite.Content.Items.Magike.BiomeLens
         }
     }
 
-    public class OceanProducer : UpgradeableBiomeProducer
+    public class ForestProducer : UpgradeableBiomeProducer
     {
         public override MagikeSystem.UITextID ApparatusName()
-            => MagikeSystem.UITextID.OceanLensName;
+            => MagikeSystem.UITextID.ForestLensName;
 
         public override MagikeSystem.UITextID ProduceCondition()
-            => MagikeSystem.UITextID.OceanCondition;
+            => MagikeSystem.UITextID.ForestCondition;
 
         public override bool CheckTile(Tile tile)
-            => tile.TileType == TileID.Sand;
+            => TileID.Sets.Grass[tile.TileType];
 
         public override bool CheckWall(Tile tile)
-            => true;
+            => tile.WallType is WallID.Grass or WallID.GrassUnsafe or WallID.Flower or WallID.FlowerUnsafe;
 
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
@@ -147,13 +165,17 @@ namespace Coralite.Content.Items.Magike.BiomeLens
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Seashore:
+                case MagikeApparatusLevel.Glistent:
                     ProductionDelayBase = 10;
-                    ThroughputBase = 1;
+                    ThroughputBase = 3;
                     break;
-                case MagikeApparatusLevel.Pelagic:
+                case MagikeApparatusLevel.CrystallineMagike:
                     ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ThroughputBase = 43;
+                    break;
+                case MagikeApparatusLevel.SplendorMagicore:
+                    ProductionDelayBase = 6;
+                    ThroughputBase = 360;
                     break;
             }
 

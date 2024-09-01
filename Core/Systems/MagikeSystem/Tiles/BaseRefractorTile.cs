@@ -20,7 +20,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             float rotationTop = rotation + MathHelper.PiOver2;
 
             //虽然一般不会没有 但是还是检测一下
-            if (!(entity as IEntity).TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender senderComponent))
+            if (!entity.TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender senderComponent))
                 return;
 
             if (senderComponent.IsEmpty())

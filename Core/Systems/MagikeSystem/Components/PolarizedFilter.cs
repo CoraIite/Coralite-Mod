@@ -51,7 +51,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override bool PostCheckCanInsert(MagikeTileEntity entity, ref string text)
         {
             //没有其他任何滤镜时
-            if (!(entity as IEntity).HasComponent(MagikeComponentID.MagikeFilter))
+            if (!entity.HasComponent(MagikeComponentID.MagikeFilter))
                 return true;
 
             PolarizedFilter oldFilter = (PolarizedFilter)(entity.Components[MagikeComponentID.MagikeFilter] as List<Component>)
@@ -68,7 +68,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 //有就弹出这个
                 if (oldFilter != null)
                 {
-                    (entity as IEntity).RemoveComponentWithoutOnRemove(oldFilter);
+                    entity.RemoveComponentWithoutOnRemove(oldFilter);
                     oldFilter.SpawnItem(entity);
                     return true;
                 }

@@ -1,8 +1,5 @@
-﻿using Coralite.Content.Items.Magike.BiomeLens;
-using Coralite.Content.UI.UILib;
+﻿using Coralite.Content.UI.UILib;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.GameContent;
 using Terraria.Localization;
 
 namespace Coralite.Content.UI.MagikeGuideBook.Chapter3

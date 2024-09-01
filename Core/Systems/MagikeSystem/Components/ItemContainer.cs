@@ -275,7 +275,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
                 ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
                 ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
-                //_container[_index] = inv;
+                _container[_index] = inv;
                 _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
             }
             else

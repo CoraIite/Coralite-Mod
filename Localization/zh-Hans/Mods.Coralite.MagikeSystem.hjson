@@ -3,15 +3,6 @@ MagikeSystem: {
 	learnedMagikeBase: 学习“书页：魔能基础”后可合成
 	DecraftCondition: 该分解无法使用！
 	NewKnowledgeUnlocked: 魔能辞典中解锁了新的知识
-	ChooseSender_Found: 已选择魔能发送器
-	ChooseSender_NotFound: 未找到魔能发送器！
-	ChooseReceiver_NotFound: 未找到魔能接收器！
-	ChooseReceiver_Success: 成功建立连接
-	Deconnect: 成功取消连接
-	BrilliantConnect: 成功连接{0}个仪器，未成功连接{1}个仪器
-	ConnectFail_TooFar: 接收器距离太远！
-	ConnectFail_CantBeSelf: 不能连接自己！
-	ConnectFail_ConnectorFillUp: 魔能发送器容量已满！
 	ApparatusNotFound: 未找到魔能仪器！
 	FilterFillUp: 仪器内滤镜已满！
 	InsertSuccess: 成功插入滤镜
@@ -25,6 +16,13 @@ MagikeSystem: {
 	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
 	ApparatusDescriptionMagikeAmount: "魔能容量 "
 	ApparatusDescriptionConnectAmount: "连接情况 "
+
+	ApparatusDescription: {
+		MagikeAmount: "魔能容量 "
+		ConnectAmount: "连接情况 "
+		IsWorking: 正在工作中...
+	}
+
 	NeedPolarizedFilter: 插入偏振滤镜后才能正常工作
 
 	UIText: {
@@ -81,6 +79,31 @@ MagikeSystem: {
 	}
 
 	Error: 发生致命错误！请重新摆放该物块！
+
+	Staffs: {
+		ChooseSender_Found: 已选择魔能发送器
+		ChooseSender_NotFound: 未找到魔能发送器！
+		ChooseReceiver_NotFound: 未找到魔能接收器！
+		ConnectFail_TooFar: 接收器距离太远！
+		ConnectFail_CantBeSelf: 不能连接自己！
+		ConnectFail_ConnectorFillUp: 魔能发送器容量已满！
+		Connect_Success: 成功建立连接
+		Deconnect: 成功取消连接
+		BrilliantConnect: 成功连接{0}个仪器，未成功连接{1}个仪器
+		ChargeNotFound: 未找到魔能容器！
+		FactoryNotFound: 未找到魔能工作站！
+	}
+
+	CraftText: {
+		NoMainItem: 未找到主要物品！
+		MainItemIncorrect: 主要物品类型错误！
+		MainItemNotEnough: 主要物品数量不足！
+		ConditionNotMet: 未达成合成条件！
+		OtherItemNotEnough: 次要物品数量不足！
+		OtherItemLack: 缺失次要物品！
+		MagikeNotEnough: 魔能不足！
+		NoCraftRecipe: 没有可合成的合成表！
+	}
 }
 
 C0_P1_BookName: {

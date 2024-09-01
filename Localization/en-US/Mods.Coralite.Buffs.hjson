@@ -198,3 +198,8 @@ HungryPotionBuff: {
 	DisplayName: Hungry Potion Buff
 	Description: Mods.Coralite.Buffs.HungryPotionBuff.Description
 }
+
+LeafeoShieldCD: {
+	DisplayName: Leafeo Shield C D
+	Description: Mods.Coralite.Buffs.LeafeoShieldCD.Description
+}

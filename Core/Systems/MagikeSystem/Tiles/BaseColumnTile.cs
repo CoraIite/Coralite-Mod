@@ -16,7 +16,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             Vector2 drawPos = bottomLeft + offset;
 
             //虽然一般不会没有 但是还是检测一下
-            if (!(entity as IEntity).TryGetComponent(MagikeComponentID.MagikeContainer, out MagikeContainer container))
+            if (!entity.TryGetComponent(MagikeComponentID.MagikeContainer, out MagikeContainer container))
                 return;
 
             float percent = (float)container.Magike / container.MagikeMax;

@@ -23,9 +23,13 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         public bool visible;
         public override bool Visible => visible;
 
-        public static bool ComponentButtonsVisible = true;
+        public static bool ComponentButtonsVisible = false;
 
         #region 各类记录用字段
+
+        private static Color BackgroundColor = new (56, 50, 53, 200);
+        private static Color BackgroundColor2 = new (75, 69, 71, 150);
+        private static Color EdgeColor = new (250, 217, 241, 150);
 
         /// <summary> 当前的魔能物块实体 </summary>
         public static MagikeTileEntity CurrentEntity;
@@ -39,7 +43,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         private int _currentCount;
 
         /// <summary> 当前显示的组件 </summary>
-        public static bool[] _showComponents;
+        private static bool[] _showComponents;
+        /// <summary> 当前显示的组件 </summary>
         public static bool[] ShowComponents
         {
             get
@@ -139,8 +144,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             //初始化特殊显示面板
             InitComponentPanel();
 
-            BasePanel.Top.Set(500, 0);
-            BasePanel.Left.Set(500, 0);
+            BasePanel.Top.Set(50, 0);
+            BasePanel.Left.Set(800, 0);
 
             Append(BasePanel);
             base.OnInitialize();
@@ -150,8 +155,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             BasePanel ??= new UIDragablePanel(true, true, true);
 
-            BasePanel.BackgroundColor = new Color(60, 19, 68, 200);
-            BasePanel.BorderColor = new Color(184, 80, 13, 255);
+            BasePanel.BackgroundColor = BackgroundColor;
+            BasePanel.BorderColor = EdgeColor;
         }
 
         public void InitComponentController()
@@ -202,8 +207,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             ComponentControllerPanel.Height.Set(fullHeight, 0);
             ComponentControllerPanel.Top.Set(12, 0);
 
-            ComponentControllerPanel.BackgroundColor = new Color(46, 46, 57, 200);
-            ComponentControllerPanel.BorderColor = new Color(105, 97, 90, 200);
+            ComponentControllerPanel.BackgroundColor = BackgroundColor2;
+            ComponentControllerPanel.BorderColor = EdgeColor;
 
             BasePanel.Append(ComponentControllerPanel);
         }
@@ -249,12 +254,13 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             ComponentPanel ??= new UIPanel();
 
-            ComponentPanel.Left.Set(ComponentControllerPanel.Width.Pixels + VerticalLine.Width.Pixels-6, 0);
-            ComponentPanel.Width.Set(-VerticalLine.Left.Pixels - VerticalLine.Width.Pixels-6, 1);
+            ComponentPanel.Left.Set(ComponentControllerPanel.Width.Pixels + VerticalLine.Width.Pixels, 0);
+            ComponentPanel.Width.Set(-VerticalLine.Left.Pixels - VerticalLine.Width.Pixels - 6, 1);
             ComponentPanel.Top.Set(0, 0);
             ComponentPanel.Height.Set(0, 1f);
-            ComponentPanel.BorderColor = new Color(255, 190, 236, 255);
-            ComponentPanel.BackgroundColor = new Color(50, 20, 28, 170);
+            ComponentPanel.BackgroundColor = BackgroundColor2;
+            ComponentPanel.BorderColor = EdgeColor;
+
             ComponentPanel.OverflowHidden = true;
 
             BasePanel.Append(ComponentPanel);

@@ -206,3 +206,8 @@ HungryPotionBuff: {
 		-8% 移动速度
 		'''
 }
+
+LeafeoShieldCD: {
+	DisplayName: 叶子护盾冷却
+	Description: 正在进行光合作用以生产叶子护盾...
+}

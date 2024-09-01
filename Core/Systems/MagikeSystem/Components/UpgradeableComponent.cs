@@ -66,4 +66,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
     }
+
+    public class UpgradeableItemContainer:ItemContainer, IUpgradeable
+    {
+        public override void Initialize()
+        {
+            Upgrade(MagikeApparatusLevel.None);
+        }
+
+        public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
+
+        public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
+            => Entity.CheckUpgrageable(incomeLevel);
+    }
 }

@@ -59,6 +59,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             text = "";
             if (IsWorking)
             {
+                text = MagikeSystem.GetApparatusDescriptionText(MagikeSystem.ApparatusDescriptionID.IsWorking);
+
                 return false;
             }
 
